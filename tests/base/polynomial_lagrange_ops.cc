@@ -29,9 +29,9 @@ check_scale(const std::vector<Polynomial<double>>& p)
   deallog << "Scale operation";
   for(unsigned int i = 0; i < p.size(); ++i)
     {
-      Polynomial<double> q      = p[i];
-      double             x      = random_value<double>();
-      double             factor = 5. * random_value<double>();
+      Polynomial<double> q = p[i];
+      double x             = random_value<double>();
+      double factor        = 5. * random_value<double>();
       q.scale(factor);
       double value1 = p[i].value(factor * x);
       double value2 = q.value(x);
@@ -55,8 +55,8 @@ check_shift(const std::vector<Polynomial<double>>& p)
   for(unsigned int i = 0; i < p.size(); ++i)
     {
       Polynomial<double> q = p[i];
-      double             x = random_value<double>();
-      double             a = 10. * (-1. + 2. * random_value<double>());
+      double x             = random_value<double>();
+      double a             = 10. * (-1. + 2. * random_value<double>());
       q.shift(a);
       double value1 = p[i].value(x + a);
       double value2 = q.value(x);
@@ -76,8 +76,8 @@ check_mult_scalar(const std::vector<Polynomial<double>>& p)
   for(unsigned int i = 0; i < p.size(); ++i)
     {
       Polynomial<double> q = p[i];
-      double             x = random_value<double>();
-      double             a = random_value<double>();
+      double x             = random_value<double>();
+      double a             = random_value<double>();
       q *= a;
       double value1 = p[i].value(x) * a;
       double value2 = q.value(x);
@@ -133,7 +133,7 @@ check_expand(const std::vector<Polynomial<double>>& p)
   for(unsigned int i = 0; i < p.size(); ++i)
     {
       Polynomial<double> q = p[i];
-      double             x = random_value<double>();
+      double x             = random_value<double>();
       q += zero;
       double value1 = p[i].value(x);
       double value2 = q.value(x);

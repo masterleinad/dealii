@@ -72,12 +72,12 @@ private:
 
   Triangulation<dim> triangulation;
 
-  hp::DoFHandler<dim>   dof_handler;
+  hp::DoFHandler<dim> dof_handler;
   hp::FECollection<dim> fe;
 
   ConstraintMatrix hanging_node_constraints;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   Vector<double> solution;
@@ -96,8 +96,8 @@ public:
 
   virtual void
   value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+             std::vector<double>& values,
+             const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -113,8 +113,8 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
 template <int dim>
 void
 Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                             std::vector<double>&           values,
-                             const unsigned int             component) const
+                             std::vector<double>& values,
+                             const unsigned int component) const
 {
   const unsigned int n_points = points.size();
 
@@ -186,12 +186,12 @@ LaplaceProblem<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula[0].size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   const Coefficient<dim> coefficient;
-  std::vector<double>    coefficient_values(n_q_points);
+  std::vector<double> coefficient_values(n_q_points);
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -246,7 +246,7 @@ void
 LaplaceProblem<dim>::solve()
 {
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   PreconditionSSOR<> preconditioner;
   preconditioner.initialize(system_matrix, 1.2);

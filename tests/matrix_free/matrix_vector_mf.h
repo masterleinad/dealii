@@ -29,11 +29,11 @@
 template <int dim, int fe_degree, typename VectorType, int n_q_points_1d>
 void
 helmholtz_operator(const MatrixFree<dim, typename VectorType::value_type>& data,
-                   VectorType&                                             dst,
-                   const VectorType&                                       src,
+                   VectorType& dst,
+                   const VectorType& src,
                    const std::pair<unsigned int, unsigned int>& cell_range)
 {
-  typedef typename VectorType::value_type                Number;
+  typedef typename VectorType::value_type Number;
   FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
   const unsigned int n_q_points = fe_eval.n_q_points;
 

@@ -172,7 +172,7 @@ namespace Step17
     // we do not use a separate sparsity pattern, since PETSc manages this
     // internally as part of its matrix data structures.
     Triangulation<dim> triangulation;
-    DoFHandler<dim>    dof_handler;
+    DoFHandler<dim> dof_handler;
 
     FESystem<dim> fe;
 
@@ -198,7 +198,7 @@ namespace Step17
 
     virtual void
     vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const override;
+                      std::vector<Vector<double>>& value_list) const override;
   };
 
   template <int dim>
@@ -208,7 +208,7 @@ namespace Step17
   template <int dim>
   inline void
   RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
     Assert(dim >= 2, ExcInternalError());
@@ -233,7 +233,7 @@ namespace Step17
   void
   RightHandSide<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    std::vector<Vector<double>>& value_list) const
   {
     const unsigned int n_points = points.size();
 
@@ -455,7 +455,7 @@ namespace Step17
   void
   ElasticProblem<dim>::assemble_system()
   {
-    QGauss<dim>   quadrature_formula(2);
+    QGauss<dim> quadrature_formula(2);
     FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_gradients
@@ -465,7 +465,7 @@ namespace Step17
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -474,7 +474,7 @@ namespace Step17
 
     Functions::ConstantFunction<dim> lambda(1.), mu(1.);
 
-    RightHandSide<dim>          right_hand_side;
+    RightHandSide<dim> right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim));
 
     // The next thing is the loop over all elements. Note that we do

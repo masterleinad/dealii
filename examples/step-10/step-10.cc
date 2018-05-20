@@ -128,7 +128,7 @@ namespace Step10
             // face is drawn by 30 small lines instead of only one. This is
             // sufficient to give us the impression of seeing a curved line,
             // rather than a set of straight lines.
-            GridOut               grid_out;
+            GridOut grid_out;
             GridOutFlags::Gnuplot gnuplot_flags(false, 60);
             grid_out.set_flags(gnuplot_flags);
 
@@ -334,7 +334,7 @@ namespace Step10
         GridGenerator::hyper_ball(triangulation);
 
         const MappingQ<dim> mapping(degree);
-        const FE_Q<dim>     fe(1);
+        const FE_Q<dim> fe(1);
 
         DoFHandler<dim> dof_handler(triangulation);
 

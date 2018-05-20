@@ -231,9 +231,9 @@ public:
    * formula or it is factored out, to be included in the integrand.
    */
   QGaussLogR(const unsigned int n,
-             const Point<dim>   x0                         = Point<dim>(),
-             const double       alpha                      = 1,
-             const bool         factor_out_singular_weight = false);
+             const Point<dim> x0                   = Point<dim>(),
+             const double alpha                    = 1,
+             const bool factor_out_singular_weight = false);
 
   /**
    * Move constructor. We cannot rely on the move constructor for `Quadrature`,
@@ -309,8 +309,8 @@ public:
    * @endcode
    */
   QGaussOneOverR(const unsigned int n,
-                 const Point<dim>   singularity,
-                 const bool         factor_out_singular_weight = false);
+                 const Point<dim> singularity,
+                 const bool factor_out_singular_weight = false);
   /**
    * The constructor takes three arguments: the order of the Gauss formula,
    * the index of the vertex where the singularity is located, and whether we
@@ -347,7 +347,7 @@ public:
    */
   QGaussOneOverR(const unsigned int n,
                  const unsigned int vertex_index,
-                 const bool         factor_out_singular_weight = false);
+                 const bool factor_out_singular_weight = false);
 
 private:
   /**
@@ -520,7 +520,7 @@ public:
   };
   /// Generate a formula with <tt>n</tt> quadrature points
   QGaussRadauChebyshev(const unsigned int n,
-                       EndPoint           ep = QGaussRadauChebyshev::left);
+                       EndPoint ep = QGaussRadauChebyshev::left);
 
   /**
    * Move constructor. We cannot rely on the move constructor for `Quadrature`,
@@ -720,7 +720,7 @@ public:
    */
   QDuffy(const Quadrature<1>& radial_quadrature,
          const Quadrature<1>& angular_quadrature,
-         const double         beta = 1.0);
+         const double beta = 1.0);
 
   /**
    * Call the above constructor with QGauss<1>(n) quadrature formulas for
@@ -808,16 +808,16 @@ template <>
 QGaussLog<1>::QGaussLog(const unsigned int n, const bool revert);
 template <>
 QGaussLogR<1>::QGaussLogR(const unsigned int n,
-                          const Point<1>     x0,
-                          const double       alpha,
-                          const bool         flag);
+                          const Point<1> x0,
+                          const double alpha,
+                          const bool flag);
 template <>
 QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
                                   const unsigned int index,
-                                  const bool         flag);
+                                  const bool flag);
 template <>
 QTelles<1>::QTelles(const Quadrature<1>& base_quad,
-                    const Point<1>&      singularity);
+                    const Point<1>& singularity);
 
 DEAL_II_NAMESPACE_CLOSE
 

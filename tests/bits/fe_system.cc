@@ -37,7 +37,7 @@ void
 test()
 {
   // 0 components is not okay
-  FESystem<dim>      fe(FE_Q<dim>(1), 1, FE_Q<dim>(2), 0);
+  FESystem<dim> fe(FE_Q<dim>(1), 1, FE_Q<dim>(2), 0);
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria, 0., 1.);
   tria.refine_global(2);

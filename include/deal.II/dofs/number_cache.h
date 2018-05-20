@@ -75,7 +75,7 @@ namespace internal
        * from the argument.
        */
       NumberCache(const std::vector<IndexSet>& locally_owned_dofs_per_processor,
-                  const unsigned int           my_rank);
+                  const unsigned int my_rank);
 
       /**
        * Copy operator. Simply copy all members of the referenced
@@ -169,9 +169,9 @@ namespace internal
     NumberCache::serialize(Archive& ar, const unsigned int /*version*/)
     {
       ar& n_global_dofs& n_locally_owned_dofs;
-      ar&                locally_owned_dofs;
-      ar&                n_locally_owned_dofs_per_processor;
-      ar&                locally_owned_dofs_per_processor;
+      ar& locally_owned_dofs;
+      ar& n_locally_owned_dofs_per_processor;
+      ar& locally_owned_dofs_per_processor;
     }
 
   } // namespace DoFHandlerImplementation

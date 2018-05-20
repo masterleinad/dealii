@@ -49,7 +49,7 @@ test()
     static_cast<Triangulation<dim>&>(tr), sub, Point<2>(0, 0), Point<2>(1, 1));
 
   const FE_Q<dim> fe_q(1);
-  FESystem<dim>   fe(fe_q, 2);
+  FESystem<dim> fe(fe_q, 2);
   DoFHandler<dim> dofh(tr);
   dofh.distribute_dofs(fe);
 
@@ -86,7 +86,7 @@ test()
 
     if(myid == 0)
       {
-        std::vector<types::global_dof_index>           local_dof_indices;
+        std::vector<types::global_dof_index> local_dof_indices;
         typename DoFHandler<dim>::active_cell_iterator cell, endc = dofh.end();
 
         if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)

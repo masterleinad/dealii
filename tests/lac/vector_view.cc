@@ -17,8 +17,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_view.h>
 
-const unsigned int N           = 10;
-unsigned int       check_point = 0;
+const unsigned int N     = 10;
+unsigned int check_point = 0;
 
 template <typename number>
 void

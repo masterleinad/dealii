@@ -243,9 +243,9 @@ namespace Step34
     // mapping can be selected in the constructor of the class.
 
     Triangulation<dim - 1, dim> tria;
-    FE_Q<dim - 1, dim>          fe;
-    DoFHandler<dim - 1, dim>    dh;
-    MappingQ<dim - 1, dim>      mapping;
+    FE_Q<dim - 1, dim> fe;
+    DoFHandler<dim - 1, dim> dh;
+    MappingQ<dim - 1, dim> mapping;
 
     // In BEM methods, the matrix that is generated is dense. Depending on the
     // size of the problem, the final system might be solved by direct LU
@@ -254,7 +254,7 @@ namespace Step34
     // is non trivial, and we don't treat this subject here.
 
     FullMatrix<double> system_matrix;
-    Vector<double>     system_rhs;
+    Vector<double> system_rhs;
 
     // The next two variables will denote the solution $\phi$ as well as a
     // vector that will hold the values of $\alpha(\mathbf x)$ (the fraction
@@ -291,7 +291,7 @@ namespace Step34
     Functions::ParsedFunction<dim> wind;
     Functions::ParsedFunction<dim> exact_solution;
 
-    unsigned int                         singular_quadrature_order;
+    unsigned int singular_quadrature_order;
     std::shared_ptr<Quadrature<dim - 1>> quadrature;
 
     SolverControl solver_control;
@@ -499,7 +499,7 @@ namespace Step34
   void
   BEMProblem<dim>::read_domain()
   {
-    static const Point<dim>                      center = Point<dim>();
+    static const Point<dim> center = Point<dim>();
     static const SphericalManifold<dim - 1, dim> manifold(center);
 
     std::ifstream in;
@@ -571,7 +571,7 @@ namespace Step34
     std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
 
     std::vector<Vector<double>> cell_wind(n_q_points, Vector<double>(dim));
-    double                      normal_wind;
+    double normal_wind;
 
     // Unlike in finite element methods, if we use a collocation boundary
     // element method, then in each assembly loop we only assemble the
@@ -620,7 +620,7 @@ namespace Step34
           {
             local_matrix_row_i = 0;
 
-            bool         is_singular    = false;
+            bool is_singular            = false;
             unsigned int singular_index = numbers::invalid_unsigned_int;
 
             for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
@@ -784,7 +784,7 @@ namespace Step34
     Vector<double> difference_per_node(alpha);
     difference_per_node.add(-.5);
 
-    const double       alpha_error    = difference_per_node.linfty_norm();
+    const double alpha_error          = difference_per_node.linfty_norm();
     const unsigned int n_active_cells = tria.n_active_cells();
     const unsigned int n_dofs         = dh.n_dofs();
 
@@ -884,7 +884,7 @@ namespace Step34
   const Quadrature<1>&
   BEMProblem<2>::get_singular_quadrature(
     const DoFHandler<1, 2>::active_cell_iterator& cell,
-    const unsigned int                            index) const
+    const unsigned int index) const
   {
     Assert(index < fe.dofs_per_cell, ExcIndexRange(0, fe.dofs_per_cell, index));
 
@@ -922,9 +922,9 @@ namespace Step34
     Triangulation<dim> external_tria;
     GridGenerator::hyper_cube(external_tria, -2, 2);
 
-    FE_Q<dim>       external_fe(1);
+    FE_Q<dim> external_fe(1);
     DoFHandler<dim> external_dh(external_tria);
-    Vector<double>  external_phi;
+    Vector<double> external_phi;
 
     external_tria.refine_global(external_refinement);
     external_dh.distribute_dofs(external_fe);
@@ -945,8 +945,8 @@ namespace Step34
 
     std::vector<types::global_dof_index> dofs(fe.dofs_per_cell);
 
-    std::vector<double>         local_phi(n_q_points);
-    std::vector<double>         normal_wind(n_q_points);
+    std::vector<double> local_phi(n_q_points);
+    std::vector<double> normal_wind(n_q_points);
     std::vector<Vector<double>> local_wind(n_q_points, Vector<double>(dim));
 
     std::vector<Point<dim>> external_support_points(external_dh.n_dofs());

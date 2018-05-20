@@ -31,10 +31,10 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 double
-check_solve(SolverType&         solver,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
+check_solve(SolverType& solver,
+            const MatrixType& A,
+            VectorType& u,
+            VectorType& f,
             const PRECONDITION& P)
 {
   double result = 0.;
@@ -55,12 +55,12 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   //  logfile.setf(std::ios::fixed);
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  SolverControl      control(10, 1.e-3);
+  SolverControl control(10, 1.e-3);
   SolverRichardson<> rich(control);
   SolverRelaxation<> relax(control);
 
@@ -71,7 +71,7 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, 5);
       testproblem.five_point_structure(structure);
       structure.compress();
@@ -128,7 +128,7 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, 5);
       testproblem.five_point_structure(structure);
       structure.compress();

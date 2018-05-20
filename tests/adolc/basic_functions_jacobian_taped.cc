@@ -31,12 +31,12 @@ main(void)
 
   const unsigned int m = 5;  // Dependents
   const unsigned int n = 10; // Independents
-  std::size_t        tape_stats[STAT_SIZE];
+  std::size_t tape_stats[STAT_SIZE];
 
-  double*  xp = new double[n];
-  double*  yp = new double[m];
-  adouble* x  = new adouble[n];
-  adouble* y  = new adouble[m];
+  double* xp = new double[n];
+  double* yp = new double[m];
+  adouble* x = new adouble[n];
+  adouble* y = new adouble[m];
 
   for(unsigned int i = 0; i < n; i++)
     xp[i] = (i + 1.0) / (2.0 + i);

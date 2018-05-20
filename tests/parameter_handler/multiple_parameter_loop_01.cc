@@ -33,7 +33,7 @@ public:
   virtual void
   declare_parameters(ParameterHandler& prm);
   virtual void
-               run(ParameterHandler& prm);
+  run(ParameterHandler& prm);
   unsigned int run_no;
 };
 
@@ -62,7 +62,7 @@ void
 check()
 {
   class MultipleParameterLoop prm;
-  HelperClass                 h;
+  HelperClass h;
 
   h.declare_parameters(prm);
   prm.parse_input(SOURCE_DIR "/prm/multiple_parameter_loop_01.prm");

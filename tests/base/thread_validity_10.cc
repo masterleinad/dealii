@@ -22,7 +22,7 @@
 #include <deal.II/base/thread_management.h>
 
 Threads::Mutex mutex;
-int            spin_lock = 0;
+int spin_lock = 0;
 
 int
 worker()

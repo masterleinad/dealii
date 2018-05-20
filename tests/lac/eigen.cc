@@ -31,7 +31,7 @@ main()
   deallog.attach(logfile);
 
   GrowingVectorMemory<> mem;
-  SolverControl         control(1000, 1.e-5);
+  SolverControl control(1000, 1.e-5);
 
   const unsigned int size = 10;
   const unsigned int dim  = (size - 1) * (size - 1);
@@ -49,7 +49,7 @@ main()
   const double lambda_max = 8. * c * c;
   const double lambda_min = 8. * s * s;
 
-  FDMatrix        testproblem(size, size);
+  FDMatrix testproblem(size, size);
   SparsityPattern structure(dim, dim, 5);
   testproblem.five_point_structure(structure);
   structure.compress();

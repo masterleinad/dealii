@@ -38,12 +38,12 @@ main()
   Triangulation<3> tria;
   GridGenerator::cylinder_shell(tria, 1, .8, 1);
 
-  FE_Q<3>       fe(1);
+  FE_Q<3> fe(1);
   DoFHandler<3> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
   QMidpoint<3> q;
-  FEValues<3>  fe_values(fe, q, update_JxW_values);
+  FEValues<3> fe_values(fe, q, update_JxW_values);
 
   // make sure that all cells have positive
   // volume

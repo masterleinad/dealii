@@ -31,8 +31,8 @@
 
 void check_this(Triangulation<3>& tria)
 {
-  QTrapez<2>      quadrature;
-  FE_Q<3>         fe(1);
+  QTrapez<2> quadrature;
+  FE_Q<3> fe(1);
   FEFaceValues<3> fe_face_values1(
     fe, quadrature, update_quadrature_points | update_JxW_values);
   FEFaceValues<3> fe_face_values2(

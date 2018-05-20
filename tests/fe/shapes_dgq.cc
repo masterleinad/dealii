@@ -47,7 +47,7 @@ plot_FE_DGQ_shape_functions()
   plot_face_shape_functions(m, qgl, "DGQGL");
   test_compute_functions(m, qgl, "DGQGL");
 
-  QGauss<1>                 quadrature_g(5);
+  QGauss<1> quadrature_g(5);
   FE_DGQArbitraryNodes<dim> qg(quadrature_g);
   plot_shape_functions(m, qg, "DGQG");
   plot_face_shape_functions(m, qg, "DGQG");

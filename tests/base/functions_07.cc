@@ -45,7 +45,7 @@ check()
       points.push_back(p);
     }
 
-  F<dim>              f;
+  F<dim> f;
   std::vector<double> laplacians(10);
   f.laplacian_list(points, laplacians);
 
@@ -58,7 +58,7 @@ check()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

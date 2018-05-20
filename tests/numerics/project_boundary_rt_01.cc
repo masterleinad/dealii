@@ -37,7 +37,7 @@ public:
 
   virtual void
   vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   values) const;
+                    std::vector<Vector<double>>& values) const;
 
 private:
   unsigned int degree;
@@ -80,11 +80,11 @@ TestFunction<dim>::vector_value_list(const std::vector<Point<dim>>& points,
 template <int dim>
 double
 integrate_error(const DoFHandler<dim>& dof,
-                FEFaceValues<dim>&     fe,
-                const Vector<double>&  u,
-                const Function<dim>&   f)
+                FEFaceValues<dim>& fe,
+                const Vector<double>& u,
+                const Function<dim>& f)
 {
-  double                      result = 0.;
+  double result = 0.;
   std::vector<Vector<double>> f_values(fe.n_quadrature_points,
                                        Vector<double>(dim));
   std::vector<Vector<double>> fe_values(fe.n_quadrature_points,
@@ -128,12 +128,12 @@ test_projection(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
 
-  QGauss<dim - 1>      quadrature(degree + 2);
+  QGauss<dim - 1> quadrature(degree + 2);
   MappingQGeneric<dim> mapping(1);
 
-  TestFunction<dim>                         f(degree - 1);
+  TestFunction<dim> f(degree - 1);
   std::map<types::global_dof_index, double> boundary_constraints;
-  typename FunctionMap<dim>::type           boundary_map;
+  typename FunctionMap<dim>::type boundary_map;
   for(types::boundary_id i = 0; i < 255; ++i)
     boundary_map[i] = &f;
   VectorTools::project_boundary_values(
@@ -156,7 +156,7 @@ test_projection(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
                           quadrature,
                           update_quadrature_points | update_normal_vectors
                             | update_JxW_values | update_values);
-  double            err = integrate_error(dof, feval, u, f);
+  double err = integrate_error(dof, feval, u, f);
   deallog << err << std::endl;
 }
 

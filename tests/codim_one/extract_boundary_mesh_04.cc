@@ -101,9 +101,9 @@ main()
 
     map<Triangulation<dim - 1, dim>::cell_iterator,
         Triangulation<dim, dim>::face_iterator>
-                                 surface_to_volume_mapping;
+      surface_to_volume_mapping;
     const SphericalManifold<dim> boundary_description;
-    Triangulation<dim>           volume_mesh;
+    Triangulation<dim> volume_mesh;
     GridGenerator::hyper_ball(volume_mesh);
     for(Triangulation<dim>::active_cell_iterator cell
         = volume_mesh.begin_active();
@@ -118,7 +118,7 @@ main()
     volume_mesh.refine_global(1);
 
     const SphericalManifold<dim - 1, dim> surface_description;
-    Triangulation<dim - 1, dim>           boundary_mesh;
+    Triangulation<dim - 1, dim> boundary_mesh;
     boundary_mesh.set_manifold(1, surface_description);
     boundary_mesh.set_manifold(0, surface_description);
 

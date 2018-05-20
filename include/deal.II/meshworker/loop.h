@@ -179,18 +179,18 @@ namespace MeshWorker
   template <class INFOBOX, class DOFINFO, int dim, int spacedim, class ITERATOR>
   void
   cell_action(
-    ITERATOR                  cell,
+    ITERATOR cell,
     DoFInfoBox<dim, DOFINFO>& dof_info,
-    INFOBOX&                  info,
+    INFOBOX& info,
     const std::function<void(DOFINFO&, typename INFOBOX::CellInfo&)>&
       cell_worker,
     const std::function<void(DOFINFO&, typename INFOBOX::CellInfo&)>&
-                                                            boundary_worker,
+      boundary_worker,
     const std::function<void(DOFINFO&,
                              DOFINFO&,
                              typename INFOBOX::CellInfo&,
                              typename INFOBOX::CellInfo&)>& face_worker,
-    const LoopControl&                                      loop_control)
+    const LoopControl& loop_control)
   {
     const bool ignore_subdomain
       = (cell->get_triangulation().locally_owned_subdomain()
@@ -429,19 +429,19 @@ namespace MeshWorker
             class ASSEMBLER,
             class ITERATOR>
   void
-  loop(ITERATOR                          begin,
+  loop(ITERATOR begin,
        typename identity<ITERATOR>::type end,
-       DOFINFO&                          dinfo,
-       INFOBOX&                          info,
+       DOFINFO& dinfo,
+       INFOBOX& info,
        const std::function<void(DOFINFO&, typename INFOBOX::CellInfo&)>&
          cell_worker,
        const std::function<void(DOFINFO&, typename INFOBOX::CellInfo&)>&
-                                                               boundary_worker,
+         boundary_worker,
        const std::function<void(DOFINFO&,
                                 DOFINFO&,
                                 typename INFOBOX::CellInfo&,
                                 typename INFOBOX::CellInfo&)>& face_worker,
-       ASSEMBLER&                                              assembler,
+       ASSEMBLER& assembler,
        const LoopControl& lctrl = LoopControl())
   {
     DoFInfoBox<dim, DOFINFO> dof_info(dinfo);
@@ -481,13 +481,13 @@ namespace MeshWorker
    */
   template <int dim, int spacedim, class ITERATOR, class ASSEMBLER>
   void
-  integration_loop(ITERATOR                              begin,
-                   typename identity<ITERATOR>::type     end,
-                   DoFInfo<dim, spacedim>&               dof_info,
-                   IntegrationInfoBox<dim, spacedim>&    box,
+  integration_loop(ITERATOR begin,
+                   typename identity<ITERATOR>::type end,
+                   DoFInfo<dim, spacedim>& dof_info,
+                   IntegrationInfoBox<dim, spacedim>& box,
                    const LocalIntegrator<dim, spacedim>& integrator,
-                   ASSEMBLER&                            assembler,
-                   const LoopControl&                    lctrl = LoopControl())
+                   ASSEMBLER& assembler,
+                   const LoopControl& lctrl = LoopControl())
   {
     std::function<void(DoFInfo<dim, spacedim>&,
                        IntegrationInfo<dim, spacedim>&)>

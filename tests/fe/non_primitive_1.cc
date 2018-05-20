@@ -42,10 +42,10 @@
 template <int dim>
 void
 create_stokes_matrix_1(const DoFHandler<dim>& dof_handler,
-                       SparseMatrix<double>&  A)
+                       SparseMatrix<double>& A)
 {
-  const FiniteElement<dim>& fe            = dof_handler.get_fe();
-  const unsigned int        dofs_per_cell = fe.dofs_per_cell;
+  const FiniteElement<dim>& fe     = dof_handler.get_fe();
+  const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -54,7 +54,7 @@ create_stokes_matrix_1(const DoFHandler<dim>& dof_handler,
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
-  QGauss<dim>        quadrature(3);
+  QGauss<dim> quadrature(3);
   const unsigned int n_q_points = quadrature.size();
 
   FEValues<dim> fe_values(
@@ -109,10 +109,10 @@ create_stokes_matrix_1(const DoFHandler<dim>& dof_handler,
 template <int dim>
 void
 create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
-                       SparseMatrix<double>&  A)
+                       SparseMatrix<double>& A)
 {
-  const FiniteElement<dim>& fe            = dof_handler.get_fe();
-  const unsigned int        dofs_per_cell = fe.dofs_per_cell;
+  const FiniteElement<dim>& fe     = dof_handler.get_fe();
+  const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -121,7 +121,7 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
-  QGauss<dim>        quadrature(3);
+  QGauss<dim> quadrature(3);
   const unsigned int n_q_points = quadrature.size();
 
   FEValues<dim> fe_values(
@@ -179,10 +179,10 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
 template <int dim>
 void
 create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
-                       SparseMatrix<double>&  A)
+                       SparseMatrix<double>& A)
 {
-  const FiniteElement<dim>& fe            = dof_handler.get_fe();
-  const unsigned int        dofs_per_cell = fe.dofs_per_cell;
+  const FiniteElement<dim>& fe     = dof_handler.get_fe();
+  const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -191,7 +191,7 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
-  QGauss<dim>        quadrature(3);
+  QGauss<dim> quadrature(3);
   const unsigned int n_q_points = quadrature.size();
 
   FEValues<dim> fe_values(
@@ -260,7 +260,7 @@ test()
   deallog << "dim=" << dim << ", n_cells=" << triangulation.n_active_cells()
           << std::endl;
 
-  FESystem<dim>   fe(FE_Q<dim>(2), dim, FE_Q<dim>(1), 1);
+  FESystem<dim> fe(FE_Q<dim>(2), dim, FE_Q<dim>(1), 1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

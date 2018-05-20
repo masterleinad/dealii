@@ -25,7 +25,7 @@ void
 test(const NumberType a, const NumberType b)
 {
   FullMatrix<NumberType> rotation(2);
-  Vector<NumberType>     x(2), y(2), res(2);
+  Vector<NumberType> x(2), y(2), res(2);
 
   x[0] = a;
   x[1] = b;

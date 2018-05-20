@@ -39,7 +39,7 @@ template <int dim>
 void
 dofs(const DoFHandler<dim>& dof)
 {
-  typename DoFHandler<dim>::cell_iterator       cell;
+  typename DoFHandler<dim>::cell_iterator cell;
   const typename DoFHandler<dim>::cell_iterator end = dof.end();
 
   std::vector<types::global_dof_index> indices;
@@ -68,7 +68,7 @@ check_fe(FiniteElement<dim>& fe)
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
-  Functions::ZeroFunction<dim>    zero;
+  Functions::ZeroFunction<dim> zero;
   typename FunctionMap<dim>::type fmap;
   fmap.insert(std::make_pair(0, &zero));
 

@@ -80,7 +80,7 @@ test()
   // on some level
   if(true)
     {
-      const IteratorFilters::LevelEqualTo    predicate(3);
+      const IteratorFilters::LevelEqualTo predicate(3);
       FilteredIterator<active_cell_iterator> begin
         = make_filtered_iterator(tria.begin_active(), predicate),
         end = make_filtered_iterator(
@@ -171,8 +171,8 @@ test()
   if(true)
     {
       typedef FilteredIterator<active_cell_iterator> FI;
-      const IteratorFilters::SubdomainEqualTo        predicate(1);
-      FI                                             cell(predicate);
+      const IteratorFilters::SubdomainEqualTo predicate(1);
+      FI cell(predicate);
       cell.set_to_next_positive(tria.begin_active());
       active_cell_iterator endc(tria.end());
       active_cell_iterator cell1 = tria.begin_active();

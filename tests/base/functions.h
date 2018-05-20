@@ -26,13 +26,13 @@
 template <int dim>
 void
 check_function_value_consistency(const Function<dim>& f,
-                                 unsigned int         sub,
-                                 double               threshold = 1.e-15)
+                                 unsigned int sub,
+                                 double threshold = 1.e-15)
 {
-  QMidpoint<1>   mid;
+  QMidpoint<1> mid;
   QIterated<dim> quadrature(mid, sub);
 
-  std::vector<double>         f1(quadrature.size());
+  std::vector<double> f1(quadrature.size());
   std::vector<Vector<double>> f2(quadrature.size(),
                                  Vector<double>(f.n_components));
 
@@ -63,13 +63,13 @@ check_function_value_consistency(const Function<dim>& f,
 template <int dim>
 void
 check_function_gradient_consistency(const Function<dim>& f,
-                                    unsigned int         sub,
-                                    double               threshold = 1.e-15)
+                                    unsigned int sub,
+                                    double threshold = 1.e-15)
 {
-  QMidpoint<1>   mid;
+  QMidpoint<1> mid;
   QIterated<dim> quadrature(mid, sub);
 
-  std::vector<Tensor<1, dim>>              f1(quadrature.size());
+  std::vector<Tensor<1, dim>> f1(quadrature.size());
   std::vector<std::vector<Tensor<1, dim>>> f2(
     quadrature.size(), std::vector<Tensor<1, dim>>(f.n_components));
 
@@ -116,7 +116,7 @@ public:
   value(const Point<dim>& points, const unsigned int component) const;
   virtual void
   vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   values) const;
+                    std::vector<Vector<double>>& values) const;
 
 private:
   const Function<dim>& func;
@@ -124,7 +124,7 @@ private:
 
 template <int dim>
 DerivativeTestFunction<dim>::DerivativeTestFunction(const Function<dim>& f,
-                                                    const double         h)
+                                                    const double h)
   : AutoDerivativeFunction<dim>(h, f.n_components), func(f)
 {
   this->set_formula(AutoDerivativeFunction<dim>::FourthOrder);
@@ -138,7 +138,7 @@ template <int dim>
 void
 DerivativeTestFunction<dim>::vector_value_list(
   const std::vector<Point<dim>>& points,
-  std::vector<Vector<double>>&   values) const
+  std::vector<Vector<double>>& values) const
 {
   func.vector_value_list(points, values);
 }
@@ -146,14 +146,14 @@ DerivativeTestFunction<dim>::vector_value_list(
 template <int dim>
 void
 DerivativeTestFunction<dim>::vector_value(const Point<dim>& point,
-                                          Vector<double>&   value) const
+                                          Vector<double>& value) const
 {
   func.vector_value(point, value);
 }
 
 template <int dim>
 double
-DerivativeTestFunction<dim>::value(const Point<dim>&  point,
+DerivativeTestFunction<dim>::value(const Point<dim>& point,
                                    const unsigned int comp) const
 {
   //  std::cerr << '[' << point << '!' << func.value(point, comp) << ']';
@@ -165,14 +165,14 @@ DerivativeTestFunction<dim>::value(const Point<dim>&  point,
 template <int dim>
 void
 check_gradient(const Function<dim>& f,
-               unsigned int         sub,
-               double               threshold = 1. / 14.)
+               unsigned int sub,
+               double threshold = 1. / 14.)
 {
   DerivativeTestFunction<dim> dtest1(f, 1.e-2);
   DerivativeTestFunction<dim> dtest2(f, 2.e-2);
 
-  QMidpoint<1>                   mid;
-  QIterated<dim>                 quadrature(mid, sub);
+  QMidpoint<1> mid;
+  QIterated<dim> quadrature(mid, sub);
   const std::vector<Point<dim>>& points = quadrature.get_points();
 
   std::vector<std::vector<Tensor<1, dim>>> gradients(

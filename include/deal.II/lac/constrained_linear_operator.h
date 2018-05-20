@@ -59,7 +59,7 @@ DEAL_II_NAMESPACE_OPEN
 template <typename Range, typename Domain>
 LinearOperator<Range, Domain>
 distribute_constraints_linear_operator(
-  const ConstraintMatrix&              constraint_matrix,
+  const ConstraintMatrix& constraint_matrix,
   const LinearOperator<Range, Domain>& exemplar)
 {
   LinearOperator<Range, Domain> return_op = exemplar;
@@ -154,7 +154,7 @@ distribute_constraints_linear_operator(
 template <typename Range, typename Domain>
 LinearOperator<Range, Domain>
 project_to_constrained_linear_operator(
-  const ConstraintMatrix&              constraint_matrix,
+  const ConstraintMatrix& constraint_matrix,
   const LinearOperator<Range, Domain>& exemplar)
 {
   LinearOperator<Range, Domain> return_op = exemplar;
@@ -304,7 +304,7 @@ constrained_right_hand_side(const ConstraintMatrix& constraint_matrix,
           = distribute_constraints_linear_operator(constraint_matrix, linop);
         const auto Ct = transpose_operator(C);
 
-        GrowingVectorMemory<Domain>            vector_memory;
+        GrowingVectorMemory<Domain> vector_memory;
         typename VectorMemory<Domain>::Pointer k(vector_memory);
         linop.reinit_domain_vector(*k, /*bool fast=*/false);
         constraint_matrix.distribute(*k);

@@ -32,8 +32,8 @@
 
 void check_this(Triangulation<3>& tria)
 {
-  QMidpoint<2>    q;
-  FE_Q<3>         fe(1);
+  QMidpoint<2> q;
+  FE_Q<3> fe(1);
   FEFaceValues<3> fe_face_values1(fe, q, update_normal_vectors);
   FEFaceValues<3> fe_face_values2(fe, q, update_normal_vectors);
 

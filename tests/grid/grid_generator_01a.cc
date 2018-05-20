@@ -47,8 +47,8 @@ test(std::ostream& out)
     p3[2] = 4.;
 
   SphericalManifold<dim> boundary_description(p1);
-  GridOut                go;
-  GridOut::OutputFormat  format = GridOut::gnuplot;
+  GridOut go;
+  GridOut::OutputFormat format = GridOut::gnuplot;
 
   {
     deallog << "half_hyper_ball" << std::endl;

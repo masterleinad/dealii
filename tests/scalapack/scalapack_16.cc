@@ -39,9 +39,9 @@ template <typename NumberType>
 void
 test(const unsigned int size,
      const unsigned int block_size,
-     const NumberType   tol)
+     const NumberType tol)
 {
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(mpi_communicator));
   const unsigned int this_mpi_process(

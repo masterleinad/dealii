@@ -45,8 +45,8 @@ namespace Particles
   template <int dim, int spacedim>
   ParticleHandler<dim, spacedim>::ParticleHandler(
     const parallel::distributed::Triangulation<dim, spacedim>& triangulation,
-    const Mapping<dim, spacedim>&                              mapping,
-    const unsigned int                                         n_properties)
+    const Mapping<dim, spacedim>& mapping,
+    const unsigned int n_properties)
     : triangulation(&triangulation, typeid(*this).name()),
       mapping(&mapping, typeid(*this).name()),
       particles(),
@@ -69,8 +69,8 @@ namespace Particles
   void
   ParticleHandler<dim, spacedim>::initialize(
     const parallel::distributed::Triangulation<dim, spacedim>& tria,
-    const Mapping<dim, spacedim>&                              mapp,
-    const unsigned int                                         n_properties)
+    const Mapping<dim, spacedim>& mapp,
+    const unsigned int n_properties)
   {
     triangulation = &tria;
     mapping       = &mapp;
@@ -100,9 +100,9 @@ namespace Particles
   void
   ParticleHandler<dim, spacedim>::update_cached_numbers()
   {
-    types::particle_index locally_highest_index        = 0;
-    unsigned int          local_max_particles_per_cell = 0;
-    unsigned int          current_particles_per_cell   = 0;
+    types::particle_index locally_highest_index = 0;
+    unsigned int local_max_particles_per_cell   = 0;
+    unsigned int current_particles_per_cell     = 0;
     typename Triangulation<dim, spacedim>::active_cell_iterator current_cell
       = triangulation->begin_active();
 
@@ -231,7 +231,7 @@ namespace Particles
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
   ParticleHandler<dim, spacedim>::insert_particle(
-    const Particle<dim, spacedim>&                                     particle,
+    const Particle<dim, spacedim>& particle,
     const typename Triangulation<dim, spacedim>::active_cell_iterator& cell)
   {
     typename std::multimap<internal::LevelInd,
@@ -284,7 +284,7 @@ namespace Particles
 
 #  ifdef DEAL_II_WITH_MPI
     types::particle_index particles_to_add_locally = positions.size();
-    const int             ierr = MPI_Scan(&particles_to_add_locally,
+    const int ierr = MPI_Scan(&particles_to_add_locally,
                               &local_start_index,
                               1,
                               PARTICLE_INDEX_MPI_TYPE,
@@ -401,9 +401,9 @@ namespace Particles
     template <int dim>
     bool
     compare_particle_association(
-      const unsigned int                 a,
-      const unsigned int                 b,
-      const Tensor<1, dim>&              particle_direction,
+      const unsigned int a,
+      const unsigned int b,
+      const Tensor<1, dim>& particle_direction,
       const std::vector<Tensor<1, dim>>& center_directions)
     {
       const double scalar_product_a = center_directions[a] * particle_direction;
@@ -518,7 +518,7 @@ namespace Particles
         {
           // The cell the particle is in
           Point<dim> current_reference_position;
-          bool       found_cell = false;
+          bool found_cell = false;
 
           // Check if the particle is in one of the old cell's neighbors
           // that are adjacent to the closest vertex
@@ -740,7 +740,7 @@ namespace Particles
       = triangulation->ghost_owners();
     const std::vector<types::subdomain_id> neighbors(ghost_owners.begin(),
                                                      ghost_owners.end());
-    const unsigned int                     n_neighbors = neighbors.size();
+    const unsigned int n_neighbors = neighbors.size();
 
     if(send_cells.size() != 0)
       Assert(particles_to_send.size() == send_cells.size(), ExcInternalError());
@@ -769,7 +769,7 @@ namespace Particles
     // to other processors and the data itself.
     std::vector<unsigned int> n_send_data(n_neighbors, 0);
     std::vector<unsigned int> send_offsets(n_neighbors, 0);
-    std::vector<char>         send_data;
+    std::vector<char> send_data;
 
     // Only serialize things if there are particles to be send.
     // We can not return early even if no particles
@@ -867,8 +867,8 @@ namespace Particles
     // Exchange the particle data between domains
     {
       std::vector<MPI_Request> requests(2 * n_neighbors);
-      unsigned int             send_ops = 0;
-      unsigned int             recv_ops = 0;
+      unsigned int send_ops = 0;
+      unsigned int recv_ops = 0;
 
       for(unsigned int i = 0; i < n_neighbors; ++i)
         if(n_recv_data[i] > 0)
@@ -938,7 +938,7 @@ namespace Particles
   template <int dim, int spacedim>
   void
   ParticleHandler<dim, spacedim>::register_additional_store_load_functions(
-    const std::function<std::size_t()>&                          size_callb,
+    const std::function<std::size_t()>& size_callb,
     const std::function<void*(const particle_iterator&, void*)>& store_callb,
     const std::function<const void*(const particle_iterator&, const void*)>&
       load_callb)
@@ -1075,8 +1075,8 @@ namespace Particles
   void
   ParticleHandler<dim, spacedim>::store_particles(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const typename Triangulation<dim, spacedim>::CellStatus     status,
-    void*                                                       data) const
+    const typename Triangulation<dim, spacedim>::CellStatus status,
+    void* data) const
   {
     unsigned int n_particles(0);
 
@@ -1147,8 +1147,8 @@ namespace Particles
   void
   ParticleHandler<dim, spacedim>::load_particles(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const typename Triangulation<dim, spacedim>::CellStatus     status,
-    const void*                                                 data)
+    const typename Triangulation<dim, spacedim>::CellStatus status,
+    const void* data)
   {
     const unsigned int* n_particles_in_cell_ptr
       = static_cast<const unsigned int*>(data);

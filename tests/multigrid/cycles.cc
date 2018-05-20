@@ -62,7 +62,7 @@ public:
 void
 test_cycles(unsigned int minlevel, unsigned int maxlevel)
 {
-  MGAll                             all;
+  MGAll all;
   MGLevelObject<FullMatrix<double>> level_matrices(0, maxlevel);
   for(unsigned int i = 0; i <= maxlevel; ++i)
     level_matrices[i].reinit(N, N);

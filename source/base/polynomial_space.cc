@@ -58,7 +58,7 @@ PolynomialSpace<2>::compute_index(const unsigned int i) const
   // linear in n_1d), someone
   // should think about this...
   const unsigned int n_1d = polynomials.size();
-  unsigned int       k    = 0;
+  unsigned int k          = 0;
   for(unsigned int iy = 0; iy < n_1d; ++iy)
     if(n < k + n_1d - iy)
       {
@@ -85,7 +85,7 @@ PolynomialSpace<3>::compute_index(const unsigned int i) const
   // (ah, and yes: the original
   // algorithm was even cubic!)
   const unsigned int n_1d = polynomials.size();
-  unsigned int       k    = 0;
+  unsigned int k          = 0;
   for(unsigned int iz = 0; iz < n_1d; ++iz)
     for(unsigned int iy = 0; iy < n_1d - iz; ++iy)
       if(n < k + n_1d - iy - iz)
@@ -114,7 +114,7 @@ PolynomialSpace<dim>::set_numbering(const std::vector<unsigned int>& renumber)
 template <int dim>
 double
 PolynomialSpace<dim>::compute_value(const unsigned int i,
-                                    const Point<dim>&  p) const
+                                    const Point<dim>& p) const
 {
   const auto ix = compute_index(i);
   // take the product of the
@@ -129,7 +129,7 @@ PolynomialSpace<dim>::compute_value(const unsigned int i,
 template <int dim>
 Tensor<1, dim>
 PolynomialSpace<dim>::compute_grad(const unsigned int i,
-                                   const Point<dim>&  p) const
+                                   const Point<dim>& p) const
 {
   const auto ix = compute_index(i);
 
@@ -153,7 +153,7 @@ PolynomialSpace<dim>::compute_grad(const unsigned int i,
 template <int dim>
 Tensor<2, dim>
 PolynomialSpace<dim>::compute_grad_grad(const unsigned int i,
-                                        const Point<dim>&  p) const
+                                        const Point<dim>& p) const
 {
   const auto ix = compute_index(i);
 
@@ -187,8 +187,8 @@ PolynomialSpace<dim>::compute_grad_grad(const unsigned int i,
 template <int dim>
 void
 PolynomialSpace<dim>::compute(
-  const Point<dim>&            p,
-  std::vector<double>&         values,
+  const Point<dim>& p,
+  std::vector<double>& values,
   std::vector<Tensor<1, dim>>& grads,
   std::vector<Tensor<2, dim>>& grad_grads,
   std::vector<Tensor<3, dim>>& third_derivatives,

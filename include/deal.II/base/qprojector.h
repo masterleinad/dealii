@@ -85,8 +85,8 @@ public:
    * doc for this class.
    */
   static void
-  project_to_face(const SubQuadrature&     quadrature,
-                  const unsigned int       face_no,
+  project_to_face(const SubQuadrature& quadrature,
+                  const unsigned int face_no,
                   std::vector<Point<dim>>& q_points);
 
   /**
@@ -107,10 +107,10 @@ public:
    * same as those of the original rule.
    */
   static void
-  project_to_subface(const SubQuadrature&           quadrature,
-                     const unsigned int             face_no,
-                     const unsigned int             subface_no,
-                     std::vector<Point<dim>>&       q_points,
+  project_to_subface(const SubQuadrature& quadrature,
+                     const unsigned int face_no,
+                     const unsigned int subface_no,
+                     std::vector<Point<dim>>& q_points,
                      const RefinementCase<dim - 1>& ref_case
                      = RefinementCase<dim - 1>::isotropic_refinement);
 
@@ -124,9 +124,9 @@ public:
    * same as those of the original rule.
    */
   static Quadrature<dim>
-  project_to_subface(const SubQuadrature&           quadrature,
-                     const unsigned int             face_no,
-                     const unsigned int             subface_no,
+  project_to_subface(const SubQuadrature& quadrature,
+                     const unsigned int face_no,
+                     const unsigned int subface_no,
                      const RefinementCase<dim - 1>& ref_case
                      = RefinementCase<dim - 1>::isotropic_refinement);
 
@@ -177,7 +177,7 @@ public:
    */
   static Quadrature<dim>
   project_to_child(const Quadrature<dim>& quadrature,
-                   const unsigned int     child_no);
+                   const unsigned int child_no);
 
   /**
    * Project a quadrature rule to all children of a cell. Similarly to
@@ -197,8 +197,8 @@ public:
    */
   static Quadrature<dim>
   project_to_line(const Quadrature<1>& quadrature,
-                  const Point<dim>&    p1,
-                  const Point<dim>&    p2);
+                  const Point<dim>& p1,
+                  const Point<dim>& p2);
 
   /**
    * Since the project_to_all_faces() and project_to_all_subfaces() functions
@@ -243,9 +243,9 @@ public:
      */
     static DataSetDescriptor
     face(const unsigned int face_no,
-         const bool         face_orientation,
-         const bool         face_flip,
-         const bool         face_rotation,
+         const bool face_orientation,
+         const bool face_flip,
+         const bool face_rotation,
          const unsigned int n_quadrature_points);
 
     /**
@@ -261,12 +261,12 @@ public:
      * Through the last argument anisotropic refinement can be respected.
      */
     static DataSetDescriptor
-    subface(const unsigned int               face_no,
-            const unsigned int               subface_no,
-            const bool                       face_orientation,
-            const bool                       face_flip,
-            const bool                       face_rotation,
-            const unsigned int               n_quadrature_points,
+    subface(const unsigned int face_no,
+            const unsigned int subface_no,
+            const bool face_orientation,
+            const bool face_flip,
+            const bool face_rotation,
+            const unsigned int n_quadrature_points,
             const internal::SubfaceCase<dim> ref_case
             = internal::SubfaceCase<dim>::case_isotropic);
 
@@ -354,13 +354,13 @@ QProjector<1>::project_to_face(const Quadrature<0>&,
                                std::vector<Point<1>>&);
 template <>
 void
-QProjector<2>::project_to_face(const Quadrature<1>&   quadrature,
-                               const unsigned int     face_no,
+QProjector<2>::project_to_face(const Quadrature<1>& quadrature,
+                               const unsigned int face_no,
                                std::vector<Point<2>>& q_points);
 template <>
 void
-QProjector<3>::project_to_face(const Quadrature<2>&   quadrature,
-                               const unsigned int     face_no,
+QProjector<3>::project_to_face(const Quadrature<2>& quadrature,
+                               const unsigned int face_no,
                                std::vector<Point<3>>& q_points);
 
 template <>
@@ -376,17 +376,17 @@ QProjector<1>::project_to_subface(const Quadrature<0>&,
                                   const RefinementCase<0>&);
 template <>
 void
-QProjector<2>::project_to_subface(const Quadrature<1>&   quadrature,
-                                  const unsigned int     face_no,
-                                  const unsigned int     subface_no,
+QProjector<2>::project_to_subface(const Quadrature<1>& quadrature,
+                                  const unsigned int face_no,
+                                  const unsigned int subface_no,
                                   std::vector<Point<2>>& q_points,
                                   const RefinementCase<1>&);
 template <>
 void
-QProjector<3>::project_to_subface(const Quadrature<2>&     quadrature,
-                                  const unsigned int       face_no,
-                                  const unsigned int       subface_no,
-                                  std::vector<Point<3>>&   q_points,
+QProjector<3>::project_to_subface(const Quadrature<2>& quadrature,
+                                  const unsigned int face_no,
+                                  const unsigned int subface_no,
+                                  std::vector<Point<3>>& q_points,
                                   const RefinementCase<2>& face_ref_case);
 
 template <>
@@ -395,7 +395,7 @@ QProjector<1>::project_to_all_subfaces(const Quadrature<0>& quadrature);
 
 template <>
 QIterated<1>::QIterated(const Quadrature<1>& base_quadrature,
-                        const unsigned int   n_copies);
+                        const unsigned int n_copies);
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

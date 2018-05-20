@@ -79,7 +79,7 @@ namespace CUDAWrappers
      * The sparse matrix on the host is copied on the device and the elements
      * are reordered according to the format supported by cuSPARSE.
      */
-    SparseMatrix(Utilities::CUDA::Handle&              handle,
+    SparseMatrix(Utilities::CUDA::Handle& handle,
                  const ::dealii::SparseMatrix<Number>& sparse_matrix_host);
 
     /**
@@ -104,7 +104,7 @@ namespace CUDAWrappers
      * supported by cuSPARSE.
      */
     void
-    reinit(Utilities::CUDA::Handle&              handle,
+    reinit(Utilities::CUDA::Handle& handle,
            const ::dealii::SparseMatrix<Number>& sparse_matrix_host);
     //@}
 
@@ -161,7 +161,7 @@ namespace CUDAWrappers
      * being this matrix.
      */
     void
-    vmult(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    vmult(LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
           const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const;
 
     /**
@@ -170,7 +170,7 @@ namespace CUDAWrappers
      * takes this transposed matrix.
      */
     void
-    Tvmult(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    Tvmult(LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
            const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const;
 
     /**
@@ -178,7 +178,7 @@ namespace CUDAWrappers
      * with $M$ being this matrix.
      */
     void
-    vmult_add(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    vmult_add(LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
               const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const;
 
     /**
@@ -187,7 +187,7 @@ namespace CUDAWrappers
      * as vmult_add() but takes the transposed matrix.
      */
     void
-    Tvmult_add(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    Tvmult_add(LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
                const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const;
 
     /**
@@ -219,7 +219,7 @@ namespace CUDAWrappers
      * Source $x$ and destination $dst$ must not be the same vector.
      */
     Number
-    residual(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    residual(LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
              const LinearAlgebra::CUDAWrappers::Vector<Number>& x,
              const LinearAlgebra::CUDAWrappers::Vector<Number>& b) const;
     //@}

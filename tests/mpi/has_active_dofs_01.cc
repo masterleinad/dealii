@@ -37,7 +37,7 @@ test()
   tr.refine_global(2);
 
   // assign DoFs to the mesh
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tr);
   dof_handler.distribute_dofs(fe);
 
@@ -106,7 +106,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   deallog.push("2d");
   test<2>();

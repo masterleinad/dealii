@@ -87,7 +87,7 @@ public:
   hessian(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dir = p - origin;
-    const double   r   = dir.norm();
+    const double r     = dir.norm();
     Assert(r > 0.0, ExcMessage("r is not positive"));
     dir /= r;
     SymmetricTensor<2, dim> dir_x_dir;
@@ -119,40 +119,40 @@ private:
  */
 template <int dim>
 void
-check_consistency(const Point<dim>&     p,
-                  const Function<dim>&  func1,
-                  const Function<dim>&  func2,
-                  const Function<dim>&  func3,
-                  const double&         v_e,
+check_consistency(const Point<dim>& p,
+                  const Function<dim>& func1,
+                  const Function<dim>& func2,
+                  const Function<dim>& func3,
+                  const double& v_e,
                   const Tensor<1, dim>& g_e,
                   const Tensor<2, dim>& h_e,
-                  const double&         v_s0,
+                  const double& v_s0,
                   const Tensor<1, dim>& g_s0,
                   const Tensor<2, dim>& h_s0,
-                  const double&         v_s1,
+                  const double& v_s1,
                   const Tensor<1, dim>& g_s1,
                   const Tensor<2, dim>& h_s1,
-                  const double&         v_s2,
+                  const double& v_s2,
                   const Tensor<1, dim>& g_s2,
                   const Tensor<2, dim>& h_s2,
-                  const double&         v_s3,
+                  const double& v_s3,
                   const Tensor<1, dim>& g_s3,
                   const Tensor<2, dim>& h_s3)
 {
-  const double                  v_f1 = func1.value(p);
-  const Tensor<1, dim>          g_f1 = func1.gradient(p);
+  const double v_f1                  = func1.value(p);
+  const Tensor<1, dim> g_f1          = func1.gradient(p);
   const SymmetricTensor<2, dim> h_f1 = func1.hessian(p);
 
-  const double                  v_f2 = func2.value(p);
-  const Tensor<1, dim>          g_f2 = func2.gradient(p);
+  const double v_f2                  = func2.value(p);
+  const Tensor<1, dim> g_f2          = func2.gradient(p);
   const SymmetricTensor<2, dim> h_f2 = func2.hessian(p);
 
-  const double                  v_f3 = func3.value(p);
-  const Tensor<1, dim>          g_f3 = func3.gradient(p);
+  const double v_f3                  = func3.value(p);
+  const Tensor<1, dim> g_f3          = func3.gradient(p);
   const SymmetricTensor<2, dim> h_f3 = func3.hessian(p);
 
   // product rule:
-  const double         v_s = v_s0 + v_s1 * v_f1 + v_s2 * v_f2 + v_s3 * v_f3;
+  const double v_s         = v_s0 + v_s1 * v_f1 + v_s2 * v_f2 + v_s3 * v_f3;
   const Tensor<1, dim> g_s = g_s0 + g_s1 * v_f1 + v_s1 * g_f1 + g_s2 * v_f2
                              + v_s2 * g_f2 + g_s3 * v_f3 + v_s3 * g_f3;
   Tensor<2, dim> op1 = outer_product(g_s1, g_f1),
@@ -188,16 +188,16 @@ check_consistency(const Point<dim>&     p,
  */
 template <int dim>
 void
-test(const FiniteElement<dim>&  fe_base,
-     const FiniteElement<dim>&  fe_en1,
-     const FiniteElement<dim>&  fe_en2,
-     const Quadrature<dim>&     volume_quad,
+test(const FiniteElement<dim>& fe_base,
+     const FiniteElement<dim>& fe_en1,
+     const FiniteElement<dim>& fe_en2,
+     const Quadrature<dim>& volume_quad,
      const Quadrature<dim - 1>& face_quad,
-     const bool                 distort)
+     const bool distort)
 {
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler_enriched(triangulation);
-  DoFHandler<dim>    dof_handler_system(triangulation);
+  DoFHandler<dim> dof_handler_enriched(triangulation);
+  DoFHandler<dim> dof_handler_system(triangulation);
 
   Point<dim> p1, p2, p3;
   for(unsigned int d = 0; d < dim; d++)
@@ -208,7 +208,7 @@ test(const FiniteElement<dim>&  fe_base,
     }
   p2[0] = 10.0;
   p3[0] = 5.0;
-  EnrichmentFunction<dim>                fun1(p1), fun2(p2), fun3(p3);
+  EnrichmentFunction<dim> fun1(p1), fun2(p2), fun3(p3);
   std::vector<const FiniteElement<dim>*> fe_enrichements(3);
   fe_enrichements[0] = &fe_en1;
   fe_enrichements[1] = &fe_en2;
@@ -239,10 +239,10 @@ test(const FiniteElement<dim>&  fe_base,
   };
 
   FE_Enriched<dim> fe_enriched(&fe_base, fe_enrichements, functions);
-  FESystem<dim>    fe_system(fe_base, 1, fe_en1, 1, fe_en2, 2);
+  FESystem<dim> fe_system(fe_base, 1, fe_en1, 1, fe_en2, 2);
 
   {
-    Point<dim>                p1, p2;
+    Point<dim> p1, p2;
     std::vector<unsigned int> repetitions(dim);
     for(unsigned int d = 0; d < dim; d++)
       {
@@ -297,7 +297,7 @@ test(const FiniteElement<dim>&  fe_base,
     {
       fe_values_enriched.reinit(cell_enriched);
       fe_values_system.reinit(cell_system);
-      const unsigned int                     n_q_points = volume_quad.size();
+      const unsigned int n_q_points = volume_quad.size();
       const std::vector<dealii::Point<dim>>& q_points
         = fe_values_system.get_quadrature_points();
 

@@ -45,7 +45,7 @@ main(int argc, char** argv)
 {
   //Initialize MPI and Zoltan
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);
-  MPILogInitAll                    all;
+  MPILogInitAll all;
 
   //Number of nodes
   unsigned int num_indices = 5;
@@ -64,7 +64,7 @@ main(int argc, char** argv)
   Assert(num_indices == sp_graph.n_rows(), ExcInternalError());
 
   std::vector<unsigned int> color_indices;
-  unsigned int              num_colors;
+  unsigned int num_colors;
 
   color_indices.resize(num_indices);
   num_colors = GraphColoring::color_sparsity_pattern(sp_graph, color_indices);

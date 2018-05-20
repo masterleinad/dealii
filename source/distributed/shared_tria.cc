@@ -35,8 +35,8 @@ namespace parallel
     Triangulation<dim, spacedim>::Triangulation(
       MPI_Comm mpi_communicator,
       const typename dealii::Triangulation<dim, spacedim>::MeshSmoothing
-                     smooth_grid,
-      const bool     allow_artificial_cells,
+        smooth_grid,
+      const bool allow_artificial_cells,
       const Settings settings)
       : dealii::parallel::Triangulation<dim, spacedim>(mpi_communicator,
                                                        smooth_grid,
@@ -339,8 +339,8 @@ namespace parallel
     void
     Triangulation<dim, spacedim>::create_triangulation(
       const std::vector<Point<spacedim>>& vertices,
-      const std::vector<CellData<dim>>&   cells,
-      const SubCellData&                  subcelldata)
+      const std::vector<CellData<dim>>& cells,
+      const SubCellData& subcelldata)
     {
       try
         {

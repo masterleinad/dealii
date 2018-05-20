@@ -52,7 +52,7 @@ main(int argc, char** argv)
 
   typedef Vector<double> VectorType;
 
-  ParameterHandler                             prm;
+  ParameterHandler prm;
   SUNDIALS::ARKode<VectorType>::AdditionalData data;
   data.add_parameters(prm);
 
@@ -99,7 +99,7 @@ main(int argc, char** argv)
                                   const VectorType&,
                                   const VectorType&,
                                   const VectorType& src,
-                                  VectorType&       dst) -> int {
+                                  VectorType& dst) -> int {
     J       = 0;
     J(0, 0) = 1;
     J(1, 1) = 1;
@@ -109,8 +109,8 @@ main(int argc, char** argv)
     return 0;
   };
 
-  ode.output_step = [&](const double       t,
-                        const VectorType&  sol,
+  ode.output_step = [&](const double t,
+                        const VectorType& sol,
                         const unsigned int step_number) -> int {
     out << t << " " << sol[0] << " " << sol[1] << " " << sol[2] << std::endl;
     return 0;

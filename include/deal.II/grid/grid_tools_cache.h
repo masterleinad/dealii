@@ -74,7 +74,7 @@ namespace GridTools
      * @param mapping The mapping to use when computing cached objects
      */
     Cache(const Triangulation<dim, spacedim>& tria,
-          const Mapping<dim, spacedim>&       mapping
+          const Mapping<dim, spacedim>& mapping
           = StaticMappingQ1<dim, spacedim>::mapping);
 
     /**

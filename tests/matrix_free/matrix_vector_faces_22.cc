@@ -38,7 +38,7 @@ test()
   // rather than linears and quadratics according to the main function in
   // matrix_vector_faces_common.h
 
-  const unsigned int                        fe_degree = fe_degree_ + 1;
+  const unsigned int fe_degree = fe_degree_ + 1;
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria, -1, 1);
 
@@ -58,10 +58,10 @@ test()
 
   tria.refine_global(3 - dim);
 
-  FE_DGQ<dim>      fe(fe_degree);
-  FESystem<dim>    fe_system(fe, dim);
-  DoFHandler<dim>  dof(tria);
-  DoFHandler<dim>  dof_system(tria);
+  FE_DGQ<dim> fe(fe_degree);
+  FESystem<dim> fe_system(fe, dim);
+  DoFHandler<dim> dof(tria);
+  DoFHandler<dim> dof_system(tria);
   ConstraintMatrix constraints;
   constraints.close();
 
@@ -80,8 +80,8 @@ test()
       // analogy to matrix_vector_faces_14
       LinearAlgebra::distributed::Vector<double> in, out, out_dist;
 
-      MatrixFree<dim, double>                          mf_data;
-      const QGauss<1>                                  quad(fe_degree + 2);
+      MatrixFree<dim, double> mf_data;
+      const QGauss<1> quad(fe_degree + 2);
       typename MatrixFree<dim, double>::AdditionalData data;
       data.tasks_parallel_scheme
         = MatrixFree<dim, double>::AdditionalData::none;

@@ -68,7 +68,7 @@ test()
 
   // this causes a crash in PETSc, but is ignored in Trilinos:
   //DynamicSparsityPattern sp (owned);
-  DynamicSparsityPattern         sp(relevant);
+  DynamicSparsityPattern sp(relevant);
   typename LA::MPI::SparseMatrix matrix;
   DoFTools::make_sparsity_pattern(
     dof_handler,
@@ -86,10 +86,10 @@ test()
 
   if(myid != 0)
     {
-      types::global_dof_index                    row      = 21;
-      unsigned int                               n_values = 4;
-      types::global_dof_index                    cols[]   = {21, 22, 23, 39};
-      typename LA::MPI::SparseMatrix::value_type vals[]   = {1, 201, 401, 101};
+      types::global_dof_index row                       = 21;
+      unsigned int n_values                             = 4;
+      types::global_dof_index cols[]                    = {21, 22, 23, 39};
+      typename LA::MPI::SparseMatrix::value_type vals[] = {1, 201, 401, 101};
       matrix.add(row, n_values, cols, vals, false, true);
     }
 
@@ -106,7 +106,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   {
     deallog.push("PETSc");

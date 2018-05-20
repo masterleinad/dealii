@@ -43,9 +43,9 @@ namespace PETScWrappers
       Vector::create_vector(n, local_size);
     }
 
-    Vector::Vector(const MPI_Comm&   communicator,
+    Vector::Vector(const MPI_Comm& communicator,
                    const VectorBase& v,
-                   const size_type   local_size)
+                   const size_type local_size)
       : VectorBase(v), communicator(communicator)
     {
       // In the past (before it was deprecated) this constructor did a
@@ -129,7 +129,7 @@ namespace PETScWrappers
     Vector::reinit(const MPI_Comm& comm,
                    const size_type n,
                    const size_type local_sz,
-                   const bool      omit_zeroing_entries)
+                   const bool omit_zeroing_entries)
     {
       communicator = comm;
 
@@ -307,17 +307,17 @@ namespace PETScWrappers
     }
 
     void
-    Vector::print(std::ostream&      out,
+    Vector::print(std::ostream& out,
                   const unsigned int precision,
-                  const bool         scientific,
-                  const bool         across) const
+                  const bool scientific,
+                  const bool across) const
     {
       AssertThrow(out, ExcIO());
 
       // get a representation of the vector and
       // loop over all the elements
       PetscScalar* val;
-      PetscInt     nlocal, istart, iend;
+      PetscInt nlocal, istart, iend;
 
       PetscErrorCode ierr = VecGetArray(vector, &val);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -329,8 +329,8 @@ namespace PETScWrappers
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // save the state of out stream
-      std::ios::fmtflags old_flags     = out.flags();
-      unsigned int       old_precision = out.precision(precision);
+      std::ios::fmtflags old_flags = out.flags();
+      unsigned int old_precision   = out.precision(precision);
 
       out.precision(precision);
       if(scientific)

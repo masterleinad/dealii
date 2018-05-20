@@ -23,7 +23,7 @@
 void
 test(const bool is_singular)
 {
-  const unsigned int       n = 10;
+  const unsigned int n = 10;
   LAPACKFullMatrix<double> A(n, n);
   A = 0;
 
@@ -61,7 +61,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 

@@ -39,7 +39,7 @@ main()
   triangulation.refine_global(2);
 
   hp::FECollection<1> fe_collection;
-  hp::DoFHandler<1>   dof_handler(triangulation);
+  hp::DoFHandler<1> dof_handler(triangulation);
   fe_collection.push_back(FE_Q<1>(2));
   fe_collection.push_back(FE_Q<1>(4));
   fe_collection.push_back(FE_Q<1>(6));

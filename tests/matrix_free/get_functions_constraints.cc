@@ -37,7 +37,7 @@ test()
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 

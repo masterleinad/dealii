@@ -53,7 +53,7 @@ check()
 
   // create a system element composed
   // of non-primitive elements
-  FESystem<dim>   element(FE_RaviartThomas<dim>(1), 2);
+  FESystem<dim> element(FE_RaviartThomas<dim>(1), 2);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 
@@ -62,13 +62,13 @@ check()
   // formula suited to the elements
   // we have here
   MappingQ<dim> mapping(3);
-  QGauss<dim>   quadrature(6);
+  QGauss<dim> quadrature(6);
 
   // create sparsity pattern. note
   // that different blocks should
   // not couple, so use pattern
-  SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
-  const unsigned int           n_components = 2 * dim;
+  SparsityPattern sparsity(dof.n_dofs(), dof.n_dofs());
+  const unsigned int n_components = 2 * dim;
   Table<2, DoFTools::Coupling> mask(n_components, n_components);
   for(unsigned int i = 0; i < n_components; ++i)
     for(unsigned int j = 0; j < n_components; ++j)

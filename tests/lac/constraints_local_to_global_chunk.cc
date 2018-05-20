@@ -52,7 +52,7 @@ test(unsigned int chunk_size)
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -62,7 +62,7 @@ test(unsigned int chunk_size)
     dof, 1, Functions::ZeroFunction<dim>(), constraints);
   constraints.close();
 
-  SparsityPattern      sparsity;
+  SparsityPattern sparsity;
   ChunkSparsityPattern chunk_sparsity;
   {
     DynamicSparsityPattern csp(dof.n_dofs(), dof.n_dofs());
@@ -70,7 +70,7 @@ test(unsigned int chunk_size)
     sparsity.copy_from(csp);
     chunk_sparsity.copy_from(csp, chunk_size);
   }
-  SparseMatrix<double>      sparse(sparsity);
+  SparseMatrix<double> sparse(sparsity);
   ChunkSparseMatrix<double> chunk_sparse(chunk_sparsity);
 
   FullMatrix<double> local_mat(fe.dofs_per_cell, fe.dofs_per_cell);

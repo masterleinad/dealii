@@ -135,7 +135,7 @@ template <int dim>
 void
 FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
 {
-  QGauss<dim>        cell_quadrature(deg + 1);
+  QGauss<dim> cell_quadrature(deg + 1);
   const unsigned int n_interior_points = (deg > 0) ? cell_quadrature.size() : 0;
 
   unsigned int n_face_points = (dim > 1) ? 1 : 0;
@@ -152,7 +152,7 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
 
   if(dim > 1)
     {
-      QGauss<dim - 1>                   face_points(deg + 1);
+      QGauss<dim - 1> face_points(deg + 1);
       TensorProductPolynomials<dim - 1> legendre
         = Polynomials::Legendre::generate_complete_basis(deg);
 
@@ -249,7 +249,7 @@ FE_RaviartThomas<dim>::initialize_restriction()
 {
   const unsigned int iso = RefinementCase<dim>::isotropic_refinement - 1;
 
-  QGauss<dim - 1>    q_base(this->degree);
+  QGauss<dim - 1> q_base(this->degree);
   const unsigned int n_face_points = q_base.size();
   // First, compute interpolation on
   // subfaces
@@ -336,7 +336,7 @@ FE_RaviartThomas<dim>::initialize_restriction()
         = std_cxx14::make_unique<AnisotropicPolynomials<dim>>(poly);
     }
 
-  QGauss<dim>        q_cell(this->degree);
+  QGauss<dim> q_cell(this->degree);
   const unsigned int start_cell_dofs
     = GeometryInfo<dim>::faces_per_cell * this->dofs_per_face;
 
@@ -455,7 +455,7 @@ template <int dim>
 void
 FE_RaviartThomas<dim>::convert_generalized_support_point_values_to_dof_values(
   const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  std::vector<double>& nodal_values) const
 {
   Assert(support_point_values.size() == this->generalized_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),

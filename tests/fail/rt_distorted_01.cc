@@ -82,7 +82,7 @@ TestMap1<dim>::value(const Point<dim>& /*p*/,
 template <int dim>
 void
 TestMap1<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -134,7 +134,7 @@ TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef1<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -180,7 +180,7 @@ TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef2<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -227,7 +227,7 @@ TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef3<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -239,12 +239,12 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
  * Integrate the function value over the element.
  */
 
-double EvaluateArea(Mapping<2>&     mapping,
-                    DoFHandler<2>*  dof_handler,
+double EvaluateArea(Mapping<2>& mapping,
+                    DoFHandler<2>* dof_handler,
                     Vector<double>& solution)
 {
   // Use a high order quadrature.
-  QGauss<2>   quad(6);
+  QGauss<2> quad(6);
   FEValues<2> fe_values(
     mapping,
     dof_handler->get_fe(),
@@ -287,8 +287,8 @@ main(int /*argc*/, char** /*argv*/)
   deallog.attach(logfile);
 
   Triangulation<2> tria_test;
-  DoFHandler<2>*   dof_handler, *dof_handler_def;
-  Point<2>         p1(0, 0), p2(1, 1);
+  DoFHandler<2>*dof_handler, *dof_handler_def;
+  Point<2> p1(0, 0), p2(1, 1);
 
   GridGenerator::hyper_rectangle(tria_test, p1, p2);
   tria_test.refine_global(1);

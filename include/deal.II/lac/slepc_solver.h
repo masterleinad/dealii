@@ -170,9 +170,9 @@ namespace SLEPcWrappers
     template <typename OutputVector>
     void
     solve(const PETScWrappers::MatrixBase& A,
-          std::vector<PetscScalar>&        eigenvalues,
-          std::vector<OutputVector>&       eigenvectors,
-          const unsigned int               n_eigenpairs = 1);
+          std::vector<PetscScalar>& eigenvalues,
+          std::vector<OutputVector>& eigenvectors,
+          const unsigned int n_eigenpairs = 1);
 
     /**
      * Same as above, but here a composite method for solving the system $A
@@ -183,9 +183,9 @@ namespace SLEPcWrappers
     void
     solve(const PETScWrappers::MatrixBase& A,
           const PETScWrappers::MatrixBase& B,
-          std::vector<PetscScalar>&        eigenvalues,
-          std::vector<OutputVector>&       eigenvectors,
-          const unsigned int               n_eigenpairs = 1);
+          std::vector<PetscScalar>& eigenvalues,
+          std::vector<OutputVector>& eigenvectors,
+          const unsigned int n_eigenpairs = 1);
 
     /**
      * Same as above, but here a composite method for solving the system $A
@@ -196,11 +196,11 @@ namespace SLEPcWrappers
     void
     solve(const PETScWrappers::MatrixBase& A,
           const PETScWrappers::MatrixBase& B,
-          std::vector<double>&             real_eigenvalues,
-          std::vector<double>&             imag_eigenvalues,
-          std::vector<OutputVector>&       real_eigenvectors,
-          std::vector<OutputVector>&       imag_eigenvectors,
-          const unsigned int               n_eigenpairs = 1);
+          std::vector<double>& real_eigenvalues,
+          std::vector<double>& imag_eigenvalues,
+          std::vector<OutputVector>& real_eigenvectors,
+          std::vector<OutputVector>& imag_eigenvectors,
+          const unsigned int n_eigenpairs = 1);
 
     /**
      * Set the initial vector for the solver.
@@ -315,8 +315,8 @@ namespace SLEPcWrappers
      * \text{n\_converged}-1$.
      */
     void
-    get_eigenpair(const unsigned int         index,
-                  PetscScalar&               eigenvalues,
+    get_eigenpair(const unsigned int index,
+                  PetscScalar& eigenvalues,
                   PETScWrappers::VectorBase& eigenvectors);
 
     /**
@@ -325,9 +325,9 @@ namespace SLEPcWrappers
      * \text{n\_converged}-1$.
      */
     void
-    get_eigenpair(const unsigned int         index,
-                  double&                    real_eigenvalues,
-                  double&                    imag_eigenvalues,
+    get_eigenpair(const unsigned int index,
+                  double& real_eigenvalues,
+                  double& imag_eigenvalues,
                   PETScWrappers::VectorBase& real_eigenvectors,
                   PETScWrappers::VectorBase& imag_eigenvectors);
 
@@ -365,12 +365,12 @@ namespace SLEPcWrappers
      * @note This function is not used currently.
      */
     static int
-    convergence_test(EPS         eps,
+    convergence_test(EPS eps,
                      PetscScalar real_eigenvalue,
                      PetscScalar imag_eigenvalue,
-                     PetscReal   residual_norm,
-                     PetscReal*  estimated_error,
-                     void*       solver_control);
+                     PetscReal residual_norm,
+                     PetscReal* estimated_error,
+                     void* solver_control);
   };
 
   /**
@@ -396,9 +396,9 @@ namespace SLEPcWrappers
      * computations are parallelized. By default, this carries the same
      * behaviour as the PETScWrappers, but you can change that.
      */
-    SolverKrylovSchur(SolverControl&        cn,
-                      const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                      const AdditionalData& data = AdditionalData());
+    SolverKrylovSchur(SolverControl& cn,
+                      const MPI_Comm& mpi_communicator = PETSC_COMM_SELF,
+                      const AdditionalData& data       = AdditionalData());
 
   protected:
     /**
@@ -441,9 +441,9 @@ namespace SLEPcWrappers
      * computations are parallelized. By default, this carries the same
      * behaviour as the PETScWrappers, but you can change that.
      */
-    SolverArnoldi(SolverControl&        cn,
-                  const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                  const AdditionalData& data             = AdditionalData());
+    SolverArnoldi(SolverControl& cn,
+                  const MPI_Comm& mpi_communicator = PETSC_COMM_SELF,
+                  const AdditionalData& data       = AdditionalData());
 
   protected:
     /**
@@ -487,9 +487,9 @@ namespace SLEPcWrappers
      * computations are parallelized. By default, this carries the same
      * behaviour as the PETScWrappers, but you can change that.
      */
-    SolverLanczos(SolverControl&        cn,
-                  const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                  const AdditionalData& data             = AdditionalData());
+    SolverLanczos(SolverControl& cn,
+                  const MPI_Comm& mpi_communicator = PETSC_COMM_SELF,
+                  const AdditionalData& data       = AdditionalData());
 
   protected:
     /**
@@ -521,9 +521,9 @@ namespace SLEPcWrappers
      * computations are parallelized. By default, this carries the same
      * behaviour as the PETScWrappers, but you can change that.
      */
-    SolverPower(SolverControl&        cn,
-                const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                const AdditionalData& data             = AdditionalData());
+    SolverPower(SolverControl& cn,
+                const MPI_Comm& mpi_communicator = PETSC_COMM_SELF,
+                const AdditionalData& data       = AdditionalData());
 
   protected:
     /**
@@ -565,7 +565,7 @@ namespace SLEPcWrappers
      * computations are parallelized. By default, this carries the same
      * behaviour as the PETScWrappers, but you can change that.
      */
-    SolverGeneralizedDavidson(SolverControl&  cn,
+    SolverGeneralizedDavidson(SolverControl& cn,
                               const MPI_Comm& mpi_communicator
                               = PETSC_COMM_SELF,
                               const AdditionalData& data = AdditionalData());
@@ -600,7 +600,7 @@ namespace SLEPcWrappers
      * computations are parallelized. By default, this carries the same
      * behaviour as the PETScWrappers, but you can change that.
      */
-    SolverJacobiDavidson(SolverControl&  cn,
+    SolverJacobiDavidson(SolverControl& cn,
                          const MPI_Comm& mpi_communicator = PETSC_COMM_SELF,
                          const AdditionalData& data       = AdditionalData());
 
@@ -634,9 +634,9 @@ namespace SLEPcWrappers
      * computations are parallelized. By default, this carries the same
      * behaviour as the PETScWrappers, but you can change that.
      */
-    SolverLAPACK(SolverControl&        cn,
-                 const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                 const AdditionalData& data             = AdditionalData());
+    SolverLAPACK(SolverControl& cn,
+                 const MPI_Comm& mpi_communicator = PETSC_COMM_SELF,
+                 const AdditionalData& data       = AdditionalData());
 
   protected:
     /**
@@ -655,9 +655,9 @@ namespace SLEPcWrappers
   template <typename OutputVector>
   void
   SolverBase::solve(const PETScWrappers::MatrixBase& A,
-                    std::vector<PetscScalar>&        eigenvalues,
-                    std::vector<OutputVector>&       eigenvectors,
-                    const unsigned int               n_eigenpairs)
+                    std::vector<PetscScalar>& eigenvalues,
+                    std::vector<OutputVector>& eigenvectors,
+                    const unsigned int n_eigenpairs)
   {
     // Panic if the number of eigenpairs wanted is out of bounds.
     AssertThrow((n_eigenpairs > 0) && (n_eigenpairs <= A.m()),
@@ -688,9 +688,9 @@ namespace SLEPcWrappers
   void
   SolverBase::solve(const PETScWrappers::MatrixBase& A,
                     const PETScWrappers::MatrixBase& B,
-                    std::vector<PetscScalar>&        eigenvalues,
-                    std::vector<OutputVector>&       eigenvectors,
-                    const unsigned int               n_eigenpairs)
+                    std::vector<PetscScalar>& eigenvalues,
+                    std::vector<OutputVector>& eigenvectors,
+                    const unsigned int n_eigenpairs)
   {
     // Guard against incompatible matrix sizes:
     AssertThrow(A.m() == B.m(), ExcDimensionMismatch(A.m(), B.m()));
@@ -726,11 +726,11 @@ namespace SLEPcWrappers
   void
   SolverBase::solve(const PETScWrappers::MatrixBase& A,
                     const PETScWrappers::MatrixBase& B,
-                    std::vector<double>&             real_eigenvalues,
-                    std::vector<double>&             imag_eigenvalues,
-                    std::vector<OutputVector>&       real_eigenvectors,
-                    std::vector<OutputVector>&       imag_eigenvectors,
-                    const unsigned int               n_eigenpairs)
+                    std::vector<double>& real_eigenvalues,
+                    std::vector<double>& imag_eigenvalues,
+                    std::vector<OutputVector>& real_eigenvectors,
+                    std::vector<OutputVector>& imag_eigenvectors,
+                    const unsigned int n_eigenpairs)
   {
     // Guard against incompatible matrix sizes:
     AssertThrow(A.m() == B.m(), ExcDimensionMismatch(A.m(), B.m()));

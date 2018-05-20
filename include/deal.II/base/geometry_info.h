@@ -1815,7 +1815,7 @@ struct GeometryInfo
    */
   static double
   subface_ratio(const internal::SubfaceCase<dim>& subface_case,
-                const unsigned int                subface_no);
+                const unsigned int subface_no);
 
   /**
    * Given a cell refined with the <code>RefinementCase</code> @p
@@ -1824,10 +1824,10 @@ struct GeometryInfo
    */
   static RefinementCase<dim - 1>
   face_refinement_case(const RefinementCase<dim>& cell_refinement_case,
-                       const unsigned int         face_no,
-                       const bool                 face_orientation = true,
-                       const bool                 face_flip        = false,
-                       const bool                 face_rotation    = false);
+                       const unsigned int face_no,
+                       const bool face_orientation = true,
+                       const bool face_flip        = false,
+                       const bool face_rotation    = false);
 
   /**
    * Given the SubfaceCase @p face_refinement_case of the @p face_no th face,
@@ -1837,10 +1837,10 @@ struct GeometryInfo
   static RefinementCase<dim>
   min_cell_refinement_case_for_face_refinement(
     const RefinementCase<dim - 1>& face_refinement_case,
-    const unsigned int             face_no,
-    const bool                     face_orientation = true,
-    const bool                     face_flip        = false,
-    const bool                     face_rotation    = false);
+    const unsigned int face_no,
+    const bool face_orientation = true,
+    const bool face_flip        = false,
+    const bool face_rotation    = false);
 
   /**
    * Given a cell refined with the RefinementCase @p cell_refinement_case
@@ -1848,7 +1848,7 @@ struct GeometryInfo
    */
   static RefinementCase<1>
   line_refinement_case(const RefinementCase<dim>& cell_refinement_case,
-                       const unsigned int         line_no);
+                       const unsigned int line_no);
 
   /**
    * Return the minimal / smallest RefinementCase of the cell, which ensures
@@ -1904,12 +1904,12 @@ struct GeometryInfo
    * additional argument, defaulting to isotropic refinement of the face.
    */
   static unsigned int
-  child_cell_on_face(const RefinementCase<dim>&     ref_case,
-                     const unsigned int             face,
-                     const unsigned int             subface,
-                     const bool                     face_orientation = true,
-                     const bool                     face_flip        = false,
-                     const bool                     face_rotation    = false,
+  child_cell_on_face(const RefinementCase<dim>& ref_case,
+                     const unsigned int face,
+                     const unsigned int subface,
+                     const bool face_orientation = true,
+                     const bool face_flip        = false,
+                     const bool face_rotation    = false,
                      const RefinementCase<dim - 1>& face_refinement_case
                      = RefinementCase<dim - 1>::isotropic_refinement);
 
@@ -1952,9 +1952,9 @@ struct GeometryInfo
   static unsigned int
   face_to_cell_vertices(const unsigned int face,
                         const unsigned int vertex,
-                        const bool         face_orientation = true,
-                        const bool         face_flip        = false,
-                        const bool         face_rotation    = false);
+                        const bool face_orientation = true,
+                        const bool face_flip        = false,
+                        const bool face_rotation    = false);
 
   /**
    * Map face line number to cell line number, i.e. give the cell line number
@@ -1970,9 +1970,9 @@ struct GeometryInfo
   static unsigned int
   face_to_cell_lines(const unsigned int face,
                      const unsigned int line,
-                     const bool         face_orientation = true,
-                     const bool         face_flip        = false,
-                     const bool         face_rotation    = false);
+                     const bool face_orientation = true,
+                     const bool face_flip        = false,
+                     const bool face_rotation    = false);
 
   /**
    * Map the vertex index @p vertex of a face in standard orientation to one
@@ -1985,9 +1985,9 @@ struct GeometryInfo
    */
   static unsigned int
   standard_to_real_face_vertex(const unsigned int vertex,
-                               const bool         face_orientation = true,
-                               const bool         face_flip        = false,
-                               const bool         face_rotation    = false);
+                               const bool face_orientation = true,
+                               const bool face_flip        = false,
+                               const bool face_rotation    = false);
 
   /**
    * Map the vertex index @p vertex of a face with arbitrary @p
@@ -2000,9 +2000,9 @@ struct GeometryInfo
    */
   static unsigned int
   real_to_standard_face_vertex(const unsigned int vertex,
-                               const bool         face_orientation = true,
-                               const bool         face_flip        = false,
-                               const bool         face_rotation    = false);
+                               const bool face_orientation = true,
+                               const bool face_flip        = false,
+                               const bool face_rotation    = false);
 
   /**
    * Map the line index @p line of a face in standard orientation to one of a
@@ -2015,9 +2015,9 @@ struct GeometryInfo
    */
   static unsigned int
   standard_to_real_face_line(const unsigned int line,
-                             const bool         face_orientation = true,
-                             const bool         face_flip        = false,
-                             const bool         face_rotation    = false);
+                             const bool face_orientation = true,
+                             const bool face_flip        = false,
+                             const bool face_rotation    = false);
 
   /**
    * Map the line index @p line of a face with arbitrary @p face_orientation,
@@ -2030,9 +2030,9 @@ struct GeometryInfo
    */
   static unsigned int
   real_to_standard_face_line(const unsigned int line,
-                             const bool         face_orientation = true,
-                             const bool         face_flip        = false,
-                             const bool         face_rotation    = false);
+                             const bool face_orientation = true,
+                             const bool face_flip        = false,
+                             const bool face_rotation    = false);
 
   /**
    * Return the position of the @p ith vertex on the unit cell. The order of
@@ -2062,8 +2062,8 @@ struct GeometryInfo
    * depends on the number of the child.
    */
   static Point<dim>
-  cell_to_child_coordinates(const Point<dim>&         p,
-                            const unsigned int        child_index,
+  cell_to_child_coordinates(const Point<dim>& p,
+                            const unsigned int child_index,
                             const RefinementCase<dim> refine_case
                             = RefinementCase<dim>::isotropic_refinement);
 
@@ -2073,8 +2073,8 @@ struct GeometryInfo
    * mother cell.
    */
   static Point<dim>
-  child_to_cell_coordinates(const Point<dim>&         p,
-                            const unsigned int        child_index,
+  child_to_cell_coordinates(const Point<dim>& p,
+                            const unsigned int child_index,
                             const RefinementCase<dim> refine_case
                             = RefinementCase<dim>::isotropic_refinement);
 
@@ -2254,15 +2254,15 @@ struct GeometryInfo
 
 template <>
 Tensor<1, 1>
-GeometryInfo<1>::d_linear_shape_function_gradient(const Point<1>&    xi,
+GeometryInfo<1>::d_linear_shape_function_gradient(const Point<1>& xi,
                                                   const unsigned int i);
 template <>
 Tensor<1, 2>
-GeometryInfo<2>::d_linear_shape_function_gradient(const Point<2>&    xi,
+GeometryInfo<2>::d_linear_shape_function_gradient(const Point<2>& xi,
                                                   const unsigned int i);
 template <>
 Tensor<1, 3>
-GeometryInfo<3>::d_linear_shape_function_gradient(const Point<3>&    xi,
+GeometryInfo<3>::d_linear_shape_function_gradient(const Point<3>& xi,
                                                   const unsigned int i);
 
 /* -------------- inline functions ------------- */
@@ -2384,7 +2384,7 @@ RefinementCase<dim>::operator|(const RefinementCase<dim>& r) const
 
 template <int dim>
 inline RefinementCase<dim> RefinementCase<dim>::
-                           operator&(const RefinementCase<dim>& r) const
+operator&(const RefinementCase<dim>& r) const
 {
   return RefinementCase<dim>(static_cast<std::uint8_t>(value & r.value));
 }
@@ -2412,7 +2412,7 @@ RefinementCase<dim>::serialize(Archive& ar, const unsigned int)
   // serialization can't deal with bitfields, so copy from/to a full sized
   // std::uint8_t
   std::uint8_t uchar_value = value;
-  ar&          uchar_value;
+  ar& uchar_value;
   value = uchar_value;
 }
 
@@ -2498,8 +2498,8 @@ GeometryInfo<dim>::child_cell_from_point(const Point<dim>&)
 
 template <>
 inline Point<1>
-GeometryInfo<1>::cell_to_child_coordinates(const Point<1>&         p,
-                                           const unsigned int      child_index,
+GeometryInfo<1>::cell_to_child_coordinates(const Point<1>& p,
+                                           const unsigned int child_index,
                                            const RefinementCase<1> refine_case)
 
 {
@@ -2512,8 +2512,8 @@ GeometryInfo<1>::cell_to_child_coordinates(const Point<1>&         p,
 
 template <>
 inline Point<2>
-GeometryInfo<2>::cell_to_child_coordinates(const Point<2>&         p,
-                                           const unsigned int      child_index,
+GeometryInfo<2>::cell_to_child_coordinates(const Point<2>& p,
+                                           const unsigned int child_index,
                                            const RefinementCase<2> refine_case)
 
 {
@@ -2547,8 +2547,8 @@ GeometryInfo<2>::cell_to_child_coordinates(const Point<2>&         p,
 
 template <>
 inline Point<3>
-GeometryInfo<3>::cell_to_child_coordinates(const Point<3>&         p,
-                                           const unsigned int      child_index,
+GeometryInfo<3>::cell_to_child_coordinates(const Point<3>& p,
+                                           const unsigned int child_index,
                                            const RefinementCase<3> refine_case)
 
 {
@@ -2632,8 +2632,8 @@ GeometryInfo<dim>::cell_to_child_coordinates(
 
 template <>
 inline Point<1>
-GeometryInfo<1>::child_to_cell_coordinates(const Point<1>&         p,
-                                           const unsigned int      child_index,
+GeometryInfo<1>::child_to_cell_coordinates(const Point<1>& p,
+                                           const unsigned int child_index,
                                            const RefinementCase<1> refine_case)
 
 {
@@ -2646,8 +2646,8 @@ GeometryInfo<1>::child_to_cell_coordinates(const Point<1>&         p,
 
 template <>
 inline Point<3>
-GeometryInfo<3>::child_to_cell_coordinates(const Point<3>&         p,
-                                           const unsigned int      child_index,
+GeometryInfo<3>::child_to_cell_coordinates(const Point<3>& p,
+                                           const unsigned int child_index,
                                            const RefinementCase<3> refine_case)
 
 {
@@ -2719,8 +2719,8 @@ GeometryInfo<3>::child_to_cell_coordinates(const Point<3>&         p,
 
 template <>
 inline Point<2>
-GeometryInfo<2>::child_to_cell_coordinates(const Point<2>&         p,
-                                           const unsigned int      child_index,
+GeometryInfo<2>::child_to_cell_coordinates(const Point<2>& p,
+                                           const unsigned int child_index,
                                            const RefinementCase<2> refine_case)
 {
   Assert(
@@ -3044,7 +3044,7 @@ GeometryInfo<2>::subface_ratio(const internal::SubfaceCase<2>& subface_case,
 template <>
 inline double
 GeometryInfo<3>::subface_ratio(const internal::SubfaceCase<3>& subface_case,
-                               const unsigned int              subface_no)
+                               const unsigned int subface_no)
 {
   double ratio = 1;
   switch(subface_case)
@@ -3126,7 +3126,7 @@ template <>
 inline RefinementCase<1>
 GeometryInfo<2>::face_refinement_case(
   const RefinementCase<2>& cell_refinement_case,
-  const unsigned int       face_no,
+  const unsigned int face_no,
   const bool,
   const bool,
   const bool)
@@ -3159,8 +3159,8 @@ template <>
 inline RefinementCase<2>
 GeometryInfo<3>::face_refinement_case(
   const RefinementCase<3>& cell_refinement_case,
-  const unsigned int       face_no,
-  const bool               face_orientation,
+  const unsigned int face_no,
+  const bool face_orientation,
   const bool /*face_flip*/,
   const bool face_rotation)
 {
@@ -3246,7 +3246,7 @@ template <>
 inline RefinementCase<1>
 GeometryInfo<1>::line_refinement_case(
   const RefinementCase<1>& cell_refinement_case,
-  const unsigned int       line_no)
+  const unsigned int line_no)
 {
   (void) line_no;
   const unsigned int dim = 1;
@@ -3265,7 +3265,7 @@ template <>
 inline RefinementCase<1>
 GeometryInfo<2>::line_refinement_case(
   const RefinementCase<2>& cell_refinement_case,
-  const unsigned int       line_no)
+  const unsigned int line_no)
 {
   // Assertions are in face_refinement_case()
   return face_refinement_case(cell_refinement_case, line_no);
@@ -3275,7 +3275,7 @@ template <>
 inline RefinementCase<1>
 GeometryInfo<3>::line_refinement_case(
   const RefinementCase<3>& cell_refinement_case,
-  const unsigned int       line_no)
+  const unsigned int line_no)
 {
   const unsigned int dim = 3;
   Assert(cell_refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
@@ -3338,7 +3338,7 @@ template <>
 inline RefinementCase<2>
 GeometryInfo<2>::min_cell_refinement_case_for_face_refinement(
   const RefinementCase<1>& face_refinement_case,
-  const unsigned int       face_no,
+  const unsigned int face_no,
   const bool,
   const bool,
   const bool)
@@ -3363,8 +3363,8 @@ template <>
 inline RefinementCase<3>
 GeometryInfo<3>::min_cell_refinement_case_for_face_refinement(
   const RefinementCase<2>& face_refinement_case,
-  const unsigned int       face_no,
-  const bool               face_orientation,
+  const unsigned int face_no,
+  const bool face_orientation,
   const bool /*face_flip*/,
   const bool face_rotation)
 {
@@ -3542,9 +3542,9 @@ GeometryInfo<dim>::real_to_standard_face_vertex(const unsigned int vertex,
 template <>
 inline unsigned int
 GeometryInfo<3>::standard_to_real_face_line(const unsigned int line,
-                                            const bool         face_orientation,
-                                            const bool         face_flip,
-                                            const bool         face_rotation)
+                                            const bool face_orientation,
+                                            const bool face_flip,
+                                            const bool face_rotation)
 {
   Assert(line < GeometryInfo<3>::lines_per_face,
          ExcIndexRange(line, 0, GeometryInfo<3>::lines_per_face));
@@ -3605,9 +3605,9 @@ GeometryInfo<dim>::standard_to_real_face_line(const unsigned int line,
 template <>
 inline unsigned int
 GeometryInfo<3>::real_to_standard_face_line(const unsigned int line,
-                                            const bool         face_orientation,
-                                            const bool         face_flip,
-                                            const bool         face_rotation)
+                                            const bool face_orientation,
+                                            const bool face_flip,
+                                            const bool face_rotation)
 {
   Assert(line < GeometryInfo<3>::lines_per_face,
          ExcIndexRange(line, 0, GeometryInfo<3>::lines_per_face));
@@ -3686,8 +3686,8 @@ GeometryInfo<1>::child_cell_on_face(const RefinementCase<1>&,
 template <>
 inline unsigned int
 GeometryInfo<2>::child_cell_on_face(const RefinementCase<2>& ref_case,
-                                    const unsigned int       face,
-                                    const unsigned int       subface,
+                                    const unsigned int face,
+                                    const unsigned int subface,
                                     const bool /*face_orientation*/,
                                     const bool face_flip,
                                     const bool /*face_rotation*/,
@@ -3725,11 +3725,11 @@ GeometryInfo<2>::child_cell_on_face(const RefinementCase<2>& ref_case,
 template <>
 inline unsigned int
 GeometryInfo<3>::child_cell_on_face(const RefinementCase<3>& ref_case,
-                                    const unsigned int       face,
-                                    const unsigned int       subface,
-                                    const bool               face_orientation,
-                                    const bool               face_flip,
-                                    const bool               face_rotation,
+                                    const unsigned int face,
+                                    const unsigned int subface,
+                                    const bool face_orientation,
+                                    const bool face_flip,
+                                    const bool face_rotation,
                                     const RefinementCase<2>& face_ref_case)
 {
   const unsigned int dim = 3;
@@ -4007,9 +4007,9 @@ template <>
 inline unsigned int
 GeometryInfo<3>::face_to_cell_lines(const unsigned int face,
                                     const unsigned int line,
-                                    const bool         face_orientation,
-                                    const bool         face_flip,
-                                    const bool         face_rotation)
+                                    const bool face_orientation,
+                                    const bool face_flip,
+                                    const bool face_rotation)
 {
   Assert(face < faces_per_cell, ExcIndexRange(face, 0, faces_per_cell));
   Assert(line < lines_per_face, ExcIndexRange(line, 0, lines_per_face));
@@ -4041,9 +4041,9 @@ template <int dim>
 inline unsigned int
 GeometryInfo<dim>::face_to_cell_vertices(const unsigned int face,
                                          const unsigned int vertex,
-                                         const bool         face_orientation,
-                                         const bool         face_flip,
-                                         const bool         face_rotation)
+                                         const bool face_orientation,
+                                         const bool face_flip,
+                                         const bool face_rotation)
 {
   return child_cell_on_face(RefinementCase<dim>::isotropic_refinement,
                             face,
@@ -4084,7 +4084,7 @@ GeometryInfo<dim>::distance_to_unit_cell(const Point<dim>& p)
 
 template <int dim>
 inline double
-GeometryInfo<dim>::d_linear_shape_function(const Point<dim>&  xi,
+GeometryInfo<dim>::d_linear_shape_function(const Point<dim>& xi,
                                            const unsigned int i)
 {
   Assert(i < GeometryInfo<dim>::vertices_per_cell,
@@ -4177,7 +4177,7 @@ Tensor<1, 1> inline GeometryInfo<1>::d_linear_shape_function_gradient(
 
 template <>
 Tensor<1, 2> inline GeometryInfo<2>::d_linear_shape_function_gradient(
-  const Point<2>&    xi,
+  const Point<2>& xi,
   const unsigned int i)
 {
   Assert(i < GeometryInfo<2>::vertices_per_cell,
@@ -4201,7 +4201,7 @@ Tensor<1, 2> inline GeometryInfo<2>::d_linear_shape_function_gradient(
 
 template <>
 Tensor<1, 3> inline GeometryInfo<3>::d_linear_shape_function_gradient(
-  const Point<3>&    xi,
+  const Point<3>& xi,
   const unsigned int i)
 {
   Assert(i < GeometryInfo<3>::vertices_per_cell,

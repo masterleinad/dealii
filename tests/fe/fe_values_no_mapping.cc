@@ -59,7 +59,7 @@ test()
   const unsigned int q_test = 2;
 
   MappingCartesian<dim> mapping;
-  FE_Q<dim>             elem(q_test);
+  FE_Q<dim> elem(q_test);
   // choose a point that is not right in the middle of the cell so that the
   // Jacobian contains many nonzero entries
   Point<dim> quad_p;
@@ -79,14 +79,14 @@ test()
     Vector<double> interpolant(dof_handler.n_dofs());
     VectorTools::interpolate(dof_handler, F<dim>(q_test), interpolant);
 
-    const UpdateFlags    no_m(update_values);
-    const UpdateFlags    w_m(update_values | update_jacobians);
-    std::vector<double>  values(quad.size());
-    std::vector<double>  values_m(quad.size());
-    FEValues<dim>        fe_val(mapping, elem, quad, no_m);
-    FEValues<dim>        fe_val_m(mapping, elem, quad, w_m);
-    FEFaceValues<dim>    fe_f_val(mapping, elem, f_quad, no_m);
-    FEFaceValues<dim>    fe_f_val_m(mapping, elem, f_quad, w_m);
+    const UpdateFlags no_m(update_values);
+    const UpdateFlags w_m(update_values | update_jacobians);
+    std::vector<double> values(quad.size());
+    std::vector<double> values_m(quad.size());
+    FEValues<dim> fe_val(mapping, elem, quad, no_m);
+    FEValues<dim> fe_val_m(mapping, elem, quad, w_m);
+    FEFaceValues<dim> fe_f_val(mapping, elem, f_quad, no_m);
+    FEFaceValues<dim> fe_f_val_m(mapping, elem, f_quad, w_m);
     FESubfaceValues<dim> fe_subf_val(mapping, elem, f_quad, no_m);
     FESubfaceValues<dim> fe_subf_val_m(mapping, elem, f_quad, w_m);
 

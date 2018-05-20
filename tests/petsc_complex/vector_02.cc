@@ -24,7 +24,7 @@
 void
 test()
 {
-  const unsigned int         s = 10;
+  const unsigned int s = 10;
   PETScWrappers::MPI::Vector v(MPI_COMM_WORLD, s, s);
   for(unsigned int k = 0; k < v.size(); ++k)
     v(k) = k;

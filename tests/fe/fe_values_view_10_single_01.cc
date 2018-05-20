@@ -48,11 +48,11 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     fe_function(i) = i + 1;
 
   const QGauss<dim> quadrature(2);
-  FEValues<dim>     fe_values(
+  FEValues<dim> fe_values(
     fe, quadrature, update_values | update_gradients | update_hessians);
   fe_values.reinit(dof.begin_active());
 
-  std::vector<Tensor<2, dim>>              scalar_values(quadrature.size());
+  std::vector<Tensor<2, dim>> scalar_values(quadrature.size());
   std::vector<std::vector<Tensor<2, dim>>> vector_values(
     quadrature.size(), std::vector<Tensor<2, dim>>(fe.n_components()));
 

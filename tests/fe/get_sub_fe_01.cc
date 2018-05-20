@@ -80,7 +80,7 @@ check()
     return c;
   };
 
-  FE_Q<dim>   fe_q(2);
+  FE_Q<dim> fe_q(2);
   FE_DGP<dim> fe_dg(2);
   FE_BDM<dim> fe_nonprim(1);
 

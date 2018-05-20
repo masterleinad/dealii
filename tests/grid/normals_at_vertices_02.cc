@@ -31,7 +31,7 @@ main()
 
   SphericalManifold<3> boundary(Point<3>(1, 0, 0));
 
-  Triangulation<3>               tria;
+  Triangulation<3> tria;
   Manifold<3>::FaceVertexNormals normals;
 
   GridGenerator::hyper_ball(tria, Point<3>(1, 0, 0), 3);

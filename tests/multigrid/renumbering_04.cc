@@ -51,7 +51,7 @@ check(FiniteElement<dim>& fe)
 
   deallog << "** before:" << std::endl;
   {
-    unsigned int                         n_dofs_per_cell = fe.dofs_per_cell;
+    unsigned int n_dofs_per_cell = fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dofs(n_dofs_per_cell);
     for(unsigned int level = 0; level < tria.n_levels(); ++level)
       {
@@ -74,7 +74,7 @@ check(FiniteElement<dim>& fe)
 
   deallog << std::endl << "** after:" << std::endl;
   {
-    unsigned int                         n_dofs_per_cell = fe.dofs_per_cell;
+    unsigned int n_dofs_per_cell = fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dofs(n_dofs_per_cell);
     for(unsigned int level = 0; level < tria.n_levels(); ++level)
       {

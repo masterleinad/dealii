@@ -32,7 +32,7 @@ test()
   AssertThrow(in, ExcIO());
 
   // read the two numbers that are in this file
-  int    i;
+  int i;
   double d;
   in >> i >> d;
 

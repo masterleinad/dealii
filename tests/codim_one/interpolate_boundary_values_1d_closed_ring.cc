@@ -46,14 +46,14 @@ test()
   Triangulation<dim, spacedim> tria;
   std::map<Triangulation<dim, spacedim>::cell_iterator,
            Triangulation<spacedim, spacedim>::face_iterator>
-                          surface_to_volume_mapping;
+    surface_to_volume_mapping;
   Triangulation<spacedim> volume_mesh;
   GridGenerator::hyper_cube(volume_mesh);
 
   surface_to_volume_mapping
     = GridGenerator::extract_boundary_mesh(volume_mesh, tria);
 
-  FE_Q<dim, spacedim>       fe(2);
+  FE_Q<dim, spacedim> fe(2);
   DoFHandler<dim, spacedim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

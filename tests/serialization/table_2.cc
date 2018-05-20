@@ -22,9 +22,9 @@
 void
 test()
 {
-  unsigned int    index1 = 3, index2 = 4;
+  unsigned int index1 = 3, index2 = 4;
   TableIndices<2> indices1(index1, index2);
-  unsigned int    sum_of_indices = index1 + index2;
+  unsigned int sum_of_indices = index1 + index2;
 
   Table<2, int> t1(index1, index2);
   Table<2, int> t2(index1, index2);

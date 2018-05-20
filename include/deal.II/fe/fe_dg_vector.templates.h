@@ -28,7 +28,7 @@ DEAL_II_NAMESPACE_OPEN
 
 template <class PolynomialType, int dim, int spacedim>
 FE_DGVector<PolynomialType, dim, spacedim>::FE_DGVector(const unsigned int deg,
-                                                        MappingType        map)
+                                                        MappingType map)
   : FE_PolyTensor<PolynomialType, dim, spacedim>(
       deg,
       FiniteElementData<dim>(get_dpo_vector(deg),

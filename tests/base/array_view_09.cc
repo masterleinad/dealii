@@ -36,7 +36,7 @@ test()
 {
   // test on a built-in array
   {
-    int  v[10];
+    int v[10];
     auto a = make_array_view(std::begin(v) + 1, std::end(v));
     AssertThrow(a.begin() == v + 1, ExcInternalError());
     AssertThrow(a.end() == v + sizeof(v) / sizeof(v[0]), ExcInternalError());
@@ -60,7 +60,7 @@ test()
     std::array<double, 10> v;
     std::fill(v.begin(), v.end(), 42.0);
     const std::array<double, 10>& v2 = v;
-    const auto                    a  = make_array_view(v2.begin(), v2.end());
+    const auto a                     = make_array_view(v2.begin(), v2.end());
     static_assert(is_const_reference<decltype(*a.begin())>(),
                   "type should be const");
     static_assert(is_const_reference<decltype(*a.end())>(),

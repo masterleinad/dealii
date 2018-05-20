@@ -106,7 +106,7 @@ namespace Step25
     void
     compute_nl_term(const Vector<double>& old_data,
                     const Vector<double>& new_data,
-                    Vector<double>&       nl_term) const;
+                    Vector<double>& nl_term) const;
     void
     compute_nl_matrix(const Vector<double>& old_data,
                       const Vector<double>& new_data,
@@ -117,17 +117,17 @@ namespace Step25
     output_results(const unsigned int timestep_number) const;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
     SparseMatrix<double> mass_matrix;
     SparseMatrix<double> laplace_matrix;
 
     const unsigned int n_global_refinements;
 
-    double       time;
+    double time;
     const double final_time, time_step;
     const double theta;
 
@@ -235,7 +235,7 @@ namespace Step25
 
   template <int dim>
   double
-  InitialValues<dim>::value(const Point<dim>&  p,
+  InitialValues<dim>::value(const Point<dim>& p,
                             const unsigned int component) const
   {
     return ExactSolution<dim>(1, this->get_time()).value(p, component);
@@ -402,11 +402,11 @@ namespace Step25
   void
   SineGordonProblem<dim>::compute_nl_term(const Vector<double>& old_data,
                                           const Vector<double>& new_data,
-                                          Vector<double>&       nl_term) const
+                                          Vector<double>& nl_term) const
   {
     nl_term = 0;
     const QGauss<dim> quadrature_formula(3);
-    FEValues<dim>     fe_values(fe,
+    FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_JxW_values
                               | update_quadrature_points);
@@ -414,10 +414,10 @@ namespace Step25
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     const unsigned int n_q_points    = quadrature_formula.size();
 
-    Vector<double>                       local_nl_term(dofs_per_cell);
+    Vector<double> local_nl_term(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    std::vector<double>                  old_data_values(n_q_points);
-    std::vector<double>                  new_data_values(n_q_points);
+    std::vector<double> old_data_values(n_q_points);
+    std::vector<double> new_data_values(n_q_points);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -470,7 +470,7 @@ namespace Step25
     const Vector<double>& new_data,
     SparseMatrix<double>& nl_matrix) const
   {
-    QGauss<dim>   quadrature_formula(3);
+    QGauss<dim> quadrature_formula(3);
     FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_JxW_values
@@ -481,8 +481,8 @@ namespace Step25
 
     FullMatrix<double> local_nl_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    std::vector<double>                  old_data_values(n_q_points);
-    std::vector<double>                  new_data_values(n_q_points);
+    std::vector<double> old_data_values(n_q_points);
+    std::vector<double> new_data_values(n_q_points);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -551,7 +551,7 @@ namespace Step25
   SineGordonProblem<dim>::solve()
   {
     SolverControl solver_control(1000, 1e-12 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);
@@ -645,7 +645,7 @@ namespace Step25
         // linear solver iterations it took us. When the loop below is done,
         // we have (an approximation of) $U^n$.
         double initial_rhs_norm = 0.;
-        bool   first_iteration  = true;
+        bool first_iteration    = true;
         do
           {
             assemble_system();

@@ -103,18 +103,18 @@ private:
 
   static double
   energy(const hp::DoFHandler<dim>& dof_handler,
-         const Vector<double>&      function);
+         const Vector<double>& function);
 
   const unsigned int run_number;
 
   Triangulation<dim> triangulation;
 
   hp::FECollection<dim> fe;
-  hp::DoFHandler<dim>   dof_handler;
+  hp::DoFHandler<dim> dof_handler;
 
   ConstraintMatrix hanging_node_constraints;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> matrix;
 
   Vector<double> present_solution;
@@ -177,7 +177,7 @@ MinimizationProblem<dim>::assemble_step()
   residual.reinit(dof_handler.n_dofs());
 
   hp::QCollection<dim> quadrature_formula(QGauss<dim>(4));
-  hp::FEValues<dim>    fe_values(fe,
+  hp::FEValues<dim> fe_values(fe,
                               quadrature_formula,
                               update_values | update_gradients
                                 | update_quadrature_points | update_JxW_values);
@@ -186,11 +186,11 @@ MinimizationProblem<dim>::assemble_step()
   const unsigned int n_q_points    = quadrature_formula[0].size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  std::vector<double>         local_solution_values(n_q_points);
+  std::vector<double> local_solution_values(n_q_points);
   std::vector<Tensor<1, dim>> local_solution_grads(n_q_points);
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
@@ -213,8 +213,8 @@ MinimizationProblem<dim>::assemble_step()
           const double u
             = local_solution_values[q_point],
             x = fe_values.get_present_fe_values().quadrature_point(q_point)(0);
-          const double         x_minus_u3 = (x - std::pow(u, 3));
-          const Tensor<1, dim> u_prime    = local_solution_grads[q_point];
+          const double x_minus_u3      = (x - std::pow(u, 3));
+          const Tensor<1, dim> u_prime = local_solution_grads[q_point];
 
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)
@@ -269,7 +269,7 @@ template <int dim>
 double
 MinimizationProblem<dim>::line_search(const Vector<double>& update) const
 {
-  double         alpha = 0.;
+  double alpha = 0.;
   Vector<double> tmp(present_solution.size());
 
   for(unsigned int step = 0; step < 5; ++step)
@@ -327,7 +327,7 @@ MinimizationProblem<dim>::do_step()
   Vector<double> update(present_solution.size());
   {
     SolverControl solver_control(residual.size(), 1e-2 * residual.l2_norm());
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(matrix);
@@ -363,16 +363,16 @@ MinimizationProblem<1>::refine_grid()
 
   Vector<float> error_indicators(triangulation.n_active_cells());
 
-  QTrapez<dim>         q;
+  QTrapez<dim> q;
   hp::QCollection<dim> quadrature(q);
-  hp::FEValues<dim>    fe_values(fe,
+  hp::FEValues<dim> fe_values(fe,
                               quadrature,
                               update_values | update_gradients | update_hessians
                                 | update_quadrature_points | update_JxW_values);
 
   hp::FEValues<dim> neighbor_fe_values(fe, quadrature, update_gradients);
 
-  std::vector<double>         local_values(quadrature[0].size());
+  std::vector<double> local_values(quadrature[0].size());
   std::vector<Tensor<1, dim>> local_gradients(quadrature[0].size());
   std::vector<Tensor<2, dim>> local_2nd_derivs(quadrature[0].size());
 
@@ -485,17 +485,17 @@ MinimizationProblem<1>::refine_grid()
 template <int dim>
 double
 MinimizationProblem<dim>::energy(const hp::DoFHandler<dim>& dof_handler,
-                                 const Vector<double>&      function)
+                                 const Vector<double>& function)
 {
   hp::QCollection<dim> quadrature_formula(QGauss<dim>(4));
-  hp::FEValues<dim>    fe_values(dof_handler.get_fe(),
+  hp::FEValues<dim> fe_values(dof_handler.get_fe(),
                               quadrature_formula,
                               update_values | update_gradients
                                 | update_quadrature_points | update_JxW_values);
 
   const unsigned int n_q_points = quadrature_formula[0].size();
 
-  std::vector<double>         local_solution_values(n_q_points);
+  std::vector<double> local_solution_values(n_q_points);
   std::vector<Tensor<1, dim>> local_solution_grads(n_q_points);
 
   double energy = 0.;

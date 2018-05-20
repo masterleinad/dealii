@@ -112,7 +112,7 @@ namespace Utilities
      */
     std::vector<unsigned int>
     compute_point_to_point_communication_pattern(
-      const MPI_Comm&                  mpi_comm,
+      const MPI_Comm& mpi_comm,
       const std::vector<unsigned int>& destinations);
 
     /**
@@ -160,10 +160,10 @@ namespace Utilities
      */
 #ifdef DEAL_II_WITH_MPI
     int
-    create_group(const MPI_Comm&  comm,
+    create_group(const MPI_Comm& comm,
                  const MPI_Group& group,
-                 const int        tag,
-                 MPI_Comm*        new_comm);
+                 const int tag,
+                 MPI_Comm* new_comm);
 #endif
 
     /**
@@ -214,8 +214,8 @@ namespace Utilities
     template <typename T>
     void
     sum(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       sums);
+        const MPI_Comm& mpi_communicator,
+        const ArrayView<T>& sums);
 
     /**
      * Perform an MPI sum of the entries of a symmetric tensor.
@@ -225,7 +225,7 @@ namespace Utilities
     template <int rank, int dim, typename Number>
     SymmetricTensor<rank, dim, Number>
     sum(const SymmetricTensor<rank, dim, Number>& local,
-        const MPI_Comm&                           mpi_communicator);
+        const MPI_Comm& mpi_communicator);
 
     /**
      * Perform an MPI sum of the entries of a tensor.
@@ -235,7 +235,7 @@ namespace Utilities
     template <int rank, int dim, typename Number>
     Tensor<rank, dim, Number>
     sum(const Tensor<rank, dim, Number>& local,
-        const MPI_Comm&                  mpi_communicator);
+        const MPI_Comm& mpi_communicator);
 
     /**
      * Perform an MPI sum of the entries of a SparseMatrix.
@@ -248,8 +248,8 @@ namespace Utilities
     template <typename Number>
     void
     sum(const SparseMatrix<Number>& local,
-        const MPI_Comm&             mpi_communicator,
-        SparseMatrix<Number>&       global);
+        const MPI_Comm& mpi_communicator,
+        SparseMatrix<Number>& global);
 
     /**
      * Return the maximum over all processors of the value @p t. This function
@@ -299,8 +299,8 @@ namespace Utilities
     template <typename T>
     void
     max(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       maxima);
+        const MPI_Comm& mpi_communicator,
+        const ArrayView<T>& maxima);
 
     /**
      * Return the minimum over all processors of the value @p t. This function
@@ -350,8 +350,8 @@ namespace Utilities
     template <typename T>
     void
     min(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       minima);
+        const MPI_Comm& mpi_communicator,
+        const ArrayView<T>& minima);
 
     /**
      * A data structure to store the result of the min_max_avg() function.
@@ -522,8 +522,8 @@ namespace Utilities
        * create an object of this type is also at or close to the top of
        * <code>main()</code>.
        */
-      MPI_InitFinalize(int&               argc,
-                       char**&            argv,
+      MPI_InitFinalize(int& argc,
+                       char**& argv,
                        const unsigned int max_num_threads
                        = numbers::invalid_unsigned_int);
 
@@ -566,7 +566,7 @@ namespace Utilities
      */
     template <typename T>
     std::map<unsigned int, T>
-    some_to_some(const MPI_Comm&                  comm,
+    some_to_some(const MPI_Comm& comm,
                  const std::map<unsigned int, T>& objects_to_send);
 
     /**
@@ -607,8 +607,8 @@ namespace Utilities
      */
     template <typename T>
     std::vector<T>
-    gather(const MPI_Comm&    comm,
-           const T&           object_to_send,
+    gather(const MPI_Comm& comm,
+           const T& object_to_send,
            const unsigned int root_process = 0);
 
 #ifndef DOXYGEN
@@ -617,10 +617,10 @@ namespace Utilities
     {
       template <typename T>
       void
-      all_reduce(const MPI_Op&             mpi_op,
+      all_reduce(const MPI_Op& mpi_op,
                  const ArrayView<const T>& values,
-                 const MPI_Comm&           mpi_communicator,
-                 const ArrayView<T>&       output);
+                 const MPI_Comm& mpi_communicator,
+                 const ArrayView<T>& output);
     }
 
     // Since these depend on N they must live in the header file
@@ -656,7 +656,7 @@ namespace Utilities
 
     template <typename T>
     std::map<unsigned int, T>
-    some_to_some(const MPI_Comm&                  comm,
+    some_to_some(const MPI_Comm& comm,
                  const std::map<unsigned int, T>& objects_to_send)
     {
 #  ifndef DEAL_II_WITH_MPI
@@ -683,7 +683,7 @@ namespace Utilities
 
       // Sending buffers
       std::vector<std::vector<char>> buffers_to_send(send_to.size());
-      std::vector<MPI_Request>       buffer_send_requests(send_to.size());
+      std::vector<MPI_Request> buffer_send_requests(send_to.size());
       {
         unsigned int i = 0;
         for(const auto& rank_obj : objects_to_send)
@@ -711,7 +711,7 @@ namespace Utilities
           {
             // Probe what's going on. Take data from the first available sender
             MPI_Status status;
-            int        ierr = MPI_Probe(MPI_ANY_SOURCE, 21, comm, &status);
+            int ierr = MPI_Probe(MPI_ANY_SOURCE, 21, comm, &status);
             AssertThrowMPI(ierr);
 
             // Length of the message
@@ -799,8 +799,8 @@ namespace Utilities
 
     template <typename T>
     std::vector<T>
-    gather(const MPI_Comm&    comm,
-           const T&           object_to_send,
+    gather(const MPI_Comm& comm,
+           const T& object_to_send,
            const unsigned int root_process)
     {
 #  ifndef DEAL_II_WITH_MPI
@@ -814,8 +814,8 @@ namespace Utilities
 
       Assert(root_process < n_procs, ExcIndexRange(root_process, 0, n_procs));
 
-      std::vector<char> buffer       = Utilities::pack(object_to_send);
-      int               n_local_data = buffer.size();
+      std::vector<char> buffer = Utilities::pack(object_to_send);
+      int n_local_data         = buffer.size();
 
       // Vector to store the size of loc_data_array for every process
       // only the root process needs to allocate memory for that purpose

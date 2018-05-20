@@ -55,8 +55,8 @@ class SolutionBase
 {
 protected:
   static const unsigned int n_source_centers = 3;
-  static const Point<dim>   source_centers[n_source_centers];
-  static const double       width;
+  static const Point<dim> source_centers[n_source_centers];
+  static const double width;
 };
 
 template <>
@@ -170,7 +170,7 @@ public:
     adaptive_refinement
   };
 
-  HelmholtzProblem(const unsigned int   fe_degree,
+  HelmholtzProblem(const unsigned int fe_degree,
                    const RefinementMode refinement_mode);
 
   void
@@ -188,23 +188,23 @@ private:
   void
   process_solution(const unsigned int cycle);
 
-  Triangulation<dim>   triangulation;
-  FE_Q<dim>            fe;
-  DoFHandler<dim>      dof_handler;
-  ConstraintMatrix     constraints;
-  SparsityPattern      sparsity_pattern;
+  Triangulation<dim> triangulation;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
+  ConstraintMatrix constraints;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
-  Vector<double>       solution;
-  Vector<double>       system_rhs;
+  Vector<double> solution;
+  Vector<double> system_rhs;
 
-  FE_TraceQ<dim>       fe_trace;
-  DoFHandler<dim>      dof_handler_trace;
-  ConstraintMatrix     constraints_trace;
-  SparsityPattern      sparsity_pattern_trace;
+  FE_TraceQ<dim> fe_trace;
+  DoFHandler<dim> dof_handler_trace;
+  ConstraintMatrix constraints_trace;
+  SparsityPattern sparsity_pattern_trace;
   SparseMatrix<double> system_matrix_trace;
-  Vector<double>       solution_trace_full;
-  Vector<double>       solution_trace;
-  Vector<double>       system_rhs_trace;
+  Vector<double> solution_trace_full;
+  Vector<double> solution_trace;
+  Vector<double> system_rhs_trace;
 
   const RefinementMode refinement_mode;
 
@@ -212,7 +212,7 @@ private:
 };
 
 template <int dim>
-HelmholtzProblem<dim>::HelmholtzProblem(const unsigned int   fe_degree,
+HelmholtzProblem<dim>::HelmholtzProblem(const unsigned int fe_degree,
                                         const RefinementMode refinement_mode)
   : fe(fe_degree),
     dof_handler(triangulation),
@@ -282,7 +282,7 @@ template <int dim>
 void
 HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
 {
-  QGauss<dim>     quadrature_formula(fe.degree + 1);
+  QGauss<dim> quadrature_formula(fe.degree + 1);
   QGauss<dim - 1> face_quadrature_formula(fe.degree + 1);
 
   const unsigned int n_q_points      = quadrature_formula.size();
@@ -291,11 +291,11 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   FullMatrix<double> trace_matrix(fe_trace.dofs_per_cell,
                                   fe_trace.dofs_per_cell);
-  Vector<double>     trace_rhs(fe_trace.dofs_per_cell);
+  Vector<double> trace_rhs(fe_trace.dofs_per_cell);
 
   FullMatrix<double> eliminate_matrix(cell_matrix.m() - trace_matrix.m(),
                                       cell_matrix.m() - trace_matrix.m());
@@ -319,7 +319,7 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
                                        | update_JxW_values);
 
   const RightHandSide<dim> right_hand_side;
-  std::vector<double>      rhs_values(n_q_points);
+  std::vector<double> rhs_values(n_q_points);
 
   const Solution<dim> exact_solution;
 
@@ -339,7 +339,7 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
         {
           for(unsigned int j = 0; j < dofs_per_cell; ++j)
             {
-              double                sum          = 0;
+              double sum                         = 0;
               const Tensor<1, dim>* shape_grad_i = &fe_values.shape_grad(i, 0);
               const Tensor<1, dim>* shape_grad_j = &fe_values.shape_grad(j, 0);
               const double* shape_value_i        = &fe_values.shape_value(i, 0);
@@ -457,7 +457,7 @@ HelmholtzProblem<dim>::solve()
 {
   {
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);
@@ -468,7 +468,7 @@ HelmholtzProblem<dim>::solve()
   }
   {
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix_trace, 1.2);

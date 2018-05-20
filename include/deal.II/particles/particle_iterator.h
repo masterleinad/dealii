@@ -129,9 +129,9 @@ namespace Particles
      * are standard for iterators and are used by algorithms to enquire about
      * the specifics of the iterators they work on.
      */
-    typedef std::bidirectional_iterator_tag  iterator_category;
-    typedef ParticleAccessor<dim, spacedim>  value_type;
-    typedef std::ptrdiff_t                   difference_type;
+    typedef std::bidirectional_iterator_tag iterator_category;
+    typedef ParticleAccessor<dim, spacedim> value_type;
+    typedef std::ptrdiff_t difference_type;
     typedef ParticleAccessor<dim, spacedim>* pointer;
     typedef ParticleAccessor<dim, spacedim>& reference;
 

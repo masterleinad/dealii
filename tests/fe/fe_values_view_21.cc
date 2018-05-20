@@ -62,10 +62,10 @@ private:
   const unsigned int n_gamma_components;  // scalar plastic multiplier
 
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe;
-  DoFHandler<dim>    dof_handler;
+  FESystem<dim> fe;
+  DoFHandler<dim> dof_handler;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> system_matrix;
 
   BlockVector<double> solution;
@@ -165,12 +165,12 @@ MixedElastoPlasticity<dim>::assemble_system()
   deallog << "dofs_per_cell: " << fe.dofs_per_cell << std::endl;
 
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     local_rhs(dofs_per_cell);
+  Vector<double> local_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   const FEValuesExtractors::SymmetricTensor<2> stress(0);
-  const FEValuesExtractors::Scalar             gamma(n_stress_components);
+  const FEValuesExtractors::Scalar gamma(n_stress_components);
 
   deallog << "fe.dofs_per_cell: " << fe.dofs_per_cell
           << "\tquadrature_formula.size(): " << quadrature_formula.size()

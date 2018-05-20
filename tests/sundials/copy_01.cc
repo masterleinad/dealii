@@ -29,7 +29,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log_all;
+  MPILogInitAll log_all;
 
   const unsigned int current_process
     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);

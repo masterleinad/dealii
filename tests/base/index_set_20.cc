@@ -73,8 +73,8 @@ test()
   for(unsigned int i = 0; i < 10; ++i)
     {
       const int size = 100;
-      IndexSet  a(size);
-      IndexSet  b(size);
+      IndexSet a(size);
+      IndexSet b(size);
       for(unsigned int i = 0; i < 9 * a.size() / 10; ++i)
         {
           a.add_index(Testing::rand() % a.size());

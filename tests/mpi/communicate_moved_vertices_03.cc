@@ -41,7 +41,7 @@ test()
 
   triangulation.refine_global(3);
 
-  auto       cell = triangulation.begin_active();
+  auto cell       = triangulation.begin_active();
   const auto endc = triangulation.end();
 
   std::map<unsigned int, Point<dim>> non_artificial_vertices_old;
@@ -53,7 +53,7 @@ test()
         non_artificial_vertices_old[cell->vertex_index(vertex_no)]
           = cell->vertex(vertex_no);
 
-  std::vector<bool>       vertex_moved(triangulation.n_vertices(), false);
+  std::vector<bool> vertex_moved(triangulation.n_vertices(), false);
   const std::vector<bool> locally_owned_vertices
     = GridTools::get_locally_owned_vertices(triangulation);
   for(cell = triangulation.begin_active(); cell != endc; ++cell)
@@ -108,7 +108,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   test<2>();
   test<3>();
   return 0;

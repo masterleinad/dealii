@@ -62,11 +62,11 @@ test_renumbering()
 {
   deallog.push("Renumber");
 
-  FE_Q<dim>             q1(1);
-  FE_Q<dim>             q3(3);
-  FE_DGQ<dim>           dg1(1);
+  FE_Q<dim> q1(1);
+  FE_Q<dim> q3(3);
+  FE_DGQ<dim> dg1(1);
   FE_RaviartThomas<dim> rt1(1);
-  FE_Nedelec<dim>       n1(1);
+  FE_Nedelec<dim> n1(1);
   test_renumbering(q1);
   test_renumbering(q3);
   test_renumbering(dg1);

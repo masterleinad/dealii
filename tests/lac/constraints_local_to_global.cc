@@ -50,7 +50,7 @@ test()
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -67,7 +67,7 @@ test()
     sparsity.copy_from(csp);
   }
   SparseMatrix<double> sparse(sparsity);
-  FullMatrix<double>   full(dof.n_dofs(), dof.n_dofs());
+  FullMatrix<double> full(dof.n_dofs(), dof.n_dofs());
 
   FullMatrix<double> local_mat(fe.dofs_per_cell, fe.dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);

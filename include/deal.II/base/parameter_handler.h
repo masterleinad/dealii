@@ -893,7 +893,7 @@ public:
    * value does not satisfy its pattern is ignored.
    */
   virtual void
-  parse_input(std::istream&      input,
+  parse_input(std::istream& input,
               const std::string& filename  = "input file",
               const std::string& last_line = "");
 
@@ -1000,10 +1000,10 @@ public:
    * error, for example to override an earlier default value.
    */
   void
-  declare_entry(const std::string&           entry,
-                const std::string&           default_value,
+  declare_entry(const std::string& entry,
+                const std::string& default_value,
                 const Patterns::PatternBase& pattern = Patterns::Anything(),
-                const std::string&           documentation = std::string());
+                const std::string& documentation     = std::string());
 
   /**
    * Attach an action to the parameter with name @p entry in the current
@@ -1048,7 +1048,7 @@ public:
    *  ParameterHandler::parse_input() for more information.
    */
   void
-  add_action(const std::string&                                   entry,
+  add_action(const std::string& entry,
              const std::function<void(const std::string& value)>& action);
 
   /**
@@ -1062,9 +1062,9 @@ public:
    */
   template <class ParameterType>
   void
-  add_parameter(const std::string&           entry,
-                ParameterType&               parameter,
-                const std::string&           documentation = std::string(),
+  add_parameter(const std::string& entry,
+                ParameterType& parameter,
+                const std::string& documentation = std::string(),
                 const Patterns::PatternBase& pattern
                 = *Patterns::Tools::Convert<ParameterType>::to_pattern());
 
@@ -1114,7 +1114,7 @@ public:
   void
   declare_alias(const std::string& existing_entry_name,
                 const std::string& alias_name,
-                const bool         alias_is_deprecated = false);
+                const bool alias_is_deprecated = false);
 
   /**
    * Enter a subsection. If it does not yet exist, create it.
@@ -1303,8 +1303,8 @@ public:
    */
   DEAL_II_DEPRECATED
   void
-  print_parameters_section(std::ostream&      out,
-                           const OutputStyle  style,
+  print_parameters_section(std::ostream& out,
+                           const OutputStyle style,
                            const unsigned int indent_level,
                            const bool include_top_level_elements = false);
 
@@ -1570,7 +1570,7 @@ private:
    * caller's variable is not changed.
    */
   void
-  scan_line(std::string        line,
+  scan_line(std::string line,
             const std::string& input_filename,
             const unsigned int current_line_n);
 
@@ -1588,9 +1588,9 @@ private:
   void
   recursively_print_parameters(
     const std::vector<std::string>& target_subsection_path,
-    const OutputStyle               style,
-    const unsigned int              indent_level,
-    std::ostream&                   out) const;
+    const OutputStyle style,
+    const unsigned int indent_level,
+    std::ostream& out) const;
 
   friend class MultipleParameterLoop;
 };
@@ -1870,7 +1870,7 @@ public:
    * just reformat their inputs and then call this version.
    */
   virtual void
-  parse_input(std::istream&      input,
+  parse_input(std::istream& input,
               const std::string& filename  = "input file",
               const std::string& last_line = "") override;
 
@@ -1932,8 +1932,8 @@ private:
      * <tt>split_different_values</tt>.
      */
     Entry(const std::vector<std::string>& Path,
-          const std::string&              Name,
-          const std::string&              Value);
+          const std::string& Name,
+          const std::string& Value);
 
     /**
      * Split the entry value into the different branches.
@@ -2038,7 +2038,7 @@ ParameterHandler::load(Archive& ar, const unsigned int)
   ar&* entries.get();
 
   std::vector<std::string> descriptions;
-  ar&                      descriptions;
+  ar& descriptions;
 
   patterns.clear();
   for(unsigned int j = 0; j < descriptions.size(); ++j)
@@ -2047,9 +2047,9 @@ ParameterHandler::load(Archive& ar, const unsigned int)
 
 template <class ParameterType>
 void
-ParameterHandler::add_parameter(const std::string&           entry,
-                                ParameterType&               parameter,
-                                const std::string&           documentation,
+ParameterHandler::add_parameter(const std::string& entry,
+                                ParameterType& parameter,
+                                const std::string& documentation,
                                 const Patterns::PatternBase& pattern)
 {
   static_assert(std::is_const<ParameterType>::value == false,
@@ -2062,7 +2062,7 @@ ParameterHandler::add_parameter(const std::string&           entry,
                 pattern,
                 documentation);
 
-  std::string        path = get_current_full_path(entry);
+  std::string path = get_current_full_path(entry);
   const unsigned int pattern_index
     = entries->get<unsigned int>(path + path_separator + "pattern");
 

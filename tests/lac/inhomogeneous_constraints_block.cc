@@ -71,12 +71,12 @@ private:
   Triangulation<dim> triangulation;
 
   DoFHandler<dim> dof_handler;
-  FESystem<dim>   fe;
+  FESystem<dim> fe;
 
   ConstraintMatrix hanging_nodes_only;
   ConstraintMatrix test_all_constraints;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> reference_matrix;
   BlockSparseMatrix<double> test_matrix;
 
@@ -245,21 +245,21 @@ AdvectionProblem<dim>::assemble_reference()
   reference_matrix = 0;
   reference_rhs    = 0;
 
-  QGauss<dim>   quadrature_formula(3);
+  QGauss<dim> quadrature_formula(3);
   FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
   const RightHandSide<dim> rhs_function;
-  const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-  std::vector<double>                  rhs_values(n_q_points);
+  std::vector<double> rhs_values(n_q_points);
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -322,21 +322,21 @@ AdvectionProblem<dim>::assemble_test_1()
   test_matrix = 0;
   test_rhs    = 0;
 
-  QGauss<dim>   quadrature_formula(3);
+  QGauss<dim> quadrature_formula(3);
   FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
   const RightHandSide<dim> rhs_function;
-  const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-  std::vector<double>                  rhs_values(n_q_points);
+  std::vector<double> rhs_values(n_q_points);
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -393,21 +393,21 @@ AdvectionProblem<dim>::assemble_test_2()
   test_matrix = 0;
   test_rhs    = 0;
 
-  QGauss<dim>   quadrature_formula(3);
+  QGauss<dim> quadrature_formula(3);
   FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
   const RightHandSide<dim> rhs_function;
-  const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-  std::vector<double>                  rhs_values(n_q_points);
+  std::vector<double> rhs_values(n_q_points);
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),

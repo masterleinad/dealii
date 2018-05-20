@@ -181,11 +181,11 @@ namespace internal
       create_blocks_serial(
         const std::vector<unsigned int>& boundary_cells,
         const std::vector<unsigned int>& cells_close_to_boundary,
-        const unsigned int               dofs_per_cell,
+        const unsigned int dofs_per_cell,
         const std::vector<unsigned int>& cell_vectorization_categories,
-        const bool                       cell_vectorization_categories_strict,
-        std::vector<unsigned int>&       renumbering,
-        std::vector<unsigned char>&      incompletely_filled_vectorization);
+        const bool cell_vectorization_categories_strict,
+        std::vector<unsigned int>& renumbering,
+        std::vector<unsigned char>& incompletely_filled_vectorization);
 
       /**
        * First step in the block creation for the task-parallel blocking setup.
@@ -207,8 +207,8 @@ namespace internal
       void
       initial_setup_blocks_tasks(
         const std::vector<unsigned int>& boundary_cells,
-        std::vector<unsigned int>&       renumbering,
-        std::vector<unsigned char>&      incompletely_filled_vectorization);
+        std::vector<unsigned int>& renumbering,
+        std::vector<unsigned char>& incompletely_filled_vectorization);
 
       /**
        * This helper function determines a block size if the user decided not
@@ -252,10 +252,10 @@ namespace internal
        */
       void
       make_thread_graph_partition_color(
-        DynamicSparsityPattern&     connectivity,
-        std::vector<unsigned int>&  renumbering,
+        DynamicSparsityPattern& connectivity,
+        std::vector<unsigned int>& renumbering,
         std::vector<unsigned char>& irregular_cells,
-        const bool                  hp_bool);
+        const bool hp_bool);
 
       /**
        * This function goes through all cells that have been filled into @p
@@ -292,10 +292,10 @@ namespace internal
       void
       make_thread_graph_partition_partition(
         const std::vector<unsigned int>& cell_active_fe_index,
-        DynamicSparsityPattern&          connectivity,
-        std::vector<unsigned int>&       renumbering,
-        std::vector<unsigned char>&      irregular_cells,
-        const bool                       hp_bool);
+        DynamicSparsityPattern& connectivity,
+        std::vector<unsigned int>& renumbering,
+        std::vector<unsigned char>& irregular_cells,
+        const bool hp_bool);
 
       /**
        * Either calls make_thread_graph_partition_color() or
@@ -322,10 +322,10 @@ namespace internal
        */
       void
       make_thread_graph(const std::vector<unsigned int>& cell_active_fe_index,
-                        DynamicSparsityPattern&          connectivity,
-                        std::vector<unsigned int>&       renumbering,
-                        std::vector<unsigned char>&      irregular_cells,
-                        const bool                       hp_bool);
+                        DynamicSparsityPattern& connectivity,
+                        std::vector<unsigned int>& renumbering,
+                        std::vector<unsigned char>& irregular_cells,
+                        const bool hp_bool);
 
       /**
        * This function computes the connectivity between blocks of cells from
@@ -334,8 +334,8 @@ namespace internal
       void
       make_connectivity_cells_to_blocks(
         const std::vector<unsigned char>& irregular_cells,
-        const DynamicSparsityPattern&     connectivity_cells,
-        DynamicSparsityPattern&           connectivity_blocks) const;
+        const DynamicSparsityPattern& connectivity_cells,
+        DynamicSparsityPattern& connectivity_blocks) const;
 
       /**
        * Function to create coloring on the second layer within each
@@ -343,12 +343,12 @@ namespace internal
        */
       void
       make_coloring_within_partitions_pre_blocked(
-        const DynamicSparsityPattern&    connectivity,
-        const unsigned int               partition,
+        const DynamicSparsityPattern& connectivity,
+        const unsigned int partition,
         const std::vector<unsigned int>& cell_partition,
         const std::vector<unsigned int>& partition_list,
         const std::vector<unsigned int>& partition_size,
-        std::vector<unsigned int>&       partition_color_list);
+        std::vector<unsigned int>& partition_color_list);
 
       /**
        * Function to create partitioning on the second layer within each
@@ -356,16 +356,16 @@ namespace internal
        */
       void
       make_partitioning_within_partitions_post_blocked(
-        const DynamicSparsityPattern&    connectivity,
+        const DynamicSparsityPattern& connectivity,
         const std::vector<unsigned int>& cell_active_fe_index,
-        const unsigned int               partition,
-        const unsigned int               cluster_size,
-        const bool                       hp_bool,
+        const unsigned int partition,
+        const unsigned int cluster_size,
+        const bool hp_bool,
         const std::vector<unsigned int>& cell_partition,
         const std::vector<unsigned int>& partition_list,
         const std::vector<unsigned int>& partition_size,
-        std::vector<unsigned int>&       partition_partition_list,
-        std::vector<unsigned char>&      irregular_cells);
+        std::vector<unsigned int>& partition_partition_list,
+        std::vector<unsigned char>& irregular_cells);
 
       /**
        * This function creates partitions according to the provided connectivity graph.
@@ -388,11 +388,11 @@ namespace internal
        */
       void
       make_partitioning(const DynamicSparsityPattern& connectivity,
-                        const unsigned int            cluster_size,
-                        std::vector<unsigned int>&    cell_partition,
-                        std::vector<unsigned int>&    partition_list,
-                        std::vector<unsigned int>&    partition_size,
-                        unsigned int&                 partition) const;
+                        const unsigned int cluster_size,
+                        std::vector<unsigned int>& cell_partition,
+                        std::vector<unsigned int>& partition_list,
+                        std::vector<unsigned int>& partition_size,
+                        unsigned int& partition) const;
 
       /**
        * Update fields of task info for task graph set up in

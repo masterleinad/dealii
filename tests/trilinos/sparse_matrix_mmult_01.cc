@@ -38,13 +38,13 @@ main(int argc, char* argv[])
   initlog();
 
   TrilinosWrappers::SparsityPattern P_A;
-  TrilinosWrappers::SparseMatrix    A;
+  TrilinosWrappers::SparseMatrix A;
   P_A.reinit(4, 3);
   P_A.compress();
   A.reinit(P_A);
 
   TrilinosWrappers::SparsityPattern P_B;
-  TrilinosWrappers::SparseMatrix    B;
+  TrilinosWrappers::SparseMatrix B;
   P_B.reinit(3, 5);
   P_B.compress();
   B.reinit(P_B);
@@ -61,7 +61,7 @@ main(int argc, char* argv[])
   Assert(AB.n() == B.n(), ExcInternalError());
 
   TrilinosWrappers::SparsityPattern P_C;
-  TrilinosWrappers::SparseMatrix    C;
+  TrilinosWrappers::SparseMatrix C;
   P_C.reinit(4, 5);
   P_C.compress();
   C.reinit(P_C);

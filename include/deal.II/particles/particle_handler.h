@@ -77,7 +77,7 @@ namespace Particles
      */
     ParticleHandler(
       const parallel::distributed::Triangulation<dim, spacedim>& tria,
-      const Mapping<dim, spacedim>&                              mapping,
+      const Mapping<dim, spacedim>& mapping,
       const unsigned int n_properties = 0);
 
     /**
@@ -93,7 +93,7 @@ namespace Particles
     void
     initialize(const parallel::distributed::Triangulation<dim, spacedim>& tria,
                const Mapping<dim, spacedim>& mapping,
-               const unsigned int            n_properties = 0);
+               const unsigned int n_properties = 0);
 
     /**
      * Clear all particle related data.
@@ -507,8 +507,8 @@ namespace Particles
     void
     store_particles(
       const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-      const typename Triangulation<dim, spacedim>::CellStatus     status,
-      void*                                                       data) const;
+      const typename Triangulation<dim, spacedim>::CellStatus status,
+      void* data) const;
 
     /**
      * Called by listener functions after a refinement step. The local map
@@ -517,8 +517,8 @@ namespace Particles
     void
     load_particles(
       const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-      const typename Triangulation<dim, spacedim>::CellStatus     status,
-      const void*                                                 data);
+      const typename Triangulation<dim, spacedim>::CellStatus status,
+      const void* data);
   };
 
   /* -------------------------- inline and template functions ---------------------- */
@@ -534,7 +534,7 @@ namespace Particles
     // the domain is distributed differently after resuming from a checkpoint.
     ar //&particles
       & global_number_of_particles& global_max_particles_per_cell&
-                                    next_free_particle_index;
+        next_free_particle_index;
   }
 } // namespace Particles
 

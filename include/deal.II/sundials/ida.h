@@ -304,17 +304,17 @@ namespace SUNDIALS
         const double& initial_step_size = 1e-2,
         const double& output_period     = 1e-1,
         // Running parameters
-        const double&       minimum_step_size             = 1e-6,
+        const double& minimum_step_size                   = 1e-6,
         const unsigned int& maximum_order                 = 5,
         const unsigned int& maximum_non_linear_iterations = 10,
         // Error parameters
-        const double& absolute_tolerance                = 1e-6,
-        const double& relative_tolerance                = 1e-5,
-        const bool&   ignore_algebraic_terms_for_errors = true,
+        const double& absolute_tolerance              = 1e-6,
+        const double& relative_tolerance              = 1e-5,
+        const bool& ignore_algebraic_terms_for_errors = true,
         // Initial conditions parameters
-        const InitialConditionCorrection& ic_type    = use_y_diff,
-        const InitialConditionCorrection& reset_type = use_y_diff,
-        const unsigned int&               maximum_non_linear_iterations_ic = 5)
+        const InitialConditionCorrection& ic_type            = use_y_diff,
+        const InitialConditionCorrection& reset_type         = use_y_diff,
+        const unsigned int& maximum_non_linear_iterations_ic = 5)
         : initial_time(initial_time),
           final_time(final_time),
           initial_step_size(initial_step_size),
@@ -570,8 +570,8 @@ namespace SUNDIALS
      * @param data IDA configuration data
      * @param mpi_comm MPI communicator
      */
-    IDA(const AdditionalData& data     = AdditionalData(),
-        const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
+    IDA(const AdditionalData& data = AdditionalData(),
+        const MPI_Comm mpi_comm    = MPI_COMM_WORLD);
 
     /**
      * Destructor.
@@ -624,10 +624,10 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const double      t,
+    std::function<int(const double t,
                       const VectorType& y,
                       const VectorType& y_dot,
-                      VectorType&       res)>
+                      VectorType& res)>
       residual;
 
     /**
@@ -660,10 +660,10 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const double      t,
+    std::function<int(const double t,
                       const VectorType& y,
                       const VectorType& y_dot,
-                      const double      alpha)>
+                      const double alpha)>
       setup_jacobian;
 
     /**
@@ -711,9 +711,9 @@ namespace SUNDIALS
      * times this function is called and how many time steps have actually been
      * computed.
      */
-    std::function<void(const double       t,
-                       const VectorType&  sol,
-                       const VectorType&  sol_dot,
+    std::function<void(const double t,
+                       const VectorType& sol,
+                       const VectorType& sol_dot,
                        const unsigned int step_number)>
       output_step;
 

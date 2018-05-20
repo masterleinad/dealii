@@ -53,15 +53,15 @@ template <int dim>
 void
 transfer(std::ostream& out)
 {
-  MyFunction<dim>    function;
+  MyFunction<dim> function;
   Triangulation<dim> tria(Triangulation<dim>::allow_anisotropic_smoothing);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(3);
-  FE_DGQ<dim>          fe(1);
-  DoFHandler<dim>      dof_handler(tria);
-  Vector<double>       solution;
+  FE_DGQ<dim> fe(1);
+  DoFHandler<dim> dof_handler(tria);
+  Vector<double> solution;
   MappingQGeneric<dim> mapping(1);
-  DataOut<dim>         data_out;
+  DataOut<dim> data_out;
 
   dof_handler.distribute_dofs(fe);
   solution.reinit(dof_handler.n_dofs());

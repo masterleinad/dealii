@@ -195,7 +195,7 @@ public:
    */
   virtual void
   create_triangulation(const std::vector<Point<spacedim>>& vertices,
-                       const std::vector<CellData<dim>>&   cells,
+                       const std::vector<CellData<dim>>& cells,
                        const SubCellData& subcelldata) override;
 
   /**
@@ -207,8 +207,8 @@ public:
   virtual void
   create_triangulation_compatibility(
     const std::vector<Point<spacedim>>& vertices,
-    const std::vector<CellData<dim>>&   cells,
-    const SubCellData&                  subcelldata) override;
+    const std::vector<CellData<dim>>& cells,
+    const SubCellData& subcelldata) override;
 
   /**
    * Write all refine and coarsen flags to the ostream @p out.

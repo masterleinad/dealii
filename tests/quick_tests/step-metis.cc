@@ -42,7 +42,7 @@ main(int argc, char** argv)
           ::Triangulation<dim>::none,
           false,
           parallel::shared::Triangulation<dim>::partition_metis);
-        FE_Q<dim>       fe(1);
+        FE_Q<dim> fe(1);
         DoFHandler<dim> dof_handler(triangulation);
 
         GridGenerator::hyper_cube(triangulation, -1, 1);

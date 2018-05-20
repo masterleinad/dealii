@@ -38,9 +38,9 @@ namespace DoFToolsEx
   template <int dim, class InVector, class OutVector>
   void
   transfer(const DoFHandler<dim>& source_dof,
-           const InVector&        source_vector,
+           const InVector& source_vector,
            const DoFHandler<dim>& target_dof,
-           OutVector&             target_vector);
+           OutVector& target_vector);
 } // namespace DoFToolsEx
 
 /**
@@ -53,9 +53,9 @@ namespace DoFToolsEx
 template <int dim, class InVector, class OutVector>
 void
 DoFToolsEx::transfer(const DoFHandler<dim>& source_dof,
-                     const InVector&        source_vector,
+                     const InVector& source_vector,
                      const DoFHandler<dim>& target_dof,
-                     OutVector&             target_vector)
+                     OutVector& target_vector)
 {
   // any sanity tests? Trias derived from same coarse grid?
 
@@ -150,7 +150,7 @@ main()
 
   // interpolate test function onto tria
   Vector<double> sol(dof.n_dofs());
-  TestFunction   test_function;
+  TestFunction test_function;
   VectorTools::interpolate(dof, test_function, sol);
 
   // setup solution vectors

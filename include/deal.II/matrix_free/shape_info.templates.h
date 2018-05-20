@@ -68,9 +68,9 @@ namespace internal
     template <typename Number>
     template <int dim>
     void
-    ShapeInfo<Number>::reinit(const Quadrature<1>&      quad,
+    ShapeInfo<Number>::reinit(const Quadrature<1>& quad,
                               const FiniteElement<dim>& fe_in,
-                              const unsigned int        base_element_number)
+                              const unsigned int base_element_number)
     {
       const FiniteElement<dim>* fe = &fe_in.base_element(base_element_number);
 
@@ -86,7 +86,7 @@ namespace internal
       // vertex DoFs come first, which is incompatible with the lexicographic
       // ordering necessary to apply tensor products efficiently)
       std::vector<unsigned int> scalar_lexicographic;
-      Point<dim>                unit_point;
+      Point<dim> unit_point;
       {
         // find numbering to lexicographic
         Assert(fe->n_components() == 1,

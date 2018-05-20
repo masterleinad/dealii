@@ -84,7 +84,7 @@ test()
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation, -1, 1);
 
-  FESystem<dim>   fe(FE_Q<dim>(2), dim);
+  FESystem<dim> fe(FE_Q<dim>(2), dim);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

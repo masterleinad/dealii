@@ -143,7 +143,7 @@ public:
    * You will want to have the weights sum up to one, but this is not checked.
    */
   Quadrature(const std::vector<Point<dim>>& points,
-             const std::vector<double>&     weights);
+             const std::vector<double>& weights);
 
   /**
    * Construct a dummy quadrature formula from a list of points, with weights
@@ -192,7 +192,7 @@ public:
    */
   void
   initialize(const std::vector<Point<dim>>& points,
-             const std::vector<double>&     weights);
+             const std::vector<double>& weights);
 
   /**
    * Number of quadrature points.

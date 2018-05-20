@@ -39,7 +39,7 @@ public:
   FESystem<dim> continuous_fe;
   FESystem<dim> discontinuous_fe;
 
-  hp::DoFHandler<dim>   dof_handler;
+  hp::DoFHandler<dim> dof_handler;
   hp::FECollection<dim> fe_collection;
 };
 

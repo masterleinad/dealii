@@ -57,7 +57,7 @@ main()
   SolverControl solver_control_A(2, 1.0e-15);
 
   SolverCG<Vector<double>> solver_A(solver_control_A);
-  PreconditionIdentity     preconditioner_A;
+  PreconditionIdentity preconditioner_A;
 
   const auto lo_A_inv   = inverse_operator(lo_A, solver_A, preconditioner_A);
   const auto lo_A_inv_t = transpose_operator(lo_A_inv);

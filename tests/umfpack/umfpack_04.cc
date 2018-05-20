@@ -43,12 +43,12 @@
 
 template <int dim, typename MatrixType, typename VectorType>
 void
-assemble_laplace(MatrixType&         B,
-                 VectorType&         bb,
-                 DoFHandler<dim>&    dof_handler,
+assemble_laplace(MatrixType& B,
+                 VectorType& bb,
+                 DoFHandler<dim>& dof_handler,
                  FiniteElement<dim>& fe)
 {
-  QGauss<dim>   quadrature_formula(2);
+  QGauss<dim> quadrature_formula(2);
   FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients | update_JxW_values);
@@ -57,7 +57,7 @@ assemble_laplace(MatrixType&         B,
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -118,7 +118,7 @@ test()
   tria.execute_coarsening_and_refinement();
   tria.refine_global(7 - 2 * dim);
 
-  FESystem<dim>   fe(FE_Q<dim>(1), dim);
+  FESystem<dim> fe(FE_Q<dim>(1), dim);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
   DoFRenumbering::component_wise(dof_handler);
@@ -129,7 +129,7 @@ test()
   DoFTools::count_dofs_per_component(dof_handler, size);
 
   BlockSparsityPattern b_sparsity_pattern;
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
 
   b_sparsity_pattern.reinit(size.size(), size.size());
   for(unsigned int k = 0; k < size.size(); ++k)
@@ -155,7 +155,7 @@ test()
   B.reinit(sparsity_pattern);
 
   BlockVector<double> bb(size), bx(size);
-  Vector<double>      b(dof_handler.n_dofs()), x(dof_handler.n_dofs()),
+  Vector<double> b(dof_handler.n_dofs()), x(dof_handler.n_dofs()),
     ub(dof_handler.n_dofs()), ubb(dof_handler.n_dofs());
 
   assemble_laplace(Bb, bb, dof_handler, fe);
@@ -170,7 +170,7 @@ test()
   ub  = b;
   ubb = bb;
 
-  SolverControl                 control(1000, 1e-13);
+  SolverControl control(1000, 1e-13);
   SolverCG<BlockVector<double>> bcg(
     control, SolverCG<BlockVector<double>>::AdditionalData());
 

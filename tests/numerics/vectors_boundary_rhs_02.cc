@@ -78,7 +78,7 @@ check()
   // create a system element composed
   // of one Q1 and one Q2 element
   FE_RaviartThomas<dim> element(0);
-  DoFHandler<dim>       dof(tr);
+  DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 
   // use a more complicated mapping

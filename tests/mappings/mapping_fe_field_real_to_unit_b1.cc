@@ -43,7 +43,7 @@ test_real_to_unit_cell()
   Triangulation<dim, spacedim> triangulation;
   GridGenerator::hyper_cube(triangulation);
 
-  const unsigned int      n_points = 4;
+  const unsigned int n_points = 4;
   std::vector<Point<dim>> unit_points(Utilities::fixed_power<dim>(n_points));
 
   switch(dim)
@@ -78,10 +78,10 @@ test_real_to_unit_cell()
     }
 
   const FE_Bernstein<dim, spacedim> feb(1);
-  const FESystem<dim, spacedim>     fesystem(feb, spacedim);
-  DoFHandler<dim, spacedim>         dhb(triangulation);
+  const FESystem<dim, spacedim> fesystem(feb, spacedim);
+  DoFHandler<dim, spacedim> dhb(triangulation);
   dhb.distribute_dofs(fesystem);
-  Vector<double>      eulerq(dhb.n_dofs());
+  Vector<double> eulerq(dhb.n_dofs());
   const ComponentMask mask(spacedim, true);
 
   VectorTools::get_position_vector(dhb, eulerq, mask);
@@ -92,8 +92,8 @@ test_real_to_unit_cell()
 
   //Move a vertex a little bit
   const unsigned int n_dx = 5;
-  const double       dx   = 0.4 / n_dx;
-  Point<spacedim>    direction;
+  const double dx         = 0.4 / n_dx;
+  Point<spacedim> direction;
   for(unsigned int j = 0; j < spacedim; ++j)
     direction[j] = dx;
 

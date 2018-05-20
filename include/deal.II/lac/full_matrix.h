@@ -97,8 +97,8 @@ public:
      * matrix pointer is sufficient.
      */
     Accessor(const FullMatrix<number>* matrix,
-             const size_type           row,
-             const size_type           col);
+             const size_type row,
+             const size_type col);
 
     /**
      * Row number of the element represented by this object.
@@ -150,8 +150,8 @@ public:
      * Constructor.
      */
     const_iterator(const FullMatrix<number>* matrix,
-                   const size_type           row,
-                   const size_type           col);
+                   const size_type row,
+                   const size_type col);
 
     /**
      * Prefix increment.
@@ -317,12 +317,12 @@ public:
   template <int dim>
   void
   copy_from(const Tensor<2, dim>& T,
-            const unsigned int    src_r_i = 0,
-            const unsigned int    src_r_j = dim - 1,
-            const unsigned int    src_c_i = 0,
-            const unsigned int    src_c_j = dim - 1,
-            const size_type       dst_r   = 0,
-            const size_type       dst_c   = 0);
+            const unsigned int src_r_i = 0,
+            const unsigned int src_r_j = dim - 1,
+            const unsigned int src_c_i = 0,
+            const unsigned int src_c_j = dim - 1,
+            const size_type dst_r      = 0,
+            const size_type dst_c      = 0);
 
   /**
    * Insert a submatrix (also rectangular) into a tensor, putting its upper
@@ -332,13 +332,13 @@ public:
    * matrix coincide.
    */
   template <int dim>
-  void copy_to(Tensor<2, dim>&    T,
-               const size_type    src_r_i = 0,
-               const size_type    src_r_j = dim - 1,
-               const size_type    src_c_i = 0,
-               const size_type    src_c_j = dim - 1,
-               const unsigned int dst_r   = 0,
-               const unsigned int dst_c   = 0) const;
+  void copy_to(Tensor<2, dim>& T,
+               const size_type src_r_i  = 0,
+               const size_type src_r_j  = dim - 1,
+               const size_type src_c_i  = 0,
+               const size_type src_c_j  = dim - 1,
+               const unsigned int dst_r = 0,
+               const unsigned int dst_c = 0) const;
 
   /**
    * Copy a subset of the rows and columns of another matrix into the current
@@ -354,7 +354,7 @@ public:
    */
   template <typename MatrixType, typename index_type>
   void
-  extract_submatrix_from(const MatrixType&              matrix,
+  extract_submatrix_from(const MatrixType& matrix,
                          const std::vector<index_type>& row_index_set,
                          const std::vector<index_type>& column_index_set);
 
@@ -374,7 +374,7 @@ public:
   void
   scatter_matrix_to(const std::vector<index_type>& row_index_set,
                     const std::vector<index_type>& column_index_set,
-                    MatrixType&                    matrix) const;
+                    MatrixType& matrix) const;
 
   /**
    * Fill rectangular block.
@@ -389,10 +389,10 @@ public:
   template <typename number2>
   void
   fill(const FullMatrix<number2>& src,
-       const size_type            dst_offset_i = 0,
-       const size_type            dst_offset_j = 0,
-       const size_type            src_offset_i = 0,
-       const size_type            src_offset_j = 0);
+       const size_type dst_offset_i = 0,
+       const size_type dst_offset_j = 0,
+       const size_type src_offset_i = 0,
+       const size_type src_offset_j = 0);
 
   /**
    * Make function of base class available.
@@ -414,7 +414,7 @@ public:
    */
   template <typename number2>
   void
-  fill_permutation(const FullMatrix<number2>&    src,
+  fill_permutation(const FullMatrix<number2>& src,
                    const std::vector<size_type>& p_rows,
                    const std::vector<size_type>& p_cols);
 
@@ -562,7 +562,7 @@ public:
    */
   template <class StreamType>
   void
-  print(StreamType&        s,
+  print(StreamType& s,
         const unsigned int width     = 5,
         const unsigned int precision = 2) const;
 
@@ -589,13 +589,13 @@ public:
    * this are considered zero.
    */
   void
-  print_formatted(std::ostream&      out,
-                  const unsigned int precision   = 3,
-                  const bool         scientific  = true,
-                  const unsigned int width       = 0,
-                  const char*        zero_string = " ",
-                  const double       denominator = 1.,
-                  const double       threshold   = 0.) const;
+  print_formatted(std::ostream& out,
+                  const unsigned int precision = 3,
+                  const bool scientific        = true,
+                  const unsigned int width     = 0,
+                  const char* zero_string      = " ",
+                  const double denominator     = 1.,
+                  const double threshold       = 0.) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -668,9 +668,9 @@ public:
    */
   template <typename number2>
   void
-  add(const number               a,
+  add(const number a,
       const FullMatrix<number2>& A,
-      const number               b,
+      const number b,
       const FullMatrix<number2>& B);
 
   /**
@@ -683,11 +683,11 @@ public:
    */
   template <typename number2>
   void
-  add(const number               a,
+  add(const number a,
       const FullMatrix<number2>& A,
-      const number               b,
+      const number b,
       const FullMatrix<number2>& B,
-      const number               c,
+      const number c,
       const FullMatrix<number2>& C);
 
   /**
@@ -704,11 +704,11 @@ public:
   template <typename number2>
   void
   add(const FullMatrix<number2>& src,
-      const number               factor,
-      const size_type            dst_offset_i = 0,
-      const size_type            dst_offset_j = 0,
-      const size_type            src_offset_i = 0,
-      const size_type            src_offset_j = 0);
+      const number factor,
+      const size_type dst_offset_i = 0,
+      const size_type dst_offset_j = 0,
+      const size_type src_offset_i = 0,
+      const size_type src_offset_j = 0);
 
   /**
    * Weighted addition of the transpose of <tt>B</tt> to <tt>this</tt>.
@@ -733,11 +733,11 @@ public:
   template <typename number2>
   void
   Tadd(const FullMatrix<number2>& src,
-       const number               factor,
-       const size_type            dst_offset_i = 0,
-       const size_type            dst_offset_j = 0,
-       const size_type            src_offset_i = 0,
-       const size_type            src_offset_j = 0);
+       const number factor,
+       const size_type dst_offset_i = 0,
+       const size_type dst_offset_j = 0,
+       const size_type src_offset_i = 0,
+       const size_type src_offset_j = 0);
 
   /**
    * Add a single element at the given position.
@@ -756,12 +756,12 @@ public:
    */
   template <typename number2, typename index_type>
   void
-  add(const size_type   row,
-      const size_type   n_cols,
+  add(const size_type row,
+      const size_type n_cols,
       const index_type* col_indices,
-      const number2*    values,
-      const bool        elide_zero_values      = true,
-      const bool        col_indices_are_sorted = false);
+      const number2* values,
+      const bool elide_zero_values      = true,
+      const bool col_indices_are_sorted = false);
 
   /**
    * <i>A(i,1...n) += s*A(j,1...n)</i>.  Simple addition of rows of this
@@ -775,9 +775,9 @@ public:
    */
   void
   add_row(const size_type i,
-          const number    s,
+          const number s,
           const size_type j,
-          const number    t,
+          const number t,
           const size_type k);
 
   /**
@@ -792,9 +792,9 @@ public:
    */
   void
   add_col(const size_type i,
-          const number    s,
+          const number s,
           const size_type j,
-          const number    t,
+          const number t,
           const size_type k);
 
   /**
@@ -828,9 +828,9 @@ public:
    */
   template <typename number2>
   void
-  equ(const number               a,
+  equ(const number a,
       const FullMatrix<number2>& A,
-      const number               b,
+      const number b,
       const FullMatrix<number2>& B);
 
   /**
@@ -838,11 +838,11 @@ public:
    */
   template <typename number2>
   void
-  equ(const number               a,
+  equ(const number a,
       const FullMatrix<number2>& A,
-      const number               b,
+      const number b,
       const FullMatrix<number2>& B,
-      const number               c,
+      const number c,
       const FullMatrix<number2>& C);
 
   /**
@@ -943,9 +943,9 @@ public:
    */
   template <typename number2>
   void
-  mmult(FullMatrix<number2>&       C,
+  mmult(FullMatrix<number2>& C,
         const FullMatrix<number2>& B,
-        const bool                 adding = false) const;
+        const bool adding = false) const;
 
   /**
    * Matrix-matrix-multiplication using transpose of <tt>this</tt>.
@@ -967,9 +967,9 @@ public:
    */
   template <typename number2>
   void
-  Tmmult(FullMatrix<number2>&       C,
+  Tmmult(FullMatrix<number2>& C,
          const FullMatrix<number2>& B,
-         const bool                 adding = false) const;
+         const bool adding = false) const;
 
   /**
    * Matrix-matrix-multiplication using transpose of <tt>B</tt>.
@@ -991,9 +991,9 @@ public:
    */
   template <typename number2>
   void
-  mTmult(FullMatrix<number2>&       C,
+  mTmult(FullMatrix<number2>& C,
          const FullMatrix<number2>& B,
-         const bool                 adding = false) const;
+         const bool adding = false) const;
 
   /**
    * Matrix-matrix-multiplication using transpose of <tt>this</tt> and
@@ -1016,9 +1016,9 @@ public:
    */
   template <typename number2>
   void
-  TmTmult(FullMatrix<number2>&       C,
+  TmTmult(FullMatrix<number2>& C,
           const FullMatrix<number2>& B,
-          const bool                 adding = false) const;
+          const bool adding = false) const;
 
   /**
    * Add to the current matrix the triple product <b>B A D</b>. Optionally,
@@ -1034,9 +1034,9 @@ public:
   triple_product(const FullMatrix<number>& A,
                  const FullMatrix<number>& B,
                  const FullMatrix<number>& D,
-                 const bool                transpose_B = false,
-                 const bool                transpose_D = false,
-                 const number              scaling     = number(1.));
+                 const bool transpose_B = false,
+                 const bool transpose_D = false,
+                 const number scaling   = number(1.));
 
   /**
    * Matrix-vector-multiplication.
@@ -1052,9 +1052,9 @@ public:
    */
   template <typename number2>
   void
-  vmult(Vector<number2>&       w,
+  vmult(Vector<number2>& w,
         const Vector<number2>& v,
-        const bool             adding = false) const;
+        const bool adding = false) const;
 
   /**
    * Adding Matrix-vector-multiplication.  <i>w += A*v</i>
@@ -1080,9 +1080,9 @@ public:
    */
   template <typename number2>
   void
-  Tvmult(Vector<number2>&       w,
+  Tvmult(Vector<number2>& w,
          const Vector<number2>& v,
-         const bool             adding = false) const;
+         const bool adding = false) const;
 
   /**
    * Adding transpose matrix-vector-multiplication.  <i>w +=
@@ -1101,9 +1101,9 @@ public:
    */
   template <typename somenumber>
   void
-  precondition_Jacobi(Vector<somenumber>&       dst,
+  precondition_Jacobi(Vector<somenumber>& dst,
                       const Vector<somenumber>& src,
-                      const number              omega = 1.) const;
+                      const number omega = 1.) const;
 
   /**
    * <i>dst=b-A*x</i>. Residual calculation, returns the
@@ -1113,7 +1113,7 @@ public:
    */
   template <typename number2, typename number3>
   number
-  residual(Vector<number2>&       dst,
+  residual(Vector<number2>& dst,
            const Vector<number2>& x,
            const Vector<number3>& b) const;
 
@@ -1272,7 +1272,7 @@ template <typename number>
 template <typename MatrixType, typename index_type>
 inline void
 FullMatrix<number>::extract_submatrix_from(
-  const MatrixType&              matrix,
+  const MatrixType& matrix,
   const std::vector<index_type>& row_index_set,
   const std::vector<index_type>& column_index_set)
 {
@@ -1294,7 +1294,7 @@ inline void
 FullMatrix<number>::scatter_matrix_to(
   const std::vector<index_type>& row_index_set,
   const std::vector<index_type>& column_index_set,
-  MatrixType&                    matrix) const
+  MatrixType& matrix) const
 {
   AssertDimension(row_index_set.size(), this->n_rows());
   AssertDimension(column_index_set.size(), this->n_cols());
@@ -1313,7 +1313,7 @@ template <typename number>
 inline void
 FullMatrix<number>::set(const size_type i,
                         const size_type j,
-                        const number    value)
+                        const number value)
 {
   (*this)(i, j) = value;
 }
@@ -1321,7 +1321,7 @@ FullMatrix<number>::set(const size_type i,
 template <typename number>
 template <typename number2>
 void
-FullMatrix<number>::vmult_add(Vector<number2>&       w,
+FullMatrix<number>::vmult_add(Vector<number2>& w,
                               const Vector<number2>& v) const
 {
   vmult(w, v, true);
@@ -1330,7 +1330,7 @@ FullMatrix<number>::vmult_add(Vector<number2>&       w,
 template <typename number>
 template <typename number2>
 void
-FullMatrix<number>::Tvmult_add(Vector<number2>&       w,
+FullMatrix<number>::Tvmult_add(Vector<number2>& w,
                                const Vector<number2>& v) const
 {
   Tvmult(w, v, true);
@@ -1340,8 +1340,8 @@ FullMatrix<number>::Tvmult_add(Vector<number2>&       w,
 
 template <typename number>
 inline FullMatrix<number>::Accessor::Accessor(const FullMatrix<number>* matrix,
-                                              const size_type           r,
-                                              const size_type           c)
+                                              const size_type r,
+                                              const size_type c)
   : matrix(matrix), a_row(r), a_col(c)
 {}
 
@@ -1370,8 +1370,8 @@ FullMatrix<number>::Accessor::value() const
 template <typename number>
 inline FullMatrix<number>::const_iterator::const_iterator(
   const FullMatrix<number>* matrix,
-  const size_type           r,
-  const size_type           c)
+  const size_type r,
+  const size_type c)
   : accessor(matrix, r, c)
 {}
 
@@ -1490,10 +1490,10 @@ FullMatrix<number>::add(const size_type r, const size_type c, const number v)
 template <typename number>
 template <typename number2, typename index_type>
 inline void
-FullMatrix<number>::add(const size_type   row,
-                        const size_type   n_cols,
+FullMatrix<number>::add(const size_type row,
+                        const size_type n_cols,
                         const index_type* col_indices,
-                        const number2*    values,
+                        const number2* values,
                         const bool,
                         const bool)
 {
@@ -1508,7 +1508,7 @@ FullMatrix<number>::add(const size_type   row,
 template <typename number>
 template <class StreamType>
 inline void
-FullMatrix<number>::print(StreamType&        s,
+FullMatrix<number>::print(StreamType& s,
                           const unsigned int w,
                           const unsigned int p) const
 {

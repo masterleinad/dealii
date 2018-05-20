@@ -40,8 +40,8 @@
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler,
-           const Vector<double>&  v_node,
-           const Vector<double>&  v_cell);
+           const Vector<double>& v_node,
+           const Vector<double>& v_cell);
 
 // take a vector, and make a block vector out of it
 void

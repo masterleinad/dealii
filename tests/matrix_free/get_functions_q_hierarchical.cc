@@ -33,9 +33,9 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  typedef double               number;
+  typedef double number;
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -52,7 +52,7 @@ test()
   tria.refine_global(4 - dim);
 
   FE_Q_Hierarchical<dim> fe(fe_degree);
-  DoFHandler<dim>        dof(tria);
+  DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
   ConstraintMatrix constraints;
@@ -79,8 +79,8 @@ test()
 
   MatrixFree<dim, number> mf_data;
   deallog << "Test with fe_degree " << fe_degree << std::endl;
-  const QGauss<1>                                  quad(fe_degree + 1);
-  MappingQ<dim>                                    mapping(4);
+  const QGauss<1> quad(fe_degree + 1);
+  MappingQ<dim> mapping(4);
   typename MatrixFree<dim, number>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
   data.mapping_update_flags  = update_gradients | update_hessians;

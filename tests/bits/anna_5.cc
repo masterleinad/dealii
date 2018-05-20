@@ -21,6 +21,6 @@
 int
 main()
 {
-  std::ofstream        o("output");
+  std::ofstream o("output");
   BlockSparsityPattern sparsity_pattern;
 }

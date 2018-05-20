@@ -38,7 +38,7 @@ main(int argc, char** argv)
   typedef Vector<double> VectorType;
 
   SUNDIALS::KINSOL<VectorType>::AdditionalData data;
-  ParameterHandler                             prm;
+  ParameterHandler prm;
   data.add_parameters(prm);
 
   if(false)

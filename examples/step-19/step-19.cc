@@ -51,10 +51,10 @@ namespace Step19
   // operation, such as output format (unless given on the command line);
   // second, the names of input and output files; and third, the format in
   // which the output is to be written:
-  ParameterHandler         prm;
+  ParameterHandler prm;
   std::vector<std::string> input_file_names;
-  std::string              output_file;
-  std::string              output_format;
+  std::string output_file;
+  std::string output_format;
 
   // All the stuff this program does can be done from here on. As described in
   // the introduction, what we have to do is declare what values the parameter

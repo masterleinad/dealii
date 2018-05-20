@@ -83,7 +83,7 @@ public:
   virtual void
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    std::vector<double>& nodal_values) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -107,7 +107,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**
@@ -260,7 +260,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<1, spacedim>& source,
-                                   const unsigned int                subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**
@@ -386,9 +386,9 @@ protected:
 
   std::unique_ptr<typename FiniteElement<1, spacedim>::InternalDataBase>
   get_subface_data(
-    const UpdateFlags           update_flags,
+    const UpdateFlags update_flags,
     const Mapping<1, spacedim>& mapping,
-    const Quadrature<0>&        quadrature,
+    const Quadrature<0>& quadrature,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<1, spacedim>& output_data) const override
   {
@@ -398,12 +398,12 @@ protected:
   virtual void
   fill_fe_values(
     const typename Triangulation<1, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                          cell_similarity,
-    const Quadrature<1>&                                      quadrature,
-    const Mapping<1, spacedim>&                               mapping,
-    const typename Mapping<1, spacedim>::InternalDataBase&    mapping_internal,
+    const CellSimilarity::Similarity cell_similarity,
+    const Quadrature<1>& quadrature,
+    const Mapping<1, spacedim>& mapping,
+    const typename Mapping<1, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<1, spacedim>&                           mapping_data,
+      MappingRelatedData<1, spacedim>& mapping_data,
     const typename FiniteElement<1, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<1, spacedim>& output_data) const override;
@@ -411,12 +411,12 @@ protected:
   virtual void
   fill_fe_face_values(
     const typename Triangulation<1, spacedim>::cell_iterator& cell,
-    const unsigned int                                        face_no,
-    const Quadrature<0>&                                      quadrature,
-    const Mapping<1, spacedim>&                               mapping,
-    const typename Mapping<1, spacedim>::InternalDataBase&    mapping_internal,
+    const unsigned int face_no,
+    const Quadrature<0>& quadrature,
+    const Mapping<1, spacedim>& mapping,
+    const typename Mapping<1, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<1, spacedim>&                           mapping_data,
+      MappingRelatedData<1, spacedim>& mapping_data,
     const typename FiniteElement<1, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<1, spacedim>& output_data) const override;
@@ -424,13 +424,13 @@ protected:
   virtual void
   fill_fe_subface_values(
     const typename Triangulation<1, spacedim>::cell_iterator& cell,
-    const unsigned int                                        face_no,
-    const unsigned int                                        sub_no,
-    const Quadrature<0>&                                      quadrature,
-    const Mapping<1, spacedim>&                               mapping,
-    const typename Mapping<1, spacedim>::InternalDataBase&    mapping_internal,
+    const unsigned int face_no,
+    const unsigned int sub_no,
+    const Quadrature<0>& quadrature,
+    const Mapping<1, spacedim>& mapping,
+    const typename Mapping<1, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<1, spacedim>&                           mapping_data,
+      MappingRelatedData<1, spacedim>& mapping_data,
     const typename FiniteElement<1, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<1, spacedim>& output_data) const override;
@@ -511,7 +511,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**

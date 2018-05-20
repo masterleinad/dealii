@@ -85,7 +85,7 @@ void
 test3()
 {
   Triangulation<dim, spacedim> triangulation;
-  GridIn<dim, spacedim>        grid_in;
+  GridIn<dim, spacedim> grid_in;
   grid_in.attach_triangulation(triangulation);
   if(dim == 1)
     {

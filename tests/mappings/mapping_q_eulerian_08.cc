@@ -77,7 +77,7 @@ public:
   shift_value(const Point<dim, VectorizedArray<NumberType>>& p_vec) const
   {
     Tensor<1, dim, VectorizedArray<NumberType>> shift_vec;
-    Point<dim>                                  p;
+    Point<dim> p;
     for(unsigned int v = 0; v < VectorizedArray<NumberType>::n_array_elements;
         ++v)
       {
@@ -100,11 +100,11 @@ template <int dim,
 void
 test(const unsigned int n_ref = 0)
 {
-  Displacement<dim>  displacement_function;
+  Displacement<dim> displacement_function;
   const unsigned int euler_fe_degree = 2;
 
   deallog << "dim=" << dim << std::endl;
-  MPI_Comm     mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_communicator);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(mpi_communicator);
 
@@ -132,7 +132,7 @@ test(const unsigned int n_ref = 0)
       triangulation.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
   dof_handler.distribute_mg_dofs();
@@ -141,7 +141,7 @@ test(const unsigned int n_ref = 0)
   // FE displacement field.
   QGauss<1> quadrature_formula(n_q_points);
 
-  FESystem<dim>   fe_euler(FE_Q<dim>(euler_fe_degree), dim);
+  FESystem<dim> fe_euler(FE_Q<dim>(euler_fe_degree), dim);
   DoFHandler<dim> dof_handler_euler(triangulation);
   dof_handler_euler.distribute_dofs(fe_euler);
   dof_handler_euler.distribute_mg_dofs();
@@ -153,7 +153,7 @@ test(const unsigned int n_ref = 0)
                                           locally_relevant_dofs_euler);
 
   const IndexSet& locally_owned_dofs = dof_handler.locally_owned_dofs();
-  IndexSet        locally_relevant_dofs;
+  IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
   // constraints:
@@ -203,7 +203,7 @@ test(const unsigned int n_ref = 0)
     MappingQEulerian<dim, LinearAlgebra::distributed::Vector<NumberType>>
       euler_fine(euler_fe_degree, dof_handler_euler, displacement);
 
-    MatrixFree<dim, NumberType>                          matrix_free_euler;
+    MatrixFree<dim, NumberType> matrix_free_euler;
     typename MatrixFree<dim, NumberType>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, NumberType>::AdditionalData::partition_color;
@@ -233,7 +233,7 @@ test(const unsigned int n_ref = 0)
             {
               const auto& v1 = fe_eval_euler.quadrature_point(q);
               const auto& qp = fe_eval.quadrature_point(q);
-              const auto  v2 = qp + displacement_function.shift_value(qp);
+              const auto v2  = qp + displacement_function.shift_value(qp);
               VectorizedArray<NumberType> dist = v1.distance(v2);
               for(unsigned int v = 0;
                   v < VectorizedArray<NumberType>::n_array_elements;
@@ -265,7 +265,7 @@ test(const unsigned int n_ref = 0)
                                                 | update_quadrature_points;
 
       ConstraintMatrix level_constraints;
-      IndexSet         relevant_dofs;
+      IndexSet relevant_dofs;
       DoFTools::extract_locally_relevant_level_dofs(
         dof_handler, level, relevant_dofs);
       level_constraints.reinit(relevant_dofs);
@@ -307,7 +307,7 @@ test(const unsigned int n_ref = 0)
               {
                 const auto& v1 = fe_eval_euler.quadrature_point(q);
                 const auto& qp = fe_eval.quadrature_point(q);
-                const auto  v2 = qp + displacement_function.shift_value(qp);
+                const auto v2  = qp + displacement_function.shift_value(qp);
                 VectorizedArray<NumberType> dist = v1.distance(v2);
                 for(unsigned int v = 0;
                     v < VectorizedArray<NumberType>::n_array_elements;
@@ -328,7 +328,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
 }

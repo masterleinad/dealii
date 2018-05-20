@@ -34,7 +34,7 @@ test_real_to_unit_cell()
   Triangulation<dim, spacedim> triangulation;
   GridGenerator::hyper_cube(triangulation);
 
-  const unsigned int      n_points = 5;
+  const unsigned int n_points = 5;
   std::vector<Point<dim>> unit_points(Utilities::fixed_power<dim>(n_points));
 
   switch(dim)
@@ -75,8 +75,8 @@ test_real_to_unit_cell()
 
   //Move a vertex a little bit
   const unsigned int n_dx = 5;
-  const double       dx   = 0.4 / n_dx;
-  Point<spacedim>    direction;
+  const double dx         = 0.4 / n_dx;
+  Point<spacedim> direction;
   for(unsigned int j = 0; j < spacedim; ++j)
     direction[j] = dx;
 

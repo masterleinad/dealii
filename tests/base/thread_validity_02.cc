@@ -45,7 +45,7 @@ execute(const X& x)
 void
 test()
 {
-  const X               x(42);
+  const X x(42);
   Threads::Thread<void> t = Threads::new_thread(&execute, x);
   t.join();
 }

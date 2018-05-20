@@ -36,7 +36,7 @@ main()
   tria.refine_global(1);
 
   FE_Q_Hierarchical<2> fe(1);
-  DoFHandler<2>        dof_handler(tria);
+  DoFHandler<2> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
   BlockSparsityPattern sparsity_pattern;

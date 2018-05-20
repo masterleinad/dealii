@@ -93,12 +93,12 @@ namespace Step26
                 const unsigned int max_grid_level);
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     ConstraintMatrix constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> mass_matrix;
     SparseMatrix<double> laplace_matrix;
     SparseMatrix<double> system_matrix;
@@ -107,8 +107,8 @@ namespace Step26
     Vector<double> old_solution;
     Vector<double> system_rhs;
 
-    double       time;
-    double       time_step;
+    double time;
+    double time_step;
     unsigned int timestep_number;
 
     const double theta;
@@ -138,7 +138,7 @@ namespace Step26
 
   template <int dim>
   double
-  RightHandSide<dim>::value(const Point<dim>&  p,
+  RightHandSide<dim>::value(const Point<dim>& p,
                             const unsigned int component) const
   {
     (void) component;
@@ -263,7 +263,7 @@ namespace Step26
   HeatEquation<dim>::solve_time_step()
   {
     SolverControl solver_control(1000, 1e-8 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.0);

@@ -58,7 +58,7 @@ main(int argc, char* argv[])
         test(v1);
 
         LinearAlgebra::ReadWriteVector<double> v_tmp(local_range);
-        LinearAlgebra::EpetraWrappers::Vector  v2(local_range, MPI_COMM_WORLD);
+        LinearAlgebra::EpetraWrappers::Vector v2(local_range, MPI_COMM_WORLD);
         v_tmp.import(v1, VectorOperation::insert);
         v2.import(v_tmp, VectorOperation::insert);
         VectorTools::subtract_mean_value(v2);

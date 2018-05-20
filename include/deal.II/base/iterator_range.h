@@ -176,11 +176,11 @@ public:
      * standard for iterators and are used by algorithms to enquire about the
      * specifics of the iterators they work on.
      */
-    typedef std::forward_iterator_tag          iterator_category;
-    typedef Iterator                           value_type;
+    typedef std::forward_iterator_tag iterator_category;
+    typedef Iterator value_type;
     typedef typename Iterator::difference_type difference_type;
-    typedef Iterator*                          pointer;
-    typedef Iterator&                          reference;
+    typedef Iterator* pointer;
+    typedef Iterator& reference;
 
   private:
     /**

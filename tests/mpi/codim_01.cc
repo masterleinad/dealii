@@ -30,7 +30,7 @@
 template <int dim, int spacedim>
 void
 write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
-          const char*                                                filename)
+          const char* filename)
 {
   deallog << "Checksum: " << tria.get_checksum() << std::endl;
 
@@ -69,7 +69,7 @@ test(std::ostream& /*out*/)
 
   write_vtk(tr, "file");
 
-  FE_Q<dim, spacedim>       fe(1);
+  FE_Q<dim, spacedim> fe(1);
   DoFHandler<dim, spacedim> dh(tr);
   dh.distribute_dofs(fe);
   deallog << "dofs " << dh.n_dofs() << std::endl;

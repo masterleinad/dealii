@@ -23,7 +23,7 @@ main()
 {
   initlog();
   Triangulation<2, 3> tria;
-  GridIn<2, 3>        gridin;
+  GridIn<2, 3> gridin;
   gridin.attach_triangulation(tria);
   gridin.read_assimp(SOURCE_DIR "/grids/torus.obj", -1, true, 1e-3);
 

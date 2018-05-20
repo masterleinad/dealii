@@ -108,7 +108,7 @@ test_one_object(const TESTEE<dim>& f,
 // Construct TESTEE with different constructor and test them
 template <int dim, typename Number>
 void
-test_constructor(const unsigned int         n_component,
+test_constructor(const unsigned int n_component,
                  const std::vector<NUMBER>& component_data)
 {
   const unsigned int n_points(5);

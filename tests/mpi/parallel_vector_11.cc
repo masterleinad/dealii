@@ -36,9 +36,9 @@ test()
   // less than 20
   const unsigned int local_size  = 3;
   const unsigned int global_size = std::min(20U, local_size * numproc);
-  const int          my_start    = std::min(local_size * myid, global_size);
-  const int          my_end = std::min(local_size * (myid + 1), global_size);
-  const int          actual_local_size = my_end - my_start;
+  const int my_start             = std::min(local_size * myid, global_size);
+  const int my_end            = std::min(local_size * (myid + 1), global_size);
+  const int actual_local_size = my_end - my_start;
 
   IndexSet local_owned(global_size);
   if(my_end > my_start)

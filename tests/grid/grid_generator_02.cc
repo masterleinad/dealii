@@ -51,7 +51,7 @@ test(std::ostream& out)
   if(true)
     {
       deallog << "subdivided_hyper_rectangle" << std::endl;
-      Triangulation<dim>               tr;
+      Triangulation<dim> tr;
       std::vector<std::vector<double>> sub(dim);
       for(unsigned int i = 0; i < dim; ++i)
         sub[i] = std::vector<double>(i + 2, (p2[i] - p1[i]) / (i + 2));
@@ -65,7 +65,7 @@ test(std::ostream& out)
   if(true)
     {
       deallog << "subdivided_hyper_rectangle" << std::endl;
-      Triangulation<dim>               tr;
+      Triangulation<dim> tr;
       std::vector<std::vector<double>> sub(dim);
       for(unsigned int i = 0; i < dim; ++i)
         {

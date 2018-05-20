@@ -113,29 +113,29 @@ namespace Step57
     void
     output_results(const unsigned int refinement_cycle) const;
     void
-    newton_iteration(const double       tolerance,
+    newton_iteration(const double tolerance,
                      const unsigned int max_iteration,
                      const unsigned int n_refinements,
-                     const bool         is_initial_step,
-                     const bool         output_result);
+                     const bool is_initial_step,
+                     const bool output_result);
     void
     compute_initial_guess(double step_size);
 
-    double                               viscosity;
-    double                               gamma;
-    const unsigned int                   degree;
+    double viscosity;
+    double gamma;
+    const unsigned int degree;
     std::vector<types::global_dof_index> dofs_per_block;
 
     Triangulation<dim> triangulation;
-    FESystem<dim>      fe;
-    DoFHandler<dim>    dof_handler;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     ConstraintMatrix zero_constraints;
     ConstraintMatrix nonzero_constraints;
 
-    BlockSparsityPattern      sparsity_pattern;
+    BlockSparsityPattern sparsity_pattern;
     BlockSparseMatrix<double> system_matrix;
-    SparseMatrix<double>      pressure_mass_matrix;
+    SparseMatrix<double> pressure_mass_matrix;
 
     BlockVector<double> present_solution;
     BlockVector<double> newton_update;
@@ -171,7 +171,7 @@ namespace Step57
 
   template <int dim>
   double
-  BoundaryValues<dim>::value(const Point<dim>&  p,
+  BoundaryValues<dim>::value(const Point<dim>& p,
                              const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -185,7 +185,7 @@ namespace Step57
   template <int dim>
   void
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                    Vector<double>&   values) const
+                                    Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
@@ -211,22 +211,22 @@ namespace Step57
   class BlockSchurPreconditioner : public Subscriptor
   {
   public:
-    BlockSchurPreconditioner(double                           gamma,
-                             double                           viscosity,
+    BlockSchurPreconditioner(double gamma,
+                             double viscosity,
                              const BlockSparseMatrix<double>& S,
-                             const SparseMatrix<double>&      P,
-                             const PreconditionerMp&          Mppreconditioner);
+                             const SparseMatrix<double>& P,
+                             const PreconditionerMp& Mppreconditioner);
 
     void
     vmult(BlockVector<double>& dst, const BlockVector<double>& src) const;
 
   private:
-    const double                     gamma;
-    const double                     viscosity;
+    const double gamma;
+    const double viscosity;
     const BlockSparseMatrix<double>& stokes_matrix;
-    const SparseMatrix<double>&      pressure_mass_matrix;
-    const PreconditionerMp&          mp_preconditioner;
-    SparseDirectUMFPACK              A_inverse;
+    const SparseMatrix<double>& pressure_mass_matrix;
+    const PreconditionerMp& mp_preconditioner;
+    SparseDirectUMFPACK A_inverse;
   };
 
   // We can notice that the initialization of the inverse of the matrix at (0,0) corner
@@ -235,11 +235,11 @@ namespace Step57
 
   template <class PreconditionerMp>
   BlockSchurPreconditioner<PreconditionerMp>::BlockSchurPreconditioner(
-    double                           gamma,
-    double                           viscosity,
+    double gamma,
+    double viscosity,
     const BlockSparseMatrix<double>& S,
-    const SparseMatrix<double>&      P,
-    const PreconditionerMp&          Mppreconditioner)
+    const SparseMatrix<double>& P,
+    const PreconditionerMp& Mppreconditioner)
     : gamma(gamma),
       viscosity(viscosity),
       stokes_matrix(S),
@@ -252,14 +252,14 @@ namespace Step57
   template <class PreconditionerMp>
   void
   BlockSchurPreconditioner<PreconditionerMp>::vmult(
-    BlockVector<double>&       dst,
+    BlockVector<double>& dst,
     const BlockVector<double>& src) const
   {
     Vector<double> utmp(src.block(0));
 
     {
       SolverControl solver_control(1000, 1e-6 * src.block(1).l2_norm());
-      SolverCG<>    cg(solver_control);
+      SolverCG<> cg(solver_control);
 
       dst.block(1) = 0.0;
       cg.solve(
@@ -411,7 +411,7 @@ namespace Step57
     const FEValuesExtractors::Scalar pressure(dim);
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -421,12 +421,12 @@ namespace Step57
 
     std::vector<Tensor<1, dim>> present_velocity_values(n_q_points);
     std::vector<Tensor<2, dim>> present_velocity_gradients(n_q_points);
-    std::vector<double>         present_pressure_values(n_q_points);
+    std::vector<double> present_pressure_values(n_q_points);
 
-    std::vector<double>         div_phi_u(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
     std::vector<Tensor<1, dim>> phi_u(dofs_per_cell);
     std::vector<Tensor<2, dim>> grad_phi_u(dofs_per_cell);
-    std::vector<double>         phi_p(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -650,15 +650,15 @@ namespace Step57
   template <int dim>
   void
   StationaryNavierStokes<dim>::newton_iteration(
-    const double       tolerance,
+    const double tolerance,
     const unsigned int max_iteration,
     const unsigned int max_refinement,
-    const bool         is_initial_step,
-    const bool         output_result)
+    const bool is_initial_step,
+    const bool output_result)
   {
     double current_res;
     double last_res;
-    bool   first_step = is_initial_step;
+    bool first_step = is_initial_step;
 
     for(unsigned int refinement = 0; refinement < max_refinement + 1;
         ++refinement)

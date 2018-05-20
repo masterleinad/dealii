@@ -57,7 +57,7 @@ test(const Triangulation<dim>& tr)
     points[1][d] = 0.85;
 
   const Quadrature<dim> quadrature(points);
-  FEValues<dim>         fe_values(
+  FEValues<dim> fe_values(
     mapping, fe, quadrature, update_gradients | update_jacobians);
 
   for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
@@ -95,7 +95,7 @@ test()
   // on the boundary uses a Q3 mapping from a hyper ball. The radius is
   // sqrt(1/9+1) which makes sure the mapping connects to the linear boundary
   // for the other cells.
-  const int          dim = 2;
+  const int dim = 2;
   Triangulation<dim> tr;
   GridGenerator::subdivided_hyper_cube(tr, 3, -1, 1);
 

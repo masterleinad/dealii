@@ -31,10 +31,10 @@ void
 test(Utilities::CUDA::Handle& cuda_handle)
 {
   // Build the sparse matrix on the host
-  const unsigned int   problem_size = 10;
-  unsigned int         size         = (problem_size - 1) * (problem_size - 1);
-  FDMatrix             testproblem(problem_size, problem_size);
-  SparsityPattern      structure(size, size, 5);
+  const unsigned int problem_size = 10;
+  unsigned int size               = (problem_size - 1) * (problem_size - 1);
+  FDMatrix testproblem(problem_size, problem_size);
+  SparsityPattern structure(size, size, 5);
   SparseMatrix<double> A;
   testproblem.five_point_structure(structure);
   structure.compress();
@@ -43,19 +43,19 @@ test(Utilities::CUDA::Handle& cuda_handle)
 
   // Solve on the host
   PreconditionIdentity prec_no;
-  SolverControl        control(100, 1.e-10);
-  SolverCG<>           cg_host(control);
-  Vector<double>       sol_host(size);
-  Vector<double>       rhs_host(size);
+  SolverControl control(100, 1.e-10);
+  SolverCG<> cg_host(control);
+  Vector<double> sol_host(size);
+  Vector<double> rhs_host(size);
   for(unsigned int i = 0; i < size; ++i)
     rhs_host[i] = static_cast<double>(i);
   cg_host.solve(A, sol_host, rhs_host, prec_no);
 
   // Solve on the device
-  CUDAWrappers::SparseMatrix<double>          A_dev(cuda_handle, A);
+  CUDAWrappers::SparseMatrix<double> A_dev(cuda_handle, A);
   LinearAlgebra::CUDAWrappers::Vector<double> sol_dev(size);
   LinearAlgebra::CUDAWrappers::Vector<double> rhs_dev(size);
-  LinearAlgebra::ReadWriteVector<double>      rw_vector(size);
+  LinearAlgebra::ReadWriteVector<double> rw_vector(size);
   for(unsigned int i = 0; i < size; ++i)
     rw_vector[i] = static_cast<double>(i);
   rhs_dev.import(rw_vector, VectorOperation::insert);

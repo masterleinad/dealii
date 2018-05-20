@@ -40,7 +40,7 @@ test(unsigned int ref = 1)
   double radius = center.norm();
 
   SphericalManifold<dim, spacedim> boundary(center);
-  Triangulation<dim, spacedim>     tria;
+  Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_cube(tria);
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 

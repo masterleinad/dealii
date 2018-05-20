@@ -55,7 +55,7 @@ namespace Utilities
 
     Partitioner::Partitioner(const IndexSet& locally_owned_indices,
                              const IndexSet& ghost_indices_in,
-                             const MPI_Comm  communicator_in)
+                             const MPI_Comm communicator_in)
       : global_size(
           static_cast<types::global_dof_index>(locally_owned_indices.size())),
         n_ghost_indices_data(0),
@@ -71,7 +71,7 @@ namespace Utilities
     }
 
     Partitioner::Partitioner(const IndexSet& locally_owned_indices,
-                             const MPI_Comm  communicator_in)
+                             const MPI_Comm communicator_in)
       : global_size(
           static_cast<types::global_dof_index>(locally_owned_indices.size())),
         n_ghost_indices_data(0),
@@ -300,7 +300,7 @@ namespace Utilities
       std::vector<types::global_dof_index> expanded_import_indices(
         n_import_indices_data);
       {
-        unsigned int             current_index_start = 0;
+        unsigned int current_index_start = 0;
         std::vector<MPI_Request> import_requests(import_targets_data.size());
         for(unsigned int i = 0; i < import_targets_data.size(); i++)
           {
@@ -348,7 +348,7 @@ namespace Utilities
                                                     + 1);
           import_indices_chunks_by_rank_data[0] = 0;
           std::vector<std::pair<unsigned int, unsigned int>>
-                       compressed_import_indices;
+            compressed_import_indices;
           unsigned int shift = 0;
           for(unsigned int p = 0; p < import_targets_data.size(); ++p)
             {
@@ -465,8 +465,8 @@ namespace Utilities
 #ifdef DEAL_II_WITH_MPI
       if(Utilities::MPI::job_supports_mpi())
         {
-          int       communicators_same = 0;
-          const int ierr               = MPI_Comm_compare(
+          int communicators_same = 0;
+          const int ierr         = MPI_Comm_compare(
             part.communicator, communicator, &communicators_same);
           AssertThrowMPI(ierr);
           if(!(communicators_same == MPI_IDENT

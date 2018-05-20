@@ -33,13 +33,13 @@ main(int argc, char* argv[])
   initlog();
   deallog << std::setprecision(10);
 
-  typedef TrilinosWrappers::MPI::Vector  vector_t;
+  typedef TrilinosWrappers::MPI::Vector vector_t;
   typedef TrilinosWrappers::SparseMatrix matrix_t;
 
   matrix_t a(5U, 5U, 3U);
   a.compress(VectorOperation::add);
 
-  auto     op_a = linear_operator<vector_t>(a);
+  auto op_a = linear_operator<vector_t>(a);
   vector_t u, res;
   op_a.reinit_domain_vector(u, false);
   res = op_a * u;

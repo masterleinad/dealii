@@ -30,7 +30,7 @@ int
 main()
 {
   initlog();
-  Point<3>                      center(0.0, 0.0, 0.0);
+  Point<3> center(0.0, 0.0, 0.0);
   const SphericalManifold<3, 3> manifold(center);
 
   for(unsigned int i = 1; i < 20; ++i)
@@ -42,7 +42,7 @@ main()
       Point<3> P3(1., 0., 0.);
 
       std::vector<Point<3>> points1(3);
-      std::vector<double>   weights(3);
+      std::vector<double> weights(3);
 
       points1[0] = P1;
       points1[1] = P2;

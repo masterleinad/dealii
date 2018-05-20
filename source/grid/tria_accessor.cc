@@ -40,7 +40,7 @@ namespace
   // the face
   inline unsigned int
   translate_subface_no(const TriaIterator<TriaAccessor<2, 3, 3>>& face,
-                       const unsigned int                         subface_no)
+                       const unsigned int subface_no)
   {
     Assert(face->has_children(), ExcInternalError());
     Assert(subface_no < face->n_children(), ExcInternalError());
@@ -80,8 +80,8 @@ namespace
   // the face
   inline unsigned int
   translate_subface_no(const TriaIterator<TriaAccessor<2, 3, 3>>& face,
-                       const unsigned int                         subface_no,
-                       const unsigned int                         subsubface_no)
+                       const unsigned int subface_no,
+                       const unsigned int subsubface_no)
   {
     Assert(face->has_children(), ExcInternalError());
     // the subface must be refined, otherwise
@@ -1564,7 +1564,7 @@ TriaAccessor<structdim, dim, spacedim>::intermediate_point(
 {
   // Surrounding points and weights.
   std::array<Point<spacedim>, GeometryInfo<structdim>::vertices_per_cell> p;
-  std::array<double, GeometryInfo<structdim>::vertices_per_cell>          w;
+  std::array<double, GeometryInfo<structdim>::vertices_per_cell> w;
 
   for(unsigned int i = 0; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
     {
@@ -1796,8 +1796,8 @@ CellAccessor<3>::point_inside(const Point<3>& p) const
   // check there.
   const unsigned int dim      = 3;
   const unsigned int spacedim = 3;
-  Point<spacedim>    maxp     = this->vertex(0);
-  Point<spacedim>    minp     = this->vertex(0);
+  Point<spacedim> maxp        = this->vertex(0);
+  Point<spacedim> minp        = this->vertex(0);
 
   for(unsigned int v = 1; v < GeometryInfo<dim>::vertices_per_cell; ++v)
     for(unsigned int d = 0; d < dim; ++d)
@@ -1844,7 +1844,7 @@ bool
 CellAccessor<dim, spacedim>::point_inside_codim(const Point<spacedim_>& p) const
 {
   const TriaRawIterator<CellAccessor<dim_, spacedim_>> cell_iterator(*this);
-  const Point<dim_>                                    p_unit
+  const Point<dim_> p_unit
     = StaticMappingQ1<dim_, spacedim_>::mapping.transform_real_to_unit_cell(
       cell_iterator, p);
 
@@ -2060,7 +2060,7 @@ CellAccessor<dim, spacedim>::recursively_set_subdomain_id(
 template <int dim, int spacedim>
 void
 CellAccessor<dim, spacedim>::set_neighbor(
-  const unsigned int                               i,
+  const unsigned int i,
   const TriaIterator<CellAccessor<dim, spacedim>>& pointer) const
 {
   AssertIndexRange(i, GeometryInfo<dim>::faces_per_cell);
@@ -2095,8 +2095,8 @@ CellAccessor<dim, spacedim>::id() const
 {
   std::array<unsigned char, 30> id;
 
-  CellAccessor<dim, spacedim> ptr             = *this;
-  const unsigned int          n_child_indices = ptr.level();
+  CellAccessor<dim, spacedim> ptr    = *this;
+  const unsigned int n_child_indices = ptr.level();
 
   while(ptr.level() > 0)
     {
@@ -2438,7 +2438,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor(const unsigned int i_face) const
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
-  cell_iterator                                     my_it(*this);
+  cell_iterator my_it(*this);
 
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
@@ -2488,7 +2488,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_child_on_subface(
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
-  cell_iterator                                     my_it(*this);
+  cell_iterator my_it(*this);
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
                                     std::bitset<3>>>::const_iterator
@@ -2502,7 +2502,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_child_on_subface(
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
   cell_iterator parent_nb_it = my_face_pair->second.first.first;
-  unsigned int  nb_face_num  = my_face_pair->second.first.second;
+  unsigned int nb_face_num   = my_face_pair->second.first.second;
   TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> nb_parent_face_it
     = parent_nb_it->face(nb_face_num);
   /*
@@ -2541,7 +2541,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
-  const int     my_face_index = this->face_index(i_face);
+  const int my_face_index = this->face_index(i_face);
   cell_iterator my_it(*this);
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
@@ -2555,8 +2555,8 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
    */
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
-  cell_iterator nb_it          = my_face_pair->second.first.first;
-  unsigned int  face_num_of_nb = my_face_pair->second.first.second;
+  cell_iterator nb_it         = my_face_pair->second.first.first;
+  unsigned int face_num_of_nb = my_face_pair->second.first.second;
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
                                     std::bitset<3>>>::const_iterator
@@ -2625,7 +2625,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_face_no(
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
-  cell_iterator                                     my_it(*this);
+  cell_iterator my_it(*this);
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
                                     std::bitset<3>>>::const_iterator
@@ -2665,7 +2665,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser(
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
-  cell_iterator                                     my_it(*this);
+  cell_iterator my_it(*this);
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
                                     std::bitset<3>>>::const_iterator
@@ -2678,8 +2678,8 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser(
    */
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
-  cell_iterator nb_it          = my_face_pair->second.first.first;
-  unsigned int  face_num_of_nb = my_face_pair->second.first.second;
+  cell_iterator nb_it         = my_face_pair->second.first.first;
+  unsigned int face_num_of_nb = my_face_pair->second.first.second;
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
                                     std::bitset<3>>>::const_iterator
@@ -2835,8 +2835,8 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
           Assert(total_children <= GeometryInfo<3>::max_children_per_face,
                  ExcInternalError());
 
-          unsigned int                                    neighbor_neighbor;
-          TriaIterator<CellAccessor<dim, spacedim>>       neighbor_child;
+          unsigned int neighbor_neighbor;
+          TriaIterator<CellAccessor<dim, spacedim>> neighbor_child;
           const TriaIterator<CellAccessor<dim, spacedim>> neighbor
             = this->neighbor(face);
 

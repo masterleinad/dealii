@@ -256,8 +256,8 @@ public:
    */
   DoFAccessor(const Triangulation<DoFHandlerType::dimension,
                                   DoFHandlerType::space_dimension>* tria,
-              const int                                             level,
-              const int                                             index,
+              const int level,
+              const int index,
               const DoFHandlerType* dof_handler);
 
   /**
@@ -411,7 +411,7 @@ public:
    */
   void
   get_dof_indices(std::vector<types::global_dof_index>& dof_indices,
-                  const unsigned int                    fe_index
+                  const unsigned int fe_index
                   = DoFHandlerType::default_fe_index) const;
 
   /**
@@ -421,18 +421,18 @@ public:
    * level this line lives on.
    */
   void
-  get_mg_dof_indices(const int                             level,
+  get_mg_dof_indices(const int level,
                      std::vector<types::global_dof_index>& dof_indices,
-                     const unsigned int                    fe_index
+                     const unsigned int fe_index
                      = DoFHandlerType::default_fe_index) const;
 
   /**
    * Set the level DoF indices that are returned by get_mg_dof_indices.
    */
   void
-  set_mg_dof_indices(const int                                   level,
+  set_mg_dof_indices(const int level,
                      const std::vector<types::global_dof_index>& dof_indices,
-                     const unsigned int                          fe_index
+                     const unsigned int fe_index
                      = DoFHandlerType::default_fe_index);
 
   /**
@@ -464,7 +464,7 @@ public:
    * see vertex_dof_index().
    */
   types::global_dof_index
-  mg_vertex_dof_index(const int          level,
+  mg_vertex_dof_index(const int level,
                       const unsigned int vertex,
                       const unsigned int i,
                       const unsigned int fe_index
@@ -665,14 +665,14 @@ protected:
    * fe_index has to match the result of active_fe_index().
    */
   void
-  set_dof_index(const unsigned int            i,
+  set_dof_index(const unsigned int i,
                 const types::global_dof_index index,
-                const unsigned int            fe_index
+                const unsigned int fe_index
                 = DoFHandlerType::default_fe_index) const;
 
   void
-  set_mg_dof_index(const int                     level,
-                   const unsigned int            i,
+  set_mg_dof_index(const int level,
+                   const unsigned int i,
                    const types::global_dof_index index) const;
 
   /**
@@ -693,18 +693,18 @@ protected:
    * fe_index has to match the result of active_fe_index().
    */
   void
-  set_vertex_dof_index(const unsigned int            vertex,
-                       const unsigned int            i,
+  set_vertex_dof_index(const unsigned int vertex,
+                       const unsigned int i,
                        const types::global_dof_index index,
-                       const unsigned int            fe_index
+                       const unsigned int fe_index
                        = DoFHandlerType::default_fe_index) const;
 
   void
-  set_mg_vertex_dof_index(const int                     level,
-                          const unsigned int            vertex,
-                          const unsigned int            i,
+  set_mg_vertex_dof_index(const int level,
+                          const unsigned int vertex,
+                          const unsigned int i,
                           const types::global_dof_index index,
-                          const unsigned int            fe_index
+                          const unsigned int fe_index
                           = DoFHandlerType::default_fe_index) const;
 
   /**
@@ -744,7 +744,7 @@ private:
  * @author Wolfgang Bangerth, 2010
  */
 template <template <int, int> class DoFHandlerType,
-          int  spacedim,
+          int spacedim,
           bool level_dof_access>
 class DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>
   : public TriaAccessor<0, 1, spacedim>
@@ -802,10 +802,10 @@ public:
    * This iterator can only be called for one-dimensional triangulations.
    */
   DoFAccessor(
-    const Triangulation<1, spacedim>*                       tria,
+    const Triangulation<1, spacedim>* tria,
     const typename TriaAccessor<0, 1, spacedim>::VertexKind vertex_kind,
-    const unsigned int                                      vertex_index,
-    const DoFHandlerType<1, spacedim>*                      dof_handler);
+    const unsigned int vertex_index,
+    const DoFHandlerType<1, spacedim>* dof_handler);
 
   /**
    * Constructor. This constructor exists in order to maintain interface
@@ -956,7 +956,7 @@ public:
    */
   void
   get_dof_indices(std::vector<types::global_dof_index>& dof_indices,
-                  const unsigned int                    fe_index
+                  const unsigned int fe_index
                   = AccessorData::default_fe_index) const;
 
   /**
@@ -966,9 +966,9 @@ public:
    * level this line lives on.
    */
   void
-  get_mg_dof_indices(const int                             level,
+  get_mg_dof_indices(const int level,
                      std::vector<types::global_dof_index>& dof_indices,
-                     const unsigned int                    fe_index
+                     const unsigned int fe_index
                      = AccessorData::default_fe_index) const;
 
   /**
@@ -1153,9 +1153,9 @@ protected:
    * fe_index has to match the result of active_fe_index().
    */
   void
-  set_dof_index(const unsigned int            i,
+  set_dof_index(const unsigned int i,
                 const types::global_dof_index index,
-                const unsigned int            fe_index
+                const unsigned int fe_index
                 = AccessorData::default_fe_index) const;
 
   /**
@@ -1176,10 +1176,10 @@ protected:
    * fe_index has to match the result of active_fe_index().
    */
   void
-  set_vertex_dof_index(const unsigned int            vertex,
-                       const unsigned int            i,
+  set_vertex_dof_index(const unsigned int vertex,
+                       const unsigned int i,
                        const types::global_dof_index index,
-                       const unsigned int            fe_index
+                       const unsigned int fe_index
                        = AccessorData::default_fe_index) const;
 
   /**
@@ -1245,10 +1245,10 @@ public:
    * semantic sense, and we generate an exception when such an object is
    * actually generated.
    */
-  DoFInvalidAccessor(const Triangulation<dim, spacedim>* parent     = 0,
-                     const int                           level      = -1,
-                     const int                           index      = -1,
-                     const AccessorData*                 local_data = 0);
+  DoFInvalidAccessor(const Triangulation<dim, spacedim>* parent = 0,
+                     const int level                            = -1,
+                     const int index                            = -1,
+                     const AccessorData* local_data             = 0);
 
   /**
    * Copy constructor.  This class is used for iterators that do not make
@@ -1272,9 +1272,9 @@ public:
    * all other functions in this class this function only throws an exception.
    */
   void
-  set_dof_index(const unsigned int            i,
+  set_dof_index(const unsigned int i,
                 const types::global_dof_index index,
-                const unsigned int            fe_index
+                const unsigned int fe_index
                 = DoFHandler<dim, spacedim>::default_fe_index) const;
 };
 
@@ -1348,8 +1348,8 @@ public:
    */
   DoFCellAccessor(const Triangulation<DoFHandlerType::dimension,
                                       DoFHandlerType::space_dimension>* tria,
-                  const int                                             level,
-                  const int                                             index,
+                  const int level,
+                  const int index,
                   const AccessorData* local_data);
 
   /**
@@ -1517,8 +1517,8 @@ public:
   template <class InputVector, typename ForwardIterator>
   void
   get_dof_values(const InputVector& values,
-                 ForwardIterator    local_values_begin,
-                 ForwardIterator    local_values_end) const;
+                 ForwardIterator local_values_begin,
+                 ForwardIterator local_values_end) const;
 
   /**
    * Return the values of the given vector restricted to the dofs of this cell
@@ -1539,9 +1539,9 @@ public:
   template <class InputVector, typename ForwardIterator>
   void
   get_dof_values(const ConstraintMatrix& constraints,
-                 const InputVector&      values,
-                 ForwardIterator         local_values_begin,
-                 ForwardIterator         local_values_end) const;
+                 const InputVector& values,
+                 ForwardIterator local_values_begin,
+                 ForwardIterator local_values_end) const;
 
   /**
    * This function is the counterpart to get_dof_values(): it takes a vector
@@ -1567,7 +1567,7 @@ public:
   template <class OutputVector, typename number>
   void
   set_dof_values(const Vector<number>& local_values,
-                 OutputVector&         values) const;
+                 OutputVector& values) const;
 
   /**
    * Return the interpolation of the given finite element function to the
@@ -1603,7 +1603,7 @@ public:
   template <class InputVector, typename number>
   void
   get_interpolated_dof_values(const InputVector& values,
-                              Vector<number>&    interpolated_values,
+                              Vector<number>& interpolated_values,
                               const unsigned int fe_index
                               = DoFHandlerType::default_fe_index) const;
 
@@ -1662,8 +1662,8 @@ public:
   template <class OutputVector, typename number>
   void
   set_dof_values_by_interpolation(const Vector<number>& local_values,
-                                  OutputVector&         values,
-                                  const unsigned int    fe_index
+                                  OutputVector& values,
+                                  const unsigned int fe_index
                                   = DoFHandlerType::default_fe_index) const;
 
   /**
@@ -1677,7 +1677,7 @@ public:
   template <typename number, typename OutputVector>
   void
   distribute_local_to_global(const Vector<number>& local_source,
-                             OutputVector&         global_destination) const;
+                             OutputVector& global_destination) const;
 
   /**
    * Distribute a local (cell based) vector in iterator format to a global one
@@ -1691,7 +1691,7 @@ public:
   void
   distribute_local_to_global(ForwardIterator local_source_begin,
                              ForwardIterator local_source_end,
-                             OutputVector&   global_destination) const;
+                             OutputVector& global_destination) const;
 
   /**
    * Distribute a local (cell based) vector in iterator format to a global one
@@ -1706,9 +1706,9 @@ public:
   template <typename ForwardIterator, typename OutputVector>
   void
   distribute_local_to_global(const ConstraintMatrix& constraints,
-                             ForwardIterator         local_source_begin,
-                             ForwardIterator         local_source_end,
-                             OutputVector&           global_destination) const;
+                             ForwardIterator local_source_begin,
+                             ForwardIterator local_source_end,
+                             OutputVector& global_destination) const;
 
   /**
    * This function does much the same as the
@@ -1728,9 +1728,9 @@ public:
   template <typename number, typename OutputMatrix, typename OutputVector>
   void
   distribute_local_to_global(const FullMatrix<number>& local_matrix,
-                             const Vector<number>&     local_vector,
-                             OutputMatrix&             global_matrix,
-                             OutputVector&             global_vector) const;
+                             const Vector<number>& local_vector,
+                             OutputMatrix& global_matrix,
+                             OutputVector& global_vector) const;
 
   /**
    * @}

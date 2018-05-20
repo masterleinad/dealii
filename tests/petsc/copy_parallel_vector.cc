@@ -30,7 +30,7 @@ main(int argc, char** argv)
   using namespace dealii;
 
   Utilities::MPI::MPI_InitFinalize mpi_context(argc, argv, 1);
-  MPILogInitAll                    mpi_log;
+  MPILogInitAll mpi_log;
 
   const auto rank            = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const auto n_mpi_processes = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);

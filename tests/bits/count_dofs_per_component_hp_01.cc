@@ -48,7 +48,7 @@ test()
   fe_collection.push_back(fe_system);
 
   hp::DoFHandler<dim> hp_dof_handler(triangulation);
-  DoFHandler<dim>     dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
 
   //distribute dofs
   hp_dof_handler.distribute_dofs(fe_collection);

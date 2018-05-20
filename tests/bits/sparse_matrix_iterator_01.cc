@@ -29,7 +29,7 @@ test()
         sp.add(i, j);
   sp.compress();
 
-  SparseMatrix<double>                 m(sp);
+  SparseMatrix<double> m(sp);
   SparseMatrix<double>::const_iterator i = m.begin();
   deallog << i->value() << std::endl;
   ++i;

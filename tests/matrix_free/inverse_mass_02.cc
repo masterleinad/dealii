@@ -45,9 +45,9 @@ public:
 
   void
   local_mass_operator(
-    const MatrixFree<dim, Number>&               data,
-    VectorType&                                  dst,
-    const VectorType&                            src,
+    const MatrixFree<dim, Number>& data,
+    VectorType& dst,
+    const VectorType& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, dim, Number> fe_eval(data);
@@ -67,15 +67,15 @@ public:
 
   void
   local_inverse_mass_operator(
-    const MatrixFree<dim, Number>&               data,
-    VectorType&                                  dst,
-    const VectorType&                            src,
+    const MatrixFree<dim, Number>& data,
+    VectorType& dst,
+    const VectorType& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, dim, Number> fe_eval(data);
     MatrixFreeOperators::CellwiseInverseMassMatrix<dim, fe_degree, dim, Number>
-                                           mass_inv(fe_eval);
-    const unsigned int                     n_q_points = fe_eval.n_q_points;
+      mass_inv(fe_eval);
+    const unsigned int n_q_points = fe_eval.n_q_points;
     AlignedVector<VectorizedArray<Number>> inverse_coefficients(n_q_points);
 
     for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
@@ -125,7 +125,7 @@ do_test(const DoFHandler<dim>& dof)
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, number>::AdditionalData::partition_color;
@@ -147,7 +147,7 @@ do_test(const DoFHandler<dim>& dof)
 
   mf.apply_inverse(inverse, in);
 
-  SolverControl      control(1000, 1e-12);
+  SolverControl control(1000, 1e-12);
   std::ostringstream stream;
   deallog.attach(stream);
   SolverCG<Vector<number>> solver(control);
@@ -180,8 +180,8 @@ test()
   tria.execute_coarsening_and_refinement();
 
   const unsigned int degree = fe_degree;
-  FESystem<dim>      fe(FE_DGQ<dim>(degree), dim);
-  DoFHandler<dim>    dof(tria);
+  FESystem<dim> fe(FE_DGQ<dim>(degree), dim);
+  DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
   do_test<dim, fe_degree, double>(dof);

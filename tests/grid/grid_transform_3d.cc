@@ -27,10 +27,10 @@
 int
 main()
 {
-  const unsigned int       dim = 3;
-  Point<dim>               origin;
+  const unsigned int dim = 3;
+  Point<dim> origin;
   CylindricalManifold<dim> boundary;
-  Triangulation<dim>       tria;
+  Triangulation<dim> tria;
   GridGenerator::cylinder(tria, 1, .7);
   tria.set_manifold(0, boundary);
   tria.refine_global(2);
@@ -62,7 +62,7 @@ main()
   tria.execute_coarsening_and_refinement();
 
   {
-    GridOut       grid_out;
+    GridOut grid_out;
     std::ofstream out("output_before.vtk");
     out.precision(5);
     out << std::fixed;
@@ -94,7 +94,7 @@ main()
       }
 
   {
-    GridOut       grid_out;
+    GridOut grid_out;
     std::ofstream out("output_after.vtk");
     out.precision(5);
     out << std::fixed;
@@ -103,7 +103,7 @@ main()
 
   GridTools::laplace_transform<dim>(new_points, tria, nullptr, true);
 
-  GridOut       grid_out;
+  GridOut grid_out;
   std::ofstream out("output");
   out.precision(5);
   out << std::fixed;

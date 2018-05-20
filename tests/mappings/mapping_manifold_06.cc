@@ -50,8 +50,8 @@ test()
   triangulation.set_manifold(0, manifold);
 
   MappingManifold<dim, spacedim> map_manifold;
-  FE_Q<dim, spacedim>            fe(1);
-  const QGauss<dim - 1>          quad(5);
+  FE_Q<dim, spacedim> fe(1);
+  const QGauss<dim - 1> quad(5);
 
   FEFaceValues<dim, spacedim> fe_v(
     map_manifold, fe, quad, update_quadrature_points | update_normal_vectors);

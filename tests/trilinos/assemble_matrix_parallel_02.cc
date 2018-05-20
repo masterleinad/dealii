@@ -84,9 +84,9 @@ namespace Assembly
         : assemble_reference(assemble_reference)
       {}
       std::vector<types::global_dof_index> local_dof_indices;
-      FullMatrix<double>                   local_matrix;
-      Vector<double>                       local_rhs;
-      const bool                           assemble_reference;
+      FullMatrix<double> local_matrix;
+      Vector<double> local_rhs;
+      const bool assemble_reference;
     };
   } // namespace Copy
 } // namespace Assembly
@@ -120,8 +120,8 @@ private:
   void
   local_assemble(const FilteredIterator<
                    typename DoFHandler<dim>::active_cell_iterator>& cell,
-                 Assembly::Scratch::Data<dim>&                      scratch,
-                 Assembly::Copy::Data&                              data);
+                 Assembly::Scratch::Data<dim>& scratch,
+                 Assembly::Copy::Data& data);
   void
   copy_local_to_global(const Assembly::Copy::Data& data);
 
@@ -133,8 +133,8 @@ private:
   parallel::distributed::Triangulation<dim> triangulation;
 
   DoFHandler<dim> dof_handler;
-  FE_Q<dim>       fe;
-  QGauss<dim>     quadrature;
+  FE_Q<dim> fe;
+  QGauss<dim> quadrature;
 
   ConstraintMatrix constraints;
 
@@ -242,7 +242,7 @@ LaplaceProblem<dim>::setup_system()
   constraints.close();
 
   typedef FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>
-             CellFilter;
+    CellFilter;
   CellFilter begin(IteratorFilters::LocallyOwnedCell(),
                    dof_handler.begin_active());
   CellFilter end(IteratorFilters::LocallyOwnedCell(), dof_handler.end());
@@ -267,7 +267,7 @@ LaplaceProblem<dim>::setup_system()
   }
   {
     TrilinosWrappers::SparsityPattern csp;
-    IndexSet                          relevant_set;
+    IndexSet relevant_set;
     DoFTools::extract_locally_relevant_dofs(dof_handler, relevant_set);
     csp.reinit(locally_owned, locally_owned, relevant_set, MPI_COMM_WORLD);
     DoFTools::make_sparsity_pattern(dof_handler, csp, constraints, false);
@@ -282,7 +282,7 @@ void
 LaplaceProblem<dim>::local_assemble(
   const FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>& cell,
   Assembly::Scratch::Data<dim>& scratch,
-  Assembly::Copy::Data&         data)
+  Assembly::Copy::Data& data)
 {
   const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
 
@@ -344,7 +344,7 @@ LaplaceProblem<dim>::assemble_reference()
   reference_matrix = 0;
   reference_rhs    = 0;
 
-  Assembly::Copy::Data         copy_data(true);
+  Assembly::Copy::Data copy_data(true);
   Assembly::Scratch::Data<dim> assembly_data(fe, quadrature);
 
   for(unsigned int color = 0; color < graph.size(); ++color)

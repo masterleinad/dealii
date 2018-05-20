@@ -57,13 +57,13 @@ private:
   solve();
 
   Triangulation<2> triangulation;
-  FE_Q<2>          fe;
-  DoFHandler<2>    dof_handler;
+  FE_Q<2> fe;
+  DoFHandler<2> dof_handler;
 
-  PETScWrappers::SparseMatrix             A, B;
+  PETScWrappers::SparseMatrix A, B;
   std::vector<PETScWrappers::MPI::Vector> x;
-  std::vector<double>                     lambda;
-  ConstraintMatrix                        constraints;
+  std::vector<double> lambda;
+  ConstraintMatrix constraints;
 
   TableHandler output_table;
 };
@@ -152,13 +152,13 @@ LaplaceEigenspectrumProblem::assemble_system()
 void
 LaplaceEigenspectrumProblem::solve()
 {
-  SolverControl                solver_control(1000, 1e-10);
+  SolverControl solver_control(1000, 1e-10);
   SLEPcWrappers::SolverArnoldi eigensolver(solver_control);
   eigensolver.set_which_eigenpairs(EPS_SMALLEST_REAL);
   eigensolver.solve(A, B, lambda, x, x.size());
 
   {
-    const double               precision = 1e-7;
+    const double precision = 1e-7;
     PETScWrappers::MPI::Vector Ax(x[0]), Bx(x[0]);
     for(unsigned int i = 0; i < x.size(); ++i)
       {

@@ -60,7 +60,7 @@ public:
 
   virtual double
   value(const dealii::Point<dim>& point,
-        const unsigned int        component = 0) const;
+        const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -78,10 +78,10 @@ template <int dim>
 void
 test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 {
-  Triangulation<dim>    triangulation;
-  hp::DoFHandler<dim>   dof_handler(triangulation);
+  Triangulation<dim> triangulation;
+  hp::DoFHandler<dim> dof_handler(triangulation);
   hp::FECollection<dim> fe_collection;
-  hp::QCollection<dim>  quadrature_formula;
+  hp::QCollection<dim> quadrature_formula;
 
   for(unsigned int p = poly_degree; p <= poly_degree + 3; p++)
     {
@@ -97,11 +97,11 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
   Vector<double> values(dof_handler.n_dofs());
 
   VectorTools::interpolate(dof_handler, func, values);
-  const unsigned int      N = 4;
+  const unsigned int N = 4;
   FESeries::Legendre<dim> legendre(N, fe_collection, quadrature_formula);
 
   Table<1, double> coeff_out(N);
-  Vector<double>   local_dof_values;
+  Vector<double> local_dof_values;
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active();
@@ -164,9 +164,9 @@ test_legendre_orthonormal(const unsigned int N)
         for(unsigned int q = 0; q < quadrature.size(); ++q)
           {
             const Point<dim>& x_q = quadrature.point(q);
-            const double      m   = 0.5;              // mid-point
-            const double      h   = 0.5;              // half-length
-            const double      x   = (x_q[0] - m) / h; // 1D only
+            const double m        = 0.5;              // mid-point
+            const double h        = 0.5;              // half-length
+            const double x        = (x_q[0] - m) / h; // 1D only
             Assert(std::fabs(x) < 1.0, dealii::ExcInternalError());
             const double L1 = std::sqrt(1.0 / h) * gsl_sf_legendre_Pl(k1, x);
             const double L2 = std::sqrt(1.0 / h) * gsl_sf_legendre_Pl(k2, x);

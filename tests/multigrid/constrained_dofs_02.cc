@@ -74,8 +74,8 @@ setup_tria(parallel::distributed::Triangulation<dim>& triangulation)
 template <typename DoFHandlerType>
 void
 extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
-                                  const unsigned int    level,
-                                  IndexSet&             dof_set)
+                                  const unsigned int level,
+                                  IndexSet& dof_set)
 {
   dof_set = IndexSet(dof_handler.n_dofs(level));
 
@@ -125,7 +125,7 @@ check_fe(FiniteElement<dim>& fe)
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   setup_tria(tr);
 
-  Functions::ZeroFunction<dim>    zero;
+  Functions::ZeroFunction<dim> zero;
   typename FunctionMap<dim>::type fmap;
   fmap.insert(std::make_pair(0, &zero));
 
@@ -176,7 +176,7 @@ check_fe(FiniteElement<dim>& fe)
       }
 
     typename FunctionMap<dim>::type dirichlet_boundary;
-    Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+    Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
     dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
     mg_constrained_dofs_ref.initialize(dofhref, dirichlet_boundary);
   }
@@ -184,7 +184,7 @@ check_fe(FiniteElement<dim>& fe)
   MGConstrainedDoFs mg_constrained_dofs;
 
   typename FunctionMap<dim>::type dirichlet_boundary;
-  Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+  Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
   dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
   mg_constrained_dofs.initialize(dofh, dirichlet_boundary);
 
@@ -247,7 +247,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log(true);
+  MPILogInitAll log(true);
 
   check<2>();
   //check<3> ();

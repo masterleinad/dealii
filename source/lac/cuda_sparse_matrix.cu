@@ -30,8 +30,8 @@ namespace CUDAWrappers
   {
     template <typename Number>
     __global__ void
-    scale(Number*                                        val,
-          const Number                                   a,
+    scale(Number* val,
+          const Number a,
           const typename SparseMatrix<Number>::size_type N)
     {
       const typename SparseMatrix<Number>::size_type idx
@@ -41,21 +41,21 @@ namespace CUDAWrappers
     }
 
     void
-    csrmv(cusparseHandle_t         handle,
-          bool                     transpose,
-          int                      m,
-          int                      n,
-          int                      nnz,
+    csrmv(cusparseHandle_t handle,
+          bool transpose,
+          int m,
+          int n,
+          int nnz,
           const cusparseMatDescr_t descr,
-          const float*             A_val_dev,
-          const int*               A_row_ptr_dev,
-          const int*               A_column_index_dev,
-          const float*             x,
-          bool                     add,
-          float*                   y)
+          const float* A_val_dev,
+          const int* A_row_ptr_dev,
+          const int* A_column_index_dev,
+          const float* x,
+          bool add,
+          float* y)
     {
-      float               alpha = 1.;
-      float               beta  = add ? 1. : 0.;
+      float alpha = 1.;
+      float beta  = add ? 1. : 0.;
       cusparseOperation_t cusparse_operation
         = transpose ? CUSPARSE_OPERATION_TRANSPOSE :
                       CUSPARSE_OPERATION_NON_TRANSPOSE;
@@ -78,21 +78,21 @@ namespace CUDAWrappers
     }
 
     void
-    csrmv(cusparseHandle_t         handle,
-          bool                     transpose,
-          int                      m,
-          int                      n,
-          int                      nnz,
+    csrmv(cusparseHandle_t handle,
+          bool transpose,
+          int m,
+          int n,
+          int nnz,
           const cusparseMatDescr_t descr,
-          const double*            A_val_dev,
-          const int*               A_row_ptr_dev,
-          const int*               A_column_index_dev,
-          const double*            x,
-          bool                     add,
-          double*                  y)
+          const double* A_val_dev,
+          const int* A_row_ptr_dev,
+          const int* A_column_index_dev,
+          const double* x,
+          bool add,
+          double* y)
     {
-      double              alpha = 1.;
-      double              beta  = add ? 1. : 0.;
+      double alpha = 1.;
+      double beta  = add ? 1. : 0.;
       cusparseOperation_t cusparse_operation
         = transpose ? CUSPARSE_OPERATION_TRANSPOSE :
                       CUSPARSE_OPERATION_NON_TRANSPOSE;
@@ -117,10 +117,10 @@ namespace CUDAWrappers
     template <typename Number>
     __global__ void
     l1_norm(const typename SparseMatrix<Number>::size_type n_rows,
-            const Number*                                  val_dev,
-            const int*                                     column_index_dev,
-            const int*                                     row_ptr_dev,
-            Number*                                        sums)
+            const Number* val_dev,
+            const int* column_index_dev,
+            const int* row_ptr_dev,
+            Number* sums)
     {
       const typename SparseMatrix<Number>::size_type row
         = threadIdx.x + blockIdx.x * blockDim.x;
@@ -136,10 +136,10 @@ namespace CUDAWrappers
     template <typename Number>
     __global__ void
     linfty_norm(const typename SparseMatrix<Number>::size_type n_rows,
-                const Number*                                  val_dev,
-                const int*                                     column_index_dev,
-                const int*                                     row_ptr_dev,
-                Number*                                        sums)
+                const Number* val_dev,
+                const int* column_index_dev,
+                const int* row_ptr_dev,
+                Number* sums)
     {
       const typename SparseMatrix<Number>::size_type row
         = threadIdx.x + blockIdx.x * blockDim.x;
@@ -165,7 +165,7 @@ namespace CUDAWrappers
 
   template <typename Number>
   SparseMatrix<Number>::SparseMatrix(
-    Utilities::CUDA::Handle&              handle,
+    Utilities::CUDA::Handle& handle,
     const ::dealii::SparseMatrix<Number>& sparse_matrix_host)
     : val_dev(nullptr),
       column_index_dev(nullptr),
@@ -234,14 +234,14 @@ namespace CUDAWrappers
   template <typename Number>
   void
   SparseMatrix<Number>::reinit(
-    Utilities::CUDA::Handle&              handle,
+    Utilities::CUDA::Handle& handle,
     const ::dealii::SparseMatrix<Number>& sparse_matrix_host)
   {
-    cusparse_handle                  = handle.cusparse_handle;
-    nnz                              = sparse_matrix_host.n_nonzero_elements();
-    n_rows                           = sparse_matrix_host.m();
-    n_cols                           = sparse_matrix_host.n();
-    unsigned int const  row_ptr_size = n_rows + 1;
+    cusparse_handle                 = handle.cusparse_handle;
+    nnz                             = sparse_matrix_host.n_nonzero_elements();
+    n_rows                          = sparse_matrix_host.m();
+    n_cols                          = sparse_matrix_host.n();
+    unsigned int const row_ptr_size = n_rows + 1;
     std::vector<Number> val;
     val.reserve(nnz);
     std::vector<int> column_index;
@@ -252,7 +252,7 @@ namespace CUDAWrappers
     // reordering
     for(int row = 0; row < n_rows; ++row)
       {
-        auto         p_end   = sparse_matrix_host.end(row);
+        auto p_end           = sparse_matrix_host.end(row);
         unsigned int counter = 0;
         for(auto p = sparse_matrix_host.begin(row); p != p_end; ++p)
           {
@@ -263,10 +263,10 @@ namespace CUDAWrappers
         row_ptr[row + 1] = row_ptr[row] + counter;
 
         // Sort the elements in the row
-        unsigned int const offset     = row_ptr[row];
-        int const          diag_index = column_index[offset];
-        Number             diag_elem  = sparse_matrix_host.diag_element(row);
-        unsigned int       pos        = 1;
+        unsigned int const offset = row_ptr[row];
+        int const diag_index      = column_index[offset];
+        Number diag_elem          = sparse_matrix_host.diag_element(row);
+        unsigned int pos          = 1;
         while((column_index[offset + pos] < row) && (pos < counter))
           {
             val[offset + pos - 1]          = val[offset + pos];
@@ -350,7 +350,7 @@ namespace CUDAWrappers
   template <typename Number>
   void
   SparseMatrix<Number>::vmult(
-    LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
     const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const
   {
     internal::csrmv(cusparse_handle,
@@ -370,7 +370,7 @@ namespace CUDAWrappers
   template <typename Number>
   void
   SparseMatrix<Number>::Tvmult(
-    LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
     const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const
   {
     internal::csrmv(cusparse_handle,
@@ -390,7 +390,7 @@ namespace CUDAWrappers
   template <typename Number>
   void
   SparseMatrix<Number>::vmult_add(
-    LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
     const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const
   {
     internal::csrmv(cusparse_handle,
@@ -410,7 +410,7 @@ namespace CUDAWrappers
   template <typename Number>
   void
   SparseMatrix<Number>::Tvmult_add(
-    LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
     const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const
   {
     internal::csrmv(cusparse_handle,
@@ -453,7 +453,7 @@ namespace CUDAWrappers
   template <typename Number>
   Number
   SparseMatrix<Number>::residual(
-    LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
+    LinearAlgebra::CUDAWrappers::Vector<Number>& dst,
     const LinearAlgebra::CUDAWrappers::Vector<Number>& x,
     const LinearAlgebra::CUDAWrappers::Vector<Number>& b) const
   {

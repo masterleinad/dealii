@@ -32,7 +32,7 @@ main()
   SphericalManifold<2> m0(c0);
   SphericalManifold<2> m1(c1);
 
-  Triangulation<2>          tria;
+  Triangulation<2> tria;
   std::vector<unsigned int> subdivisions(2);
   subdivisions[0] = 4;
   subdivisions[1] = 1;

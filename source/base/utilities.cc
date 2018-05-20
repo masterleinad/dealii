@@ -117,7 +117,7 @@ namespace Utilities
     if(from.empty())
       return input;
 
-    std::string            out = input;
+    std::string out            = input;
     std::string::size_type pos = out.find(from);
 
     while(pos != std::string::npos)
@@ -306,9 +306,9 @@ namespace Utilities
   std::vector<std::string>
   break_text_into_lines(const std::string& original_text,
                         const unsigned int width,
-                        const char         delimiter)
+                        const char delimiter)
   {
-    std::string              text = original_text;
+    std::string text = original_text;
     std::vector<std::string> lines;
 
     // remove trailing spaces
@@ -614,8 +614,8 @@ namespace Utilities
       // VmHWM, so we use /status instead.
 #if defined(__linux__)
       std::ifstream file("/proc/self/status");
-      std::string   line;
-      std::string   name;
+      std::string line;
+      std::string name;
       while(!file.eof())
         {
           file >> name;
@@ -641,7 +641,7 @@ namespace Utilities
     {
 #if defined(DEAL_II_HAVE_UNISTD_H) && defined(DEAL_II_HAVE_GETHOSTNAME)
       const unsigned int N = 1024;
-      char               hostname[N];
+      char hostname[N];
       gethostname(&(hostname[0]), N - 1);
 #else
       std::string hostname("unknown");
@@ -653,7 +653,7 @@ namespace Utilities
     get_time()
     {
       std::time_t time1 = std::time(nullptr);
-      std::tm*    time  = std::localtime(&time1);
+      std::tm* time     = std::localtime(&time1);
 
       std::ostringstream o;
       o << time->tm_hour << ":" << (time->tm_min < 10 ? "0" : "")
@@ -667,7 +667,7 @@ namespace Utilities
     get_date()
     {
       std::time_t time1 = std::time(nullptr);
-      std::tm*    time  = std::localtime(&time1);
+      std::tm* time     = std::localtime(&time1);
 
       std::ostringstream o;
       o << time->tm_year + 1900 << "/" << time->tm_mon + 1 << "/"

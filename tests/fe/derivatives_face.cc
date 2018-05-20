@@ -30,14 +30,14 @@
 
 template <int dim>
 inline void
-plot_derivatives(Mapping<dim>&       mapping,
+plot_derivatives(Mapping<dim>& mapping,
                  FiniteElement<dim>& finel,
-                 const char*         name)
+                 const char* name)
 {
   deallog.push(name);
 
   Triangulation<dim> tr;
-  DoFHandler<dim>    dof(tr);
+  DoFHandler<dim> dof(tr);
   GridGenerator::hyper_cube(tr);
   typename DoFHandler<dim>::cell_iterator c = dof.begin();
   dof.distribute_dofs(finel);
@@ -85,7 +85,7 @@ void
 plot_FE_DGQ_shape_functions()
 {
   MappingQGeneric<dim> m(1);
-  FE_DGQ<dim>          q1(1);
+  FE_DGQ<dim> q1(1);
   plot_derivatives(m, q1, "DGQ1");
   FE_DGQ<dim> q2(2);
   plot_derivatives(m, q2, "DGQ2");

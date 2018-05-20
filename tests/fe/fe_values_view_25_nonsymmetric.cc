@@ -42,7 +42,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     fe_function(i) = i + 1;
 
   const QGauss<dim> quadrature(2);
-  FEValues<dim>     fe_values(fe,
+  FEValues<dim> fe_values(fe,
                           quadrature,
                           update_values | update_gradients
                             | update_quadrature_points);
@@ -50,7 +50,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   // let the FEValues object compute the
   // divergences at quadrature points
-  std::vector<Tensor<1, dim>>   divergences(quadrature.size());
+  std::vector<Tensor<1, dim>> divergences(quadrature.size());
   FEValuesExtractors::Tensor<2> extractor(0);
   fe_values[extractor].get_function_divergences(fe_function, divergences);
 

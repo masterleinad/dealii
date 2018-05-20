@@ -34,7 +34,7 @@ test()
   Triangulation<1, spacedim> tria;
   GridGenerator::hyper_cube(tria);
 
-  FESystem<1, spacedim>   fe(FE_Q<1, spacedim>(2), 2, FE_Q<1, spacedim>(1), 1);
+  FESystem<1, spacedim> fe(FE_Q<1, spacedim>(2), 2, FE_Q<1, spacedim>(1), 1);
   DoFHandler<1, spacedim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

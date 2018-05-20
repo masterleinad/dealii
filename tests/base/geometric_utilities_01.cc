@@ -94,7 +94,7 @@ test3d()
   print<3>(to_spherical(y), sy);
   print<3>(to_spherical(z), sz);
 
-  const Point<3>        dateline(0, -1, 0);
+  const Point<3> dateline(0, -1, 0);
   std::array<double, 3> sdateline;
   sdateline[0] = 1.;
   sdateline[1] = 3 * numbers::PI / 2;

@@ -52,7 +52,7 @@ test()
             << particle.get_reference_location() << std::endl
             << "Particle index: " << particle.get_id() << std::endl;
 
-    std::stringstream             stream;
+    std::stringstream stream;
     boost::archive::text_oarchive archive(stream);
 
     archive << particle;

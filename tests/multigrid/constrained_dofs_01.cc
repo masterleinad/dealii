@@ -68,7 +68,7 @@ check_fe(FiniteElement<dim>& fe)
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   setup_tria(tr);
 
-  Functions::ZeroFunction<dim>    zero;
+  Functions::ZeroFunction<dim> zero;
   typename FunctionMap<dim>::type fmap;
   fmap.insert(std::make_pair(0, &zero));
 
@@ -119,7 +119,7 @@ check_fe(FiniteElement<dim>& fe)
       }
 
     typename FunctionMap<dim>::type dirichlet_boundary;
-    Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+    Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
     dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
     mg_constrained_dofs_ref.initialize(dofhref, dirichlet_boundary);
   }
@@ -127,7 +127,7 @@ check_fe(FiniteElement<dim>& fe)
   MGConstrainedDoFs mg_constrained_dofs;
 
   typename FunctionMap<dim>::type dirichlet_boundary;
-  Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+  Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
   dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
   mg_constrained_dofs.initialize(dofh, dirichlet_boundary);
 
@@ -185,7 +185,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   check<2>();
   //check<3> ();

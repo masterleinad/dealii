@@ -94,20 +94,20 @@ void create_triangulation(Triangulation<3>& triangulation)
 }
 
 void
-evaluate(const FE_Nedelec<3>&  fe,
-         const DoFHandler<3>&  dof_handler_ref,
+evaluate(const FE_Nedelec<3>& fe,
+         const DoFHandler<3>& dof_handler_ref,
          const Vector<double>& u_ref,
-         const DoFHandler<3>&  dof_handler,
+         const DoFHandler<3>& dof_handler,
          const Vector<double>& u)
 {
   const FEValuesExtractors::Vector component(0);
-  const QGauss<3>                  quadrature(2);
-  const unsigned int               n_q_points = quadrature.size();
-  Functions::FEFieldFunction<3>    fe_field_function(dof_handler, u);
-  FEValues<3>                      fe_values(
+  const QGauss<3> quadrature(2);
+  const unsigned int n_q_points = quadrature.size();
+  Functions::FEFieldFunction<3> fe_field_function(dof_handler, u);
+  FEValues<3> fe_values(
     fe, quadrature, update_quadrature_points | update_values);
   std::vector<Vector<double>> values(n_q_points, Vector<double>(3));
-  std::vector<Tensor<1, 3>>   values_ref(n_q_points);
+  std::vector<Tensor<1, 3>> values_ref(n_q_points);
 
   for(DoFHandler<3>::active_cell_iterator cell = dof_handler_ref.begin_active();
       cell != dof_handler_ref.end();
@@ -137,9 +137,9 @@ set_reference_solution(Vector<double>& vector)
 }
 
 void
-set_solution(Vector<double>&       vector,
-             const DoFHandler<3>&  dof_handler,
-             const DoFHandler<3>&  dof_handler_ref,
+set_solution(Vector<double>& vector,
+             const DoFHandler<3>& dof_handler,
+             const DoFHandler<3>& dof_handler_ref,
              const Vector<double>& u_ref)
 {
   ConstraintMatrix constraints;

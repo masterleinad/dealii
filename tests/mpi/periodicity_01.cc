@@ -85,8 +85,8 @@ namespace Step40
     void
     refine_grid();
     void
-    get_point_value(const Point<dim>     point,
-                    const int            proc,
+    get_point_value(const Point<dim> point,
+                    const int proc,
                     Vector<PetscScalar>& value) const;
     void
     check_periodicity(const unsigned int cycle) const;
@@ -98,7 +98,7 @@ namespace Step40
     parallel::distributed::Triangulation<dim> triangulation;
 
     DoFHandler<dim> dof_handler;
-    FE_Q<dim>       fe;
+    FE_Q<dim> fe;
 
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
@@ -106,8 +106,8 @@ namespace Step40
     ConstraintMatrix constraints;
 
     PETScWrappers::MPI::SparseMatrix system_matrix;
-    PETScWrappers::MPI::Vector       locally_relevant_solution;
-    PETScWrappers::MPI::Vector       system_rhs;
+    PETScWrappers::MPI::Vector locally_relevant_solution;
+    PETScWrappers::MPI::Vector system_rhs;
 
     ConditionalOStream pcout;
   };
@@ -190,7 +190,7 @@ namespace Step40
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<PetscScalar> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<PetscScalar>     cell_rhs(dofs_per_cell);
+    Vector<PetscScalar> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -299,8 +299,8 @@ namespace Step40
 
   template <int dim>
   void
-  LaplaceProblem<dim>::get_point_value(const Point<dim>     point,
-                                       const int            proc,
+  LaplaceProblem<dim>::get_point_value(const Point<dim> point,
+                                       const int proc,
                                        Vector<PetscScalar>& value) const
   {
     typename DoFHandler<dim>::active_cell_iterator cell

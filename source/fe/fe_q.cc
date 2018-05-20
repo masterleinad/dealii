@@ -82,8 +82,8 @@ FE_Q<dim, spacedim>::get_name() const
   // particular format of the string this function returns, so they have to be
   // kept in synch
 
-  std::ostringstream  namebuf;
-  bool                equidistant = true;
+  std::ostringstream namebuf;
+  bool equidistant = true;
   std::vector<double> points(this->degree + 1);
 
   // Decode the support points in one coordinate direction.
@@ -113,7 +113,7 @@ FE_Q<dim, spacedim>::get_name() const
     {
       // Check whether the support points come from QGaussLobatto.
       const QGaussLobatto<1> points_gl(this->degree + 1);
-      bool                   gauss_lobatto = true;
+      bool gauss_lobatto = true;
       for(unsigned int j = 0; j <= this->degree; j++)
         if(points[j] != points_gl.point(j)(0))
           {
@@ -134,7 +134,7 @@ template <int dim, int spacedim>
 void
 FE_Q<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
   const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  std::vector<double>& nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());

@@ -91,7 +91,7 @@ namespace TrilinosWrappers
     }
 
     Vector::Vector(const IndexSet& parallel_partitioner,
-                   const Vector&   v,
+                   const Vector& v,
                    const MPI_Comm& communicator)
       : Vector()
     {
@@ -169,8 +169,8 @@ namespace TrilinosWrappers
 
     void
     Vector::reinit(const Vector& v,
-                   const bool    omit_zeroing_entries,
-                   const bool    allow_different_maps)
+                   const bool omit_zeroing_entries,
+                   const bool allow_different_maps)
     {
       nonlocal_vector.reset();
 
@@ -329,7 +329,7 @@ namespace TrilinosWrappers
     Vector::reinit(const IndexSet& locally_owned_entries,
                    const IndexSet& ghost_entries,
                    const MPI_Comm& communicator,
-                   const bool      vector_writable)
+                   const bool vector_writable)
     {
       nonlocal_vector.reset();
       owned_elements = locally_owned_entries;
@@ -485,7 +485,7 @@ namespace TrilinosWrappers
 
     void
     Vector::import_nonlocal_data_for_fe(const TrilinosWrappers::SparseMatrix& m,
-                                        const Vector&                         v)
+                                        const Vector& v)
     {
       Assert(m.trilinos_matrix().Filled() == true,
              ExcMessage("Matrix is not compressed. "
@@ -499,7 +499,7 @@ namespace TrilinosWrappers
           m.trilinos_matrix().ColMap());
 
       Epetra_Import data_exchange(vector->Map(), v.vector->Map());
-      const int     ierr = vector->Import(*v.vector, data_exchange, Insert);
+      const int ierr = vector->Import(*v.vector, data_exchange, Insert);
 
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
@@ -537,7 +537,7 @@ namespace TrilinosWrappers
       // check that every process has decided to use the same mode. This will
       // otherwise result in undefined behaviour in the call to
       // GlobalAssemble().
-      double                double_mode = mode;
+      double double_mode = mode;
       const Epetra_MpiComm* comm_ptr
         = dynamic_cast<const Epetra_MpiComm*>(&(vector_partitioner().Comm()));
       Assert(comm_ptr != nullptr, ExcInternalError());
@@ -606,7 +606,7 @@ namespace TrilinosWrappers
 
 #  if DEAL_II_TRILINOS_VERSION_GTE(11, 11, 0)
           Epetra_Import data_exchange(vector->Map(), v.vector->Map());
-          int           ierr
+          int ierr
             = vector->Import(*v.vector, data_exchange, Epetra_AddLocalAlso);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
           last_action = Add;
@@ -615,7 +615,7 @@ namespace TrilinosWrappers
           // Hence, we provide a workaround in this case
 
           Epetra_MultiVector dummy(vector->Map(), 1, false);
-          Epetra_Import      data_exchange(dummy.Map(), v.vector->Map());
+          Epetra_Import data_exchange(dummy.Map(), v.vector->Map());
 
           int ierr = dummy.Import(*v.vector, data_exchange, Insert);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
@@ -654,9 +654,9 @@ namespace TrilinosWrappers
     {
       // get a representation of the vector and
       // loop over all the elements
-      TrilinosScalar*       start_ptr = (*vector)[0];
+      TrilinosScalar* start_ptr = (*vector)[0];
       const TrilinosScalar *ptr = start_ptr, *eptr = start_ptr + local_size();
-      unsigned int          flag = 0;
+      unsigned int flag = 0;
       while(ptr != eptr)
         {
           if(*ptr != 0)
@@ -694,7 +694,7 @@ namespace TrilinosWrappers
       // get a representation of the vector and
       // loop over all the elements
       TrilinosScalar* start_ptr;
-      int             leading_dimension;
+      int leading_dimension;
       int ierr = vector->ExtractView(&start_ptr, &leading_dimension);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
@@ -703,7 +703,7 @@ namespace TrilinosWrappers
       // this. Find out a better way to
       // this in that case.
       const TrilinosScalar *ptr = start_ptr, *eptr = start_ptr + size();
-      bool                  flag = true;
+      bool flag = true;
       while(ptr != eptr)
         {
           if(*ptr < 0.0)
@@ -718,10 +718,10 @@ namespace TrilinosWrappers
     }
 
     void
-    Vector::print(std::ostream&      out,
+    Vector::print(std::ostream& out,
                   const unsigned int precision,
-                  const bool         scientific,
-                  const bool         across) const
+                  const bool scientific,
+                  const bool across) const
     {
       AssertThrow(out, ExcIO());
       boost::io::ios_flags_saver restore_flags(out);
@@ -747,8 +747,8 @@ namespace TrilinosWrappers
       else
         {
           TrilinosScalar* val;
-          int             leading_dimension;
-          int             ierr = vector->ExtractView(&val, &leading_dimension);
+          int leading_dimension;
+          int ierr = vector->ExtractView(&val, &leading_dimension);
 
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
           if(across)

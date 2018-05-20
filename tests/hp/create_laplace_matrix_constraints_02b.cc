@@ -73,7 +73,7 @@ check()
   // formula suited to the elements
   // we have here
   MappingQ<dim> mapping(3);
-  QGauss<dim>   quadrature(6);
+  QGauss<dim> quadrature(6);
 
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);

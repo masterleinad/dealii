@@ -23,7 +23,7 @@
 void
 test()
 {
-  IndexSet      rel;
+  IndexSet rel;
   std::ifstream f(SOURCE_DIR "/constraints_01/is.23");
   rel.read(f);
 

@@ -51,9 +51,9 @@ public:
              update_values | update_gradients | update_JxW_values){};
 
   void
-  operator()(const MatrixFree<dim, Number>&               data,
-             VectorType&                                  dst,
-             const VectorType&                            src,
+  operator()(const MatrixFree<dim, Number>& data,
+             VectorType& dst,
+             const VectorType& src,
              const std::pair<unsigned int, unsigned int>& cell_range) const;
 
   void
@@ -73,23 +73,23 @@ public:
 
 private:
   const MatrixFree<dim, Number>& data;
-  mutable FEValues<dim>          fe_val;
+  mutable FEValues<dim> fe_val;
 };
 
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
 operator()(const MatrixFree<dim, Number>& data,
-           std::vector<Vector<Number>*>&  dst,
+           std::vector<Vector<Number>*>& dst,
            const std::vector<Vector<Number>*>&,
            const std::pair<unsigned int, unsigned int>& cell_range) const
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
-  const unsigned int                     n_q_points    = fe_eval.n_q_points;
-  const unsigned int                     dofs_per_cell = fe_eval.dofs_per_cell;
+  const unsigned int n_q_points    = fe_eval.n_q_points;
+  const unsigned int dofs_per_cell = fe_eval.dofs_per_cell;
   AlignedVector<VectorizedArray<Number>> values(n_q_points);
   AlignedVector<VectorizedArray<Number>> gradients(dim * n_q_points);
-  std::vector<types::global_dof_index>   dof_indices(dofs_per_cell);
+  std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
   for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval.reinit(cell);
@@ -140,9 +140,9 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  typedef double               number;
+  typedef double number;
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -178,7 +178,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   deallog << "Testing " << fe.get_name() << std::endl;
@@ -200,8 +200,8 @@ test()
   }
 
   MatrixFreeTest<dim, fe_degree, number> mf(mf_data);
-  Vector<number>                         solution(dof.n_dofs());
-  Vector<number>                         solution_dist(dof.n_dofs());
+  Vector<number> solution(dof.n_dofs());
+  Vector<number> solution_dist(dof.n_dofs());
 
   mf.test_functions(solution_dist, solution);
 

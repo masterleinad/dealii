@@ -32,8 +32,8 @@ main()
   write_STEP(sh, "tmp.step");
   std::ifstream in("tmp.step");
   std::ofstream out("output");
-  std::string   line;
-  unsigned int  counter = 0;
+  std::string line;
+  unsigned int counter = 0;
 
   while(std::getline(in, line))
     {

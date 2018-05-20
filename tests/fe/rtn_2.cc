@@ -37,17 +37,17 @@ void
 plot_shape_functions(const unsigned int degree)
 {
   FE_RaviartThomasNodal<dim> fe_rt(degree);
-  Triangulation<dim>         tr;
+  Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr, 0., 1.);
 
-  DoFHandler<dim>                         dof(tr);
+  DoFHandler<dim> dof(tr);
   typename DoFHandler<dim>::cell_iterator c = dof.begin();
   dof.distribute_dofs(fe_rt);
 
-  QTrapez<1>         q_trapez;
+  QTrapez<1> q_trapez;
   const unsigned int div = 10;
-  QIterated<dim>     q(q_trapez, div);
-  FEValues<dim>      fe(
+  QIterated<dim> q(q_trapez, div);
+  FEValues<dim> fe(
     fe_rt, q, update_values | update_gradients | update_quadrature_points);
   fe.reinit(c);
 

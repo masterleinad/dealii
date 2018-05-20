@@ -54,17 +54,17 @@ class MatrixFreeTest
 {
 public:
   typedef typename DoFHandler<dim>::active_cell_iterator CellIterator;
-  typedef double                                         Number;
+  typedef double Number;
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              VectorType&                                  dst,
-              const VectorType&                            src,
+  local_apply(const MatrixFree<dim, Number>& data,
+              VectorType& dst,
+              const VectorType& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
-    typedef VectorizedArray<Number>                    vector_t;
+    typedef VectorizedArray<Number> vector_t;
     FEEvaluation<dim, degree, degree + 1, dim, Number> phi(data);
     vector_t coeff = make_vectorized_array(global_coefficient);
 
@@ -117,8 +117,8 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe_sca(QGaussLobatto<1>(fe_degree + 1));
-  FESystem<dim>   fe(fe_sca, dim);
+  FE_Q<dim> fe_sca(QGaussLobatto<1>(fe_degree + 1));
+  FESystem<dim> fe(fe_sca, dim);
   DoFHandler<dim> dof_handler_sca(tria);
   DoFHandler<dim> dof_handler(tria);
 
@@ -126,11 +126,11 @@ test()
 
   ConstraintMatrix constraints;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> system_matrix;
 
-  BlockVector<double>         solution;
-  BlockVector<double>         system_rhs;
+  BlockVector<double> solution;
+  BlockVector<double> system_rhs;
   std::vector<Vector<double>> vec1, vec2;
 
   dof_handler.distribute_dofs(fe);
@@ -251,7 +251,7 @@ test()
 
   system_matrix.vmult(solution, system_rhs);
 
-  typedef std::vector<Vector<double>>        VectorType;
+  typedef std::vector<Vector<double>> VectorType;
   MatrixFreeTest<dim, fe_degree, VectorType> mf(mf_data);
   mf.vmult(vec2, vec1);
 

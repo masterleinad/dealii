@@ -757,7 +757,7 @@ block_diagonal_operator(
                 "one block");
 
   typedef typename BlockLinearOperator<Range, Domain, BlockPayload>::BlockType
-                           BlockType;
+    BlockType;
   std::array<BlockType, m> new_ops;
   new_ops.fill(op);
 
@@ -861,7 +861,7 @@ block_forward_substitution(
         if(m == 0)
           return;
 
-        GrowingVectorMemory<typename Range::BlockType>            vector_memory;
+        GrowingVectorMemory<typename Range::BlockType> vector_memory;
         typename VectorMemory<typename Range::BlockType>::Pointer tmp(
           vector_memory);
 
@@ -930,7 +930,7 @@ block_back_substitution(
   return_op.reinit_range_vector  = diagonal_inverse.reinit_range_vector;
   return_op.reinit_domain_vector = diagonal_inverse.reinit_domain_vector;
 
-  return_op.vmult = [block_operator, diagonal_inverse](Range&       v,
+  return_op.vmult = [block_operator, diagonal_inverse](Range& v,
                                                        const Range& u) {
     const unsigned int m = block_operator.n_block_rows();
     Assert(block_operator.n_block_cols() == m,
@@ -971,7 +971,7 @@ block_back_substitution(
                ExcDimensionMismatch(diagonal_inverse.n_block_cols(), m));
         Assert(v.n_blocks() == m, ExcDimensionMismatch(v.n_blocks(), m));
         Assert(u.n_blocks() == m, ExcDimensionMismatch(u.n_blocks(), m));
-        GrowingVectorMemory<typename Range::BlockType>            vector_memory;
+        GrowingVectorMemory<typename Range::BlockType> vector_memory;
         typename VectorMemory<typename Range::BlockType>::Pointer tmp(
           vector_memory);
 

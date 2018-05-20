@@ -35,7 +35,7 @@ template <typename NumberType>
 void
 test(const unsigned int block_size, const NumberType tol)
 {
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(mpi_communicator));
   const unsigned int this_mpi_process(
@@ -131,9 +131,9 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> blocks     = {{1, 2}};
-  const double                    tol_double = 1e-10;
-  const float                     tol_float  = 1e-5;
+  const std::vector<unsigned int> blocks = {{1, 2}};
+  const double tol_double                = 1e-10;
+  const float tol_float                  = 1e-5;
 
   for(const auto& b : blocks)
     test<double>(b, tol_double);

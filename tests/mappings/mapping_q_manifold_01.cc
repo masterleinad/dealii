@@ -143,7 +143,7 @@ VectorFunction<dim>::value(const Point<dim>& p, Vector<double>& values) const
 template <int dim>
 void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+                                  Vector<double>& values) const
 {
   for(int i = 0; i < dim; ++i)
     values(i) = value(p, i);
@@ -176,7 +176,7 @@ test(const FiniteElement<dim>& fe)
   deallog << "dim: " << dim << "\t" << fe.get_name() << std::endl;
   deallog << "Mapping degree\t||u-u_h||" << std::endl;
 
-  Geometry<dim>      geometry;
+  Geometry<dim> geometry;
   Triangulation<dim> triangulation;
   create_tria(triangulation, geometry);
 
@@ -212,7 +212,7 @@ test(const FiniteElement<dim>& fe)
 
       deallog << mapping.get_degree() << "\t" << diff.l2_norm() << std::endl;
 
-      DataOut<dim>  data_out;
+      DataOut<dim> data_out;
       std::ofstream output(
         ("output_" + Utilities::int_to_string(mapping_p) + ".vtk").c_str());
       data_out.attach_dof_handler(dof_handler);

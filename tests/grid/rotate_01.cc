@@ -29,10 +29,10 @@ template <>
 void
 test<2, 2>()
 {
-  const int                            dim      = 2;
-  const int                            spacedim = 2;
-  Triangulation<dim, spacedim>         tria;
-  Point<spacedim>                      origin;
+  const int dim      = 2;
+  const int spacedim = 2;
+  Triangulation<dim, spacedim> tria;
+  Point<spacedim> origin;
   std::array<Tensor<1, spacedim>, dim> edges;
   edges[0] = Point<spacedim>(2.0, 0.0) - Point<spacedim>();
   edges[1] = Point<spacedim>(0.2, 0.8) - Point<spacedim>();
@@ -48,8 +48,8 @@ template <int dim, int spacedim>
 void
 test()
 {
-  Triangulation<dim, spacedim>         tria;
-  Point<spacedim>                      origin(0.1, 0.2, 0.3);
+  Triangulation<dim, spacedim> tria;
+  Point<spacedim> origin(0.1, 0.2, 0.3);
   std::array<Tensor<1, spacedim>, dim> edges;
   edges[0] = Point<spacedim>(2.0, 0.0, 0.1) - Point<spacedim>();
   if(dim >= 2)

@@ -60,7 +60,7 @@ check()
       triangulation.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> stokes_dof_handler(triangulation);
   stokes_dof_handler.distribute_dofs(fe);
 

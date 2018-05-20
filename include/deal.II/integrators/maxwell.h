@@ -166,9 +166,9 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    curl_curl_matrix(FullMatrix<double>&      M,
+    curl_curl_matrix(FullMatrix<double>& M,
                      const FEValuesBase<dim>& fe,
-                     const double             factor = 1.)
+                     const double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -222,10 +222,10 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    curl_matrix(FullMatrix<double>&      M,
+    curl_matrix(FullMatrix<double>& M,
                 const FEValuesBase<dim>& fe,
                 const FEValuesBase<dim>& fetest,
-                double                   factor = 1.)
+                double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
       const unsigned int t_dofs = fetest.dofs_per_cell;
@@ -274,11 +274,11 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    nitsche_curl_matrix(FullMatrix<double>&      M,
+    nitsche_curl_matrix(FullMatrix<double>& M,
                         const FEValuesBase<dim>& fe,
-                        const unsigned int       face_no,
-                        double                   penalty,
-                        double                   factor = 1.)
+                        const unsigned int face_no,
+                        double penalty,
+                        double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -300,8 +300,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               if(fe.get_fe().has_support_on_face(i, face_no)
@@ -340,9 +340,9 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    tangential_trace_matrix(FullMatrix<double>&      M,
+    tangential_trace_matrix(FullMatrix<double>& M,
                             const FEValuesBase<dim>& fe,
-                            double                   factor = 1.)
+                            double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -364,8 +364,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               for(unsigned int d = 0; d < d_max; ++d)
@@ -400,15 +400,15 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    ip_curl_matrix(FullMatrix<double>&      M11,
-                   FullMatrix<double>&      M12,
-                   FullMatrix<double>&      M21,
-                   FullMatrix<double>&      M22,
+    ip_curl_matrix(FullMatrix<double>& M11,
+                   FullMatrix<double>& M12,
+                   FullMatrix<double>& M21,
+                   FullMatrix<double>& M22,
                    const FEValuesBase<dim>& fe1,
                    const FEValuesBase<dim>& fe2,
-                   const double             pen,
-                   const double             factor1 = 1.,
-                   const double             factor2 = -1.)
+                   const double pen,
+                   const double factor1 = 1.,
+                   const double factor2 = -1.)
     {
       const unsigned int n_dofs = fe1.dofs_per_cell;
 
@@ -441,8 +441,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
-          const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const double dx        = fe1.JxW(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               for(unsigned int d = 0; d < d_max; ++d)

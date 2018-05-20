@@ -285,7 +285,7 @@ void
 FE_RaviartThomasNodal<dim>::
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const
+    std::vector<double>& nodal_values) const
 {
   Assert(support_point_values.size() == this->generalized_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),
@@ -527,7 +527,7 @@ template <int dim>
 void
 FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
   const FiniteElement<dim>& x_source_fe,
-  FullMatrix<double>&       interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
@@ -630,8 +630,8 @@ template <int dim>
 void
 FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
   const FiniteElement<dim>& x_source_fe,
-  const unsigned int        subface,
-  FullMatrix<double>&       interpolation_matrix) const
+  const unsigned int subface,
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a

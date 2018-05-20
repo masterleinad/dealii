@@ -39,16 +39,16 @@ DEAL_II_NAMESPACE_OPEN
 namespace TrilinosWrappers
 {
   PreconditionAMGMueLu::AdditionalData::AdditionalData(
-    const bool                            elliptic,
-    const unsigned int                    n_cycles,
-    const bool                            w_cycle,
-    const double                          aggregation_threshold,
+    const bool elliptic,
+    const unsigned int n_cycles,
+    const bool w_cycle,
+    const double aggregation_threshold,
     const std::vector<std::vector<bool>>& constant_modes,
-    const unsigned int                    smoother_sweeps,
-    const unsigned int                    smoother_overlap,
-    const bool                            output_details,
-    const char*                           smoother_type,
-    const char*                           coarse_type)
+    const unsigned int smoother_sweeps,
+    const unsigned int smoother_overlap,
+    const bool output_details,
+    const char* smoother_type,
+    const char* coarse_type)
     : elliptic(elliptic),
       n_cycles(n_cycles),
       w_cycle(w_cycle),
@@ -77,7 +77,7 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionAMGMueLu::initialize(const SparseMatrix&   matrix,
+  PreconditionAMGMueLu::initialize(const SparseMatrix& matrix,
                                    const AdditionalData& additional_data)
   {
     initialize(matrix.trilinos_matrix(), additional_data);
@@ -85,7 +85,7 @@ namespace TrilinosWrappers
 
   void
   PreconditionAMGMueLu::initialize(const Epetra_CrsMatrix& matrix,
-                                   const AdditionalData&   additional_data)
+                                   const AdditionalData& additional_data)
   {
     // Build the AMG preconditioner.
     Teuchos::ParameterList parameter_list;
@@ -137,7 +137,7 @@ namespace TrilinosWrappers
     if(constant_modes_dimension > 0)
       {
         const size_type n_rows = TrilinosWrappers::n_global_rows(matrix);
-        const bool      constant_modes_are_global
+        const bool constant_modes_are_global
           = additional_data.constant_modes[0].size() == n_rows;
         const size_type n_relevant_rows
           = constant_modes_are_global ?
@@ -186,7 +186,7 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionAMGMueLu::initialize(const SparseMatrix&     matrix,
+  PreconditionAMGMueLu::initialize(const SparseMatrix& matrix,
                                    Teuchos::ParameterList& muelu_parameters)
   {
     initialize(matrix.trilinos_matrix(), muelu_parameters);
@@ -234,9 +234,9 @@ namespace TrilinosWrappers
   void
   PreconditionAMGMueLu::initialize(
     const ::dealii::SparseMatrix<number>& deal_ii_sparse_matrix,
-    const AdditionalData&                 additional_data,
-    const double                          drop_tolerance,
-    const ::dealii::SparsityPattern*      use_this_sparsity)
+    const AdditionalData& additional_data,
+    const double drop_tolerance,
+    const ::dealii::SparsityPattern* use_this_sparsity)
   {
     preconditioner.reset();
     const size_type n_rows = deal_ii_sparse_matrix.m();

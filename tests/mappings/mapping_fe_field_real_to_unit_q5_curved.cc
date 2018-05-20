@@ -58,7 +58,7 @@ test_real_to_unit_cell()
   triangulation.set_manifold(1, boundary);
   triangulation.begin_active()->face(0)->set_boundary_id(1);
 
-  const unsigned int      n_points = 5;
+  const unsigned int n_points = 5;
   std::vector<Point<dim>> unit_points(Utilities::fixed_power<dim>(n_points));
 
   switch(dim)
@@ -92,11 +92,11 @@ test_real_to_unit_cell()
         break;
     }
 
-  const FE_Q<dim, spacedim>     feq(5);
+  const FE_Q<dim, spacedim> feq(5);
   const FESystem<dim, spacedim> fesystem(feq, spacedim);
-  DoFHandler<dim, spacedim>     dhq(triangulation);
+  DoFHandler<dim, spacedim> dhq(triangulation);
   dhq.distribute_dofs(fesystem);
-  Vector<double>      eulerq(dhq.n_dofs());
+  Vector<double> eulerq(dhq.n_dofs());
   const ComponentMask mask(spacedim, true);
 
   VectorTools::get_position_vector(dhq, eulerq, mask);

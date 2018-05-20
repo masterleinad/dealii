@@ -27,7 +27,7 @@ main()
   deallog.attach(logfile);
 
   const TableIndices<2> t1(84, 42);
-  TableIndices<2>       t2;
+  TableIndices<2> t2;
   t2[0] = 84;
   t2[1] = 42;
 

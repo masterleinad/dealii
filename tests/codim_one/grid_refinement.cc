@@ -34,8 +34,8 @@ void
 test(std::string filename)
 {
   SphericalManifold<dim, spacedim> boundary;
-  Triangulation<dim, spacedim>     tria;
-  GridIn<dim, spacedim>            gi;
+  Triangulation<dim, spacedim> tria;
+  GridIn<dim, spacedim> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);

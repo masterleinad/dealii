@@ -127,7 +127,7 @@ main()
 
       A.print_formatted(logfile, 3, false);
 
-      Vector<double>                      u(5);
+      Vector<double> u(5);
       GrowingVectorMemory<Vector<double>> mem;
 
       SolverControl control(500, 1.e-8, false, false);
@@ -136,7 +136,7 @@ main()
         {
           u = 1.;
           EigenPower<Vector<double>> von_Mises(control, mem, 0.);
-          double                     eigen = 0.;
+          double eigen = 0.;
           von_Mises.solve(eigen, A, u);
           deallog << "Eigenvalue: " << eigen << std::endl;
         }
@@ -144,7 +144,7 @@ main()
         {
           u = 1.;
           EigenPower<Vector<double>> von_Mises(control, mem, -4.);
-          double                     eigen = 0.;
+          double eigen = 0.;
           von_Mises.solve(eigen, A, u);
           deallog << "Eigenvalue: " << eigen << std::endl;
         }
@@ -155,7 +155,7 @@ main()
         {
           u = 1.;
           EigenPower<Vector<double>> von_Mises(control, mem, 0.);
-          double                     eigen = 0.;
+          double eigen = 0.;
           von_Mises.solve(eigen, H, u);
           deallog << "Eigenvalue: " << eigen << std::endl;
         }
@@ -163,7 +163,7 @@ main()
         {
           u = 1.;
           EigenPower<Vector<double>> von_Mises(control, mem, -4.);
-          double                     eigen = 0.;
+          double eigen = 0.;
           von_Mises.solve(eigen, H, u);
           deallog << "Eigenvalue: " << eigen << std::endl;
         }

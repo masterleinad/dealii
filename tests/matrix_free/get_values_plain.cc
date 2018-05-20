@@ -53,7 +53,7 @@ public:
   virtual void
   operator()(const MatrixFree<dim, Number>& data,
              Vector<Number>&,
-             const Vector<Number>&                        src,
+             const Vector<Number>& src,
              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
@@ -96,7 +96,7 @@ public:
 
 protected:
   const MatrixFree<dim, Number>& data;
-  mutable double                 error, total;
+  mutable double error, total;
 };
 
 template <int dim, int fe_degree, typename number>
@@ -123,7 +123,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   constraints.distribute(solution);
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     data.store_plain_indices   = true;
@@ -139,7 +139,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_shell(tria, Point<dim>(), 1., 2., 96, true);
   tria.set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
@@ -157,7 +157,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 

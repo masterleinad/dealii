@@ -22,14 +22,14 @@
 #include <deal.II/grid/tria_iterator.h>
 
 void my_cylinder(Triangulation<3>& tria,
-                 const double      radius,
-                 const double      half_length)
+                 const double radius,
+                 const double half_length)
 {
   // Copy the base from hyper_ball<3>
   // and transform it to yz
-  const double d            = radius / std::sqrt(2.0);
-  const double a            = d / (1 + std::sqrt(2.0));
-  Point<3>     vertices[16] = {
+  const double d        = radius / std::sqrt(2.0);
+  const double a        = d / (1 + std::sqrt(2.0));
+  Point<3> vertices[16] = {
     Point<3>(-d, 0, -d),
     Point<3>(d, 0, -d),
     Point<3>(-a, 0, -a),

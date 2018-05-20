@@ -53,9 +53,9 @@ test(const double R)
     center[d] = d;
 
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
-  FE_Q<dim>          fe(fe_degree);
-  QGauss<dim>        quadrature_formula(n_q_points_1d);
+  DoFHandler<dim> dof_handler(triangulation);
+  FE_Q<dim> fe(fe_degree);
+  QGauss<dim> quadrature_formula(n_q_points_1d);
 
   GridGenerator::hyper_ball(triangulation, center, R);
   triangulation.set_all_manifold_ids_on_boundary(0);

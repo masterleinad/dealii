@@ -45,9 +45,9 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    cell_matrix(FullMatrix<double>&      M,
+    cell_matrix(FullMatrix<double>& M,
                 const FEValuesBase<dim>& fe,
-                const double             factor = 1.)
+                const double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -78,8 +78,8 @@ namespace LocalIntegrators
     template <int dim, typename number>
     inline void
     cell_residual(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
+      Vector<number>& result,
+      const FEValuesBase<dim>& fe,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& input,
       double factor = 1.)
     {
@@ -113,10 +113,10 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    nitsche_matrix(FullMatrix<double>&      M,
+    nitsche_matrix(FullMatrix<double>& M,
                    const FEValuesBase<dim>& fe,
-                   double                   penalty,
-                   double                   factor = 1.)
+                   double penalty,
+                   double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -126,8 +126,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               for(unsigned int d1 = 0; d1 < dim; ++d1)
@@ -162,10 +162,10 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    nitsche_tangential_matrix(FullMatrix<double>&      M,
+    nitsche_tangential_matrix(FullMatrix<double>& M,
                               const FEValuesBase<dim>& fe,
-                              double                   penalty,
-                              double                   factor = 1.)
+                              double penalty,
+                              double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -175,8 +175,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               {
@@ -244,11 +244,11 @@ namespace LocalIntegrators
     template <int dim, typename number>
     void
     nitsche_residual(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
+      Vector<number>& result,
+      const FEValuesBase<dim>& fe,
+      const VectorSlice<const std::vector<std::vector<double>>>& input,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
-      const VectorSlice<const std::vector<std::vector<double>>>&         data,
+      const VectorSlice<const std::vector<std::vector<double>>>& data,
       double penalty,
       double factor = 1.)
     {
@@ -259,8 +259,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int d1 = 0; d1 < dim; ++d1)
               {
@@ -297,11 +297,11 @@ namespace LocalIntegrators
     template <int dim, typename number>
     inline void
     nitsche_tangential_residual(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
+      Vector<number>& result,
+      const FEValuesBase<dim>& fe,
+      const VectorSlice<const std::vector<std::vector<double>>>& input,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
-      const VectorSlice<const std::vector<std::vector<double>>>&         data,
+      const VectorSlice<const std::vector<std::vector<double>>>& data,
       double penalty,
       double factor = 1.)
     {
@@ -312,8 +312,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             {
               double udotn   = 0.;
@@ -377,9 +377,9 @@ namespace LocalIntegrators
     template <int dim, typename number>
     void
     nitsche_residual_homogeneous(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
+      Vector<number>& result,
+      const FEValuesBase<dim>& fe,
+      const VectorSlice<const std::vector<std::vector<double>>>& input,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
       double penalty,
       double factor = 1.)
@@ -390,8 +390,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int d1 = 0; d1 < dim; ++d1)
               {
@@ -423,15 +423,15 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    ip_matrix(FullMatrix<double>&      M11,
-              FullMatrix<double>&      M12,
-              FullMatrix<double>&      M21,
-              FullMatrix<double>&      M22,
+    ip_matrix(FullMatrix<double>& M11,
+              FullMatrix<double>& M12,
+              FullMatrix<double>& M21,
+              FullMatrix<double>& M22,
               const FEValuesBase<dim>& fe1,
               const FEValuesBase<dim>& fe2,
-              const double             pen,
-              const double             int_factor = 1.,
-              const double             ext_factor = -1.)
+              const double pen,
+              const double int_factor = 1.,
+              const double ext_factor = -1.)
     {
       const unsigned int n_dofs = fe1.dofs_per_cell;
 
@@ -452,8 +452,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
-          const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const double dx        = fe1.JxW(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               for(unsigned int d1 = 0; d1 < dim; ++d1)
@@ -535,16 +535,16 @@ namespace LocalIntegrators
     template <int dim, typename number>
     void
     ip_residual(
-      Vector<number>&                                            result1,
-      Vector<number>&                                            result2,
-      const FEValuesBase<dim>&                                   fe1,
-      const FEValuesBase<dim>&                                   fe2,
+      Vector<number>& result1,
+      Vector<number>& result2,
+      const FEValuesBase<dim>& fe1,
+      const FEValuesBase<dim>& fe2,
       const VectorSlice<const std::vector<std::vector<double>>>& input1,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-                                                                 Dinput1,
+        Dinput1,
       const VectorSlice<const std::vector<std::vector<double>>>& input2,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-             Dinput2,
+        Dinput2,
       double pen,
       double int_factor = 1.,
       double ext_factor = -1.)
@@ -564,8 +564,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
-          const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const double dx        = fe1.JxW(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
 
           for(unsigned int i = 0; i < n1; ++i)
             for(unsigned int d1 = 0; d1 < dim; ++d1)

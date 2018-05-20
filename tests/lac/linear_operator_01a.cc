@@ -31,7 +31,7 @@ using namespace dealii;
 struct LeftVector
 {
   typedef std::complex<double> value_type;
-  value_type                   value;
+  value_type value;
 
   LeftVector&
   operator=(value_type new_value)
@@ -72,7 +72,7 @@ struct LeftVector
 struct RightVector
 {
   typedef std::complex<double> value_type;
-  value_type                   value;
+  value_type value;
 
   RightVector&
   operator=(value_type new_value)
@@ -143,7 +143,7 @@ main()
   // Small unit tests for all functions:
 
   RightVector u = {4.};
-  LeftVector  v = {0.};
+  LeftVector v  = {0.};
 
   // vmult, vmult_add
 
@@ -210,8 +210,8 @@ main()
 
   // operator* and transpose
 
-  auto        test2 = transpose_operator(multiply2) * multiply4;
-  RightVector w     = {0.};
+  auto test2    = transpose_operator(multiply2) * multiply4;
+  RightVector w = {0.};
   test2.vmult(w, u);
   deallog << "(2 * 4) * " << u.value << " = " << w.value << std::endl;
 

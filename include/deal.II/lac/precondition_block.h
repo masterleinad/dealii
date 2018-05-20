@@ -108,9 +108,9 @@ public:
      * default parameter.
      */
     AdditionalData(const size_type block_size,
-                   const double    relaxation      = 1.,
-                   const bool      invert_diagonal = true,
-                   const bool      same_diagonal   = false);
+                   const double relaxation    = 1.,
+                   const bool invert_diagonal = true,
+                   const bool same_diagonal   = false);
 
     /**
      * Relaxation parameter.
@@ -177,10 +177,10 @@ protected:
    * Additionally, a relaxation parameter for derived classes may be provided.
    */
   void
-  initialize(const MatrixType&             A,
+  initialize(const MatrixType& A,
              const std::vector<size_type>& permutation,
              const std::vector<size_type>& inverse_permutation,
-             const AdditionalData          parameters);
+             const AdditionalData parameters);
 
   /**
    * Set either the permutation of rows or the permutation of blocks,
@@ -268,10 +268,10 @@ public:
    */
   template <typename number2>
   void
-  forward_step(Vector<number2>&       dst,
+  forward_step(Vector<number2>& dst,
                const Vector<number2>& prev,
                const Vector<number2>& src,
-               const bool             transpose_diagonal) const;
+               const bool transpose_diagonal) const;
 
   /**
    * Perform one block relaxation step in backward numbering.
@@ -286,10 +286,10 @@ public:
    */
   template <typename number2>
   void
-  backward_step(Vector<number2>&       dst,
+  backward_step(Vector<number2>& dst,
                 const Vector<number2>& prev,
                 const Vector<number2>& src,
-                const bool             transpose_diagonal) const;
+                const bool transpose_diagonal) const;
 
   /**
    * Return the size of the blocks.
@@ -404,7 +404,7 @@ public:
        * matrix pointer is sufficient.
        */
       Accessor(const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix,
-               const size_type                                          row);
+               const size_type row);
 
       /**
        * Row number of the element represented by this object.
@@ -462,7 +462,7 @@ public:
      */
     const_iterator(
       const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix,
-      const size_type                                          row);
+      const size_type row);
 
     /**
      * Prefix increment.
@@ -904,7 +904,7 @@ template <typename MatrixType, typename inverse_type>
 inline inverse_type
 PreconditionBlock<MatrixType, inverse_type>::el(size_type i, size_type j) const
 {
-  const size_type    bs = blocksize;
+  const size_type bs    = blocksize;
   const unsigned int nb = i / bs;
 
   const FullMatrix<inverse_type>& B = this->inverse(nb);
@@ -926,7 +926,7 @@ template <typename MatrixType, typename inverse_type>
 inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
   Accessor::Accessor(
     const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix,
-    const size_type                                          row)
+    const size_type row)
   : matrix(matrix),
     b_iterator(&matrix->inverse(0), 0, 0),
     b_end(&matrix->inverse(0), 0, 0)
@@ -981,7 +981,7 @@ template <typename MatrixType, typename inverse_type>
 inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
   const_iterator(
     const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix,
-    const size_type                                          row)
+    const size_type row)
   : accessor(matrix, row)
 {}
 

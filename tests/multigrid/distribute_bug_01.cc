@@ -98,7 +98,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   do_test<2>();
   do_test<3>();

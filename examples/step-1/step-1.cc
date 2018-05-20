@@ -71,7 +71,7 @@ first_grid()
   // file. The GridOut class of deal.II can do that in a number of different
   // output formats; here, we choose encapsulated postscript (eps) format:
   std::ofstream out("grid-1.eps");
-  GridOut       grid_out;
+  GridOut grid_out;
   grid_out.write_eps(triangulation, out);
   std::cout << "Grid written to grid-1.eps" << std::endl;
 }
@@ -92,7 +92,7 @@ second_grid()
   // circumferential cells could be adjusted automatically by this function,
   // but we choose to set it explicitly to 10 as the last argument:
   const Point<2> center(1, 0);
-  const double   inner_radius = 0.5, outer_radius = 1.0;
+  const double inner_radius = 0.5, outer_radius = 1.0;
   GridGenerator::hyper_shell(
     triangulation, center, inner_radius, outer_radius, 10);
   // By default, the triangulation assumes that all boundaries are
@@ -242,7 +242,7 @@ second_grid()
   // write the resulting mesh to a file, again in eps format. This works just
   // as above:
   std::ofstream out("grid-2.eps");
-  GridOut       grid_out;
+  GridOut grid_out;
   grid_out.write_eps(triangulation, out);
 
   std::cout << "Grid written to grid-2.eps" << std::endl;

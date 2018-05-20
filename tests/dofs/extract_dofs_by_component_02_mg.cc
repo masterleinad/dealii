@@ -42,7 +42,7 @@ check()
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
 
-  FESystem<dim>   element(FE_Q<dim>(2), 1, FE_Nedelec<dim>(0), 1);
+  FESystem<dim> element(FE_Q<dim>(2), 1, FE_Nedelec<dim>(0), 1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
   dof.distribute_mg_dofs(element);

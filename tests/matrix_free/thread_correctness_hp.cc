@@ -35,9 +35,9 @@ public:
   MatrixFreeTestHP(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              Vector<Number>&                              dst,
-              const Vector<Number>&                        src,
+  local_apply(const MatrixFree<dim, Number>& data,
+              Vector<Number>& dst,
+              const Vector<Number>& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     // Ask MatrixFree for cell_range for different
@@ -97,7 +97,7 @@ do_test(const unsigned int parallel_option)
   const unsigned int max_degree = 9 - 2 * dim;
 
   hp::FECollection<dim> fe_collection;
-  hp::QCollection<1>    quadrature_collection_mf;
+  hp::QCollection<1> quadrature_collection_mf;
 
   for(unsigned int deg = 1; deg <= max_degree; ++deg)
     {
@@ -131,7 +131,7 @@ do_test(const unsigned int parallel_option)
   //std::cout << "Number of constraints: " << constraints.n_constraints() << std::endl;
 
   // set up reference MatrixFree
-  MatrixFree<dim, number>                          mf_data;
+  MatrixFree<dim, number> mf_data;
   typename MatrixFree<dim, number>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
   mf_data.reinit(dof, constraints, quadrature_collection_mf, data);

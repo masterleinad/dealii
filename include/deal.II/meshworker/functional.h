@@ -155,7 +155,7 @@ namespace MeshWorker
 
     private:
       AnyData results;
-      bool    separate_faces;
+      bool separate_faces;
     };
     //----------------------------------------------------------------------//
 
@@ -260,7 +260,7 @@ namespace MeshWorker
           if(separate_faces)
             {
               BlockVector<double>* v1 = results.entry<BlockVector<double>*>(1);
-              const double         J  = info1.value(i) + info2.value(i);
+              const double J          = info1.value(i) + info2.value(i);
               v1->block(i)(info1.face->user_index()) += J;
               if(info2.face != info1.face)
                 v1->block(i)(info2.face->user_index()) += J;

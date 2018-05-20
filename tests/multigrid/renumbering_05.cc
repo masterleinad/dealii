@@ -121,7 +121,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   check<2>();
   check<3>();

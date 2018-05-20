@@ -31,19 +31,19 @@
 template <int dim, int spacedim>
 void
 write_patches(const std::vector<DataOutBase::Patch<dim, spacedim>>& patches,
-              std::ostream&                                         out)
+              std::ostream& out)
 {
   std::vector<std::string> names(2);
   names[0] = std::string("first name");
   names[1] = std::string("last name");
 
-  DataOutBase::DXFlags                   dxflags;
-  DataOutBase::EpsFlags                  epsflags;
-  DataOutBase::GnuplotFlags              gnuplotflags;
-  DataOutBase::GmvFlags                  gmvflags;
-  DataOutBase::PovrayFlags               povrayflags;
-  DataOutBase::UcdFlags                  ucdflags(true);
-  DataOutBase::VtkFlags                  vtkflags;
+  DataOutBase::DXFlags dxflags;
+  DataOutBase::EpsFlags epsflags;
+  DataOutBase::GnuplotFlags gnuplotflags;
+  DataOutBase::GmvFlags gmvflags;
+  DataOutBase::PovrayFlags povrayflags;
+  DataOutBase::UcdFlags ucdflags(true);
+  DataOutBase::VtkFlags vtkflags;
   DataOutBase::Deal_II_IntermediateFlags deal_II_intermediateflags;
 
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
@@ -67,7 +67,7 @@ struct PatchInfo
 {
   static double vertices[GeometryInfo<dim>::vertices_per_cell][3];
   static double offsets[GeometryInfo<dim>::vertices_per_cell][3];
-  static int    neighbors[GeometryInfo<dim>::vertices_per_cell]
+  static int neighbors[GeometryInfo<dim>::vertices_per_cell]
                       [GeometryInfo<dim>::faces_per_cell];
 };
 

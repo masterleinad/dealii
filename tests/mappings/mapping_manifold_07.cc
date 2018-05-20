@@ -50,8 +50,8 @@ test()
   for(unsigned int cycle = 0; cycle < 4; ++cycle)
     {
       MappingManifold<dim, spacedim> map_manifold;
-      FE_Q<dim, spacedim>            fe(1);
-      const QGauss<dim - 1>          quad(3);
+      FE_Q<dim, spacedim> fe(1);
+      const QGauss<dim - 1> quad(3);
 
       FEFaceValues<dim, spacedim> fe_v(
         map_manifold, fe, quad, update_JxW_values);

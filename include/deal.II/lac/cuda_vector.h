@@ -52,8 +52,8 @@ namespace LinearAlgebra
     {
     public:
       typedef typename VectorSpaceVector<Number>::value_type value_type;
-      typedef typename VectorSpaceVector<Number>::size_type  size_type;
-      typedef typename VectorSpaceVector<Number>::real_type  real_type;
+      typedef typename VectorSpaceVector<Number>::size_type size_type;
+      typedef typename VectorSpaceVector<Number>::real_type real_type;
 
       /**
        * Constructor. Create a vector of dimension zero.
@@ -108,8 +108,8 @@ namespace LinearAlgebra
        */
       virtual void
       import(
-        const ReadWriteVector<Number>&                  V,
-        VectorOperation::values                         operation,
+        const ReadWriteVector<Number>& V,
+        VectorOperation::values operation,
         std::shared_ptr<const CommunicationPatternBase> communication_pattern
         = std::shared_ptr<const CommunicationPatternBase>()) override;
 
@@ -166,9 +166,9 @@ namespace LinearAlgebra
        * Multiple addition of scaled vectors, i.e. <tt>*this += a*V</tt>.
        */
       virtual void
-      add(const Number                     a,
+      add(const Number a,
           const VectorSpaceVector<Number>& V,
-          const Number                     b,
+          const Number b,
           const VectorSpaceVector<Number>& W) override;
 
       /**
@@ -176,8 +176,8 @@ namespace LinearAlgebra
        * = s*(*this)+a*V</tt>
        */
       virtual void
-      sadd(const Number                     s,
-           const Number                     a,
+      sadd(const Number s,
+           const Number a,
            const VectorSpaceVector<Number>& V) override;
 
       /**
@@ -247,7 +247,7 @@ namespace LinearAlgebra
        * implemented as $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       virtual Number
-      add_and_dot(const Number                     a,
+      add_and_dot(const Number a,
                   const VectorSpaceVector<Number>& V,
                   const VectorSpaceVector<Number>& W) override;
 
@@ -274,10 +274,10 @@ namespace LinearAlgebra
        * Print the vector to the output stream @p out.
        */
       virtual void
-      print(std::ostream&      out,
-            const unsigned int precision  = 2,
-            const bool         scientific = true,
-            const bool         across     = true) const override;
+      print(std::ostream& out,
+            const unsigned int precision = 2,
+            const bool scientific        = true,
+            const bool across            = true) const override;
 
       /**
        * Return the memory consumption of this class in bytes.

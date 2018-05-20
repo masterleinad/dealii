@@ -44,7 +44,7 @@ FE_Q_iso_Q1<dim, spacedim>::FE_Q_iso_Q1(const unsigned int subdivisions)
          ExcMessage("This element can only be used with a positive number of "
                     "subelements"));
 
-  QTrapez<1>   trapez;
+  QTrapez<1> trapez;
   QIterated<1> points(trapez, subdivisions);
 
   this->initialize(points.get_points());
@@ -69,7 +69,7 @@ void
 FE_Q_iso_Q1<dim, spacedim>::
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const
+    std::vector<double>& nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());

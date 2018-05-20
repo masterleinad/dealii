@@ -38,7 +38,7 @@ test()
   for(unsigned int run = 0; run < 2; ++run)
     {
       std::vector<unsigned int> subdivisions(dim);
-      Point<dim>                p1, p2;
+      Point<dim> p1, p2;
       for(unsigned int d = 0; d < dim; ++d)
         {
           p2[d]           = dim - d;
@@ -64,7 +64,7 @@ test()
 
       tria.refine_global(3);
 
-      FE_Q<dim>       fe(1);
+      FE_Q<dim> fe(1);
       DoFHandler<dim> dof_handler(tria);
       dof_handler.distribute_dofs(fe);
       dof_handler.distribute_mg_dofs(fe);

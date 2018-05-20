@@ -78,15 +78,15 @@ public:
   /**
    * Constructor.
    */
-  SolverMinRes(SolverControl&            cn,
+  SolverMinRes(SolverControl& cn,
                VectorMemory<VectorType>& mem,
-               const AdditionalData&     data = AdditionalData());
+               const AdditionalData& data = AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverMinRes(SolverControl&        cn,
+  SolverMinRes(SolverControl& cn,
                const AdditionalData& data = AdditionalData());
 
   /**
@@ -99,9 +99,9 @@ public:
    */
   template <typename MatrixType, typename PreconditionerType>
   void
-  solve(const MatrixType&         A,
-        VectorType&               x,
-        const VectorType&         b,
+  solve(const MatrixType& A,
+        VectorType& x,
+        const VectorType& b,
         const PreconditionerType& preconditioner);
 
   /**
@@ -129,9 +129,9 @@ protected:
    */
   virtual void
   print_vectors(const unsigned int step,
-                const VectorType&  x,
-                const VectorType&  r,
-                const VectorType&  d) const;
+                const VectorType& x,
+                const VectorType& r,
+                const VectorType& d) const;
 
   /**
    * Within the iteration loop, the square of the residual vector is stored in
@@ -148,7 +148,7 @@ protected:
 #ifndef DOXYGEN
 
 template <class VectorType>
-SolverMinRes<VectorType>::SolverMinRes(SolverControl&            cn,
+SolverMinRes<VectorType>::SolverMinRes(SolverControl& cn,
                                        VectorMemory<VectorType>& mem,
                                        const AdditionalData&)
   : Solver<VectorType>(cn, mem), res2(numbers::signaling_nan<double>())
@@ -177,9 +177,9 @@ SolverMinRes<VectorType>::print_vectors(const unsigned int,
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
-SolverMinRes<VectorType>::solve(const MatrixType&         A,
-                                VectorType&               x,
-                                const VectorType&         b,
+SolverMinRes<VectorType>::solve(const MatrixType& A,
+                                VectorType& x,
+                                const VectorType& b,
                                 const PreconditionerType& preconditioner)
 {
   LogStream::Prefix prefix("minres");
@@ -197,9 +197,9 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
 
   // define some aliases for simpler access
   typedef VectorType* vecptr;
-  vecptr              u[3] = {Vu0.get(), Vu1.get(), Vu2.get()};
-  vecptr              m[3] = {Vm0.get(), Vm1.get(), Vm2.get()};
-  VectorType&         v    = *Vv;
+  vecptr u[3]   = {Vu0.get(), Vu1.get(), Vu2.get()};
+  vecptr m[3]   = {Vm0.get(), Vm1.get(), Vm2.get()};
+  VectorType& v = *Vv;
 
   // resize the vectors, but do not set the values since they'd be overwritten
   // soon anyway.

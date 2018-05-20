@@ -83,8 +83,8 @@ MGTransferPrebuilt<VectorType>::clear()
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::prolongate(const unsigned int to_level,
-                                           VectorType&        dst,
-                                           const VectorType&  src) const
+                                           VectorType& dst,
+                                           const VectorType& src) const
 {
   Assert((to_level >= 1) && (to_level <= prolongation_matrices.size()),
          ExcIndexRange(to_level, 1, prolongation_matrices.size() + 1));
@@ -95,8 +95,8 @@ MGTransferPrebuilt<VectorType>::prolongate(const unsigned int to_level,
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::restrict_and_add(const unsigned int from_level,
-                                                 VectorType&        dst,
-                                                 const VectorType&  src) const
+                                                 VectorType& dst,
+                                                 const VectorType& src) const
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),
          ExcIndexRange(from_level, 1, prolongation_matrices.size() + 1));
@@ -112,8 +112,8 @@ namespace
    * and replace with the indices of the dofs to which they are constrained
    */
   void
-  replace(const MGConstrainedDoFs*              mg_constrained_dofs,
-          const unsigned int                    level,
+  replace(const MGConstrainedDoFs* mg_constrained_dofs,
+          const unsigned int level,
           std::vector<types::global_dof_index>& dof_indices)
   {
     if(mg_constrained_dofs != nullptr

@@ -23,8 +23,8 @@
 void
 test()
 {
-  const unsigned int       m = 7;
-  const unsigned int       n = 11;
+  const unsigned int m = 7;
+  const unsigned int n = 11;
   LAPACKFullMatrix<double> A(m, n);
   for(unsigned int i = 0; i < m; ++i)
     for(unsigned int j = 0; j < n; ++j)
@@ -59,7 +59,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 

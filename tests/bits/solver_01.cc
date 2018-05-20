@@ -28,8 +28,8 @@
 
 struct Entry
 {
-  int    row;
-  int    col;
+  int row;
+  int col;
   double val;
 };
 
@@ -3260,9 +3260,9 @@ test()
     const double tolerance = 1e-8;
 
     typedef SolverBicgstab<> Solver;
-    SolverControl            solver_control(N, tolerance);
-    PrimitiveVectorMemory<>  vector_memory;
-    Solver                   solver(solver_control, vector_memory);
+    SolverControl solver_control(N, tolerance);
+    PrimitiveVectorMemory<> vector_memory;
+    Solver solver(solver_control, vector_memory);
 
     PreconditionSSOR<SparseMatrix<double>> preconditioner;
     preconditioner.initialize(sm, 1.2);

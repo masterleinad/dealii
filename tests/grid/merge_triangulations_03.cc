@@ -86,7 +86,7 @@ mesh_info(const Triangulation<dim>& tria, const std::string& filename)
           << " no. of cells: " << tria.n_active_cells() << std::endl;
 
   {
-    std::map<unsigned int, unsigned int>              boundary_count;
+    std::map<unsigned int, unsigned int> boundary_count;
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active(),
       endc = tria.end();

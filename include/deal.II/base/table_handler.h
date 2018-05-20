@@ -508,7 +508,7 @@ public:
    * the description of TextOutputFormat for more information
    */
   void
-  write_text(std::ostream&          out,
+  write_text(std::ostream& out,
              const TextOutputFormat format = table_with_headers) const;
 
   /**
@@ -828,7 +828,7 @@ namespace internal
     // as a one-character id, and then read
     // the data
     char c;
-    ar&  c;
+    ar& c;
 
     switch(c)
       {
@@ -843,7 +843,7 @@ namespace internal
         case 'u':
           {
             unsigned int val;
-            ar&          val;
+            ar& val;
             value = val;
             break;
           }
@@ -851,7 +851,7 @@ namespace internal
         case 'd':
           {
             double val;
-            ar&    val;
+            ar& val;
             value = val;
             break;
           }
@@ -859,7 +859,7 @@ namespace internal
         case 's':
           {
             std::string val;
-            ar&         val;
+            ar& val;
             value = val;
             break;
           }
@@ -867,7 +867,7 @@ namespace internal
         case 'l':
           {
             unsigned long long int val;
-            ar&                    val;
+            ar& val;
             value = val;
             break;
           }

@@ -32,7 +32,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
 
   const QGauss<dim> quadrature(2);
-  FEValues<dim>     fe_values(fe, quadrature, update_values);
+  FEValues<dim> fe_values(fe, quadrature, update_values);
   fe_values.reinit(dof.begin_active());
 
   FEValuesExtractors::Tensor<2> extr; // invalid object

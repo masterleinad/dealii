@@ -55,8 +55,8 @@ void
 df(const double& x,
    const double& y,
    const double& z,
-   double&       df_dx,
-   double&       df_dy)
+   double& df_dx,
+   double& df_dy)
 {
   df_dx = z * (3.0 * x * x + 0.5 * y * y);
   df_dy = z * (2.0 * z * y + x * y);
@@ -65,8 +65,8 @@ void
 dg(const double& x,
    const double& y,
    const double& z,
-   double&       dg_dx,
-   double&       dg_dy)
+   double& dg_dx,
+   double& dg_dy)
 {
   dg_dx = z * std::cos(x * z) * std::cos(y / z);
   dg_dy = -(1.0 / z) * std::sin(x * z) * std::sin(y / z);
@@ -75,8 +75,8 @@ void
 dh(const double& x,
    const double& y,
    const double& z,
-   double&       dh_dx,
-   double&       dh_dy)
+   double& dh_dx,
+   double& dh_dy)
 {
   dh_dx = 2 * x * y * y * z;
   dh_dy = 2 * x * x * y * z;
@@ -87,9 +87,9 @@ void
 d2f(const double& x,
     const double& y,
     const double& z,
-    double&       d2f_dx_dx,
-    double&       d2f_dy_dy,
-    double&       d2f_dy_dx)
+    double& d2f_dx_dx,
+    double& d2f_dy_dy,
+    double& d2f_dy_dx)
 {
   d2f_dx_dx = z * (6.0 * x);
   d2f_dy_dx = z * y;
@@ -99,9 +99,9 @@ void
 d2g(const double& x,
     const double& y,
     const double& z,
-    double&       d2g_dx_dx,
-    double&       d2g_dy_dy,
-    double&       d2g_dy_dx)
+    double& d2g_dx_dx,
+    double& d2g_dy_dy,
+    double& d2g_dy_dx)
 {
   d2g_dx_dx = -z * z * std::sin(x * z) * std::cos(y / z);
   d2g_dy_dx = -std::cos(x * z) * std::sin(y / z);
@@ -111,9 +111,9 @@ void
 d2h(const double& x,
     const double& y,
     const double& z,
-    double&       d2h_dx_dx,
-    double&       d2h_dy_dy,
-    double&       d2h_dy_dx)
+    double& d2h_dx_dx,
+    double& d2h_dy_dy,
+    double& d2h_dy_dx)
 {
   d2h_dx_dx = 2 * y * y * z;
   d2h_dy_dx = 4 * x * y * z;
@@ -189,15 +189,15 @@ main()
   // related to the dependent function "f"
   Sacado::Rad::ADvar<Sacado::Fad::DFad<double>>::Outvar_Gradcomp(f_rfad);
   // Extract value and derivatives
-  const double                    f_ad         = f_rfad.val().val(); // f
-  const Sacado::Fad::DFad<double> df_dx_fad    = x_ad.adj();         // df/dx
-  const Sacado::Fad::DFad<double> df_dy_fad    = y_ad.adj();         // df/dy
-  const double                    df_dx_ad     = df_dx_fad.val();    // df/dx
-  const double                    df_dy_ad     = df_dy_fad.val();    // df/dy
-  const double                    d2f_dx_dx_ad = x_ad.adj().dx(0); // d^2f/dx^2
-  const double                    d2f_dy_dx_ad = x_ad.adj().dx(1); // d^2f/dy_dx
-  const double                    d2f_dx_dy_ad = y_ad.adj().dx(0); // d^2f/dx_dy
-  const double                    d2f_dy_dy_ad = y_ad.adj().dx(1); // d^2f/dy^2
+  const double f_ad                         = f_rfad.val().val(); // f
+  const Sacado::Fad::DFad<double> df_dx_fad = x_ad.adj();         // df/dx
+  const Sacado::Fad::DFad<double> df_dy_fad = y_ad.adj();         // df/dy
+  const double df_dx_ad                     = df_dx_fad.val();    // df/dx
+  const double df_dy_ad                     = df_dy_fad.val();    // df/dy
+  const double d2f_dx_dx_ad                 = x_ad.adj().dx(0);   // d^2f/dx^2
+  const double d2f_dy_dx_ad                 = x_ad.adj().dx(1);   // d^2f/dy_dx
+  const double d2f_dx_dy_ad                 = y_ad.adj().dx(0);   // d^2f/dx_dy
+  const double d2f_dy_dy_ad                 = y_ad.adj().dx(1);   // d^2f/dy^2
 
   std::cout << "df_dx: " << df_dx << "  df_dx_ad: " << df_dx_ad << std::endl;
   std::cout << "df_dy: " << df_dy << "  df_dy_ad: " << df_dy_ad << std::endl;
@@ -208,7 +208,7 @@ main()
   d_dy_rad_acc += df_dy_fad;
   Sacado::Rad::ADvar<Sacado::Fad::DFad<double>>::Outvar_Gradcomp(g_rfad);
   // Extract value and derivatives
-  const double                    g_ad = g_rfad.val().val(); // g
+  const double g_ad = g_rfad.val().val(); // g
   const Sacado::Fad::DFad<double> dg_dx_fad
     = x_ad.adj()
       - d_dx_rad_acc; // dg/dx ; Note: Accumulation of partial derivatives
@@ -231,7 +231,7 @@ main()
   d_dy_rad_acc += dg_dy_fad;
   Sacado::Rad::ADvar<Sacado::Fad::DFad<double>>::Outvar_Gradcomp(h_rfad);
   // Extract value and derivatives
-  const double                    h_ad = h_rfad.val().val(); // h
+  const double h_ad = h_rfad.val().val(); // h
   const Sacado::Fad::DFad<double> dh_dx_fad
     = x_ad.adj()
       - d_dx_rad_acc; // dh/dx ; Note: Accumulation of partial derivatives

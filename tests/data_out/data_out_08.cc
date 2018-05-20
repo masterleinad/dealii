@@ -91,7 +91,7 @@ check()
   //++it;
   it->set_subdomain_id(1);
 
-  FE_DGQ<dim>     fe(0);
+  FE_DGQ<dim> fe(0);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

@@ -53,7 +53,7 @@ namespace DoFTools
     {
       inline bool
       check_master_dof_list(
-        const FullMatrix<double>&                   face_interpolation_matrix,
+        const FullMatrix<double>& face_interpolation_matrix,
         const std::vector<types::global_dof_index>& master_dof_list)
       {
         const unsigned int N = master_dof_list.size();
@@ -89,8 +89,8 @@ namespace DoFTools
           {
             // pivot search: search that part of the line on and right of
             // the diagonal for the largest element
-            double       max = std::fabs(tmp(j, j));
-            unsigned int r   = j;
+            double max     = std::fabs(tmp(j, j));
+            unsigned int r = j;
             for(unsigned int i = j + 1; i < N; ++i)
               {
                 if(std::fabs(tmp(i, j)) > max)
@@ -167,8 +167,8 @@ namespace DoFTools
       select_master_dofs_for_face_restriction(
         const FiniteElement<dim, spacedim>& fe1,
         const FiniteElement<dim, spacedim>& fe2,
-        const FullMatrix<double>&           face_interpolation_matrix,
-        std::vector<bool>&                  master_dof_mask)
+        const FullMatrix<double>& face_interpolation_matrix,
+        std::vector<bool>& master_dof_mask)
       {
         Assert(fe1.dofs_per_face >= fe2.dofs_per_face, ExcInternalError());
         AssertDimension(master_dof_mask.size(), fe1.dofs_per_face);
@@ -200,7 +200,7 @@ namespace DoFTools
         // latter case shows up when running hp/hp_constraints_q_system_06
 
         std::vector<types::global_dof_index> master_dof_list;
-        unsigned int                         index = 0;
+        unsigned int index = 0;
         for(int v = 0;
             v < static_cast<signed int>(GeometryInfo<dim>::vertices_per_face);
             ++v)
@@ -302,7 +302,7 @@ namespace DoFTools
       ensure_existence_of_master_dof_mask(
         const FiniteElement<dim, spacedim>& fe1,
         const FiniteElement<dim, spacedim>& fe2,
-        const FullMatrix<double>&           face_interpolation_matrix,
+        const FullMatrix<double>& face_interpolation_matrix,
         std::unique_ptr<std::vector<bool>>& master_dof_mask)
       {
         if(master_dof_mask == nullptr)
@@ -323,8 +323,8 @@ namespace DoFTools
       template <int dim, int spacedim>
       void
       ensure_existence_of_face_matrix(
-        const FiniteElement<dim, spacedim>&  fe1,
-        const FiniteElement<dim, spacedim>&  fe2,
+        const FiniteElement<dim, spacedim>& fe1,
+        const FiniteElement<dim, spacedim>& fe2,
         std::unique_ptr<FullMatrix<double>>& matrix)
       {
         if(matrix == nullptr)
@@ -341,9 +341,9 @@ namespace DoFTools
       template <int dim, int spacedim>
       void
       ensure_existence_of_subface_matrix(
-        const FiniteElement<dim, spacedim>&  fe1,
-        const FiniteElement<dim, spacedim>&  fe2,
-        const unsigned int                   subface,
+        const FiniteElement<dim, spacedim>& fe1,
+        const FiniteElement<dim, spacedim>& fe2,
+        const unsigned int subface,
         std::unique_ptr<FullMatrix<double>>& matrix)
       {
         if(matrix == nullptr)
@@ -362,7 +362,7 @@ namespace DoFTools
       void
       ensure_existence_of_split_face_matrix(
         const FullMatrix<double>& face_interpolation_matrix,
-        const std::vector<bool>&  master_dof_mask,
+        const std::vector<bool>& master_dof_mask,
         std::unique_ptr<std::pair<FullMatrix<double>, FullMatrix<double>>>&
           split_matrix)
       {
@@ -461,8 +461,8 @@ namespace DoFTools
       filter_constraints(
         const std::vector<types::global_dof_index>& master_dofs,
         const std::vector<types::global_dof_index>& slave_dofs,
-        const FullMatrix<double>&                   face_constraints,
-        ConstraintMatrix&                           constraints)
+        const FullMatrix<double>& face_constraints,
+        ConstraintMatrix& constraints)
       {
         Assert(face_constraints.n() == master_dofs.size(),
                ExcDimensionMismatch(master_dofs.size(), face_constraints.n()));
@@ -631,7 +631,7 @@ namespace DoFTools
     template <typename DoFHandlerType>
     void
     make_oldstyle_hanging_node_constraints(const DoFHandlerType& dof_handler,
-                                           ConstraintMatrix&     constraints,
+                                           ConstraintMatrix& constraints,
                                            std::integral_constant<int, 2>)
     {
       const unsigned int dim = 2;
@@ -778,7 +778,7 @@ namespace DoFTools
     template <typename DoFHandlerType>
     void
     make_oldstyle_hanging_node_constraints(const DoFHandlerType& dof_handler,
-                                           ConstraintMatrix&     constraints,
+                                           ConstraintMatrix& constraints,
                                            std::integral_constant<int, 3>)
     {
       const unsigned int dim = 3;
@@ -872,8 +872,8 @@ namespace DoFTools
                   }
 
                 // ok, start up the work
-                const FiniteElement<dim>& fe       = cell->get_fe();
-                const unsigned int        fe_index = cell->active_fe_index();
+                const FiniteElement<dim>& fe = cell->get_fe();
+                const unsigned int fe_index  = cell->active_fe_index();
 
                 const unsigned int n_dofs_on_mother = fe.dofs_per_face;
                 const unsigned int n_dofs_on_children
@@ -1018,7 +1018,7 @@ namespace DoFTools
     template <typename DoFHandlerType>
     void
     make_hp_hanging_node_constraints(const DoFHandlerType& dof_handler,
-                                     ConstraintMatrix&     constraints)
+                                     ConstraintMatrix& constraints)
     {
       // note: this function is going to be hard to understand if you
       // haven't read the hp paper. however, we try to follow the notation
@@ -1758,7 +1758,7 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   make_hanging_node_constraints(const DoFHandlerType& dof_handler,
-                                ConstraintMatrix&     constraints)
+                                ConstraintMatrix& constraints)
   {
     // Decide whether to use the new or old make_hanging_node_constraints
     // function. If all the FiniteElement or all elements in a FECollection
@@ -1801,14 +1801,14 @@ namespace DoFTools
     template <typename FaceIterator>
     void
     set_periodicity_constraints(
-      const FaceIterator&                          face_1,
+      const FaceIterator& face_1,
       const typename identity<FaceIterator>::type& face_2,
-      const FullMatrix<double>&                    transformation,
-      dealii::ConstraintMatrix&                    constraint_matrix,
-      const ComponentMask&                         component_mask,
-      const bool                                   face_orientation,
-      const bool                                   face_flip,
-      const bool                                   face_rotation)
+      const FullMatrix<double>& transformation,
+      dealii::ConstraintMatrix& constraint_matrix,
+      const ComponentMask& component_mask,
+      const bool face_orientation,
+      const bool face_flip,
+      const bool face_rotation)
     {
       static const int dim      = FaceIterator::AccessorType::dimension;
       static const int spacedim = FaceIterator::AccessorType::space_dimension;
@@ -1950,8 +1950,8 @@ namespace DoFTools
                 // that if so there is only one weight equal to 1
                 //
                 // afterwards do the same for constraints of type dof1=-dof2
-                bool         is_identity_constrained = true;
-                const double eps                     = 1.e-13;
+                bool is_identity_constrained = true;
+                const double eps             = 1.e-13;
                 for(unsigned int jj = 0; jj < dofs_per_face; ++jj)
                   if(std::abs(transformation(i, jj)) > eps
                      && std::abs(transformation(i, jj) - 1.) > eps)
@@ -1982,7 +1982,7 @@ namespace DoFTools
                         }
                   }
 
-                bool         is_inverse_constrained = !is_identity_constrained;
+                bool is_inverse_constrained = !is_identity_constrained;
                 unsigned int inverse_constraint_target
                   = numbers::invalid_unsigned_int;
                 if(is_inverse_constrained)
@@ -2207,8 +2207,8 @@ namespace DoFTools
     FullMatrix<double>
     compute_transformation(
       const FiniteElement<dim, spacedim>& fe,
-      const FullMatrix<double>&           matrix,
-      const std::vector<unsigned int>&    first_vector_components)
+      const FullMatrix<double>& matrix,
+      const std::vector<unsigned int>& first_vector_components)
     {
       Assert(matrix.m() == matrix.n(), ExcInternalError());
 
@@ -2300,15 +2300,15 @@ namespace DoFTools
   template <typename FaceIterator>
   void
   make_periodicity_constraints(
-    const FaceIterator&                          face_1,
+    const FaceIterator& face_1,
     const typename identity<FaceIterator>::type& face_2,
-    dealii::ConstraintMatrix&                    constraint_matrix,
-    const ComponentMask&                         component_mask,
-    const bool                                   face_orientation,
-    const bool                                   face_flip,
-    const bool                                   face_rotation,
-    const FullMatrix<double>&                    matrix,
-    const std::vector<unsigned int>&             first_vector_components)
+    dealii::ConstraintMatrix& constraint_matrix,
+    const ComponentMask& component_mask,
+    const bool face_orientation,
+    const bool face_flip,
+    const bool face_rotation,
+    const FullMatrix<double>& matrix,
+    const std::vector<unsigned int>& first_vector_components)
   {
     static const int dim      = FaceIterator::AccessorType::dimension;
     static const int spacedim = FaceIterator::AccessorType::space_dimension;
@@ -2532,13 +2532,13 @@ namespace DoFTools
   make_periodicity_constraints(
     const std::vector<GridTools::PeriodicFacePair<
       typename DoFHandlerType::cell_iterator>>& periodic_faces,
-    dealii::ConstraintMatrix&                   constraint_matrix,
-    const ComponentMask&                        component_mask,
-    const std::vector<unsigned int>&            first_vector_components)
+    dealii::ConstraintMatrix& constraint_matrix,
+    const ComponentMask& component_mask,
+    const std::vector<unsigned int>& first_vector_components)
   {
     typedef std::vector<
       GridTools::PeriodicFacePair<typename DoFHandlerType::cell_iterator>>
-                                        FaceVector;
+      FaceVector;
     typename FaceVector::const_iterator it, end_periodic;
     it           = periodic_faces.begin();
     end_periodic = periodic_faces.end();
@@ -2573,12 +2573,12 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  make_periodicity_constraints(const DoFHandlerType&     dof_handler,
-                               const types::boundary_id  b_id1,
-                               const types::boundary_id  b_id2,
-                               const int                 direction,
+  make_periodicity_constraints(const DoFHandlerType& dof_handler,
+                               const types::boundary_id b_id1,
+                               const types::boundary_id b_id2,
+                               const int direction,
                                dealii::ConstraintMatrix& constraint_matrix,
-                               const ComponentMask&      component_mask)
+                               const ComponentMask& component_mask)
   {
     static const int space_dim = DoFHandlerType::space_dimension;
     (void) space_dim;
@@ -2603,11 +2603,11 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  make_periodicity_constraints(const DoFHandlerType&     dof_handler,
-                               const types::boundary_id  b_id,
-                               const int                 direction,
+  make_periodicity_constraints(const DoFHandlerType& dof_handler,
+                               const types::boundary_id b_id,
+                               const int direction,
                                dealii::ConstraintMatrix& constraint_matrix,
-                               const ComponentMask&      component_mask)
+                               const ComponentMask& component_mask)
   {
     static const int dim       = DoFHandlerType::dimension;
     static const int space_dim = DoFHandlerType::space_dimension;
@@ -2641,7 +2641,7 @@ namespace DoFTools
       template <int dim, int spacedim>
       struct CopyData
       {
-        unsigned int                         dofs_per_cell;
+        unsigned int dofs_per_cell;
         std::vector<types::global_dof_index> parameter_dof_indices;
 #ifdef DEAL_II_WITH_MPI
         std::vector<dealii::LinearAlgebra::distributed::Vector<double>>
@@ -2666,10 +2666,10 @@ namespace DoFTools
           cell,
         const Assembler::Scratch&,
         Assembler::CopyData<dim, spacedim>& copy_data,
-        const unsigned int                  coarse_component,
+        const unsigned int coarse_component,
         const FiniteElement<dim, spacedim>& coarse_fe,
         const InterGridMap<dealii::DoFHandler<dim, spacedim>>&
-                                                   coarse_to_fine_grid_map,
+          coarse_to_fine_grid_map,
         const std::vector<dealii::Vector<double>>& parameter_dofs)
       {
         // for each cell on the parameter grid: find out which degrees of
@@ -2757,11 +2757,11 @@ namespace DoFTools
       template <int dim, int spacedim>
       void
       copy_intergrid_weights_3(
-        const Assembler::CopyData<dim, spacedim>&   copy_data,
-        const unsigned int                          coarse_component,
-        const FiniteElement<dim, spacedim>&         coarse_fe,
+        const Assembler::CopyData<dim, spacedim>& copy_data,
+        const unsigned int coarse_component,
+        const FiniteElement<dim, spacedim>& coarse_fe,
         const std::vector<types::global_dof_index>& weight_mapping,
-        const bool                                  is_called_in_parallel,
+        const bool is_called_in_parallel,
         std::vector<std::map<types::global_dof_index, float>>& weights)
       {
         unsigned int pos = 0;
@@ -2832,14 +2832,14 @@ namespace DoFTools
       void
       compute_intergrid_weights_2(
         const dealii::DoFHandler<dim, spacedim>& coarse_grid,
-        const unsigned int                       coarse_component,
+        const unsigned int coarse_component,
         const InterGridMap<dealii::DoFHandler<dim, spacedim>>&
-                                                               coarse_to_fine_grid_map,
-        const std::vector<dealii::Vector<double>>&             parameter_dofs,
-        const std::vector<types::global_dof_index>&            weight_mapping,
+          coarse_to_fine_grid_map,
+        const std::vector<dealii::Vector<double>>& parameter_dofs,
+        const std::vector<types::global_dof_index>& weight_mapping,
         std::vector<std::map<types::global_dof_index, float>>& weights)
       {
-        Assembler::Scratch                 scratch;
+        Assembler::Scratch scratch;
         Assembler::CopyData<dim, spacedim> copy_data;
 
         unsigned int n_interesting_dofs = 0;
@@ -2926,13 +2926,13 @@ namespace DoFTools
       unsigned int
       compute_intergrid_weights_1(
         const dealii::DoFHandler<dim, spacedim>& coarse_grid,
-        const unsigned int                       coarse_component,
+        const unsigned int coarse_component,
         const dealii::DoFHandler<dim, spacedim>& fine_grid,
-        const unsigned int                       fine_component,
+        const unsigned int fine_component,
         const InterGridMap<dealii::DoFHandler<dim, spacedim>>&
-                                                               coarse_to_fine_grid_map,
+          coarse_to_fine_grid_map,
         std::vector<std::map<types::global_dof_index, float>>& weights,
-        std::vector<types::global_dof_index>&                  weight_mapping)
+        std::vector<types::global_dof_index>& weight_mapping)
       {
         // aliases to the finite elements used by the dof handlers:
         const FiniteElement<dim, spacedim>&coarse_fe = coarse_grid.get_fe(),
@@ -3144,12 +3144,12 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   compute_intergrid_constraints(
-    const DoFHandler<dim, spacedim>&               coarse_grid,
-    const unsigned int                             coarse_component,
-    const DoFHandler<dim, spacedim>&               fine_grid,
-    const unsigned int                             fine_component,
+    const DoFHandler<dim, spacedim>& coarse_grid,
+    const unsigned int coarse_component,
+    const DoFHandler<dim, spacedim>& fine_grid,
+    const unsigned int fine_component,
     const InterGridMap<DoFHandler<dim, spacedim>>& coarse_to_fine_grid_map,
-    ConstraintMatrix&                              constraints)
+    ConstraintMatrix& constraints)
   {
     // store the weights with which a dof on the parameter grid contributes
     // to a dof on the fine grid. see the long doc below for more info
@@ -3318,10 +3318,10 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   compute_intergrid_transfer_representation(
-    const DoFHandler<dim, spacedim>&               coarse_grid,
-    const unsigned int                             coarse_component,
-    const DoFHandler<dim, spacedim>&               fine_grid,
-    const unsigned int                             fine_component,
+    const DoFHandler<dim, spacedim>& coarse_grid,
+    const unsigned int coarse_component,
+    const DoFHandler<dim, spacedim>& fine_grid,
+    const unsigned int fine_component,
     const InterGridMap<DoFHandler<dim, spacedim>>& coarse_to_fine_grid_map,
     std::vector<std::map<types::global_dof_index, float>>&
       transfer_representation)
@@ -3414,7 +3414,7 @@ namespace DoFTools
   void
   make_zero_boundary_constraints(const DoFHandlerType<dim, spacedim>& dof,
                                  const types::boundary_id boundary_id,
-                                 ConstraintMatrix&    zero_boundary_constraints,
+                                 ConstraintMatrix& zero_boundary_constraints,
                                  const ComponentMask& component_mask)
   {
     Assert(component_mask.represents_n_components(dof.get_fe(0).n_components()),
@@ -3498,7 +3498,7 @@ namespace DoFTools
   template <int dim, int spacedim, template <int, int> class DoFHandlerType>
   void
   make_zero_boundary_constraints(const DoFHandlerType<dim, spacedim>& dof,
-                                 ConstraintMatrix&    zero_boundary_constraints,
+                                 ConstraintMatrix& zero_boundary_constraints,
                                  const ComponentMask& component_mask)
   {
     make_zero_boundary_constraints(dof,

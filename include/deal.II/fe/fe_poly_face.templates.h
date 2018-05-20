@@ -25,9 +25,9 @@ DEAL_II_NAMESPACE_OPEN
 
 template <class PolynomialType, int dim, int spacedim>
 FE_PolyFace<PolynomialType, dim, spacedim>::FE_PolyFace(
-  const PolynomialType&         poly_space,
+  const PolynomialType& poly_space,
   const FiniteElementData<dim>& fe_data,
-  const std::vector<bool>&      restriction_is_additive_flags)
+  const std::vector<bool>& restriction_is_additive_flags)
   : FiniteElement<dim, spacedim>(
       fe_data,
       restriction_is_additive_flags,
@@ -99,7 +99,7 @@ template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_face_values(
   const typename Triangulation<dim, spacedim>::cell_iterator&,
-  const unsigned int         face_no,
+  const unsigned int face_no,
   const Quadrature<dim - 1>& quadrature,
   const Mapping<dim, spacedim>&,
   const typename Mapping<dim, spacedim>::InternalDataBase&,
@@ -188,8 +188,8 @@ template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_subface_values(
   const typename Triangulation<dim, spacedim>::cell_iterator&,
-  const unsigned int         face_no,
-  const unsigned int         sub_no,
+  const unsigned int face_no,
+  const unsigned int sub_no,
   const Quadrature<dim - 1>& quadrature,
   const Mapping<dim, spacedim>&,
   const typename Mapping<dim, spacedim>::InternalDataBase&,

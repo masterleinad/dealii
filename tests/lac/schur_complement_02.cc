@@ -75,15 +75,15 @@ main()
        */
 
       const unsigned int rc = 1;
-      SparsityPattern    sparsity_pattern(rc, rc, 0);
+      SparsityPattern sparsity_pattern(rc, rc, 0);
       sparsity_pattern.compress();
 
       SparseMatrix<double> A(sparsity_pattern);
       SparseMatrix<double> B(sparsity_pattern);
       SparseMatrix<double> C(sparsity_pattern);
       SparseMatrix<double> D(sparsity_pattern);
-      Vector<double>       y(rc);
-      Vector<double>       g(rc);
+      Vector<double> y(rc);
+      Vector<double> g(rc);
       for(unsigned int i = 0; i < rc; ++i)
         {
           A.diag_element(i) = 1.0 * (i + 1);
@@ -99,8 +99,8 @@ main()
       const auto lo_C = linear_operator(C);
       const auto lo_D = linear_operator(D);
 
-      SolverControl                            solver_control_A(100, 1.0e-10);
-      SolverCG<Vector<double>>                 solver_A(solver_control_A);
+      SolverControl solver_control_A(100, 1.0e-10);
+      SolverCG<Vector<double>> solver_A(solver_control_A);
       PreconditionJacobi<SparseMatrix<double>> preconditioner_A;
       preconditioner_A.initialize(A);
       const auto lo_A_inv = inverse_operator(lo_A, solver_A, preconditioner_A);

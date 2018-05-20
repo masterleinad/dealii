@@ -42,7 +42,7 @@ test()
   tr.refine_global(4);
 
   Vector<float> indicators(tr.n_active_cells());
-  float         min_indicator = tr.n_active_cells(), max_indicator = 0;
+  float min_indicator = tr.n_active_cells(), max_indicator = 0;
   {
     unsigned int cell_index    = 0;
     unsigned int my_cell_index = 0;

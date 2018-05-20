@@ -62,20 +62,20 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);
   constraints.close();
 
-  const QGauss<1>                          quad(2);
-  MatrixFree<dim>                          mf;
+  const QGauss<1> quad(2);
+  MatrixFree<dim> mf;
   typename MatrixFree<dim>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
   mf.reinit(dof, constraints, quad, data);
 
-  const unsigned int        n_macro_cells = mf.n_macro_cells();
+  const unsigned int n_macro_cells = mf.n_macro_cells();
   std::vector<unsigned int> n_cell_types(4, 0);
   for(unsigned int i = 0; i < n_macro_cells; ++i)
     n_cell_types[mf.get_mapping_info().get_cell_type(i)]++;
@@ -97,20 +97,20 @@ test_cube()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(5 - dim);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);
   constraints.close();
 
-  const QGauss<1>                          quad(2);
-  MatrixFree<dim>                          mf;
+  const QGauss<1> quad(2);
+  MatrixFree<dim> mf;
   typename MatrixFree<dim>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
   mf.reinit(dof, constraints, quad, data);
 
-  const unsigned int        n_macro_cells = mf.n_macro_cells();
+  const unsigned int n_macro_cells = mf.n_macro_cells();
   std::vector<unsigned int> n_cell_types(4, 0);
   for(unsigned int i = 0; i < n_macro_cells; ++i)
     n_cell_types[mf.get_mapping_info().get_cell_type(i)]++;
@@ -129,7 +129,7 @@ test_parallelogram()
 {
   deallog << "Parallelogram" << std::endl;
   Triangulation<dim> tria;
-  Point<dim>         corners[dim];
+  Point<dim> corners[dim];
   for(unsigned int d = 0; d < dim; ++d)
     {
       corners[d][d] = 1.;
@@ -139,20 +139,20 @@ test_parallelogram()
   GridGenerator::parallelepiped(tria, corners);
   tria.refine_global(5 - dim);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);
   constraints.close();
 
-  const QGauss<1>                          quad(2);
-  MatrixFree<dim>                          mf;
+  const QGauss<1> quad(2);
+  MatrixFree<dim> mf;
   typename MatrixFree<dim>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
   mf.reinit(dof, constraints, quad, data);
 
-  const unsigned int        n_macro_cells = mf.n_macro_cells();
+  const unsigned int n_macro_cells = mf.n_macro_cells();
   std::vector<unsigned int> n_cell_types(4, 0);
   for(unsigned int i = 0; i < n_macro_cells; ++i)
     n_cell_types[mf.get_mapping_info().get_cell_type(i)]++;

@@ -569,7 +569,7 @@ namespace Differentiation
         static std::complex<
           typename ADNumberTraits<ADNumberType>::derivative_type>
         directional_derivative(const std::complex<ADNumberType>& x,
-                               const unsigned int                direction)
+                               const unsigned int direction)
         {
           return std::complex<
             typename ADNumberTraits<ADNumberType>::derivative_type>(

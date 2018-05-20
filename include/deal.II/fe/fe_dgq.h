@@ -164,7 +164,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**
@@ -186,7 +186,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_restriction_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -213,7 +213,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_prolongation_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -319,7 +319,7 @@ public:
   virtual void
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    std::vector<double>& nodal_values) const override;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -374,7 +374,7 @@ private:
    */
   void
   rotate_indices(std::vector<unsigned int>& indices,
-                 const char                 direction) const;
+                 const char direction) const;
 
   /*
    * Mutex for protecting initialization of restriction and embedding matrix.
@@ -440,7 +440,7 @@ public:
   virtual void
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    std::vector<double>& nodal_values) const override;
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const override;
 };

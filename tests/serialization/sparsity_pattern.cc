@@ -23,12 +23,12 @@ void
 test()
 {
   const unsigned int N1 = 5;
-  SparsityPattern    sp1((N1 - 1) * (N1 - 1), (N1 - 1) * (N1 - 1), 5);
+  SparsityPattern sp1((N1 - 1) * (N1 - 1), (N1 - 1) * (N1 - 1), 5);
   FDMatrix(N1, N1).five_point_structure(sp1);
   sp1.compress();
 
   const unsigned int N2 = 3;
-  SparsityPattern    sp2((N2 - 1) * (N2 - 1), (N2 - 1) * (N2 - 1), 5);
+  SparsityPattern sp2((N2 - 1) * (N2 - 1), (N2 - 1) * (N2 - 1), 5);
   FDMatrix(N2, N2).five_point_structure(sp2);
   sp2.compress();
 

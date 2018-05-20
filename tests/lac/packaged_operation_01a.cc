@@ -27,7 +27,7 @@
 using namespace dealii;
 
 void
-test_applies(std::string                                            description,
+test_applies(std::string description,
              const PackagedOperation<Vector<std::complex<double>>>& expr)
 {
   // test apply

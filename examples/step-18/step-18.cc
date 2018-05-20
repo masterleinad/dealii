@@ -183,8 +183,8 @@ namespace Step18
   template <int dim>
   inline SymmetricTensor<2, dim>
   get_strain(const FEValues<dim>& fe_values,
-             const unsigned int   shape_func,
-             const unsigned int   q_point)
+             const unsigned int shape_func,
+             const unsigned int q_point)
   {
     // Declare a temporary that will hold the return value:
     SymmetricTensor<2, dim> tmp;
@@ -487,9 +487,9 @@ namespace Step18
     // nature of the problem: they denote the length of the time interval
     // which we want to simulate, the present time and number of time step,
     // and length of present timestep:
-    double       present_time;
-    double       present_timestep;
-    double       end_time;
+    double present_time;
+    double present_timestep;
+    double end_time;
     unsigned int timestep_no;
 
     // Then a few variables that have to do with %parallel processing: first,
@@ -568,7 +568,7 @@ namespace Step18
 
     virtual void
     vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const override;
+                      std::vector<Vector<double>>& value_list) const override;
   };
 
   template <int dim>
@@ -593,7 +593,7 @@ namespace Step18
   void
   BodyForce<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    std::vector<Vector<double>>& value_list) const
   {
     const unsigned int n_points = points.size();
 
@@ -643,7 +643,7 @@ namespace Step18
 
     virtual void
     vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const override;
+                      std::vector<Vector<double>>& value_list) const override;
 
   private:
     const double velocity;
@@ -676,7 +676,7 @@ namespace Step18
   void
   IncrementalBoundaryValues<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    std::vector<Vector<double>>& value_list) const
   {
     const unsigned int n_points = points.size();
 
@@ -943,11 +943,11 @@ namespace Step18
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    BodyForce<dim>              body_force;
+    BodyForce<dim> body_force;
     std::vector<Vector<double>> body_force_values(n_q_points,
                                                   Vector<double>(dim));
 
@@ -1070,7 +1070,7 @@ namespace Step18
     // which vector components it should apply to; this is a vector of bools
     // for each vector component and because we only want to restrict vertical
     // motion, it has only its last component set:
-    FEValuesExtractors::Scalar                z_component(dim - 1);
+    FEValuesExtractors::Scalar z_component(dim - 1);
     std::map<types::global_dof_index, double> boundary_values;
     VectorTools::interpolate_boundary_values(
       dof_handler, 0, Functions::ZeroFunction<dim>(dim), boundary_values);
@@ -1132,7 +1132,7 @@ namespace Step18
       locally_owned_dofs, mpi_communicator);
     distributed_incremental_displacement = incremental_displacement;
 
-    SolverControl           solver_control(dof_handler.n_dofs(),
+    SolverControl solver_control(dof_handler.n_dofs(),
                                  1e-16 * system_rhs.l2_norm());
     PETScWrappers::SolverCG cg(solver_control, mpi_communicator);
 

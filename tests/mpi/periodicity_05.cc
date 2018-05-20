@@ -28,9 +28,9 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);
   mpi_initlog();
-  const double                            L = 7.6 / 2.0;
+  const double L = 7.6 / 2.0;
   parallel::distributed::Triangulation<3> triangulation(MPI_COMM_WORLD);
-  GridIn<3>                               gridin;
+  GridIn<3> gridin;
   gridin.attach_triangulation(triangulation);
   std::ifstream f(SOURCE_DIR "/periodicity_05.inp");
   gridin.read_ucd(f);
@@ -72,7 +72,7 @@ main(int argc, char* argv[])
                                       periodicity_vector);
   triangulation.add_periodicity(periodicity_vector);
 
-  FE_Q<3>       fe(1);
+  FE_Q<3> fe(1);
   DoFHandler<3> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
   deallog << "OK" << std::endl;

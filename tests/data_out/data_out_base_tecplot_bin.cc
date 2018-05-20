@@ -48,7 +48,7 @@ template <int dim, int spacedim>
 void
 check_all()
 {
-  char                      name[100];
+  char name[100];
   DataOutBase::TecplotFlags flags;
   if(true)
     {

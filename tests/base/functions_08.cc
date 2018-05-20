@@ -35,7 +35,7 @@ template <int dim>
 void
 check1()
 {
-  X<dim>                                x;
+  X<dim> x;
   VectorFunctionFromTensorFunction<dim> object(x, 1, dim + 2);
 
   AssertThrow(object.n_components == dim + 2, ExcInternalError());
@@ -67,7 +67,7 @@ check1()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

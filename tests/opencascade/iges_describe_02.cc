@@ -32,11 +32,11 @@ main()
   deallog.attach(logfile);
 
   TopoDS_Shape sh = read_IGES(SOURCE_DIR "/iges_files/goteborg.iges");
-  std::vector<TopoDS_Compound>  compounds;
+  std::vector<TopoDS_Compound> compounds;
   std::vector<TopoDS_CompSolid> compsolids;
-  std::vector<TopoDS_Solid>     solids;
-  std::vector<TopoDS_Shell>     shells;
-  std::vector<TopoDS_Wire>      wires;
+  std::vector<TopoDS_Solid> solids;
+  std::vector<TopoDS_Shell> shells;
+  std::vector<TopoDS_Wire> wires;
   extract_compound_shapes(sh, compounds, compsolids, solids, shells, wires);
 
   deallog << "Shape contains " << compounds.size() << " compounds, "

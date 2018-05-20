@@ -41,7 +41,7 @@ check(const unsigned int n)
 {
   deallog << "n=" << n << std::endl;
 
-  Point<dim>         center;
+  Point<dim> center;
   Triangulation<dim> tria(Triangulation<dim>::none);
   GridGenerator::hyper_shell(tria, center, 0.5, 1, n, true);
 

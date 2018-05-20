@@ -24,7 +24,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim>
 double
 TensorProductPolynomialsConst<dim>::compute_value(const unsigned int i,
-                                                  const Point<dim>&  p) const
+                                                  const Point<dim>& p) const
 {
   const unsigned int max_indices = this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
@@ -49,7 +49,7 @@ TensorProductPolynomialsConst<0>::compute_value(const unsigned int,
 template <int dim>
 Tensor<1, dim>
 TensorProductPolynomialsConst<dim>::compute_grad(const unsigned int i,
-                                                 const Point<dim>&  p) const
+                                                 const Point<dim>& p) const
 {
   const unsigned int max_indices = this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
@@ -81,8 +81,8 @@ TensorProductPolynomialsConst<dim>::compute_grad_grad(const unsigned int i,
 template <int dim>
 void
 TensorProductPolynomialsConst<dim>::compute(
-  const Point<dim>&            p,
-  std::vector<double>&         values,
+  const Point<dim>& p,
+  std::vector<double>& values,
   std::vector<Tensor<1, dim>>& grads,
   std::vector<Tensor<2, dim>>& grad_grads,
   std::vector<Tensor<3, dim>>& third_derivatives,

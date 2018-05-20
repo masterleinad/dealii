@@ -319,22 +319,22 @@ namespace Step60
 
     std::unique_ptr<Triangulation<spacedim>> space_grid;
     std::unique_ptr<GridTools::Cache<spacedim, spacedim>>
-                                             space_grid_tools_cache;
+      space_grid_tools_cache;
     std::unique_ptr<FiniteElement<spacedim>> space_fe;
-    std::unique_ptr<DoFHandler<spacedim>>    space_dh;
+    std::unique_ptr<DoFHandler<spacedim>> space_dh;
 
     // Then the ones related to the embedded grid, with the DoFHandler associated
     // to the Lagrange multiplier `lambda`
 
     std::unique_ptr<Triangulation<dim, spacedim>> embedded_grid;
     std::unique_ptr<FiniteElement<dim, spacedim>> embedded_fe;
-    std::unique_ptr<DoFHandler<dim, spacedim>>    embedded_dh;
+    std::unique_ptr<DoFHandler<dim, spacedim>> embedded_dh;
 
     // And finally, everything that is needed to *deform* the embedded
     // triangulation
     std::unique_ptr<FiniteElement<dim, spacedim>> embedded_configuration_fe;
-    std::unique_ptr<DoFHandler<dim, spacedim>>    embedded_configuration_dh;
-    Vector<double>                                embedded_configuration;
+    std::unique_ptr<DoFHandler<dim, spacedim>> embedded_configuration_dh;
+    Vector<double> embedded_configuration;
 
     // The ParameterAcceptorProxy class is a "transparent" wrapper derived
     // from both ParameterAcceptor and the type passed as its template
@@ -1010,7 +1010,7 @@ namespace Step60
     auto K_inv = linear_operator(K, K_inv_umfpack);
 
     // Using the Schur complement method
-    auto                     S = C * K_inv * Ct;
+    auto S = C * K_inv * Ct;
     SolverCG<Vector<double>> solver_cg(schur_solver_control);
     auto S_inv = inverse_operator(S, solver_cg, PreconditionIdentity());
 
@@ -1101,7 +1101,7 @@ main(int argc, char** argv)
       // and exit the program.
 
       DistributedLagrangeProblem<dim, spacedim>::Parameters parameters;
-      DistributedLagrangeProblem<dim, spacedim>             problem(parameters);
+      DistributedLagrangeProblem<dim, spacedim> problem(parameters);
 
       std::string parameter_file;
       if(argc > 1)

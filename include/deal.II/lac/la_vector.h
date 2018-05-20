@@ -62,7 +62,7 @@ namespace LinearAlgebra
                  public VectorSpaceVector<Number>
   {
   public:
-    typedef types::global_dof_index                      size_type;
+    typedef types::global_dof_index size_type;
     typedef typename ReadWriteVector<Number>::value_type value_type;
 
     /**
@@ -105,7 +105,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const size_type size,
-           const bool      omit_zeroing_entries = false) override;
+           const bool omit_zeroing_entries = false) override;
 
     /**
      * Uses the same IndexSet as the one of the input vector @p in_vector and
@@ -118,7 +118,7 @@ namespace LinearAlgebra
     template <typename Number2>
     void
     reinit(const ReadWriteVector<Number2>& in_vector,
-           const bool                      omit_zeroing_entries = false);
+           const bool omit_zeroing_entries = false);
 
     /**
      * Initializes the vector. The indices are specified by @p
@@ -131,7 +131,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const IndexSet& locally_stored_indices,
-           const bool      omit_zeroing_entries = false) override;
+           const bool omit_zeroing_entries = false) override;
 
     /**
      * Change the dimension to that of the vector V. The elements of V are not
@@ -194,8 +194,8 @@ namespace LinearAlgebra
      * This function is not implemented and will throw an exception.
      */
     virtual void
-    import(const ReadWriteVector<Number>&                  V,
-           VectorOperation::values                         operation,
+    import(const ReadWriteVector<Number>& V,
+           VectorOperation::values operation,
            std::shared_ptr<const CommunicationPatternBase> communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>()) override;
 
@@ -216,9 +216,9 @@ namespace LinearAlgebra
      * a*V+b*W</tt>.
      */
     virtual void
-    add(const Number                     a,
+    add(const Number a,
         const VectorSpaceVector<Number>& V,
-        const Number                     b,
+        const Number b,
         const VectorSpaceVector<Number>& W) override;
 
     /**
@@ -226,8 +226,8 @@ namespace LinearAlgebra
      * s*(*this)+a*V</tt>.
      */
     virtual void
-    sadd(const Number                     s,
-         const Number                     a,
+    sadd(const Number s,
+         const Number a,
          const VectorSpaceVector<Number>& V) override;
 
     /**
@@ -297,7 +297,7 @@ namespace LinearAlgebra
      * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
      */
     virtual Number
-    add_and_dot(const Number                     a,
+    add_and_dot(const Number a,
                 const VectorSpaceVector<Number>& V,
                 const VectorSpaceVector<Number>& W) override;
 
@@ -326,10 +326,10 @@ namespace LinearAlgebra
      * Prints the vector to the output stream @p out.
      */
     virtual void
-    print(std::ostream&      out,
-          const unsigned int precision  = 3,
-          const bool         scientific = true,
-          const bool         across     = true) const override;
+    print(std::ostream& out,
+          const unsigned int precision = 3,
+          const bool scientific        = true,
+          const bool across            = true) const override;
 
     /**
      * Write the vector en bloc to a file. This is done in a binary mode, so
@@ -422,9 +422,9 @@ namespace LinearAlgebra
 
   template <typename Number>
   inline void
-  Vector<Number>::print(std::ostream&      out,
+  Vector<Number>::print(std::ostream& out,
                         const unsigned int precision,
-                        const bool         scientific,
+                        const bool scientific,
                         const bool) const
   {
     ReadWriteVector<Number>::print(out, precision, scientific);

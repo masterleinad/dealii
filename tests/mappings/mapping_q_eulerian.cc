@@ -89,13 +89,13 @@ private:
   write_tria_to_eps(std::string id);
 
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler;
-  FESystem<dim>      fe;
+  DoFHandler<dim> dof_handler;
+  FESystem<dim> fe;
 
   unsigned int degree;
 
   ImposedDisplacement<dim> imposed_displacement;
-  Vector<double>           displacements;
+  Vector<double> displacements;
 };
 
 // .... CONSTRUCTOR
@@ -190,7 +190,7 @@ void
 MappingTest<dim>::explicitly_move_mesh()
 {
   std::vector<bool> moved(triangulation.n_vertices(), false);
-  unsigned int      vpc = GeometryInfo<dim>::vertices_per_cell;
+  unsigned int vpc = GeometryInfo<dim>::vertices_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),

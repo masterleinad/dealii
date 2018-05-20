@@ -116,13 +116,13 @@ class PETScInverse
 {
 public:
   PETScInverse(const dealii::PETScWrappers::MatrixBase& A,
-               dealii::SolverControl&                   cn,
+               dealii::SolverControl& cn,
                const MPI_Comm& mpi_communicator = PETSC_COMM_SELF)
     : solver(cn, mpi_communicator), matrix(A), preconditioner(matrix)
   {}
 
   void
-  vmult(dealii::PETScWrappers::MPI::Vector&       dst,
+  vmult(dealii::PETScWrappers::MPI::Vector& dst,
         const dealii::PETScWrappers::MPI::Vector& src) const
   {
     ;
@@ -130,9 +130,9 @@ public:
   }
 
 private:
-  mutable dealii::PETScWrappers::SolverCG  solver;
+  mutable dealii::PETScWrappers::SolverCG solver;
   const dealii::PETScWrappers::MatrixBase& matrix;
-  PETScWrappers::PreconditionBlockJacobi   preconditioner;
+  PETScWrappers::PreconditionBlockJacobi preconditioner;
 };
 
 void
@@ -141,22 +141,22 @@ test()
   const unsigned int global_mesh_refinement_steps = 5;
   const unsigned int number_of_eigenvalues        = 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
     = dealii::Utilities::MPI::this_mpi_process(mpi_communicator);
 
   dealii::Triangulation<dim> triangulation;
-  dealii::DoFHandler<dim>    dof_handler(triangulation);
-  dealii::FE_Q<dim>          fe(1);
-  dealii::ConstraintMatrix   constraints;
-  dealii::IndexSet           locally_owned_dofs;
-  dealii::IndexSet           locally_relevant_dofs;
+  dealii::DoFHandler<dim> dof_handler(triangulation);
+  dealii::FE_Q<dim> fe(1);
+  dealii::ConstraintMatrix constraints;
+  dealii::IndexSet locally_owned_dofs;
+  dealii::IndexSet locally_relevant_dofs;
 
   std::vector<dealii::PETScWrappers::MPI::Vector> eigenfunctions;
-  std::vector<PetscScalar>                        eigenvalues;
-  dealii::PETScWrappers::MPI::SparseMatrix        stiffness_matrix, mass_matrix;
+  std::vector<PetscScalar> eigenvalues;
+  dealii::PETScWrappers::MPI::SparseMatrix stiffness_matrix, mass_matrix;
 
   dealii::GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(global_mesh_refinement_steps);
@@ -174,7 +174,7 @@ test()
     for(; cell != endc; ++cell)
       {
         const dealii::Point<dim>& center = cell->center();
-        const double              x      = center[0];
+        const double x                   = center[0];
 
         const unsigned int id = std::floor((x - x0) / dL);
         cell->set_subdomain_id(id);
@@ -229,7 +229,7 @@ test()
   stiffness_matrix = 0;
   mass_matrix      = 0;
 
-  dealii::QGauss<dim>   quadrature_formula(2);
+  dealii::QGauss<dim> quadrature_formula(2);
   dealii::FEValues<dim> fe_values(
     fe,
     quadrature_formula,
@@ -320,7 +320,7 @@ test()
     // a) (A*x_i-\lambda*B*x_i).L2() == 0
     // b) x_j*B*x_i=\delta_{ij}
     {
-      const double               precision = 1e-7;
+      const double precision = 1e-7;
       PETScWrappers::MPI::Vector Ax(eigenfunctions[0]), Bx(eigenfunctions[0]);
       for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {

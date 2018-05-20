@@ -55,7 +55,7 @@ main()
     deallog << "Testing hyper_cube in dim: " << dim << "..." << endl;
 
     const SphericalManifold<dim> boundary_description;
-    Triangulation<dim>           volume_mesh;
+    Triangulation<dim> volume_mesh;
     GridGenerator::hyper_ball(volume_mesh);
     GridTools::copy_boundary_to_manifold_id(volume_mesh);
     volume_mesh.set_manifold(0, boundary_description);
@@ -81,7 +81,7 @@ main()
       }
 
     const SphericalManifold<dim - 1, dim> surface_description;
-    Triangulation<dim - 1, dim>           boundary_mesh;
+    Triangulation<dim - 1, dim> boundary_mesh;
     boundary_mesh.set_manifold(0, surface_description);
 
     // now extract a mesh of the 5

@@ -195,7 +195,7 @@ public:
    * element should consist of.
    */
   FESystem(const FiniteElement<dim, spacedim>& fe,
-           const unsigned int                  n_elements);
+           const unsigned int n_elements);
 
   /**
    * Constructor for mixed discretizations with two base elements.
@@ -204,9 +204,9 @@ public:
    * composing elements.
    */
   FESystem(const FiniteElement<dim, spacedim>& fe1,
-           const unsigned int                  n1,
+           const unsigned int n1,
            const FiniteElement<dim, spacedim>& fe2,
-           const unsigned int                  n2);
+           const unsigned int n2);
 
   /**
    * Constructor for mixed discretizations with three base elements.
@@ -215,11 +215,11 @@ public:
    * composing elements.
    */
   FESystem(const FiniteElement<dim, spacedim>& fe1,
-           const unsigned int                  n1,
+           const unsigned int n1,
            const FiniteElement<dim, spacedim>& fe2,
-           const unsigned int                  n2,
+           const unsigned int n2,
            const FiniteElement<dim, spacedim>& fe3,
-           const unsigned int                  n3);
+           const unsigned int n3);
 
   /**
    * Constructor for mixed discretizations with four base elements.
@@ -228,13 +228,13 @@ public:
    * general idea of composing elements.
    */
   FESystem(const FiniteElement<dim, spacedim>& fe1,
-           const unsigned int                  n1,
+           const unsigned int n1,
            const FiniteElement<dim, spacedim>& fe2,
-           const unsigned int                  n2,
+           const unsigned int n2,
            const FiniteElement<dim, spacedim>& fe3,
-           const unsigned int                  n3,
+           const unsigned int n3,
            const FiniteElement<dim, spacedim>& fe4,
-           const unsigned int                  n4);
+           const unsigned int n4);
 
   /**
    * Constructor for mixed discretizations with five base elements.
@@ -243,15 +243,15 @@ public:
    * general idea of composing elements.
    */
   FESystem(const FiniteElement<dim, spacedim>& fe1,
-           const unsigned int                  n1,
+           const unsigned int n1,
            const FiniteElement<dim, spacedim>& fe2,
-           const unsigned int                  n2,
+           const unsigned int n2,
            const FiniteElement<dim, spacedim>& fe3,
-           const unsigned int                  n3,
+           const unsigned int n3,
            const FiniteElement<dim, spacedim>& fe4,
-           const unsigned int                  n4,
+           const unsigned int n4,
            const FiniteElement<dim, spacedim>& fe5,
-           const unsigned int                  n5);
+           const unsigned int n5);
 
   /**
    * Same as above but for any number of base elements. Pointers to the base
@@ -561,7 +561,7 @@ public:
    */
   virtual double
   shape_value_component(const unsigned int i,
-                        const Point<dim>&  p,
+                        const Point<dim>& p,
                         const unsigned int component) const override;
 
   /**
@@ -591,7 +591,7 @@ public:
    */
   virtual Tensor<1, dim>
   shape_grad_component(const unsigned int i,
-                       const Point<dim>&  p,
+                       const Point<dim>& p,
                        const unsigned int component) const override;
 
   /**
@@ -621,7 +621,7 @@ public:
    */
   virtual Tensor<2, dim>
   shape_grad_grad_component(const unsigned int i,
-                            const Point<dim>&  p,
+                            const Point<dim>& p,
                             const unsigned int component) const override;
 
   /**
@@ -640,7 +640,7 @@ public:
    */
   virtual Tensor<3, dim>
   shape_3rd_derivative(const unsigned int i,
-                       const Point<dim>&  p) const override;
+                       const Point<dim>& p) const override;
 
   /**
    * Return the third derivatives of the @p componentth vector component of
@@ -652,7 +652,7 @@ public:
    */
   virtual Tensor<3, dim>
   shape_3rd_derivative_component(const unsigned int i,
-                                 const Point<dim>&  p,
+                                 const Point<dim>& p,
                                  const unsigned int component) const override;
 
   /**
@@ -671,7 +671,7 @@ public:
    */
   virtual Tensor<4, dim>
   shape_4th_derivative(const unsigned int i,
-                       const Point<dim>&  p) const override;
+                       const Point<dim>& p) const override;
 
   /**
    * Return the fourth derivatives of the @p componentth vector component of
@@ -683,7 +683,7 @@ public:
    */
   virtual Tensor<4, dim>
   shape_4th_derivative_component(const unsigned int i,
-                                 const Point<dim>&  p,
+                                 const Point<dim>& p,
                                  const unsigned int component) const override;
 
   /**
@@ -743,7 +743,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_restriction_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -776,7 +776,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_prolongation_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -821,9 +821,9 @@ public:
   virtual unsigned int
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
-                     const bool         face_orientation = true,
-                     const bool         face_flip        = false,
-                     const bool         face_rotation = false) const override;
+                     const bool face_orientation = true,
+                     const bool face_flip        = false,
+                     const bool face_rotation    = false) const override;
 
   /**
    * Implementation of the respective function in the base class.
@@ -892,7 +892,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**
@@ -961,7 +961,7 @@ public:
   virtual void
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               dof_values) const override;
+    std::vector<double>& dof_values) const override;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -977,9 +977,9 @@ public:
 protected:
   virtual std::unique_ptr<
     typename FiniteElement<dim, spacedim>::InternalDataBase>
-  get_data(const UpdateFlags             update_flags,
+  get_data(const UpdateFlags update_flags,
            const Mapping<dim, spacedim>& mapping,
-           const Quadrature<dim>&        quadrature,
+           const Quadrature<dim>& quadrature,
            dealii::internal::FEValuesImplementation::FiniteElementRelatedData<
              dim,
              spacedim>& output_data) const override;
@@ -987,30 +987,30 @@ protected:
   virtual std::unique_ptr<
     typename FiniteElement<dim, spacedim>::InternalDataBase>
   get_face_data(
-    const UpdateFlags             update_flags,
+    const UpdateFlags update_flags,
     const Mapping<dim, spacedim>& mapping,
-    const Quadrature<dim - 1>&    quadrature,
+    const Quadrature<dim - 1>& quadrature,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
 
   virtual std::unique_ptr<
     typename FiniteElement<dim, spacedim>::InternalDataBase>
   get_subface_data(
-    const UpdateFlags             update_flags,
+    const UpdateFlags update_flags,
     const Mapping<dim, spacedim>& mapping,
-    const Quadrature<dim - 1>&    quadrature,
+    const Quadrature<dim - 1>& quadrature,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
 
   virtual void
   fill_fe_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const CellSimilarity::Similarity cell_similarity,
+    const Quadrature<dim>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -1018,12 +1018,12 @@ protected:
   virtual void
   fill_fe_face_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const unsigned int face_no,
+    const Quadrature<dim - 1>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -1031,13 +1031,13 @@ protected:
   virtual void
   fill_fe_subface_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          sub_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const unsigned int face_no,
+    const unsigned int sub_no,
+    const Quadrature<dim - 1>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -1055,12 +1055,12 @@ protected:
   template <int dim_1>
   void
   compute_fill(
-    const Mapping<dim, spacedim>&                               mapping,
+    const Mapping<dim, spacedim>& mapping,
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          sub_no,
-    const Quadrature<dim_1>&                                    quadrature,
-    const CellSimilarity::Similarity                            cell_similarity,
+    const unsigned int face_no,
+    const unsigned int sub_no,
+    const Quadrature<dim_1>& quadrature,
+    const CellSimilarity::Similarity cell_similarity,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_data,
     const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
@@ -1272,7 +1272,7 @@ FESystem<dim, spacedim>::FESystem(
     base_elements(count_nonzeros(fe_systems))
 {
   std::vector<const FiniteElement<dim, spacedim>*> fes;
-  std::vector<unsigned int>                        multiplicities;
+  std::vector<unsigned int> multiplicities;
 
   const auto extract
     = [&fes, &multiplicities](

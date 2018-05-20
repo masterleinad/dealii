@@ -75,7 +75,7 @@ namespace Assembly
 template <int dim, int fe_degree>
 void
 assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator& cell,
-                 Assembly::Scratch::Data<dim, fe_degree>&              data,
+                 Assembly::Scratch::Data<dim, fe_degree>& data,
                  unsigned int&)
 {
   const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
@@ -155,7 +155,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -170,7 +170,7 @@ test()
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   do_test<dim, fe_degree>(dof);

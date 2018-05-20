@@ -50,14 +50,14 @@ class LaplaceMatrix : public MeshWorker::LocalIntegrator<dim>
 public:
   LaplaceMatrix();
   virtual void
-  cell(MeshWorker::DoFInfo<dim>&         dinfo,
+  cell(MeshWorker::DoFInfo<dim>& dinfo,
        MeshWorker::IntegrationInfo<dim>& info) const;
   virtual void
-  boundary(MeshWorker::DoFInfo<dim>&         dinfo,
+  boundary(MeshWorker::DoFInfo<dim>& dinfo,
            MeshWorker::IntegrationInfo<dim>& info) const;
   virtual void
-  face(MeshWorker::DoFInfo<dim>&         dinfo1,
-       MeshWorker::DoFInfo<dim>&         dinfo2,
+  face(MeshWorker::DoFInfo<dim>& dinfo1,
+       MeshWorker::DoFInfo<dim>& dinfo2,
        MeshWorker::IntegrationInfo<dim>& info1,
        MeshWorker::IntegrationInfo<dim>& info2) const;
 };
@@ -68,7 +68,7 @@ LaplaceMatrix<dim>::LaplaceMatrix()
 
 template <int dim>
 void
-LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
+LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>& dinfo,
                          MeshWorker::IntegrationInfo<dim>& info) const
 {
   Laplace::cell_matrix(dinfo.matrix(0, false).matrix, info.fe_values(0));
@@ -77,7 +77,7 @@ LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
 template <int dim>
 void
 LaplaceMatrix<dim>::boundary(
-  MeshWorker::DoFInfo<dim>&                  dinfo,
+  MeshWorker::DoFInfo<dim>& dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
   const unsigned int deg = info.fe_values(0).get_fe().tensor_degree();
@@ -88,8 +88,8 @@ LaplaceMatrix<dim>::boundary(
 
 template <int dim>
 void
-LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
-                         MeshWorker::DoFInfo<dim>&         dinfo2,
+LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>& dinfo1,
+                         MeshWorker::DoFInfo<dim>& dinfo2,
                          MeshWorker::IntegrationInfo<dim>& info1,
                          MeshWorker::IntegrationInfo<dim>& info2) const
 {
@@ -120,8 +120,8 @@ LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
 
 template <int dim>
 void
-assemble_mg_matrix(DoFHandler<dim>&                    dof_handler,
-                   MeshWorker::LocalIntegrator<dim>&   matrix_integrator,
+assemble_mg_matrix(DoFHandler<dim>& dof_handler,
+                   MeshWorker::LocalIntegrator<dim>& matrix_integrator,
                    mg::SparseMatrixCollection<double>& mg)
 {
   MGConstrainedDoFs mg_constraints;
@@ -221,14 +221,14 @@ int
 main()
 {
   const std::string logname("output");
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
-  FE_DGP<2>           p0(0);
-  FE_DGP<2>           p1(1);
+  FE_DGP<2> p0(0);
+  FE_DGP<2> p1(1);
   FE_RaviartThomas<2> rt0(0);
   FE_RaviartThomas<2> rt1(1);
-  FE_Q<2>             q2(2);
+  FE_Q<2> q2(2);
 
   FESystem<2> sys1(p0, 2, p0, 1);
   FESystem<2> sys2(rt0, 1, p0, 1);

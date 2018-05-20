@@ -360,7 +360,7 @@ public:
   virtual Point<spacedim>
   transform_unit_to_real_cell(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const Point<dim>&                                           p) const = 0;
+    const Point<dim>& p) const = 0;
 
   /**
    * Map the point @p p on the real @p cell to the corresponding point on the
@@ -393,7 +393,7 @@ public:
   virtual Point<dim>
   transform_real_to_unit_cell(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const Point<spacedim>&                                      p) const = 0;
+    const Point<spacedim>& p) const = 0;
 
   /**
    * Transform the point @p p on the real @p cell to the corresponding point
@@ -407,8 +407,8 @@ public:
   Point<dim - 1>
   project_real_point_to_unit_point_on_face(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int&                                         face_no,
-    const Point<spacedim>&                                      p) const;
+    const unsigned int& face_no,
+    const Point<spacedim>& p) const;
 
   /**
    * @}
@@ -647,7 +647,7 @@ protected:
    * the returned object, knowing its real (derived) type.
    */
   virtual std::unique_ptr<InternalDataBase>
-  get_data(const UpdateFlags      update_flags,
+  get_data(const UpdateFlags update_flags,
            const Quadrature<dim>& quadrature) const = 0;
 
   /**
@@ -678,7 +678,7 @@ protected:
    * the returned object, knowing its real (derived) type.
    */
   virtual std::unique_ptr<InternalDataBase>
-  get_face_data(const UpdateFlags          update_flags,
+  get_face_data(const UpdateFlags update_flags,
                 const Quadrature<dim - 1>& quadrature) const = 0;
 
   /**
@@ -710,7 +710,7 @@ protected:
    * the returned object, knowing its real (derived) type.
    */
   virtual std::unique_ptr<InternalDataBase>
-  get_subface_data(const UpdateFlags          update_flags,
+  get_subface_data(const UpdateFlags update_flags,
                    const Quadrature<dim - 1>& quadrature) const = 0;
 
   /**
@@ -799,9 +799,9 @@ protected:
   virtual CellSimilarity::Similarity
   fill_fe_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+    const CellSimilarity::Similarity cell_similarity,
+    const Quadrature<dim>& quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
     dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
       output_data) const = 0;
 
@@ -832,9 +832,9 @@ protected:
   virtual void
   fill_fe_face_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+    const unsigned int face_no,
+    const Quadrature<dim - 1>& quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
     dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
       output_data) const = 0;
 
@@ -867,10 +867,10 @@ protected:
   virtual void
   fill_fe_subface_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          subface_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+    const unsigned int face_no,
+    const unsigned int subface_no,
+    const Quadrature<dim - 1>& quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
     dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
       output_data) const = 0;
 
@@ -947,8 +947,8 @@ public:
    * const, but the tensors it points to are not.)
    */
   virtual void
-  transform(const ArrayView<const Tensor<1, dim>>&                   input,
-            const MappingType                                        type,
+  transform(const ArrayView<const Tensor<1, dim>>& input,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<1, spacedim>>& output) const = 0;
 
@@ -1000,7 +1000,7 @@ public:
    */
   virtual void
   transform(const ArrayView<const DerivativeForm<1, dim, spacedim>>& input,
-            const MappingType                                        type,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<2, spacedim>>& output) const = 0;
 
@@ -1056,8 +1056,8 @@ public:
    * const, but the tensors it points to are not.)
    */
   virtual void
-  transform(const ArrayView<const Tensor<2, dim>>&                   input,
-            const MappingType                                        type,
+  transform(const ArrayView<const Tensor<2, dim>>& input,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<2, spacedim>>& output) const = 0;
 
@@ -1102,7 +1102,7 @@ public:
    */
   virtual void
   transform(const ArrayView<const DerivativeForm<2, dim, spacedim>>& input,
-            const MappingType                                        type,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<3, spacedim>>& output) const = 0;
 
@@ -1154,8 +1154,8 @@ public:
    * transformed objects should be placed.
    */
   virtual void
-  transform(const ArrayView<const Tensor<3, dim>>&                   input,
-            const MappingType                                        type,
+  transform(const ArrayView<const Tensor<3, dim>>& input,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<3, spacedim>>& output) const = 0;
 

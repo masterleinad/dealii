@@ -30,7 +30,7 @@ main()
 
   const int dim = 2, spacedim = 2;
 
-  PolarManifold<1, 2>       F;
+  PolarManifold<1, 2> F;
   FunctionManifold<2, 2, 2> G("x;y+1", "x;y-1");
 
   CompositionManifold<2, 2, 2, 2, 1> manifold(F, G);

@@ -33,7 +33,7 @@ DEAL_II_NAMESPACE_OPEN
  */
 namespace LinearAlgebraDealII
 {
-  typedef Vector<double>      Vector;
+  typedef Vector<double> Vector;
   typedef BlockVector<double> BlockVector;
 
   typedef SparseMatrix<double> SparseMatrix;
@@ -63,7 +63,7 @@ namespace LinearAlgebraPETSc
 {
   using namespace dealii;
 
-  typedef PETScWrappers::SolverCG    SolverCG;
+  typedef PETScWrappers::SolverCG SolverCG;
   typedef PETScWrappers::SolverGMRES SolverGMRES;
 
   /**
@@ -148,7 +148,7 @@ namespace LinearAlgebraTrilinos
 {
   using namespace dealii;
 
-  typedef TrilinosWrappers::SolverCG    SolverCG;
+  typedef TrilinosWrappers::SolverCG SolverCG;
   typedef TrilinosWrappers::SolverGMRES SolverGMRES;
 
   /**

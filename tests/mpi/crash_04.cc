@@ -60,12 +60,12 @@ test()
 
     {
       //data out
-      FE_Q<dim>       fe(1);
+      FE_Q<dim> fe(1);
       DoFHandler<dim> dof_handler(triangulation);
 
       dof_handler.distribute_dofs(fe);
 
-      unsigned int  n_coarse = 0;
+      unsigned int n_coarse = 0;
       Vector<float> subdomain(triangulation.n_active_cells());
       {
         unsigned int index = 0;

@@ -29,7 +29,7 @@ check()
 {
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
-  FESystem<dim>   fe(FE_Q<dim>(2), dim);
+  FESystem<dim> fe(FE_Q<dim>(2), dim);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   Point<dim> orientation;

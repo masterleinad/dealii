@@ -91,7 +91,7 @@ TestMap1<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestMap1<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -143,7 +143,7 @@ TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef1<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -189,7 +189,7 @@ TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef2<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -236,7 +236,7 @@ TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef3<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -248,12 +248,12 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
  * Check the value of the derivative field.
  */
 
-double EvaluateDiver(Mapping<2>&     mapping,
-                     DoFHandler<2>&  dof_handler,
+double EvaluateDiver(Mapping<2>& mapping,
+                     DoFHandler<2>& dof_handler,
                      Vector<double>& solution)
 {
   // Use a high order quadrature.
-  QGauss<2>   quad(6);
+  QGauss<2> quad(6);
   FEValues<2> fe_values(mapping,
                         dof_handler.get_fe(),
                         quad,
@@ -302,7 +302,7 @@ main()
   deallog.attach(logfile);
 
   Triangulation<2> tria_test;
-  Point<2>         p1(0, 0), p2(1, 1);
+  Point<2> p1(0, 0), p2(1, 1);
 
   GridGenerator::hyper_rectangle(tria_test, p1, p2);
   tria_test.refine_global(1);
@@ -310,7 +310,7 @@ main()
 
   // Create a DoFHandler for the RT space
   FE_RaviartThomas<2> fe(2);
-  DoFHandler<2>       dof_handler(tria_test);
+  DoFHandler<2> dof_handler(tria_test);
   dof_handler.distribute_dofs(fe);
 
   QGauss<2> quad_temp(6);
@@ -325,7 +325,7 @@ main()
   deallog << buf;
 
   // Create an deformation object for the Eulerian mapping
-  FESystem<2>   fe_def(FE_Q<2>(1), 2);
+  FESystem<2> fe_def(FE_Q<2>(1), 2);
   DoFHandler<2> dof_handler_def(tria_test);
   dof_handler_def.distribute_dofs(fe_def);
 

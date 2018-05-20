@@ -101,7 +101,7 @@ namespace Algorithms
     if(debug > 2)
       deallog << "u: " << u.l2_norm() << std::endl;
 
-    GrowingVectorMemory<VectorType>            mem;
+    GrowingVectorMemory<VectorType> mem;
     typename VectorMemory<VectorType>::Pointer Du(mem);
     typename VectorMemory<VectorType>::Pointer res(mem);
 
@@ -126,7 +126,7 @@ namespace Algorithms
 
     if(debug_vectors)
       {
-        AnyData     tmp;
+        AnyData tmp;
         VectorType* p = &u;
         tmp.add<const VectorType*>(p, "solution");
         p = Du.get();
@@ -156,7 +156,7 @@ namespace Algorithms
 
         if(debug_vectors)
           {
-            AnyData     tmp;
+            AnyData tmp;
             VectorType* p = &u;
             tmp.add<const VectorType*>(p, "solution");
             p = Du.get();

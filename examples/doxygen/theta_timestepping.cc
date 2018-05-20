@@ -36,7 +36,7 @@ public:
 
 private:
   SmartPointer<const FullMatrix<double>, Explicit> matrix;
-  FullMatrix<double>                               m;
+  FullMatrix<double> m;
 };
 
 class Implicit : public OperatorBase
@@ -48,7 +48,7 @@ public:
 
 private:
   SmartPointer<const FullMatrix<double>, Implicit> matrix;
-  FullMatrix<double>                               m;
+  FullMatrix<double> m;
 };
 
 // End of declarations
@@ -65,8 +65,8 @@ main()
   OutputOperator<Vector<double>> out;
   out.initialize_stream(std::cout);
 
-  Explicit                          op_explicit(matrix);
-  Implicit                          op_implicit(matrix);
+  Explicit op_explicit(matrix);
+  Implicit op_implicit(matrix);
   ThetaTimestepping<Vector<double>> solver(op_explicit, op_implicit);
   solver.set_output(out);
 

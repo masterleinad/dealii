@@ -35,7 +35,7 @@ test()
   // test for a mutable view of a mutable vector
   {
     std::vector<int> v(10);
-    ArrayView<int>   a(&v[4], 3);
+    ArrayView<int> a(&v[4], 3);
     AssertThrow(a.begin() == &v[4], ExcInternalError());
     AssertThrow(a.end() == &v[7], ExcInternalError());
 
@@ -51,7 +51,7 @@ test()
 
   // and an immutable view of a mutable vector
   {
-    std::vector<int>           v(10);
+    std::vector<int> v(10);
     const ArrayView<const int> a(&v[4], 3);
     AssertThrow(a.begin() == &v[4], ExcInternalError());
     AssertThrow(a.end() == &v[7], ExcInternalError());
@@ -64,7 +64,7 @@ test()
 
   // and an immutable view of an immutable vector
   {
-    const std::vector<int>     v(10, 42);
+    const std::vector<int> v(10, 42);
     const ArrayView<const int> a(&v[4], 3);
     AssertThrow(a.begin() == &v[4], ExcInternalError());
     AssertThrow(a.end() == &v[7], ExcInternalError());

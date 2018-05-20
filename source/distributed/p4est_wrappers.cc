@@ -15,11 +15,11 @@ namespace internal
       typename dealii::Triangulation<dim, spacedim>::cell_iterator
       cell_from_quad(
         const dealii::parallel::distributed::Triangulation<dim, spacedim>*
-                                                                      triangulation,
-        const typename dealii::internal::p4est::types<dim>::topidx    treeidx,
+          triangulation,
+        const typename dealii::internal::p4est::types<dim>::topidx treeidx,
         const typename dealii::internal::p4est::types<dim>::quadrant& quad)
       {
-        int                             i, l = quad.level;
+        int i, l = quad.level;
         dealii::types::global_dof_index dealii_index
           = triangulation->get_p4est_tree_to_coarse_cell_permutation()[treeidx];
 
@@ -50,7 +50,7 @@ namespace internal
       {
         const typename dealii::parallel::distributed::Triangulation<dim,
                                                                     spacedim>*
-                    triangulation;
+          triangulation;
         sc_array_t* subids;
         std::map<unsigned int, std::set<dealii::types::subdomain_id>>*
           vertices_with_ghost_neighbors;
@@ -65,7 +65,7 @@ namespace internal
       void
       find_ghosts_corner(
         typename dealii::internal::p4est::iter<dim>::corner_info* info,
-        void*                                                     user_data)
+        void* user_data)
       {
         int i, j;
         int nsides = info->sides.elem_count;
@@ -78,7 +78,7 @@ namespace internal
         const dealii::parallel::distributed::Triangulation<dim, spacedim>*
           triangulation
           = fg->triangulation;
-        int                          nsubs;
+        int nsubs;
         dealii::types::subdomain_id* subdomain_ids;
         std::map<unsigned int, std::set<dealii::types::subdomain_id>>*
           vertices_with_ghost_neighbors
@@ -141,7 +141,7 @@ namespace internal
       void
       find_ghosts_edge(
         typename dealii::internal::p4est::iter<dim>::edge_info* info,
-        void*                                                   user_data)
+        void* user_data)
       {
         int i, j, k;
         int nsides = info->sides.elem_count;
@@ -154,7 +154,7 @@ namespace internal
         const dealii::parallel::distributed::Triangulation<dim, spacedim>*
           triangulation
           = fg->triangulation;
-        int                          nsubs;
+        int nsubs;
         dealii::types::subdomain_id* subdomain_ids;
         std::map<unsigned int, std::set<dealii::types::subdomain_id>>*
           vertices_with_ghost_neighbors
@@ -227,7 +227,7 @@ namespace internal
       void
       find_ghosts_face(
         typename dealii::internal::p4est::iter<dim>::face_info* info,
-        void*                                                   user_data)
+        void* user_data)
       {
         int i, j, k;
         int nsides = info->sides.elem_count;
@@ -240,7 +240,7 @@ namespace internal
         const dealii::parallel::distributed::Triangulation<dim, spacedim>*
           triangulation
           = fg->triangulation;
-        int                          nsubs;
+        int nsubs;
         dealii::types::subdomain_id* subdomain_ids;
         std::map<unsigned int, std::set<dealii::types::subdomain_id>>*
           vertices_with_ghost_neighbors
@@ -324,16 +324,16 @@ namespace internal
       = p4est_quadrant_compare;
 
     void (&functions<2>::quadrant_childrenv)(const types<2>::quadrant* q,
-                                             types<2>::quadrant        c[])
+                                             types<2>::quadrant c[])
       = p4est_quadrant_childrenv;
 
-    int (&functions<2>::quadrant_overlaps_tree)(types<2>::tree*           tree,
+    int (&functions<2>::quadrant_overlaps_tree)(types<2>::tree* tree,
                                                 const types<2>::quadrant* q)
       = p4est_quadrant_overlaps_tree;
 
     void (&functions<2>::quadrant_set_morton)(types<2>::quadrant* quadrant,
-                                              int                 level,
-                                              uint64_t            id)
+                                              int level,
+                                              uint64_t id)
       = p4est_quadrant_set_morton;
 
     int (&functions<2>::quadrant_is_equal)(const types<2>::quadrant* q1,
@@ -349,13 +349,13 @@ namespace internal
       = p4est_quadrant_is_ancestor;
 
     int (&functions<2>::quadrant_ancestor_id)(const types<2>::quadrant* q,
-                                              int                       level)
+                                              int level)
       = p4est_quadrant_ancestor_id;
 
-    int (&functions<2>::comm_find_owner)(types<2>::forest*         p4est,
-                                         const types<2>::locidx    which_tree,
+    int (&functions<2>::comm_find_owner)(types<2>::forest* p4est,
+                                         const types<2>::locidx which_tree,
                                          const types<2>::quadrant* q,
-                                         const int                 guess)
+                                         const int guess)
       = p4est_comm_find_owner;
 
     types<2>::connectivity* (&functions<2>::connectivity_new)(
@@ -369,9 +369,9 @@ namespace internal
     void (&functions<2>::connectivity_join_faces)(types<2>::connectivity* conn,
                                                   types<2>::topidx tree_left,
                                                   types<2>::topidx tree_right,
-                                                  int              face_left,
-                                                  int              face_right,
-                                                  int              orientation)
+                                                  int face_left,
+                                                  int face_right,
+                                                  int orientation)
       = p4est_connectivity_join_faces;
 #  endif
 
@@ -380,33 +380,33 @@ namespace internal
       = p4est_connectivity_destroy;
 
     types<2>::forest* (&functions<2>::new_forest)(
-      MPI_Comm                mpicomm,
+      MPI_Comm mpicomm,
       types<2>::connectivity* connectivity,
-      types<2>::locidx        min_quadrants,
-      int                     min_level,
-      int                     fill_uniform,
-      size_t                  data_size,
-      p4est_init_t            init_fn,
-      void*                   user_pointer)
+      types<2>::locidx min_quadrants,
+      int min_level,
+      int fill_uniform,
+      size_t data_size,
+      p4est_init_t init_fn,
+      void* user_pointer)
       = p4est_new_ext;
 
     void (&functions<2>::destroy)(types<2>::forest* p4est) = p4est_destroy;
 
     void (&functions<2>::refine)(types<2>::forest* p4est,
-                                 int               refine_recursive,
-                                 p4est_refine_t    refine_fn,
-                                 p4est_init_t      init_fn)
+                                 int refine_recursive,
+                                 p4est_refine_t refine_fn,
+                                 p4est_init_t init_fn)
       = p4est_refine;
 
     void (&functions<2>::coarsen)(types<2>::forest* p4est,
-                                  int               coarsen_recursive,
-                                  p4est_coarsen_t   coarsen_fn,
-                                  p4est_init_t      init_fn)
+                                  int coarsen_recursive,
+                                  p4est_coarsen_t coarsen_fn,
+                                  p4est_init_t init_fn)
       = p4est_coarsen;
 
-    void (&functions<2>::balance)(types<2>::forest*      p4est,
+    void (&functions<2>::balance)(types<2>::forest* p4est,
                                   types<2>::balance_type btype,
-                                  p4est_init_t           init_fn)
+                                  p4est_init_t init_fn)
       = p4est_balance;
 #  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     p4est_gloidx_t (&functions<2>::partition)(types<2>::forest* p4est,
@@ -416,43 +416,43 @@ namespace internal
 #  else
 
     void (&functions<2>::partition)(types<2>::forest* p4est,
-                                    int               partition_for_coarsening,
-                                    p4est_weight_t    weight_fn)
+                                    int partition_for_coarsening,
+                                    p4est_weight_t weight_fn)
       = p4est_partition_ext;
 #  endif
 
-    void (&functions<2>::save)(const char*       filename,
+    void (&functions<2>::save)(const char* filename,
                                types<2>::forest* p4est,
-                               int               save_data)
+                               int save_data)
       = p4est_save;
 
 #  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     types<2>::forest* (&functions<2>::load_ext)(const char* filename,
-                                                MPI_Comm    mpicomm,
+                                                MPI_Comm mpicomm,
                                                 std::size_t data_size,
-                                                int         load_data,
-                                                int         autopartition,
-                                                int         broadcasthead,
-                                                void*       user_pointer,
+                                                int load_data,
+                                                int autopartition,
+                                                int broadcasthead,
+                                                void* user_pointer,
                                                 types<2>::connectivity** p4est)
       = p4est_load_ext;
 #  else
     types<2>::forest* (&functions<2>::load)(const char* filename,
-                                            MPI_Comm    mpicomm,
+                                            MPI_Comm mpicomm,
                                             std::size_t data_size,
-                                            int         load_data,
-                                            void*       user_pointer,
+                                            int load_data,
+                                            void* user_pointer,
                                             types<2>::connectivity** p4est)
       = p4est_load;
 #  endif
 
 #  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
-    int (&functions<2>::connectivity_save)(const char*             filename,
+    int (&functions<2>::connectivity_save)(const char* filename,
                                            types<2>::connectivity* connectivity)
       = p4est_connectivity_save;
 #  else
     void (&functions<2>::connectivity_save)(
-      const char*             filename,
+      const char* filename,
       types<2>::connectivity* connectivity)
       = p4est_connectivity_save;
 #  endif
@@ -466,7 +466,7 @@ namespace internal
       = p4est_connectivity_load;
 #  elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     types<2>::connectivity* (&functions<2>::connectivity_load)(
-      const char*    filename,
+      const char* filename,
       long unsigned* length)
       = p4est_connectivity_load;
 #  else
@@ -483,7 +483,7 @@ namespace internal
                                          const char* baseName)
       = p4est_vtk_write_file;
 
-    types<2>::ghost* (&functions<2>::ghost_new)(types<2>::forest*      p4est,
+    types<2>::ghost* (&functions<2>::ghost_new)(types<2>::forest* p4est,
                                                 types<2>::balance_type btype)
       = p4est_ghost_new;
 
@@ -491,9 +491,9 @@ namespace internal
       = p4est_ghost_destroy;
 
     void (&functions<2>::reset_data)(types<2>::forest* p4est,
-                                     size_t            data_size,
-                                     p4est_init_t      init_fn,
-                                     void*             user_pointer)
+                                     size_t data_size,
+                                     p4est_init_t init_fn,
+                                     void* user_pointer)
       = p4est_reset_data;
 
     size_t (&functions<2>::forest_memory_used)(types<2>::forest* p4est)
@@ -508,9 +508,9 @@ namespace internal
     compute_vertices_with_ghost_neighbors(
       const typename dealii::parallel::distributed::Triangulation<dim,
                                                                   spacedim>&
-                                                            tria,
+        tria,
       typename dealii::internal::p4est::types<dim>::forest* parallel_forest,
-      typename dealii::internal::p4est::types<dim>::ghost*  parallel_ghost)
+      typename dealii::internal::p4est::types<dim>::ghost* parallel_ghost)
     {
       std::map<unsigned int, std::set<dealii::types::subdomain_id>>
         vertices_with_ghost_neighbors;
@@ -562,16 +562,16 @@ namespace internal
       = p8est_quadrant_compare;
 
     void (&functions<3>::quadrant_childrenv)(const types<3>::quadrant* q,
-                                             types<3>::quadrant        c[])
+                                             types<3>::quadrant c[])
       = p8est_quadrant_childrenv;
 
-    int (&functions<3>::quadrant_overlaps_tree)(types<3>::tree*           tree,
+    int (&functions<3>::quadrant_overlaps_tree)(types<3>::tree* tree,
                                                 const types<3>::quadrant* q)
       = p8est_quadrant_overlaps_tree;
 
     void (&functions<3>::quadrant_set_morton)(types<3>::quadrant* quadrant,
-                                              int                 level,
-                                              uint64_t            id)
+                                              int level,
+                                              uint64_t id)
       = p8est_quadrant_set_morton;
 
     int (&functions<3>::quadrant_is_equal)(const types<3>::quadrant* q1,
@@ -587,13 +587,13 @@ namespace internal
       = p8est_quadrant_is_ancestor;
 
     int (&functions<3>::quadrant_ancestor_id)(const types<3>::quadrant* q,
-                                              int                       level)
+                                              int level)
       = p8est_quadrant_ancestor_id;
 
-    int (&functions<3>::comm_find_owner)(types<3>::forest*         p4est,
-                                         const types<3>::locidx    which_tree,
+    int (&functions<3>::comm_find_owner)(types<3>::forest* p4est,
+                                         const types<3>::locidx which_tree,
                                          const types<3>::quadrant* q,
-                                         const int                 guess)
+                                         const int guess)
       = p8est_comm_find_owner;
 
     types<3>::connectivity* (&functions<3>::connectivity_new)(
@@ -613,40 +613,40 @@ namespace internal
     void (&functions<3>::connectivity_join_faces)(types<3>::connectivity* conn,
                                                   types<3>::topidx tree_left,
                                                   types<3>::topidx tree_right,
-                                                  int              face_left,
-                                                  int              face_right,
-                                                  int              orientation)
+                                                  int face_left,
+                                                  int face_right,
+                                                  int orientation)
       = p8est_connectivity_join_faces;
 #  endif
 
     types<3>::forest* (&functions<3>::new_forest)(
-      MPI_Comm                mpicomm,
+      MPI_Comm mpicomm,
       types<3>::connectivity* connectivity,
-      types<3>::locidx        min_quadrants,
-      int                     min_level,
-      int                     fill_uniform,
-      size_t                  data_size,
-      p8est_init_t            init_fn,
-      void*                   user_pointer)
+      types<3>::locidx min_quadrants,
+      int min_level,
+      int fill_uniform,
+      size_t data_size,
+      p8est_init_t init_fn,
+      void* user_pointer)
       = p8est_new_ext;
 
     void (&functions<3>::destroy)(types<3>::forest* p8est) = p8est_destroy;
 
     void (&functions<3>::refine)(types<3>::forest* p8est,
-                                 int               refine_recursive,
-                                 p8est_refine_t    refine_fn,
-                                 p8est_init_t      init_fn)
+                                 int refine_recursive,
+                                 p8est_refine_t refine_fn,
+                                 p8est_init_t init_fn)
       = p8est_refine;
 
     void (&functions<3>::coarsen)(types<3>::forest* p8est,
-                                  int               coarsen_recursive,
-                                  p8est_coarsen_t   coarsen_fn,
-                                  p8est_init_t      init_fn)
+                                  int coarsen_recursive,
+                                  p8est_coarsen_t coarsen_fn,
+                                  p8est_init_t init_fn)
       = p8est_coarsen;
 
-    void (&functions<3>::balance)(types<3>::forest*      p8est,
+    void (&functions<3>::balance)(types<3>::forest* p8est,
                                   types<3>::balance_type btype,
-                                  p8est_init_t           init_fn)
+                                  p8est_init_t init_fn)
       = p8est_balance;
 
 #  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
@@ -656,43 +656,43 @@ namespace internal
       = p8est_partition_ext;
 #  else
     void (&functions<3>::partition)(types<3>::forest* p8est,
-                                    int               partition_for_coarsening,
-                                    p8est_weight_t    weight_fn)
+                                    int partition_for_coarsening,
+                                    p8est_weight_t weight_fn)
       = p8est_partition_ext;
 #  endif
 
-    void (&functions<3>::save)(const char*       filename,
+    void (&functions<3>::save)(const char* filename,
                                types<3>::forest* p4est,
-                               int               save_data)
+                               int save_data)
       = p8est_save;
 
 #  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     types<3>::forest* (&functions<3>::load_ext)(const char* filename,
-                                                MPI_Comm    mpicomm,
+                                                MPI_Comm mpicomm,
                                                 std::size_t data_size,
-                                                int         load_data,
-                                                int         autopartition,
-                                                int         broadcasthead,
-                                                void*       user_pointer,
+                                                int load_data,
+                                                int autopartition,
+                                                int broadcasthead,
+                                                void* user_pointer,
                                                 types<3>::connectivity** p4est)
       = p8est_load_ext;
 #  else
     types<3>::forest* (&functions<3>::load)(const char* filename,
-                                            MPI_Comm    mpicomm,
+                                            MPI_Comm mpicomm,
                                             std::size_t data_size,
-                                            int         load_data,
-                                            void*       user_pointer,
+                                            int load_data,
+                                            void* user_pointer,
                                             types<3>::connectivity** p4est)
       = p8est_load;
 #  endif
 
 #  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
-    int (&functions<3>::connectivity_save)(const char*             filename,
+    int (&functions<3>::connectivity_save)(const char* filename,
                                            types<3>::connectivity* connectivity)
       = p8est_connectivity_save;
 #  else
     void (&functions<3>::connectivity_save)(
-      const char*             filename,
+      const char* filename,
       types<3>::connectivity* connectivity)
       = p8est_connectivity_save;
 #  endif
@@ -707,7 +707,7 @@ namespace internal
       = p8est_connectivity_load;
 #  elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     types<3>::connectivity* (&functions<3>::connectivity_load)(
-      const char*    filename,
+      const char* filename,
       long unsigned* length)
       = p8est_connectivity_load;
 #  else
@@ -724,7 +724,7 @@ namespace internal
                                          const char* baseName)
       = p8est_vtk_write_file;
 
-    types<3>::ghost* (&functions<3>::ghost_new)(types<3>::forest*      p4est,
+    types<3>::ghost* (&functions<3>::ghost_new)(types<3>::forest* p4est,
                                                 types<3>::balance_type btype)
       = p8est_ghost_new;
 
@@ -732,9 +732,9 @@ namespace internal
       = p8est_ghost_destroy;
 
     void (&functions<3>::reset_data)(types<3>::forest* p4est,
-                                     size_t            data_size,
-                                     p8est_init_t      init_fn,
-                                     void*             user_pointer)
+                                     size_t data_size,
+                                     p8est_init_t init_fn,
+                                     void* user_pointer)
       = p8est_reset_data;
 
     size_t (&functions<3>::forest_memory_used)(types<3>::forest* p4est)
@@ -810,7 +810,7 @@ namespace internal
     template <int dim>
     bool
     tree_exists_locally(const typename types<dim>::forest* parallel_forest,
-                        const typename types<dim>::topidx  coarse_grid_cell)
+                        const typename types<dim>::topidx coarse_grid_cell)
     {
       Assert(coarse_grid_cell < parallel_forest->connectivity->num_trees,
              ExcInternalError());

@@ -68,7 +68,7 @@ public:
   value(const Point<dim, VectorizedArray<double>>& p_vec) const
   {
     VectorizedArray<double> res = make_vectorized_array(0.);
-    Point<dim>              p;
+    Point<dim> p;
     for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
       {
         for(unsigned int d = 0; d < dim; d++)
@@ -90,8 +90,8 @@ struct QData
 template <typename VectorType, int dim>
 void
 do_project(const parallel::distributed::Triangulation<dim>& triangulation,
-           const FiniteElement<dim>&                        fe,
-           const unsigned int                               p)
+           const FiniteElement<dim>& fe,
+           const unsigned int p)
 {
   AssertThrow(fe.n_components() == 1, ExcNotImplemented());
   DoFHandler<dim> dof_handler(triangulation);
@@ -111,9 +111,9 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
   for(unsigned int q = 0; q <= p; ++q)
     {
       // setup quadrature data:
-      F<dim>     function(q, fe.n_components());
+      F<dim> function(q, fe.n_components());
       VectorType field_relevant;
-      double     field_l2_norm = 0.;
+      double field_l2_norm = 0.;
       {
         QGauss<dim> quadrature_formula(p + 2);
         CellDataStorage<typename parallel::distributed::
@@ -165,14 +165,14 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
       // L2 norm of the difference between FE field and the function
       double L2_norm = 0.;
       {
-        QGauss<dim>   quadrature_formula_error(std::max(p, q) + 1);
+        QGauss<dim> quadrature_formula_error(std::max(p, q) + 1);
         FEValues<dim> fe_values(fe,
                                 quadrature_formula_error,
                                 update_values | update_quadrature_points
                                   | update_JxW_values);
 
-        const unsigned int  dofs_per_cell = fe.dofs_per_cell;
-        const unsigned int  n_q_points    = quadrature_formula_error.size();
+        const unsigned int dofs_per_cell = fe.dofs_per_cell;
+        const unsigned int n_q_points    = quadrature_formula_error.size();
         std::vector<double> values(n_q_points);
 
         typename DoFHandler<dim>::active_cell_iterator cell

@@ -108,9 +108,9 @@ public:
   template <typename number>
   void
   evaluate(const std::vector<Vector<number>>& values,
-           const std::vector<double>&         y_values,
-           const unsigned int                 n_intervals,
-           const IntervalSpacing              interval_spacing = linear);
+           const std::vector<double>& y_values,
+           const unsigned int n_intervals,
+           const IntervalSpacing interval_spacing = linear);
 
   /**
    * This function is only a wrapper to the above one in case you have only
@@ -119,7 +119,7 @@ public:
   template <typename number>
   void
   evaluate(const Vector<number>& values,
-           const unsigned int    n_intervals,
+           const unsigned int n_intervals,
            const IntervalSpacing interval_spacing = linear);
 
   /**

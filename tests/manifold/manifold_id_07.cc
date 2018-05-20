@@ -39,7 +39,7 @@ test(unsigned int ref = 1)
   for(unsigned int i = 0; i < dim; ++i)
     center[i] = .5;
 
-  Triangulation<dim, spacedim>     tria;
+  Triangulation<dim, spacedim> tria;
   SphericalManifold<dim, spacedim> boundary(center);
   GridGenerator::hyper_cube(tria);
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;

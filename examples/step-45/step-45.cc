@@ -91,15 +91,15 @@ namespace Step45
     MPI_Comm mpi_communicator;
 
     parallel::distributed::Triangulation<dim> triangulation;
-    FESystem<dim>                             fe;
-    DoFHandler<dim>                           dof_handler;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    ConstraintMatrix      constraints;
+    ConstraintMatrix constraints;
     std::vector<IndexSet> owned_partitioning;
     std::vector<IndexSet> relevant_partitioning;
 
     TrilinosWrappers::BlockSparsityPattern sparsity_pattern;
-    TrilinosWrappers::BlockSparseMatrix    system_matrix;
+    TrilinosWrappers::BlockSparseMatrix system_matrix;
 
     TrilinosWrappers::MPI::BlockVector solution;
     TrilinosWrappers::MPI::BlockVector system_rhs;
@@ -138,7 +138,7 @@ namespace Step45
   template <int dim>
   void
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                    Vector<double>&   values) const
+                                    Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
@@ -160,11 +160,11 @@ namespace Step45
 
   template <int dim>
   double
-  RightHandSide<dim>::value(const Point<dim>&  p,
+  RightHandSide<dim>::value(const Point<dim>& p,
                             const unsigned int component) const
   {
     const Point<dim> center(0.75, 0.1);
-    const double     r = (p - center).norm();
+    const double r = (p - center).norm();
 
     if(component == 0)
       return std::exp(-100. * r * r);
@@ -174,7 +174,7 @@ namespace Step45
   template <int dim>
   void
   RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
@@ -184,29 +184,29 @@ namespace Step45
   class InverseMatrix : public Subscriptor
   {
   public:
-    InverseMatrix(const MatrixType&         m,
+    InverseMatrix(const MatrixType& m,
                   const PreconditionerType& preconditioner,
-                  const IndexSet&           locally_owned,
-                  const MPI_Comm&           mpi_communicator);
+                  const IndexSet& locally_owned,
+                  const MPI_Comm& mpi_communicator);
 
     void
-    vmult(TrilinosWrappers::MPI::Vector&       dst,
+    vmult(TrilinosWrappers::MPI::Vector& dst,
           const TrilinosWrappers::MPI::Vector& src) const;
 
   private:
-    const SmartPointer<const MatrixType>         matrix;
+    const SmartPointer<const MatrixType> matrix;
     const SmartPointer<const PreconditionerType> preconditioner;
 
-    const MPI_Comm*                       mpi_communicator;
+    const MPI_Comm* mpi_communicator;
     mutable TrilinosWrappers::MPI::Vector tmp;
   };
 
   template <class MatrixType, class PreconditionerType>
   InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
-    const MatrixType&         m,
+    const MatrixType& m,
     const PreconditionerType& preconditioner,
-    const IndexSet&           locally_owned,
-    const MPI_Comm&           mpi_communicator)
+    const IndexSet& locally_owned,
+    const MPI_Comm& mpi_communicator)
     : matrix(&m),
       preconditioner(&preconditioner),
       mpi_communicator(&mpi_communicator),
@@ -216,10 +216,10 @@ namespace Step45
   template <class MatrixType, class PreconditionerType>
   void
   InverseMatrix<MatrixType, PreconditionerType>::vmult(
-    TrilinosWrappers::MPI::Vector&       dst,
+    TrilinosWrappers::MPI::Vector& dst,
     const TrilinosWrappers::MPI::Vector& src) const
   {
-    SolverControl              solver_control(src.size(), 1e-6 * src.l2_norm());
+    SolverControl solver_control(src.size(), 1e-6 * src.l2_norm());
     TrilinosWrappers::SolverCG cg(solver_control,
                                   TrilinosWrappers::SolverCG::AdditionalData());
 
@@ -234,19 +234,19 @@ namespace Step45
   public:
     SchurComplement(const TrilinosWrappers::BlockSparseMatrix& system_matrix,
                     const InverseMatrix<TrilinosWrappers::SparseMatrix,
-                                        PreconditionerType>&   A_inverse,
-                    const IndexSet&                            owned_pres,
+                                        PreconditionerType>& A_inverse,
+                    const IndexSet& owned_pres,
                     const MPI_Comm& mpi_communicator);
 
     void
-    vmult(TrilinosWrappers::MPI::Vector&       dst,
+    vmult(TrilinosWrappers::MPI::Vector& dst,
           const TrilinosWrappers::MPI::Vector& src) const;
 
   private:
     const SmartPointer<const TrilinosWrappers::BlockSparseMatrix> system_matrix;
     const SmartPointer<
       const InverseMatrix<TrilinosWrappers::SparseMatrix, PreconditionerType>>
-                                          A_inverse;
+      A_inverse;
     mutable TrilinosWrappers::MPI::Vector tmp1, tmp2;
   };
 
@@ -254,7 +254,7 @@ namespace Step45
   SchurComplement<PreconditionerType>::SchurComplement(
     const TrilinosWrappers::BlockSparseMatrix& system_matrix,
     const InverseMatrix<TrilinosWrappers::SparseMatrix, PreconditionerType>&
-                    A_inverse,
+      A_inverse,
     const IndexSet& owned_vel,
     const MPI_Comm& mpi_communicator)
     : system_matrix(&system_matrix),
@@ -266,7 +266,7 @@ namespace Step45
   template <class PreconditionerType>
   void
   SchurComplement<PreconditionerType>::vmult(
-    TrilinosWrappers::MPI::Vector&       dst,
+    TrilinosWrappers::MPI::Vector& dst,
     const TrilinosWrappers::MPI::Vector& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
@@ -291,7 +291,7 @@ namespace Step45
   void
   StokesProblem<dim>::create_mesh()
   {
-    Point<dim>   center;
+    Point<dim> center;
     const double inner_radius = .5;
     const double outer_radius = 1.;
 
@@ -508,19 +508,19 @@ namespace Step45
     const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    const RightHandSide<dim>    right_hand_side;
+    const RightHandSide<dim> right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim + 1));
 
     const FEValuesExtractors::Vector velocities(0);
     const FEValuesExtractors::Scalar pressure(dim);
 
     std::vector<SymmetricTensor<2, dim>> symgrad_phi_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -746,7 +746,7 @@ main(int argc, char* argv[])
       using namespace Step45;
 
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-      StokesProblem<2>                 flow_problem(1);
+      StokesProblem<2> flow_problem(1);
       flow_problem.run();
     }
   catch(std::exception& exc)

@@ -114,11 +114,11 @@ namespace Step38
     compute_error() const;
 
     Triangulation<dim, spacedim> triangulation;
-    FE_Q<dim, spacedim>          fe;
-    DoFHandler<dim, spacedim>    dof_handler;
-    MappingQ<dim, spacedim>      mapping;
+    FE_Q<dim, spacedim> fe;
+    DoFHandler<dim, spacedim> dof_handler;
+    MappingQ<dim, spacedim> mapping;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
@@ -148,7 +148,7 @@ namespace Step38
     value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim>&  p,
+    gradient(const Point<dim>& p,
              const unsigned int component = 0) const override;
   };
 
@@ -352,7 +352,7 @@ namespace Step38
     system_matrix = 0;
     system_rhs    = 0;
 
-    const QGauss<dim>       quadrature_formula(2 * fe.degree);
+    const QGauss<dim> quadrature_formula(2 * fe.degree);
     FEValues<dim, spacedim> fe_values(mapping,
                                       fe,
                                       quadrature_formula,
@@ -364,9 +364,9 @@ namespace Step38
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
-    std::vector<double>                  rhs_values(n_q_points);
+    std::vector<double> rhs_values(n_q_points);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     const RightHandSide<spacedim> rhs;
@@ -424,7 +424,7 @@ namespace Step38
   LaplaceBeltramiProblem<spacedim>::solve()
   {
     SolverControl solver_control(solution.size(), 1e-7 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);

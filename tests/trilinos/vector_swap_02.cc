@@ -39,14 +39,14 @@ test()
 {
   unsigned int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector v;
-  IndexSet                      owned_indices_1(6);
-  IndexSet                      ghosted_indices_1(6);
+  IndexSet owned_indices_1(6);
+  IndexSet ghosted_indices_1(6);
   owned_indices_1.add_range(my_id * 3, (my_id + 1) * 3);
   ghosted_indices_1.add_range((1 - my_id) * 3, (2 - my_id) * 3);
   v.reinit(owned_indices_1, ghosted_indices_1, MPI_COMM_WORLD);
 
   TrilinosWrappers::MPI::Vector w;
-  IndexSet                      owned_indices_2(10);
+  IndexSet owned_indices_2(10);
   owned_indices_2.add_range(my_id * 5, (my_id + 1) * 5);
   w.reinit(owned_indices_2, MPI_COMM_WORLD);
   for(unsigned int i = my_id * 5; i < (my_id + 1) * 5; ++i)
@@ -73,7 +73,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    mpi_log;
+  MPILogInitAll mpi_log;
 
   try
     {

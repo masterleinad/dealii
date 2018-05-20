@@ -42,7 +42,7 @@ namespace internal
   template <typename number>
   void
   reinit(MatrixBlock<dealii::SparseMatrix<number>>& v,
-         const BlockSparsityPattern&                p);
+         const BlockSparsityPattern& p);
 } // namespace internal
 
 /**
@@ -148,8 +148,8 @@ public:
    * entry does not exist or if it is in a different block.
    */
   void
-  add(const size_type                       i,
-      const size_type                       j,
+  add(const size_type i,
+      const size_type j,
       const typename MatrixType::value_type value);
 
   /**
@@ -170,8 +170,8 @@ public:
   template <typename number>
   void
   add(const std::vector<size_type>& indices,
-      const FullMatrix<number>&     full_matrix,
-      const bool                    elide_zero_values = true);
+      const FullMatrix<number>& full_matrix,
+      const bool elide_zero_values = true);
 
   /**
    * Add all elements in a FullMatrix into global locations given by
@@ -191,8 +191,8 @@ public:
   void
   add(const std::vector<size_type>& row_indices,
       const std::vector<size_type>& col_indices,
-      const FullMatrix<number>&     full_matrix,
-      const bool                    elide_zero_values = true);
+      const FullMatrix<number>& full_matrix,
+      const bool elide_zero_values = true);
 
   /**
    * Set several elements in the specified row of the matrix with column
@@ -212,10 +212,10 @@ public:
    */
   template <typename number>
   void
-  add(const size_type               row_index,
+  add(const size_type row_index,
       const std::vector<size_type>& col_indices,
-      const std::vector<number>&    values,
-      const bool                    elide_zero_values = true);
+      const std::vector<number>& values,
+      const bool elide_zero_values = true);
 
   /**
    * Add an array of values given by <tt>values</tt> in the given global
@@ -228,12 +228,12 @@ public:
    */
   template <typename number>
   void
-  add(const size_type  row,
-      const size_type  n_cols,
+  add(const size_type row,
+      const size_type n_cols,
       const size_type* col_indices,
-      const number*    values,
-      const bool       elide_zero_values      = true,
-      const bool       col_indices_are_sorted = false);
+      const number* values,
+      const bool elide_zero_values      = true,
+      const bool col_indices_are_sorted = false);
 
   /**
    * Matrix-vector-multiplication, forwarding to the same function in
@@ -323,7 +323,7 @@ private:
   template <typename number>
   friend void
   internal::reinit(MatrixBlock<dealii::SparseMatrix<number>>& v,
-                   const BlockSparsityPattern&                p);
+                   const BlockSparsityPattern& p);
 };
 
 /**
@@ -610,7 +610,7 @@ namespace internal
   template <typename number>
   void
   reinit(MatrixBlock<dealii::SparseMatrix<number>>& v,
-         const BlockSparsityPattern&                p)
+         const BlockSparsityPattern& p)
   {
     v.row_indices    = p.get_row_indices();
     v.column_indices = p.get_column_indices();
@@ -659,8 +659,8 @@ inline MatrixBlock<MatrixType>::operator const MatrixType&() const
 
 template <typename MatrixType>
 inline void
-MatrixBlock<MatrixType>::add(const size_type                       gi,
-                             const size_type                       gj,
+MatrixBlock<MatrixType>::add(const size_type gi,
+                             const size_type gj,
                              const typename MatrixType::value_type value)
 {
   Assert(row_indices.size() != 0, ExcNotInitialized());
@@ -681,8 +681,8 @@ template <typename number>
 inline void
 MatrixBlock<MatrixType>::add(const std::vector<size_type>& r_indices,
                              const std::vector<size_type>& c_indices,
-                             const FullMatrix<number>&     values,
-                             const bool                    elide_zero_values)
+                             const FullMatrix<number>& values,
+                             const bool elide_zero_values)
 {
   Assert(row_indices.size() != 0, ExcNotInitialized());
   Assert(column_indices.size() != 0, ExcNotInitialized());
@@ -701,10 +701,10 @@ MatrixBlock<MatrixType>::add(const std::vector<size_type>& r_indices,
 template <typename MatrixType>
 template <typename number>
 inline void
-MatrixBlock<MatrixType>::add(const size_type  b_row,
-                             const size_type  n_cols,
+MatrixBlock<MatrixType>::add(const size_type b_row,
+                             const size_type n_cols,
                              const size_type* col_indices,
-                             const number*    values,
+                             const number* values,
                              const bool,
                              const bool)
 {
@@ -740,8 +740,8 @@ template <typename MatrixType>
 template <typename number>
 inline void
 MatrixBlock<MatrixType>::add(const std::vector<size_type>& indices,
-                             const FullMatrix<number>&     values,
-                             const bool                    elide_zero_values)
+                             const FullMatrix<number>& values,
+                             const bool elide_zero_values)
 {
   Assert(row_indices.size() != 0, ExcNotInitialized());
   Assert(column_indices.size() != 0, ExcNotInitialized());
@@ -760,10 +760,10 @@ MatrixBlock<MatrixType>::add(const std::vector<size_type>& indices,
 template <typename MatrixType>
 template <typename number>
 inline void
-MatrixBlock<MatrixType>::add(const size_type               row,
+MatrixBlock<MatrixType>::add(const size_type row,
                              const std::vector<size_type>& col_indices,
-                             const std::vector<number>&    values,
-                             const bool                    elide_zero_values)
+                             const std::vector<number>& values,
+                             const bool elide_zero_values)
 {
   Assert(row_indices.size() != 0, ExcNotInitialized());
   Assert(column_indices.size() != 0, ExcNotInitialized());
@@ -820,8 +820,8 @@ MatrixBlock<MatrixType>::memory_consumption() const
 
 template <typename MatrixType>
 inline void
-MatrixBlockVector<MatrixType>::add(size_type          row,
-                                   size_type          column,
+MatrixBlockVector<MatrixType>::add(size_type row,
+                                   size_type column,
                                    const std::string& name)
 {
   ptr_type p(new value_type(row, column));
@@ -891,8 +891,8 @@ MGMatrixBlockVector<MatrixType>::size() const
 
 template <typename MatrixType>
 inline void
-MGMatrixBlockVector<MatrixType>::add(size_type          row,
-                                     size_type          column,
+MGMatrixBlockVector<MatrixType>::add(size_type row,
+                                     size_type column,
                                      const std::string& name)
 {
   MGLevelObject<MatrixBlock<MatrixType>> p(0, 1);
@@ -989,9 +989,9 @@ MGMatrixBlockVector<MatrixType>::reinit_matrix(
 {
   for(size_type i = 0; i < this->size(); ++i)
     {
-      MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
-      const size_type                         row = o[o.min_level()].row;
-      const size_type                         col = o[o.min_level()].column;
+      MGLevelObject<MatrixBlock<MatrixType>>& o = block(i);
+      const size_type row                       = o[o.min_level()].row;
+      const size_type col                       = o[o.min_level()].column;
 
       o.resize(sparsity.min_level(), sparsity.max_level());
       for(size_type level = o.min_level(); level <= o.max_level(); ++level)
@@ -1010,9 +1010,9 @@ MGMatrixBlockVector<MatrixType>::reinit_edge(
 {
   for(size_type i = 0; i < this->size(); ++i)
     {
-      MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
-      const size_type                         row = o[o.min_level()].row;
-      const size_type                         col = o[o.min_level()].column;
+      MGLevelObject<MatrixBlock<MatrixType>>& o = block(i);
+      const size_type row                       = o[o.min_level()].row;
+      const size_type col                       = o[o.min_level()].column;
 
       block_in(i).resize(sparsity.min_level(), sparsity.max_level());
       block_out(i).resize(sparsity.min_level(), sparsity.max_level());
@@ -1035,9 +1035,9 @@ MGMatrixBlockVector<MatrixType>::reinit_edge_flux(
 {
   for(size_type i = 0; i < this->size(); ++i)
     {
-      MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
-      const size_type                         row = o[o.min_level()].row;
-      const size_type                         col = o[o.min_level()].column;
+      MGLevelObject<MatrixBlock<MatrixType>>& o = block(i);
+      const size_type row                       = o[o.min_level()].row;
+      const size_type col                       = o[o.min_level()].column;
 
       block_up(i).resize(sparsity.min_level(), sparsity.max_level());
       block_down(i).resize(sparsity.min_level(), sparsity.max_level());

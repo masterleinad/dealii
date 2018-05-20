@@ -87,7 +87,7 @@ namespace Step50
   struct ScratchData
   {
     ScratchData(const FiniteElement<dim>& fe,
-                const unsigned int        quadrature_degree)
+                const unsigned int quadrature_degree)
       : fe_values(fe,
                   QGauss<dim>(quadrature_degree),
                   update_values | update_gradients | update_quadrature_points
@@ -108,8 +108,8 @@ namespace Step50
     unsigned int level;
     unsigned int dofs_per_cell;
 
-    FullMatrix<double>                   cell_matrix;
-    Vector<double>                       cell_rhs;
+    FullMatrix<double> cell_matrix;
+    Vector<double> cell_rhs;
     std::vector<types::global_dof_index> local_dof_indices;
   };
 
@@ -128,8 +128,8 @@ namespace Step50
     template <class IteratorType>
     void
     assemble_cell(const IteratorType& cell,
-                  ScratchData<dim>&   scratch_data,
-                  CopyData&           copy_data);
+                  ScratchData<dim>& scratch_data,
+                  CopyData& copy_data);
 
     void
     assemble_system_and_multigrid();
@@ -139,11 +139,11 @@ namespace Step50
     refine_grid();
 
     parallel::distributed::Triangulation<dim> triangulation;
-    FE_Q<dim>                                 fe;
-    DoFHandler<dim>                           mg_dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> mg_dof_handler;
 
     typedef LA::MPI::SparseMatrix matrix_t;
-    typedef LA::MPI::Vector       vector_t;
+    typedef LA::MPI::Vector vector_t;
 
     matrix_t system_matrix;
 
@@ -158,7 +158,7 @@ namespace Step50
 
     MGLevelObject<matrix_t> mg_matrices;
     MGLevelObject<matrix_t> mg_interface_matrices;
-    MGConstrainedDoFs       mg_constrained_dofs;
+    MGConstrainedDoFs mg_constrained_dofs;
   };
 
   template <int dim>
@@ -173,8 +173,8 @@ namespace Step50
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const;
+               std::vector<double>& values,
+               const unsigned int component = 0) const;
   };
 
   template <int dim>
@@ -190,8 +190,8 @@ namespace Step50
   template <int dim>
   void
   Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+                               std::vector<double>& values,
+                               const unsigned int component) const
   {
     (void) component;
     const unsigned int n_points = points.size();
@@ -232,8 +232,8 @@ namespace Step50
     constraints.reinit(locally_relevant_set);
     DoFTools::make_hanging_node_constraints(mg_dof_handler, constraints);
 
-    std::set<types::boundary_id>     dirichlet_boundary_ids;
-    typename FunctionMap<dim>::type  dirichlet_boundary;
+    std::set<types::boundary_id> dirichlet_boundary_ids;
+    typename FunctionMap<dim>::type dirichlet_boundary;
     Functions::ConstantFunction<dim> homogeneous_dirichlet_bc(1.0);
     dirichlet_boundary_ids.insert(0);
     dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
@@ -293,8 +293,8 @@ namespace Step50
   template <class IteratorType>
   void
   LaplaceProblem<dim>::assemble_cell(const IteratorType& cell,
-                                     ScratchData<dim>&   scratch_data,
-                                     CopyData&           copy_data)
+                                     ScratchData<dim>& scratch_data,
+                                     CopyData& copy_data)
   {
     const unsigned int level = cell->level();
     copy_data.level          = level;
@@ -315,7 +315,7 @@ namespace Step50
     scratch_data.fe_values.reinit(cell);
 
     const Coefficient<dim> coefficient;
-    std::vector<double>    coefficient_values(n_q_points);
+    std::vector<double> coefficient_values(n_q_points);
     coefficient.value_list(scratch_data.fe_values.get_quadrature_points(),
                            coefficient_values);
 
@@ -357,14 +357,14 @@ namespace Step50
 
     auto cell_worker_active
       = [&](const decltype(mg_dof_handler.begin_active())& cell,
-            ScratchData<dim>&                              scratch_data,
-            CopyData&                                      copy_data) {
+            ScratchData<dim>& scratch_data,
+            CopyData& copy_data) {
           this->assemble_cell(cell, scratch_data, copy_data);
         };
 
     auto cell_worker_mg = [&](const decltype(mg_dof_handler.begin_mg())& cell,
                               ScratchData<dim>& scratch_data,
-                              CopyData&         copy_data) {
+                              CopyData& copy_data) {
       this->assemble_cell(cell, scratch_data, copy_data);
     };
 
@@ -430,8 +430,8 @@ namespace Step50
 
     matrix_t& coarse_matrix = mg_matrices[0];
 
-    SolverControl        coarse_solver_control(1000, 1e-10, false, false);
-    SolverCG<vector_t>   coarse_solver(coarse_solver_control);
+    SolverControl coarse_solver_control(1000, 1e-10, false, false);
+    SolverCG<vector_t> coarse_solver(coarse_solver_control);
     PreconditionIdentity id;
     MGCoarseGridIterativeSolver<vector_t,
                                 SolverCG<vector_t>,
@@ -439,7 +439,7 @@ namespace Step50
                                 PreconditionIdentity>
       coarse_grid_solver(coarse_solver, coarse_matrix, id);
 
-    typedef LA::MPI::PreconditionJacobi                  Smoother;
+    typedef LA::MPI::PreconditionJacobi Smoother;
     MGSmootherPrecondition<matrix_t, Smoother, vector_t> mg_smoother;
     mg_smoother.initialize(mg_matrices, Smoother::AdditionalData(0.5));
     mg_smoother.set_steps(2);
@@ -455,7 +455,7 @@ namespace Step50
     PreconditionMG<dim, vector_t, MGTransferPrebuilt<vector_t>> preconditioner(
       mg_dof_handler, mg, mg_transfer);
 
-    SolverControl      solver_control(500, 1e-8 * system_rhs.l2_norm(), false);
+    SolverControl solver_control(500, 1e-8 * system_rhs.l2_norm(), false);
     SolverCG<vector_t> solver(solver_control);
 
     solver.solve(system_matrix, solution, system_rhs, preconditioner);

@@ -94,7 +94,7 @@ test()
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(2);
 
-  FESystem<dim>   fe(FE_Q<dim>(2), dim);
+  FESystem<dim> fe(FE_Q<dim>(2), dim);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
@@ -126,7 +126,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
 }

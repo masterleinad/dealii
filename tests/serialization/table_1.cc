@@ -22,12 +22,12 @@
 void
 test()
 {
-  unsigned int  index1 = 3;
+  unsigned int index1 = 3;
   Table<1, int> t1(index1);
 
   Table<1, int> t2(index1);
 
-  unsigned int  index3 = 2;
+  unsigned int index3 = 2;
   Table<1, int> t3(index3);
 
   for(unsigned int i = 0; i < index1; i++)

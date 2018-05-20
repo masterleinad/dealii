@@ -63,7 +63,7 @@ test()
   tria.add_periodicity(periodic_faces);
   tria.refine_global(5);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
   deallog << "Number of cells: " << tria.n_global_active_cells() << std::endl

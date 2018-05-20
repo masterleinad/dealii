@@ -39,12 +39,12 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   {
     const unsigned int size = 31;
-    unsigned int       dim  = (size - 1);
+    unsigned int dim        = (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl << std::endl;
 
     // Make matrix
-    FD1DLaplaceMatrix           testproblem(size);
+    FD1DLaplaceMatrix testproblem(size);
     PETScWrappers::SparseMatrix A(dim, dim, 3);
     testproblem.three_point(A);
     A.compress(VectorOperation::insert);
@@ -73,7 +73,7 @@ main(int argc, char** argv)
             1e-10,
             false,
             false);
-          std::vector<double>                  estimated_eigenvalues;
+          std::vector<double> estimated_eigenvalues;
           SolverCG<PETScWrappers::MPI::Vector> solver(control);
           solver.connect_eigenvalues_slot(
             [&estimated_eigenvalues](const std::vector<double>& ev) -> void {

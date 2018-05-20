@@ -22,7 +22,7 @@ void
 ConvergenceTable::evaluate_convergence_rates(
   const std::string& data_column_key,
   const std::string& reference_column_key,
-  const RateMode     rate_mode,
+  const RateMode rate_mode,
   const unsigned int dim)
 {
   Assert(columns.count(data_column_key), ExcColumnNotExistent(data_column_key));
@@ -122,7 +122,7 @@ ConvergenceTable::evaluate_convergence_rates(
 
 void
 ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
-                                             const RateMode     rate_mode)
+                                             const RateMode rate_mode)
 {
   Assert(columns.count(data_column_key), ExcColumnNotExistent(data_column_key));
 
@@ -131,7 +131,7 @@ ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
   set_auto_fill_mode(false);
 
   std::vector<internal::TableEntry>& entries = columns[data_column_key].entries;
-  std::string                        rate_key = data_column_key + "...";
+  std::string rate_key                       = data_column_key + "...";
 
   const unsigned int n = entries.size();
 
@@ -222,7 +222,7 @@ ConvergenceTable::omit_column_from_convergence_rate_evaluation(
 void
 ConvergenceTable::evaluate_all_convergence_rates(
   const std::string& reference_column_key,
-  const RateMode     rate_mode)
+  const RateMode rate_mode)
 {
   for(std::map<std::string, Column>::const_iterator col_iter = columns.begin();
       col_iter != columns.end();

@@ -27,8 +27,8 @@ main()
   deallog << std::setprecision(5);
   deallog.attach(logfile);
 
-  const int                                        dim = 3;
-  SymmetricTensor<2, dim, VectorizedArray<float>>  s1;
+  const int dim = 3;
+  SymmetricTensor<2, dim, VectorizedArray<float>> s1;
   SymmetricTensor<2, dim, VectorizedArray<double>> s2;
 
   for(unsigned int i = 0; i < dim; ++i)
@@ -38,9 +38,9 @@ main()
         s2[i][j] = 2 + (j + i) * dim;
       }
 
-  float                                            factor_float  = 2.f;
-  double                                           factor_double = 3.;
-  SymmetricTensor<2, dim, VectorizedArray<float>>  r1 = factor_float * s1;
+  float factor_float                                  = 2.f;
+  double factor_double                                = 3.;
+  SymmetricTensor<2, dim, VectorizedArray<float>> r1  = factor_float * s1;
   SymmetricTensor<2, dim, VectorizedArray<double>> r2 = factor_double * s2;
 
   for(unsigned int i = 0; i < dim; ++i)

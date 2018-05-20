@@ -76,7 +76,7 @@ test()
 
   for(unsigned int p = 1; p < 7 - dim; ++p)
     {
-      FE_DGQ<dim>     fe(p);
+      FE_DGQ<dim> fe(p);
       DoFHandler<dim> dof_handler(triangulation);
       dof_handler.distribute_dofs(fe);
 

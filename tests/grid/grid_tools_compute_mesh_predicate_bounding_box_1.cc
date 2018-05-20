@@ -117,7 +117,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test_hypercube<2>(0, 4);
   test_hypercube<2>(1, 4);

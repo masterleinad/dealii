@@ -25,8 +25,8 @@ test()
   // converting a non-const vector to an ArrayView to const or
   // non-const data should work
   {
-    std::vector<double>     v(10);
-    ArrayView<double>       a1(v);
+    std::vector<double> v(10);
+    ArrayView<double> a1(v);
     ArrayView<const double> a2(v);
   }
 
@@ -36,7 +36,7 @@ test()
   // converting to an ArrayView<double> will not work
   {
     const std::vector<double> v(10);
-    ArrayView<const double>   a2(v);
+    ArrayView<const double> a2(v);
   }
 
   deallog << "OK" << std::endl;

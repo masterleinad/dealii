@@ -48,9 +48,9 @@ main()
 
   // The circle passing through the
   // vertices of the unit square
-  gp_Dir        z_axis(0., 0., 1.);
-  gp_Pnt        center(.5, .5, 0.);
-  gp_Ax2        axis(center, z_axis);
+  gp_Dir z_axis(0., 0., 1.);
+  gp_Pnt center(.5, .5, 0.);
+  gp_Ax2 axis(center, z_axis);
   Standard_Real radius(std::sqrt(2.) / 2.);
 
   GC_MakeCircle make_circle(axis, radius);

@@ -47,7 +47,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 

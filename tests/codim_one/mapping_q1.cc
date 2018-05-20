@@ -35,7 +35,7 @@ void
 test(std::string filename)
 {
   Triangulation<dim, spacedim> tria;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);
@@ -44,14 +44,14 @@ test(std::string filename)
   grid_out.set_flags(GridOutFlags::Ucd(true));
   grid_out.write_ucd(tria, logfile);
 
-  QTrapez<dim>                                                quad;
-  MappingQGeneric<dim, spacedim>                              mapping(1);
+  QTrapez<dim> quad;
+  MappingQGeneric<dim, spacedim> mapping(1);
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = tria.begin_active(),
     endc = tria.end();
   Point<spacedim> real;
-  Point<dim>      unit;
-  double          eps = 1e-10;
+  Point<dim> unit;
+  double eps = 1e-10;
   for(; cell != endc; ++cell)
     {
       deallog << cell << std::endl;

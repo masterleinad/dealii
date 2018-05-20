@@ -24,14 +24,14 @@ namespace Functions
 {
   template <int dim>
   ParsedFunction<dim>::ParsedFunction(const unsigned int n_components,
-                                      const double       h)
+                                      const double h)
     : AutoDerivativeFunction<dim>(h, n_components),
       function_object(n_components)
   {}
 
   template <int dim>
   void
-  ParsedFunction<dim>::declare_parameters(ParameterHandler&  prm,
+  ParsedFunction<dim>::declare_parameters(ParameterHandler& prm,
                                           const unsigned int n_components)
   {
     Assert(n_components > 0, ExcZero());
@@ -159,7 +159,7 @@ namespace Functions
   template <int dim>
   void
   ParsedFunction<dim>::vector_value(const Point<dim>& p,
-                                    Vector<double>&   values) const
+                                    Vector<double>& values) const
   {
     function_object.vector_value(p, values);
   }

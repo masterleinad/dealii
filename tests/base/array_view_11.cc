@@ -24,7 +24,7 @@ test()
 {
   {
     std::vector<int> arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    ArrayView<int>   view(arr); // writable view
+    ArrayView<int> view(arr); // writable view
     for(auto& el : view)
       ++el;
 
@@ -34,7 +34,7 @@ test()
   }
 
   {
-    std::vector<int>     arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     const ArrayView<int> view(arr); // writable view
     for(auto& el : view)
       ++el;

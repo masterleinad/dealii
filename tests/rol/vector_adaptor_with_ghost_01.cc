@@ -34,9 +34,9 @@ prepare_vector(VectorType& v)
 
   const unsigned int set = 200;
   AssertIndexRange(numproc, set - 2);
-  const unsigned int local_size  = set - myid;
-  unsigned int       global_size = 0;
-  unsigned int       my_start    = 0;
+  const unsigned int local_size = set - myid;
+  unsigned int global_size      = 0;
+  unsigned int my_start         = 0;
   for(unsigned int i = 0; i < numproc; ++i)
     {
       global_size += set - i;
@@ -50,7 +50,7 @@ prepare_vector(VectorType& v)
   // processors
   IndexSet local_owned(global_size);
   local_owned.add_range(my_start, my_start + local_size);
-  IndexSet     local_relevant(global_size);
+  IndexSet local_relevant(global_size);
   unsigned int ghost_indices[10] = {1,
                                     2,
                                     13,
@@ -99,7 +99,7 @@ test()
   Rol::VectorAdaptor<VectorType> c_rol(c_rcp);
 
   Teuchos::RCP<std::ostream> out_stream;
-  Teuchos::oblackholestream  bhs; // outputs nothing
+  Teuchos::oblackholestream bhs; // outputs nothing
 
   if(dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     out_stream = Teuchos::rcp(&std::cout, false);

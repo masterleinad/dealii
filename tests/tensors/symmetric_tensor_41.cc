@@ -21,8 +21,8 @@
 #include <deal.II/base/symmetric_tensor.h>
 
 void
-check_value(const int    dim,
-            const int    index,
+check_value(const int dim,
+            const int index,
             const double expected,
             const double actual,
             const double tol = 1e-12)
@@ -47,7 +47,7 @@ is_unit_vector(const Tensor<1, dim>& v)
 template <int dim>
 bool check_orientation(Tensor<1, dim> v1,
                        Tensor<1, dim> v2,
-                       const double   tol = 1e-9)
+                       const double tol = 1e-9)
 {
   v1 /= v1.norm();
   v2 /= v2.norm();
@@ -56,10 +56,10 @@ bool check_orientation(Tensor<1, dim> v1,
 
 template <int dim>
 void
-check_vector(const int            index,
+check_vector(const int index,
              const Tensor<1, dim> expected,
              const Tensor<1, dim> actual,
-             const double         tol = 1e-12)
+             const double tol = 1e-12)
 {
   const bool orientation = check_orientation(expected, actual);
   const bool unit_vec    = is_unit_vector(actual);
@@ -75,10 +75,10 @@ check_vector(const int            index,
 
 void
 test_dim_1(const enum SymmetricTensorEigenvectorMethod method,
-           const double                                e1,
-           const double                                tol = 1e-12)
+           const double e1,
+           const double tol = 1e-12)
 {
-  const unsigned int      dim = 1;
+  const unsigned int dim = 1;
   SymmetricTensor<2, dim> T;
   T[0][0]                  = e1;
   const auto eig_vals_vecs = eigenvectors(T, method);
@@ -89,10 +89,10 @@ test_dim_1(const enum SymmetricTensorEigenvectorMethod method,
 
 void
 test_dim_2(const enum SymmetricTensorEigenvectorMethod method,
-           const double                                e1,
-           Tensor<1, 2>                                v1,
-           const double                                e2,
-           const double                                tol = 1e-12)
+           const double e1,
+           Tensor<1, 2> v1,
+           const double e2,
+           const double tol = 1e-12)
 {
   const unsigned int dim = 2;
   v1 /= v1.norm();
@@ -115,12 +115,12 @@ test_dim_2(const enum SymmetricTensorEigenvectorMethod method,
 
 void
 test_dim_3(const enum SymmetricTensorEigenvectorMethod method,
-           const double                                e1,
-           Tensor<1, 3>                                v1,
-           const double                                e2,
-           Tensor<1, 3>                                v2,
-           const double                                e3,
-           const double                                tol = 1e-12)
+           const double e1,
+           Tensor<1, 3> v1,
+           const double e2,
+           Tensor<1, 3> v2,
+           const double e3,
+           const double tol = 1e-12)
 {
   const unsigned int dim = 3;
 

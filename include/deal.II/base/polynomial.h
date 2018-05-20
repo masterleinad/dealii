@@ -82,7 +82,7 @@ namespace Polynomials
      * stored).
      */
     Polynomial(const std::vector<Point<1>>& lagrange_support_points,
-               const unsigned int           evaluation_point);
+               const unsigned int evaluation_point);
 
     /**
      * Default constructor creating an illegal object.
@@ -124,9 +124,9 @@ namespace Polynomials
      * terms involving the roots if that representation is used.
      */
     void
-    value(const number       x,
+    value(const number x,
           const unsigned int n_derivatives,
-          number*            values) const;
+          number* values) const;
 
     /**
      * Degree of the polynomial. This is the degree reflected by the number of
@@ -356,8 +356,8 @@ namespace Polynomials
      * function is <tt>static</tt> to allow to be called in the constructor.
      */
     static void
-    compute_coefficients(const unsigned int   n,
-                         const unsigned int   support_point,
+    compute_coefficients(const unsigned int n,
+                         const unsigned int support_point,
                          std::vector<double>& a);
   };
 
@@ -714,9 +714,9 @@ namespace Polynomials
   template <typename Number>
   Number
   jacobi_polynomial_value(const unsigned int degree,
-                          const int          alpha,
-                          const int          beta,
-                          const Number       x);
+                          const int alpha,
+                          const int beta,
+                          const Number x);
 
   /**
    * Compute the roots of the Jacobi polynomials on the unit interval $[0, 1]$
@@ -733,8 +733,8 @@ namespace Polynomials
   template <typename Number>
   std::vector<Number>
   jacobi_polynomial_roots(const unsigned int degree,
-                          const int          alpha,
-                          const int          beta);
+                          const int alpha,
+                          const int beta);
 } // namespace Polynomials
 
 /** @} */
@@ -772,8 +772,8 @@ namespace Polynomials
         Assert(coefficients.size() > 0, ExcEmptyObject());
 
         // Horner scheme
-        const unsigned int m     = coefficients.size();
-        number             value = coefficients.back();
+        const unsigned int m = coefficients.size();
+        number value         = coefficients.back();
         for(int k = m - 2; k >= 0; --k)
           value = value * x + coefficients[k];
         return value;
@@ -781,8 +781,8 @@ namespace Polynomials
     else
       {
         // direct evaluation of Lagrange polynomial
-        const unsigned int m     = lagrange_support_points.size();
-        number             value = 1.;
+        const unsigned int m = lagrange_support_points.size();
+        number value         = 1.;
         for(unsigned int j = 0; j < m; ++j)
           value *= x - lagrange_support_points[j];
         value *= lagrange_weight;
@@ -806,9 +806,9 @@ namespace Polynomials
   template <typename Number>
   Number
   jacobi_polynomial_value(const unsigned int degree,
-                          const int          alpha,
-                          const int          beta,
-                          const Number       x)
+                          const int alpha,
+                          const int beta,
+                          const Number x)
   {
     Assert(alpha >= 0 && beta >= 0,
            ExcNotImplemented("Negative alpha/beta coefficients not supported"));
@@ -845,8 +845,8 @@ namespace Polynomials
   template <typename Number>
   std::vector<Number>
   jacobi_polynomial_roots(const unsigned int degree,
-                          const int          alpha,
-                          const int          beta)
+                          const int alpha,
+                          const int beta)
   {
     std::vector<Number> x(degree, 0.5);
 

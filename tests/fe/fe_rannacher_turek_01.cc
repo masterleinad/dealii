@@ -31,7 +31,7 @@ void
 test_known_values()
 {
   PolynomialsRannacherTurek<2> pols;
-  Point<2>                     p(0.5, 0.5);
+  Point<2> p(0.5, 0.5);
   for(unsigned int i = 0; i < 4; ++i)
     {
       deallog << pols.compute_value(i, p) - 0.25 << std::endl;
@@ -61,10 +61,10 @@ test_nodal_matrix()
   FullMatrix<double> N(4, 4);
   // compute_node_matrix does not check for number of components but
   // simply assumes that there are dim components. Thus we do it ourselves.
-  const unsigned int           n_dofs = fe.dofs_per_cell;
+  const unsigned int n_dofs           = fe.dofs_per_cell;
   const std::vector<Point<2>>& points = fe.get_generalized_support_points();
-  std::vector<Vector<double>>  values(points.size(), Vector<double>(1));
-  std::vector<double>          local_dofs(n_dofs);
+  std::vector<Vector<double>> values(points.size(), Vector<double>(1));
+  std::vector<double> local_dofs(n_dofs);
 
   for(unsigned int i = 0; i < n_dofs; ++i)
     {
@@ -105,7 +105,7 @@ test_interpolation()
   tr.refine_global(2);
 
   FE_RannacherTurek<2> fe;
-  const unsigned int   n_dofs = fe.dofs_per_cell;
+  const unsigned int n_dofs = fe.dofs_per_cell;
 
   DoFHandler<2> dofh;
   dofh.initialize(tr, fe);
@@ -117,10 +117,10 @@ test_interpolation()
     }
 
   Quadrature<2> quadrature(fe.get_generalized_support_points());
-  FEValues<2>   fev(fe, quadrature, update_values | update_JxW_values);
+  FEValues<2> fev(fe, quadrature, update_values | update_JxW_values);
 
   typedef DoFHandler<2>::cell_iterator cell_it;
-  cell_it                              cell = dofh.begin_active();
+  cell_it cell = dofh.begin_active();
   for(; cell != dofh.end(); ++cell)
     {
       fev.reinit(cell);

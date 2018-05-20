@@ -53,10 +53,10 @@ template <int dim>
 void
 run(bool random_p, unsigned int* indx)
 {
-  Triangulation<dim>    triangulation;
+  Triangulation<dim> triangulation;
   hp::FECollection<dim> fe;
-  hp::DoFHandler<dim>   dof_handler(triangulation);
-  ConstraintMatrix      hanging_node_constraints;
+  hp::DoFHandler<dim> dof_handler(triangulation);
+  ConstraintMatrix hanging_node_constraints;
 
   FE_Q<dim> fe_1(QIterated<1>(QTrapez<1>(), indx[0])),
     fe_2(QIterated<1>(QTrapez<1>(), indx[1])),

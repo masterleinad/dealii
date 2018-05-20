@@ -72,7 +72,7 @@ test(unsigned int ref, const MappingQ<dim>& mapping)
   deallog << "Testing dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
   MyFlatManifold<dim, spacedim> flat_manifold;
-  Triangulation<dim, spacedim>  tria;
+  Triangulation<dim, spacedim> tria;
   tria.set_manifold(0, flat_manifold);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(ref);
@@ -80,7 +80,7 @@ test(unsigned int ref, const MappingQ<dim>& mapping)
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
   QGauss<dim> quadrature(4);
-  FE_Q<dim>   fe(2);
+  FE_Q<dim> fe(2);
 
   FEValues<dim> fe_values(mapping,
                           fe,

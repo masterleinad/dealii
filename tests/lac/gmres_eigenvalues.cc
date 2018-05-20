@@ -24,7 +24,7 @@
 template <class NUMBER>
 void
 output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
-                   const std::string&         text)
+                   const std::string& text)
 {
   deallog << text;
   for(unsigned int j = 0; j < eigenvalues.size(); ++j)
@@ -39,7 +39,7 @@ void
 test(unsigned int variant)
 {
   const unsigned int n = variant < 3 ? 64 : 20;
-  Vector<number>     rhs(n), sol(n);
+  Vector<number> rhs(n), sol(n);
   rhs = 1.;
 
   LAPACKFullMatrix<number> matrix(n, n);
@@ -84,7 +84,7 @@ test(unsigned int variant)
 
   if(variant < 2)
     {
-      IterationNumberControl   cg_control(variant == 1 ? 6 : 21, 1e-40);
+      IterationNumberControl cg_control(variant == 1 ? 6 : 21, 1e-40);
       SolverCG<Vector<number>> solver_cg(cg_control);
       solver_cg.connect_eigenvalues_slot(std::bind(output_eigenvalues<double>,
                                                    std::placeholders::_1,

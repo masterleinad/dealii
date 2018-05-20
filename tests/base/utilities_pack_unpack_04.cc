@@ -30,7 +30,7 @@ void
 check(const T (&object)[N])
 {
   const std::vector<char> buffer = Utilities::pack(object);
-  T                       unpacked[N];
+  T unpacked[N];
   Utilities::unpack(buffer, unpacked);
 
   const bool equal_sizes = (buffer.size() == sizeof(T) * N);
@@ -63,7 +63,7 @@ test()
   // now try a much larger array that will actually be serialized
   // using BOOST
   const unsigned int N = 10000;
-  double             y[N];
+  double y[N];
   for(unsigned int i = 0; i < N; ++i)
     y[i] = i;
   check(y);

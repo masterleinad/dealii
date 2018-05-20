@@ -38,7 +38,7 @@ test()
   // rather than linears and quadratics according to
   // matrix_vector_faces_common.h
 
-  const unsigned int                        fe_degree = fe_degree_ + 2;
+  const unsigned int fe_degree = fe_degree_ + 2;
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   create_mesh(tria);
 
@@ -47,8 +47,8 @@ test()
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active();
-    typename Triangulation<dim>::active_cell_iterator endc    = tria.end();
-    unsigned int                                      counter = 0;
+    typename Triangulation<dim>::active_cell_iterator endc = tria.end();
+    unsigned int counter                                   = 0;
     for(; cell != endc; ++cell, ++counter)
       if(cell->is_locally_owned() && counter % 3 == 0)
         cell->set_refine_flag();
@@ -56,7 +56,7 @@ test()
   }
 
   FE_DGQHermite<dim> fe(fe_degree);
-  DoFHandler<dim>    dof(tria);
+  DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
   constraints.close();
@@ -71,8 +71,8 @@ test()
 
   LinearAlgebra::distributed::Vector<double> in, out, out_dist;
 
-  MatrixFree<dim, double>                          mf_data;
-  const QGauss<1>                                  quad(fe_degree + 1);
+  MatrixFree<dim, double> mf_data;
+  const QGauss<1> quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
   data.tasks_block_size      = 3;

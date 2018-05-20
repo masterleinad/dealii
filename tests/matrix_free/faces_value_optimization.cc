@@ -60,7 +60,7 @@ private:
   local_apply_face(
     const MatrixFree<dim, number>& data,
     Vector<number>&,
-    const Vector<number>&                        src,
+    const Vector<number>& src,
     const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> ref(data, true);
@@ -162,7 +162,7 @@ private:
   }
 
   const MatrixFree<dim, number>& data;
-  mutable std::vector<double>    error;
+  mutable std::vector<double> error;
 };
 
 template <int dim, int fe_degree>
@@ -196,7 +196,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_DGQ<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
@@ -206,7 +206,7 @@ test()
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     data.tasks_block_size      = 3;

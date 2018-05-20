@@ -23,7 +23,7 @@ template <int dim>
 void
 check()
 {
-  const unsigned int  n_points = 10;
+  const unsigned int n_points = 10;
   std::vector<double> x(n_points), y(n_points);
   for(unsigned int i = 0; i < n_points; i++)
     {
@@ -34,8 +34,8 @@ check()
   std::vector<double> y_native;
   // native version
   {
-    gsl_interp_accel* acc    = gsl_interp_accel_alloc();
-    gsl_spline*       spline = gsl_spline_alloc(gsl_interp_cspline, n_points);
+    gsl_interp_accel* acc = gsl_interp_accel_alloc();
+    gsl_spline* spline    = gsl_spline_alloc(gsl_interp_cspline, n_points);
 
     gsl_spline_init(spline, &x[0], &y[0], n_points);
 
@@ -70,7 +70,7 @@ check()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

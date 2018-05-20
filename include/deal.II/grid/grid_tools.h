@@ -156,7 +156,7 @@ namespace GridTools
   template <int dim, int spacedim>
   double
   volume(const Triangulation<dim, spacedim>& tria,
-         const Mapping<dim, spacedim>&       mapping
+         const Mapping<dim, spacedim>& mapping
          = (StaticMappingQ1<dim, spacedim>::mapping));
 
   /**
@@ -172,7 +172,7 @@ namespace GridTools
   template <int dim, int spacedim>
   double
   minimal_cell_diameter(const Triangulation<dim, spacedim>& triangulation,
-                        const Mapping<dim, spacedim>&       mapping
+                        const Mapping<dim, spacedim>& mapping
                         = (StaticMappingQ1<dim, spacedim>::mapping));
 
   /**
@@ -188,7 +188,7 @@ namespace GridTools
   template <int dim, int spacedim>
   double
   maximal_cell_diameter(const Triangulation<dim, spacedim>& triangulation,
-                        const Mapping<dim, spacedim>&       mapping
+                        const Mapping<dim, spacedim>& mapping
                         = (StaticMappingQ1<dim, spacedim>::mapping));
 
   /**
@@ -254,7 +254,7 @@ namespace GridTools
   template <typename Iterator>
   Point<Iterator::AccessorType::space_dimension>
   project_to_object(
-    const Iterator&                                       object,
+    const Iterator& object,
     const Point<Iterator::AccessorType::space_dimension>& trial_point);
 
   /*@}*/
@@ -282,8 +282,8 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   delete_unused_vertices(std::vector<Point<spacedim>>& vertices,
-                         std::vector<CellData<dim>>&   cells,
-                         SubCellData&                  subcelldata);
+                         std::vector<CellData<dim>>& cells,
+                         SubCellData& subcelldata);
 
   /**
    * Remove vertices that are duplicated, due to the input of a structured
@@ -303,10 +303,10 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   delete_duplicated_vertices(std::vector<Point<spacedim>>& all_vertices,
-                             std::vector<CellData<dim>>&   cells,
-                             SubCellData&                  subcelldata,
-                             std::vector<unsigned int>&    considered_vertices,
-                             const double                  tol = 1e-12);
+                             std::vector<CellData<dim>>& cells,
+                             SubCellData& subcelldata,
+                             std::vector<unsigned int>& considered_vertices,
+                             const double tol = 1e-12);
 
   /*@}*/
   /**
@@ -339,7 +339,7 @@ namespace GridTools
    */
   template <int dim, typename Transformation, int spacedim>
   void
-  transform(const Transformation&         transformation,
+  transform(const Transformation& transformation,
             Triangulation<dim, spacedim>& triangulation);
 
   /**
@@ -349,7 +349,7 @@ namespace GridTools
    */
   template <int dim, int spacedim>
   void
-  shift(const Tensor<1, spacedim>&    shift_vector,
+  shift(const Tensor<1, spacedim>& shift_vector,
         Triangulation<dim, spacedim>& triangulation);
 
   /**
@@ -376,8 +376,8 @@ namespace GridTools
    */
   template <int dim>
   void
-  rotate(const double           angle,
-         const unsigned int     axis,
+  rotate(const double angle,
+         const unsigned int axis,
          Triangulation<dim, 3>& triangulation);
 
   /**
@@ -441,7 +441,7 @@ namespace GridTools
   template <int dim>
   void
   laplace_transform(const std::map<unsigned int, Point<dim>>& new_points,
-                    Triangulation<dim>&                       tria,
+                    Triangulation<dim>& tria,
                     const Function<dim, double>* coefficient = nullptr,
                     const bool solve_for_absolute_positions  = false);
 
@@ -463,7 +463,7 @@ namespace GridTools
    */
   template <int dim, int spacedim>
   void
-  scale(const double                  scaling_factor,
+  scale(const double scaling_factor,
         Triangulation<dim, spacedim>& triangulation);
 
   /**
@@ -478,9 +478,9 @@ namespace GridTools
    */
   template <int dim, int spacedim>
   void
-  distort_random(const double                  factor,
+  distort_random(const double factor,
                  Triangulation<dim, spacedim>& triangulation,
-                 const bool                    keep_boundary = true);
+                 const bool keep_boundary = true);
 
   /**
    * Remove hanging nodes from a grid. If the @p isotropic parameter is set
@@ -520,8 +520,8 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   remove_hanging_nodes(Triangulation<dim, spacedim>& tria,
-                       const bool                    isotropic      = false,
-                       const unsigned int            max_iterations = 100);
+                       const bool isotropic              = false,
+                       const unsigned int max_iterations = 100);
 
   /**
    * Refine a mesh anisotropically such that the resulting mesh is composed by
@@ -551,8 +551,8 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   remove_anisotropy(Triangulation<dim, spacedim>& tria,
-                    const double                  max_ratio      = 1.6180339887,
-                    const unsigned int            max_iterations = 5);
+                    const double max_ratio            = 1.6180339887,
+                    const unsigned int max_iterations = 5);
 
   /**
    * Analyze the boundary cells of a mesh, and if one cell is found at
@@ -701,8 +701,8 @@ namespace GridTools
   return_type
 #  endif
   compute_point_locations(
-    const Cache<dim, spacedim>&                                        cache,
-    const std::vector<Point<spacedim>>&                                points,
+    const Cache<dim, spacedim>& cache,
+    const std::vector<Point<spacedim>>& points,
     const typename Triangulation<dim, spacedim>::active_cell_iterator& cell_hint
     = typename Triangulation<dim, spacedim>::active_cell_iterator());
 
@@ -779,8 +779,8 @@ namespace GridTools
   return_type
 #  endif
   distributed_compute_point_locations(
-    const GridTools::Cache<dim, spacedim>&                 cache,
-    const std::vector<Point<spacedim>>&                    local_points,
+    const GridTools::Cache<dim, spacedim>& cache,
+    const std::vector<Point<spacedim>>& local_points,
     const std::vector<std::vector<BoundingBox<spacedim>>>& global_bboxes);
 
   /**
@@ -814,7 +814,7 @@ namespace GridTools
   template <int dim, int spacedim>
   std::map<unsigned int, Point<spacedim>>
   extract_used_vertices(const Triangulation<dim, spacedim>& container,
-                        const Mapping<dim, spacedim>&       mapping
+                        const Mapping<dim, spacedim>& mapping
                         = StaticMappingQ1<dim, spacedim>::mapping);
 
   /**
@@ -831,7 +831,7 @@ namespace GridTools
   template <int spacedim>
   unsigned int
   find_closest_vertex(const std::map<unsigned int, Point<spacedim>>& vertices,
-                      const Point<spacedim>&                         p);
+                      const Point<spacedim>& p);
 
   /**
    * Find and return the index of the used vertex (or marked vertex) in a
@@ -862,8 +862,8 @@ namespace GridTools
   template <int dim, template <int, int> class MeshType, int spacedim>
   unsigned int
   find_closest_vertex(const MeshType<dim, spacedim>& mesh,
-                      const Point<spacedim>&         p,
-                      const std::vector<bool>&       marked_vertices
+                      const Point<spacedim>& p,
+                      const std::vector<bool>& marked_vertices
                       = std::vector<bool>());
 
   /**
@@ -893,10 +893,10 @@ namespace GridTools
    */
   template <int dim, template <int, int> class MeshType, int spacedim>
   unsigned int
-  find_closest_vertex(const Mapping<dim, spacedim>&  mapping,
+  find_closest_vertex(const Mapping<dim, spacedim>& mapping,
                       const MeshType<dim, spacedim>& mesh,
-                      const Point<spacedim>&         p,
-                      const std::vector<bool>&       marked_vertices
+                      const Point<spacedim>& p,
+                      const std::vector<bool>& marked_vertices
                       = std::vector<bool>());
 
   /**
@@ -932,7 +932,7 @@ namespace GridTools
       ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type>
 #  endif
   find_cells_adjacent_to_vertex(const MeshType<dim, spacedim>& container,
-                                const unsigned int             vertex_index);
+                                const unsigned int vertex_index);
 
   /**
    * Find and return an iterator to the active cell that surrounds a given
@@ -966,8 +966,8 @@ namespace GridTools
     ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type
 #  endif
   find_active_cell_around_point(const MeshType<dim, spacedim>& mesh,
-                                const Point<spacedim>&         p,
-                                const std::vector<bool>&       marked_vertices
+                                const Point<spacedim>& p,
+                                const std::vector<bool>& marked_vertices
                                 = std::vector<bool>());
 
   /**
@@ -1062,10 +1062,10 @@ namespace GridTools
               ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type,
             Point<dim>>
 #  endif
-  find_active_cell_around_point(const Mapping<dim, spacedim>&  mapping,
+  find_active_cell_around_point(const Mapping<dim, spacedim>& mapping,
                                 const MeshType<dim, spacedim>& mesh,
-                                const Point<spacedim>&         p,
-                                const std::vector<bool>&       marked_vertices
+                                const Point<spacedim>& p,
+                                const std::vector<bool>& marked_vertices
                                 = std::vector<bool>());
 
   /**
@@ -1085,12 +1085,12 @@ namespace GridTools
             Point<dim>>
 #  endif
   find_active_cell_around_point(
-    const Mapping<dim, spacedim>&  mapping,
+    const Mapping<dim, spacedim>& mapping,
     const MeshType<dim, spacedim>& mesh,
-    const Point<spacedim>&         p,
+    const Point<spacedim>& p,
     const std::vector<
       std::set<typename MeshType<dim, spacedim>::active_cell_iterator>>&
-                                                         vertex_to_cell_map,
+      vertex_to_cell_map,
     const std::vector<std::vector<Tensor<1, spacedim>>>& vertex_to_cell_centers,
     const typename MeshType<dim, spacedim>::active_cell_iterator& cell_hint
     = typename MeshType<dim, spacedim>::active_cell_iterator(),
@@ -1122,8 +1122,8 @@ namespace GridTools
             Point<dim>>
   find_active_cell_around_point(
     const hp::MappingCollection<dim, spacedim>& mapping,
-    const hp::DoFHandler<dim, spacedim>&        mesh,
-    const Point<spacedim>&                      p);
+    const hp::DoFHandler<dim, spacedim>& mesh,
+    const Point<spacedim>& p);
 
   /**
    * A version of the previous function that exploits an already existing
@@ -1135,8 +1135,8 @@ namespace GridTools
   std::pair<typename Triangulation<dim, spacedim>::active_cell_iterator,
             Point<dim>>
   find_active_cell_around_point(
-    const Cache<dim, spacedim>&                                        cache,
-    const Point<spacedim>&                                             p,
+    const Cache<dim, spacedim>& cache,
+    const Point<spacedim>& p,
     const typename Triangulation<dim, spacedim>::active_cell_iterator& cell_hint
     = typename Triangulation<dim, spacedim>::active_cell_iterator(),
     const std::vector<bool>& marked_vertices = std::vector<bool>());
@@ -1179,7 +1179,7 @@ namespace GridTools
   template <class MeshType>
   void
   get_active_neighbors(
-    const typename MeshType::active_cell_iterator&        cell,
+    const typename MeshType::active_cell_iterator& cell,
     std::vector<typename MeshType::active_cell_iterator>& active_neighbors);
 
   /**
@@ -1252,7 +1252,7 @@ namespace GridTools
   compute_cell_halo_layer_on_level(
     const MeshType& mesh,
     const std::function<bool(const typename MeshType::cell_iterator&)>&
-                       predicate,
+      predicate,
     const unsigned int level);
 
   /**
@@ -1330,7 +1330,7 @@ namespace GridTools
   compute_active_cell_layer_within_distance(
     const MeshType& mesh,
     const std::function<bool(const typename MeshType::active_cell_iterator&)>&
-                 predicate,
+      predicate,
     const double layer_thickness);
 
   /**
@@ -1361,7 +1361,7 @@ namespace GridTools
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   compute_ghost_cell_layer_within_distance(const MeshType& mesh,
-                                           const double    layer_thickness);
+                                           const double layer_thickness);
 
   /**
    * Compute and return a bounding box, defined through a pair of points
@@ -1433,9 +1433,9 @@ namespace GridTools
   compute_mesh_predicate_bounding_box(
     const MeshType& mesh,
     const std::function<bool(const typename MeshType::active_cell_iterator&)>&
-                       predicate,
+      predicate,
     const unsigned int refinement_level = 0,
-    const bool         allow_merge      = false,
+    const bool allow_merge              = false,
     const unsigned int max_boxes        = numbers::invalid_unsigned_int);
 
   /**
@@ -1476,7 +1476,7 @@ namespace GridTools
 #  endif
   guess_point_owner(
     const std::vector<std::vector<BoundingBox<spacedim>>>& global_bboxes,
-    const std::vector<Point<spacedim>>&                    points);
+    const std::vector<Point<spacedim>>& points);
 
   /**
    * Return the adjacent cells of all the vertices. If a vertex is also a
@@ -1577,7 +1577,7 @@ namespace GridTools
   void
   get_face_connectivity_of_cells(
     const Triangulation<dim, spacedim>& triangulation,
-    DynamicSparsityPattern&             connectivity);
+    DynamicSparsityPattern& connectivity);
 
   /**
    * Produce a sparsity pattern in which nonzero entries indicate that two
@@ -1591,7 +1591,7 @@ namespace GridTools
   void
   get_vertex_connectivity_of_cells(
     const Triangulation<dim, spacedim>& triangulation,
-    DynamicSparsityPattern&             connectivity);
+    DynamicSparsityPattern& connectivity);
 
   /**
    * Produce a sparsity pattern for a given level mesh in which nonzero entries
@@ -1605,8 +1605,8 @@ namespace GridTools
   void
   get_vertex_connectivity_of_cells_on_level(
     const Triangulation<dim, spacedim>& triangulation,
-    const unsigned int                  level,
-    DynamicSparsityPattern&             connectivity);
+    const unsigned int level,
+    DynamicSparsityPattern& connectivity);
 
   /**
    * Use graph partitioner to partition the active cells making up the entire domain.
@@ -1628,8 +1628,8 @@ namespace GridTools
    */
   template <int dim, int spacedim>
   void
-  partition_triangulation(const unsigned int               n_partitions,
-                          Triangulation<dim, spacedim>&    triangulation,
+  partition_triangulation(const unsigned int n_partitions,
+                          Triangulation<dim, spacedim>& triangulation,
                           const SparsityTools::Partitioner partitioner
                           = SparsityTools::Partitioner::metis);
 
@@ -1645,9 +1645,9 @@ namespace GridTools
    */
   template <int dim, int spacedim>
   void
-  partition_triangulation(const unsigned int               n_partitions,
+  partition_triangulation(const unsigned int n_partitions,
                           const std::vector<unsigned int>& cell_weights,
-                          Triangulation<dim, spacedim>&    triangulation,
+                          Triangulation<dim, spacedim>& triangulation,
                           const SparsityTools::Partitioner partitioner
                           = SparsityTools::Partitioner::metis);
 
@@ -1698,8 +1698,8 @@ namespace GridTools
    */
   template <int dim, int spacedim>
   void
-  partition_triangulation(const unsigned int            n_partitions,
-                          const SparsityPattern&        cell_connection_graph,
+  partition_triangulation(const unsigned int n_partitions,
+                          const SparsityPattern& cell_connection_graph,
                           Triangulation<dim, spacedim>& triangulation,
                           const SparsityTools::Partitioner partitioner
                           = SparsityTools::Partitioner::metis);
@@ -1716,9 +1716,9 @@ namespace GridTools
    */
   template <int dim, int spacedim>
   void
-  partition_triangulation(const unsigned int               n_partitions,
+  partition_triangulation(const unsigned int n_partitions,
                           const std::vector<unsigned int>& cell_weights,
-                          const SparsityPattern&        cell_connection_graph,
+                          const SparsityPattern& cell_connection_graph,
                           Triangulation<dim, spacedim>& triangulation,
                           const SparsityTools::Partitioner partitioner
                           = SparsityTools::Partitioner::metis);
@@ -1732,7 +1732,7 @@ namespace GridTools
    */
   template <int dim, int spacedim>
   void
-  partition_triangulation_zorder(const unsigned int            n_partitions,
+  partition_triangulation_zorder(const unsigned int n_partitions,
                                  Triangulation<dim, spacedim>& triangulation);
 
   /**
@@ -1761,7 +1761,7 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   get_subdomain_association(const Triangulation<dim, spacedim>& triangulation,
-                            std::vector<types::subdomain_id>&   subdomain);
+                            std::vector<types::subdomain_id>& subdomain);
 
   /**
    * Count how many cells are uniquely associated with the given @p subdomain
@@ -1781,7 +1781,7 @@ namespace GridTools
   unsigned int
   count_cells_with_subdomain_association(
     const Triangulation<dim, spacedim>& triangulation,
-    const types::subdomain_id           subdomain);
+    const types::subdomain_id subdomain);
 
   /**
    * For a triangulation, return a mask that represents which of its vertices
@@ -1907,7 +1907,7 @@ namespace GridTools
   typename Triangulation<dim, spacedim>::DistortedCellList
   fix_up_distorted_child_cells(
     const typename Triangulation<dim, spacedim>::DistortedCellList&
-                                  distorted_cells,
+      distorted_cells,
     Triangulation<dim, spacedim>& triangulation);
 
   /*@}*/
@@ -2223,10 +2223,10 @@ namespace GridTools
    */
   template <typename FaceIterator>
   bool orthogonal_equality(
-    std::bitset<3>&                                               orientation,
-    const FaceIterator&                                           face1,
-    const FaceIterator&                                           face2,
-    const int                                                     direction,
+    std::bitset<3>& orientation,
+    const FaceIterator& face1,
+    const FaceIterator& face2,
+    const int direction,
     const Tensor<1, FaceIterator::AccessorType::space_dimension>& offset
     = Tensor<1, FaceIterator::AccessorType::space_dimension>(),
     const FullMatrix<double>& matrix = FullMatrix<double>());
@@ -2237,9 +2237,9 @@ namespace GridTools
   template <typename FaceIterator>
   bool
   orthogonal_equality(
-    const FaceIterator&                                           face1,
-    const FaceIterator&                                           face2,
-    const int                                                     direction,
+    const FaceIterator& face1,
+    const FaceIterator& face2,
+    const int direction,
     const Tensor<1, FaceIterator::AccessorType::space_dimension>& offset
     = Tensor<1, FaceIterator::AccessorType::space_dimension>(),
     const FullMatrix<double>& matrix = FullMatrix<double>());
@@ -2305,12 +2305,12 @@ namespace GridTools
   template <typename MeshType>
   void
   collect_periodic_faces(
-    const MeshType&          mesh,
+    const MeshType& mesh,
     const types::boundary_id b_id1,
     const types::boundary_id b_id2,
-    const int                direction,
+    const int direction,
     std::vector<PeriodicFacePair<typename MeshType::cell_iterator>>&
-                                                matched_pairs,
+      matched_pairs,
     const Tensor<1, MeshType::space_dimension>& offset
     = dealii::Tensor<1, MeshType::space_dimension>(),
     const FullMatrix<double>& matrix = FullMatrix<double>());
@@ -2340,11 +2340,11 @@ namespace GridTools
   template <typename MeshType>
   void
   collect_periodic_faces(
-    const MeshType&          mesh,
+    const MeshType& mesh,
     const types::boundary_id b_id,
-    const int                direction,
+    const int direction,
     std::vector<PeriodicFacePair<typename MeshType::cell_iterator>>&
-                                                        matched_pairs,
+      matched_pairs,
     const dealii::Tensor<1, MeshType::space_dimension>& offset
     = dealii::Tensor<1, MeshType::space_dimension>(),
     const FullMatrix<double>& matrix = FullMatrix<double>());
@@ -2410,7 +2410,7 @@ namespace GridTools
   map_boundary_to_manifold_ids(
     const std::vector<types::boundary_id>& src_boundary_ids,
     const std::vector<types::manifold_id>& dst_manifold_ids,
-    Triangulation<dim, spacedim>&          tria,
+    Triangulation<dim, spacedim>& tria,
     const std::vector<types::boundary_id>& reset_boundary_ids = {});
 
   /**
@@ -2534,11 +2534,11 @@ namespace GridTools
   template <typename DataType, typename MeshType>
   void
   exchange_cell_data_to_ghosts(
-    const MeshType&                                     mesh,
+    const MeshType& mesh,
     const std::function<boost::optional<DataType>(
       const typename MeshType::active_cell_iterator&)>& pack,
     const std::function<void(const typename MeshType::active_cell_iterator&,
-                             const DataType&)>&         unpack);
+                             const DataType&)>& unpack);
 
   /* Exchange with all processors of the MPI communicator @p mpi_communicator the vector of bounding
    * boxes @p local_bboxes.
@@ -2554,7 +2554,7 @@ namespace GridTools
   std::vector<std::vector<BoundingBox<spacedim>>>
   exchange_local_bounding_boxes(
     const std::vector<BoundingBox<spacedim>>& local_bboxes,
-    MPI_Comm                                  mpi_communicator);
+    MPI_Comm mpi_communicator);
 
   /**
    * A structure that allows the transfer of cell data of type @p T from one processor
@@ -2681,7 +2681,7 @@ namespace GridTools
 
   template <int dim, typename Predicate, int spacedim>
   void
-  transform(const Predicate&              predicate,
+  transform(const Predicate& predicate,
             Triangulation<dim, spacedim>& triangulation)
   {
     std::vector<bool> treated_vertices(triangulation.n_vertices(), false);
@@ -2787,7 +2787,7 @@ namespace GridTools
   template <class MeshType>
   void
   get_active_neighbors(
-    const typename MeshType::active_cell_iterator&        cell,
+    const typename MeshType::active_cell_iterator& cell,
     std::vector<typename MeshType::active_cell_iterator>& active_neighbors)
   {
     active_neighbors.clear();
@@ -2906,7 +2906,7 @@ namespace GridTools
       cross_stencil(
         const CrossDerivative cross_derivative,
         const Tensor<1, GeometryInfo<structdim>::vertices_per_cell>& center,
-        const double                                                 step,
+        const double step,
         const F& f) -> decltype(f(center) - f(center))
       {
         Tensor<1, GeometryInfo<structdim>::vertices_per_cell> simplex_vector;
@@ -2927,12 +2927,12 @@ namespace GridTools
       template <int spacedim, int structdim, typename F>
       inline double
       gradient_entry(
-        const unsigned int     row_n,
-        const unsigned int     dependent_direction,
+        const unsigned int row_n,
+        const unsigned int dependent_direction,
         const Point<spacedim>& p0,
         const Tensor<1, GeometryInfo<structdim>::vertices_per_cell>& center,
-        const double                                                 step,
-        const F&                                                     f)
+        const double step,
+        const F& f)
       {
         Assert(row_n < GeometryInfo<structdim>::vertices_per_cell
                  && dependent_direction
@@ -2945,8 +2945,8 @@ namespace GridTools
           ExcMessage("We cannot differentiate with respect to the variable "
                      "that is assumed to be dependent."));
 
-        const Point<spacedim>     manifold_point = f(center);
-        const Tensor<1, spacedim> stencil_value  = cross_stencil<structdim>(
+        const Point<spacedim> manifold_point    = f(center);
+        const Tensor<1, spacedim> stencil_value = cross_stencil<structdim>(
           {row_n, dependent_direction}, center, step, f);
         double entry = 0.0;
         for(unsigned int dim_n = 0; dim_n < spacedim; ++dim_n)
@@ -2962,7 +2962,7 @@ namespace GridTools
        */
       template <typename Iterator, int spacedim, int structdim>
       Point<spacedim>
-      project_to_d_linear_object(const Iterator&        object,
+      project_to_d_linear_object(const Iterator& object,
                                  const Point<spacedim>& trial_point)
       {
         // let's look at this for simplicity for a quad (structdim==2) in a space with
@@ -3086,7 +3086,7 @@ namespace GridTools
   template <typename Iterator>
   Point<Iterator::AccessorType::space_dimension>
   project_to_object(
-    const Iterator&                                       object,
+    const Iterator& object,
     const Point<Iterator::AccessorType::space_dimension>& trial_point)
   {
     const int spacedim  = Iterator::AccessorType::space_dimension;
@@ -3103,7 +3103,7 @@ namespace GridTools
         // than the general algorithm in 3D). This does not take into account
         // whether projected_point is outside the quad, but we optimize along
         // lines below anyway:
-        const int                      dim = Iterator::AccessorType::dimension;
+        const int dim = Iterator::AccessorType::dimension;
         const Manifold<dim, spacedim>& manifold = object->get_manifold();
         if(structdim == 2
            && dynamic_cast<const FlatManifold<dim, spacedim>*>(&manifold)
@@ -3177,7 +3177,7 @@ namespace GridTools
             // pick the initial weights as (normalized) inverse distances from
             // the trial point:
             Tensor<1, n_vertices_per_cell> guess_weights;
-            double                         guess_weights_sum = 0.0;
+            double guess_weights_sum = 0.0;
             for(unsigned int vertex_n = 0; vertex_n < n_vertices_per_cell;
                 ++vertex_n)
               {
@@ -3245,7 +3245,7 @@ namespace GridTools
                 // and second derivatives of F(x - alpha g) with centered
                 // finite differences.
                 double gradient_weight = -0.5;
-                auto   gradient_weight_objective_function
+                auto gradient_weight_objective_function
                   = [&](const double gradient_weight_guess) -> double {
                   return (trial_point
                           - get_point_from_weights(guess_weights
@@ -3380,11 +3380,11 @@ namespace GridTools
            ExcDimensionMismatch(cell_ids.size(), data.size()));
     // archive the cellids in an efficient binary format
     const size_t n_cells = cell_ids.size();
-    ar&          n_cells;
+    ar& n_cells;
     for(auto& it : cell_ids)
       {
         CellId::binary_type binary_cell_id = it.template to_binary<dim>();
-        ar&                 binary_cell_id;
+        ar& binary_cell_id;
       }
 
     ar& data;
@@ -3397,13 +3397,13 @@ namespace GridTools
                                        const unsigned int /*version*/)
   {
     size_t n_cells;
-    ar&    n_cells;
+    ar& n_cells;
     cell_ids.clear();
     cell_ids.reserve(n_cells);
     for(unsigned int c = 0; c < n_cells; ++c)
       {
         CellId::binary_type value;
-        ar&                 value;
+        ar& value;
         cell_ids.emplace_back(value);
       }
     ar& data;
@@ -3412,11 +3412,11 @@ namespace GridTools
   template <typename DataType, typename MeshType>
   void
   exchange_cell_data_to_ghosts(
-    const MeshType&                                     mesh,
+    const MeshType& mesh,
     const std::function<boost::optional<DataType>(
       const typename MeshType::active_cell_iterator&)>& pack,
     const std::function<void(const typename MeshType::active_cell_iterator&,
-                             const DataType&)>&         unpack)
+                             const DataType&)>& unpack)
   {
 #    ifndef DEAL_II_WITH_MPI
     (void) mesh;
@@ -3438,7 +3438,7 @@ namespace GridTools
     // map neighbor_id -> data_buffer where we accumulate the data to send
     typedef std::map<dealii::types::subdomain_id,
                      CellDataTransferBuffer<dim, DataType>>
-                           DestinationToBufferMap;
+      DestinationToBufferMap;
     DestinationToBufferMap destination_to_data_buffer_map;
 
     std::map<unsigned int, std::set<dealii::types::subdomain_id>>
@@ -3500,10 +3500,10 @@ namespace GridTools
         }
 
     // 2. send our messages
-    std::set<dealii::types::subdomain_id> ghost_owners   = tria->ghost_owners();
-    const unsigned int                    n_ghost_owners = ghost_owners.size();
-    std::vector<std::vector<char>>        sendbuffers(n_ghost_owners);
-    std::vector<MPI_Request>              requests(n_ghost_owners);
+    std::set<dealii::types::subdomain_id> ghost_owners = tria->ghost_owners();
+    const unsigned int n_ghost_owners                  = ghost_owners.size();
+    std::vector<std::vector<char>> sendbuffers(n_ghost_owners);
+    std::vector<MPI_Request> requests(n_ghost_owners);
 
     unsigned int idx = 0;
     for(auto it = ghost_owners.begin(); it != ghost_owners.end(); ++it, ++idx)
@@ -3530,8 +3530,8 @@ namespace GridTools
     for(unsigned int idx = 0; idx < n_ghost_owners; ++idx)
       {
         MPI_Status status;
-        int        len;
-        int        ierr
+        int len;
+        int ierr
           = MPI_Probe(MPI_ANY_SOURCE, 786, tria->get_communicator(), &status);
         AssertThrowMPI(ierr);
         ierr = MPI_Get_count(&status, MPI_BYTE, &len);

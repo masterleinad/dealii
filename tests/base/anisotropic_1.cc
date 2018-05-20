@@ -25,13 +25,13 @@ using namespace Polynomials;
 
 template <int dim, class PolynomialType1, class PolynomialType2>
 void
-check_poly(const Point<dim>&      x,
+check_poly(const Point<dim>& x,
            const PolynomialType1& p,
            const PolynomialType2& q)
 {
   const unsigned int n = p.n();
 
-  std::vector<double>         values1(n), values2(n);
+  std::vector<double> values1(n), values2(n);
   std::vector<Tensor<1, dim>> gradients1(n), gradients2(n);
   std::vector<Tensor<2, dim>> second1(n), second2(n);
   std::vector<Tensor<3, dim>> third1(n), third2(n);
@@ -146,7 +146,7 @@ check_tensor(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
   TensorProductPolynomials<dim> p(v);
 
   std::vector<std::vector<Polynomial<double>>> pols(dim, v);
-  AnisotropicPolynomials<dim>                  q(pols);
+  AnisotropicPolynomials<dim> q(pols);
 
   check_poly(x, p, q);
 }

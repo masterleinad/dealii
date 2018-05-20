@@ -67,13 +67,13 @@ private:
   output_results(const unsigned int cycle) const;
 
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler;
+  DoFHandler<dim> dof_handler;
 
   FESystem<dim> fe;
 
   ConstraintMatrix hanging_node_constraints;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   Vector<double> solution;
@@ -91,7 +91,7 @@ public:
 
   virtual void
   vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   value_list) const;
+                    std::vector<Vector<double>>& value_list) const;
 };
 
 template <int dim>
@@ -101,7 +101,7 @@ RightHandSide<dim>::RightHandSide() : Function<dim>(dim)
 template <int dim>
 inline void
 RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                 Vector<double>&   values) const
+                                 Vector<double>& values) const
 {
   Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
   Assert(dim >= 2, ExcNotImplemented());
@@ -126,7 +126,7 @@ template <int dim>
 void
 RightHandSide<dim>::vector_value_list(
   const std::vector<Point<dim>>& points,
-  std::vector<Vector<double>>&   value_list) const
+  std::vector<Vector<double>>& value_list) const
 {
   Assert(value_list.size() == points.size(),
          ExcDimensionMismatch(value_list.size(), points.size()));
@@ -187,7 +187,7 @@ ElasticProblem<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -196,7 +196,7 @@ ElasticProblem<dim>::assemble_system()
 
   Functions::ConstantFunction<dim> lambda(1.), mu(1.);
 
-  RightHandSide<dim>          right_hand_side;
+  RightHandSide<dim> right_hand_side;
   std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim));
 
   typename DoFHandler<dim>::active_cell_iterator cell
@@ -282,7 +282,7 @@ void
 ElasticProblem<dim>::solve()
 {
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   PreconditionSSOR<> preconditioner;
   preconditioner.initialize(system_matrix, 1.2);

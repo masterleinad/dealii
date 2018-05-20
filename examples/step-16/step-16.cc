@@ -107,7 +107,7 @@ namespace Step16
   public:
     LaplaceIntegrator();
     virtual void
-    cell(MeshWorker::DoFInfo<dim>&         dinfo,
+    cell(MeshWorker::DoFInfo<dim>& dinfo,
          MeshWorker::IntegrationInfo<dim>& info) const override;
   };
 
@@ -148,7 +148,7 @@ namespace Step16
   // we enter the information into block zero of vector zero.
   template <int dim>
   void
-  LaplaceIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
+  LaplaceIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>& dinfo,
                                MeshWorker::IntegrationInfo<dim>& info) const
   {
     AssertDimension(dinfo.n_matrices(), 1);
@@ -194,10 +194,10 @@ namespace Step16
     output_results(const unsigned int cycle) const;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     ConstraintMatrix constraints;
@@ -222,11 +222,11 @@ namespace Step16
     // refinement edge between two different refinement levels. It
     // thus serves a similar purpose as ConstraintMatrix, but on each
     // level.
-    MGLevelObject<SparsityPattern>      mg_sparsity_patterns;
+    MGLevelObject<SparsityPattern> mg_sparsity_patterns;
     MGLevelObject<SparseMatrix<double>> mg_matrices;
     MGLevelObject<SparseMatrix<double>> mg_interface_in;
     MGLevelObject<SparseMatrix<double>> mg_interface_out;
-    MGConstrainedDoFs                   mg_constrained_dofs;
+    MGConstrainedDoFs mg_constrained_dofs;
   };
 
   // @sect3{The <code>LaplaceProblem</code> class implementation}
@@ -280,8 +280,8 @@ namespace Step16
     constraints.clear();
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
 
-    std::set<types::boundary_id>          dirichlet_boundary_ids;
-    Functions::ZeroFunction<dim>          homogeneous_dirichlet_bc;
+    std::set<types::boundary_id> dirichlet_boundary_ids;
+    Functions::ZeroFunction<dim> homogeneous_dirichlet_bc;
     const typename FunctionMap<dim>::type dirichlet_boundary_functions
       = {{types::boundary_id(0), &homogeneous_dirichlet_bc}};
     VectorTools::interpolate_boundary_values(
@@ -384,9 +384,9 @@ namespace Step16
   void
   LaplaceProblem<dim>::assemble_system()
   {
-    MappingQ1<dim>                      mapping;
+    MappingQ1<dim> mapping;
     MeshWorker::IntegrationInfoBox<dim> info_box;
-    UpdateFlags                         update_flags
+    UpdateFlags update_flags
       = update_values | update_gradients | update_hessians;
     info_box.add_update_flags_all(update_flags);
     info_box.initialize(fe, mapping);
@@ -426,9 +426,9 @@ namespace Step16
   void
   LaplaceProblem<dim>::assemble_multigrid()
   {
-    MappingQ1<dim>                      mapping;
+    MappingQ1<dim> mapping;
     MeshWorker::IntegrationInfoBox<dim> info_box;
-    UpdateFlags                         update_flags
+    UpdateFlags update_flags
       = update_values | update_gradients | update_hessians;
     info_box.add_update_flags_all(update_flags);
     info_box.initialize(fe, mapping);
@@ -520,7 +520,7 @@ namespace Step16
     // iteration (which requires a symmetric preconditioner) below, we need to
     // let the multilevel preconditioner make sure that we get a symmetric
     // operator even for nonsymmetric smoothers:
-    typedef PreconditionSOR<SparseMatrix<double>>    Smoother;
+    typedef PreconditionSOR<SparseMatrix<double>> Smoother;
     mg::SmootherRelaxation<Smoother, Vector<double>> mg_smoother;
     mg_smoother.initialize(mg_matrices);
     mg_smoother.set_steps(2);
@@ -549,7 +549,7 @@ namespace Step16
     // With all this together, we can finally get about solving the linear
     // system in the usual way:
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
 
     solution = 0;
 

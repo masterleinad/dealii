@@ -96,10 +96,10 @@ namespace Step41
     output_results(const unsigned int iteration) const;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
-    ConstraintMatrix   constraints;
-    IndexSet           active_set;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
+    ConstraintMatrix constraints;
+    IndexSet active_set;
 
     TrilinosWrappers::SparseMatrix system_matrix;
     TrilinosWrappers::SparseMatrix complete_system_matrix;
@@ -284,7 +284,7 @@ namespace Step41
     system_matrix = 0;
     system_rhs    = 0;
 
-    const QGauss<dim>        quadrature_formula(fe.degree + 1);
+    const QGauss<dim> quadrature_formula(fe.degree + 1);
     const RightHandSide<dim> right_hand_side;
 
     FEValues<dim> fe_values(fe,
@@ -296,7 +296,7 @@ namespace Step41
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -365,7 +365,7 @@ namespace Step41
     Assert(fe.degree == 1, ExcNotImplemented());
 
     const QTrapez<dim> quadrature_formula;
-    FEValues<dim>      fe_values(
+    FEValues<dim> fe_values(
       fe, quadrature_formula, update_values | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
@@ -461,7 +461,7 @@ namespace Step41
     active_set.clear();
 
     const Obstacle<dim> obstacle;
-    std::vector<bool>   dof_touched(dof_handler.n_dofs(), false);
+    std::vector<bool> dof_touched(dof_handler.n_dofs(), false);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -545,9 +545,9 @@ namespace Step41
   {
     std::cout << "   Solving system..." << std::endl;
 
-    ReductionControl                        reduction_control(100, 1e-12, 1e-3);
+    ReductionControl reduction_control(100, 1e-12, 1e-3);
     SolverCG<TrilinosWrappers::MPI::Vector> solver(reduction_control);
-    TrilinosWrappers::PreconditionAMG       precondition;
+    TrilinosWrappers::PreconditionAMG precondition;
     precondition.initialize(system_matrix);
 
     solver.solve(system_matrix, solution, system_rhs, precondition);

@@ -221,7 +221,7 @@ test()
 
   {
     deallog << "========== MappingFEField ==========" << std::endl;
-    FESystem<dim>   fe_euler(FE_Q<dim>(QGaussLobatto<1>(4)), dim);
+    FESystem<dim> fe_euler(FE_Q<dim>(QGaussLobatto<1>(4)), dim);
     DoFHandler<dim> map_dh(tria);
     map_dh.distribute_dofs(fe_euler);
 

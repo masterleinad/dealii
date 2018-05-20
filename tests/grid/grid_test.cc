@@ -33,7 +33,7 @@ class Ball : public FlatManifold<dim>
 public:
   virtual Point<dim>
   get_new_point(const ArrayView<const Point<dim>>& surrounding_points,
-                const ArrayView<const double>&     weights) const override
+                const ArrayView<const double>& weights) const override
   {
     Point<dim> middle
       = FlatManifold<dim>::get_new_point(surrounding_points, weights);
@@ -204,7 +204,7 @@ test(const int test_case)
             };
 
           // set the manifold function
-          Ball<dim>       ball;
+          Ball<dim> ball;
           CurvedLine<dim> curved_line;
           if(test_case == 2)
             tria.set_manifold(1, ball);

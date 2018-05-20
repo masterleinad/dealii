@@ -34,7 +34,7 @@ using namespace dealii;
 template <int dim>
 void
 set_periodicity(parallel::distributed::Triangulation<dim>& triangulation,
-                bool                                       reverse)
+                bool reverse)
 {
   typename Triangulation<dim>::cell_iterator cell_1 = triangulation.begin();
   typename Triangulation<dim>::cell_iterator cell_2 = cell_1++;
@@ -70,7 +70,7 @@ set_periodicity(parallel::distributed::Triangulation<dim>& triangulation,
 
 /* The 2D case */
 void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
-                   int                                      orientation)
+                   int orientation)
 {
   Point<2> vertices_1[] = {
     Point<2>(-1., -3.),
@@ -108,9 +108,9 @@ void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
 
 /* The 3D case */
 void generate_grid(parallel::distributed::Triangulation<3>& triangulation,
-                   int                                      orientation)
+                   int orientation)
 {
-  Point<3>              vertices_1[] = {Point<3>(-1., -1., -3.),
+  Point<3> vertices_1[] = {Point<3>(-1., -1., -3.),
                            Point<3>(+1., -1., -3.),
                            Point<3>(-1., +1., -3.),
                            Point<3>(+1., +1., -3.),
@@ -168,7 +168,7 @@ check(const unsigned int orientation, bool reverse)
   set_periodicity(triangulation, reverse);
 
   //first without refinement
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
@@ -210,10 +210,10 @@ check(const unsigned int orientation, bool reverse)
           const std::vector<std::pair<types::global_dof_index, double>>* entries
             = constraints.get_constraint_entries(line);
           Assert(entries->size() == 1, ExcInternalError());
-          const Point<dim> point1     = support_points[line];
-          const Point<dim> point2     = support_points[(*entries)[0].first];
-          Tensor<1, dim>   difference = point1 - point2;
-          difference[dim - 1]         = 0.;
+          const Point<dim> point1   = support_points[line];
+          const Point<dim> point2   = support_points[(*entries)[0].first];
+          Tensor<1, dim> difference = point1 - point2;
+          difference[dim - 1]       = 0.;
           AssertThrow(difference.norm() < 1.e-9, ExcInternalError());
           if(locally_owned_dofs.is_element(line))
             ++n_local_constraints;
@@ -260,9 +260,9 @@ check(const unsigned int orientation, bool reverse)
       const unsigned int face_no_1 = it->first.second;
       const typename Triangulation<dim>::cell_iterator cell_2
         = it->second.first.first;
-      const unsigned int face_no_2     = it->second.first.second;
-      const Point<dim>   face_center_1 = cell_1->face(face_no_1)->center();
-      const Point<dim>   face_center_2 = cell_2->face(face_no_2)->center();
+      const unsigned int face_no_2   = it->second.first.second;
+      const Point<dim> face_center_1 = cell_1->face(face_no_1)->center();
+      const Point<dim> face_center_2 = cell_2->face(face_no_2)->center();
       Assert(std::min(std::abs(face_center_1(dim - 1) - 3.),
                       std::abs(face_center_1(dim - 1) + 3.))
                < 1.e-8,

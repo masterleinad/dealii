@@ -50,7 +50,7 @@ check()
   hp::FECollection<dim> fe_collection;
   for(unsigned int degree = 1; degree < 4; ++degree)
     fe_collection.push_back(FE_Q<dim>(degree));
-  hp::DoFHandler<dim>                                dof_handler(triangulation);
+  hp::DoFHandler<dim> dof_handler(triangulation);
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active();
   for(unsigned int degree = 1; cell != dof_handler.end(); ++cell, ++degree)

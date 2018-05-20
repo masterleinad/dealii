@@ -112,9 +112,9 @@ void
 print_matching(DoFHandler<dim>& dof_handler)
 {
   const FiniteElement<dim>& fe = dof_handler.get_fe();
-  MappingQ<dim>             mapping(1);
+  MappingQ<dim> mapping(1);
 
-  ConstraintMatrix        constraint_matrix;
+  ConstraintMatrix constraint_matrix;
   std::vector<Point<dim>> support_points(dof_handler.n_dofs());
   DoFTools::map_dofs_to_support_points<dim>(
     mapping, dof_handler, support_points);
@@ -168,8 +168,8 @@ main()
 
   // Generate a triangulation and match:
   Triangulation<2> triangulation;
-  FE_Q<2>          fe(1);
-  DoFHandler<2>    dof_handler;
+  FE_Q<2> fe(1);
+  DoFHandler<2> dof_handler;
 
   generate_grid(triangulation);
   dof_handler.initialize(triangulation, fe);

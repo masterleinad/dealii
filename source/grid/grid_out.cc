@@ -131,9 +131,9 @@ namespace GridOutFlags
     write_lines    = param.get_bool("Write lines");
   }
 
-  Gnuplot::Gnuplot(const bool         write_cell_numbers,
+  Gnuplot::Gnuplot(const bool write_cell_numbers,
                    const unsigned int n_boundary_face_points,
-                   const bool         curved_inner_cells)
+                   const bool curved_inner_cells)
     : write_cell_numbers(write_cell_numbers),
       n_boundary_face_points(n_boundary_face_points),
       curved_inner_cells(curved_inner_cells)
@@ -153,12 +153,12 @@ namespace GridOutFlags
     n_boundary_face_points = param.get_integer("Boundary points");
   }
 
-  EpsFlagsBase::EpsFlagsBase(const SizeType     size_type,
+  EpsFlagsBase::EpsFlagsBase(const SizeType size_type,
                              const unsigned int size,
-                             const double       line_width,
-                             const bool         color_lines_on_user_flag,
+                             const double line_width,
+                             const bool color_lines_on_user_flag,
                              const unsigned int n_boundary_face_points,
-                             const bool         color_lines_level)
+                             const bool color_lines_level)
     : size_type(size_type),
       size(size),
       line_width(line_width),
@@ -211,10 +211,10 @@ namespace GridOutFlags
     color_lines_level        = param.get_bool("Color by level");
   }
 
-  Eps<1>::Eps(const SizeType     size_type,
+  Eps<1>::Eps(const SizeType size_type,
               const unsigned int size,
-              const double       line_width,
-              const bool         color_lines_on_user_flag,
+              const double line_width,
+              const bool color_lines_on_user_flag,
               const unsigned int n_boundary_face_points)
     : EpsFlagsBase(size_type,
                    size,
@@ -233,15 +233,15 @@ namespace GridOutFlags
     EpsFlagsBase::parse_parameters(param);
   }
 
-  Eps<2>::Eps(const SizeType     size_type,
+  Eps<2>::Eps(const SizeType size_type,
               const unsigned int size,
-              const double       line_width,
-              const bool         color_lines_on_user_flag,
+              const double line_width,
+              const bool color_lines_on_user_flag,
               const unsigned int n_boundary_face_points,
-              const bool         write_cell_numbers,
-              const bool         write_cell_number_level,
-              const bool         write_vertex_numbers,
-              const bool         color_lines_level)
+              const bool write_cell_numbers,
+              const bool write_cell_number_level,
+              const bool write_vertex_numbers,
+              const bool color_lines_level)
     : EpsFlagsBase(size_type,
                    size,
                    line_width,
@@ -281,13 +281,13 @@ namespace GridOutFlags
     write_vertex_numbers    = param.get_bool("Vertex number");
   }
 
-  Eps<3>::Eps(const SizeType     size_type,
+  Eps<3>::Eps(const SizeType size_type,
               const unsigned int size,
-              const double       line_width,
-              const bool         color_lines_on_user_flag,
+              const double line_width,
+              const bool color_lines_on_user_flag,
               const unsigned int n_boundary_face_points,
-              const double       azimut_angle,
-              const double       turn_angle)
+              const double azimut_angle,
+              const double turn_angle)
     : EpsFlagsBase(size_type,
                    size,
                    line_width,
@@ -362,18 +362,18 @@ namespace GridOutFlags
 
   Svg::Svg(const unsigned int line_thickness,
            const unsigned int boundary_line_thickness,
-           bool               margin,
-           const Background   background,
-           const int          azimuth_angle,
-           const int          polar_angle,
-           const Coloring     coloring,
-           const bool         convert_level_number_to_height,
-           const bool         label_level_number,
-           const bool         label_cell_index,
-           const bool         label_material_id,
-           const bool         label_subdomain_id,
-           const bool         draw_colorbar,
-           const bool         draw_legend)
+           bool margin,
+           const Background background,
+           const int azimuth_angle,
+           const int polar_angle,
+           const Coloring coloring,
+           const bool convert_level_number_to_height,
+           const bool label_level_number,
+           const bool label_cell_index,
+           const bool label_material_id,
+           const bool label_subdomain_id,
+           const bool draw_colorbar,
+           const bool draw_legend)
     : height(1000),
       width(0),
       line_thickness(line_thickness),
@@ -695,14 +695,14 @@ GridOut::write_dx(const Triangulation<1, 3>&, std::ostream&) const
 template <int dim, int spacedim>
 void
 GridOut::write_dx(const Triangulation<dim, spacedim>& tria,
-                  std::ostream&                       out) const
+                  std::ostream& out) const
 {
   //TODO:[GK] allow for boundary faces only
   Assert(dx_flags.write_all_faces, ExcNotImplemented());
   AssertThrow(out, ExcIO());
   // Copied and adapted from write_ucd
-  const std::vector<Point<spacedim>>& vertices    = tria.get_vertices();
-  const std::vector<bool>&            vertex_used = tria.get_used_vertices();
+  const std::vector<Point<spacedim>>& vertices = tria.get_vertices();
+  const std::vector<bool>& vertex_used         = tria.get_used_vertices();
 
   const unsigned int n_vertices = tria.n_used_vertices();
 
@@ -720,7 +720,7 @@ GridOut::write_dx(const Triangulation<dim, spacedim>& tria,
       renumber[i] = new_number++;
   Assert(new_number == n_vertices, ExcInternalError());
 
-  typename Triangulation<dim, spacedim>::active_cell_iterator       cell;
+  typename Triangulation<dim, spacedim>::active_cell_iterator cell;
   const typename Triangulation<dim, spacedim>::active_cell_iterator endc
     = tria.end();
 
@@ -933,15 +933,15 @@ GridOut::write_dx(const Triangulation<dim, spacedim>& tria,
 template <int dim, int spacedim>
 void
 GridOut::write_msh(const Triangulation<dim, spacedim>& tria,
-                   std::ostream&                       out) const
+                   std::ostream& out) const
 {
   AssertThrow(out, ExcIO());
 
   // get the positions of the
   // vertices and whether they are
   // used.
-  const std::vector<Point<spacedim>>& vertices    = tria.get_vertices();
-  const std::vector<bool>&            vertex_used = tria.get_used_vertices();
+  const std::vector<Point<spacedim>>& vertices = tria.get_vertices();
+  const std::vector<bool>& vertex_used         = tria.get_used_vertices();
 
   const unsigned int n_vertices = tria.n_used_vertices();
 
@@ -1081,15 +1081,15 @@ GridOut::write_msh(const Triangulation<dim, spacedim>& tria,
 template <int dim, int spacedim>
 void
 GridOut::write_ucd(const Triangulation<dim, spacedim>& tria,
-                   std::ostream&                       out) const
+                   std::ostream& out) const
 {
   AssertThrow(out, ExcIO());
 
   // get the positions of the
   // vertices and whether they are
   // used.
-  const std::vector<Point<spacedim>>& vertices    = tria.get_vertices();
-  const std::vector<bool>&            vertex_used = tria.get_used_vertices();
+  const std::vector<Point<spacedim>>& vertices = tria.get_vertices();
+  const std::vector<bool>& vertex_used         = tria.get_used_vertices();
 
   const unsigned int n_vertices = tria.n_used_vertices();
 
@@ -1105,7 +1105,7 @@ GridOut::write_ucd(const Triangulation<dim, spacedim>& tria,
       // variables destroyed after
       // use
       std::time_t time1 = std::time(nullptr);
-      std::tm*    time  = std::localtime(&time1);
+      std::tm* time     = std::localtime(&time1);
       out
         << "# This file was generated by the deal.II library." << '\n'
         << "# Date =  " << time->tm_year + 1900 << "/" << time->tm_mon + 1
@@ -1214,7 +1214,7 @@ GridOut::write_xfig(const Triangulation<dim, spacedim>&,
 template <>
 void
 GridOut::write_xfig(const Triangulation<2>& tria,
-                    std::ostream&           out,
+                    std::ostream& out,
                     const Mapping<2>* /*mapping*/) const
 {
   const int dim      = 2;
@@ -1289,8 +1289,8 @@ GridOut::write_xfig(const Triangulation<2>& tria,
   // on finer levels. Level 0
   // corresponds to a depth of 900,
   // each level subtracting 1
-  Triangulation<dim, spacedim>::cell_iterator       cell = tria.begin();
-  const Triangulation<dim, spacedim>::cell_iterator end  = tria.end();
+  Triangulation<dim, spacedim>::cell_iterator cell      = tria.begin();
+  const Triangulation<dim, spacedim>::cell_iterator end = tria.end();
 
   for(; cell != end; ++cell)
     {
@@ -1451,7 +1451,7 @@ GridOut::write_svg(const Triangulation<2, 2>& tria, std::ostream& out) const
   Point<3> camera_position;
   Point<3> camera_direction;
   Point<3> camera_horizontal;
-  float    camera_focus;
+  float camera_focus;
 
   Point<3> point;
   Point<2> projection_decomposition;
@@ -2615,7 +2615,7 @@ GridOut::write_mathgl(const Triangulation<1>&, std::ostream&) const
 template <int dim, int spacedim>
 void
 GridOut::write_mathgl(const Triangulation<dim, spacedim>& tria,
-                      std::ostream&                       out) const
+                      std::ostream& out) const
 {
   AssertThrow(out, ExcIO());
 
@@ -2624,7 +2624,7 @@ GridOut::write_mathgl(const Triangulation<dim, spacedim>& tria,
     {
       // block this to have local variables destroyed after use
       const std::time_t time1 = std::time(nullptr);
-      const std::tm*    time  = std::localtime(&time1);
+      const std::tm* time     = std::localtime(&time1);
 
       out
         << "\n#"
@@ -2767,8 +2767,8 @@ namespace
   void
   generate_triangulation_patches(
     std::vector<DataOutBase::Patch<dim, spacedim>>& patches,
-    ITERATOR                                        cell,
-    END                                             end)
+    ITERATOR cell,
+    END end)
   {
     // convert each of the active cells into a patch
     for(; cell != end; ++cell)
@@ -2809,7 +2809,7 @@ namespace
 template <int dim, int spacedim>
 void
 GridOut::write_vtk(const Triangulation<dim, spacedim>& tria,
-                   std::ostream&                       out) const
+                   std::ostream& out) const
 {
   AssertThrow(out, ExcIO());
 
@@ -2833,7 +2833,7 @@ GridOut::write_vtk(const Triangulation<dim, spacedim>& tria,
 template <int dim, int spacedim>
 void
 GridOut::write_vtu(const Triangulation<dim, spacedim>& tria,
-                   std::ostream&                       out) const
+                   std::ostream& out) const
 {
   AssertThrow(out, ExcIO());
 
@@ -2858,13 +2858,13 @@ template <int dim, int spacedim>
 void
 GridOut::write_mesh_per_processor_as_vtu(
   const Triangulation<dim, spacedim>& tria,
-  const std::string&                  filename_without_extension,
-  const bool                          view_levels,
-  const bool                          include_artificial) const
+  const std::string& filename_without_extension,
+  const bool view_levels,
+  const bool include_artificial) const
 {
   std::vector<DataOutBase::Patch<dim, spacedim>> patches;
-  const unsigned int                             n_datasets = 4;
-  std::vector<std::string>                       data_names;
+  const unsigned int n_datasets = 4;
+  std::vector<std::string> data_names;
   data_names.emplace_back("level");
   data_names.emplace_back("subdomain");
   data_names.emplace_back("level_subdomain");
@@ -2970,7 +2970,7 @@ GridOut::write_mesh_per_processor_as_vtu(
 
   std::ofstream out(new_file.c_str());
   std::vector<std::tuple<unsigned int, unsigned int, std::string>>
-                        vector_data_ranges;
+    vector_data_ranges;
   DataOutBase::VtkFlags flags;
   DataOutBase::write_vtu(patches, data_names, vector_data_ranges, flags, out);
 }
@@ -3028,7 +3028,7 @@ unsigned int
 GridOut::n_boundary_faces(const Triangulation<dim, spacedim>& tria) const
 {
   typename Triangulation<dim, spacedim>::active_face_iterator face, endf;
-  unsigned int                                                n_faces = 0;
+  unsigned int n_faces = 0;
 
   for(face = tria.begin_active_face(), endf = tria.end_face(); face != endf;
       ++face)
@@ -3139,8 +3139,8 @@ GridOut::write_msh_lines(const Triangulation<2, 3>&,
 template <int dim, int spacedim>
 unsigned int
 GridOut::write_msh_faces(const Triangulation<dim, spacedim>& tria,
-                         const unsigned int                  next_element_index,
-                         std::ostream&                       out) const
+                         const unsigned int next_element_index,
+                         std::ostream& out) const
 {
   unsigned int current_element_index = next_element_index;
   typename Triangulation<dim, spacedim>::active_face_iterator face, endf;
@@ -3181,8 +3181,8 @@ GridOut::write_msh_faces(const Triangulation<dim, spacedim>& tria,
 template <int dim, int spacedim>
 unsigned int
 GridOut::write_msh_lines(const Triangulation<dim, spacedim>& tria,
-                         const unsigned int                  next_element_index,
-                         std::ostream&                       out) const
+                         const unsigned int next_element_index,
+                         std::ostream& out) const
 {
   unsigned int current_element_index = next_element_index;
   // save the user flags for lines so
@@ -3296,8 +3296,8 @@ GridOut::write_ucd_lines(const Triangulation<2, 3>&,
 template <int dim, int spacedim>
 unsigned int
 GridOut::write_ucd_faces(const Triangulation<dim, spacedim>& tria,
-                         const unsigned int                  next_element_index,
-                         std::ostream&                       out) const
+                         const unsigned int next_element_index,
+                         std::ostream& out) const
 {
   unsigned int current_element_index = next_element_index;
   typename Triangulation<dim, spacedim>::active_face_iterator face, endf;
@@ -3336,8 +3336,8 @@ GridOut::write_ucd_faces(const Triangulation<dim, spacedim>& tria,
 template <int dim, int spacedim>
 unsigned int
 GridOut::write_ucd_lines(const Triangulation<dim, spacedim>& tria,
-                         const unsigned int                  next_element_index,
-                         std::ostream&                       out) const
+                         const unsigned int next_element_index,
+                         std::ostream& out) const
 {
   unsigned int current_element_index = next_element_index;
   // save the user flags for lines so
@@ -3386,7 +3386,7 @@ Point<2> GridOut::svg_project_point(Point<3> point,
                                     Point<3> camera_position,
                                     Point<3> camera_direction,
                                     Point<3> camera_horizontal,
-                                    float    camera_focus)
+                                    float camera_focus)
 {
   // ...
   Point<3> camera_vertical;
@@ -3439,7 +3439,7 @@ namespace internal
     template <int spacedim>
     void
     write_gnuplot(const dealii::Triangulation<1, spacedim>& tria,
-                  std::ostream&                             out,
+                  std::ostream& out,
                   const Mapping<1, spacedim>*,
                   const GridOutFlags::Gnuplot& gnuplot_flags)
     {
@@ -3474,9 +3474,9 @@ namespace internal
     template <int spacedim>
     void
     write_gnuplot(const dealii::Triangulation<2, spacedim>& tria,
-                  std::ostream&                             out,
-                  const Mapping<2, spacedim>*               mapping,
-                  const GridOutFlags::Gnuplot&              gnuplot_flags)
+                  std::ostream& out,
+                  const Mapping<2, spacedim>* mapping,
+                  const GridOutFlags::Gnuplot& gnuplot_flags)
     {
       AssertThrow(out, ExcIO());
 
@@ -3497,7 +3497,7 @@ namespace internal
       // quadrature formula which will be
       // used to probe boundary points at
       // curved faces
-      Quadrature<dim>*            q_projector = nullptr;
+      Quadrature<dim>* q_projector = nullptr;
       std::vector<Point<dim - 1>> boundary_points;
       if(mapping != nullptr)
         {
@@ -3604,9 +3604,9 @@ namespace internal
     template <int spacedim>
     void
     write_gnuplot(const dealii::Triangulation<3, spacedim>& tria,
-                  std::ostream&                             out,
-                  const Mapping<3, spacedim>*               mapping,
-                  const GridOutFlags::Gnuplot&              gnuplot_flags)
+                  std::ostream& out,
+                  const Mapping<3, spacedim>* mapping,
+                  const GridOutFlags::Gnuplot& gnuplot_flags)
     {
       AssertThrow(out, ExcIO());
 
@@ -3627,7 +3627,7 @@ namespace internal
       // quadrature formula which will be
       // used to probe boundary points at
       // curved faces
-      Quadrature<dim>*      q_projector = nullptr;
+      Quadrature<dim>* q_projector = nullptr;
       std::vector<Point<1>> boundary_points;
       if(mapping != nullptr)
         {
@@ -3638,7 +3638,7 @@ namespace internal
             boundary_points[i](0) = 1. * i / (n_points - 1);
 
           std::vector<double> dummy_weights(n_points, 1. / n_points);
-          Quadrature<1>       quadrature1d(boundary_points, dummy_weights);
+          Quadrature<1> quadrature1d(boundary_points, dummy_weights);
 
           // tensor product of points,
           // only one copy
@@ -3833,8 +3833,8 @@ namespace internal
 template <int dim, int spacedim>
 void
 GridOut::write_gnuplot(const Triangulation<dim, spacedim>& tria,
-                       std::ostream&                       out,
-                       const Mapping<dim, spacedim>*       mapping) const
+                       std::ostream& out,
+                       const Mapping<dim, spacedim>* mapping) const
 {
   internal::write_gnuplot(tria, out, mapping, gnuplot_flags);
 }
@@ -3845,13 +3845,13 @@ namespace internal
   {
     struct LineEntry
     {
-      Point<2>     first;
-      Point<2>     second;
-      bool         colorize;
+      Point<2> first;
+      Point<2> second;
+      bool colorize;
       unsigned int level;
-      LineEntry(const Point<2>&    f,
-                const Point<2>&    s,
-                const bool         c,
+      LineEntry(const Point<2>& f,
+                const Point<2>& s,
+                const bool c,
                 const unsigned int l)
         : first(f), second(s), colorize(c), level(l)
       {}
@@ -3900,10 +3900,10 @@ namespace internal
     template <int dim, int spacedim>
     void
     write_eps(const dealii::Triangulation<dim, spacedim>& tria,
-              std::ostream&                               out,
-              const Mapping<dim, spacedim>*               mapping,
-              const GridOutFlags::Eps<2>&                 eps_flags_2,
-              const GridOutFlags::Eps<3>&                 eps_flags_3)
+              std::ostream& out,
+              const Mapping<dim, spacedim>* mapping,
+              const GridOutFlags::Eps<2>& eps_flags_2,
+              const GridOutFlags::Eps<3>& eps_flags_3)
     {
       typedef std::list<LineEntry> LineList;
 
@@ -4016,7 +4016,7 @@ namespace internal
                     boundary_points[i](0) = 1. * (i + 1) / (n_points + 1);
 
                   Quadrature<dim - 1> quadrature(boundary_points);
-                  Quadrature<dim>     q_projector(
+                  Quadrature<dim> q_projector(
                     QProjector<dim>::project_to_all_faces(quadrature));
 
                   // next loop over all
@@ -4039,7 +4039,7 @@ namespace internal
                         if(face->at_boundary())
                           {
                             Point<dim> p0_dim(face->vertex(0));
-                            Point<2>   p0(p0_dim(0), p0_dim(1));
+                            Point<2> p0(p0_dim(0), p0_dim(1));
 
                             // loop over
                             // all pieces
@@ -4061,7 +4061,7 @@ namespace internal
 
                             // generate last piece
                             const Point<dim> p1_dim(face->vertex(1));
-                            const Point<2>   p1(p1_dim(0), p1_dim(1));
+                            const Point<2> p1(p1_dim(0), p1_dim(1));
                             line_list.emplace_back(
                               p0, p1, face->user_flag_set(), cell->level());
                           }
@@ -4100,9 +4100,9 @@ namespace internal
               // is in direction of the viewer, but
               // I am too tired at present to fix
               // this
-              const double     pi         = numbers::PI;
-              const double     z_angle    = eps_flags_3.azimut_angle;
-              const double     turn_angle = eps_flags_3.turn_angle;
+              const double pi         = numbers::PI;
+              const double z_angle    = eps_flags_3.azimut_angle;
+              const double turn_angle = eps_flags_3.turn_angle;
               const Point<dim> view_direction(
                 -std::sin(z_angle * 2. * pi / 360.)
                   * std::sin(turn_angle * 2. * pi / 360.),
@@ -4156,10 +4156,10 @@ namespace internal
       // find out minimum and maximum x and
       // y coordinates to compute offsets
       // and scaling factors
-      double       x_min     = tria.begin_active()->vertex(0)(0);
-      double       x_max     = x_min;
-      double       y_min     = tria.begin_active()->vertex(0)(1);
-      double       y_max     = y_min;
+      double x_min           = tria.begin_active()->vertex(0)(0);
+      double x_max           = x_min;
+      double y_min           = tria.begin_active()->vertex(0)(1);
+      double y_max           = y_min;
       unsigned int max_level = line_list.begin()->level;
 
       for(LineList::const_iterator line = line_list.begin();
@@ -4199,7 +4199,7 @@ namespace internal
           // variables destroyed after
           // use
           std::time_t time1 = std::time(nullptr);
-          std::tm*    time  = std::localtime(&time1);
+          std::tm* time     = std::localtime(&time1);
           out << "%!PS-Adobe-2.0 EPSF-1.2" << '\n'
               << "%%Title: deal.II Output" << '\n'
               << "%%Creator: the deal.II library" << '\n'
@@ -4364,8 +4364,8 @@ namespace internal
 template <int dim, int spacedim>
 void
 GridOut::write_eps(const Triangulation<dim, spacedim>& tria,
-                   std::ostream&                       out,
-                   const Mapping<dim, spacedim>*       mapping) const
+                   std::ostream& out,
+                   const Mapping<dim, spacedim>* mapping) const
 {
   internal::write_eps(tria, out, mapping, eps_flags_2, eps_flags_3);
 }
@@ -4373,9 +4373,9 @@ GridOut::write_eps(const Triangulation<dim, spacedim>& tria,
 template <int dim, int spacedim>
 void
 GridOut::write(const Triangulation<dim, spacedim>& tria,
-               std::ostream&                       out,
-               const OutputFormat                  output_format,
-               const Mapping<dim, spacedim>*       mapping) const
+               std::ostream& out,
+               const OutputFormat output_format,
+               const Mapping<dim, spacedim>* mapping) const
 {
   switch(output_format)
     {
@@ -4429,8 +4429,8 @@ GridOut::write(const Triangulation<dim, spacedim>& tria,
 template <int dim, int spacedim>
 void
 GridOut::write(const Triangulation<dim, spacedim>& tria,
-               std::ostream&                       out,
-               const Mapping<dim, spacedim>*       mapping) const
+               std::ostream& out,
+               const Mapping<dim, spacedim>* mapping) const
 {
   write(tria, out, default_format, mapping);
 }

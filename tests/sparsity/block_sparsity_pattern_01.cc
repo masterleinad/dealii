@@ -26,7 +26,7 @@ main()
   deallog << std::setprecision(2);
   deallog.attach(logfile);
 
-  BlockSparsityPattern                 sparsity;
+  BlockSparsityPattern sparsity;
   std::vector<types::global_dof_index> row_blocks(4);
   row_blocks[0] = 4;
   row_blocks[1] = 5;

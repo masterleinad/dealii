@@ -31,9 +31,9 @@ template <int dim>
 double
 difference(const FiniteElement<dim>& fe,
            const std::vector<double> dofs,
-           const Function<dim>&      function)
+           const Function<dim>& function)
 {
-  double      result = 0.;
+  double result = 0.;
   QGauss<dim> quadrature(fe.degree + 1);
 
   std::vector<double> f(quadrature.size());
@@ -54,10 +54,10 @@ template <int dim>
 double
 vector_difference(const FiniteElement<dim>& fe,
                   const std::vector<double> dofs,
-                  const Function<dim>&      function,
-                  const unsigned int        offset)
+                  const Function<dim>& function,
+                  const unsigned int offset)
 {
-  double      result = 0.;
+  double result = 0.;
   QGauss<dim> quadrature(fe.degree + 1);
 
   std::vector<Vector<double>> f(quadrature.size(),
@@ -99,16 +99,16 @@ public:
 
   void
   value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             c) const
+             std::vector<double>& values,
+             const unsigned int c) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim>& p      = points[i];
-        double            result = 1.;
+        const Point<dim>& p = points[i];
+        double result       = 1.;
         for(unsigned int d = 0; d < dim; ++d)
           for(unsigned int k = 0; k < degree; ++k)
             result *= p(d) + c;
@@ -118,7 +118,7 @@ public:
 
   void
   vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   values) const
+                    std::vector<Vector<double>>& values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));

@@ -44,7 +44,7 @@ test()
   deallog << dim << "D" << std::endl;
 
   Triangulation<dim> triangulation;
-  const Point<dim>   p2
+  const Point<dim> p2
     = (dim == 1 ? Point<dim>(1.) :
                   (dim == 2 ? Point<dim>(1., 1.) : Point<dim>(1., 1., 1.)));
   GridGenerator::hyper_rectangle(triangulation, Point<dim>(), p2, true);
@@ -64,7 +64,7 @@ test()
 
   // assign quadrature, set up a
   // DoFHandler, and distribute dofs
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
   deallog << "Number of dofs : " << dof_handler.n_dofs() << std::endl;
@@ -78,7 +78,7 @@ test()
   DoFTools::make_sparsity_pattern(dof_handler, sparsity);
   sparsity.compress();
   SparseMatrix<double> A(sparsity), B(sparsity);
-  Vector<double>       a1(dof_handler.n_dofs());
+  Vector<double> a1(dof_handler.n_dofs());
 
   // initialize object denoting zero
   // boundary values and boundary
@@ -98,7 +98,7 @@ test()
   // constraints later on
   std::vector<types::global_dof_index> local_dofs(fe.dofs_per_cell);
   FullMatrix<double> local_matrix(fe.dofs_per_cell, fe.dofs_per_cell);
-  Vector<double>     local_vector(fe.dofs_per_cell);
+  Vector<double> local_vector(fe.dofs_per_cell);
   for(typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active();
       cell != dof_handler.end();

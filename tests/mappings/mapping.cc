@@ -39,16 +39,16 @@
 
 template <int dim>
 inline void
-plot_transformation(Mapping<dim>&                            mapping,
-                    FiniteElement<dim>&                      fe,
+plot_transformation(Mapping<dim>& mapping,
+                    FiniteElement<dim>& fe,
                     typename DoFHandler<dim>::cell_iterator& cell,
-                    const std::string&                       name)
+                    const std::string& name)
 {
   const unsigned int div = 7;
 
-  QTrapez<1>     q_trapez;
+  QTrapez<1> q_trapez;
   QIterated<dim> q(q_trapez, div);
-  FEValues<dim>  fe_values(
+  FEValues<dim> fe_values(
     mapping, fe, q, UpdateFlags(update_quadrature_points | update_JxW_values));
 
   fe_values.reinit(cell);
@@ -76,14 +76,14 @@ plot_transformation(Mapping<dim>&                            mapping,
 
 template <int dim>
 inline void
-plot_faces(Mapping<dim>&                            mapping,
-           FiniteElement<dim>&                      fe,
+plot_faces(Mapping<dim>& mapping,
+           FiniteElement<dim>& fe,
            typename DoFHandler<dim>::cell_iterator& cell,
-           const std::string&                       name)
+           const std::string& name)
 {
   deallog.push(name);
 
-  QGauss<dim - 1>    q(4);
+  QGauss<dim - 1> q(4);
   const unsigned int nq
     = (unsigned int) (.01 + std::pow(q.size(), 1. / (dim - 1)));
 
@@ -104,9 +104,9 @@ plot_faces(Mapping<dim>&                            mapping,
         {
           for(unsigned int nx = 0; nx < nq; ++nx)
             {
-              const Point<dim>     x  = fe_values.quadrature_point(k);
-              const Tensor<1, dim> n  = fe_values.normal_vector(k);
-              const double         ds = fe_values.JxW(k);
+              const Point<dim> x     = fe_values.quadrature_point(k);
+              const Tensor<1, dim> n = fe_values.normal_vector(k);
+              const double ds        = fe_values.JxW(k);
 
               deallog << x << '\t' << n << '\t' << ds << std::endl;
               ++k;
@@ -120,14 +120,14 @@ plot_faces(Mapping<dim>&                            mapping,
 
 template <int dim>
 inline void
-plot_subfaces(Mapping<dim>&                            mapping,
-              FiniteElement<dim>&                      fe,
+plot_subfaces(Mapping<dim>& mapping,
+              FiniteElement<dim>& fe,
               typename DoFHandler<dim>::cell_iterator& cell,
-              const std::string&                       name)
+              const std::string& name)
 {
   deallog.push(name);
 
-  QGauss<dim - 1>    q(4);
+  QGauss<dim - 1> q(4);
   const unsigned int nq
     = (unsigned int) (.01 + std::pow(q.size(), 1. / (dim - 1)));
 
@@ -152,7 +152,7 @@ plot_subfaces(Mapping<dim>&                            mapping,
           {
             for(unsigned int nx = 0; nx < nq; ++nx)
               {
-                Point<dim>     x = fe_values.quadrature_point(k);
+                Point<dim> x     = fe_values.quadrature_point(k);
                 Tensor<1, dim> n = normals[k];
                 deallog << x << '\t' << n << std::endl;
                 ++k;
@@ -180,11 +180,11 @@ inline void plot_subfaces(Mapping<1>&,
 
 template <int dim>
 inline void
-compute_area(Mapping<dim>&                            mapping,
-             FiniteElement<dim>&                      fe,
+compute_area(Mapping<dim>& mapping,
+             FiniteElement<dim>& fe,
              typename DoFHandler<dim>::cell_iterator& cell)
 {
-  QGauss<dim>   gauss4(4);
+  QGauss<dim> gauss4(4);
   FEValues<dim> fe_values(mapping, fe, gauss4, UpdateFlags(update_JxW_values));
   fe_values.reinit(cell);
   const std::vector<double>& JxW = fe_values.get_JxW_values();
@@ -205,7 +205,7 @@ create_triangulations(std::vector<Triangulation<dim>*>&,
 }
 
 std::vector<std::vector<unsigned int>> show;
-unsigned int                           mapping_size;
+unsigned int mapping_size;
 
 template <>
 void create_triangulations(std::vector<Triangulation<1>*>& tria_ptr,
@@ -224,8 +224,8 @@ void create_triangulations(std::vector<Triangulation<1>*>& tria_ptr,
 
 template <>
 void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
-                           std::vector<Manifold<2>*>&      boundary_ptr,
-                           std::vector<double>&            exact_areas)
+                           std::vector<Manifold<2>*>& boundary_ptr,
+                           std::vector<double>& exact_areas)
 {
   Triangulation<2>* tria;
   show.clear();
@@ -238,11 +238,11 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
       const double left  = 1.;
       const double right = 4.;
 
-      const Point<2>           vertices[4]         = {Point<2>(left, left),
+      const Point<2> vertices[4]    = {Point<2>(left, left),
                                     Point<2>(right, left),
                                     Point<2>(right, right),
                                     Point<2>(left, right)};
-      const int                cell_vertices[1][4] = {{1, 2, 0, 3}};
+      const int cell_vertices[1][4] = {{1, 2, 0, 3}};
       std::vector<CellData<2>> cells(1, CellData<2>());
       for(unsigned int j = 0; j < 4; ++j)
         cells[0].vertices[j] = cell_vertices[0][j];
@@ -335,8 +335,8 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
 
 template <>
 void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
-                           std::vector<Manifold<3>*>&      boundary_ptr,
-                           std::vector<double>&            exact_areas)
+                           std::vector<Manifold<3>*>& boundary_ptr,
+                           std::vector<double>& exact_areas)
 {
   Triangulation<3>* tria;
   show.clear();
@@ -369,7 +369,7 @@ void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
     {
       Point<3> m(2, 2, 2);
       Point<3> v(3, 3, 3);
-      double   r = std::sqrt((m - v).norm_square()), h = r - 1.5,
+      double r = std::sqrt((m - v).norm_square()), h = r - 1.5,
              pi              = std::acos(-1.);
       Manifold<3>* boundary1 = new SphericalManifold<3>(m);
       boundary_ptr.push_back(boundary1);
@@ -407,13 +407,13 @@ mapping_test()
   deallog << "dim=" << dim << std::endl;
 
   std::vector<Mapping<dim>*> mapping_ptr;
-  std::vector<std::string>   mapping_strings;
+  std::vector<std::string> mapping_strings;
 
   MappingCartesian<dim> cart;
-  MappingQGeneric<dim>  q1_old(1);
-  MappingQ<dim>         q1tmp(1);
-  MappingQ<dim>         q2tmp(2);
-  MappingQ<dim>         q3tmp(3);
+  MappingQGeneric<dim> q1_old(1);
+  MappingQ<dim> q1tmp(1);
+  MappingQ<dim> q2tmp(2);
+  MappingQ<dim> q3tmp(3);
   // check MappingQ copy constructor
   MappingQ<dim> q1(q1tmp);
   MappingQ<dim> q2(q2tmp);
@@ -435,8 +435,8 @@ mapping_test()
   mapping_size = mapping_ptr.size();
 
   std::vector<Triangulation<dim>*> tria_ptr;
-  std::vector<Manifold<dim>*>      boundary_ptr;
-  std::vector<double>              exact_areas;
+  std::vector<Manifold<dim>*> boundary_ptr;
+  std::vector<double> exact_areas;
 
   create_triangulations(tria_ptr, boundary_ptr, exact_areas);
   Assert(show.size() == tria_ptr.size(), ExcInternalError());
@@ -487,7 +487,7 @@ mapping_test()
             if(true)
               {
                 Mapping<dim>& mapping = *mapping_ptr[j];
-                Point<dim>    p_unit;
+                Point<dim> p_unit;
                 switch(dim)
                   {
                     case 1:

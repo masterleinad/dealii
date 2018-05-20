@@ -30,7 +30,7 @@ template <int dim, class PolynomialType>
 void
 check_point(const Point<dim>& x, const PolynomialType& p)
 {
-  const unsigned int          n = p.n();
+  const unsigned int n = p.n();
   std::vector<Tensor<1, dim>> values(n);
   std::vector<Tensor<2, dim>> gradients(n);
   std::vector<Tensor<3, dim>> seconds(0);

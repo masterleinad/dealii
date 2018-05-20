@@ -38,8 +38,8 @@ void
 test()
 {
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe(1);
-  DoFHandler<dim>    dof_handler(triangulation);
+  FE_Q<dim> fe(1);
+  DoFHandler<dim> dof_handler(triangulation);
 
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);

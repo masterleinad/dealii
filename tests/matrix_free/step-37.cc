@@ -69,8 +69,8 @@ namespace Step37
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const;
+               std::vector<double>& values,
+               const unsigned int component = 0) const;
   };
 
   template <int dim>
@@ -84,7 +84,7 @@ namespace Step37
 
   template <int dim>
   double
-  Coefficient<dim>::value(const Point<dim>&  p,
+  Coefficient<dim>::value(const Point<dim>& p,
                           const unsigned int component) const
   {
     return value<double>(p, component);
@@ -93,8 +93,8 @@ namespace Step37
   template <int dim>
   void
   Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+                               std::vector<double>& values,
+                               const unsigned int component) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -115,9 +115,9 @@ namespace Step37
     clear();
 
     void
-    reinit(const DoFHandler<dim>&  dof_handler,
+    reinit(const DoFHandler<dim>& dof_handler,
            const ConstraintMatrix& constraints,
-           const unsigned int      level = numbers::invalid_unsigned_int);
+           const unsigned int level = numbers::invalid_unsigned_int);
 
     unsigned int
     m() const;
@@ -140,19 +140,19 @@ namespace Step37
 
   private:
     void
-    local_apply(const MatrixFree<dim, number>&               data,
-                Vector<double>&                              dst,
-                const Vector<double>&                        src,
+    local_apply(const MatrixFree<dim, number>& data,
+                Vector<double>& dst,
+                const Vector<double>& src,
                 const std::pair<unsigned int, unsigned int>& cell_range) const;
 
     void
     evaluate_coefficient(const Coefficient<dim>& function);
 
-    MatrixFree<dim, number>                data;
+    MatrixFree<dim, number> data;
     AlignedVector<VectorizedArray<number>> coefficient;
 
     Vector<number> diagonal_values;
-    bool           diagonal_is_available;
+    bool diagonal_is_available;
   };
 
   template <int dim, int fe_degree, typename number>
@@ -185,9 +185,9 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::reinit(
-    const DoFHandler<dim>&  dof_handler,
+    const DoFHandler<dim>& dof_handler,
     const ConstraintMatrix& constraints,
-    const unsigned int      level)
+    const unsigned int level)
   {
     typename MatrixFree<dim, number>::AdditionalData additional_data;
     additional_data.tasks_parallel_scheme
@@ -220,9 +220,9 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::local_apply(
-    const MatrixFree<dim, number>&               data,
-    Vector<double>&                              dst,
-    const Vector<double>&                        src,
+    const MatrixFree<dim, number>& data,
+    Vector<double>& dst,
+    const Vector<double>& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
@@ -244,7 +244,7 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::vmult(
-    Vector<double>&       dst,
+    Vector<double>& dst,
     const Vector<double>& src) const
   {
     dst = 0;
@@ -254,7 +254,7 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::Tvmult(
-    Vector<double>&       dst,
+    Vector<double>& dst,
     const Vector<double>& src) const
   {
     dst = 0;
@@ -264,7 +264,7 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::Tvmult_add(
-    Vector<double>&       dst,
+    Vector<double>& dst,
     const Vector<double>& src) const
   {
     vmult_add(dst, src);
@@ -273,7 +273,7 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::vmult_add(
-    Vector<double>&       dst,
+    Vector<double>& dst,
     const Vector<double>& src) const
   {
     data.cell_loop(&LaplaceOperator::local_apply, this, dst, src);
@@ -332,17 +332,17 @@ namespace Step37
     output_results(const unsigned int cycle) const;
 
     typedef LaplaceOperator<dim, degree_finite_element, double>
-                                                               SystemMatrixType;
+      SystemMatrixType;
     typedef LaplaceOperator<dim, degree_finite_element, float> LevelMatrixType;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
-    ConstraintMatrix   constraints;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
+    ConstraintMatrix constraints;
 
-    SystemMatrixType                system_matrix;
-    MGLevelObject<LevelMatrixType>  mg_matrices;
-    FullMatrix<float>               coarse_matrix;
+    SystemMatrixType system_matrix;
+    MGLevelObject<LevelMatrixType> mg_matrices;
+    FullMatrix<float> coarse_matrix;
     MGLevelObject<ConstraintMatrix> mg_constraints;
 
     Vector<double> solution;
@@ -384,7 +384,7 @@ namespace Step37
     mg_constraints.resize(0, nlevels - 1);
 
     typename FunctionMap<dim>::type dirichlet_boundary;
-    Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+    Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
     dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
     std::vector<std::set<types::global_dof_index>> boundary_indices(
       triangulation.n_levels());
@@ -407,7 +407,7 @@ namespace Step37
   void
   LaplaceProblem<dim>::assemble_system()
   {
-    QGauss<dim>   quadrature_formula(fe.degree + 1);
+    QGauss<dim> quadrature_formula(fe.degree + 1);
     FEValues<dim> fe_values(
       fe, quadrature_formula, update_values | update_JxW_values);
 
@@ -415,8 +415,8 @@ namespace Step37
     const unsigned int n_q_points    = quadrature_formula.size();
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    const Coefficient<dim>               coefficient;
-    std::vector<double>                  coefficient_values(n_q_points);
+    const Coefficient<dim> coefficient;
+    std::vector<double> coefficient_values(n_q_points);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -441,7 +441,7 @@ namespace Step37
   LaplaceProblem<dim>::assemble_multigrid()
   {
     coarse_matrix = 0;
-    QGauss<dim>   quadrature_formula(fe.degree + 1);
+    QGauss<dim> quadrature_formula(fe.degree + 1);
     FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_gradients | update_inverse_jacobians
@@ -451,17 +451,17 @@ namespace Step37
     const unsigned int n_q_points    = quadrature_formula.size();
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    const Coefficient<dim>               coefficient;
-    std::vector<double>                  coefficient_values(n_q_points);
+    const Coefficient<dim> coefficient;
+    std::vector<double> coefficient_values(n_q_points);
     FullMatrix<float> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>    local_diagonal(dofs_per_cell);
+    Vector<double> local_diagonal(dofs_per_cell);
 
-    const unsigned int         n_levels = triangulation.n_levels();
+    const unsigned int n_levels = triangulation.n_levels();
     std::vector<Vector<float>> diagonals(n_levels);
     for(unsigned int level = 0; level < n_levels; ++level)
       diagonals[level].reinit(dof_handler.n_dofs(level));
 
-    std::vector<unsigned int>               cell_no(triangulation.n_levels());
+    std::vector<unsigned int> cell_no(triangulation.n_levels());
     typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(),
                                             endc = dof_handler.end();
     for(; cell != endc; ++cell)
@@ -535,7 +535,7 @@ namespace Step37
       preconditioner(dof_handler, mg, mg_transfer);
 
     SolverControl solver_control(1000, 1e-12 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     cg.solve(system_matrix, solution, system_rhs, preconditioner);
   }

@@ -33,7 +33,7 @@ test()
     parallel::shared::Triangulation<dim>::partition_zorder);
   GridGenerator::hyper_cube(triangulation, -1.0, 1.0);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

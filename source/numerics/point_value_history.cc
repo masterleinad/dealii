@@ -39,8 +39,8 @@ namespace internal
     /// Only a constructor needed for this class (a struct really)
     template <int dim>
     PointGeometryData<dim>::PointGeometryData(
-      const Point<dim>&                           new_requested_location,
-      const std::vector<Point<dim>>&              new_locations,
+      const Point<dim>& new_requested_location,
+      const std::vector<Point<dim>>& new_locations,
       const std::vector<types::global_dof_index>& new_sol_indices)
     {
       requested_location      = new_requested_location;
@@ -72,7 +72,7 @@ PointValueHistory<dim>::PointValueHistory(
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
   const DoFHandler<dim>& dof_handler,
-  const unsigned int     n_independent_variables)
+  const unsigned int n_independent_variables)
   : dof_handler(&dof_handler), n_indep(n_independent_variables)
 {
   closed                = false;
@@ -204,7 +204,7 @@ PointValueHistory<dim>::add_point(const Point<dim>& location)
   // consistent in case they are actually
   // chosen
   typename DoFHandler<dim>::active_cell_iterator current_cell = cell;
-  std::vector<unsigned int>                      current_fe_index(n_components,
+  std::vector<unsigned int> current_fe_index(n_components,
                                              0); // need one index per component
   fe_values.reinit(cell);
   std::vector<Point<dim>> current_points(n_components, Point<dim>());
@@ -351,7 +351,7 @@ PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
     locations.size(), cell);
 
   fe_values.reinit(cell);
-  std::vector<Point<dim>>   temp_points(n_components, Point<dim>());
+  std::vector<Point<dim>> temp_points(n_components, Point<dim>());
   std::vector<unsigned int> temp_fe_index(n_components, 0);
   for(unsigned int support_point = 0; support_point < n_support_points;
       support_point++)
@@ -441,7 +441,7 @@ PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
 
 template <int dim>
 void
-PointValueHistory<dim>::add_field_name(const std::string&   vector_name,
+PointValueHistory<dim>::add_field_name(const std::string& vector_name,
                                        const ComponentMask& mask)
 {
   // can't be closed to add additional points
@@ -496,7 +496,7 @@ PointValueHistory<dim>::add_field_name(const std::string& vector_name,
 template <int dim>
 void
 PointValueHistory<dim>::add_component_names(
-  const std::string&              vector_name,
+  const std::string& vector_name,
   const std::vector<std::string>& component_names)
 {
   typename std::map<std::string, std::vector<std::string>>::iterator names
@@ -556,7 +556,7 @@ template <int dim>
 template <typename VectorType>
 void
 PointValueHistory<dim>::evaluate_field(const std::string& vector_name,
-                                       const VectorType&  solution)
+                                       const VectorType& solution)
 {
   // must be closed to add data to internal
   // members.
@@ -626,9 +626,9 @@ template <typename VectorType>
 void
 PointValueHistory<dim>::evaluate_field(
   const std::vector<std::string>& vector_names,
-  const VectorType&               solution,
-  const DataPostprocessor<dim>&   data_postprocessor,
-  const Quadrature<dim>&          quadrature)
+  const VectorType& solution,
+  const DataPostprocessor<dim>& data_postprocessor,
+  const Quadrature<dim>& quadrature)
 {
   // must be closed to add data to internal
   // members.
@@ -654,8 +654,8 @@ PointValueHistory<dim>::evaluate_field(
       "The update of normal vectors may not be requested for evaluation of "
       "data on cells via DataPostprocessor."));
   FEValues<dim> fe_values(dof_handler->get_fe(), quadrature, update_flags);
-  unsigned int  n_components        = dof_handler->get_fe(0).n_components();
-  unsigned int  n_quadrature_points = quadrature.size();
+  unsigned int n_components        = dof_handler->get_fe(0).n_components();
+  unsigned int n_quadrature_points = quadrature.size();
 
   unsigned int n_output_variables = data_postprocessor.get_names().size();
 
@@ -706,7 +706,7 @@ PointValueHistory<dim>::evaluate_field(
       // find the closest quadrature point
       std::vector<Point<dim>> quadrature_points
         = fe_values.get_quadrature_points();
-      double       distance       = cell->diameter();
+      double distance             = cell->diameter();
       unsigned int selected_point = 0;
       for(unsigned int q_point = 0; q_point < n_quadrature_points; q_point++)
         {
@@ -848,10 +848,10 @@ template <int dim>
 template <typename VectorType>
 void
 PointValueHistory<dim>::evaluate_field(
-  const std::string&            vector_name,
-  const VectorType&             solution,
+  const std::string& vector_name,
+  const VectorType& solution,
   const DataPostprocessor<dim>& data_postprocessor,
-  const Quadrature<dim>&        quadrature)
+  const Quadrature<dim>& quadrature)
 {
   std::vector<std::string> vector_names;
   vector_names.push_back(vector_name);
@@ -863,7 +863,7 @@ template <typename VectorType>
 void
 PointValueHistory<dim>::evaluate_field_at_requested_location(
   const std::string& vector_name,
-  const VectorType&  solution)
+  const VectorType& solution)
 {
   typedef typename VectorType::value_type number;
   // must be closed to add data to internal
@@ -965,7 +965,7 @@ PointValueHistory<dim>::push_back_independent(
 template <int dim>
 void
 PointValueHistory<dim>::write_gnuplot(
-  const std::string&             base_name,
+  const std::string& base_name,
   const std::vector<Point<dim>>& postprocessor_locations)
 {
   AssertThrow(closed, ExcInvalidState());
@@ -975,7 +975,7 @@ PointValueHistory<dim>::write_gnuplot(
   // write inputs to a file
   if(n_indep != 0)
     {
-      std::string   filename = base_name + "_indep.gpl";
+      std::string filename = base_name + "_indep.gpl";
       std::ofstream to_gnuplot(filename.c_str());
 
       to_gnuplot << "# Data independent of mesh location\n";
@@ -1232,7 +1232,7 @@ PointValueHistory<dim>::get_points(
 template <int dim>
 void
 PointValueHistory<dim>::get_postprocessor_locations(
-  const Quadrature<dim>&   quadrature,
+  const Quadrature<dim>& quadrature,
   std::vector<Point<dim>>& locations)
 {
   Assert(!cleared, ExcInvalidState());
@@ -1242,7 +1242,7 @@ PointValueHistory<dim>::get_postprocessor_locations(
 
   FEValues<dim> fe_values(
     dof_handler->get_fe(), quadrature, update_quadrature_points);
-  unsigned int            n_quadrature_points = quadrature.size();
+  unsigned int n_quadrature_points = quadrature.size();
   std::vector<Point<dim>> evaluation_points;
 
   // Loop over points and find correct cell
@@ -1263,7 +1263,7 @@ PointValueHistory<dim>::get_postprocessor_locations(
       fe_values.reinit(cell);
 
       evaluation_points           = fe_values.get_quadrature_points();
-      double       distance       = cell->diameter();
+      double distance             = cell->diameter();
       unsigned int selected_point = 0;
 
       for(unsigned int q_point = 0; q_point < n_quadrature_points; q_point++)

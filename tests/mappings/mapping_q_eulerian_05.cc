@@ -40,7 +40,7 @@ test(unsigned int degree)
 {
   Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_cube(tria);
-  FE_Q<dim, spacedim>     base_fe(degree);
+  FE_Q<dim, spacedim> base_fe(degree);
   FESystem<dim, spacedim> fe(base_fe, spacedim);
 
   DoFHandler<dim, spacedim> shift_dh(tria);
@@ -55,7 +55,7 @@ test(unsigned int degree)
   grid_out.set_flags(GridOutFlags::Ucd(true));
   grid_out.write_ucd(tria, logfile);
 
-  QTrapez<dim>                                    quad;
+  QTrapez<dim> quad;
   MappingQEulerian<dim, Vector<double>, spacedim> mapping(
     degree, shift_dh, shift);
 
@@ -63,8 +63,8 @@ test(unsigned int degree)
     = tria.begin_active(),
     endc = tria.end();
   Point<spacedim> real;
-  Point<dim>      unit;
-  double          eps = 1e-10;
+  Point<dim> unit;
+  double eps = 1e-10;
   for(; cell != endc; ++cell)
     {
       deallog << cell << std::endl;

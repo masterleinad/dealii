@@ -116,8 +116,8 @@ public:
    * over all tensor product polynomials.
    */
   void
-  compute(const Point<dim>&            unit_point,
-          std::vector<double>&         values,
+  compute(const Point<dim>& unit_point,
+          std::vector<double>& values,
           std::vector<Tensor<1, dim>>& grads,
           std::vector<Tensor<2, dim>>& grad_grads,
           std::vector<Tensor<3, dim>>& third_derivatives,
@@ -287,8 +287,8 @@ public:
    * in a loop over all tensor product polynomials.
    */
   void
-  compute(const Point<dim>&            unit_point,
-          std::vector<double>&         values,
+  compute(const Point<dim>& unit_point,
+          std::vector<double>& values,
           std::vector<Tensor<1, dim>>& grads,
           std::vector<Tensor<2, dim>>& grad_grads,
           std::vector<Tensor<3, dim>>& third_derivatives,
@@ -446,7 +446,7 @@ template <int order>
 Tensor<order, dim>
 TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim>& p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);
@@ -574,7 +574,7 @@ template <int dim>
 template <int order>
 Tensor<order, dim>
 AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
-                                                const Point<dim>&  p) const
+                                                const Point<dim>& p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);

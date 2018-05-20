@@ -37,18 +37,18 @@
 
 void
 solve_filtered(std::map<types::global_dof_index, double>& bv,
-               SparseMatrix<double>&                      A,
-               Vector<double>&                            u,
-               Vector<double>&                            f)
+               SparseMatrix<double>& A,
+               Vector<double>& u,
+               Vector<double>& f)
 {
   FilteredMatrix<Vector<double>> A1(A);
   A1.add_constraints(bv);
 
-  SolverControl                            control(1000, 1.e-10, false, false);
-  PrimitiveVectorMemory<Vector<double>>    mem;
-  SolverCG<Vector<double>>                 solver(control, mem);
+  SolverControl control(1000, 1.e-10, false, false);
+  PrimitiveVectorMemory<Vector<double>> mem;
+  SolverCG<Vector<double>> solver(control, mem);
   PreconditionJacobi<SparseMatrix<double>> prec;
-  FilteredMatrix<Vector<double>>           fprec;
+  FilteredMatrix<Vector<double>> fprec;
   prec.initialize(A, 1.2);
   fprec.initialize(prec);
 
@@ -67,16 +67,16 @@ solve_filtered(std::map<types::global_dof_index, double>& bv,
 template <int dim>
 void
 solve_eliminated(std::map<types::global_dof_index, double>& bv,
-                 SparseMatrix<double>&                      A,
-                 Vector<double>&                            u,
-                 Vector<double>&                            f)
+                 SparseMatrix<double>& A,
+                 Vector<double>& u,
+                 Vector<double>& f)
 {
   MatrixTools::apply_boundary_values(bv, A, u, f);
 
-  SolverControl                         control(1000, 1.e-10, false, false);
+  SolverControl control(1000, 1.e-10, false, false);
   PrimitiveVectorMemory<Vector<double>> mem;
-  SolverCG<Vector<double>>              solver(control, mem);
-  PreconditionJacobi<>                  prec;
+  SolverCG<Vector<double>> solver(control, mem);
+  PreconditionJacobi<> prec;
   prec.initialize(A, 1.2);
 
   solver.solve(A, u, f, prec);
@@ -99,8 +99,8 @@ check()
   tr.refine_global(5 - dim);
 
   MappingQ<dim> mapping(2);
-  FE_Q<dim>     element(1);
-  QGauss<dim>   quadrature(4);
+  FE_Q<dim> element(1);
+  QGauss<dim> quadrature(4);
 
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
@@ -112,7 +112,7 @@ check()
                      | update_JxW_values);
 
   std::vector<types::global_dof_index> global_dofs(element.dofs_per_cell);
-  std::vector<double>                  function(quadrature.size());
+  std::vector<double> function(quadrature.size());
 
   Vector<double> f(dof.n_dofs());
 
@@ -124,7 +124,7 @@ check()
   SparseMatrix<double> A(A_pattern);
 
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-  const typename DoFHandler<dim>::cell_iterator  end  = dof.end();
+  const typename DoFHandler<dim>::cell_iterator end   = dof.end();
 
   for(; cell != end; ++cell)
     {
@@ -138,7 +138,7 @@ check()
 
           for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
             {
-              const double         v      = fe.shape_value(i, k);
+              const double v              = fe.shape_value(i, k);
               const Tensor<1, dim> grad_v = fe.shape_grad(i, k);
 
               double rhs = dx * v * (function[k]);
@@ -147,7 +147,7 @@ check()
               for(unsigned int j = 0; j < element.dofs_per_cell; ++j)
                 {
                   const Tensor<1, dim> grad_u = fe.shape_grad(j, k);
-                  double               el     = dx * (grad_u * grad_v);
+                  double el                   = dx * (grad_u * grad_v);
                   A.add(global_dofs[i], global_dofs[j], el);
                 }
             }

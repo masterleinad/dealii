@@ -44,7 +44,7 @@ test()
   ivector[3] = 5;
 
   BlockVector<double> v1(ivector);
-  Vector<double>      v2(v1.size());
+  Vector<double> v2(v1.size());
 
   for(unsigned int i = 0; i < v1.size(); ++i)
     v1(i) = 1 + i * i;

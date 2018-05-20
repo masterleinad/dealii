@@ -77,7 +77,7 @@ public:
    */
   void
   set_fields(const char* file,
-             const int   line,
+             const int line,
              const char* function,
              const char* cond,
              const char* exc_name);
@@ -1115,12 +1115,12 @@ namespace deal_II_exceptions
     template <class ExceptionType>
     [[noreturn]] void
     issue_error_noreturn(ExceptionHandling handling,
-                         const char*       file,
-                         int               line,
-                         const char*       function,
-                         const char*       cond,
-                         const char*       exc_name,
-                         ExceptionType     e) {
+                         const char* file,
+                         int line,
+                         const char* function,
+                         const char* cond,
+                         const char* exc_name,
+                         ExceptionType e) {
       // Fill the fields of the exception object
       e.set_fields(file, line, function, cond, exc_name);
 
@@ -1155,11 +1155,11 @@ namespace deal_II_exceptions
     template <class ExceptionType>
     void
     issue_error_nothrow(ExceptionHandling,
-                        const char*   file,
-                        int           line,
-                        const char*   function,
-                        const char*   cond,
-                        const char*   exc_name,
+                        const char* file,
+                        int line,
+                        const char* function,
+                        const char* cond,
+                        const char* exc_name,
                         ExceptionType e) noexcept
     {
       static_assert(std::is_base_of<ExceptionBase, ExceptionType>::value,

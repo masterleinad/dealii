@@ -253,9 +253,9 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Gnuplot(const bool         write_cell_number      = false,
+    Gnuplot(const bool write_cell_number              = false,
             const unsigned int n_boundary_face_points = 2,
-            const bool         curved_inner_cells     = false);
+            const bool curved_inner_cells             = false);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -349,12 +349,12 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    EpsFlagsBase(const SizeType     size_type                = width,
-                 const unsigned int size                     = 300,
-                 const double       line_width               = 0.5,
-                 const bool         color_lines_on_user_flag = false,
-                 const unsigned int n_boundary_face_points   = 2,
-                 const bool         color_lines_level        = false);
+    EpsFlagsBase(const SizeType size_type                  = width,
+                 const unsigned int size                   = 300,
+                 const double line_width                   = 0.5,
+                 const bool color_lines_on_user_flag       = false,
+                 const unsigned int n_boundary_face_points = 2,
+                 const bool color_lines_level              = false);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -393,11 +393,11 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Eps(const SizeType     size_type                = width,
-        const unsigned int size                     = 300,
-        const double       line_width               = 0.5,
-        const bool         color_lines_on_user_flag = false,
-        const unsigned int n_boundary_face_points   = 2);
+    Eps(const SizeType size_type                  = width,
+        const unsigned int size                   = 300,
+        const double line_width                   = 0.5,
+        const bool color_lines_on_user_flag       = false,
+        const unsigned int n_boundary_face_points = 2);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -446,15 +446,15 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Eps(const SizeType     size_type                = width,
-        const unsigned int size                     = 300,
-        const double       line_width               = 0.5,
-        const bool         color_lines_on_user_flag = false,
-        const unsigned int n_boundary_face_points   = 2,
-        const bool         write_cell_numbers       = false,
-        const bool         write_cell_number_level  = true,
-        const bool         write_vertex_numbers     = false,
-        const bool         color_lines_level        = false);
+    Eps(const SizeType size_type                  = width,
+        const unsigned int size                   = 300,
+        const double line_width                   = 0.5,
+        const bool color_lines_on_user_flag       = false,
+        const unsigned int n_boundary_face_points = 2,
+        const bool write_cell_numbers             = false,
+        const bool write_cell_number_level        = true,
+        const bool write_vertex_numbers           = false,
+        const bool color_lines_level              = false);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -496,13 +496,13 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Eps(const SizeType     size_type                = width,
-        const unsigned int size                     = 300,
-        const double       line_width               = 0.5,
-        const bool         color_lines_on_user_flag = false,
-        const unsigned int n_boundary_face_points   = 2,
-        const double       azimut_angle             = 60,
-        const double       turn_angle               = 30);
+    Eps(const SizeType size_type                  = width,
+        const unsigned int size                   = 300,
+        const double line_width                   = 0.5,
+        const bool color_lines_on_user_flag       = false,
+        const unsigned int n_boundary_face_points = 2,
+        const double azimut_angle                 = 60,
+        const double turn_angle                   = 30);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -704,20 +704,20 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Svg(const unsigned int line_thickness                 = 2,
-        const unsigned int boundary_line_thickness        = 4,
-        bool               margin                         = true,
-        const Background   background                     = white,
-        const int          azimuth_angle                  = 0,
-        const int          polar_angle                    = 0,
-        const Coloring     coloring                       = level_number,
-        const bool         convert_level_number_to_height = false,
-        const bool         label_level_number             = true,
-        const bool         label_cell_index               = true,
-        const bool         label_material_id              = false,
-        const bool         label_subdomain_id             = false,
-        const bool         draw_colorbar                  = true,
-        const bool         draw_legend                    = true);
+    Svg(const unsigned int line_thickness          = 2,
+        const unsigned int boundary_line_thickness = 4,
+        bool margin                                = true,
+        const Background background                = white,
+        const int azimuth_angle                    = 0,
+        const int polar_angle                      = 0,
+        const Coloring coloring                    = level_number,
+        const bool convert_level_number_to_height  = false,
+        const bool label_level_number              = true,
+        const bool label_cell_index                = true,
+        const bool label_material_id               = false,
+        const bool label_subdomain_id              = false,
+        const bool draw_colorbar                   = true,
+        const bool draw_legend                     = true);
   };
 
   /**
@@ -928,8 +928,8 @@ public:
   template <int dim, int spacedim>
   void
   write_gnuplot(const Triangulation<dim, spacedim>& tria,
-                std::ostream&                       out,
-                const Mapping<dim, spacedim>*       mapping = nullptr) const;
+                std::ostream& out,
+                const Mapping<dim, spacedim>* mapping = nullptr) const;
 
   /**
    * Write the triangulation in the msh format.
@@ -1008,8 +1008,8 @@ public:
   template <int dim, int spacedim>
   void
   write_eps(const Triangulation<dim, spacedim>& tria,
-            std::ostream&                       out,
-            const Mapping<dim, spacedim>*       mapping = nullptr) const;
+            std::ostream& out,
+            const Mapping<dim, spacedim>* mapping = nullptr) const;
 
   /**
    * Write two-dimensional XFig-file.
@@ -1032,8 +1032,8 @@ public:
   template <int dim, int spacedim>
   void
   write_xfig(const Triangulation<dim, spacedim>& tria,
-             std::ostream&                       out,
-             const Mapping<dim, spacedim>*       mapping = nullptr) const;
+             std::ostream& out,
+             const Mapping<dim, spacedim>* mapping = nullptr) const;
 
   /**
    * Write the triangulation in the SVG format.
@@ -1082,7 +1082,7 @@ public:
   template <int dim, int spacedim>
   void
   write_mathgl(const Triangulation<dim, spacedim>& tria,
-               std::ostream&                       out) const;
+               std::ostream& out) const;
 
   /**
    * Write triangulation in VTK format.
@@ -1158,8 +1158,8 @@ public:
   void
   write_mesh_per_processor_as_vtu(const Triangulation<dim, spacedim>& tria,
                                   const std::string& filename_without_extension,
-                                  const bool         view_levels = false,
-                                  const bool include_artificial  = false) const;
+                                  const bool view_levels        = false,
+                                  const bool include_artificial = false) const;
 
   /**
    * Write grid to @p out according to the given data format. This function
@@ -1168,9 +1168,9 @@ public:
   template <int dim, int spacedim>
   void
   write(const Triangulation<dim, spacedim>& tria,
-        std::ostream&                       out,
-        const OutputFormat                  output_format,
-        const Mapping<dim, spacedim>*       mapping = nullptr) const;
+        std::ostream& out,
+        const OutputFormat output_format,
+        const Mapping<dim, spacedim>* mapping = nullptr) const;
 
   /**
    * Write mesh in default format set by ParameterHandler.
@@ -1178,8 +1178,8 @@ public:
   template <int dim, int spacedim>
   void
   write(const Triangulation<dim, spacedim>& tria,
-        std::ostream&                       out,
-        const Mapping<dim, spacedim>*       mapping = nullptr) const;
+        std::ostream& out,
+        const Mapping<dim, spacedim>* mapping = nullptr) const;
 
   /**
    * Set flags for DX output
@@ -1425,28 +1425,28 @@ private:
   template <int dim, int spacedim>
   unsigned int
   write_msh_faces(const Triangulation<dim, spacedim>& tria,
-                  const unsigned int                  next_element_index,
-                  std::ostream&                       out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Does nothing.
    */
   unsigned int
   write_msh_faces(const Triangulation<1, 1>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Does
    * nothing.
    */
   unsigned int
   write_msh_faces(const Triangulation<1, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   unsigned int
   write_msh_faces(const Triangulation<1, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Write the grid information about lines to @p out. Only those lines are
@@ -1476,16 +1476,16 @@ private:
   template <int dim, int spacedim>
   unsigned int
   write_msh_lines(const Triangulation<dim, spacedim>& tria,
-                  const unsigned int                  next_element_index,
-                  std::ostream&                       out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Does nothing.
    */
   unsigned int
   write_msh_lines(const Triangulation<1, 1>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Does
@@ -1493,27 +1493,27 @@ private:
    */
   unsigned int
   write_msh_lines(const Triangulation<1, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   unsigned int
   write_msh_lines(const Triangulation<1, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   /**
    * Declaration of the specialization of above function for 2d. Does nothing.
    */
   unsigned int
   write_msh_lines(const Triangulation<2, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   /**
    * Declaration of the specialization of above function for 2d, 3sd. Does
    * nothing.
    */
   unsigned int
   write_msh_lines(const Triangulation<2, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Write the grid information about faces to @p out. Only those faces are
@@ -1543,16 +1543,16 @@ private:
   template <int dim, int spacedim>
   unsigned int
   write_ucd_faces(const Triangulation<dim, spacedim>& tria,
-                  const unsigned int                  next_element_index,
-                  std::ostream&                       out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Does nothing.
    */
   unsigned int
   write_ucd_faces(const Triangulation<1, 1>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Does
@@ -1560,12 +1560,12 @@ private:
    */
   unsigned int
   write_ucd_faces(const Triangulation<1, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   unsigned int
   write_ucd_faces(const Triangulation<1, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Write the grid information about lines to @p out. Only those lines are
@@ -1595,44 +1595,44 @@ private:
   template <int dim, int spacedim>
   unsigned int
   write_ucd_lines(const Triangulation<dim, spacedim>& tria,
-                  const unsigned int                  next_element_index,
-                  std::ostream&                       out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Does nothing.
    */
   unsigned int
   write_ucd_lines(const Triangulation<1, 1>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Does
    * nothing.
    */
   unsigned int
   write_ucd_lines(const Triangulation<1, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   unsigned int
   write_ucd_lines(const Triangulation<1, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * Declaration of the specialization of above function for 2d. Does nothing.
    */
   unsigned int
   write_ucd_lines(const Triangulation<2, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
   /**
    * Declaration of the specialization of above function for 2d, 3sd. Does
    * nothing.
    */
   unsigned int
   write_ucd_lines(const Triangulation<2, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+                  const unsigned int next_element_index,
+                  std::ostream& out) const;
 
   /**
    * This function projects a three-dimensional point (Point<3> point) onto a
@@ -1648,7 +1648,7 @@ private:
                                     Point<3> camera_position,
                                     Point<3> camera_direction,
                                     Point<3> camera_horizontal,
-                                    float    camera_focus);
+                                    float camera_focus);
 
   /**
    * Return the number of faces in the triangulation which have a boundary

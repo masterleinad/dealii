@@ -67,11 +67,11 @@ private:
   solve();
 
   parallel::distributed::Triangulation<dim> triangulation;
-  FE_Q<dim>                                 fe;
-  DoFHandler<dim>                           dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   ConstraintMatrix constraints;
-  SparsityPattern  sparsity_pattern;
+  SparsityPattern sparsity_pattern;
 
   TrilinosWrappers::SparseMatrix system_matrix;
 
@@ -217,8 +217,8 @@ Step4<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
-  Vector<double>     cell_rhs_two(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs_two(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -279,7 +279,7 @@ Step4<dim>::solve()
   preconditioner.initialize(system_matrix);
   TrilinosWrappers::MPI::Vector temp_solution(system_rhs);
   temp_solution = 0;
-  SolverControl                           solver_control(1000, 1e-12);
+  SolverControl solver_control(1000, 1e-12);
   SolverCG<TrilinosWrappers::MPI::Vector> solver(solver_control);
 
   solver.solve(system_matrix, temp_solution, system_rhs, preconditioner);

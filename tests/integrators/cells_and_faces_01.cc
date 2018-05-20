@@ -52,8 +52,8 @@ public:
   void
   face(MeshWorker::DoFInfo<dim>& dinfo1,
        MeshWorker::DoFInfo<dim>& dinfo2,
-       CellInfo&                 info1,
-       CellInfo&                 info2) const;
+       CellInfo& info1,
+       CellInfo& info2) const;
 };
 
 template <int dim>
@@ -101,8 +101,8 @@ test_mesh(DoFHandler<dim>& mgdofs)
   out_data.add<BlockVector<double>*>(&cells, "cells");
   out_data.add<BlockVector<double>*>(&faces, "faces");
 
-  Local<dim>               local;
-  EmptyInfoBox             info_box;
+  Local<dim> local;
+  EmptyInfoBox info_box;
   MeshWorker::DoFInfo<dim> dof_info(dofs);
 
   MeshWorker::Assembler::CellsAndFaces<double> assembler;
@@ -178,7 +178,7 @@ void
 test(const FiniteElement<dim>& fe)
 {
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
-  DoFHandler<dim>    dofs(tr);
+  DoFHandler<dim> dofs(tr);
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
   deallog.push("1");
@@ -206,7 +206,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
   FE_DGP<2> el2(0);

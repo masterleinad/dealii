@@ -54,7 +54,7 @@ test()
   mat.compress(VectorOperation::insert);
   src.compress(VectorOperation::insert);
 
-  Prec                          preconditioner;
+  Prec preconditioner;
   typename Prec::AdditionalData data;
   data.block_size = 4;
 
@@ -68,7 +68,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<TrilinosWrappers::PreconditionBlockJacobi>();
   test<TrilinosWrappers::PreconditionBlockSOR>();

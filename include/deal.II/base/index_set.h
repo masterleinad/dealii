@@ -441,7 +441,7 @@ public:
    */
   Epetra_Map
   make_trilinos_map(const MPI_Comm& communicator = MPI_COMM_WORLD,
-                    const bool      overlapping  = false) const;
+                    const bool overlapping       = false) const;
 #endif
 
   /**
@@ -649,10 +649,10 @@ public:
      * specifics of the iterators they work on.
      */
     typedef std::forward_iterator_tag iterator_category;
-    typedef IntervalAccessor          value_type;
-    typedef std::ptrdiff_t            difference_type;
-    typedef IntervalAccessor*         pointer;
-    typedef IntervalAccessor&         reference;
+    typedef IntervalAccessor value_type;
+    typedef std::ptrdiff_t difference_type;
+    typedef IntervalAccessor* pointer;
+    typedef IntervalAccessor& reference;
 
   private:
     /**
@@ -740,10 +740,10 @@ public:
      * specifics of the iterators they work on.
      */
     typedef std::forward_iterator_tag iterator_category;
-    typedef size_type                 value_type;
-    typedef std::ptrdiff_t            difference_type;
-    typedef size_type*                pointer;
-    typedef size_type&                reference;
+    typedef size_type value_type;
+    typedef std::ptrdiff_t difference_type;
+    typedef size_type* pointer;
+    typedef size_type& reference;
 
   private:
     /**
@@ -972,7 +972,7 @@ complete_index_set(const unsigned int N)
 /* IntervalAccessor */
 
 inline IndexSet::IntervalAccessor::IntervalAccessor(
-  const IndexSet*           idxset,
+  const IndexSet* idxset,
   const IndexSet::size_type range_idx)
   : index_set(idxset), range_idx(range_idx)
 {
@@ -1081,7 +1081,7 @@ IndexSet::IntervalAccessor::advance()
 /* IntervalIterator */
 
 inline IndexSet::IntervalIterator::IntervalIterator(
-  const IndexSet*           idxset,
+  const IndexSet* idxset,
   const IndexSet::size_type range_idx)
   : accessor(idxset, range_idx)
 {}
@@ -1121,13 +1121,13 @@ IndexSet::IntervalIterator::operator++(int)
 }
 
 inline const IndexSet::IntervalAccessor& IndexSet::IntervalIterator::
-                                         operator*() const
+operator*() const
 {
   return accessor;
 }
 
 inline const IndexSet::IntervalAccessor* IndexSet::IntervalIterator::
-                                         operator->() const
+operator->() const
 {
   return &accessor;
 }
@@ -1178,7 +1178,7 @@ operator-(const IndexSet::IntervalIterator& other) const
 /* ElementIterator */
 
 inline IndexSet::ElementIterator::ElementIterator(
-  const IndexSet*           idxset,
+  const IndexSet* idxset,
   const IndexSet::size_type range_idx,
   const IndexSet::size_type index)
   : index_set(idxset), range_idx(range_idx), idx(index)
@@ -1533,7 +1533,7 @@ IndexSet::add_indices(const ForwardIterator& begin, const ForwardIterator& end)
   for(ForwardIterator p = begin; p != end;)
     {
       const size_type begin_index = *p;
-      size_type       end_index   = begin_index + 1;
+      size_type end_index         = begin_index + 1;
       ForwardIterator q           = p;
       ++q;
       while((q != end) && (*q == end_index))
@@ -1712,7 +1712,7 @@ IndexSet::index_within_set(const size_type n) const
   if(n >= main_range->begin && n < main_range->end)
     return (n - main_range->begin) + main_range->nth_index_in_set;
 
-  Range                              r(n, n);
+  Range r(n, n);
   std::vector<Range>::const_iterator range_begin, range_end;
   if(n < main_range->begin)
     {

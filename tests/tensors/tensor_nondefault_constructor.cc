@@ -33,7 +33,7 @@ main()
 
   // rank 2
   {
-    Tensor<2, dim, float>  t(a);
+    Tensor<2, dim, float> t(a);
     Tensor<2, dim, double> dt(t), dt2;
     dt2 = t;
     AssertThrow(dt2 == dt, ExcInternalError());
@@ -52,7 +52,7 @@ main()
 
   // rank 1
   {
-    Tensor<1, dim, float>  t(b);
+    Tensor<1, dim, float> t(b);
     Tensor<1, dim, double> dt(t), dt2;
     dt2 = t;
     AssertThrow(dt2 == dt, ExcInternalError());

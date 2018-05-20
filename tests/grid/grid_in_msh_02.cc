@@ -36,7 +36,7 @@ void
 check_file()
 {
   Triangulation<1> tria;
-  GridIn<1>        gi;
+  GridIn<1> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(SOURCE_DIR "/../grid/grids/grid_in_msh_02.msh");
   gi.read_msh(in);

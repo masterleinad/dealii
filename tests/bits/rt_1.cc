@@ -36,10 +36,10 @@ test(const unsigned int degree, const unsigned int q_order)
   GridGenerator::hyper_cube(triangulation, -1, 1);
 
   FE_RaviartThomas<dim> fe(degree);
-  DoFHandler<dim>       dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  QGauss<dim - 1>   q(q_order);
+  QGauss<dim - 1> q(q_order);
   FEFaceValues<dim> fe_values(fe,
                               q,
                               update_values | update_gradients | update_hessians

@@ -47,15 +47,15 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(1);
   deallog.attach(logfile);
 
-  FullMatrix<double>       A(4, 4, left);
+  FullMatrix<double> A(4, 4, left);
   LAPACKFullMatrix<double> LA(4, 4);
   LA = A;
   FullMatrix<double> eigenvectors;
-  Vector<double>     eigenvalues(0);
+  Vector<double> eigenvalues(0);
 
   LA.compute_eigenvalues_symmetric(
     0.5, 2.5, 2.0 * DBL_MIN, eigenvalues, eigenvectors);

@@ -35,7 +35,7 @@ void
 check()
 {
   Functions::CosineFunction<spacedim> function;
-  Triangulation<dim, spacedim>        tr;
+  Triangulation<dim, spacedim> tr;
 
   GridGenerator::hyper_cube(tr, -1, 1);
 
@@ -43,12 +43,12 @@ check()
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
 
-  FE_Q<dim, spacedim>       element(QIterated<1>(QTrapez<1>(), 3));
+  FE_Q<dim, spacedim> element(QIterated<1>(QTrapez<1>(), 3));
   DoFHandler<dim, spacedim> dof(tr);
   dof.distribute_dofs(element);
 
   MappingQ<dim, spacedim> mapping(3);
-  QGauss<dim - 1>         q_face(4);
+  QGauss<dim - 1> q_face(4);
 
   std::map<types::boundary_id, const Function<spacedim>*> neumann_bc;
   neumann_bc[0] = &function;

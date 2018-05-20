@@ -92,14 +92,14 @@ check_quadrature(double* exact_monomials)
 {
   for(unsigned int n = startn; n < 18; ++n)
     {
-      quadrature_type              quadrature(n);
-      const std::vector<Point<1>>& points  = quadrature.get_points();
-      const std::vector<double>&   weights = quadrature.get_weights();
+      quadrature_type quadrature(n);
+      const std::vector<Point<1>>& points = quadrature.get_points();
+      const std::vector<double>& weights  = quadrature.get_weights();
 
       for(unsigned int i = 0; i < 32; ++i)
         {
           long double quadrature_int = 0;
-          double      err            = 0;
+          double err                 = 0;
 
           // Check the integral
           // x^i/sqrt(x(1-x))
@@ -127,13 +127,13 @@ check_GRC_right(double* exact_monomials)
   for(unsigned int n = 1; n < 18; ++n)
     {
       QGaussRadauChebyshev<1> quadrature(n, QGaussRadauChebyshev<1>::right);
-      const std::vector<Point<1>>& points  = quadrature.get_points();
-      const std::vector<double>&   weights = quadrature.get_weights();
+      const std::vector<Point<1>>& points = quadrature.get_points();
+      const std::vector<double>& weights  = quadrature.get_weights();
 
       for(unsigned int i = 0; i < 32; ++i)
         {
           long double quadrature_int = 0;
-          double      err            = 0;
+          double err                 = 0;
 
           // Check the integral
           // x^i/sqrt(x(1-x))

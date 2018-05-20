@@ -47,7 +47,7 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
   gradient_matrix(Mg, fes, fev);
   Mg.print(deallog, 16, 8);
 
-  Vector<double>                           u(nv), v(ns), w(ns);
+  Vector<double> u(nv), v(ns), w(ns);
   std::vector<std::vector<Tensor<1, dim>>> ugrad(
     dim, std::vector<Tensor<1, dim>>(fev.n_quadrature_points));
 
@@ -107,7 +107,7 @@ test_boundary(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
   u_dot_n_matrix(M, fev, fes);
   M.print(deallog, 16, 8);
 
-  Vector<double>                   u(nv), v(ns), w(ns);
+  Vector<double> u(nv), v(ns), w(ns);
   std::vector<std::vector<double>> uval(
     dim, std::vector<double>(fev.n_quadrature_points));
 
@@ -170,7 +170,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fv, FiniteElement<dim>& fs)
 {
   deallog << fv.get_name() << " x " << fs.get_name() << std::endl
           << "cell matrix" << std::endl;
-  QGauss<dim>   quadrature(fv.tensor_degree() + 1);
+  QGauss<dim> quadrature(fv.tensor_degree() + 1);
   FEValues<dim> fev(
     fv, quadrature, update_values | update_gradients | update_JxW_values);
   FEValues<dim> fes(
@@ -181,7 +181,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fv, FiniteElement<dim>& fs)
   fes.reinit(cell1);
   test_cell(fev, fes);
 
-  QGauss<dim - 1>   face_quadrature(fv.tensor_degree() + 1);
+  QGauss<dim - 1> face_quadrature(fv.tensor_degree() + 1);
   FEFaceValues<dim> fev1(fv,
                          face_quadrature,
                          update_values | update_gradients
@@ -217,10 +217,10 @@ template <int dim>
 void
 test(Triangulation<dim>& tr)
 {
-  FE_DGQ<dim>           q1(1);
-  FE_Nedelec<dim>       n1(1);
+  FE_DGQ<dim> q1(1);
+  FE_Nedelec<dim> n1(1);
   FE_RaviartThomas<dim> r1(1);
-  FESystem<dim>         s1(q1, dim);
+  FESystem<dim> s1(q1, dim);
 
   test_fe(tr, r1, q1);
   test_fe(tr, n1, q1);
@@ -231,7 +231,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
   Triangulation<2> tr2;

@@ -64,7 +64,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   // would be in the range of 40 MB)
   for(unsigned int l = 0; l < 20; ++l)
     {
-      const unsigned int                    line = l * (sp.n_rows() / 20);
+      const unsigned int line = l * (sp.n_rows() / 20);
       std::pair<unsigned int, unsigned int> block_row
         = sp.get_row_indices().global_to_local(line);
       for(unsigned int col = 0; col < n_blocks; ++col)

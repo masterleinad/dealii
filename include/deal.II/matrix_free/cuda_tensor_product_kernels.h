@@ -44,9 +44,9 @@ namespace CUDAWrappers
      * @ingroup CUDAWrappers
      */
     template <EvaluatorVariant variant,
-              int              dim,
-              int              fe_degree,
-              int              n_q_points_1d,
+              int dim,
+              int fe_degree,
+              int n_q_points_1d,
               typename Number>
     struct EvaluatorTensorProduct
     {};
@@ -153,7 +153,7 @@ namespace CUDAWrappers
                            fe_degree,
                            n_q_points_1d,
                            Number>::gradients(const Number* in,
-                                              Number*       out) const
+                                              Number* out) const
     {
       apply<direction, dof_to_quad, add, in_place>(
         global_shape_gradients, in, out);
@@ -166,9 +166,9 @@ namespace CUDAWrappers
                            dim,
                            fe_degree,
                            n_q_points_1d,
-                           Number>::apply(Number        shape_data[],
+                           Number>::apply(Number shape_data[],
                                           const Number* in,
-                                          Number*       out) const
+                                          Number* out) const
     {
       const unsigned int i = (dim == 1) ? 0 : threadIdx.x % n_q_points_1d;
       const unsigned int j = (dim == 3) ? threadIdx.y : 0;

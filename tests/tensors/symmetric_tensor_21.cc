@@ -26,7 +26,7 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  const unsigned int      dim = 3;
+  const unsigned int dim = 3;
   SymmetricTensor<4, dim> t;
   t[0][0][0][0] = t[1][0][1][0] = t[1][1][1][1] = t[2][2][2][2] = t[2][0][2][0]
     = 3;

@@ -49,11 +49,11 @@ check()
   GridGenerator::hyper_cube(triangulation, 0., 1.);
   GridTools::transform(&affine<dim>, triangulation);
 
-  FE_P1NC         fe;
+  FE_P1NC fe;
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  QGauss<dim>   quadrature(3);
+  QGauss<dim> quadrature(3);
   FEValues<dim> fe_values(fe, quadrature, update_gradients | update_q_points);
   fe_values.reinit(dof_handler.begin_active());
 

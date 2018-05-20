@@ -34,14 +34,14 @@ void
 test(std::string filename)
 {
   Triangulation<dim, spacedim> tria;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);
 
   deallog << tria.n_active_cells() << " active cells" << std::endl;
 
-  FESystem<dim, spacedim>   fe(FE_Q<dim, spacedim>(2), spacedim);
+  FESystem<dim, spacedim> fe(FE_Q<dim, spacedim>(2), spacedim);
   DoFHandler<dim, spacedim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

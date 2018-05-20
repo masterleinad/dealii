@@ -27,7 +27,7 @@ main()
   initlog();
 
   const unsigned int N = 10000;
-  Vector<double>     x(N), y(N);
+  Vector<double> x(N), y(N);
 
   for(unsigned int i = 0; i < N; ++i)
     x(i) = i;

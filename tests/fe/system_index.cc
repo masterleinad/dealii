@@ -112,10 +112,10 @@ template <int dim>
 void
 check()
 {
-  FE_DGQ<dim>           co(0);
-  FE_Q<dim>             q1(1);
-  FE_Q<dim>             q2(2);
-  FE_DGQ<dim>           dgq1(1);
+  FE_DGQ<dim> co(0);
+  FE_Q<dim> q1(1);
+  FE_Q<dim> q2(2);
+  FE_DGQ<dim> dgq1(1);
   FE_RaviartThomas<dim> rt0(0);
   FE_RaviartThomas<dim> rt1(1);
   FE_RaviartThomas<dim> rt2(2);

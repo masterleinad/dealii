@@ -136,7 +136,7 @@ public:
   virtual void
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    std::vector<double>& nodal_values) const override;
 
   /**
    * Return a list of constant modes of the element. This method is currently
@@ -266,7 +266,7 @@ public:
   virtual void
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    std::vector<double>& nodal_values) const override;
 
   virtual void
   get_face_interpolation_matrix(const FiniteElement<dim>& source,
@@ -274,7 +274,7 @@ public:
 
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim>& source,
-                                   const unsigned int        subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
   virtual bool
   hp_constraints_are_implemented() const override;

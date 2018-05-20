@@ -36,7 +36,7 @@ test()
   const int spacedim = 2;
 
   Triangulation<dim, spacedim> tria;
-  Triangulation<spacedim>      volume_mesh;
+  Triangulation<spacedim> volume_mesh;
   GridGenerator::half_hyper_ball(volume_mesh);
   std::set<types::boundary_id> boundary_ids;
   boundary_ids.insert(0);
@@ -45,7 +45,7 @@ test()
 
   deallog << tria.n_active_cells() << " active cells" << std::endl;
 
-  FE_Q<dim, spacedim>       fe(1);
+  FE_Q<dim, spacedim> fe(1);
   DoFHandler<dim, spacedim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

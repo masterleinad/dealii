@@ -45,8 +45,8 @@ void
 test_kinematic_tensors()
 {
   const FESystem<dim> fe(FE_Q<dim>(1), dim);
-  const QGauss<dim>   qf(2);
-  Triangulation<dim>  tria;
+  const QGauss<dim> qf(2);
+  Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria, -1, 1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
@@ -64,20 +64,20 @@ test_kinematic_tensors()
           soln_t[cell->vertex_dof_index(v, 0)] = 1.0;
     }
 
-  const double   delta_t    = 2.0;
+  const double delta_t      = 2.0;
   Vector<double> dot_soln_t = soln_t;
   dot_soln_t -= soln_t1;
   dot_soln_t *= (1.0 / delta_t);
 
-  FEValuesExtractors::Vector  u_fe(0);
+  FEValuesExtractors::Vector u_fe(0);
   std::vector<Tensor<2, dim>> qp_Grad_u_t;
   std::vector<Tensor<2, dim>> qp_Grad_u_t1;
   std::vector<Tensor<2, dim>> qp_dot_Grad_u_t;
   std::vector<Tensor<2, dim>> qp_dot_grad_u_t;
 
-  FEValues<dim>         fe_values(fe, qf, update_gradients);
+  FEValues<dim> fe_values(fe, qf, update_gradients);
   MappingQEulerian<dim> q1_mapping(1, dof_handler, soln_t);
-  FEValues<dim>         fe_values_mapped(q1_mapping, fe, qf, update_gradients);
+  FEValues<dim> fe_values_mapped(q1_mapping, fe, qf, update_gradients);
 
   for(typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active();

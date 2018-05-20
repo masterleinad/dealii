@@ -62,7 +62,7 @@ namespace Algorithms
                  DoFOutputOperator<VectorType, dim, spacedim>>
       dof;
 
-    const std::string  filename_base;
+    const std::string filename_base;
     const unsigned int digits;
 
     DataOut<dim> out;

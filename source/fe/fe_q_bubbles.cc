@@ -44,16 +44,16 @@ namespace internal
       template <int dim, int spacedim>
       inline void
       compute_embedding_matrices(
-        const dealii::FE_Q_Bubbles<dim, spacedim>&    fe,
+        const dealii::FE_Q_Bubbles<dim, spacedim>& fe,
         std::vector<std::vector<FullMatrix<double>>>& matrices,
-        const bool                                    isotropic_only)
+        const bool isotropic_only)
       {
         const unsigned int dpc    = fe.dofs_per_cell;
         const unsigned int degree = fe.degree;
 
         // Initialize quadrature formula on fine cells
         std::unique_ptr<Quadrature<dim>> q_fine;
-        Quadrature<1>                    q_dummy(std::vector<Point<1>>(1),
+        Quadrature<1> q_dummy(std::vector<Point<1>>(1),
                               std::vector<double>(1, 1.));
         switch(dim)
           {
@@ -127,7 +127,7 @@ namespace internal
               nc, std::vector<types::global_dof_index>(fe.dofs_per_cell));
 
             //now create the mass matrix and all the right_hand sides
-            unsigned int                                           child_no = 0;
+            unsigned int child_no = 0;
             typename dealii::DoFHandler<dim>::active_cell_iterator cell
               = dh.begin_active();
             for(; cell != dh.end(); ++cell, ++child_no)
@@ -255,11 +255,11 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
   // particular format of the string this function returns, so they have to be
   // kept in synch
 
-  std::ostringstream             namebuf;
-  bool                           type     = true;
-  const unsigned int             n_points = this->degree;
-  std::vector<double>            points(n_points);
-  const unsigned int             dofs_per_cell = this->dofs_per_cell;
+  std::ostringstream namebuf;
+  bool type                   = true;
+  const unsigned int n_points = this->degree;
+  std::vector<double> points(n_points);
+  const unsigned int dofs_per_cell = this->dofs_per_cell;
   const std::vector<Point<dim>>& unit_support_points
     = this->unit_support_points;
   unsigned int index = 0;
@@ -335,7 +335,7 @@ void
 FE_Q_Bubbles<dim, spacedim>::
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const
+    std::vector<double>& nodal_values) const
 {
   Assert(support_point_values.size() == this->unit_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),
@@ -362,7 +362,7 @@ template <int dim, int spacedim>
 void
 FE_Q_Bubbles<dim, spacedim>::get_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // We don't know how to do this properly, yet.
   // However, for SolutionTransfer to work we need to provide an implementation
@@ -396,8 +396,8 @@ template <int dim, int spacedim>
 std::vector<bool>
 FE_Q_Bubbles<dim, spacedim>::get_riaf_vector(const unsigned int q_deg)
 {
-  unsigned int       n_cont_dofs = Utilities::fixed_power<dim>(q_deg + 1);
-  const unsigned int n_bubbles   = (q_deg <= 1 ? 1 : dim);
+  unsigned int n_cont_dofs     = Utilities::fixed_power<dim>(q_deg + 1);
+  const unsigned int n_bubbles = (q_deg <= 1 ? 1 : dim);
   return std::vector<bool>(n_cont_dofs + n_bubbles, true);
 }
 
@@ -431,7 +431,7 @@ FE_Q_Bubbles<dim, spacedim>::has_support_on_face(
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FE_Q_Bubbles<dim, spacedim>::get_prolongation_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
@@ -453,7 +453,7 @@ FE_Q_Bubbles<dim, spacedim>::get_prolongation_matrix(
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FE_Q_Bubbles<dim, spacedim>::get_restriction_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,

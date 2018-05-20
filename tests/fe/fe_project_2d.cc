@@ -108,8 +108,8 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 {
   Assert(component < 2, ExcIndexRange(component, 0, 1));
 
-  const double PI  = numbers::PI;
-  double       val = 0.0;
+  const double PI = numbers::PI;
+  double val      = 0.0;
   switch(component)
     {
       case 0:
@@ -125,14 +125,14 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 template <int dim>
 void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+                                  Vector<double>& values) const
 {
   for(int i = 0; i < dim; ++i)
     values(i) = value(p, i);
 }
 
 void create_tria(Triangulation<2>& triangulation,
-                 const Point<2>*   vertices_parallelograms)
+                 const Point<2>* vertices_parallelograms)
 {
   const std::vector<Point<2>> vertices(&vertices_parallelograms[0],
                                        &vertices_parallelograms[n_vertices]);
@@ -155,9 +155,9 @@ void create_tria(Triangulation<2>& triangulation,
 template <int dim>
 void
 test(const FiniteElement<dim>& fe,
-     unsigned                  n_cycles,
-     bool                      global,
-     const Point<dim>*         vertices_parallelograms)
+     unsigned n_cycles,
+     bool global,
+     const Point<dim>* vertices_parallelograms)
 {
   deallog << "dim: " << dim << "\t" << fe.get_name() << std::endl;
   deallog << "DoFs\t\t||u-u_h||\tcurl(u_h)\tdiv(u_h)" << std::endl;
@@ -167,13 +167,13 @@ test(const FiniteElement<dim>& fe,
 
   DoFHandler<dim> dof_handler(triangulation);
 
-  VectorFunction<dim>              fe_function;
+  VectorFunction<dim> fe_function;
   const FEValuesExtractors::Vector vec(0);
-  const QGauss<dim>                quadrature(fe.degree + 1);
-  const unsigned int               n_q_points = quadrature.size();
-  MappingQ<dim>                    mapping(1);
+  const QGauss<dim> quadrature(fe.degree + 1);
+  const unsigned int n_q_points = quadrature.size();
+  MappingQ<dim> mapping(1);
   //MappingQGeneric<dim> mapping(1);
-  std::vector<double>                                         div_v(n_q_points);
+  std::vector<double> div_v(n_q_points);
   std::vector<typename FEValuesViews::Vector<dim>::curl_type> curl_v(
     n_q_points);
 
@@ -199,7 +199,7 @@ test(const FiniteElement<dim>& fe,
                                         VectorTools::L2_norm);
 
       typename FEValuesViews::Vector<dim>::curl_type total_curl;
-      double                                         total_div = 0;
+      double total_div = 0;
       total_curl *= 0.;
 
       FEValues<dim> fe_values(mapping,
@@ -207,7 +207,7 @@ test(const FiniteElement<dim>& fe,
                               quadrature,
                               update_JxW_values | update_quadrature_points
                                 | update_values | update_gradients);
-      unsigned int  cell_index = 0;
+      unsigned int cell_index = 0;
 
       for(typename DoFHandler<dim>::active_cell_iterator cell
           = dof_handler.begin_active();
@@ -248,9 +248,9 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  const static unsigned dim      = 2;
-  unsigned              order    = 1;
-  unsigned              n_cycles = 4;
+  const static unsigned dim = 2;
+  unsigned order            = 1;
+  unsigned n_cycles         = 4;
 
   deallog << "2d\nRectangular grid:\n";
 

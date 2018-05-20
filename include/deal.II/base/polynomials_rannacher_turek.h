@@ -82,8 +82,8 @@ public:
    * zero. A size of zero means that we are not computing the vector entries.
    */
   void
-  compute(const Point<dim>&            unit_point,
-          std::vector<double>&         values,
+  compute(const Point<dim>& unit_point,
+          std::vector<double>& values,
           std::vector<Tensor<1, dim>>& grads,
           std::vector<Tensor<2, dim>>& grad_grads,
           std::vector<Tensor<3, dim>>& third_derivatives,
@@ -190,7 +190,7 @@ template <int dim>
 template <int order>
 Tensor<order, dim>
 PolynomialsRannacherTurek<dim>::compute_derivative(const unsigned int i,
-                                                   const Point<dim>&  p) const
+                                                   const Point<dim>& p) const
 {
   return internal::PolynomialsRannacherTurekImplementation::compute_derivative<
     order>(i, p);

@@ -58,7 +58,7 @@ test()
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -79,7 +79,7 @@ test()
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     mf_data.reinit(dof, constraints, quad, data);
@@ -100,7 +100,7 @@ test()
   // assemble trilinos sparse matrix with
   // (\nabla v, \nabla u) + (v, 10 * u) for
   // reference
-  SparsityPattern      sparsity;
+  SparsityPattern sparsity;
   SparseMatrix<number> sparse_matrix;
   {
     DynamicSparsityPattern csp(dof.n_dofs(), dof.n_dofs());

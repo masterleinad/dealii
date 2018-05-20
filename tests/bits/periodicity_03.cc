@@ -36,7 +36,7 @@ test()
   deallog << dim << "D" << std::endl;
 
   // create a 2x1 (or 2x1x1) mesh and refine the leftmost cell twice
-  Triangulation<dim>        triangulation;
+  Triangulation<dim> triangulation;
   std::vector<unsigned int> repetitions(dim, 1);
   repetitions[0] = 2;
   GridGenerator::subdivided_hyper_rectangle(
@@ -49,7 +49,7 @@ test()
   triangulation.begin_active(1)->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

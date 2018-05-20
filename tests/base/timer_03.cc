@@ -71,7 +71,7 @@ main()
   std::ofstream logfile("output");
   deallog.attach(logfile);
 
-  Timer       t1, t2;
+  Timer t1, t2;
   TimerOutput tO(std::cout, TimerOutput::summary, TimerOutput::cpu_times);
 
   tO.enter_section("Section1");

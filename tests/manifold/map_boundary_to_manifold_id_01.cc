@@ -66,7 +66,7 @@ test()
 
   // Test setting all manifold ids to 0
   deallog << "All manifold ids to 0" << std::endl;
-  auto                            bids = tria.get_boundary_ids();
+  auto bids = tria.get_boundary_ids();
   std::vector<types::manifold_id> mids(bids.size(), 0);
   GridTools::map_boundary_to_manifold_ids(bids, mids, tria);
   print_info(tria);

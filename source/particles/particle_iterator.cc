@@ -23,7 +23,7 @@ namespace Particles
   ParticleIterator<dim, spacedim>::ParticleIterator(
     const std::multimap<internal::LevelInd, Particle<dim, spacedim>>& map,
     const typename std::multimap<internal::LevelInd,
-                                 Particle<dim, spacedim>>::iterator&  particle)
+                                 Particle<dim, spacedim>>::iterator& particle)
     : accessor(map, particle)
   {}
 
@@ -41,14 +41,14 @@ namespace Particles
 
   template <int dim, int spacedim>
   const ParticleAccessor<dim, spacedim>& ParticleIterator<dim, spacedim>::
-                                         operator*() const
+  operator*() const
   {
     return accessor;
   }
 
   template <int dim, int spacedim>
   const ParticleAccessor<dim, spacedim>* ParticleIterator<dim, spacedim>::
-                                         operator->() const
+  operator->() const
   {
     return &(this->operator*());
   }
@@ -90,7 +90,7 @@ namespace Particles
   ParticleIterator<dim, spacedim>::operator++(int)
   {
     ParticleIterator tmp(*this);
-                     operator++();
+    operator++();
 
     return tmp;
   }
@@ -108,7 +108,7 @@ namespace Particles
   ParticleIterator<dim, spacedim>::operator--(int)
   {
     ParticleIterator tmp(*this);
-                     operator--();
+    operator--();
 
     return tmp;
   }

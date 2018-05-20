@@ -50,7 +50,7 @@ test()
   // *---*---*
   // | 0 | 1 |
   // *---*---*
-  Triangulation<dim>        triangulation;
+  Triangulation<dim> triangulation;
   std::vector<unsigned int> subdivisions(dim, 1);
   subdivisions[0] = 2;
   GridGenerator::subdivided_hyper_rectangle(

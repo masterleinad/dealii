@@ -25,7 +25,7 @@ check()
   for(unsigned int test = 0; test < 5; ++test)
     {
       const unsigned int size = 17 + test * 1101;
-      Vector<number>     v1(size), v2(size), v3(size), check(size);
+      Vector<number> v1(size), v2(size), v3(size), check(size);
       for(unsigned int i = 0; i < size; ++i)
         {
           v1(i) = 0.1 + 0.005 * i;

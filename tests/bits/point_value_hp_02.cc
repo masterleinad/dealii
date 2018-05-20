@@ -130,7 +130,7 @@ check()
   // that isn't
   for(unsigned int i = 0; i < 2; ++i)
     {
-      static const MySquareFunction<dim>          function_1;
+      static const MySquareFunction<dim> function_1;
       static const Functions::CosineFunction<dim> function_2;
 
       const Function<dim>& function

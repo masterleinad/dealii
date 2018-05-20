@@ -34,9 +34,9 @@ public:
   MatrixFreeTestHP(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              Vector<Number>&                              dst,
-              const Vector<Number>&                        src,
+  local_apply(const MatrixFree<dim, Number>& data,
+              Vector<Number>& dst,
+              const Vector<Number>& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     // ask MatrixFree for cell_range for different orders
@@ -89,9 +89,9 @@ test()
   if(fe_degree > 1)
     return;
 
-  typedef double               number;
+  typedef double number;
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -118,8 +118,8 @@ test()
   const unsigned int max_degree = 9 - 2 * dim;
 
   hp::FECollection<dim> fe_collection;
-  hp::QCollection<dim>  quadrature_collection;
-  hp::QCollection<1>    quadrature_collection_mf;
+  hp::QCollection<dim> quadrature_collection;
+  hp::QCollection<1> quadrature_collection_mf;
 
   for(unsigned int deg = 1; deg <= max_degree; ++deg)
     {
@@ -159,7 +159,7 @@ test()
   //std::cout << "Number of constraints: " << constraints.n_constraints() << std::endl;
 
   // set up MatrixFree
-  MatrixFree<dim, number>                          mf_data;
+  MatrixFree<dim, number> mf_data;
   typename MatrixFree<dim, number>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
   mf_data.reinit(dof, constraints, quadrature_collection_mf, data);
@@ -168,11 +168,11 @@ test()
   // assemble sparse matrix with (\nabla v,
   // \nabla u) + (v, 10 * u)
   {
-    hp::FEValues<dim>                    hp_fe_values(fe_collection,
+    hp::FEValues<dim> hp_fe_values(fe_collection,
                                    quadrature_collection,
                                    update_values | update_gradients
                                      | update_JxW_values);
-    FullMatrix<double>                   cell_matrix;
+    FullMatrix<double> cell_matrix;
     std::vector<types::global_dof_index> local_dof_indices;
 
     typename hp::DoFHandler<dim>::active_cell_iterator cell

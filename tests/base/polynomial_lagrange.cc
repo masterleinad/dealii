@@ -24,7 +24,7 @@ using namespace Polynomials;
 
 void
 check_interpolation(const std::vector<Polynomial<double>>& p,
-                    const std::vector<Point<1>>&           x)
+                    const std::vector<Point<1>>& x)
 {
   for(unsigned int i = 0; i < p.size(); ++i)
     {
@@ -66,7 +66,7 @@ check_lge(unsigned int n)
   std::vector<Polynomial<double>> p
     = LagrangeEquidistant::generate_complete_basis(n);
   std::vector<Point<1>> x(n + 1);
-  const double          h = 1. / n;
+  const double h = 1. / n;
   for(unsigned int i = 0; i <= n; ++i)
     x[i](0) = h * i;
   check_interpolation(p, x);
@@ -79,8 +79,8 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  QTrapez<1>   trapez;
-  QSimpson<1>  simpson;
+  QTrapez<1> trapez;
+  QSimpson<1> simpson;
   QIterated<1> equi7(trapez, 6);
   QIterated<1> equi10(trapez, 9);
 

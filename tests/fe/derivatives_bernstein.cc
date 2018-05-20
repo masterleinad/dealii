@@ -31,14 +31,14 @@
 
 template <int dim>
 inline void
-plot_derivatives(Mapping<dim>&       mapping,
+plot_derivatives(Mapping<dim>& mapping,
                  FiniteElement<dim>& finel,
-                 const char*         name)
+                 const char* name)
 {
   deallog.push(name);
 
   Triangulation<dim> tr;
-  DoFHandler<dim>    dof(tr);
+  DoFHandler<dim> dof(tr);
   GridGenerator::hyper_cube(tr, 2., 5.);
   typename DoFHandler<dim>::cell_iterator c = dof.begin();
   dof.distribute_dofs(finel);
@@ -78,7 +78,7 @@ void
 plot_FE_Bernstein_shape_functions()
 {
   MappingQGeneric<dim> m(1);
-  FE_Bernstein<dim>    b1(1);
+  FE_Bernstein<dim> b1(1);
   plot_derivatives(m, b1, "B1");
 
   FE_Bernstein<dim> b2(2);
@@ -114,7 +114,7 @@ main()
 
   // FESystem test.
   MappingQGeneric<2> m(1);
-  FESystem<2>        q2_q3(FE_Bernstein<2>(2), 1, FE_Bernstein<2>(3), 1);
+  FESystem<2> q2_q3(FE_Bernstein<2>(2), 1, FE_Bernstein<2>(3), 1);
   //  plot_derivatives(m, q2_q3, "B2_Q3");
 
   return 0;

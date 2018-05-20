@@ -107,7 +107,7 @@ namespace TrilinosWrappers
        * it is quite inelegant to set a specific option of one solver in the
        * base class for all solvers.
        */
-      explicit AdditionalData(const bool         output_solver_details = false,
+      explicit AdditionalData(const bool output_solver_details = false,
                               const unsigned int gmres_restart_parameter = 30);
 
       /**
@@ -125,7 +125,7 @@ namespace TrilinosWrappers
     /**
      * Constructor. Takes the solver control object and creates the solver.
      */
-    SolverBase(SolverControl&        cn,
+    SolverBase(SolverControl& cn,
                const AdditionalData& data = AdditionalData());
 
     /**
@@ -133,7 +133,7 @@ namespace TrilinosWrappers
      * specifies the solver name and sets the appropriate Krylov method.
      */
     SolverBase(const enum SolverName solver_name,
-               SolverControl&        cn,
+               SolverControl& cn,
                const AdditionalData& data = AdditionalData());
 
     /**
@@ -147,9 +147,9 @@ namespace TrilinosWrappers
      * one of the linear solvers and preconditioners of Trilinos is chosen.
      */
     void
-    solve(const SparseMatrix&     A,
-          MPI::Vector&            x,
-          const MPI::Vector&      b,
+    solve(const SparseMatrix& A,
+          MPI::Vector& x,
+          const MPI::Vector& b,
           const PreconditionBase& preconditioner);
 
     /**
@@ -160,9 +160,9 @@ namespace TrilinosWrappers
      * Trilinos is chosen.
      */
     void
-    solve(const Epetra_Operator&  A,
-          MPI::Vector&            x,
-          const MPI::Vector&      b,
+    solve(const Epetra_Operator& A,
+          MPI::Vector& x,
+          const MPI::Vector& b,
           const PreconditionBase& preconditioner);
 
     /**
@@ -176,8 +176,8 @@ namespace TrilinosWrappers
      */
     void
     solve(const Epetra_Operator& A,
-          MPI::Vector&           x,
-          const MPI::Vector&     b,
+          MPI::Vector& x,
+          const MPI::Vector& b,
           const Epetra_Operator& preconditioner);
 
     /**
@@ -190,10 +190,10 @@ namespace TrilinosWrappers
      * of Trilinos is chosen.
      */
     void
-    solve(const Epetra_Operator&    A,
-          Epetra_MultiVector&       x,
+    solve(const Epetra_Operator& A,
+          Epetra_MultiVector& x,
           const Epetra_MultiVector& b,
-          const PreconditionBase&   preconditioner);
+          const PreconditionBase& preconditioner);
 
     /**
      * Solve the linear system <tt>Ax=b</tt> where both <tt>A</tt> and its
@@ -206,10 +206,10 @@ namespace TrilinosWrappers
      * of Trilinos is chosen.
      */
     void
-    solve(const Epetra_Operator&    A,
-          Epetra_MultiVector&       x,
+    solve(const Epetra_Operator& A,
+          Epetra_MultiVector& x,
           const Epetra_MultiVector& b,
-          const Epetra_Operator&    preconditioner);
+          const Epetra_Operator& preconditioner);
 
     /**
      * Solve the linear system <tt>Ax=b</tt>. Depending on the information
@@ -222,10 +222,10 @@ namespace TrilinosWrappers
      * will be thrown.
      */
     void
-    solve(const SparseMatrix&           A,
-          dealii::Vector<double>&       x,
+    solve(const SparseMatrix& A,
+          dealii::Vector<double>& x,
           const dealii::Vector<double>& b,
-          const PreconditionBase&       preconditioner);
+          const PreconditionBase& preconditioner);
 
     /**
      * Solve the linear system <tt>Ax=b</tt> where <tt>A</tt> is an operator.
@@ -239,10 +239,10 @@ namespace TrilinosWrappers
      * exception will be thrown.
      */
     void
-    solve(Epetra_Operator&              A,
-          dealii::Vector<double>&       x,
+    solve(Epetra_Operator& A,
+          dealii::Vector<double>& x,
           const dealii::Vector<double>& b,
-          const PreconditionBase&       preconditioner);
+          const PreconditionBase& preconditioner);
 
     /**
      * Solve the linear system <tt>Ax=b</tt> for deal.II's parallel
@@ -251,8 +251,8 @@ namespace TrilinosWrappers
      * solvers and preconditioners of Trilinos is chosen.
      */
     void
-    solve(const SparseMatrix&                                       A,
-          dealii::LinearAlgebra::distributed::Vector<double>&       x,
+    solve(const SparseMatrix& A,
+          dealii::LinearAlgebra::distributed::Vector<double>& x,
           const dealii::LinearAlgebra::distributed::Vector<double>& b,
           const PreconditionBase& preconditioner);
 
@@ -264,8 +264,8 @@ namespace TrilinosWrappers
      * Trilinos is chosen.
      */
     void
-    solve(Epetra_Operator&                                          A,
-          dealii::LinearAlgebra::distributed::Vector<double>&       x,
+    solve(Epetra_Operator& A,
+          dealii::LinearAlgebra::distributed::Vector<double>& x,
           const dealii::LinearAlgebra::distributed::Vector<double>& b,
           const PreconditionBase& preconditioner);
 
@@ -336,12 +336,12 @@ namespace TrilinosWrappers
   // provide a declaration for two explicit specializations
   template <>
   void
-  SolverBase::set_preconditioner(AztecOO&                solver,
+  SolverBase::set_preconditioner(AztecOO& solver,
                                  const PreconditionBase& preconditioner);
 
   template <>
   void
-  SolverBase::set_preconditioner(AztecOO&               solver,
+  SolverBase::set_preconditioner(AztecOO& solver,
                                  const Epetra_Operator& preconditioner);
 
   /**
@@ -435,8 +435,8 @@ namespace TrilinosWrappers
        * Constructor. By default, set the number of temporary vectors to 30,
        * i.e. do a restart every 30 iterations.
        */
-      explicit AdditionalData(const bool         output_solver_details = false,
-                              const unsigned int restart_parameter     = 30);
+      explicit AdditionalData(const bool output_solver_details     = false,
+                              const unsigned int restart_parameter = 30);
     };
 
     /**
@@ -446,7 +446,7 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverGMRES(SolverControl&        cn,
+    SolverGMRES(SolverControl& cn,
                 const AdditionalData& data = AdditionalData());
 
   protected:
@@ -484,7 +484,7 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverBicgstab(SolverControl&        cn,
+    SolverBicgstab(SolverControl& cn,
                    const AdditionalData& data = AdditionalData());
 
   protected:
@@ -522,7 +522,7 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverTFQMR(SolverControl&        cn,
+    SolverTFQMR(SolverControl& cn,
                 const AdditionalData& data = AdditionalData());
 
   protected:
@@ -557,8 +557,8 @@ namespace TrilinosWrappers
       /**
        * Set the additional data field to the desired output format.
        */
-      explicit AdditionalData(const bool         output_solver_details = false,
-                              const std::string& solver_type = "Amesos_Klu");
+      explicit AdditionalData(const bool output_solver_details = false,
+                              const std::string& solver_type   = "Amesos_Klu");
 
       /**
        * Enables/disables the output of solver details (residual in each
@@ -590,7 +590,7 @@ namespace TrilinosWrappers
     /**
      * Constructor. Takes the solver control object and creates the solver.
      */
-    SolverDirect(SolverControl&        cn,
+    SolverDirect(SolverControl& cn,
                  const AdditionalData& data = AdditionalData());
 
     /**
@@ -621,7 +621,7 @@ namespace TrilinosWrappers
      * refactorized during this call.
      */
     void
-    solve(dealii::LinearAlgebra::distributed::Vector<double>&       x,
+    solve(dealii::LinearAlgebra::distributed::Vector<double>& x,
           const dealii::LinearAlgebra::distributed::Vector<double>& b);
 
     /**
@@ -641,8 +641,8 @@ namespace TrilinosWrappers
      * exception will be thrown.
      */
     void
-    solve(const SparseMatrix&           A,
-          dealii::Vector<double>&       x,
+    solve(const SparseMatrix& A,
+          dealii::Vector<double>& x,
           const dealii::Vector<double>& b);
 
     /**
@@ -652,8 +652,8 @@ namespace TrilinosWrappers
      * there is no need for a preconditioner here.
      */
     void
-    solve(const SparseMatrix&                                       A,
-          dealii::LinearAlgebra::distributed::Vector<double>&       x,
+    solve(const SparseMatrix& A,
+          dealii::LinearAlgebra::distributed::Vector<double>& x,
           const dealii::LinearAlgebra::distributed::Vector<double>& b);
 
     /**

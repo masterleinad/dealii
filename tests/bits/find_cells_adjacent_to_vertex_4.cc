@@ -51,7 +51,7 @@ main()
       // cells: the center plus 16
       // points on the perimeter of a
       // circle
-      const unsigned int      dim = 2;
+      const unsigned int dim = 2;
       std::vector<Point<dim>> vertices;
       vertices.push_back(Point<dim>());
 

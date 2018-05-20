@@ -42,14 +42,14 @@ namespace internal
   template <typename VectorType>
   struct MatrixSelector
   {
-    typedef ::dealii::SparsityPattern                               Sparsity;
+    typedef ::dealii::SparsityPattern Sparsity;
     typedef ::dealii::SparseMatrix<typename VectorType::value_type> Matrix;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
-    reinit(Matrix&                    matrix,
-           Sparsity&                  sparsity,
-           int                        level,
+    reinit(Matrix& matrix,
+           Sparsity& sparsity,
+           int level,
            const SparsityPatternType& sp,
            const DoFHandlerType&)
     {
@@ -64,15 +64,15 @@ namespace internal
   struct MatrixSelector<LinearAlgebra::distributed::Vector<Number>>
   {
     typedef ::dealii::TrilinosWrappers::SparsityPattern Sparsity;
-    typedef ::dealii::TrilinosWrappers::SparseMatrix    Matrix;
+    typedef ::dealii::TrilinosWrappers::SparseMatrix Matrix;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
     reinit(Matrix& matrix,
            Sparsity&,
-           int                        level,
+           int level,
            const SparsityPatternType& sp,
-           DoFHandlerType&            dh)
+           DoFHandlerType& dh)
     {
       const parallel::Triangulation<DoFHandlerType::dimension,
                                     DoFHandlerType::space_dimension>* dist_tria
@@ -95,15 +95,15 @@ namespace internal
   struct MatrixSelector<dealii::TrilinosWrappers::MPI::Vector>
   {
     typedef ::dealii::TrilinosWrappers::SparsityPattern Sparsity;
-    typedef ::dealii::TrilinosWrappers::SparseMatrix    Matrix;
+    typedef ::dealii::TrilinosWrappers::SparseMatrix Matrix;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
     reinit(Matrix& matrix,
            Sparsity&,
-           int                        level,
+           int level,
            const SparsityPatternType& sp,
-           DoFHandlerType&            dh)
+           DoFHandlerType& dh)
     {
       const parallel::Triangulation<DoFHandlerType::dimension,
                                     DoFHandlerType::space_dimension>* dist_tria
@@ -126,15 +126,15 @@ namespace internal
   struct MatrixSelector<dealii::LinearAlgebra::EpetraWrappers::Vector>
   {
     typedef ::dealii::TrilinosWrappers::SparsityPattern Sparsity;
-    typedef ::dealii::TrilinosWrappers::SparseMatrix    Matrix;
+    typedef ::dealii::TrilinosWrappers::SparseMatrix Matrix;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
     reinit(Matrix& matrix,
            Sparsity&,
-           int                        level,
+           int level,
            const SparsityPatternType& sp,
-           DoFHandlerType&            dh)
+           DoFHandlerType& dh)
     {
       const parallel::Triangulation<DoFHandlerType::dimension,
                                     DoFHandlerType::space_dimension>* dist_tria
@@ -158,7 +158,7 @@ namespace internal
   template <typename Number>
   struct MatrixSelector<LinearAlgebra::distributed::Vector<Number>>
   {
-    typedef ::dealii::SparsityPattern      Sparsity;
+    typedef ::dealii::SparsityPattern Sparsity;
     typedef ::dealii::SparseMatrix<Number> Matrix;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
@@ -213,8 +213,8 @@ public:
   template <int dim, class InVector, int spacedim>
   void
   copy_to_mg(const DoFHandler<dim, spacedim>& mg_dof,
-             MGLevelObject<VectorType>&       dst,
-             const InVector&                  src) const;
+             MGLevelObject<VectorType>& dst,
+             const InVector& src) const;
 
   /**
    * Transfer from multi-level vector to normal vector.
@@ -226,7 +226,7 @@ public:
   template <int dim, class OutVector, int spacedim>
   void
   copy_from_mg(const DoFHandler<dim, spacedim>& mg_dof,
-               OutVector&                       dst,
+               OutVector& dst,
                const MGLevelObject<VectorType>& src) const;
 
   /**
@@ -237,7 +237,7 @@ public:
   template <int dim, class OutVector, int spacedim>
   void
   copy_from_mg_add(const DoFHandler<dim, spacedim>& mg_dof,
-                   OutVector&                       dst,
+                   OutVector& dst,
                    const MGLevelObject<VectorType>& src) const;
 
   /**
@@ -367,7 +367,7 @@ public:
    */
   template <int dim, typename Number2, int spacedim>
   void
-  copy_to_mg(const DoFHandler<dim, spacedim>&                           mg_dof,
+  copy_to_mg(const DoFHandler<dim, spacedim>& mg_dof,
              MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& dst,
              const LinearAlgebra::distributed::Vector<Number2>& src) const;
 
@@ -381,8 +381,8 @@ public:
   template <int dim, typename Number2, int spacedim>
   void
   copy_from_mg(
-    const DoFHandler<dim, spacedim>&                                 mg_dof,
-    LinearAlgebra::distributed::Vector<Number2>&                     dst,
+    const DoFHandler<dim, spacedim>& mg_dof,
+    LinearAlgebra::distributed::Vector<Number2>& dst,
     const MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& src) const;
 
   /**
@@ -393,8 +393,8 @@ public:
   template <int dim, typename Number2, int spacedim>
   void
   copy_from_mg_add(
-    const DoFHandler<dim, spacedim>&                                 mg_dof,
-    LinearAlgebra::distributed::Vector<Number2>&                     dst,
+    const DoFHandler<dim, spacedim>& mg_dof,
+    LinearAlgebra::distributed::Vector<Number2>& dst,
     const MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& src) const;
 
   /**
@@ -434,9 +434,9 @@ protected:
    */
   template <int dim, typename Number2, int spacedim>
   void
-  copy_to_mg(const DoFHandler<dim, spacedim>&                           mg_dof,
+  copy_to_mg(const DoFHandler<dim, spacedim>& mg_dof,
              MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& dst,
-             const LinearAlgebra::distributed::Vector<Number2>&         src,
+             const LinearAlgebra::distributed::Vector<Number2>& src,
              const bool solution_transfer) const;
 
   /**
@@ -591,7 +591,7 @@ public:
    * @deprecated @p constraints is unused.
    */
   DEAL_II_DEPRECATED
-  MGTransferPrebuilt(const ConstraintMatrix&  constraints,
+  MGTransferPrebuilt(const ConstraintMatrix& constraints,
                      const MGConstrainedDoFs& mg_constrained_dofs);
 
   /**
@@ -612,7 +612,7 @@ public:
    */
   DEAL_II_DEPRECATED
   void
-  initialize_constraints(const ConstraintMatrix&  constraints,
+  initialize_constraints(const ConstraintMatrix& constraints,
                          const MGConstrainedDoFs& mg_constrained_dofs);
 
   /**
@@ -641,8 +641,8 @@ public:
    */
   virtual void
   prolongate(const unsigned int to_level,
-             VectorType&        dst,
-             const VectorType&  src) const override;
+             VectorType& dst,
+             const VectorType& src) const override;
 
   /**
    * Restrict a vector from level <tt>from_level</tt> to level
@@ -661,8 +661,8 @@ public:
    */
   virtual void
   restrict_and_add(const unsigned int from_level,
-                   VectorType&        dst,
-                   const VectorType&  src) const override;
+                   VectorType& dst,
+                   const VectorType& src) const override;
 
   /**
    * Finite element does not provide prolongation matrices.

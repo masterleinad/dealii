@@ -51,17 +51,17 @@ class MatrixFreeTest
 {
 public:
   typedef typename DoFHandler<dim>::active_cell_iterator CellIterator;
-  typedef double                                         Number;
+  typedef double Number;
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              VectorType&                                  dst,
-              const VectorType&                            src,
+  local_apply(const MatrixFree<dim, Number>& data,
+              VectorType& dst,
+              const VectorType& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
-    typedef VectorizedArray<Number>                            vector_t;
+    typedef VectorizedArray<Number> vector_t;
     FEEvaluation<dim, degree_p + 1, degree_p + 2, dim, Number> velocity(data,
                                                                         0);
     FEEvaluation<dim, degree_p, degree_p + 2, 1, Number> pressure(data, 1);
@@ -114,7 +114,7 @@ void
 test()
 {
   SphericalManifold<dim> manifold;
-  Triangulation<dim>     triangulation;
+  Triangulation<dim> triangulation;
   GridGenerator::hyper_shell(triangulation, Point<dim>(), 0.5, 1., 96, true);
   triangulation.set_all_manifold_ids(0);
   triangulation.set_manifold(0, manifold);
@@ -126,11 +126,11 @@ test()
   triangulation.last()->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 
-  MappingQ<dim>   mapping(3);
-  FE_Q<dim>       fe_u_scal(fe_degree + 1);
-  FESystem<dim>   fe_u(fe_u_scal, dim);
-  FE_Q<dim>       fe_p(fe_degree);
-  FESystem<dim>   fe(fe_u_scal, dim, fe_p, 1);
+  MappingQ<dim> mapping(3);
+  FE_Q<dim> fe_u_scal(fe_degree + 1);
+  FESystem<dim> fe_u(fe_u_scal, dim);
+  FE_Q<dim> fe_p(fe_degree);
+  FESystem<dim> fe(fe_u_scal, dim, fe_p, 1);
   DoFHandler<dim> dof_handler_u(triangulation);
   DoFHandler<dim> dof_handler_p(triangulation);
   DoFHandler<dim> dof_handler(triangulation);
@@ -139,7 +139,7 @@ test()
 
   ConstraintMatrix constraints, constraints_u, constraints_p;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> system_matrix;
 
   BlockVector<double> solution;
@@ -215,8 +215,8 @@ test()
     const FEValuesExtractors::Scalar pressure(dim);
 
     std::vector<SymmetricTensor<2, dim>> phi_grads_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),

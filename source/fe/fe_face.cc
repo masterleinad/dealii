@@ -136,7 +136,7 @@ template <int dim, int spacedim>
 void
 FE_FaceQ<dim, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
@@ -146,8 +146,8 @@ template <int dim, int spacedim>
 void
 FE_FaceQ<dim, spacedim>::get_subface_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const unsigned int subface,
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this function is similar to the respective method in FE_Q
 
@@ -457,7 +457,7 @@ template <int dim, int spacedim>
 void
 FE_FaceQ<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
   const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  std::vector<double>& nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());
@@ -517,7 +517,7 @@ template <int spacedim>
 void
 FE_FaceQ<1, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<1, spacedim>& source_fe,
-  FullMatrix<double>&               interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
@@ -790,7 +790,7 @@ template <int dim, int spacedim>
 void
 FE_FaceP<dim, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
@@ -800,8 +800,8 @@ template <int dim, int spacedim>
 void
 FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const unsigned int subface,
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this function is similar to the respective method in FE_Q
 
@@ -850,8 +850,8 @@ FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
         }
 
       Householder<double> H(mass);
-      Vector<double>      v_in(face_quadrature.size());
-      Vector<double>      v_out(source_fe->dofs_per_face);
+      Vector<double> v_in(face_quadrature.size());
+      Vector<double> v_out(source_fe->dofs_per_face);
 
       // compute the interpolation matrix by evaluating on the fine side and
       // then solving the least squares problem

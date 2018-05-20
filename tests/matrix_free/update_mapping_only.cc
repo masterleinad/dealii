@@ -33,7 +33,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -60,12 +60,12 @@ test()
 
   constraints.distribute(solution);
 
-  FESystem<dim>   fe_sys(dof.get_fe(), dim);
+  FESystem<dim> fe_sys(dof.get_fe(), dim);
   DoFHandler<dim> dofh_eulerian(dof.get_triangulation());
   dofh_eulerian.distribute_dofs(fe_sys);
 
   MatrixFree<dim, double> mf_data;
-  Vector<double>          shift(dofh_eulerian.n_dofs());
+  Vector<double> shift(dofh_eulerian.n_dofs());
   for(unsigned int i = 0; i < 2; ++i)
     {
       if(i == 1)
@@ -76,7 +76,7 @@ test()
       MappingQEulerian<dim> mapping(2, dofh_eulerian, shift);
 
       {
-        const QGauss<1>                                  quad(fe_degree + 1);
+        const QGauss<1> quad(fe_degree + 1);
         typename MatrixFree<dim, double>::AdditionalData data;
         data.tasks_parallel_scheme
           = MatrixFree<dim, double>::AdditionalData::none;

@@ -72,8 +72,8 @@ using namespace dealii;
 void
 filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
 {
-  std::string       line;
-  bool              found   = false;
+  std::string line;
+  bool found                = false;
   const std::string opening = "<" + key;
   const std::string closing = "</" + key;
   while(std::getline(in, line))
@@ -172,8 +172,8 @@ namespace Testing
   int
   rand(const bool reseed = false, const int seed = 1)
   {
-    static int  r[32];
-    static int  k;
+    static int r[32];
+    static int k;
     static bool inited = false;
 
     if(!inited || reseed)
@@ -451,7 +451,7 @@ namespace
 // This will open the correct output file, divert log output there and
 // switch off screen output. If screen output is desired, provide the
 // optional second argument as 'true'.
-std::string   deallogname;
+std::string deallogname;
 std::ofstream deallogfile;
 
 void
@@ -574,7 +574,7 @@ DEAL_II_NAMESPACE_CLOSE
 
 void
 new_tbb_assertion_handler(const char* file,
-                          int         line,
+                          int line,
                           const char* expr,
                           const char* comment)
 {

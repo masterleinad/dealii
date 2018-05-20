@@ -27,13 +27,13 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
   const unsigned int this_mpi_process
     = Utilities::MPI::this_mpi_process(mpi_communicator);
   const unsigned int n_mpi_processes
     = Utilities::MPI::n_mpi_processes(mpi_communicator);
 
-  MPI_Comm           serial_communicator;
+  MPI_Comm serial_communicator;
   const unsigned int colour = this_mpi_process;
   const unsigned int key    = this_mpi_process;
   if(n_mpi_processes > 1)

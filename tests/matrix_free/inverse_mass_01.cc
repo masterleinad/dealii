@@ -45,9 +45,9 @@ public:
 
   void
   local_mass_operator(
-    const MatrixFree<dim, Number>&               data,
-    VectorType&                                  dst,
-    const VectorType&                            src,
+    const MatrixFree<dim, Number>& data,
+    VectorType& dst,
+    const VectorType& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
@@ -67,15 +67,15 @@ public:
 
   void
   local_inverse_mass_operator(
-    const MatrixFree<dim, Number>&               data,
-    VectorType&                                  dst,
-    const VectorType&                            src,
+    const MatrixFree<dim, Number>& data,
+    VectorType& dst,
+    const VectorType& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
     MatrixFreeOperators::CellwiseInverseMassMatrix<dim, fe_degree, 1, Number>
-                                           mass_inv(fe_eval);
-    const unsigned int                     n_q_points = fe_eval.n_q_points;
+      mass_inv(fe_eval);
+    const unsigned int n_q_points = fe_eval.n_q_points;
     AlignedVector<VectorizedArray<Number>> inverse_coefficients(n_q_points);
 
     for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
@@ -126,7 +126,7 @@ do_test(const DoFHandler<dim>& dof)
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, number>::AdditionalData::partition_color;
@@ -168,7 +168,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -189,7 +189,7 @@ test()
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_DGQ<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 

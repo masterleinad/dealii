@@ -35,7 +35,7 @@ template <int dim>
 void
 check(double r1, double r2, unsigned int n)
 {
-  Point<dim>         center;
+  Point<dim> center;
   Triangulation<dim> tria(Triangulation<dim>::none);
   GridGenerator::hyper_shell(tria, center, r1, r2, n, true);
   static const SphericalManifold<dim> boundary(center);

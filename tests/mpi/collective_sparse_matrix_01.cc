@@ -26,7 +26,7 @@ test()
   const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int size = 50;
 
-  FDMatrix     testproblem(size, size);
+  FDMatrix testproblem(size, size);
   unsigned int dim = (size - 1) * (size - 1);
 
   SparsityPattern sparsity(dim, dim, size);
@@ -34,7 +34,7 @@ test()
   sparsity.compress();
 
   SparseMatrix<double> matrix(sparsity);
-  const double         val = std::pow(10, myid);
+  const double val = std::pow(10, myid);
   for(SparsityPattern::const_iterator it = sparsity.begin();
       it != sparsity.end();
       ++it)

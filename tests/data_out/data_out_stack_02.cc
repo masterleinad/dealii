@@ -35,7 +35,7 @@ check_this(const DoFHandler<dim>&, const Vector<double>&, const Vector<double>&)
 
 template <>
 void
-check_this<1>(const DoFHandler<1>&  dof_handler,
+check_this<1>(const DoFHandler<1>& dof_handler,
               const Vector<double>& v_node,
               const Vector<double>& v_cell)
 {

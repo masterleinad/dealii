@@ -61,8 +61,8 @@ namespace TestGrids
   template <int dim>
   void
   hypercube(Triangulation<dim>& tr,
-            unsigned int        refinement = 0,
-            bool                local      = false)
+            unsigned int refinement = 0,
+            bool local              = false)
   {
     GridGenerator::hyper_cube(tr, -1., 1.);
     if(refinement && !local)
@@ -77,8 +77,8 @@ namespace TestGrids
                 cell != tr.end();
                 ++cell)
               {
-                const Point<dim>& p        = cell->center();
-                bool              negative = true;
+                const Point<dim>& p = cell->center();
+                bool negative       = true;
                 for(unsigned int d = 0; d < dim; ++d)
                   if(p(d) >= 0.)
                     negative = false;
@@ -113,8 +113,8 @@ namespace TestGrids
   template <int dim>
   void
   star_shaped(Triangulation<dim>& tr,
-              unsigned int        refinement = 0,
-              bool                local      = false);
+              unsigned int refinement = 0,
+              bool local              = false);
   /**
    * Local refinement of every other
    * cell in a checkerboard fashion.

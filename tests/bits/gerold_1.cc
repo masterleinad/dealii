@@ -55,10 +55,10 @@ public:
 
 private:
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   Vector<double> solution;

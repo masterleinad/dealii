@@ -29,7 +29,7 @@ main()
 {
   initlog();
 
-  std::vector<std::string>      function(1);
+  std::vector<std::string> function(1);
   std::map<std::string, double> constants;
 
   constants["PI"] = 3.141592654;

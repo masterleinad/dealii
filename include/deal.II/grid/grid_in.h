@@ -385,7 +385,7 @@ public:
    */
   void
   read_ucd(std::istream& in,
-           const bool    apply_all_indicators_to_manifolds = false);
+           const bool apply_all_indicators_to_manifolds = false);
 
   /**
    * Read grid data from an Abaqus file. Numerical and constitutive data is
@@ -428,7 +428,7 @@ public:
    */
   void
   read_abaqus(std::istream& in,
-              const bool    apply_all_indicators_to_manifolds = false);
+              const bool apply_all_indicators_to_manifolds = false);
 
   /**
    * Read grid data from a file containing data in the DB mesh format.
@@ -507,9 +507,9 @@ public:
   void
   read_assimp(const std::string& filename,
               const unsigned int mesh_index = numbers::invalid_unsigned_int,
-              const bool         remove_duplicates                = true,
-              const double       tol                              = 1e-12,
-              const bool         ignore_unsupported_element_types = true);
+              const bool remove_duplicates  = true,
+              const double tol              = 1e-12,
+              const bool ignore_unsupported_element_types = true);
 
   /**
    * Return the standard suffix for a file in this format.
@@ -651,9 +651,9 @@ protected:
    * further ado by the user.
    */
   static void
-  debug_output_grid(const std::vector<CellData<dim>>&   cells,
+  debug_output_grid(const std::vector<CellData<dim>>& cells,
                     const std::vector<Point<spacedim>>& vertices,
-                    std::ostream&                       out);
+                    std::ostream& out);
 
 private:
   /**
@@ -681,14 +681,14 @@ private:
    * function execution..
    */
   static void
-  parse_tecplot_header(std::string&               header,
+  parse_tecplot_header(std::string& header,
                        std::vector<unsigned int>& tecplot2deal,
-                       unsigned int&              n_vars,
-                       unsigned int&              n_vertices,
-                       unsigned int&              n_cells,
+                       unsigned int& n_vars,
+                       unsigned int& n_vertices,
+                       unsigned int& n_cells,
                        std::vector<unsigned int>& IJK,
-                       bool&                      structured,
-                       bool&                      blocked);
+                       bool& structured,
+                       bool& blocked);
 
   /**
    * Input format used by read() if no format is given.
@@ -703,19 +703,19 @@ private:
 template <>
 void
 GridIn<2>::debug_output_grid(const std::vector<CellData<2>>& cells,
-                             const std::vector<Point<2>>&    vertices,
-                             std::ostream&                   out);
+                             const std::vector<Point<2>>& vertices,
+                             std::ostream& out);
 
 template <>
 void
 GridIn<2, 3>::debug_output_grid(const std::vector<CellData<2>>& cells,
-                                const std::vector<Point<3>>&    vertices,
-                                std::ostream&                   out);
+                                const std::vector<Point<3>>& vertices,
+                                std::ostream& out);
 template <>
 void
 GridIn<3>::debug_output_grid(const std::vector<CellData<3>>& cells,
-                             const std::vector<Point<3>>&    vertices,
-                             std::ostream&                   out);
+                             const std::vector<Point<3>>& vertices,
+                             std::ostream& out);
 #endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE

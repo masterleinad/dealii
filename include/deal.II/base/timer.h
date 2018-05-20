@@ -694,9 +694,9 @@ public:
    * @param output_type A variable indicating what kind of timing the output
    * should represent (CPU or wall time).
    */
-  TimerOutput(std::ostream&         stream,
+  TimerOutput(std::ostream& stream,
               const OutputFrequency output_frequency,
-              const OutputType      output_type);
+              const OutputType output_type);
 
   /**
    * Constructor.
@@ -708,9 +708,9 @@ public:
    * @param output_type A variable indicating what kind of timing the output
    * should represent (CPU or wall time).
    */
-  TimerOutput(ConditionalOStream&   stream,
+  TimerOutput(ConditionalOStream& stream,
               const OutputFrequency output_frequency,
-              const OutputType      output_type);
+              const OutputType output_type);
 
   /**
    * Constructor that takes an MPI communicator as input. A timer constructed
@@ -735,10 +735,10 @@ public:
    * <code>MPI_Barrier</code> call before starting and stopping the timer for
    * each section.
    */
-  TimerOutput(MPI_Comm              mpi_comm,
-              std::ostream&         stream,
+  TimerOutput(MPI_Comm mpi_comm,
+              std::ostream& stream,
               const OutputFrequency output_frequency,
-              const OutputType      output_type);
+              const OutputType output_type);
 
   /**
    * Constructor that takes an MPI communicator as input. A timer constructed
@@ -763,10 +763,10 @@ public:
    * <code>MPI_Barrier</code> call before starting and stopping the timer for
    * each section.)
    */
-  TimerOutput(MPI_Comm              mpi_comm,
-              ConditionalOStream&   stream,
+  TimerOutput(MPI_Comm mpi_comm,
+              ConditionalOStream& stream,
               const OutputFrequency output_frequency,
-              const OutputType      output_type);
+              const OutputType output_type);
 
   /**
    * Destructor. Calls print_summary() in case the option for writing the
@@ -862,9 +862,9 @@ private:
    */
   struct Section
   {
-    Timer        timer;
-    double       total_cpu_time;
-    double       total_wall_time;
+    Timer timer;
+    double total_cpu_time;
+    double total_wall_time;
     unsigned int n_calls;
   };
 
@@ -984,7 +984,7 @@ TimerOutput::exit_section(const std::string& section_name)
 }
 
 inline TimerOutput::Scope::Scope(dealii::TimerOutput& timer_,
-                                 const std::string&   section_name_)
+                                 const std::string& section_name_)
   : timer(timer_), section_name(section_name_), in(true)
 {
   timer.enter_section(section_name);

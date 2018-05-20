@@ -28,7 +28,7 @@
 void
 test()
 {
-  MPI_Comm                                mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   parallel::distributed::Triangulation<3> triangulation(mpi_communicator);
 
   FE_Q<3> fe(1);

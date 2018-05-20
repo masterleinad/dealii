@@ -80,19 +80,19 @@ namespace Step27
 
     Triangulation<dim> triangulation;
 
-    hp::DoFHandler<dim>      dof_handler;
-    hp::FECollection<dim>    fe_collection;
-    hp::QCollection<dim>     quadrature_collection;
+    hp::DoFHandler<dim> dof_handler;
+    hp::FECollection<dim> fe_collection;
+    hp::QCollection<dim> quadrature_collection;
     hp::QCollection<dim - 1> face_quadrature_collection;
 
-    hp::QCollection<dim>                    fourier_q_collection;
+    hp::QCollection<dim> fourier_q_collection;
     std::shared_ptr<FESeries::Fourier<dim>> fourier;
-    std::vector<double>                     ln_k;
-    Table<dim, std::complex<double>>        fourier_coefficients;
+    std::vector<double> ln_k;
+    Table<dim, std::complex<double>> fourier_coefficients;
 
     ConstraintMatrix constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
@@ -142,7 +142,7 @@ namespace Step27
 
     const unsigned int N = max_degree;
 
-    QGauss<1>      base_quadrature(2);
+    QGauss<1> base_quadrature(2);
     QIterated<dim> quadrature(base_quadrature, N);
     for(unsigned int i = 0; i < fe_collection.size(); i++)
       fourier_q_collection.push_back(quadrature);
@@ -193,7 +193,7 @@ namespace Step27
     const RightHandSide<dim> rhs_function;
 
     FullMatrix<double> cell_matrix;
-    Vector<double>     cell_rhs;
+    Vector<double> cell_rhs;
 
     std::vector<types::global_dof_index> local_dof_indices;
 
@@ -244,7 +244,7 @@ namespace Step27
   {
     SolverControl solver_control(system_rhs.size(),
                                  1e-8 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);
@@ -445,7 +445,7 @@ namespace Step27
     const unsigned int N = max_degree;
 
     std::vector<Tensor<1, dim>> k_vectors;
-    std::vector<unsigned int>   k_vectors_magnitude;
+    std::vector<unsigned int> k_vectors_magnitude;
     switch(dim)
       {
         case 2:
@@ -483,7 +483,7 @@ namespace Step27
           Assert(false, ExcNotImplemented());
       }
 
-    const unsigned      n_fourier_modes = k_vectors.size();
+    const unsigned n_fourier_modes = k_vectors.size();
     std::vector<double> ln_k(n_fourier_modes);
     for(unsigned int i = 0; i < n_fourier_modes; ++i)
       ln_k[i] = std::log(k_vectors[i].norm());
@@ -491,7 +491,7 @@ namespace Step27
     std::vector<Table<2, std::complex<double>>> fourier_transform_matrices(
       fe_collection.size());
 
-    QGauss<1>      base_quadrature(2);
+    QGauss<1> base_quadrature(2);
     QIterated<dim> quadrature(base_quadrature, N);
 
     for(unsigned int fe = 0; fe < fe_collection.size(); ++fe)
@@ -516,7 +516,7 @@ namespace Step27
       }
 
     std::vector<std::complex<double>> fourier_coefficients(n_fourier_modes);
-    Vector<double>                    local_dof_values;
+    Vector<double> local_dof_values;
 
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),

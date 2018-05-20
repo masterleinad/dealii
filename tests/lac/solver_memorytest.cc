@@ -34,16 +34,16 @@
 
 template <typename SolverType, typename MatrixType, typename VectorType>
 void
-check_solve(const MatrixType&                          A,
-            VectorType&                                u,
-            VectorType&                                f,
+check_solve(const MatrixType& A,
+            VectorType& u,
+            VectorType& f,
             const typename SolverType::AdditionalData& additional_data
             = typename SolverType::AdditionalData())
 {
   GrowingVectorMemory<> mem;
-  SolverControl         control(100, 1.e-3);
-  SolverType            solver(control, mem, additional_data);
-  PreconditionIdentity  prec_no;
+  SolverControl control(100, 1.e-3);
+  SolverType solver(control, mem, additional_data);
+  PreconditionIdentity prec_no;
   u = 0.;
   f = 0.;
 
@@ -72,7 +72,7 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, 5);
       testproblem.five_point_structure(structure);
       structure.compress();

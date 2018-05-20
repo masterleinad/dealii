@@ -128,12 +128,12 @@ namespace Step23
     output_results() const;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     ConstraintMatrix constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> mass_matrix;
     SparseMatrix<double> laplace_matrix;
     SparseMatrix<double> matrix_u;
@@ -143,8 +143,8 @@ namespace Step23
     Vector<double> old_solution_u, old_solution_v;
     Vector<double> system_rhs;
 
-    double       time_step;
-    double       time;
+    double time_step;
+    double time;
     unsigned int timestep_number;
     const double theta;
   };
@@ -251,7 +251,7 @@ namespace Step23
 
   template <int dim>
   double
-  BoundaryValuesU<dim>::value(const Point<dim>&  p,
+  BoundaryValuesU<dim>::value(const Point<dim>& p,
                               const unsigned int component) const
   {
     (void) component;
@@ -266,7 +266,7 @@ namespace Step23
 
   template <int dim>
   double
-  BoundaryValuesV<dim>::value(const Point<dim>&  p,
+  BoundaryValuesV<dim>::value(const Point<dim>& p,
                               const unsigned int component) const
   {
     (void) component;
@@ -393,7 +393,7 @@ namespace Step23
   WaveEquation<dim>::solve_u()
   {
     SolverControl solver_control(1000, 1e-8 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     cg.solve(matrix_u, solution_u, system_rhs, PreconditionIdentity());
 
@@ -406,7 +406,7 @@ namespace Step23
   WaveEquation<dim>::solve_v()
   {
     SolverControl solver_control(1000, 1e-8 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     cg.solve(matrix_v, solution_v, system_rhs, PreconditionIdentity());
 

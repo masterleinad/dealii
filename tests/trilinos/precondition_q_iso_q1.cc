@@ -54,11 +54,11 @@ private:
   solve();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   FE_Q_iso_Q1<dim> fe_precondition;
-  DoFHandler<dim>  dof_handler_precondition;
+  DoFHandler<dim> dof_handler_precondition;
 
   ConstraintMatrix constraints;
 
@@ -166,7 +166,7 @@ Step4<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -218,7 +218,7 @@ Step4<dim>::assemble_preconditioner()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -257,8 +257,8 @@ Step4<dim>::solve()
   deallog.push("AMG_Q");
   {
     solution = 0;
-    SolverControl                     solver_control(1000, 1e-12);
-    SolverCG<>                        solver(solver_control);
+    SolverControl solver_control(1000, 1e-12);
+    SolverCG<> solver(solver_control);
     TrilinosWrappers::PreconditionAMG preconditioner;
     preconditioner.initialize(system_matrix);
     solver.solve(system_matrix, solution, system_rhs, preconditioner);
@@ -268,8 +268,8 @@ Step4<dim>::solve()
   deallog.push("AMG_Q_iso_Q1");
   {
     solution = 0;
-    SolverControl                     solver_control(1000, 1e-12);
-    SolverCG<>                        solver(solver_control);
+    SolverControl solver_control(1000, 1e-12);
+    SolverCG<> solver(solver_control);
     TrilinosWrappers::PreconditionAMG preconditioner;
     preconditioner.initialize(preconditioner_matrix);
     solver.solve(system_matrix, solution, system_rhs, preconditioner);

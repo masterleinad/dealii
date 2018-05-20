@@ -81,7 +81,7 @@ public:
    * and the number of children of a cell in the current space dimension (i.e.,
    * GeometryInfo<dim>::max_children_per_cell).
    */
-  CellId(const unsigned int               coarse_cell_id,
+  CellId(const unsigned int coarse_cell_id,
          const std::vector<std::uint8_t>& child_indices);
 
   /**
@@ -95,8 +95,8 @@ public:
    * GeometryInfo<dim>::max_children_per_cell). The array
    * @p child_indices must have at least @p n_child_indices valid entries.
    */
-  CellId(const unsigned int  coarse_cell_id,
-         const unsigned int  n_child_indices,
+  CellId(const unsigned int coarse_cell_id,
+         const unsigned int n_child_indices,
          const std::uint8_t* child_indices);
 
   /**

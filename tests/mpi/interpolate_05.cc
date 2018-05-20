@@ -55,11 +55,11 @@ test()
   tr.refine_global(2);
 
   // Create a system with more than one component
-  FESystem<dim>   fe(FE_Q<dim>(1), 2);
+  FESystem<dim> fe(FE_Q<dim>(1), 2);
   DoFHandler<dim> dofh(tr);
   dofh.distribute_dofs(fe);
 
-  IndexSet                      owned_set = dofh.locally_owned_dofs();
+  IndexSet owned_set = dofh.locally_owned_dofs();
   TrilinosWrappers::MPI::Vector x;
 
   x.reinit(owned_set, MPI_COMM_WORLD);
@@ -79,7 +79,7 @@ test()
   DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
   TrilinosWrappers::MPI::Vector x_rel(relevant_set, MPI_COMM_WORLD);
   x_rel = x;
-  Vector<double>               error(tr.n_active_cells());
+  Vector<double> error(tr.n_active_cells());
   ComponentSelectFunction<dim> right_component_select(0, 2);
   ComponentSelectFunction<dim> wrong_component_select(1, 2);
 

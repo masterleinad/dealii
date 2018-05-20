@@ -32,7 +32,7 @@ check_this(const DoFHandler<dim>& dof_handler)
     return;
 
   std::vector<Point<dim>> map(dof_handler.n_dofs());
-  MappingQ<dim>           mapping(2);
+  MappingQ<dim> mapping(2);
 
   DoFTools::map_dofs_to_support_points(mapping, dof_handler, map);
 

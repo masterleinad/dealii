@@ -51,9 +51,9 @@ public:
   run();
 
 private:
-  Triangulation<dim>     triangulation;
-  FESystem<dim>          finite_element;
-  DoFHandler<dim>        dof_handler;
+  Triangulation<dim> triangulation;
+  FESystem<dim> finite_element;
+  DoFHandler<dim> dof_handler;
   PointValueHistory<dim> test_copy;
 };
 
@@ -96,7 +96,7 @@ TestPointValueHistory<dim>::run()
   // than dimensions. The code breaks down at the edges of the mesh and this is
   // not corrected for.
   {
-    QGauss<dim>   quadrature_formula(2);
+    QGauss<dim> quadrature_formula(2);
     FEValues<dim> fe_values(
       finite_element,
       quadrature_formula,
@@ -106,7 +106,7 @@ TestPointValueHistory<dim>::run()
     std::vector<types::global_dof_index> local_dof_indices(
       finite_element.dofs_per_cell);
     std::vector<Point<dim>> dof_locations(finite_element.dofs_per_cell);
-    Vector<double>          cell_pole(finite_element.dofs_per_cell);
+    Vector<double> cell_pole(finite_element.dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell, endc;
     cell = dof_handler.begin_active();
@@ -143,7 +143,7 @@ TestPointValueHistory<dim>::run()
   }
 
   // Setup monitor node to print variation over time
-  unsigned int           n_inputs = 1;
+  unsigned int n_inputs = 1;
   PointValueHistory<dim> node_monitor(dof_handler, n_inputs);
   PointValueHistory<dim> no_dof_handler(n_inputs);
 

@@ -42,9 +42,9 @@ output_double_number(double input, const std::string& text)
 
 template <int dim, int fe_degree, typename Number>
 void
-mass_operator(const MatrixFree<dim, Number>&               data,
-              Vector<Number>&                              dst,
-              const Vector<Number>&                        src,
+mass_operator(const MatrixFree<dim, Number>& data,
+              Vector<Number>& dst,
+              const Vector<Number>& src,
               const std::pair<unsigned int, unsigned int>& cell_range)
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
@@ -107,14 +107,14 @@ test(const FiniteElement<dim>& fe, const unsigned int n_iterations)
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_block_size = 8 / VectorizedArray<number>::n_array_elements;
     mf_data.reinit(dof, constraints, quad, data);
   }
 
   MatrixFreeTest<dim, fe_degree, number> mf(mf_data);
-  Vector<number>                         in(dof.n_dofs()), out(dof.n_dofs());
+  Vector<number> in(dof.n_dofs()), out(dof.n_dofs());
 
   VectorTools::create_right_hand_side(
     dof, QGauss<dim>(fe_degree + 1), Functions::CosineFunction<dim>(), in);
@@ -124,7 +124,7 @@ test(const FiniteElement<dim>& fe, const unsigned int n_iterations)
   // accumulate differently. Beware of this strange solver setting when seeing
   // "failure" in the output
   SolverControl control(n_iterations, 0);
-  SolverCG<>    solver(control);
+  SolverCG<> solver(control);
   solver.connect_condition_number_slot(
     std::bind(output_double_number,
               std::placeholders::_1,

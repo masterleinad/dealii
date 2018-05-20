@@ -36,7 +36,7 @@ main(int argc, char* argv[])
   // Need to get the linear operator to do some nonsense work to verify
   // that it can indeed be used as expected
   const unsigned int size = 32;
-  unsigned int       dim  = (size - 1) * (size - 1);
+  unsigned int dim        = (size - 1) * (size - 1);
 
   // Make matrix
   FDMatrix testproblem(size, size);

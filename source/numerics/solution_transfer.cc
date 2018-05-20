@@ -111,7 +111,7 @@ template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::refine_interpolate(
   const VectorType& in,
-  VectorType&       out) const
+  VectorType& out) const
 {
   Assert(prepared_for == pure_refinement, ExcNotPrepared());
   Assert(in.size() == n_dofs_old, ExcDimensionMismatch(in.size(), n_dofs_old));
@@ -188,7 +188,7 @@ namespace internal
   void
   extract_interpolation_matrices(
     const dealii::hp::DoFHandler<dim, spacedim>& dof,
-    dealii::Table<2, FullMatrix<double>>&        matrices)
+    dealii::Table<2, FullMatrix<double>>& matrices)
   {
     const dealii::hp::FECollection<dim, spacedim>& fe = dof.get_fe_collection();
     matrices.reinit(fe.size(), fe.size());
@@ -302,7 +302,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
     std::vector<Vector<typename VectorType::value_type>>(in_size))
     .swap(dof_values_on_cell);
 
-  Table<2, FullMatrix<double>>   interpolation_hp;
+  Table<2, FullMatrix<double>> interpolation_hp;
   std::vector<std::vector<bool>> restriction_is_additive;
 
   internal::extract_interpolation_matrices(*dof_handler, interpolation_hp);
@@ -409,7 +409,7 @@ template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
   const std::vector<VectorType>& all_in,
-  std::vector<VectorType>&       all_out) const
+  std::vector<VectorType>& all_out) const
 {
   Assert(prepared_for == coarsening_and_refinement, ExcNotPrepared());
   const unsigned int size = all_in.size();
@@ -427,7 +427,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
                         " at the same time!"));
 
   Vector<typename VectorType::value_type> local_values;
-  std::vector<types::global_dof_index>    dofs;
+  std::vector<types::global_dof_index> dofs;
 
   typename std::map<std::pair<unsigned int, unsigned int>,
                     Pointerstruct>::const_iterator pointerstruct,
@@ -542,7 +542,7 @@ template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
   const VectorType& in,
-  VectorType&       out) const
+  VectorType& out) const
 {
   Assert(in.size() == n_dofs_old, ExcDimensionMismatch(in.size(), n_dofs_old));
   Assert(out.size() == dof_handler->n_dofs(),

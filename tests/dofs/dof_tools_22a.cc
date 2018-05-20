@@ -40,7 +40,7 @@ test()
 {
   unsigned int np   = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const int    dim  = 2;
+  const int dim     = 2;
   // Setup system
   dealii::parallel::distributed::Triangulation<dim> triangulation(
     MPI_COMM_WORLD);
@@ -126,7 +126,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
   const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  MPILogInitAll      log;
+  MPILogInitAll log;
 
   deallog.push(Utilities::int_to_string(myid));
 

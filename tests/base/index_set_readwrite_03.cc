@@ -33,7 +33,7 @@ test()
     is1.block_write(out);
   }
 
-  IndexSet      is2;
+  IndexSet is2;
   std::ifstream in("a.idxset");
   is2.block_read(in);
 

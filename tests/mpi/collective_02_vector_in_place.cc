@@ -21,10 +21,10 @@
 void
 test()
 {
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  unsigned int              values_[2] = {1, 2};
+  unsigned int values_[2] = {1, 2};
   std::vector<unsigned int> sums(&values_[0], &values_[2]);
   Utilities::MPI::sum(sums, MPI_COMM_WORLD, sums);
   Assert(sums[0] == numprocs, ExcInternalError());

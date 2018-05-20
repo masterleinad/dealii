@@ -89,17 +89,17 @@ namespace Step36
     output_results() const;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     // With these exceptions: For our eigenvalue problem, we need both a
     // stiffness matrix for the left hand side as well as a mass matrix for
     // the right hand side. We also need not just one solution function, but a
     // whole set of these for the eigenfunctions we want to compute, along
     // with the corresponding eigenvalues:
-    PETScWrappers::SparseMatrix             stiffness_matrix, mass_matrix;
+    PETScWrappers::SparseMatrix stiffness_matrix, mass_matrix;
     std::vector<PETScWrappers::MPI::Vector> eigenfunctions;
-    std::vector<double>                     eigenvalues;
+    std::vector<double> eigenvalues;
 
     // And then we need an object that will store several run-time parameters
     // that we will specify in an input file:
@@ -346,7 +346,7 @@ namespace Step36
   {
     // We start here, as we normally do, by assigning convergence control we
     // want:
-    SolverControl                    solver_control(dof_handler.n_dofs(), 1e-9);
+    SolverControl solver_control(dof_handler.n_dofs(), 1e-9);
     SLEPcWrappers::SolverKrylovSchur eigensolver(solver_control);
 
     // Before we actually solve for the eigenfunctions and -values, we have to

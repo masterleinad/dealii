@@ -36,7 +36,7 @@ main(int argc, char** argv)
     SolverControl control(100, 1.e-3);
 
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int dim        = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -49,7 +49,7 @@ main(int argc, char** argv)
     f = 1.;
     A.compress(VectorOperation::insert);
 
-    PETScWrappers::SolverCG         solver(control);
+    PETScWrappers::SolverCG solver(control);
     PETScWrappers::PreconditionNone preconditioner(A);
     deallog << "Solver type: " << typeid(solver).name() << std::endl;
     check_solver_within_range(

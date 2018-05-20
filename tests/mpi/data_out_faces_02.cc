@@ -51,17 +51,17 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   {
     const unsigned int dim = 2;
 
-    MPI_Comm                                  mpi_communicator(MPI_COMM_WORLD);
+    MPI_Comm mpi_communicator(MPI_COMM_WORLD);
     parallel::distributed::Triangulation<dim> triangulation(
       mpi_communicator,
       typename Triangulation<dim>::MeshSmoothing(
         Triangulation<dim>::smoothing_on_refinement
         | Triangulation<dim>::smoothing_on_coarsening));
-    FESystem<dim>   fe(FE_FaceQ<dim>(2), dim);
+    FESystem<dim> fe(FE_FaceQ<dim>(2), dim);
     DoFHandler<dim> dof_handler(triangulation);
 
     triangulation.clear();
@@ -69,8 +69,8 @@ main(int argc, char* argv[])
     dof_handler.distribute_dofs(fe);
 
     LinearAlgebraTrilinos::MPI::Vector locally_relevant_sol;
-    IndexSet                           locally_owned_dofs;
-    IndexSet                           locally_relevant_dofs;
+    IndexSet locally_owned_dofs;
+    IndexSet locally_relevant_dofs;
 
     locally_owned_dofs = dof_handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);

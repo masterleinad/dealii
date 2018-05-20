@@ -84,10 +84,10 @@ namespace internal
       template <int dh_dim, int spacedim>
       void
       set_dof_index(const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-                    const unsigned int                          obj_index,
-                    const unsigned int                          fe_index,
-                    const unsigned int                          local_index,
-                    const types::global_dof_index               global_index);
+                    const unsigned int obj_index,
+                    const unsigned int fe_index,
+                    const unsigned int local_index,
+                    const types::global_dof_index global_index);
 
       /**
        * Return the global index of the @p local_index-th degree of freedom
@@ -104,8 +104,8 @@ namespace internal
       template <int dh_dim, int spacedim>
       types::global_dof_index
       get_dof_index(const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-                    const unsigned int                          obj_index,
-                    const unsigned int                          fe_index,
+                    const unsigned int obj_index,
+                    const unsigned int fe_index,
                     const unsigned int local_index) const;
 
       /**
@@ -117,7 +117,7 @@ namespace internal
       unsigned int
       n_active_fe_indices(
         const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-        const types::global_dof_index               index) const;
+        const types::global_dof_index index) const;
 
       /**
        * Similar to the function above. Assert that the given index is zero,
@@ -127,8 +127,8 @@ namespace internal
       bool
       fe_index_is_active(
         const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-        const types::global_dof_index               index,
-        const unsigned int                          fe_index) const;
+        const types::global_dof_index index,
+        const unsigned int fe_index) const;
 
       /**
        * Determine an estimate for the memory consumption (in bytes) of this
@@ -187,9 +187,9 @@ namespace internal
     inline types::global_dof_index
     DoFObjects<dim>::get_dof_index(
       const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-      const unsigned int                          obj_index,
-      const unsigned int                          fe_index,
-      const unsigned int                          local_index) const
+      const unsigned int obj_index,
+      const unsigned int fe_index,
+      const unsigned int local_index) const
     {
       (void) fe_index;
       Assert(

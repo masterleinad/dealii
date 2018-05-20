@@ -105,9 +105,9 @@ public:
      * Default constructor. Set all elements of this structure to their
      * default values.
      */
-    Options(const bool         show_absolute_values = false,
-            const unsigned int block_size           = 1,
-            const bool         discontinuous        = false);
+    Options(const bool show_absolute_values = false,
+            const unsigned int block_size   = 1,
+            const bool discontinuous        = false);
   };
 
   /**
@@ -134,9 +134,9 @@ public:
    */
   template <class Matrix>
   void
-  build_patches(const Matrix&      matrix,
+  build_patches(const Matrix& matrix,
                 const std::string& name,
-                const Options      options = Options(false, 1, false));
+                const Options options = Options(false, 1, false));
 
 private:
   /**
@@ -180,10 +180,10 @@ private:
    */
   template <class Matrix>
   static double
-  get_gridpoint_value(const Matrix&   matrix,
+  get_gridpoint_value(const Matrix& matrix,
                       const size_type i,
                       const size_type j,
-                      const Options&  options);
+                      const Options& options);
 };
 
 /* ---------------------- Template and inline functions ------------- */
@@ -200,8 +200,8 @@ namespace internal
       template <typename number>
       double
       get_element(const dealii::SparseMatrix<number>& matrix,
-                  const types::global_dof_index       i,
-                  const types::global_dof_index       j)
+                  const types::global_dof_index i,
+                  const types::global_dof_index j)
       {
         return matrix.el(i, j);
       }
@@ -212,8 +212,8 @@ namespace internal
       template <typename number>
       double
       get_element(const dealii::BlockSparseMatrix<number>& matrix,
-                  const types::global_dof_index            i,
-                  const types::global_dof_index            j)
+                  const types::global_dof_index i,
+                  const types::global_dof_index j)
       {
         return matrix.el(i, j);
       }
@@ -224,8 +224,8 @@ namespace internal
        */
       inline double
       get_element(const TrilinosWrappers::SparseMatrix& matrix,
-                  const types::global_dof_index         i,
-                  const types::global_dof_index         j)
+                  const types::global_dof_index i,
+                  const types::global_dof_index j)
       {
         return matrix.el(i, j);
       }
@@ -236,8 +236,8 @@ namespace internal
        */
       inline double
       get_element(const TrilinosWrappers::BlockSparseMatrix& matrix,
-                  const types::global_dof_index              i,
-                  const types::global_dof_index              j)
+                  const types::global_dof_index i,
+                  const types::global_dof_index j)
       {
         return matrix.el(i, j);
       }
@@ -256,7 +256,7 @@ namespace internal
        */
       template <class Matrix>
       double
-      get_element(const Matrix&                 matrix,
+      get_element(const Matrix& matrix,
                   const types::global_dof_index i,
                   const types::global_dof_index j)
       {
@@ -268,10 +268,10 @@ namespace internal
 
 template <class Matrix>
 inline double
-MatrixOut::get_gridpoint_value(const Matrix&   matrix,
+MatrixOut::get_gridpoint_value(const Matrix& matrix,
                                const size_type i,
                                const size_type j,
-                               const Options&  options)
+                               const Options& options)
 {
   // special case if block size is
   // one since we then don't need all
@@ -287,7 +287,7 @@ MatrixOut::get_gridpoint_value(const Matrix&   matrix,
 
   // if blocksize greater than one,
   // then compute average of elements
-  double    average    = 0;
+  double average       = 0;
   size_type n_elements = 0;
   for(size_type row = i * options.block_size;
       row < std::min(size_type(matrix.m()),
@@ -309,9 +309,9 @@ MatrixOut::get_gridpoint_value(const Matrix&   matrix,
 
 template <class Matrix>
 void
-MatrixOut::build_patches(const Matrix&      matrix,
+MatrixOut::build_patches(const Matrix& matrix,
                          const std::string& name,
-                         const Options      options)
+                         const Options options)
 {
   size_type gridpoints_x = (matrix.n() / options.block_size
                             + (matrix.n() % options.block_size != 0 ? 1 : 0)),

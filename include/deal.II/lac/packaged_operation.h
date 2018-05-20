@@ -354,7 +354,7 @@ operator-(const PackagedOperation<Range>& first_comp,
  */
 template <typename Range>
 PackagedOperation<Range> operator*(const PackagedOperation<Range>& comp,
-                                   typename Range::value_type      number)
+                                   typename Range::value_type number)
 {
   PackagedOperation<Range> return_comp;
 
@@ -393,7 +393,7 @@ PackagedOperation<Range> operator*(const PackagedOperation<Range>& comp,
  * @ingroup LAOperators
  */
 template <typename Range>
-PackagedOperation<Range> operator*(typename Range::value_type      number,
+PackagedOperation<Range> operator*(typename Range::value_type number,
                                    const PackagedOperation<Range>& comp)
 {
   return comp * number;
@@ -596,7 +596,7 @@ operator-(const Range& u, const Range& v)
 template <typename Range,
           typename = typename std::enable_if<
             has_vector_interface<Range>::type::value>::type>
-PackagedOperation<Range> operator*(const Range&               u,
+PackagedOperation<Range> operator*(const Range& u,
                                    typename Range::value_type number)
 {
   return PackagedOperation<Range>(u) * number;
@@ -620,7 +620,7 @@ template <typename Range,
           typename = typename std::enable_if<
             has_vector_interface<Range>::type::value>::type>
 PackagedOperation<Range> operator*(typename Range::value_type number,
-                                   const Range&               u)
+                                   const Range& u)
 {
   return number * PackagedOperation<Range>(u);
 }
@@ -704,7 +704,7 @@ operator*(const Range& u, const LinearOperator<Range, Domain, Payload>& op)
 template <typename Range, typename Domain, typename Payload>
 PackagedOperation<Range>
 operator*(const LinearOperator<Range, Domain, Payload>& op,
-          const PackagedOperation<Domain>&              comp)
+          const PackagedOperation<Domain>& comp)
 {
   PackagedOperation<Range> return_comp;
 
@@ -746,7 +746,7 @@ operator*(const LinearOperator<Range, Domain, Payload>& op,
  */
 template <typename Range, typename Domain, typename Payload>
 PackagedOperation<Domain>
-operator*(const PackagedOperation<Range>&               comp,
+operator*(const PackagedOperation<Range>& comp,
           const LinearOperator<Range, Domain, Payload>& op)
 {
   PackagedOperation<Range> return_comp;

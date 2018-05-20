@@ -37,10 +37,10 @@ main()
 
   const unsigned int dim = 2;
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe(1);
-  QGauss<dim>        quadrature_formula(2);
-  DoFHandler<dim>    dof_handler(triangulation);
-  Vector<double>     zero_solution;
+  FE_Q<dim> fe(1);
+  QGauss<dim> quadrature_formula(2);
+  DoFHandler<dim> dof_handler(triangulation);
+  Vector<double> zero_solution;
 
   FEValues<dim> fe_values(fe,
                           quadrature_formula,
@@ -52,7 +52,7 @@ main()
 
   const FEValuesExtractors::Scalar extractor_sclr(0);
 
-  typedef Sacado::Fad::DFad<double>     ad_type;
+  typedef Sacado::Fad::DFad<double> ad_type;
   DoFHandler<dim>::active_cell_iterator cell = dof_handler.begin_active();
   DoFHandler<dim>::active_cell_iterator endc = dof_handler.end();
   for(; cell != endc; ++cell)

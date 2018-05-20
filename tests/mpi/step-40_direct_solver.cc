@@ -80,7 +80,7 @@ namespace Step40
     parallel::distributed::Triangulation<dim> triangulation;
 
     DoFHandler<dim> dof_handler;
-    FE_Q<dim>       fe;
+    FE_Q<dim> fe;
 
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
@@ -88,8 +88,8 @@ namespace Step40
     ConstraintMatrix constraints;
 
     PETScWrappers::MPI::SparseMatrix system_matrix;
-    PETScWrappers::MPI::Vector       locally_relevant_solution;
-    PETScWrappers::MPI::Vector       system_rhs;
+    PETScWrappers::MPI::Vector locally_relevant_solution;
+    PETScWrappers::MPI::Vector system_rhs;
 
     ConditionalOStream pcout;
   };
@@ -166,7 +166,7 @@ namespace Step40
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<PetscScalar> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<PetscScalar>     cell_rhs(dofs_per_cell);
+    Vector<PetscScalar> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 

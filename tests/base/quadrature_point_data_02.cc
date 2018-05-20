@@ -98,13 +98,13 @@ template <int dim, typename DATA>
 void
 check_qph(parallel::distributed::Triangulation<dim>& tr,
           const CellDataStorage<typename Triangulation<dim, dim>::cell_iterator,
-                                DATA>&               manager,
-          const Quadrature<dim>&                     rhs_quadrature,
-          const MyFunction<dim>&                     func)
+                                DATA>& manager,
+          const Quadrature<dim>& rhs_quadrature,
+          const MyFunction<dim>& func)
 {
   DoFHandler<dim> dof_handler(tr);
-  FE_Q<dim>       dummy_fe(1);
-  FEValues<dim>   fe_values(dummy_fe, rhs_quadrature, update_quadrature_points);
+  FE_Q<dim> dummy_fe(1);
+  FEValues<dim> fe_values(dummy_fe, rhs_quadrature, update_quadrature_points);
   dof_handler.distribute_dofs(dummy_fe);
   typename Triangulation<dim, dim>::active_cell_iterator cell;
   for(cell = tr.begin_active(); cell != tr.end(); ++cell)
@@ -156,8 +156,8 @@ test()
 
   {
     DoFHandler<dim> dof_handler(tr);
-    FE_Q<dim>       dummy_fe(1);
-    FEValues<dim>   fe_values(dummy_fe, rhs, update_quadrature_points);
+    FE_Q<dim> dummy_fe(1);
+    FEValues<dim> fe_values(dummy_fe, rhs, update_quadrature_points);
     dof_handler.distribute_dofs(dummy_fe);
     for(cell = tr.begin_active(); cell != tr.end(); ++cell)
       if(cell->is_locally_owned())

@@ -48,7 +48,7 @@ test(std::string filename, unsigned int degree = 1)
 
 {
   Triangulation<dim, spacedim> triangulation;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
 
   gi.attach_triangulation(triangulation);
   std::ifstream in(filename.c_str());
@@ -56,7 +56,7 @@ test(std::string filename, unsigned int degree = 1)
 
   // finite elements used for the
   // projection
-  const FE_Q<dim, spacedim>     fe(QIterated<1>(QTrapez<1>(), degree));
+  const FE_Q<dim, spacedim> fe(QIterated<1>(QTrapez<1>(), degree));
   const MappingQ<dim, spacedim> mapping(degree);
 
   DoFHandler<dim, spacedim> dof_handler(triangulation);
@@ -81,7 +81,7 @@ test(std::string filename, unsigned int degree = 1)
   // Functions::Monomial<spacedim> the_function(exp);
 
   const QGauss<dim> quad(2 * fe.degree + 1);
-  ConstraintMatrix  constraints;
+  ConstraintMatrix constraints;
   constraints.close();
   VectorTools::project(
     mapping, dof_handler, constraints, quad, the_function, projected_one);

@@ -53,10 +53,10 @@ test()
 
   if(myid == 1)
     {
-      MPI_Status  status;
+      MPI_Status status;
       MPI_Request request;
-      int         flag  = 0;
-      int         tests = 0;
+      int flag  = 0;
+      int tests = 0;
 
       while(!flag && tests < 10)
         {

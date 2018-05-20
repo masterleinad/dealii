@@ -41,7 +41,7 @@ test_vertices_orientation(
   const Triangulation<s_dim, spacedim>& boundary_mesh,
   map<typename Triangulation<s_dim, spacedim>::cell_iterator,
       typename Triangulation<s_dim + 1, spacedim>::face_iterator>&
-            surface_to_volume_mapping,
+    surface_to_volume_mapping,
   const int verbosity = 1)
 {
   typename Triangulation<s_dim, spacedim>::active_cell_iterator cell
@@ -109,7 +109,7 @@ main()
 
     map<Triangulation<dim - 1, dim>::cell_iterator,
         Triangulation<dim, dim>::face_iterator>
-                       surface_to_volume_mapping;
+      surface_to_volume_mapping;
     Triangulation<dim> volume_mesh;
     GridGenerator::hyper_ball(volume_mesh);
     volume_mesh.reset_manifold(0);

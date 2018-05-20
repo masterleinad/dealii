@@ -132,15 +132,15 @@ namespace Step22
     const unsigned int degree;
 
     Triangulation<dim> triangulation;
-    FESystem<dim>      fe;
-    DoFHandler<dim>    dof_handler;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     ConstraintMatrix constraints;
 
-    BlockSparsityPattern      sparsity_pattern;
+    BlockSparsityPattern sparsity_pattern;
     BlockSparseMatrix<double> system_matrix;
 
-    BlockSparsityPattern      preconditioner_sparsity_pattern;
+    BlockSparsityPattern preconditioner_sparsity_pattern;
     BlockSparseMatrix<double> preconditioner_matrix;
 
     BlockVector<double> solution;
@@ -196,7 +196,7 @@ namespace Step22
 
   template <int dim>
   double
-  BoundaryValues<dim>::value(const Point<dim>&  p,
+  BoundaryValues<dim>::value(const Point<dim>& p,
                              const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -210,7 +210,7 @@ namespace Step22
   template <int dim>
   void
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                    Vector<double>&   values) const
+                                    Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
@@ -243,7 +243,7 @@ namespace Step22
   template <int dim>
   void
   RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
@@ -271,20 +271,20 @@ namespace Step22
   class InverseMatrix : public Subscriptor
   {
   public:
-    InverseMatrix(const MatrixType&         m,
+    InverseMatrix(const MatrixType& m,
                   const PreconditionerType& preconditioner);
 
     void
     vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
-    const SmartPointer<const MatrixType>         matrix;
+    const SmartPointer<const MatrixType> matrix;
     const SmartPointer<const PreconditionerType> preconditioner;
   };
 
   template <class MatrixType, class PreconditionerType>
   InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
-    const MatrixType&         m,
+    const MatrixType& m,
     const PreconditionerType& preconditioner)
     : matrix(&m), preconditioner(&preconditioner)
   {}
@@ -302,11 +302,11 @@ namespace Step22
   template <class MatrixType, class PreconditionerType>
   void
   InverseMatrix<MatrixType, PreconditionerType>::vmult(
-    Vector<double>&       dst,
+    Vector<double>& dst,
     const Vector<double>& src) const
   {
     SolverControl solver_control(src.size(), 1e-6 * src.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     dst = 0;
 
@@ -355,7 +355,7 @@ namespace Step22
 
   template <class PreconditionerType>
   void
-  SchurComplement<PreconditionerType>::vmult(Vector<double>&       dst,
+  SchurComplement<PreconditionerType>::vmult(Vector<double>& dst,
                                              const Vector<double>& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
@@ -620,11 +620,11 @@ namespace Step22
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> local_preconditioner_matrix(dofs_per_cell,
                                                    dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    const RightHandSide<dim>    right_hand_side;
+    const RightHandSide<dim> right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim + 1));
 
     // Next, we need two objects that work as extractors for the FEValues
@@ -656,8 +656,8 @@ namespace Step22
     // <code>dofs_per_cell</code>, but only up to <code>i</code>, the index of
     // the outer loop.
     std::vector<SymmetricTensor<2, dim>> symgrad_phi_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -778,7 +778,7 @@ namespace Step22
   {
     const InverseMatrix<SparseMatrix<double>,
                         typename InnerPreconditioner<dim>::type>
-                   A_inverse(system_matrix.block(0, 0), *A_preconditioner);
+      A_inverse(system_matrix.block(0, 0), *A_preconditioner);
     Vector<double> tmp(solution.block(0).size());
 
     // This is as in step-20. We generate the right hand side $B A^{-1} F - G$
@@ -798,7 +798,7 @@ namespace Step22
       // The usual control structures for the solver call are created...
       SolverControl solver_control(solution.block(1).size(),
                                    1e-6 * schur_rhs.l2_norm());
-      SolverCG<>    cg(solver_control);
+      SolverCG<> cg(solver_control);
 
       // Now to the preconditioner to the Schur complement. As explained in
       // the introduction, the preconditioning is done by a mass matrix in the

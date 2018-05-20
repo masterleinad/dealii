@@ -37,7 +37,7 @@ test()
   std::ostream& out = deallog.get_file_stream();
 
   Triangulation<dim> triangulation;
-  const int          velocity_degree = 2;
+  const int velocity_degree = 2;
 
   std::vector<unsigned int> rep(dim, 1);
   rep[0] = 2;

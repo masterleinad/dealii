@@ -27,7 +27,7 @@ struct ScratchData
 {};
 struct CopyData
 {
-  unsigned     n_cells;
+  unsigned n_cells;
   unsigned int n_own_cells;
   unsigned int n_ghost_cells;
 
@@ -55,13 +55,13 @@ test()
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dofh(tria);
   dofh.distribute_dofs(fe);
   dofh.distribute_mg_dofs(fe);
 
   ScratchData scratch;
-  CopyData    copy;
+  CopyData copy;
 
   auto cell = dofh.begin_mg();
   auto endc = dofh.end_mg();
@@ -85,14 +85,14 @@ test()
                 << std::endl;
       };
 
-  auto face_worker = [](const Iterator&     cell,
+  auto face_worker = [](const Iterator& cell,
                         const unsigned int& f,
                         const unsigned int& sf,
-                        const Iterator&     ncell,
+                        const Iterator& ncell,
                         const unsigned int& nf,
                         const unsigned int& nsf,
-                        ScratchData&        s,
-                        CopyData&           c) {
+                        ScratchData& s,
+                        CopyData& c) {
     deallog << "Face worker on : " << cell << ", Neighbor cell : " << ncell
             << ", Face : " << f << ", Neighbor Face : " << nf
             << ", Subface: " << sf << ", Neighbor Subface: " << nsf
@@ -103,7 +103,7 @@ test()
   };
 
   CopyData data;
-  auto     copier = [&](const CopyData& c) {
+  auto copier = [&](const CopyData& c) {
     data.n_cells += c.n_cells;
     data.n_own_cells += c.n_own_cells;
     data.n_ghost_cells += c.n_ghost_cells;

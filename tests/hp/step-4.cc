@@ -58,11 +58,11 @@ private:
   void
   output_results() const;
 
-  Triangulation<dim>    triangulation;
+  Triangulation<dim> triangulation;
   hp::FECollection<dim> fe;
-  hp::DoFHandler<dim>   dof_handler;
+  hp::DoFHandler<dim> dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   Vector<double> solution;
@@ -163,7 +163,7 @@ LaplaceProblem<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula[0].size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -216,7 +216,7 @@ void
 LaplaceProblem<dim>::solve()
 {
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
   cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
 
   deallog << "   " << solver_control.last_step()

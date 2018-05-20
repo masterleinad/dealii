@@ -92,7 +92,7 @@ template <int dim>
 void
 Postprocess<dim>::evaluate_vector_field(
   const DataPostprocessorInputs::Vector<dim>& inputs,
-  std::vector<Vector<double>>&                computed_quantities) const
+  std::vector<Vector<double>>& computed_quantities) const
 {
   Assert(computed_quantities.size() == inputs.solution_values.size(),
          ExcDimensionMismatch(computed_quantities.size(),
@@ -128,10 +128,10 @@ private:
   void
   output_results(unsigned int step, Vector<double> solution) const;
 
-  Triangulation<dim>      triangulation;
-  FESystem<dim>           finite_element;
-  DoFHandler<dim>         dof_handler;
-  PointValueHistory<dim>  test_copy;
+  Triangulation<dim> triangulation;
+  FESystem<dim> finite_element;
+  DoFHandler<dim> dof_handler;
+  PointValueHistory<dim> test_copy;
   std::vector<Point<dim>> postprocessor_locations;
 };
 
@@ -239,7 +239,7 @@ TestPointValueHistory<dim>::run()
   }
 
   // Setup monitor node to print variation over time
-  unsigned int           n_inputs = 1;
+  unsigned int n_inputs = 1;
   PointValueHistory<dim> node_monitor(dof_handler, n_inputs);
   PointValueHistory<dim> no_dof_handler(n_inputs);
 
@@ -308,14 +308,14 @@ TestPointValueHistory<dim>::run()
     std::vector<std::vector<Point<dim>>> selected_locations;
     node_monitor.get_support_locations(selected_locations);
     Vector<double> node_locations = node_monitor.mark_support_locations();
-    QGauss<dim>    postprocess_quadrature(2);
+    QGauss<dim> postprocess_quadrature(2);
     node_monitor.get_postprocessor_locations(postprocess_quadrature,
                                              postprocessor_locations);
   }
 
-  double       delta_t = 0.000001;
-  double       t_max   = 0.00001;
-  unsigned int step    = 0;
+  double delta_t    = 0.000001;
+  double t_max      = 0.00001;
+  unsigned int step = 0;
 
   for(double time = 0; time < t_max; time = time + delta_t)
     {
@@ -332,8 +332,8 @@ TestPointValueHistory<dim>::run()
       node_monitor.evaluate_field("Pressure", solution);
       node_monitor.evaluate_field_at_requested_location("Req_sol", solution);
 
-      Postprocess<dim>         postprocessor;
-      QGauss<dim>              postprocess_quadrature(2);
+      Postprocess<dim> postprocessor;
+      QGauss<dim> postprocess_quadrature(2);
       std::vector<std::string> names;
       names.emplace_back("Vector_out");
       names.emplace_back("Scalar_out");
@@ -390,7 +390,7 @@ TestPointValueHistory<dim>::run()
 
 template <int dim>
 void
-TestPointValueHistory<dim>::output_results(unsigned int   step,
+TestPointValueHistory<dim>::output_results(unsigned int step,
                                            Vector<double> solution) const
 {
   std::vector<std::string> solution_names(dim, "velocity");

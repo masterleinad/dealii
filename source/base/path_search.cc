@@ -25,7 +25,7 @@ DEAL_II_NAMESPACE_OPEN
 
 std::map<std::string, std::vector<std::string>> PathSearch::path_lists;
 std::map<std::string, std::vector<std::string>> PathSearch::suffix_lists;
-std::string                                     PathSearch::empty("");
+std::string PathSearch::empty("");
 
 void
 PathSearch::initialize_classes()
@@ -106,9 +106,9 @@ PathSearch::PathSearch(const std::string& cls, const unsigned int debug)
 std::string
 PathSearch::find(const std::string& filename,
                  const std::string& suffix,
-                 const char*        open_mode)
+                 const char* open_mode)
 {
-  std::vector<std::string>::const_iterator       path;
+  std::vector<std::string>::const_iterator path;
   const std::vector<std::string>::const_iterator endp = my_path_list.end();
 
   std::string real_name;
@@ -165,7 +165,7 @@ PathSearch::find(const std::string& filename,
 std::string
 PathSearch::find(const std::string& filename, const char* open_mode)
 {
-  std::vector<std::string>::const_iterator       suffix;
+  std::vector<std::string>::const_iterator suffix;
   const std::vector<std::string>::const_iterator ends = my_suffix_list.end();
 
   if(debug > 2)

@@ -86,7 +86,7 @@ main()
 
   // Vector to visualize the FE of each cell
   Vector<double> FE_Type(triangulation.n_active_cells());
-  unsigned int   cnt_cells(0);
+  unsigned int cnt_cells(0);
   cell = dof_handler.begin_active(), endc = dof_handler.end();
   for(; cell != endc; ++cell)
     {

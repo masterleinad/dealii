@@ -257,7 +257,7 @@ private:
 //---------------------------------------------------------------------------
 
 template <typename ElementType>
-inline ArrayView<ElementType>::ArrayView(value_type*       starting_element,
+inline ArrayView<ElementType>::ArrayView(value_type* starting_element,
                                          const std::size_t n_elements)
   : starting_element(starting_element), n_elements(n_elements)
 {}
@@ -378,7 +378,7 @@ ArrayView<ElementType>::cend() const
 
 template <typename ElementType>
 inline typename ArrayView<ElementType>::value_type& ArrayView<ElementType>::
-                                                    operator[](const std::size_t i) const
+operator[](const std::size_t i) const
 {
   Assert(i < n_elements, ExcIndexRange(i, 0, n_elements));
 
@@ -734,8 +734,8 @@ make_array_view(const std::vector<ElementType>& vector)
 template <typename ElementType>
 inline ArrayView<ElementType>
 make_array_view(std::vector<ElementType>& vector,
-                const std::size_t         starting_index,
-                const std::size_t         size_of_view)
+                const std::size_t starting_index,
+                const std::size_t size_of_view)
 {
   Assert(starting_index + size_of_view <= vector.size(),
          ExcMessage("The starting index and size of the view you want to "
@@ -766,8 +766,8 @@ make_array_view(std::vector<ElementType>& vector,
 template <typename ElementType>
 inline ArrayView<const ElementType>
 make_array_view(const std::vector<ElementType>& vector,
-                const std::size_t               starting_index,
-                const std::size_t               size_of_view)
+                const std::size_t starting_index,
+                const std::size_t size_of_view)
 {
   Assert(starting_index + size_of_view <= vector.size(),
          ExcMessage("The starting index and size of the view you want to "
@@ -794,7 +794,7 @@ make_array_view(const std::vector<ElementType>& vector,
  */
 template <typename ElementType>
 inline ArrayView<ElementType>
-  make_array_view(Table<2, ElementType>&                          table,
+  make_array_view(Table<2, ElementType>& table,
                   const typename Table<2, ElementType>::size_type row)
 {
   AssertIndexRange(row, table.size()[0]);
@@ -911,7 +911,7 @@ make_array_view(const LAPACKFullMatrix<ElementType>& matrix)
  */
 template <typename ElementType>
 inline ArrayView<const ElementType>
-make_array_view(const Table<2, ElementType>&                    table,
+make_array_view(const Table<2, ElementType>& table,
                 const typename Table<2, ElementType>::size_type row)
 {
   AssertIndexRange(row, table.size()[0]);
@@ -939,10 +939,10 @@ make_array_view(const Table<2, ElementType>&                    table,
  */
 template <typename ElementType>
 inline ArrayView<ElementType> make_array_view(
-  Table<2, ElementType>&                          table,
+  Table<2, ElementType>& table,
   const typename Table<2, ElementType>::size_type row,
   const typename Table<2, ElementType>::size_type starting_column,
-  const std::size_t                               size_of_view)
+  const std::size_t size_of_view)
 {
   AssertIndexRange(row, table.size()[0]);
   AssertIndexRange(starting_column, table.size()[1]);
@@ -974,10 +974,10 @@ inline ArrayView<ElementType> make_array_view(
  */
 template <typename ElementType>
 inline ArrayView<const ElementType>
-make_array_view(const Table<2, ElementType>&                    table,
+make_array_view(const Table<2, ElementType>& table,
                 const typename Table<2, ElementType>::size_type row,
                 const typename Table<2, ElementType>::size_type starting_column,
-                const std::size_t                               size_of_view)
+                const std::size_t size_of_view)
 {
   AssertIndexRange(row, table.size()[0]);
   AssertIndexRange(starting_column, table.size()[1]);

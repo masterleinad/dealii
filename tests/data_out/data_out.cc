@@ -54,8 +54,8 @@ private:
   output_results() const;
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   Vector<double> solution;
 };
@@ -120,7 +120,7 @@ LaplaceProblem<2>::output_results() const
       data_out.write_povray(logfile);
       data_out.write_eps(logfile);
 
-      const unsigned int                    number_of_time_steps = 3;
+      const unsigned int number_of_time_steps = 3;
       std::vector<std::vector<std::string>> piece_names(number_of_time_steps);
       piece_names[0].push_back("subdomain-01.time_step_0.vtk");
       piece_names[0].push_back("subdomain-02.time_step_0.vtk");

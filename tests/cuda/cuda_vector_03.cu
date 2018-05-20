@@ -22,9 +22,9 @@
 void
 test()
 {
-  const unsigned int                          size = 100;
+  const unsigned int size = 100;
   LinearAlgebra::CUDAWrappers::Vector<double> a(size);
-  LinearAlgebra::ReadWriteVector<double>      read_write(size);
+  LinearAlgebra::ReadWriteVector<double> read_write(size);
   for(unsigned int i = 0; i < size; ++i)
     read_write[i] = i;
   a.import(read_write, VectorOperation::insert);

@@ -41,8 +41,8 @@ test()
   deallog << "dim = " << dim << std::endl;
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe(1);
-  DoFHandler<dim>    dof_handler(triangulation);
+  FE_Q<dim> fe(1);
+  DoFHandler<dim> dof_handler(triangulation);
 
   GridGenerator::hyper_cube(triangulation, 0, 1);
   triangulation.begin_active()->face(0)->set_boundary_id(10);

@@ -59,7 +59,7 @@ test_boundary_values(const FiniteElement<dim>& fe)
   dof_handler.distribute_dofs(fe);
 
   BoundaryFunction<dim> boundary_function;
-  ConstraintMatrix      constraints;
+  ConstraintMatrix constraints;
 
   constraints.clear();
   VectorTools::project_boundary_values_curl_conforming(

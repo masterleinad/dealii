@@ -73,12 +73,12 @@ namespace Step36
     output_results() const;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    SparsityPattern                   sparsity_pattern;
-    SparseMatrix<double>              stiffness_matrix, mass_matrix;
-    std::vector<Vector<double>>       eigenfunctions;
+    SparsityPattern sparsity_pattern;
+    SparseMatrix<double> stiffness_matrix, mass_matrix;
+    std::vector<Vector<double>> eigenfunctions;
     std::vector<std::complex<double>> eigenvalues;
 
     ConstraintMatrix constraints;
@@ -197,14 +197,14 @@ namespace Step36
   {
     SolverControl solver_control(dof_handler.n_dofs(), 1e-10);
 
-    const double shift    = 4.0;
-    const auto   op_H     = linear_operator<Vector<double>>(stiffness_matrix);
-    const auto   op_M     = linear_operator<Vector<double>>(mass_matrix);
-    const auto   op_shift = op_H - shift * op_M;
+    const double shift  = 4.0;
+    const auto op_H     = linear_operator<Vector<double>>(stiffness_matrix);
+    const auto op_M     = linear_operator<Vector<double>>(mass_matrix);
+    const auto op_shift = op_H - shift * op_M;
 
     SolverControl solver_control_lin(dof_handler.n_dofs(), 1e-12, false, false);
     SolverCG<Vector<double>> cg(solver_control_lin);
-    const auto               op_shift_invert
+    const auto op_shift_invert
       = inverse_operator(op_shift, cg, PreconditionIdentity());
 
     const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 2;

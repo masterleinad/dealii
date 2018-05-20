@@ -58,12 +58,12 @@ private:
   solve();
 
   Triangulation<2> triangulation;
-  FE_Q<2>          fe;
-  DoFHandler<2>    dof_handler;
+  FE_Q<2> fe;
+  DoFHandler<2> dof_handler;
 
   PETScWrappers::SparseMatrix A;
-  PETScWrappers::MPI::Vector  b, x;
-  ConstraintMatrix            constraints;
+  PETScWrappers::MPI::Vector b, x;
+  ConstraintMatrix constraints;
 
   TableHandler output_table;
 };
@@ -105,7 +105,7 @@ LaplaceProblem::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_A(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_b(dofs_per_cell);
+  Vector<double> cell_b(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -145,8 +145,8 @@ LaplaceProblem::assemble_system()
 void
 LaplaceProblem::solve()
 {
-  SolverControl                          solver_control(1e03, 1e-03);
-  PETScWrappers::SolverCG                cg_solver(solver_control);
+  SolverControl solver_control(1e03, 1e-03);
+  PETScWrappers::SolverCG cg_solver(solver_control);
   PETScWrappers::PreconditionBlockJacobi preconditioner(A);
   cg_solver.solve(A, x, b, preconditioner);
 

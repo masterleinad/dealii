@@ -79,7 +79,7 @@ test_polar()
   deallog << "Testing with PolarManifold dim=" << dim
           << ", spacedim=" << spacedim << std::endl;
 
-  PolarManifold<dim, spacedim>                    polar_manifold;
+  PolarManifold<dim, spacedim> polar_manifold;
   TransfiniteInterpolationManifold<dim, spacedim> manifold;
 
   {

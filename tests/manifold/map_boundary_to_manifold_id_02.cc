@@ -89,7 +89,7 @@ test()
 
   // Test setting all manifold ids to an offset of the boundary id
   deallog << "All manifold ids to offset boundary id" << std::endl;
-  auto                            bids = tria.get_boundary_ids();
+  auto bids = tria.get_boundary_ids();
   std::vector<types::manifold_id> mids(bids.size(), 0);
   for(unsigned int i = 0; i < bids.size(); ++i)
     mids[i] = 10 + bids[i];

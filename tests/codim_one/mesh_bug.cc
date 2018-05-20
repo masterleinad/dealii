@@ -33,7 +33,7 @@ main()
   std::ofstream logfile("output");
 
   Triangulation<2, 3> tria;
-  GridIn<2, 3>        gi;
+  GridIn<2, 3> gi;
   gi.attach_triangulation(tria);
   std::ifstream infile(SOURCE_DIR "/mesh_bug.output");
   gi.read(infile);

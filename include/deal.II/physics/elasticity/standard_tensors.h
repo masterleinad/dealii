@@ -288,7 +288,7 @@ Physics::Elasticity::StandardTensors<dim>::Dev_P(
   const Number det_F = determinant(F);
   Assert(numbers::value_is_greater_than(det_F, 0.0),
          ExcMessage("Deformation gradient has a negative determinant."));
-  const Tensor<2, dim, Number>          C_ns  = transpose(F) * F;
+  const Tensor<2, dim, Number> C_ns           = transpose(F) * F;
   const SymmetricTensor<2, dim, Number> C     = symmetrize(C_ns);
   const SymmetricTensor<2, dim, Number> C_inv = symmetrize(invert(C_ns));
 
@@ -312,7 +312,7 @@ Physics::Elasticity::StandardTensors<dim>::Dev_P_T(
   const Number det_F = determinant(F);
   Assert(numbers::value_is_greater_than(det_F, 0.0),
          ExcMessage("Deformation gradient has a negative determinant."));
-  const Tensor<2, dim, Number>          C_ns  = transpose(F) * F;
+  const Tensor<2, dim, Number> C_ns           = transpose(F) * F;
   const SymmetricTensor<2, dim, Number> C     = symmetrize(C_ns);
   const SymmetricTensor<2, dim, Number> C_inv = symmetrize(invert(C_ns));
 

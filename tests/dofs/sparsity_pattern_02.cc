@@ -64,7 +64,7 @@ check()
 
   // create a system element composed
   // of one Q1 and one Q2 element
-  FESystem<dim>   element(FE_Q<dim>(1), 1, FE_Q<dim>(2), 1);
+  FESystem<dim> element(FE_Q<dim>(1), 1, FE_Q<dim>(2), 1);
   DoFHandler<dim> dof_1(triangulation_1);
   DoFHandler<dim> dof_2(triangulation_2);
   dof_1.distribute_dofs(element);

@@ -339,7 +339,7 @@ namespace MeshWorker
     template <typename MatrixType>
     void
     initialize_matrices(const MatrixBlockVector<MatrixType>& matrices,
-                        bool                                 both);
+                        bool both);
 
     /**
      * Allocate a local matrix for each of the global level objects in @p
@@ -351,7 +351,7 @@ namespace MeshWorker
     template <typename MatrixType>
     void
     initialize_matrices(const MGMatrixBlockVector<MatrixType>& matrices,
-                        bool                                   both);
+                        bool both);
 
     /**
      * Initialize quadrature values to <tt>nv</tt> values in <tt>np</tt>
@@ -431,7 +431,7 @@ namespace MeshWorker
   inline void
   LocalResults<number>::initialize_matrices(
     const MatrixBlockVector<MatrixType>& matrices,
-    bool                                 both)
+    bool both)
   {
     M1.resize(matrices.size());
     if(both)
@@ -456,7 +456,7 @@ namespace MeshWorker
   inline void
   LocalResults<number>::initialize_matrices(
     const MGMatrixBlockVector<MatrixType>& matrices,
-    bool                                   both)
+    bool both)
   {
     M1.resize(matrices.size());
     if(both)
@@ -480,7 +480,7 @@ namespace MeshWorker
   template <typename number>
   inline void
   LocalResults<number>::initialize_matrices(const unsigned int n,
-                                            const bool         both)
+                                            const bool both)
   {
     M1.resize(n);
     if(both)

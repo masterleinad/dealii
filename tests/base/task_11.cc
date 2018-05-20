@@ -22,8 +22,8 @@
 #include <deal.II/base/thread_management.h>
 
 Threads::Mutex mutex;
-unsigned int   n_running;
-unsigned int   n_max_running;
+unsigned int n_running;
+unsigned int n_max_running;
 
 void
 a_task()

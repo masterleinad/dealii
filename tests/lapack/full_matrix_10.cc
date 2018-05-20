@@ -25,10 +25,10 @@
 void
 test()
 {
-  const unsigned int       m = 2;
-  const unsigned int       n = 3;
-  const unsigned int       k = 4;
-  FullMatrix<double>       A(m, k), B(n, k), C(m, n), OC(m, n);
+  const unsigned int m = 2;
+  const unsigned int n = 3;
+  const unsigned int k = 4;
+  FullMatrix<double> A(m, k), B(n, k), C(m, n), OC(m, n);
   LAPACKFullMatrix<double> AL(m, k), BL(n, k), CL(m, n);
   for(unsigned int i = 0; i < m; ++i)
     for(unsigned int j = 0; j < k; ++j)
@@ -54,7 +54,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 

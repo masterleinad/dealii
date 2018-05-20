@@ -344,7 +344,7 @@ namespace numbers
      * function simply returns the given number.
      */
     static DEAL_II_CUDA_HOST_DEV const number&
-                                       conjugate(const number& x);
+    conjugate(const number& x);
 
     /**
      * Return the square of the absolute value of the given number. Since the
@@ -354,7 +354,7 @@ namespace numbers
      * @see CUDAWrappers
      */
     static DEAL_II_CUDA_HOST_DEV real_type
-                                 abs_square(const number& x);
+    abs_square(const number& x);
 
     /**
      * Return the absolute value of a number.
@@ -448,7 +448,7 @@ namespace numbers
 
   template <typename number>
   DEAL_II_CUDA_HOST_DEV const number&
-                              NumberTraits<number>::conjugate(const number& x)
+  NumberTraits<number>::conjugate(const number& x)
   {
     return x;
   }
@@ -554,7 +554,7 @@ namespace internal
   struct NumberType
   {
     static DEAL_II_CUDA_HOST_DEV const T&
-                                       value(const T& t)
+    value(const T& t)
     {
       return t;
     }

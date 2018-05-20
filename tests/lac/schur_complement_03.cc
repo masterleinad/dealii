@@ -70,16 +70,16 @@ namespace Step22
     void
     solve();
     void
-                              refine_mesh();
-    const unsigned int        degree;
-    Triangulation<dim>        triangulation;
-    FESystem<dim>             fe;
-    DoFHandler<dim>           dof_handler;
-    ConstraintMatrix          constraints;
-    BlockSparsityPattern      sparsity_pattern;
+    refine_mesh();
+    const unsigned int degree;
+    Triangulation<dim> triangulation;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
+    ConstraintMatrix constraints;
+    BlockSparsityPattern sparsity_pattern;
     BlockSparseMatrix<double> system_matrix;
-    BlockVector<double>       solution;
-    BlockVector<double>       system_rhs;
+    BlockVector<double> solution;
+    BlockVector<double> system_rhs;
   };
 
   template <int dim>
@@ -96,7 +96,7 @@ namespace Step22
 
   template <int dim>
   double
-  BoundaryValues<dim>::value(const Point<dim>&  p,
+  BoundaryValues<dim>::value(const Point<dim>& p,
                              const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -109,7 +109,7 @@ namespace Step22
   template <int dim>
   void
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                    Vector<double>&   values) const
+                                    Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
@@ -138,7 +138,7 @@ namespace Step22
   template <int dim>
   void
   RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
@@ -208,23 +208,23 @@ namespace Step22
   {
     system_matrix = 0;
     system_rhs    = 0;
-    QGauss<dim>        quadrature_formula(degree + 2);
-    FEValues<dim>      fe_values(fe,
+    QGauss<dim> quadrature_formula(degree + 2);
+    FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_quadrature_points
                               | update_JxW_values | update_gradients);
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     const unsigned int n_q_points    = quadrature_formula.size();
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    const RightHandSide<dim>             right_hand_side;
+    const RightHandSide<dim> right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim + 1));
-    const FEValuesExtractors::Vector     velocities(0);
-    const FEValuesExtractors::Scalar     pressure(dim);
+    const FEValuesExtractors::Vector velocities(0);
+    const FEValuesExtractors::Scalar pressure(dim);
     std::vector<SymmetricTensor<2, dim>> symgrad_phi_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -312,13 +312,13 @@ namespace Step22
     SolverCG<> solver_S(solver_control_S);
     const auto S_inv = inverse_operator(S, solver_S, M_inv);
 
-    Vector<double>&       x   = solution.block(0);
-    Vector<double>&       y   = solution.block(1);
-    const Vector<double>& f   = system_rhs.block(0);
-    const Vector<double>& g   = system_rhs.block(1);
-    auto                  rhs = condense_schur_rhs(A_inv, C, f, g);
-    y                         = S_inv * rhs;
-    x                         = postprocess_schur_solution(A_inv, B, y, f);
+    Vector<double>& x       = solution.block(0);
+    Vector<double>& y       = solution.block(1);
+    const Vector<double>& f = system_rhs.block(0);
+    const Vector<double>& g = system_rhs.block(1);
+    auto rhs                = condense_schur_rhs(A_inv, C, f, g);
+    y                       = S_inv * rhs;
+    x                       = postprocess_schur_solution(A_inv, B, y, f);
 
     constraints.distribute(solution);
     deallog << "  " << solver_control_S.last_step()

@@ -39,14 +39,14 @@ test()
   GridGenerator::hyper_ball(volume_mesh);
 
   const SphericalManifold<dim - 1, dim> surface_description;
-  Triangulation<dim - 1, dim>           boundary_mesh;
+  Triangulation<dim - 1, dim> boundary_mesh;
   boundary_mesh.set_manifold(0, surface_description);
 
   GridGenerator::extract_boundary_mesh(volume_mesh, boundary_mesh);
 
-  QGauss<dim - 1>        quadrature(dim == 2 ? 3 : 2);
+  QGauss<dim - 1> quadrature(dim == 2 ? 3 : 2);
   MappingQ<dim - 1, dim> mapping(2);
-  FE_Q<dim - 1, dim>     fe(1);
+  FE_Q<dim - 1, dim> fe(1);
 
   FEValues<dim - 1, dim> fe_values(
     mapping, fe, quadrature, update_normal_vectors);

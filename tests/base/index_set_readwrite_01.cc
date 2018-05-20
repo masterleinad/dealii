@@ -30,7 +30,7 @@ test()
 
   std::ofstream out("a.idxset");
   is1.write(out);
-  IndexSet      is2;
+  IndexSet is2;
   std::ifstream in("a.idxset");
   is2.read(in);
 

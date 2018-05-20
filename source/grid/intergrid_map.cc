@@ -58,9 +58,9 @@ InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
       // know the underlying data structure
       // for this and we would like to
       // avoid such knowledge here
-      unsigned int  n_cells = 0;
-      cell_iterator cell    = source_grid.begin(level),
-                    endc    = source_grid.end(level);
+      unsigned int n_cells = 0;
+      cell_iterator cell   = source_grid.begin(level),
+                    endc   = source_grid.end(level);
       for(; cell != endc; ++cell)
         if(static_cast<unsigned int>(cell->index()) > n_cells)
           n_cells = cell->index();
@@ -141,7 +141,7 @@ InterGridMap<MeshType>::set_entries_to_cell(const cell_iterator& src_cell,
 
 template <class MeshType>
 typename InterGridMap<MeshType>::cell_iterator InterGridMap<MeshType>::
-                                               operator[](const cell_iterator& source_cell) const
+operator[](const cell_iterator& source_cell) const
 {
   Assert(source_cell.state() == IteratorState::valid,
          ExcInvalidKey(source_cell));

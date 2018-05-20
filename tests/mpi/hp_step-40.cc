@@ -84,7 +84,7 @@ namespace Step40
 
     parallel::distributed::Triangulation<dim> triangulation;
 
-    hp::DoFHandler<dim>   dof_handler;
+    hp::DoFHandler<dim> dof_handler;
     hp::FECollection<dim> fe;
 
     IndexSet locally_owned_dofs;
@@ -93,8 +93,8 @@ namespace Step40
     ConstraintMatrix constraints;
 
     PETScWrappers::MPI::SparseMatrix system_matrix;
-    PETScWrappers::MPI::Vector       locally_relevant_solution;
-    PETScWrappers::MPI::Vector       system_rhs;
+    PETScWrappers::MPI::Vector locally_relevant_solution;
+    PETScWrappers::MPI::Vector system_rhs;
 
     ConditionalOStream pcout;
   };
@@ -160,7 +160,7 @@ namespace Step40
   void
   LaplaceProblem<dim>::assemble_system()
   {
-    const QGauss<dim>    quadrature_formula(3);
+    const QGauss<dim> quadrature_formula(3);
     hp::QCollection<dim> q_collection;
     q_collection.push_back(quadrature_formula);
 
@@ -171,7 +171,7 @@ namespace Step40
                                     | update_JxW_values);
 
     FullMatrix<PetscScalar> cell_matrix;
-    Vector<PetscScalar>     cell_rhs;
+    Vector<PetscScalar> cell_rhs;
 
     std::vector<types::global_dof_index> local_dof_indices;
 

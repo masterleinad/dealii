@@ -46,8 +46,8 @@ FiniteElement<dim, spacedim>::InternalDataBase::memory_consumption() const
 
 template <int dim, int spacedim>
 FiniteElement<dim, spacedim>::FiniteElement(
-  const FiniteElementData<dim>&     fe_data,
-  const std::vector<bool>&          r_i_a_f,
+  const FiniteElementData<dim>& fe_data,
+  const std::vector<bool>& r_i_a_f,
   const std::vector<ComponentMask>& nonzero_c)
   : FiniteElementData<dim>(fe_data),
     adjust_quad_dof_index_for_face_orientation_table(
@@ -271,7 +271,7 @@ FiniteElement<dim, spacedim>::reinit_restriction_and_prolongation_matrices(
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FiniteElement<dim, spacedim>::get_restriction_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
@@ -297,7 +297,7 @@ FiniteElement<dim, spacedim>::get_restriction_matrix(
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FiniteElement<dim, spacedim>::get_prolongation_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
@@ -579,9 +579,9 @@ template <int dim, int spacedim>
 unsigned int
 FiniteElement<dim, spacedim>::adjust_quad_dof_index_for_face_orientation(
   const unsigned int index,
-  const bool         face_orientation,
-  const bool         face_flip,
-  const bool         face_rotation) const
+  const bool face_orientation,
+  const bool face_flip,
+  const bool face_rotation) const
 {
   // general template for 1D and 2D: not
   // implemented. in fact, the function
@@ -614,7 +614,7 @@ template <int dim, int spacedim>
 unsigned int
 FiniteElement<dim, spacedim>::adjust_line_dof_index_for_line_orientation(
   const unsigned int index,
-  const bool         line_orientation) const
+  const bool line_orientation) const
 {
   // general template for 1D and 2D: do
   // nothing. Do not throw an Assertion,
@@ -1124,9 +1124,9 @@ FiniteElement<dim, spacedim>::compute_n_nonzero_components(
 template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FiniteElement<dim, spacedim>::get_face_data(
-  const UpdateFlags             flags,
+  const UpdateFlags flags,
   const Mapping<dim, spacedim>& mapping,
-  const Quadrature<dim - 1>&    quadrature,
+  const Quadrature<dim - 1>& quadrature,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>&
     output_data) const
@@ -1140,9 +1140,9 @@ FiniteElement<dim, spacedim>::get_face_data(
 template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FiniteElement<dim, spacedim>::get_subface_data(
-  const UpdateFlags             flags,
+  const UpdateFlags flags,
   const Mapping<dim, spacedim>& mapping,
-  const Quadrature<dim - 1>&    quadrature,
+  const Quadrature<dim - 1>& quadrature,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>&
     output_data) const

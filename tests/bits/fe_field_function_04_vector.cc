@@ -55,7 +55,7 @@ test()
   triangulation.set_manifold(0, boundary_description);
   triangulation.refine_global(1);
 
-  FESystem<dim>   fe(FE_Q<dim>(2), 2);
+  FESystem<dim> fe(FE_Q<dim>(2), 2);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
@@ -63,7 +63,7 @@ test()
   VectorTools::interpolate(dof_handler, F<dim>(), solution);
 
   Functions::FEFieldFunction<2> fe_function(dof_handler, solution);
-  std::vector<Point<dim>>       points;
+  std::vector<Point<dim>> points;
 
   // add a bunch of points. all
   // points are inside the circle.

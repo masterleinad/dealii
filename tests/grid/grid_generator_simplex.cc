@@ -25,7 +25,7 @@ void
 dim_2(std::ostream& os)
 {
   const unsigned int d = 2;
-  Triangulation<d>   tr;
+  Triangulation<d> tr;
 
   std::vector<Point<d>> vertices(d + 1);
   vertices[1](0) = 0.5;
@@ -42,7 +42,7 @@ void
 dim_3(std::ostream& os)
 {
   const unsigned int d = 3;
-  Triangulation<d>   tr;
+  Triangulation<d> tr;
 
   std::vector<Point<d>> vertices(d + 1);
   vertices[0](0) = 1.;

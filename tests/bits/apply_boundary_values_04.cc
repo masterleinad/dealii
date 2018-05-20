@@ -37,14 +37,14 @@ void
 test()
 {
   const unsigned int N = 4;
-  SparsityPattern    sparsity(N, N, N);
+  SparsityPattern sparsity(N, N, N);
   for(unsigned int i = 0; i < N; ++i)
     for(unsigned int j = 0; j < N; ++j)
       sparsity.add(i, j);
   sparsity.compress();
   SparseMatrix<double> A(sparsity), B(sparsity);
-  Vector<double>       b1(N);
-  Vector<double>       b2(N);
+  Vector<double> b1(N);
+  Vector<double> b2(N);
 
   // then fill the two matrices and vectors
   // by setting up bogus matrix entries and
@@ -56,8 +56,8 @@ test()
 
   // then fill the matrices
   std::vector<types::global_dof_index> local_dofs(N);
-  FullMatrix<double>                   local_matrix(N, N);
-  Vector<double>                       local_vector(N);
+  FullMatrix<double> local_matrix(N, N);
+  Vector<double> local_vector(N);
   {
     for(unsigned int i = 0; i < N; ++i)
       local_dofs[i] = i;

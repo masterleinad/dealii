@@ -20,8 +20,8 @@ namespace NonMatching
 {
   template <int dim>
   ImmersedSurfaceQuadrature<dim>::ImmersedSurfaceQuadrature(
-    const std::vector<Point<dim>>&     points,
-    const std::vector<double>&         weights,
+    const std::vector<Point<dim>>& points,
+    const std::vector<double>& weights,
     const std::vector<Tensor<1, dim>>& normals)
     : Quadrature<dim>(points, weights), normals(normals)
   {
@@ -37,8 +37,8 @@ namespace NonMatching
 
   template <int dim>
   void
-  ImmersedSurfaceQuadrature<dim>::push_back(const Point<dim>&     point,
-                                            const double          weight,
+  ImmersedSurfaceQuadrature<dim>::push_back(const Point<dim>& point,
+                                            const double weight,
                                             const Tensor<1, dim>& normal)
   {
     this->quadrature_points.push_back(point);

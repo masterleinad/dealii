@@ -37,7 +37,7 @@ test()
   tria.begin_active()->line(0)->set_boundary_id(1);
   tria.begin_active()->face(2 * dim - 1)->set_boundary_id(2);
 
-  GridOut           grid_out;
+  GridOut grid_out;
   GridOutFlags::Msh flags;
   flags.write_lines = flags.write_faces = true;
   grid_out.set_flags(flags);

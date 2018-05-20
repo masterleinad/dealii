@@ -48,7 +48,7 @@ main()
   try
     {
       Vector<double> v(100);
-      Vector<float>  w(100);
+      Vector<float> w(100);
       test(v, w);
     }
   catch(std::exception& exc)

@@ -399,7 +399,7 @@ namespace parallel
        */
       virtual void
       create_triangulation(const std::vector<Point<spacedim>>& vertices,
-                           const std::vector<CellData<dim>>&   cells,
+                           const std::vector<CellData<dim>>& cells,
                            const SubCellData& subcelldata) override;
 
       /**
@@ -773,7 +773,7 @@ namespace parallel
        */
       void
       notify_ready_to_unpack(
-        const unsigned int                      handle,
+        const unsigned int handle,
         const std::function<void(const cell_iterator&,
                                  const CellStatus,
                                  const void*)>& unpack_callback);
@@ -1119,7 +1119,7 @@ namespace parallel
         const std::function<void(
           const typename dealii::Triangulation<1, spacedim>::cell_iterator&,
           const typename dealii::Triangulation<1, spacedim>::CellStatus,
-          void*)>&        pack_callback);
+          void*)>& pack_callback);
 
       /**
        * This function is not implemented, but needs to be present for the compiler.
@@ -1130,7 +1130,7 @@ namespace parallel
         const std::function<void(
           const typename dealii::Triangulation<1, spacedim>::cell_iterator&,
           const typename dealii::Triangulation<1, spacedim>::CellStatus,
-          const void*)>&   unpack_callback);
+          const void*)>& unpack_callback);
 
       /**
        * Dummy arrays. This class isn't usable but the compiler wants to see

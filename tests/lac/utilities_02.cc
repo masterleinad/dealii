@@ -73,7 +73,7 @@ test()
 {
   const unsigned int global_mesh_refinement_steps = 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
@@ -84,7 +84,7 @@ test()
   triangulation.refine_global(global_mesh_refinement_steps);
 
   DoFHandler<dim> dof_handler(triangulation);
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   dof_handler.distribute_dofs(fe);
 
   IndexSet locally_relevant_dofs;
@@ -99,7 +99,7 @@ test()
   std::shared_ptr<MatrixFree<dim, double>> mf_data(
     new MatrixFree<dim, double>());
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, double>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, double>::AdditionalData::partition_color;
@@ -128,10 +128,10 @@ test()
   DiagonalMatrix<LinearAlgebra::distributed::Vector<double>> diagonal_mass_inv;
   {
     LinearAlgebra::distributed::Vector<double> inv_mass_matrix;
-    VectorizedArray<double>                    one = make_vectorized_array(1.);
+    VectorizedArray<double> one = make_vectorized_array(1.);
     mf_data->initialize_dof_vector(inv_mass_matrix);
     FEEvaluation<dim, fe_degree> fe_eval(*mf_data);
-    const unsigned int           n_q_points = fe_eval.n_q_points;
+    const unsigned int n_q_points = fe_eval.n_q_points;
     for(unsigned int cell = 0; cell < mf_data->n_macro_cells(); ++cell)
       {
         fe_eval.reinit(cell);
@@ -182,7 +182,7 @@ test()
     const unsigned int number_of_eigenvalues = 5;
 
     std::vector<LinearAlgebra::distributed::Vector<double>> eigenfunctions;
-    std::vector<double>                                     eigenvalues;
+    std::vector<double> eigenvalues;
     eigenfunctions.resize(number_of_eigenvalues);
     eigenvalues.resize(number_of_eigenvalues);
     for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
@@ -233,7 +233,7 @@ test()
     // a) (A*x_i-\lambda*x_i).L2() == 0
     // b) x_j*x_i=\delta_{ij}
     {
-      const double                               precision = 1e-7;
+      const double precision = 1e-7;
       LinearAlgebra::distributed::Vector<double> Ax(eigenfunctions[0]);
       for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {

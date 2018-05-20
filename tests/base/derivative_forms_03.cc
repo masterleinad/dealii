@@ -23,7 +23,7 @@ void
 test()
 {
   DerivativeForm<1, dim, spacedim, std::complex<double>> dF;
-  double                                                 dF_norm_sqr = 0;
+  double dF_norm_sqr = 0;
   for(unsigned int i = 0; i < spacedim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
       {
@@ -32,7 +32,7 @@ test()
       }
 
   DerivativeForm<2, dim, spacedim, std::complex<double>> ddF;
-  double                                                 ddF_norm_sqr = 0;
+  double ddF_norm_sqr = 0;
   for(unsigned int i = 0; i < spacedim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
       for(unsigned int k = 0; k < dim; ++k)

@@ -21,7 +21,7 @@
 void
 test()
 {
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   unsigned int values[2] = {1 + myid, numprocs + myid};

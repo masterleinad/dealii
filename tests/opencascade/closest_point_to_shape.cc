@@ -41,9 +41,9 @@ main()
   initlog();
 
   // A unit circle
-  gp_Dir        z_axis(0., 0., 1.);
-  gp_Pnt        center(0., 0., 0.);
-  gp_Ax2        axis(center, z_axis);
+  gp_Dir z_axis(0., 0., 1.);
+  gp_Pnt center(0., 0., 0.);
+  gp_Ax2 axis(center, z_axis);
   Standard_Real radius(1.);
 
   GC_MakeCircle make_circle(axis, radius);
@@ -65,7 +65,7 @@ main()
   points.push_back(Point<3>(.1, 0, 3));
   points.push_back(Point<3>(.1, 0, 4));
 
-  double       u, v;
+  double u, v;
   TopoDS_Shape sh;
   for(unsigned int i = 0; i < points.size(); ++i)
     {

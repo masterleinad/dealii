@@ -22,8 +22,8 @@
 void
 test()
 {
-  const char*                   filename = "test.txt";
-  const unsigned int            size(10);
+  const char* filename = "test.txt";
+  const unsigned int size(10);
   LinearAlgebra::Vector<double> vec(size);
   for(unsigned int i = 0; i < size; ++i)
     vec[i] = i;
@@ -49,7 +49,7 @@ test()
 
   // save data to archive
   {
-    std::ofstream                 file_out2(filename);
+    std::ofstream file_out2(filename);
     boost::archive::text_oarchive oa(file_out2);
     oa << vec;
     // archive and stream closed when destructors are called
@@ -58,7 +58,7 @@ test()
   // Clear the vector
   vec.reinit(0);
   {
-    std::ifstream                 file_in2(filename);
+    std::ifstream file_in2(filename);
     boost::archive::text_iarchive ia(file_in2);
     ia >> vec;
   }

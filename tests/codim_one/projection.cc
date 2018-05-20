@@ -46,13 +46,13 @@ void
 test(std::string filename, unsigned int n)
 {
   Triangulation<dim, spacedim> triangulation;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
 
   gi.attach_triangulation(triangulation);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);
 
-  FE_Q<dim, spacedim>       fe(n);
+  FE_Q<dim, spacedim> fe(n);
   DoFHandler<dim, spacedim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
@@ -63,8 +63,8 @@ test(std::string filename, unsigned int n)
   Vector<double> error(dof_handler.n_dofs());
 
   Functions::CosineFunction<spacedim> cosine;
-  QGauss<dim>                         quad(5);
-  ConstraintMatrix                    constraints;
+  QGauss<dim> quad(5);
+  ConstraintMatrix constraints;
   constraints.close();
   VectorTools::project(dof_handler, constraints, quad, cosine, projected_one);
 

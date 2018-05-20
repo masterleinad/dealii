@@ -44,9 +44,9 @@ public:
   /**
    * Constructor.
    */
-  FE_Q_Base(const PolynomialType&         poly_space,
+  FE_Q_Base(const PolynomialType& poly_space,
             const FiniteElementData<dim>& fe_data,
-            const std::vector<bool>&      restriction_is_additive_flags);
+            const std::vector<bool>& restriction_is_additive_flags);
 
   /**
    * Return the matrix interpolating from the given finite element to the
@@ -85,7 +85,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**
@@ -120,7 +120,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_restriction_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -152,7 +152,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_prolongation_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -197,9 +197,9 @@ public:
   virtual unsigned int
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
-                     const bool         face_orientation = true,
-                     const bool         face_flip        = false,
-                     const bool         face_rotation = false) const override;
+                     const bool face_orientation = true,
+                     const bool face_flip        = false,
+                     const bool face_rotation    = false) const override;
 
   /**
    * Return a list of constant modes of the element. For this element, the

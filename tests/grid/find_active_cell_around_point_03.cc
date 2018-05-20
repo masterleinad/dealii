@@ -44,9 +44,9 @@ test()
   DoFHandler<spacedim> dof_handler(triangulation);
 
   GridTools::Cache<dim, spacedim> cache(triangulation, mapping);
-  Point<spacedim>                 p1;
-  Point<spacedim>                 p2;
-  Point<spacedim>                 p3;
+  Point<spacedim> p1;
+  Point<spacedim> p2;
+  Point<spacedim> p3;
   for(unsigned int d = 0; d < spacedim; ++d)
     {
       p1[d] = a;

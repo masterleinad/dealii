@@ -37,10 +37,10 @@ template <int dim>
 void
 test()
 {
-  Triangulation<dim>    triangulation;
+  Triangulation<dim> triangulation;
   hp::FECollection<dim> fe;
-  hp::DoFHandler<dim>   dof_handler(triangulation);
-  ConstraintMatrix      hanging_node_constraints;
+  hp::DoFHandler<dim> dof_handler(triangulation);
+  ConstraintMatrix hanging_node_constraints;
 
   FE_Q<dim> fe_1(1), fe_2(2), fe_3(QIterated<1>(QTrapez<1>(), 3)),
     fe_4(QIterated<1>(QTrapez<1>(), 4));

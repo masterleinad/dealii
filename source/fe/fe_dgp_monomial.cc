@@ -43,7 +43,7 @@ namespace internal
       //
       // points[start_index[k]..start_index[k+1]-1]
       const unsigned int start_index2d[6] = {0, 1, 4, 10, 20, 35};
-      const double       points2d[35][2]
+      const double points2d[35][2]
         = {{0, 0},       {0, 0},       {1, 0},       {0, 1},       {0, 0},
            {1, 0},       {0, 1},       {1, 1},       {0.5, 0},     {0, 0.5},
            {0, 0},       {1, 0},       {0, 1},       {1, 1},       {1. / 3., 0},
@@ -59,7 +59,7 @@ namespace internal
       // k    0  1  2  3  4  5  6   7
       // dofs 1  4 10 20 35 56 84 120
       const unsigned int start_index3d[6] = {0, 1, 5, 15 /*,35*/};
-      const double       points3d[35][3]  = {{0, 0, 0},
+      const double points3d[35][3]        = {{0, 0, 0},
                                       {0, 0, 0},
                                       {1, 0, 0},
                                       {0, 1, 0},
@@ -181,7 +181,7 @@ template <int dim>
 void
 FE_DGPMonomial<dim>::get_interpolation_matrix(
   const FiniteElement<dim>& source_fe,
-  FullMatrix<double>&       interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   const FE_DGPMonomial<dim>* source_dgp_monomial
     = dynamic_cast<const FE_DGPMonomial<dim>*>(&source_fe);
@@ -259,7 +259,7 @@ template <int dim>
 void
 FE_DGPMonomial<dim>::get_face_interpolation_matrix(
   const FiniteElement<dim>& x_source_fe,
-  FullMatrix<double>&       interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the source
   // FE is also a DGPMonomial element. in that case,

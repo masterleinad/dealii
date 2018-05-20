@@ -64,10 +64,10 @@ public:
 
     typedef Vector<double> VectorType;
 
-    time_stepper.residual = [&](const double      t,
+    time_stepper.residual = [&](const double t,
                                 const VectorType& y,
                                 const VectorType& y_dot,
-                                VectorType&       res) -> int {
+                                VectorType& res) -> int {
       res = y_dot;
       A.vmult_add(res, y);
       return 0;
@@ -95,9 +95,9 @@ public:
       return 0;
     };
 
-    time_stepper.output_step = [&](const double       t,
-                                   const VectorType&  sol,
-                                   const VectorType&  sol_dot,
+    time_stepper.output_step = [&](const double t,
+                                   const VectorType& sol,
+                                   const VectorType& sol_dot,
                                    const unsigned int step_number) -> int {
       // In this test, don't output anything.
       return 0;
@@ -119,13 +119,13 @@ public:
   SUNDIALS::IDA<Vector<double>> time_stepper;
 
 private:
-  Vector<double>     y;
-  Vector<double>     y_dot;
-  Vector<double>     diff;
+  Vector<double> y;
+  Vector<double> y_dot;
+  Vector<double> diff;
   FullMatrix<double> J;
   FullMatrix<double> A;
   FullMatrix<double> Jinv;
-  double             kappa;
+  double kappa;
 };
 
 int

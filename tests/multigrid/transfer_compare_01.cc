@@ -40,9 +40,9 @@ using namespace std;
 template <int dim, typename number, int spacedim>
 void
 reinit_vector_by_blocks(
-  const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-  MGLevelObject<dealii::Vector<number>>&             v,
-  const unsigned int                                 selected_block,
+  const dealii::DoFHandler<dim, spacedim>& mg_dof,
+  MGLevelObject<dealii::Vector<number>>& v,
+  const unsigned int selected_block,
   std::vector<std::vector<types::global_dof_index>>& ndofs)
 {
   const unsigned int n_blocks = mg_dof.get_fe().n_blocks();
@@ -69,9 +69,9 @@ reinit_vector_by_blocks(
 template <int dim, typename number, int spacedim>
 void
 reinit_vector_by_blocks(
-  const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-  MGLevelObject<BlockVector<number>>&                v,
-  const std::vector<bool>&                           sel,
+  const dealii::DoFHandler<dim, spacedim>& mg_dof,
+  MGLevelObject<BlockVector<number>>& v,
+  const std::vector<bool>& sel,
   std::vector<std::vector<types::global_dof_index>>& ndofs)
 {
   std::vector<bool> selected = sel;
@@ -115,7 +115,7 @@ check_block(const FiniteElement<dim>& fe)
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
 
-  DoFHandler<dim>  mgdof(tr);
+  DoFHandler<dim> mgdof(tr);
   DoFHandler<dim>& dof = mgdof;
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
@@ -142,8 +142,8 @@ check_block(const FiniteElement<dim>& fe)
   MGTools::count_dofs_per_block(mgdof, mg_ndofs);
 
   MGTransferPrebuilt<BlockVector<double>> transfer;
-  MGTransferBlock<double>                 transfer_block;
-  MGTransferBlockSelect<double>           transfer_select;
+  MGTransferBlock<double> transfer_block;
+  MGTransferBlockSelect<double> transfer_select;
   transfer.build_matrices(mgdof);
   transfer_block.build_matrices(dof, mgdof, selected);
   transfer_select.build_matrices(dof, mgdof, 0);
@@ -209,9 +209,9 @@ check_block(const FiniteElement<dim>& fe)
     u(i) = i + 1;
 
   std::vector<std::vector<types::global_dof_index>> cached_sizes;
-  MGLevelObject<BlockVector<double>>                v;
-  MGLevelObject<BlockVector<double>>                wb;
-  MGLevelObject<Vector<double>>                     ws;
+  MGLevelObject<BlockVector<double>> v;
+  MGLevelObject<BlockVector<double>> wb;
+  MGLevelObject<Vector<double>> ws;
   v.resize(0, tr.n_levels() - 1);
   wb.resize(0, tr.n_levels() - 1);
   ws.resize(0, tr.n_levels() - 1);
@@ -260,9 +260,9 @@ main()
 
   std::vector<double> factors;
 
-  FE_DGQ<2>                q0(0);
-  FE_DGQ<2>                q1(1);
-  FE_Q<2>                  cq1(1);
+  FE_DGQ<2> q0(0);
+  FE_DGQ<2> q1(1);
+  FE_Q<2> cq1(1);
   FE_RaviartThomasNodal<2> rt0(0);
   FE_RaviartThomasNodal<2> rt1(1);
 

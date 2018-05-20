@@ -41,8 +41,8 @@ test()
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active();
-    typename Triangulation<dim>::active_cell_iterator endc    = tria.end();
-    unsigned int                                      counter = 0;
+    typename Triangulation<dim>::active_cell_iterator endc = tria.end();
+    unsigned int counter                                   = 0;
     for(; cell != endc; ++cell, ++counter)
       if(cell->is_locally_owned() && counter % 3 == 0)
         cell->set_refine_flag();
@@ -50,8 +50,8 @@ test()
   }
 
   FE_DGQArbitraryNodes<dim> fe(QGauss<1>(fe_degree + 1));
-  DoFHandler<dim>           dof_orig(tria);
-  DoFHandler<dim>           dof(tria);
+  DoFHandler<dim> dof_orig(tria);
+  DoFHandler<dim> dof(tria);
   dof_orig.distribute_dofs(fe);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
@@ -68,8 +68,8 @@ test()
   LinearAlgebra::distributed::Vector<double> in, in_orig, out, out_orig;
 
   // create MatrixFree with DoFHandler in original numbering
-  MatrixFree<dim, double>                          mf_data_orig;
-  const QGauss<1>                                  quad(fe_degree + 1);
+  MatrixFree<dim, double> mf_data_orig;
+  const QGauss<1> quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
   data.tasks_block_size      = 3;

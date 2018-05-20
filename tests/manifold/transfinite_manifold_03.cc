@@ -34,10 +34,10 @@ do_test(const Triangulation<dim, spacedim>& tria)
   for(unsigned int degree = 1; degree < 5; ++degree)
     {
       MappingQGeneric<dim, spacedim> mapping(degree);
-      FE_Nothing<dim, spacedim>      fe;
-      QGauss<dim>                    gauss(degree + 1);
+      FE_Nothing<dim, spacedim> fe;
+      QGauss<dim> gauss(degree + 1);
       FEValues<dim, spacedim> fe_values(mapping, fe, gauss, update_JxW_values);
-      double                  volume = 0;
+      double volume = 0;
       for(typename Triangulation<dim, spacedim>::cell_iterator cell
           = tria.begin_active();
           cell != tria.end();
@@ -62,7 +62,7 @@ test_polar()
   deallog << "Testing with PolarManifold dim=" << dim
           << ", spacedim=" << spacedim << std::endl;
 
-  PolarManifold<dim, spacedim>                    polar_manifold;
+  PolarManifold<dim, spacedim> polar_manifold;
   TransfiniteInterpolationManifold<dim, spacedim> manifold;
 
   Triangulation<dim, spacedim> tria;
@@ -86,7 +86,7 @@ test_spherical()
   deallog << "Testing with SphericalManifold dim=" << dim
           << ", spacedim=" << spacedim << std::endl;
 
-  SphericalManifold<dim, spacedim>                spherical_manifold;
+  SphericalManifold<dim, spacedim> spherical_manifold;
   TransfiniteInterpolationManifold<dim, spacedim> manifold;
 
   Triangulation<dim, spacedim> tria;
@@ -108,9 +108,9 @@ test_cylinder(unsigned int ref = 1)
   const unsigned int dim = 3, spacedim = 3;
   deallog << "Testing with CylindricalManifold in 3d" << std::endl;
 
-  CylindricalManifold<dim, spacedim>              cylinder_manifold;
+  CylindricalManifold<dim, spacedim> cylinder_manifold;
   TransfiniteInterpolationManifold<dim, spacedim> manifold;
-  Triangulation<dim, spacedim>                    tria;
+  Triangulation<dim, spacedim> tria;
   GridGenerator::cylinder(tria);
 
   tria.set_all_manifold_ids(1);

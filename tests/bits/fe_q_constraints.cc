@@ -52,7 +52,7 @@ class TestFunction : public Function<dim>
 {
 private:
   std::vector<Polynomials::Polynomial<double>> base;
-  const unsigned int                           p_order;
+  const unsigned int p_order;
 
 public:
   TestFunction(const unsigned int p_order);
@@ -106,9 +106,9 @@ private:
   test();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
-  ConstraintMatrix   hanging_node_constraints;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
+  ConstraintMatrix hanging_node_constraints;
 };
 
 template <int dim>
@@ -128,7 +128,7 @@ void
 TestFEQConstraints<dim>::refine_grid_random()
 {
   const unsigned int n_cells = triangulation.n_active_cells();
-  Vector<double>     estimated_error_per_cell(n_cells);
+  Vector<double> estimated_error_per_cell(n_cells);
 
   for(unsigned int i = 0; i < n_cells; ++i)
     estimated_error_per_cell(i) = random_value<double>();
@@ -167,7 +167,7 @@ void
 TestFEQConstraints<dim>::test()
 {
   TestFunction<dim> test_function(p_order);
-  double            l2test, l2norm1, l2norm2, l2error;
+  double l2test, l2norm1, l2norm2, l2error;
 
   Vector<double> solution;
   solution.reinit(dof_handler.n_dofs());

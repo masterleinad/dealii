@@ -35,7 +35,7 @@ test()
 
   GridTools::partition_triangulation(nproc, triangulation);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

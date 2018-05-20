@@ -77,7 +77,7 @@ test()
   tria.refine_global(1);
 
   {
-    FE_Q<dim>       fe(fe_degree);
+    FE_Q<dim> fe(fe_degree);
     DoFHandler<dim> dof(tria);
     dof.distribute_dofs(fe);
 
@@ -86,7 +86,7 @@ test()
     do_test<dim, fe_degree, double>(dof, constraints);
   }
   {
-    FE_DGQ<dim>     fe(fe_degree);
+    FE_DGQ<dim> fe(fe_degree);
     DoFHandler<dim> dof(tria);
     dof.distribute_dofs(fe);
 
@@ -96,7 +96,7 @@ test()
   }
   deallog << "Test without templates on FEEvaluation" << std::endl;
   {
-    FE_DGQ<dim>     fe(fe_degree);
+    FE_DGQ<dim> fe(fe_degree);
     DoFHandler<dim> dof(tria);
     dof.distribute_dofs(fe);
 

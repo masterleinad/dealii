@@ -59,7 +59,7 @@ void EvaluateDerivative(DoFHandler<3>& dof_handler, Vector<double>& solution)
 {
   // This quadrature rule determines the points, where the
   // derivative will be evaluated.
-  QGauss<3>   quad(3);
+  QGauss<3> quad(3);
   FEValues<3> fe_values(dof_handler.get_fe(),
                         quad,
                         UpdateFlags(update_values | update_quadrature_points
@@ -136,12 +136,12 @@ void EvaluateDerivative(DoFHandler<3>& dof_handler, Vector<double>& solution)
 
 template <int dim>
 void
-create_mass_matrix(const Mapping<dim>&        mapping,
-                   const DoFHandler<dim>&     dof,
-                   const Quadrature<dim>&     q,
-                   SparseMatrix<double>&      matrix,
-                   const Function<dim>&       rhs_function,
-                   Vector<double>&            rhs_vector,
+create_mass_matrix(const Mapping<dim>& mapping,
+                   const DoFHandler<dim>& dof,
+                   const Quadrature<dim>& q,
+                   SparseMatrix<double>& matrix,
+                   const Function<dim>& rhs_function,
+                   Vector<double>& rhs_vector,
                    const Function<dim>* const coefficient = nullptr)
 {
   UpdateFlags update_flags
@@ -151,18 +151,18 @@ create_mass_matrix(const Mapping<dim>&        mapping,
 
   FEValues<dim> fe_values(mapping, dof.get_fe(), q, update_flags);
 
-  const unsigned int dofs_per_cell       = fe_values.dofs_per_cell,
-                     n_q_points          = fe_values.n_quadrature_points;
-  const FiniteElement<dim>& fe           = fe_values.get_fe();
-  const unsigned int        n_components = fe.n_components();
+  const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
+                     n_q_points    = fe_values.n_quadrature_points;
+  const FiniteElement<dim>& fe     = fe_values.get_fe();
+  const unsigned int n_components  = fe.n_components();
 
   Assert(coefficient == nullptr || coefficient->n_components == 1
            || coefficient->n_components == n_components,
          ExcInternalError());
 
-  FullMatrix<double>          cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>              cell_vector(dofs_per_cell);
-  std::vector<double>         coefficient_values(n_q_points);
+  FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
+  Vector<double> cell_vector(dofs_per_cell);
+  std::vector<double> coefficient_values(n_q_points);
   std::vector<Vector<double>> coefficient_vector_values(
     n_q_points, Vector<double>(n_components));
 
@@ -219,7 +219,7 @@ create_mass_matrix(const Mapping<dim>&        mapping,
                   const double weight = fe_values.JxW(point);
                   for(unsigned int i = 0; i < dofs_per_cell; ++i)
                     {
-                      const double       v = fe_values.shape_value(i, point);
+                      const double v = fe_values.shape_value(i, point);
                       const unsigned int component_i
                         = fe.system_to_component_index(i).first;
                       for(unsigned int j = 0; j < dofs_per_cell; ++j)
@@ -241,8 +241,8 @@ create_mass_matrix(const Mapping<dim>&        mapping,
         {
           // Compute eventual sign changes depending on the neighborhood
           // between two faces.
-          std::vector<double>       sign_change(dofs_per_cell, 1.0);
-          const unsigned int        dofs_per_face = fe.dofs_per_face;
+          std::vector<double> sign_change(dofs_per_cell, 1.0);
+          const unsigned int dofs_per_face = fe.dofs_per_face;
           std::vector<unsigned int> face_dof_indices(dofs_per_face);
 
           for(unsigned int point = 0; point < n_q_points; ++point)
@@ -304,11 +304,11 @@ create_mass_matrix(const Mapping<dim>&        mapping,
 
 template <int dim>
 void
-create_right_hand_side(const Mapping<dim>&    mapping,
+create_right_hand_side(const Mapping<dim>& mapping,
                        const DoFHandler<dim>& dof_handler,
                        const Quadrature<dim>& quadrature,
-                       const Function<dim>&   rhs_function,
-                       Vector<double>&        rhs_vector)
+                       const Function<dim>& rhs_function,
+                       Vector<double>& rhs_vector)
 {
   const FiniteElement<dim>& fe = dof_handler.get_fe();
   Assert(fe.n_components() == rhs_function.n_components, ExcInternalError());
@@ -325,7 +325,7 @@ create_right_hand_side(const Mapping<dim>&    mapping,
                      n_components  = fe.n_components();
 
   std::vector<unsigned int> dofs(dofs_per_cell);
-  Vector<double>            cell_vector(dofs_per_cell);
+  Vector<double> cell_vector(dofs_per_cell);
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -398,15 +398,15 @@ create_right_hand_side(const Mapping<dim>&    mapping,
 
 template <int dim>
 void
-project(const Mapping<dim>&     mapping,
-        const DoFHandler<dim>&  dof,
+project(const Mapping<dim>& mapping,
+        const DoFHandler<dim>& dof,
         const ConstraintMatrix& constraints,
-        const Quadrature<dim>&  quadrature,
-        const Function<dim>&    function,
-        Vector<double>&         vec,
-        const bool              enforce_zero_boundary = false,
-        const Quadrature<dim - 1>&                    = QGauss<dim - 1>(2),
-        const bool project_to_boundary_first          = false)
+        const Quadrature<dim>& quadrature,
+        const Function<dim>& function,
+        Vector<double>& vec,
+        const bool enforce_zero_boundary     = false,
+        const Quadrature<dim - 1>&           = QGauss<dim - 1>(2),
+        const bool project_to_boundary_first = false)
 {
   Assert(dof.get_fe().n_components() == function.n_components,
          ExcInternalError());
@@ -470,7 +470,7 @@ project(const Mapping<dim>&     mapping,
   constraints.condense(sparsity);
 
   SparseMatrix<double> mass_matrix(sparsity);
-  Vector<double>       tmp(mass_matrix.n());
+  Vector<double> tmp(mass_matrix.n());
 
   create_mass_matrix(mapping, dof, quadrature, mass_matrix, function, tmp);
 
@@ -480,9 +480,9 @@ project(const Mapping<dim>&     mapping,
     MatrixTools::apply_boundary_values(
       boundary_values, mass_matrix, vec, tmp, true);
 
-  SolverControl           control(1000, 1e-16, false, false);
+  SolverControl control(1000, 1e-16, false, false);
   PrimitiveVectorMemory<> memory;
-  SolverCG<>              cg(control, memory);
+  SolverCG<> cg(control, memory);
 
   PreconditionSSOR<> prec;
   prec.initialize(mass_matrix, 1.2);

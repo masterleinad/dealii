@@ -59,7 +59,7 @@ namespace Assembly
     struct Data
     {
       Data(const hp::FECollection<dim>& fe,
-           const hp::QCollection<dim>&  quadrature)
+           const hp::QCollection<dim>& quadrature)
         : hp_fe_values(fe,
                        quadrature,
                        update_values | update_gradients
@@ -88,9 +88,9 @@ namespace Assembly
       {}
 
       std::vector<types::global_dof_index> local_dof_indices;
-      FullMatrix<double>                   local_matrix;
-      Vector<double>                       local_rhs;
-      const unsigned int                   test_variant;
+      FullMatrix<double> local_matrix;
+      Vector<double> local_rhs;
+      const unsigned int test_variant;
     };
   } // namespace Copy
 } // namespace Assembly
@@ -128,7 +128,7 @@ private:
   void
   local_assemble(const typename hp::DoFHandler<dim>::active_cell_iterator& cell,
                  Assembly::Scratch::Data<dim>& scratch,
-                 Assembly::Copy::Data&         data);
+                 Assembly::Copy::Data& data);
   void
   copy_local_to_global(const Assembly::Copy::Data& data);
 
@@ -138,14 +138,14 @@ private:
 
   Triangulation<dim> triangulation;
 
-  hp::DoFHandler<dim>      dof_handler;
-  hp::FECollection<dim>    fe_collection;
-  hp::QCollection<dim>     quadrature_collection;
+  hp::DoFHandler<dim> dof_handler;
+  hp::FECollection<dim> fe_collection;
+  hp::QCollection<dim> quadrature_collection;
   hp::QCollection<dim - 1> face_quadrature_collection;
 
   ConstraintMatrix constraints;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> reference_matrix;
   SparseMatrix<double> test_matrix;
   SparseMatrix<double> test_matrix_2;
@@ -304,8 +304,8 @@ template <int dim>
 void
 LaplaceProblem<dim>::local_assemble(
   const typename hp::DoFHandler<dim>::active_cell_iterator& cell,
-  Assembly::Scratch::Data<dim>&                             scratch,
-  Assembly::Copy::Data&                                     data)
+  Assembly::Scratch::Data<dim>& scratch,
+  Assembly::Copy::Data& data)
 {
   const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
 
@@ -378,7 +378,7 @@ LaplaceProblem<dim>::assemble_reference()
   reference_matrix = 0;
   reference_rhs    = 0;
 
-  Assembly::Copy::Data         copy_data(0);
+  Assembly::Copy::Data copy_data(0);
   Assembly::Scratch::Data<dim> assembly_data(fe_collection,
                                              quadrature_collection);
 

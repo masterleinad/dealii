@@ -45,7 +45,7 @@ template <int dim, int spacedim>
 Point<spacedim>
 Manifold<dim, spacedim>::get_intermediate_point(const Point<spacedim>& p1,
                                                 const Point<spacedim>& p2,
-                                                const double           w) const
+                                                const double w) const
 {
   const std::array<Point<spacedim>, 2> vertices{{p1, p2}};
   return project_to_manifold(make_array_view(vertices.begin(), vertices.end()),
@@ -56,9 +56,9 @@ template <int dim, int spacedim>
 Point<spacedim>
 Manifold<dim, spacedim>::get_new_point(
   const ArrayView<const Point<spacedim>>& surrounding_points,
-  const ArrayView<const double>&          weights) const
+  const ArrayView<const double>& weights) const
 {
-  const double       tol      = 1e-10;
+  const double tol            = 1e-10;
   const unsigned int n_points = surrounding_points.size();
 
   Assert(n_points > 0, ExcMessage("There should be at least one point."));
@@ -84,7 +84,7 @@ Manifold<dim, spacedim>::get_new_point(
 
   // Now loop over points in the order of their associated weight
   Point<spacedim> p = surrounding_points[permutation[0]];
-  double          w = weights[permutation[0]];
+  double w          = weights[permutation[0]];
 
   for(unsigned int i = 1; i < n_points; ++i)
     {
@@ -107,8 +107,8 @@ template <int dim, int spacedim>
 void
 Manifold<dim, spacedim>::get_new_points(
   const ArrayView<const Point<spacedim>>& surrounding_points,
-  const Table<2, double>&                 weights,
-  ArrayView<Point<spacedim>>              new_points) const
+  const Table<2, double>& weights,
+  ArrayView<Point<spacedim>> new_points) const
 {
   AssertDimension(surrounding_points.size(), weights.size(1));
 
@@ -123,7 +123,7 @@ Manifold<dim, spacedim>::get_new_points(
 template <>
 Tensor<1, 2>
 Manifold<2, 2>::normal_vector(const Triangulation<2, 2>::face_iterator& face,
-                              const Point<2>&                           p) const
+                              const Point<2>& p) const
 {
   const int spacedim = 2;
 
@@ -143,7 +143,7 @@ Manifold<2, 2>::normal_vector(const Triangulation<2, 2>::face_iterator& face,
 template <>
 Tensor<1, 3>
 Manifold<3, 3>::normal_vector(const Triangulation<3, 3>::face_iterator& face,
-                              const Point<3>&                           p) const
+                              const Point<3>& p) const
 {
   const int spacedim = 3;
 
@@ -162,9 +162,9 @@ Manifold<3, 3>::normal_vector(const Triangulation<3, 3>::face_iterator& face,
   // indicate the angle closest to a perpendicular one (i.e., cos(theta) close
   // to zero). We start with an invalid value but the loops should always find
   // a value.
-  double       abs_cos_angle = std::numeric_limits<double>::max();
-  unsigned int first_index   = numbers::invalid_unsigned_int,
-               second_index  = numbers::invalid_unsigned_int;
+  double abs_cos_angle      = std::numeric_limits<double>::max();
+  unsigned int first_index  = numbers::invalid_unsigned_int,
+               second_index = numbers::invalid_unsigned_int;
   for(unsigned int i = 0; i < 3; ++i)
     if(distances[i] > 1e-8 * max_distance)
       for(unsigned int j = i + 1; j < 4; ++j)
@@ -225,7 +225,7 @@ template <>
 void
 Manifold<2, 2>::get_normals_at_vertices(
   const Triangulation<2, 2>::face_iterator& face,
-  FaceVertexNormals&                        n) const
+  FaceVertexNormals& n) const
 {
   n[0] = cross_product_2d(get_tangent_vector(face->vertex(0), face->vertex(1)));
   n[1]
@@ -245,7 +245,7 @@ template <>
 void
 Manifold<3, 3>::get_normals_at_vertices(
   const Triangulation<3, 3>::face_iterator& face,
-  FaceVertexNormals&                        n) const
+  FaceVertexNormals& n) const
 {
   n[0] = cross_product_3d(get_tangent_vector(face->vertex(0), face->vertex(1)),
                           get_tangent_vector(face->vertex(0), face->vertex(2)));
@@ -273,7 +273,7 @@ template <int dim, int spacedim>
 void
 Manifold<dim, spacedim>::get_normals_at_vertices(
   const typename Triangulation<dim, spacedim>::face_iterator& face,
-  FaceVertexNormals&                                          n) const
+  FaceVertexNormals& n) const
 {
   for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
     {
@@ -425,8 +425,8 @@ Manifold<dim, spacedim>::get_tangent_vector(const Point<spacedim>& x1,
   const double epsilon = 1e-8;
 
   const std::array<Point<spacedim>, 2> points{{x1, x2}};
-  const std::array<double, 2>          weights{{epsilon, 1.0 - epsilon}};
-  const Point<spacedim>                neighbor_point
+  const std::array<double, 2> weights{{epsilon, 1.0 - epsilon}};
+  const Point<spacedim> neighbor_point
     = get_new_point(make_array_view(points.begin(), points.end()),
                     make_array_view(weights.begin(), weights.end()));
   return (neighbor_point - x1) / epsilon;
@@ -461,7 +461,7 @@ namespace internal
 template <int dim, int spacedim>
 FlatManifold<dim, spacedim>::FlatManifold(
   const Tensor<1, spacedim>& periodicity,
-  const double               tolerance)
+  const double tolerance)
   : periodicity(periodicity), tolerance(tolerance)
 {}
 
@@ -477,7 +477,7 @@ template <int dim, int spacedim>
 Point<spacedim>
 FlatManifold<dim, spacedim>::get_new_point(
   const ArrayView<const Point<spacedim>>& surrounding_points,
-  const ArrayView<const double>&          weights) const
+  const ArrayView<const double>& weights) const
 {
   Assert(std::abs(std::accumulate(weights.begin(), weights.end(), 0.0) - 1.0)
            < 1e-10,
@@ -535,8 +535,8 @@ template <int dim, int spacedim>
 void
 FlatManifold<dim, spacedim>::get_new_points(
   const ArrayView<const Point<spacedim>>& surrounding_points,
-  const Table<2, double>&                 weights,
-  ArrayView<Point<spacedim>>              new_points) const
+  const Table<2, double>& weights,
+  ArrayView<Point<spacedim>> new_points) const
 {
   AssertDimension(surrounding_points.size(), weights.size(1));
   if(weights.size(0) == 0)
@@ -681,7 +681,7 @@ template <>
 void
 FlatManifold<2>::get_normals_at_vertices(
   const Triangulation<2>::face_iterator& face,
-  Manifold<2, 2>::FaceVertexNormals&     face_vertex_normals) const
+  Manifold<2, 2>::FaceVertexNormals& face_vertex_normals) const
 {
   const Tensor<1, 2> tangent = face->vertex(1) - face->vertex(0);
   for(unsigned int vertex = 0; vertex < GeometryInfo<2>::vertices_per_face;
@@ -703,7 +703,7 @@ template <>
 void
 FlatManifold<3>::get_normals_at_vertices(
   const Triangulation<3>::face_iterator& face,
-  Manifold<3, 3>::FaceVertexNormals&     face_vertex_normals) const
+  Manifold<3, 3>::FaceVertexNormals& face_vertex_normals) const
 {
   const unsigned int vertices_per_face = GeometryInfo<3>::vertices_per_face;
 
@@ -754,7 +754,7 @@ template <>
 Tensor<1, 2>
 FlatManifold<2, 2>::normal_vector(
   const Triangulation<2, 2>::face_iterator& face,
-  const Point<2>&                           p) const
+  const Point<2>& p) const
 {
   // In 2d, a face is just a straight line and
   // we can use the 'standard' implementation.
@@ -765,7 +765,7 @@ template <int dim, int spacedim>
 Tensor<1, spacedim>
 FlatManifold<dim, spacedim>::normal_vector(
   const typename Triangulation<dim, spacedim>::face_iterator& face,
-  const Point<spacedim>&                                      p) const
+  const Point<spacedim>& p) const
 {
   // I don't think the implementation below will work when dim!=spacedim;
   // in fact, I believe that we don't even have enough information here,
@@ -803,9 +803,9 @@ FlatManifold<dim, spacedim>::normal_vector(
   for(unsigned int i = 0; i < facedim; ++i)
     xi[i] = 1. / 2;
 
-  const double        eps = 1e-12;
+  const double eps = 1e-12;
   Tensor<1, spacedim> grad_F[facedim];
-  unsigned int        iteration = 0;
+  unsigned int iteration = 0;
   while(true)
     {
       Point<spacedim> F;
@@ -869,10 +869,10 @@ Point<spacedim>
 ChartManifold<dim, spacedim, chartdim>::get_intermediate_point(
   const Point<spacedim>& p1,
   const Point<spacedim>& p2,
-  const double           w) const
+  const double w) const
 {
   const std::array<Point<spacedim>, 2> points{{p1, p2}};
-  const std::array<double, 2>          weights{{1. - w, w}};
+  const std::array<double, 2> weights{{1. - w, w}};
   return get_new_point(make_array_view(points.begin(), points.end()),
                        make_array_view(weights.begin(), weights.end()));
 }
@@ -881,7 +881,7 @@ template <int dim, int spacedim, int chartdim>
 Point<spacedim>
 ChartManifold<dim, spacedim, chartdim>::get_new_point(
   const ArrayView<const Point<spacedim>>& surrounding_points,
-  const ArrayView<const double>&          weights) const
+  const ArrayView<const double>& weights) const
 {
   const std::size_t n_points = surrounding_points.size();
 
@@ -900,8 +900,8 @@ template <int dim, int spacedim, int chartdim>
 void
 ChartManifold<dim, spacedim, chartdim>::get_new_points(
   const ArrayView<const Point<spacedim>>& surrounding_points,
-  const Table<2, double>&                 weights,
-  ArrayView<Point<spacedim>>              new_points) const
+  const Table<2, double>& weights,
+  ArrayView<Point<spacedim>> new_points) const
 {
   Assert(weights.size(0) > 0, ExcEmptyObject());
   AssertDimension(surrounding_points.size(), weights.size(1));

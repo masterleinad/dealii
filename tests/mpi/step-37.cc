@@ -92,16 +92,16 @@ namespace Step37
     Triangulation<dim> triangulation;
 #endif
 
-    FE_Q<dim>       fe;
+    FE_Q<dim> fe;
     DoFHandler<dim> dof_handler;
 
-    FE_Q<dim>       fe_euler;
-    FESystem<dim>   fe_system;
+    FE_Q<dim> fe_euler;
+    FESystem<dim> fe_system;
     DoFHandler<dim> dof_euler;
     std::shared_ptr<
       MappingFEField<dim, dim, LinearAlgebra::distributed::Vector<double>>>
-                                               mapping;
-    ConstraintMatrix                           constraints_euler;
+      mapping;
+    ConstraintMatrix constraints_euler;
     LinearAlgebra::distributed::Vector<double> euler_positions;
 
     IndexSet locally_relevant_dofs;
@@ -114,7 +114,7 @@ namespace Step37
       degree_finite_element + 1,
       1,
       LinearAlgebra::distributed::Vector<double>>
-                     SystemMatrixType;
+      SystemMatrixType;
     SystemMatrixType system_matrix;
 
     MGConstrainedDoFs mg_constrained_dofs;
@@ -124,7 +124,7 @@ namespace Step37
       degree_finite_element + 1,
       1,
       LinearAlgebra::distributed::Vector<float>>
-                                   LevelMatrixType;
+      LevelMatrixType;
     MGLevelObject<LevelMatrixType> mg_matrices;
 
     LinearAlgebra::distributed::Vector<double> solution;
@@ -289,7 +289,7 @@ namespace Step37
     }
 
   private:
-    const double     charge;
+    const double charge;
     const Point<dim> x0;
   };
 
@@ -307,9 +307,9 @@ namespace Step37
       DoFTools::make_hanging_node_constraints(
         dof_handler, hanging_nodes_laplace_constraints);
 
-      std::set<types::boundary_id>    dirichlet_boundary_ids;
+      std::set<types::boundary_id> dirichlet_boundary_ids;
       typename FunctionMap<dim>::type dirichlet_boundary_functions;
-      PotentialBCFunction<dim>        bc_func(240, Point<dim>());
+      PotentialBCFunction<dim> bc_func(240, Point<dim>());
       dirichlet_boundary_ids.insert(0);
       dirichlet_boundary_functions[0] = &bc_func;
       VectorTools::interpolate_boundary_values(*mapping.get(),
@@ -360,7 +360,7 @@ namespace Step37
       SmootherType;
     mg::SmootherRelaxation<SmootherType,
                            LinearAlgebra::distributed::Vector<float>>
-                                                         mg_smoother;
+      mg_smoother;
     MGLevelObject<typename SmootherType::AdditionalData> smoother_data;
     smoother_data.resize(0, triangulation.n_global_levels() - 1);
     for(unsigned int level = 0; level < triangulation.n_global_levels();
@@ -471,7 +471,7 @@ namespace Step37
           = "grid" + dealii::Utilities::int_to_string(dim) + "_"
             + dealii::Utilities::int_to_string(cycle);
         const std::string filename = base_filename + ".gp";
-        std::ofstream     f(filename.c_str());
+        std::ofstream f(filename.c_str());
 
         f << "set terminal png size 400,410 enhanced font \"Helvetica,8\""
           << std::endl
@@ -504,7 +504,7 @@ namespace Step37
             Point<dim> center;
             GridGenerator::hyper_ball(triangulation, center, 12);
 
-            const types::manifold_id            sphere_id = 0;
+            const types::manifold_id sphere_id = 0;
             static const SphericalManifold<dim> boundary_ball(center);
             triangulation.set_all_manifold_ids_on_boundary(sphere_id);
             triangulation.set_manifold(sphere_id, boundary_ball);

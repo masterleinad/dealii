@@ -136,7 +136,7 @@ template <int dim>
 void
 FE_Q_Hierarchical<dim>::get_interpolation_matrix(
   const FiniteElement<dim>& source,
-  FullMatrix<double>&       matrix) const
+  FullMatrix<double>& matrix) const
 {
   // support interpolation between FE_Q_Hierarchical only.
   if(const FE_Q_Hierarchical<dim>* source_fe
@@ -185,7 +185,7 @@ FE_Q_Hierarchical<dim>::get_interpolation_matrix(
 template <int dim>
 const FullMatrix<double>&
 FE_Q_Hierarchical<dim>::get_prolongation_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(
@@ -874,7 +874,7 @@ template <int dim>
 void
 FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
   const FiniteElement<dim>& x_source_fe,
-  FullMatrix<double>&       interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
@@ -959,8 +959,8 @@ template <int dim>
 void
 FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
   const FiniteElement<dim>& x_source_fe,
-  const unsigned int        subface,
-  FullMatrix<double>&       interpolation_matrix) const
+  const unsigned int subface,
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
@@ -2021,8 +2021,8 @@ FE_Q_Hierarchical<dim>::hierarchic_to_fe_q_hierarchical_numbering(
 
       case 3:
         {
-          unsigned int       next_index = 0;
-          const unsigned int n2         = n * n;
+          unsigned int next_index = 0;
+          const unsigned int n2   = n * n;
           // first the eight vertices
           // bottom face, lexicographic
           h2l[next_index++] = 0;

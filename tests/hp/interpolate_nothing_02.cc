@@ -77,14 +77,14 @@ private:
   const unsigned int mech_degree;
   const unsigned int diff_degree;
 
-  Triangulation<dim>                        triangulation;
-  FESystem<dim>                             omega1_fe;
-  FESystem<dim>                             omega2_fe;
-  hp::FECollection<dim>                     fe_collection;
-  hp::DoFHandler<dim>                       dof_handler;
-  QGauss<dim>                               quadrature_formula;
-  QGauss<dim - 1>                           face_quadrature_formula;
-  SparsityPattern                           sparsity_pattern;
+  Triangulation<dim> triangulation;
+  FESystem<dim> omega1_fe;
+  FESystem<dim> omega2_fe;
+  hp::FECollection<dim> fe_collection;
+  hp::DoFHandler<dim> dof_handler;
+  QGauss<dim> quadrature_formula;
+  QGauss<dim - 1> face_quadrature_formula;
+  SparsityPattern sparsity_pattern;
   std::map<types::global_dof_index, double> boundary_values;
 
   Vector<double> system_rhs, U, Un, dU, U0;

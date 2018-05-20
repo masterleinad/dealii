@@ -74,7 +74,7 @@ main()
 
   // now solve with MinRes. This
   // didn't work at one point
-  SolverControl                     solver_control(1000, 1e-12);
+  SolverControl solver_control(1000, 1e-12);
   SolverMinRes<BlockVector<double>> minres(solver_control);
 
   minres.solve(block_A, b, a, PreconditionIdentity());

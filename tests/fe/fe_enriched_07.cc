@@ -79,13 +79,13 @@ public:
 
 template <int dim>
 void
-test6(const bool         do_href,
+test6(const bool do_href,
       const unsigned int p_feq  = 1,
       const unsigned int p_feen = 2)
 {
   deallog << "hp: " << do_href << " " << p_feq << " " << p_feen << std::endl;
 
-  Triangulation<dim>  triangulation;
+  Triangulation<dim> triangulation;
   hp::DoFHandler<dim> dof_handler(triangulation);
 
   EnrichmentFunction<dim> function;
@@ -138,7 +138,7 @@ test6(const bool         do_href,
 #ifdef DATA_OUT_FE_ENRICHED
   // output to check if all is good:
   std::vector<Vector<double>> shape_functions;
-  std::vector<std::string>    names;
+  std::vector<std::string> names;
   for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     {
       Vector<double> shape_function;

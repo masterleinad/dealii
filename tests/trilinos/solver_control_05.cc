@@ -69,7 +69,7 @@ main(int argc, char** argv)
     TrilinosWrappers::PreconditionJacobi preconditioner;
     preconditioner.initialize(A);
 
-    SolverControl              solver_control(2000, 1.e-3);
+    SolverControl solver_control(2000, 1.e-3);
     TrilinosWrappers::SolverCG solver(solver_control);
 
     const auto lo_A     = linear_operator<TrilinosWrappers::MPI::Vector>(A);

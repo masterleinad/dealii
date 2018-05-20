@@ -36,14 +36,14 @@ test(const unsigned int size, const unsigned int block_size)
 {
   const std::string filename("scalapack_10_test.h5");
 
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int this_mpi_process(
     Utilities::MPI::this_mpi_process(mpi_communicator));
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));
 
   //create FullMatrix and fill it
   FullMatrix<NumberType> full(size);
-  unsigned int           count = 0;
+  unsigned int count = 0;
   for(unsigned int i = 0; i < size; ++i)
     for(unsigned int j = 0; j < size; ++j, ++count)
       full(i, j) = count;

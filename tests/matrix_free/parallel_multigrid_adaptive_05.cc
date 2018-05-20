@@ -52,14 +52,14 @@ public:
   LaplaceOperator(){};
 
   void
-  initialize(const Mapping<dim>&                    mapping,
-             const DoFHandler<dim>&                 dof_handler,
-             const MGConstrainedDoFs&               mg_constrained_dofs,
+  initialize(const Mapping<dim>& mapping,
+             const DoFHandler<dim>& dof_handler,
+             const MGConstrainedDoFs& mg_constrained_dofs,
              const typename FunctionMap<dim>::type& dirichlet_boundary,
-             const unsigned int                     level,
-             const bool                             threaded)
+             const unsigned int level,
+             const bool threaded)
   {
-    const QGauss<1>                                  quad(n_q_points_1d);
+    const QGauss<1> quad(n_q_points_1d);
     typename MatrixFree<dim, number>::AdditionalData addit_data;
     if(threaded)
       addit_data.tasks_parallel_scheme
@@ -113,7 +113,7 @@ public:
   }
 
   void
-  vmult(LinearAlgebra::distributed::Vector<number>&       dst,
+  vmult(LinearAlgebra::distributed::Vector<number>& dst,
         const LinearAlgebra::distributed::Vector<number>& src) const
   {
     dst = 0;
@@ -121,7 +121,7 @@ public:
   }
 
   void
-  Tvmult(LinearAlgebra::distributed::Vector<number>&       dst,
+  Tvmult(LinearAlgebra::distributed::Vector<number>& dst,
          const LinearAlgebra::distributed::Vector<number>& src) const
   {
     dst = 0;
@@ -129,14 +129,14 @@ public:
   }
 
   void
-  Tvmult_add(LinearAlgebra::distributed::Vector<number>&       dst,
+  Tvmult_add(LinearAlgebra::distributed::Vector<number>& dst,
              const LinearAlgebra::distributed::Vector<number>& src) const
   {
     vmult_add(dst, src);
   }
 
   void
-  vmult_add(LinearAlgebra::distributed::Vector<number>&       dst,
+  vmult_add(LinearAlgebra::distributed::Vector<number>& dst,
             const LinearAlgebra::distributed::Vector<number>& src) const
   {
     Assert(src.partitioners_are_globally_compatible(
@@ -181,7 +181,7 @@ public:
 
   void
   vmult_interface_down(
-    LinearAlgebra::distributed::Vector<number>&       dst,
+    LinearAlgebra::distributed::Vector<number>& dst,
     const LinearAlgebra::distributed::Vector<number>& src) const
   {
     Assert(src.partitioners_are_globally_compatible(
@@ -228,7 +228,7 @@ public:
 
   void
   vmult_interface_up(
-    LinearAlgebra::distributed::Vector<number>&       dst,
+    LinearAlgebra::distributed::Vector<number>& dst,
     const LinearAlgebra::distributed::Vector<number>& src) const
   {
     Assert(src.partitioners_are_globally_compatible(
@@ -244,7 +244,7 @@ public:
       return;
 
     LinearAlgebra::distributed::Vector<number> src_cpy(src);
-    unsigned int                               c = 0;
+    unsigned int c = 0;
     for(unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
       {
         for(; c < edge_constrained_indices[i]; ++c)
@@ -302,8 +302,8 @@ public:
 
 private:
   void
-  local_apply(const MatrixFree<dim, number>&                    data,
-              LinearAlgebra::distributed::Vector<number>&       dst,
+  local_apply(const MatrixFree<dim, number>& data,
+              LinearAlgebra::distributed::Vector<number>& dst,
               const LinearAlgebra::distributed::Vector<number>& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
@@ -351,7 +351,7 @@ private:
 
   void
   local_diagonal_cell(
-    const MatrixFree<dim, number>&              data,
+    const MatrixFree<dim, number>& data,
     LinearAlgebra::distributed::Vector<number>& dst,
     const unsigned int&,
     const std::pair<unsigned int, unsigned int>& cell_range) const
@@ -380,11 +380,11 @@ private:
       }
   }
 
-  MatrixFree<dim, number>                        data;
-  LinearAlgebra::distributed::Vector<number>     inverse_diagonal_entries;
-  std::vector<unsigned int>                      edge_constrained_indices;
+  MatrixFree<dim, number> data;
+  LinearAlgebra::distributed::Vector<number> inverse_diagonal_entries;
+  std::vector<unsigned int> edge_constrained_indices;
   mutable std::vector<std::pair<number, number>> edge_constrained_values;
-  bool                                           have_interface_matrices;
+  bool have_interface_matrices;
 };
 
 template <typename LAPLACEOPERATOR>
@@ -425,7 +425,7 @@ class MGTransferMF
 {
 public:
   MGTransferMF(const MGLevelObject<LAPLACEOPERATOR>& laplace,
-               const MGConstrainedDoFs&              mg_constrained_dofs)
+               const MGConstrainedDoFs& mg_constrained_dofs)
     : MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>(
         mg_constrained_dofs),
       laplace_operator(laplace)
@@ -438,10 +438,10 @@ public:
    */
   template <class InVector, int spacedim>
   void
-  copy_to_mg(const DoFHandler<dim, spacedim>&          mg_dof_handler,
+  copy_to_mg(const DoFHandler<dim, spacedim>& mg_dof_handler,
              MGLevelObject<LinearAlgebra::distributed::Vector<
                typename LAPLACEOPERATOR::value_type>>& dst,
-             const InVector&                           src) const
+             const InVector& src) const
   {
     for(unsigned int level = dst.min_level(); level <= dst.max_level(); ++level)
       laplace_operator[level].initialize_dof_vector(dst[level]);
@@ -470,8 +470,8 @@ public:
   }
 
   virtual void
-  operator()(const unsigned int                                level,
-             LinearAlgebra::distributed::Vector<Number>&       dst,
+  operator()(const unsigned int level,
+             LinearAlgebra::distributed::Vector<Number>& dst,
              const LinearAlgebra::distributed::Vector<Number>& src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
@@ -492,19 +492,19 @@ do_test(const DoFHandler<dim>& dof, const bool threaded)
   deallog << "Number of degrees of freedom: " << dof.n_dofs() << std::endl;
 
   ConstraintMatrix hanging_node_constraints;
-  IndexSet         locally_relevant_dofs;
+  IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof, locally_relevant_dofs);
   hanging_node_constraints.reinit(locally_relevant_dofs);
   DoFTools::make_hanging_node_constraints(dof, hanging_node_constraints);
   hanging_node_constraints.close();
 
-  MGConstrainedDoFs               mg_constrained_dofs;
-  Functions::ZeroFunction<dim>    zero_function;
+  MGConstrainedDoFs mg_constrained_dofs;
+  Functions::ZeroFunction<dim> zero_function;
   typename FunctionMap<dim>::type dirichlet_boundary;
   dirichlet_boundary[0] = &zero_function;
   mg_constrained_dofs.initialize(dof, dirichlet_boundary);
 
-  MappingQ<dim>                                          mapping(fe_degree + 1);
+  MappingQ<dim> mapping(fe_degree + 1);
   LaplaceOperator<dim, fe_degree, n_q_points_1d, double> fine_matrix;
   fine_matrix.initialize(mapping,
                          dof,
@@ -618,7 +618,7 @@ test()
                || (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
-      FE_Q<dim>       fe(fe_degree);
+      FE_Q<dim> fe(fe_degree);
       DoFHandler<dim> dof(tria);
       dof.distribute_dofs(fe);
       dof.distribute_mg_dofs(fe);

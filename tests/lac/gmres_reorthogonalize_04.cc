@@ -51,7 +51,7 @@ void
 test()
 {
   const unsigned int n = 200;
-  Vector<number>     rhs(n), sol(n);
+  Vector<number> rhs(n), sol(n);
   rhs = 1.;
 
   // only add diagonal entries

@@ -94,14 +94,14 @@ private:
   void
   output(unsigned int cycle);
 
-  MPI_Comm           mpi_comm;
+  MPI_Comm mpi_comm;
   const unsigned int n_mpi_proc;
   const unsigned int this_mpi_proc;
 
   parallel::distributed::Triangulation<2> triangulation;
 
   DoFHandler<2> dof_handler;
-  FE_Q<2>       fe;
+  FE_Q<2> fe;
 
   IndexSet locally_owned_dofs;
   IndexSet locally_relevant_dofs;
@@ -109,11 +109,11 @@ private:
   ConstraintMatrix constraints;
 
   LA::MPI::SparseMatrix system_matrix;
-  LA::MPI::Vector       locally_relevant_solution;
-  LA::MPI::Vector       system_rhs;
+  LA::MPI::Vector locally_relevant_solution;
+  LA::MPI::Vector system_rhs;
 
   ConditionalOStream pcout;
-  TimerOutput        timer;
+  TimerOutput timer;
 };
 
 Test_Solver_Output::Test_Solver_Output()
@@ -236,7 +236,7 @@ Test_Solver_Output::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -291,13 +291,13 @@ Test_Solver_Output::solve_base()
 
   LA::MPI::Vector completely_distributed_solution(locally_owned_dofs, mpi_comm);
 
-  LA::MPI::PreconditionAMG                 prec;
+  LA::MPI::PreconditionAMG prec;
   LA::MPI::PreconditionAMG::AdditionalData amgdata;
   prec.initialize(system_matrix, amgdata);
 
-  SolverControl                                solver_control(100, 1e-12);
+  SolverControl solver_control(100, 1e-12);
   TrilinosWrappers::SolverBase::AdditionalData solver_data(true);
-  TrilinosWrappers::SolverBase                 solver(
+  TrilinosWrappers::SolverBase solver(
     TrilinosWrappers::SolverBase::cg, solver_control, solver_data);
   solver.solve(
     system_matrix, completely_distributed_solution, system_rhs, prec);
@@ -317,13 +317,13 @@ Test_Solver_Output::solve_cg()
 
   LA::MPI::Vector completely_distributed_solution(locally_owned_dofs, mpi_comm);
 
-  LA::MPI::PreconditionAMG                 prec;
+  LA::MPI::PreconditionAMG prec;
   LA::MPI::PreconditionAMG::AdditionalData amgdata;
   prec.initialize(system_matrix, amgdata);
 
-  SolverControl                solver_control(100, 1e-12);
+  SolverControl solver_control(100, 1e-12);
   LA::SolverCG::AdditionalData solver_data(true);
-  LA::SolverCG                 solver(solver_control, solver_data);
+  LA::SolverCG solver(solver_control, solver_data);
   solver.solve(
     system_matrix, completely_distributed_solution, system_rhs, prec);
 
@@ -342,11 +342,11 @@ Test_Solver_Output::solve_cgs()
 
   LA::MPI::Vector completely_distributed_solution(locally_owned_dofs, mpi_comm);
 
-  LA::MPI::PreconditionAMG                 prec;
+  LA::MPI::PreconditionAMG prec;
   LA::MPI::PreconditionAMG::AdditionalData amgdata;
   prec.initialize(system_matrix, amgdata);
 
-  SolverControl                               solver_control(100, 1e-12);
+  SolverControl solver_control(100, 1e-12);
   TrilinosWrappers::SolverCGS::AdditionalData solver_data(true);
   TrilinosWrappers::SolverCGS solver(solver_control, solver_data);
   solver.solve(
@@ -367,13 +367,13 @@ Test_Solver_Output::solve_gmres()
 
   LA::MPI::Vector completely_distributed_solution(locally_owned_dofs, mpi_comm);
 
-  LA::MPI::PreconditionAMG                 prec;
+  LA::MPI::PreconditionAMG prec;
   LA::MPI::PreconditionAMG::AdditionalData amgdata;
   prec.initialize(system_matrix, amgdata);
 
-  SolverControl                   solver_control(100, 1e-12);
+  SolverControl solver_control(100, 1e-12);
   LA::SolverGMRES::AdditionalData solver_data(true, 25);
-  LA::SolverGMRES                 solver(solver_control, solver_data);
+  LA::SolverGMRES solver(solver_control, solver_data);
   solver.solve(
     system_matrix, completely_distributed_solution, system_rhs, prec);
 
@@ -392,11 +392,11 @@ Test_Solver_Output::solve_bicgstab()
 
   LA::MPI::Vector completely_distributed_solution(locally_owned_dofs, mpi_comm);
 
-  LA::MPI::PreconditionAMG                 prec;
+  LA::MPI::PreconditionAMG prec;
   LA::MPI::PreconditionAMG::AdditionalData amgdata;
   prec.initialize(system_matrix, amgdata);
 
-  SolverControl                                    solver_control(100, 1e-12);
+  SolverControl solver_control(100, 1e-12);
   TrilinosWrappers::SolverBicgstab::AdditionalData solver_data(true);
   TrilinosWrappers::SolverBicgstab solver(solver_control, solver_data);
   solver.solve(
@@ -417,11 +417,11 @@ Test_Solver_Output::solve_tfqmr()
 
   LA::MPI::Vector completely_distributed_solution(locally_owned_dofs, mpi_comm);
 
-  LA::MPI::PreconditionAMG                 prec;
+  LA::MPI::PreconditionAMG prec;
   LA::MPI::PreconditionAMG::AdditionalData amgdata;
   prec.initialize(system_matrix, amgdata);
 
-  SolverControl                                 solver_control(100, 1e-12);
+  SolverControl solver_control(100, 1e-12);
   TrilinosWrappers::SolverTFQMR::AdditionalData solver_data(true);
   TrilinosWrappers::SolverTFQMR solver(solver_control, solver_data);
   solver.solve(
@@ -501,7 +501,7 @@ main(int argc, char* argv[])
   std::ifstream inputfile;
   inputfile.open("stdout");
   Assert(inputfile.good() && inputfile.is_open(), ExcIO());
-  std::string       line;
+  std::string line;
   const std::string key = "*****";
   while(std::getline(inputfile, line))
     {

@@ -30,7 +30,7 @@ namespace Particles
 
   template <int dim, int spacedim>
   Particle<dim, spacedim>::Particle(const Point<spacedim>& location,
-                                    const Point<dim>&      reference_location,
+                                    const Point<dim>& reference_location,
                                     const types::particle_index id)
     : location(location),
       reference_location(reference_location),
@@ -63,7 +63,7 @@ namespace Particles
   }
 
   template <int dim, int spacedim>
-  Particle<dim, spacedim>::Particle(const void*&        data,
+  Particle<dim, spacedim>::Particle(const void*& data,
                                     PropertyPool* const new_property_pool)
   {
     const types::particle_index* id_data

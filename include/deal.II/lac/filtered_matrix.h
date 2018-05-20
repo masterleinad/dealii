@@ -263,7 +263,7 @@ public:
      * Constructor.
      */
     const_iterator(const FilteredMatrix<VectorType>* matrix,
-                   const size_type                   index);
+                   const size_type index);
 
     /**
      * Prefix increment.
@@ -351,7 +351,7 @@ public:
    */
   template <typename MatrixType>
   FilteredMatrix(const MatrixType& matrix,
-                 const bool        expect_constrained_source = false);
+                 const bool expect_constrained_source = false);
 
   /**
    * Copy operator. Take over matrix and constraints from the other object.
@@ -571,7 +571,7 @@ private:
 template <typename VectorType>
 inline FilteredMatrix<VectorType>::Accessor::Accessor(
   const FilteredMatrix<VectorType>* matrix,
-  const size_type                   index)
+  const size_type index)
   : matrix(matrix), index(index)
 {
   Assert(index <= matrix->constraints.size(),
@@ -610,7 +610,7 @@ FilteredMatrix<VectorType>::Accessor::advance()
 template <typename VectorType>
 inline FilteredMatrix<VectorType>::const_iterator::const_iterator(
   const FilteredMatrix<VectorType>* matrix,
-  const size_type                   index)
+  const size_type index)
   : accessor(matrix, index)
 {}
 
@@ -703,7 +703,7 @@ inline FilteredMatrix<VectorType>::FilteredMatrix(const FilteredMatrix& fm)
 template <typename VectorType>
 template <typename MatrixType>
 inline FilteredMatrix<VectorType>::FilteredMatrix(const MatrixType& m,
-                                                  const bool        ecs)
+                                                  const bool ecs)
   : expect_constrained_source(false)
 {
   initialize(m, ecs);
@@ -722,7 +722,7 @@ FilteredMatrix<VectorType>::operator=(const FilteredMatrix& fm)
 template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::add_constraint(const size_type index,
-                                           const double    value)
+                                           const double value)
 {
   // add new constraint to end
   constraints.push_back(IndexValuePair(index, value));
@@ -777,10 +777,10 @@ template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::apply_constraints(VectorType& v) const
 {
-  GrowingVectorMemory<VectorType>            mem;
+  GrowingVectorMemory<VectorType> mem;
   typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
   tmp_vector->reinit(v);
-  const_index_value_iterator       i = constraints.begin();
+  const_index_value_iterator i       = constraints.begin();
   const const_index_value_iterator e = constraints.end();
   for(; i != e; ++i)
     {
@@ -807,7 +807,7 @@ FilteredMatrix<VectorType>::pre_filter(VectorType& v) const
 {
   // iterate over all constraints and
   // zero out value
-  const_index_value_iterator       i = constraints.begin();
+  const_index_value_iterator i       = constraints.begin();
   const const_index_value_iterator e = constraints.end();
   for(; i != e; ++i)
     v(i->first) = 0;
@@ -816,11 +816,11 @@ FilteredMatrix<VectorType>::pre_filter(VectorType& v) const
 template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::post_filter(const VectorType& in,
-                                        VectorType&       out) const
+                                        VectorType& out) const
 {
   // iterate over all constraints and
   // set value correctly
-  const_index_value_iterator       i = constraints.begin();
+  const_index_value_iterator i       = constraints.begin();
   const const_index_value_iterator e = constraints.end();
   for(; i != e; ++i)
     {
@@ -835,7 +835,7 @@ FilteredMatrix<VectorType>::vmult(VectorType& dst, const VectorType& src) const
 {
   if(!expect_constrained_source)
     {
-      GrowingVectorMemory<VectorType>            mem;
+      GrowingVectorMemory<VectorType> mem;
       typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
       // first copy over src vector and
       // pre-filter
@@ -860,7 +860,7 @@ FilteredMatrix<VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
 {
   if(!expect_constrained_source)
     {
-      GrowingVectorMemory<VectorType>            mem;
+      GrowingVectorMemory<VectorType> mem;
       typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
       // first copy over src vector and
       // pre-filter
@@ -881,12 +881,12 @@ FilteredMatrix<VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
 
 template <typename VectorType>
 inline void
-FilteredMatrix<VectorType>::vmult_add(VectorType&       dst,
+FilteredMatrix<VectorType>::vmult_add(VectorType& dst,
                                       const VectorType& src) const
 {
   if(!expect_constrained_source)
     {
-      GrowingVectorMemory<VectorType>            mem;
+      GrowingVectorMemory<VectorType> mem;
       typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
       // first copy over src vector and
       // pre-filter
@@ -907,12 +907,12 @@ FilteredMatrix<VectorType>::vmult_add(VectorType&       dst,
 
 template <typename VectorType>
 inline void
-FilteredMatrix<VectorType>::Tvmult_add(VectorType&       dst,
+FilteredMatrix<VectorType>::Tvmult_add(VectorType& dst,
                                        const VectorType& src) const
 {
   if(!expect_constrained_source)
     {
-      GrowingVectorMemory<VectorType>            mem;
+      GrowingVectorMemory<VectorType> mem;
       typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
       // first copy over src vector and
       // pre-filter

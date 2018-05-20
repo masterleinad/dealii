@@ -55,7 +55,7 @@ test(const unsigned int degree)
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim, spacedim>     fe(degree);
+  FE_Q<dim, spacedim> fe(degree);
   FESystem<dim, spacedim> fe_sys(fe, spacedim);
 
   DoFHandler<dim, spacedim> dof_sys(tria);

@@ -30,9 +30,9 @@ public:
   };
 
 private:
-  int         f_i = 3;
-  double      f_d = 7.7;
-  bool        f_b = true;
+  int f_i         = 3;
+  double f_d      = 7.7;
+  bool f_b        = true;
   std::string f_s = "hello";
 };
 
@@ -49,9 +49,9 @@ public:
   };
 
 private:
-  int         s_i = 5;
-  double      s_d = 9.9;
-  bool        s_b = false;
+  int s_i         = 5;
+  double s_d      = 9.9;
+  bool s_b        = false;
   std::string s_s = "bye bye";
 };
 
@@ -60,7 +60,7 @@ main()
 {
   initlog();
 
-  FirstClass  f;
+  FirstClass f;
   SecondClass s;
   std::string output_name = "used_parameter_acceptor_05.xml";
   ParameterAcceptor::initialize(

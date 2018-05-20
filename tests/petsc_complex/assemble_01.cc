@@ -34,12 +34,12 @@ main(int argc, char** argv)
 
   const unsigned int n = 4;
 
-  PETScWrappers::SparseMatrix      serial_matrix(n, n, n);
+  PETScWrappers::SparseMatrix serial_matrix(n, n, n);
   PETScWrappers::MPI::SparseMatrix mpi_matrix(MPI_COMM_WORLD, n, n, n, n, n);
-  PETScWrappers::MPI::Vector       mpi_vector(MPI_COMM_WORLD, n, n);
+  PETScWrappers::MPI::Vector mpi_vector(MPI_COMM_WORLD, n, n);
 
   FullMatrix<PetscScalar> cell_matrix(n, n);
-  Vector<PetscScalar>     cell_rhs(n);
+  Vector<PetscScalar> cell_rhs(n);
 
   ConstraintMatrix constraints;
   constraints.close();

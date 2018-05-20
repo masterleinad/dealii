@@ -184,7 +184,7 @@ namespace TensorAccessors
    */
   template <int index, int rank, typename T>
   inline DEAL_II_ALWAYS_INLINE internal::ReorderedIndexView<index, rank, T>
-                               reordered_index_view(T& t)
+  reordered_index_view(T& t)
   {
     static_assert(0 <= index && index < rank,
                   "The specified index must lie within the range [0,rank)");
@@ -522,7 +522,7 @@ namespace TensorAccessors
       }
 
     private:
-      const S   s_;
+      const S s_;
       const int i_;
     };
 
@@ -539,7 +539,7 @@ namespace TensorAccessors
 
       typedef
         typename ValueType<typename S::return_type>::value_type return_type;
-      typedef return_type                                       value_type;
+      typedef return_type value_type;
 
       inline DEAL_II_ALWAYS_INLINE return_type& operator[](unsigned int j) const
       {
@@ -547,7 +547,7 @@ namespace TensorAccessors
       }
 
     private:
-      const S   s_;
+      const S s_;
       const int i_;
     };
 

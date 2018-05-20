@@ -47,8 +47,8 @@ main()
       GridGenerator::cylinder(triangulation);
 
       const MappingQ<3> mapping(degree, true);
-      const FE_Q<3>     dummy_fe(1);
-      DoFHandler<3>     dof_handler(triangulation);
+      const FE_Q<3> dummy_fe(1);
+      DoFHandler<3> dof_handler(triangulation);
 
       for(Triangulation<3>::active_cell_iterator cell
           = triangulation.begin_active();

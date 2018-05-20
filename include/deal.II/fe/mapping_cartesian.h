@@ -98,36 +98,36 @@ public:
 
   // for documentation, see the Mapping base class
   virtual void
-  transform(const ArrayView<const Tensor<1, dim>>&                   input,
-            const MappingType                                        type,
+  transform(const ArrayView<const Tensor<1, dim>>& input,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<1, spacedim>>& output) const override;
 
   // for documentation, see the Mapping base class
   virtual void
   transform(const ArrayView<const DerivativeForm<1, dim, spacedim>>& input,
-            const MappingType                                        type,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<2, spacedim>>& output) const override;
 
   // for documentation, see the Mapping base class
   virtual void
-  transform(const ArrayView<const Tensor<2, dim>>&                   input,
-            const MappingType                                        type,
+  transform(const ArrayView<const Tensor<2, dim>>& input,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<2, spacedim>>& output) const override;
 
   // for documentation, see the Mapping base class
   virtual void
   transform(const ArrayView<const DerivativeForm<2, dim, spacedim>>& input,
-            const MappingType                                        type,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<3, spacedim>>& output) const override;
 
   // for documentation, see the Mapping base class
   virtual void
-  transform(const ArrayView<const Tensor<3, dim>>&                   input,
-            const MappingType                                        type,
+  transform(const ArrayView<const Tensor<3, dim>>& input,
+            const MappingType type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
             const ArrayView<Tensor<3, spacedim>>& output) const override;
 
@@ -193,21 +193,21 @@ private:
 
   // documentation can be found in Mapping::get_face_data()
   virtual std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
-  get_face_data(const UpdateFlags          flags,
+  get_face_data(const UpdateFlags flags,
                 const Quadrature<dim - 1>& quadrature) const override;
 
   // documentation can be found in Mapping::get_subface_data()
   virtual std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
-  get_subface_data(const UpdateFlags          flags,
+  get_subface_data(const UpdateFlags flags,
                    const Quadrature<dim - 1>& quadrature) const override;
 
   // documentation can be found in Mapping::fill_fe_values()
   virtual CellSimilarity::Similarity
   fill_fe_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+    const CellSimilarity::Similarity cell_similarity,
+    const Quadrature<dim>& quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
     internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
       output_data) const override;
 
@@ -215,9 +215,9 @@ private:
   virtual void
   fill_fe_face_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+    const unsigned int face_no,
+    const Quadrature<dim - 1>& quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
     internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
       output_data) const override;
 
@@ -225,10 +225,10 @@ private:
   virtual void
   fill_fe_subface_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          subface_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+    const unsigned int face_no,
+    const unsigned int subface_no,
+    const Quadrature<dim - 1>& quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
     internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
       output_data) const override;
 
@@ -241,12 +241,12 @@ private:
    */
   void
   compute_fill(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-               const unsigned int               face_no,
-               const unsigned int               sub_no,
+               const unsigned int face_no,
+               const unsigned int sub_no,
                const CellSimilarity::Similarity cell_similarity,
-               const InternalData&              data,
-               std::vector<Point<dim>>&         quadrature_points,
-               std::vector<Tensor<1, dim>>&     normal_vectors) const;
+               const InternalData& data,
+               std::vector<Point<dim>>& quadrature_points,
+               std::vector<Tensor<1, dim>>& normal_vectors) const;
 
   /**
    * Value to indicate that a given face or subface number is invalid.

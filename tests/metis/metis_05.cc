@@ -60,7 +60,7 @@ test(const bool with_weighting, const bool write_to_vtk = false)
       cell_weighting
         = std::vector<unsigned int>(triangulation.n_active_cells(), 1u);
 
-      const Point<dim>                                  origin;
+      const Point<dim> origin;
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
       for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
@@ -75,7 +75,7 @@ test(const bool with_weighting, const bool write_to_vtk = false)
 
   // generate a field where the value equals
   // the subdomain number, and output it
-  FE_DGQ<dim>     fe(0);
+  FE_DGQ<dim> fe(0);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

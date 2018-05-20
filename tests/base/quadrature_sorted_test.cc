@@ -50,16 +50,16 @@ check_cells(std::vector<Quadrature<dim>*>& quadratures)
   Quadrature<dim> quadrature;
   for(unsigned int n = 0; n < quadratures.size(); ++n)
     {
-      quadrature                             = *quadratures[n];
-      const std::vector<Point<dim>>& points  = quadrature.get_points();
-      const std::vector<double>&     weights = quadrature.get_weights();
+      quadrature                            = *quadratures[n];
+      const std::vector<Point<dim>>& points = quadrature.get_points();
+      const std::vector<double>& weights    = quadrature.get_weights();
 
       deallog << "Quadrature no." << n;
 
-      unsigned int i              = 0;
-      double       quadrature_int = 0;
-      double       exact_int      = 0;
-      double       err            = 0;
+      unsigned int i        = 0;
+      double quadrature_int = 0;
+      double exact_int      = 0;
+      double err            = 0;
 
       do
         {
@@ -97,7 +97,7 @@ check_cells(std::vector<Quadrature<dim>*>& quadratures)
 template <int dim>
 void
 check_faces(const std::vector<Quadrature<dim - 1>*>& quadratures,
-            const bool                               sub)
+            const bool sub)
 {
   if(sub)
     deallog.push("subfaces");
@@ -110,15 +110,15 @@ check_faces(const std::vector<Quadrature<dim - 1>*>& quadratures,
         sub == false ?
           QProjector<dim>::project_to_all_faces(*quadratures[n]) :
           QProjector<dim>::project_to_all_subfaces(*quadratures[n]));
-      const std::vector<Point<dim>>& points  = quadrature.get_points();
-      const std::vector<double>&     weights = quadrature.get_weights();
+      const std::vector<Point<dim>>& points = quadrature.get_points();
+      const std::vector<double>& weights    = quadrature.get_weights();
 
       deallog << "Quadrature no." << n;
 
-      unsigned int i              = 0;
-      long double  quadrature_int = 0;
-      double       exact_int      = 0;
-      double       err            = 0;
+      unsigned int i             = 0;
+      long double quadrature_int = 0;
+      double exact_int           = 0;
+      double err                 = 0;
 
       do
         {
@@ -177,8 +177,8 @@ check_quadratures(const std::vector<Quadrature<dim>*>& quadratures)
 {
   for(unsigned int i = 0; i < quadratures.size(); ++i)
     {
-      Quadrature<dim>& quad  = *quadratures[i];
-      bool             check = true;
+      Quadrature<dim>& quad = *quadratures[i];
+      bool check            = true;
       for(unsigned int q = 1; q < quad.size(); ++q)
         if(quad.weight(q) < quad.weight(q - 1))
           {

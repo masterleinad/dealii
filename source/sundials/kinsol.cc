@@ -102,9 +102,9 @@ namespace SUNDIALS
 
     template <typename VectorType>
     int
-    t_kinsol_solve_jacobian(KINMem    kinsol_mem,
-                            N_Vector  x,
-                            N_Vector  b,
+    t_kinsol_solve_jacobian(KINMem kinsol_mem,
+                            N_Vector x,
+                            N_Vector b,
                             realtype* sJpnorm,
                             realtype* sFdotJp)
     {
@@ -143,7 +143,7 @@ namespace SUNDIALS
 
   template <typename VectorType>
   KINSOL<VectorType>::KINSOL(const AdditionalData& data,
-                             const MPI_Comm        mpi_comm)
+                             const MPI_Comm mpi_comm)
     : data(data),
       kinsol_mem(nullptr),
       solution(nullptr),
@@ -256,7 +256,7 @@ namespace SUNDIALS
     AssertKINSOL(status);
 
 #  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
-    SUNMatrix       J  = nullptr;
+    SUNMatrix J        = nullptr;
     SUNLinearSolver LS = nullptr;
 #  endif
 

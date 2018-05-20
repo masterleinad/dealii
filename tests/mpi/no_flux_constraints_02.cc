@@ -93,7 +93,7 @@ test()
   // create FE_System and fill in no-normal flux
   // conditions on boundary 1 (outer)
   static const FESystem<dim> fe(FE_Q<dim>(1), dim);
-  DoFHandler<dim>            dofh(triangulation);
+  DoFHandler<dim> dofh(triangulation);
   dofh.distribute_dofs(fe);
   DoFRenumbering::hierarchical(dofh);
 
@@ -135,7 +135,7 @@ test()
         (std::string("cat ") + base + "cm_?.dot|sort -n|uniq >" + base + "cm")
           .c_str());
       {
-        std::ifstream     file((base + "cm").c_str());
+        std::ifstream file((base + "cm").c_str());
         std::stringstream ss;
         ss << file.rdbuf();
         std::string str = ss.str();
@@ -156,7 +156,7 @@ test()
   // processors might write info in different
   // orders, copy all numbers to root processor
   std::vector<unsigned int> n_constraints_glob(numprocs);
-  unsigned int              n_constraints = constraints.n_constraints();
+  unsigned int n_constraints = constraints.n_constraints();
   MPI_Gather(&n_constraints,
              1,
              MPI_UNSIGNED,
@@ -175,9 +175,9 @@ test()
   TrilinosWrappers::MPI::Vector vector;
   vector.reinit(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
   {
-    const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell = fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    Vector<double>                       local_vector(dofs_per_cell);
+    Vector<double> local_vector(dofs_per_cell);
     for(unsigned int i = 0; i < dofs_per_cell; ++i)
       local_vector(i) = 1.;
     typename DoFHandler<dim>::active_cell_iterator cell = dofh.begin_active(),

@@ -21,13 +21,13 @@
 void
 test()
 {
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  int          int_sum;
+  int int_sum;
   unsigned int uint_sum;
-  double       double_sum;
-  float        float_sum;
+  double double_sum;
+  float float_sum;
 
   int_sum  = Utilities::MPI::min<int>(numprocs + myid, MPI_COMM_WORLD);
   uint_sum = Utilities::MPI::min<unsigned int>(numprocs + myid, MPI_COMM_WORLD);

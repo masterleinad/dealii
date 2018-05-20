@@ -175,9 +175,9 @@ public:
 
 private:
   Triangulation<dim>* tria;
-  DoFHandler<dim>*    dof;
-  CurvedLine<dim>     curved_line;
-  Ball<dim>           ball;
+  DoFHandler<dim>* dof;
+  CurvedLine<dim> curved_line;
+  Ball<dim> ball;
 };
 
 template <int dim>

@@ -84,10 +84,10 @@ test4()
   deallog << "h-refinement:" << std::endl;
 
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
 
   EnrichmentFunction<dim> function;
-  FE_Enriched<dim>        fe(FE_Q<dim>(2), FE_Q<dim>(1), &function);
+  FE_Enriched<dim> fe(FE_Q<dim>(2), FE_Q<dim>(1), &function);
 
   GridGenerator::hyper_cube(triangulation);
 
@@ -107,7 +107,7 @@ test4()
 
 #ifdef DATA_OUT_FE_ENRICHED
   std::vector<Vector<double>> shape_functions;
-  std::vector<std::string>    names;
+  std::vector<std::string> names;
   for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     if(!constraints.is_constrained(s))
       {

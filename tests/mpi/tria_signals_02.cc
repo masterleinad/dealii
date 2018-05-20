@@ -72,7 +72,7 @@ private:
     return;
   }
 
-  int                                 n_active_cells;
+  int n_active_cells;
   const Triangulation<dim, spacedim>& tria;
 };
 
@@ -100,7 +100,7 @@ test()
 
   // Test signal on coarsening
   {
-    typename TriaType::active_cell_iterator       cell = tria.begin_active();
+    typename TriaType::active_cell_iterator cell       = tria.begin_active();
     const typename TriaType::active_cell_iterator endc = tria.end();
 
     for(; cell != endc; ++cell)

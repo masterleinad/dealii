@@ -110,19 +110,19 @@ namespace Step27
 
     Triangulation<dim> triangulation;
 
-    hp::DoFHandler<dim>      dof_handler;
-    hp::FECollection<dim>    fe_collection;
-    hp::QCollection<dim>     quadrature_collection;
+    hp::DoFHandler<dim> dof_handler;
+    hp::FECollection<dim> fe_collection;
+    hp::QCollection<dim> quadrature_collection;
     hp::QCollection<dim - 1> face_quadrature_collection;
 
-    hp::QCollection<dim>                    fourier_q_collection;
+    hp::QCollection<dim> fourier_q_collection;
     std::shared_ptr<FESeries::Fourier<dim>> fourier;
-    std::vector<double>                     ln_k;
-    Table<dim, std::complex<double>>        fourier_coefficients;
+    std::vector<double> ln_k;
+    Table<dim, std::complex<double>> fourier_coefficients;
 
     ConstraintMatrix constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
@@ -228,7 +228,7 @@ namespace Step27
     // finite element, namely that is obtained by iterating a
     // 2-point Gauss formula as many times as the maximal exponent we use for
     // the term $e^{i{\bf k}\cdot{\bf x}}$:
-    QGauss<1>      base_quadrature(2);
+    QGauss<1> base_quadrature(2);
     QIterated<dim> quadrature(base_quadrature, N);
     for(unsigned int i = 0; i < fe_collection.size(); i++)
       fourier_q_collection.push_back(quadrature);
@@ -319,7 +319,7 @@ namespace Step27
     const RightHandSide<dim> rhs_function;
 
     FullMatrix<double> cell_matrix;
-    Vector<double>     cell_rhs;
+    Vector<double> cell_rhs;
 
     std::vector<types::global_dof_index> local_dof_indices;
 
@@ -375,7 +375,7 @@ namespace Step27
   {
     SolverControl solver_control(system_rhs.size(),
                                  1e-8 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);

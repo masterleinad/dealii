@@ -87,12 +87,12 @@ namespace with_hp
     void
     solve();
 
-    Triangulation<dim>    triangulation;
+    Triangulation<dim> triangulation;
     hp::FECollection<dim> fe;
-    hp::DoFHandler<dim>   dof_handler;
-    hp::QCollection<dim>  quadrature;
-    SparsityPattern       sparsity_pattern;
-    SparseMatrix<double>  system_matrix;
+    hp::DoFHandler<dim> dof_handler;
+    hp::QCollection<dim> quadrature;
+    SparsityPattern sparsity_pattern;
+    SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
     Vector<double> system_rhs;
@@ -143,7 +143,7 @@ namespace with_hp
     unsigned int n_q_points;
 
     FullMatrix<double> cell_matrix;
-    Vector<double>     cell_rhs;
+    Vector<double> cell_rhs;
 
     std::vector<types::global_dof_index> local_dof_indices;
 
@@ -201,7 +201,7 @@ namespace with_hp
   LaplaceProblem<dim>::solve()
   {
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
   }
@@ -239,10 +239,10 @@ namespace without_hp
     solve();
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
@@ -284,7 +284,7 @@ namespace without_hp
   void
   LaplaceProblem<dim>::assemble_system()
   {
-    QGauss<dim>   quadrature_formula(2);
+    QGauss<dim> quadrature_formula(2);
     FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_gradients
@@ -294,7 +294,7 @@ namespace without_hp
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -345,7 +345,7 @@ namespace without_hp
   LaplaceProblem<dim>::solve()
   {
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
   }

@@ -77,7 +77,7 @@ check()
   FillTensor<rank, dim>::fill_tensor(value, 0);
 
   ConstantTensorFunction<rank, dim> tensor_function(value);
-  TensorFunction<rank, dim>*        foo = &tensor_function;
+  TensorFunction<rank, dim>* foo = &tensor_function;
 
   Point<dim> point;
   for(int i = 0; i < dim; ++i)
@@ -98,7 +98,7 @@ check()
     point(i) = dim - i;
   points.push_back(point);
 
-  std::vector<Tensor<rank, dim>>     tensors;
+  std::vector<Tensor<rank, dim>> tensors;
   std::vector<Tensor<rank + 1, dim>> gradients;
   tensors.resize(2);
   gradients.resize(2);
@@ -121,7 +121,7 @@ check()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

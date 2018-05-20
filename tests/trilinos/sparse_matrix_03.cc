@@ -48,7 +48,7 @@ main(int argc, char** argv)
   matrix.print_formatted(deallog.get_file_stream());
 
   // now copy everything into a Trilinos matrix
-  Epetra_Map                     map(TrilinosWrappers::types::int_type(5),
+  Epetra_Map map(TrilinosWrappers::types::int_type(5),
                  5,
                  0,
                  Utilities::Trilinos::comm_world());

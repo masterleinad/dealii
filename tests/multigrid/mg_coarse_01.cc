@@ -86,7 +86,7 @@ namespace Step50
 
   private:
     typedef LA::MPI::SparseMatrix matrix_t;
-    typedef LA::MPI::Vector       vector_t;
+    typedef LA::MPI::Vector vector_t;
 
     void
     setup_system();
@@ -106,8 +106,8 @@ namespace Step50
     output_results(const unsigned int cycle) const;
 
     parallel::distributed::Triangulation<dim> triangulation;
-    FE_Q<dim>                                 fe;
-    DoFHandler<dim>                           mg_dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> mg_dof_handler;
 
     matrix_t system_matrix;
 
@@ -124,7 +124,7 @@ namespace Step50
     MGLevelObject<matrix_t> mg_interface_matrices;
 
     MGConstrainedDoFs mg_constrained_dofs;
-    int               K;
+    int K;
   };
 
   template <int dim>
@@ -139,8 +139,8 @@ namespace Step50
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const;
+               std::vector<double>& values,
+               const unsigned int component = 0) const;
 
   private:
     int K;
@@ -162,8 +162,8 @@ namespace Step50
   template <int dim>
   void
   Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+                               std::vector<double>& values,
+                               const unsigned int component) const
   {
     const unsigned int n_points = points.size();
 
@@ -203,7 +203,7 @@ namespace Step50
     constraints.reinit(locally_relevant_set);
     DoFTools::make_hanging_node_constraints(mg_dof_handler, constraints);
 
-    typename FunctionMap<dim>::type  dirichlet_boundary;
+    typename FunctionMap<dim>::type dirichlet_boundary;
     Functions::ConstantFunction<dim> homogeneous_dirichlet_bc(0.0);
     dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
     VectorTools::interpolate_boundary_values(
@@ -262,12 +262,12 @@ namespace Step50
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     const Coefficient<dim> coefficient(K);
-    std::vector<double>    coefficient_values(n_q_points);
+    std::vector<double> coefficient_values(n_q_points);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = mg_dof_handler.begin_active(),
@@ -327,7 +327,7 @@ namespace Step50
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     const Coefficient<dim> coefficient(K);
-    std::vector<double>    coefficient_values(n_q_points);
+    std::vector<double> coefficient_values(n_q_points);
 
     std::vector<ConstraintMatrix> boundary_constraints(
       triangulation.n_global_levels());
@@ -419,7 +419,7 @@ namespace Step50
   class MGCoarseAMG : public MGCoarseGridBase<VECTOR>
   {
   public:
-    MGCoarseAMG(const LA::MPI::SparseMatrix&                   coarse_matrix,
+    MGCoarseAMG(const LA::MPI::SparseMatrix& coarse_matrix,
                 const LA::MPI::PreconditionAMG::AdditionalData additional_data)
       : count(0)
     {
@@ -447,7 +447,7 @@ namespace Step50
     MGTransferPrebuilt<vector_t> mg_transfer(mg_constrained_dofs);
     mg_transfer.build_matrices(mg_dof_handler);
 
-    typedef LA::MPI::PreconditionJacobi                  Smoother;
+    typedef LA::MPI::PreconditionJacobi Smoother;
     MGSmootherPrecondition<matrix_t, Smoother, vector_t> mg_smoother;
     mg_smoother.initialize(mg_matrices, Smoother::AdditionalData(0.5));
     mg_smoother.set_steps(2);
@@ -491,8 +491,8 @@ namespace Step50
   void
   LaplaceProblem<dim>::solve()
   {
-    matrix_t&          coarse_matrix = mg_matrices[0];
-    SolverControl      coarse_solver_control(1000, 1e-8, false, false);
+    matrix_t& coarse_matrix = mg_matrices[0];
+    SolverControl coarse_solver_control(1000, 1e-8, false, false);
     SolverCG<vector_t> coarse_solver(coarse_solver_control);
 
     {

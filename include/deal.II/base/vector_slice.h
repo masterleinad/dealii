@@ -169,7 +169,7 @@ inline VectorSlice<VectorType>::VectorSlice(VectorType& v)
 {}
 
 template <typename VectorType>
-inline VectorSlice<VectorType>::VectorSlice(VectorType&  v,
+inline VectorSlice<VectorType>::VectorSlice(VectorType& v,
                                             unsigned int start,
                                             unsigned int length)
   : v(v), start(start), length(length)
@@ -200,7 +200,7 @@ operator ArrayView<const typename VectorType::value_type*>() const
 
 template <typename VectorType>
 inline typename VectorType::reference VectorSlice<VectorType>::
-                                      operator[](unsigned int i)
+operator[](unsigned int i)
 {
   Assert((i < length), ExcIndexRange(i, 0, length));
 
@@ -209,7 +209,7 @@ inline typename VectorType::reference VectorSlice<VectorType>::
 
 template <typename VectorType>
 inline typename VectorType::const_reference VectorSlice<VectorType>::
-                                            operator[](unsigned int i) const
+operator[](unsigned int i) const
 {
   Assert((i < length), ExcIndexRange(i, 0, length));
 

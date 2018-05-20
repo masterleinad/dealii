@@ -104,7 +104,7 @@ check()
   // associated list of boundary
   // value functions
   std::vector<const FiniteElement<dim>*> fe_list;
-  std::vector<const Function<dim>*>      function_list;
+  std::vector<const Function<dim>*> function_list;
 
   // FE1: a system of a quadratic and
   // a linear element

@@ -39,8 +39,8 @@ template <int dim>
 void
 check(const Triangulation<dim>& tria, const unsigned int order)
 {
-  MappingQ<dim>   mapping(order);
-  FE_Q<dim>       fe(1);
+  MappingQ<dim> mapping(order);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

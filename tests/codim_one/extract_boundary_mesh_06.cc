@@ -38,7 +38,7 @@ test()
   Triangulation<dim, spacedim> boundary_mesh;
   map<Triangulation<dim, spacedim>::cell_iterator,
       Triangulation<spacedim, spacedim>::face_iterator>
-                          surface_to_volume_mapping;
+    surface_to_volume_mapping;
   Triangulation<spacedim> volume_mesh;
   GridGenerator::hyper_cube(volume_mesh);
   volume_mesh.refine_global(1);

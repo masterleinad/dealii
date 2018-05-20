@@ -86,7 +86,7 @@ namespace Step40
     parallel::distributed::Triangulation<dim> triangulation;
 
     DoFHandler<dim> dof_handler;
-    FE_Q<dim>       fe;
+    FE_Q<dim> fe;
 
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
@@ -94,8 +94,8 @@ namespace Step40
     ConstraintMatrix constraints;
 
     PETScWrappers::MPI::SparseMatrix system_matrix;
-    PETScWrappers::MPI::Vector       locally_relevant_solution;
-    PETScWrappers::MPI::Vector       system_rhs;
+    PETScWrappers::MPI::Vector locally_relevant_solution;
+    PETScWrappers::MPI::Vector system_rhs;
 
     ConditionalOStream pcout;
   };
@@ -133,14 +133,14 @@ namespace Step40
       std::vector<types::global_dof_index> starting_indices;
 
       const QGauss<dim - 1> face_quadrature_formula(fe.degree + 1);
-      FEFaceValues<dim>     fe_face_values(fe,
+      FEFaceValues<dim> fe_face_values(fe,
                                        face_quadrature_formula,
                                        update_values | update_quadrature_points
                                          | update_normal_vectors
                                          | update_JxW_values);
 
-      Tensor<1, dim>                       u;
-      Point<dim>                           down{0, -1};
+      Tensor<1, dim> u;
+      Point<dim> down{0, -1};
       std::vector<types::global_dof_index> dof_indices(fe.n_dofs_per_face(), 0);
 
       for(const auto& cell : dof_handler.active_cell_iterators())
@@ -227,7 +227,7 @@ namespace Step40
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<PetscScalar> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<PetscScalar>     cell_rhs(dofs_per_cell);
+    Vector<PetscScalar> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 

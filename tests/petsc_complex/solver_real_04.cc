@@ -29,10 +29,10 @@
 
 template <class SOLVER, class MATRIX, class VECTOR, class PRECONDITION>
 void
-check_solve(SOLVER&             solver,
-            const MATRIX&       A,
-            VECTOR&             u,
-            VECTOR&             f,
+check_solve(SOLVER& solver,
+            const MATRIX& A,
+            VECTOR& u,
+            VECTOR& f,
             const PRECONDITION& P)
 {
   deallog << "Solver type: " << typeid(solver).name() << std::endl;
@@ -65,12 +65,12 @@ main(int argc, char** argv)
     SolverControl control(100, 1.e-3);
 
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int dim        = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
     // Make matrix
-    FDMatrix                    testproblem(size, size);
+    FDMatrix testproblem(size, size);
     PETScWrappers::SparseMatrix A(dim, dim, 5);
     testproblem.five_point(A);
 
@@ -81,7 +81,7 @@ main(int argc, char** argv)
     f.compress(VectorOperation::insert);
     u.compress(VectorOperation::insert);
 
-    PETScWrappers::SolverBiCG         solver(control);
+    PETScWrappers::SolverBiCG solver(control);
     PETScWrappers::PreconditionJacobi preconditioner(A);
     check_solve(solver, A, u, f, preconditioner);
   }

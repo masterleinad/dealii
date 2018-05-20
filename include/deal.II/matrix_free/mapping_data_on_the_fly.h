@@ -61,9 +61,9 @@ namespace internal
        * element, FE_Nothing, is used internally for the underlying FEValues
        * object.
        */
-      MappingDataOnTheFly(const Mapping<dim>&  mapping,
+      MappingDataOnTheFly(const Mapping<dim>& mapping,
                           const Quadrature<1>& quadrature,
-                          const UpdateFlags    update_flags);
+                          const UpdateFlags update_flags);
 
       /**
        * Constructor. This constructor is equivalent to the other one except
@@ -71,7 +71,7 @@ namespace internal
        * MappingQGeneric(1)) implicitly.
        */
       MappingDataOnTheFly(const Quadrature<1>& quadrature,
-                          const UpdateFlags    update_flags);
+                          const UpdateFlags update_flags);
 
       /**
        * Initialize with the given cell iterator.
@@ -150,9 +150,9 @@ namespace internal
 
     template <int dim, typename Number>
     inline MappingDataOnTheFly<dim, Number>::MappingDataOnTheFly(
-      const Mapping<dim>&  mapping,
+      const Mapping<dim>& mapping,
       const Quadrature<1>& quadrature,
-      const UpdateFlags    update_flags)
+      const UpdateFlags update_flags)
       : fe_values(mapping,
                   fe_dummy,
                   Quadrature<dim>(quadrature),
@@ -184,7 +184,7 @@ namespace internal
     template <int dim, typename Number>
     inline MappingDataOnTheFly<dim, Number>::MappingDataOnTheFly(
       const Quadrature<1>& quadrature,
-      const UpdateFlags    update_flags)
+      const UpdateFlags update_flags)
       : MappingDataOnTheFly(::dealii::StaticMappingQ1<dim, dim>::mapping,
                             quadrature,
                             update_flags)

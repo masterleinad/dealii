@@ -57,7 +57,7 @@ namespace Polynomials
 
   template <typename number>
   Polynomial<number>::Polynomial(const std::vector<Point<1>>& supp,
-                                 const unsigned int           center)
+                                 const unsigned int center)
     : in_lagrange_product_form(true)
   {
     Assert(supp.size() > 0, ExcEmptyObject());
@@ -92,9 +92,9 @@ namespace Polynomials
 
   template <typename number>
   void
-  Polynomial<number>::value(const number       x,
+  Polynomial<number>::value(const number x,
                             const unsigned int n_derivatives,
-                            number*            values) const
+                            number* values) const
   {
     // evaluate Lagrange polynomial and derivatives
     if(in_lagrange_product_form == true)
@@ -199,9 +199,9 @@ namespace Polynomials
 
     // if there are derivatives needed, then do it properly by the full Horner
     // scheme
-    const unsigned int  m = coefficients.size();
+    const unsigned int m = coefficients.size();
     std::vector<number> a(coefficients);
-    unsigned int        j_faculty = 1;
+    unsigned int j_faculty = 1;
 
     // loop over all requested derivatives. note that derivatives @p{j>m} are
     // necessarily zero, as they differentiate the polynomial more often than
@@ -259,7 +259,7 @@ namespace Polynomials
   template <typename number>
   void
   Polynomial<number>::scale(std::vector<number>& coefficients,
-                            const number         factor)
+                            const number factor)
   {
     number f = 1.;
     for(typename std::vector<number>::iterator c = coefficients.begin();
@@ -297,7 +297,7 @@ namespace Polynomials
   template <typename number>
   void
   Polynomial<number>::multiply(std::vector<number>& coefficients,
-                               const number         factor)
+                               const number factor)
   {
     for(typename std::vector<number>::iterator c = coefficients.begin();
         c != coefficients.end();
@@ -343,7 +343,7 @@ namespace Polynomials
     // well if necessary. copy the polynomial to
     // do this
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number>* q = nullptr;
     if(p.in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(p);
@@ -385,7 +385,7 @@ namespace Polynomials
     // well if necessary. copy the polynomial to
     // do this
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number>* q = nullptr;
     if(p.in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(p);
@@ -419,7 +419,7 @@ namespace Polynomials
     // well if necessary. copy the polynomial to
     // do this
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number>* q = nullptr;
     if(p.in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(p);
@@ -472,7 +472,7 @@ namespace Polynomials
   template <typename number2>
   void
   Polynomial<number>::shift(std::vector<number>& coefficients,
-                            const number2        offset)
+                            const number2 offset)
   {
     // too many coefficients cause overflow in
     // the binomial coefficient used below
@@ -556,7 +556,7 @@ namespace Polynomials
       return Monomial<number>(0, 0.);
 
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number>* q = nullptr;
     if(in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(*this);
@@ -580,7 +580,7 @@ namespace Polynomials
     // no simple form possible for Lagrange
     // polynomial on product form
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number>* q = nullptr;
     if(in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(*this);
@@ -653,7 +653,7 @@ namespace Polynomials
       generate_equidistant_unit_points(const unsigned int n)
       {
         std::vector<Point<1>> points(n + 1);
-        const double          one_over_n = 1. / n;
+        const double one_over_n = 1. / n;
         for(unsigned int k = 0; k <= n; ++k)
           points[k](0) = static_cast<double>(k) * one_over_n;
         return points;
@@ -683,8 +683,8 @@ namespace Polynomials
   }
 
   void
-  LagrangeEquidistant::compute_coefficients(const unsigned int   n,
-                                            const unsigned int   support_point,
+  LagrangeEquidistant::compute_coefficients(const unsigned int n,
+                                            const unsigned int support_point,
                                             std::vector<double>& a)
   {
     Assert(support_point < n + 1, ExcIndexRange(support_point, 0, n + 1));
@@ -1176,9 +1176,9 @@ namespace Polynomials
       // out to be between zero and the first root of the Jacobi polynomial,
       // but the algorithm is agnostic about that, so simply choose two points
       // that are sufficiently far apart.
-      double             guess_left  = 0;
-      double             guess_right = 0.5;
-      const unsigned int degree      = jacobi_roots.size() + 3;
+      double guess_left         = 0;
+      double guess_right        = 0.5;
+      const unsigned int degree = jacobi_roots.size() + 3;
 
       // Compute two integrals of the product of l_0(x) * l_1(x)
       // l_0(x) = (x-y)*(x-jacobi_roots(0))*...*(x-jacobi_roos(degree-4))*(x-1)*(x-1)
@@ -1188,11 +1188,11 @@ namespace Polynomials
       // necessary because we are only looking for the x_star where the matrix
       // entry is zero, for which the constants do not matter.
       QGauss<1> gauss(degree + 1);
-      double    integral_left = 0, integral_right = 0;
+      double integral_left = 0, integral_right = 0;
       for(unsigned int q = 0; q < gauss.size(); ++q)
         {
-          const double x               = gauss.point(q)[0];
-          double       poly_val_common = x;
+          const double x         = gauss.point(q)[0];
+          double poly_val_common = x;
           for(unsigned int j = 0; j < degree - 3; ++j)
             poly_val_common *= Utilities::fixed_power<2>(x - jacobi_roots[j]);
           poly_val_common *= Utilities::fixed_power<4>(x - 1.);
@@ -1358,14 +1358,14 @@ namespace Polynomials
             // basis is nodal for all interior points, this property ensures
             // that the sum of all polynomials with weight 1 is one.
             std::vector<Point<1>> points(degree);
-            double                ratio = 1.;
+            double ratio = 1.;
             for(unsigned int i = 0; i < degree; ++i)
               {
                 points[i][0] = this->lagrange_support_points[i];
                 if(i > 0)
                   ratio *= -this->lagrange_support_points[i];
               }
-            Polynomial<double>  helper(points, 0);
+            Polynomial<double> helper(points, 0);
             std::vector<double> value_and_grad(2);
             helper.value(0., value_and_grad);
             Assert(std::abs(value_and_grad[0]) > 1e-10,
@@ -1400,14 +1400,14 @@ namespace Polynomials
             this->lagrange_support_points[degree - 1] = 1.;
 
             std::vector<Point<1>> points(degree);
-            double                ratio = 1.;
+            double ratio = 1.;
             for(unsigned int i = 0; i < degree; ++i)
               {
                 points[i][0] = this->lagrange_support_points[i];
                 if(i < degree - 1)
                   ratio *= 1. - this->lagrange_support_points[i];
               }
-            Polynomial<double>  helper(points, degree - 1);
+            Polynomial<double> helper(points, degree - 1);
             std::vector<double> value_and_grad(2);
             helper.value(1., value_and_grad);
             Assert(std::abs(value_and_grad[0]) > 1e-10,

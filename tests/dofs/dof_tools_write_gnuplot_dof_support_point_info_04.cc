@@ -23,8 +23,8 @@ void
 test(const double epsilon)
 {
   constexpr unsigned int dim = 2;
-  Point<dim>             p1(1.0, 1.0);
-  Point<dim>             p2(1.0 + epsilon, 0.0);
+  Point<dim> p1(1.0, 1.0);
+  Point<dim> p2(1.0 + epsilon, 0.0);
 
   std::map<types::global_dof_index, Point<dim>> support_points;
   support_points[0] = p1;

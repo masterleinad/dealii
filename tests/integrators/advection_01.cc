@@ -31,9 +31,9 @@ template <int dim>
 void
 test_cell(const FEValuesBase<dim>& fev)
 {
-  const unsigned int               n = fev.dofs_per_cell;
-  unsigned int                     d = fev.get_fe().n_components();
-  FullMatrix<double>               M(n, n);
+  const unsigned int n = fev.dofs_per_cell;
+  unsigned int d       = fev.get_fe().n_components();
+  FullMatrix<double> M(n, n);
   std::vector<std::vector<double>> vel(dim, std::vector<double>(1));
   vel[0][0] = 1.;
   vel[1][0] = 1.;
@@ -45,7 +45,7 @@ test_cell(const FEValuesBase<dim>& fev)
     M.print_formatted(deallog.get_file_stream(), 3, true, 0, "0.");
   }
 
-  Vector<double>                   u(n), v(n), w(n);
+  Vector<double> u(n), v(n), w(n);
   std::vector<std::vector<double>> uval(
     d, std::vector<double>(fev.n_quadrature_points));
 
@@ -85,9 +85,9 @@ template <int dim>
 void
 test_boundary(const FEValuesBase<dim>& fev)
 {
-  const unsigned int               n = fev.dofs_per_cell;
-  unsigned int                     d = fev.get_fe().n_components();
-  FullMatrix<double>               M(n, n);
+  const unsigned int n = fev.dofs_per_cell;
+  unsigned int d       = fev.get_fe().n_components();
+  FullMatrix<double> M(n, n);
   std::vector<std::vector<double>> vel(dim, std::vector<double>(1));
   vel[0][0] = 1.;
   vel[1][0] = 1.;
@@ -99,7 +99,7 @@ test_boundary(const FEValuesBase<dim>& fev)
     M.print_formatted(deallog.get_file_stream(), 3, true, 0, "0.");
   }
 
-  Vector<double>                   u(n), v(n), w(n);
+  Vector<double> u(n), v(n), w(n);
   std::vector<std::vector<double>> uval(
     d, std::vector<double>(fev.n_quadrature_points));
   std::vector<std::vector<double>> null_val(
@@ -144,13 +144,13 @@ template <int dim>
 void
 test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
 {
-  const unsigned int               n1 = fev1.dofs_per_cell;
-  const unsigned int               n2 = fev2.dofs_per_cell;
-  unsigned int                     d  = fev1.get_fe().n_components();
-  FullMatrix<double>               M11(n1, n1);
-  FullMatrix<double>               M12(n1, n2);
-  FullMatrix<double>               M21(n2, n1);
-  FullMatrix<double>               M22(n2, n2);
+  const unsigned int n1 = fev1.dofs_per_cell;
+  const unsigned int n2 = fev2.dofs_per_cell;
+  unsigned int d        = fev1.get_fe().n_components();
+  FullMatrix<double> M11(n1, n1);
+  FullMatrix<double> M12(n1, n2);
+  FullMatrix<double> M21(n2, n1);
+  FullMatrix<double> M22(n2, n2);
   std::vector<std::vector<double>> vel(dim, std::vector<double>(1));
   vel[0][0] = 1.;
   vel[1][0] = 1.;
@@ -176,8 +176,8 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
     M22.print_formatted(deallog.get_file_stream(), 3, true, 0, "0.");
   }
 
-  Vector<double>                   u1(n1), v1(n1), w1(n1);
-  Vector<double>                   u2(n2), v2(n2), w2(n2);
+  Vector<double> u1(n1), v1(n1), w1(n1);
+  Vector<double> u2(n2), v2(n2), w2(n2);
   std::vector<std::vector<double>> u1val(
     d, std::vector<double>(fev1.n_quadrature_points)),
     nullval(d, std::vector<double>(fev2.n_quadrature_points, 0.));
@@ -258,7 +258,7 @@ void
 test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl << "cell matrix" << std::endl;
-  QGauss<dim>   quadrature(fe.tensor_degree());
+  QGauss<dim> quadrature(fe.tensor_degree());
   FEValues<dim> fev(
     fe, quadrature, update_values | update_gradients | update_JxW_values);
 
@@ -266,7 +266,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
   fev.reinit(cell1);
   test_cell(fev);
 
-  QGauss<dim - 1>   face_quadrature(fe.tensor_degree() + 1);
+  QGauss<dim - 1> face_quadrature(fe.tensor_degree() + 1);
   FEFaceValues<dim> fef1(fe,
                          face_quadrature,
                          update_values | update_gradients
@@ -278,7 +278,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
       test_boundary(fef1);
     }
 
-  FEFaceValues<dim>                          fef2(fe,
+  FEFaceValues<dim> fef2(fe,
                          face_quadrature,
                          update_values | update_gradients
                            | update_normal_vectors | update_JxW_values);

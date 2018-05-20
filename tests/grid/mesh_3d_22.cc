@@ -79,12 +79,12 @@ test(Triangulation<dim>& triangulation)
   MappingQ<3> mapping(3);
   for(unsigned int p = 1; p < 7 - dim; ++p)
     {
-      FE_Q<dim>       fe(p);
+      FE_Q<dim> fe(p);
       DoFHandler<dim> dof_handler(triangulation);
       dof_handler.distribute_dofs(fe);
 
       Vector<double> interpolant(dof_handler.n_dofs());
-      Vector<float>  error(triangulation.n_active_cells());
+      Vector<float> error(triangulation.n_active_cells());
       for(unsigned int q = 0; q <= p + 2; ++q)
         {
           // interpolate the function
@@ -116,7 +116,7 @@ main()
   deallog.attach(logfile);
 
   Triangulation<3> triangulation;
-  GridIn<3>        grid_in;
+  GridIn<3> grid_in;
   grid_in.attach_triangulation(triangulation);
   std::ifstream inputStream(SOURCE_DIR "/grids/mesh.msh");
   grid_in.read_msh(inputStream);

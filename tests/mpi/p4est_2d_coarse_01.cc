@@ -35,7 +35,7 @@ test()
   if(true)
     {
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
-      GridIn<dim>                               gi;
+      GridIn<dim> gi;
       gi.attach_triangulation(tr);
       std::ifstream in(SOURCE_DIR "/../grid/grid_in_02/2d.xda");
       try

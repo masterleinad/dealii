@@ -35,13 +35,13 @@ namespace internal
   {
     template <int dim, int spacedim>
     ParallelData<dim, spacedim>::ParallelData(
-      const unsigned int               n_datasets,
-      const unsigned int               n_subdivisions,
+      const unsigned int n_datasets,
+      const unsigned int n_subdivisions,
       const std::vector<unsigned int>& n_postprocessor_outputs,
-      const Mapping<dim, spacedim>&    mapping,
+      const Mapping<dim, spacedim>& mapping,
       const std::vector<
         std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                        finite_elements,
+        finite_elements,
       const UpdateFlags update_flags)
       : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
           n_datasets,
@@ -60,7 +60,7 @@ namespace internal
     template <int dim, int spacedim>
     void
     append_patch_to_list(
-      const DataOutBase::Patch<dim - 1, spacedim>&        patch,
+      const DataOutBase::Patch<dim - 1, spacedim>& patch,
       std::vector<DataOutBase::Patch<dim - 1, spacedim>>& patches)
     {
       patches.push_back(patch);
@@ -81,7 +81,7 @@ void
 DataOutFaces<dim, DoFHandlerType>::build_one_patch(
   const FaceDescriptor* cell_and_face,
   internal::DataOutFacesImplementation::ParallelData<dimension, dimension>&
-                                                      data,
+    data,
   DataOutBase::Patch<dimension - 1, space_dimension>& patch)
 {
   Assert(cell_and_face->first->is_locally_owned(), ExcNotImplemented());
@@ -311,7 +311,7 @@ template <int dim, typename DoFHandlerType>
 void
 DataOutFaces<dim, DoFHandlerType>::build_patches(
   const Mapping<dimension>& mapping,
-  const unsigned int        n_subdivisions_)
+  const unsigned int n_subdivisions_)
 {
   // Check consistency of redundant template parameter
   Assert(dim == dimension, ExcDimensionMismatch(dim, dimension));
@@ -364,7 +364,7 @@ DataOutFaces<dim, DoFHandlerType>::build_patches(
   update_flags |= update_quadrature_points;
 
   internal::DataOutFacesImplementation::ParallelData<dimension, space_dimension>
-                                                     thread_data(n_datasets,
+    thread_data(n_datasets,
                 n_subdivisions,
                 n_postprocessor_outputs,
                 mapping,

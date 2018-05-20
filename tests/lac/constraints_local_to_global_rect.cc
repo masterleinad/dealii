@@ -35,7 +35,7 @@ test()
   local(1, 0) = -2.;
   local(1, 1) = 12.;
   FullMatrix<double> global1(4, 6), global2(4, 6);
-  ConstraintMatrix   cm1, cm2;
+  ConstraintMatrix cm1, cm2;
   cm1.add_line(2);
   cm1.add_entry(2, 1, 0.5);
   cm1.add_entry(2, 3, 0.5);

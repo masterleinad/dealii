@@ -69,10 +69,10 @@ main()
   tria.refine_global(1);
 
   Tensor<1, 3> direction({.1, .01, .001});
-  double       tolerance = 1e-10;
+  double tolerance = 1e-10;
 
   {
-    FE_Q<2, 3>       fe(2);
+    FE_Q<2, 3> fe(2);
     DoFHandler<2, 3> dh(tria);
     dh.distribute_dofs(fe);
     MappingQGeneric<2, 3> mapping2(2);
@@ -92,7 +92,7 @@ main()
 
   tria.refine_global(1);
   {
-    FE_Q<2, 3>       fe(1);
+    FE_Q<2, 3> fe(1);
     DoFHandler<2, 3> dh(tria);
     dh.distribute_dofs(fe);
     std::vector<Point<3>> spoints(dh.n_dofs());

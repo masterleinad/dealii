@@ -28,7 +28,7 @@ void
 test(const unsigned int& size)
 {
   std::vector<Point<dim>> points(size);
-  auto                    a_pair = std::make_pair(1, 3.14);
+  auto a_pair = std::make_pair(1, 3.14);
 
   for(auto& p : points)
     p = random_point<dim>();
@@ -42,8 +42,8 @@ test(const unsigned int& size)
   auto pair_unpacked   = std::get<0>(tuple_unpacked);
   auto points_unpacked = std::get<1>(tuple_unpacked);
 
-  unsigned int i  = 0;
-  bool         ok = (pair_unpacked == a_pair);
+  unsigned int i = 0;
+  bool ok        = (pair_unpacked == a_pair);
 
   for(const auto& p : points)
     if(p.distance(points_unpacked[i++]) > 1e-12)

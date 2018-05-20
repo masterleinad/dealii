@@ -49,8 +49,8 @@ main()
   triangulation.refine_global(2);
 
   MappingQGeneric<dim> mapping_q1(1);
-  FESystem<dim>        fe(FE_Q<dim>(2), 1, FE_Q<dim>(1), 1, FE_Q<dim>(3), 1);
-  DoFHandler<dim>      dof_handler(triangulation);
+  FESystem<dim> fe(FE_Q<dim>(2), 1, FE_Q<dim>(1), 1, FE_Q<dim>(3), 1);
+  DoFHandler<dim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
 

@@ -88,7 +88,7 @@ namespace internal
     template <int N, typename T>
     struct Types<N, T, true>
     {
-      typedef const T               value_type;
+      typedef const T value_type;
       typedef const TableBase<N, T> TableType;
 
       typedef typename AlignedVector<T>::const_iterator iterator;
@@ -106,13 +106,13 @@ namespace internal
     template <int N, typename T>
     struct Types<N, T, false>
     {
-      typedef T               value_type;
+      typedef T value_type;
       typedef TableBase<N, T> TableType;
 
-      typedef typename AlignedVector<T>::iterator       iterator;
+      typedef typename AlignedVector<T>::iterator iterator;
       typedef typename AlignedVector<T>::const_iterator const_iterator;
 
-      typedef typename AlignedVector<T>::reference       reference;
+      typedef typename AlignedVector<T>::reference reference;
       typedef typename AlignedVector<T>::const_reference const_reference;
     };
 
@@ -160,10 +160,10 @@ namespace internal
     public:
       typedef typename Types<N, T, C>::TableType TableType;
 
-      typedef typename Types<N, T, C>::iterator       iterator;
+      typedef typename Types<N, T, C>::iterator iterator;
       typedef typename Types<N, T, C>::const_iterator const_iterator;
 
-      typedef size_t    size_type;
+      typedef size_t size_type;
       typedef ptrdiff_t difference_type;
 
     private:
@@ -213,7 +213,7 @@ namespace internal
        * these elements constant.
        */
       const TableType& table;
-      const iterator   data;
+      const iterator data;
 
       // declare some other classes
       // as friends. make sure to
@@ -249,13 +249,13 @@ namespace internal
        */
       typedef typename Types<N, T, C>::value_type value_type;
 
-      typedef typename Types<N, T, C>::iterator       iterator;
+      typedef typename Types<N, T, C>::iterator iterator;
       typedef typename Types<N, T, C>::const_iterator const_iterator;
 
-      typedef typename Types<N, T, C>::reference       reference;
+      typedef typename Types<N, T, C>::reference reference;
       typedef typename Types<N, T, C>::const_reference const_reference;
 
-      typedef size_t    size_type;
+      typedef size_t size_type;
       typedef ptrdiff_t difference_type;
 
       /**
@@ -323,7 +323,7 @@ namespace internal
        * these elements constant.
        */
       const TableType& table;
-      const iterator   data;
+      const iterator data;
 
       // declare some other classes
       // as friends. make sure to
@@ -437,8 +437,8 @@ public:
    */
   template <typename InputIterator>
   TableBase(const TableIndices<N>& sizes,
-            InputIterator          entries,
-            const bool             C_style_indexing = true);
+            InputIterator entries,
+            const bool C_style_indexing = true);
 
   /**
    * Copy constructor. Performs a deep copy.
@@ -514,7 +514,7 @@ public:
    */
   void
   reinit(const TableIndices<N>& new_size,
-         const bool             omit_default_initialization = false);
+         const bool omit_default_initialization = false);
 
   /**
    * Size of the table in direction <tt>i</tt>.
@@ -769,8 +769,8 @@ public:
    */
   template <typename InputIterator>
   Table(const size_type size,
-        InputIterator   entries,
-        const bool      C_style_indexing = true);
+        InputIterator entries,
+        const bool C_style_indexing = true);
 
   /**
    * Access operator. Since this is a one-dimensional object, this simply
@@ -887,8 +887,8 @@ public:
   template <typename InputIterator>
   Table(const size_type size1,
         const size_type size2,
-        InputIterator   entries,
-        const bool      C_style_indexing = true);
+        InputIterator entries,
+        const bool C_style_indexing = true);
 
   /**
    * Reinitialize the object. This function is mostly here for compatibility
@@ -898,7 +898,7 @@ public:
   void
   reinit(const size_type size1,
          const size_type size2,
-         const bool      omit_default_initialization = false);
+         const bool omit_default_initialization = false);
 
   using TableBase<2, T>::reinit;
 
@@ -1071,8 +1071,8 @@ public:
   Table(const size_type size1,
         const size_type size2,
         const size_type size3,
-        InputIterator   entries,
-        const bool      C_style_indexing = true);
+        InputIterator entries,
+        const bool C_style_indexing = true);
 
   /**
    * Access operator. Generate an object that accesses the requested two-
@@ -1561,7 +1561,7 @@ namespace TransposeTableIterators
      * in column-major order.
      */
     AccessorBase(const container_pointer_type table,
-                 const std::ptrdiff_t         linear_index);
+                 const std::ptrdiff_t linear_index);
 
     /**
      * Get a constant reference to the value of the element represented by
@@ -1698,8 +1698,8 @@ namespace TransposeTableIterators
      * Constructor for a particular table entry.
      */
     Iterator(const container_pointer_type object,
-             const size_type              row,
-             const size_type              column);
+             const size_type row,
+             const size_type column);
 
     /**
      * Copy constructor from a non-const iterator.
@@ -1710,7 +1710,7 @@ namespace TransposeTableIterators
      * Constructor for an entry with a particular linear index.
      */
     Iterator(const container_pointer_type container,
-             const std::ptrdiff_t         linear_index);
+             const std::ptrdiff_t linear_index);
   };
 } // namespace TransposeTableIterators
 
@@ -1780,7 +1780,7 @@ public:
   void
   reinit(const size_type size1,
          const size_type size2,
-         const bool      omit_default_initialization = false);
+         const bool omit_default_initialization = false);
 
   /**
    * Direct access to one element of the table by specifying all indices at
@@ -1896,8 +1896,8 @@ TableBase<N, T>::TableBase(const TableIndices<N>& sizes)
 template <int N, typename T>
 template <typename InputIterator>
 TableBase<N, T>::TableBase(const TableIndices<N>& sizes,
-                           InputIterator          entries,
-                           const bool             C_style_indexing)
+                           InputIterator entries,
+                           const bool C_style_indexing)
 {
   reinit(sizes);
   fill(entries, C_style_indexing);
@@ -1944,7 +1944,7 @@ namespace internal
   {
     template <int N, typename T, bool C, unsigned int P>
     inline Accessor<N, T, C, P>::Accessor(const TableType& table,
-                                          const iterator   data)
+                                          const iterator data)
       : table(table), data(data)
     {}
 
@@ -1955,7 +1955,7 @@ namespace internal
 
     template <int N, typename T, bool C, unsigned int P>
     inline Accessor<N, T, C, P - 1> Accessor<N, T, C, P>::
-                                    operator[](const size_type i) const
+    operator[](const size_type i) const
     {
       Assert(i < table.size()[N - P], ExcIndexRange(i, 0, table.size()[N - P]));
 
@@ -1979,7 +1979,7 @@ namespace internal
 
     template <int N, typename T, bool C>
     inline Accessor<N, T, C, 1>::Accessor(const TableType& table,
-                                          const iterator   data)
+                                          const iterator data)
       : table(table), data(data)
     {}
 
@@ -1990,7 +1990,7 @@ namespace internal
 
     template <int N, typename T, bool C>
     inline typename Accessor<N, T, C, 1>::reference Accessor<N, T, C, 1>::
-                                                    operator[](const size_type i) const
+    operator[](const size_type i) const
     {
       AssertIndexRange(i, table.size()[N - 1]);
       return *(data + i);
@@ -2082,7 +2082,7 @@ TableBase<N, T>::fill(const T& value)
 template <int N, typename T>
 inline void
 TableBase<N, T>::reinit(const TableIndices<N>& new_sizes,
-                        const bool             omit_default_initialization)
+                        const bool omit_default_initialization)
 {
   table_size = new_sizes;
 
@@ -2297,14 +2297,14 @@ inline Table<1, T>::Table(const size_type size)
 template <typename T>
 template <typename InputIterator>
 inline Table<1, T>::Table(const size_type size,
-                          InputIterator   entries,
-                          const bool      C_style_indexing)
+                          InputIterator entries,
+                          const bool C_style_indexing)
   : TableBase<1, T>(TableIndices<1>(size), entries, C_style_indexing)
 {}
 
 template <typename T>
 inline typename AlignedVector<T>::const_reference Table<1, T>::
-                                                  operator[](const size_type i) const
+operator[](const size_type i) const
 {
   AssertIndexRange(i, this->table_size[0]);
   return this->values[i];
@@ -2312,7 +2312,7 @@ inline typename AlignedVector<T>::const_reference Table<1, T>::
 
 template <typename T>
 inline typename AlignedVector<T>::reference Table<1, T>::
-                                            operator[](const size_type i)
+operator[](const size_type i)
 {
   AssertIndexRange(i, this->table_size[0]);
   return this->values[i];
@@ -2359,8 +2359,8 @@ template <typename T>
 template <typename InputIterator>
 inline Table<2, T>::Table(const size_type size1,
                           const size_type size2,
-                          InputIterator   entries,
-                          const bool      C_style_indexing)
+                          InputIterator entries,
+                          const bool C_style_indexing)
   : TableBase<2, T>(TableIndices<2>(size1, size2), entries, C_style_indexing)
 {}
 
@@ -2368,7 +2368,7 @@ template <typename T>
 inline void
 Table<2, T>::reinit(const size_type size1,
                     const size_type size2,
-                    const bool      omit_default_initialization)
+                    const bool omit_default_initialization)
 {
   this->TableBase<2, T>::reinit(TableIndices<2>(size1, size2),
                                 omit_default_initialization);
@@ -2476,7 +2476,7 @@ namespace TransposeTableIterators
   template <typename T, bool Constness>
   inline AccessorBase<T, Constness>::AccessorBase(
     const container_pointer_type table,
-    const std::ptrdiff_t         index)
+    const std::ptrdiff_t index)
     : container(table), linear_index(index)
   {
     Assert(0 <= linear_index && linear_index < container->values.size() + 1,
@@ -2567,14 +2567,14 @@ namespace TransposeTableIterators
 
   template <typename T, bool Constness>
   Iterator<T, Constness>::Iterator(const container_pointer_type table,
-                                   const size_type              row_n,
-                                   const size_type              col_n)
+                                   const size_type row_n,
+                                   const size_type col_n)
     : Iterator(table, table->n_rows() * col_n + row_n)
   {}
 
   template <typename T, bool Constness>
   Iterator<T, Constness>::Iterator(const container_pointer_type table,
-                                   const std::ptrdiff_t         linear_index)
+                                   const std::ptrdiff_t linear_index)
     : LinearIndexIterator<Iterator<T, Constness>, Accessor<T, Constness>>(
         Accessor<T, Constness>(table, linear_index))
   {}
@@ -2591,7 +2591,7 @@ template <typename T>
 inline void
 TransposeTable<T>::reinit(const size_type size1,
                           const size_type size2,
-                          const bool      omit_default_initialization)
+                          const bool omit_default_initialization)
 {
   this->TableBase<2, T>::reinit(TableIndices<2>(size2, size1),
                                 omit_default_initialization);
@@ -2684,8 +2684,8 @@ template <typename InputIterator>
 inline Table<3, T>::Table(const size_type size1,
                           const size_type size2,
                           const size_type size3,
-                          InputIterator   entries,
-                          const bool      C_style_indexing)
+                          InputIterator entries,
+                          const bool C_style_indexing)
   : TableBase<3, T>(TableIndices<3>(size1, size2, size3),
                     entries,
                     C_style_indexing)

@@ -55,7 +55,7 @@ BoundaryFunction<dim>::vector_value(const Point<dim>&,
 template <int dim>
 void
 test_boundary_values(const FiniteElement<dim>& fe,
-                     ConstraintMatrix&         constraints)
+                     ConstraintMatrix& constraints)
 {
   Triangulation<dim> triangulation;
   GridGenerator::subdivided_hyper_cube(triangulation, 2);

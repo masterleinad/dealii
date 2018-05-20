@@ -60,7 +60,7 @@ test()
 
   const FESystem<dim> stokes_fe(FE_Q<dim>(1), 1, FE_DGP<dim>(0), 1);
 
-  DoFHandler<dim>           stokes_dof_handler(triangulation);
+  DoFHandler<dim> stokes_dof_handler(triangulation);
   std::vector<unsigned int> stokes_sub_blocks(1 + 1, 0);
   stokes_sub_blocks[1] = 1;
   stokes_dof_handler.distribute_dofs(stokes_fe);
@@ -151,7 +151,7 @@ test_LA_Trilinos()
 
   const FESystem<dim> stokes_fe(FE_Q<dim>(1), 1, FE_DGP<dim>(0), 1);
 
-  DoFHandler<dim>           stokes_dof_handler(triangulation);
+  DoFHandler<dim> stokes_dof_handler(triangulation);
   std::vector<unsigned int> stokes_sub_blocks(1 + 1, 0);
   stokes_sub_blocks[1] = 1;
   stokes_dof_handler.distribute_dofs(stokes_fe);
@@ -220,7 +220,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   {
     deallog.push("PETSc");

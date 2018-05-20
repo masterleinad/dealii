@@ -37,7 +37,7 @@ template <int dim>
 void
 initialize_node_matrix(const FiniteElement<dim>& other,
                        const FiniteElement<dim>& nodes,
-                       FullMatrix<double>&       N)
+                       FullMatrix<double>& N)
 {
   const unsigned int n_dofs = other.dofs_per_cell;
   Assert(n_dofs == nodes.dofs_per_cell,
@@ -84,9 +84,9 @@ template <int dim>
 void
 compare_shapes(const FiniteElement<dim>& other,
                const FiniteElement<dim>& nodes,
-               FullMatrix<double>&       M)
+               FullMatrix<double>& M)
 {
-  QGauss<dim>      quadrature(other.degree + 1);
+  QGauss<dim> quadrature(other.degree + 1);
   Table<3, double> other_values(quadrature.size(), other.dofs_per_cell, dim);
   Table<3, double> nodes_values(quadrature.size(), other.dofs_per_cell, dim);
   Table<3, Tensor<1, dim>> other_grads(
@@ -112,8 +112,8 @@ compare_shapes(const FiniteElement<dim>& other,
       for(unsigned int i = 0; i < other.dofs_per_cell; ++i)
         for(unsigned int d = 0; d < dim; ++d)
           {
-            double         value = other_values[k][i][d];
-            Tensor<1, dim> grad  = other_grads[k][i][d];
+            double value        = other_values[k][i][d];
+            Tensor<1, dim> grad = other_grads[k][i][d];
             for(unsigned int j = 0; j < other.dofs_per_cell; ++j)
               {
                 value -= M(j, i) * nodes_values[k][j][d];
@@ -135,9 +135,9 @@ template <int dim>
 void
 test(unsigned int degree)
 {
-  FE_RaviartThomas<dim>      rt1(degree);
+  FE_RaviartThomas<dim> rt1(degree);
   FE_RaviartThomasNodal<dim> rtn1(degree);
-  FullMatrix<double>         N;
+  FullMatrix<double> N;
   initialize_node_matrix(rt1, rtn1, N);
   compare_shapes(rt1, rtn1, N);
 }

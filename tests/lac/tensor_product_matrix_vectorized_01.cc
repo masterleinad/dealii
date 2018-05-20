@@ -63,7 +63,7 @@ do_test(const unsigned int size)
   for(unsigned int i = 0; i < w1.size(); ++i)
     w1[i] = (2 * i + 1) % 23;
 
-  auto convert_to_vectorized = [](const Vector<double>&                   in,
+  auto convert_to_vectorized = [](const Vector<double>& in,
                                   AlignedVector<VectorizedArray<double>>& out) {
     std::transform(in.begin(), in.end(), out.begin(), [](const double& val) {
       return make_vectorized_array(val);
@@ -74,12 +74,12 @@ do_test(const unsigned int size)
   convert_to_vectorized(w1, v1);
 
   constexpr unsigned int macro_size = VectorizedArray<double>::n_array_elements;
-  Vector<double>         vec_flat(v1.size() * macro_size);
+  Vector<double> vec_flat(v1.size() * macro_size);
   std::array<unsigned int, macro_size> offsets;
   for(unsigned int i = 0; i < macro_size; ++i)
     offsets[i] = v1.size() * i;
   auto subtract_and_assign
-    = [](AlignedVector<VectorizedArray<double>>&       lhs,
+    = [](AlignedVector<VectorizedArray<double>>& lhs,
          const AlignedVector<VectorizedArray<double>>& rhs) {
         std::transform(
           lhs.begin(),

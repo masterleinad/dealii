@@ -74,7 +74,7 @@ test()
   vec_rel = vec;
 
   MappingQGeneric<dim> mapping(1);
-  Vector<float>        indicators(tr.n_active_cells());
+  Vector<float> indicators(tr.n_active_cells());
   DerivativeApproximation::approximate_gradient(
     mapping, dofh, vec_rel, indicators);
 
@@ -87,7 +87,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
 }

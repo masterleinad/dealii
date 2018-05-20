@@ -40,7 +40,7 @@ main()
     using namespace dealii::GridTools::internal::ProjectToObject;
 
     constexpr int structdim = 2;
-    auto          objective =
+    auto objective =
       [](const Tensor<1, GeometryInfo<structdim>::vertices_per_cell>& weights) {
         return std::sin(2.0 * weights[0]) * std::cos(3.0 * weights[1])
                + std::cos(weights[2]);
@@ -100,8 +100,8 @@ main()
 
   // Test project_to_object in 2D with an annulus
   {
-    PolarManifold<2>             polar_manifold;
-    Triangulation<2>             triangulation;
+    PolarManifold<2> polar_manifold;
+    Triangulation<2> triangulation;
     constexpr types::manifold_id polar_id = 42;
     GridGenerator::hyper_shell(triangulation, Point<2>(), 1.0, 2.0);
     triangulation.set_manifold(polar_id, polar_manifold);
@@ -127,7 +127,7 @@ main()
       const std::array<Point<2>, 2> vertices{
         {face->vertex(0), face->vertex(1)}};
       const std::array<double, 2> weights{{0.5, 0.5}};
-      const auto                  vertices_view
+      const auto vertices_view
         = make_array_view(vertices.begin(), vertices.end());
       const auto weights_view = make_array_view(weights.begin(), weights.end());
 
@@ -155,7 +155,7 @@ main()
       const std::array<Point<2>, 2> vertices{
         {face->vertex(0), face->vertex(1)}};
       const std::array<double, 2> weights{{0.125, 0.875}};
-      const auto                  vertices_view
+      const auto vertices_view
         = make_array_view(vertices.begin(), vertices.end());
       const auto weights_view = make_array_view(weights.begin(), weights.end());
 
@@ -206,7 +206,7 @@ main()
 
   // Test project_to_object with a 2D surface in 3D
   {
-    TorusManifold<2>    torus_manifold(2.0, 1.0);
+    TorusManifold<2> torus_manifold(2.0, 1.0);
     Triangulation<2, 3> triangulation;
     GridGenerator::torus(triangulation, 2.0, 1.0);
 
@@ -255,8 +255,8 @@ main()
               << "====================================================="
               << std::endl;
 
-      SphericalManifold<3>         spherical_manifold;
-      Triangulation<3>             triangulation;
+      SphericalManifold<3> spherical_manifold;
+      Triangulation<3> triangulation;
       constexpr types::manifold_id spherical_id = 42;
       GridGenerator::hyper_shell(triangulation, Point<3>(), 1.0, 2.0);
       triangulation.set_manifold(spherical_id, spherical_manifold);
@@ -293,7 +293,7 @@ main()
         const std::array<Point<3>, 4> vertices{
           {face->vertex(0), face->vertex(1), face->vertex(2), face->vertex(3)}};
         const std::array<double, 4> weights{{0.25, 0.25, 0.25, 0.25}};
-        const auto                  vertices_view
+        const auto vertices_view
           = make_array_view(vertices.begin(), vertices.end());
         const auto weights_view
           = make_array_view(weights.begin(), weights.end());
@@ -346,7 +346,7 @@ main()
         const std::array<Point<3>, 2> vertices{
           {face->vertex(0), face->vertex(1)}};
         const std::array<double, 2> weights{{1.0 - 1.0 / 2048.0, 1.0 / 2048.0}};
-        const auto                  vertices_view
+        const auto vertices_view
           = make_array_view(vertices.begin(), vertices.end());
         const auto weights_view
           = make_array_view(weights.begin(), weights.end());
@@ -376,7 +376,7 @@ main()
         const std::array<Point<3>, 4> vertices{
           {face->vertex(0), face->vertex(1), face->vertex(2), face->vertex(3)}};
         const std::array<double, 4> weights{{0.0625, 0.5, 0.25, 0.1875}};
-        const auto                  vertices_view
+        const auto vertices_view
           = make_array_view(vertices.begin(), vertices.end());
         const auto weights_view
           = make_array_view(weights.begin(), weights.end());
@@ -405,7 +405,7 @@ main()
         const std::array<Point<3>, 4> vertices{
           {face->vertex(0), face->vertex(1), face->vertex(2), face->vertex(3)}};
         const std::array<double, 4> weights{{0.0625, 0.5, 0.25, 0.1875}};
-        const auto                  vertices_view
+        const auto vertices_view
           = make_array_view(vertices.begin(), vertices.end());
         const auto weights_view
           = make_array_view(weights.begin(), weights.end());
@@ -433,11 +433,11 @@ main()
 
       // test that we can recover a point that is on a line in 3D
       {
-        const auto                    line = face->line(0);
+        const auto line = face->line(0);
         const std::array<Point<3>, 2> vertices{
           {line->vertex(0), line->vertex(1)}};
         const std::array<double, 2> weights{{0.125, 1.0 - 0.125}};
-        const auto                  vertices_view
+        const auto vertices_view
           = make_array_view(vertices.begin(), vertices.end());
         const auto weights_view
           = make_array_view(weights.begin(), weights.end());

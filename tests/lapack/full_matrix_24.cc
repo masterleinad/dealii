@@ -46,7 +46,7 @@ template <typename NumberType>
 void
 test()
 {
-  const unsigned int           size = 3;
+  const unsigned int size = 3;
   LAPACKFullMatrix<NumberType> M(size);
   M.set_property(LAPACKSupport::upper_triangular);
 
@@ -79,7 +79,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 

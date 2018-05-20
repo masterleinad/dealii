@@ -33,8 +33,8 @@ plot_FE_FaceQ_shape_functions()
   FE_FaceQ<dim> q1(1);
   FE_FaceQ<dim> q2(2);
   FE_FaceQ<dim> q3(3);
-  FE_DGQ<dim>   dg0(0);
-  FE_DGQ<dim>   dg1(1);
+  FE_DGQ<dim> dg0(0);
+  FE_DGQ<dim> dg1(1);
   FESystem<dim> sys0(q0, 1);
   FESystem<dim> sys1(q1, 1);
   FESystem<dim> sys00(q0, 1, dg0, 1);
@@ -53,7 +53,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog << std::setprecision(PRECISION) << std::fixed;
   deallog.attach(logfile);
 

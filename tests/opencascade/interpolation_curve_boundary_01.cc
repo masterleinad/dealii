@@ -36,8 +36,8 @@ remove_iges_header(const std::string& in_filename,
 {
   std::ifstream in(in_filename);
   std::ofstream out(out_filename);
-  std::string   line;
-  unsigned int  counter = 5;
+  std::string line;
+  unsigned int counter = 5;
   while(counter--)
     std::getline(in, line);
   while(std::getline(in, line))

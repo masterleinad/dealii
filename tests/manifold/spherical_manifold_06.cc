@@ -26,12 +26,12 @@ main()
   initlog();
 
   {
-    Point<2>                      center(1.0, 0.0);
+    Point<2> center(1.0, 0.0);
     const SphericalManifold<2, 2> manifold(center);
-    Point<2>                      P1(1.0, 1.0);
-    Point<2>                      P2(1.0, -1.0);
-    std::vector<Point<2>>         points;
-    std::vector<double>           weights;
+    Point<2> P1(1.0, 1.0);
+    Point<2> P2(1.0, -1.0);
+    std::vector<Point<2>> points;
+    std::vector<double> weights;
     points.push_back(P1);
     points.push_back(P2);
     weights.push_back(0.5);
@@ -41,12 +41,12 @@ main()
   }
 
   {
-    Point<3>                      center(1.0, 0.0, 0.0);
+    Point<3> center(1.0, 0.0, 0.0);
     const SphericalManifold<3, 3> manifold(center);
-    Point<3>                      P1(1.0, 1.0, 0.0);
-    Point<3>                      P2(1.0, -1.0, 0.0);
-    std::vector<Point<3>>         points;
-    std::vector<double>           weights;
+    Point<3> P1(1.0, 1.0, 0.0);
+    Point<3> P2(1.0, -1.0, 0.0);
+    std::vector<Point<3>> points;
+    std::vector<double> weights;
     points.push_back(P1);
     points.push_back(P2);
     weights.push_back(0.5);

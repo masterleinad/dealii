@@ -29,7 +29,7 @@ test(const unsigned int chunk_size)
         sp.add(i, j);
   sp.compress();
 
-  ChunkSparseMatrix<double>                 m(sp);
+  ChunkSparseMatrix<double> m(sp);
   ChunkSparseMatrix<double>::const_iterator i = m.begin();
   deallog << i->value() << std::endl;
   ++i;

@@ -79,7 +79,7 @@ MappingCartesian<dim, spacedim>::requires_update_flags(
 
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
-MappingCartesian<dim, spacedim>::get_data(const UpdateFlags      update_flags,
+MappingCartesian<dim, spacedim>::get_data(const UpdateFlags update_flags,
                                           const Quadrature<dim>& q) const
 {
   auto data = std_cxx14::make_unique<InternalData>(q);
@@ -95,7 +95,7 @@ MappingCartesian<dim, spacedim>::get_data(const UpdateFlags      update_flags,
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingCartesian<dim, spacedim>::get_face_data(
-  const UpdateFlags          update_flags,
+  const UpdateFlags update_flags,
   const Quadrature<dim - 1>& quadrature) const
 {
   auto data = std_cxx14::make_unique<InternalData>(
@@ -116,7 +116,7 @@ MappingCartesian<dim, spacedim>::get_face_data(
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingCartesian<dim, spacedim>::get_subface_data(
-  const UpdateFlags          update_flags,
+  const UpdateFlags update_flags,
   const Quadrature<dim - 1>& quadrature) const
 {
   auto data = std_cxx14::make_unique<InternalData>(
@@ -138,11 +138,11 @@ template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::compute_fill(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const unsigned int                                          face_no,
-  const unsigned int                                          sub_no,
-  const CellSimilarity::Similarity                            cell_similarity,
-  const InternalData&                                         data,
-  std::vector<Point<dim>>&                                    quadrature_points,
+  const unsigned int face_no,
+  const unsigned int sub_no,
+  const CellSimilarity::Similarity cell_similarity,
+  const InternalData& data,
+  std::vector<Point<dim>>& quadrature_points,
   std::vector<Tensor<1, dim>>& normal_vectors) const
 {
   const UpdateFlags update_flags = data.update_each;
@@ -305,9 +305,9 @@ template <int dim, int spacedim>
 CellSimilarity::Similarity
 MappingCartesian<dim, spacedim>::fill_fe_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const CellSimilarity::Similarity                            cell_similarity,
-  const Quadrature<dim>&                                      quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+  const CellSimilarity::Similarity cell_similarity,
+  const Quadrature<dim>& quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
   internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
     output_data) const
 {
@@ -414,9 +414,9 @@ template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::fill_fe_face_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const unsigned int                                          face_no,
-  const Quadrature<dim - 1>&                                  quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+  const unsigned int face_no,
+  const Quadrature<dim - 1>& quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
   internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
     output_data) const
 {
@@ -516,10 +516,10 @@ template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::fill_fe_subface_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const unsigned int                                          face_no,
-  const unsigned int                                          subface_no,
-  const Quadrature<dim - 1>&                                  quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+  const unsigned int face_no,
+  const unsigned int subface_no,
+  const Quadrature<dim - 1>& quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
   internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
     output_data) const
 {
@@ -626,10 +626,10 @@ MappingCartesian<dim, spacedim>::fill_fe_subface_values(
 template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::transform(
-  const ArrayView<const Tensor<1, dim>>&                   input,
-  const MappingType                                        mapping_type,
+  const ArrayView<const Tensor<1, dim>>& input,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<1, spacedim>>&                    output) const
+  const ArrayView<Tensor<1, spacedim>>& output) const
 {
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData*>(&mapping_data) != nullptr,
@@ -685,9 +685,9 @@ template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::transform(
   const ArrayView<const DerivativeForm<1, dim, spacedim>>& input,
-  const MappingType                                        mapping_type,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<2, spacedim>>&                    output) const
+  const ArrayView<Tensor<2, spacedim>>& output) const
 {
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData*>(&mapping_data) != nullptr,
@@ -793,10 +793,10 @@ MappingCartesian<dim, spacedim>::transform(
 template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::transform(
-  const ArrayView<const Tensor<2, dim>>&                   input,
-  const MappingType                                        mapping_type,
+  const ArrayView<const Tensor<2, dim>>& input,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<2, spacedim>>&                    output) const
+  const ArrayView<Tensor<2, spacedim>>& output) const
 {
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData*>(&mapping_data) != nullptr,
@@ -903,9 +903,9 @@ template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::transform(
   const ArrayView<const DerivativeForm<2, dim, spacedim>>& input,
-  const MappingType                                        mapping_type,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<3, spacedim>>&                    output) const
+  const ArrayView<Tensor<3, spacedim>>& output) const
 {
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData*>(&mapping_data) != nullptr,
@@ -939,10 +939,10 @@ MappingCartesian<dim, spacedim>::transform(
 template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::transform(
-  const ArrayView<const Tensor<3, dim>>&                   input,
-  const MappingType                                        mapping_type,
+  const ArrayView<const Tensor<3, dim>>& input,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<3, spacedim>>&                    output) const
+  const ArrayView<Tensor<3, spacedim>>& output) const
 {
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData*>(&mapping_data) != nullptr,
@@ -1026,9 +1026,9 @@ template <int dim, int spacedim>
 Point<spacedim>
 MappingCartesian<dim, spacedim>::transform_unit_to_real_cell(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const Point<dim>&                                           p) const
+  const Point<dim>& p) const
 {
-  Tensor<1, dim>   length;
+  Tensor<1, dim> length;
   const Point<dim> start = cell->vertex(0);
   switch(dim)
     {
@@ -1059,12 +1059,12 @@ template <int dim, int spacedim>
 Point<dim>
 MappingCartesian<dim, spacedim>::transform_real_to_unit_cell(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const Point<spacedim>&                                      p) const
+  const Point<spacedim>& p) const
 {
   if(dim != spacedim)
     Assert(false, ExcNotImplemented());
   const Point<dim>& start = cell->vertex(0);
-  Point<dim>        real  = p;
+  Point<dim> real         = p;
   real -= start;
 
   switch(dim)

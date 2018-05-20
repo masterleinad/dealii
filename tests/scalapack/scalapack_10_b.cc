@@ -33,12 +33,12 @@
 template <typename NumberType>
 void
 test(const std::pair<unsigned int, unsigned int>& size,
-     const unsigned int                           block_size,
+     const unsigned int block_size,
      const std::pair<unsigned int, unsigned int>& chunk_size)
 {
   const std::string filename("scalapack_10_b_test.h5");
 
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int this_mpi_process(
     Utilities::MPI::this_mpi_process(mpi_communicator));
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));

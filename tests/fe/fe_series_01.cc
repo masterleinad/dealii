@@ -44,20 +44,20 @@ test_1d()
   const unsigned int N = 4;
   // exact values obtained by Maxima:
   std::vector<std::complex<double>> exact(N);
-  const std::complex<double>        I(0, 1.);
+  const std::complex<double> I(0, 1.);
   exact[0] = std::complex<double>(1. / 2, 0.);
   exact[1] = -I / (2 * numbers::PI);
   exact[2] = -I / (4 * numbers::PI);
   exact[3] = -I / (6 * numbers::PI);
   //
-  const unsigned int    dim = 1;
+  const unsigned int dim = 1;
   hp::FECollection<dim> fe_collection;
-  hp::QCollection<dim>  q_collection;
+  hp::QCollection<dim> q_collection;
 
   // linear FE
   fe_collection.push_back(FE_Q<dim>(1));
 
-  QGauss<1>      base_quadrature(6);
+  QGauss<1> base_quadrature(6);
   QIterated<dim> quadrature(base_quadrature, N);
   q_collection.push_back(quadrature);
 

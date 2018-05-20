@@ -43,14 +43,14 @@ main()
 {
   initlog();
 
-  Point<3>                          t0(1, 2, 3);
-  std::complex<double>              t1(4, 5);
-  std::vector<Point<3>>             t2(2, t0);
+  Point<3> t0(1, 2, 3);
+  std::complex<double> t1(4, 5);
+  std::vector<Point<3>> t2(2, t0);
   std::vector<std::complex<double>> t3(2, t1);
 
-  std::map<unsigned int, Point<3>>                          t10;
-  std::map<unsigned int, std::complex<double>>              t11;
-  std::map<unsigned int, std::vector<Point<3>>>             t12;
+  std::map<unsigned int, Point<3>> t10;
+  std::map<unsigned int, std::complex<double>> t11;
+  std::map<unsigned int, std::vector<Point<3>>> t12;
   std::map<unsigned int, std::vector<std::complex<double>>> t13;
 
   t10[0] = t0;

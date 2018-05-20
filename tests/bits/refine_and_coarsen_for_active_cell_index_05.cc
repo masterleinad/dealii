@@ -108,7 +108,7 @@ check()
       oa << tria;
     }
     {
-      std::istringstream            iss(oss.str());
+      std::istringstream iss(oss.str());
       boost::archive::text_iarchive ia(iss, boost::archive::no_header);
 
       // restore triangulation
@@ -139,7 +139,7 @@ check()
       oa << tria;
     }
     {
-      std::istringstream            iss(oss.str());
+      std::istringstream iss(oss.str());
       boost::archive::text_iarchive ia(iss, boost::archive::no_header);
 
       // restore triangulation

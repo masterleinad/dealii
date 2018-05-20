@@ -382,7 +382,7 @@ public:
    */
   virtual void
   get_interpolation_matrix(const FiniteElement<dim>& source,
-                           FullMatrix<double>&       matrix) const override;
+                           FullMatrix<double>& matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -412,7 +412,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim>& source,
-                                   const unsigned int        subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**

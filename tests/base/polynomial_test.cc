@@ -28,9 +28,9 @@ template <int dim, class PolynomialType>
 void
 check_poly(const Point<dim>& x, const PolynomialType& p)
 {
-  const unsigned int          n   = p.n();
-  const double                eps = 5.0e-15;
-  std::vector<double>         values(n);
+  const unsigned int n = p.n();
+  const double eps     = 5.0e-15;
+  std::vector<double> values(n);
   std::vector<Tensor<1, dim>> gradients(n);
   std::vector<Tensor<2, dim>> second(n);
   std::vector<Tensor<3, dim>> third(n);

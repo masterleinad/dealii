@@ -83,7 +83,7 @@ namespace LinearAlgebra
       void
       reinit(const IndexSet& parallel_partitioner,
              const MPI_Comm& communicator,
-             const bool      omit_zeroing_entries = false);
+             const bool omit_zeroing_entries = false);
 
       /**
        * Change the dimension to that of the vector V. The elements of V are not
@@ -118,8 +118,8 @@ namespace LinearAlgebra
        */
       virtual void
       import(
-        const ReadWriteVector<double>&                  V,
-        VectorOperation::values                         operation,
+        const ReadWriteVector<double>& V,
+        VectorOperation::values operation,
         std::shared_ptr<const CommunicationPatternBase> communication_pattern
         = std::shared_ptr<const CommunicationPatternBase>()) override;
 
@@ -172,9 +172,9 @@ namespace LinearAlgebra
        * a*V+b*W</tt>. The vectors need to have the same layout.
        */
       virtual void
-      add(const double                     a,
+      add(const double a,
           const VectorSpaceVector<double>& V,
-          const double                     b,
+          const double b,
           const VectorSpaceVector<double>& W) override;
 
       /**
@@ -182,8 +182,8 @@ namespace LinearAlgebra
        * = s*(*this)+a*V</tt>.
        */
       virtual void
-      sadd(const double                     s,
-           const double                     a,
+      sadd(const double s,
+           const double a,
            const VectorSpaceVector<double>& V) override;
 
       /**
@@ -256,7 +256,7 @@ namespace LinearAlgebra
        * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       virtual double
-      add_and_dot(const double                     a,
+      add_and_dot(const double a,
                   const VectorSpaceVector<double>& V,
                   const VectorSpaceVector<double>& W) override;
       /**
@@ -310,10 +310,10 @@ namespace LinearAlgebra
        * Prints the vector to the output stream @p out.
        */
       virtual void
-      print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const override;
+      print(std::ostream& out,
+            const unsigned int precision = 3,
+            const bool scientific        = true,
+            const bool across            = true) const override;
 
       /**
        * Return the memory consumption of this class in bytes.

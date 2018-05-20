@@ -42,7 +42,7 @@ test()
 {
   deallog << "dim: " << dim << ", spacedim: " << spacedim << std::endl;
 
-  Triangulation<dim, spacedim>      tria;
+  Triangulation<dim, spacedim> tria;
   Triangulation<spacedim, spacedim> space_tria;
 
   GridGenerator::hyper_cube(tria, -.4, .3);
@@ -51,7 +51,7 @@ test()
   tria.refine_global(1);
   space_tria.refine_global(2);
 
-  FESystem<dim, spacedim>      fe(FE_Q<dim, spacedim>(1), spacedim + 1);
+  FESystem<dim, spacedim> fe(FE_Q<dim, spacedim>(1), spacedim + 1);
   FESystem<spacedim, spacedim> space_fe(FE_Q<spacedim, spacedim>(1),
                                         spacedim + 1);
 
@@ -64,7 +64,7 @@ test()
   deallog << "FE      : " << fe.get_name() << std::endl
           << "Space FE: " << space_fe.get_name() << std::endl;
 
-  DoFHandler<dim, spacedim>      dh(tria);
+  DoFHandler<dim, spacedim> dh(tria);
   DoFHandler<spacedim, spacedim> space_dh(space_tria);
 
   dh.distribute_dofs(fe);

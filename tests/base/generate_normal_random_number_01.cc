@@ -27,9 +27,9 @@ test()
   const double mu    = 13;
   const double sigma = 3;
 
-  unsigned int N          = 1000000;
-  double       sum        = 0;
-  double       sum_square = 0;
+  unsigned int N    = 1000000;
+  double sum        = 0;
+  double sum_square = 0;
   for(unsigned int i = 0; i < N; ++i)
     {
       const double x = Utilities::generate_normal_random_number(mu, sigma);

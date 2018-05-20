@@ -37,7 +37,7 @@ test()
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  MappingQ<dim>   mapping(5);
+  MappingQ<dim> mapping(5);
   FE_Nothing<dim> dummy;
   // choose a point that is not right in the middle of the cell so that the
   // Jacobian contains many nonzero entries
@@ -47,7 +47,7 @@ test()
   Quadrature<dim - 1> quad(quad_p);
 
   {
-    FEFaceValues<dim>    fe_val(mapping, dummy, quad, update_jacobians);
+    FEFaceValues<dim> fe_val(mapping, dummy, quad, update_jacobians);
     FESubfaceValues<dim> fe_sub_val(mapping, dummy, quad, update_jacobians);
 
     deallog << dim << "D Jacobians:" << std::endl;
@@ -82,7 +82,7 @@ test()
   }
 
   {
-    FEFaceValues<dim>    fe_val(mapping, dummy, quad, update_inverse_jacobians);
+    FEFaceValues<dim> fe_val(mapping, dummy, quad, update_inverse_jacobians);
     FESubfaceValues<dim> fe_sub_val(
       mapping, dummy, quad, update_inverse_jacobians);
 
@@ -118,7 +118,7 @@ test()
   }
 
   {
-    FEFaceValues<dim>    fe_val(mapping, dummy, quad, update_jacobian_grads);
+    FEFaceValues<dim> fe_val(mapping, dummy, quad, update_jacobian_grads);
     FESubfaceValues<dim> fe_sub_val(
       mapping, dummy, quad, update_jacobian_grads);
 

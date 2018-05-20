@@ -58,7 +58,7 @@ template <int dim>
 void
 check_dg_lobatto(const Function<dim>& f, const unsigned int degree)
 {
-  QGaussLobatto<1>          fe_quadrature(degree);
+  QGaussLobatto<1> fe_quadrature(degree);
   FE_DGQArbitraryNodes<dim> fe(fe_quadrature);
   deallog << fe.get_name() << ' ';
 

@@ -73,7 +73,7 @@ public:
 
   virtual double
   value(const dealii::Point<dim>& point,
-        const unsigned int        component = 0) const;
+        const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -89,8 +89,8 @@ class EnrichmentFunction : public Function<dim>
 {
 public:
   EnrichmentFunction(const Point<dim>& origin,
-                     const double&     Z,
-                     const double&     radius)
+                     const double& Z,
+                     const double& radius)
     : Function<dim>(1), origin(origin), Z(Z), radius(radius)
   {}
 
@@ -98,7 +98,7 @@ public:
   value(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = point - origin;
-    const double   r    = dist.norm();
+    const double r      = dist.norm();
     return std::exp(-Z * r);
   }
 
@@ -115,7 +115,7 @@ public:
   gradient(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = p - origin;
-    const double   r    = dist.norm();
+    const double r      = dist.norm();
     dist /= r;
     return -Z * std::exp(-Z * r) * dist;
   }
@@ -170,22 +170,22 @@ namespace Step36
     void
     output_results(const unsigned int cycle) const;
 
-    Triangulation<dim>    triangulation;
-    hp::DoFHandler<dim>   dof_handler;
+    Triangulation<dim> triangulation;
+    hp::DoFHandler<dim> dof_handler;
     hp::FECollection<dim> fe_collection;
-    hp::QCollection<dim>  q_collection;
+    hp::QCollection<dim> q_collection;
 
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
 
     std::vector<PETScWrappers::MPI::Vector> eigenfunctions;
     std::vector<PETScWrappers::MPI::Vector> eigenfunctions_locally_relevant;
-    std::vector<PetscScalar>                eigenvalues;
-    PETScWrappers::MPI::SparseMatrix        stiffness_matrix, mass_matrix;
+    std::vector<PetscScalar> eigenvalues;
+    PETScWrappers::MPI::SparseMatrix stiffness_matrix, mass_matrix;
 
     ConstraintMatrix constraints;
 
-    MPI_Comm           mpi_communicator;
+    MPI_Comm mpi_communicator;
     const unsigned int n_mpi_processes;
     const unsigned int this_mpi_process;
 
@@ -198,16 +198,16 @@ namespace Step36
     EnrichmentFunction<dim> enrichment;
 
     const FEValuesExtractors::Scalar fe_extractor;
-    const unsigned int               fe_group;
-    const unsigned int               fe_fe_index;
-    const unsigned int               fe_material_id;
+    const unsigned int fe_group;
+    const unsigned int fe_fe_index;
+    const unsigned int fe_material_id;
     const FEValuesExtractors::Scalar pou_extractor;
-    const unsigned int               pou_group;
-    const unsigned int               pou_fe_index;
-    const unsigned int               pou_material_id;
+    const unsigned int pou_group;
+    const unsigned int pou_fe_index;
+    const unsigned int pou_material_id;
 
     std::vector<Vector<float>> vec_estimated_error_per_cell;
-    Vector<float>              estimated_error_per_cell;
+    Vector<float> estimated_error_per_cell;
   };
 
   template <int dim>
@@ -425,12 +425,12 @@ namespace Step36
     stiffness_matrix = 0;
     mass_matrix      = 0;
 
-    dealii::FullMatrix<double>           cell_stiffness_matrix;
-    dealii::FullMatrix<double>           cell_mass_matrix;
+    dealii::FullMatrix<double> cell_stiffness_matrix;
+    dealii::FullMatrix<double> cell_mass_matrix;
     std::vector<types::global_dof_index> local_dof_indices;
-    std::vector<double>                  potential_values;
-    std::vector<double>                  enrichment_values;
-    std::vector<Tensor<1, dim>>          enrichment_gradients;
+    std::vector<double> potential_values;
+    std::vector<double> enrichment_values;
+    std::vector<Tensor<1, dim>> enrichment_gradients;
 
     hp::FEValues<dim> fe_values_hp(fe_collection,
                                    q_collection,
@@ -740,11 +740,11 @@ namespace Step36
 
     virtual void
     compute_derived_quantities_vector(
-      const std::vector<Vector<double>>&              solution_values,
+      const std::vector<Vector<double>>& solution_values,
       const std::vector<std::vector<Tensor<1, dim>>>& solution_gradients,
       const std::vector<std::vector<Tensor<2, dim>>>& solution_hessians,
-      const std::vector<Point<dim>>&                  normals,
-      const std::vector<Point<dim>>&                  evaluation_points,
+      const std::vector<Point<dim>>& normals,
+      const std::vector<Point<dim>>& evaluation_points,
       std::vector<Vector<double>>& computed_quantities) const;
 
   private:
@@ -766,7 +766,7 @@ namespace Step36
     const std::vector<std::vector<Tensor<2, dim>>>& /*solution_hessians*/,
     const std::vector<Point<dim>>& /*normals*/,
     const std::vector<Point<dim>>& evaluation_points,
-    std::vector<Vector<double>>&   computed_quantities) const
+    std::vector<Vector<double>>& computed_quantities) const
   {
     const unsigned int n_quadrature_points = solution_values.size();
     Assert(computed_quantities.size() == n_quadrature_points,

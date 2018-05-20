@@ -46,7 +46,7 @@ execute(Threads::Mutex& m)
 {
   // check correct default initialization
   bool exists;
-  int  i = tls_data.get(exists).i;
+  int i = tls_data.get(exists).i;
   AssertThrow(i == 42, ExcInternalError());
   AssertThrow(exists == false, ExcInternalError());
 
@@ -73,7 +73,7 @@ void
 test()
 {
   const unsigned int N = 10;
-  Threads::Mutex     m[N];
+  Threads::Mutex m[N];
 
   // start N threads with mutices locked
   Threads::ThreadGroup<> tg;

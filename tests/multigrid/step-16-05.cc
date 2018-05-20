@@ -75,10 +75,10 @@ private:
   solve();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    mg_dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> mg_dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   ConstraintMatrix hanging_node_constraints;
@@ -90,10 +90,10 @@ private:
   const unsigned int degree;
   const unsigned int min_level;
 
-  MGLevelObject<SparsityPattern>      mg_sparsity_patterns;
+  MGLevelObject<SparsityPattern> mg_sparsity_patterns;
   MGLevelObject<SparseMatrix<double>> mg_matrices;
   MGLevelObject<SparseMatrix<double>> mg_interface_matrices;
-  MGConstrainedDoFs                   mg_constrained_dofs;
+  MGConstrainedDoFs mg_constrained_dofs;
 };
 
 template <int dim>
@@ -108,8 +108,8 @@ public:
 
   virtual void
   value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+             std::vector<double>& values,
+             const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -125,8 +125,8 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
 template <int dim>
 void
 Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                             std::vector<double>&           values,
-                             const unsigned int             component) const
+                             std::vector<double>& values,
+                             const unsigned int component) const
 {
   const unsigned int n_points = points.size();
 
@@ -169,7 +169,7 @@ LaplaceProblem<dim>::setup_system()
   DoFTools::make_hanging_node_constraints(mg_dof_handler,
                                           hanging_node_constraints);
   typename FunctionMap<dim>::type dirichlet_boundary;
-  Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+  Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
   dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
   MappingQGeneric<dim> mapping(1);
   VectorTools::interpolate_boundary_values(
@@ -207,7 +207,7 @@ template <int dim>
 void
 LaplaceProblem<dim>::assemble_system()
 {
-  Vector<double>    tmp(system_rhs.size());
+  Vector<double> tmp(system_rhs.size());
   const QGauss<dim> quadrature_formula(degree + 1);
 
   FEValues<dim> fe_values(fe,
@@ -219,12 +219,12 @@ LaplaceProblem<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   const Coefficient<dim> coefficient;
-  std::vector<double>    coefficient_values(n_q_points);
+  std::vector<double> coefficient_values(n_q_points);
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = mg_dof_handler.begin_active(),
@@ -279,10 +279,10 @@ LaplaceProblem<dim>::assemble_multigrid()
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   const Coefficient<dim> coefficient;
-  std::vector<double>    coefficient_values(n_q_points);
+  std::vector<double> coefficient_values(n_q_points);
 
   std::vector<ConstraintMatrix> boundary_constraints(triangulation.n_levels());
-  ConstraintMatrix              empty_constraints;
+  ConstraintMatrix empty_constraints;
   for(unsigned int level = min_level; level < triangulation.n_levels(); ++level)
     {
       boundary_constraints[level].add_lines(
@@ -368,12 +368,12 @@ LaplaceProblem<dim>::solve()
 
   typedef PreconditionChebyshev<SparseMatrix<double>,
                                 LinearAlgebra::distributed::Vector<double>>
-                                                                  Smoother;
+    Smoother;
   GrowingVectorMemory<LinearAlgebra::distributed::Vector<double>> vector_memory;
   MGSmootherPrecondition<SparseMatrix<double>,
                          Smoother,
                          LinearAlgebra::distributed::Vector<double>>
-                                    mg_smoother;
+    mg_smoother;
   typename Smoother::AdditionalData smoother_data;
   smoother_data.smoothing_range     = 20.;
   smoother_data.degree              = 2;

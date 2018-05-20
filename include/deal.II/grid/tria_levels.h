@@ -211,13 +211,13 @@ namespace internal
     class TriaLevel<3>
     {
     public:
-      std::vector<std::uint8_t>        refine_flags;
-      std::vector<bool>                coarsen_flags;
-      std::vector<unsigned int>        active_cell_indices;
+      std::vector<std::uint8_t> refine_flags;
+      std::vector<bool> coarsen_flags;
+      std::vector<unsigned int> active_cell_indices;
       std::vector<std::pair<int, int>> neighbors;
       std::vector<types::subdomain_id> subdomain_ids;
       std::vector<types::subdomain_id> level_subdomain_ids;
-      std::vector<int>                 parents;
+      std::vector<int> parents;
 
       // The following is not used
       // since we don't support

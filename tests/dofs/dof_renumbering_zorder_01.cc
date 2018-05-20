@@ -36,9 +36,9 @@ template <int dim, class stream>
 void
 print_dofs(const DoFHandler<dim>& dof, stream& out)
 {
-  const FiniteElement<dim>&            fe = dof.get_fe();
+  const FiniteElement<dim>& fe = dof.get_fe();
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
-  std::shared_ptr<FEValues<dim>>       fevalues;
+  std::shared_ptr<FEValues<dim>> fevalues;
 
   if(fe.has_support_points())
     {
@@ -73,7 +73,7 @@ check()
   GridGenerator::hyper_cube(tr, -1., 1.);
   tr.refine_global(1);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
 

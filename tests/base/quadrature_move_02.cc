@@ -21,10 +21,10 @@ template <template <int dim> class Quad, int dim, typename... Args>
 std::string
 check_q_assign_move(Args&&... args)
 {
-  Quad<dim>                     quad1(args...);
-  const unsigned int            size1    = quad1.size();
-  const std::vector<double>     weights1 = quad1.get_weights();
-  const std::vector<Point<dim>> points1  = quad1.get_points();
+  Quad<dim> quad1(args...);
+  const unsigned int size1              = quad1.size();
+  const std::vector<double> weights1    = quad1.get_weights();
+  const std::vector<Point<dim>> points1 = quad1.get_points();
 
   Quadrature<dim> quad2;
   AssertThrow(quad2.size() == 0, ExcInternalError());
@@ -34,8 +34,8 @@ check_q_assign_move(Args&&... args)
   AssertThrow(quad1.size() == 0, ExcInternalError());
   AssertThrow(quad2.size() == size1, ExcInternalError());
 
-  const std::vector<double>     weights2 = quad2.get_weights();
-  const std::vector<Point<dim>> points2  = quad2.get_points();
+  const std::vector<double> weights2    = quad2.get_weights();
+  const std::vector<Point<dim>> points2 = quad2.get_points();
   for(unsigned int i = 0; i < size1; ++i)
     {
       AssertThrow(std::abs(weights1[i] - weights2[i]) < 1.e-16,

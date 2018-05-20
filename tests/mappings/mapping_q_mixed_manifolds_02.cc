@@ -60,8 +60,8 @@ void create_triangulation(Triangulation<2>& tria)
   ref_1[1] = 2;
 
   // create middle part first as a hyper shell
-  const double       outer_radius = (X_2 - X_1) / 2.0;
-  const unsigned int n_cells      = 4;
+  const double outer_radius  = (X_2 - X_1) / 2.0;
+  const unsigned int n_cells = 4;
   GridGenerator::hyper_shell(
     middle, Point<2>(X_C, Y_C), R_2, outer_radius, n_cells, true);
   middle.set_all_manifold_ids(MANIFOLD_ID);
@@ -194,7 +194,7 @@ ManifoldWrapper<2>::operator()(const Tensor<1, 2>& /*direction*/,
 template <>
 Manifold<3>*
 ManifoldWrapper<3>::operator()(const Tensor<1, 3>& direction,
-                               const Point<3>&     center) const
+                               const Point<3>& center) const
 {
   return new CylindricalManifold<3>(direction, center);
 }
@@ -219,9 +219,9 @@ test()
   for(unsigned int degree = 1; degree < 7; ++degree)
     {
       MappingQGeneric<dim> mapping(degree);
-      QGauss<dim>          quad(degree + 1);
-      FEValues<dim>        fe_values(mapping, fe, quad, update_JxW_values);
-      double               sum = 0.;
+      QGauss<dim> quad(degree + 1);
+      FEValues<dim> fe_values(mapping, fe, quad, update_JxW_values);
+      double sum = 0.;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tria.begin_active();
           cell != tria.end();

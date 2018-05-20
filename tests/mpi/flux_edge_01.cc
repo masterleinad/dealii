@@ -75,9 +75,9 @@ namespace Step39
     setup_system();
 
     parallel::distributed::Triangulation<dim> triangulation;
-    const MappingQGeneric<dim>                mapping;
-    const FiniteElement<dim>&                 fe;
-    DoFHandler<dim>                           dof_handler;
+    const MappingQGeneric<dim> mapping;
+    const FiniteElement<dim>& fe;
+    DoFHandler<dim> dof_handler;
 
     IndexSet locally_relevant_set;
 
@@ -206,7 +206,7 @@ main(int argc, char* argv[])
 
   try
     {
-      FE_DGQ<2>                 fe1(0);
+      FE_DGQ<2> fe1(0);
       InteriorPenaltyProblem<2> test1(fe1);
       test1.run(20);
     }

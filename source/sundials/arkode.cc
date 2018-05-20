@@ -53,7 +53,7 @@ namespace SUNDIALS
     t_arkode_explicit_function(realtype tt,
                                N_Vector yy,
                                N_Vector yp,
-                               void*    user_data)
+                               void* user_data)
     {
       ARKode<VectorType>& solver = *static_cast<ARKode<VectorType>*>(user_data);
       GrowingVectorMemory<VectorType> mem;
@@ -78,7 +78,7 @@ namespace SUNDIALS
     t_arkode_implicit_function(realtype tt,
                                N_Vector yy,
                                N_Vector yp,
-                               void*    user_data)
+                               void* user_data)
     {
       ARKode<VectorType>& solver = *static_cast<ARKode<VectorType>*>(user_data);
       GrowingVectorMemory<VectorType> mem;
@@ -100,10 +100,10 @@ namespace SUNDIALS
 
     template <typename VectorType>
     int
-    t_arkode_setup_jacobian(ARKodeMem    arkode_mem,
-                            int          convfail,
-                            N_Vector     ypred,
-                            N_Vector     fpred,
+    t_arkode_setup_jacobian(ARKodeMem arkode_mem,
+                            int convfail,
+                            N_Vector ypred,
+                            N_Vector fpred,
                             booleantype* jcurPtr,
                             N_Vector,
                             N_Vector,
@@ -135,7 +135,7 @@ namespace SUNDIALS
     template <typename VectorType>
     int
     t_arkode_solve_jacobian(ARKodeMem arkode_mem,
-                            N_Vector  b,
+                            N_Vector b,
 #  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
                             N_Vector,
 #  endif
@@ -215,7 +215,7 @@ namespace SUNDIALS
 
   template <typename VectorType>
   ARKode<VectorType>::ARKode(const AdditionalData& data,
-                             const MPI_Comm        mpi_comm)
+                             const MPI_Comm mpi_comm)
     : data(data),
       arkode_mem(nullptr),
       yy(nullptr),
@@ -248,8 +248,8 @@ namespace SUNDIALS
   {
     unsigned int system_size = solution.size();
 
-    double       t           = data.initial_time;
-    double       h           = data.initial_step_size;
+    double t                 = data.initial_time;
+    double h                 = data.initial_step_size;
     unsigned int step_number = 0;
 
     int status;
@@ -261,8 +261,8 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is                = solution.locally_owned_elements();
-        const size_t   local_system_size = is.n_elements();
+        const IndexSet is              = solution.locally_owned_elements();
+        const size_t local_system_size = is.n_elements();
 
         yy = N_VNew_Parallel(communicator, local_system_size, system_size);
 
@@ -325,8 +325,8 @@ namespace SUNDIALS
 
   template <typename VectorType>
   void
-  ARKode<VectorType>::reset(const double&     current_time,
-                            const double&     current_time_step,
+  ARKode<VectorType>::reset(const double& current_time,
+                            const double& current_time_step,
                             const VectorType& solution)
   {
     unsigned int system_size;
@@ -359,8 +359,8 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is                = solution.locally_owned_elements();
-        const size_t   local_system_size = is.n_elements();
+        const IndexSet is              = solution.locally_owned_elements();
+        const size_t local_system_size = is.n_elements();
 
         yy = N_VNew_Parallel(communicator, local_system_size, system_size);
 

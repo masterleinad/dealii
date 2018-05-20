@@ -22,7 +22,7 @@ template <int dim>
 void
 test()
 {
-  const double   lambda = 1.5, mu = 1.7;
+  const double lambda = 1.5, mu = 1.7;
   Tensor<2, dim> t;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)

@@ -25,7 +25,7 @@ void
 dim_2(std::ostream& os)
 {
   const unsigned int d = 2;
-  Triangulation<d>   tr;
+  Triangulation<d> tr;
 
   std::vector<unsigned int> sizes(2 * d);
   sizes[0] = 3;
@@ -42,7 +42,7 @@ void
 dim_3(std::ostream& os)
 {
   const unsigned int d = 3;
-  Triangulation<d>   tr;
+  Triangulation<d> tr;
 
   std::vector<unsigned int> sizes(2 * d);
   sizes[0] = 5;

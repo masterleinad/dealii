@@ -23,7 +23,7 @@
 void
 test()
 {
-  const unsigned int          s = 10;
+  const unsigned int s = 10;
   PETScWrappers::SparseMatrix m(s, s, s);
   for(unsigned int i = 0; i < m.m(); ++i)
     for(unsigned int j = 0; j <= i; ++j)

@@ -52,7 +52,7 @@ check()
 
   // create a system element composed
   // of one Q1 and one Q2 element
-  FE_Q<dim>       element(2);
+  FE_Q<dim> element(2);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 
@@ -61,7 +61,7 @@ check()
   // formula suited to the elements
   // we have here
   MappingQ<dim> mapping(3);
-  QGauss<dim>   quadrature(6);
+  QGauss<dim> quadrature(6);
 
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);

@@ -76,12 +76,12 @@ check()
   // formula suited to the elements
   // we have here
   MappingQ<dim> mapping(3);
-  QGauss<dim>   quadrature(6);
+  QGauss<dim> quadrature(6);
 
   // create sparsity pattern. note
   // that different blocks should
   // not couple, so use pattern
-  SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
+  SparsityPattern sparsity(dof.n_dofs(), dof.n_dofs());
   Table<2, DoFTools::Coupling> mask(2 * dim, 2 * dim);
   for(unsigned int i = 0; i < 2 * dim; ++i)
     for(unsigned int j = 0; j < 2 * dim; ++j)

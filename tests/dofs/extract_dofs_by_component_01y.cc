@@ -46,7 +46,7 @@ check()
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr, -1, 1);
 
-  FESystem<dim>   element(FE_Nedelec<dim>(0), 2);
+  FESystem<dim> element(FE_Nedelec<dim>(0), 2);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 

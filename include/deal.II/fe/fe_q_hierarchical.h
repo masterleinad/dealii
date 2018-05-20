@@ -587,14 +587,14 @@ public:
    */
   virtual void
   get_interpolation_matrix(const FiniteElement<dim>& source,
-                           FullMatrix<double>&       matrix) const override;
+                           FullMatrix<double>& matrix) const override;
 
   /**
    * Embedding matrix between grids. Only isotropic refinement is supported.
    */
   virtual const FullMatrix<double>&
   get_prolongation_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -658,7 +658,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim>& source,
-                                   const unsigned int        subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**

@@ -87,7 +87,7 @@ template <template <int, int, typename> class TensorType1,
 void
 test_one()
 {
-  const unsigned int               dim = 2;
+  const unsigned int dim = 2;
   TensorType1<2, dim, NumberType1> t2_1;
   TensorType2<2, dim, NumberType2> t2_2;
   TensorType1<4, dim, NumberType1> t4_1;
@@ -122,7 +122,7 @@ template <template <int, int, typename> class TensorType1,
 typename std::enable_if<AreSame<TensorType1, TensorType2>::value>::type
 test_two()
 {
-  const unsigned int               dim = 2;
+  const unsigned int dim = 2;
   TensorType1<2, dim, NumberType1> t2_1;
   TensorType1<2, dim, NumberType2> t2_2;
   TensorType1<4, dim, NumberType1> t4_1;
@@ -184,7 +184,7 @@ typename std::enable_if<(AreSame<TensorType1, SymmetricTensor>::value
                          && AreSame<TensorType2, SymmetricTensor>::value)>::type
 test_three()
 {
-  const unsigned int               dim = 2;
+  const unsigned int dim = 2;
   TensorType1<2, dim, NumberType1> t2_1;
   TensorType1<4, dim, NumberType2> t4_2;
 

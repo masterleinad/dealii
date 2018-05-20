@@ -64,8 +64,8 @@ public:
    */
   void
   operator()(const unsigned int level,
-             VectorType&        dst,
-             const VectorType&  src) const override;
+             VectorType& dst,
+             const VectorType& src) const override;
 
 private:
   /**
@@ -132,8 +132,8 @@ public:
    */
   void
   operator()(const unsigned int level,
-             VectorType&        dst,
-             const VectorType&  src) const;
+             VectorType& dst,
+             const VectorType& src) const;
 
   /**
    * Set the matrix. This gives the possibility to replace the matrix that
@@ -183,8 +183,8 @@ public:
    * Constructor. Only a reference to these objects is stored, so
    * their lifetime needs to exceed the usage in this class.
    */
-  MGCoarseGridIterativeSolver(SolverType&               solver,
-                              const MatrixType&         matrix,
+  MGCoarseGridIterativeSolver(SolverType& solver,
+                              const MatrixType& matrix,
                               const PreconditionerType& precondition);
 
   /**
@@ -192,8 +192,8 @@ public:
    * details.
    */
   void
-  initialize(SolverType&               solver,
-             const MatrixType&         matrix,
+  initialize(SolverType& solver,
+             const MatrixType& matrix,
              const PreconditionerType& precondition);
 
   /**
@@ -208,8 +208,8 @@ public:
    */
   virtual void
   operator()(const unsigned int level,
-             VectorType&        dst,
-             const VectorType&  src) const override;
+             VectorType& dst,
+             const VectorType& src) const override;
 
 private:
   /**
@@ -270,8 +270,8 @@ public:
 
   void
   operator()(const unsigned int level,
-             VectorType&        dst,
-             const VectorType&  src) const override;
+             VectorType& dst,
+             const VectorType& src) const override;
 
 private:
   /**
@@ -305,8 +305,8 @@ public:
 
   void
   operator()(const unsigned int level,
-             VectorType&        dst,
-             const VectorType&  src) const;
+             VectorType& dst,
+             const VectorType& src) const;
 
   /**
    * Write the singular values to @p deallog.
@@ -358,8 +358,8 @@ MGCoarseGridApplySmoother<VectorType>::clear()
 template <class VectorType>
 void
 MGCoarseGridApplySmoother<VectorType>::operator()(const unsigned int level,
-                                                  VectorType&        dst,
-                                                  const VectorType&  src) const
+                                                  VectorType& dst,
+                                                  const VectorType& src) const
 {
   coarse_smooth->smooth(level, dst, src);
 }
@@ -374,8 +374,8 @@ MGCoarseGridLACIteration<SolverType, VectorType>::MGCoarseGridLACIteration()
 template <typename SolverType, class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 MGCoarseGridLACIteration<SolverType, VectorType>::MGCoarseGridLACIteration(
-  SolverType&               s,
-  const MatrixType&         m,
+  SolverType& s,
+  const MatrixType& m,
   const PreconditionerType& p)
   : solver(&s, typeid(*this).name())
 {
@@ -396,8 +396,8 @@ template <typename SolverType, class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
 MGCoarseGridLACIteration<SolverType, VectorType>::initialize(
-  SolverType&               s,
-  const MatrixType&         m,
+  SolverType& s,
+  const MatrixType& m,
   const PreconditionerType& p)
 {
   solver = &s;
@@ -421,7 +421,7 @@ template <typename SolverType, class VectorType>
 void
 MGCoarseGridLACIteration<SolverType, VectorType>::
 operator()(const unsigned int /* level */,
-           VectorType&       dst,
+           VectorType& dst,
            const VectorType& src) const
 {
   Assert(solver != nullptr, ExcNotInitialized());
@@ -463,8 +463,8 @@ MGCoarseGridIterativeSolver<VectorType,
                             SolverType,
                             MatrixType,
                             PreconditionerType>::
-  MGCoarseGridIterativeSolver(SolverType&               solver,
-                              const MatrixType&         matrix,
+  MGCoarseGridIterativeSolver(SolverType& solver,
+                              const MatrixType& matrix,
                               const PreconditionerType& preconditioner)
   : solver(&solver, typeid(*this).name()),
     matrix(&matrix, typeid(*this).name()),
@@ -480,8 +480,8 @@ MGCoarseGridIterativeSolver<
   VectorType,
   SolverType,
   MatrixType,
-  PreconditionerType>::initialize(SolverType&               solver_,
-                                  const MatrixType&         matrix_,
+  PreconditionerType>::initialize(SolverType& solver_,
+                                  const MatrixType& matrix_,
                                   const PreconditionerType& preconditioner_)
 {
   solver         = &solver_;
@@ -514,7 +514,7 @@ MGCoarseGridIterativeSolver<VectorType,
                             MatrixType,
                             PreconditionerType>::
 operator()(const unsigned int /*level*/,
-           VectorType&       dst,
+           VectorType& dst,
            const VectorType& src) const
 {
   Assert(solver != nullptr, ExcNotInitialized());
@@ -545,7 +545,7 @@ template <typename number, class VectorType>
 void
 MGCoarseGridHouseholder<number, VectorType>::
 operator()(const unsigned int /*level*/,
-           VectorType&       dst,
+           VectorType& dst,
            const VectorType& src) const
 {
   householder.least_squares(dst, src);
@@ -566,7 +566,7 @@ MGCoarseGridSVD<number, VectorType>::initialize(const FullMatrix<number>& A,
 template <typename number, class VectorType>
 void
 MGCoarseGridSVD<number, VectorType>::operator()(const unsigned int /*level*/,
-                                                VectorType&       dst,
+                                                VectorType& dst,
                                                 const VectorType& src) const
 {
   matrix.vmult(dst, src);

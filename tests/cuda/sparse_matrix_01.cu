@@ -25,17 +25,17 @@
 #include <deal.II/lac/vector.h>
 
 void
-check_matrix(SparseMatrix<double> const&         A,
+check_matrix(SparseMatrix<double> const& A,
              CUDAWrappers::SparseMatrix<double>& A_dev)
 {
   cudaError_t cuda_error_code;
-  double*     val_dev          = nullptr;
-  int*        column_index_dev = nullptr;
-  int*        row_ptr_dev      = nullptr;
+  double* val_dev       = nullptr;
+  int* column_index_dev = nullptr;
+  int* row_ptr_dev      = nullptr;
   std::tie(val_dev, column_index_dev, row_ptr_dev, std::ignore)
     = A_dev.get_cusparse_matrix();
 
-  int                 nnz = A_dev.n_nonzero_elements();
+  int nnz = A_dev.n_nonzero_elements();
   std::vector<double> val_host(nnz);
   cuda_error_code = cudaMemcpy(
     &val_host[0], val_dev, nnz * sizeof(double), cudaMemcpyDeviceToHost);
@@ -48,7 +48,7 @@ check_matrix(SparseMatrix<double> const&         A,
                                cudaMemcpyDeviceToHost);
   AssertCuda(cuda_error_code);
 
-  int const        n_rows = A_dev.m() + 1;
+  int const n_rows = A_dev.m() + 1;
   std::vector<int> row_ptr_host(n_rows + 1);
   cuda_error_code = cudaMemcpy(&row_ptr_host[0],
                                row_ptr_dev,
@@ -63,7 +63,7 @@ check_matrix(SparseMatrix<double> const&         A,
 }
 
 void
-check_vector(Vector<double> const&                         a,
+check_vector(Vector<double> const& a,
              LinearAlgebra::ReadWriteVector<double> const& b)
 {
   unsigned int size = a.size();
@@ -75,10 +75,10 @@ void
 test(Utilities::CUDA::Handle& cuda_handle)
 {
   // Build the sparse matrix on the host
-  const unsigned int   size = 10;
-  unsigned int         dim  = (size - 1) * (size - 1);
-  FDMatrix             testproblem(size, size);
-  SparsityPattern      structure(dim, dim, 5);
+  const unsigned int size = 10;
+  unsigned int dim        = (size - 1) * (size - 1);
+  FDMatrix testproblem(size, size);
+  SparsityPattern structure(dim, dim, 5);
   SparseMatrix<double> A;
   testproblem.five_point_structure(structure);
   structure.compress();
@@ -104,14 +104,14 @@ test(Utilities::CUDA::Handle& cuda_handle)
 
   // Matrix-vector multiplication
   const unsigned int vector_size = A.n();
-  Vector<double>     dst(vector_size);
-  Vector<double>     src(vector_size);
+  Vector<double> dst(vector_size);
+  Vector<double> src(vector_size);
   for(unsigned int i = 0; i < vector_size; ++i)
     src[i] = i;
   A.vmult(dst, src);
   LinearAlgebra::CUDAWrappers::Vector<double> dst_dev(vector_size);
   LinearAlgebra::CUDAWrappers::Vector<double> src_dev(vector_size);
-  LinearAlgebra::ReadWriteVector<double>      read_write(vector_size);
+  LinearAlgebra::ReadWriteVector<double> read_write(vector_size);
   for(unsigned int i = 0; i < vector_size; ++i)
     read_write[i] = i;
   src_dev.import(read_write, VectorOperation::insert);

@@ -42,7 +42,7 @@ main()
   pts.push_back(Point<3>(1, 1, 0));
   pts.push_back(Point<3>(1, 0, 0));
 
-  TopoDS_Edge                           edge = interpolation_curve(pts);
+  TopoDS_Edge edge = interpolation_curve(pts);
   ArclengthProjectionLineManifold<1, 3> manifold(edge);
 
   Triangulation<1, 3> tria;

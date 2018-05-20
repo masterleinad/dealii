@@ -45,7 +45,7 @@ test()
   GridGenerator::subdivided_hyper_rectangle(
     static_cast<Triangulation<dim>&>(tr), sub, Point<2>(0, 0), Point<2>(1, 1));
 
-  FESystem<dim>   fe(FE_Q<dim>(1), 2, FE_DGQ<dim>(0), 1);
+  FESystem<dim> fe(FE_Q<dim>(1), 2, FE_DGQ<dim>(0), 1);
   DoFHandler<dim> dofh(tr);
   dofh.distribute_dofs(fe);
 

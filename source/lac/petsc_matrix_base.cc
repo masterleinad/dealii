@@ -45,8 +45,8 @@ namespace PETScWrappers
         }
 
       // get a representation of the present row
-      PetscInt           ncols;
-      const PetscInt*    colnums;
+      PetscInt ncols;
+      const PetscInt* colnums;
       const PetscScalar* values;
 
       PetscErrorCode ierr
@@ -91,7 +91,7 @@ namespace PETScWrappers
 
     // ...and replace it by an empty
     // sequential matrix
-    const int            m = 0, n = 0, n_nonzero_per_row = 0;
+    const int m = 0, n = 0, n_nonzero_per_row = 0;
     const PetscErrorCode ierr = MatCreateSeqAIJ(
       PETSC_COMM_SELF, m, n, n_nonzero_per_row, nullptr, &matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -120,7 +120,7 @@ namespace PETScWrappers
 
   void
   MatrixBase::clear_rows(const std::vector<size_type>& rows,
-                         const PetscScalar             new_diag_value)
+                         const PetscScalar new_diag_value)
   {
     assert_is_compressed();
 
@@ -259,7 +259,7 @@ namespace PETScWrappers
   MatrixBase::size_type
   MatrixBase::n_nonzero_elements() const
   {
-    MatInfo              mat_info;
+    MatInfo mat_info;
     const PetscErrorCode ierr = MatGetInfo(matrix, MAT_GLOBAL_SUM, &mat_info);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -279,8 +279,8 @@ namespace PETScWrappers
 
     // get a representation of the present
     // row
-    PetscInt           ncols;
-    const PetscInt*    colnums;
+    PetscInt ncols;
+    const PetscInt* colnums;
     const PetscScalar* values;
 
     //TODO: this is probably horribly inefficient; we should lobby for a way to
@@ -373,8 +373,8 @@ namespace PETScWrappers
   MatrixBase&
   MatrixBase::operator/=(const PetscScalar a)
   {
-    const PetscScalar    factor = 1. / a;
-    const PetscErrorCode ierr   = MatScale(matrix, factor);
+    const PetscScalar factor  = 1. / a;
+    const PetscErrorCode ierr = MatScale(matrix, factor);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     return *this;
@@ -437,9 +437,9 @@ namespace PETScWrappers
     void
     perform_mmult(const MatrixBase& inputleft,
                   const MatrixBase& inputright,
-                  MatrixBase&       result,
+                  MatrixBase& result,
                   const VectorBase& V,
-                  const bool        transpose_left)
+                  const bool transpose_left)
     {
       const bool use_vector = (V.size() == inputright.m() ? true : false);
       if(transpose_left == false)
@@ -505,7 +505,7 @@ namespace PETScWrappers
   } // namespace internals
 
   void
-  MatrixBase::mmult(MatrixBase&       C,
+  MatrixBase::mmult(MatrixBase& C,
                     const MatrixBase& B,
                     const VectorBase& V) const
   {
@@ -513,7 +513,7 @@ namespace PETScWrappers
   }
 
   void
-  MatrixBase::Tmmult(MatrixBase&       C,
+  MatrixBase::Tmmult(MatrixBase& C,
                      const MatrixBase& B,
                      const VectorBase& V) const
   {
@@ -521,7 +521,7 @@ namespace PETScWrappers
   }
 
   PetscScalar
-  MatrixBase::residual(VectorBase&       dst,
+  MatrixBase::residual(VectorBase& dst,
                        const VectorBase& x,
                        const VectorBase& b) const
   {
@@ -596,8 +596,8 @@ namespace PETScWrappers
     std::pair<MatrixBase::size_type, MatrixBase::size_type> loc_range
       = local_range();
 
-    PetscInt           ncols;
-    const PetscInt*    colnums;
+    PetscInt ncols;
+    const PetscInt* colnums;
     const PetscScalar* values;
 
     MatrixBase::size_type row;
@@ -622,7 +622,7 @@ namespace PETScWrappers
   std::size_t
   MatrixBase::memory_consumption() const
   {
-    MatInfo              info;
+    MatInfo info;
     const PetscErrorCode ierr = MatGetInfo(matrix, MAT_LOCAL, &info);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 

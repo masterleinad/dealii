@@ -60,11 +60,11 @@ namespace pdd
     void
     output_results();
 
-    MPI_Comm                                  mpi_communicator;
+    MPI_Comm mpi_communicator;
     parallel::distributed::Triangulation<dim> triangulation;
     //Triangulation<dim>   triangulation;
     DoFHandler<dim> dof_handler;
-    FE_Q<dim>       fe;
+    FE_Q<dim> fe;
 
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
@@ -176,7 +176,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   try
     {

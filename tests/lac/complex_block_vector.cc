@@ -102,7 +102,7 @@ test()
   // vector
   {
     deallog.push("Constructor with iterators");
-    double                            array[] = {0, 1, 2, 3, 4, 5};
+    double array[] = {0, 1, 2, 3, 4, 5};
     BlockVector<std::complex<double>> v1(vector_indices, &array[0], &array[6]);
     for(unsigned int i = 0; i < v1.size(); ++i)
       deallog << v1(i) << ' ';
@@ -111,7 +111,7 @@ test()
     // same test, but do not initialize
     // from double*'s, but from
     // std::list iterators.
-    std::list<double>                 l(&array[0], &array[6]);
+    std::list<double> l(&array[0], &array[6]);
     BlockVector<std::complex<double>> v2(vector_indices, l.begin(), l.end());
     for(unsigned int i = 0; i < v2.n_blocks(); ++i)
       for(unsigned int j = 0; j < v2.block(i).size(); ++j)
@@ -132,7 +132,7 @@ test()
   // arguments
   {
     deallog.push("Constructor with iterators");
-    std::complex<double>              array[] = {std::complex<double>(0, 1),
+    std::complex<double> array[] = {std::complex<double>(0, 1),
                                     std::complex<double>(1, 2),
                                     std::complex<double>(2, 3),
                                     std::complex<double>(3, 4),
@@ -146,7 +146,7 @@ test()
     // same test, but do not initialize
     // from double*'s, but from
     // std::list iterators.
-    std::list<std::complex<double>>   l(&array[0], &array[6]);
+    std::list<std::complex<double>> l(&array[0], &array[6]);
     BlockVector<std::complex<double>> v2(vector_indices, l.begin(), l.end());
     for(unsigned int i = 0; i < v2.n_blocks(); ++i)
       for(unsigned int j = 0; j < v2.block(i).size(); ++j)

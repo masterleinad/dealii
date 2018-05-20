@@ -42,13 +42,13 @@ void
 test(std::string filename)
 {
   Triangulation<dim, spacedim> triangulation;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
 
   gi.attach_triangulation(triangulation);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);
 
-  const QGauss<dim>         quadrature(2);
+  const QGauss<dim> quadrature(2);
   const FE_Q<dim, spacedim> dummy_fe(1);
   DoFHandler<dim, spacedim> dof_handler(triangulation);
 

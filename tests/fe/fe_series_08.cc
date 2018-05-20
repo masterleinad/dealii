@@ -25,9 +25,9 @@ using namespace dealii;
 void
 test()
 {
-  const double        k_in = numbers::PI;
-  const double        b_in = std::sqrt(2.);
-  const unsigned int  N    = 10;
+  const double k_in    = numbers::PI;
+  const double b_in    = std::sqrt(2.);
+  const unsigned int N = 10;
   std::vector<double> x(N), y(N);
 
   // fill the data

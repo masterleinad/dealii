@@ -64,18 +64,18 @@ template <int dim>
 void
 transfer(std::ostream& out)
 {
-  MyFunction<dim>    func;
+  MyFunction<dim> func;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   tria.refine_global(5 - dim);
-  const unsigned int    max_degree = 6 - dim;
+  const unsigned int max_degree = 6 - dim;
   hp::FECollection<dim> fe_q;
   for(unsigned int deg = 1; deg <= max_degree; ++deg)
     {
       fe_q.push_back(FE_Q_Hierarchical<dim>(deg));
     }
-  hp::DoFHandler<dim>  q_dof_handler(tria);
-  Vector<double>       q_solution;
+  hp::DoFHandler<dim> q_dof_handler(tria);
+  Vector<double> q_solution;
   MappingQGeneric<dim> mapping(1);
 
   // refine a few cells
@@ -120,7 +120,7 @@ transfer(std::ostream& out)
     quad.push_back(QTrapez<dim>());
     hp::FEValues<dim> hp_fe_val(
       fe_q, quad, update_values | update_quadrature_points);
-    std::vector<types::global_dof_index>               local_dof_indices;
+    std::vector<types::global_dof_index> local_dof_indices;
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
       endc = q_dof_handler.end();
@@ -189,11 +189,11 @@ transfer(std::ostream& out)
   // check correctness by comparing the values
   // on points of QGauss of order 2.
   {
-    double                     error = 0;
+    double error = 0;
     const hp::QCollection<dim> quad(QGauss<dim>(2));
-    hp::FEValues<dim>          hp_fe_val(
+    hp::FEValues<dim> hp_fe_val(
       fe_q, quad, update_values | update_quadrature_points);
-    std::vector<double>                                vals(quad[0].size());
+    std::vector<double> vals(quad[0].size());
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
       endc = q_dof_handler.end();

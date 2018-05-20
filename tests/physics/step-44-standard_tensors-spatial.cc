@@ -103,8 +103,8 @@ namespace Step44
     struct Geometry
     {
       unsigned int global_refinement;
-      double       scale;
-      double       p_p0;
+      double scale;
+      double p_p0;
       static void
       declare_parameters(ParameterHandler& prm);
       void
@@ -177,11 +177,11 @@ namespace Step44
     struct LinearSolver
     {
       std::string type_lin;
-      double      tol_lin;
-      double      max_iterations_lin;
-      bool        use_static_condensation;
+      double tol_lin;
+      double max_iterations_lin;
+      bool use_static_condensation;
       std::string preconditioner_type;
-      double      preconditioner_relaxation;
+      double preconditioner_relaxation;
       static void
       declare_parameters(ParameterHandler& prm);
       void
@@ -237,8 +237,8 @@ namespace Step44
     struct NonlinearSolver
     {
       unsigned int max_iterations_NR;
-      double       tol_f;
-      double       tol_u;
+      double tol_f;
+      double tol_u;
       static void
       declare_parameters(ParameterHandler& prm);
       void
@@ -383,7 +383,7 @@ namespace Step44
 
   private:
     unsigned int timestep;
-    double       time_current;
+    double time_current;
     const double time_end;
     const double delta_t;
   };
@@ -405,8 +405,8 @@ namespace Step44
     {}
     void
     update_material_data(const Tensor<2, dim>& F,
-                         const double          p_tilde_in,
-                         const double          J_tilde_in)
+                         const double p_tilde_in,
+                         const double J_tilde_in)
     {
       det_F                      = determinant(F);
       const Tensor<2, dim> F_iso = Physics::Elasticity::Kinematics::F_iso(F);
@@ -452,11 +452,11 @@ namespace Step44
     }
 
   protected:
-    const double            kappa;
-    const double            c_1;
-    double                  det_F;
-    double                  p_tilde;
-    double                  J_tilde;
+    const double kappa;
+    const double c_1;
+    double det_F;
+    double p_tilde;
+    double J_tilde;
     SymmetricTensor<2, dim> b_bar;
     SymmetricTensor<2, dim>
     get_tau_vol() const
@@ -524,8 +524,8 @@ namespace Step44
     }
     void
     update_values(const Tensor<2, dim>& Grad_u_n,
-                  const double          p_tilde,
-                  const double          J_tilde)
+                  const double p_tilde,
+                  const double J_tilde)
     {
       const Tensor<2, dim> F = Physics::Elasticity::Kinematics::F(Grad_u_n);
       material->update_material_data(F, p_tilde, J_tilde);
@@ -578,10 +578,10 @@ namespace Step44
 
   private:
     std::shared_ptr<Material_Compressible_Neo_Hook_Three_Field<dim>> material;
-    Tensor<2, dim>                                                   F_inv;
-    SymmetricTensor<2, dim>                                          tau;
-    double                  d2Psi_vol_dJ2;
-    double                  dPsi_vol_dJ;
+    Tensor<2, dim> F_inv;
+    SymmetricTensor<2, dim> tau;
+    double d2Psi_vol_dJ2;
+    double dPsi_vol_dJ;
     SymmetricTensor<4, dim> Jc;
   };
   template <int dim>
@@ -613,8 +613,8 @@ namespace Step44
     void
     assemble_system_tangent_one_cell(
       const typename DoFHandler<dim>::active_cell_iterator& cell,
-      ScratchData_K&                                        scratch,
-      PerTaskData_K&                                        data) const;
+      ScratchData_K& scratch,
+      PerTaskData_K& data) const;
     void
     copy_local_to_global_K(const PerTaskData_K& data);
     void
@@ -622,8 +622,8 @@ namespace Step44
     void
     assemble_system_rhs_one_cell(
       const typename DoFHandler<dim>::active_cell_iterator& cell,
-      ScratchData_RHS&                                      scratch,
-      PerTaskData_RHS&                                      data) const;
+      ScratchData_RHS& scratch,
+      PerTaskData_RHS& data) const;
     void
     copy_local_to_global_rhs(const PerTaskData_RHS& data);
     void
@@ -631,8 +631,8 @@ namespace Step44
     void
     assemble_sc_one_cell(
       const typename DoFHandler<dim>::active_cell_iterator& cell,
-      ScratchData_SC&                                       scratch,
-      PerTaskData_SC&                                       data);
+      ScratchData_SC& scratch,
+      PerTaskData_SC& data);
     void
     copy_local_to_global_sc(const PerTaskData_SC& data);
     void
@@ -644,8 +644,8 @@ namespace Step44
     void
     update_qph_incremental_one_cell(
       const typename DoFHandler<dim>::active_cell_iterator& cell,
-      ScratchData_UQPH&                                     scratch,
-      PerTaskData_UQPH&                                     data);
+      ScratchData_UQPH& scratch,
+      PerTaskData_UQPH& data);
     void
     copy_local_to_global_UQPH(const PerTaskData_UQPH& /*data*/)
     {}
@@ -656,27 +656,27 @@ namespace Step44
     BlockVector<double>
     get_total_solution(const BlockVector<double>& solution_delta) const;
     void
-                              output_results() const;
+    output_results() const;
     Parameters::AllParameters parameters;
-    double                    vol_reference;
-    Triangulation<dim>        triangulation;
-    Time                      time;
-    mutable TimerOutput       timer;
+    double vol_reference;
+    Triangulation<dim> triangulation;
+    Time time;
+    mutable TimerOutput timer;
     CellDataStorage<typename Triangulation<dim>::cell_iterator,
                     PointHistory<dim>>
-                                     quadrature_point_history;
-    const unsigned int               degree;
-    const FESystem<dim>              fe;
-    DoFHandler<dim>                  dof_handler_ref;
-    const unsigned int               dofs_per_cell;
+      quadrature_point_history;
+    const unsigned int degree;
+    const FESystem<dim> fe;
+    DoFHandler<dim> dof_handler_ref;
+    const unsigned int dofs_per_cell;
     const FEValuesExtractors::Vector u_fe;
     const FEValuesExtractors::Scalar p_fe;
     const FEValuesExtractors::Scalar J_fe;
-    static const unsigned int        n_blocks          = 3;
-    static const unsigned int        n_components      = dim + 2;
-    static const unsigned int        first_u_component = 0;
-    static const unsigned int        p_component       = dim;
-    static const unsigned int        J_component       = dim + 1;
+    static const unsigned int n_blocks          = 3;
+    static const unsigned int n_components      = dim + 2;
+    static const unsigned int first_u_component = 0;
+    static const unsigned int p_component       = dim;
+    static const unsigned int J_component       = dim + 1;
     enum
     {
       u_dof = 0,
@@ -687,16 +687,16 @@ namespace Step44
     std::vector<types::global_dof_index> element_indices_u;
     std::vector<types::global_dof_index> element_indices_p;
     std::vector<types::global_dof_index> element_indices_J;
-    const QGauss<dim>                    qf_cell;
-    const QGauss<dim - 1>                qf_face;
-    const unsigned int                   n_q_points;
-    const unsigned int                   n_q_points_f;
-    ConstraintMatrix                     constraints;
-    BlockSparsityPattern                 sparsity_pattern;
-    BlockSparseMatrix<double>            tangent_matrix;
-    BlockVector<double>                  system_rhs;
-    BlockVector<double>                  solution_n;
-    ConditionalOStream                   pcout;
+    const QGauss<dim> qf_cell;
+    const QGauss<dim - 1> qf_face;
+    const unsigned int n_q_points;
+    const unsigned int n_q_points_f;
+    ConstraintMatrix constraints;
+    BlockSparsityPattern sparsity_pattern;
+    BlockSparseMatrix<double> tangent_matrix;
+    BlockVector<double> system_rhs;
+    BlockVector<double> solution_n;
+    ConditionalOStream pcout;
     struct Errors
     {
       Errors() : norm(1.0), u(1.0), p(1.0), J(1.0)
@@ -729,7 +729,7 @@ namespace Step44
     get_error_residual(Errors& error_residual);
     void
     get_error_update(const BlockVector<double>& newton_update,
-                     Errors&                    error_update);
+                     Errors& error_update);
     std::pair<double, double>
     get_error_dilation() const;
     double
@@ -824,7 +824,7 @@ namespace Step44
   template <int dim>
   struct Solid<dim>::PerTaskData_K
   {
-    FullMatrix<double>                   cell_matrix;
+    FullMatrix<double> cell_matrix;
     std::vector<types::global_dof_index> local_dof_indices;
     PerTaskData_K(const unsigned int dofs_per_cell)
       : cell_matrix(dofs_per_cell, dofs_per_cell),
@@ -839,13 +839,13 @@ namespace Step44
   template <int dim>
   struct Solid<dim>::ScratchData_K
   {
-    FEValues<dim>                                     fe_values_ref;
-    std::vector<std::vector<double>>                  Nx;
-    std::vector<std::vector<Tensor<2, dim>>>          grad_Nx;
+    FEValues<dim> fe_values_ref;
+    std::vector<std::vector<double>> Nx;
+    std::vector<std::vector<Tensor<2, dim>>> grad_Nx;
     std::vector<std::vector<SymmetricTensor<2, dim>>> symm_grad_Nx;
     ScratchData_K(const FiniteElement<dim>& fe_cell,
-                  const QGauss<dim>&        qf_cell,
-                  const UpdateFlags         uf_cell)
+                  const QGauss<dim>& qf_cell,
+                  const UpdateFlags uf_cell)
       : fe_values_ref(fe_cell, qf_cell, uf_cell),
         Nx(qf_cell.size(), std::vector<double>(fe_cell.dofs_per_cell)),
         grad_Nx(qf_cell.size(),
@@ -886,7 +886,7 @@ namespace Step44
   template <int dim>
   struct Solid<dim>::PerTaskData_RHS
   {
-    Vector<double>                       cell_rhs;
+    Vector<double> cell_rhs;
     std::vector<types::global_dof_index> local_dof_indices;
     PerTaskData_RHS(const unsigned int dofs_per_cell)
       : cell_rhs(dofs_per_cell), local_dof_indices(dofs_per_cell)
@@ -900,15 +900,15 @@ namespace Step44
   template <int dim>
   struct Solid<dim>::ScratchData_RHS
   {
-    FEValues<dim>                                     fe_values_ref;
-    FEFaceValues<dim>                                 fe_face_values_ref;
-    std::vector<std::vector<double>>                  Nx;
+    FEValues<dim> fe_values_ref;
+    FEFaceValues<dim> fe_face_values_ref;
+    std::vector<std::vector<double>> Nx;
     std::vector<std::vector<SymmetricTensor<2, dim>>> symm_grad_Nx;
     ScratchData_RHS(const FiniteElement<dim>& fe_cell,
-                    const QGauss<dim>&        qf_cell,
-                    const UpdateFlags         uf_cell,
-                    const QGauss<dim - 1>&    qf_face,
-                    const UpdateFlags         uf_face)
+                    const QGauss<dim>& qf_cell,
+                    const UpdateFlags uf_cell,
+                    const QGauss<dim - 1>& qf_face,
+                    const UpdateFlags uf_face)
       : fe_values_ref(fe_cell, qf_cell, uf_cell),
         fe_face_values_ref(fe_cell, qf_face, uf_face),
         Nx(qf_cell.size(), std::vector<double>(fe_cell.dofs_per_cell)),
@@ -947,17 +947,17 @@ namespace Step44
   template <int dim>
   struct Solid<dim>::PerTaskData_SC
   {
-    FullMatrix<double>                   cell_matrix;
+    FullMatrix<double> cell_matrix;
     std::vector<types::global_dof_index> local_dof_indices;
-    FullMatrix<double>                   k_orig;
-    FullMatrix<double>                   k_pu;
-    FullMatrix<double>                   k_pJ;
-    FullMatrix<double>                   k_JJ;
-    FullMatrix<double>                   k_pJ_inv;
-    FullMatrix<double>                   k_bbar;
-    FullMatrix<double>                   A;
-    FullMatrix<double>                   B;
-    FullMatrix<double>                   C;
+    FullMatrix<double> k_orig;
+    FullMatrix<double> k_pu;
+    FullMatrix<double> k_pJ;
+    FullMatrix<double> k_JJ;
+    FullMatrix<double> k_pJ_inv;
+    FullMatrix<double> k_bbar;
+    FullMatrix<double> A;
+    FullMatrix<double> B;
+    FullMatrix<double> C;
     PerTaskData_SC(const unsigned int dofs_per_cell,
                    const unsigned int n_u,
                    const unsigned int n_p,
@@ -995,14 +995,14 @@ namespace Step44
   template <int dim>
   struct Solid<dim>::ScratchData_UQPH
   {
-    const BlockVector<double>&  solution_total;
+    const BlockVector<double>& solution_total;
     std::vector<Tensor<2, dim>> solution_grads_u_total;
-    std::vector<double>         solution_values_p_total;
-    std::vector<double>         solution_values_J_total;
-    FEValues<dim>               fe_values_ref;
-    ScratchData_UQPH(const FiniteElement<dim>&  fe_cell,
-                     const QGauss<dim>&         qf_cell,
-                     const UpdateFlags          uf_cell,
+    std::vector<double> solution_values_p_total;
+    std::vector<double> solution_values_J_total;
+    FEValues<dim> fe_values_ref;
+    ScratchData_UQPH(const FiniteElement<dim>& fe_cell,
+                     const QGauss<dim>& qf_cell,
+                     const UpdateFlags uf_cell,
                      const BlockVector<double>& solution_total)
       : solution_total(solution_total),
         solution_grads_u_total(qf_cell.size()),
@@ -1091,7 +1091,7 @@ namespace Step44
       const types::global_dof_index n_dofs_u = dofs_per_block[u_dof];
       const types::global_dof_index n_dofs_p = dofs_per_block[p_dof];
       const types::global_dof_index n_dofs_J = dofs_per_block[J_dof];
-      BlockDynamicSparsityPattern   dsp(n_blocks, n_blocks);
+      BlockDynamicSparsityPattern dsp(n_blocks, n_blocks);
       dsp.block(u_dof, u_dof).reinit(n_dofs_u, n_dofs_u);
       dsp.block(u_dof, p_dof).reinit(n_dofs_u, n_dofs_p);
       dsp.block(u_dof, J_dof).reinit(n_dofs_u, n_dofs_J);
@@ -1173,8 +1173,8 @@ namespace Step44
     const BlockVector<double> solution_total(
       get_total_solution(solution_delta));
     const UpdateFlags uf_UQPH(update_values | update_gradients);
-    PerTaskData_UQPH  per_task_data_UQPH;
-    ScratchData_UQPH  scratch_data_UQPH(fe, qf_cell, uf_UQPH, solution_total);
+    PerTaskData_UQPH per_task_data_UQPH;
+    ScratchData_UQPH scratch_data_UQPH(fe, qf_cell, uf_UQPH, solution_total);
     WorkStream::run(dof_handler_ref.begin_active(),
                     dof_handler_ref.end(),
                     *this,
@@ -1188,7 +1188,7 @@ namespace Step44
   void
   Solid<dim>::update_qph_incremental_one_cell(
     const typename DoFHandler<dim>::active_cell_iterator& cell,
-    ScratchData_UQPH&                                     scratch,
+    ScratchData_UQPH& scratch,
     PerTaskData_UQPH& /*data*/)
   {
     const std::vector<std::shared_ptr<PointHistory<dim>>> lqph
@@ -1306,7 +1306,7 @@ namespace Step44
   double
   Solid<dim>::compute_vol_current() const
   {
-    double        vol_current = 0.0;
+    double vol_current = 0.0;
     FEValues<dim> fe_values_ref(fe, qf_cell, update_JxW_values);
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
@@ -1331,7 +1331,7 @@ namespace Step44
   std::pair<double, double>
   Solid<dim>::get_error_dilation() const
   {
-    double        dil_L2_error = 0.0;
+    double dil_L2_error = 0.0;
     FEValues<dim> fe_values_ref(fe, qf_cell, update_JxW_values);
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
@@ -1371,7 +1371,7 @@ namespace Step44
   template <int dim>
   void
   Solid<dim>::get_error_update(const BlockVector<double>& newton_update,
-                               Errors&                    error_update)
+                               Errors& error_update)
   {
     BlockVector<double> error_ud(dofs_per_block);
     for(unsigned int i = 0; i < dof_handler_ref.n_dofs(); ++i)
@@ -1400,8 +1400,8 @@ namespace Step44
     tangent_matrix = 0.0;
     const UpdateFlags uf_cell(update_values | update_gradients
                               | update_JxW_values);
-    PerTaskData_K     per_task_data(dofs_per_cell);
-    ScratchData_K     scratch_data(fe, qf_cell, uf_cell);
+    PerTaskData_K per_task_data(dofs_per_cell);
+    ScratchData_K scratch_data(fe, qf_cell, uf_cell);
     WorkStream::run(dof_handler_ref.begin_active(),
                     dof_handler_ref.end(),
                     std::bind(&Solid<dim>::assemble_system_tangent_one_cell,
@@ -1430,8 +1430,8 @@ namespace Step44
   void
   Solid<dim>::assemble_system_tangent_one_cell(
     const typename DoFHandler<dim>::active_cell_iterator& cell,
-    ScratchData_K&                                        scratch,
-    PerTaskData_K&                                        data) const
+    ScratchData_K& scratch,
+    PerTaskData_K& data) const
   {
     data.reset();
     scratch.reset();
@@ -1465,11 +1465,11 @@ namespace Step44
       }
     for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
-        const Tensor<2, dim>          tau = lqph[q_point]->get_tau();
-        const SymmetricTensor<4, dim> Jc  = lqph[q_point]->get_Jc();
-        const double d2Psi_vol_dJ2        = lqph[q_point]->get_d2Psi_vol_dJ2();
-        const double det_F                = lqph[q_point]->get_det_F();
-        const std::vector<double>&                  N = scratch.Nx[q_point];
+        const Tensor<2, dim> tau         = lqph[q_point]->get_tau();
+        const SymmetricTensor<4, dim> Jc = lqph[q_point]->get_Jc();
+        const double d2Psi_vol_dJ2       = lqph[q_point]->get_d2Psi_vol_dJ2();
+        const double det_F               = lqph[q_point]->get_det_F();
+        const std::vector<double>& N     = scratch.Nx[q_point];
         const std::vector<SymmetricTensor<2, dim>>& symm_grad_Nx
           = scratch.symm_grad_Nx[q_point];
         const std::vector<Tensor<2, dim>>& grad_Nx = scratch.grad_Nx[q_point];
@@ -1528,8 +1528,8 @@ namespace Step44
                               | update_JxW_values);
     const UpdateFlags uf_face(update_values | update_normal_vectors
                               | update_JxW_values);
-    PerTaskData_RHS   per_task_data(dofs_per_cell);
-    ScratchData_RHS   scratch_data(fe, qf_cell, uf_cell, qf_face, uf_face);
+    PerTaskData_RHS per_task_data(dofs_per_cell);
+    ScratchData_RHS scratch_data(fe, qf_cell, uf_cell, qf_face, uf_face);
     WorkStream::run(dof_handler_ref.begin_active(),
                     dof_handler_ref.end(),
                     std::bind(&Solid<dim>::assemble_system_rhs_one_cell,
@@ -1555,8 +1555,8 @@ namespace Step44
   void
   Solid<dim>::assemble_system_rhs_one_cell(
     const typename DoFHandler<dim>::active_cell_iterator& cell,
-    ScratchData_RHS&                                      scratch,
-    PerTaskData_RHS&                                      data) const
+    ScratchData_RHS& scratch,
+    PerTaskData_RHS& data) const
   {
     data.reset();
     scratch.reset();
@@ -1586,12 +1586,12 @@ namespace Step44
       }
     for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
-        const SymmetricTensor<2, dim> tau     = lqph[q_point]->get_tau();
-        const double                  det_F   = lqph[q_point]->get_det_F();
-        const double                  J_tilde = lqph[q_point]->get_J_tilde();
-        const double                  p_tilde = lqph[q_point]->get_p_tilde();
-        const double dPsi_vol_dJ = lqph[q_point]->get_dPsi_vol_dJ();
-        const std::vector<double>&                  N = scratch.Nx[q_point];
+        const SymmetricTensor<2, dim> tau = lqph[q_point]->get_tau();
+        const double det_F                = lqph[q_point]->get_det_F();
+        const double J_tilde              = lqph[q_point]->get_J_tilde();
+        const double p_tilde              = lqph[q_point]->get_p_tilde();
+        const double dPsi_vol_dJ          = lqph[q_point]->get_dPsi_vol_dJ();
+        const std::vector<double>& N      = scratch.Nx[q_point];
         const std::vector<SymmetricTensor<2, dim>>& symm_grad_Nx
           = scratch.symm_grad_Nx[q_point];
         const double JxW = scratch.fe_values_ref.JxW(q_point);
@@ -1619,9 +1619,9 @@ namespace Step44
                 = scratch.fe_face_values_ref.normal_vector(f_q_point);
               static const double p0
                 = -4.0 / (parameters.scale * parameters.scale);
-              const double         time_ramp = (time.current() / time.end());
-              const double         pressure  = p0 * parameters.p_p0 * time_ramp;
-              const Tensor<1, dim> traction  = pressure * N;
+              const double time_ramp        = (time.current() / time.end());
+              const double pressure         = p0 * parameters.p_p0 * time_ramp;
+              const Tensor<1, dim> traction = pressure * N;
               for(unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
                   const unsigned int i_group
@@ -1648,7 +1648,7 @@ namespace Step44
     if(it_nr > 1)
       return;
     constraints.clear();
-    const bool                       apply_dirichlet_bc = (it_nr == 0);
+    const bool apply_dirichlet_bc = (it_nr == 0);
     const FEValuesExtractors::Scalar x_displacement(0);
     const FEValuesExtractors::Scalar y_displacement(1);
     {
@@ -1817,8 +1817,8 @@ namespace Step44
   void
   Solid<dim>::assemble_sc_one_cell(
     const typename DoFHandler<dim>::active_cell_iterator& cell,
-    ScratchData_SC&                                       scratch,
-    PerTaskData_SC&                                       data)
+    ScratchData_SC& scratch,
+    PerTaskData_SC& data)
   {
     data.reset();
     scratch.reset();
@@ -1846,8 +1846,8 @@ namespace Step44
   std::pair<unsigned int, double>
   Solid<dim>::solve_linear_system(BlockVector<double>& newton_update)
   {
-    unsigned int lin_it  = 0;
-    double       lin_res = 0.0;
+    unsigned int lin_it = 0;
+    double lin_res      = 0.0;
     if(parameters.use_static_condensation == true)
       {
         BlockVector<double> A(dofs_per_block);
@@ -1933,10 +1933,10 @@ namespace Step44
             const Vector<double>& f_u = system_rhs.block(u_dof);
             const Vector<double>& f_p = system_rhs.block(p_dof);
             const Vector<double>& f_J = system_rhs.block(J_dof);
-            Vector<double>&       d_u = newton_update.block(u_dof);
-            Vector<double>&       d_p = newton_update.block(p_dof);
-            Vector<double>&       d_J = newton_update.block(J_dof);
-            const auto            K_uu
+            Vector<double>& d_u       = newton_update.block(u_dof);
+            Vector<double>& d_p       = newton_update.block(p_dof);
+            Vector<double>& d_J       = newton_update.block(J_dof);
+            const auto K_uu
               = linear_operator(tangent_matrix.block(u_dof, u_dof));
             const auto K_up
               = linear_operator(tangent_matrix.block(u_dof, p_dof));
@@ -2050,7 +2050,7 @@ main(int argc, char** argv)
   try
     {
       const unsigned int dim = 3;
-      Solid<dim>         solid(SOURCE_DIR "/prm/parameters-step-44.prm");
+      Solid<dim> solid(SOURCE_DIR "/prm/parameters-step-44.prm");
       solid.run();
     }
   catch(std::exception& exc)

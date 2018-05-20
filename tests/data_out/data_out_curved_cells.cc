@@ -51,19 +51,19 @@ using namespace dealii;
 
 // this is copied from GridGenerator
 void
-laplace_solve(const SparseMatrix<double>&           S,
+laplace_solve(const SparseMatrix<double>& S,
               const std::map<unsigned int, double>& m,
-              Vector<double>&                       u)
+              Vector<double>& u)
 {
-  const unsigned int                       n_dofs = S.n();
-  FilteredMatrix<Vector<double>>           SF(S);
+  const unsigned int n_dofs = S.n();
+  FilteredMatrix<Vector<double>> SF(S);
   PreconditionJacobi<SparseMatrix<double>> prec;
   prec.initialize(S, 1.2);
   FilteredMatrix<Vector<double>> PF(prec);
 
-  SolverControl                       control(10000, 1.e-10, false, false);
+  SolverControl control(10000, 1.e-10, false, false);
   GrowingVectorMemory<Vector<double>> mem;
-  SolverCG<Vector<double>>            solver(control, mem);
+  SolverCG<Vector<double>> solver(control, mem);
 
   Vector<double> f(n_dofs);
 
@@ -101,9 +101,9 @@ curved_grid(std::ofstream& out)
   for(unsigned int j = 0; j < n_r + 1; ++j)
     for(unsigned int i = 0; i < n_phi; ++i)
       {
-        const unsigned int p     = i + j * n_phi;
-        const double       alpha = i * 2 * numbers::PI / n_phi;
-        vertices[p] = Point<2>(r[j] * cos(alpha), r[j] * sin(alpha));
+        const unsigned int p = i + j * n_phi;
+        const double alpha   = i * 2 * numbers::PI / n_phi;
+        vertices[p]          = Point<2>(r[j] * cos(alpha), r[j] * sin(alpha));
       }
   // create connectivity
   std::vector<CellData<2>> cells(n_phi * n_r);
@@ -129,8 +129,8 @@ curved_grid(std::ofstream& out)
   // needed for solving a Laplace
   // equation.
   MappingQGeneric<2> mapping_q1(1);
-  FE_Q<2>            fe(2);
-  DoFHandler<2>      dof_handler(triangulation);
+  FE_Q<2> fe(2);
+  DoFHandler<2> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
   SparsityPattern sparsity_pattern(dof_handler.n_dofs(),
                                    dof_handler.n_dofs(),
@@ -138,7 +138,7 @@ curved_grid(std::ofstream& out)
   DoFTools::make_sparsity_pattern(dof_handler, sparsity_pattern);
   sparsity_pattern.compress();
   SparseMatrix<double> S(sparsity_pattern);
-  QGauss<2>            quadrature(4);
+  QGauss<2> quadrature(4);
   MatrixCreator::create_laplace_matrix(mapping_q1, dof_handler, quadrature, S);
   // set up the boundary values for
   // the laplace problem
@@ -195,7 +195,7 @@ curved_grid(std::ofstream& out)
   threads.join_all();
   // create a new DoFHandler for the combined
   // system
-  FESystem<2>   cfe(FE_Q<2>(2), 2);
+  FESystem<2> cfe(FE_Q<2>(2), 2);
   DoFHandler<2> cdh(triangulation);
   cdh.distribute_dofs(cfe);
   Vector<double> displacements(cdh.n_dofs()), dx(fe.dofs_per_cell),

@@ -29,8 +29,8 @@ template <int dim>
 void
 plot(const PolynomialsBDM<dim>& poly)
 {
-  QTrapez<1>                  base_quadrature;
-  QIterated<dim>              quadrature(base_quadrature, poly.degree() + 4);
+  QTrapez<1> base_quadrature;
+  QIterated<dim> quadrature(base_quadrature, poly.degree() + 4);
   std::vector<Tensor<1, dim>> values(poly.n());
   std::vector<Tensor<2, dim>> grads;
   std::vector<Tensor<3, dim>> grads2;
@@ -57,7 +57,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 

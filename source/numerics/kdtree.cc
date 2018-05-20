@@ -7,7 +7,7 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim>
-KDTree<dim>::KDTree(const unsigned int&            max_leaf_size,
+KDTree<dim>::KDTree(const unsigned int& max_leaf_size,
                     const std::vector<Point<dim>>& pts)
   : max_leaf_size(max_leaf_size)
 {
@@ -18,8 +18,8 @@ KDTree<dim>::KDTree(const unsigned int&            max_leaf_size,
 template <int dim>
 std::vector<std::pair<unsigned int, double>>
 KDTree<dim>::get_points_within_ball(const Point<dim>& center,
-                                    const double&     radius,
-                                    bool              sorted) const
+                                    const double& radius,
+                                    bool sorted) const
 {
   Assert(adaptor, ExcNotInitialized());
   Assert(kdtree, ExcInternalError());
@@ -37,7 +37,7 @@ KDTree<dim>::get_points_within_ball(const Point<dim>& center,
 
 template <int dim>
 std::vector<std::pair<unsigned int, double>>
-KDTree<dim>::get_closest_points(const Point<dim>&  target,
+KDTree<dim>::get_closest_points(const Point<dim>& target,
                                 const unsigned int n_points) const
 {
   Assert(adaptor, ExcNotInitialized());
@@ -45,7 +45,7 @@ KDTree<dim>::get_closest_points(const Point<dim>&  target,
 
   // get the information out of nanoflann
   std::vector<unsigned int> indices(n_points);
-  std::vector<double>       distances(n_points);
+  std::vector<double> distances(n_points);
 
   kdtree->knnSearch(&target[0], n_points, &indices[0], &distances[0]);
 

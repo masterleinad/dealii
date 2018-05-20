@@ -52,7 +52,7 @@ sub_test()
     tria.refine_global(1);
 #endif
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_DGQ<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   deallog << "Testing " << fe.get_name() << std::endl;
 

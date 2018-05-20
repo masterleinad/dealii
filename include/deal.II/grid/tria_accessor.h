@@ -314,8 +314,8 @@ protected:
    * Constructor. Protected, thus only callable from friend classes.
    */
   TriaAccessorBase(const Triangulation<dim, spacedim>* parent = nullptr,
-                   const int                           level  = -1,
-                   const int                           index  = -1,
+                   const int level                            = -1,
+                   const int index                            = -1,
                    const AccessorData*                        = nullptr);
 
   /**
@@ -555,10 +555,10 @@ public:
    * semantic sense, and we generate an exception when such an object is
    * actually generated.
    */
-  InvalidAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-                  const int                           level      = -1,
-                  const int                           index      = -1,
-                  const AccessorData*                 local_data = nullptr);
+  InvalidAccessor(const Triangulation<dim, spacedim>* parent = nullptr,
+                  const int level                            = -1,
+                  const int index                            = -1,
+                  const AccessorData* local_data             = nullptr);
 
   /**
    * Copy constructor.  This class is used for iterators that do not make
@@ -670,10 +670,10 @@ public:
   /**
    * Constructor.
    */
-  TriaAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-               const int                           level      = -1,
-               const int                           index      = -1,
-               const AccessorData*                 local_data = nullptr);
+  TriaAccessor(const Triangulation<dim, spacedim>* parent = nullptr,
+               const int level                            = -1,
+               const int index                            = -1,
+               const AccessorData* local_data             = nullptr);
 
   /**
    * Conversion constructor. This constructor exists to make certain
@@ -1731,17 +1731,17 @@ public:
    * point to.
    */
   TriaAccessor(const Triangulation<dim, spacedim>* tria,
-               const unsigned int                  vertex_index);
+               const unsigned int vertex_index);
 
   /**
    * Constructor. This constructor exists in order to maintain interface
    * compatibility with the other accessor classes. @p index can be used to
    * set the global index of the vertex we point to.
    */
-  TriaAccessor(const Triangulation<dim, spacedim>* tria  = nullptr,
-               const int                           level = 0,
-               const int                           index = 0,
-               const AccessorData*                       = nullptr);
+  TriaAccessor(const Triangulation<dim, spacedim>* tria = nullptr,
+               const int level                          = 0,
+               const int index                          = 0,
+               const AccessorData*                      = nullptr);
 
   /**
    * Constructor. Should never be called and thus produces an error.
@@ -2134,8 +2134,8 @@ public:
    * The third argument is the global index of the vertex we point to.
    */
   TriaAccessor(const Triangulation<1, spacedim>* tria,
-               const VertexKind                  vertex_kind,
-               const unsigned int                vertex_index);
+               const VertexKind vertex_kind,
+               const unsigned int vertex_index);
 
   /**
    * Constructor. This constructor exists in order to maintain interface
@@ -2574,10 +2574,10 @@ public:
   /**
    * Constructor.
    */
-  CellAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-               const int                           level      = -1,
-               const int                           index      = -1,
-               const AccessorData*                 local_data = nullptr);
+  CellAccessor(const Triangulation<dim, spacedim>* parent = nullptr,
+               const int level                            = -1,
+               const int index                            = -1,
+               const AccessorData* local_data             = nullptr);
 
   /**
    * Copy constructor.
@@ -3030,7 +3030,7 @@ public:
    */
   bool
   flag_for_face_refinement(
-    const unsigned int             face_no,
+    const unsigned int face_no,
     const RefinementCase<dim - 1>& face_refinement_case
     = RefinementCase<dim - 1>::isotropic_refinement) const;
 
@@ -3396,7 +3396,7 @@ public:
    * from application codes.
    */
   void
-  set_neighbor(const unsigned int                               i,
+  set_neighbor(const unsigned int i,
                const TriaIterator<CellAccessor<dim, spacedim>>& pointer) const;
 
   /**

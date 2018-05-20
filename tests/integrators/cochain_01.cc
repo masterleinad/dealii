@@ -55,7 +55,7 @@ const bool debugging = false;
 
 template <int dim>
 void
-cell_matrix(MeshWorker::DoFInfo<dim>&                       dinfo,
+cell_matrix(MeshWorker::DoFInfo<dim>& dinfo,
             typename MeshWorker::IntegrationInfo<dim, dim>& info)
 {
   unsigned int dm = 0; // Matrix index
@@ -195,7 +195,7 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   // now check, whether d*d =
   // D^TM^{-1}D
-  SolverControl            control(100, 1.e-13, false, false);
+  SolverControl control(100, 1.e-13, false, false);
   SolverCG<Vector<double>> solver(control);
 
   for(unsigned int d = 0; d < dim; ++d)
@@ -247,9 +247,9 @@ run2d(unsigned int degree)
   deallog.push(prefix.str());
   deallog << "Setup" << std::endl;
 
-  FE_Q<2>       h1(degree + 1);
+  FE_Q<2> h1(degree + 1);
   FE_Nedelec<2> hdiv(degree);
-  FE_DGQ<2>     l2(degree);
+  FE_DGQ<2> l2(degree);
 
   FESystem<2> fe(h1, 1, hdiv, 1, l2, 1);
 

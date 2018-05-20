@@ -106,7 +106,7 @@ CPUClock::now() noexcept
 {
   double system_cpu_duration = 0.0;
 #ifdef DEAL_II_MSVC
-  FILETIME   cpuTime, sysTime, createTime, exitTime;
+  FILETIME cpuTime, sysTime, createTime, exitTime;
   const auto succeeded = GetProcessTimes(
     GetCurrentProcess(), &createTime, &exitTime, &sysTime, &cpuTime);
   if(succeeded)
@@ -277,9 +277,9 @@ Timer::reset()
 
 /* ---------------------------- TimerOutput -------------------------- */
 
-TimerOutput::TimerOutput(std::ostream&         stream,
+TimerOutput::TimerOutput(std::ostream& stream,
                          const OutputFrequency output_frequency,
-                         const OutputType      output_type)
+                         const OutputType output_type)
   : output_frequency(output_frequency),
     output_type(output_type),
     out_stream(stream, true),
@@ -287,9 +287,9 @@ TimerOutput::TimerOutput(std::ostream&         stream,
     mpi_communicator(MPI_COMM_SELF)
 {}
 
-TimerOutput::TimerOutput(ConditionalOStream&   stream,
+TimerOutput::TimerOutput(ConditionalOStream& stream,
                          const OutputFrequency output_frequency,
-                         const OutputType      output_type)
+                         const OutputType output_type)
   : output_frequency(output_frequency),
     output_type(output_type),
     out_stream(stream),
@@ -297,10 +297,10 @@ TimerOutput::TimerOutput(ConditionalOStream&   stream,
     mpi_communicator(MPI_COMM_SELF)
 {}
 
-TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
-                         std::ostream&         stream,
+TimerOutput::TimerOutput(MPI_Comm mpi_communicator,
+                         std::ostream& stream,
                          const OutputFrequency output_frequency,
-                         const OutputType      output_type)
+                         const OutputType output_type)
   : output_frequency(output_frequency),
     output_type(output_type),
     out_stream(stream, true),
@@ -308,10 +308,10 @@ TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
     mpi_communicator(mpi_communicator)
 {}
 
-TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
-                         ConditionalOStream&   stream,
+TimerOutput::TimerOutput(MPI_Comm mpi_communicator,
+                         ConditionalOStream& stream,
                          const OutputFrequency output_frequency,
-                         const OutputType      output_type)
+                         const OutputType output_type)
   : output_frequency(output_frequency),
     output_type(output_type),
     out_stream(stream),
@@ -440,7 +440,7 @@ TimerOutput::leave_subsection(const std::string& section_name)
       || output_frequency == every_call_and_summary)
      && output_is_enabled == true)
     {
-      std::string        output_time;
+      std::string output_time;
       std::ostringstream cpu;
       cpu << cpu_time << "s";
       std::ostringstream wall;

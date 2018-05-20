@@ -70,7 +70,7 @@ main()
     surface_to_volume_mapping;
 
   SphericalManifold<3> boundary_description;
-  Triangulation<3>     volume_mesh;
+  Triangulation<3> volume_mesh;
   GridGenerator::half_hyper_ball(volume_mesh);
 
   volume_mesh.set_manifold(1, boundary_description);
@@ -88,7 +88,7 @@ main()
   // test for the position
   MappingQ<2, 3> mapping(mapping_degree, true);
 
-  FESystem<2, 3>   fe_test(FE_Q<2, 3>(fe_degree), 3);
+  FESystem<2, 3> fe_test(FE_Q<2, 3>(fe_degree), 3);
   DoFHandler<2, 3> dh_test(tria);
   dh_test.distribute_dofs(fe_test);
 

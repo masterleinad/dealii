@@ -53,13 +53,13 @@ namespace Step38
   private:
     static const unsigned int boundary_dim = spacedim - 1;
 
-    Triangulation<spacedim>               volume_mesh_triangulation;
+    Triangulation<spacedim> volume_mesh_triangulation;
     Triangulation<boundary_dim, spacedim> boundary_triangulation;
 
-    FE_Q<spacedim>               space_fe;
+    FE_Q<spacedim> space_fe;
     FE_Q<boundary_dim, spacedim> boundary_fe;
 
-    DoFHandler<spacedim>               space_dof_handler;
+    DoFHandler<spacedim> space_dof_handler;
     DoFHandler<boundary_dim, spacedim> contact_dof_handler;
   };
 

@@ -531,7 +531,7 @@ namespace
   template <int dim>
   std::vector<Cell<dim>>
   build_cells_and_connect_edges(const std::vector<CellData<dim>>& cells,
-                                std::vector<Edge<dim>>&           edges)
+                                std::vector<Edge<dim>>& edges)
   {
     std::vector<Cell<dim>> cell_list;
     cell_list.reserve(cells.size());
@@ -560,7 +560,7 @@ namespace
   unsigned int
   get_next_unoriented_cell(const std::vector<Cell<dim>>& cells,
                            const std::vector<Edge<dim>>& edges,
-                           const unsigned int            current_cell)
+                           const unsigned int current_cell)
   {
     for(unsigned int c = current_cell; c < cells.size(); ++c)
       for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
@@ -579,9 +579,9 @@ namespace
   template <int dim>
   void
   orient_one_set_of_parallel_edges(const std::vector<Cell<dim>>& cells,
-                                   std::vector<Edge<dim>>&       edges,
-                                   const unsigned int            cell,
-                                   const unsigned int            local_edge)
+                                   std::vector<Edge<dim>>& edges,
+                                   const unsigned int cell,
+                                   const unsigned int local_edge)
   {
     // choose the direction of the first edge. we have free choice
     // here and could simply choose "forward" if that's what pleases
@@ -768,8 +768,8 @@ namespace
   void
   rotate_cell(const std::vector<Cell<dim>>& cell_list,
               const std::vector<Edge<dim>>& edge_list,
-              const unsigned int            cell_index,
-              std::vector<CellData<dim>>&   raw_cells)
+              const unsigned int cell_index,
+              std::vector<CellData<dim>>& raw_cells)
   {
     // find the first vertex of the cell. this is the vertex where dim edges
     // originate, so for each of the edges record which the starting vertex is
@@ -1101,7 +1101,7 @@ template <>
 void
 GridReordering<2>::invert_all_cells_of_negative_grid(
   const std::vector<Point<2>>& all_vertices,
-  std::vector<CellData<2>>&    cells)
+  std::vector<CellData<2>>& cells)
 {
   unsigned int vertices_lex[GeometryInfo<2>::vertices_per_cell];
   unsigned int n_negative_cells = 0;
@@ -1169,7 +1169,7 @@ template <>
 void
 GridReordering<3>::invert_all_cells_of_negative_grid(
   const std::vector<Point<3>>& all_vertices,
-  std::vector<CellData<3>>&    cells)
+  std::vector<CellData<3>>& cells)
 {
   unsigned int vertices_lex[GeometryInfo<3>::vertices_per_cell];
   unsigned int n_negative_cells = 0;

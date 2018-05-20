@@ -62,7 +62,7 @@ test(VectorTools::NormType norm, double value, double exp = 2.0)
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
 
-  FESystem<dim>   fe(FE_Q<dim>(4), dim);
+  FESystem<dim> fe(FE_Q<dim>(4), dim);
   DoFHandler<dim> dofh(tria);
   dofh.distribute_dofs(fe);
 

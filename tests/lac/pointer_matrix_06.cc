@@ -23,13 +23,13 @@
 template <typename number>
 void
 checkTvmult(FullMatrix<number>& A,
-            Vector<number>&     V,
-            char*               name = "Test Matrix")
+            Vector<number>& V,
+            char* name = "Test Matrix")
 {
   deallog << "Tvmult" << std::endl;
 
   PointerMatrix<FullMatrix<number>, Vector<number>> P(&A, name);
-  Vector<number>                                    O(A.m());
+  Vector<number> O(A.m());
   P.Tvmult(O, V);
 
   // Check the dimensions of the result matrix

@@ -60,7 +60,7 @@ namespace Evaluation
 
     virtual void
     operator()(const hp::DoFHandler<dim>& dof_handler,
-               const Vector<double>&      solution) const = 0;
+               const Vector<double>& solution) const = 0;
 
   protected:
     unsigned int refinement_cycle;
@@ -82,11 +82,11 @@ namespace Evaluation
   {
   public:
     PointValueEvaluation(const Point<dim>& evaluation_point,
-                         TableHandler&     results_table);
+                         TableHandler& results_table);
 
     virtual void
     operator()(const hp::DoFHandler<dim>& dof_handler,
-               const Vector<double>&      solution) const;
+               const Vector<double>& solution) const;
 
     DeclException1(ExcEvaluationPointNotFound,
                    Point<dim>,
@@ -95,13 +95,13 @@ namespace Evaluation
 
   private:
     const Point<dim> evaluation_point;
-    TableHandler&    results_table;
+    TableHandler& results_table;
   };
 
   template <int dim>
   PointValueEvaluation<dim>::PointValueEvaluation(
     const Point<dim>& evaluation_point,
-    TableHandler&     results_table)
+    TableHandler& results_table)
     : evaluation_point(evaluation_point), results_table(results_table)
   {}
 
@@ -140,21 +140,21 @@ namespace Evaluation
   class SolutionOutput : public EvaluationBase<dim>
   {
   public:
-    SolutionOutput(const std::string&              output_name_base,
+    SolutionOutput(const std::string& output_name_base,
                    const DataOutBase::OutputFormat output_format);
 
     virtual void
     operator()(const hp::DoFHandler<dim>& dof_handler,
-               const Vector<double>&      solution) const;
+               const Vector<double>& solution) const;
 
   private:
-    const std::string               output_name_base;
+    const std::string output_name_base;
     const DataOutBase::OutputFormat output_format;
   };
 
   template <int dim>
   SolutionOutput<dim>::SolutionOutput(
-    const std::string&              output_name_base,
+    const std::string& output_name_base,
     const DataOutBase::OutputFormat output_format)
     : output_name_base(output_name_base), output_format(output_format)
   {}
@@ -162,7 +162,7 @@ namespace Evaluation
   template <int dim>
   void
   SolutionOutput<dim>::operator()(const hp::DoFHandler<dim>& dof_handler,
-                                  const Vector<double>&      solution) const
+                                  const Vector<double>& solution) const
   {
     DataOut<dim, hp::DoFHandler<dim>> data_out;
     data_out.attach_dof_handler(dof_handler);
@@ -214,10 +214,10 @@ namespace LaplaceSolver
   class Solver : public virtual Base<dim>
   {
   public:
-    Solver(Triangulation<dim>&          triangulation,
+    Solver(Triangulation<dim>& triangulation,
            const hp::FECollection<dim>& fe,
-           const hp::QCollection<dim>&  quadrature,
-           const Function<dim>&         boundary_values);
+           const hp::QCollection<dim>& quadrature,
+           const Function<dim>& boundary_values);
     virtual ~Solver();
 
     virtual void
@@ -231,10 +231,10 @@ namespace LaplaceSolver
 
   protected:
     const SmartPointer<const hp::FECollection<dim>> fe;
-    const SmartPointer<const hp::QCollection<dim>>  quadrature;
-    hp::DoFHandler<dim>                             dof_handler;
-    Vector<double>                                  solution;
-    const SmartPointer<const Function<dim>>         boundary_values;
+    const SmartPointer<const hp::QCollection<dim>> quadrature;
+    hp::DoFHandler<dim> dof_handler;
+    Vector<double> solution;
+    const SmartPointer<const Function<dim>> boundary_values;
 
     virtual void
     assemble_rhs(Vector<double>& rhs) const = 0;
@@ -247,10 +247,10 @@ namespace LaplaceSolver
       void
       solve(Vector<double>& solution) const;
 
-      ConstraintMatrix     hanging_node_constraints;
-      SparsityPattern      sparsity_pattern;
+      ConstraintMatrix hanging_node_constraints;
+      SparsityPattern sparsity_pattern;
       SparseMatrix<double> matrix;
-      Vector<double>       rhs;
+      Vector<double> rhs;
     };
 
     void
@@ -258,17 +258,17 @@ namespace LaplaceSolver
 
     void
     assemble_matrix(
-      LinearSystem&                                             linear_system,
+      LinearSystem& linear_system,
       const typename hp::DoFHandler<dim>::active_cell_iterator& begin_cell,
       const typename hp::DoFHandler<dim>::active_cell_iterator& end_cell,
-      Threads::Mutex&                                           mutex) const;
+      Threads::Mutex& mutex) const;
   };
 
   template <int dim>
-  Solver<dim>::Solver(Triangulation<dim>&          triangulation,
+  Solver<dim>::Solver(Triangulation<dim>& triangulation,
                       const hp::FECollection<dim>& fe,
-                      const hp::QCollection<dim>&  quadrature,
-                      const Function<dim>&         boundary_values)
+                      const hp::QCollection<dim>& quadrature,
+                      const Function<dim>& boundary_values)
     : Base<dim>(triangulation),
       fe(&fe),
       quadrature(&quadrature),
@@ -321,7 +321,7 @@ namespace LaplaceSolver
       thread_ranges = Threads::split_range<active_cell_iterator>(
         dof_handler.begin_active(), dof_handler.end(), n_threads);
 
-    Threads::Mutex         mutex;
+    Threads::Mutex mutex;
     Threads::ThreadGroup<> threads;
     for(unsigned int thread = 0; thread < n_threads; ++thread)
       threads += Threads::new_thread(&Solver<dim>::assemble_matrix,
@@ -348,10 +348,10 @@ namespace LaplaceSolver
   template <int dim>
   void
   Solver<dim>::assemble_matrix(
-    LinearSystem&                                             linear_system,
+    LinearSystem& linear_system,
     const typename hp::DoFHandler<dim>::active_cell_iterator& begin_cell,
     const typename hp::DoFHandler<dim>::active_cell_iterator& end_cell,
-    Threads::Mutex&                                           mutex) const
+    Threads::Mutex& mutex) const
   {
     hp::FEValues<dim> fe_values(
       *fe, *quadrature, update_gradients | update_JxW_values);
@@ -420,7 +420,7 @@ namespace LaplaceSolver
   Solver<dim>::LinearSystem::solve(Vector<double>& solution) const
   {
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(matrix, 1.2);
@@ -434,11 +434,11 @@ namespace LaplaceSolver
   class PrimalSolver : public Solver<dim>
   {
   public:
-    PrimalSolver(Triangulation<dim>&          triangulation,
+    PrimalSolver(Triangulation<dim>& triangulation,
                  const hp::FECollection<dim>& fe,
-                 const hp::QCollection<dim>&  quadrature,
-                 const Function<dim>&         rhs_function,
-                 const Function<dim>&         boundary_values);
+                 const hp::QCollection<dim>& quadrature,
+                 const Function<dim>& rhs_function,
+                 const Function<dim>& boundary_values);
 
   protected:
     const SmartPointer<const Function<dim>> rhs_function;
@@ -447,11 +447,11 @@ namespace LaplaceSolver
   };
 
   template <int dim>
-  PrimalSolver<dim>::PrimalSolver(Triangulation<dim>&          triangulation,
+  PrimalSolver<dim>::PrimalSolver(Triangulation<dim>& triangulation,
                                   const hp::FECollection<dim>& fe,
-                                  const hp::QCollection<dim>&  quadrature,
-                                  const Function<dim>&         rhs_function,
-                                  const Function<dim>&         boundary_values)
+                                  const hp::QCollection<dim>& quadrature,
+                                  const Function<dim>& rhs_function,
+                                  const Function<dim>& boundary_values)
     : Base<dim>(triangulation),
       Solver<dim>(triangulation, fe, quadrature, boundary_values),
       rhs_function(&rhs_function)
@@ -469,8 +469,8 @@ namespace LaplaceSolver
     const unsigned int dofs_per_cell = (*this->fe)[0].dofs_per_cell;
     const unsigned int n_q_points    = (*this->quadrature)[0].size();
 
-    Vector<double>                       cell_rhs(dofs_per_cell);
-    std::vector<double>                  rhs_values(n_q_points);
+    Vector<double> cell_rhs(dofs_per_cell);
+    std::vector<double> rhs_values(n_q_points);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     typename hp::DoFHandler<dim>::active_cell_iterator cell
@@ -501,11 +501,11 @@ namespace LaplaceSolver
   class RefinementGlobal : public PrimalSolver<dim>
   {
   public:
-    RefinementGlobal(Triangulation<dim>&          coarse_grid,
+    RefinementGlobal(Triangulation<dim>& coarse_grid,
                      const hp::FECollection<dim>& fe,
-                     const hp::QCollection<dim>&  quadrature,
-                     const Function<dim>&         rhs_function,
-                     const Function<dim>&         boundary_values);
+                     const hp::QCollection<dim>& quadrature,
+                     const Function<dim>& rhs_function,
+                     const Function<dim>& boundary_values);
 
     virtual void
     refine_grid();
@@ -513,11 +513,11 @@ namespace LaplaceSolver
 
   template <int dim>
   RefinementGlobal<dim>::RefinementGlobal(
-    Triangulation<dim>&          coarse_grid,
+    Triangulation<dim>& coarse_grid,
     const hp::FECollection<dim>& fe,
-    const hp::QCollection<dim>&  quadrature,
-    const Function<dim>&         rhs_function,
-    const Function<dim>&         boundary_values)
+    const hp::QCollection<dim>& quadrature,
+    const Function<dim>& rhs_function,
+    const Function<dim>& boundary_values)
     : Base<dim>(coarse_grid),
       PrimalSolver<dim>(coarse_grid,
                         fe,
@@ -537,11 +537,11 @@ namespace LaplaceSolver
   class RefinementKelly : public PrimalSolver<dim>
   {
   public:
-    RefinementKelly(Triangulation<dim>&          coarse_grid,
+    RefinementKelly(Triangulation<dim>& coarse_grid,
                     const hp::FECollection<dim>& fe,
-                    const hp::QCollection<dim>&  quadrature,
-                    const Function<dim>&         rhs_function,
-                    const Function<dim>&         boundary_values);
+                    const hp::QCollection<dim>& quadrature,
+                    const Function<dim>& rhs_function,
+                    const Function<dim>& boundary_values);
 
     virtual void
     refine_grid();
@@ -550,7 +550,7 @@ namespace LaplaceSolver
   template <int dim>
   RefinementKelly<dim>::RefinementKelly(Triangulation<dim>& coarse_grid,
                                         const hp::FECollection<dim>& fe,
-                                        const hp::QCollection<dim>&  quadrature,
+                                        const hp::QCollection<dim>& quadrature,
                                         const Function<dim>& rhs_function,
                                         const Function<dim>& boundary_values)
     : Base<dim>(coarse_grid),
@@ -621,8 +621,8 @@ RightHandSide<dim>::value(const Point<dim>& p,
   double q = p(0);
   for(unsigned int i = 1; i < dim; ++i)
     q += std::sin(10 * p(i) + 5 * p(0) * p(0));
-  const double u  = std::exp(q);
-  double       t1 = 1, t2 = 0, t3 = 0;
+  const double u = std::exp(q);
+  double t1 = 1, t2 = 0, t3 = 0;
   for(unsigned int i = 1; i < dim; ++i)
     {
       t1 += std::cos(10 * p(i) + 5 * p(0) * p(0)) * 10 * p(0);
@@ -640,7 +640,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
 template <int dim>
 void
 run_simulation(
-  LaplaceSolver::Base<dim>&                          solver,
+  LaplaceSolver::Base<dim>& solver,
   const std::list<Evaluation::EvaluationBase<dim>*>& postprocessor_list)
 {
   deallog << "Refinement cycle: ";
@@ -682,9 +682,9 @@ solve_problem(const std::string& solver_name)
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(2);
   const hp::FECollection<dim> fe(FE_Q<dim>(1));
-  const hp::QCollection<dim>  quadrature(QGauss<dim>(4));
-  const RightHandSide<dim>    rhs_function;
-  const Solution<dim>         boundary_values;
+  const hp::QCollection<dim> quadrature(QGauss<dim>(4));
+  const RightHandSide<dim> rhs_function;
+  const Solution<dim> boundary_values;
 
   LaplaceSolver::Base<dim>* solver = nullptr;
   if(solver_name == "global")
@@ -696,7 +696,7 @@ solve_problem(const std::string& solver_name)
   else
     AssertThrow(false, ExcNotImplemented());
 
-  TableHandler                          results_table;
+  TableHandler results_table;
   Evaluation::PointValueEvaluation<dim> postprocessor1(Point<dim>(0.5, 0.5),
                                                        results_table);
 

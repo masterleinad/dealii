@@ -59,7 +59,7 @@ MGTransferBlock<number>::~MGTransferBlock()
 
 template <typename number>
 void
-MGTransferBlock<number>::initialize(const std::vector<number>&    f,
+MGTransferBlock<number>::initialize(const std::vector<number>& f,
                                     VectorMemory<Vector<number>>& mem)
 {
   factors = f;
@@ -68,8 +68,8 @@ MGTransferBlock<number>::initialize(const std::vector<number>&    f,
 
 template <typename number>
 void
-MGTransferBlock<number>::prolongate(const unsigned int         to_level,
-                                    BlockVector<number>&       dst,
+MGTransferBlock<number>::prolongate(const unsigned int to_level,
+                                    BlockVector<number>& dst,
                                     const BlockVector<number>& src) const
 {
   Assert((to_level >= 1) && (to_level <= prolongation_matrices.size()),
@@ -92,8 +92,8 @@ MGTransferBlock<number>::prolongate(const unsigned int         to_level,
 
 template <typename number>
 void
-MGTransferBlock<number>::restrict_and_add(const unsigned int         from_level,
-                                          BlockVector<number>&       dst,
+MGTransferBlock<number>::restrict_and_add(const unsigned int from_level,
+                                          BlockVector<number>& dst,
                                           const BlockVector<number>& src) const
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),
@@ -186,8 +186,8 @@ MGTransferSelect<number>::MGTransferSelect(const ConstraintMatrix& c)
 
 template <typename number>
 void
-MGTransferSelect<number>::prolongate(const unsigned int    to_level,
-                                     Vector<number>&       dst,
+MGTransferSelect<number>::prolongate(const unsigned int to_level,
+                                     Vector<number>& dst,
                                      const Vector<number>& src) const
 {
   Assert((to_level >= 1) && (to_level <= prolongation_matrices.size()),
@@ -201,8 +201,8 @@ MGTransferSelect<number>::prolongate(const unsigned int    to_level,
 
 template <typename number>
 void
-MGTransferSelect<number>::restrict_and_add(const unsigned int    from_level,
-                                           Vector<number>&       dst,
+MGTransferSelect<number>::restrict_and_add(const unsigned int from_level,
+                                           Vector<number>& dst,
                                            const Vector<number>& src) const
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),
@@ -235,8 +235,8 @@ MGTransferBlockSelect<number>::MGTransferBlockSelect(
 
 template <typename number>
 void
-MGTransferBlockSelect<number>::prolongate(const unsigned int    to_level,
-                                          Vector<number>&       dst,
+MGTransferBlockSelect<number>::prolongate(const unsigned int to_level,
+                                          Vector<number>& dst,
                                           const Vector<number>& src) const
 {
   Assert((to_level >= 1) && (to_level <= prolongation_matrices.size()),
@@ -250,7 +250,7 @@ MGTransferBlockSelect<number>::prolongate(const unsigned int    to_level,
 template <typename number>
 void
 MGTransferBlockSelect<number>::restrict_and_add(const unsigned int from_level,
-                                                Vector<number>&    dst,
+                                                Vector<number>& dst,
                                                 const Vector<number>& src) const
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),

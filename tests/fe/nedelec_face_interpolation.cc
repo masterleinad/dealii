@@ -40,7 +40,7 @@ test(unsigned p1, unsigned p2)
   // *----*----*
   // | p1 | p2 |
   // *----*----*
-  Triangulation<dim>        triangulation;
+  Triangulation<dim> triangulation;
   std::vector<unsigned int> subdivisions(dim, 1);
   subdivisions[0] = 2;
   GridGenerator::subdivided_hyper_rectangle(

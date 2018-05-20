@@ -55,7 +55,7 @@ test()
   tria.refine_global(4);
   std::cout << "Number of cells: " << tria.n_global_active_cells() << std::endl;
 
-  FE_DGQ<mydim>     fe(1);
+  FE_DGQ<mydim> fe(1);
   DoFHandler<mydim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
@@ -69,8 +69,8 @@ test()
 
   LinearAlgebra::distributed::Vector<double> in, out, in2, out2;
 
-  MatrixFree<mydim, double>                          mf_data;
-  const QGauss<1>                                    quad(fe_degree + 1);
+  MatrixFree<mydim, double> mf_data;
+  const QGauss<1> quad(fe_degree + 1);
   typename MatrixFree<mydim, double>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<mydim, double>::AdditionalData::none;
   data.mapping_update_flags_inner_faces

@@ -62,9 +62,9 @@ namespace FESeries
   }
 
   template <int dim>
-  Fourier<dim>::Fourier(const unsigned int           N,
+  Fourier<dim>::Fourier(const unsigned int N,
                         const hp::FECollection<dim>& fe_collection,
-                        const hp::QCollection<dim>&  q_collection)
+                        const hp::QCollection<dim>& q_collection)
     : fe_collection(&fe_collection),
       q_collection(&q_collection),
       fourier_transform_matrices(fe_collection.size())
@@ -76,8 +76,8 @@ namespace FESeries
   template <int dim>
   void
   Fourier<dim>::calculate(
-    const Vector<double>&             local_dof_values,
-    const unsigned int                cell_active_fe_index,
+    const Vector<double>& local_dof_values,
+    const unsigned int cell_active_fe_index,
     Table<dim, std::complex<double>>& fourier_coefficients)
   {
     ensure_existence(cell_active_fe_index);
@@ -103,9 +103,9 @@ namespace FESeries
   template <int dim>
   std::complex<double>
   integrate(const FiniteElement<dim>& fe,
-            const Quadrature<dim>&    quadrature,
-            const Tensor<1, dim>&     k_vector,
-            const unsigned int        j)
+            const Quadrature<dim>& quadrature,
+            const Tensor<1, dim>& k_vector,
+            const unsigned int j)
   {
     std::complex<double> sum = 0;
     for(unsigned int q = 0; q < quadrature.size(); ++q)
@@ -232,9 +232,9 @@ namespace FESeries
   }
 
   template <int dim>
-  Legendre<dim>::Legendre(const unsigned int           size_in_each_direction,
+  Legendre<dim>::Legendre(const unsigned int size_in_each_direction,
                           const hp::FECollection<dim>& fe_collection,
-                          const hp::QCollection<dim>&  q_collection)
+                          const hp::QCollection<dim>& q_collection)
     : N(size_in_each_direction),
       fe_collection(&fe_collection),
       q_collection(&q_collection),
@@ -245,8 +245,8 @@ namespace FESeries
   template <int dim>
   void
   Legendre<dim>::calculate(const dealii::Vector<double>& local_dof_values,
-                           const unsigned int            cell_active_fe_index,
-                           Table<dim, double>&           legendre_coefficients)
+                           const unsigned int cell_active_fe_index,
+                           Table<dim, double>& legendre_coefficients)
   {
     ensure_existence(cell_active_fe_index);
     const FullMatrix<double>& matrix
@@ -269,9 +269,9 @@ namespace FESeries
   template <int dim>
   double
   integrate_Legendre(const FiniteElement<dim>& fe,
-                     const Quadrature<dim>&    quadrature,
-                     const TableIndices<dim>&  indices,
-                     const unsigned int        dof)
+                     const Quadrature<dim>& quadrature,
+                     const TableIndices<dim>& indices,
+                     const unsigned int dof)
   {
     double sum = 0;
     for(unsigned int q = 0; q < quadrature.size(); ++q)
@@ -357,7 +357,7 @@ namespace FESeries
   linear_regression(const std::vector<double>& x, const std::vector<double>& y)
   {
     FullMatrix<double> K(2, 2), invK(2, 2);
-    Vector<double>     X(2), B(2);
+    Vector<double> X(2), B(2);
 
     Assert(x.size() == y.size(),
            ExcMessage("x and y are expected to have the same size"));

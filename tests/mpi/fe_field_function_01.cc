@@ -76,7 +76,7 @@ test()
 
   for(unsigned int test = 0; test < 4; ++test)
     {
-      double     value;
+      double value;
       Point<dim> p
         = (dim == 2 ? Point<dim>(test / 2 + 1, test % 2 + 1) / 3 :
                       Point<dim>(test / 2 + 1, test / 2 + 1, test % 2 + 1) / 3);

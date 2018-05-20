@@ -134,7 +134,7 @@ template <int dim>
 void
 FE_ABF<dim>::initialize_support_points(const unsigned int deg)
 {
-  QGauss<dim>        cell_quadrature(deg + 2);
+  QGauss<dim> cell_quadrature(deg + 2);
   const unsigned int n_interior_points = cell_quadrature.size();
 
   unsigned int n_face_points = (dim > 1) ? 1 : 0;
@@ -166,7 +166,7 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
 
   if(dim > 1)
     {
-      QGauss<dim - 1>                   face_points(deg + 1);
+      QGauss<dim - 1> face_points(deg + 1);
       TensorProductPolynomials<dim - 1> legendre
         = Polynomials::Legendre::generate_complete_basis(deg);
 
@@ -303,8 +303,8 @@ FE_ABF<dim>::initialize_restriction()
         this->restriction[iso][i].reinit(0, 0);
       return;
     }
-  unsigned int       iso = RefinementCase<dim>::isotropic_refinement - 1;
-  QGauss<dim - 1>    q_base(rt_order + 1);
+  unsigned int iso = RefinementCase<dim>::isotropic_refinement - 1;
+  QGauss<dim - 1> q_base(rt_order + 1);
   const unsigned int n_face_points = q_base.size();
   // First, compute interpolation on
   // subfaces
@@ -388,7 +388,7 @@ FE_ABF<dim>::initialize_restriction()
       polynomials[dd] = new AnisotropicPolynomials<dim>(poly);
     }
 
-  QGauss<dim>        q_cell(rt_order + 1);
+  QGauss<dim> q_cell(rt_order + 1);
   const unsigned int start_cell_dofs
     = GeometryInfo<dim>::faces_per_cell * this->dofs_per_face;
 
@@ -503,7 +503,7 @@ template <int dim>
 void
 FE_ABF<dim>::convert_generalized_support_point_values_to_dof_values(
   const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  std::vector<double>& nodal_values) const
 {
   Assert(support_point_values.size() == this->generalized_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),

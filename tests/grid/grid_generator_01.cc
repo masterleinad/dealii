@@ -44,7 +44,7 @@ test(std::ostream& out)
   if(dim > 2)
     p3[2] = 4.;
 
-  GridOut            go;
+  GridOut go;
   GridOutFlags::XFig xfig_flags;
   xfig_flags.fill_style = 25;
 
@@ -83,7 +83,7 @@ test(std::ostream& out)
   if(true)
     {
       deallog << "subdivided_hyper_rectangle" << std::endl;
-      Triangulation<dim>        tr;
+      Triangulation<dim> tr;
       std::vector<unsigned int> sub(dim);
       sub[0] = 2;
       if(dim > 1)
@@ -98,7 +98,7 @@ test(std::ostream& out)
     {
       deallog << "parallelogram" << std::endl;
       Triangulation<dim> tr;
-      Point<dim>         corners[dim];
+      Point<dim> corners[dim];
       corners[0] = p1;
       if(dim > 1)
         corners[1] = p2;

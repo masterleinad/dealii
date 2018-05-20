@@ -124,8 +124,8 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 {
   Assert(component < 3, ExcIndexRange(component, 0, 2));
 
-  const double PI  = numbers::PI;
-  double       val = 0.0;
+  const double PI = numbers::PI;
+  double val      = 0.0;
   switch(component)
     {
       case 0:
@@ -144,7 +144,7 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 template <int dim>
 void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+                                  Vector<double>& values) const
 {
   for(int i = 0; i < dim; ++i)
     values(i) = value(p, i);
@@ -152,12 +152,12 @@ VectorFunction<dim>::vector_value(const Point<dim>& p,
 
 template <>
 Tensor<1, 3>
-VectorFunction<3>::gradient(const Point<3>&    p,
+VectorFunction<3>::gradient(const Point<3>& p,
                             const unsigned int component) const
 {
   const double PI = numbers::PI;
   Tensor<1, 3> val;
-  double       x = p(0), y = p(1), z = p(2);
+  double x = p(0), y = p(1), z = p(2);
 
   switch(component)
     {
@@ -181,7 +181,7 @@ VectorFunction<3>::gradient(const Point<3>&    p,
 }
 
 void create_tria(Triangulation<3>& triangulation,
-                 const Point<3>*   vertices_parallelograms)
+                 const Point<3>* vertices_parallelograms)
 {
   const std::vector<Point<3>> vertices(&vertices_parallelograms[0],
                                        &vertices_parallelograms[n_vertices]);
@@ -215,9 +215,9 @@ void create_tria(Triangulation<3>& triangulation,
 template <int dim>
 void
 test(const FiniteElement<dim>& fe,
-     unsigned                  n_cycles,
-     bool                      global,
-     const Point<dim>*         vertices_parallelograms)
+     unsigned n_cycles,
+     bool global,
+     const Point<dim>* vertices_parallelograms)
 {
   deallog << "dim: " << dim << "\t" << fe.get_name() << std::endl;
   deallog
@@ -229,15 +229,15 @@ test(const FiniteElement<dim>& fe,
 
   DoFHandler<dim> dof_handler(triangulation);
 
-  VectorFunction<dim>              fe_function;
+  VectorFunction<dim> fe_function;
   const FEValuesExtractors::Vector vec(0);
-  const QGauss<dim>                quadrature(fe.degree + 1);
-  const QGauss<dim - 1>            face_quadrature(fe.degree + 1);
-  const unsigned int               n_q_points      = quadrature.size();
-  const unsigned int               n_face_q_points = face_quadrature.size();
+  const QGauss<dim> quadrature(fe.degree + 1);
+  const QGauss<dim - 1> face_quadrature(fe.degree + 1);
+  const unsigned int n_q_points      = quadrature.size();
+  const unsigned int n_face_q_points = face_quadrature.size();
   //MappingQ<dim> mapping(2);
-  MappingQGeneric<dim>                                        mapping(1);
-  std::vector<double>                                         div_v(n_q_points);
+  MappingQGeneric<dim> mapping(1);
+  std::vector<double> div_v(n_q_points);
   std::vector<typename FEValuesViews::Vector<dim>::curl_type> curl_v(
     n_q_points);
   std::vector<Tensor<3, dim>> hessians(n_q_points);
@@ -270,12 +270,12 @@ test(const FiniteElement<dim>& fe,
       typename FEValuesViews::Vector<dim>::curl_type total_curl,
         boundary_tangentials;
       Tensor<1, dim> total_curl_curl, boundary_curl_curl_traces;
-      double         total_div     = 0;
-      double         boundary_flux = 0;
+      double total_div     = 0;
+      double boundary_flux = 0;
       total_curl *= 0.;
       boundary_tangentials *= 0.;
 
-      FEValues<dim>     fe_values(mapping,
+      FEValues<dim> fe_values(mapping,
                               fe,
                               quadrature,
                               update_JxW_values | update_quadrature_points
@@ -406,9 +406,9 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  const static unsigned dim      = 3;
-  unsigned              order    = 1;
-  unsigned              n_cycles = 2;
+  const static unsigned dim = 3;
+  unsigned order            = 1;
+  unsigned n_cycles         = 2;
 
   deallog << "3d\nRectangular grid:\n";
 

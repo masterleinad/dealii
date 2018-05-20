@@ -25,7 +25,7 @@ int
 main()
 {
   Triangulation<2, 3> tria;
-  GridIn<2, 3>        gridin;
+  GridIn<2, 3> gridin;
   gridin.attach_triangulation(tria);
 
   {

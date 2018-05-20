@@ -65,16 +65,16 @@ namespace Advection
     setup_system();
 
     void
-    integrate_cell_term(MeshWorker::DoFInfo<dim>&         dinfo,
+    integrate_cell_term(MeshWorker::DoFInfo<dim>& dinfo,
                         MeshWorker::IntegrationInfo<dim>& info);
 
     void
-    integrate_boundary_term(MeshWorker::DoFInfo<dim>&         dinfo,
+    integrate_boundary_term(MeshWorker::DoFInfo<dim>& dinfo,
                             MeshWorker::IntegrationInfo<dim>& info);
 
     void
-    integrate_face_term(MeshWorker::DoFInfo<dim>&         dinfo1,
-                        MeshWorker::DoFInfo<dim>&         dinfo2,
+    integrate_face_term(MeshWorker::DoFInfo<dim>& dinfo1,
+                        MeshWorker::DoFInfo<dim>& dinfo2,
                         MeshWorker::IntegrationInfo<dim>& info1,
                         MeshWorker::IntegrationInfo<dim>& info2);
 
@@ -95,7 +95,7 @@ namespace Advection
 
     // DATA:
     Triangulation<dim> triangulation;
-    DoFHandler<dim>    dof_handler;
+    DoFHandler<dim> dof_handler;
 
     FESystem<dim> fe;
 
@@ -230,7 +230,7 @@ namespace Advection
     //deallog<<"\nApparently it DoFInfo was constructed fine!"<<std::endl;
 
     MeshWorker::Assembler::ResidualSimple<Vector<double>> assembler;
-    AnyData                                               data;
+    AnyData data;
     data.add<Vector<double>*>(&residual, "Residual");
     assembler.initialize(data);
 
@@ -268,7 +268,7 @@ namespace Advection
   template <int dim>
   void
   AdvectionProblem<dim>::integrate_cell_term(
-    MeshWorker::DoFInfo<dim>&         dinfo,
+    MeshWorker::DoFInfo<dim>& dinfo,
     MeshWorker::IntegrationInfo<dim>& info)
   {
     const FEValuesBase<dim>& fe_v = info.fe_values();
@@ -307,7 +307,7 @@ namespace Advection
   template <int dim>
   void
   AdvectionProblem<dim>::integrate_boundary_term(
-    MeshWorker::DoFInfo<dim>&         dinfo,
+    MeshWorker::DoFInfo<dim>& dinfo,
     MeshWorker::IntegrationInfo<dim>& info)
   {
     const unsigned int boundary_id = dinfo.face->boundary_id();
@@ -341,8 +341,8 @@ namespace Advection
   template <int dim>
   void
   AdvectionProblem<dim>::integrate_face_term(
-    MeshWorker::DoFInfo<dim>&         dinfo1,
-    MeshWorker::DoFInfo<dim>&         dinfo2,
+    MeshWorker::DoFInfo<dim>& dinfo1,
+    MeshWorker::DoFInfo<dim>& dinfo2,
     MeshWorker::IntegrationInfo<dim>& info1,
     MeshWorker::IntegrationInfo<dim>& info2)
   {
@@ -445,7 +445,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
   Advection::AdvectionProblem<1> advection_problem;

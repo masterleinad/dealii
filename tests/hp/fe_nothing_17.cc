@@ -43,10 +43,10 @@ transfer(std::ostream& out)
   GridGenerator::hyper_cube(tria);
   tria.refine_global(5 - dim);
 
-  FESystem<dim>   fe(FE_Q<dim>(1), 1, FE_Nothing<dim>(), 1);
+  FESystem<dim> fe(FE_Q<dim>(1), 1, FE_Nothing<dim>(), 1);
   DoFHandler<dim> dof_handler(tria);
 
-  Vector<double>   solution;
+  Vector<double> solution;
   ConstraintMatrix cm;
   cm.close();
 

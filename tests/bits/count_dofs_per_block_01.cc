@@ -60,7 +60,7 @@ check()
     }
 
   // Taylor-Hood element
-  FESystem<dim>   fe(FE_Q<dim>(1), dim, FE_DGQ<dim>(0), 1);
+  FESystem<dim> fe(FE_Q<dim>(1), dim, FE_DGQ<dim>(0), 1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

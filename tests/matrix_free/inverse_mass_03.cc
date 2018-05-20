@@ -46,9 +46,9 @@ public:
 
   void
   local_mass_operator(
-    const MatrixFree<dim, Number>&               data,
-    VectorType&                                  dst,
-    const VectorType&                            src,
+    const MatrixFree<dim, Number>& data,
+    VectorType& dst,
+    const VectorType& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 3, Number> fe_eval(data);
@@ -74,15 +74,15 @@ public:
 
   void
   local_inverse_mass_operator(
-    const MatrixFree<dim, Number>&               data,
-    VectorType&                                  dst,
-    const VectorType&                            src,
+    const MatrixFree<dim, Number>& data,
+    VectorType& dst,
+    const VectorType& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 3, Number> fe_eval(data);
     MatrixFreeOperators::CellwiseInverseMassMatrix<dim, fe_degree, 3, Number>
-                                           mass_inv(fe_eval);
-    const unsigned int                     n_q_points = fe_eval.n_q_points;
+      mass_inv(fe_eval);
+    const unsigned int n_q_points = fe_eval.n_q_points;
     AlignedVector<VectorizedArray<Number>> inverse_coefficients(3 * n_q_points);
 
     for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
@@ -138,10 +138,10 @@ do_test(const DoFHandler<dim>& dof)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
 
-  MappingQ<dim>           mapping(4);
+  MappingQ<dim> mapping(4);
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, number>::AdditionalData::partition_color;
@@ -163,7 +163,7 @@ do_test(const DoFHandler<dim>& dof)
 
   mf.apply_inverse(inverse, in);
 
-  SolverControl      control(10000, 1e-12);
+  SolverControl control(10000, 1e-12);
   std::ostringstream stream;
   deallog.attach(stream);
   SolverCG<Vector<number>> solver(control);
@@ -181,7 +181,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -203,8 +203,8 @@ test()
   tria.execute_coarsening_and_refinement();
 
   const unsigned int degree = fe_degree;
-  FESystem<dim>      fe(FE_DGQ<dim>(degree), 3);
-  DoFHandler<dim>    dof(tria);
+  FESystem<dim> fe(FE_DGQ<dim>(degree), 3);
+  DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
   do_test<dim, fe_degree, double>(dof);

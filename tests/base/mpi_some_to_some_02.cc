@@ -44,7 +44,7 @@ to_string(const T& object)
 template <int dim>
 void
 test(const unsigned int max_particles,
-     const double       shared_fraction,
+     const double shared_fraction,
      const unsigned int max_cell_levels,
      const unsigned int max_cell_index)
 {
@@ -54,7 +54,7 @@ test(const unsigned int max_particles,
   // Test some fake structure, similar to particles
   typedef typename std::pair<unsigned int, Point<dim>> particle;
 
-  unsigned int          n_local_particles = random_index(max_particles);
+  unsigned int n_local_particles = random_index(max_particles);
   std::vector<particle> particles(n_local_particles);
 
   auto all_n_local_particles
@@ -70,8 +70,8 @@ test(const unsigned int max_particles,
   for(unsigned int i = 0; i < n_local_particles; ++i)
     particles[i] = std::make_pair(my_global_start + i, random_point<dim>());
 
-  std::set<unsigned int>                        shared_indices;
-  std::set<unsigned int>                        shared_procs_set;
+  std::set<unsigned int> shared_indices;
+  std::set<unsigned int> shared_procs_set;
   std::map<unsigned int, std::vector<particle>> shared_particles;
 
   for(unsigned int i = 0; i < n_procs; ++i)
@@ -111,7 +111,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>(40, .3, 5, 10);
 }

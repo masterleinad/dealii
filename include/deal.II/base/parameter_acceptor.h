@@ -385,8 +385,8 @@ public:
    * @param prm The ParameterHandler to use
    */
   static void
-  initialize(const std::string&                  filename        = "",
-             const std::string&                  output_filename = "",
+  initialize(const std::string& filename        = "",
+             const std::string& output_filename = "",
              const ParameterHandler::OutputStyle output_style_for_prm_format
              = ParameterHandler::ShortText,
              ParameterHandler& prm = ParameterAcceptor::prm);
@@ -401,7 +401,7 @@ public:
    * @param prm The ParameterHandler to use
    */
   static void
-  initialize(std::istream&     input_stream,
+  initialize(std::istream& input_stream,
              ParameterHandler& prm = ParameterAcceptor::prm);
 
   /**
@@ -488,10 +488,10 @@ public:
    */
   template <class ParameterType>
   void
-  add_parameter(const std::string&           entry,
-                ParameterType&               parameter,
-                const std::string&           documentation = std::string(),
-                ParameterHandler&            prm_          = prm,
+  add_parameter(const std::string& entry,
+                ParameterType& parameter,
+                const std::string& documentation = std::string(),
+                ParameterHandler& prm_           = prm,
                 const Patterns::PatternBase& pattern
                 = *Patterns::Tools::Convert<ParameterType>::to_pattern());
 
@@ -614,10 +614,10 @@ public:
 // Inline and template functions
 template <class ParameterType>
 void
-ParameterAcceptor::add_parameter(const std::string&           entry,
-                                 ParameterType&               parameter,
-                                 const std::string&           documentation,
-                                 ParameterHandler&            prm,
+ParameterAcceptor::add_parameter(const std::string& entry,
+                                 ParameterType& parameter,
+                                 const std::string& documentation,
+                                 ParameterHandler& prm,
                                  const Patterns::PatternBase& pattern)
 {
   enter_my_subsection(prm);

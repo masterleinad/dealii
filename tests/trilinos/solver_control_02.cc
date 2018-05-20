@@ -39,12 +39,12 @@ main(int argc, char** argv)
 
   {
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int dim        = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
     // Make matrix
-    FDMatrix               testproblem(size, size);
+    FDMatrix testproblem(size, size);
     DynamicSparsityPattern csp(dim, dim);
     testproblem.five_point_structure(csp);
     TrilinosWrappers::SparseMatrix A;
@@ -66,7 +66,7 @@ main(int argc, char** argv)
     deallog.push("Rel tol");
     {
       // Expects success
-      ReductionControl           control(2000, 1.e-30, 1e-6);
+      ReductionControl control(2000, 1.e-30, 1e-6);
       TrilinosWrappers::SolverCG solver(control);
       check_solver_within_range(
         solver.solve(A, u, f, preconditioner), control.last_step(), 49, 51);
@@ -77,7 +77,7 @@ main(int argc, char** argv)
     deallog.push("Abs tol");
     {
       // Expects success
-      ReductionControl           control(2000, 1.e-3, 1e-9);
+      ReductionControl control(2000, 1.e-3, 1e-9);
       TrilinosWrappers::SolverCG solver(control);
       check_solver_within_range(
         solver.solve(A, u, f, preconditioner), control.last_step(), 42, 44);
@@ -88,7 +88,7 @@ main(int argc, char** argv)
     deallog.push("Iterations");
     {
       // Expects failure
-      ReductionControl           control(20, 1.e-30, 1e-6);
+      ReductionControl control(20, 1.e-30, 1e-6);
       TrilinosWrappers::SolverCG solver(control);
       check_solver_within_range(
         solver.solve(A, u, f, preconditioner), control.last_step(), 0, 19);

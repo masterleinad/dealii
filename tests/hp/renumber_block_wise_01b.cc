@@ -40,7 +40,7 @@ template <int dim>
 void
 check()
 {
-  Triangulation<dim>        tr;
+  Triangulation<dim> tr;
   std::vector<unsigned int> sub(3, 1U);
   sub[0] = 2;
   GridGenerator::subdivided_hyper_rectangle(
@@ -64,7 +64,7 @@ check()
   }
   dof.distribute_dofs(fe_collection);
 
-  std::vector<bool>                    touched(dof.n_dofs(), false);
+  std::vector<bool> touched(dof.n_dofs(), false);
   std::vector<types::global_dof_index> local_dof_indices;
   for(typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof.begin_active();

@@ -51,7 +51,7 @@ IndexSet::IndexSet(const Epetra_Map& map)
   else
     {
       const size_type n_indices = map.NumMyElements();
-      size_type*      indices
+      size_type* indices
         = reinterpret_cast<size_type*>(map.MyGlobalElements64());
       add_indices(indices, indices + n_indices);
     }
@@ -77,7 +77,7 @@ IndexSet::IndexSet(const Epetra_Map& map)
   else
     {
       const size_type n_indices = map.NumMyElements();
-      unsigned int*   indices
+      unsigned int* indices
         = reinterpret_cast<unsigned int*>(map.MyGlobalElements());
       add_indices(indices, indices + n_indices);
     }
@@ -228,7 +228,7 @@ IndexSet::get_view(const size_type begin, const size_type end) const
          ExcMessage("End index needs to be larger or equal to begin index!"));
   Assert(end <= size(), ExcMessage("Given range exceeds index set dimension"));
 
-  IndexSet                           result(end - begin);
+  IndexSet result(end - begin);
   std::vector<Range>::const_iterator r1 = ranges.begin();
 
   while(r1 != ranges.end())
@@ -423,7 +423,7 @@ IndexSet::read(std::istream& in)
 {
   AssertThrow(in, ExcIO());
 
-  size_type    s;
+  size_type s;
   unsigned int n_ranges;
 
   in >> s >> n_ranges;
@@ -457,7 +457,7 @@ void
 IndexSet::block_read(std::istream& in)
 {
   size_type size;
-  size_t    n_ranges;
+  size_t n_ranges;
   in.read(reinterpret_cast<char*>(&size), sizeof(size));
   in.read(reinterpret_cast<char*>(&n_ranges), sizeof(n_ranges));
   // we have to clear ranges first
@@ -491,7 +491,7 @@ IndexSet::fill_index_vector(std::vector<size_type>& indices) const
 
 Epetra_Map
 IndexSet::make_trilinos_map(const MPI_Comm& communicator,
-                            const bool      overlapping) const
+                            const bool overlapping) const
 {
   compress();
   (void) communicator;

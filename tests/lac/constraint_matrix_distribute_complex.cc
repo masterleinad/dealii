@@ -33,7 +33,7 @@ main()
   const int dim = 2;
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe(2);
+  FE_Q<dim> fe(2);
 
   GridGenerator::hyper_cube(triangulation);
   DoFHandler<dim> dof_handler(triangulation);

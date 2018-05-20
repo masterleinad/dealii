@@ -83,7 +83,7 @@ main()
 {
   initlog();
 
-  PreconditionIdentity           identity;
+  PreconditionIdentity identity;
   FilteredMatrix<Vector<double>> f;
   f.initialize(identity, false);
   test(f);

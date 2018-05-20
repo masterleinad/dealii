@@ -33,7 +33,7 @@ void
 test_initializer()
 {
   const SymmetricTensor<rank, dim, OtherNumberType> t1;
-  const SymmetricTensor<rank, dim, NumberType>      t2(t1);
+  const SymmetricTensor<rank, dim, NumberType> t2(t1);
 }
 
 template <int rank, typename NumberType, typename OtherNumberType>

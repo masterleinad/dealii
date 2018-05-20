@@ -43,13 +43,13 @@ main()
 {
   initlog();
 
-  int           t0 = 1;
-  unsigned int  t1 = 2;
+  int t0           = 1;
+  unsigned int t1  = 2;
   unsigned char t2 = 3;
-  std::string   t3 = "Ciao";
-  double        t4 = 4.0;
-  bool          t5 = true;
-  float         t6 = 5.5;
+  std::string t3   = "Ciao";
+  double t4        = 4.0;
+  bool t5          = true;
+  float t6         = 5.5;
 
   test(t0);
   test(t1);

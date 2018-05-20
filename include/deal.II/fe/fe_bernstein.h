@@ -90,7 +90,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_restriction_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -103,7 +103,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_prolongation_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -131,7 +131,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
 
   /**

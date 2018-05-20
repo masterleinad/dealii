@@ -61,7 +61,7 @@ template <int dim>
 void
 test(const Triangulation<dim>& tr,
      const FiniteElement<dim>& fe,
-     const unsigned int        degree)
+     const unsigned int degree)
 {
   deallog << "FE=" << fe.get_name() << std::endl;
 
@@ -76,7 +76,7 @@ test(const Triangulation<dim>& tr,
   VectorTools::project(dof, cm, QGauss<2>(2 + degree), F(), fe_function);
 
   const QGauss<dim> quadrature(2);
-  FEValues<dim>     fe_values(fe,
+  FEValues<dim> fe_values(fe,
                           quadrature,
                           update_values | update_gradients
                             | update_quadrature_points);
@@ -87,7 +87,7 @@ test(const Triangulation<dim>& tr,
   std::vector<typename dealii::internal::CurlType<dim>::type> curls(
     quadrature.size());
   std::vector<Tensor<2, dim>> grads(quadrature.size());
-  FEValuesExtractors::Vector  extractor(0);
+  FEValuesExtractors::Vector extractor(0);
   fe_values[extractor].get_function_curls(fe_function, curls);
   fe_values[extractor].get_function_gradients(fe_function, grads);
 

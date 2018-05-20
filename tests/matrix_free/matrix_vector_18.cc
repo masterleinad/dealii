@@ -60,9 +60,9 @@ private:
   const MatrixFree<dim, Number>& data;
 
   void
-  local_operation(const MatrixFree<dim, Number>&               data,
-                  VectorType&                                  out,
-                  const VectorType&                            in,
+  local_operation(const MatrixFree<dim, Number>& data,
+                  VectorType& out,
+                  const VectorType& in,
                   const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
@@ -93,9 +93,9 @@ private:
 
 template <int dim, int fe_degree, typename number>
 void
-do_test(const DoFHandler<dim>&  dof,
+do_test(const DoFHandler<dim>& dof,
         const ConstraintMatrix& constraints,
-        const unsigned int      parallel_option = 0)
+        const unsigned int parallel_option = 0)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
   if(parallel_option > 0)
@@ -103,7 +103,7 @@ do_test(const DoFHandler<dim>&  dof,
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     if(parallel_option == 1)
       data.tasks_parallel_scheme
@@ -124,9 +124,9 @@ do_test(const DoFHandler<dim>&  dof,
   }
 
   MatrixFreeTest<dim, fe_degree, number> mf(mf_data);
-  Vector<number>                         in(dof.n_dofs()), out(dof.n_dofs());
-  Vector<number>                         in_dist(dof.n_dofs());
-  Vector<number>                         out_dist(in_dist);
+  Vector<number> in(dof.n_dofs()), out(dof.n_dofs());
+  Vector<number> in_dist(dof.n_dofs());
+  Vector<number> out_dist(in_dist);
 
   for(unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
@@ -217,7 +217,7 @@ test()
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;

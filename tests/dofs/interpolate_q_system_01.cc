@@ -69,14 +69,14 @@ test()
 
   for(unsigned int p = 1; p < 6 - dim; ++p)
     {
-      FE_Q<dim>       fe_1(p);
-      FE_Q<dim>       fe_2(p + 1);
-      FESystem<dim>   fe(fe_1, 2, fe_2, 1);
+      FE_Q<dim> fe_1(p);
+      FE_Q<dim> fe_2(p + 1);
+      FESystem<dim> fe(fe_1, 2, fe_2, 1);
       DoFHandler<dim> dof_handler(triangulation);
       dof_handler.distribute_dofs(fe);
 
       Vector<double> interpolant(dof_handler.n_dofs());
-      Vector<float>  error(triangulation.n_active_cells());
+      Vector<float> error(triangulation.n_active_cells());
       for(unsigned int q = 0; q <= p + 2; ++q)
         {
           // interpolate the function

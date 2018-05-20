@@ -80,9 +80,9 @@ private:
   dirichlet_conditions();
 
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe;
-  DoFHandler<dim>    dof_handler;
-  Vector<double>     solution;
+  FESystem<dim> fe;
+  DoFHandler<dim> dof_handler;
+  Vector<double> solution;
 };
 
 // Construct FESystem with
@@ -118,7 +118,7 @@ void
 FindBug<dim>::dirichlet_conditions()
 {
   std::map<types::global_dof_index, double> dirichlet_dofs;
-  std::vector<bool>                         component_mask(dim + 1, false);
+  std::vector<bool> component_mask(dim + 1, false);
   component_mask[dim] = true;
 
   // This is just for the final
@@ -133,7 +133,7 @@ FindBug<dim>::dirichlet_conditions()
                                            dirichlet_dofs,
                                            component_mask);
 
-  std::vector<bool>            fixed_dofs(dof_handler.n_dofs());
+  std::vector<bool> fixed_dofs(dof_handler.n_dofs());
   std::set<types::boundary_id> boundary_ids;
   boundary_ids.insert(0);
 

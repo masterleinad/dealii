@@ -84,8 +84,8 @@ public:
   /**
    * Constructor initializing default values.
    */
-  PreconditionBlockBase(bool      store_diagonals = false,
-                        Inversion method          = gauss_jordan);
+  PreconditionBlockBase(bool store_diagonals = false,
+                        Inversion method     = gauss_jordan);
 
   /**
    * The virtual destructor
@@ -105,9 +105,9 @@ public:
    */
   void
   reinit(unsigned int nblocks,
-         size_type    blocksize,
-         bool         compress,
-         Inversion    method = gauss_jordan);
+         size_type blocksize,
+         bool compress,
+         Inversion method = gauss_jordan);
 
   /**
    * Tell the class that inverses are computed.
@@ -144,8 +144,8 @@ public:
    */
   template <typename number2>
   void
-  inverse_vmult(size_type              i,
-                Vector<number2>&       dst,
+  inverse_vmult(size_type i,
+                Vector<number2>& dst,
                 const Vector<number2>& src) const;
 
   /**
@@ -153,8 +153,8 @@ public:
    */
   template <typename number2>
   void
-  inverse_Tvmult(size_type              i,
-                 Vector<number2>&       dst,
+  inverse_Tvmult(size_type i,
+                 Vector<number2>& dst,
                  const Vector<number2>& src) const;
 
   /**
@@ -296,7 +296,7 @@ private:
 //----------------------------------------------------------------------//
 
 template <typename number>
-inline PreconditionBlockBase<number>::PreconditionBlockBase(bool      store,
+inline PreconditionBlockBase<number>::PreconditionBlockBase(bool store,
                                                             Inversion method)
   : inversion(method),
     n_diagonal_blocks(0),
@@ -326,9 +326,9 @@ PreconditionBlockBase<number>::clear()
 template <typename number>
 inline void
 PreconditionBlockBase<number>::reinit(unsigned int n,
-                                      size_type    b,
-                                      bool         compress,
-                                      Inversion    method)
+                                      size_type b,
+                                      bool compress,
+                                      Inversion method)
 {
   inversion          = method;
   var_same_diagonal  = compress;
@@ -410,8 +410,8 @@ PreconditionBlockBase<number>::size() const
 template <typename number>
 template <typename number2>
 inline void
-PreconditionBlockBase<number>::inverse_vmult(size_type              i,
-                                             Vector<number2>&       dst,
+PreconditionBlockBase<number>::inverse_vmult(size_type i,
+                                             Vector<number2>& dst,
                                              const Vector<number2>& src) const
 {
   const size_type ii = same_diagonal() ? 0U : i;
@@ -438,8 +438,8 @@ PreconditionBlockBase<number>::inverse_vmult(size_type              i,
 template <typename number>
 template <typename number2>
 inline void
-PreconditionBlockBase<number>::inverse_Tvmult(size_type              i,
-                                              Vector<number2>&       dst,
+PreconditionBlockBase<number>::inverse_Tvmult(size_type i,
+                                              Vector<number2>& dst,
                                               const Vector<number2>& src) const
 {
   const size_type ii = same_diagonal() ? 0U : i;
@@ -600,13 +600,13 @@ PreconditionBlockBase<number>::log_statistics() const
   if(inversion == svd)
     {
       unsigned int kermin = 100000000, kermax = 0;
-      double       sigmin = 1.e300, sigmax = -1.e300;
-      double       kappamin = 1.e300, kappamax = -1.e300;
+      double sigmin = 1.e300, sigmax = -1.e300;
+      double kappamin = 1.e300, kappamax = -1.e300;
 
       for(size_type b = 0; b < size(); ++b)
         {
           const LAPACKFullMatrix<number>& matrix = inverse_svd(b);
-          size_type                       k      = 1;
+          size_type k                            = 1;
           while(k <= matrix.n_cols()
                 && matrix.singular_value(matrix.n_cols() - k) == 0)
             ++k;

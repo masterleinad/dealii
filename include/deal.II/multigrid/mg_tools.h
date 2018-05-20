@@ -50,9 +50,9 @@ namespace MGTools
   template <int dim, int spacedim>
   void
   compute_row_length_vector(const DoFHandler<dim, spacedim>& dofs,
-                            const unsigned int               level,
-                            std::vector<unsigned int>&       row_lengths,
-                            const DoFTools::Coupling         flux_couplings
+                            const unsigned int level,
+                            std::vector<unsigned int>& row_lengths,
+                            const DoFTools::Coupling flux_couplings
                             = DoFTools::none);
 
   /**
@@ -61,9 +61,9 @@ namespace MGTools
    */
   template <int dim, int spacedim>
   void
-  compute_row_length_vector(const DoFHandler<dim, spacedim>&    dofs,
-                            const unsigned int                  level,
-                            std::vector<unsigned int>&          row_lengths,
+  compute_row_length_vector(const DoFHandler<dim, spacedim>& dofs,
+                            const unsigned int level,
+                            std::vector<unsigned int>& row_lengths,
                             const Table<2, DoFTools::Coupling>& couplings,
                             const Table<2, DoFTools::Coupling>& flux_couplings);
 
@@ -79,8 +79,8 @@ namespace MGTools
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
   make_sparsity_pattern(const DoFHandlerType& dof_handler,
-                        SparsityPatternType&  sparsity,
-                        const unsigned int    level);
+                        SparsityPatternType& sparsity,
+                        const unsigned int level);
 
   /**
    * Make a sparsity pattern including fluxes of discontinuous Galerkin
@@ -93,8 +93,8 @@ namespace MGTools
   template <int dim, typename SparsityPatternType, int spacedim>
   void
   make_flux_sparsity_pattern(const DoFHandler<dim, spacedim>& dof_handler,
-                             SparsityPatternType&             sparsity,
-                             const unsigned int               level);
+                             SparsityPatternType& sparsity,
+                             const unsigned int level);
 
   /**
    * Create sparsity pattern for the fluxes at refinement edges. The matrix
@@ -105,8 +105,8 @@ namespace MGTools
   template <int dim, typename SparsityPatternType, int spacedim>
   void
   make_flux_sparsity_pattern_edge(const DoFHandler<dim, spacedim>& dof_handler,
-                                  SparsityPatternType&             sparsity,
-                                  const unsigned int               level);
+                                  SparsityPatternType& sparsity,
+                                  const unsigned int level);
   /**
    * This function does the same as the other with the same name, but it gets
    * two additional coefficient matrices. A matrix entry will only be
@@ -118,9 +118,9 @@ namespace MGTools
    */
   template <int dim, typename SparsityPatternType, int spacedim>
   void
-  make_flux_sparsity_pattern(const DoFHandler<dim, spacedim>&    dof,
-                             SparsityPatternType&                sparsity,
-                             const unsigned int                  level,
+  make_flux_sparsity_pattern(const DoFHandler<dim, spacedim>& dof,
+                             SparsityPatternType& sparsity,
+                             const unsigned int level,
                              const Table<2, DoFTools::Coupling>& int_mask,
                              const Table<2, DoFTools::Coupling>& flux_mask);
 
@@ -135,9 +135,9 @@ namespace MGTools
   template <int dim, typename SparsityPatternType, int spacedim>
   void
   make_flux_sparsity_pattern_edge(
-    const DoFHandler<dim, spacedim>&    dof_handler,
-    SparsityPatternType&                sparsity,
-    const unsigned int                  level,
+    const DoFHandler<dim, spacedim>& dof_handler,
+    SparsityPatternType& sparsity,
+    const unsigned int level,
     const Table<2, DoFTools::Coupling>& flux_mask);
 
   /**
@@ -147,10 +147,10 @@ namespace MGTools
    */
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_interface_sparsity_pattern(const DoFHandlerType&    dof_handler,
+  make_interface_sparsity_pattern(const DoFHandlerType& dof_handler,
                                   const MGConstrainedDoFs& mg_constrained_dofs,
-                                  SparsityPatternType&     sparsity,
-                                  const unsigned int       level);
+                                  SparsityPatternType& sparsity,
+                                  const unsigned int level);
 
   /**
    * Count the dofs block-wise on each level.
@@ -161,7 +161,7 @@ namespace MGTools
   template <typename DoFHandlerType>
   void
   count_dofs_per_block(
-    const DoFHandlerType&                              dof_handler,
+    const DoFHandlerType& dof_handler,
     std::vector<std::vector<types::global_dof_index>>& dofs_per_block,
     std::vector<unsigned int> target_block = std::vector<unsigned int>());
 
@@ -175,9 +175,9 @@ namespace MGTools
   template <int dim, int spacedim>
   void
   count_dofs_per_component(
-    const DoFHandler<dim, spacedim>&                   mg_dof,
+    const DoFHandler<dim, spacedim>& mg_dof,
     std::vector<std::vector<types::global_dof_index>>& result,
-    const bool                                         only_once = false,
+    const bool only_once                       = false,
     std::vector<unsigned int> target_component = std::vector<unsigned int>());
 
   /**
@@ -202,8 +202,8 @@ namespace MGTools
   template <int dim, int spacedim>
   void
   make_boundary_list(
-    const DoFHandler<dim, spacedim>&                mg_dof,
-    const typename FunctionMap<dim>::type&          function_map,
+    const DoFHandler<dim, spacedim>& mg_dof,
+    const typename FunctionMap<dim>::type& function_map,
     std::vector<std::set<types::global_dof_index>>& boundary_indices,
     const ComponentMask& component_mask = ComponentMask());
 
@@ -216,9 +216,9 @@ namespace MGTools
    */
   template <int dim, int spacedim>
   void
-  make_boundary_list(const DoFHandler<dim, spacedim>&       mg_dof,
+  make_boundary_list(const DoFHandler<dim, spacedim>& mg_dof,
                      const typename FunctionMap<dim>::type& function_map,
-                     std::vector<IndexSet>&                 boundary_indices,
+                     std::vector<IndexSet>& boundary_indices,
                      const ComponentMask& component_mask = ComponentMask());
 
   /**
@@ -230,9 +230,9 @@ namespace MGTools
    */
   template <int dim, int spacedim>
   void
-  make_boundary_list(const DoFHandler<dim, spacedim>&    mg_dof,
+  make_boundary_list(const DoFHandler<dim, spacedim>& mg_dof,
                      const std::set<types::boundary_id>& boundary_ids,
-                     std::vector<IndexSet>&              boundary_indices,
+                     std::vector<IndexSet>& boundary_indices,
                      const ComponentMask& component_mask = ComponentMask());
 
   /**
@@ -243,12 +243,12 @@ namespace MGTools
   template <int dim, int spacedim>
   void
   extract_inner_interface_dofs(const DoFHandler<dim, spacedim>& mg_dof_handler,
-                               std::vector<IndexSet>&           interface_dofs);
+                               std::vector<IndexSet>& interface_dofs);
 
   template <int dim, int spacedim>
   void
   extract_non_interface_dofs(
-    const DoFHandler<dim, spacedim>&                mg_dof_handler,
+    const DoFHandler<dim, spacedim>& mg_dof_handler,
     std::vector<std::set<types::global_dof_index>>& non_interface_dofs);
 
   /**

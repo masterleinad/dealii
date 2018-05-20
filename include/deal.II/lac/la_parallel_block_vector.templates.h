@@ -50,7 +50,7 @@ namespace LinearAlgebra
     template <typename Number>
     BlockVector<Number>::BlockVector(const std::vector<IndexSet>& local_ranges,
                                      const std::vector<IndexSet>& ghost_indices,
-                                     const MPI_Comm               communicator)
+                                     const MPI_Comm communicator)
     {
       std::vector<size_type> sizes(local_ranges.size());
       for(unsigned int i = 0; i < local_ranges.size(); ++i)
@@ -65,7 +65,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     BlockVector<Number>::BlockVector(const std::vector<IndexSet>& local_ranges,
-                                     const MPI_Comm               communicator)
+                                     const MPI_Comm communicator)
     {
       std::vector<size_type> sizes(local_ranges.size());
       for(unsigned int i = 0; i < local_ranges.size(); ++i)
@@ -101,7 +101,7 @@ namespace LinearAlgebra
     void
     BlockVector<Number>::reinit(const size_type n_bl,
                                 const size_type bl_sz,
-                                const bool      omit_zeroing_entries)
+                                const bool omit_zeroing_entries)
     {
       std::vector<size_type> n(n_bl, bl_sz);
       reinit(n, omit_zeroing_entries);
@@ -325,7 +325,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::equ(const Number                     a,
+    BlockVector<Number>::equ(const Number a,
                              const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
@@ -340,9 +340,9 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::equ(const Number               a,
+    BlockVector<Number>::equ(const Number a,
                              const BlockVector<Number>& v,
-                             const Number               b,
+                             const Number b,
                              const BlockVector<Number>& w)
     {
       AssertDimension(this->n_blocks(), v.n_blocks());
@@ -393,7 +393,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::add(const Number                     a,
+    BlockVector<Number>::add(const Number a,
                              const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
@@ -408,9 +408,9 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::add(const Number                     a,
+    BlockVector<Number>::add(const Number a,
                              const VectorSpaceVector<Number>& vv,
-                             const Number                     b,
+                             const Number b,
                              const VectorSpaceVector<Number>& ww)
     {
       // Downcast. Throws an exception if invalid.
@@ -431,8 +431,8 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::sadd(const Number                     x,
-                              const Number                     a,
+    BlockVector<Number>::sadd(const Number x,
+                              const Number a,
                               const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
@@ -456,10 +456,10 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::sadd(const Number               x,
-                              const Number               a,
+    BlockVector<Number>::sadd(const Number x,
+                              const Number a,
                               const BlockVector<Number>& v,
-                              const Number               b,
+                              const Number b,
                               const BlockVector<Number>& w)
     {
       AssertDimension(this->n_blocks(), v.n_blocks());
@@ -471,7 +471,7 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename OtherNumber>
     void
-    BlockVector<Number>::add(const std::vector<size_type>&        indices,
+    BlockVector<Number>::add(const std::vector<size_type>& indices,
                              const ::dealii::Vector<OtherNumber>& values)
     {
       for(size_type i = 0; i < indices.size(); ++i)
@@ -481,7 +481,7 @@ namespace LinearAlgebra
     template <typename Number>
     void
     BlockVector<Number>::add(const std::vector<size_type>& indices,
-                             const std::vector<Number>&    values)
+                             const std::vector<Number>& values)
     {
       for(size_type i = 0; i < indices.size(); ++i)
         (*this)(indices[i]) += values[i];
@@ -512,7 +512,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     Number BlockVector<Number>::
-           operator*(const VectorSpaceVector<Number>& vv) const
+    operator*(const VectorSpaceVector<Number>& vv) const
     {
       Assert(this->n_blocks() > 0, ExcEmptyObject());
 
@@ -633,7 +633,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     inline Number
-    BlockVector<Number>::add_and_dot(const Number                     a,
+    BlockVector<Number>::add_and_dot(const Number a,
                                      const VectorSpaceVector<Number>& vv,
                                      const VectorSpaceVector<Number>& ww)
     {
@@ -712,10 +712,10 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::print(std::ostream&      out,
+    BlockVector<Number>::print(std::ostream& out,
                                const unsigned int precision,
-                               const bool         scientific,
-                               const bool         across) const
+                               const bool scientific,
+                               const bool across) const
     {
       for(unsigned int b = 0; b < this->n_blocks(); ++b)
         this->block(b).print(out, precision, scientific, across);
@@ -798,9 +798,9 @@ namespace LinearAlgebra
     template <typename FullMatrixType>
     Number
     BlockVector<Number>::multivector_inner_product_with_metric(
-      const FullMatrixType&      matrix,
+      const FullMatrixType& matrix,
       const BlockVector<Number>& V,
-      const bool                 symmetric) const
+      const bool symmetric) const
     {
       Number res = Number(0.);
 
@@ -844,10 +844,10 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename FullMatrixType>
     void
-    BlockVector<Number>::mmult(BlockVector<Number>&  V,
+    BlockVector<Number>::mmult(BlockVector<Number>& V,
                                const FullMatrixType& matrix,
-                               const Number          s,
-                               const Number          b) const
+                               const Number s,
+                               const Number b) const
     {
       const unsigned int m = this->n_blocks();
       const unsigned int n = V.n_blocks();

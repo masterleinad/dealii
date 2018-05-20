@@ -43,16 +43,16 @@
 template <typename MatrixType>
 void
 check_vmult_quadratic(std::vector<double>& residuals,
-                      const MatrixType&    A,
-                      const char*          prefix)
+                      const MatrixType& A,
+                      const char* prefix)
 {
   deallog.push(prefix);
 
-  Vector<double>        u(A.n());
-  Vector<double>        f(A.m());
+  Vector<double> u(A.n());
+  Vector<double> f(A.m());
   GrowingVectorMemory<> mem;
 
-  SolverControl      control(10, 1.e-13, false);
+  SolverControl control(10, 1.e-13, false);
   SolverRichardson<> rich(
     control, mem, SolverRichardson<>::AdditionalData(/*omega=*/.01));
   SolverRichardson<> prich(
@@ -64,8 +64,8 @@ check_vmult_quadratic(std::vector<double>& residuals,
 
   typename PreconditionBlock<MatrixType, float>::AdditionalData data(block_size,
                                                                      1.2);
-  std::vector<types::global_dof_index>                          perm(A.n());
-  std::vector<types::global_dof_index>                          iperm(A.n());
+  std::vector<types::global_dof_index> perm(A.n());
+  std::vector<types::global_dof_index> iperm(A.n());
   for(unsigned int i = 0; i < n_blocks; ++i)
     for(unsigned int j = 0; j < block_size; ++j)
       {
@@ -73,7 +73,7 @@ check_vmult_quadratic(std::vector<double>& residuals,
         iperm[perm[block_size * i + j]] = block_size * i + j;
       }
 
-  PreconditionIdentity           identity;
+  PreconditionIdentity identity;
   PreconditionJacobi<MatrixType> jacobi;
   jacobi.initialize(A, .5);
   PreconditionSOR<MatrixType> sor;
@@ -119,22 +119,22 @@ check_vmult_quadratic(std::vector<double>& residuals,
 }
 
 void
-check_vmult_quadratic(std::vector<double>&             residuals,
+check_vmult_quadratic(std::vector<double>& residuals,
                       const BlockSparseMatrix<double>& A,
-                      const char*                      prefix)
+                      const char* prefix)
 {
   deallog.push(prefix);
 
-  Vector<double>        u(A.n());
-  Vector<double>        f(A.m());
+  Vector<double> u(A.n());
+  Vector<double> f(A.m());
   GrowingVectorMemory<> mem;
 
-  SolverControl      control(10, 1.e-13, false);
+  SolverControl control(10, 1.e-13, false);
   SolverRichardson<> rich(
     control, mem, SolverRichardson<>::AdditionalData(/*omega=*/.01));
   SolverRichardson<> prich(
     control, mem, SolverRichardson<>::AdditionalData(/*omega=*/1.));
-  PreconditionIdentity                          identity;
+  PreconditionIdentity identity;
   PreconditionJacobi<BlockSparseMatrix<double>> jacobi;
   jacobi.initialize(A, .5);
 
@@ -227,8 +227,8 @@ void
 check_conjugate(std::ostream& out)
 {
   SparseMatrixEZ<double> B(3, 2);
-  SparseMatrixEZ<float>  A1(2, 2);
-  SparseMatrixEZ<float>  A2(3, 3);
+  SparseMatrixEZ<float> A1(2, 2);
+  SparseMatrixEZ<float> A2(3, 3);
   SparseMatrixEZ<double> C1(3, 3);
   SparseMatrixEZ<double> C2(2, 2);
 
@@ -278,14 +278,14 @@ main()
   check_ez_iterator();
   check_conjugate(logfile);
 
-  FDMatrix     testproblem(size, size);
+  FDMatrix testproblem(size, size);
   unsigned int dim = (size - 1) * (size - 1);
 
   std::vector<double> A_res;
   std::vector<double> E_res;
 
   // usual sparse matrix
-  SparsityPattern      structure(dim, dim, 5);
+  SparsityPattern structure(dim, dim, 5);
   SparseMatrix<double> A;
   {
     deallog << "Structure" << std::endl;
@@ -359,7 +359,7 @@ main()
   A.block_write(tmp_write);
   tmp_write.close();
 
-  std::ifstream        tmp_read("sparse_matrices.tmp");
+  std::ifstream tmp_read("sparse_matrices.tmp");
   SparseMatrix<double> A_tmp;
   A_tmp.reinit(A.get_sparsity_pattern());
   A_tmp.block_read(tmp_read);

@@ -23,7 +23,7 @@ void
 check()
 {
   const unsigned int size = 10;
-  Vector<double>     vec(size);
+  Vector<double> vec(size);
   for(unsigned int i = 0; i < size; ++i)
     vec(i) = 2;
   DiagonalMatrix<Vector<double>> mat;

@@ -29,7 +29,7 @@ void
 test(std::string filename)
 {
   Triangulation<dim, spacedim> tria;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);

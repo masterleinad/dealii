@@ -56,7 +56,7 @@ verify(const T& t1, T& t2)
   // verify correctness of the
   // serialization
   {
-    std::istringstream            iss(oss.str());
+    std::istringstream iss(oss.str());
     boost::archive::text_iarchive ia(iss, boost::archive::no_header);
 
     ia >> t2;

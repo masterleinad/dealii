@@ -24,7 +24,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim>
 double
 TensorProductPolynomialsBubbles<dim>::compute_value(const unsigned int i,
-                                                    const Point<dim>&  p) const
+                                                    const Point<dim>& p) const
 {
   const unsigned int q_degree      = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
@@ -60,7 +60,7 @@ TensorProductPolynomialsBubbles<0>::compute_value(const unsigned int,
 template <int dim>
 Tensor<1, dim>
 TensorProductPolynomialsBubbles<dim>::compute_grad(const unsigned int i,
-                                                   const Point<dim>&  p) const
+                                                   const Point<dim>& p) const
 {
   const unsigned int q_degree      = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
@@ -73,7 +73,7 @@ TensorProductPolynomialsBubbles<dim>::compute_grad(const unsigned int i,
     return this->TensorProductPolynomials<dim>::compute_grad(i, p);
 
   const unsigned int comp = i - this->n_tensor_pols;
-  Tensor<1, dim>     grad;
+  Tensor<1, dim> grad;
 
   for(unsigned int d = 0; d < dim; ++d)
     {
@@ -106,7 +106,7 @@ template <int dim>
 Tensor<2, dim>
 TensorProductPolynomialsBubbles<dim>::compute_grad_grad(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim>& p) const
 {
   const unsigned int q_degree      = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
@@ -192,7 +192,7 @@ TensorProductPolynomialsBubbles<dim>::compute_grad_grad(
 
   //calculate \psi *(\partial j \partial_k monomial) and sum
   Tensor<2, dim> grad_grad;
-  double         psi_value = 1.;
+  double psi_value = 1.;
   for(unsigned int x = 0; x < dim; ++x)
     psi_value *= v[x][0];
 
@@ -208,8 +208,8 @@ TensorProductPolynomialsBubbles<dim>::compute_grad_grad(
 template <int dim>
 void
 TensorProductPolynomialsBubbles<dim>::compute(
-  const Point<dim>&            p,
-  std::vector<double>&         values,
+  const Point<dim>& p,
+  std::vector<double>& values,
   std::vector<Tensor<1, dim>>& grads,
   std::vector<Tensor<2, dim>>& grad_grads,
   std::vector<Tensor<3, dim>>& third_derivatives,

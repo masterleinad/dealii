@@ -30,7 +30,7 @@ test()
         sp.add(i, j);
   sp.compress();
 
-  TrilinosWrappers::SparseMatrix                 m(sp);
+  TrilinosWrappers::SparseMatrix m(sp);
   TrilinosWrappers::SparseMatrix::const_iterator i = m.begin();
   deallog << i->value() << std::endl;
   ++i;

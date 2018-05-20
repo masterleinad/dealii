@@ -60,7 +60,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_DGQ<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
@@ -87,8 +87,8 @@ test()
       in(i)              = entry;
     }
 
-  MatrixFree<dim, double>                          mf_data;
-  const QGauss<1>                                  quad(fe_degree + 1);
+  MatrixFree<dim, double> mf_data;
+  const QGauss<1> quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
   data.tasks_block_size      = 3;

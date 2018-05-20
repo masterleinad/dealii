@@ -234,8 +234,8 @@ namespace MeshWorker
        * <code>index</code> in the vector #matrix.
        */
       void
-      assemble(const FullMatrix<double>&                   M,
-               const unsigned int                          index,
+      assemble(const FullMatrix<double>& M,
+               const unsigned int index,
                const std::vector<types::global_dof_index>& i1,
                const std::vector<types::global_dof_index>& i2);
 
@@ -324,8 +324,8 @@ namespace MeshWorker
        * Assemble a single matrix into a global matrix.
        */
       void
-      assemble(MatrixType&                                 G,
-               const FullMatrix<double>&                   M,
+      assemble(MatrixType& G,
+               const FullMatrix<double>& M,
                const std::vector<types::global_dof_index>& i1,
                const std::vector<types::global_dof_index>& i2);
 
@@ -333,19 +333,19 @@ namespace MeshWorker
        * Assemble a single matrix into a global matrix.
        */
       void
-      assemble(MatrixType&                                 G,
-               const FullMatrix<double>&                   M,
+      assemble(MatrixType& G,
+               const FullMatrix<double>& M,
                const std::vector<types::global_dof_index>& i1,
                const std::vector<types::global_dof_index>& i2,
-               const unsigned int                          level);
+               const unsigned int level);
 
       /**
        * Assemble a single matrix into a global matrix.
        */
 
       void
-      assemble_up(MatrixType&                                 G,
-                  const FullMatrix<double>&                   M,
+      assemble_up(MatrixType& G,
+                  const FullMatrix<double>& M,
                   const std::vector<types::global_dof_index>& i1,
                   const std::vector<types::global_dof_index>& i2,
                   const unsigned int level = numbers::invalid_unsigned_int);
@@ -354,8 +354,8 @@ namespace MeshWorker
        */
 
       void
-      assemble_down(MatrixType&                                 G,
-                    const FullMatrix<double>&                   M,
+      assemble_down(MatrixType& G,
+                    const FullMatrix<double>& M,
                     const std::vector<types::global_dof_index>& i1,
                     const std::vector<types::global_dof_index>& i2,
                     const unsigned int level = numbers::invalid_unsigned_int);
@@ -365,8 +365,8 @@ namespace MeshWorker
        */
 
       void
-      assemble_in(MatrixType&                                 G,
-                  const FullMatrix<double>&                   M,
+      assemble_in(MatrixType& G,
+                  const FullMatrix<double>& M,
                   const std::vector<types::global_dof_index>& i1,
                   const std::vector<types::global_dof_index>& i2,
                   const unsigned int level = numbers::invalid_unsigned_int);
@@ -376,8 +376,8 @@ namespace MeshWorker
        */
 
       void
-      assemble_out(MatrixType&                                 G,
-                   const FullMatrix<double>&                   M,
+      assemble_out(MatrixType& G,
+                   const FullMatrix<double>& M,
                    const std::vector<types::global_dof_index>& i1,
                    const std::vector<types::global_dof_index>& i2,
                    const unsigned int level = numbers::invalid_unsigned_int);
@@ -497,15 +497,15 @@ namespace MeshWorker
        * <code>index</code> in the vector #matrix.
        */
       void
-      assemble(const FullMatrix<double>&                   M,
-               const Vector<double>&                       vector,
-               const unsigned int                          index,
+      assemble(const FullMatrix<double>& M,
+               const Vector<double>& vector,
+               const unsigned int index,
                const std::vector<types::global_dof_index>& indices);
 
       void
-      assemble(const FullMatrix<double>&                   M,
-               const Vector<double>&                       vector,
-               const unsigned int                          index,
+      assemble(const FullMatrix<double>& M,
+               const Vector<double>& vector,
+               const unsigned int index,
                const std::vector<types::global_dof_index>& i1,
                const std::vector<types::global_dof_index>& i2);
     };
@@ -636,8 +636,8 @@ namespace MeshWorker
     template <typename MatrixType>
     inline void
     MatrixSimple<MatrixType>::assemble(
-      const FullMatrix<double>&                   M,
-      const unsigned int                          index,
+      const FullMatrix<double>& M,
+      const unsigned int index,
       const std::vector<types::global_dof_index>& i1,
       const std::vector<types::global_dof_index>& i2)
     {
@@ -808,8 +808,8 @@ namespace MeshWorker
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::assemble(
-      MatrixType&                                 G,
-      const FullMatrix<double>&                   M,
+      MatrixType& G,
+      const FullMatrix<double>& M,
       const std::vector<types::global_dof_index>& i1,
       const std::vector<types::global_dof_index>& i2)
     {
@@ -827,11 +827,11 @@ namespace MeshWorker
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::assemble(
-      MatrixType&                                 G,
-      const FullMatrix<double>&                   M,
+      MatrixType& G,
+      const FullMatrix<double>& M,
       const std::vector<types::global_dof_index>& i1,
       const std::vector<types::global_dof_index>& i2,
-      const unsigned int                          level)
+      const unsigned int level)
     {
       AssertDimension(M.m(), i1.size());
       AssertDimension(M.n(), i2.size());
@@ -879,11 +879,11 @@ namespace MeshWorker
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::assemble_up(
-      MatrixType&                                 G,
-      const FullMatrix<double>&                   M,
+      MatrixType& G,
+      const FullMatrix<double>& M,
       const std::vector<types::global_dof_index>& i1,
       const std::vector<types::global_dof_index>& i2,
-      const unsigned int                          level)
+      const unsigned int level)
     {
       AssertDimension(M.n(), i1.size());
       AssertDimension(M.m(), i2.size());
@@ -908,11 +908,11 @@ namespace MeshWorker
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::assemble_down(
-      MatrixType&                                 G,
-      const FullMatrix<double>&                   M,
+      MatrixType& G,
+      const FullMatrix<double>& M,
       const std::vector<types::global_dof_index>& i1,
       const std::vector<types::global_dof_index>& i2,
-      const unsigned int                          level)
+      const unsigned int level)
     {
       AssertDimension(M.m(), i1.size());
       AssertDimension(M.n(), i2.size());
@@ -937,11 +937,11 @@ namespace MeshWorker
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::assemble_in(
-      MatrixType&                                 G,
-      const FullMatrix<double>&                   M,
+      MatrixType& G,
+      const FullMatrix<double>& M,
       const std::vector<types::global_dof_index>& i1,
       const std::vector<types::global_dof_index>& i2,
-      const unsigned int                          level)
+      const unsigned int level)
     {
       AssertDimension(M.m(), i1.size());
       AssertDimension(M.n(), i2.size());
@@ -976,11 +976,11 @@ namespace MeshWorker
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::assemble_out(
-      MatrixType&                                 G,
-      const FullMatrix<double>&                   M,
+      MatrixType& G,
+      const FullMatrix<double>& M,
       const std::vector<types::global_dof_index>& i1,
       const std::vector<types::global_dof_index>& i2,
-      const unsigned int                          level)
+      const unsigned int level)
     {
       AssertDimension(M.n(), i1.size());
       AssertDimension(M.m(), i2.size());
@@ -1189,7 +1189,7 @@ namespace MeshWorker
     SystemSimple<MatrixType, VectorType>::initialize(MatrixType& m,
                                                      VectorType& rhs)
     {
-      AnyData     data;
+      AnyData data;
       VectorType* p = &rhs;
       data.add(p, "right hand side");
 
@@ -1208,7 +1208,7 @@ namespace MeshWorker
     template <class DOFINFO>
     inline void
     SystemSimple<MatrixType, VectorType>::initialize_info(DOFINFO& info,
-                                                          bool     face) const
+                                                          bool face) const
     {
       MatrixSimple<MatrixType>::initialize_info(info, face);
       ResidualSimple<VectorType>::initialize_info(info, face);
@@ -1217,16 +1217,16 @@ namespace MeshWorker
     template <typename MatrixType, typename VectorType>
     inline void
     SystemSimple<MatrixType, VectorType>::assemble(
-      const FullMatrix<double>&                   M,
-      const Vector<double>&                       vector,
-      const unsigned int                          index,
+      const FullMatrix<double>& M,
+      const Vector<double>& vector,
+      const unsigned int index,
       const std::vector<types::global_dof_index>& indices)
     {
       AssertDimension(M.m(), indices.size());
       AssertDimension(M.n(), indices.size());
 
-      AnyData     residuals = ResidualSimple<VectorType>::residuals;
-      VectorType* v         = residuals.entry<VectorType*>(index);
+      AnyData residuals = ResidualSimple<VectorType>::residuals;
+      VectorType* v     = residuals.entry<VectorType*>(index);
 
       if(ResidualSimple<VectorType>::constraints == nullptr)
         {
@@ -1254,17 +1254,17 @@ namespace MeshWorker
     template <typename MatrixType, typename VectorType>
     inline void
     SystemSimple<MatrixType, VectorType>::assemble(
-      const FullMatrix<double>&                   M,
-      const Vector<double>&                       vector,
-      const unsigned int                          index,
+      const FullMatrix<double>& M,
+      const Vector<double>& vector,
+      const unsigned int index,
       const std::vector<types::global_dof_index>& i1,
       const std::vector<types::global_dof_index>& i2)
     {
       AssertDimension(M.m(), i1.size());
       AssertDimension(M.n(), i2.size());
 
-      AnyData     residuals = ResidualSimple<VectorType>::residuals;
-      VectorType* v         = residuals.entry<VectorType*>(index);
+      AnyData residuals = ResidualSimple<VectorType>::residuals;
+      VectorType* v     = residuals.entry<VectorType*>(index);
 
       if(ResidualSimple<VectorType>::constraints == nullptr)
         {

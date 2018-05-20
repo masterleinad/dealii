@@ -79,8 +79,8 @@ test()
   if(type == 1 && M % 2 == 1 && N % 2 == 1)
     shape_host[M / 2 * N + N / 2] = 0.;
 
-  constexpr int                          M_2d = M * M;
-  constexpr int                          N_2d = N * N;
+  constexpr int M_2d = M * M;
+  constexpr int N_2d = N * N;
   LinearAlgebra::ReadWriteVector<double> x_host(N_2d), x_ref(N_2d),
     y_host(M_2d), y_ref(M_2d);
   for(unsigned int i = 0; i < N_2d; ++i)

@@ -66,7 +66,7 @@ namespace
     {}
 
     const FiniteElement<dim>& fe_collection;
-    const Quadrature<dim>&    quadrature_collection;
+    const Quadrature<dim>& quadrature_collection;
 
     FEValues<dim> x_fe_values;
 
@@ -80,8 +80,8 @@ namespace
 } // namespace
 
 void
-zero_subrange(const unsigned int   begin,
-              const unsigned int   end,
+zero_subrange(const unsigned int begin,
+              const unsigned int end,
               std::vector<double>& dst)
 {
   for(unsigned int i = begin; i < end; ++i)
@@ -97,7 +97,7 @@ zero_element(std::vector<double>& dst, const unsigned int i)
 template <int dim>
 void
 mass_assembler(const typename Triangulation<dim>::active_cell_iterator& cell,
-               Scratch<dim>&                                            data,
+               Scratch<dim>& data,
                CopyData& copy_data)
 {
   data.x_fe_values.reinit(cell);
@@ -144,15 +144,15 @@ do_project()
   triangulation.refine_global(2);
 
   FE_Nothing<dim> fe;
-  QMidpoint<dim>  q;
+  QMidpoint<dim> q;
 
   for(unsigned int i = 0; i < 12; ++i)
     {
       std::vector<double> tmp;
 
-      double       sum = 0;
+      double sum = 0;
       Scratch<dim> assembler_data(fe, q);
-      CopyData     copy_data;
+      CopyData copy_data;
       copy_data.cell_rhs.resize(8);
       WorkStream::run(
         GraphColoring::make_graph_coloring(

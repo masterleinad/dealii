@@ -31,12 +31,12 @@ main(void)
   initlog();
 
   const unsigned int n = 10;
-  std::size_t        tape_stats[STAT_SIZE];
+  std::size_t tape_stats[STAT_SIZE];
 
-  double*  xp = new double[n];
-  double   yp = 0.0;
-  adouble* x  = new adouble[n];
-  adouble  y  = 1.0;
+  double* xp = new double[n];
+  double yp  = 0.0;
+  adouble* x = new adouble[n];
+  adouble y  = 1.0;
 
   for(unsigned int i = 0; i < n; i++)
     xp[i] = (i + 1.0) / (2.0 + i);

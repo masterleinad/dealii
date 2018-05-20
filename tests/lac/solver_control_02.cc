@@ -30,12 +30,12 @@
 
 template <typename MatrixType, typename VectorType, class PRECONDITION>
 void
-check_solve(SolverControl&      solver_control,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
+check_solve(SolverControl& solver_control,
+            const MatrixType& A,
+            VectorType& u,
+            VectorType& f,
             const PRECONDITION& P,
-            const bool          expected_result)
+            const bool expected_result)
 {
   SolverCG<VectorType> solver(solver_control);
 
@@ -67,12 +67,12 @@ main(int argc, char** argv)
 
   {
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int dim        = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
     // Make matrix
-    FDMatrix        testproblem(size, size);
+    FDMatrix testproblem(size, size);
     SparsityPattern structure(dim, dim, 5);
     testproblem.five_point_structure(structure);
     structure.compress();

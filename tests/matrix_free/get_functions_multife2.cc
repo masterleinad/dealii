@@ -64,20 +64,20 @@ public:
   void
   operator()(const MatrixFree<dim, Number>& data,
              VectorType&,
-             const VectorType&                            src,
+             const VectorType& src,
              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
-    FEEvaluation<dim, 0, 1, 1, Number>                     fe_eval0(data, 0, 0);
+    FEEvaluation<dim, 0, 1, 1, Number> fe_eval0(data, 0, 0);
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval1(data, 1, 1);
     FEEvaluation<dim, fe_degree + 1, fe_degree + 1, 1, Number> fe_eval2(
       data, 2, 1);
-    std::vector<double>         reference_values0(fe_eval0.n_q_points);
+    std::vector<double> reference_values0(fe_eval0.n_q_points);
     std::vector<Tensor<1, dim>> reference_grads0(fe_eval0.n_q_points);
     std::vector<Tensor<2, dim>> reference_hess0(fe_eval0.n_q_points);
-    std::vector<double>         reference_values1(fe_eval1.n_q_points);
+    std::vector<double> reference_values1(fe_eval1.n_q_points);
     std::vector<Tensor<1, dim>> reference_grads1(fe_eval1.n_q_points);
     std::vector<Tensor<2, dim>> reference_hess1(fe_eval1.n_q_points);
-    std::vector<double>         reference_values2(fe_eval2.n_q_points);
+    std::vector<double> reference_values2(fe_eval2.n_q_points);
     std::vector<Tensor<1, dim>> reference_grads2(fe_eval2.n_q_points);
     std::vector<Tensor<2, dim>> reference_hess2(fe_eval2.n_q_points);
     for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
@@ -226,17 +226,17 @@ public:
 
 private:
   const MatrixFree<dim, Number>& data;
-  mutable FEValues<dim>          fe_val0;
-  mutable FEValues<dim>          fe_val1;
-  mutable FEValues<dim>          fe_val2;
-  mutable double                 errors[9], total[9];
+  mutable FEValues<dim> fe_val0;
+  mutable FEValues<dim> fe_val1;
+  mutable FEValues<dim> fe_val2;
+  mutable double errors[9], total[9];
 };
 
 template <int dim, int fe_degree>
 void
 test()
 {
-  typedef double     number;
+  typedef double number;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
@@ -251,9 +251,9 @@ test()
   tria.begin_active(tria.n_levels() - 3)->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_DGQ<dim>     fe0(0);
-  FE_Q<dim>       fe1(fe_degree);
-  FE_Q<dim>       fe2(fe_degree + 1);
+  FE_DGQ<dim> fe0(0);
+  FE_Q<dim> fe1(fe_degree);
+  FE_Q<dim> fe2(fe_degree + 1);
   DoFHandler<dim> dof0(tria);
   dof0.distribute_dofs(fe0);
   DoFHandler<dim> dof1(tria);
@@ -275,7 +275,7 @@ test()
     src[i].reinit(dof[i]->n_dofs());
 
   std::vector<const ConstraintMatrix*> constraints(3);
-  ConstraintMatrix                     constraint0;
+  ConstraintMatrix constraint0;
   DoFTools::make_hanging_node_constraints(*dof[0], constraint0);
   constraint0.close();
   constraints[0] = &constraint0;

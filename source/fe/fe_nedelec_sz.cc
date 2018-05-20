@@ -131,7 +131,7 @@ FE_NedelecSZ<dim>::get_data(
   const unsigned int n_line_dofs = this->dofs_per_line * lines_per_cell;
   const unsigned int n_face_dofs = this->dofs_per_quad * faces_per_cell;
 
-  const UpdateFlags  flags(data->update_each);
+  const UpdateFlags flags(data->update_each);
   const unsigned int n_q_points = quadrature.size();
 
   // Resize the internal data storage:
@@ -203,7 +203,7 @@ FE_NedelecSZ<dim>::get_data(
           // Helper arrays:
           const int sigma_comp_signs[GeometryInfo<2>::vertices_per_cell][2]
             = {{-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
-          int          sigma_imj_sign[vertices_per_cell][vertices_per_cell];
+          int sigma_imj_sign[vertices_per_cell][vertices_per_cell];
           unsigned int sigma_imj_component[vertices_per_cell]
                                           [vertices_per_cell];
 
@@ -567,7 +567,7 @@ FE_NedelecSZ<dim>::get_data(
                {-1, 1, 1},
                {1, 1, 1}};
 
-          int          sigma_imj_sign[vertices_per_cell][vertices_per_cell];
+          int sigma_imj_sign[vertices_per_cell][vertices_per_cell];
           unsigned int sigma_imj_component[vertices_per_cell]
                                           [vertices_per_cell];
 
@@ -1060,8 +1060,8 @@ template <int dim>
 void
 FE_NedelecSZ<dim>::fill_edge_values(
   const typename Triangulation<dim, dim>::cell_iterator& cell,
-  const Quadrature<dim>&                                 quadrature,
-  const InternalData&                                    fe_data) const
+  const Quadrature<dim>& quadrature,
+  const InternalData& fe_data) const
 {
   // This function handles the cell-dependent construction of the EDGE-based shape functions.
   //
@@ -1073,7 +1073,7 @@ FE_NedelecSZ<dim>::fill_edge_values(
   // It should be called by the fill_fe_*_values routines in order to complete the
   // basis set at quadrature points on the current cell for each edge.
 
-  const UpdateFlags  flags(fe_data.update_each);
+  const UpdateFlags flags(fe_data.update_each);
   const unsigned int n_q_points = quadrature.size();
 
   Assert(
@@ -1465,8 +1465,8 @@ template <int dim>
 void
 FE_NedelecSZ<dim>::fill_face_values(
   const typename Triangulation<dim, dim>::cell_iterator& cell,
-  const Quadrature<dim>&                                 quadrature,
-  const InternalData&                                    fe_data) const
+  const Quadrature<dim>& quadrature,
+  const InternalData& fe_data) const
 {
   // This function handles the cell-dependent construction of the FACE-based shape functions.
   //
@@ -1828,11 +1828,11 @@ void
 FE_NedelecSZ<dim>::fill_fe_values(
   const typename Triangulation<dim, dim>::cell_iterator& cell,
   const CellSimilarity::Similarity /*cell_similarity*/,
-  const Quadrature<dim>&                              quadrature,
-  const Mapping<dim, dim>&                            mapping,
+  const Quadrature<dim>& quadrature,
+  const Mapping<dim, dim>& mapping,
   const typename Mapping<dim, dim>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim, dim>&
-                                                            mapping_data,
+    mapping_data,
   const typename FiniteElement<dim, dim>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim, dim>&
     data) const
@@ -1851,7 +1851,7 @@ FE_NedelecSZ<dim>::fill_fe_values(
       fill_face_values(cell, quadrature, fe_data);
     }
 
-  const UpdateFlags  flags(fe_data.update_each);
+  const UpdateFlags flags(fe_data.update_each);
   const unsigned int n_q_points = quadrature.size();
 
   Assert(
@@ -1942,12 +1942,12 @@ template <int dim>
 void
 FE_NedelecSZ<dim>::fill_fe_face_values(
   const typename Triangulation<dim, dim>::cell_iterator& cell,
-  const unsigned int                                     face_no,
-  const Quadrature<dim - 1>&                             quadrature,
-  const Mapping<dim, dim>&                               mapping,
-  const typename Mapping<dim, dim>::InternalDataBase&    mapping_internal,
+  const unsigned int face_no,
+  const Quadrature<dim - 1>& quadrature,
+  const Mapping<dim, dim>& mapping,
+  const typename Mapping<dim, dim>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim, dim>&
-                                                            mapping_data,
+    mapping_data,
   const typename FiniteElement<dim, dim>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim, dim>&
     data) const
@@ -1979,7 +1979,7 @@ FE_NedelecSZ<dim>::fill_fe_face_values(
         cell, QProjector<dim>::project_to_all_faces(quadrature), fe_data);
     }
 
-  const UpdateFlags  flags(fe_data.update_each);
+  const UpdateFlags flags(fe_data.update_each);
   const unsigned int n_q_points = quadrature.size();
   const typename QProjector<dim>::DataSetDescriptor offset
     = QProjector<dim>::DataSetDescriptor::face(face_no,

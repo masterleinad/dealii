@@ -32,8 +32,8 @@ main()
   write_IGES(sh, "tmp.iges");
   std::ifstream in("tmp.iges");
   std::ofstream out("output");
-  std::string   line;
-  unsigned int  counter = 5;
+  std::string line;
+  unsigned int counter = 5;
   while(counter--)
     std::getline(in, line);
   while(std::getline(in, line))

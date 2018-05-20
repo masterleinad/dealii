@@ -23,7 +23,7 @@ template <int dim, typename number>
 void
 check()
 {
-  VectorizedArray<number>             distance_vec;
+  VectorizedArray<number> distance_vec;
   Point<dim, VectorizedArray<number>> p1_vec, p2_vec;
 
   for(unsigned int v = 0; v < VectorizedArray<number>::n_array_elements; ++v)

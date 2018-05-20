@@ -39,7 +39,7 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, dim);
       //      testproblem.five_point_structure(structure);
       for(unsigned int i = 0; i < dim; ++i)

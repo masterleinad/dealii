@@ -27,10 +27,10 @@ main()
   initlog();
 
   // check product with Tensor<2,dim>
-  Tensor<2, 2, double>           t;
+  Tensor<2, 2, double> t;
   SymmetricTensor<2, 2, Sdouble> st;
-  Sdouble                        a(2, 0, 7.0);
-  Sdouble                        b(2, 1, 3.0);
+  Sdouble a(2, 0, 7.0);
+  Sdouble b(2, 1, 3.0);
 
   for(unsigned int i = 0; i < 2; ++i)
     for(unsigned int j = 0; j < 2; ++j)

@@ -254,7 +254,7 @@ namespace parallel
           cell_iterator& cell,
         const typename Triangulation<dim, DoFHandlerType::space_dimension>::
           CellStatus status,
-        void*        data);
+        void* data);
 
       /**
        * A callback function used to unpack the data on the current mesh that
@@ -266,8 +266,8 @@ namespace parallel
         const typename Triangulation<dim, DoFHandlerType::space_dimension>::
           cell_iterator& cell,
         const typename Triangulation<dim, DoFHandlerType::space_dimension>::
-          CellStatus              status,
-        const void*               data,
+          CellStatus status,
+        const void* data,
         std::vector<VectorType*>& all_out);
 
       /**

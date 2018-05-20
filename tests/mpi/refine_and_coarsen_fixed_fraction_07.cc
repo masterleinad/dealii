@@ -40,7 +40,7 @@ test()
   // create a mesh with 120 cells (because that's what Andrea's
   // original testcase had)
   parallel::distributed::Triangulation<2> triangulation(MPI_COMM_WORLD);
-  std::vector<unsigned int>               subdivisions(2);
+  std::vector<unsigned int> subdivisions(2);
   subdivisions[0] = 120;
   subdivisions[1] = 1;
   GridGenerator::subdivided_hyper_rectangle(

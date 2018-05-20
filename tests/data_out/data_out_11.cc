@@ -30,10 +30,10 @@
 void
 test()
 {
-  const int          dim = 2;
+  const int dim = 2;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria, -1, 1);
-  FESystem<dim>   fe(FE_Q<dim>(1), dim + 1);
+  FESystem<dim> fe(FE_Q<dim>(1), dim + 1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
   Vector<double> vec(dof_handler.n_dofs());

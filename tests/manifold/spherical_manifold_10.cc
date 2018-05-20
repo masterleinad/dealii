@@ -35,17 +35,17 @@ main()
   deallog << std::setprecision(8);
 
   constexpr unsigned int dim = 3;
-  SphericalManifold<3>   spherical;
+  SphericalManifold<3> spherical;
 
   Triangulation<dim> tria;
   GridGenerator::hyper_shell(tria, Point<dim>(), 0.5, 1., 96, true);
   tria.set_all_manifold_ids(0);
   tria.set_manifold(0, spherical);
 
-  MappingQGeneric<dim>   mapping(4);
+  MappingQGeneric<dim> mapping(4);
   QGaussLobatto<dim - 1> quadrature(4);
 
-  FE_Nothing<dim>   dummy;
+  FE_Nothing<dim> dummy;
   FEFaceValues<dim> fe_values(mapping,
                               dummy,
                               quadrature,

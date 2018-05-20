@@ -61,9 +61,9 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   {
     deallog.push("(tt)ffff");
-    SparsityPattern           bl;
-    std::vector<bool>         temp_vector(2, true);
-    BlockMask                 exclude_boundary_dofs(temp_vector);
+    SparsityPattern bl;
+    std::vector<bool> temp_vector(2, true);
+    BlockMask exclude_boundary_dofs(temp_vector);
     std::vector<unsigned int> vm;
     std::cout << exclude_boundary_dofs.size() << std::endl;
     vm = DoFTools::make_vertex_patches(
@@ -80,10 +80,10 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   }
   {
     deallog.push("(tf)ffff");
-    SparsityPattern   bl;
+    SparsityPattern bl;
     std::vector<bool> temp_vector(2, true);
     temp_vector[1] = false;
-    BlockMask                 exclude_boundary_dofs(temp_vector);
+    BlockMask exclude_boundary_dofs(temp_vector);
     std::vector<unsigned int> vm;
     vm = DoFTools::make_vertex_patches(
       bl, dof, level, exclude_boundary_dofs, false, false, false, false);
@@ -99,10 +99,10 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   }
   {
     deallog.push("(ft)ffff");
-    SparsityPattern   bl;
+    SparsityPattern bl;
     std::vector<bool> temp_vector(2, false);
     temp_vector[1] = true;
-    BlockMask                 exclude_boundary_dofs(temp_vector);
+    BlockMask exclude_boundary_dofs(temp_vector);
     std::vector<unsigned int> vm;
     vm = DoFTools::make_vertex_patches(
       bl, dof, level, exclude_boundary_dofs, false, false, false, false);
@@ -118,9 +118,9 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   }
   {
     deallog.push("(ff)ffff");
-    SparsityPattern           bl;
-    std::vector<bool>         temp_vector(2, false);
-    BlockMask                 exclude_boundary_dofs(temp_vector);
+    SparsityPattern bl;
+    std::vector<bool> temp_vector(2, false);
+    BlockMask exclude_boundary_dofs(temp_vector);
     std::vector<unsigned int> vm;
     vm = DoFTools::make_vertex_patches(
       bl, dof, level, exclude_boundary_dofs, false, false, false, false);

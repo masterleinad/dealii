@@ -53,7 +53,7 @@ static const unsigned int dim = 2;
 void
 test()
 {
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(mpi_communicator));
   const unsigned int this_mpi_process(
@@ -72,7 +72,7 @@ test()
   tria.refine_global(2);
 
   const unsigned int poly_degree = 1;
-  FE_Q<dim>          fe(poly_degree);
+  FE_Q<dim> fe(poly_degree);
 
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
@@ -81,7 +81,7 @@ test()
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
-  PETScWrappers::MPI::Vector                 vector, vector_locally_relevant;
+  PETScWrappers::MPI::Vector vector, vector_locally_relevant;
   LinearAlgebra::distributed::Vector<double> vector_Re,
     vector_Re_locally_relevant, vector_Im, vector_Im_locally_relevant;
   vector.reinit(locally_owned_dofs, mpi_communicator);
@@ -124,7 +124,7 @@ test()
   {
     //a separate quadrature formula
     //enough for mass and kinetic matrices assembly
-    QGauss<dim>   quadrature_formula(poly_degree + 1);
+    QGauss<dim> quadrature_formula(poly_degree + 1);
     FEValues<dim> fe_values(
       fe, quadrature_formula, update_values | update_JxW_values);
 
@@ -132,7 +132,7 @@ test()
     const unsigned int n_q_points    = quadrature_formula.size();
 
     std::vector<PetscScalar> values(n_q_points);
-    std::vector<double>      values_Re(n_q_points), values_Im(n_q_points);
+    std::vector<double> values_Re(n_q_points), values_Im(n_q_points);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 

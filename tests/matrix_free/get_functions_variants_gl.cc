@@ -43,9 +43,9 @@ public:
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  operator()(const MatrixFree<dim, Number>&               data,
-             VectorType&                                  dst,
-             const VectorType&                            src,
+  operator()(const MatrixFree<dim, Number>& data,
+             VectorType& dst,
+             const VectorType& src,
              const std::pair<unsigned int, unsigned int>& cell_range) const;
 
   void
@@ -71,7 +71,7 @@ public:
 
 private:
   const MatrixFree<dim, Number>& data;
-  mutable double                 errors[5];
+  mutable double errors[5];
 };
 
 template <int dim, int fe_degree, typename Number>
@@ -79,7 +79,7 @@ void
 MatrixFreeTest<dim, fe_degree, Number>::
 operator()(const MatrixFree<dim, Number>& data,
            VectorType&,
-           const VectorType&                            src,
+           const VectorType& src,
            const std::pair<unsigned int, unsigned int>& cell_range) const
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
@@ -146,7 +146,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -163,9 +163,9 @@ test()
     }
 
   ConstraintMatrix constraints;
-  MatrixFree<dim>  mf_data;
+  MatrixFree<dim> mf_data;
   {
-    const QGaussLobatto<1>                   quad(fe_degree + 1);
+    const QGaussLobatto<1> quad(fe_degree + 1);
     typename MatrixFree<dim>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
     data.mapping_update_flags  = update_gradients | update_hessians;

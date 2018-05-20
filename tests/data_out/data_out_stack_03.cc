@@ -32,7 +32,7 @@ run()
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(1);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

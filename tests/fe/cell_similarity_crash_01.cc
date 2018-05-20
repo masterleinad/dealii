@@ -36,12 +36,12 @@ test()
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
 
   const QGauss<dim> quadrature(2);
-  FEValues<dim>     fe_values(fe, quadrature, update_values);
+  FEValues<dim> fe_values(fe, quadrature, update_values);
 
   // initialize FEValues with the first cell
   fe_values.reinit(dof.begin_active());

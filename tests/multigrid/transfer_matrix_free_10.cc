@@ -32,7 +32,7 @@ check(const FiniteElement<dim>& fe)
 {
   deallog << "FE: " << fe.get_name() << std::endl;
 
-  MGConstrainedDoFs                 mg_constrained_dofs;
+  MGConstrainedDoFs mg_constrained_dofs;
   MGTransferMatrixFree<dim, Number> transfer(mg_constrained_dofs);
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
   GridGenerator::hyper_cube(tr);

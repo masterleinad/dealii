@@ -143,7 +143,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionJacobi(const MatrixBase&     matrix,
+    PreconditionJacobi(const MatrixBase& matrix,
                        const AdditionalData& additional_data
                        = AdditionalData());
 
@@ -151,7 +151,7 @@ namespace PETScWrappers
      * Same as above but without setting a matrix to form the preconditioner.
      * Intended to be used with SLEPc objects.
      */
-    PreconditionJacobi(const MPI_Comm        communicator,
+    PreconditionJacobi(const MPI_Comm communicator,
                        const AdditionalData& additional_data
                        = AdditionalData());
 
@@ -162,7 +162,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -224,7 +224,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionBlockJacobi(const MatrixBase&     matrix,
+    PreconditionBlockJacobi(const MatrixBase& matrix,
                             const AdditionalData& additional_data
                             = AdditionalData());
 
@@ -232,7 +232,7 @@ namespace PETScWrappers
      * Same as above but without setting a matrix to form the preconditioner.
      * Intended to be used with SLEPc objects.
      */
-    PreconditionBlockJacobi(const MPI_Comm        communicator,
+    PreconditionBlockJacobi(const MPI_Comm communicator,
                             const AdditionalData& additional_data
                             = AdditionalData());
 
@@ -243,7 +243,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -300,7 +300,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionSOR(const MatrixBase&     matrix,
+    PreconditionSOR(const MatrixBase& matrix,
                     const AdditionalData& additional_data = AdditionalData());
 
     /**
@@ -310,7 +310,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -359,7 +359,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionSSOR(const MatrixBase&     matrix,
+    PreconditionSSOR(const MatrixBase& matrix,
                      const AdditionalData& additional_data = AdditionalData());
 
     /**
@@ -369,7 +369,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -421,7 +421,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionEisenstat(const MatrixBase&     matrix,
+    PreconditionEisenstat(const MatrixBase& matrix,
                           const AdditionalData& additional_data
                           = AdditionalData());
 
@@ -432,7 +432,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -481,7 +481,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionICC(const MatrixBase&     matrix,
+    PreconditionICC(const MatrixBase& matrix,
                     const AdditionalData& additional_data = AdditionalData());
 
     /**
@@ -491,7 +491,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -540,7 +540,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionILU(const MatrixBase&     matrix,
+    PreconditionILU(const MatrixBase& matrix,
                     const AdditionalData& additional_data = AdditionalData());
 
     /**
@@ -550,7 +550,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -621,7 +621,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionLU(const MatrixBase&     matrix,
+    PreconditionLU(const MatrixBase& matrix,
                    const AdditionalData& additional_data = AdditionalData());
 
     /**
@@ -631,7 +631,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -665,11 +665,11 @@ namespace PETScWrappers
        * Constructor. Note that BoomerAMG offers a lot more options to set
        * than what is exposed here.
        */
-      AdditionalData(const bool         symmetric_operator = false,
-                     const double       strong_threshold   = 0.25,
-                     const double       max_row_sum        = 0.9,
+      AdditionalData(const bool symmetric_operator = false,
+                     const double strong_threshold = 0.25,
+                     const double max_row_sum      = 0.9,
                      const unsigned int aggressive_coarsening_num_levels = 0,
-                     const bool         output_details = false);
+                     const bool output_details = false);
 
       /**
        * Set this flag to true if you have a symmetric system matrix and you
@@ -723,7 +723,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionBoomerAMG(const MatrixBase&     matrix,
+    PreconditionBoomerAMG(const MatrixBase& matrix,
                           const AdditionalData& additional_data
                           = AdditionalData());
 
@@ -731,7 +731,7 @@ namespace PETScWrappers
      * Same as above but without setting a matrix to form the preconditioner.
      * Intended to be used with SLEPc objects.
      */
-    PreconditionBoomerAMG(const MPI_Comm        communicator,
+    PreconditionBoomerAMG(const MPI_Comm communicator,
                           const AdditionalData& additional_data
                           = AdditionalData());
 
@@ -742,7 +742,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   protected:
@@ -792,11 +792,11 @@ namespace PETScWrappers
       /**
        * Constructor.
        */
-      AdditionalData(const unsigned int symmetric      = 1,
-                     const unsigned int n_levels       = 1,
-                     const double       threshold      = 0.1,
-                     const double       filter         = 0.05,
-                     const bool         output_details = false);
+      AdditionalData(const unsigned int symmetric = 1,
+                     const unsigned int n_levels  = 1,
+                     const double threshold       = 0.1,
+                     const double filter          = 0.05,
+                     const bool output_details    = false);
 
       /**
        * This parameter specifies the type of problem to solve:
@@ -860,7 +860,7 @@ namespace PETScWrappers
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
-    PreconditionParaSails(const MatrixBase&     matrix,
+    PreconditionParaSails(const MatrixBase& matrix,
                           const AdditionalData& additional_data
                           = AdditionalData());
 
@@ -871,7 +871,7 @@ namespace PETScWrappers
      * used if you create the preconditioner without arguments.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   private:
@@ -908,7 +908,7 @@ namespace PETScWrappers
      * and additional flags if there are any. The matrix is completely ignored
      * in computations.
      */
-    PreconditionNone(const MatrixBase&     matrix,
+    PreconditionNone(const MatrixBase& matrix,
                      const AdditionalData& additional_data = AdditionalData());
 
     /**
@@ -919,7 +919,7 @@ namespace PETScWrappers
      * completely ignored in computations.
      */
     void
-    initialize(const MatrixBase&     matrix,
+    initialize(const MatrixBase& matrix,
                const AdditionalData& additional_data = AdditionalData());
 
   private:

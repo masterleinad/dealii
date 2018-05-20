@@ -104,7 +104,7 @@ namespace Step29
 
     virtual void
     vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const override;
+                      std::vector<Vector<double>>& value_list) const override;
   };
 
   template <int dim>
@@ -122,7 +122,7 @@ namespace Step29
   void
   DirichletBoundaryValues<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    std::vector<Vector<double>>& value_list) const
   {
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
@@ -147,7 +147,7 @@ namespace Step29
 
   private:
     void
-                      declare_parameters();
+    declare_parameters();
     ParameterHandler& prm;
   };
 
@@ -337,7 +337,7 @@ namespace Step29
   void
   ComputeIntensity<dim>::evaluate_vector_field(
     const DataPostprocessorInputs::Vector<dim>& inputs,
-    std::vector<Vector<double>>&                computed_quantities) const
+    std::vector<Vector<double>>& computed_quantities) const
   {
     Assert(computed_quantities.size() == inputs.solution_values.size(),
            ExcDimensionMismatch(computed_quantities.size(),
@@ -392,12 +392,12 @@ namespace Step29
     ParameterHandler& prm;
 
     Triangulation<dim> triangulation;
-    DoFHandler<dim>    dof_handler;
-    FESystem<dim>      fe;
+    DoFHandler<dim> dof_handler;
+    FESystem<dim> fe;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
-    Vector<double>       solution, system_rhs;
+    Vector<double> solution, system_rhs;
   };
 
   // The constructor takes the ParameterHandler object and stores it in a
@@ -434,7 +434,7 @@ namespace Step29
     // object:
     prm.enter_subsection("Mesh & geometry parameters");
 
-    const double       focal_distance = prm.get_double("Focal distance");
+    const double focal_distance      = prm.get_double("Focal distance");
     const unsigned int n_refinements = prm.get_integer("Number of refinements");
 
     prm.leave_subsection();
@@ -551,7 +551,7 @@ namespace Step29
     // used. Since our bilinear form involves boundary integrals on
     // $\Gamma_2$, we also need a quadrature rule for surface integration on
     // the faces, which are $dim-1$ dimensional:
-    QGauss<dim>     quadrature_formula(2);
+    QGauss<dim> quadrature_formula(2);
     QGauss<dim - 1> face_quadrature_formula(2);
 
     const unsigned int n_q_points      = quadrature_formula.size(),
@@ -804,7 +804,7 @@ namespace Step29
     // Define objects of our <code>ComputeIntensity</code> class and a DataOut
     // object:
     ComputeIntensity<dim> intensities;
-    DataOut<dim>          data_out;
+    DataOut<dim> data_out;
 
     data_out.attach_dof_handler(dof_handler);
 
@@ -887,7 +887,7 @@ main()
       deallog.depth_console(5);
 
       ParameterHandler prm;
-      ParameterReader  param(prm);
+      ParameterReader param(prm);
       param.read_parameters("step-29.prm");
 
       UltrasoundProblem<2> ultrasound_problem(prm);

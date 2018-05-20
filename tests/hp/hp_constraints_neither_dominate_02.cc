@@ -79,9 +79,9 @@ struct less_than_key
   operator()(const std::pair<Point<dim>, Vector<double>>& pair1,
              const std::pair<Point<dim>, Vector<double>>& pair2)
   {
-    const double      precision = 1e-3;
-    const Point<dim>& p1        = pair1.first;
-    const Point<dim>& p2        = pair2.first;
+    const double precision = 1e-3;
+    const Point<dim>& p1   = pair1.first;
+    const Point<dim>& p2   = pair2.first;
 
     for(unsigned int d = 0; d < dim; d++)
       {
@@ -169,7 +169,7 @@ test2cells(const FiniteElement<dim>& fe_0,
   // output to check if all is good:
   counter++;
   std::vector<Vector<double>> shape_functions;
-  std::vector<std::string>    names;
+  std::vector<std::string> names;
   for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     {
       Vector<double> shape_function;
@@ -229,7 +229,7 @@ test2cells(const FiniteElement<dim>& fe_0,
   hp::FEFaceValues<dim> fe_face_values_hp(
     fe_collection, q_face_collection, update_values | update_quadrature_points);
 
-  std::vector<unsigned int>   local_face_dof_indices;
+  std::vector<unsigned int> local_face_dof_indices;
   std::vector<Vector<double>> values;
 
   std::vector<std::pair<Point<dim>, Vector<double>>> pairs_point_value;
@@ -290,7 +290,7 @@ test2cells(const FiniteElement<dim>& fe_0,
     pairs_point_value.begin(), pairs_point_value.end(), less_than_key<dim>());
   for(unsigned int p = 0; p < pairs_point_value.size(); p++)
     {
-      const Point<dim>&     pt  = pairs_point_value[p].first;
+      const Point<dim>& pt      = pairs_point_value[p].first;
       const Vector<double>& val = pairs_point_value[p].second;
 
       Assert(val.size() == n_comp, ExcInternalError());

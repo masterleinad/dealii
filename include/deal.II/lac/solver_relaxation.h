@@ -66,7 +66,7 @@ public:
   /**
    * Constructor.
    */
-  SolverRelaxation(SolverControl&        cn,
+  SolverRelaxation(SolverControl& cn,
                    const AdditionalData& data = AdditionalData());
 
   /**
@@ -81,9 +81,9 @@ public:
    */
   template <typename MatrixType, class RelaxationType>
   void
-  solve(const MatrixType&     A,
-        VectorType&           x,
-        const VectorType&     b,
+  solve(const MatrixType& A,
+        VectorType& x,
+        const VectorType& b,
         const RelaxationType& R);
 };
 
@@ -102,20 +102,20 @@ SolverRelaxation<VectorType>::~SolverRelaxation()
 template <class VectorType>
 template <typename MatrixType, class RelaxationType>
 void
-SolverRelaxation<VectorType>::solve(const MatrixType&     A,
-                                    VectorType&           x,
-                                    const VectorType&     b,
+SolverRelaxation<VectorType>::solve(const MatrixType& A,
+                                    VectorType& x,
+                                    const VectorType& b,
                                     const RelaxationType& R)
 {
   GrowingVectorMemory<VectorType> mem;
-  SolverControl::State            conv = SolverControl::iterate;
+  SolverControl::State conv = SolverControl::iterate;
 
   // Memory allocation
   typename VectorMemory<VectorType>::Pointer Vr(mem);
-  VectorType&                                r = *Vr;
+  VectorType& r = *Vr;
   r.reinit(x);
   typename VectorMemory<VectorType>::Pointer Vd(mem);
-  VectorType&                                d = *Vd;
+  VectorType& d = *Vd;
   d.reinit(x);
 
   LogStream::Prefix prefix("Relaxation");

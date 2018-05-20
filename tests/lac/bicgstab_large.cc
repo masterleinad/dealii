@@ -44,7 +44,7 @@ main()
   Vector<double> solution(4);
 
   {
-    SolverControl    control(100, 1.e-3);
+    SolverControl control(100, 1.e-3);
     SolverBicgstab<> bicgstab(control);
     bicgstab.solve(M, solution, rhs, PreconditionIdentity());
   }
@@ -63,7 +63,7 @@ main()
   solution = 0;
 
   {
-    SolverControl    control(100, 1.e7);
+    SolverControl control(100, 1.e7);
     SolverBicgstab<> bicgstab(control);
     bicgstab.solve(M1, solution, rhs, PreconditionIdentity());
   }

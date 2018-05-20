@@ -34,9 +34,9 @@ prepare_vector(VectorType& v)
 
   const unsigned int set = 10;
   AssertIndexRange(numproc, set - 2);
-  const unsigned int local_size  = set - myid;
-  unsigned int       global_size = 0;
-  unsigned int       my_start    = 0;
+  const unsigned int local_size = set - myid;
+  unsigned int global_size      = 0;
+  unsigned int my_start         = 0;
   for(unsigned int i = 0; i < numproc; ++i)
     {
       global_size += set - i;
@@ -78,7 +78,7 @@ test()
   Teuchos::RCP<VectorType> b_rcp(new VectorType(b));
 
   ROL::Elementwise::Multiply<double> mult;
-  ROL::Elementwise::Plus<double>     plus;
+  ROL::Elementwise::Plus<double> plus;
 
   // --- Testing the constructor
   Rol::VectorAdaptor<VectorType> a_rol(a_rcp);

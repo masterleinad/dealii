@@ -28,806 +28,806 @@ extern "C"
   // vector update of the form y += alpha*x with a scalar, x,y vectors
   void
   daxpy_(const dealii::types::blas_int* n,
-         const double*                  alpha,
-         const double*                  x,
+         const double* alpha,
+         const double* x,
          const dealii::types::blas_int* incx,
-         double*                        y,
+         double* y,
          const dealii::types::blas_int* incy);
   void
   saxpy_(const dealii::types::blas_int* n,
-         const float*                   alpha,
-         const float*                   x,
+         const float* alpha,
+         const float* x,
          const dealii::types::blas_int* incx,
-         float*                         y,
+         float* y,
          const dealii::types::blas_int* incy);
   // General Matrix
   // Matrix vector product
   void
-  dgemv_(const char*                    trans,
+  dgemv_(const char* trans,
          const dealii::types::blas_int* m,
          const dealii::types::blas_int* n,
-         const double*                  alpha,
-         const double*                  A,
+         const double* alpha,
+         const double* A,
          const dealii::types::blas_int* lda,
-         const double*                  x,
+         const double* x,
          const dealii::types::blas_int* incx,
-         const double*                  b,
-         double*                        y,
+         const double* b,
+         double* y,
          const dealii::types::blas_int* incy);
   void
-  sgemv_(const char*                    trans,
+  sgemv_(const char* trans,
          const dealii::types::blas_int* m,
          const dealii::types::blas_int* n,
-         const float*                   alpha,
-         const float*                   A,
+         const float* alpha,
+         const float* A,
          const dealii::types::blas_int* lda,
-         const float*                   x,
+         const float* x,
          const dealii::types::blas_int* incx,
-         const float*                   b,
-         float*                         y,
+         const float* b,
+         float* y,
          const dealii::types::blas_int* incy);
   void
-  dtrmv_(const char*                    uplo,
-         const char*                    trans,
-         const char*                    diag,
+  dtrmv_(const char* uplo,
+         const char* trans,
+         const char* diag,
          const dealii::types::blas_int* N,
-         const double*                  A,
+         const double* A,
          const dealii::types::blas_int* lda,
-         double*                        x,
+         double* x,
          const dealii::types::blas_int* incx);
   void
-  strmv_(const char*                    uplo,
-         const char*                    trans,
-         const char*                    diag,
+  strmv_(const char* uplo,
+         const char* trans,
+         const char* diag,
          const dealii::types::blas_int* N,
-         const float*                   A,
+         const float* A,
          const dealii::types::blas_int* lda,
-         float*                         x,
+         float* x,
          const dealii::types::blas_int* incx);
   // Matrix matrix product
   void
-  dgemm_(const char*                    transa,
-         const char*                    transb,
+  dgemm_(const char* transa,
+         const char* transb,
          const dealii::types::blas_int* m,
          const dealii::types::blas_int* n,
          const dealii::types::blas_int* k,
-         const double*                  alpha,
-         const double*                  A,
+         const double* alpha,
+         const double* A,
          const dealii::types::blas_int* lda,
-         const double*                  B,
+         const double* B,
          const dealii::types::blas_int* ldb,
-         const double*                  beta,
-         double*                        C,
+         const double* beta,
+         double* C,
          const dealii::types::blas_int* ldc);
   void
-  sgemm_(const char*                    transa,
-         const char*                    transb,
+  sgemm_(const char* transa,
+         const char* transb,
          const dealii::types::blas_int* m,
          const dealii::types::blas_int* n,
          const dealii::types::blas_int* k,
-         const float*                   alpha,
-         const float*                   A,
+         const float* alpha,
+         const float* A,
          const dealii::types::blas_int* lda,
-         const float*                   B,
+         const float* B,
          const dealii::types::blas_int* ldb,
-         const float*                   beta,
-         float*                         C,
+         const float* beta,
+         float* C,
          const dealii::types::blas_int* ldc);
   // Symmetric rank-k update
   void
-  dsyrk_(const char*                    uplo,
-         const char*                    trans,
+  dsyrk_(const char* uplo,
+         const char* trans,
          const dealii::types::blas_int* n,
          const dealii::types::blas_int* k,
-         const double*                  alpha,
-         const double*                  A,
+         const double* alpha,
+         const double* A,
          const dealii::types::blas_int* lda,
-         const double*                  beta,
-         double*                        C,
+         const double* beta,
+         double* C,
          const dealii::types::blas_int* ldc);
   void
-  ssyrk_(const char*                    uplo,
-         const char*                    trans,
+  ssyrk_(const char* uplo,
+         const char* trans,
          const dealii::types::blas_int* n,
          const dealii::types::blas_int* k,
-         const float*                   alpha,
-         const float*                   A,
+         const float* alpha,
+         const float* A,
          const dealii::types::blas_int* lda,
-         const float*                   beta,
-         float*                         C,
+         const float* beta,
+         float* C,
          const dealii::types::blas_int* ldc);
   // Compute LU factorization
   void
   dgetrf_(const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       ipiv,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* ipiv,
+          dealii::types::blas_int* info);
   void
   sgetrf_(const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       ipiv,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* ipiv,
+          dealii::types::blas_int* info);
   // Apply forward/backward substitution to LU factorization
   void
-  dgetrs_(const char*                    trans,
+  dgetrs_(const char* trans,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* nrhs,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
           const dealii::types::blas_int* ipiv,
-          double*                        b,
+          double* b,
           const dealii::types::blas_int* ldb,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
-  sgetrs_(const char*                    trans,
+  sgetrs_(const char* trans,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* nrhs,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
           const dealii::types::blas_int* ipiv,
-          float*                         b,
+          float* b,
           const dealii::types::blas_int* ldb,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Invert matrix from LU factorization
   void
   dgetri_(const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       ipiv,
-          double*                        inv_work,
+          dealii::types::blas_int* ipiv,
+          double* inv_work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
   sgetri_(const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       ipiv,
-          float*                         inv_work,
+          dealii::types::blas_int* ipiv,
+          float* inv_work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Compute Cholesky factorization of SPD
   void
-  dpotrf_(const char*                    uplo,
+  dpotrf_(const char* uplo,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
-  spotrf_(const char*                    uplo,
+  spotrf_(const char* uplo,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Apply forward/backward substitution to Cholesky factorization
   void
-  dpotrs_(const char*                    uplo,
+  dpotrs_(const char* uplo,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* nrhs,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          double*                        B,
+          double* B,
           const dealii::types::blas_int* ldb,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
-  spotrs_(const char*                    uplo,
+  spotrs_(const char* uplo,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* nrhs,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          float*                         B,
+          float* B,
           const dealii::types::blas_int* ldb,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Estimate the reciprocal of the condition number in 1-norm from Cholesky
   void
-  dpocon_(const char*                    uplo,
+  dpocon_(const char* uplo,
           const dealii::types::blas_int* n,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          const double*                  anorm,
-          double*                        rcond,
-          double*                        work,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          const double* anorm,
+          double* rcond,
+          double* work,
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   void
-  spocon_(const char*                    uplo,
+  spocon_(const char* uplo,
           const dealii::types::blas_int* n,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          const float*                   anorm,
-          float*                         rcond,
-          float*                         work,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          const float* anorm,
+          float* rcond,
+          float* work,
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   // Estimate the reciprocal of the condition number of triangular matrices
   // http://www.netlib.org/lapack/explore-html/da/dba/group__double_o_t_h_e_rcomputational_gaff914510b1673e90752c095f5b9dcedf.html#gaff914510b1673e90752c095f5b9dcedf
   void
-  dtrcon_(const char*                    norm,
-          const char*                    uplo,
-          const char*                    diag,
+  dtrcon_(const char* norm,
+          const char* uplo,
+          const char* diag,
           const dealii::types::blas_int* n,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          double*                        rcond,
-          double*                        work,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          double* rcond,
+          double* work,
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   void
-  strcon_(const char*                    norm,
-          const char*                    uplo,
-          const char*                    diag,
+  strcon_(const char* norm,
+          const char* uplo,
+          const char* diag,
           const dealii::types::blas_int* n,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          float*                         rcond,
-          float*                         work,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          float* rcond,
+          float* work,
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   // Computes the inverse from Cholesky
   void
-  dpotri_(const char*                    uplo,
+  dpotri_(const char* uplo,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
-  spotri_(const char*                    uplo,
+  spotri_(const char* uplo,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Norms
   double
-  dlansy_(const char*                    norm,
-          const char*                    uplo,
+  dlansy_(const char* norm,
+          const char* uplo,
           const dealii::types::blas_int* n,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          double*                        work);
+          double* work);
   float
-  slansy_(const char*                    norm,
-          const char*                    uplo,
+  slansy_(const char* norm,
+          const char* uplo,
           const dealii::types::blas_int* n,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          float*                         work);
+          float* work);
   double
-  dlange_(const char*                    norm,
+  dlange_(const char* norm,
           const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          double*                        work);
+          double* work);
   float
-  slange_(const char*                    norm,
+  slange_(const char* norm,
           const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          float*                         work);
+          float* work);
 
   // Compute QR factorization (Householder)
   void
   dgeqrf_(const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          double*                        tau,
-          double*                        work,
+          double* tau,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
   sgeqrf_(const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          float*                         tau,
-          float*                         work,
+          float* tau,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Compute vector Q^T B, where Q is the result from dgeqrf_
   void
-  dormqr_(const char*                    side,
-          const char*                    trans,
+  dormqr_(const char* side,
+          const char* trans,
           const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* k,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          const double*                  tau,
-          double*                        B,
+          const double* tau,
+          double* B,
           const dealii::types::blas_int* ldb,
-          double*                        work,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
-  sormqr_(const char*                    side,
-          const char*                    trans,
+  sormqr_(const char* side,
+          const char* trans,
           const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* k,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          const float*                   tau,
-          float*                         B,
+          const float* tau,
+          float* B,
           const dealii::types::blas_int* ldb,
-          float*                         work,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Compute matrix Q from the result of dgeqrf_
   void
   dorgqr_(const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* k,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          const double*                  tau,
-          double*                        work,
+          const double* tau,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
   sorgqr_(const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* k,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          const float*                   tau,
-          float*                         work,
+          const float* tau,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Compute Rx = b
   void
-  dtrtrs_(const char*                    uplo,
-          const char*                    trans,
-          const char*                    diag,
+  dtrtrs_(const char* uplo,
+          const char* trans,
+          const char* diag,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* n_rhs,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          double*                        B,
+          double* B,
           const dealii::types::blas_int* ldb,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
-  strtrs_(const char*                    uplo,
-          const char*                    trans,
-          const char*                    diag,
+  strtrs_(const char* uplo,
+          const char* trans,
+          const char* diag,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* n_rhs,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          float*                         B,
+          float* B,
           const dealii::types::blas_int* ldb,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Compute eigenvalues and vectors
   void
-  dgeev_(const char*                    jobvl,
-         const char*                    jobvr,
+  dgeev_(const char* jobvl,
+         const char* jobvr,
          const dealii::types::blas_int* n,
-         double*                        A,
+         double* A,
          const dealii::types::blas_int* lda,
-         double*                        lambda_re,
-         double*                        lambda_im,
-         double*                        vl,
+         double* lambda_re,
+         double* lambda_im,
+         double* vl,
          const dealii::types::blas_int* ldvl,
-         double*                        vr,
+         double* vr,
          const dealii::types::blas_int* ldva,
-         double*                        work,
+         double* work,
          const dealii::types::blas_int* lwork,
-         dealii::types::blas_int*       info);
+         dealii::types::blas_int* info);
   void
-  sgeev_(const char*                    jobvl,
-         const char*                    jobvr,
+  sgeev_(const char* jobvl,
+         const char* jobvr,
          const dealii::types::blas_int* n,
-         float*                         A,
+         float* A,
          const dealii::types::blas_int* lda,
-         float*                         lambda_re,
-         float*                         lambda_im,
-         float*                         vl,
+         float* lambda_re,
+         float* lambda_im,
+         float* vl,
          const dealii::types::blas_int* ldvl,
-         float*                         vr,
+         float* vr,
          const dealii::types::blas_int* ldva,
-         float*                         work,
+         float* work,
          const dealii::types::blas_int* lwork,
-         dealii::types::blas_int*       info);
+         dealii::types::blas_int* info);
   // Compute eigenvalues and vectors (expert)
   void
-  dgeevx_(const char*                    balanc,
-          const char*                    jobvl,
-          const char*                    jobvr,
-          const char*                    sense,
+  dgeevx_(const char* balanc,
+          const char* jobvl,
+          const char* jobvr,
+          const char* sense,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          double*                        lambda_re,
-          double*                        lambda_im,
-          double*                        vl,
+          double* lambda_re,
+          double* lambda_im,
+          double* vl,
           const dealii::types::blas_int* ldvl,
-          double*                        vr,
+          double* vr,
           const dealii::types::blas_int* ldvr,
-          dealii::types::blas_int*       ilo,
-          dealii::types::blas_int*       ihi,
-          double*                        scale,
-          double*                        abnrm,
-          double*                        rconde,
-          double*                        rcondv,
-          double*                        work,
+          dealii::types::blas_int* ilo,
+          dealii::types::blas_int* ihi,
+          double* scale,
+          double* abnrm,
+          double* rconde,
+          double* rcondv,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   void
-  sgeevx_(const char*                    balanc,
-          const char*                    jobvl,
-          const char*                    jobvr,
-          const char*                    sense,
+  sgeevx_(const char* balanc,
+          const char* jobvl,
+          const char* jobvr,
+          const char* sense,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          float*                         lambda_re,
-          float*                         lambda_im,
-          float*                         vl,
+          float* lambda_re,
+          float* lambda_im,
+          float* vl,
           const dealii::types::blas_int* ldvl,
-          float*                         vr,
+          float* vr,
           const dealii::types::blas_int* ldvr,
-          dealii::types::blas_int*       ilo,
-          dealii::types::blas_int*       ihi,
-          float*                         scale,
-          float*                         abnrm,
-          float*                         rconde,
-          float*                         rcondv,
-          float*                         work,
+          dealii::types::blas_int* ilo,
+          dealii::types::blas_int* ihi,
+          float* scale,
+          float* abnrm,
+          float* rconde,
+          float* rcondv,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   // Eigenvalues for a symmetric matrix
   void
-  dsyev_(const char*                    jobz,
-         const char*                    uplo,
+  dsyev_(const char* jobz,
+         const char* uplo,
          const dealii::types::blas_int* n,
-         double*                        A,
+         double* A,
          const dealii::types::blas_int* lda,
-         double*                        w,
-         double*                        work,
+         double* w,
+         double* work,
          const dealii::types::blas_int* lwork,
-         dealii::types::blas_int*       info);
+         dealii::types::blas_int* info);
   void
-  ssyev_(const char*                    jobz,
-         const char*                    uplo,
+  ssyev_(const char* jobz,
+         const char* uplo,
          const dealii::types::blas_int* n,
-         float*                         A,
+         float* A,
          const dealii::types::blas_int* lda,
-         float*                         w,
-         float*                         work,
+         float* w,
+         float* work,
          const dealii::types::blas_int* lwork,
-         dealii::types::blas_int*       info);
+         dealii::types::blas_int* info);
   // Same functionality as dsyev_ but with more options: E.g.
   // Compute only eigenvalues in a specific dealii::types::blas_interval,
   // Compute only eigenvalues with a specific index,
   // Set tolerance for eigenvalue computation
   void
-  dsyevx_(const char*                    jobz,
-          const char*                    range,
-          const char*                    uplo,
+  dsyevx_(const char* jobz,
+          const char* range,
+          const char* uplo,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          const double*                  vl,
-          const double*                  vu,
+          const double* vl,
+          const double* vu,
           const dealii::types::blas_int* il,
           const dealii::types::blas_int* iu,
-          const double*                  abstol,
-          dealii::types::blas_int*       m,
-          double*                        w,
-          double*                        z,
+          const double* abstol,
+          dealii::types::blas_int* m,
+          double* w,
+          double* z,
           const dealii::types::blas_int* ldz,
-          double*                        work,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       ifail,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* ifail,
+          dealii::types::blas_int* info);
   void
-  ssyevx_(const char*                    jobz,
-          const char*                    range,
-          const char*                    uplo,
+  ssyevx_(const char* jobz,
+          const char* range,
+          const char* uplo,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          const float*                   vl,
-          const float*                   vu,
+          const float* vl,
+          const float* vu,
           const dealii::types::blas_int* il,
           const dealii::types::blas_int* iu,
-          const float*                   abstol,
-          dealii::types::blas_int*       m,
-          float*                         w,
-          float*                         z,
+          const float* abstol,
+          dealii::types::blas_int* m,
+          float* w,
+          float* z,
           const dealii::types::blas_int* ldz,
-          float*                         work,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       ifail,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* ifail,
+          dealii::types::blas_int* info);
   // Same functionality as dsyev_ but using MRRR algorithm and with more options:
   // E.g. compute only eigenvalues in a specific dealii::types::blas_interval,
   // Compute only eigenvalues with a specific index.
   void
-  dsyevr_(const char*                    jobz,
-          const char*                    range,
-          const char*                    uplo,
+  dsyevr_(const char* jobz,
+          const char* range,
+          const char* uplo,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          const double*                  vl,
-          const double*                  vu,
+          const double* vl,
+          const double* vu,
           const dealii::types::blas_int* il,
           const dealii::types::blas_int* iu,
-          const double*                  abstol,
-          dealii::types::blas_int*       m,
-          double*                        w,
-          double*                        z,
+          const double* abstol,
+          dealii::types::blas_int* m,
+          double* w,
+          double* z,
           const dealii::types::blas_int* ldz,
-          dealii::types::blas_int*       isuppz,
-          double*                        work,
-          dealii::types::blas_int*       lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       liwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* isuppz,
+          double* work,
+          dealii::types::blas_int* lwork,
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* liwork,
+          dealii::types::blas_int* info);
   void
-  ssyevr_(const char*                    jobz,
-          const char*                    range,
-          const char*                    uplo,
+  ssyevr_(const char* jobz,
+          const char* range,
+          const char* uplo,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          const float*                   vl,
-          const float*                   vu,
+          const float* vl,
+          const float* vu,
           const dealii::types::blas_int* il,
           const dealii::types::blas_int* iu,
-          const float*                   abstol,
-          dealii::types::blas_int*       m,
-          float*                         w,
-          float*                         z,
+          const float* abstol,
+          dealii::types::blas_int* m,
+          float* w,
+          float* z,
           const dealii::types::blas_int* ldz,
-          dealii::types::blas_int*       isuppz,
-          float*                         work,
-          dealii::types::blas_int*       lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       liwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* isuppz,
+          float* work,
+          dealii::types::blas_int* lwork,
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* liwork,
+          dealii::types::blas_int* info);
   // Generalized eigenvalues and eigenvectors of
   // 1: A*x = lambda*B*x; 2: A*B*x = lambda*x; 3: B*A*x = lambda*x
   // A and B are symmetric and B is definite
   void
   dsygv_(const dealii::types::blas_int* itype,
-         const char*                    jobz,
-         const char*                    uplo,
+         const char* jobz,
+         const char* uplo,
          const dealii::types::blas_int* n,
-         double*                        A,
+         double* A,
          const dealii::types::blas_int* lda,
-         double*                        B,
+         double* B,
          const dealii::types::blas_int* ldb,
-         double*                        w,
-         double*                        work,
+         double* w,
+         double* work,
          const dealii::types::blas_int* lwork,
-         dealii::types::blas_int*       info);
+         dealii::types::blas_int* info);
   void
   ssygv_(const dealii::types::blas_int* itype,
-         const char*                    jobz,
-         const char*                    uplo,
+         const char* jobz,
+         const char* uplo,
          const dealii::types::blas_int* n,
-         float*                         A,
+         float* A,
          const dealii::types::blas_int* lda,
-         float*                         B,
+         float* B,
          const dealii::types::blas_int* ldb,
-         float*                         w,
-         float*                         work,
+         float* w,
+         float* work,
          const dealii::types::blas_int* lwork,
-         dealii::types::blas_int*       info);
+         dealii::types::blas_int* info);
   // Same functionality as dsygv_ but with more options: E.g.
   // Compute only eigenvalues in a specific dealii::types::blas_interval,
   // Compute only eigenvalues with a specific index,
   // Set tolerance for eigenvalue computation
   void
   dsygvx_(const dealii::types::blas_int* itype,
-          const char*                    jobz,
-          const char*                    range,
-          const char*                    uplo,
+          const char* jobz,
+          const char* range,
+          const char* uplo,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          double*                        B,
+          double* B,
           const dealii::types::blas_int* ldb,
-          const double*                  vl,
-          const double*                  vu,
+          const double* vl,
+          const double* vu,
           const dealii::types::blas_int* il,
           const dealii::types::blas_int* iu,
-          const double*                  abstol,
-          dealii::types::blas_int*       m,
-          double*                        w,
-          double*                        z,
+          const double* abstol,
+          dealii::types::blas_int* m,
+          double* w,
+          double* z,
           const dealii::types::blas_int* ldz,
-          double*                        work,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       ifail,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* ifail,
+          dealii::types::blas_int* info);
   void
   ssygvx_(const dealii::types::blas_int* itype,
-          const char*                    jobz,
-          const char*                    range,
-          const char*                    uplo,
+          const char* jobz,
+          const char* range,
+          const char* uplo,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          float*                         B,
+          float* B,
           const dealii::types::blas_int* ldb,
-          const float*                   vl,
-          const float*                   vu,
+          const float* vl,
+          const float* vu,
           const dealii::types::blas_int* il,
           const dealii::types::blas_int* iu,
-          const float*                   abstol,
-          dealii::types::blas_int*       m,
-          float*                         w,
-          float*                         z,
+          const float* abstol,
+          dealii::types::blas_int* m,
+          float* w,
+          float* z,
           const dealii::types::blas_int* ldz,
-          float*                         work,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       ifail,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* ifail,
+          dealii::types::blas_int* info);
   // Compute singular value decomposition using divide and conquer
   void
-  dgesdd_(const char*                    jobz,
+  dgesdd_(const char* jobz,
           const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          double*                        s,
-          double*                        u,
+          double* s,
+          double* u,
           const dealii::types::blas_int* ldu,
-          double*                        vt,
+          double* vt,
           const dealii::types::blas_int* ldvt,
-          double*                        work,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   void
-  sgesdd_(const char*                    jobz,
+  sgesdd_(const char* jobz,
           const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          float*                         s,
-          float*                         u,
+          float* s,
+          float* u,
           const dealii::types::blas_int* ldu,
-          float*                         vt,
+          float* vt,
           const dealii::types::blas_int* ldvt,
-          float*                         work,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   // Compute singular value decomposition
   void
-  dgesvd_(dealii::types::blas_int*       jobu,
-          dealii::types::blas_int*       jobvt,
+  dgesvd_(dealii::types::blas_int* jobu,
+          dealii::types::blas_int* jobvt,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* m,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          double*                        s,
-          double*                        u,
+          double* s,
+          double* u,
           const dealii::types::blas_int* ldu,
-          double*                        vt,
+          double* vt,
           const dealii::types::blas_int* ldvt,
-          double*                        work,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
-  sgesvd_(dealii::types::blas_int*       jobu,
-          dealii::types::blas_int*       jobvt,
+  sgesvd_(dealii::types::blas_int* jobu,
+          dealii::types::blas_int* jobvt,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* m,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          float*                         s,
-          float*                         u,
+          float* s,
+          float* u,
           const dealii::types::blas_int* ldu,
-          float*                         vt,
+          float* vt,
           const dealii::types::blas_int* ldvt,
-          float*                         work,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // Solve a least squares problem using SVD
   void
   dgelsd_(const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* nrhs,
-          const double*                  A,
+          const double* A,
           const dealii::types::blas_int* lda,
-          double*                        B,
+          double* B,
           const dealii::types::blas_int* ldb,
-          double*                        s,
-          const double*                  rcond,
-          dealii::types::blas_int*       rank,
-          double*                        work,
+          double* s,
+          const double* rcond,
+          dealii::types::blas_int* rank,
+          double* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   void
   sgelsd_(const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
           const dealii::types::blas_int* nrhs,
-          const float*                   A,
+          const float* A,
           const dealii::types::blas_int* lda,
-          float*                         B,
+          float* B,
           const dealii::types::blas_int* ldb,
-          float*                         s,
-          const float*                   rcond,
-          dealii::types::blas_int*       rank,
-          float*                         work,
+          float* s,
+          const float* rcond,
+          dealii::types::blas_int* rank,
+          float* work,
           const dealii::types::blas_int* lwork,
-          dealii::types::blas_int*       iwork,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* iwork,
+          dealii::types::blas_int* info);
   // Symmetric tridiagonal matrix
   void
-  dstev_(const char*                    jobz,
+  dstev_(const char* jobz,
          const dealii::types::blas_int* n,
-         double*                        d,
-         double*                        e,
-         double*                        z,
+         double* d,
+         double* e,
+         double* z,
          const dealii::types::blas_int* ldz,
-         double*                        work,
-         dealii::types::blas_int*       info);
+         double* work,
+         dealii::types::blas_int* info);
   void
-  sstev_(const char*                    jobz,
+  sstev_(const char* jobz,
          const dealii::types::blas_int* n,
-         float*                         d,
-         float*                         e,
-         float*                         z,
+         float* d,
+         float* e,
+         float* z,
          const dealii::types::blas_int* ldz,
-         float*                         work,
-         dealii::types::blas_int*       info);
+         float* work,
+         dealii::types::blas_int* info);
   // Rank-1 update for symmetric matrices
   void
-  dsyr_(const char*                    uplo,
+  dsyr_(const char* uplo,
         const dealii::types::blas_int* n,
-        const double*                  alpha,
-        const double*                  x,
+        const double* alpha,
+        const double* x,
         const dealii::types::blas_int* incx,
-        double*                        A,
+        double* A,
         const dealii::types::blas_int* lda);
   void
-  ssyr_(const char*                    uplo,
+  ssyr_(const char* uplo,
         const dealii::types::blas_int* n,
-        const float*                   alpha,
-        const float*                   x,
+        const float* alpha,
+        const float* x,
         const dealii::types::blas_int* incx,
-        float*                         A,
+        float* A,
         const dealii::types::blas_int* lda);
   // Multiply rectangular mxn real matrix by real scalar CTO/CFROM
   void
-  dlascl_(const char*                    type,
+  dlascl_(const char* type,
           const dealii::types::blas_int* kl,
           const dealii::types::blas_int* ku,
-          const double*                  cfrom,
-          const double*                  cto,
+          const double* cfrom,
+          const double* cto,
           const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          double*                        A,
+          double* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   void
-  slascl_(const char*                    type,
+  slascl_(const char* type,
           const dealii::types::blas_int* kl,
           const dealii::types::blas_int* ku,
-          const float*                   cfrom,
-          const float*                   cto,
+          const float* cfrom,
+          const float* cto,
           const dealii::types::blas_int* m,
           const dealii::types::blas_int* n,
-          float*                         A,
+          float* A,
           const dealii::types::blas_int* lda,
-          dealii::types::blas_int*       info);
+          dealii::types::blas_int* info);
   // dlamch and slamch help determining machine precision
   double
   dlamch_(const char* chmach);
@@ -856,30 +856,30 @@ syrk(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-syrk(const char*            uplo,
-     const char*            trans,
+syrk(const char* uplo,
+     const char* trans,
      const types::blas_int* n,
      const types::blas_int* k,
-     const double*          alpha,
-     const double*          A,
+     const double* alpha,
+     const double* A,
      const types::blas_int* lda,
-     const double*          beta,
-     double*                C,
+     const double* beta,
+     double* C,
      const types::blas_int* ldc)
 {
   dsyrk_(uplo, trans, n, k, alpha, A, lda, beta, C, ldc);
 }
 
 inline void
-syrk(const char*            uplo,
-     const char*            trans,
+syrk(const char* uplo,
+     const char* trans,
      const types::blas_int* n,
      const types::blas_int* k,
-     const float*           alpha,
-     const float*           A,
+     const float* alpha,
+     const float* A,
      const types::blas_int* lda,
-     const float*           beta,
-     float*                 C,
+     const float* beta,
+     float* C,
      const types::blas_int* ldc)
 {
   ssyrk_(uplo, trans, n, k, alpha, A, lda, beta, C, ldc);
@@ -902,23 +902,23 @@ syr(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-syr(const char*            uplo,
+syr(const char* uplo,
     const types::blas_int* n,
-    const double*          alpha,
-    const double*          x,
+    const double* alpha,
+    const double* x,
     const types::blas_int* incx,
-    double*                A,
+    double* A,
     const types::blas_int* lda)
 {
   dsyr_(uplo, n, alpha, x, incx, A, lda);
 }
 inline void
-syr(const char*            uplo,
+syr(const char* uplo,
     const types::blas_int* n,
-    const float*           alpha,
-    const float*           x,
+    const float* alpha,
+    const float* x,
     const types::blas_int* incx,
-    float*                 A,
+    float* A,
     const types::blas_int* lda)
 {
   ssyr_(uplo, n, alpha, x, incx, A, lda);
@@ -941,10 +941,10 @@ axpy(const types::blas_int*,
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 axpy(const types::blas_int* n,
-     const double*          alpha,
-     const double*          x,
+     const double* alpha,
+     const double* x,
      const types::blas_int* incx,
-     double*                y,
+     double* y,
      const types::blas_int* incy)
 {
   daxpy_(n, alpha, x, incx, y, incy);
@@ -965,10 +965,10 @@ axpy(const types::blas_int*,
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 axpy(const types::blas_int* n,
-     const float*           alpha,
-     const float*           x,
+     const float* alpha,
+     const float* x,
      const types::blas_int* incx,
-     float*                 y,
+     float* y,
      const types::blas_int* incy)
 {
   saxpy_(n, alpha, x, incx, y, incy);
@@ -1010,16 +1010,16 @@ gemv(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-gemv(const char*            trans,
+gemv(const char* trans,
      const types::blas_int* m,
      const types::blas_int* n,
-     const double*          alpha,
-     const double*          A,
+     const double* alpha,
+     const double* A,
      const types::blas_int* lda,
-     const double*          x,
+     const double* x,
      const types::blas_int* incx,
-     const double*          b,
-     double*                y,
+     const double* b,
+     double* y,
      const types::blas_int* incy)
 {
   dgemv_(trans, m, n, alpha, A, lda, x, incx, b, y, incy);
@@ -1044,16 +1044,16 @@ gemv(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-gemv(const char*            trans,
+gemv(const char* trans,
      const types::blas_int* m,
      const types::blas_int* n,
-     const float*           alpha,
-     const float*           A,
+     const float* alpha,
+     const float* A,
      const types::blas_int* lda,
-     const float*           x,
+     const float* x,
      const types::blas_int* incx,
-     const float*           b,
-     float*                 y,
+     const float* b,
+     float* y,
      const types::blas_int* incy)
 {
   sgemv_(trans, m, n, alpha, A, lda, x, incx, b, y, incy);
@@ -1093,13 +1093,13 @@ trmv(const char* /*uplo*/,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-trmv(const char*            uplo,
-     const char*            trans,
-     const char*            diag,
+trmv(const char* uplo,
+     const char* trans,
+     const char* diag,
      const types::blas_int* N,
-     const double*          A,
+     const double* A,
      const types::blas_int* lda,
-     double*                x,
+     double* x,
      const types::blas_int* incx)
 {
   dtrmv_(uplo, trans, diag, N, A, lda, x, incx);
@@ -1121,13 +1121,13 @@ trmv(const char* /*uplo*/,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-trmv(const char*            uplo,
-     const char*            trans,
-     const char*            diag,
+trmv(const char* uplo,
+     const char* trans,
+     const char* diag,
      const types::blas_int* N,
-     const float*           A,
+     const float* A,
      const types::blas_int* lda,
-     float*                 x,
+     float* x,
      const types::blas_int* incx)
 {
   strmv_(uplo, trans, diag, N, A, lda, x, incx);
@@ -1173,18 +1173,18 @@ gemm(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-gemm(const char*            transa,
-     const char*            transb,
+gemm(const char* transa,
+     const char* transb,
      const types::blas_int* m,
      const types::blas_int* n,
      const types::blas_int* k,
-     const double*          alpha,
-     const double*          A,
+     const double* alpha,
+     const double* A,
      const types::blas_int* lda,
-     const double*          B,
+     const double* B,
      const types::blas_int* ldb,
-     const double*          beta,
-     double*                C,
+     const double* beta,
+     double* C,
      const types::blas_int* ldc)
 {
   dgemm_(transa, transb, m, n, k, alpha, A, lda, B, ldb, beta, C, ldc);
@@ -1211,18 +1211,18 @@ gemm(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-gemm(const char*            transa,
-     const char*            transb,
+gemm(const char* transa,
+     const char* transb,
      const types::blas_int* m,
      const types::blas_int* n,
      const types::blas_int* k,
-     const float*           alpha,
-     const float*           A,
+     const float* alpha,
+     const float* A,
      const types::blas_int* lda,
-     const float*           B,
+     const float* B,
      const types::blas_int* ldb,
-     const float*           beta,
-     float*                 C,
+     const float* beta,
+     float* C,
      const types::blas_int* ldc)
 {
   sgemm_(transa, transb, m, n, k, alpha, A, lda, B, ldb, beta, C, ldc);
@@ -1260,11 +1260,11 @@ potrf(const char*,
 }
 
 inline void
-potrf(const char*            uplo,
+potrf(const char* uplo,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
 #ifdef DEAL_II_WITH_LAPACK
   dpotrf_(uplo, n, A, lda, info);
@@ -1280,11 +1280,11 @@ potrf(const char*            uplo,
 }
 
 inline void
-potrf(const char*            uplo,
+potrf(const char* uplo,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
 #ifdef DEAL_II_WITH_LAPACK
   spotrf_(uplo, n, A, lda, info);
@@ -1317,16 +1317,16 @@ trcon(const char* /*norm*/,
 }
 
 inline void
-trcon(const char*            norm,
-      const char*            uplo,
-      const char*            diag,
+trcon(const char* norm,
+      const char* uplo,
+      const char* diag,
       const types::blas_int* n,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      double*                rcond,
-      double*                work,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      double* rcond,
+      double* work,
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
 #ifdef DEAL_II_WITH_LAPACK
   dtrcon_(norm, uplo, diag, n, A, lda, rcond, work, iwork, info);
@@ -1347,16 +1347,16 @@ trcon(const char*            norm,
 }
 
 inline void
-trcon(const char*            norm,
-      const char*            uplo,
-      const char*            diag,
+trcon(const char* norm,
+      const char* uplo,
+      const char* diag,
       const types::blas_int* n,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      float*                 rcond,
-      float*                 work,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      float* rcond,
+      float* work,
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
 #ifdef DEAL_II_WITH_LAPACK
   strcon_(norm, uplo, diag, n, A, lda, rcond, work, iwork, info);
@@ -1393,15 +1393,15 @@ pocon(const char*,
 }
 
 inline void
-pocon(const char*            uplo,
+pocon(const char* uplo,
       const types::blas_int* n,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      const double*          anorm,
-      double*                rcond,
-      double*                work,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      const double* anorm,
+      double* rcond,
+      double* work,
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
 #ifdef DEAL_II_WITH_LAPACK
   dpocon_(uplo, n, A, lda, anorm, rcond, work, iwork, info);
@@ -1421,15 +1421,15 @@ pocon(const char*            uplo,
 }
 
 inline void
-pocon(const char*            uplo,
+pocon(const char* uplo,
       const types::blas_int* n,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      const float*           anorm,
-      float*                 rcond,
-      float*                 work,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      const float* anorm,
+      float* rcond,
+      float* work,
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
 #ifdef DEAL_II_WITH_LAPACK
   spocon_(uplo, n, A, lda, anorm, rcond, work, iwork, info);
@@ -1461,11 +1461,11 @@ potri(const char*,
 }
 
 inline void
-potri(const char*            uplo,
+potri(const char* uplo,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
 #ifdef DEAL_II_WITH_LAPACK
   dpotri_(uplo, n, A, lda, info);
@@ -1481,11 +1481,11 @@ potri(const char*            uplo,
 }
 
 inline void
-potri(const char*            uplo,
+potri(const char* uplo,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
 #ifdef DEAL_II_WITH_LAPACK
   spotri_(uplo, n, A, lda, info);
@@ -1515,12 +1515,12 @@ lansy(const char*,
 }
 
 inline double
-lansy(const char*            norm,
-      const char*            uplo,
+lansy(const char* norm,
+      const char* uplo,
       const types::blas_int* n,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      double*                work)
+      double* work)
 {
 #ifdef DEAL_II_WITH_LAPACK
   return dlansy_(norm, uplo, n, A, lda, work);
@@ -1538,12 +1538,12 @@ lansy(const char*            norm,
 }
 
 inline float
-lansy(const char*            norm,
-      const char*            uplo,
+lansy(const char* norm,
+      const char* uplo,
       const types::blas_int* n,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      float*                 work)
+      float* work)
 {
 #ifdef DEAL_II_WITH_LAPACK
   return slansy_(norm, uplo, n, A, lda, work);
@@ -1575,12 +1575,12 @@ lange(const char*,
 }
 
 inline double
-lange(const char*            norm,
+lange(const char* norm,
       const types::blas_int* m,
       const types::blas_int* n,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      double*                work)
+      double* work)
 {
 #ifdef DEAL_II_WITH_LAPACK
   return dlange_(norm, m, n, A, lda, work);
@@ -1598,12 +1598,12 @@ lange(const char*            norm,
 }
 
 inline float
-lange(const char*            norm,
+lange(const char* norm,
       const types::blas_int* m,
       const types::blas_int* n,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      float*                 work)
+      float* work)
 {
 #ifdef DEAL_II_WITH_LAPACK
   return slange_(norm, m, n, A, lda, work);
@@ -1637,10 +1637,10 @@ getrf(const types::blas_int*,
 inline void
 getrf(const types::blas_int* m,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      types::blas_int*       ipiv,
-      types::blas_int*       info)
+      types::blas_int* ipiv,
+      types::blas_int* info)
 {
   dgetrf_(m, n, A, lda, ipiv, info);
 }
@@ -1661,10 +1661,10 @@ getrf(const types::blas_int*,
 inline void
 getrf(const types::blas_int* m,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      types::blas_int*       ipiv,
-      types::blas_int*       info)
+      types::blas_int* ipiv,
+      types::blas_int* info)
 {
   sgetrf_(m, n, A, lda, ipiv, info);
 }
@@ -1699,15 +1699,15 @@ getrs(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-getrs(const char*            trans,
+getrs(const char* trans,
       const types::blas_int* n,
       const types::blas_int* nrhs,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
       const types::blas_int* ipiv,
-      double*                b,
+      double* b,
       const types::blas_int* ldb,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dgetrs_(trans, n, nrhs, A, lda, ipiv, b, ldb, info);
 }
@@ -1729,15 +1729,15 @@ getrs(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-getrs(const char*            trans,
+getrs(const char* trans,
       const types::blas_int* n,
       const types::blas_int* nrhs,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
       const types::blas_int* ipiv,
-      float*                 b,
+      float* b,
       const types::blas_int* ldb,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   sgetrs_(trans, n, nrhs, A, lda, ipiv, b, ldb, info);
 }
@@ -1774,26 +1774,26 @@ potrs(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-potrs(const char*            uplo,
+potrs(const char* uplo,
       const types::blas_int* n,
       const types::blas_int* nrhs,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      double*                B,
+      double* B,
       const types::blas_int* ldb,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dpotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
 }
 inline void
-potrs(const char*            uplo,
+potrs(const char* uplo,
       const types::blas_int* n,
       const types::blas_int* nrhs,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      float*                 B,
+      float* B,
       const types::blas_int* ldb,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   spotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
 }
@@ -1841,12 +1841,12 @@ getri(const types::blas_int*,
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 getri(const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      types::blas_int*       ipiv,
-      double*                inv_work,
+      types::blas_int* ipiv,
+      double* inv_work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dgetri_(n, A, lda, ipiv, inv_work, lwork, info);
 }
@@ -1867,12 +1867,12 @@ getri(const types::blas_int*,
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 getri(const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      types::blas_int*       ipiv,
-      float*                 inv_work,
+      types::blas_int* ipiv,
+      float* inv_work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   sgetri_(n, A, lda, ipiv, inv_work, lwork, info);
 }
@@ -1909,12 +1909,12 @@ geqrf(const types::blas_int*,
 inline void
 geqrf(const types::blas_int* m,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      double*                tau,
-      double*                work,
+      double* tau,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dgeqrf_(m, n, A, lda, tau, work, lwork, info);
 }
@@ -1937,12 +1937,12 @@ geqrf(const types::blas_int*,
 inline void
 geqrf(const types::blas_int* m,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      float*                 tau,
-      float*                 work,
+      float* tau,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   sgeqrf_(m, n, A, lda, tau, work, lwork, info);
 }
@@ -1986,19 +1986,19 @@ ormqr(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-ormqr(const char*            side,
-      const char*            trans,
+ormqr(const char* side,
+      const char* trans,
       const types::blas_int* m,
       const types::blas_int* n,
       const types::blas_int* k,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      const double*          tau,
-      double*                B,
+      const double* tau,
+      double* B,
       const types::blas_int* ldb,
-      double*                work,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dormqr_(side, trans, m, n, k, A, lda, tau, B, ldb, work, lwork, info);
 }
@@ -2024,19 +2024,19 @@ ormqr(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-ormqr(const char*            side,
-      const char*            trans,
+ormqr(const char* side,
+      const char* trans,
       const types::blas_int* m,
       const types::blas_int* n,
       const types::blas_int* k,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      const float*           tau,
-      float*                 B,
+      const float* tau,
+      float* B,
       const types::blas_int* ldb,
-      float*                 work,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   sormqr_(side, trans, m, n, k, A, lda, tau, B, ldb, work, lwork, info);
 }
@@ -2081,12 +2081,12 @@ inline void
 orgqr(const types::blas_int* m,
       const types::blas_int* n,
       const types::blas_int* k,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      const double*          tau,
-      double*                work,
+      const double* tau,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dorgqr_(m, n, k, A, lda, tau, work, lwork, info);
 }
@@ -2111,12 +2111,12 @@ inline void
 orgqr(const types::blas_int* m,
       const types::blas_int* n,
       const types::blas_int* k,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      const float*           tau,
-      float*                 work,
+      const float* tau,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   sorgqr_(m, n, k, A, lda, tau, work, lwork, info);
 }
@@ -2155,16 +2155,16 @@ trtrs(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-trtrs(const char*            uplo,
-      const char*            trans,
-      const char*            diag,
+trtrs(const char* uplo,
+      const char* trans,
+      const char* diag,
       const types::blas_int* n,
       const types::blas_int* n_rhs,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      double*                B,
+      double* B,
       const types::blas_int* ldb,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dtrtrs_(uplo, trans, diag, n, n_rhs, A, lda, B, ldb, info);
 }
@@ -2187,16 +2187,16 @@ trtrs(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-trtrs(const char*            uplo,
-      const char*            trans,
-      const char*            diag,
+trtrs(const char* uplo,
+      const char* trans,
+      const char* diag,
       const types::blas_int* n,
       const types::blas_int* n_rhs,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      float*                 B,
+      float* B,
       const types::blas_int* ldb,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   strtrs_(uplo, trans, diag, n, n_rhs, A, lda, B, ldb, info);
 }
@@ -2245,20 +2245,20 @@ geev(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-geev(const char*            jobvl,
-     const char*            jobvr,
+geev(const char* jobvl,
+     const char* jobvr,
      const types::blas_int* n,
-     double*                A,
+     double* A,
      const types::blas_int* lda,
-     double*                lambda_re,
-     double*                lambda_im,
-     double*                vl,
+     double* lambda_re,
+     double* lambda_im,
+     double* vl,
      const types::blas_int* ldvl,
-     double*                vr,
+     double* vr,
      const types::blas_int* ldva,
-     double*                work,
+     double* work,
      const types::blas_int* lwork,
-     types::blas_int*       info)
+     types::blas_int* info)
 {
   dgeev_(jobvl,
          jobvr,
@@ -2298,20 +2298,20 @@ geev(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-geev(const char*            jobvl,
-     const char*            jobvr,
+geev(const char* jobvl,
+     const char* jobvr,
      const types::blas_int* n,
-     float*                 A,
+     float* A,
      const types::blas_int* lda,
-     float*                 lambda_re,
-     float*                 lambda_im,
-     float*                 vl,
+     float* lambda_re,
+     float* lambda_im,
+     float* vl,
      const types::blas_int* ldvl,
-     float*                 vr,
+     float* vr,
      const types::blas_int* ldva,
-     float*                 work,
+     float* work,
      const types::blas_int* lwork,
-     types::blas_int*       info)
+     types::blas_int* info)
 {
   sgeev_(jobvl,
          jobvr,
@@ -2390,29 +2390,29 @@ geevx(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-geevx(const char*            balanc,
-      const char*            jobvl,
-      const char*            jobvr,
-      const char*            sense,
+geevx(const char* balanc,
+      const char* jobvl,
+      const char* jobvr,
+      const char* sense,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      double*                lambda_re,
-      double*                lambda_im,
-      double*                vl,
+      double* lambda_re,
+      double* lambda_im,
+      double* vl,
       const types::blas_int* ldvl,
-      double*                vr,
+      double* vr,
       const types::blas_int* ldvr,
-      types::blas_int*       ilo,
-      types::blas_int*       ihi,
-      double*                scale,
-      double*                abnrm,
-      double*                rconde,
-      double*                rcondv,
-      double*                work,
+      types::blas_int* ilo,
+      types::blas_int* ihi,
+      double* scale,
+      double* abnrm,
+      double* rconde,
+      double* rcondv,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
   dgeevx_(balanc,
           jobvl,
@@ -2470,29 +2470,29 @@ geevx(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-geevx(const char*            balanc,
-      const char*            jobvl,
-      const char*            jobvr,
-      const char*            sense,
+geevx(const char* balanc,
+      const char* jobvl,
+      const char* jobvr,
+      const char* sense,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      float*                 lambda_re,
-      float*                 lambda_im,
-      float*                 vl,
+      float* lambda_re,
+      float* lambda_im,
+      float* vl,
       const types::blas_int* ldvl,
-      float*                 vr,
+      float* vr,
       const types::blas_int* ldvr,
-      types::blas_int*       ilo,
-      types::blas_int*       ihi,
-      float*                 scale,
-      float*                 abnrm,
-      float*                 rconde,
-      float*                 rcondv,
-      float*                 work,
+      types::blas_int* ilo,
+      types::blas_int* ihi,
+      float* scale,
+      float* abnrm,
+      float* rconde,
+      float* rcondv,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
   sgeevx_(balanc,
           jobvl,
@@ -2566,15 +2566,15 @@ syev(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-syev(const char*            jobz,
-     const char*            uplo,
+syev(const char* jobz,
+     const char* uplo,
      const types::blas_int* n,
-     double*                A,
+     double* A,
      const types::blas_int* lda,
-     double*                w,
-     double*                work,
+     double* w,
+     double* work,
      const types::blas_int* lwork,
-     types::blas_int*       info)
+     types::blas_int* info)
 {
   dsyev_(jobz, uplo, n, A, lda, w, work, lwork, info);
 }
@@ -2596,15 +2596,15 @@ syev(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-syev(const char*            jobz,
-     const char*            uplo,
+syev(const char* jobz,
+     const char* uplo,
      const types::blas_int* n,
-     float*                 A,
+     float* A,
      const types::blas_int* lda,
-     float*                 w,
-     float*                 work,
+     float* w,
+     float* work,
      const types::blas_int* lwork,
-     types::blas_int*       info)
+     types::blas_int* info)
 {
   ssyev_(jobz, uplo, n, A, lda, w, work, lwork, info);
 }
@@ -2659,26 +2659,26 @@ syevx(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-syevx(const char*            jobz,
-      const char*            range,
-      const char*            uplo,
+syevx(const char* jobz,
+      const char* range,
+      const char* uplo,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      const double*          vl,
-      const double*          vu,
+      const double* vl,
+      const double* vu,
       const types::blas_int* il,
       const types::blas_int* iu,
-      const double*          abstol,
-      types::blas_int*       m,
-      double*                w,
-      double*                z,
+      const double* abstol,
+      types::blas_int* m,
+      double* w,
+      double* z,
       const types::blas_int* ldz,
-      double*                work,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       ifail,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* ifail,
+      types::blas_int* info)
 {
   dsyevx_(jobz,
           range,
@@ -2730,26 +2730,26 @@ syevx(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-syevx(const char*            jobz,
-      const char*            range,
-      const char*            uplo,
+syevx(const char* jobz,
+      const char* range,
+      const char* uplo,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      const float*           vl,
-      const float*           vu,
+      const float* vl,
+      const float* vu,
       const types::blas_int* il,
       const types::blas_int* iu,
-      const float*           abstol,
-      types::blas_int*       m,
-      float*                 w,
-      float*                 z,
+      const float* abstol,
+      types::blas_int* m,
+      float* w,
+      float* z,
       const types::blas_int* ldz,
-      float*                 work,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       ifail,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* ifail,
+      types::blas_int* info)
 {
   ssyevx_(jobz,
           range,
@@ -2829,27 +2829,27 @@ syevr(const char* /*jobz*/,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-syevr(const char*            jobz,
-      const char*            range,
-      const char*            uplo,
+syevr(const char* jobz,
+      const char* range,
+      const char* uplo,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      const double*          vl,
-      const double*          vu,
+      const double* vl,
+      const double* vu,
       const types::blas_int* il,
       const types::blas_int* iu,
-      const double*          abstol,
-      types::blas_int*       m,
-      double*                w,
-      double*                z,
+      const double* abstol,
+      types::blas_int* m,
+      double* w,
+      double* z,
       const types::blas_int* ldz,
-      types::blas_int*       isuppz,
-      double*                work,
-      types::blas_int*       lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       liwork,
-      types::blas_int*       info)
+      types::blas_int* isuppz,
+      double* work,
+      types::blas_int* lwork,
+      types::blas_int* iwork,
+      types::blas_int* liwork,
+      types::blas_int* info)
 {
   /*
    * Netlib and Atlas Lapack perform floating point tests (e.g. divide-by-zero) within the call to dsyevr
@@ -2889,27 +2889,27 @@ syevr(const char*            jobz,
 }
 
 inline void
-syevr(const char*            jobz,
-      const char*            range,
-      const char*            uplo,
+syevr(const char* jobz,
+      const char* range,
+      const char* uplo,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      const float*           vl,
-      const float*           vu,
+      const float* vl,
+      const float* vu,
       const types::blas_int* il,
       const types::blas_int* iu,
-      const float*           abstol,
-      types::blas_int*       m,
-      float*                 w,
-      float*                 z,
+      const float* abstol,
+      types::blas_int* m,
+      float* w,
+      float* z,
       const types::blas_int* ldz,
-      types::blas_int*       isuppz,
-      float*                 work,
-      types::blas_int*       lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       liwork,
-      types::blas_int*       info)
+      types::blas_int* isuppz,
+      float* work,
+      types::blas_int* lwork,
+      types::blas_int* iwork,
+      types::blas_int* liwork,
+      types::blas_int* info)
 {
   /*
    * Netlib and Atlas Lapack perform floating point tests (e.g. divide-by-zero) within the call to ssyevr
@@ -2974,17 +2974,17 @@ sygv(const types::blas_int*,
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 sygv(const types::blas_int* itype,
-     const char*            jobz,
-     const char*            uplo,
+     const char* jobz,
+     const char* uplo,
      const types::blas_int* n,
-     double*                A,
+     double* A,
      const types::blas_int* lda,
-     double*                B,
+     double* B,
      const types::blas_int* ldb,
-     double*                w,
-     double*                work,
+     double* w,
+     double* work,
      const types::blas_int* lwork,
-     types::blas_int*       info)
+     types::blas_int* info)
 {
   dsygv_(itype, jobz, uplo, n, A, lda, B, ldb, w, work, lwork, info);
 }
@@ -3010,17 +3010,17 @@ sygv(const types::blas_int*,
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 sygv(const types::blas_int* itype,
-     const char*            jobz,
-     const char*            uplo,
+     const char* jobz,
+     const char* uplo,
      const types::blas_int* n,
-     float*                 A,
+     float* A,
      const types::blas_int* lda,
-     float*                 B,
+     float* B,
      const types::blas_int* ldb,
-     float*                 w,
-     float*                 work,
+     float* w,
+     float* work,
      const types::blas_int* lwork,
-     types::blas_int*       info)
+     types::blas_int* info)
 {
   ssygv_(itype, jobz, uplo, n, A, lda, B, ldb, w, work, lwork, info);
 }
@@ -3083,28 +3083,28 @@ sygvx(const types::blas_int*,
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 sygvx(const types::blas_int* itype,
-      const char*            jobz,
-      const char*            range,
-      const char*            uplo,
+      const char* jobz,
+      const char* range,
+      const char* uplo,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      double*                B,
+      double* B,
       const types::blas_int* ldb,
-      const double*          vl,
-      const double*          vu,
+      const double* vl,
+      const double* vu,
       const types::blas_int* il,
       const types::blas_int* iu,
-      const double*          abstol,
-      types::blas_int*       m,
-      double*                w,
-      double*                z,
+      const double* abstol,
+      types::blas_int* m,
+      double* w,
+      double* z,
       const types::blas_int* ldz,
-      double*                work,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       ifail,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* ifail,
+      types::blas_int* info)
 {
   dsygvx_(itype,
           jobz,
@@ -3163,28 +3163,28 @@ sygvx(const types::blas_int*,
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 sygvx(const types::blas_int* itype,
-      const char*            jobz,
-      const char*            range,
-      const char*            uplo,
+      const char* jobz,
+      const char* range,
+      const char* uplo,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      float*                 B,
+      float* B,
       const types::blas_int* ldb,
-      const float*           vl,
-      const float*           vu,
+      const float* vl,
+      const float* vu,
       const types::blas_int* il,
       const types::blas_int* iu,
-      const float*           abstol,
-      types::blas_int*       m,
-      float*                 w,
-      float*                 z,
+      const float* abstol,
+      types::blas_int* m,
+      float* w,
+      float* z,
       const types::blas_int* ldz,
-      float*                 work,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       ifail,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* ifail,
+      types::blas_int* info)
 {
   ssygvx_(itype,
           jobz,
@@ -3267,20 +3267,20 @@ gesdd(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-gesdd(const char*            jobz,
+gesdd(const char* jobz,
       const types::blas_int* m,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      double*                s,
-      double*                u,
+      double* s,
+      double* u,
       const types::blas_int* ldu,
-      double*                vt,
+      double* vt,
       const types::blas_int* ldvt,
-      double*                work,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
   dgesdd_(jobz, m, n, A, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info);
 }
@@ -3307,20 +3307,20 @@ gesdd(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-gesdd(const char*            jobz,
+gesdd(const char* jobz,
       const types::blas_int* m,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      float*                 s,
-      float*                 u,
+      float* s,
+      float* u,
       const types::blas_int* ldu,
-      float*                 vt,
+      float* vt,
       const types::blas_int* ldvt,
-      float*                 work,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
   sgesdd_(jobz, m, n, A, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info);
 }
@@ -3372,20 +3372,20 @@ gesvd(types::blas_int*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-gesvd(types::blas_int*       jobu,
-      types::blas_int*       jobvt,
+gesvd(types::blas_int* jobu,
+      types::blas_int* jobvt,
       const types::blas_int* n,
       const types::blas_int* m,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      double*                s,
-      double*                u,
+      double* s,
+      double* u,
       const types::blas_int* ldu,
-      double*                vt,
+      double* vt,
       const types::blas_int* ldvt,
-      double*                work,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dgesvd_(jobu, jobvt, n, m, A, lda, s, u, ldu, vt, ldvt, work, lwork, info);
 }
@@ -3412,20 +3412,20 @@ gesvd(types::blas_int*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-gesvd(types::blas_int*       jobu,
-      types::blas_int*       jobvt,
+gesvd(types::blas_int* jobu,
+      types::blas_int* jobvt,
       const types::blas_int* n,
       const types::blas_int* m,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      float*                 s,
-      float*                 u,
+      float* s,
+      float* u,
       const types::blas_int* ldu,
-      float*                 vt,
+      float* vt,
       const types::blas_int* ldvt,
-      float*                 work,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   sgesvd_(jobu, jobvt, n, m, A, lda, s, u, ldu, vt, ldvt, work, lwork, info);
 }
@@ -3480,17 +3480,17 @@ inline void
 gelsd(const types::blas_int* m,
       const types::blas_int* n,
       const types::blas_int* nrhs,
-      const double*          A,
+      const double* A,
       const types::blas_int* lda,
-      double*                B,
+      double* B,
       const types::blas_int* ldb,
-      double*                s,
-      const double*          rcond,
-      types::blas_int*       rank,
-      double*                work,
+      double* s,
+      const double* rcond,
+      types::blas_int* rank,
+      double* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
   dgelsd_(m, n, nrhs, A, lda, B, ldb, s, rcond, rank, work, lwork, iwork, info);
 }
@@ -3520,17 +3520,17 @@ inline void
 gelsd(const types::blas_int* m,
       const types::blas_int* n,
       const types::blas_int* nrhs,
-      const float*           A,
+      const float* A,
       const types::blas_int* lda,
-      float*                 B,
+      float* B,
       const types::blas_int* ldb,
-      float*                 s,
-      const float*           rcond,
-      types::blas_int*       rank,
-      float*                 work,
+      float* s,
+      const float* rcond,
+      types::blas_int* rank,
+      float* work,
       const types::blas_int* lwork,
-      types::blas_int*       iwork,
-      types::blas_int*       info)
+      types::blas_int* iwork,
+      types::blas_int* info)
 {
   sgelsd_(m, n, nrhs, A, lda, B, ldb, s, rcond, rank, work, lwork, iwork, info);
 }
@@ -3575,14 +3575,14 @@ stev(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-stev(const char*            jobz,
+stev(const char* jobz,
      const types::blas_int* n,
-     double*                d,
-     double*                e,
-     double*                z,
+     double* d,
+     double* e,
+     double* z,
      const types::blas_int* ldz,
-     double*                work,
-     types::blas_int*       info)
+     double* work,
+     types::blas_int* info)
 {
   dstev_(jobz, n, d, e, z, ldz, work, info);
 }
@@ -3603,14 +3603,14 @@ stev(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-stev(const char*            jobz,
+stev(const char* jobz,
      const types::blas_int* n,
-     float*                 d,
-     float*                 e,
-     float*                 z,
+     float* d,
+     float* e,
+     float* z,
      const types::blas_int* ldz,
-     float*                 work,
-     types::blas_int*       info)
+     float* work,
+     types::blas_int* info)
 {
   sstev_(jobz, n, d, e, z, ldz, work, info);
 }
@@ -3648,16 +3648,16 @@ lascl(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-lascl(const char*            type,
+lascl(const char* type,
       const types::blas_int* kl,
       const types::blas_int* ku,
-      const double*          cfrom,
-      const double*          cto,
+      const double* cfrom,
+      const double* cto,
       const types::blas_int* m,
       const types::blas_int* n,
-      double*                A,
+      double* A,
       const types::blas_int* lda,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   dlascl_(type, kl, ku, cfrom, cto, m, n, A, lda, info);
 }
@@ -3680,16 +3680,16 @@ lascl(const char*,
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
-lascl(const char*            type,
+lascl(const char* type,
       const types::blas_int* kl,
       const types::blas_int* ku,
-      const float*           cfrom,
-      const float*           cto,
+      const float* cfrom,
+      const float* cto,
       const types::blas_int* m,
       const types::blas_int* n,
-      float*                 A,
+      float* A,
       const types::blas_int* lda,
-      types::blas_int*       info)
+      types::blas_int* info)
 {
   slascl_(type, kl, ku, cfrom, cto, m, n, A, lda, info);
 }

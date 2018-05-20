@@ -105,7 +105,7 @@ main()
   std::string fluid_fe_name
     = "FESystem[FE_Nothing()^2-FE_Nothing()^2-FE_Q(2)^2-FE_Q(1)-FE_Q(2)^2]";
 
-  hp::FECollection<dim>               fe_collection;
+  hp::FECollection<dim> fe_collection;
   std::unique_ptr<FiniteElement<dim>> solid_fe(
     FETools::get_fe_by_name<dim, dim>(solid_fe_name));
   std::unique_ptr<FiniteElement<dim>> fluid_fe(
@@ -210,7 +210,7 @@ main()
   // build matrices and vectors
 
   BlockSparseMatrix<double> system_matrix(block_sparsity_pattern);
-  BlockVector<double>       system_rhs(dofs_per_block);
+  BlockVector<double> system_rhs(dofs_per_block);
 
   // set up constraints for solution and solution update
   /**
@@ -336,7 +336,7 @@ main()
     const unsigned int dofs_per_cell = fluid_fe->dofs_per_cell;
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 

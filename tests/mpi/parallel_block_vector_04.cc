@@ -50,7 +50,7 @@ test()
   LinearAlgebra::distributed::Vector<double> v(
     local_owned, local_relevant, MPI_COMM_WORLD);
   std::vector<types::global_dof_index> indices;
-  std::vector<double>                  values;
+  std::vector<double> values;
 
   // set local values
   if(myid < 8)

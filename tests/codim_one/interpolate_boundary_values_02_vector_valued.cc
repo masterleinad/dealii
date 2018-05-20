@@ -53,7 +53,7 @@ test()
   GridGenerator::hyper_cube(tria);
   deallog << tria.n_active_cells() << " active cells" << std::endl;
 
-  FESystem<dim, spacedim>   fe(FE_Q<dim, spacedim>(2), spacedim);
+  FESystem<dim, spacedim> fe(FE_Q<dim, spacedim>(2), spacedim);
   DoFHandler<dim, spacedim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

@@ -25,7 +25,7 @@ test()
   // DynamicSparsityPatterns are most
   // often used for 3d, use a rather large
   // number of entries per row
-  const unsigned int     N = 1000;
+  const unsigned int N = 1000;
   DynamicSparsityPattern csp(N, N);
   for(unsigned int i = 0; i < N; ++i)
     for(unsigned int j = 0; j < 40; ++j)

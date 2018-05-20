@@ -32,7 +32,7 @@ void
 test1()
 {
   Triangulation<dim> tria;
-  GridIn<dim>        gi;
+  GridIn<dim> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(SOURCE_DIR "/grid_in/2d.inp");
   gi.read_ucd(in);
@@ -63,7 +63,7 @@ test2()
   // input file, but grid_in_02/2d.xda is a
   // corrected input file.
   Triangulation<dim> tria(Triangulation<dim>::none, true);
-  GridIn<dim>        gi;
+  GridIn<dim> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(SOURCE_DIR "/grid_in/2d.xda");
   try
@@ -94,11 +94,11 @@ void
 test3()
 {
   Triangulation<dim> tria;
-  GridIn<dim>        gi;
+  GridIn<dim> gi;
   gi.attach_triangulation(tria);
   gi.read(SOURCE_DIR "/grid_in/2d.nc");
 
-  GridOut       grid_out;
+  GridOut grid_out;
   std::ofstream gnufile("grid_in_2d.gnuplot");
   grid_out.write_gnuplot(tria, gnufile);
 }
@@ -108,7 +108,7 @@ void
 check_file(const std::string name, typename GridIn<dim>::Format format)
 {
   Triangulation<dim> tria(Triangulation<dim>::none, true);
-  GridIn<dim>        gi;
+  GridIn<dim> gi;
   gi.attach_triangulation(tria);
   try
     {

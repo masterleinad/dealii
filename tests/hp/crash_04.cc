@@ -38,7 +38,7 @@ test()
   dof_handler.distribute_dofs(fe_collection);
 
   Vector<double> v(dof_handler.n_dofs());
-  Vector<float>  e(tria.n_active_cells());
+  Vector<float> e(tria.n_active_cells());
   DerivativeApproximation::approximate_gradient(dof_handler, v, e);
 }
 

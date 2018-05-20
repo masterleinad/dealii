@@ -40,9 +40,9 @@ template <typename NumberType>
 void
 test(const unsigned int size,
      const unsigned int block_size,
-     const NumberType   tol)
+     const NumberType tol)
 {
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(mpi_communicator));
   const unsigned int this_mpi_process(
@@ -61,13 +61,13 @@ test(const unsigned int size,
   const unsigned int max_n_eigenvalues = 5;
 
   // Create SPD matrices of requested size:
-  FullMatrix<NumberType>          full_A(size);
-  std::vector<NumberType>         eigenvalues_Lapack(size);
+  FullMatrix<NumberType> full_A(size);
+  std::vector<NumberType> eigenvalues_Lapack(size);
   std::vector<Vector<NumberType>> s_eigenvectors_(max_n_eigenvalues,
                                                   Vector<NumberType>(size));
   std::vector<Vector<NumberType>> p_eigenvectors_(max_n_eigenvalues,
                                                   Vector<NumberType>(size));
-  FullMatrix<NumberType>          p_eigenvectors(size, size);
+  FullMatrix<NumberType> p_eigenvectors(size, size);
 
   ScaLAPACKMatrix<NumberType> scalapack_syevx(size, grid, block_size);
   scalapack_syevx.set_property(LAPACKSupport::Property::symmetric);
@@ -83,12 +83,12 @@ test(const unsigned int size,
         lapack_A[i * size + j] = full_A(i, j);
 
     int
-         info; //Variable containing information about the successful exit of the lapack routine
+      info; //Variable containing information about the successful exit of the lapack routine
     char jobz = 'V'; //'V': all eigenpairs of A are computed
     char uplo
       = 'U'; //storage format of the matrix A; not so important as matrix is symmetric
-    int                     LDA = size; //leading dimension of the matrix A
-    int                     lwork;      //length of vector/array work
+    int LDA = size; //leading dimension of the matrix A
+    int lwork;      //length of vector/array work
     std::vector<NumberType> work(1);
 
     //by setting lwork to -1 a workspace query for work is done

@@ -92,18 +92,18 @@ private:
 template <int dim, int components, int fe_degree>
 void
 do_project(const parallel::distributed::Triangulation<dim>& triangulation,
-           const FiniteElement<dim>&                        fe,
-           const unsigned int                               order_difference)
+           const FiniteElement<dim>& fe,
+           const unsigned int order_difference)
 {
   const unsigned int p = fe_degree;
-  DoFHandler<dim>    dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
   deallog << "n_dofs=" << dof_handler.n_dofs() << std::endl;
 
-  const MPI_Comm& mpi_communicator   = triangulation.get_communicator();
-  const IndexSet  locally_owned_dofs = dof_handler.locally_owned_dofs();
-  IndexSet        locally_relevant_dofs;
+  const MPI_Comm& mpi_communicator  = triangulation.get_communicator();
+  const IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
   ConstraintMatrix constraints;
@@ -157,7 +157,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
 template <int dim, int components, int fe_degree>
 void
 test_no_hanging_nodes(const FiniteElement<dim>& fe,
-                      const unsigned int        order_difference = 0)
+                      const unsigned int order_difference = 0)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);
@@ -170,7 +170,7 @@ test_no_hanging_nodes(const FiniteElement<dim>& fe,
 template <int dim, int components, int fe_degree>
 void
 test_with_hanging_nodes(const FiniteElement<dim>& fe,
-                        const unsigned int        order_difference = 0)
+                        const unsigned int order_difference = 0)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);
@@ -195,7 +195,7 @@ test_with_hanging_nodes(const FiniteElement<dim>& fe,
 template <int dim, int components, int fe_degree>
 void
 test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
-                                 const unsigned int        order_difference = 0)
+                                 const unsigned int order_difference = 0)
 {
   if(dim != 3)
     return;
@@ -223,7 +223,7 @@ test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
 template <int dim, int components, int fe_degree>
 void
 test_with_2d_deformed_mesh(const FiniteElement<dim>& fe,
-                           const unsigned int        order_difference = 0)
+                           const unsigned int order_difference = 0)
 {
   if(dim != 2)
     return;

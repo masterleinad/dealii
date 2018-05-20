@@ -80,7 +80,7 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::reinit(const size_type size,
-                           const bool      omit_zeroing_entries)
+                           const bool omit_zeroing_entries)
     {
       clear_mpi_requests();
 
@@ -104,7 +104,7 @@ namespace LinearAlgebra
     template <typename Number2>
     void
     Vector<Number>::reinit(const Vector<Number2>& v,
-                           const bool             omit_zeroing_entries)
+                           const bool omit_zeroing_entries)
     {
       clear_mpi_requests();
       Assert(v.partitioner.get() != nullptr, ExcNotInitialized());
@@ -139,7 +139,7 @@ namespace LinearAlgebra
     void
     Vector<Number>::reinit(const IndexSet& locally_owned_indices,
                            const IndexSet& ghost_indices,
-                           const MPI_Comm  communicator)
+                           const MPI_Comm communicator)
     {
       // set up parallel partitioner with index sets and communicator
       std::shared_ptr<const Utilities::MPI::Partitioner> new_partitioner(
@@ -151,7 +151,7 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::reinit(const IndexSet& locally_owned_indices,
-                           const MPI_Comm  communicator)
+                           const MPI_Comm communicator)
     {
       // set up parallel partitioner with index sets and communicator
       std::shared_ptr<const Utilities::MPI::Partitioner> new_partitioner(
@@ -217,7 +217,7 @@ namespace LinearAlgebra
     template <typename Number>
     Vector<Number>::Vector(const IndexSet& local_range,
                            const IndexSet& ghost_indices,
-                           const MPI_Comm  communicator)
+                           const MPI_Comm communicator)
       : allocated_size(0), values(nullptr, &free), vector_is_ghosted(false)
     {
       reinit(local_range, ghost_indices, communicator);
@@ -225,7 +225,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     Vector<Number>::Vector(const IndexSet& local_range,
-                           const MPI_Comm  communicator)
+                           const MPI_Comm communicator)
       : allocated_size(0), values(nullptr, &free), vector_is_ghosted(false)
     {
       reinit(local_range, communicator);
@@ -358,7 +358,7 @@ namespace LinearAlgebra
       void
       copy_petsc_vector(const PETSC_Number* petsc_start_ptr,
                         const PETSC_Number* petsc_end_ptr,
-                        Number*             ptr)
+                        Number* ptr)
       {
         std::copy(petsc_start_ptr, petsc_end_ptr, ptr);
       }
@@ -367,7 +367,7 @@ namespace LinearAlgebra
       void
       copy_petsc_vector(const std::complex<PETSC_Number>* petsc_start_ptr,
                         const std::complex<PETSC_Number>* petsc_end_ptr,
-                        std::complex<Number>*             ptr)
+                        std::complex<Number>* ptr)
       {
         std::copy(petsc_start_ptr, petsc_end_ptr, ptr);
       }
@@ -395,7 +395,7 @@ namespace LinearAlgebra
              StandardExceptions::ExcInvalidState());
 
       // get a representation of the vector and copy it
-      PetscScalar*   start_ptr;
+      PetscScalar* start_ptr;
       PetscErrorCode ierr
         = VecGetArray(static_cast<const Vec&>(petsc_vec), &start_ptr);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -472,7 +472,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::compress_start(const unsigned int                counter,
+    Vector<Number>::compress_start(const unsigned int counter,
                                    ::dealii::VectorOperation::values operation)
     {
       (void) counter;
@@ -586,8 +586,8 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::import(
-      const ReadWriteVector<Number>&                  V,
-      VectorOperation::values                         operation,
+      const ReadWriteVector<Number>& V,
+      VectorOperation::values operation,
       std::shared_ptr<const CommunicationPatternBase> communication_pattern)
     {
       IndexSet locally_owned_elem = locally_owned_elements();
@@ -782,7 +782,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::add_local(const Number                     a,
+    Vector<Number>::add_local(const Number a,
                               const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
@@ -815,9 +815,9 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::add(const Number                     a,
+    Vector<Number>::add(const Number a,
                         const VectorSpaceVector<Number>& vv,
-                        const Number                     b,
+                        const Number b,
                         const VectorSpaceVector<Number>& ww)
     {
       // Downcast. Throws an exception if invalid.
@@ -846,7 +846,7 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::add(const std::vector<size_type>& indices,
-                        const std::vector<Number>&    values)
+                        const std::vector<Number>& values)
     {
       for(std::size_t i = 0; i < indices.size(); ++i)
         {
@@ -872,8 +872,8 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::sadd_local(const Number                     x,
-                               const Number                     a,
+    Vector<Number>::sadd_local(const Number x,
+                               const Number a,
                                const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
@@ -893,8 +893,8 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::sadd(const Number                     x,
-                         const Number                     a,
+    Vector<Number>::sadd(const Number x,
+                         const Number a,
                          const VectorSpaceVector<Number>& vv)
     {
       sadd_local(x, a, vv);
@@ -905,10 +905,10 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::sadd(const Number          x,
-                         const Number          a,
+    Vector<Number>::sadd(const Number x,
+                         const Number a,
                          const Vector<Number>& v,
-                         const Number          b,
+                         const Number b,
                          const Vector<Number>& w)
     {
       AssertIsFinite(x);
@@ -995,9 +995,9 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::equ(const Number          a,
+    Vector<Number>::equ(const Number a,
                         const Vector<Number>& v,
-                        const Number          b,
+                        const Number b,
                         const Vector<Number>& w)
     {
       AssertIsFinite(a);
@@ -1053,7 +1053,7 @@ namespace LinearAlgebra
 
       AssertDimension(partitioner->local_size(), v.partitioner->local_size());
 
-      Number                                           sum;
+      Number sum;
       internal::VectorOperations::Dot<Number, Number2> dot(values.get(),
                                                            v.values.get());
       internal::VectorOperations::parallel_reduce(
@@ -1083,7 +1083,7 @@ namespace LinearAlgebra
     typename Vector<Number>::real_type
     Vector<Number>::norm_sqr_local() const
     {
-      real_type                                            sum;
+      real_type sum;
       internal::VectorOperations::Norm2<Number, real_type> norm2(values.get());
       internal::VectorOperations::parallel_reduce(
         norm2, 0, partitioner->local_size(), sum, thread_loop_partitioner);
@@ -1101,7 +1101,7 @@ namespace LinearAlgebra
       if(partitioner->local_size() == 0)
         return Number();
 
-      Number                                        sum;
+      Number sum;
       internal::VectorOperations::MeanValue<Number> mean(values.get());
       internal::VectorOperations::parallel_reduce(
         mean, 0, partitioner->local_size(), sum, thread_loop_partitioner);
@@ -1127,7 +1127,7 @@ namespace LinearAlgebra
     typename Vector<Number>::real_type
     Vector<Number>::l1_norm_local() const
     {
-      real_type                                            sum;
+      real_type sum;
       internal::VectorOperations::Norm1<Number, real_type> norm1(values.get());
       internal::VectorOperations::parallel_reduce(
         norm1, 0, partitioner->local_size(), sum, thread_loop_partitioner);
@@ -1170,7 +1170,7 @@ namespace LinearAlgebra
     typename Vector<Number>::real_type
     Vector<Number>::lp_norm_local(const real_type p) const
     {
-      real_type                                            sum;
+      real_type sum;
       internal::VectorOperations::NormP<Number, real_type> normp(values.get(),
                                                                  p);
       internal::VectorOperations::parallel_reduce(
@@ -1219,7 +1219,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     Number
-    Vector<Number>::add_and_dot_local(const Number          a,
+    Vector<Number>::add_and_dot_local(const Number a,
                                       const Vector<Number>& v,
                                       const Vector<Number>& w)
     {
@@ -1227,7 +1227,7 @@ namespace LinearAlgebra
       AssertDimension(vec_size, v.local_size());
       AssertDimension(vec_size, w.local_size());
 
-      Number                                        sum;
+      Number sum;
       internal::VectorOperations::AddAndDot<Number> adder(
         this->values.get(), v.values.get(), w.values.get(), a);
       internal::VectorOperations::parallel_reduce(
@@ -1238,7 +1238,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     Number
-    Vector<Number>::add_and_dot(const Number                     a,
+    Vector<Number>::add_and_dot(const Number a,
                                 const VectorSpaceVector<Number>& vv,
                                 const VectorSpaceVector<Number>& ww)
     {
@@ -1295,15 +1295,15 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::print(std::ostream&      out,
+    Vector<Number>::print(std::ostream& out,
                           const unsigned int precision,
-                          const bool         scientific,
-                          const bool         across) const
+                          const bool scientific,
+                          const bool across) const
     {
       Assert(partitioner.get() != nullptr, ExcInternalError());
       AssertThrow(out, ExcIO());
-      std::ios::fmtflags old_flags     = out.flags();
-      unsigned int       old_precision = out.precision(precision);
+      std::ios::fmtflags old_flags = out.flags();
+      unsigned int old_precision   = out.precision(precision);
 
       out.precision(precision);
       if(scientific)

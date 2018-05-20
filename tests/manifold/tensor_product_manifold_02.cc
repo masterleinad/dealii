@@ -29,7 +29,7 @@ test()
   std::ostream& out = deallog.get_file_stream();
 
   FunctionManifold<1, 1> F("x", "x");
-  PolarManifold<2, 2>    G;
+  PolarManifold<2, 2> G;
 
   TensorProductManifold<2, 1, 1, 1, 2, 2, 2> manifold(F, G);
 
@@ -55,7 +55,7 @@ test()
   Triangulation<2, 3>::active_cell_iterator it = tria.begin_active();
   for(; it != tria.end(); ++it)
     {
-      Point<3>     p  = it->center(true);
+      Point<3> p      = it->center(true);
       Tensor<1, 3> t1 = manifold.get_tangent_vector(p, it->vertex(0));
       Tensor<1, 3> t2 = manifold.get_tangent_vector(p, it->vertex(1));
       Tensor<1, 3> n  = cross_product_3d(t1, t2);

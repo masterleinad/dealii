@@ -24,10 +24,10 @@
 void
 test()
 {
-  unsigned int                         size(10);
+  unsigned int size(10);
   std::vector<types::global_dof_index> indices(size);
-  std::vector<float>                   float_values(size);
-  std::vector<double>                  double_values(size);
+  std::vector<float> float_values(size);
+  std::vector<double> double_values(size);
   for(unsigned int i = 0; i < size; ++i)
     {
       indices[i]       = i;
@@ -35,10 +35,10 @@ test()
       double_values[i] = 3. * i;
     }
 
-  LinearAlgebra::ReadWriteVector<float>  float_vector;
+  LinearAlgebra::ReadWriteVector<float> float_vector;
   LinearAlgebra::ReadWriteVector<double> double_vector_1;
   LinearAlgebra::ReadWriteVector<double> double_vector_2;
-  IndexSet                               is(50);
+  IndexSet is(50);
   is.add_range(0, 10);
   is.add_index(46);
   is.add_range(11, 25);

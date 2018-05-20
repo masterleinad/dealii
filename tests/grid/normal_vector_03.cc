@@ -57,15 +57,15 @@ main()
 
   FE_Q<2> linear_interpolator(1);
 
-  Triangulation<3>               tria;
-  FlatManifold<3>                boundary;
+  Triangulation<3> tria;
+  FlatManifold<3> boundary;
   Manifold<3>::FaceVertexNormals normals;
   for(unsigned int case_no = 0; case_no < 2; ++case_no)
     {
       deallog << "Case" << case_no << std::endl;
       create_triangulation(case_no, tria);
       const Triangulation<3>::active_cell_iterator cell = tria.begin_active();
-      Triangulation<3>::face_iterator              face;
+      Triangulation<3>::face_iterator face;
       for(unsigned int face_no = 0; face_no < GeometryInfo<3>::faces_per_cell;
           ++face_no)
         {
@@ -75,7 +75,7 @@ main()
           for(double xi = 0; xi <= 1; xi += 0.234)
             for(double eta = 0; eta <= 1; eta += 0.234)
               {
-                Point<3>     p;
+                Point<3> p;
                 Tensor<1, 3> normal;
 
                 for(unsigned int v = 0; v < GeometryInfo<3>::vertices_per_face;

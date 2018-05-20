@@ -83,16 +83,16 @@ main()
 {
   initlog();
 
-  FE_Q<2>     q21(1);
-  FE_Q<2>     q22(2);
+  FE_Q<2> q21(1);
+  FE_Q<2> q22(2);
   FESystem<2> s2(q21, 3, q22, 2);
 
   test_fe(q21);
   test_fe(q22);
   test_fe(s2);
 
-  FE_Q<3>     q31(1);
-  FE_Q<3>     q32(2);
+  FE_Q<3> q31(1);
+  FE_Q<3> q32(2);
   FESystem<3> s3(q31, 3, q32, 2);
 
   test_fe(q31);

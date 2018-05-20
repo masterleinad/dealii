@@ -69,7 +69,7 @@ Test()
       for(double t = 0.; t < 1; t += .1)
         {
           function.set_time(t);
-          Point<dim>                  p;
+          Point<dim> p;
           std::vector<Vector<double>> values(vertices.size(),
                                              Vector<double>(i + 1));
           function.vector_value_list(vertices, values);

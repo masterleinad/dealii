@@ -39,7 +39,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
 
   const QGauss<dim> quadrature(2);
-  FEValues<dim>     fe_values(
+  FEValues<dim> fe_values(
     fe, quadrature, update_covariant_transformation | update_hessians);
 
   fe_values.reinit(dof.begin_active());

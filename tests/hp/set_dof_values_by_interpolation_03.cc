@@ -66,7 +66,7 @@ test()
   // do the test where we set data on the coarsest cell with an
   // explicit Q1 space
   typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin(0);
-  Vector<double>                              local(fe[0].dofs_per_cell);
+  Vector<double> local(fe[0].dofs_per_cell);
   for(unsigned int i = 0; i < local.size(); ++i)
     local(i) = i;
   cell->set_dof_values_by_interpolation(local, solution, 0);

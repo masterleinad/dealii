@@ -21,8 +21,8 @@
 template <typename number>
 void
 checkVmult_Add(FullMatrix<number>& A,
-               Vector<number>&     V,
-               bool                expect_constrained_source = false)
+               Vector<number>& V,
+               bool expect_constrained_source = false)
 {
   deallog << "vmult_add" << std::endl;
 

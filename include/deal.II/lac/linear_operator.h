@@ -457,7 +457,7 @@ operator-(const LinearOperator<Range, Domain, Payload>& first_op,
  */
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
-operator*(typename Range::value_type                    number,
+operator*(typename Range::value_type number,
           const LinearOperator<Range, Domain, Payload>& op)
 {
   static_assert(
@@ -524,7 +524,7 @@ operator*(typename Range::value_type                    number,
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
 operator*(const LinearOperator<Range, Domain, Payload>& op,
-          typename Domain::value_type                   number)
+          typename Domain::value_type number)
 {
   static_assert(
     std::is_convertible<typename Range::value_type,
@@ -555,7 +555,7 @@ template <typename Range,
           typename Domain,
           typename Payload>
 LinearOperator<Range, Domain, Payload>
-operator*(const LinearOperator<Range, Intermediate, Payload>&  first_op,
+operator*(const LinearOperator<Range, Intermediate, Payload>& first_op,
           const LinearOperator<Intermediate, Domain, Payload>& second_op)
 {
   if(first_op.is_null_operator || second_op.is_null_operator)
@@ -670,8 +670,8 @@ template <typename Payload,
           typename Domain = Range>
 LinearOperator<Domain, Range, Payload>
 inverse_operator(const LinearOperator<Range, Domain, Payload>& op,
-                 Solver&                                       solver,
-                 const Preconditioner&                         preconditioner)
+                 Solver& solver,
+                 const Preconditioner& preconditioner)
 {
   LinearOperator<Domain, Range, Payload> return_op(
     op.inverse_payload(solver, preconditioner));
@@ -903,8 +903,8 @@ namespace internal
       template <typename Matrix>
       static void
       reinit_range_vector(const Matrix& matrix,
-                          Vector&       v,
-                          bool          omit_zeroing_entries)
+                          Vector& v,
+                          bool omit_zeroing_entries)
       {
         v.reinit(matrix.m(), omit_zeroing_entries);
       }
@@ -923,8 +923,8 @@ namespace internal
       template <typename Matrix>
       static void
       reinit_domain_vector(const Matrix& matrix,
-                           Vector&       v,
-                           bool          omit_zeroing_entries)
+                           Vector& v,
+                           bool omit_zeroing_entries)
       {
         v.reinit(matrix.n(), omit_zeroing_entries);
       }
@@ -1044,10 +1044,10 @@ namespace
   // intermediate storage
   template <typename Function, typename Range, typename Domain>
   void
-  apply_with_intermediate_storage(Function      function,
-                                  Range&        v,
+  apply_with_intermediate_storage(Function function,
+                                  Range& v,
                                   const Domain& u,
-                                  bool          add)
+                                  bool add)
   {
     GrowingVectorMemory<Range> vector_memory;
 
@@ -1314,7 +1314,7 @@ linear_operator(const OperatorExemplar& operator_exemplar, const Matrix& matrix)
 template <typename Range, typename Domain, typename Payload, typename Matrix>
 LinearOperator<Range, Domain, Payload>
 linear_operator(const LinearOperator<Range, Domain, Payload>& operator_exemplar,
-                const Matrix&                                 matrix)
+                const Matrix& matrix)
 {
   // Initialize the payload based on the LinearOperator exemplar
   auto return_op = operator_exemplar;

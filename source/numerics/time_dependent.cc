@@ -57,7 +57,7 @@ TimeDependent::~TimeDependent()
 
 void
 TimeDependent::insert_timestep(const TimeStepBase* position,
-                               TimeStepBase*       new_timestep)
+                               TimeStepBase* new_timestep)
 {
   Assert(
     (std::find(timesteps.begin(), timesteps.end(), position) != timesteps.end())
@@ -372,10 +372,10 @@ TimeStepBase_Tria<dim>::TimeStepBase_Tria()
 
 template <int dim>
 TimeStepBase_Tria<dim>::TimeStepBase_Tria(
-  const double              time,
+  const double time,
   const Triangulation<dim>& coarse_grid,
-  const Flags&              flags,
-  const RefinementFlags&    refinement_flags)
+  const Flags& flags,
+  const RefinementFlags& refinement_flags)
   : TimeStepBase(time),
     tria(nullptr, typeid(*this).name()),
     coarse_grid(&coarse_grid, typeid(*this).name()),
@@ -1079,7 +1079,7 @@ TimeStepBase_Tria_Flags::Flags<dim>::Flags()
 
 template <int dim>
 TimeStepBase_Tria_Flags::Flags<dim>::Flags(
-  const bool         delete_and_rebuild_tria,
+  const bool delete_and_rebuild_tria,
   const unsigned int wakeup_level_to_build_grid,
   const unsigned int sleep_level_to_delete_grid)
   : delete_and_rebuild_tria(delete_and_rebuild_tria),
@@ -1104,15 +1104,15 @@ typename TimeStepBase_Tria_Flags::RefinementFlags<dim>::CorrectionRelaxations
 
 template <int dim>
 TimeStepBase_Tria_Flags::RefinementFlags<dim>::RefinementFlags(
-  const unsigned int           max_refinement_level,
-  const unsigned int           first_sweep_with_correction,
-  const unsigned int           min_cells_for_correction,
-  const double                 cell_number_corridor_top,
-  const double                 cell_number_corridor_bottom,
+  const unsigned int max_refinement_level,
+  const unsigned int first_sweep_with_correction,
+  const unsigned int min_cells_for_correction,
+  const double cell_number_corridor_top,
+  const double cell_number_corridor_bottom,
   const CorrectionRelaxations& correction_relaxations,
-  const unsigned int           cell_number_correction_steps,
-  const bool                   mirror_flags_to_previous_grid,
-  const bool                   adapt_grids)
+  const unsigned int cell_number_correction_steps,
+  const bool mirror_flags_to_previous_grid,
+  const bool adapt_grids)
   : max_refinement_level(max_refinement_level),
     first_sweep_with_correction(first_sweep_with_correction),
     min_cells_for_correction(min_cells_for_correction),

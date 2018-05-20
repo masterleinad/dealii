@@ -49,7 +49,7 @@ test_compute_pt_loc(unsigned int n_points)
   tria.refine_global(std::max(6 - dim, 2));
 
   //Creating the finite elements needed:
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
@@ -62,8 +62,8 @@ test_compute_pt_loc(unsigned int n_points)
   // Initializing the cache
   GridTools::Cache<dim, dim> cache(tria);
 
-  auto   cell_qpoint_map = GridTools::compute_point_locations(cache, points);
-  size_t n_cells         = std::get<0>(cell_qpoint_map).size();
+  auto cell_qpoint_map = GridTools::compute_point_locations(cache, points);
+  size_t n_cells       = std::get<0>(cell_qpoint_map).size();
 
   deallog << "Points found in " << n_cells << " cells" << std::endl;
 

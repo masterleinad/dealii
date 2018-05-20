@@ -39,7 +39,7 @@ void check_line(Quadrature<1>& quadrature)
       p2(2) = 10.;
     }
   Quadrature<dim> q = QProjector<dim>::project_to_line(quadrature, p1, p2);
-  double          s = 0.;
+  double s          = 0.;
 
   for(unsigned int k = 0; k < q.size(); ++k)
     {
@@ -85,7 +85,7 @@ void check_faces(Quadrature<1>& q1)
   deallog << "Checking dim " << dim << " 1d-points " << nq << std::endl;
 
   Quadrature<dim - 1> subquadrature(q1);
-  const unsigned int  nqs = subquadrature.size();
+  const unsigned int nqs = subquadrature.size();
 
   Quadrature<dim> faces = QProjector<dim>::project_to_all_faces(subquadrature);
 

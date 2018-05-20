@@ -31,7 +31,7 @@ void
 test()
 {
   const unsigned int size = 3;
-  SparsityPattern    sparsity(size, size, 1);
+  SparsityPattern sparsity(size, size, 1);
   sparsity.compress();
   SparseMatrix<double> mat;
   mat.reinit(sparsity);
@@ -45,7 +45,7 @@ test()
   rhs(size - 1) = 1.0;
 
   SolverControl solvctrl(1000, 1e-12, true);
-  SolverType    solver(solvctrl);
+  SolverType solver(solvctrl);
 
   PreconditionIdentity precond;
   solver.solve(mat, solvec, rhs, precond);

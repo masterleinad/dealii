@@ -65,8 +65,8 @@ namespace DynamicSparsityPatternIterators
      * Constructor.
      */
     Accessor(const DynamicSparsityPattern* sparsity_pattern,
-             const size_type               row,
-             const unsigned int            index_within_row);
+             const size_type row,
+             const unsigned int index_within_row);
 
     /**
      * Constructor. Construct the end accessor for the given sparsity pattern.
@@ -177,8 +177,8 @@ namespace DynamicSparsityPatternIterators
      * the zeroth row).
      */
     Iterator(const DynamicSparsityPattern* sp,
-             const size_type               row,
-             const unsigned int            index_within_row);
+             const size_type row,
+             const unsigned int index_within_row);
 
     /**
      * Constructor. Create an invalid (end) iterator into the sparsity pattern
@@ -411,7 +411,7 @@ public:
   add_entries(const size_type row,
               ForwardIterator begin,
               ForwardIterator end,
-              const bool      indices_are_unique_and_sorted = false);
+              const bool indices_are_unique_and_sorted = false);
 
   /**
    * Check if a value at a certain position may be non-zero.
@@ -435,7 +435,7 @@ public:
    */
   template <typename SparsityPatternTypeLeft, typename SparsityPatternTypeRight>
   void
-  compute_mmult_pattern(const SparsityPatternTypeLeft&  left,
+  compute_mmult_pattern(const SparsityPatternTypeLeft& left,
                         const SparsityPatternTypeRight& right);
 
   /**
@@ -641,7 +641,7 @@ private:
     void
     add_entries(ForwardIterator begin,
                 ForwardIterator end,
-                const bool      indices_are_sorted);
+                const bool indices_are_sorted);
 
     /**
      * estimates memory consumption.
@@ -665,8 +665,8 @@ private:
 namespace DynamicSparsityPatternIterators
 {
   inline Accessor::Accessor(const DynamicSparsityPattern* sparsity_pattern,
-                            const size_type               row,
-                            const unsigned int            index_within_row)
+                            const size_type row,
+                            const unsigned int index_within_row)
     : sparsity_pattern(sparsity_pattern),
       current_row(row),
       current_entry(
@@ -799,8 +799,8 @@ namespace DynamicSparsityPatternIterators
   }
 
   inline Iterator::Iterator(const DynamicSparsityPattern* sparsity_pattern,
-                            const size_type               row,
-                            const unsigned int            index_within_row)
+                            const size_type row,
+                            const unsigned int index_within_row)
     : accessor(sparsity_pattern, row, index_within_row)
   {}
 
@@ -919,7 +919,7 @@ inline void
 DynamicSparsityPattern::add_entries(const size_type row,
                                     ForwardIterator begin,
                                     ForwardIterator end,
-                                    const bool      indices_are_sorted)
+                                    const bool indices_are_sorted)
 {
   Assert(row < rows, ExcIndexRangeType<size_type>(row, 0, rows));
 

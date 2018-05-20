@@ -282,7 +282,7 @@ ParameterHandler::get_current_full_path(const std::string& name) const
 }
 
 void
-ParameterHandler::parse_input(std::istream&      input,
+ParameterHandler::parse_input(std::istream& input,
                               const std::string& filename,
                               const std::string& last_line)
 {
@@ -293,7 +293,7 @@ ParameterHandler::parse_input(std::istream&      input,
 
   std::string input_line;
   std::string fully_concatenated_line;
-  bool        is_concatenated = false;
+  bool is_concatenated = false;
   // Maintain both the current line number and the current logical line
   // number, where the latter refers to the line number where (possibly) the
   // current line continuation started.
@@ -414,13 +414,13 @@ ParameterHandler::parse_input(const std::string& filename,
 {
   PathSearch search("PARAMETERS");
 
-  std::string   openname = search.find(filename);
+  std::string openname = search.find(filename);
   std::ifstream file_stream(openname.c_str());
   parse_input(file_stream, filename, last_line);
 }
 
 void
-ParameterHandler::parse_input_from_string(const char*        s,
+ParameterHandler::parse_input_from_string(const char* s,
                                           const std::string& last_line)
 {
   std::istringstream input_stream(s);
@@ -437,8 +437,8 @@ namespace
   void
   read_xml_recursively(
     const boost::property_tree::ptree& source,
-    const std::string&                 current_path,
-    const char                         path_separator,
+    const std::string& current_path,
+    const char path_separator,
     const std::vector<std::unique_ptr<const Patterns::PatternBase>>& patterns,
     boost::property_tree::ptree& destination)
   {
@@ -577,10 +577,10 @@ ParameterHandler::clear()
 }
 
 void
-ParameterHandler::declare_entry(const std::string&           entry,
-                                const std::string&           default_value,
+ParameterHandler::declare_entry(const std::string& entry,
+                                const std::string& default_value,
                                 const Patterns::PatternBase& pattern,
-                                const std::string&           documentation)
+                                const std::string& documentation)
 {
   entries->put(get_current_full_path(entry) + path_separator + "value",
                default_value);
@@ -614,7 +614,7 @@ ParameterHandler::declare_entry(const std::string&           entry,
 
 void
 ParameterHandler::add_action(
-  const std::string&                             entry,
+  const std::string& entry,
   const std::function<void(const std::string&)>& action)
 {
   actions.push_back(action);
@@ -648,7 +648,7 @@ ParameterHandler::add_action(
 void
 ParameterHandler::declare_alias(const std::string& existing_entry_name,
                                 const std::string& alias_name,
-                                const bool         alias_is_deprecated)
+                                const bool alias_is_deprecated)
 {
   // see if there is anything to refer to already
   Assert(entries->get_optional<std::string>(
@@ -856,7 +856,7 @@ ParameterHandler::set(const std::string& entry_string, const double& new_value)
 
 void
 ParameterHandler::set(const std::string& entry_string,
-                      const long int&    new_value)
+                      const long int& new_value)
 {
   std::ostringstream s;
   s << new_value;
@@ -875,7 +875,7 @@ ParameterHandler::set(const std::string& entry_string, const bool& new_value)
 }
 
 std::ostream&
-ParameterHandler::print_parameters(std::ostream&     out,
+ParameterHandler::print_parameters(std::ostream& out,
                                    const OutputStyle style) const
 {
   AssertThrow(out, ExcIO());
@@ -884,7 +884,7 @@ ParameterHandler::print_parameters(std::ostream&     out,
   // set the appropriate fill character, but also make sure that
   // we will restore the previous setting (and all other stream
   // flags) when we exit this function
-  boost::io::ios_flags_saver            restore_flags(out);
+  boost::io::ios_flags_saver restore_flags(out);
   boost::io::basic_ios_fill_saver<char> restore_fill_state(out);
   out.fill(' ');
 
@@ -953,9 +953,9 @@ ParameterHandler::print_parameters(std::ostream&     out,
 void
 ParameterHandler::recursively_print_parameters(
   const std::vector<std::string>& target_subsection_path,
-  const OutputStyle               style,
-  const unsigned int              indent_level,
-  std::ostream&                   out) const
+  const OutputStyle style,
+  const unsigned int indent_level,
+  std::ostream& out) const
 {
   AssertThrow(out, ExcIO());
 
@@ -1329,7 +1329,7 @@ ParameterHandler::recursively_print_parameters(
           }
 
         // then the contents of the subsection
-        const std::string        subsection     = demangle(p->first);
+        const std::string subsection            = demangle(p->first);
         std::vector<std::string> directory_path = target_subsection_path;
         directory_path.emplace_back(subsection);
 
@@ -1377,10 +1377,10 @@ ParameterHandler::recursively_print_parameters(
 // If bit 6 (64) is set, default values after change are not printed.
 void
 ParameterHandler::print_parameters_section(
-  std::ostream&      out,
-  const OutputStyle  style,
+  std::ostream& out,
+  const OutputStyle style,
   const unsigned int indent_level,
-  const bool         include_top_level_elements)
+  const bool include_top_level_elements)
 {
   AssertThrow(out, ExcIO());
 
@@ -1885,7 +1885,7 @@ ParameterHandler::log_parameters_section(LogStream& out)
 }
 
 void
-ParameterHandler::scan_line(std::string        line,
+ParameterHandler::scan_line(std::string line,
                             const std::string& input_filename,
                             const unsigned int current_line_n)
 {
@@ -2113,7 +2113,7 @@ MultipleParameterLoop::MultipleParameterLoop() : n_branches(0)
 {}
 
 void
-MultipleParameterLoop::parse_input(std::istream&      input,
+MultipleParameterLoop::parse_input(std::istream& input,
                                    const std::string& filename,
                                    const std::string& last_line)
 {
@@ -2271,8 +2271,8 @@ MultipleParameterLoop::memory_consumption() const
 }
 
 MultipleParameterLoop::Entry::Entry(const std::vector<std::string>& ssp,
-                                    const std::string&              Name,
-                                    const std::string&              Value)
+                                    const std::string& Name,
+                                    const std::string& Value)
   : subsection_path(ssp),
     entry_name(Name),
     entry_value(Value),

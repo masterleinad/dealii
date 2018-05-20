@@ -28,7 +28,7 @@ template <typename ForwardIterator>
 void
 DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
                                           ForwardIterator end,
-                                          const bool      indices_are_sorted)
+                                          const bool indices_are_sorted)
 {
   const int n_elements = end - begin;
   if(n_elements <= 0)
@@ -59,8 +59,8 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
       // the first entry. check whether the
       // first entry is a duplicate before
       // actually doing something.
-      ForwardIterator                  my_it = begin;
-      size_type                        col   = *my_it;
+      ForwardIterator my_it = begin;
+      size_type col         = *my_it;
       std::vector<size_type>::iterator it
         = Utilities::lower_bound(entries.begin(), entries.end(), col);
       while(*it == col)
@@ -141,7 +141,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
   if(stop_size > entries.capacity())
     entries.reserve(stop_size);
 
-  size_type                        col = *my_it;
+  size_type col = *my_it;
   std::vector<size_type>::iterator it, it2;
   // insert the first element as for one
   // entry only first check the last
@@ -363,7 +363,7 @@ DynamicSparsityPattern::symmetrize()
 template <typename SparsityPatternTypeLeft, typename SparsityPatternTypeRight>
 void
 DynamicSparsityPattern::compute_mmult_pattern(
-  const SparsityPatternTypeLeft&  left,
+  const SparsityPatternTypeLeft& left,
   const SparsityPatternTypeRight& right)
 {
   Assert(left.n_cols() == right.n_rows(),

@@ -23,7 +23,7 @@ template <int dim>
 void
 check()
 {
-  const unsigned int  n_points = 10;
+  const unsigned int n_points = 10;
   std::vector<double> x(n_points), y(n_points);
   for(unsigned int i = 0; i < n_points; i++)
     {
@@ -32,8 +32,8 @@ check()
     }
 
   // native:
-  gsl_interp_accel* acc    = gsl_interp_accel_alloc();
-  gsl_spline*       spline = gsl_spline_alloc(gsl_interp_cspline, n_points);
+  gsl_interp_accel* acc = gsl_interp_accel_alloc();
+  gsl_spline* spline    = gsl_spline_alloc(gsl_interp_cspline, n_points);
 
   gsl_spline_init(spline, &x[0], &y[0], n_points);
 
@@ -46,9 +46,9 @@ check()
       const double df  = gsl_spline_eval_deriv(spline, xi, acc);
       const double ddf = gsl_spline_eval_deriv2(spline, xi, acc);
 
-      const double         y   = cspline.value(Point<dim>(xi));
-      const Tensor<1, dim> dy  = cspline.gradient(Point<dim>(xi));
-      const double         ddy = cspline.laplacian(Point<dim>(xi));
+      const double y          = cspline.value(Point<dim>(xi));
+      const Tensor<1, dim> dy = cspline.gradient(Point<dim>(xi));
+      const double ddy        = cspline.laplacian(Point<dim>(xi));
 
       AssertThrow(std::fabs(f - y) <= std::fabs(f) * 1e-10, ExcInternalError());
 
@@ -67,7 +67,7 @@ check()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

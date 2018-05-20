@@ -37,8 +37,8 @@ namespace LocalIntegrators
   {
     template <int dim>
     inline void points_and_values(
-      Table<2, double>&                                          result,
-      const FEValuesBase<dim>&                                   fe,
+      Table<2, double>& result,
+      const FEValuesBase<dim>& fe,
       const VectorSlice<const std::vector<std::vector<double>>>& input)
     {
       const unsigned int n_comp = fe.get_fe().n_components();

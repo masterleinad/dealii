@@ -71,9 +71,9 @@ namespace Step54
       NormalToMeshProjection = 2
     };
 
-    TriangulationOnCAD(const std::string&   initial_mesh_filename,
-                       const std::string&   cad_file_name,
-                       const std::string&   output_filename,
+    TriangulationOnCAD(const std::string& initial_mesh_filename,
+                       const std::string& cad_file_name,
+                       const std::string& output_filename,
                        const ProjectionType surface_projection_kind
                        = NormalProjection);
 
@@ -110,9 +110,9 @@ namespace Step54
   // below for details).
 
   TriangulationOnCAD::TriangulationOnCAD(
-    const std::string&   initial_mesh_filename,
-    const std::string&   cad_file_name,
-    const std::string&   output_filename,
+    const std::string& initial_mesh_filename,
+    const std::string& cad_file_name,
+    const std::string& output_filename,
     const ProjectionType surface_projection_kind)
     : initial_mesh_filename(initial_mesh_filename),
       cad_file_name(cad_file_name),
@@ -201,11 +201,11 @@ namespace Step54
     // OpenCASCADE::extract_compound_shapes is a shape and a set of empty
     // std::vectors of subshapes, which will be filled with all
     // compound shapes found in the given topological shape:
-    std::vector<TopoDS_Compound>  compounds;
+    std::vector<TopoDS_Compound> compounds;
     std::vector<TopoDS_CompSolid> compsolids;
-    std::vector<TopoDS_Solid>     solids;
-    std::vector<TopoDS_Shell>     shells;
-    std::vector<TopoDS_Wire>      wires;
+    std::vector<TopoDS_Solid> solids;
+    std::vector<TopoDS_Shell> shells;
+    std::vector<TopoDS_Wire> wires;
 
     OpenCASCADE::extract_compound_shapes(
       bow_surface, compounds, compsolids, solids, shells, wires);
@@ -354,7 +354,7 @@ namespace Step54
     const std::string filename
       = (output_filename + "_" + Utilities::int_to_string(cycle) + ".vtk");
     std::ofstream logfile(filename);
-    GridOut       grid_out;
+    GridOut grid_out;
     grid_out.write_vtk(tria, logfile);
   }
 
@@ -397,7 +397,7 @@ main()
       cout << "Testing projection in direction normal to CAD surface" << endl;
       cout << "----------------------------------------------------------"
            << endl;
-      std::string        out_mesh_filename = ("3d_mesh_normal_projection");
+      std::string out_mesh_filename = ("3d_mesh_normal_projection");
       TriangulationOnCAD tria_on_cad_norm(in_mesh_filename,
                                           cad_file_name,
                                           out_mesh_filename,

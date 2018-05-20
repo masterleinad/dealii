@@ -58,7 +58,7 @@ output(parallel::distributed::Triangulation<dim>& tr)
 
   out.write_xfig(tr, stream);
   */
-  GridOut           grid_out;
+  GridOut grid_out;
   GridOutFlags::Svg svg_flags;
   svg_flags.coloring                       = GridOutFlags::Svg::subdomain_id;
   svg_flags.label_material_id              = false;
@@ -150,7 +150,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   deallog.push("2d");
   test<2>();

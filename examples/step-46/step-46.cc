@@ -120,12 +120,12 @@ namespace Step46
     assemble_system();
     void
     assemble_interface_term(
-      const FEFaceValuesBase<dim>&          elasticity_fe_face_values,
-      const FEFaceValuesBase<dim>&          stokes_fe_face_values,
-      std::vector<Tensor<1, dim>>&          elasticity_phi,
+      const FEFaceValuesBase<dim>& elasticity_fe_face_values,
+      const FEFaceValuesBase<dim>& stokes_fe_face_values,
+      std::vector<Tensor<1, dim>>& elasticity_phi,
       std::vector<SymmetricTensor<2, dim>>& stokes_symgrad_phi_u,
-      std::vector<double>&                  stokes_phi_p,
-      FullMatrix<double>&                   local_interface_matrix) const;
+      std::vector<double>& stokes_phi_p,
+      FullMatrix<double>& local_interface_matrix) const;
     void
     solve();
     void
@@ -136,15 +136,15 @@ namespace Step46
     const unsigned int stokes_degree;
     const unsigned int elasticity_degree;
 
-    Triangulation<dim>    triangulation;
-    FESystem<dim>         stokes_fe;
-    FESystem<dim>         elasticity_fe;
+    Triangulation<dim> triangulation;
+    FESystem<dim> stokes_fe;
+    FESystem<dim> elasticity_fe;
     hp::FECollection<dim> fe_collection;
-    hp::DoFHandler<dim>   dof_handler;
+    hp::DoFHandler<dim> dof_handler;
 
     ConstraintMatrix constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
@@ -179,7 +179,7 @@ namespace Step46
 
   template <int dim>
   double
-  StokesBoundaryValues<dim>::value(const Point<dim>&  p,
+  StokesBoundaryValues<dim>::value(const Point<dim>& p,
                                    const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -202,7 +202,7 @@ namespace Step46
   template <int dim>
   void
   StokesBoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                          Vector<double>&   values) const
+                                          Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = StokesBoundaryValues<dim>::value(p, c);
@@ -233,7 +233,7 @@ namespace Step46
   template <int dim>
   void
   RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
@@ -541,7 +541,7 @@ namespace Step46
     FullMatrix<double> local_matrix;
     FullMatrix<double> local_interface_matrix(elasticity_dofs_per_cell,
                                               stokes_dofs_per_cell);
-    Vector<double>     local_rhs;
+    Vector<double> local_rhs;
 
     std::vector<types::global_dof_index> local_dof_indices;
     std::vector<types::global_dof_index> neighbor_dof_indices(
@@ -562,7 +562,7 @@ namespace Step46
     std::vector<double> stokes_phi_p(stokes_dofs_per_cell);
 
     std::vector<Tensor<2, dim>> elasticity_grad_phi(elasticity_dofs_per_cell);
-    std::vector<double>         elasticity_div_phi(elasticity_dofs_per_cell);
+    std::vector<double> elasticity_div_phi(elasticity_dofs_per_cell);
     std::vector<Tensor<1, dim>> elasticity_phi(elasticity_dofs_per_cell);
 
     // Then comes the main loop over all cells and, as in step-27, the
@@ -815,12 +815,12 @@ namespace Step46
   template <int dim>
   void
   FluidStructureProblem<dim>::assemble_interface_term(
-    const FEFaceValuesBase<dim>&          elasticity_fe_face_values,
-    const FEFaceValuesBase<dim>&          stokes_fe_face_values,
-    std::vector<Tensor<1, dim>>&          elasticity_phi,
+    const FEFaceValuesBase<dim>& elasticity_fe_face_values,
+    const FEFaceValuesBase<dim>& stokes_fe_face_values,
+    std::vector<Tensor<1, dim>>& elasticity_phi,
     std::vector<SymmetricTensor<2, dim>>& stokes_symgrad_phi_u,
-    std::vector<double>&                  stokes_phi_p,
-    FullMatrix<double>&                   local_interface_matrix) const
+    std::vector<double>& stokes_phi_p,
+    FullMatrix<double>& local_interface_matrix) const
   {
     Assert(stokes_fe_face_values.n_quadrature_points
              == elasticity_fe_face_values.n_quadrature_points,

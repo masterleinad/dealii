@@ -22,9 +22,9 @@ namespace Polynomials
   template <typename number>
   PiecewisePolynomial<number>::PiecewisePolynomial(
     const Polynomial<number>& coefficients_on_interval,
-    const unsigned int        n_intervals,
-    const unsigned int        interval,
-    const bool                spans_next_interval)
+    const unsigned int n_intervals,
+    const unsigned int interval,
+    const bool spans_next_interval)
     : polynomial(coefficients_on_interval),
       n_intervals(n_intervals),
       interval(interval),
@@ -36,7 +36,7 @@ namespace Polynomials
 
   template <typename number>
   void
-  PiecewisePolynomial<number>::value(const number         x,
+  PiecewisePolynomial<number>::value(const number x,
                                      std::vector<number>& values) const
   {
     Assert(values.size() > 0, ExcZero());
@@ -46,9 +46,9 @@ namespace Polynomials
 
   template <typename number>
   void
-  PiecewisePolynomial<number>::value(const number       x,
+  PiecewisePolynomial<number>::value(const number x,
                                      const unsigned int n_derivatives,
-                                     number*            values) const
+                                     number* values) const
   {
     // shift polynomial if necessary
     number y                      = x;

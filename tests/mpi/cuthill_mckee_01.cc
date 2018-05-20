@@ -33,7 +33,7 @@ test()
 {
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tr, -1.0, 1.0);
-  DoFHandler<dim>        dofh(tr);
+  DoFHandler<dim> dofh(tr);
   static const FE_Q<dim> fe(1);
   dofh.distribute_dofs(fe);
   DoFRenumbering::Cuthill_McKee(dofh);

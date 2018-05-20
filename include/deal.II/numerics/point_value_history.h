@@ -54,11 +54,11 @@ namespace internal
     {
     public:
       PointGeometryData(
-        const Point<dim>&                           new_requested_location,
-        const std::vector<Point<dim>>&              new_locations,
+        const Point<dim>& new_requested_location,
+        const std::vector<Point<dim>>& new_locations,
         const std::vector<types::global_dof_index>& new_sol_indices);
-      Point<dim>                           requested_location;
-      std::vector<Point<dim>>              support_point_locations;
+      Point<dim> requested_location;
+      std::vector<Point<dim>> support_point_locations;
       std::vector<types::global_dof_index> solution_indices;
     };
   } // namespace PointValueHistoryImplementation
@@ -224,7 +224,7 @@ public:
    * example for recording external input or logging solver performance data.
    */
   PointValueHistory(const DoFHandler<dim>& dof_handler,
-                    const unsigned int     n_independent_variables = 0);
+                    const unsigned int n_independent_variables = 0);
 
   /**
    * Copy constructor. This constructor can be safely called with a @p
@@ -279,7 +279,7 @@ public:
    * called in any order.
    */
   void
-  add_field_name(const std::string&   vector_name,
+  add_field_name(const std::string& vector_name,
                  const ComponentMask& component_mask = ComponentMask());
 
   /**
@@ -299,7 +299,7 @@ public:
    * used instead of names generated from the field name, if supplied.
    */
   void
-  add_component_names(const std::string&              vector_name,
+  add_component_names(const std::string& vector_name,
                       const std::vector<std::string>& component_names);
 
   /**
@@ -341,9 +341,9 @@ public:
   template <class VectorType>
   void
   evaluate_field(const std::vector<std::string>& names,
-                 const VectorType&               solution,
-                 const DataPostprocessor<dim>&   data_postprocessor,
-                 const Quadrature<dim>&          quadrature);
+                 const VectorType& solution,
+                 const DataPostprocessor<dim>& data_postprocessor,
+                 const Quadrature<dim>& quadrature);
 
   /**
    * Construct a std::vector <std::string> containing only vector_name and
@@ -352,10 +352,10 @@ public:
    */
   template <class VectorType>
   void
-  evaluate_field(const std::string&            name,
-                 const VectorType&             solution,
+  evaluate_field(const std::string& name,
+                 const VectorType& solution,
                  const DataPostprocessor<dim>& data_postprocessor,
-                 const Quadrature<dim>&        quadrature);
+                 const Quadrature<dim>& quadrature);
 
   /**
    * Extract values at the points actually requested from the VectorType
@@ -372,7 +372,7 @@ public:
   template <class VectorType>
   void
   evaluate_field_at_requested_location(const std::string& name,
-                                       const VectorType&  solution);
+                                       const VectorType& solution);
 
   /**
    * Add the key for the current dataset to the dataset. Although calling this
@@ -412,7 +412,7 @@ public:
    * locations output.
    */
   void
-  write_gnuplot(const std::string&             base_name,
+  write_gnuplot(const std::string& base_name,
                 const std::vector<Point<dim>>& postprocessor_locations
                 = std::vector<Point<dim>>());
 
@@ -472,7 +472,7 @@ public:
    * correct number of points by the method.
    */
   void
-  get_postprocessor_locations(const Quadrature<dim>&   quadrature,
+  get_postprocessor_locations(const Quadrature<dim>& quadrature,
                               std::vector<Point<dim>>& locations);
 
   /**

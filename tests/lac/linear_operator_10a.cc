@@ -52,8 +52,8 @@ template <class PRECONDITIONER,
           class VECTOR,
           class ADDITIONAL_DATA = typename PRECONDITIONER::AdditionalData>
 void
-test_preconditioner(const MATRIX&          A,
-                    const VECTOR&          b,
+test_preconditioner(const MATRIX& A,
+                    const VECTOR& b,
                     const ADDITIONAL_DATA& data = ADDITIONAL_DATA())
 {
   const auto lo_A = linear_operator<VECTOR>(A);
@@ -66,8 +66,8 @@ test_preconditioner(const MATRIX&          A,
   preconditioner.initialize(A, data);
 
   typedef SolverCG<VECTOR> SOLVER;
-  SolverControl            solver_control(100, 1.0e-10, false, false);
-  SOLVER                   solver(solver_control);
+  SolverControl solver_control(100, 1.0e-10, false, false);
+  SOLVER solver(solver_control);
 
   // Exact inverse
   const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
@@ -130,7 +130,7 @@ test_preconditioner(const MATRIX&          A,
     deallog.push("S.A.");
     typedef dealii::TrilinosWrappers::internal::LinearOperatorImplementation::
       TrilinosPayload PAYLOAD;
-    const auto        lo_A_inv_approx
+    const auto lo_A_inv_approx
       = linear_operator<VECTOR, VECTOR, PAYLOAD>(preconditioner);
 
     // Singular operation
@@ -165,10 +165,10 @@ test_solver(const MATRIX& A, const VECTOR& b)
   //  const auto lo_A = linear_operator<VECTOR,VECTOR,PAYLOAD>(A);
 
   SolverControl solver_control(100, 1.0e-10, false, false);
-  SOLVER        solver(solver_control);
+  SOLVER solver(solver_control);
 
   typedef TrilinosWrappers::PreconditionJacobi PRECONDITIONER;
-  PRECONDITIONER                               preconditioner;
+  PRECONDITIONER preconditioner;
   preconditioner.initialize(A);
 
   {
@@ -202,12 +202,12 @@ test_solver(const MATRIX& A, const VECTOR& b)
   {
     deallog.push("C_Op2");
     SolverControl solver_control_1(100, 1.0e-10, false, false);
-    SOLVER        solver_1(solver_control_1);
-    const auto    lo_A_inv_1 = inverse_operator(lo_A, solver_1, preconditioner);
+    SOLVER solver_1(solver_control_1);
+    const auto lo_A_inv_1 = inverse_operator(lo_A, solver_1, preconditioner);
     SolverControl solver_control_2(100, 1.0e-10, false, false);
-    SOLVER        solver_2(solver_control_2);
-    const auto    lo_A_inv_2 = inverse_operator(lo_A, solver_2, preconditioner);
-    const VECTOR  x_approx   = (lo_A_inv_2 * lo_A * lo_A_inv_1) * b;
+    SOLVER solver_2(solver_control_2);
+    const auto lo_A_inv_2 = inverse_operator(lo_A, solver_2, preconditioner);
+    const VECTOR x_approx = (lo_A_inv_2 * lo_A * lo_A_inv_1) * b;
     print(x_approx);
     deallog.pop();
   }
@@ -224,7 +224,7 @@ main(int argc, char* argv[])
 
   // TrilinosWrappers::SparseMatrix
   {
-    const unsigned int                rc = 10;
+    const unsigned int rc = 10;
     TrilinosWrappers::SparsityPattern sparsity_pattern(
       rc, rc, /*n_entries_per_row =*/1);
     for(unsigned int i = 0; i < rc; ++i)
@@ -234,7 +234,7 @@ main(int argc, char* argv[])
     sparsity_pattern.compress();
 
     TrilinosWrappers::SparseMatrix A(sparsity_pattern);
-    TrilinosWrappers::MPI::Vector  b;
+    TrilinosWrappers::MPI::Vector b;
     b.reinit(A.locally_owned_domain_indices());
     TrilinosWrappers::MPI::Vector c;
     c.reinit(A.locally_owned_domain_indices());

@@ -39,7 +39,7 @@ void
 test_in_dim(const DoFHandlerType& d1, const DoFHandlerType& d2)
 {
   typename DoFHandlerType::active_cell_iterator a = d1.begin_active();
-  typename DoFHandlerType::cell_iterator        l
+  typename DoFHandlerType::cell_iterator l
     = d1.begin(d1.get_triangulation().n_levels() - 1);
 
   deallog << "a " << a << std::endl << "l " << l << std::endl;
@@ -55,7 +55,7 @@ init_tria(Triangulation<dim>& tr)
 
 template <int dim>
 void
-init_dofs(DoFHandler<dim>&          dof,
+init_dofs(DoFHandler<dim>& dof,
           const Triangulation<dim>& tr,
           const FiniteElement<dim>& fe)
 {
@@ -70,11 +70,11 @@ main()
   Triangulation<2> t2;
   init_tria(t2);
 
-  FE_Q<2>       q21(1);
+  FE_Q<2> q21(1);
   DoFHandler<2> d21;
   init_dofs(d21, t2, q21);
 
-  FE_Q<2>       q22(2);
+  FE_Q<2> q22(2);
   DoFHandler<2> d22;
   init_dofs(d22, t2, q22);
 

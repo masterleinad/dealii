@@ -59,7 +59,7 @@ check_parallelepiped(std::ostream& logfile)
 
   Point<dim> origin;
 
-  Triangulation<dim>        triangulation;
+  Triangulation<dim> triangulation;
   std::vector<unsigned int> subdivisions;
 
   try

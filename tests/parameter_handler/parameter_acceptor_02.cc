@@ -42,10 +42,10 @@ public:
   }
 
 private:
-  double      a = 1.0;
-  int         b = 2;
+  double a      = 1.0;
+  int b         = 2;
   std::string c = "Ciao";
-  bool        d = true;
+  bool d        = true;
 };
 
 int

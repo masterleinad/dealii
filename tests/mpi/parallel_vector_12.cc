@@ -61,8 +61,8 @@ test()
   // vector1: local size 4
   const unsigned int local_size1  = 4;
   const unsigned int global_size1 = local_size1 * numproc;
-  const int          my_start1    = local_size1 * myid;
-  const int          my_end1      = local_size1 * (myid + 1);
+  const int my_start1             = local_size1 * myid;
+  const int my_end1               = local_size1 * (myid + 1);
 
   IndexSet local_owned1(global_size1);
   local_owned1.add_range(static_cast<unsigned int>(my_start1),

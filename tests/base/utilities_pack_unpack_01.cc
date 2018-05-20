@@ -33,8 +33,8 @@ test(const unsigned int& size)
 
   auto unpacked = Utilities::unpack<std::vector<Point<dim>>>(buffer);
 
-  unsigned int i  = 0;
-  bool         ok = true;
+  unsigned int i = 0;
+  bool ok        = true;
   for(const auto& p : points)
     if(p.distance(unpacked[i++]) > 1e-12)
       {

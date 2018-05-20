@@ -75,12 +75,12 @@ namespace CUDAWrappers
   class FEEvaluation
   {
   public:
-    typedef Number                                 value_type;
-    typedef Tensor<1, dim, Number>                 gradient_type;
+    typedef Number value_type;
+    typedef Tensor<1, dim, Number> gradient_type;
     typedef typename MatrixFree<dim, Number>::Data data_type;
-    static constexpr unsigned int                  dimension    = dim;
-    static constexpr unsigned int                  n_components = n_components_;
-    static constexpr unsigned int                  n_q_points
+    static constexpr unsigned int dimension    = dim;
+    static constexpr unsigned int n_components = n_components_;
+    static constexpr unsigned int n_q_points
       = Utilities::pow(n_q_points_1d, dim);
     static constexpr unsigned int tensor_dofs_per_cell
       = Utilities::pow(fe_degree + 1, dim);
@@ -89,8 +89,8 @@ namespace CUDAWrappers
      * Constructor.
      */
     __device__
-    FEEvaluation(int                      cell_id,
-                 const data_type*         data,
+    FEEvaluation(int cell_id,
+                 const data_type* data,
                  SharedData<dim, Number>* shdata);
 
     /**
@@ -138,7 +138,7 @@ namespace CUDAWrappers
      * number @p q_point after a call to @p evalue(true,...).
      */
     __device__ value_type
-               get_value(const unsigned int q_point) const;
+    get_value(const unsigned int q_point) const;
 
     /**
      * Write a value to the field containing the values on quadrature points
@@ -154,7 +154,7 @@ namespace CUDAWrappers
      * number @p q_point after a call to @p evaluate(...,true).
      */
     __device__ gradient_type
-               get_gradient(const unsigned int q_point) const;
+    get_gradient(const unsigned int q_point) const;
 
     /**
      * Write a contribution that is tested by the gradient to the field
@@ -172,8 +172,8 @@ namespace CUDAWrappers
 
   private:
     unsigned int* local_to_global;
-    unsigned int  n_cells;
-    unsigned int  padding_length;
+    unsigned int n_cells;
+    unsigned int padding_length;
 
     const unsigned int constraint_mask;
 
@@ -192,8 +192,8 @@ namespace CUDAWrappers
             typename Number>
   __device__
   FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
-    FEEvaluation(int                      cell_id,
-                 const data_type*         data,
+    FEEvaluation(int cell_id,
+                 const data_type* data,
                  SharedData<dim, Number>* shdata)
     : n_cells(data->n_cells),
       padding_length(data->padding_length),

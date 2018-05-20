@@ -39,12 +39,12 @@ void
 test(const unsigned int m,
      const unsigned int n,
      const unsigned int k,
-     const NumberType   eps)
+     const NumberType eps)
 {
   deallog << m << " " << n << " " << k << " " << std::endl;
-  FullMatrix<NumberType>       A(k, m), B(k, n), C(m, n), D(k, k);
+  FullMatrix<NumberType> A(k, m), B(k, n), C(m, n), D(k, k);
   LAPACKFullMatrix<NumberType> AL(k, m), BL(k, n), CL(m, n);
-  Vector<NumberType>           DL(k);
+  Vector<NumberType> DL(k);
 
   create_random(AL);
   create_random(BL);
@@ -106,7 +106,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 

@@ -34,7 +34,7 @@ namespace
    * https://github.com/elemental/Elemental/blob/master/src/core/Grid.cpp#L67-L91
    */
   inline std::pair<int, int>
-  compute_processor_grid_sizes(MPI_Comm           mpi_comm,
+  compute_processor_grid_sizes(MPI_Comm mpi_comm,
                                const unsigned int m,
                                const unsigned int n,
                                const unsigned int block_size_m,
@@ -66,7 +66,7 @@ namespace
     // Np = Pc * Pc / ratio
     // for quadratic matrices the ratio equals 1
     const double ratio = double(n) / m;
-    int          Pc    = std::floor(std::sqrt(ratio * Np));
+    int Pc             = std::floor(std::sqrt(ratio * Np));
 
     // one could rounds up Pc to the number which has zero remainder from the division of Np
     // while ( Np % Pc != 0 )
@@ -100,7 +100,7 @@ namespace Utilities
   namespace MPI
   {
     ProcessGrid::ProcessGrid(
-      MPI_Comm                                     mpi_comm,
+      MPI_Comm mpi_comm,
       const std::pair<unsigned int, unsigned int>& grid_dimensions)
       : mpi_communicator(mpi_comm),
         this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
@@ -161,7 +161,7 @@ namespace Utilities
         inactive_with_root_ranks.push_back(i);
 
       // Get the group of processes in mpi_communicator
-      int       ierr = 0;
+      int ierr = 0;
       MPI_Group all_group;
       ierr = MPI_Comm_group(mpi_communicator, &all_group);
       AssertThrowMPI(ierr);
@@ -200,7 +200,7 @@ namespace Utilities
 #  endif
     }
 
-    ProcessGrid::ProcessGrid(MPI_Comm           mpi_comm,
+    ProcessGrid::ProcessGrid(MPI_Comm mpi_comm,
                              const unsigned int n_rows_matrix,
                              const unsigned int n_columns_matrix,
                              const unsigned int row_block_size,
@@ -213,7 +213,7 @@ namespace Utilities
                                                  column_block_size))
     {}
 
-    ProcessGrid::ProcessGrid(MPI_Comm           mpi_comm,
+    ProcessGrid::ProcessGrid(MPI_Comm mpi_comm,
                              const unsigned int n_rows,
                              const unsigned int n_columns)
       : ProcessGrid(mpi_comm, std::make_pair(n_rows, n_columns))

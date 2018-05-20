@@ -10,8 +10,8 @@ void
 test1()
 {
   // set up problem:
-  std::string                   variables  = "x,y";
-  std::string                   expression = "cos(x)+sqrt(y)";
+  std::string variables  = "x,y";
+  std::string expression = "cos(x)+sqrt(y)";
   std::map<std::string, double> constants;
 
   // FunctionParser with 2 variables and 1 component:

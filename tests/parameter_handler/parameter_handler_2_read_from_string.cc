@@ -29,7 +29,7 @@ main()
     "Function", "a", Patterns::List(Patterns::Selection("a|b|c|d|e|f|g|h")));
   prm.leave_subsection();
 
-  std::string   input;
+  std::string input;
   std::ifstream in(SOURCE_DIR "/prm/parameter_handler_2_read_from_string.prm");
   while(in)
     {

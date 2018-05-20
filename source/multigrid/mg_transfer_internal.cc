@@ -30,11 +30,11 @@ namespace internal
     // that associates a level dof index with a global dof index.
     struct DoFPair
     {
-      unsigned int            level;
+      unsigned int level;
       types::global_dof_index global_dof_index;
       types::global_dof_index level_dof_index;
 
-      DoFPair(const unsigned int            level,
+      DoFPair(const unsigned int level,
               const types::global_dof_index global_dof_index,
               const types::global_dof_index level_dof_index)
         : level(level),
@@ -53,7 +53,7 @@ namespace internal
     void
     fill_copy_indices(
       const dealii::DoFHandler<dim, spacedim>& mg_dof,
-      const MGConstrainedDoFs*                 mg_constrained_dofs,
+      const MGConstrainedDoFs* mg_constrained_dofs,
       std::vector<std::vector<
         std::pair<types::global_dof_index, types::global_dof_index>>>&
         copy_indices,
@@ -62,7 +62,7 @@ namespace internal
         copy_indices_global_mine,
       std::vector<std::vector<
         std::pair<types::global_dof_index, types::global_dof_index>>>&
-                 copy_indices_level_mine,
+        copy_indices_level_mine,
       const bool skip_interface_dofs)
     {
       // Now we are filling the variables copy_indices*, which are essentially
@@ -213,7 +213,7 @@ namespace internal
                 ++it)
               {
                 requests.push_back(MPI_Request());
-                unsigned int          dest = *it;
+                unsigned int dest          = *it;
                 std::vector<DoFPair>& data = send_data[dest];
                 // If there is nothing to send, we still need to send a message,
                 // because the receiving end will be waitng. In that case we
@@ -250,8 +250,8 @@ namespace internal
             for(unsigned int counter = 0; counter < neighbors.size(); ++counter)
               {
                 MPI_Status status;
-                int        len;
-                int        ierr = MPI_Probe(
+                int len;
+                int ierr = MPI_Probe(
                   MPI_ANY_SOURCE, 71, tria->get_communicator(), &status);
                 AssertThrowMPI(ierr);
                 ierr = MPI_Get_count(&status, MPI_BYTE, &len);
@@ -337,9 +337,9 @@ namespace internal
     template <typename Number>
     void
     reinit_ghosted_vector(
-      const IndexSet&                             locally_owned,
-      std::vector<types::global_dof_index>&       ghosted_level_dofs,
-      const MPI_Comm&                             communicator,
+      const IndexSet& locally_owned,
+      std::vector<types::global_dof_index>& ghosted_level_dofs,
+      const MPI_Comm& communicator,
       LinearAlgebra::distributed::Vector<Number>& ghosted_level_vector,
       std::vector<std::pair<unsigned int, unsigned int>>&
         copy_indices_global_mine)
@@ -370,10 +370,10 @@ namespace internal
     // Transform the ghost indices to local index space for the vector
     inline void
     copy_indices_to_mpi_local_numbers(
-      const Utilities::MPI::Partitioner&          part,
+      const Utilities::MPI::Partitioner& part,
       const std::vector<types::global_dof_index>& mine,
       const std::vector<types::global_dof_index>& remote,
-      std::vector<unsigned int>&                  localized_indices)
+      std::vector<unsigned int>& localized_indices)
     {
       localized_indices.resize(mine.size() + remote.size(),
                                numbers::invalid_unsigned_int);
@@ -404,8 +404,8 @@ namespace internal
           tmp /= 2;
         }
       const unsigned int n_child_dofs_1d = fe_degree + 1 + fe_shift_1d;
-      unsigned int       factor          = 1;
-      unsigned int       shift           = fe_shift_1d * c_tensor_index[0];
+      unsigned int factor                = 1;
+      unsigned int shift                 = fe_shift_1d * c_tensor_index[0];
       for(unsigned int d = 1; d < dim; ++d)
         {
           factor *= n_child_dofs_1d;
@@ -419,12 +419,12 @@ namespace internal
     template <int dim>
     void
     add_child_indices(
-      const unsigned int                          child,
-      const unsigned int                          fe_shift_1d,
-      const unsigned int                          fe_degree,
-      const std::vector<unsigned int>&            lexicographic_numbering,
+      const unsigned int child,
+      const unsigned int fe_shift_1d,
+      const unsigned int fe_degree,
+      const std::vector<unsigned int>& lexicographic_numbering,
       const std::vector<types::global_dof_index>& local_dof_indices,
-      types::global_dof_index*                    target_indices)
+      types::global_dof_index* target_indices)
     {
       const unsigned int n_child_dofs_1d = fe_degree + 1 + fe_shift_1d;
       const unsigned int shift
@@ -432,7 +432,7 @@ namespace internal
       const unsigned int n_components
         = local_dof_indices.size() / Utilities::fixed_power<dim>(fe_degree + 1);
       types::global_dof_index* indices = target_indices + shift;
-      const unsigned int       n_scalar_cell_dofs
+      const unsigned int n_scalar_cell_dofs
         = Utilities::fixed_power<dim>(n_child_dofs_1d);
       for(unsigned int c = 0, m = 0; c < n_components; ++c)
         for(unsigned int k = 0; k < (dim > 2 ? (fe_degree + 1) : 1); ++k)
@@ -453,8 +453,8 @@ namespace internal
 
     template <int dim, typename Number>
     void
-    setup_element_info(ElementInfo<Number>&           elem_info,
-                       const FiniteElement<1>&        fe,
+    setup_element_info(ElementInfo<Number>& elem_info,
+                       const FiniteElement<1>& fe,
                        const dealii::DoFHandler<dim>& mg_dof)
     {
       // currently, we have only FE_Q and FE_DGQ type elements implemented
@@ -519,8 +519,8 @@ namespace internal
        * and replace with the indices of the dofs to which they are constrained
        */
       void
-      replace(const MGConstrainedDoFs*              mg_constrained_dofs,
-              const unsigned int                    level,
+      replace(const MGConstrainedDoFs* mg_constrained_dofs,
+              const unsigned int level,
               std::vector<types::global_dof_index>& dof_indices)
       {
         if(mg_constrained_dofs != nullptr
@@ -549,15 +549,15 @@ namespace internal
     template <int dim, typename Number>
     void
     setup_transfer(
-      const dealii::DoFHandler<dim>&          mg_dof,
-      const MGConstrainedDoFs*                mg_constrained_dofs,
-      ElementInfo<Number>&                    elem_info,
+      const dealii::DoFHandler<dim>& mg_dof,
+      const MGConstrainedDoFs* mg_constrained_dofs,
+      ElementInfo<Number>& elem_info,
       std::vector<std::vector<unsigned int>>& level_dof_indices,
       std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
-                                 parent_child_connect,
+        parent_child_connect,
       std::vector<unsigned int>& n_owned_level_cells,
       std::vector<std::vector<std::vector<unsigned short>>>& dirichlet_indices,
-      std::vector<std::vector<Number>>&                      weights_on_refined,
+      std::vector<std::vector<Number>>& weights_on_refined,
       std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
         copy_indices_global_mine,
       MGLevelObject<LinearAlgebra::distributed::Vector<Number>>&
@@ -615,7 +615,7 @@ namespace internal
 
       for(unsigned int level = n_levels - 1; level > 0; --level)
         {
-          unsigned int                         counter = 0;
+          unsigned int counter = 0;
           std::vector<types::global_dof_index> global_level_dof_indices;
           std::vector<types::global_dof_index> global_level_dof_indices_remote;
           std::vector<types::global_dof_index> ghosted_level_dofs;

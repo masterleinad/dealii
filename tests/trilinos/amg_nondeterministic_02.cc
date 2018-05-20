@@ -497,10 +497,10 @@ double matv[]
 void
 run()
 {
-  int                dim = 2300;
-  int                ierr;
-  const unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int       numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  int dim = 2300;
+  int ierr;
+  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc    = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   IndexSet owned(dim);
 
@@ -524,9 +524,9 @@ run()
   sp.compress();
 
   TrilinosWrappers::SparseMatrix mat(sp);
-  TrilinosWrappers::MPI::Vector  x1(owned, MPI_COMM_WORLD);
-  TrilinosWrappers::MPI::Vector  x2(owned, MPI_COMM_WORLD);
-  TrilinosWrappers::MPI::Vector  b(owned, MPI_COMM_WORLD);
+  TrilinosWrappers::MPI::Vector x1(owned, MPI_COMM_WORLD);
+  TrilinosWrappers::MPI::Vector x2(owned, MPI_COMM_WORLD);
+  TrilinosWrappers::MPI::Vector b(owned, MPI_COMM_WORLD);
 
   for(unsigned int i = 0; i < dim; ++i)
     mat.set(i, i, 1.0);
@@ -596,6 +596,6 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   run();
 }

@@ -126,8 +126,8 @@ test()
   }
 
   DoFHandler<dim> dof_handler(triangulation);
-  unsigned int    iFEDeg = 2;
-  FE_Q<dim>       finite_element(iFEDeg);
+  unsigned int iFEDeg = 2;
+  FE_Q<dim> finite_element(iFEDeg);
   dof_handler.distribute_dofs(finite_element);
 
   std::map<types::global_dof_index,

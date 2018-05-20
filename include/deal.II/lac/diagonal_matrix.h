@@ -47,7 +47,7 @@ class DiagonalMatrix : public Subscriptor
 {
 public:
   typedef typename VectorType::value_type value_type;
-  typedef typename VectorType::size_type  size_type;
+  typedef typename VectorType::size_type size_type;
 
   /**
    * Constructor.
@@ -139,12 +139,12 @@ public:
    */
   template <typename number2>
   void
-  add(const size_type  row,
-      const size_type  n_cols,
+  add(const size_type row,
+      const size_type n_cols,
       const size_type* col_indices,
-      const number2*   values,
-      const bool       elide_zero_values      = true,
-      const bool       col_indices_are_sorted = false);
+      const number2* values,
+      const bool elide_zero_values      = true,
+      const bool col_indices_are_sorted = false);
 
   /**
    * Add value to the element (i,j).
@@ -297,10 +297,10 @@ DiagonalMatrix<VectorType>::operator()(const size_type i, const size_type j)
 template <typename VectorType>
 template <typename number2>
 void
-DiagonalMatrix<VectorType>::add(const size_type  row,
-                                const size_type  n_cols,
+DiagonalMatrix<VectorType>::add(const size_type row,
+                                const size_type n_cols,
                                 const size_type* col_indices,
-                                const number2*   values,
+                                const number2* values,
                                 const bool,
                                 const bool)
 {
@@ -311,8 +311,8 @@ DiagonalMatrix<VectorType>::add(const size_type  row,
 
 template <typename VectorType>
 void
-DiagonalMatrix<VectorType>::add(const size_type  i,
-                                const size_type  j,
+DiagonalMatrix<VectorType>::add(const size_type i,
+                                const size_type j,
                                 const value_type value)
 {
   if(i == j)
@@ -336,7 +336,7 @@ DiagonalMatrix<VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
 
 template <typename VectorType>
 void
-DiagonalMatrix<VectorType>::vmult_add(VectorType&       dst,
+DiagonalMatrix<VectorType>::vmult_add(VectorType& dst,
                                       const VectorType& src) const
 {
   VectorType tmp(src);
@@ -346,7 +346,7 @@ DiagonalMatrix<VectorType>::vmult_add(VectorType&       dst,
 
 template <typename VectorType>
 void
-DiagonalMatrix<VectorType>::Tvmult_add(VectorType&       dst,
+DiagonalMatrix<VectorType>::Tvmult_add(VectorType& dst,
                                        const VectorType& src) const
 {
   vmult_add(dst, src);

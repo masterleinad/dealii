@@ -26,7 +26,7 @@ void
 test(unsigned int variant)
 {
   const unsigned int n = 64;
-  Vector<number>     rhs(n), sol(n);
+  Vector<number> rhs(n), sol(n);
   rhs = 1.;
 
   FullMatrix<number> matrix(n, n);

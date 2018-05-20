@@ -24,9 +24,9 @@ template <int dim>
 void
 test()
 {
-  const double            lambda = 5, mu = 7;
+  const double lambda = 5, mu = 7;
   SymmetricTensor<4, dim> ts;
-  Tensor<4, dim>          ta;
+  Tensor<4, dim> ta;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
       {
@@ -41,7 +41,7 @@ test()
           ts[i][j][k][l] = ta[i][j][k][l];
 
   SymmetricTensor<2, dim> as, bs;
-  Tensor<2, dim>          aa, ba;
+  Tensor<2, dim> aa, ba;
 
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)

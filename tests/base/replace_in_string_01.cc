@@ -23,7 +23,7 @@ void
 check(const std::string in,
       const std::string from,
       const std::string to,
-      std::string       out)
+      std::string out)
 {
   std::string result = Utilities::replace_in_string(in, from, to);
   if(result != out)

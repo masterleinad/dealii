@@ -27,7 +27,7 @@
 // column (well, we had to invent
 // something)
 void
-make_masks(const unsigned int            n,
+make_masks(const unsigned int n,
            Table<2, DoFTools::Coupling>& m1,
            Table<2, DoFTools::Coupling>& m2)
 {
@@ -57,7 +57,7 @@ check_this(const DoFHandler<dim>& dof_handler)
 
   // create sparsity pattern
   const unsigned int n_components = dof_handler.get_fe().n_components();
-  BlockDynamicSparsityPattern          sp(n_components, n_components);
+  BlockDynamicSparsityPattern sp(n_components, n_components);
   std::vector<types::global_dof_index> dofs_per_component(n_components);
   DoFTools::count_dofs_per_component(dof_handler, dofs_per_component);
   for(unsigned int i = 0; i < n_components; ++i)
@@ -74,7 +74,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   // would be in the range of 40 MB)
   for(unsigned int l = 0; l < 20; ++l)
     {
-      const unsigned int                    line = l * (sp.n_rows() / 20);
+      const unsigned int line = l * (sp.n_rows() / 20);
       std::pair<unsigned int, unsigned int> block_row
         = sp.get_row_indices().global_to_local(line);
       for(unsigned int col = 0; col < n_components; ++col)

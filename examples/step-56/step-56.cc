@@ -110,7 +110,7 @@ namespace Step56
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
     virtual Tensor<1, dim>
-    gradient(const Point<dim>&  p,
+    gradient(const Point<dim>& p,
              const unsigned int component = 0) const override;
   };
 
@@ -311,10 +311,10 @@ namespace Step56
   public:
     BlockSchurPreconditioner(
       const BlockSparseMatrix<double>& system_matrix,
-      const SparseMatrix<double>&      schur_complement_matrix,
-      const PreconditionerAType&       preconditioner_A,
-      const PreconditionerSType&       preconditioner_S,
-      const bool                       do_solve_A);
+      const SparseMatrix<double>& schur_complement_matrix,
+      const PreconditionerAType& preconditioner_A,
+      const PreconditionerSType& preconditioner_S,
+      const bool do_solve_A);
 
     void
     vmult(BlockVector<double>& dst, const BlockVector<double>& src) const;
@@ -324,9 +324,9 @@ namespace Step56
 
   private:
     const BlockSparseMatrix<double>& system_matrix;
-    const SparseMatrix<double>&      schur_complement_matrix;
-    const PreconditionerAType&       preconditioner_A;
-    const PreconditionerSType&       preconditioner_S;
+    const SparseMatrix<double>& schur_complement_matrix;
+    const PreconditionerAType& preconditioner_A;
+    const PreconditionerSType& preconditioner_S;
 
     const bool do_solve_A;
   };
@@ -335,10 +335,10 @@ namespace Step56
   BlockSchurPreconditioner<PreconditionerAType, PreconditionerSType>::
     BlockSchurPreconditioner(
       const BlockSparseMatrix<double>& system_matrix,
-      const SparseMatrix<double>&      schur_complement_matrix,
-      const PreconditionerAType&       preconditioner_A,
-      const PreconditionerSType&       preconditioner_S,
-      const bool                       do_solve_A)
+      const SparseMatrix<double>& schur_complement_matrix,
+      const PreconditionerAType& preconditioner_A,
+      const PreconditionerSType& preconditioner_S,
+      const bool do_solve_A)
     : n_iterations_A(0),
       n_iterations_S(0),
       system_matrix(system_matrix),
@@ -351,7 +351,7 @@ namespace Step56
   template <class PreconditionerAType, class PreconditionerSType>
   void
   BlockSchurPreconditioner<PreconditionerAType, PreconditionerSType>::vmult(
-    BlockVector<double>&       dst,
+    BlockVector<double>& dst,
     const BlockVector<double>& src) const
   {
     Vector<double> utmp(src.block(0));
@@ -359,7 +359,7 @@ namespace Step56
     // First solve with the approximation for S
     {
       SolverControl solver_control(1000, 1e-6 * src.block(1).l2_norm());
-      SolverCG<>    cg(solver_control);
+      SolverCG<> cg(solver_control);
 
       dst.block(1) = 0.0;
       cg.solve(
@@ -381,7 +381,7 @@ namespace Step56
     if(do_solve_A == true)
       {
         SolverControl solver_control(10000, utmp.l2_norm() * 1e-4);
-        SolverCG<>    cg(solver_control);
+        SolverCG<> cg(solver_control);
 
         dst.block(0) = 0.0;
         cg.solve(
@@ -404,7 +404,7 @@ namespace Step56
   {
   public:
     StokesProblem(const unsigned int pressure_degree,
-                  SolverType::type   solver_type);
+                  SolverType::type solver_type);
     void
     run();
 
@@ -423,34 +423,34 @@ namespace Step56
     output_results(const unsigned int refinement_cycle) const;
 
     const unsigned int pressure_degree;
-    SolverType::type   solver_type;
+    SolverType::type solver_type;
 
     Triangulation<dim> triangulation;
-    FESystem<dim>      velocity_fe;
-    FESystem<dim>      fe;
-    DoFHandler<dim>    dof_handler;
-    DoFHandler<dim>    velocity_dof_handler;
+    FESystem<dim> velocity_fe;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
+    DoFHandler<dim> velocity_dof_handler;
 
     ConstraintMatrix constraints;
 
-    BlockSparsityPattern      sparsity_pattern;
+    BlockSparsityPattern sparsity_pattern;
     BlockSparseMatrix<double> system_matrix;
-    SparseMatrix<double>      pressure_mass_matrix;
+    SparseMatrix<double> pressure_mass_matrix;
 
     BlockVector<double> solution;
     BlockVector<double> system_rhs;
 
-    MGLevelObject<SparsityPattern>      mg_sparsity_patterns;
+    MGLevelObject<SparsityPattern> mg_sparsity_patterns;
     MGLevelObject<SparseMatrix<double>> mg_matrices;
     MGLevelObject<SparseMatrix<double>> mg_interface_matrices;
-    MGConstrainedDoFs                   mg_constrained_dofs;
+    MGConstrainedDoFs mg_constrained_dofs;
 
     TimerOutput computing_timer;
   };
 
   template <int dim>
   StokesProblem<dim>::StokesProblem(const unsigned int pressure_degree,
-                                    SolverType::type   solver_type)
+                                    SolverType::type solver_type)
     : pressure_degree(pressure_degree),
       solver_type(solver_type),
       triangulation(Triangulation<dim>::maximum_smoothing),
@@ -620,19 +620,19 @@ namespace Step56
     const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    const RightHandSide<dim>    right_hand_side;
+    const RightHandSide<dim> right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim + 1));
 
     const FEValuesExtractors::Vector velocities(0);
     const FEValuesExtractors::Scalar pressure(dim);
 
     std::vector<SymmetricTensor<2, dim>> symgrad_phi_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -832,8 +832,8 @@ namespace Step56
     // Here we must make sure to solve for the residual with "good enough" accuracy
     SolverControl solver_control(system_matrix.m(),
                                  1e-10 * system_rhs.l2_norm());
-    unsigned int  n_iterations_A;
-    unsigned int  n_iterations_S;
+    unsigned int n_iterations_A;
+    unsigned int n_iterations_S;
 
     // This is used to pass whether or not we want to solve for A inside
     // the preconditioner.  One could change this to false to see if
@@ -890,7 +890,7 @@ namespace Step56
         MGCoarseGridHouseholder<> coarse_grid_solver;
         coarse_grid_solver.initialize(coarse_matrix);
 
-        typedef PreconditionSOR<SparseMatrix<double>>    Smoother;
+        typedef PreconditionSOR<SparseMatrix<double>> Smoother;
         mg::SmootherRelaxation<Smoother, Vector<double>> mg_smoother;
         mg_smoother.initialize(mg_matrices);
         mg_smoother.set_steps(2);

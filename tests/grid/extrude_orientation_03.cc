@@ -42,7 +42,7 @@ test()
                 << std::endl;
     }
 
-  Triangulation<3>    tr3;
+  Triangulation<3> tr3;
   std::vector<double> slice_points = {0, 0.1, 0.5};
   GridGenerator::extrude_triangulation(tr, slice_points, tr3);
 

@@ -133,11 +133,11 @@ namespace Utilities
      */
     template <typename OperatorType, typename VectorType>
     double
-    lanczos_largest_eigenvalue(const OperatorType&       H,
-                               const VectorType&         v0,
-                               const unsigned int        k,
+    lanczos_largest_eigenvalue(const OperatorType& H,
+                               const VectorType& v0,
+                               const unsigned int k,
                                VectorMemory<VectorType>& vector_memory,
-                               std::vector<double>*      eigenvalues = nullptr);
+                               std::vector<double>* eigenvalues = nullptr);
 
     /**
      * Apply Chebyshev polynomial of the operator @p H to @p x. For a
@@ -190,12 +190,12 @@ namespace Utilities
      */
     template <typename OperatorType, typename VectorType>
     void
-    chebyshev_filter(VectorType&                     x,
-                     const OperatorType&             H,
-                     const unsigned int              n,
+    chebyshev_filter(VectorType& x,
+                     const OperatorType& H,
+                     const unsigned int n,
                      const std::pair<double, double> unwanted_spectrum,
-                     const double                    tau,
-                     VectorMemory<VectorType>&       vector_memory);
+                     const double tau,
+                     VectorMemory<VectorType>& vector_memory);
 
   } // namespace LinearAlgebra
 
@@ -301,11 +301,11 @@ namespace Utilities
 
     template <typename OperatorType, typename VectorType>
     double
-    lanczos_largest_eigenvalue(const OperatorType&       H,
-                               const VectorType&         v0_,
-                               const unsigned int        k,
+    lanczos_largest_eigenvalue(const OperatorType& H,
+                               const VectorType& v0_,
+                               const unsigned int k,
                                VectorMemory<VectorType>& vector_memory,
-                               std::vector<double>*      eigenvalues)
+                               std::vector<double>* eigenvalues)
     {
       // Do k-step Lanczos:
 
@@ -361,10 +361,10 @@ namespace Utilities
       // Use Lapack dstev to get ||T||_2 norm, i.e. the largest eigenvalue
       // of T
       const types::blas_int n = k;
-      std::vector<double>   Z;       // unused for eigenvalues-only ("N") job
+      std::vector<double> Z;         // unused for eigenvalues-only ("N") job
       const types::blas_int ldz = 1; // ^^   (>=1)
-      std::vector<double>   work;    // ^^
-      types::blas_int       info;
+      std::vector<double> work;      // ^^
+      types::blas_int info;
       // call lapack_templates.h wrapper:
       stev("N",
            &n,
@@ -391,12 +391,12 @@ namespace Utilities
 
     template <typename OperatorType, typename VectorType>
     void
-    chebyshev_filter(VectorType&                     x,
-                     const OperatorType&             op,
-                     const unsigned int              degree,
+    chebyshev_filter(VectorType& x,
+                     const OperatorType& op,
+                     const unsigned int degree,
                      const std::pair<double, double> unwanted_spectrum,
-                     const double                    a_L,
-                     VectorMemory<VectorType>&       vector_memory)
+                     const double a_L,
+                     VectorMemory<VectorType>& vector_memory)
     {
       const double a = unwanted_spectrum.first;
       const double b = unwanted_spectrum.second;
@@ -442,8 +442,8 @@ namespace Utilities
 
       const double sigma1
         = e / (a_L - c); // BUGFIX which is relevant for odd degrees
-      double       sigma = scale ? sigma1 : 1.;
-      const double tau   = 2. / sigma;
+      double sigma     = scale ? sigma1 : 1.;
+      const double tau = 2. / sigma;
       op.vmult(y, x);
       y.sadd(alpha * sigma, beta * sigma, x);
 

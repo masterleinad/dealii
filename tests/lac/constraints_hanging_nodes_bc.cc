@@ -62,7 +62,7 @@ test()
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 

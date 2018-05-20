@@ -41,21 +41,21 @@ main()
 {
   initlog();
 
-  std::vector<int>          l0(2, -1);
+  std::vector<int> l0(2, -1);
   std::vector<unsigned int> l1(3, 2);
-  std::vector<double>       l2(4, 3.14);
-  std::vector<std::string>  l3(2, "bar");
-  Point<3>                  l4(3, 2, 1);
-  std::complex<double>      l5(2.0, 1.0);
+  std::vector<double> l2(4, 3.14);
+  std::vector<std::string> l3(2, "bar");
+  Point<3> l4(3, 2, 1);
+  std::complex<double> l5(2.0, 1.0);
 
-  std::vector<std::vector<int>>          vl0(2, std::vector<int>(3, 1));
+  std::vector<std::vector<int>> vl0(2, std::vector<int>(3, 1));
   std::vector<std::vector<unsigned int>> vl1(2,
                                              std::vector<unsigned int>(3, 2));
-  std::vector<std::vector<double>>       vl2(2, std::vector<double>(3, 3.14));
-  std::vector<std::vector<std::string>>  vl3(2,
+  std::vector<std::vector<double>> vl2(2, std::vector<double>(3, 3.14));
+  std::vector<std::vector<std::string>> vl3(2,
                                             std::vector<std::string>(3, "foo"));
-  std::vector<Point<3>>                  vl4(2, Point<3>(4, 3, 2));
-  std::vector<std::complex<double>>      vl5(2, std::complex<double>(1.0, 3.0));
+  std::vector<Point<3>> vl4(2, Point<3>(4, 3, 2));
+  std::vector<std::complex<double>> vl5(2, std::complex<double>(1.0, 3.0));
 
   deallog << "List of int         : " << Convert<decltype(l0)>::to_string(l0)
           << std::endl;

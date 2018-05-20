@@ -33,16 +33,16 @@ template <int dim>
 void
 check_function_consistency(const Function<dim>& f,
                            const Function<dim>& gradf,
-                           unsigned int         sub)
+                           unsigned int sub)
 {
-  QMidpoint<1>   mid;
+  QMidpoint<1> mid;
   QIterated<dim> quadrature(mid, sub);
 
-  std::vector<Tensor<1, dim>>              fg1(quadrature.size());
+  std::vector<Tensor<1, dim>> fg1(quadrature.size());
   std::vector<std::vector<Tensor<1, dim>>> fg2(quadrature.size(),
                                                std::vector<Tensor<1, dim>>(1));
 
-  std::vector<double>         g1(quadrature.size());
+  std::vector<double> g1(quadrature.size());
   std::vector<Vector<double>> g2(quadrature.size(), Vector<double>(dim));
 
   // Derivative values are in fg1,
@@ -71,8 +71,8 @@ check_function_consistency(const Function<dim>& f,
 template <int dim>
 void
 check_function_derivative(const Functions::FlowFunction<dim>& f,
-                          unsigned int                        sub,
-                          std::ostream&                       out)
+                          unsigned int sub,
+                          std::ostream& out)
 {
   DerivativeTestFunction<dim> dtest1(f, 1.e-2);
   DerivativeTestFunction<dim> dtest2(f, 2.e-2);
@@ -80,7 +80,7 @@ check_function_derivative(const Functions::FlowFunction<dim>& f,
   // patch stretching over the cube
   // [-1,1]^dim
   std::vector<DataOutBase::Patch<dim, dim>> patches(1);
-  unsigned int                              vertex_number = 0;
+  unsigned int vertex_number = 0;
   for(unsigned int iz = 0; iz < ((dim > 2) ? 2 : 1); ++iz)
     for(unsigned int iy = 0; iy < ((dim > 1) ? 2 : 1); ++iy)
       for(unsigned int ix = 0; ix < 2; ++ix)
@@ -106,8 +106,8 @@ check_function_derivative(const Functions::FlowFunction<dim>& f,
 
   // Build the vector of quadrature points;
   std::vector<Point<dim>> points(vertex_number);
-  const double            h = 2. / sub;
-  vertex_number             = 0;
+  const double h = 2. / sub;
+  vertex_number  = 0;
   for(unsigned int iz = 0; iz <= ((dim > 2) ? sub : 0); ++iz)
     for(unsigned int iy = 0; iy <= ((dim > 1) ? sub : 0); ++iy)
       for(unsigned int ix = 0; ix <= sub; ++ix)
@@ -121,8 +121,8 @@ check_function_derivative(const Functions::FlowFunction<dim>& f,
           ++vertex_number;
         }
 
-  std::vector<Vector<double>>      values(points.size(),
-                                          Vector<double>(f.n_components));
+  std::vector<Vector<double>> values(points.size(),
+                                     Vector<double>(f.n_components));
   std::vector<std::vector<double>> values2(f.n_components,
                                            std::vector<double>(points.size()));
   f.vector_value_list(points, values);
@@ -222,8 +222,8 @@ check_function_derivative(const Functions::FlowFunction<dim>& f,
       names[i] = std::string("comp");
     }
 
-  DataOutBase::DXFlags                                             dxflags;
-  DataOutBase::GnuplotFlags                                        gflags;
+  DataOutBase::DXFlags dxflags;
+  DataOutBase::GnuplotFlags gflags;
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   if(dim == 2)
     DataOutBase::write_gnuplot(patches, names, vectors, gflags, out);
@@ -234,11 +234,11 @@ check_function_derivative(const Functions::FlowFunction<dim>& f,
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
-  Functions::LSingularityFunction     fl;
+  Functions::LSingularityFunction fl;
   Functions::LSingularityGradFunction flg;
   // Use odd number of points to
   // avoid lines with

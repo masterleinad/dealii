@@ -91,7 +91,7 @@ test_periodic_cube()
 
   typedef GridTools::PeriodicFacePair<
     typename Triangulation<dim>::cell_iterator>
-                                  periodic_face_pair;
+    periodic_face_pair;
   std::vector<periodic_face_pair> periodicity_vector;
   GridTools::collect_periodic_faces(tria, 0, 1, 0, periodicity_vector);
   tria.add_periodicity(periodicity_vector);

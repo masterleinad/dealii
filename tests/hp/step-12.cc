@@ -49,8 +49,8 @@ class RHS : public Function<dim>
 public:
   virtual void
   value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+             std::vector<double>& values,
+             const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -59,8 +59,8 @@ class BoundaryValues : public Function<dim>
 public:
   virtual void
   value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+             std::vector<double>& values,
+             const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -71,13 +71,13 @@ public:
   {}
   void
   value_list(const std::vector<Point<dim>>& points,
-             std::vector<Point<dim>>&       values) const;
+             std::vector<Point<dim>>& values) const;
 };
 
 template <int dim>
 void
 RHS<dim>::value_list(const std::vector<Point<dim>>& points,
-                     std::vector<double>&           values,
+                     std::vector<double>& values,
                      const unsigned int) const
 {
   Assert(values.size() == points.size(),
@@ -90,15 +90,15 @@ RHS<dim>::value_list(const std::vector<Point<dim>>& points,
 template <int dim>
 void
 Beta<dim>::value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Point<dim>>&       values) const
+                      std::vector<Point<dim>>& values) const
 {
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
   for(unsigned int i = 0; i < points.size(); ++i)
     {
-      const Point<dim>& p    = points[i];
-      Point<dim>&       beta = values[i];
+      const Point<dim>& p = points[i];
+      Point<dim>& beta    = values[i];
 
       beta(0) = -p(1);
       beta(1) = p(0);
@@ -109,7 +109,7 @@ Beta<dim>::value_list(const std::vector<Point<dim>>& points,
 template <int dim>
 void
 BoundaryValues<dim>::value_list(const std::vector<Point<dim>>& points,
-                                std::vector<double>&           values,
+                                std::vector<double>& values,
                                 const unsigned int) const
 {
   Assert(values.size() == points.size(),
@@ -132,33 +132,33 @@ public:
 
   void
   assemble_cell_term(const hp::FEValues<dim>& fe_v,
-                     FullMatrix<double>&      ui_vi_matrix,
-                     Vector<double>&          cell_vector) const;
+                     FullMatrix<double>& ui_vi_matrix,
+                     Vector<double>& cell_vector) const;
 
   void
   assemble_boundary_term(const hp::FEFaceValues<dim>& fe_v,
-                         FullMatrix<double>&          ui_vi_matrix,
-                         Vector<double>&              cell_vector) const;
+                         FullMatrix<double>& ui_vi_matrix,
+                         Vector<double>& cell_vector) const;
 
   template <class X, class Y>
   void
-  assemble_face_term1(const X&            fe_v,
-                      const Y&            fe_v_neighbor,
+  assemble_face_term1(const X& fe_v,
+                      const Y& fe_v_neighbor,
                       FullMatrix<double>& ui_vi_matrix,
                       FullMatrix<double>& ue_vi_matrix) const;
 
   template <class X, class Y>
   void
-  assemble_face_term2(const X&            fe_v,
-                      const Y&            fe_v_neighbor,
+  assemble_face_term2(const X& fe_v,
+                      const Y& fe_v_neighbor,
                       FullMatrix<double>& ui_vi_matrix,
                       FullMatrix<double>& ue_vi_matrix,
                       FullMatrix<double>& ui_ve_matrix,
                       FullMatrix<double>& ue_ve_matrix) const;
 
 private:
-  const Beta<dim>           beta_function;
-  const RHS<dim>            rhs_function;
+  const Beta<dim> beta_function;
+  const RHS<dim> rhs_function;
   const BoundaryValues<dim> boundary_function;
 };
 
@@ -207,8 +207,8 @@ template <int dim>
 void
 DGTransportEquation<dim>::assemble_boundary_term(
   const hp::FEFaceValues<dim>& fe_v,
-  FullMatrix<double>&          ui_vi_matrix,
-  Vector<double>&              cell_vector) const
+  FullMatrix<double>& ui_vi_matrix,
+  Vector<double>& cell_vector) const
 {
   const std::vector<double>& JxW
     = fe_v.get_present_fe_values().get_JxW_values();
@@ -252,8 +252,8 @@ template <int dim>
 template <class X, class Y>
 void
 DGTransportEquation<dim>::assemble_face_term1(
-  const X&            fe_v,
-  const Y&            fe_v_neighbor,
+  const X& fe_v,
+  const Y& fe_v_neighbor,
   FullMatrix<double>& ui_vi_matrix,
   FullMatrix<double>& ue_vi_matrix) const
 {
@@ -300,8 +300,8 @@ template <int dim>
 template <class X, class Y>
 void
 DGTransportEquation<dim>::assemble_face_term2(
-  const X&            fe_v,
-  const Y&            fe_v_neighbor,
+  const X& fe_v,
+  const Y& fe_v_neighbor,
   FullMatrix<double>& ui_vi_matrix,
   FullMatrix<double>& ue_vi_matrix,
   FullMatrix<double>& ui_ve_matrix,
@@ -400,16 +400,16 @@ private:
   void
   output_results(const unsigned int cycle) const;
 
-  Triangulation<dim>               triangulation;
+  Triangulation<dim> triangulation;
   const hp::MappingCollection<dim> mapping;
 
   hp::FECollection<dim> fe;
-  hp::DoFHandler<dim>   dof_handler;
+  hp::DoFHandler<dim> dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
-  const hp::QCollection<dim>     quadrature;
+  const hp::QCollection<dim> quadrature;
   const hp::QCollection<dim - 1> face_quadrature;
 
   Vector<double> solution1;
@@ -644,7 +644,7 @@ DGMethod<dim>::assemble_system2()
 
   const UpdateFlags neighbor_face_update_flags = update_values;
 
-  hp::FEValues<dim>     fe_v(mapping, fe, quadrature, update_flags);
+  hp::FEValues<dim> fe_v(mapping, fe, quadrature, update_flags);
   hp::FEFaceValues<dim> fe_v_face(
     mapping, fe, face_quadrature, face_update_flags);
   hp::FESubfaceValues<dim> fe_v_subface(
@@ -791,7 +791,7 @@ template <int dim>
 void
 DGMethod<dim>::solve(Vector<double>& solution)
 {
-  SolverControl      solver_control(1000, 1e-12, false, false);
+  SolverControl solver_control(1000, 1e-12, false, false);
   SolverRichardson<> solver(solver_control);
 
   PreconditionBlockSSOR<SparseMatrix<double>> preconditioner;

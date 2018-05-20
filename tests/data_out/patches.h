@@ -73,15 +73,15 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
 template <int dim>
 void
 create_continuous_patches(std::vector<DataOutBase::Patch<dim, dim>>& patches,
-                          unsigned int                               n_cells,
-                          unsigned int                               n_sub)
+                          unsigned int n_cells,
+                          unsigned int n_sub)
 {
   unsigned int n1 = (dim >= 1) ? n_cells : 1;
   unsigned int n2 = (dim >= 2) ? n_cells : 1;
   unsigned int n3 = (dim >= 3) ? n_cells : 1;
 
-  QTrapez<dim>   trapez;
-  QTrapez<1>     trapez1d;
+  QTrapez<dim> trapez;
+  QTrapez<1> trapez1d;
   QIterated<dim> trapezsub(trapez1d, n_sub);
 
   Point<dim> midpoint;

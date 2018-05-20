@@ -36,9 +36,9 @@ check()
   tr.reset_manifold(0);
 
   ConstraintMatrix cm;
-  MappingQ<dim>    mapping(1);
+  MappingQ<dim> mapping(1);
 
-  FESystem<dim>   fe(FE_Q<dim>(3), dim);
+  FESystem<dim> fe(FE_Q<dim>(3), dim);
   DoFHandler<dim> dofh(tr);
 
   dofh.distribute_dofs(fe);

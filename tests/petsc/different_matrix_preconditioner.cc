@@ -48,7 +48,7 @@ main(int argc, char** argv)
   GridGenerator::hyper_cube(triangulation, 0, 1.);
   triangulation.refine_global(5);
 
-  FE_Q<2>       fe_q(1);
+  FE_Q<2> fe_q(1);
   DoFHandler<2> dof_handler;
   dof_handler.initialize(triangulation, fe_q);
 
@@ -90,7 +90,7 @@ main(int argc, char** argv)
   PETScWrappers::MPI::Vector residual(MPI_COMM_WORLD, n_dofs, n_dofs);
 
   {
-    SolverControl              solver_control(n_dofs, 1e-6, false, false);
+    SolverControl solver_control(n_dofs, 1e-6, false, false);
     PETScWrappers::SolverGMRES solver(solver_control);
 
     PETScWrappers::PreconditionBoomerAMG preconditioner(A);
@@ -106,7 +106,7 @@ main(int argc, char** argv)
   }
   solution = 0.;
   {
-    SolverControl              solver_control(n_dofs, 1e-6, false, false);
+    SolverControl solver_control(n_dofs, 1e-6, false, false);
     PETScWrappers::SolverGMRES solver(solver_control);
 
     PETScWrappers::PreconditionBoomerAMG preconditioner(A2);

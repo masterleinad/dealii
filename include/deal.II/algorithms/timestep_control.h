@@ -182,13 +182,13 @@ namespace Algorithms
     file_name_format();
 
   private:
-    double   start_val;
-    double   final_val;
-    double   tolerance_val;
+    double start_val;
+    double final_val;
+    double tolerance_val;
     Strategy strategy_val;
-    double   start_step_val;
-    double   max_step_val;
-    double   min_step_val;
+    double start_step_val;
+    double max_step_val;
+    double min_step_val;
     /**
      * The size of the current time step. This may differ from @p step_val, if
      * we aimed at @p final_val.

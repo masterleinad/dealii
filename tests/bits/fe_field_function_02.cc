@@ -48,7 +48,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(8 / dim);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dh(tria);
 
   dh.distribute_dofs(fe);

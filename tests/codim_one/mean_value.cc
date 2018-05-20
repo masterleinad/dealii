@@ -44,12 +44,12 @@ test()
   Triangulation<dim, spacedim> triangulation;
   GridGenerator::hyper_cube(triangulation, -1, 1);
 
-  FE_Q<dim, spacedim>       fe(1);
+  FE_Q<dim, spacedim> fe(1);
   DoFHandler<dim, spacedim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
   Functions::CosineFunction<spacedim> cosine;
-  Vector<double>                      x(dof_handler.n_dofs());
+  Vector<double> x(dof_handler.n_dofs());
   VectorTools::interpolate(dof_handler, cosine, x);
 
   const double mean

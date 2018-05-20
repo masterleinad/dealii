@@ -24,13 +24,13 @@
 int
 main(int argc, char** argv)
 {
-  typedef BlockVector<double>                BlockVectorLocal;
+  typedef BlockVector<double> BlockVectorLocal;
   typedef TrilinosWrappers::MPI::BlockVector BlockVector;
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
-  const MPI_Comm&    mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
   const unsigned int this_mpi_process
     = Utilities::MPI::this_mpi_process(mpi_communicator);
   const unsigned int n_mpi_processes

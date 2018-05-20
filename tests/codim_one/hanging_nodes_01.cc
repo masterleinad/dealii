@@ -58,9 +58,9 @@ main()
   boundary_mesh.execute_coarsening_and_refinement();
 
   /*****************************************************************/
-  FE_Q<dim, spacedim>       fe(1);
+  FE_Q<dim, spacedim> fe(1);
   DoFHandler<dim, spacedim> dh(boundary_mesh);
-  ConstraintMatrix          hanging_node_constraints;
+  ConstraintMatrix hanging_node_constraints;
 
   dh.distribute_dofs(fe);
   hanging_node_constraints.clear();

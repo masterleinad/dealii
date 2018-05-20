@@ -40,7 +40,7 @@ test()
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  QGauss<dim - 1>   q(2);
+  QGauss<dim - 1> q(2);
   FEFaceValues<dim> fe_values(fe, q, update_values | update_gradients);
   fe_values.reinit(dof_handler.begin_active(), 0);
 

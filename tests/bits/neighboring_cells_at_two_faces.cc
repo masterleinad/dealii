@@ -43,7 +43,7 @@ void create_grid(Triangulation<2>& tria)
 {
   const unsigned int n_points = 5;
 
-  const Point<2>        points[n_points] = {Point<2>(0.0, 0.0),
+  const Point<2> points[n_points] = {Point<2>(0.0, 0.0),
                                      Point<2>(1.0, 1.0),
                                      Point<2>(2.0, 2.0),
                                      Point<2>(0.0, 2.0),

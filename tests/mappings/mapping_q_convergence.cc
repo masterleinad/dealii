@@ -56,7 +56,7 @@ double
 regression_slope(const std::vector<double>& x, const std::vector<double>& y)
 {
   FullMatrix<double> K(2, 2), invK(2, 2);
-  Vector<double>     X(2), B(2);
+  Vector<double> X(2), B(2);
 
   Assert(x.size() == y.size(),
          ExcMessage("x and y are expected to have the same size"));
@@ -191,9 +191,9 @@ template <int dim>
 void
 test(const FiniteElement<dim>& fe)
 {
-  Geometry<dim>                           geometry;
+  Geometry<dim> geometry;
   TranscendentalManufacturedSolution<dim> fe_function;
-  ConstraintMatrix                        constraints;
+  ConstraintMatrix constraints;
   constraints.close();
 
   deallog << "FE degree: " << fe.degree << std::endl;

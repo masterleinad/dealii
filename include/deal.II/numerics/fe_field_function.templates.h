@@ -37,8 +37,8 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   FEFieldFunction<dim, DoFHandlerType, VectorType>::FEFieldFunction(
     const DoFHandlerType& mydh,
-    const VectorType&     myv,
-    const Mapping<dim>&   mymapping)
+    const VectorType& myv,
+    const Mapping<dim>& mymapping)
     : Function<dim, typename VectorType::value_type>(
         mydh.get_fe(0).n_components()),
       dh(&mydh, "FEFieldFunction"),
@@ -59,7 +59,7 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::vector_value(
-    const Point<dim>&                        p,
+    const Point<dim>& p,
     Vector<typename VectorType::value_type>& values) const
   {
     Assert(values.size() == this->n_components,
@@ -90,7 +90,7 @@ namespace Functions
 
     // Now we can find out about the point
     Quadrature<dim> quad(qp.get());
-    FEValues<dim>   fe_v(mapping, cell->get_fe(), quad, update_values);
+    FEValues<dim> fe_v(mapping, cell->get_fe(), quad, update_values);
     fe_v.reinit(cell);
     std::vector<Vector<typename VectorType::value_type>> vvalues(
       1, Vector<typename VectorType::value_type>(values.size()));
@@ -101,7 +101,7 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   typename VectorType::value_type
   FEFieldFunction<dim, DoFHandlerType, VectorType>::value(
-    const Point<dim>&  p,
+    const Point<dim>& p,
     const unsigned int comp) const
   {
     Vector<typename VectorType::value_type> values(this->n_components);
@@ -112,7 +112,7 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::vector_gradient(
-    const Point<dim>&                                             p,
+    const Point<dim>& p,
     std::vector<Tensor<1, dim, typename VectorType::value_type>>& gradients)
     const
   {
@@ -145,7 +145,7 @@ namespace Functions
 
     // Now we can find out about the point
     Quadrature<dim> quad(qp.get());
-    FEValues<dim>   fe_v(mapping, cell->get_fe(), quad, update_gradients);
+    FEValues<dim> fe_v(mapping, cell->get_fe(), quad, update_gradients);
     fe_v.reinit(cell);
 
     if(this->n_components == 1)
@@ -171,7 +171,7 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   Tensor<1, dim, typename VectorType::value_type>
   FEFieldFunction<dim, DoFHandlerType, VectorType>::gradient(
-    const Point<dim>&  p,
+    const Point<dim>& p,
     const unsigned int comp) const
   {
     std::vector<Tensor<1, dim, typename VectorType::value_type>> grads(
@@ -183,7 +183,7 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::vector_laplacian(
-    const Point<dim>&                        p,
+    const Point<dim>& p,
     Vector<typename VectorType::value_type>& values) const
   {
     Assert(values.size() == this->n_components,
@@ -214,7 +214,7 @@ namespace Functions
 
     // Now we can find out about the point
     Quadrature<dim> quad(qp.get());
-    FEValues<dim>   fe_v(mapping, cell->get_fe(), quad, update_hessians);
+    FEValues<dim> fe_v(mapping, cell->get_fe(), quad, update_hessians);
     fe_v.reinit(cell);
     std::vector<Vector<typename VectorType::value_type>> vvalues(
       1, Vector<typename VectorType::value_type>(values.size()));
@@ -225,7 +225,7 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   typename VectorType::value_type
   FEFieldFunction<dim, DoFHandlerType, VectorType>::laplacian(
-    const Point<dim>&  p,
+    const Point<dim>& p,
     const unsigned int comp) const
   {
     Vector<typename VectorType::value_type> lap(this->n_components);
@@ -239,21 +239,21 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::vector_value_list(
-    const std::vector<Point<dim>>&                        points,
+    const std::vector<Point<dim>>& points,
     std::vector<Vector<typename VectorType::value_type>>& values) const
   {
     Assert(points.size() == values.size(),
            ExcDimensionMismatch(points.size(), values.size()));
 
     std::vector<typename DoFHandlerType::active_cell_iterator> cells;
-    std::vector<std::vector<Point<dim>>>                       qpoints;
-    std::vector<std::vector<unsigned int>>                     maps;
+    std::vector<std::vector<Point<dim>>> qpoints;
+    std::vector<std::vector<unsigned int>> maps;
 
     const unsigned int n_cells
       = compute_point_locations(points, cells, qpoints, maps);
-    hp::MappingCollection<dim>   mapping_collection(mapping);
+    hp::MappingCollection<dim> mapping_collection(mapping);
     const hp::FECollection<dim>& fe_collection = dh->get_fe_collection();
-    hp::QCollection<dim>         quadrature_collection;
+    hp::QCollection<dim> quadrature_collection;
     // Create quadrature collection
     for(unsigned int i = 0; i < n_cells; ++i)
       {
@@ -285,9 +285,9 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::value_list(
-    const std::vector<Point<dim>>&                points,
+    const std::vector<Point<dim>>& points,
     std::vector<typename VectorType::value_type>& values,
-    const unsigned int                            component) const
+    const unsigned int component) const
   {
     Assert(points.size() == values.size(),
            ExcDimensionMismatch(points.size(), values.size()));
@@ -310,14 +310,14 @@ namespace Functions
            ExcDimensionMismatch(points.size(), values.size()));
 
     std::vector<typename DoFHandlerType::active_cell_iterator> cells;
-    std::vector<std::vector<Point<dim>>>                       qpoints;
-    std::vector<std::vector<unsigned int>>                     maps;
+    std::vector<std::vector<Point<dim>>> qpoints;
+    std::vector<std::vector<unsigned int>> maps;
 
     const unsigned int n_cells
       = compute_point_locations(points, cells, qpoints, maps);
-    hp::MappingCollection<dim>   mapping_collection(mapping);
+    hp::MappingCollection<dim> mapping_collection(mapping);
     const hp::FECollection<dim>& fe_collection = dh->get_fe_collection();
-    hp::QCollection<dim>         quadrature_collection;
+    hp::QCollection<dim> quadrature_collection;
     // Create quadrature collection
     for(unsigned int i = 0; i < n_cells; ++i)
       {
@@ -360,7 +360,7 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::gradient_list(
-    const std::vector<Point<dim>>&                                points,
+    const std::vector<Point<dim>>& points,
     std::vector<Tensor<1, dim, typename VectorType::value_type>>& values,
     const unsigned int component) const
   {
@@ -378,21 +378,21 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::vector_laplacian_list(
-    const std::vector<Point<dim>>&                        points,
+    const std::vector<Point<dim>>& points,
     std::vector<Vector<typename VectorType::value_type>>& values) const
   {
     Assert(points.size() == values.size(),
            ExcDimensionMismatch(points.size(), values.size()));
 
     std::vector<typename DoFHandlerType::active_cell_iterator> cells;
-    std::vector<std::vector<Point<dim>>>                       qpoints;
-    std::vector<std::vector<unsigned int>>                     maps;
+    std::vector<std::vector<Point<dim>>> qpoints;
+    std::vector<std::vector<unsigned int>> maps;
 
     const unsigned int n_cells
       = compute_point_locations(points, cells, qpoints, maps);
-    hp::MappingCollection<dim>   mapping_collection(mapping);
+    hp::MappingCollection<dim> mapping_collection(mapping);
     const hp::FECollection<dim>& fe_collection = dh->get_fe_collection();
-    hp::QCollection<dim>         quadrature_collection;
+    hp::QCollection<dim> quadrature_collection;
     // Create quadrature collection
     for(unsigned int i = 0; i < n_cells; ++i)
       {
@@ -427,9 +427,9 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::laplacian_list(
-    const std::vector<Point<dim>>&                points,
+    const std::vector<Point<dim>>& points,
     std::vector<typename VectorType::value_type>& values,
-    const unsigned int                            component) const
+    const unsigned int component) const
   {
     Assert(points.size() == values.size(),
            ExcDimensionMismatch(points.size(), values.size()));
@@ -444,10 +444,10 @@ namespace Functions
   template <int dim, typename DoFHandlerType, typename VectorType>
   unsigned int
   FEFieldFunction<dim, DoFHandlerType, VectorType>::compute_point_locations(
-    const std::vector<Point<dim>>&                              points,
+    const std::vector<Point<dim>>& points,
     std::vector<typename DoFHandlerType::active_cell_iterator>& cells,
-    std::vector<std::vector<Point<dim>>>&                       qpoints,
-    std::vector<std::vector<unsigned int>>&                     maps) const
+    std::vector<std::vector<Point<dim>>>& qpoints,
+    std::vector<std::vector<unsigned int>>& maps) const
   {
     // Calling the GridTools routine and preparing output
     auto cell_qpoint_map
@@ -466,7 +466,7 @@ namespace Functions
   boost::optional<Point<dim>>
   FEFieldFunction<dim, DoFHandlerType, VectorType>::get_reference_coordinates(
     const typename DoFHandlerType::active_cell_iterator& cell,
-    const Point<dim>&                                    point) const
+    const Point<dim>& point) const
   {
     try
       {

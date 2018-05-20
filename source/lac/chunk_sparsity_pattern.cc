@@ -49,10 +49,10 @@ ChunkSparsityPattern::ChunkSparsityPattern(const size_type m,
 }
 
 ChunkSparsityPattern::ChunkSparsityPattern(
-  const size_type               m,
-  const size_type               n,
+  const size_type m,
+  const size_type n,
   const std::vector<size_type>& row_lengths,
-  const size_type               chunk_size)
+  const size_type chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 
@@ -67,9 +67,9 @@ ChunkSparsityPattern::ChunkSparsityPattern(const size_type n,
 }
 
 ChunkSparsityPattern::ChunkSparsityPattern(
-  const size_type               m,
+  const size_type m,
   const std::vector<size_type>& row_lengths,
-  const size_type               chunk_size)
+  const size_type chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 
@@ -110,10 +110,10 @@ ChunkSparsityPattern::reinit(const size_type m,
 
 void
 ChunkSparsityPattern::reinit(
-  const size_type                                  m,
-  const size_type                                  n,
+  const size_type m,
+  const size_type n,
   const VectorSlice<const std::vector<size_type>>& row_lengths,
-  const size_type                                  chunk_size)
+  const size_type chunk_size)
 {
   Assert(row_lengths.size() == m, ExcInvalidNumber(m));
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
@@ -159,7 +159,7 @@ ChunkSparsityPattern::compress()
 template <typename SparsityPatternType>
 void
 ChunkSparsityPattern::copy_from(const SparsityPatternType& dsp,
-                                const size_type            chunk_size)
+                                const size_type chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
   this->chunk_size = chunk_size;
@@ -199,7 +199,7 @@ ChunkSparsityPattern::copy_from(const SparsityPatternType& dsp,
 template <typename number>
 void
 ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
-                                const size_type           chunk_size)
+                                const size_type chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 
@@ -231,10 +231,10 @@ ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
 }
 
 void
-ChunkSparsityPattern::reinit(const size_type               m,
-                             const size_type               n,
+ChunkSparsityPattern::reinit(const size_type m,
+                             const size_type n,
                              const std::vector<size_type>& row_lengths,
-                             const size_type               chunk_size)
+                             const size_type chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 

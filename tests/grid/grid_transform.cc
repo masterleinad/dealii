@@ -29,11 +29,11 @@ int
 main()
 {
   const unsigned int dim = 2;
-  Point<dim>         origin;
-  MappingQ<dim>      mapping(2);
+  Point<dim> origin;
+  MappingQ<dim> mapping(2);
   Triangulation<dim> tria;
-  const double       inner_radius = 1.;
-  const double       outer_radius = 5.;
+  const double inner_radius = 1.;
+  const double outer_radius = 5.;
   GridGenerator::hyper_shell(tria, origin, inner_radius, outer_radius, 8);
   // restore compatibility with the pre-9.0 version of GridGenerator by resetting manifolds
   tria.set_all_manifold_ids(numbers::flat_manifold_id);
@@ -51,7 +51,7 @@ main()
   // new center and new radius
   // of the inner circle.
   const Point<dim> n_center(0, -1);
-  const double     n_radius = 0.5;
+  const double n_radius = 0.5;
 
   Triangulation<dim>::cell_iterator cell = tria.begin_active(),
                                     endc = tria.end();
@@ -111,7 +111,7 @@ main()
   GridTools::laplace_transform(new_points, tria);
 
   std::ofstream eps_stream2("output");
-  GridOut       grid_out;
+  GridOut grid_out;
   grid_out.write_eps(tria, eps_stream2, &mapping);
 
   tria.clear();

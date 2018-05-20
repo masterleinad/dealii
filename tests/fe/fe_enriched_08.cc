@@ -98,7 +98,7 @@ test2cells(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
       triangulationL, triangulationR, triangulation);
   }
 
-  hp::DoFHandler<dim>     dof_handler(triangulation);
+  hp::DoFHandler<dim> dof_handler(triangulation);
   EnrichmentFunction<dim> function;
 
   hp::FECollection<dim> fe_collection;
@@ -122,7 +122,7 @@ test2cells(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
 #ifdef DATA_OUT_FE_ENRICHED
   // output to check if all is good:
   std::vector<Vector<double>> shape_functions;
-  std::vector<std::string>    names;
+  std::vector<std::string> names;
   for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     {
       Vector<double> shape_function;

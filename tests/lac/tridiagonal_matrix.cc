@@ -110,9 +110,9 @@ void
 check_vmult(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
-  Vector<number>     u(n);
-  Vector<number>     v(n);
-  Vector<number>     w(n);
+  Vector<number> u(n);
+  Vector<number> v(n);
+  Vector<number> w(n);
 
   for(unsigned int i = 0; i < n; ++i)
     u(i) = 1 << i;

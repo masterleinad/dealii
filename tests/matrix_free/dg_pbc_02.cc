@@ -66,14 +66,14 @@ test()
 
   tria.refine_global(8 - 2 * dim);
 
-  FE_DGQ<dim>     fe(1);
+  FE_DGQ<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   dof.distribute_mg_dofs(fe);
   ConstraintMatrix constraints;
   constraints.close();
 
-  const QGauss<1>                          quad(1);
+  const QGauss<1> quad(1);
   typename MatrixFree<dim>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
   data.mapping_update_flags_inner_faces

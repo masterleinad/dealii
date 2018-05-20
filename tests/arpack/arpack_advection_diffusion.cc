@@ -81,13 +81,13 @@ private:
   solve();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
-  SparsityPattern                   sparsity_pattern;
-  SparseMatrix<double>              stiffness_matrix, mass_matrix;
-  std::vector<Vector<double>>       arpack_vectors;
-  std::vector<Vector<double>>       eigenvectors;
+  SparsityPattern sparsity_pattern;
+  SparseMatrix<double> stiffness_matrix, mass_matrix;
+  std::vector<Vector<double>> arpack_vectors;
+  std::vector<Vector<double>> eigenvectors;
   std::vector<std::complex<double>> eigenvalues;
 
   ConstraintMatrix constraints;
@@ -162,7 +162,7 @@ EigenvalueProblem<dim>::assemble_system()
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
           const Point<dim> cur_point = fe_values.quadrature_point(q_point);
-          Tensor<1, dim>   advection;
+          Tensor<1, dim> advection;
           advection[0] = 10.;
           advection[1] = 10. * cur_point[0];
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -197,13 +197,13 @@ template <int dim>
 void
 EigenvalueProblem<dim>::solve()
 {
-  SolverControl       solver_control(dof_handler.n_dofs(), 1e-10);
+  SolverControl solver_control(dof_handler.n_dofs(), 1e-10);
   SparseDirectUMFPACK inverse;
   inverse.initialize(stiffness_matrix);
-  const unsigned int           num_arnoldi_vectors = 2 * eigenvalues.size() + 2;
+  const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 2;
   ArpackSolver::AdditionalData additional_data(num_arnoldi_vectors,
                                                ArpackSolver::largest_real_part);
-  ArpackSolver                 eigensolver(solver_control, additional_data);
+  ArpackSolver eigensolver(solver_control, additional_data);
   arpack_vectors[0] = 1.;
   eigensolver.set_initial_vector(arpack_vectors[0]);
   eigensolver.solve(stiffness_matrix,
