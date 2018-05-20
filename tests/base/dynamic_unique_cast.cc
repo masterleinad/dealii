@@ -39,7 +39,7 @@ test()
   // Ownership now rests with b, but it's still a D. Verify this:
   Assert(d.get() == nullptr, ExcInternalError());
   Assert(b.get() != nullptr, ExcInternalError());
-  Assert(dynamic_cast<D*>(b.get()) != nullptr, ExcInternalError());
+  Assert(dynamic_cast<D *>(b.get()) != nullptr, ExcInternalError());
 
   // Check that we can again upcast to D:
   std::unique_ptr<D> dd = Utilities::dynamic_unique_cast<D>(std::move(b));
@@ -62,7 +62,7 @@ invalid_test()
     {
       std::unique_ptr<D> dd = Utilities::dynamic_unique_cast<D>(std::move(b));
     }
-  catch(const std::bad_cast&)
+  catch(const std::bad_cast &)
     {
       deallog << "OK" << std::endl;
     }

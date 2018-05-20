@@ -64,8 +64,8 @@ PathSearch::initialize_classes()
   suffix_lists.insert(map_type(std::string("MESH"), v));
 }
 
-std::vector<std::string>&
-PathSearch::get_path_list(const std::string& cls)
+std::vector<std::string> &
+PathSearch::get_path_list(const std::string &cls)
 {
   if(path_lists.empty())
     initialize_classes();
@@ -80,8 +80,8 @@ PathSearch::get_path_list(const std::string& cls)
   return path_lists.find(cls)->second;
 }
 
-std::vector<std::string>&
-PathSearch::get_suffix_list(const std::string& cls)
+std::vector<std::string> &
+PathSearch::get_suffix_list(const std::string &cls)
 {
   // This is redundant. The constructor should have already called the
   // add_path function with the path_list bit...
@@ -96,7 +96,7 @@ PathSearch::get_suffix_list(const std::string& cls)
   return suffix_lists.find(cls)->second;
 }
 
-PathSearch::PathSearch(const std::string& cls, const unsigned int debug)
+PathSearch::PathSearch(const std::string &cls, const unsigned int debug)
   : cls(cls),
     my_path_list(get_path_list(cls)),
     my_suffix_list(get_suffix_list(cls)),
@@ -104,9 +104,9 @@ PathSearch::PathSearch(const std::string& cls, const unsigned int debug)
 {}
 
 std::string
-PathSearch::find(const std::string& filename,
-                 const std::string& suffix,
-                 const char*        open_mode)
+PathSearch::find(const std::string &filename,
+                 const std::string &suffix,
+                 const char *       open_mode)
 {
   std::vector<std::string>::const_iterator       path;
   const std::vector<std::string>::const_iterator endp = my_path_list.end();
@@ -128,7 +128,7 @@ PathSearch::find(const std::string& filename,
         if(debug > 1)
           deallog << "PathSearch[" << cls << "] trying " << real_name
                   << std::endl;
-        FILE* fp = fopen(real_name.c_str(), open_mode);
+        FILE *fp = fopen(real_name.c_str(), open_mode);
         if(fp != nullptr)
           {
             if(debug > 0)
@@ -147,7 +147,7 @@ PathSearch::find(const std::string& filename,
           if(debug > 1)
             deallog << "PathSearch[" << cls << "] trying " << real_name
                     << std::endl;
-          FILE* fp = fopen(real_name.c_str(), open_mode);
+          FILE *fp = fopen(real_name.c_str(), open_mode);
           if(fp != nullptr)
             {
               if(debug > 0)
@@ -163,7 +163,7 @@ PathSearch::find(const std::string& filename,
 }
 
 std::string
-PathSearch::find(const std::string& filename, const char* open_mode)
+PathSearch::find(const std::string &filename, const char *open_mode)
 {
   std::vector<std::string>::const_iterator       suffix;
   const std::vector<std::string>::const_iterator ends = my_suffix_list.end();
@@ -179,7 +179,7 @@ PathSearch::find(const std::string& filename, const char* open_mode)
         {
           return find(filename, *suffix, open_mode);
         }
-      catch(ExcFileNotFound&)
+      catch(ExcFileNotFound &)
         {
           continue;
         }
@@ -189,7 +189,7 @@ PathSearch::find(const std::string& filename, const char* open_mode)
 }
 
 void
-PathSearch::add_class(const std::string& cls)
+PathSearch::add_class(const std::string &cls)
 {
   // Make sure standard classes are
   // initialized first
@@ -204,7 +204,7 @@ PathSearch::add_class(const std::string& cls)
 }
 
 void
-PathSearch::add_path(const std::string& path, Position pos)
+PathSearch::add_path(const std::string &path, Position pos)
 {
   if(pos == back)
     my_path_list.push_back(path);
@@ -221,7 +221,7 @@ PathSearch::add_path(const std::string& path, Position pos)
 }
 
 void
-PathSearch::add_suffix(const std::string& suffix, Position pos)
+PathSearch::add_suffix(const std::string &suffix, Position pos)
 {
   if(pos == back)
     my_suffix_list.push_back(suffix);

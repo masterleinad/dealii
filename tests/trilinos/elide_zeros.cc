@@ -107,16 +107,16 @@ namespace LinearAdvectionTest
     assemble_system();
     void
     calculate_flux_terms(
-      const TriaActiveIterator<DoFCellAccessor<DoFHandler<dim>, false>>&
-                         current_cell,
-      FEFaceValues<dim>& current_face_values,
-      const TriaIterator<DoFCellAccessor<DoFHandler<dim>, false>>&
-                             neighbor_cell,
-      FEFaceValuesBase<dim>& neighbor_face_values,
-      FullMatrix<double>&    current_to_current_flux,
-      FullMatrix<double>&    current_to_neighbor_flux,
-      FullMatrix<double>&    neighbor_to_current_flux,
-      FullMatrix<double>&    neighbor_to_neighbor_flux);
+      const TriaActiveIterator<DoFCellAccessor<DoFHandler<dim>, false>>
+        &                current_cell,
+      FEFaceValues<dim> &current_face_values,
+      const TriaIterator<DoFCellAccessor<DoFHandler<dim>, false>>
+        &                    neighbor_cell,
+      FEFaceValuesBase<dim> &neighbor_face_values,
+      FullMatrix<double> &   current_to_current_flux,
+      FullMatrix<double> &   current_to_neighbor_flux,
+      FullMatrix<double> &   neighbor_to_current_flux,
+      FullMatrix<double> &   neighbor_to_neighbor_flux);
 
     const unsigned int n_mpi_processes;
     const unsigned int this_mpi_process;
@@ -183,15 +183,15 @@ namespace LinearAdvectionTest
   template <int dim>
   void
   AdvectionProblem<dim>::calculate_flux_terms(
-    const TriaActiveIterator<DoFCellAccessor<DoFHandler<dim>, false>>&
-                       current_cell,
-    FEFaceValues<dim>& current_face_values,
-    const TriaIterator<DoFCellAccessor<DoFHandler<dim>, false>>& neighbor_cell,
-    FEFaceValuesBase<dim>& neighbor_face_values,
-    FullMatrix<double>& /*current_to_current_flux*/,
-    FullMatrix<double>& /*current_to_neighbor_flux*/,
-    FullMatrix<double>& /*neighbor_to_current_flux*/,
-    FullMatrix<double>& neighbor_to_neighbor_flux)
+    const TriaActiveIterator<DoFCellAccessor<DoFHandler<dim>, false>>
+      &                current_cell,
+    FEFaceValues<dim> &current_face_values,
+    const TriaIterator<DoFCellAccessor<DoFHandler<dim>, false>> &neighbor_cell,
+    FEFaceValuesBase<dim> &neighbor_face_values,
+    FullMatrix<double> & /*current_to_current_flux*/,
+    FullMatrix<double> & /*current_to_neighbor_flux*/,
+    FullMatrix<double> & /*neighbor_to_current_flux*/,
+    FullMatrix<double> &neighbor_to_neighbor_flux)
   {
     std::vector<types::global_dof_index> current_dofs(
       current_face_values.dofs_per_cell);
@@ -317,7 +317,7 @@ namespace LinearAdvectionTest
 } // namespace LinearAdvectionTest
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   using namespace dealii;
   initlog();

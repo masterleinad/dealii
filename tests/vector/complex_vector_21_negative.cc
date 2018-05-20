@@ -22,7 +22,7 @@
 #include <vector>
 
 void
-test(Vector<std::complex<double>>& v)
+test(Vector<std::complex<double>> &v)
 {
   // set only certain elements of the
   // vector. have a bit pattern of where we
@@ -60,7 +60,7 @@ main()
       Vector<std::complex<double>> v(100);
       test(v);
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

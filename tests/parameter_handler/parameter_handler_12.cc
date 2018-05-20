@@ -29,7 +29,7 @@ check()
     {
       prm.set("test_1", "3.1415");
     }
-  catch(const ParameterHandler::ExcValueDoesNotMatchPattern&)
+  catch(const ParameterHandler::ExcValueDoesNotMatchPattern &)
     {
       deallog << "OK" << std::endl;
     }

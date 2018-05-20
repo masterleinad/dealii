@@ -28,7 +28,7 @@
 
 template <int dim>
 void
-test(std::ostream& /*out*/)
+test(std::ostream & /*out*/)
 {
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
@@ -39,7 +39,7 @@ test(std::ostream& /*out*/)
     {
       gi.read_xda(in);
     }
-  catch(const typename Triangulation<dim>::DistortedCellList& distorted_cells)
+  catch(const typename Triangulation<dim>::DistortedCellList &distorted_cells)
     {
       // ignore distorted cells
       deallog << distorted_cells.distorted_cells.size()
@@ -50,7 +50,7 @@ test(std::ostream& /*out*/)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

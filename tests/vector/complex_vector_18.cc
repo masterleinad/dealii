@@ -20,7 +20,7 @@
 #include <vector>
 
 void
-test(Vector<std::complex<double>>& v)
+test(Vector<std::complex<double>> &v)
 {
   // set some elements of the vector
   double norm = 0;
@@ -50,7 +50,7 @@ main()
       Vector<std::complex<double>> v(100);
       test(v);
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

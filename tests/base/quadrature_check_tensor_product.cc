@@ -22,27 +22,27 @@
 
 template <int dim>
 void
-check_tensor_product(const std::vector<Quadrature<dim>>& quadratures,
-                     const std::vector<std::string>&     quadrature_names)
+check_tensor_product(const std::vector<Quadrature<dim>> &quadratures,
+                     const std::vector<std::string> &    quadrature_names)
 {
   Assert(false, ExcNotImplemented());
 }
 
 template <>
 void
-check_tensor_product(const std::vector<Quadrature<1>>& quadratures,
-                     const std::vector<std::string>&   quadrature_names)
+check_tensor_product(const std::vector<Quadrature<1>> &quadratures,
+                     const std::vector<std::string> &  quadrature_names)
 {
   for(unsigned int i = 0; i < quadratures.size(); ++i)
     {
-      const Quadrature<1>& quadrature = quadratures[i];
+      const Quadrature<1> &quadrature = quadratures[i];
       if(quadrature.is_tensor_product())
         {
           deallog << "1D " << quadrature_names[i];
-          const auto& q_basis = quadrature.get_tensor_basis();
+          const auto &q_basis = quadrature.get_tensor_basis();
           AssertThrow(q_basis.size() == 1, ExcInternalError());
-          const auto& q_points  = quadrature.get_points();
-          const auto& q_weights = quadrature.get_weights();
+          const auto &q_points  = quadrature.get_points();
+          const auto &q_weights = quadrature.get_weights();
           AssertThrow(q_basis[0].size() == q_points.size(), ExcInternalError());
           for(unsigned int q = 0; q < quadrature.size(); ++q)
             {
@@ -63,19 +63,19 @@ check_tensor_product(const std::vector<Quadrature<1>>& quadratures,
 
 template <>
 void
-check_tensor_product(const std::vector<Quadrature<2>>& quadratures,
-                     const std::vector<std::string>&   quadrature_names)
+check_tensor_product(const std::vector<Quadrature<2>> &quadratures,
+                     const std::vector<std::string> &  quadrature_names)
 {
   for(unsigned int i = 0; i < quadratures.size(); ++i)
     {
-      const Quadrature<2>& quadrature = quadratures[i];
+      const Quadrature<2> &quadrature = quadratures[i];
       if(quadrature.is_tensor_product())
         {
           deallog << "2D " << quadrature_names[i];
-          const auto& q_basis = quadrature.get_tensor_basis();
+          const auto &q_basis = quadrature.get_tensor_basis();
           AssertThrow(q_basis.size() == 2, ExcInternalError());
-          const auto& q_points  = quadrature.get_points();
-          const auto& q_weights = quadrature.get_weights();
+          const auto &q_points  = quadrature.get_points();
+          const auto &q_weights = quadrature.get_weights();
           AssertThrow(q_basis[0].size() * q_basis[1].size() == q_points.size(),
                       ExcInternalError());
           unsigned int q = 0;
@@ -104,19 +104,19 @@ check_tensor_product(const std::vector<Quadrature<2>>& quadratures,
 
 template <>
 void
-check_tensor_product(const std::vector<Quadrature<3>>& quadratures,
-                     const std::vector<std::string>&   quadrature_names)
+check_tensor_product(const std::vector<Quadrature<3>> &quadratures,
+                     const std::vector<std::string> &  quadrature_names)
 {
   for(unsigned int i = 0; i < quadratures.size(); ++i)
     {
-      const Quadrature<3>& quadrature = quadratures[i];
+      const Quadrature<3> &quadrature = quadratures[i];
       if(quadrature.is_tensor_product())
         {
           deallog << "3D " << quadrature_names[i];
-          const auto& q_basis = quadrature.get_tensor_basis();
+          const auto &q_basis = quadrature.get_tensor_basis();
           AssertThrow(q_basis.size() == 3, ExcInternalError());
-          const auto& q_points  = quadrature.get_points();
-          const auto& q_weights = quadrature.get_weights();
+          const auto &q_points  = quadrature.get_points();
+          const auto &q_weights = quadrature.get_weights();
           AssertThrow(q_basis[0].size() * q_basis[1].size() * q_basis[2].size()
                         == q_points.size(),
                       ExcInternalError());
@@ -152,8 +152,8 @@ check_tensor_product(const std::vector<Quadrature<3>>& quadratures,
 
 template <int dim>
 void
-fill_quadrature_vector(std::vector<Quadrature<dim>>& quadratures,
-                       std::vector<std::string>&     quadrature_names)
+fill_quadrature_vector(std::vector<Quadrature<dim>> &quadratures,
+                       std::vector<std::string> &    quadrature_names)
 {
   quadratures.push_back(Quadrature<dim>());
   quadrature_names.push_back("Quadrature");

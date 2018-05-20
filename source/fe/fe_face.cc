@@ -135,8 +135,8 @@ FE_FaceQ<dim, spacedim>::get_name() const
 template <int dim, int spacedim>
 void
 FE_FaceQ<dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> &source_fe,
+  FullMatrix<double> &                interpolation_matrix) const
 {
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
@@ -145,9 +145,9 @@ FE_FaceQ<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FE_FaceQ<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
+  const FiniteElement<dim, spacedim> &x_source_fe,
   const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double> &                interpolation_matrix) const
 {
   // this function is similar to the respective method in FE_Q
 
@@ -158,8 +158,8 @@ FE_FaceQ<dim, spacedim>::get_subface_interpolation_matrix(
     ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_face));
 
   // see if source is a FaceQ element
-  if(const FE_FaceQ<dim, spacedim>* source_fe
-     = dynamic_cast<const FE_FaceQ<dim, spacedim>*>(&x_source_fe))
+  if(const FE_FaceQ<dim, spacedim> *source_fe
+     = dynamic_cast<const FE_FaceQ<dim, spacedim> *>(&x_source_fe))
     {
       // Make sure that the element for which the DoFs should be constrained
       // is the one with the higher polynomial degree.  Actually the procedure
@@ -218,7 +218,7 @@ FE_FaceQ<dim, spacedim>::get_subface_interpolation_matrix(
           Assert(std::fabs(sum - 1) < eps, ExcInternalError());
         }
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&x_source_fe) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&x_source_fe) != nullptr)
     {
       // nothing to do here, the FE_Nothing has no degrees of freedom anyway
     }
@@ -259,7 +259,7 @@ FE_FaceQ<dim, spacedim>::hp_constraints_are_implemented() const
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_FaceQ<dim, spacedim>::hp_vertex_dof_identities(
-  const FiniteElement<dim, spacedim>& /*fe_other*/) const
+  const FiniteElement<dim, spacedim> & /*fe_other*/) const
 {
   // this element is always discontinuous at vertices
   return std::vector<std::pair<unsigned int, unsigned int>>();
@@ -268,7 +268,7 @@ FE_FaceQ<dim, spacedim>::hp_vertex_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_FaceQ<dim, spacedim>::hp_line_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
   Assert(dim >= 2, ExcInternalError());
 
@@ -278,8 +278,8 @@ FE_FaceQ<dim, spacedim>::hp_line_dof_identities(
   else
     {
       // this is similar to the FE_Q_Base class
-      if(const FE_FaceQ<dim, spacedim>* fe_q_other
-         = dynamic_cast<const FE_FaceQ<dim, spacedim>*>(&fe_other))
+      if(const FE_FaceQ<dim, spacedim> *fe_q_other
+         = dynamic_cast<const FE_FaceQ<dim, spacedim> *>(&fe_other))
         {
           // dofs are located along lines, so two dofs are identical if they are
           // located at identical positions.
@@ -292,9 +292,9 @@ FE_FaceQ<dim, spacedim>::hp_line_dof_identities(
 
           std::vector<std::pair<unsigned int, unsigned int>> identities;
 
-          const std::vector<unsigned int>& index_map_inverse
+          const std::vector<unsigned int> &index_map_inverse
             = this->poly_space.get_numbering_inverse();
-          const std::vector<unsigned int>& index_map_inverse_other
+          const std::vector<unsigned int> &index_map_inverse_other
             = fe_q_other->poly_space.get_numbering_inverse();
 
           for(unsigned int i = 0; i < p + 1; ++i)
@@ -308,7 +308,7 @@ FE_FaceQ<dim, spacedim>::hp_line_dof_identities(
 
           return identities;
         }
-      else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+      else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
         {
           // the FE_Nothing has no degrees of freedom, so there are no
           // equivalencies to be recorded
@@ -336,7 +336,7 @@ FE_FaceQ<dim, spacedim>::hp_line_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_FaceQ<dim, spacedim>::hp_quad_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
   Assert(dim >= 3, ExcInternalError());
 
@@ -346,8 +346,8 @@ FE_FaceQ<dim, spacedim>::hp_quad_dof_identities(
   else
     {
       // this is similar to the FE_Q_Base class
-      if(const FE_FaceQ<dim, spacedim>* fe_q_other
-         = dynamic_cast<const FE_FaceQ<dim, spacedim>*>(&fe_other))
+      if(const FE_FaceQ<dim, spacedim> *fe_q_other
+         = dynamic_cast<const FE_FaceQ<dim, spacedim> *>(&fe_other))
         {
           // this works exactly like the line case above, except that now we have
           // to have two indices i1, i2 and j1, j2 to characterize the dofs on the
@@ -359,9 +359,9 @@ FE_FaceQ<dim, spacedim>::hp_quad_dof_identities(
 
           std::vector<std::pair<unsigned int, unsigned int>> identities;
 
-          const std::vector<unsigned int>& index_map_inverse
+          const std::vector<unsigned int> &index_map_inverse
             = this->poly_space.get_numbering_inverse();
-          const std::vector<unsigned int>& index_map_inverse_other
+          const std::vector<unsigned int> &index_map_inverse_other
             = fe_q_other->poly_space.get_numbering_inverse();
 
           std::vector<std::pair<unsigned int, unsigned int>> identities_1d;
@@ -383,7 +383,7 @@ FE_FaceQ<dim, spacedim>::hp_quad_dof_identities(
 
           return identities;
         }
-      else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+      else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
         {
           // the FE_Nothing has no degrees of freedom, so there are no
           // equivalencies to be recorded
@@ -411,10 +411,10 @@ FE_FaceQ<dim, spacedim>::hp_quad_dof_identities(
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_FaceQ<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
-  if(const FE_FaceQ<dim, spacedim>* fe_q_other
-     = dynamic_cast<const FE_FaceQ<dim, spacedim>*>(&fe_other))
+  if(const FE_FaceQ<dim, spacedim> *fe_q_other
+     = dynamic_cast<const FE_FaceQ<dim, spacedim> *>(&fe_other))
     {
       if(this->degree < fe_q_other->degree)
         return FiniteElementDomination::this_element_dominates;
@@ -423,8 +423,8 @@ FE_FaceQ<dim, spacedim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if(const FE_Nothing<dim> *fe_nothing
+          = dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if(fe_nothing->is_dominating())
         {
@@ -456,8 +456,8 @@ FE_FaceQ<dim, spacedim>::get_constant_modes() const
 template <int dim, int spacedim>
 void
 FE_FaceQ<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
-  const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  const std::vector<Vector<double>> &support_point_values,
+  std::vector<double> &              nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());
@@ -516,8 +516,8 @@ FE_FaceQ<1, spacedim>::get_name() const
 template <int spacedim>
 void
 FE_FaceQ<1, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<1, spacedim>& source_fe,
-  FullMatrix<double>&               interpolation_matrix) const
+  const FiniteElement<1, spacedim> &source_fe,
+  FullMatrix<double> &              interpolation_matrix) const
 {
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
@@ -526,9 +526,9 @@ FE_FaceQ<1, spacedim>::get_face_interpolation_matrix(
 template <int spacedim>
 void
 FE_FaceQ<1, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<1, spacedim>& x_source_fe,
+  const FiniteElement<1, spacedim> &x_source_fe,
   const unsigned int /*subface*/,
-  FullMatrix<double>& interpolation_matrix) const
+  FullMatrix<double> &interpolation_matrix) const
 {
   (void) x_source_fe;
   Assert(interpolation_matrix.n() == this->dofs_per_face,
@@ -567,7 +567,7 @@ FE_FaceQ<1, spacedim>::hp_constraints_are_implemented() const
 template <int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_FaceQ<1, spacedim>::hp_vertex_dof_identities(
-  const FiniteElement<1, spacedim>& /*fe_other*/) const
+  const FiniteElement<1, spacedim> & /*fe_other*/) const
 {
   // this element is always discontinuous at vertices
   return std::vector<std::pair<unsigned int, unsigned int>>(
@@ -577,7 +577,7 @@ FE_FaceQ<1, spacedim>::hp_vertex_dof_identities(
 template <int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_FaceQ<1, spacedim>::hp_line_dof_identities(
-  const FiniteElement<1, spacedim>&) const
+  const FiniteElement<1, spacedim> &) const
 {
   // this element is continuous only for the highest dimensional bounding object
   return std::vector<std::pair<unsigned int, unsigned int>>();
@@ -586,7 +586,7 @@ FE_FaceQ<1, spacedim>::hp_line_dof_identities(
 template <int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_FaceQ<1, spacedim>::hp_quad_dof_identities(
-  const FiniteElement<1, spacedim>&) const
+  const FiniteElement<1, spacedim> &) const
 {
   // this element is continuous only for the highest dimensional bounding object
   return std::vector<std::pair<unsigned int, unsigned int>>();
@@ -595,7 +595,7 @@ FE_FaceQ<1, spacedim>::hp_quad_dof_identities(
 template <int spacedim>
 FiniteElementDomination::Domination
 FE_FaceQ<1, spacedim>::compare_for_face_domination(
-  const FiniteElement<1, spacedim>& /*fe_other*/) const
+  const FiniteElement<1, spacedim> & /*fe_other*/) const
 {
   return FiniteElementDomination::no_requirements;
 }
@@ -629,17 +629,18 @@ FE_FaceQ<1, spacedim>::requires_update_flags(const UpdateFlags flags) const
 template <int spacedim>
 void
 FE_FaceQ<1, spacedim>::fill_fe_values(
-  const typename Triangulation<1, spacedim>::cell_iterator&,
+  const typename Triangulation<1, spacedim>::cell_iterator &,
   const CellSimilarity::Similarity,
-  const Quadrature<1>&,
-  const Mapping<1, spacedim>&,
-  const typename Mapping<1, spacedim>::InternalDataBase&,
+  const Quadrature<1> &,
+  const Mapping<1, spacedim> &,
+  const typename Mapping<1, spacedim>::InternalDataBase &,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<1,
-                                                                     spacedim>&,
-  const typename FiniteElement<1, spacedim>::InternalDataBase&,
+                                                                     spacedim>
+    &,
+  const typename FiniteElement<1, spacedim>::InternalDataBase &,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1,
-                                                                     spacedim>&)
-  const
+                                                                     spacedim>
+    &) const
 {
   // Do nothing, since we do not have values in the interior
 }
@@ -647,17 +648,18 @@ FE_FaceQ<1, spacedim>::fill_fe_values(
 template <int spacedim>
 void
 FE_FaceQ<1, spacedim>::fill_fe_face_values(
-  const typename Triangulation<1, spacedim>::cell_iterator&,
+  const typename Triangulation<1, spacedim>::cell_iterator &,
   const unsigned int face,
-  const Quadrature<0>&,
-  const Mapping<1, spacedim>&,
-  const typename Mapping<1, spacedim>::InternalDataBase&,
+  const Quadrature<0> &,
+  const Mapping<1, spacedim> &,
+  const typename Mapping<1, spacedim>::InternalDataBase &,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<1,
-                                                                     spacedim>&,
-  const typename FiniteElement<1, spacedim>::InternalDataBase& fe_internal,
+                                                                     spacedim>
+    &,
+  const typename FiniteElement<1, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1,
-                                                                     spacedim>&
-    output_data) const
+                                                                     spacedim>
+    &output_data) const
 {
   const unsigned int foffset = face;
   if(fe_internal.update_each & update_values)
@@ -671,18 +673,19 @@ FE_FaceQ<1, spacedim>::fill_fe_face_values(
 template <int spacedim>
 void
 FE_FaceQ<1, spacedim>::fill_fe_subface_values(
-  const typename Triangulation<1, spacedim>::cell_iterator&,
+  const typename Triangulation<1, spacedim>::cell_iterator &,
   const unsigned int,
   const unsigned int,
-  const Quadrature<0>&,
-  const Mapping<1, spacedim>&,
-  const typename Mapping<1, spacedim>::InternalDataBase&,
+  const Quadrature<0> &,
+  const Mapping<1, spacedim> &,
+  const typename Mapping<1, spacedim>::InternalDataBase &,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<1,
-                                                                     spacedim>&,
-  const typename FiniteElement<1, spacedim>::InternalDataBase&,
+                                                                     spacedim>
+    &,
+  const typename FiniteElement<1, spacedim>::InternalDataBase &,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1,
-                                                                     spacedim>&)
-  const
+                                                                     spacedim>
+    &) const
 {
   Assert(false, ExcMessage("There are no sub-face values to fill in 1D!"));
 }
@@ -755,10 +758,10 @@ FE_FaceP<dim, spacedim>::hp_constraints_are_implemented() const
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_FaceP<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
-  if(const FE_FaceP<dim, spacedim>* fe_q_other
-     = dynamic_cast<const FE_FaceP<dim, spacedim>*>(&fe_other))
+  if(const FE_FaceP<dim, spacedim> *fe_q_other
+     = dynamic_cast<const FE_FaceP<dim, spacedim> *>(&fe_other))
     {
       if(this->degree < fe_q_other->degree)
         return FiniteElementDomination::this_element_dominates;
@@ -767,8 +770,8 @@ FE_FaceP<dim, spacedim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if(const FE_Nothing<dim> *fe_nothing
+          = dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if(fe_nothing->is_dominating())
         {
@@ -789,8 +792,8 @@ FE_FaceP<dim, spacedim>::compare_for_face_domination(
 template <int dim, int spacedim>
 void
 FE_FaceP<dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> &source_fe,
+  FullMatrix<double> &                interpolation_matrix) const
 {
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
@@ -799,9 +802,9 @@ FE_FaceP<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
+  const FiniteElement<dim, spacedim> &x_source_fe,
   const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double> &                interpolation_matrix) const
 {
   // this function is similar to the respective method in FE_Q
 
@@ -812,8 +815,8 @@ FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
     ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_face));
 
   // see if source is a FaceP element
-  if(const FE_FaceP<dim, spacedim>* source_fe
-     = dynamic_cast<const FE_FaceP<dim, spacedim>*>(&x_source_fe))
+  if(const FE_FaceP<dim, spacedim> *source_fe
+     = dynamic_cast<const FE_FaceP<dim, spacedim> *>(&x_source_fe))
     {
       // Make sure that the element for which the DoFs should be constrained
       // is the one with the higher polynomial degree.  Actually the procedure
@@ -886,7 +889,7 @@ FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
             }
         }
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&x_source_fe) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&x_source_fe) != nullptr)
     {
       // nothing to do here, the FE_Nothing has no degrees of freedom anyway
     }

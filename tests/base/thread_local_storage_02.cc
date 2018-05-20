@@ -33,7 +33,7 @@ struct X
     deallog << "Creating" << std::endl;
     Assert(n == 42, ExcInternalError());
   };
-  X(const X&)
+  X(const X &)
   {
     deallog << "Copying" << std::endl;
   };
@@ -44,7 +44,7 @@ struct X
   int i;
 };
 
-Threads::ThreadLocalStorage<X>* tls_data;
+Threads::ThreadLocalStorage<X> *tls_data;
 
 static std::atomic<int> counter(0);
 

@@ -42,18 +42,18 @@ public:
   TestIntegrator(){};
 
   void
-  cell(MeshWorker::DoFInfo<dim, spacedim>&                  dinfo,
-       typename MeshWorker::IntegrationInfo<dim, spacedim>& info) const {};
+  cell(MeshWorker::DoFInfo<dim, spacedim> &                 dinfo,
+       typename MeshWorker::IntegrationInfo<dim, spacedim> &info) const {};
 
   void
-  boundary(MeshWorker::DoFInfo<dim, spacedim>&                  dinfo,
-           typename MeshWorker::IntegrationInfo<dim, spacedim>& info) const {};
+  boundary(MeshWorker::DoFInfo<dim, spacedim> &                 dinfo,
+           typename MeshWorker::IntegrationInfo<dim, spacedim> &info) const {};
 
   void
-  face(MeshWorker::DoFInfo<dim, spacedim>&                  dinfo1,
-       MeshWorker::DoFInfo<dim, spacedim>&                  dinfo2,
-       typename MeshWorker::IntegrationInfo<dim, spacedim>& info1,
-       typename MeshWorker::IntegrationInfo<dim, spacedim>& info2) const {};
+  face(MeshWorker::DoFInfo<dim, spacedim> &                 dinfo1,
+       MeshWorker::DoFInfo<dim, spacedim> &                 dinfo2,
+       typename MeshWorker::IntegrationInfo<dim, spacedim> &info1,
+       typename MeshWorker::IntegrationInfo<dim, spacedim> &info2) const {};
 };
 
 template <int dim, int spacedim>

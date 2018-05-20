@@ -30,7 +30,7 @@
 
 template <int dim>
 void
-test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
+test(const Triangulation<dim> &tr, const FiniteElement<dim> &fe)
 {
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);

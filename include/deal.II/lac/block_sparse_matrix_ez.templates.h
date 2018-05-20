@@ -37,8 +37,8 @@ BlockSparseMatrixEZ<number>::BlockSparseMatrixEZ(const unsigned int rows,
 //  };
 
 template <typename number>
-BlockSparseMatrixEZ<number>&
-BlockSparseMatrixEZ<number>::operator=(const BlockSparseMatrixEZ<number>& m)
+BlockSparseMatrixEZ<number> &
+BlockSparseMatrixEZ<number>::operator=(const BlockSparseMatrixEZ<number> &m)
 {
   Assert(n_block_rows() == m.n_block_rows(),
          ExcDimensionMismatch(n_block_rows(), m.n_block_rows()));
@@ -55,7 +55,7 @@ BlockSparseMatrixEZ<number>::operator=(const BlockSparseMatrixEZ<number>& m)
 }
 
 template <typename number>
-BlockSparseMatrixEZ<number>&
+BlockSparseMatrixEZ<number> &
 BlockSparseMatrixEZ<number>::operator=(const double d)
 {
   (void) d;
@@ -70,7 +70,7 @@ BlockSparseMatrixEZ<number>::operator=(const double d)
 
 template <typename number>
 BlockSparseMatrixEZ<number>::BlockSparseMatrixEZ(
-  const BlockSparseMatrixEZ<number>& m)
+  const BlockSparseMatrixEZ<number> &m)
   : Subscriptor(m),
     row_indices(m.row_indices),
     column_indices(m.column_indices),

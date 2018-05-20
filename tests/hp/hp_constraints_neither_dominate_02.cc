@@ -76,12 +76,12 @@ template <int dim>
 struct less_than_key
 {
   inline bool
-  operator()(const std::pair<Point<dim>, Vector<double>>& pair1,
-             const std::pair<Point<dim>, Vector<double>>& pair2)
+  operator()(const std::pair<Point<dim>, Vector<double>> &pair1,
+             const std::pair<Point<dim>, Vector<double>> &pair2)
   {
     const double      precision = 1e-3;
-    const Point<dim>& p1        = pair1.first;
-    const Point<dim>& p2        = pair2.first;
+    const Point<dim> &p1        = pair1.first;
+    const Point<dim> &p2        = pair2.first;
 
     for(unsigned int d = 0; d < dim; d++)
       {
@@ -101,10 +101,10 @@ struct less_than_key
 //  ------------
 template <int dim>
 void
-test2cells(const FiniteElement<dim>& fe_0,
-           const FiniteElement<dim>& fe_1,
-           const FiniteElement<dim>& fe_2,
-           const FiniteElement<dim>& fe_common)
+test2cells(const FiniteElement<dim> &fe_0,
+           const FiniteElement<dim> &fe_1,
+           const FiniteElement<dim> &fe_2,
+           const FiniteElement<dim> &fe_common)
 {
   const unsigned int n_comp = fe_0.n_components();
   Triangulation<dim> triangulation;
@@ -148,7 +148,7 @@ test2cells(const FiniteElement<dim>& fe_0,
       cell != dof_handler.end();
       ++cell)
     {
-      const Point<dim>& center = cell->center();
+      const Point<dim> &center = cell->center();
       if(center[0] > 0.0) // right cell
         cell->set_active_fe_index(2);
       else if(center[1] > 0.5)
@@ -246,7 +246,7 @@ test2cells(const FiniteElement<dim>& fe_0,
           {
             // deallog << "cell="<<cell<<" face="<<f<<std::endl;
             fe_face_values_hp.reinit(cell, f);
-            const FEFaceValues<dim>& fe_face_values
+            const FEFaceValues<dim> &fe_face_values
               = fe_face_values_hp.get_present_fe_values();
 
             const unsigned int n_q_points = fe_face_values.n_quadrature_points;
@@ -254,7 +254,7 @@ test2cells(const FiniteElement<dim>& fe_0,
 
             fe_face_values.get_function_values(solution, values);
 
-            const std::vector<dealii::Point<dim>>& q_points
+            const std::vector<dealii::Point<dim>> &q_points
               = fe_face_values.get_quadrature_points();
 
             for(unsigned int q = 0; q < n_q_points; q++)
@@ -290,8 +290,8 @@ test2cells(const FiniteElement<dim>& fe_0,
     pairs_point_value.begin(), pairs_point_value.end(), less_than_key<dim>());
   for(unsigned int p = 0; p < pairs_point_value.size(); p++)
     {
-      const Point<dim>&     pt  = pairs_point_value[p].first;
-      const Vector<double>& val = pairs_point_value[p].second;
+      const Point<dim> &    pt  = pairs_point_value[p].first;
+      const Vector<double> &val = pairs_point_value[p].second;
 
       Assert(val.size() == n_comp, ExcInternalError());
       deallog << "@" << pt << " u = {" << val[0];
@@ -303,7 +303,7 @@ test2cells(const FiniteElement<dim>& fe_0,
   dof_handler.clear();
 }
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -360,7 +360,7 @@ main(int argc, char** argv)
           FESystem<dim>(FE_Q<dim>(1), 1, FE_Q<dim>(1), 1, FE_Q<dim>(1), 1));
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

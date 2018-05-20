@@ -24,7 +24,9 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>&, const Vector<double>&, const Vector<double>&)
+check_this(const DoFHandler<dim> &,
+           const Vector<double> &,
+           const Vector<double> &)
 {
   // 3d would generate 4d data, which
   // we don't presently support
@@ -35,9 +37,9 @@ check_this(const DoFHandler<dim>&, const Vector<double>&, const Vector<double>&)
 
 template <>
 void
-check_this<1>(const DoFHandler<1>&  dof_handler,
-              const Vector<double>& v_node,
-              const Vector<double>& v_cell)
+check_this<1>(const DoFHandler<1> & dof_handler,
+              const Vector<double> &v_node,
+              const Vector<double> &v_cell)
 {
   const unsigned int dim = 1;
 

@@ -51,7 +51,7 @@ std::ofstream logfile("output");
 
 template <int dim>
 void
-run(bool random_p, unsigned int* indx)
+run(bool random_p, unsigned int *indx)
 {
   Triangulation<dim>    triangulation;
   hp::FECollection<dim> fe;
@@ -118,7 +118,7 @@ run(bool random_p, unsigned int* indx)
 
 template <int dim>
 void
-run_test(unsigned int* indx)
+run_test(unsigned int *indx)
 {
   run<dim>(true, indx);
   run<dim>(false, indx);

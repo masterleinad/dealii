@@ -78,8 +78,8 @@ namespace Functions
      * interpolation is to be done @p interpolation_points and a set of function
      * values @p interpolation_values .
      */
-    CSpline(const std::vector<double>& interpolation_points,
-            const std::vector<double>& interpolation_values);
+    CSpline(const std::vector<double> &interpolation_points,
+            const std::vector<double> &interpolation_values);
 
     /**
      * Virtual destructor.
@@ -87,19 +87,19 @@ namespace Functions
     virtual ~CSpline() override;
 
     virtual double
-    value(const Point<dim>&  point,
+    value(const Point<dim> & point,
           const unsigned int component = 0) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim>&  p,
+    gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
     virtual SymmetricTensor<2, dim>
-    hessian(const Point<dim>&  p,
+    hessian(const Point<dim> & p,
             const unsigned int component = 0) const override;
 
     virtual double
-    laplacian(const Point<dim>&  p,
+    laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
     std::size_t
@@ -119,12 +119,12 @@ namespace Functions
     /**
      * GSL accelerator for spline interpolation
      */
-    gsl_interp_accel* acc;
+    gsl_interp_accel *acc;
 
     /**
      * GSL cubic spline interpolator
      */
-    gsl_spline* cspline;
+    gsl_spline *cspline;
 
     /**
      * A mutex for accelerator object.

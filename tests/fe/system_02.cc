@@ -28,7 +28,7 @@
 
 template <int dim>
 void
-check(FESystem<dim>& fe)
+check(FESystem<dim> &fe)
 {
   deallog << fe.get_name() << std::endl;
   deallog << "components: " << fe.n_components() << std::endl;

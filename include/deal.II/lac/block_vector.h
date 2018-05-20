@@ -102,13 +102,13 @@ public:
    * Copy Constructor. Dimension set to that of @p v, all components are
    * copied from @p v.
    */
-  BlockVector(const BlockVector<Number>& V);
+  BlockVector(const BlockVector<Number> &V);
 
   /**
    * Move constructor. Creates a new vector by stealing the internal data of
    * the given argument vector.
    */
-  BlockVector(BlockVector<Number>&& /*v*/) noexcept = default;
+  BlockVector(BlockVector<Number> && /*v*/) noexcept = default;
 
   /**
    * Copy constructor taking a BlockVector of another data type. This will
@@ -123,27 +123,27 @@ public:
    * a broken compiler during configuration.
    */
   template <typename OtherNumber>
-  explicit BlockVector(const BlockVector<OtherNumber>& v);
+  explicit BlockVector(const BlockVector<OtherNumber> &v);
 
 #ifdef DEAL_II_WITH_TRILINOS
   /**
    * A copy constructor taking a (parallel) Trilinos block vector and copying
    * it into the deal.II own format.
    */
-  BlockVector(const TrilinosWrappers::MPI::BlockVector& v);
+  BlockVector(const TrilinosWrappers::MPI::BlockVector &v);
 
 #endif
   /**
    * Constructor. Set the number of blocks to <tt>block_sizes.size()</tt> and
    * initialize each block with <tt>block_sizes[i]</tt> zero elements.
    */
-  BlockVector(const std::vector<size_type>& block_sizes);
+  BlockVector(const std::vector<size_type> &block_sizes);
 
   /**
    * Constructor. Initialize vector to the structure found in the BlockIndices
    * argument.
    */
-  BlockVector(const BlockIndices& block_indices);
+  BlockVector(const BlockIndices &block_indices);
 
   /**
    * Constructor. Set the number of blocks to <tt>block_sizes.size()</tt>.
@@ -155,7 +155,7 @@ public:
    * blocks.
    */
   template <typename InputIterator>
-  BlockVector(const std::vector<size_type>& block_sizes,
+  BlockVector(const std::vector<size_type> &block_sizes,
               const InputIterator           first,
               const InputIterator           end);
 
@@ -182,22 +182,22 @@ public:
    * Copy operator: fill all components of the vector with the given scalar
    * value.
    */
-  BlockVector&
+  BlockVector &
   operator=(const value_type s);
 
   /**
    * Copy operator for arguments of the same type. Resize the present vector
    * if necessary.
    */
-  BlockVector<Number>&
-  operator=(const BlockVector<Number>& v);
+  BlockVector<Number> &
+  operator=(const BlockVector<Number> &v);
 
   /**
    * Move the given vector. This operator replaces the present vector with
    * the contents of the given argument vector.
    */
-  BlockVector<Number>&
-  operator=(BlockVector<Number>&& /*v*/)
+  BlockVector<Number> &
+  operator=(BlockVector<Number> && /*v*/)
     = default; // NOLINT
 
   /**
@@ -205,22 +205,22 @@ public:
    * present vector if necessary.
    */
   template <class Number2>
-  BlockVector<Number>&
-  operator=(const BlockVector<Number2>& V);
+  BlockVector<Number> &
+  operator=(const BlockVector<Number2> &V);
 
   /**
    * Copy a regular vector into a block vector.
    */
-  BlockVector<Number>&
-  operator=(const Vector<Number>& V);
+  BlockVector<Number> &
+  operator=(const Vector<Number> &V);
 
 #ifdef DEAL_II_WITH_TRILINOS
   /**
    * A copy constructor from a Trilinos block vector to a deal.II block
    * vector.
    */
-  BlockVector<Number>&
-  operator=(const TrilinosWrappers::MPI::BlockVector& V);
+  BlockVector<Number> &
+  operator=(const TrilinosWrappers::MPI::BlockVector &V);
 #endif
 
   /**
@@ -257,7 +257,7 @@ public:
    * yield unpredictable results since they may be routed to the wrong block.
    */
   void
-  reinit(const std::vector<size_type>& block_sizes,
+  reinit(const std::vector<size_type> &block_sizes,
          const bool                    omit_zeroing_entries = false);
 
   /**
@@ -270,7 +270,7 @@ public:
    * If <tt>omit_zeroing_entries==false</tt>, the vector is filled with zeros.
    */
   void
-  reinit(const BlockIndices& block_indices,
+  reinit(const BlockIndices &block_indices,
          const bool          omit_zeroing_entries = false);
 
   /**
@@ -288,7 +288,7 @@ public:
    */
   template <typename Number2>
   void
-  reinit(const BlockVector<Number2>& V,
+  reinit(const BlockVector<Number2> &V,
          const bool                  omit_zeroing_entries = false);
 
   /**
@@ -297,7 +297,7 @@ public:
    */
   template <class BlockVector2>
   void
-  scale(const BlockVector2& v);
+  scale(const BlockVector2 &v);
 
   /**
    * Swap the contents of this vector and the other vector <tt>v</tt>. One
@@ -311,13 +311,13 @@ public:
    * <tt>u.swap(v)</tt>, again in analogy to standard functions.
    */
   void
-  swap(BlockVector<Number>& v);
+  swap(BlockVector<Number> &v);
 
   /**
    * Print to a stream.
    */
   void
-  print(std::ostream&      out,
+  print(std::ostream &     out,
         const unsigned int precision  = 3,
         const bool         scientific = true,
         const bool         across     = true) const;
@@ -328,7 +328,7 @@ public:
    * computers using a different operating system or number format.
    */
   void
-  block_write(std::ostream& out) const;
+  block_write(std::ostream &out) const;
 
   /**
    * Read a vector en block from a file. This is done using the inverse
@@ -342,7 +342,7 @@ public:
    * file, but not more.
    */
   void
-  block_read(std::istream& in);
+  block_read(std::istream &in);
 
   /**
    * @addtogroup Exceptions
@@ -363,7 +363,7 @@ public:
 
 template <typename Number>
 template <typename InputIterator>
-BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes,
+BlockVector<Number>::BlockVector(const std::vector<size_type> &block_sizes,
                                  const InputIterator           first,
                                  const InputIterator           end)
 {
@@ -384,7 +384,7 @@ BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes,
 }
 
 template <typename Number>
-inline BlockVector<Number>&
+inline BlockVector<Number> &
 BlockVector<Number>::operator=(const value_type s)
 {
   AssertIsFinite(s);
@@ -394,8 +394,8 @@ BlockVector<Number>::operator=(const value_type s)
 }
 
 template <typename Number>
-inline BlockVector<Number>&
-BlockVector<Number>::operator=(const BlockVector<Number>& v)
+inline BlockVector<Number> &
+BlockVector<Number>::operator=(const BlockVector<Number> &v)
 {
   reinit(v, true);
   BaseClass::operator=(v);
@@ -403,8 +403,8 @@ BlockVector<Number>::operator=(const BlockVector<Number>& v)
 }
 
 template <typename Number>
-inline BlockVector<Number>&
-BlockVector<Number>::operator=(const Vector<Number>& v)
+inline BlockVector<Number> &
+BlockVector<Number>::operator=(const Vector<Number> &v)
 {
   BaseClass::operator=(v);
   return *this;
@@ -412,8 +412,8 @@ BlockVector<Number>::operator=(const Vector<Number>& v)
 
 template <typename Number>
 template <typename Number2>
-inline BlockVector<Number>&
-BlockVector<Number>::operator=(const BlockVector<Number2>& v)
+inline BlockVector<Number> &
+BlockVector<Number>::operator=(const BlockVector<Number2> &v)
 {
   reinit(v, true);
   BaseClass::operator=(v);
@@ -431,7 +431,7 @@ BlockVector<Number>::compress(::dealii::VectorOperation::values operation)
 template <typename Number>
 template <class BlockVector2>
 void
-BlockVector<Number>::scale(const BlockVector2& v)
+BlockVector<Number>::scale(const BlockVector2 &v)
 {
   BaseClass::scale(v);
 }
@@ -448,7 +448,7 @@ BlockVector<Number>::scale(const BlockVector2& v)
  */
 template <typename Number>
 inline void
-swap(BlockVector<Number>& u, BlockVector<Number>& v)
+swap(BlockVector<Number> &u, BlockVector<Number> &v)
 {
   u.swap(v);
 }
@@ -470,8 +470,8 @@ namespace internal
     public:
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix&        matrix,
-                          BlockVector<number>& v,
+      reinit_range_vector(const Matrix &       matrix,
+                          BlockVector<number> &v,
                           bool                 omit_zeroing_entries)
       {
         v.reinit(matrix.get_row_indices(), omit_zeroing_entries);
@@ -479,8 +479,8 @@ namespace internal
 
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix&        matrix,
-                           BlockVector<number>& v,
+      reinit_domain_vector(const Matrix &       matrix,
+                           BlockVector<number> &v,
                            bool                 omit_zeroing_entries)
       {
         v.reinit(matrix.get_column_indices(), omit_zeroing_entries);

@@ -38,13 +38,13 @@ namespace internal
     ParallelData<dim, spacedim>::ParallelData(
       const unsigned int               n_datasets,
       const unsigned int               n_subdivisions,
-      const std::vector<unsigned int>& n_postprocessor_outputs,
-      const Mapping<dim, spacedim>&    mapping,
+      const std::vector<unsigned int> &n_postprocessor_outputs,
+      const Mapping<dim, spacedim> &   mapping,
       const std::vector<
-        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                                                    finite_elements,
+        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
+        &                                           finite_elements,
       const UpdateFlags                             update_flags,
-      const std::vector<std::vector<unsigned int>>& cell_to_patch_index_map)
+      const std::vector<std::vector<unsigned int>> &cell_to_patch_index_map)
       : ParallelDataBase<dim, spacedim>(n_datasets,
                                         n_subdivisions,
                                         n_postprocessor_outputs,
@@ -60,12 +60,12 @@ namespace internal
 template <int dim, typename DoFHandlerType>
 void
 DataOut<dim, DoFHandlerType>::build_one_patch(
-  const std::pair<cell_iterator, unsigned int>* cell_and_index,
-  internal::DataOutImplementation::ParallelData<
-    DoFHandlerType::dimension,
-    DoFHandlerType::space_dimension>& scratch_data,
-  const unsigned int                  n_subdivisions,
-  const CurvedCellRegion              curved_cell_region)
+  const std::pair<cell_iterator, unsigned int> *cell_and_index,
+  internal::DataOutImplementation::ParallelData<DoFHandlerType::dimension,
+                                                DoFHandlerType::space_dimension>
+    &                    scratch_data,
+  const unsigned int     n_subdivisions,
+  const CurvedCellRegion curved_cell_region)
 {
   // first create the output object that we will write into
   ::dealii::DataOutBase::Patch<DoFHandlerType::dimension,
@@ -90,9 +90,8 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
   // create DoFHandlerType::active_cell_iterator and initialize FEValues
   scratch_data.reinit_all_fe_values(this->dof_data, cell_and_index->first);
 
-  const FEValuesBase<DoFHandlerType::dimension,
-                     DoFHandlerType::space_dimension>& fe_patch_values
-    = scratch_data.get_present_fe_values(0);
+  const FEValuesBase<DoFHandlerType::dimension, DoFHandlerType::space_dimension>
+    &fe_patch_values = scratch_data.get_present_fe_values(0);
 
   const unsigned int n_q_points = fe_patch_values.n_quadrature_points;
 
@@ -118,7 +117,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
 
       // then resize the patch.data member in order to have enough memory for
       // the quadrature points as well, and copy the quadrature points there
-      const std::vector<Point<DoFHandlerType::space_dimension>>& q_points
+      const std::vector<Point<DoFHandlerType::space_dimension>> &q_points
         = fe_patch_values.get_quadrature_points();
 
       patch.data.reinit(
@@ -144,15 +143,13 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
       for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)
         {
           const FEValuesBase<DoFHandlerType::dimension,
-                             DoFHandlerType::space_dimension>&
-            this_fe_patch_values
-            = scratch_data.get_present_fe_values(dataset);
+                             DoFHandlerType::space_dimension>
+            &this_fe_patch_values = scratch_data.get_present_fe_values(dataset);
           const unsigned int n_components
             = this_fe_patch_values.get_fe().n_components();
 
-          const DataPostprocessor<DoFHandlerType::space_dimension>*
-            postprocessor
-            = this->dof_data[dataset]->postprocessor;
+          const DataPostprocessor<DoFHandlerType::space_dimension>
+            *postprocessor = this->dof_data[dataset]->postprocessor;
 
           if(postprocessor != nullptr)
             {
@@ -424,8 +421,8 @@ DataOut<dim, DoFHandlerType>::build_patches(const unsigned int n_subdivisions)
 template <int dim, typename DoFHandlerType>
 void
 DataOut<dim, DoFHandlerType>::build_patches(
-  const Mapping<DoFHandlerType::dimension, DoFHandlerType::space_dimension>&
-                         mapping,
+  const Mapping<DoFHandlerType::dimension, DoFHandlerType::space_dimension>
+    &                    mapping,
   const unsigned int     n_subdivisions_,
   const CurvedCellRegion curved_region)
 {
@@ -579,7 +576,7 @@ DataOut<dim, DoFHandlerType>::build_patches(
         n_subdivisions,
         curved_cell_region),
       // no copy-local-to-global function needed here
-      std::function<void(const int&)>(),
+      std::function<void(const int &)>(),
       thread_data,
       /* dummy CopyData object = */ 0,
       // experimenting shows that we can make things run a bit
@@ -602,7 +599,7 @@ DataOut<dim, DoFHandlerType>::first_cell()
 template <int dim, typename DoFHandlerType>
 typename DataOut<dim, DoFHandlerType>::cell_iterator
 DataOut<dim, DoFHandlerType>::next_cell(
-  const typename DataOut<dim, DoFHandlerType>::cell_iterator& cell)
+  const typename DataOut<dim, DoFHandlerType>::cell_iterator &cell)
 {
   // convert the iterator to an active_iterator and advance this to the next
   // active cell
@@ -632,7 +629,7 @@ DataOut<dim, DoFHandlerType>::first_locally_owned_cell()
 template <int dim, typename DoFHandlerType>
 typename DataOut<dim, DoFHandlerType>::cell_iterator
 DataOut<dim, DoFHandlerType>::next_locally_owned_cell(
-  const typename DataOut<dim, DoFHandlerType>::cell_iterator& old_cell)
+  const typename DataOut<dim, DoFHandlerType>::cell_iterator &old_cell)
 {
   typename DataOut<dim, DoFHandlerType>::cell_iterator cell
     = next_cell(old_cell);

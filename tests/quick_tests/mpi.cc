@@ -22,7 +22,7 @@
 #include <sched.h>
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   MPI_Init(&argc, &argv);
 

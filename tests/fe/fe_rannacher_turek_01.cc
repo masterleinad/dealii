@@ -62,7 +62,7 @@ test_nodal_matrix()
   // compute_node_matrix does not check for number of components but
   // simply assumes that there are dim components. Thus we do it ourselves.
   const unsigned int           n_dofs = fe.dofs_per_cell;
-  const std::vector<Point<2>>& points = fe.get_generalized_support_points();
+  const std::vector<Point<2>> &points = fe.get_generalized_support_points();
   std::vector<Vector<double>>  values(points.size(), Vector<double>(1));
   std::vector<double>          local_dofs(n_dofs);
 

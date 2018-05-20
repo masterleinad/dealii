@@ -30,7 +30,7 @@ namespace PETScWrappers
     do_reinit(m, m, m, m);
   }
 
-  MatrixFree::MatrixFree(const MPI_Comm&    communicator,
+  MatrixFree::MatrixFree(const MPI_Comm &   communicator,
                          const unsigned int m,
                          const unsigned int n,
                          const unsigned int local_rows,
@@ -41,11 +41,11 @@ namespace PETScWrappers
   }
 
   MatrixFree::MatrixFree(
-    const MPI_Comm&                  communicator,
+    const MPI_Comm &                 communicator,
     const unsigned int               m,
     const unsigned int               n,
-    const std::vector<unsigned int>& local_rows_per_process,
-    const std::vector<unsigned int>& local_columns_per_process,
+    const std::vector<unsigned int> &local_rows_per_process,
+    const std::vector<unsigned int> &local_columns_per_process,
     const unsigned int               this_process)
     : communicator(communicator)
   {
@@ -72,8 +72,8 @@ namespace PETScWrappers
   MatrixFree::MatrixFree(
     const unsigned int               m,
     const unsigned int               n,
-    const std::vector<unsigned int>& local_rows_per_process,
-    const std::vector<unsigned int>& local_columns_per_process,
+    const std::vector<unsigned int> &local_rows_per_process,
+    const std::vector<unsigned int> &local_columns_per_process,
     const unsigned int               this_process)
     : communicator(MPI_COMM_WORLD)
   {
@@ -89,7 +89,7 @@ namespace PETScWrappers
   }
 
   void
-  MatrixFree::reinit(const MPI_Comm&    communicator,
+  MatrixFree::reinit(const MPI_Comm &   communicator,
                      const unsigned int m,
                      const unsigned int n,
                      const unsigned int local_rows,
@@ -105,11 +105,11 @@ namespace PETScWrappers
   }
 
   void
-  MatrixFree::reinit(const MPI_Comm&                  communicator,
+  MatrixFree::reinit(const MPI_Comm &                 communicator,
                      const unsigned int               m,
                      const unsigned int               n,
-                     const std::vector<unsigned int>& local_rows_per_process,
-                     const std::vector<unsigned int>& local_columns_per_process,
+                     const std::vector<unsigned int> &local_rows_per_process,
+                     const std::vector<unsigned int> &local_columns_per_process,
                      const unsigned int               this_process)
   {
     Assert(local_rows_per_process.size() == local_columns_per_process.size(),
@@ -139,8 +139,8 @@ namespace PETScWrappers
   void
   MatrixFree::reinit(const unsigned int               m,
                      const unsigned int               n,
-                     const std::vector<unsigned int>& local_rows_per_process,
-                     const std::vector<unsigned int>& local_columns_per_process,
+                     const std::vector<unsigned int> &local_rows_per_process,
+                     const std::vector<unsigned int> &local_columns_per_process,
                      const unsigned int               this_process)
   {
     reinit(MPI_COMM_WORLD,
@@ -162,7 +162,7 @@ namespace PETScWrappers
   }
 
   void
-  MatrixFree::vmult(Vec& dst, const Vec& src) const
+  MatrixFree::vmult(Vec &dst, const Vec &src) const
   {
     // VectorBase permits us to manipulate, but not own, a Vec
     PETScWrappers::VectorBase x(src);
@@ -179,12 +179,12 @@ namespace PETScWrappers
     // object and link the given matrix A
     // to the matrix-vector multiplication
     // of this MatrixFree object,
-    void*                this_object;
+    void *               this_object;
     const PetscErrorCode ierr = MatShellGetContext(A, &this_object);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // call vmult of this object:
-    reinterpret_cast<MatrixFree*>(this_object)->vmult(dst, src);
+    reinterpret_cast<MatrixFree *>(this_object)->vmult(dst, src);
 
     return (0);
   }
@@ -202,7 +202,7 @@ namespace PETScWrappers
     // object of dimension m x n and local size
     // local_rows x local_columns
     PetscErrorCode ierr = MatCreateShell(
-      communicator, local_rows, local_columns, m, n, (void*) this, &matrix);
+      communicator, local_rows, local_columns, m, n, (void *) this, &matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
     // register the MatrixFree::matrix_free_mult function
     // as the matrix multiplication used by this matrix

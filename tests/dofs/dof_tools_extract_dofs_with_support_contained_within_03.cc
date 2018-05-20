@@ -34,21 +34,21 @@
 
 template <int dim>
 bool
-pred_left(const typename DoFHandler<dim>::active_cell_iterator& cell)
+pred_left(const typename DoFHandler<dim>::active_cell_iterator &cell)
 {
   return (cell->center()(0) < 0.49);
 }
 
 template <int dim>
 bool
-pred_right(const typename DoFHandler<dim>::active_cell_iterator& cell)
+pred_right(const typename DoFHandler<dim>::active_cell_iterator &cell)
 {
   return (cell->center()(0) > 0.51);
 }
 
 template <int dim>
 bool
-pred_r(const typename Triangulation<dim>::active_cell_iterator& cell)
+pred_r(const typename Triangulation<dim>::active_cell_iterator &cell)
 {
   return (cell->center()(0) < 0.49 && cell->center()(1) < 0.49)
          || (cell->center()(0) > 0.49 && cell->center()(1) > 0.49);
@@ -89,13 +89,13 @@ test(const bool left = true)
     = left ? DoFTools::extract_dofs_with_support_contained_within(
                dh,
                std::function<bool(
-                 const typename DoFHandler<dim>::active_cell_iterator&)>(
+                 const typename DoFHandler<dim>::active_cell_iterator &)>(
                  &pred_left<dim>),
                cm) :
              DoFTools::extract_dofs_with_support_contained_within(
                dh,
                std::function<bool(
-                 const typename DoFHandler<dim>::active_cell_iterator&)>(
+                 const typename DoFHandler<dim>::active_cell_iterator &)>(
                  &pred_right<dim>),
                cm);
   support.print(deallog);
@@ -136,7 +136,7 @@ test(const bool left = true)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 

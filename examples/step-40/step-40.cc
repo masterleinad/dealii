@@ -695,7 +695,7 @@ namespace Step40
 // around, and the destructor of the LaplaceProblem class then tries to delete
 // them again.
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   try
     {
@@ -707,7 +707,7 @@ main(int argc, char* argv[])
       LaplaceProblem<2> laplace_problem_2d;
       laplace_problem_2d.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

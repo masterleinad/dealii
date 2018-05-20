@@ -33,7 +33,7 @@
 
 template <int dim>
 void
-test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
+test(const Triangulation<dim> &tr, const FiniteElement<dim> &fe)
 {
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
@@ -59,7 +59,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
   //Get the location of all boundary dofs
   std::vector<types::global_dof_index> face_dofs;
-  const std::vector<Point<dim - 1>>&   unit_support_points
+  const std::vector<Point<dim - 1>> &  unit_support_points
     = fe.get_unit_face_support_points();
   Quadrature<dim - 1>    quadrature(unit_support_points);
   FEFaceValues<dim, dim> fe_face_values(

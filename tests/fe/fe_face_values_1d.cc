@@ -39,9 +39,9 @@
 
 template <int dim>
 inline void
-plot_faces(Mapping<dim>&                            mapping,
-           FiniteElement<dim>&                      fe,
-           typename DoFHandler<dim>::cell_iterator& cell)
+plot_faces(Mapping<dim> &                           mapping,
+           FiniteElement<dim> &                     fe,
+           typename DoFHandler<dim>::cell_iterator &cell)
 {
   // create a QGauss<0>(4), which should
   // still only have 1 quadrature point
@@ -81,9 +81,9 @@ plot_faces(Mapping<dim>&                            mapping,
 
 template <int dim>
 inline void
-plot_subfaces(Mapping<dim>&                            mapping,
-              FiniteElement<dim>&                      fe,
-              typename DoFHandler<dim>::cell_iterator& cell)
+plot_subfaces(Mapping<dim> &                           mapping,
+              FiniteElement<dim> &                     fe,
+              typename DoFHandler<dim>::cell_iterator &cell)
 {
   // create a QGauss<0>(4), which should
   // still only have 1 quadrature point
@@ -130,8 +130,8 @@ mapping_test()
 {
   deallog << "dim=" << dim << std::endl;
 
-  std::vector<Mapping<dim>*> mapping_ptr;
-  std::vector<std::string>   mapping_strings;
+  std::vector<Mapping<dim> *> mapping_ptr;
+  std::vector<std::string>    mapping_strings;
 
   MappingQGeneric<dim> mapping(1);
   std::string          mapping_name = "MappingQ1";

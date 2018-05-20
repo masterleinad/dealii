@@ -83,7 +83,7 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  hyper_cube(Triangulation<dim, spacedim>& tria,
+  hyper_cube(Triangulation<dim, spacedim> &tria,
              const double                  left     = 0.,
              const double                  right    = 1.,
              const bool                    colorize = false);
@@ -114,8 +114,8 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  simplex(Triangulation<dim, dim>&       tria,
-          const std::vector<Point<dim>>& vertices);
+  simplex(Triangulation<dim, dim> &      tria,
+          const std::vector<Point<dim>> &vertices);
 
   /**
    * Same as hyper_cube(), but with the difference that not only one cell is
@@ -132,7 +132,7 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  subdivided_hyper_cube(Triangulation<dim, spacedim>& tria,
+  subdivided_hyper_cube(Triangulation<dim, spacedim> &tria,
                         const unsigned int            repetitions,
                         const double                  left  = 0.,
                         const double                  right = 1.);
@@ -168,9 +168,9 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  hyper_rectangle(Triangulation<dim, spacedim>& tria,
-                  const Point<dim>&             p1,
-                  const Point<dim>&             p2,
+  hyper_rectangle(Triangulation<dim, spacedim> &tria,
+                  const Point<dim> &            p1,
+                  const Point<dim> &            p2,
                   const bool                    colorize = false);
 
   /**
@@ -223,10 +223,10 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  subdivided_hyper_rectangle(Triangulation<dim, spacedim>&    tria,
-                             const std::vector<unsigned int>& repetitions,
-                             const Point<dim>&                p1,
-                             const Point<dim>&                p2,
+  subdivided_hyper_rectangle(Triangulation<dim, spacedim> &   tria,
+                             const std::vector<unsigned int> &repetitions,
+                             const Point<dim> &               p1,
+                             const Point<dim> &               p2,
                              const bool                       colorize = false);
 
   /**
@@ -246,10 +246,10 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  subdivided_hyper_rectangle(Triangulation<dim>&                     tria,
-                             const std::vector<std::vector<double>>& step_sizes,
-                             const Point<dim>&                       p_1,
-                             const Point<dim>&                       p_2,
+  subdivided_hyper_rectangle(Triangulation<dim> &                    tria,
+                             const std::vector<std::vector<double>> &step_sizes,
+                             const Point<dim> &                      p_1,
+                             const Point<dim> &                      p_2,
                              const bool colorize = false);
 
   /**
@@ -264,10 +264,10 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  subdivided_hyper_rectangle(Triangulation<dim>&                     tria,
-                             const std::vector<std::vector<double>>& spacing,
-                             const Point<dim>&                       p,
-                             const Table<dim, types::material_id>& material_id,
+  subdivided_hyper_rectangle(Triangulation<dim> &                    tria,
+                             const std::vector<std::vector<double>> &spacing,
+                             const Point<dim> &                      p,
+                             const Table<dim, types::material_id> &material_id,
                              const bool colorize = false);
 
   /**
@@ -298,8 +298,8 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  cheese(Triangulation<dim, spacedim>&    tria,
-         const std::vector<unsigned int>& holes);
+  cheese(Triangulation<dim, spacedim> &   tria,
+         const std::vector<unsigned int> &holes);
 
   /**
    * A general quadrilateral in 2d or a general hexahedron in 3d. It is the
@@ -317,8 +317,8 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  general_cell(Triangulation<dim>&            tria,
-               const std::vector<Point<dim>>& vertices,
+  general_cell(Triangulation<dim> &           tria,
+               const std::vector<Point<dim>> &vertices,
                const bool                     colorize = false);
 
   /**
@@ -333,7 +333,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  parallelogram(Triangulation<dim>& tria,
+  parallelogram(Triangulation<dim> &tria,
                 const Point<dim> (&corners)[dim],
                 const bool colorize = false);
 
@@ -353,7 +353,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  parallelepiped(Triangulation<dim>& tria,
+  parallelepiped(Triangulation<dim> &tria,
                  const Point<dim> (&corners)[dim],
                  const bool colorize = false);
 
@@ -369,7 +369,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  subdivided_parallelepiped(Triangulation<dim>& tria,
+  subdivided_parallelepiped(Triangulation<dim> &tria,
                             const unsigned int  n_subdivisions,
                             const Point<dim> (&corners)[dim],
                             const bool colorize = false);
@@ -383,11 +383,11 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  subdivided_parallelepiped(Triangulation<dim>& tria,
+  subdivided_parallelepiped(Triangulation<dim> &tria,
 #ifndef _MSC_VER
                             const unsigned int (&n_subdivisions)[dim],
 #else
-                            const unsigned int* n_subdivisions,
+                            const unsigned int *n_subdivisions,
 #endif
                             const Point<dim> (&corners)[dim],
                             const bool colorize = false);
@@ -416,10 +416,10 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  subdivided_parallelepiped(Triangulation<dim, spacedim>&               tria,
-                            const Point<spacedim>&                      origin,
-                            const std::array<Tensor<1, spacedim>, dim>& edges,
-                            const std::vector<unsigned int>& subdivisions
+  subdivided_parallelepiped(Triangulation<dim, spacedim> &              tria,
+                            const Point<spacedim> &                     origin,
+                            const std::array<Tensor<1, spacedim>, dim> &edges,
+                            const std::vector<unsigned int> &subdivisions
                             = std::vector<unsigned int>(),
                             const bool colorize = false);
 
@@ -439,7 +439,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  enclosed_hyper_cube(Triangulation<dim>& tria,
+  enclosed_hyper_cube(Triangulation<dim> &tria,
                       const double        left      = 0.,
                       const double        right     = 1.,
                       const double        thickness = 1.,
@@ -481,8 +481,8 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  hyper_ball(Triangulation<dim>& tria,
-             const Point<dim>&   center = Point<dim>(),
+  hyper_ball(Triangulation<dim> &tria,
+             const Point<dim> &  center = Point<dim>(),
              const double        radius = 1.,
              const bool attach_spherical_manifold_on_boundary_cells = false);
 
@@ -512,8 +512,8 @@ namespace GridGenerator
    */
 
   template <int spacedim>
-  void hyper_sphere(Triangulation<spacedim - 1, spacedim>& tria,
-                    const Point<spacedim>& center = Point<spacedim>(),
+  void hyper_sphere(Triangulation<spacedim - 1, spacedim> &tria,
+                    const Point<spacedim> &center = Point<spacedim>(),
                     const double           radius = 1.);
 
   /**
@@ -529,8 +529,8 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  quarter_hyper_ball(Triangulation<dim>& tria,
-                     const Point<dim>&   center = Point<dim>(),
+  quarter_hyper_ball(Triangulation<dim> &tria,
+                     const Point<dim> &  center = Point<dim>(),
                      const double        radius = 1.);
 
   /**
@@ -546,8 +546,8 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  half_hyper_ball(Triangulation<dim>& tria,
-                  const Point<dim>&   center = Point<dim>(),
+  half_hyper_ball(Triangulation<dim> &tria,
+                  const Point<dim> &  center = Point<dim>(),
                   const double        radius = 1.);
 
   /**
@@ -575,7 +575,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  cylinder(Triangulation<dim>& tria,
+  cylinder(Triangulation<dim> &tria,
            const double        radius      = 1.,
            const double        half_length = 1.);
 
@@ -605,7 +605,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  truncated_cone(Triangulation<dim>& tria,
+  truncated_cone(Triangulation<dim> &tria,
                  const double        radius_0    = 1.0,
                  const double        radius_1    = 0.5,
                  const double        half_length = 1.0);
@@ -640,8 +640,8 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  hyper_cross(Triangulation<dim, spacedim>&    tria,
-              const std::vector<unsigned int>& sizes,
+  hyper_cross(Triangulation<dim, spacedim> &   tria,
+              const std::vector<unsigned int> &sizes,
               const bool                       colorize_cells = false);
 
   /**
@@ -679,7 +679,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  hyper_L(Triangulation<dim>& tria,
+  hyper_L(Triangulation<dim> &tria,
           const double        left     = -1.,
           const double        right    = 1.,
           const bool          colorize = false);
@@ -703,7 +703,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  hyper_cube_slit(Triangulation<dim>& tria,
+  hyper_cube_slit(Triangulation<dim> &tria,
                   const double        left     = 0.,
                   const double        right    = 1.,
                   const bool          colorize = false);
@@ -747,8 +747,8 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  hyper_shell(Triangulation<dim>& tria,
-              const Point<dim>&   center,
+  hyper_shell(Triangulation<dim> &tria,
+              const Point<dim> &  center,
               const double        inner_radius,
               const double        outer_radius,
               const unsigned int  n_cells  = 0,
@@ -780,8 +780,8 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  half_hyper_shell(Triangulation<dim>& tria,
-                   const Point<dim>&   center,
+  half_hyper_shell(Triangulation<dim> &tria,
+                   const Point<dim> &  center,
                    const double        inner_radius,
                    const double        outer_radius,
                    const unsigned int  n_cells  = 0,
@@ -812,8 +812,8 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  quarter_hyper_shell(Triangulation<dim>& tria,
-                      const Point<dim>&   center,
+  quarter_hyper_shell(Triangulation<dim> &tria,
+                      const Point<dim> &  center,
                       const double        inner_radius,
                       const double        outer_radius,
                       const unsigned int  n_cells  = 0,
@@ -840,7 +840,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  cylinder_shell(Triangulation<dim>& tria,
+  cylinder_shell(Triangulation<dim> &tria,
                  const double        length,
                  const double        inner_radius,
                  const double        outer_radius,
@@ -870,7 +870,7 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  torus(Triangulation<dim, spacedim>& tria, const double R, const double r);
+  torus(Triangulation<dim, spacedim> &tria, const double R, const double r);
 
   /**
    * This class produces a square in the <i>xy</i>-plane with a cylindrical
@@ -901,7 +901,7 @@ namespace GridGenerator
    */
   template <int dim>
   void
-  hyper_cube_with_cylindrical_hole(Triangulation<dim>& triangulation,
+  hyper_cube_with_cylindrical_hole(Triangulation<dim> &triangulation,
                                    const double        inner_radius = .25,
                                    const double        outer_radius = .5,
                                    const double        L            = .5,
@@ -921,7 +921,7 @@ namespace GridGenerator
    * of the torus containing the loop of cells. Must be greater than @p r.
    * @param r           The radius of the cylinder bent together as a loop.
    */
-  void moebius(Triangulation<3, 3>& tria,
+  void moebius(Triangulation<3, 3> &tria,
                const unsigned int   n_cells,
                const unsigned int   n_rotations,
                const double         R,
@@ -969,9 +969,9 @@ namespace GridGenerator
    */
   template <int dim, int spacedim>
   void
-  merge_triangulations(const Triangulation<dim, spacedim>& triangulation_1,
-                       const Triangulation<dim, spacedim>& triangulation_2,
-                       Triangulation<dim, spacedim>&       result);
+  merge_triangulations(const Triangulation<dim, spacedim> &triangulation_1,
+                       const Triangulation<dim, spacedim> &triangulation_2,
+                       Triangulation<dim, spacedim> &      result);
 
   /**
    * Given the two triangulations specified as the first two arguments, create
@@ -1009,9 +1009,9 @@ namespace GridGenerator
   template <int dim, int spacedim>
   void
   create_union_triangulation(
-    const Triangulation<dim, spacedim>& triangulation_1,
-    const Triangulation<dim, spacedim>& triangulation_2,
-    Triangulation<dim, spacedim>&       result);
+    const Triangulation<dim, spacedim> &triangulation_1,
+    const Triangulation<dim, spacedim> &triangulation_2,
+    Triangulation<dim, spacedim> &      result);
 
   /**
    * This function creates a triangulation that consists of the same cells as
@@ -1051,10 +1051,10 @@ namespace GridGenerator
   template <int dim, int spacedim>
   void
   create_triangulation_with_removed_cells(
-    const Triangulation<dim, spacedim>& input_triangulation,
-    const std::set<typename Triangulation<dim, spacedim>::active_cell_iterator>&
-                                  cells_to_remove,
-    Triangulation<dim, spacedim>& result);
+    const Triangulation<dim, spacedim> &input_triangulation,
+    const std::set<typename Triangulation<dim, spacedim>::active_cell_iterator>
+      &                           cells_to_remove,
+    Triangulation<dim, spacedim> &result);
 
   /**
    * Take a 2d Triangulation that is being extruded in z direction by the
@@ -1071,10 +1071,10 @@ namespace GridGenerator
    * function.
    */
   void
-  extrude_triangulation(const Triangulation<2, 2>& input,
+  extrude_triangulation(const Triangulation<2, 2> &input,
                         const unsigned int         n_slices,
                         const double               height,
-                        Triangulation<3, 3>&       result);
+                        Triangulation<3, 3> &      result);
 
   /**
    * Overload of the previous function. Take a 2d Triangulation that is being
@@ -1095,9 +1095,9 @@ namespace GridGenerator
    * @author Weixiong Zheng, 2018
    */
   void
-  extrude_triangulation(const Triangulation<2, 2>& input,
-                        const std::vector<double>& slice_coordinates,
-                        Triangulation<3, 3>&       result);
+  extrude_triangulation(const Triangulation<2, 2> &input,
+                        const std::vector<double> &slice_coordinates,
+                        Triangulation<3, 3> &      result);
 
   /**
    * Given an input triangulation @p in_tria, this function makes a new flat
@@ -1131,8 +1131,8 @@ namespace GridGenerator
    */
   template <int dim, int spacedim1, int spacedim2>
   void
-  flatten_triangulation(const Triangulation<dim, spacedim1>& in_tria,
-                        Triangulation<dim, spacedim2>&       out_tria);
+  flatten_triangulation(const Triangulation<dim, spacedim1> &in_tria,
+                        Triangulation<dim, spacedim2> &      out_tria);
 
   ///@}
 
@@ -1239,9 +1239,9 @@ namespace GridGenerator
 #else
   typename ExtractBoundaryMesh<MeshType, dim, spacedim>::return_type
 #endif
-  extract_boundary_mesh(const MeshType<dim, spacedim>&      volume_mesh,
-                        MeshType<dim - 1, spacedim>&        surface_mesh,
-                        const std::set<types::boundary_id>& boundary_ids
+  extract_boundary_mesh(const MeshType<dim, spacedim> &     volume_mesh,
+                        MeshType<dim - 1, spacedim> &       surface_mesh,
+                        const std::set<types::boundary_id> &boundary_ids
                         = std::set<types::boundary_id>());
 
   ///@}

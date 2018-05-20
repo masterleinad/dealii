@@ -143,7 +143,7 @@ namespace Step40
       Point<dim>                           down{0, -1};
       std::vector<types::global_dof_index> dof_indices(fe.n_dofs_per_face(), 0);
 
-      for(const auto& cell : dof_handler.active_cell_iterators())
+      for(const auto &cell : dof_handler.active_cell_iterators())
         {
           if(cell->is_locally_owned())
             {
@@ -388,7 +388,7 @@ test_mpi(MPI_Comm comm)
         laplace_problem_2d.run();
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -419,7 +419,7 @@ test_mpi(MPI_Comm comm)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

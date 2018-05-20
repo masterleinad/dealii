@@ -130,7 +130,7 @@ namespace Step26
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
 
   private:
     const double period;
@@ -138,7 +138,7 @@ namespace Step26
 
   template <int dim>
   double
-  RightHandSide<dim>::value(const Point<dim>&  p,
+  RightHandSide<dim>::value(const Point<dim> & p,
                             const unsigned int component) const
   {
     (void) component;
@@ -172,12 +172,12 @@ namespace Step26
   {
   public:
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  BoundaryValues<dim>::value(const Point<dim>& /*p*/,
+  BoundaryValues<dim>::value(const Point<dim> & /*p*/,
                              const unsigned int component) const
   {
     (void) component;
@@ -639,7 +639,7 @@ main()
       HeatEquation<2> heat_equation_solver;
       heat_equation_solver.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

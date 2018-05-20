@@ -21,7 +21,7 @@ unsigned int       check_point = 0;
 
 template <typename number>
 void
-print(const LinearAlgebra::Vector<number>& v)
+print(const LinearAlgebra::Vector<number> &v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     deallog << v(i) << '\t';
@@ -30,8 +30,8 @@ print(const LinearAlgebra::Vector<number>& v)
 
 template <typename number1, typename number2>
 void
-check_vectors(LinearAlgebra::Vector<number1>& d1,
-              LinearAlgebra::Vector<number2>& d2)
+check_vectors(LinearAlgebra::Vector<number1> &d1,
+              LinearAlgebra::Vector<number2> &d2)
 {
   deallog << "Fill & Swap" << std::endl;
   LinearAlgebra::Vector<number1> d3(d1.size());

@@ -30,7 +30,7 @@ template <int dim>
 class XDataOut : public DataOutRotation<dim>
 {
 public:
-  const std::vector<typename ::DataOutBase::Patch<dim + 1, dim + 1>>&
+  const std::vector<typename ::DataOutBase::Patch<dim + 1, dim + 1>> &
   get_patches() const
   {
     return DataOutRotation<dim>::get_patches();
@@ -55,7 +55,7 @@ template <int dim>
 class XDataOutReader : public DataOutReader<dim + 1>
 {
 public:
-  const std::vector<typename ::DataOutBase::Patch<dim + 1, dim + 1>>&
+  const std::vector<typename ::DataOutBase::Patch<dim + 1, dim + 1>> &
   get_patches() const
   {
     return DataOutReader<dim + 1>::get_patches();
@@ -75,18 +75,18 @@ public:
 };
 
 void
-my_check_this(const DoFHandler<3>&,
-              const Vector<double>&,
-              const Vector<double>&)
+my_check_this(const DoFHandler<3> &,
+              const Vector<double> &,
+              const Vector<double> &)
 {
   // no checks in 3d
 }
 
 template <int dim>
 void
-my_check_this(const DoFHandler<dim>& dof_handler,
-              const Vector<double>&  v_node,
-              const Vector<double>&  v_cell)
+my_check_this(const DoFHandler<dim> &dof_handler,
+              const Vector<double> & v_node,
+              const Vector<double> & v_cell)
 {
   XDataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
@@ -149,9 +149,9 @@ my_check_this(const DoFHandler<dim>& dof_handler,
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler,
-           const Vector<double>&  v_node,
-           const Vector<double>&  v_cell)
+check_this(const DoFHandler<dim> &dof_handler,
+           const Vector<double> & v_node,
+           const Vector<double> & v_cell)
 {
   // since we can't forward declare
   // check_this in this file (it is forward

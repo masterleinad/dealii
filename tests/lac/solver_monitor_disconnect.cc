@@ -33,7 +33,7 @@
 SolverControl::State
 monitor_norm(const unsigned int    iteration,
              const double          check_value,
-             const Vector<double>& current_iterate)
+             const Vector<double> &current_iterate)
 {
   deallog << "   -- " << iteration << ' ' << check_value << std::endl;
   deallog << "   Norm=" << current_iterate.l2_norm() << std::endl;
@@ -43,7 +43,7 @@ monitor_norm(const unsigned int    iteration,
 SolverControl::State
 monitor_mean(const unsigned int    iteration,
              const double          check_value,
-             const Vector<double>& current_iterate)
+             const Vector<double> &current_iterate)
 {
   deallog << "   Mean=" << current_iterate.mean_value() << std::endl;
   return SolverControl::success;
@@ -54,11 +54,11 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_solve(SolverType&         solver,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
-            const PRECONDITION& P)
+check_solve(SolverType &        solver,
+            const MatrixType &  A,
+            VectorType &        u,
+            VectorType &        f,
+            const PRECONDITION &P)
 {
   u = 0.;
   f = 1.;
@@ -66,7 +66,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch(dealii::SolverControl::NoConvergence &e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -125,7 +125,7 @@ main()
         {
           check_solve(cg, A, u, f, prec_ssor);
         }
-      catch(std::exception& e)
+      catch(std::exception &e)
         {
           std::cerr << "Exception: " << e.what() << std::endl;
         }

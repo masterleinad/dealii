@@ -28,7 +28,7 @@
     }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -37,7 +37,7 @@ main(int argc, char** argv)
 
   {
     std::vector<IndexSet> local_owned(5);
-    for(auto& index : local_owned)
+    for(auto &index : local_owned)
       {
         index.set_size(2);
         index.add_range(0, 2);

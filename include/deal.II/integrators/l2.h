@@ -50,8 +50,8 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    mass_matrix(FullMatrix<double>&      M,
-                const FEValuesBase<dim>& fe,
+    mass_matrix(FullMatrix<double> &     M,
+                const FEValuesBase<dim> &fe,
                 const double             factor = 1.)
     {
       const unsigned int n_dofs       = fe.dofs_per_cell;
@@ -100,9 +100,9 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    weighted_mass_matrix(FullMatrix<double>&        M,
-                         const FEValuesBase<dim>&   fe,
-                         const std::vector<double>& weights)
+    weighted_mass_matrix(FullMatrix<double> &       M,
+                         const FEValuesBase<dim> &  fe,
+                         const std::vector<double> &weights)
     {
       const unsigned int n_dofs       = fe.dofs_per_cell;
       const unsigned int n_components = fe.get_fe().n_components();
@@ -146,9 +146,9 @@ namespace LocalIntegrators
      */
     template <int dim, typename number>
     void
-    L2(Vector<number>&            result,
-       const FEValuesBase<dim>&   fe,
-       const std::vector<double>& input,
+    L2(Vector<number> &           result,
+       const FEValuesBase<dim> &  fe,
+       const std::vector<double> &input,
        const double               factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
@@ -171,9 +171,9 @@ namespace LocalIntegrators
      */
     template <int dim, typename number>
     void
-    L2(Vector<number>&                                            result,
-       const FEValuesBase<dim>&                                   fe,
-       const VectorSlice<const std::vector<std::vector<double>>>& input,
+    L2(Vector<number> &                                           result,
+       const FEValuesBase<dim> &                                  fe,
+       const VectorSlice<const std::vector<std::vector<double>>> &input,
        const double                                               factor = 1.)
     {
       const unsigned int n_dofs       = fe.dofs_per_cell;
@@ -203,12 +203,12 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    jump_matrix(FullMatrix<double>&      M11,
-                FullMatrix<double>&      M12,
-                FullMatrix<double>&      M21,
-                FullMatrix<double>&      M22,
-                const FEValuesBase<dim>& fe1,
-                const FEValuesBase<dim>& fe2,
+    jump_matrix(FullMatrix<double> &     M11,
+                FullMatrix<double> &     M12,
+                FullMatrix<double> &     M21,
+                FullMatrix<double> &     M22,
+                const FEValuesBase<dim> &fe1,
+                const FEValuesBase<dim> &fe2,
                 const double             factor1 = 1.,
                 const double             factor2 = 1.)
     {

@@ -49,17 +49,17 @@ public:
 
 protected:
   void
-  apply_add(BlockVectorType& dst, const BlockVectorType& src) const
+  apply_add(BlockVectorType &dst, const BlockVectorType &src) const
   {
     Base::data->cell_loop(&MatrixFreeTest::local_apply_cell, this, dst, src);
   }
 
   void
   local_apply_cell(
-    const dealii::MatrixFree<dim, Number>&       data,
-    BlockVectorType&                             dst,
-    const BlockVectorType&                       src,
-    const std::pair<unsigned int, unsigned int>& cell_range) const
+    const dealii::MatrixFree<dim, Number> &      data,
+    BlockVectorType &                            dst,
+    const BlockVectorType &                      src,
+    const std::pair<unsigned int, unsigned int> &cell_range) const
   {
     typedef VectorizedArray<Number>                            vector_t;
     FEEvaluation<dim, degree_p + 1, degree_p + 2, dim, Number> velocity(data,
@@ -253,10 +253,10 @@ test()
     = std::shared_ptr<MatrixFree<dim, double>>(new MatrixFree<dim, double>());
   // setup matrix-free structure
   {
-    std::vector<const DoFHandler<dim>*> dofs;
+    std::vector<const DoFHandler<dim> *> dofs;
     dofs.push_back(&dof_u);
     dofs.push_back(&dof_p);
-    std::vector<const ConstraintMatrix*> constraints;
+    std::vector<const ConstraintMatrix *> constraints;
     constraints.push_back(&constraints_u);
     constraints.push_back(&constraints_p);
     QGauss<1> quad(degree + 2);
@@ -285,7 +285,7 @@ test()
 }
 
 int
-main(int /*argc*/, char** /*argv*/)
+main(int /*argc*/, char ** /*argv*/)
 {
   initlog();
   deallog.push("2D");

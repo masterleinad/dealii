@@ -35,7 +35,7 @@ burn(unsigned int n)
 
 // check that the MinMaxAvg is set to a default, unpopulated state.
 void
-assert_min_max_avg_invalid(const Utilities::MPI::MinMaxAvg& data)
+assert_min_max_avg_invalid(const Utilities::MPI::MinMaxAvg &data)
 {
   // we want to explicitly check that some things are signaling NaNs, so
   // disable FP exceptions if they are on
@@ -54,7 +54,7 @@ assert_min_max_avg_invalid(const Utilities::MPI::MinMaxAvg& data)
 
 // check that the MinMaxAvg values are reasonable.
 void
-assert_min_max_avg_valid(const Utilities::MPI::MinMaxAvg& data)
+assert_min_max_avg_valid(const Utilities::MPI::MinMaxAvg &data)
 {
   AssertThrow(data.min > 0., ExcInternalError());
   AssertThrow(data.max >= data.min, ExcInternalError());
@@ -66,7 +66,7 @@ assert_min_max_avg_valid(const Utilities::MPI::MinMaxAvg& data)
 }
 
 void
-test_timer(Timer& t)
+test_timer(Timer &t)
 {
   burn(50);
 
@@ -103,7 +103,7 @@ test_timer(Timer& t)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   mpi_initlog();

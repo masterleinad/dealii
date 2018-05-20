@@ -43,7 +43,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   //Initialize MPI and Zoltan
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);

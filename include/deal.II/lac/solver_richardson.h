@@ -85,16 +85,16 @@ public:
   /**
    * Constructor.
    */
-  SolverRichardson(SolverControl&            cn,
-                   VectorMemory<VectorType>& mem,
-                   const AdditionalData&     data = AdditionalData());
+  SolverRichardson(SolverControl &           cn,
+                   VectorMemory<VectorType> &mem,
+                   const AdditionalData &    data = AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverRichardson(SolverControl&        cn,
-                   const AdditionalData& data = AdditionalData());
+  SolverRichardson(SolverControl &       cn,
+                   const AdditionalData &data = AdditionalData());
 
   /**
    * Virtual destructor.
@@ -106,20 +106,20 @@ public:
    */
   template <typename MatrixType, typename PreconditionerType>
   void
-  solve(const MatrixType&         A,
-        VectorType&               x,
-        const VectorType&         b,
-        const PreconditionerType& preconditioner);
+  solve(const MatrixType &        A,
+        VectorType &              x,
+        const VectorType &        b,
+        const PreconditionerType &preconditioner);
 
   /**
    * Solve $A^Tx=b$ for $x$.
    */
   template <typename MatrixType, typename PreconditionerType>
   void
-  Tsolve(const MatrixType&         A,
-         VectorType&               x,
-         const VectorType&         b,
-         const PreconditionerType& preconditioner);
+  Tsolve(const MatrixType &        A,
+         VectorType &              x,
+         const VectorType &        b,
+         const PreconditionerType &preconditioner);
 
   /**
    * Set the damping-coefficient. Default is 1., i.e. no damping.
@@ -134,9 +134,9 @@ public:
    */
   virtual void
   print_vectors(const unsigned int step,
-                const VectorType&  x,
-                const VectorType&  r,
-                const VectorType&  d) const;
+                const VectorType & x,
+                const VectorType & r,
+                const VectorType & d) const;
 
 protected:
   /**
@@ -146,7 +146,7 @@ protected:
    * residual, @p r, or the preconditioned residual, @p d.
    */
   virtual typename VectorType::value_type
-  criterion(const VectorType& r, const VectorType& d) const;
+  criterion(const VectorType &r, const VectorType &d) const;
 
   /**
    * Control parameters.
@@ -167,25 +167,25 @@ inline SolverRichardson<VectorType>::AdditionalData::AdditionalData(
 {}
 
 template <class VectorType>
-SolverRichardson<VectorType>::SolverRichardson(SolverControl&            cn,
-                                               VectorMemory<VectorType>& mem,
-                                               const AdditionalData&     data)
+SolverRichardson<VectorType>::SolverRichardson(SolverControl &           cn,
+                                               VectorMemory<VectorType> &mem,
+                                               const AdditionalData &    data)
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
 template <class VectorType>
-SolverRichardson<VectorType>::SolverRichardson(SolverControl&        cn,
-                                               const AdditionalData& data)
+SolverRichardson<VectorType>::SolverRichardson(SolverControl &       cn,
+                                               const AdditionalData &data)
   : Solver<VectorType>(cn), additional_data(data)
 {}
 
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
-SolverRichardson<VectorType>::solve(const MatrixType&         A,
-                                    VectorType&               x,
-                                    const VectorType&         b,
-                                    const PreconditionerType& preconditioner)
+SolverRichardson<VectorType>::solve(const MatrixType &        A,
+                                    VectorType &              x,
+                                    const VectorType &        b,
+                                    const PreconditionerType &preconditioner)
 {
   SolverControl::State conv = SolverControl::iterate;
 
@@ -198,10 +198,10 @@ SolverRichardson<VectorType>::solve(const MatrixType&         A,
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
   typename VectorMemory<VectorType>::Pointer Vd(this->memory);
 
-  VectorType& r = *Vr;
+  VectorType &r = *Vr;
   r.reinit(x);
 
-  VectorType& d = *Vd;
+  VectorType &d = *Vd;
   d.reinit(x);
 
   LogStream::Prefix prefix("Richardson");
@@ -237,10 +237,10 @@ SolverRichardson<VectorType>::solve(const MatrixType&         A,
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
-SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
-                                     VectorType&               x,
-                                     const VectorType&         b,
-                                     const PreconditionerType& preconditioner)
+SolverRichardson<VectorType>::Tsolve(const MatrixType &        A,
+                                     VectorType &              x,
+                                     const VectorType &        b,
+                                     const PreconditionerType &preconditioner)
 {
   SolverControl::State conv           = SolverControl::iterate;
   double               last_criterion = -std::numeric_limits<double>::max();
@@ -252,10 +252,10 @@ SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
   typename VectorMemory<VectorType>::Pointer Vd(this->memory);
 
-  VectorType& r = *Vr;
+  VectorType &r = *Vr;
   r.reinit(x);
 
-  VectorType& d = *Vd;
+  VectorType &d = *Vd;
   d.reinit(x);
 
   LogStream::Prefix prefix("RichardsonT");
@@ -290,15 +290,15 @@ SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
 template <class VectorType>
 void
 SolverRichardson<VectorType>::print_vectors(const unsigned int,
-                                            const VectorType&,
-                                            const VectorType&,
-                                            const VectorType&) const
+                                            const VectorType &,
+                                            const VectorType &,
+                                            const VectorType &) const
 {}
 
 template <class VectorType>
 inline typename VectorType::value_type
-SolverRichardson<VectorType>::criterion(const VectorType& r,
-                                        const VectorType& d) const
+SolverRichardson<VectorType>::criterion(const VectorType &r,
+                                        const VectorType &d) const
 {
   if(!additional_data.use_preconditioned_residual)
     return r.l2_norm();

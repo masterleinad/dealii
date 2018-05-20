@@ -42,14 +42,14 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>::BlockVector(const std::vector<size_type>& n)
+    BlockVector<Number>::BlockVector(const std::vector<size_type> &n)
     {
       reinit(n, false);
     }
 
     template <typename Number>
-    BlockVector<Number>::BlockVector(const std::vector<IndexSet>& local_ranges,
-                                     const std::vector<IndexSet>& ghost_indices,
+    BlockVector<Number>::BlockVector(const std::vector<IndexSet> &local_ranges,
+                                     const std::vector<IndexSet> &ghost_indices,
                                      const MPI_Comm               communicator)
     {
       std::vector<size_type> sizes(local_ranges.size());
@@ -64,7 +64,7 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>::BlockVector(const std::vector<IndexSet>& local_ranges,
+    BlockVector<Number>::BlockVector(const std::vector<IndexSet> &local_ranges,
                                      const MPI_Comm               communicator)
     {
       std::vector<size_type> sizes(local_ranges.size());
@@ -79,7 +79,7 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>::BlockVector(const BlockVector<Number>& v)
+    BlockVector<Number>::BlockVector(const BlockVector<Number> &v)
       : BlockVectorBase<Vector<Number>>()
     {
       this->components.resize(v.n_blocks());
@@ -91,7 +91,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     template <typename OtherNumber>
-    BlockVector<Number>::BlockVector(const BlockVector<OtherNumber>& v)
+    BlockVector<Number>::BlockVector(const BlockVector<OtherNumber> &v)
     {
       reinit(v, true);
       *this = v;
@@ -109,7 +109,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::reinit(const std::vector<size_type>& n,
+    BlockVector<Number>::reinit(const std::vector<size_type> &n,
                                 const bool omit_zeroing_entries)
     {
       this->block_indices.reinit(n);
@@ -123,7 +123,7 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename Number2>
     void
-    BlockVector<Number>::reinit(const BlockVector<Number2>& v,
+    BlockVector<Number>::reinit(const BlockVector<Number2> &v,
                                 const bool omit_zeroing_entries)
     {
       this->block_indices = v.get_block_indices();
@@ -135,7 +135,7 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>&
+    BlockVector<Number> &
     BlockVector<Number>::operator=(const value_type s)
     {
       AssertIsFinite(s);
@@ -145,8 +145,8 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>&
-    BlockVector<Number>::operator=(const BlockVector& v)
+    BlockVector<Number> &
+    BlockVector<Number>::operator=(const BlockVector &v)
     {
       // we only allow assignment to vectors with the same number of blocks
       // or to an empty BlockVector
@@ -164,8 +164,8 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>&
-    BlockVector<Number>::operator=(const Vector<Number>& v)
+    BlockVector<Number> &
+    BlockVector<Number>::operator=(const Vector<Number> &v)
     {
       BaseClass::operator=(v);
       return *this;
@@ -173,8 +173,8 @@ namespace LinearAlgebra
 
     template <typename Number>
     template <typename Number2>
-    BlockVector<Number>&
-    BlockVector<Number>::operator=(const BlockVector<Number2>& v)
+    BlockVector<Number> &
+    BlockVector<Number>::operator=(const BlockVector<Number2> &v)
     {
       reinit(v, true);
       BaseClass::operator=(v);
@@ -184,9 +184,9 @@ namespace LinearAlgebra
 #ifdef DEAL_II_WITH_PETSC
 
     template <typename Number>
-    BlockVector<Number>&
+    BlockVector<Number> &
     BlockVector<Number>::
-    operator=(const PETScWrappers::MPI::BlockVector& petsc_vec)
+    operator=(const PETScWrappers::MPI::BlockVector &petsc_vec)
     {
       AssertDimension(this->n_blocks(), petsc_vec.n_blocks());
       for(unsigned int i = 0; i < this->n_blocks(); ++i)
@@ -200,9 +200,9 @@ namespace LinearAlgebra
 #ifdef DEAL_II_WITH_TRILINOS
 
     template <typename Number>
-    BlockVector<Number>&
+    BlockVector<Number> &
     BlockVector<Number>::
-    operator=(const TrilinosWrappers::MPI::BlockVector& trilinos_vec)
+    operator=(const TrilinosWrappers::MPI::BlockVector &trilinos_vec)
     {
       AssertDimension(this->n_blocks(), trilinos_vec.n_blocks());
       for(unsigned int i = 0; i < this->n_blocks(); ++i)
@@ -282,18 +282,18 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::reinit(const VectorSpaceVector<Number>& V,
+    BlockVector<Number>::reinit(const VectorSpaceVector<Number> &V,
                                 const bool omit_zeroing_entries)
     {
-      Assert(dynamic_cast<const BlockVector<Number>*>(&V) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& down_V
-        = dynamic_cast<const BlockVector<Number>&>(V);
+      const BlockVector<Number> &down_V
+        = dynamic_cast<const BlockVector<Number> &>(V);
       reinit(down_V, omit_zeroing_entries);
     }
 
     template <typename Number>
-    BlockVector<Number>&
+    BlockVector<Number> &
     BlockVector<Number>::operator*=(const Number factor)
     {
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
@@ -302,7 +302,7 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>&
+    BlockVector<Number> &
     BlockVector<Number>::operator/=(const Number factor)
     {
       operator*=(static_cast<Number>(1.) / factor);
@@ -311,13 +311,13 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::scale(const VectorSpaceVector<Number>& vv)
+    BlockVector<Number>::scale(const VectorSpaceVector<Number> &vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).scale(v.block(block));
@@ -326,13 +326,13 @@ namespace LinearAlgebra
     template <typename Number>
     void
     BlockVector<Number>::equ(const Number                     a,
-                             const VectorSpaceVector<Number>& vv)
+                             const VectorSpaceVector<Number> &vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).equ(a, v.block(block));
@@ -341,9 +341,9 @@ namespace LinearAlgebra
     template <typename Number>
     void
     BlockVector<Number>::equ(const Number               a,
-                             const BlockVector<Number>& v,
+                             const BlockVector<Number> &v,
                              const Number               b,
-                             const BlockVector<Number>& w)
+                             const BlockVector<Number> &w)
     {
       AssertDimension(this->n_blocks(), v.n_blocks());
       AssertDimension(this->n_blocks(), w.n_blocks());
@@ -352,14 +352,14 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>&
-    BlockVector<Number>::operator+=(const VectorSpaceVector<Number>& vv)
+    BlockVector<Number> &
+    BlockVector<Number>::operator+=(const VectorSpaceVector<Number> &vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block) += v.block(block);
@@ -368,14 +368,14 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    BlockVector<Number>&
-    BlockVector<Number>::operator-=(const VectorSpaceVector<Number>& vv)
+    BlockVector<Number> &
+    BlockVector<Number>::operator-=(const VectorSpaceVector<Number> &vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block) -= v.block(block);
@@ -394,13 +394,13 @@ namespace LinearAlgebra
     template <typename Number>
     void
     BlockVector<Number>::add(const Number                     a,
-                             const VectorSpaceVector<Number>& vv)
+                             const VectorSpaceVector<Number> &vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).add(a, v.block(block));
@@ -409,20 +409,20 @@ namespace LinearAlgebra
     template <typename Number>
     void
     BlockVector<Number>::add(const Number                     a,
-                             const VectorSpaceVector<Number>& vv,
+                             const VectorSpaceVector<Number> &vv,
                              const Number                     b,
-                             const VectorSpaceVector<Number>& ww)
+                             const VectorSpaceVector<Number> &ww)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
-      Assert(dynamic_cast<const BlockVector<Number>*>(&ww) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&ww) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& w
-        = dynamic_cast<const BlockVector<Number>&>(ww);
+      const BlockVector<Number> &w
+        = dynamic_cast<const BlockVector<Number> &>(ww);
       AssertDimension(this->n_blocks(), v.n_blocks());
 
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
@@ -433,13 +433,13 @@ namespace LinearAlgebra
     void
     BlockVector<Number>::sadd(const Number                     x,
                               const Number                     a,
-                              const VectorSpaceVector<Number>& vv)
+                              const VectorSpaceVector<Number> &vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).sadd(x, a, v.block(block));
@@ -447,7 +447,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::sadd(const Number x, const BlockVector<Number>& v)
+    BlockVector<Number>::sadd(const Number x, const BlockVector<Number> &v)
     {
       AssertDimension(this->n_blocks(), v.n_blocks());
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
@@ -458,9 +458,9 @@ namespace LinearAlgebra
     void
     BlockVector<Number>::sadd(const Number               x,
                               const Number               a,
-                              const BlockVector<Number>& v,
+                              const BlockVector<Number> &v,
                               const Number               b,
-                              const BlockVector<Number>& w)
+                              const BlockVector<Number> &w)
     {
       AssertDimension(this->n_blocks(), v.n_blocks());
       AssertDimension(this->n_blocks(), w.n_blocks());
@@ -471,8 +471,8 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename OtherNumber>
     void
-    BlockVector<Number>::add(const std::vector<size_type>&        indices,
-                             const ::dealii::Vector<OtherNumber>& values)
+    BlockVector<Number>::add(const std::vector<size_type> &       indices,
+                             const ::dealii::Vector<OtherNumber> &values)
     {
       for(size_type i = 0; i < indices.size(); ++i)
         (*this)(indices[i]) += values[i];
@@ -480,8 +480,8 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::add(const std::vector<size_type>& indices,
-                             const std::vector<Number>&    values)
+    BlockVector<Number>::add(const std::vector<size_type> &indices,
+                             const std::vector<Number> &   values)
     {
       for(size_type i = 0; i < indices.size(); ++i)
         (*this)(indices[i]) += values[i];
@@ -512,15 +512,15 @@ namespace LinearAlgebra
 
     template <typename Number>
     Number BlockVector<Number>::
-           operator*(const VectorSpaceVector<Number>& vv) const
+           operator*(const VectorSpaceVector<Number> &vv) const
     {
       Assert(this->n_blocks() > 0, ExcEmptyObject());
 
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
 
       Number local_result = Number();
@@ -634,21 +634,21 @@ namespace LinearAlgebra
     template <typename Number>
     inline Number
     BlockVector<Number>::add_and_dot(const Number                     a,
-                                     const VectorSpaceVector<Number>& vv,
-                                     const VectorSpaceVector<Number>& ww)
+                                     const VectorSpaceVector<Number> &vv,
+                                     const VectorSpaceVector<Number> &ww)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&vv) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& v
-        = dynamic_cast<const BlockVector<Number>&>(vv);
+      const BlockVector<Number> &v
+        = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
 
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const BlockVector<Number>*>(&ww) != nullptr,
+      Assert(dynamic_cast<const BlockVector<Number> *>(&ww) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number>& w
-        = dynamic_cast<const BlockVector<Number>&>(ww);
+      const BlockVector<Number> &w
+        = dynamic_cast<const BlockVector<Number> &>(ww);
       AssertDimension(this->n_blocks(), w.n_blocks());
 
       Number local_result = Number();
@@ -665,7 +665,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     inline void
-    BlockVector<Number>::swap(BlockVector<Number>& v)
+    BlockVector<Number>::swap(BlockVector<Number> &v)
     {
       Assert(this->n_blocks() == v.n_blocks(),
              ExcDimensionMismatch(this->n_blocks(), v.n_blocks()));
@@ -684,7 +684,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     inline void
-    BlockVector<Number>::import(const LinearAlgebra::ReadWriteVector<Number>&,
+    BlockVector<Number>::import(const LinearAlgebra::ReadWriteVector<Number> &,
                                 VectorOperation::values,
                                 std::shared_ptr<const CommunicationPatternBase>)
     {
@@ -712,7 +712,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    BlockVector<Number>::print(std::ostream&      out,
+    BlockVector<Number>::print(std::ostream &     out,
                                const unsigned int precision,
                                const bool         scientific,
                                const bool         across) const
@@ -733,12 +733,12 @@ namespace LinearAlgebra
     {
       template <typename FullMatrixType>
       inline void
-      set_symmetric(FullMatrixType&, const bool)
+      set_symmetric(FullMatrixType &, const bool)
       {}
 
       template <typename NumberType>
       inline void
-      set_symmetric(LAPACKFullMatrix<NumberType>& matrix, const bool symmetric)
+      set_symmetric(LAPACKFullMatrix<NumberType> &matrix, const bool symmetric)
       {
         if(symmetric)
           matrix.set_property(LAPACKSupport::symmetric);
@@ -750,8 +750,8 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename FullMatrixType>
     void
-    BlockVector<Number>::multivector_inner_product(FullMatrixType& matrix,
-                                                   const BlockVector<Number>& V,
+    BlockVector<Number>::multivector_inner_product(FullMatrixType &matrix,
+                                                   const BlockVector<Number> &V,
                                                    const bool symmetric) const
     {
       const unsigned int m = this->n_blocks();
@@ -798,8 +798,8 @@ namespace LinearAlgebra
     template <typename FullMatrixType>
     Number
     BlockVector<Number>::multivector_inner_product_with_metric(
-      const FullMatrixType&      matrix,
-      const BlockVector<Number>& V,
+      const FullMatrixType &     matrix,
+      const BlockVector<Number> &V,
       const bool                 symmetric) const
     {
       Number res = Number(0.);
@@ -844,8 +844,8 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename FullMatrixType>
     void
-    BlockVector<Number>::mmult(BlockVector<Number>&  V,
-                               const FullMatrixType& matrix,
+    BlockVector<Number>::mmult(BlockVector<Number> & V,
+                               const FullMatrixType &matrix,
                                const Number          s,
                                const Number          b) const
     {

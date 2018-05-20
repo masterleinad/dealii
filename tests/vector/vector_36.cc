@@ -20,7 +20,7 @@
 #include <vector>
 
 void
-test(Vector<double>& v, Vector<double>& w)
+test(Vector<double> &v, Vector<double> &w)
 {
   // set only certain elements of each
   // vector
@@ -65,7 +65,7 @@ main()
       Vector<double> w(100);
       test(v, w);
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

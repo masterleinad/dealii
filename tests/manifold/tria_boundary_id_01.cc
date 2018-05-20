@@ -31,13 +31,13 @@ using namespace dealii;
 
 template <typename Stream, int dim>
 void
-print_triangulation_data(Stream&                   stream,
-                         const Triangulation<dim>& triangulation)
+print_triangulation_data(Stream &                  stream,
+                         const Triangulation<dim> &triangulation)
 {
   // Boundary id count
   std::map<int, int> boundary_id_count;
   std::map<int, int> manifold_id_count;
-  for(const auto& cell : triangulation.active_cell_iterators())
+  for(const auto &cell : triangulation.active_cell_iterators())
     {
       for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
@@ -61,12 +61,12 @@ print_triangulation_data(Stream&                   stream,
         }
     }
 
-  for(const auto& pair : boundary_id_count)
+  for(const auto &pair : boundary_id_count)
     {
       stream << "  Boundary: " << pair.first << "  ;"
              << "  Number of faces: " << pair.second << "\n";
     }
-  for(const auto& pair : manifold_id_count)
+  for(const auto &pair : manifold_id_count)
     {
       stream << "  Manifold: " << pair.first << "  ;"
              << "  Number of faces: " << pair.second << "\n";
@@ -96,7 +96,7 @@ main()
   // a manifold ID to the curved surface. Note that the manifold ID coincides
   // with the boundary IDs. This is the root cause of the issue...
   const types::manifold_id curved_manifold_id = 1;
-  for(const auto& cell : tria.active_cell_iterators())
+  for(const auto &cell : tria.active_cell_iterators())
     {
       for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)

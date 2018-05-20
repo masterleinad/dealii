@@ -24,18 +24,18 @@ public:
    */
   template <typename SP>
   void
-  diag_structure(SP& structure) const;
+  diag_structure(SP &structure) const;
 
   /**
    * Fill the matrix with values.
    */
   template <typename MatrixType>
   void
-  diag(MatrixType&) const;
+  diag(MatrixType &) const;
 
   template <typename number>
   void
-  gnuplot_print(std::ostream&, const Vector<number>&) const;
+  gnuplot_print(std::ostream &, const Vector<number> &) const;
 
 private:
   /**
@@ -57,7 +57,7 @@ inline FDDiagMatrix::FDDiagMatrix(unsigned int nx, unsigned int ny)
 
 template <typename SP>
 inline void
-FDDiagMatrix::diag_structure(SP& structure) const
+FDDiagMatrix::diag_structure(SP &structure) const
 {
   for(unsigned int i = 0; i <= ny - 2; i++)
     {
@@ -72,7 +72,7 @@ FDDiagMatrix::diag_structure(SP& structure) const
 
 template <typename MatrixType>
 inline void
-FDDiagMatrix::diag(MatrixType& A) const
+FDDiagMatrix::diag(MatrixType &A) const
 {
   for(unsigned int i = 0; i <= ny - 2; i++)
     {
@@ -87,7 +87,7 @@ FDDiagMatrix::diag(MatrixType& A) const
 
 template <typename number>
 inline void
-FDDiagMatrix::gnuplot_print(std::ostream& s, const Vector<number>& V) const
+FDDiagMatrix::gnuplot_print(std::ostream &s, const Vector<number> &V) const
 {
   for(unsigned int i = 0; i <= ny - 2; i++)
     {
@@ -120,14 +120,14 @@ public:
    */
   template <typename SP>
   void
-  three_point_structure(SP& structure) const;
+  three_point_structure(SP &structure) const;
 
   /**
    * Fill the matrix with values.
    */
   template <typename MatrixType>
   void
-  three_point(MatrixType&) const;
+  three_point(MatrixType &) const;
 
 private:
   /**
@@ -143,7 +143,7 @@ inline FD1DLaplaceMatrix::FD1DLaplaceMatrix(unsigned int n) : n(n)
 
 template <typename SP>
 inline void
-FD1DLaplaceMatrix::three_point_structure(SP& structure) const
+FD1DLaplaceMatrix::three_point_structure(SP &structure) const
 {
   for(unsigned int i = 0; i <= n - 2; i++)
     {
@@ -157,7 +157,7 @@ FD1DLaplaceMatrix::three_point_structure(SP& structure) const
 
 template <typename MatrixType>
 inline void
-FD1DLaplaceMatrix::three_point(MatrixType& A) const
+FD1DLaplaceMatrix::three_point(MatrixType &A) const
 {
   for(unsigned int i = 0; i <= n - 2; i++)
     {

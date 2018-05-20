@@ -33,7 +33,7 @@ main(void)
   const unsigned int n = 10;
   adtl::setNumDir(n);
 
-  adtl::adouble* x = new adtl::adouble[n];
+  adtl::adouble *x = new adtl::adouble[n];
   for(unsigned int i = 0; i < n; i++)
     {
       x[i] = (i + 1.0) / (2.0 + i);

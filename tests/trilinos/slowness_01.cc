@@ -103,7 +103,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -116,7 +116,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

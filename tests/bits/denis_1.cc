@@ -37,7 +37,7 @@ class F : public Function<2>
 {
 public:
   virtual double
-  value(const Point<2>& p, const unsigned int) const
+  value(const Point<2> &p, const unsigned int) const
   {
     double delta = 0.05;
     double x, y, r;

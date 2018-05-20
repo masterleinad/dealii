@@ -35,7 +35,7 @@
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
 
-void check_this(Triangulation<3>& tria)
+void check_this(Triangulation<3> &tria)
 {
   FE_Q<3>       fe(1);
   DoFHandler<3> dof_handler(tria);
@@ -54,7 +54,7 @@ void check_this(Triangulation<3>& tria)
   deallog << "  " << static_cast<double>(e.linfty_norm()) << std::endl;
 }
 
-void check(Triangulation<3>& tria)
+void check(Triangulation<3> &tria)
 {
   (++tria.begin_active())->set_refine_flag();
   tria.execute_coarsening_and_refinement();

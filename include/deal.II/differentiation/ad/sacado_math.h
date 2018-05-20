@@ -87,7 +87,7 @@ namespace std
     typename = typename std::enable_if<
       dealii::Differentiation::AD::is_sacado_number<ADNumberType>::value>::type>
   inline ADNumberType
-  erfc(const ADNumberType& x)
+  erfc(const ADNumberType &x)
   {
     return 1.0 - std::erf(x);
   }

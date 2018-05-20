@@ -29,10 +29,10 @@ struct X
 {
   X() : i(0)
   {}
-  X(const X& x) : i(x.i + 1)
+  X(const X &x) : i(x.i + 1)
   {}
-  X&
-  operator=(const X& x)
+  X &
+  operator=(const X &x)
   {
     i = x.i + 1;
     return *this;
@@ -41,7 +41,7 @@ struct X
 };
 
 void
-execute_ref(const X& x)
+execute_ref(const X &x)
 {
   Assert(x.i == 0, ExcInternalError());
   deallog << unify_pretty_function(__PRETTY_FUNCTION__) << ' ' << x.i

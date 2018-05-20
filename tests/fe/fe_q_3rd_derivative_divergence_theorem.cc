@@ -46,8 +46,8 @@ ones()
 
 template <int dim>
 void
-test(const Triangulation<dim>& tr,
-     const FiniteElement<dim>& fe,
+test(const Triangulation<dim> &tr,
+     const FiniteElement<dim> &fe,
      const double              tolerance)
 {
   DoFHandler<dim> dof(tr);

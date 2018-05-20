@@ -29,9 +29,9 @@
 
 template <int dim>
 double
-difference(const FiniteElement<dim>& fe,
+difference(const FiniteElement<dim> &fe,
            const std::vector<double> dofs,
-           const Function<dim>&      function)
+           const Function<dim> &     function)
 {
   double      result = 0.;
   QGauss<dim> quadrature(fe.degree + 1);
@@ -52,9 +52,9 @@ difference(const FiniteElement<dim>& fe,
 
 template <int dim>
 double
-vector_difference(const FiniteElement<dim>& fe,
+vector_difference(const FiniteElement<dim> &fe,
                   const std::vector<double> dofs,
-                  const Function<dim>&      function,
+                  const Function<dim> &     function,
                   const unsigned int        offset)
 {
   double      result = 0.;
@@ -88,7 +88,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& p, const unsigned int c) const
+  value(const Point<dim> &p, const unsigned int c) const
   {
     double result = 1.;
     for(unsigned int d = 0; d < dim; ++d)
@@ -98,8 +98,8 @@ public:
   }
 
   void
-  value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
+  value_list(const std::vector<Point<dim>> &points,
+             std::vector<double> &          values,
              const unsigned int             c) const
   {
     Assert(values.size() == points.size(),
@@ -107,7 +107,7 @@ public:
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim>& p      = points[i];
+        const Point<dim> &p      = points[i];
         double            result = 1.;
         for(unsigned int d = 0; d < dim; ++d)
           for(unsigned int k = 0; k < degree; ++k)
@@ -117,8 +117,8 @@ public:
   }
 
   void
-  vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   values) const
+  vector_value_list(const std::vector<Point<dim>> &points,
+                    std::vector<Vector<double>> &  values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -127,7 +127,7 @@ public:
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim>& p = points[i];
+        const Point<dim> &p = points[i];
         for(unsigned int c = 0; c < COMP; ++c)
           {
             double result = 1.;

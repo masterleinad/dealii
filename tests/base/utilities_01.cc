@@ -37,7 +37,7 @@ test()
   deallog << Utilities::string_to_int(v)[2] << std::endl;
 
   {
-    const char* p = "alpha, beta, gamma ";
+    const char *p = "alpha, beta, gamma ";
     AssertThrow(Utilities::split_string_list(p).size() == 3,
                 ExcInternalError());
     AssertThrow(Utilities::split_string_list(p)[0] == "alpha",
@@ -49,7 +49,7 @@ test()
   }
 
   {
-    const char* p = "alpha; beta; gamma ";
+    const char *p = "alpha; beta; gamma ";
     AssertThrow(Utilities::split_string_list(p, ';').size() == 3,
                 ExcInternalError());
     AssertThrow(Utilities::split_string_list(p, ';')[0] == "alpha",
@@ -61,7 +61,7 @@ test()
   }
 
   {
-    const char* p = "alpha;; beta;; gamma ";
+    const char *p = "alpha;; beta;; gamma ";
     AssertThrow(Utilities::split_string_list(p, ";;").size() == 3,
                 ExcInternalError());
     AssertThrow(Utilities::split_string_list(p, ";;")[0] == "alpha",

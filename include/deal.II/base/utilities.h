@@ -116,7 +116,7 @@ namespace Utilities
    * not possible.
    */
   int
-  string_to_int(const std::string& s);
+  string_to_int(const std::string &s);
 
   /**
    * Return a string describing the dimensions of the object. Often, functions
@@ -137,21 +137,21 @@ namespace Utilities
    * assertion if that is not possible.
    */
   std::vector<int>
-  string_to_int(const std::vector<std::string>& s);
+  string_to_int(const std::vector<std::string> &s);
 
   /**
    * Given a string, convert it to an double. Throw an assertion if that is
    * not possible.
    */
   double
-  string_to_double(const std::string& s);
+  string_to_double(const std::string &s);
 
   /**
    * Given a list of strings, convert it to a list of doubles. Throw an
    * assertion if that is not possible.
    */
   std::vector<double>
-  string_to_double(const std::vector<std::string>& s);
+  string_to_double(const std::vector<std::string> &s);
 
   /**
    * Given a string that contains text separated by a @p delimiter, split it
@@ -196,14 +196,14 @@ namespace Utilities
    * yields an empty list regardless of the number of spaces in the string.
    */
   std::vector<std::string>
-  split_string_list(const std::string& s, const std::string& delimiter = ",");
+  split_string_list(const std::string &s, const std::string &delimiter = ",");
 
   /**
    * Specialization of split_string_list() for the case where the delimiter
    * is a single char.
    */
   std::vector<std::string>
-  split_string_list(const std::string& s, const char delimiter);
+  split_string_list(const std::string &s, const char delimiter);
 
   /**
    * Take a text, usually a documentation or something, and try to break it
@@ -215,7 +215,7 @@ namespace Utilities
    * too.
    */
   std::vector<std::string>
-  break_text_into_lines(const std::string& original_text,
+  break_text_into_lines(const std::string &original_text,
                         const unsigned int width,
                         const char         delimiter = ' ');
 
@@ -224,7 +224,7 @@ namespace Utilities
    * the string.
    */
   bool
-  match_at_string_start(const std::string& name, const std::string& pattern);
+  match_at_string_start(const std::string &name, const std::string &pattern);
 
   /**
    * Read a (signed) integer starting at the position in @p name indicated by
@@ -235,16 +235,16 @@ namespace Utilities
    * (-1,numbers::invalid_unsigned_int)
    */
   std::pair<int, unsigned int>
-  get_integer_at_position(const std::string& name, const unsigned int position);
+  get_integer_at_position(const std::string &name, const unsigned int position);
 
   /**
    * Return a string with all occurrences of @p from in @p input replaced by
    * @p to.
    */
   std::string
-  replace_in_string(const std::string& input,
-                    const std::string& from,
-                    const std::string& to);
+  replace_in_string(const std::string &input,
+                    const std::string &from,
+                    const std::string &to);
 
   /**
    * Return a string with all standard whitespace characters (including
@@ -252,7 +252,7 @@ namespace Utilities
    * end of @p input removed.
    */
   std::string
-  trim(const std::string& input);
+  trim(const std::string &input);
 
   /**
    * Generate a random number from a normalized Gaussian probability
@@ -370,7 +370,7 @@ namespace Utilities
    */
   template <typename Iterator, typename T>
   Iterator
-  lower_bound(Iterator first, Iterator last, const T& val);
+  lower_bound(Iterator first, Iterator last, const T &val);
 
   /**
    * The same function as above, but taking an argument that is used to
@@ -379,7 +379,7 @@ namespace Utilities
    */
   template <typename Iterator, typename T, typename Comp>
   Iterator
-  lower_bound(Iterator first, Iterator last, const T& val, const Comp comp);
+  lower_bound(Iterator first, Iterator last, const T &val, const Comp comp);
 
   /**
    * Given a permutation vector (i.e. a vector $p_0\ldots p_{N-1}$ where each
@@ -387,7 +387,7 @@ namespace Utilities
    * permutation $q_i=N-1-p_i$.
    */
   std::vector<unsigned int>
-  reverse_permutation(const std::vector<unsigned int>& permutation);
+  reverse_permutation(const std::vector<unsigned int> &permutation);
 
   /**
    * Given a permutation vector (i.e. a vector $p_0\ldots p_{N-1}$ where each
@@ -395,7 +395,7 @@ namespace Utilities
    * permutation $q_0\ldots q_{N-1}$ so that $q_{p_i}=p_{q_i}=i$.
    */
   std::vector<unsigned int>
-  invert_permutation(const std::vector<unsigned int>& permutation);
+  invert_permutation(const std::vector<unsigned int> &permutation);
 
   /**
    * Given a permutation vector (i.e. a vector $p_0\ldots p_{N-1}$ where each
@@ -403,7 +403,7 @@ namespace Utilities
    * permutation $q_i=N-1-p_i$.
    */
   std::vector<unsigned long long int>
-  reverse_permutation(const std::vector<unsigned long long int>& permutation);
+  reverse_permutation(const std::vector<unsigned long long int> &permutation);
 
   /**
    * Given a permutation vector (i.e. a vector $p_0\ldots p_{N-1}$ where each
@@ -411,7 +411,7 @@ namespace Utilities
    * permutation $q_0\ldots q_{N-1}$ so that $q_{p_i}=p_{q_i}=i$.
    */
   std::vector<unsigned long long int>
-  invert_permutation(const std::vector<unsigned long long int>& permutation);
+  invert_permutation(const std::vector<unsigned long long int> &permutation);
 
   /**
    * Given an arbitrary object of type T, use boost::serialization utilities
@@ -431,7 +431,7 @@ namespace Utilities
    */
   template <typename T>
   size_t
-  pack(const T& object, std::vector<char>& dest_buffer);
+  pack(const T &object, std::vector<char> &dest_buffer);
 
   /**
    * Creates and returns a buffer solely for the given object, using the
@@ -441,7 +441,7 @@ namespace Utilities
    */
   template <typename T>
   std::vector<char>
-  pack(const T& object);
+  pack(const T &object);
 
   /**
    * Given a vector of characters, obtained through a call to the function
@@ -473,7 +473,7 @@ namespace Utilities
    */
   template <typename T>
   T
-  unpack(const std::vector<char>& buffer);
+  unpack(const std::vector<char> &buffer);
 
   /**
    * Same unpack function as above, but takes constant iterators on
@@ -483,8 +483,8 @@ namespace Utilities
    */
   template <typename T>
   T
-  unpack(const std::vector<char>::iterator& begin,
-         const std::vector<char>::iterator& end);
+  unpack(const std::vector<char>::iterator &begin,
+         const std::vector<char>::iterator &end);
 
   /**
    * Given a vector of characters, obtained through a call to the function
@@ -518,7 +518,7 @@ namespace Utilities
    */
   template <typename T, int N>
   void
-  unpack(const std::vector<char>& buffer, T (&unpacked_object)[N]);
+  unpack(const std::vector<char> &buffer, T (&unpacked_object)[N]);
 
   /**
    * Same unpack function as above, but takes constant iterators on
@@ -528,8 +528,8 @@ namespace Utilities
    */
   template <typename T, int N>
   void
-  unpack(const std::vector<char>::iterator& begin,
-         const std::vector<char>::iterator& end,
+  unpack(const std::vector<char>::iterator &begin,
+         const std::vector<char>::iterator &end,
          T (&unpacked_object)[N]);
 
   /**
@@ -579,12 +579,12 @@ namespace Utilities
    */
   template <typename To, typename From>
   std::unique_ptr<To>
-  dynamic_unique_cast(std::unique_ptr<From>&& p)
+  dynamic_unique_cast(std::unique_ptr<From> &&p)
   {
     // Let's see if we can cast from 'From' to 'To'. If so, do the cast,
     // and then release the pointer from the old
     // owner
-    if(To* cast = dynamic_cast<To*>(p.get()))
+    if(To *cast = dynamic_cast<To *>(p.get()))
       {
         std::unique_ptr<To> result(cast);
         p.release();
@@ -678,7 +678,7 @@ namespace Utilities
      * consumption of this process. This is only implemented on Linux.
      */
     void
-    get_memory_stats(MemoryStats& stats);
+    get_memory_stats(MemoryStats &stats);
 
     /**
      * Return the name of the host this process runs on.
@@ -714,7 +714,7 @@ namespace Utilities
      * leaving this task to the calling site.
      */
     void
-    posix_memalign(void** memptr, size_t alignment, size_t size);
+    posix_memalign(void **memptr, size_t alignment, size_t size);
   } // namespace System
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -734,7 +734,7 @@ namespace Utilities
      * the communicator will correspond to MPI_COMM_WORLD, i.e. a communicator
      * that encompasses all processes within this MPI universe.
      */
-    const Epetra_Comm&
+    const Epetra_Comm &
     comm_world();
 
     /**
@@ -746,7 +746,7 @@ namespace Utilities
      * the communicator will correspond to MPI_COMM_SELF, i.e. a communicator
      * that comprises only this one processor.
      */
-    const Epetra_Comm&
+    const Epetra_Comm &
     comm_self();
 
     /**
@@ -781,8 +781,8 @@ namespace Utilities
      * relative timing as is the case in a sequential program that just uses a
      * single communicator.
      */
-    Epetra_Comm*
-    duplicate_communicator(const Epetra_Comm& communicator);
+    Epetra_Comm *
+    duplicate_communicator(const Epetra_Comm &communicator);
 
     /**
      * Given an Epetra communicator that was created by the
@@ -807,7 +807,7 @@ namespace Utilities
      * quite wrong. Don't do this.
      */
     void
-    destroy_communicator(Epetra_Comm& communicator);
+    destroy_communicator(Epetra_Comm &communicator);
 
     /**
      * Return the number of MPI processes there exist in the given
@@ -818,7 +818,7 @@ namespace Utilities
      * only one process and the function returns 1.
      */
     unsigned int
-    get_n_mpi_processes(const Epetra_Comm& mpi_communicator);
+    get_n_mpi_processes(const Epetra_Comm &mpi_communicator);
 
     /**
      * Return the number of the present MPI process in the space of processes
@@ -827,7 +827,7 @@ namespace Utilities
      * (given by get_n_mpi_processes()).
      */
     unsigned int
-    get_this_mpi_process(const Epetra_Comm& mpi_communicator);
+    get_this_mpi_process(const Epetra_Comm &mpi_communicator);
 
     /**
      * Given a Trilinos Epetra map, create a new map that has the same
@@ -840,7 +840,7 @@ namespace Utilities
      * obtained by the duplicate_communicator() function.
      */
     Epetra_Map
-    duplicate_map(const Epetra_BlockMap& map, const Epetra_Comm& comm);
+    duplicate_map(const Epetra_BlockMap &map, const Epetra_Comm &comm);
   } // namespace Trilinos
 
 #endif
@@ -878,14 +878,14 @@ namespace Utilities
 
   template <typename Iterator, typename T>
   inline Iterator
-  lower_bound(Iterator first, Iterator last, const T& val)
+  lower_bound(Iterator first, Iterator last, const T &val)
   {
     return Utilities::lower_bound(first, last, val, std::less<T>());
   }
 
   template <typename Iterator, typename T, typename Comp>
   inline Iterator
-  lower_bound(Iterator first, Iterator last, const T& val, const Comp comp)
+  lower_bound(Iterator first, Iterator last, const T &val, const Comp comp)
   {
     // verify that the two iterators are properly ordered. since
     // we need operator- for the iterator type anyway, do the
@@ -980,7 +980,7 @@ namespace Utilities
 
   template <typename T>
   size_t
-  pack(const T& object, std::vector<char>& dest_buffer)
+  pack(const T &object, std::vector<char> &dest_buffer)
   {
     // see if the object is small and copyable via memcpy. if so, use
     // this fast path. otherwise, we have to go through the BOOST
@@ -1027,7 +1027,7 @@ namespace Utilities
           boost::archive::binary_oarchive archive(out);
           archive << object;
 
-          const std::string& s = out.str();
+          const std::string &s = out.str();
           dest_buffer.reserve(dest_buffer.size() + s.size());
           std::move(s.begin(), s.end(), std::back_inserter(dest_buffer));
 #endif
@@ -1038,7 +1038,7 @@ namespace Utilities
 
   template <typename T>
   std::vector<char>
-  pack(const T& object)
+  pack(const T &object)
   {
     std::vector<char> buffer;
     pack<T>(object, buffer);
@@ -1047,8 +1047,8 @@ namespace Utilities
 
   template <typename T>
   T
-  unpack(const std::vector<char>::const_iterator& cbegin,
-         const std::vector<char>::const_iterator& cend)
+  unpack(const std::vector<char>::const_iterator &cbegin,
+         const std::vector<char>::const_iterator &cend)
   {
     // see if the object is small and copyable via memcpy. if so, use
     // this fast path. otherwise, we have to go through the BOOST
@@ -1101,15 +1101,15 @@ namespace Utilities
 
   template <typename T>
   T
-  unpack(const std::vector<char>& buffer)
+  unpack(const std::vector<char> &buffer)
   {
     return unpack<T>(buffer.cbegin(), buffer.cend());
   }
 
   template <typename T, int N>
   void
-  unpack(const std::vector<char>::const_iterator& cbegin,
-         const std::vector<char>::const_iterator& cend,
+  unpack(const std::vector<char>::const_iterator &cbegin,
+         const std::vector<char>::const_iterator &cend,
          T (&unpacked_object)[N])
   {
     // see if the object is small and copyable via memcpy. if so, use
@@ -1158,7 +1158,7 @@ namespace Utilities
 
   template <typename T, int N>
   void
-  unpack(const std::vector<char>& buffer, T (&unpacked_object)[N])
+  unpack(const std::vector<char> &buffer, T (&unpacked_object)[N])
   {
     unpack<T, N>(buffer.cbegin(), buffer.cend(), unpacked_object);
   }
@@ -1178,9 +1178,9 @@ namespace boost
     {
       template <class Archive, typename... Args>
       static void
-      serialize(Archive& ar, std::tuple<Args...>& t, const unsigned int version)
+      serialize(Archive &ar, std::tuple<Args...> &t, const unsigned int version)
       {
-        ar& std::get<N - 1>(t);
+        ar &std::get<N - 1>(t);
         Serialize<N - 1>::serialize(ar, t, version);
       }
     };
@@ -1190,7 +1190,7 @@ namespace boost
     {
       template <class Archive, typename... Args>
       static void
-      serialize(Archive& ar, std::tuple<Args...>& t, const unsigned int version)
+      serialize(Archive &ar, std::tuple<Args...> &t, const unsigned int version)
       {
         (void) ar;
         (void) t;
@@ -1200,7 +1200,7 @@ namespace boost
 
     template <class Archive, typename... Args>
     void
-    serialize(Archive& ar, std::tuple<Args...>& t, const unsigned int version)
+    serialize(Archive &ar, std::tuple<Args...> &t, const unsigned int version)
     {
       Serialize<sizeof...(Args)>::serialize(ar, t, version);
     }

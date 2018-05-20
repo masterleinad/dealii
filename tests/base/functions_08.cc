@@ -25,7 +25,7 @@ class X : public TensorFunction<1, dim>
 {
 public:
   virtual Tensor<1, dim>
-  value(const Point<dim>& p) const
+  value(const Point<dim> &p) const
   {
     return p;
   }

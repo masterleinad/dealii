@@ -61,7 +61,7 @@ const double eps = 1e-10;
 
 template <typename DoFHandlerType>
 std::vector<dealii::IndexSet>
-locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
+locally_owned_dofs_per_subdomain(const DoFHandlerType &dof_handler)
 {
   std::vector<dealii::types::subdomain_id> subdomain_association(
     dof_handler.n_dofs());
@@ -115,15 +115,15 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
 class PETScInverse
 {
 public:
-  PETScInverse(const dealii::PETScWrappers::MatrixBase& A,
-               dealii::SolverControl&                   cn,
-               const MPI_Comm& mpi_communicator = PETSC_COMM_SELF)
+  PETScInverse(const dealii::PETScWrappers::MatrixBase &A,
+               dealii::SolverControl &                  cn,
+               const MPI_Comm &mpi_communicator = PETSC_COMM_SELF)
     : solver(cn, mpi_communicator), matrix(A), preconditioner(matrix)
   {}
 
   void
-  vmult(dealii::PETScWrappers::MPI::Vector&       dst,
-        const dealii::PETScWrappers::MPI::Vector& src) const
+  vmult(dealii::PETScWrappers::MPI::Vector &      dst,
+        const dealii::PETScWrappers::MPI::Vector &src) const
   {
     ;
     solver.solve(matrix, dst, src, preconditioner);
@@ -131,7 +131,7 @@ public:
 
 private:
   mutable dealii::PETScWrappers::SolverCG  solver;
-  const dealii::PETScWrappers::MatrixBase& matrix;
+  const dealii::PETScWrappers::MatrixBase &matrix;
   PETScWrappers::PreconditionBlockJacobi   preconditioner;
 };
 
@@ -173,7 +173,7 @@ test()
       endc = triangulation.end();
     for(; cell != endc; ++cell)
       {
-        const dealii::Point<dim>& center = cell->center();
+        const dealii::Point<dim> &center = cell->center();
         const double              x      = center[0];
 
         const unsigned int id = std::floor((x - x0) / dL);
@@ -345,7 +345,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   dealii::deallog.attach(logfile, /*do not print job id*/ false);
@@ -358,7 +358,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

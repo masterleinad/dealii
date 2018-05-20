@@ -29,7 +29,7 @@
 
 template <class TRIA>
 void
-check(TRIA& tr)
+check(TRIA &tr)
 {
   typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
 
@@ -51,7 +51,7 @@ check(TRIA& tr)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   deal_II_exceptions::disable_abort_on_exception();
 

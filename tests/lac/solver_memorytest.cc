@@ -34,10 +34,10 @@
 
 template <typename SolverType, typename MatrixType, typename VectorType>
 void
-check_solve(const MatrixType&                          A,
-            VectorType&                                u,
-            VectorType&                                f,
-            const typename SolverType::AdditionalData& additional_data
+check_solve(const MatrixType &                         A,
+            VectorType &                               u,
+            VectorType &                               f,
+            const typename SolverType::AdditionalData &additional_data
             = typename SolverType::AdditionalData())
 {
   GrowingVectorMemory<> mem;
@@ -51,7 +51,7 @@ check_solve(const MatrixType&                          A,
     {
       solver.solve(A, u, f, prec_no);
     }
-  catch(std::exception& e)
+  catch(std::exception &e)
     {
       deallog << e.what() << std::endl;
     }

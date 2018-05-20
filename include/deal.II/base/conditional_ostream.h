@@ -87,7 +87,7 @@ public:
    * based on which writes are actually forwarded. Per default the condition
    * of an object is active.
    */
-  ConditionalOStream(std::ostream& stream, const bool active = true);
+  ConditionalOStream(std::ostream &stream, const bool active = true);
 
   /**
    * Depending on the <tt>active</tt> flag set the condition of this stream to
@@ -106,7 +106,7 @@ public:
   /**
    * Return a reference to the stream currently in use.
    */
-  std::ostream&
+  std::ostream &
   get_stream() const;
 
   /**
@@ -115,8 +115,8 @@ public:
    * member functions of the surrounding class.
    */
   template <typename T>
-  const ConditionalOStream&
-  operator<<(const T& t) const;
+  const ConditionalOStream &
+  operator<<(const T &t) const;
 
   /**
    * Treat ostream manipulators. This function must be @p const so that member
@@ -127,14 +127,14 @@ public:
    * template above since functions like @p std::endl are actually overloaded
    * and can't be bound directly to a template type.
    */
-  const ConditionalOStream&
-  operator<<(std::ostream& (*p)(std::ostream&) ) const;
+  const ConditionalOStream &
+  operator<<(std::ostream &(*p)(std::ostream &) ) const;
 
 private:
   /**
    * Reference to the stream we want to write to.
    */
-  std::ostream& output_stream;
+  std::ostream &output_stream;
 
   /**
    * Stores the actual condition the object is in.
@@ -145,8 +145,8 @@ private:
 // --------------------------- inline and template functions -----------
 
 template <class T>
-inline const ConditionalOStream&
-ConditionalOStream::operator<<(const T& t) const
+inline const ConditionalOStream &
+ConditionalOStream::operator<<(const T &t) const
 {
   if(active_flag == true)
     output_stream << t;
@@ -154,8 +154,8 @@ ConditionalOStream::operator<<(const T& t) const
   return *this;
 }
 
-inline const ConditionalOStream&
-ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&) ) const
+inline const ConditionalOStream &
+ConditionalOStream::operator<<(std::ostream &(*p)(std::ostream &) ) const
 {
   if(active_flag == true)
     output_stream << p;
@@ -163,7 +163,7 @@ ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&) ) const
   return *this;
 }
 
-inline std::ostream&
+inline std::ostream &
 ConditionalOStream::get_stream() const
 {
   return output_stream;

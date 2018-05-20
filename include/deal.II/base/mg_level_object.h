@@ -71,7 +71,7 @@ public:
   /**
    * Access object on level @p level.
    */
-  Object& operator[](const unsigned int level);
+  Object &operator[](const unsigned int level);
 
   /**
    * Access object on level @p level.
@@ -79,7 +79,7 @@ public:
    * This function can be called on a @p const object, and
    * consequently returns a @p const reference.
    */
-  const Object& operator[](const unsigned int level) const;
+  const Object &operator[](const unsigned int level) const;
 
   /**
    * Delete all previous contents of this object and reset its size according
@@ -101,7 +101,7 @@ public:
    * this operation. This is, in particular, true for vectors and matrices
    * if @p d is zero, thereby zeroing out all vector or matrix entries.
    */
-  MGLevelObject<Object>&
+  MGLevelObject<Object> &
   operator=(const double d);
 
   /**
@@ -184,7 +184,7 @@ MGLevelObject<Object>::MGLevelObject(const unsigned int min,
 }
 
 template <class Object>
-Object& MGLevelObject<Object>::operator[](const unsigned int i)
+Object &MGLevelObject<Object>::operator[](const unsigned int i)
 {
   Assert((i >= minlevel) && (i < minlevel + objects.size()),
          ExcIndexRange(i, minlevel, minlevel + objects.size()));
@@ -192,7 +192,7 @@ Object& MGLevelObject<Object>::operator[](const unsigned int i)
 }
 
 template <class Object>
-const Object& MGLevelObject<Object>::operator[](const unsigned int i) const
+const Object &MGLevelObject<Object>::operator[](const unsigned int i) const
 {
   Assert((i >= minlevel) && (i < minlevel + objects.size()),
          ExcIndexRange(i, minlevel, minlevel + objects.size()));
@@ -217,7 +217,7 @@ MGLevelObject<Object>::resize(const unsigned int new_minlevel,
 }
 
 template <class Object>
-MGLevelObject<Object>&
+MGLevelObject<Object> &
 MGLevelObject<Object>::operator=(const double d)
 {
   typename std::vector<std::shared_ptr<Object>>::iterator v;

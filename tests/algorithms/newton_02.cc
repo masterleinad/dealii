@@ -29,17 +29,17 @@ class TestOutputOperator : public OutputOperator<VectorType>
 {
 public:
   void
-  initialize(const DoFHandler<dim>& dof_handler)
+  initialize(const DoFHandler<dim> &dof_handler)
   {
     dof = &dof_handler;
   }
 
-  virtual OutputOperator<VectorType>&
-  operator<<(const AnyData& vectors)
+  virtual OutputOperator<VectorType> &
+  operator<<(const AnyData &vectors)
   {
     for(unsigned int i = 0; i < vectors.size(); ++i)
       {
-        const VectorType* p = vectors.try_read_ptr<VectorType>(i);
+        const VectorType *p = vectors.try_read_ptr<VectorType>(i);
         if(p != nullptr)
           {
             // this should be equal to dof->n_dofs() otherwise
@@ -58,11 +58,11 @@ class ZeroResidual : public Algorithms::OperatorBase
 {
 public:
   virtual void
-  operator()(AnyData& out, const AnyData& in)
+  operator()(AnyData &out, const AnyData &in)
   {
-    const Vector<double>& in_vector
-      = *in.entry<const Vector<double>*>("Newton iterate");
-    Vector<double>& out_vector = *out.entry<Vector<double>*>(0);
+    const Vector<double> &in_vector
+      = *in.entry<const Vector<double> *>("Newton iterate");
+    Vector<double> &out_vector = *out.entry<Vector<double> *>(0);
     out_vector.reinit(in_vector.size());
   }
 };
@@ -71,11 +71,11 @@ class IdentitySolver : public Algorithms::OperatorBase
 {
 public:
   virtual void
-  operator()(AnyData& out, const AnyData& in)
+  operator()(AnyData &out, const AnyData &in)
   {
-    const Vector<double>& in_vector
-      = *in.entry<const Vector<double>*>("Newton residual");
-    Vector<double>& out_vector = *out.entry<Vector<double>*>(0);
+    const Vector<double> &in_vector
+      = *in.entry<const Vector<double> *>("Newton residual");
+    Vector<double> &out_vector = *out.entry<Vector<double> *>(0);
     out_vector                 = in_vector;
   }
 };
@@ -105,7 +105,7 @@ test()
   AnyData out_data;
 
   Vector<double> solution(dofh.n_dofs());
-  out_data.add<Vector<double>*>(&solution, "solution");
+  out_data.add<Vector<double> *>(&solution, "solution");
 
   newton.debug_vectors = true;
   newton(out_data, in_data);

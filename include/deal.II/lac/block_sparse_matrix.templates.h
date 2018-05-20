@@ -24,7 +24,7 @@ DEAL_II_NAMESPACE_OPEN
 
 template <typename number>
 BlockSparseMatrix<number>::BlockSparseMatrix(
-  const BlockSparsityPattern& sparsity)
+  const BlockSparsityPattern &sparsity)
 {
   // virtual functions called in constructors and destructors never use the
   // override in a derived class
@@ -47,8 +47,8 @@ BlockSparseMatrix<number>::~BlockSparseMatrix()
 }
 
 template <typename number>
-BlockSparseMatrix<number>&
-BlockSparseMatrix<number>::operator=(const BlockSparseMatrix<number>& m)
+BlockSparseMatrix<number> &
+BlockSparseMatrix<number>::operator=(const BlockSparseMatrix<number> &m)
 {
   Assert(this->row_block_indices == m.row_block_indices,
          ExcBlockDimensionMismatch());
@@ -76,7 +76,7 @@ BlockSparseMatrix<number>::clear()
 
 template <typename number>
 void
-BlockSparseMatrix<number>::reinit(const BlockSparsityPattern& sparsity)
+BlockSparseMatrix<number>::reinit(const BlockSparsityPattern &sparsity)
 {
   // first delete previous content of
   // the subobjects array and delete
@@ -96,7 +96,7 @@ BlockSparseMatrix<number>::reinit(const BlockSparsityPattern& sparsity)
   for(size_type r = 0; r < this->n_block_rows(); ++r)
     for(size_type c = 0; c < this->n_block_cols(); ++c)
       {
-        BlockType* p = new SparseMatrix<number>();
+        BlockType *p = new SparseMatrix<number>();
         p->reinit(sparsity.block(r, c));
         this->sub_objects[r][c] = p;
       }
@@ -142,7 +142,7 @@ BlockSparseMatrix<number>::n_actually_nonzero_elements(
 }
 
 template <typename number>
-const BlockSparsityPattern&
+const BlockSparsityPattern &
 BlockSparseMatrix<number>::get_sparsity_pattern() const
 {
   return *sparsity_pattern;
@@ -150,11 +150,11 @@ BlockSparseMatrix<number>::get_sparsity_pattern() const
 
 template <typename number>
 void
-BlockSparseMatrix<number>::print_formatted(std::ostream&      out,
+BlockSparseMatrix<number>::print_formatted(std::ostream &     out,
                                            const unsigned int precision,
                                            const bool         scientific,
                                            const unsigned int width,
-                                           const char*        zero_string,
+                                           const char *       zero_string,
                                            const double       denominator) const
 {
   for(size_type r = 0; r < this->n_block_rows(); ++r)

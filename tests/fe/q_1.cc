@@ -28,11 +28,11 @@
 
 template <int dim>
 void
-test(const FE_Q<dim>& fe_q)
+test(const FE_Q<dim> &fe_q)
 {
   deallog << fe_q.get_name() << std::endl;
 
-  const FullMatrix<double>& constraints = fe_q.constraints();
+  const FullMatrix<double> &constraints = fe_q.constraints();
 
   for(unsigned int i = 0; i < constraints.m(); ++i)
     {

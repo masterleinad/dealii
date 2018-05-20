@@ -28,10 +28,10 @@ DEAL_II_NAMESPACE_OPEN
 
 template <class PolynomialType, int dim, int spacedim>
 FE_Poly<PolynomialType, dim, spacedim>::FE_Poly(
-  const PolynomialType&             poly_space,
-  const FiniteElementData<dim>&     fe_data,
-  const std::vector<bool>&          restriction_is_additive_flags,
-  const std::vector<ComponentMask>& nonzero_components)
+  const PolynomialType &            poly_space,
+  const FiniteElementData<dim> &    fe_data,
+  const std::vector<bool> &         restriction_is_additive_flags,
+  const std::vector<ComponentMask> &nonzero_components)
   : FiniteElement<dim, spacedim>(fe_data,
                                  restriction_is_additive_flags,
                                  nonzero_components),
@@ -50,7 +50,7 @@ FE_Poly<PolynomialType, dim, spacedim>::get_degree() const
 template <class PolynomialType, int dim, int spacedim>
 double
 FE_Poly<PolynomialType, dim, spacedim>::shape_value(const unsigned int i,
-                                                    const Point<dim>&  p) const
+                                                    const Point<dim> & p) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.compute_value(i, p);
@@ -60,7 +60,7 @@ template <class PolynomialType, int dim, int spacedim>
 double
 FE_Poly<PolynomialType, dim, spacedim>::shape_value_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim> & p,
   const unsigned int component) const
 {
   (void) component;
@@ -72,7 +72,7 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_value_component(
 template <class PolynomialType, int dim, int spacedim>
 Tensor<1, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_grad(const unsigned int i,
-                                                   const Point<dim>&  p) const
+                                                   const Point<dim> & p) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.template compute_derivative<1>(i, p);
@@ -82,7 +82,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<1, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_grad_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim> & p,
   const unsigned int component) const
 {
   (void) component;
@@ -95,7 +95,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<2, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_grad_grad(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim> & p) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.template compute_derivative<2>(i, p);
@@ -105,7 +105,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<2, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_grad_grad_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim> & p,
   const unsigned int component) const
 {
   (void) component;
@@ -118,7 +118,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<3, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_3rd_derivative(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim> & p) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.template compute_derivative<3>(i, p);
@@ -128,7 +128,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<3, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_3rd_derivative_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim> & p,
   const unsigned int component) const
 {
   (void) component;
@@ -141,7 +141,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<4, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_4th_derivative(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim> & p) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.template compute_derivative<4>(i, p);
@@ -151,7 +151,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<4, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_4th_derivative_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim> & p,
   const unsigned int component) const
 {
   (void) component;
@@ -196,26 +196,26 @@ FE_Poly<PolynomialType, dim, spacedim>::requires_update_flags(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Poly<PolynomialType, dim, spacedim>::fill_fe_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator&,
+  const typename Triangulation<dim, spacedim>::cell_iterator &,
   const CellSimilarity::Similarity                         cell_similarity,
-  const Quadrature<dim>&                                   quadrature,
-  const Mapping<dim, spacedim>&                            mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
+  const Quadrature<dim> &                                  quadrature,
+  const Mapping<dim, spacedim> &                           mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase &mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>&
-                                                                 mapping_data,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+                                                                     spacedim>
+    &                                                            mapping_data,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>&
-    output_data) const
+                                                                     spacedim>
+    &output_data) const
 {
   // convert data object to internal
   // data for this class. fails with
   // an exception if that is not
   // possible
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
 
   const UpdateFlags flags(fe_data.update_each);
 
@@ -264,26 +264,26 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_values(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
   const unsigned int                                          face_no,
-  const Quadrature<dim - 1>&                                  quadrature,
-  const Mapping<dim, spacedim>&                               mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    mapping_internal,
+  const Quadrature<dim - 1> &                                 quadrature,
+  const Mapping<dim, spacedim> &                              mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>&
-                                                                 mapping_data,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+                                                                     spacedim>
+    &                                                            mapping_data,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>&
-    output_data) const
+                                                                     spacedim>
+    &output_data) const
 {
   // convert data object to internal
   // data for this class. fails with
   // an exception if that is not
   // possible
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // offset determines which data set
   // to take (all data sets for all
@@ -350,27 +350,27 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
   const unsigned int                                          face_no,
   const unsigned int                                          sub_no,
-  const Quadrature<dim - 1>&                                  quadrature,
-  const Mapping<dim, spacedim>&                               mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    mapping_internal,
+  const Quadrature<dim - 1> &                                 quadrature,
+  const Mapping<dim, spacedim> &                              mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>&
-                                                                 mapping_data,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+                                                                     spacedim>
+    &                                                            mapping_data,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>&
-    output_data) const
+                                                                     spacedim>
+    &output_data) const
 {
   // convert data object to internal
   // data for this class. fails with
   // an exception if that is not
   // possible
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // offset determines which data set
   // to take (all data sets for all
@@ -440,10 +440,10 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
 template <class PolynomialType, int dim, int spacedim>
 inline void
 FE_Poly<PolynomialType, dim, spacedim>::correct_third_derivatives(
-  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
-    output_data,
-  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-                     mapping_data,
+  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>
+    &output_data,
+  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
+    &                mapping_data,
   const unsigned int n_q_points,
   const unsigned int dof) const
 {
@@ -470,7 +470,7 @@ namespace internal
 {
   template <class PolynomialType>
   inline std::vector<unsigned int>
-  get_poly_space_numbering(const PolynomialType&)
+  get_poly_space_numbering(const PolynomialType &)
   {
     Assert(false, ExcNotImplemented());
     return std::vector<unsigned int>();
@@ -478,7 +478,7 @@ namespace internal
 
   template <class PolynomialType>
   inline std::vector<unsigned int>
-  get_poly_space_numbering_inverse(const PolynomialType&)
+  get_poly_space_numbering_inverse(const PolynomialType &)
   {
     Assert(false, ExcNotImplemented());
     return std::vector<unsigned int>();
@@ -487,7 +487,7 @@ namespace internal
   template <int dim, typename PolynomialType>
   inline std::vector<unsigned int>
   get_poly_space_numbering(
-    const TensorProductPolynomials<dim, PolynomialType>& poly)
+    const TensorProductPolynomials<dim, PolynomialType> &poly)
   {
     return poly.get_numbering();
   }
@@ -495,14 +495,14 @@ namespace internal
   template <int dim, typename PolynomialType>
   inline std::vector<unsigned int>
   get_poly_space_numbering_inverse(
-    const TensorProductPolynomials<dim, PolynomialType>& poly)
+    const TensorProductPolynomials<dim, PolynomialType> &poly)
   {
     return poly.get_numbering_inverse();
   }
 
   template <int dim>
   inline std::vector<unsigned int>
-  get_poly_space_numbering(const TensorProductPolynomialsConst<dim>& poly)
+  get_poly_space_numbering(const TensorProductPolynomialsConst<dim> &poly)
   {
     return poly.get_numbering();
   }
@@ -510,7 +510,7 @@ namespace internal
   template <int dim>
   inline std::vector<unsigned int>
   get_poly_space_numbering_inverse(
-    const TensorProductPolynomialsConst<dim>& poly)
+    const TensorProductPolynomialsConst<dim> &poly)
   {
     return poly.get_numbering_inverse();
   }

@@ -19,18 +19,18 @@
 #include <deal.II/numerics/data_out_rotation.h>
 
 void
-my_check_this(const DoFHandler<3>&,
-              const Vector<double>&,
-              const Vector<double>&)
+my_check_this(const DoFHandler<3> &,
+              const Vector<double> &,
+              const Vector<double> &)
 {
   // nothing to check in 3d
 }
 
 template <int dim>
 void
-my_check_this(const DoFHandler<dim>& dof_handler,
-              const Vector<double>&  v_node,
-              const Vector<double>&  v_cell)
+my_check_this(const DoFHandler<dim> &dof_handler,
+              const Vector<double> & v_node,
+              const Vector<double> & v_cell)
 {
   DataOutRotation<dim> data_out_rotation;
   data_out_rotation.attach_dof_handler(dof_handler);
@@ -60,9 +60,9 @@ my_check_this(const DoFHandler<dim>& dof_handler,
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler,
-           const Vector<double>&  v_node,
-           const Vector<double>&  v_cell)
+check_this(const DoFHandler<dim> &dof_handler,
+           const Vector<double> & v_node,
+           const Vector<double> & v_cell)
 {
   // since we can't forward declare
   // check_this in this file (it is forward

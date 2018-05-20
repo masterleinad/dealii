@@ -77,7 +77,7 @@ compute_pi_by_area()
       for(; cell != endc; ++cell)
         {
           x_fe_values.reinit(cell);
-          const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
+          const FEValues<dim> &fe_values = x_fe_values.get_present_fe_values();
           for(unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
             area += fe_values.JxW(i);
         };
@@ -147,7 +147,7 @@ compute_pi_by_perimeter()
           if(cell->face(face_no)->at_boundary())
             {
               x_fe_face_values.reinit(cell, face_no);
-              const FEFaceValues<dim>& fe_face_values
+              const FEFaceValues<dim> &fe_face_values
                 = x_fe_face_values.get_present_fe_values();
 
               for(unsigned int i = 0; i < fe_face_values.n_quadrature_points;

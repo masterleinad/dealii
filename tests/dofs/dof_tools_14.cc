@@ -22,7 +22,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> &dof_handler)
 {
   // no other args
   deallog << dof_handler.n_boundary_dofs() << std::endl;

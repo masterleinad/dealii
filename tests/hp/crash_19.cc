@@ -55,7 +55,7 @@ public:
   ExactSolution()
   {}
   virtual double
-  value(const Point<dim>& p, const unsigned int) const
+  value(const Point<dim> &p, const unsigned int) const
   {
     return p(0);
   }
@@ -110,7 +110,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -29,9 +29,9 @@ using namespace Algorithms;
 class Explicit : public OperatorBase
 {
 public:
-  Explicit(const FullMatrix<double>& matrix);
+  Explicit(const FullMatrix<double> &matrix);
   void
-  operator()(AnyData& out, const AnyData& in);
+  operator()(AnyData &out, const AnyData &in);
 
 private:
   SmartPointer<const FullMatrix<double>, Explicit> matrix;
@@ -41,9 +41,9 @@ private:
 class Implicit : public OperatorBase
 {
 public:
-  Implicit(const FullMatrix<double>& matrix);
+  Implicit(const FullMatrix<double> &matrix);
   void
-  operator()(AnyData& out, const AnyData& in);
+  operator()(AnyData &out, const AnyData &in);
 
 private:
   SmartPointer<const FullMatrix<double>, Implicit> matrix;
@@ -78,7 +78,7 @@ main()
   value(0) = 1.;
   AnyData         indata;
   AnyData         outdata;
-  Vector<double>* p = &value;
+  Vector<double> *p = &value;
   outdata.add(p, "value");
   deallog << "Initial: " << value(0) << ' ' << value(1) << std::endl;
   solver.notify(Events::initial);
@@ -87,15 +87,15 @@ main()
           << value.l2_norm() << std::endl;
 }
 
-Explicit::Explicit(const FullMatrix<double>& M) : matrix(&M)
+Explicit::Explicit(const FullMatrix<double> &M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
 }
 
 void
-Explicit::operator()(AnyData& out, const AnyData& in)
+Explicit::operator()(AnyData &out, const AnyData &in)
 {
-  const double* step = in.read_ptr<double>("Timestep");
+  const double *step = in.read_ptr<double>("Timestep");
 
   if(this->notifications.test(Events::initial)
      || this->notifications.test(Events::new_timestep_size))
@@ -106,18 +106,18 @@ Explicit::operator()(AnyData& out, const AnyData& in)
     }
   this->notifications.clear();
   unsigned int i = in.find("Previous iterate");
-  m.vmult(*out.entry<Vector<double>*>(0), *in.read_ptr<Vector<double>>(i));
+  m.vmult(*out.entry<Vector<double> *>(0), *in.read_ptr<Vector<double>>(i));
 }
 
-Implicit::Implicit(const FullMatrix<double>& M) : matrix(&M)
+Implicit::Implicit(const FullMatrix<double> &M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
 }
 
 void
-Implicit::operator()(AnyData& out, const AnyData& in)
+Implicit::operator()(AnyData &out, const AnyData &in)
 {
-  const double* step = in.read_ptr<double>("Timestep");
+  const double *step = in.read_ptr<double>("Timestep");
 
   if(this->notifications.test(Events::initial)
      || this->notifications.test(Events::new_timestep_size))
@@ -130,5 +130,5 @@ Implicit::operator()(AnyData& out, const AnyData& in)
   this->notifications.clear();
 
   unsigned int i = in.find("Previous time");
-  m.vmult(*out.entry<Vector<double>*>(0), *in.read_ptr<Vector<double>>(i));
+  m.vmult(*out.entry<Vector<double> *>(0), *in.read_ptr<Vector<double>>(i));
 }

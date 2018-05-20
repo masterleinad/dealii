@@ -24,7 +24,7 @@ using namespace Polynomials;
 typedef std::vector<Polynomial<double>> PolVector;
 
 void
-print_2d(const AnisotropicPolynomials<2>& aniso)
+print_2d(const AnisotropicPolynomials<2> &aniso)
 {
   const unsigned int N = 10, M = 13;
   for(unsigned int i = 0; i <= N; ++i)
@@ -69,7 +69,7 @@ check_2d()
 }
 
 void
-print_3d(const AnisotropicPolynomials<3>& aniso)
+print_3d(const AnisotropicPolynomials<3> &aniso)
 {
   const unsigned int N = 4, M = 3, P = 5;
   for(unsigned int i = 0; i <= N; ++i)

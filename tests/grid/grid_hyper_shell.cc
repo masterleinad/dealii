@@ -65,7 +65,7 @@ check(double r1, double r2, unsigned int n)
         {
           tria.refine_global(1);
         }
-      catch(typename Triangulation<dim>::DistortedCellList& dcv)
+      catch(typename Triangulation<dim>::DistortedCellList &dcv)
         {
           deallog << "Found " << dcv.distorted_cells.size()
                   << " distorted cells" << std::endl;

@@ -58,13 +58,13 @@ static const types::manifold_id straight_manifold_id = 3;
  */
 template <int dim>
 std::shared_ptr<dealii::Manifold<dim>>
-ladutenko_circle(dealii::Triangulation<dim>& triangulation,
+ladutenko_circle(dealii::Triangulation<dim> &triangulation,
                  const dealii::Point<dim>    center = dealii::Point<dim>(),
                  const double                radius = 1.0);
 
 template <int dim>
 std::shared_ptr<Manifold<dim>>
-ladutenko_circle(Triangulation<dim>& triangulation,
+ladutenko_circle(Triangulation<dim> &triangulation,
                  const Point<dim>    center,
                  const double        radius)
 {
@@ -196,7 +196,7 @@ QuadraticTimeCircle<dim>::run()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 

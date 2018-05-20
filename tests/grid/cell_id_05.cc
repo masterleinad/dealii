@@ -27,7 +27,7 @@
 
 template <int spacedim>
 void
-test(const unsigned int& ref)
+test(const unsigned int &ref)
 {
   Triangulation<spacedim> tria;
   GridGenerator::hyper_cube(tria);

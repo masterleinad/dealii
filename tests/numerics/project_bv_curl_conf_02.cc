@@ -36,7 +36,7 @@ class BoundaryFunction : public Function<dim>
 public:
   BoundaryFunction();
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const;
+  vector_value(const Point<dim> &p, Vector<double> &values) const;
 };
 
 template <int dim>
@@ -45,8 +45,8 @@ BoundaryFunction<dim>::BoundaryFunction() : Function<dim>(dim)
 
 template <int dim>
 void
-BoundaryFunction<dim>::vector_value(const Point<dim>&,
-                                    Vector<double>& values) const
+BoundaryFunction<dim>::vector_value(const Point<dim> &,
+                                    Vector<double> &values) const
 {
   for(unsigned int d = 0; d < dim; ++d)
     values(d) = d + 1.0;
@@ -54,8 +54,8 @@ BoundaryFunction<dim>::vector_value(const Point<dim>&,
 
 template <int dim>
 void
-test_boundary_values(const FiniteElement<dim>& fe,
-                     ConstraintMatrix&         constraints)
+test_boundary_values(const FiniteElement<dim> &fe,
+                     ConstraintMatrix &        constraints)
 {
   Triangulation<dim> triangulation;
   GridGenerator::subdivided_hyper_cube(triangulation, 2);
@@ -88,7 +88,7 @@ test(unsigned order)
 
   if(constraints_fes.n_constraints() == constraints_fe.n_constraints())
     {
-      const IndexSet& lines = constraints_fes.get_local_lines();
+      const IndexSet &lines = constraints_fes.get_local_lines();
 
       for(unsigned i = 0; i < lines.n_elements(); ++i)
         {
@@ -98,10 +98,10 @@ test(unsigned order)
               return;
             }
 
-          const std::vector<std::pair<types::global_dof_index, double>>& c1
+          const std::vector<std::pair<types::global_dof_index, double>> &c1
             = *constraints_fes.get_constraint_entries(
               lines.nth_index_in_set(i));
-          const std::vector<std::pair<types::global_dof_index, double>>& c2
+          const std::vector<std::pair<types::global_dof_index, double>> &c2
             = *constraints_fe.get_constraint_entries(lines.nth_index_in_set(i));
 
           for(size_t j = 0; j < c1.size(); ++j)

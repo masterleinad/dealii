@@ -149,10 +149,10 @@ namespace Differentiation
          * Initialize the state of an independent variable.
          */
         static void
-        independent_variable(const scalar_type& in,
+        independent_variable(const scalar_type &in,
                              const unsigned int,
                              const unsigned int,
-                             ADNumberType& out)
+                             ADNumberType &out)
         {
           out <<= in;
         }
@@ -164,7 +164,7 @@ namespace Differentiation
          * simply pass a copy instead of a non-constant reference.
          */
         static void
-        dependent_variable(ADNumberType& out, ADNumberType func)
+        dependent_variable(ADNumberType &out, ADNumberType func)
         {
           // Store the value only (strip it of all sensitivities)
           out = ADNumberTraits<ADNumberType>::get_scalar_value(func);
@@ -187,10 +187,10 @@ namespace Differentiation
          * Initialize the state of an independent variable.
          */
         static void
-        independent_variable(const scalar_type& in,
+        independent_variable(const scalar_type &in,
                              const unsigned int index,
                              const unsigned int,
-                             ADNumberType& out)
+                             ADNumberType &out)
         {
           // It is important that the tapeless variables have their values set
           // before defining their directional derivative index
@@ -211,7 +211,7 @@ namespace Differentiation
          * Initialize the state of a dependent variable.
          */
         static void
-        dependent_variable(ADNumberType& out, const ADNumberType& func)
+        dependent_variable(ADNumberType &out, const ADNumberType &func)
         {
           // Simply transfer value with sensitivities
           out = 0.0;
@@ -232,7 +232,7 @@ namespace Differentiation
          * Extract the real value.
          */
         static double
-        value(const adouble& x)
+        value(const adouble &x)
         {
           return x.getValue();
         }
@@ -244,7 +244,7 @@ namespace Differentiation
          * function exists for aesthetic/compatibility reasons only.
          */
         static unsigned int
-        n_directional_derivatives(const adouble&)
+        n_directional_derivatives(const adouble &)
         {
           return 0;
         }
@@ -257,7 +257,7 @@ namespace Differentiation
          * aesthetic/compatibility reasons only.
          */
         static double
-        directional_derivative(const adouble&, const unsigned int)
+        directional_derivative(const adouble &, const unsigned int)
         {
           AssertThrow(
             false,
@@ -280,7 +280,7 @@ namespace Differentiation
          * Extract the floating point value.
          */
         static double
-        value(const adtl::adouble& x)
+        value(const adtl::adouble &x)
         {
           return x.getValue();
         }
@@ -289,7 +289,7 @@ namespace Differentiation
          * Extract the number of directional derivatives.
          */
         static unsigned int
-        n_directional_derivatives(const adtl::adouble&)
+        n_directional_derivatives(const adtl::adouble &)
         {
           // This is a global function call...
           return adtl::getNumDir();
@@ -299,7 +299,7 @@ namespace Differentiation
          * Extract the directional derivative in the specified @p direction.
          */
         static double
-        directional_derivative(const adtl::adouble& x,
+        directional_derivative(const adtl::adouble &x,
                                const unsigned int   direction)
         {
           Assert(

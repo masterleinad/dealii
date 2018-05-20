@@ -45,36 +45,36 @@ public:
   typedef EmptyInfo CellInfo;
 
   void
-  cell(MeshWorker::DoFInfo<dim>& dinfo, CellInfo& info) const;
+  cell(MeshWorker::DoFInfo<dim> &dinfo, CellInfo &info) const;
   void
-  bdry(MeshWorker::DoFInfo<dim>& dinfo, CellInfo& info) const;
+  bdry(MeshWorker::DoFInfo<dim> &dinfo, CellInfo &info) const;
   void
-  face(MeshWorker::DoFInfo<dim>& dinfo1,
-       MeshWorker::DoFInfo<dim>& dinfo2,
-       CellInfo&                 info1,
-       CellInfo&                 info2) const;
+  face(MeshWorker::DoFInfo<dim> &dinfo1,
+       MeshWorker::DoFInfo<dim> &dinfo2,
+       CellInfo &                info1,
+       CellInfo &                info2) const;
 };
 
 template <int dim>
 void
-Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
+Local<dim>::cell(MeshWorker::DoFInfo<dim> &info, CellInfo &) const
 {
   info.value(0) = 1.;
 }
 
 template <int dim>
 void
-Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
+Local<dim>::bdry(MeshWorker::DoFInfo<dim> &info, CellInfo &) const
 {
   info.value(2) = 1.;
 }
 
 template <int dim>
 void
-Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
-                 MeshWorker::DoFInfo<dim>& info2,
-                 CellInfo&,
-                 CellInfo&) const
+Local<dim>::face(MeshWorker::DoFInfo<dim> &info1,
+                 MeshWorker::DoFInfo<dim> &info2,
+                 CellInfo &,
+                 CellInfo &) const
 {
   info1.value(1) = 1. / 2.;
   info2.value(1) = 1. / 2.;
@@ -82,9 +82,9 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
 
 template <int dim>
 void
-test_mesh(DoFHandler<dim>& mgdofs)
+test_mesh(DoFHandler<dim> &mgdofs)
 {
-  const DoFHandler<dim>& dofs = mgdofs;
+  const DoFHandler<dim> &dofs = mgdofs;
 
   Local<dim>               local;
   EmptyInfoBox             info_box;
@@ -148,7 +148,7 @@ test_mesh(DoFHandler<dim>& mgdofs)
 
 template <int dim>
 void
-test(const FiniteElement<dim>& fe)
+test(const FiniteElement<dim> &fe)
 {
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
   DoFHandler<dim>    dofs(tr);

@@ -188,7 +188,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive &ar, const unsigned int version);
 
       /**
        * Exception
@@ -244,7 +244,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive &ar, const unsigned int version);
 
       /**
        * Exception
@@ -259,38 +259,38 @@ namespace internal
     template <int dim>
     template <class Archive>
     void
-    TriaLevel<dim>::serialize(Archive& ar, const unsigned int)
+    TriaLevel<dim>::serialize(Archive &ar, const unsigned int)
     {
-      ar& refine_flags& coarsen_flags;
+      ar &refine_flags &coarsen_flags;
 
       // do not serialize 'active_cell_indices' here. instead of storing them
       // to the stream and re-reading them again later, we just rebuild them
       // in Triangulation::load()
 
-      ar& neighbors;
-      ar& subdomain_ids;
-      ar& level_subdomain_ids;
-      ar& parents;
-      ar& direction_flags;
-      ar& cells;
+      ar &neighbors;
+      ar &subdomain_ids;
+      ar &level_subdomain_ids;
+      ar &parents;
+      ar &direction_flags;
+      ar &cells;
     }
 
     template <class Archive>
     void
-    TriaLevel<3>::serialize(Archive& ar, const unsigned int)
+    TriaLevel<3>::serialize(Archive &ar, const unsigned int)
     {
-      ar& refine_flags& coarsen_flags;
+      ar &refine_flags &coarsen_flags;
 
       // do not serialize 'active_cell_indices' here. instead of storing them
       // to the stream and re-reading them again later, we just rebuild them
       // in Triangulation::load()
 
-      ar& neighbors;
-      ar& subdomain_ids;
-      ar& level_subdomain_ids;
-      ar& parents;
-      ar& direction_flags;
-      ar& cells;
+      ar &neighbors;
+      ar &subdomain_ids;
+      ar &level_subdomain_ids;
+      ar &parents;
+      ar &direction_flags;
+      ar &cells;
     }
 
   } // namespace TriangulationImplementation

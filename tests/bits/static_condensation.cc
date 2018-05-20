@@ -87,15 +87,15 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> &p, const unsigned int component = 0) const;
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& p, const unsigned int component = 0) const;
+  gradient(const Point<dim> &p, const unsigned int component = 0) const;
 };
 
 template <int dim>
 double
-Solution<dim>::value(const Point<dim>& p, const unsigned int) const
+Solution<dim>::value(const Point<dim> &p, const unsigned int) const
 {
   double return_value = 0;
   for(unsigned int i = 0; i < this->n_source_centers; ++i)
@@ -110,7 +110,7 @@ Solution<dim>::value(const Point<dim>& p, const unsigned int) const
 
 template <int dim>
 Tensor<1, dim>
-Solution<dim>::gradient(const Point<dim>& p, const unsigned int) const
+Solution<dim>::gradient(const Point<dim> &p, const unsigned int) const
 {
   Tensor<1, dim> return_value;
 
@@ -135,12 +135,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> &p, const unsigned int component = 0) const;
 };
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p, const unsigned int) const
+RightHandSide<dim>::value(const Point<dim> &p, const unsigned int) const
 {
   double return_value = 0;
   for(unsigned int i = 0; i < this->n_source_centers; ++i)
@@ -331,7 +331,7 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
       cell_rhs = 0;
 
       x_fe_values.reinit(cell);
-      const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<dim> &fe_values = x_fe_values.get_present_fe_values();
 
       right_hand_side.value_list(fe_values.get_quadrature_points(), rhs_values);
 
@@ -340,10 +340,10 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
           for(unsigned int j = 0; j < dofs_per_cell; ++j)
             {
               double                sum          = 0;
-              const Tensor<1, dim>* shape_grad_i = &fe_values.shape_grad(i, 0);
-              const Tensor<1, dim>* shape_grad_j = &fe_values.shape_grad(j, 0);
-              const double* shape_value_i        = &fe_values.shape_value(i, 0);
-              const double* shape_value_j        = &fe_values.shape_value(j, 0);
+              const Tensor<1, dim> *shape_grad_i = &fe_values.shape_grad(i, 0);
+              const Tensor<1, dim> *shape_grad_j = &fe_values.shape_grad(j, 0);
+              const double *shape_value_i        = &fe_values.shape_value(i, 0);
+              const double *shape_value_j        = &fe_values.shape_value(j, 0);
               for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
                 sum += (shape_grad_i[q_index] * shape_grad_j[q_index]
                         + shape_value_i[q_index] * shape_value_j[q_index])
@@ -362,7 +362,7 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
            && (cell->face(face)->boundary_id() == 1))
           {
             x_fe_face_values.reinit(cell, face);
-            const FEFaceValues<dim>& fe_face_values
+            const FEFaceValues<dim> &fe_face_values
               = x_fe_face_values.get_present_fe_values();
 
             for(unsigned int q_point = 0; q_point < n_face_q_points; ++q_point)
@@ -663,7 +663,7 @@ main()
         deallog << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

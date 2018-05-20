@@ -34,7 +34,7 @@ namespace CUDAWrappers
   {
     template <int dim, int fe_degree, bool transpose, typename Number>
     __device__ void
-    resolve_hanging_nodes_shmem(Number* values, const unsigned int constr)
+    resolve_hanging_nodes_shmem(Number *values, const unsigned int constr)
     {
       //TODO
     }
@@ -90,8 +90,8 @@ namespace CUDAWrappers
      */
     __device__
     FEEvaluation(int                      cell_id,
-                 const data_type*         data,
-                 SharedData<dim, Number>* shdata);
+                 const data_type *        data,
+                 SharedData<dim, Number> *shdata);
 
     /**
      * For the vector @p src, read out the values on the degrees of freedom of
@@ -102,7 +102,7 @@ namespace CUDAWrappers
      * ConstraintMatrix::read_dof_valuess as well.
      */
     __device__ void
-    read_dof_values(const Number* src);
+    read_dof_values(const Number *src);
 
     /**
      * Take the value stored internally on dof values of the current cell and
@@ -111,7 +111,7 @@ namespace CUDAWrappers
      * function ConstraintMatrix::distribute_local_to_global.
      */
     __device__ void
-    distribute_local_to_global(Number* dst) const;
+    distribute_local_to_global(Number *dst) const;
 
     /**
      * Evaluate the function values and the gradients of the FE function given
@@ -147,7 +147,7 @@ namespace CUDAWrappers
      * function on the current cell and integrated over.
      */
     __device__ void
-    submit_value(const value_type& val_in, const unsigned int q_point);
+    submit_value(const value_type &val_in, const unsigned int q_point);
 
     /**
      * Return the gradient of a finite element function at quadrature point
@@ -161,28 +161,28 @@ namespace CUDAWrappers
      * containing the values on quadrature points with component @p q_point
      */
     __device__ void
-    submit_gradient(const gradient_type& grad_in, const unsigned int q_point);
+    submit_gradient(const gradient_type &grad_in, const unsigned int q_point);
 
     /**
      * Apply the function @p func on every quadrature point.
      */
     template <typename functor>
     __device__ void
-    apply_quad_point_operations(const functor& func);
+    apply_quad_point_operations(const functor &func);
 
   private:
-    unsigned int* local_to_global;
+    unsigned int *local_to_global;
     unsigned int  n_cells;
     unsigned int  padding_length;
 
     const unsigned int constraint_mask;
 
-    Number* inv_jac;
-    Number* JxW;
+    Number *inv_jac;
+    Number *JxW;
 
     // Internal buffer
-    Number* values;
-    Number* gradients[dim];
+    Number *values;
+    Number *gradients[dim];
   };
 
   template <int dim,
@@ -193,8 +193,8 @@ namespace CUDAWrappers
   __device__
   FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     FEEvaluation(int                      cell_id,
-                 const data_type*         data,
-                 SharedData<dim, Number>* shdata)
+                 const data_type *        data,
+                 SharedData<dim, Number> *shdata)
     : n_cells(data->n_cells),
       padding_length(data->padding_length),
       constraint_mask(data->constraint_mask[cell_id]),
@@ -215,7 +215,7 @@ namespace CUDAWrappers
             typename Number>
   __device__ void
   FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
-    read_dof_values(const Number* src)
+    read_dof_values(const Number *src)
   {
     static_assert(n_components_ == 1, "This function only supports FE with one \
                   components");
@@ -242,7 +242,7 @@ namespace CUDAWrappers
             typename Number>
   __device__ void
   FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
-    distribute_local_to_global(Number* dst) const
+    distribute_local_to_global(Number *dst) const
   {
     static_assert(n_components_ == 1, "This function only supports FE with one \
                   components");
@@ -349,7 +349,7 @@ namespace CUDAWrappers
             typename Number>
   __device__ void
   FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
-    submit_value(const value_type& val_in, const unsigned int q_point)
+    submit_value(const value_type &val_in, const unsigned int q_point)
   {
     values[q_point] = val_in * JxW[q_point];
   }
@@ -370,7 +370,7 @@ namespace CUDAWrappers
     static_assert(n_components_ == 1, "This function only supports FE with one \
                   components");
     // TODO optimize if the mesh is uniform
-    const Number* inv_jacobian = &inv_jac[q_point];
+    const Number *inv_jacobian = &inv_jac[q_point];
     gradient_type grad;
     for(int d_1 = 0; d_1 < dim; ++d_1)
       {
@@ -391,10 +391,10 @@ namespace CUDAWrappers
             typename Number>
   __device__ void
   FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
-    submit_gradient(const gradient_type& grad_in, const unsigned int q_point)
+    submit_gradient(const gradient_type &grad_in, const unsigned int q_point)
   {
     // TODO optimize if the mesh is uniform
-    const Number* inv_jacobian = &inv_jac[q_point];
+    const Number *inv_jacobian = &inv_jac[q_point];
     for(int d_1 = 0; d_1 < dim; ++d_1)
       {
         Number tmp = 0.;
@@ -413,7 +413,7 @@ namespace CUDAWrappers
   template <typename functor>
   __device__ void
   FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
-    apply_quad_point_operations(const functor& func)
+    apply_quad_point_operations(const functor &func)
   {
     const unsigned int q_point
       = (dim == 1 ?

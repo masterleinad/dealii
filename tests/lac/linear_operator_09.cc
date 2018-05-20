@@ -34,7 +34,7 @@
 using namespace dealii;
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   typedef PETScWrappers::MPI::SparseMatrix::size_type size_type;
 

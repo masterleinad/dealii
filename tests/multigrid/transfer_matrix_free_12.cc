@@ -33,7 +33,7 @@
 
 template <int dim, typename Number>
 void
-check(const FiniteElement<dim>& fe_scalar)
+check(const FiniteElement<dim> &fe_scalar)
 {
   FESystem<dim> fe(fe_scalar, dim);
   deallog << "FE: " << fe.get_name() << std::endl;
@@ -101,7 +101,7 @@ check(const FiniteElement<dim>& fe_scalar)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   // no threading in this test...
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);

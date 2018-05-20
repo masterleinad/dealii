@@ -29,7 +29,7 @@
 
 template <int dim>
 void
-check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
+check_this(const FiniteElement<dim> &fe, const FiniteElement<dim> & /*fe2*/)
 {
   deallog << std::setprecision(9);
 

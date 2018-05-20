@@ -56,7 +56,7 @@ test()
     {
       v(0) = 1.0;
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase &e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -64,7 +64,7 @@ test()
     {
       v(0) *= 2.0;
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase &e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -72,7 +72,7 @@ test()
     {
       v += v;
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase &e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -83,7 +83,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   deal_II_exceptions::disable_abort_on_exception();
 

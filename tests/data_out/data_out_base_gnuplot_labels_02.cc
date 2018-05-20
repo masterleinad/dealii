@@ -35,12 +35,12 @@ template <int dim, int spacedim>
 class DataOutX : public DataOutInterface<dim, spacedim>
 {
 public:
-  DataOutX(const std::vector<::DataOutBase::Patch<dim, spacedim>>& patches,
-           const std::vector<std::string>&                         names)
+  DataOutX(const std::vector<::DataOutBase::Patch<dim, spacedim>> &patches,
+           const std::vector<std::string> &                        names)
     : patches(patches), names(names)
   {}
 
-  virtual const std::vector<::DataOutBase::Patch<dim, spacedim>>&
+  virtual const std::vector<::DataOutBase::Patch<dim, spacedim>> &
   get_patches() const
   {
     return patches;
@@ -53,13 +53,13 @@ public:
   }
 
 private:
-  const std::vector<::DataOutBase::Patch<dim, spacedim>>& patches;
-  const std::vector<std::string>&                         names;
+  const std::vector<::DataOutBase::Patch<dim, spacedim>> &patches;
+  const std::vector<std::string> &                        names;
 };
 
 template <int dim, int spacedim>
 void
-check(DataOutBase::GnuplotFlags flags, std::ostream& out)
+check(DataOutBase::GnuplotFlags flags, std::ostream &out)
 {
   const unsigned int np = 4;
 
@@ -81,14 +81,14 @@ check(DataOutBase::GnuplotFlags flags, std::ostream& out)
 
 template <int dim, int spacedim>
 void
-check_all(std::ostream& log)
+check_all(std::ostream &log)
 {
 #if SEPARATE_FILES == 0
-  std::ostream& out = log;
+  std::ostream &out = log;
 #endif
 
   char        name[100];
-  const char* format = "%d%d.gnuplot";
+  const char *format = "%d%d.gnuplot";
 
   std::vector<std::string> labels;
   for(unsigned int spacedim_n = 0; spacedim_n < spacedim; ++spacedim_n)

@@ -41,7 +41,7 @@ test()
 
   auto m = GridTools::extract_used_vertices(tria);
 
-  for(auto& e : m)
+  for(auto &e : m)
     deallog << "Vertex: " << e.first << ": " << e.second << std::endl;
 };
 

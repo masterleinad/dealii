@@ -23,7 +23,7 @@
 
 template <typename number>
 bool
-operator==(const BlockVector<number>& v1, const BlockVector<number>& v2)
+operator==(const BlockVector<number> &v1, const BlockVector<number> &v2)
 {
   if(v1.size() != v2.size())
     return false;
@@ -329,7 +329,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch(std::exception &e)
     {
       deallog << std::endl
               << std::endl

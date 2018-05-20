@@ -39,7 +39,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& p, const unsigned int comp = 0) const
+  value(const Point<dim> &p, const unsigned int comp = 0) const
   {
     const double x = p[0];
     const double y = p[1];
@@ -92,7 +92,7 @@ test()
           typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
                                                                   &dof_handler);
           fe_values.reinit(dof_cell);
-          const std::vector<Point<dim>>& q_points
+          const std::vector<Point<dim>> &q_points
             = fe_values.get_quadrature_points();
           data_storage.initialize(cell, rhs.size());
           {
@@ -128,7 +128,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   initlog();

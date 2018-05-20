@@ -57,7 +57,7 @@ namespace PETScWrappers
   }
 
   void
-  PreconditionerBase::vmult(VectorBase& dst, const VectorBase& src) const
+  PreconditionerBase::vmult(VectorBase &dst, const VectorBase &src) const
   {
     AssertThrow(pc != nullptr, StandardExceptions::ExcInvalidState());
 
@@ -91,7 +91,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-  const PC&
+  const PC &
   PreconditionerBase::get_pc() const
   {
     return pc;
@@ -104,7 +104,7 @@ namespace PETScWrappers
 
   /* ----------------- PreconditionJacobi -------------------- */
   PreconditionJacobi::PreconditionJacobi(const MPI_Comm        comm,
-                                         const AdditionalData& additional_data_)
+                                         const AdditionalData &additional_data_)
   {
     additional_data = additional_data_;
 
@@ -114,8 +114,8 @@ namespace PETScWrappers
     initialize();
   }
 
-  PreconditionJacobi::PreconditionJacobi(const MatrixBase&     matrix,
-                                         const AdditionalData& additional_data)
+  PreconditionJacobi::PreconditionJacobi(const MatrixBase &    matrix,
+                                         const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
@@ -125,7 +125,7 @@ namespace PETScWrappers
   {
     AssertThrow(pc != nullptr, StandardExceptions::ExcInvalidState());
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCJACOBI));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCJACOBI));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     ierr = PCSetFromOptions(pc);
@@ -133,8 +133,8 @@ namespace PETScWrappers
   }
 
   void
-  PreconditionJacobi::initialize(const MatrixBase&     matrix_,
-                                 const AdditionalData& additional_data_)
+  PreconditionJacobi::initialize(const MatrixBase &    matrix_,
+                                 const AdditionalData &additional_data_)
   {
     clear();
 
@@ -151,7 +151,7 @@ namespace PETScWrappers
   /* ----------------- PreconditionBlockJacobi -------------------- */
   PreconditionBlockJacobi::PreconditionBlockJacobi(
     const MPI_Comm        comm,
-    const AdditionalData& additional_data_)
+    const AdditionalData &additional_data_)
   {
     additional_data = additional_data_;
 
@@ -162,8 +162,8 @@ namespace PETScWrappers
   }
 
   PreconditionBlockJacobi::PreconditionBlockJacobi(
-    const MatrixBase&     matrix,
-    const AdditionalData& additional_data)
+    const MatrixBase &    matrix,
+    const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
@@ -171,7 +171,7 @@ namespace PETScWrappers
   void
   PreconditionBlockJacobi::initialize()
   {
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCBJACOBI));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCBJACOBI));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     ierr = PCSetFromOptions(pc);
@@ -179,8 +179,8 @@ namespace PETScWrappers
   }
 
   void
-  PreconditionBlockJacobi::initialize(const MatrixBase&     matrix_,
-                                      const AdditionalData& additional_data_)
+  PreconditionBlockJacobi::initialize(const MatrixBase &    matrix_,
+                                      const AdditionalData &additional_data_)
   {
     clear();
 
@@ -200,15 +200,15 @@ namespace PETScWrappers
     : omega(omega)
   {}
 
-  PreconditionSOR::PreconditionSOR(const MatrixBase&     matrix,
-                                   const AdditionalData& additional_data)
+  PreconditionSOR::PreconditionSOR(const MatrixBase &    matrix,
+                                   const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionSOR::initialize(const MatrixBase&     matrix_,
-                              const AdditionalData& additional_data_)
+  PreconditionSOR::initialize(const MatrixBase &    matrix_,
+                              const AdditionalData &additional_data_)
   {
     clear();
 
@@ -217,7 +217,7 @@ namespace PETScWrappers
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCSOR));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCSOR));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags as given
@@ -237,15 +237,15 @@ namespace PETScWrappers
     : omega(omega)
   {}
 
-  PreconditionSSOR::PreconditionSSOR(const MatrixBase&     matrix,
-                                     const AdditionalData& additional_data)
+  PreconditionSSOR::PreconditionSSOR(const MatrixBase &    matrix,
+                                     const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionSSOR::initialize(const MatrixBase&     matrix_,
-                               const AdditionalData& additional_data_)
+  PreconditionSSOR::initialize(const MatrixBase &    matrix_,
+                               const AdditionalData &additional_data_)
   {
     clear();
 
@@ -254,7 +254,7 @@ namespace PETScWrappers
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCSOR));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCSOR));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags as given
@@ -279,15 +279,15 @@ namespace PETScWrappers
   {}
 
   PreconditionEisenstat::PreconditionEisenstat(
-    const MatrixBase&     matrix,
-    const AdditionalData& additional_data)
+    const MatrixBase &    matrix,
+    const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionEisenstat::initialize(const MatrixBase&     matrix_,
-                                    const AdditionalData& additional_data_)
+  PreconditionEisenstat::initialize(const MatrixBase &    matrix_,
+                                    const AdditionalData &additional_data_)
   {
     clear();
 
@@ -296,7 +296,7 @@ namespace PETScWrappers
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCEISENSTAT));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCEISENSTAT));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags as given
@@ -316,15 +316,15 @@ namespace PETScWrappers
     : levels(levels)
   {}
 
-  PreconditionICC::PreconditionICC(const MatrixBase&     matrix,
-                                   const AdditionalData& additional_data)
+  PreconditionICC::PreconditionICC(const MatrixBase &    matrix,
+                                   const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionICC::initialize(const MatrixBase&     matrix_,
-                              const AdditionalData& additional_data_)
+  PreconditionICC::initialize(const MatrixBase &    matrix_,
+                              const AdditionalData &additional_data_)
   {
     clear();
 
@@ -333,7 +333,7 @@ namespace PETScWrappers
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCICC));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCICC));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags
@@ -353,15 +353,15 @@ namespace PETScWrappers
     : levels(levels)
   {}
 
-  PreconditionILU::PreconditionILU(const MatrixBase&     matrix,
-                                   const AdditionalData& additional_data)
+  PreconditionILU::PreconditionILU(const MatrixBase &    matrix,
+                                   const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionILU::initialize(const MatrixBase&     matrix_,
-                              const AdditionalData& additional_data_)
+  PreconditionILU::initialize(const MatrixBase &    matrix_,
+                              const AdditionalData &additional_data_)
   {
     clear();
 
@@ -370,7 +370,7 @@ namespace PETScWrappers
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCILU));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCILU));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags
@@ -401,7 +401,7 @@ namespace PETScWrappers
 
   PreconditionBoomerAMG::PreconditionBoomerAMG(
     const MPI_Comm        comm,
-    const AdditionalData& additional_data_)
+    const AdditionalData &additional_data_)
   {
     additional_data = additional_data_;
 
@@ -419,8 +419,8 @@ namespace PETScWrappers
   }
 
   PreconditionBoomerAMG::PreconditionBoomerAMG(
-    const MatrixBase&     matrix,
-    const AdditionalData& additional_data)
+    const MatrixBase &    matrix,
+    const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
@@ -429,7 +429,7 @@ namespace PETScWrappers
   PreconditionBoomerAMG::initialize()
   {
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCHYPRE));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCHYPRE));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     ierr = PCHYPRESetType(pc, "boomeramg");
@@ -479,8 +479,8 @@ namespace PETScWrappers
   }
 
   void
-  PreconditionBoomerAMG::initialize(const MatrixBase&     matrix_,
-                                    const AdditionalData& additional_data_)
+  PreconditionBoomerAMG::initialize(const MatrixBase &    matrix_,
+                                    const AdditionalData &additional_data_)
   {
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
     clear();
@@ -519,15 +519,15 @@ namespace PETScWrappers
   {}
 
   PreconditionParaSails::PreconditionParaSails(
-    const MatrixBase&     matrix,
-    const AdditionalData& additional_data)
+    const MatrixBase &    matrix,
+    const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionParaSails::initialize(const MatrixBase&     matrix_,
-                                    const AdditionalData& additional_data_)
+  PreconditionParaSails::initialize(const MatrixBase &    matrix_,
+                                    const AdditionalData &additional_data_)
   {
     clear();
 
@@ -537,7 +537,7 @@ namespace PETScWrappers
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCHYPRE));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCHYPRE));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     ierr = PCHYPRESetType(pc, "parasails");
@@ -611,15 +611,15 @@ namespace PETScWrappers
 
   /* ----------------- PreconditionNone ------------------------- */
 
-  PreconditionNone::PreconditionNone(const MatrixBase&     matrix,
-                                     const AdditionalData& additional_data)
+  PreconditionNone::PreconditionNone(const MatrixBase &    matrix,
+                                     const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionNone::initialize(const MatrixBase&     matrix_,
-                               const AdditionalData& additional_data_)
+  PreconditionNone::initialize(const MatrixBase &    matrix_,
+                               const AdditionalData &additional_data_)
   {
     clear();
 
@@ -628,7 +628,7 @@ namespace PETScWrappers
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCNONE));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCNONE));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     ierr = PCSetFromOptions(pc);
@@ -646,15 +646,15 @@ namespace PETScWrappers
     : pivoting(pivoting), zero_pivot(zero_pivot), damping(damping)
   {}
 
-  PreconditionLU::PreconditionLU(const MatrixBase&     matrix,
-                                 const AdditionalData& additional_data)
+  PreconditionLU::PreconditionLU(const MatrixBase &    matrix,
+                                 const AdditionalData &additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionLU::initialize(const MatrixBase&     matrix_,
-                             const AdditionalData& additional_data_)
+  PreconditionLU::initialize(const MatrixBase &    matrix_,
+                             const AdditionalData &additional_data_)
   {
     clear();
 
@@ -663,7 +663,7 @@ namespace PETScWrappers
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCLU));
+    PetscErrorCode ierr = PCSetType(pc, const_cast<char *>(PCLU));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // set flags as given

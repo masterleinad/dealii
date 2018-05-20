@@ -38,7 +38,7 @@
 #  include <iostream>
 
 // Make sure we know how to call sundials own ARKode() function
-const auto& SundialsARKode = ARKode;
+const auto &SundialsARKode = ARKode;
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -53,9 +53,10 @@ namespace SUNDIALS
     t_arkode_explicit_function(realtype tt,
                                N_Vector yy,
                                N_Vector yp,
-                               void*    user_data)
+                               void *   user_data)
     {
-      ARKode<VectorType>& solver = *static_cast<ARKode<VectorType>*>(user_data);
+      ARKode<VectorType> &solver
+        = *static_cast<ARKode<VectorType> *>(user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_yy(mem);
@@ -78,9 +79,10 @@ namespace SUNDIALS
     t_arkode_implicit_function(realtype tt,
                                N_Vector yy,
                                N_Vector yp,
-                               void*    user_data)
+                               void *   user_data)
     {
-      ARKode<VectorType>& solver = *static_cast<ARKode<VectorType>*>(user_data);
+      ARKode<VectorType> &solver
+        = *static_cast<ARKode<VectorType> *>(user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_yy(mem);
@@ -104,13 +106,13 @@ namespace SUNDIALS
                             int          convfail,
                             N_Vector     ypred,
                             N_Vector     fpred,
-                            booleantype* jcurPtr,
+                            booleantype *jcurPtr,
                             N_Vector,
                             N_Vector,
                             N_Vector)
     {
-      ARKode<VectorType>& solver
-        = *static_cast<ARKode<VectorType>*>(arkode_mem->ark_user_data);
+      ARKode<VectorType> &solver
+        = *static_cast<ARKode<VectorType> *>(arkode_mem->ark_user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_ypred(mem);
@@ -127,7 +129,7 @@ namespace SUNDIALS
                                       arkode_mem->ark_gamma,
                                       *src_ypred,
                                       *src_fpred,
-                                      (bool&) *jcurPtr);
+                                      (bool &) *jcurPtr);
 
       return err;
     }
@@ -142,8 +144,8 @@ namespace SUNDIALS
                             N_Vector ycur,
                             N_Vector fcur)
     {
-      ARKode<VectorType>& solver
-        = *static_cast<ARKode<VectorType>*>(arkode_mem->ark_user_data);
+      ARKode<VectorType> &solver
+        = *static_cast<ARKode<VectorType> *>(arkode_mem->ark_user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src(mem);
@@ -177,8 +179,8 @@ namespace SUNDIALS
     int
     t_arkode_setup_mass(ARKodeMem arkode_mem, N_Vector, N_Vector, N_Vector)
     {
-      ARKode<VectorType>& solver
-        = *static_cast<ARKode<VectorType>*>(arkode_mem->ark_user_data);
+      ARKode<VectorType> &solver
+        = *static_cast<ARKode<VectorType> *>(arkode_mem->ark_user_data);
       int err = solver.setup_mass(arkode_mem->ark_tn);
       return err;
     }
@@ -194,8 +196,8 @@ namespace SUNDIALS
 #  endif
     )
     {
-      ARKode<VectorType>& solver
-        = *static_cast<ARKode<VectorType>*>(arkode_mem->ark_user_data);
+      ARKode<VectorType> &solver
+        = *static_cast<ARKode<VectorType> *>(arkode_mem->ark_user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src(mem);
@@ -214,7 +216,7 @@ namespace SUNDIALS
   } // namespace
 
   template <typename VectorType>
-  ARKode<VectorType>::ARKode(const AdditionalData& data,
+  ARKode<VectorType>::ARKode(const AdditionalData &data,
                              const MPI_Comm        mpi_comm)
     : data(data),
       arkode_mem(nullptr),
@@ -244,7 +246,7 @@ namespace SUNDIALS
 
   template <typename VectorType>
   unsigned int
-  ARKode<VectorType>::solve_ode(VectorType& solution)
+  ARKode<VectorType>::solve_ode(VectorType &solution)
   {
     unsigned int system_size = solution.size();
 
@@ -325,9 +327,9 @@ namespace SUNDIALS
 
   template <typename VectorType>
   void
-  ARKode<VectorType>::reset(const double&     current_time,
-                            const double&     current_time_step,
-                            const VectorType& solution)
+  ARKode<VectorType>::reset(const double &    current_time,
+                            const double &    current_time_step,
+                            const VectorType &solution)
   {
     unsigned int system_size;
 
@@ -404,7 +406,7 @@ namespace SUNDIALS
     status = ARKodeSetInitStep(arkode_mem, current_time_step);
     AssertARKode(status);
 
-    status = ARKodeSetUserData(arkode_mem, (void*) this);
+    status = ARKodeSetUserData(arkode_mem, (void *) this);
     AssertARKode(status);
 
     status = ARKodeSetStopTime(arkode_mem, data.final_time);
@@ -465,12 +467,12 @@ namespace SUNDIALS
   void
   ARKode<VectorType>::set_functions_to_trigger_an_assert()
   {
-    reinit_vector = [](VectorType&) {
+    reinit_vector = [](VectorType &) {
       AssertThrow(false, ExcFunctionNotProvided("reinit_vector"));
     };
 
     solver_should_restart
-      = [](const double, VectorType&) -> bool { return false; };
+      = [](const double, VectorType &) -> bool { return false; };
   }
 
   template class ARKode<Vector<double>>;

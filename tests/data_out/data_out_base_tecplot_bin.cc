@@ -26,7 +26,7 @@
 
 template <int dim, int spacedim>
 void
-check(DataOutBase::TecplotFlags flags, std::ostream& out)
+check(DataOutBase::TecplotFlags flags, std::ostream &out)
 {
   const unsigned int np = 4;
 

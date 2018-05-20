@@ -149,12 +149,12 @@ namespace Step21
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  PressureRightHandSide<dim>::value(const Point<dim>& /*p*/,
+  PressureRightHandSide<dim>::value(const Point<dim> & /*p*/,
                                     const unsigned int /*component*/) const
   {
     return 0;
@@ -172,12 +172,12 @@ namespace Step21
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  PressureBoundaryValues<dim>::value(const Point<dim>& p,
+  PressureBoundaryValues<dim>::value(const Point<dim> &p,
                                      const unsigned int /*component*/) const
   {
     return 1 - p[0];
@@ -198,12 +198,12 @@ namespace Step21
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  SaturationBoundaryValues<dim>::value(const Point<dim>& p,
+  SaturationBoundaryValues<dim>::value(const Point<dim> &p,
                                        const unsigned int /*component*/) const
   {
     if(p[0] == 0)
@@ -233,15 +233,15 @@ namespace Step21
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& value) const override;
+    vector_value(const Point<dim> &p, Vector<double> &value) const override;
   };
 
   template <int dim>
   double
-  InitialValues<dim>::value(const Point<dim>&  p,
+  InitialValues<dim>::value(const Point<dim> & p,
                             const unsigned int component) const
   {
     return Functions::ZeroFunction<dim>(dim + 2).value(p, component);
@@ -249,8 +249,8 @@ namespace Step21
 
   template <int dim>
   void
-  InitialValues<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+  InitialValues<dim>::vector_value(const Point<dim> &p,
+                                   Vector<double> &  values) const
   {
     Functions::ZeroFunction<dim>(dim + 2).vector_value(p, values);
   }
@@ -279,14 +279,14 @@ namespace Step21
       {}
 
       virtual void
-      value_list(const std::vector<Point<dim>>& points,
-                 std::vector<Tensor<2, dim>>&   values) const;
+      value_list(const std::vector<Point<dim>> &points,
+                 std::vector<Tensor<2, dim>> &  values) const;
     };
 
     template <int dim>
     void
-    KInverse<dim>::value_list(const std::vector<Point<dim>>& points,
-                              std::vector<Tensor<2, dim>>&   values) const
+    KInverse<dim>::value_list(const std::vector<Point<dim>> &points,
+                              std::vector<Tensor<2, dim>> &  values) const
     {
       Assert(points.size() == values.size(),
              ExcDimensionMismatch(points.size(), values.size()));
@@ -351,8 +351,8 @@ namespace Step21
       {}
 
       virtual void
-      value_list(const std::vector<Point<dim>>& points,
-                 std::vector<Tensor<2, dim>>&   values) const override;
+      value_list(const std::vector<Point<dim>> &points,
+                 std::vector<Tensor<2, dim>> &  values) const override;
 
     private:
       static std::vector<Point<dim>> centers;
@@ -382,8 +382,8 @@ namespace Step21
 
     template <int dim>
     void
-    KInverse<dim>::value_list(const std::vector<Point<dim>>& points,
-                              std::vector<Tensor<2, dim>>&   values) const
+    KInverse<dim>::value_list(const std::vector<Point<dim>> &points,
+                              std::vector<Tensor<2, dim>> &  values) const
     {
       Assert(points.size() == values.size(),
              ExcDimensionMismatch(points.size(), values.size()));
@@ -441,23 +441,23 @@ namespace Step21
   class InverseMatrix : public Subscriptor
   {
   public:
-    InverseMatrix(const MatrixType& m);
+    InverseMatrix(const MatrixType &m);
 
     void
-    vmult(Vector<double>& dst, const Vector<double>& src) const;
+    vmult(Vector<double> &dst, const Vector<double> &src) const;
 
   private:
     const SmartPointer<const MatrixType> matrix;
   };
 
   template <class MatrixType>
-  InverseMatrix<MatrixType>::InverseMatrix(const MatrixType& m) : matrix(&m)
+  InverseMatrix<MatrixType>::InverseMatrix(const MatrixType &m) : matrix(&m)
   {}
 
   template <class MatrixType>
   void
-  InverseMatrix<MatrixType>::vmult(Vector<double>&       dst,
-                                   const Vector<double>& src) const
+  InverseMatrix<MatrixType>::vmult(Vector<double> &      dst,
+                                   const Vector<double> &src) const
   {
     SolverControl solver_control(std::max<unsigned int>(src.size(), 200),
                                  1e-8 * src.l2_norm());
@@ -471,11 +471,11 @@ namespace Step21
   class SchurComplement : public Subscriptor
   {
   public:
-    SchurComplement(const BlockSparseMatrix<double>&           A,
-                    const InverseMatrix<SparseMatrix<double>>& Minv);
+    SchurComplement(const BlockSparseMatrix<double> &          A,
+                    const InverseMatrix<SparseMatrix<double>> &Minv);
 
     void
-    vmult(Vector<double>& dst, const Vector<double>& src) const;
+    vmult(Vector<double> &dst, const Vector<double> &src) const;
 
   private:
     const SmartPointer<const BlockSparseMatrix<double>>           system_matrix;
@@ -485,8 +485,8 @@ namespace Step21
   };
 
   SchurComplement::SchurComplement(
-    const BlockSparseMatrix<double>&           A,
-    const InverseMatrix<SparseMatrix<double>>& Minv)
+    const BlockSparseMatrix<double> &          A,
+    const InverseMatrix<SparseMatrix<double>> &Minv)
     : system_matrix(&A),
       m_inverse(&Minv),
       tmp1(A.block(0, 0).m()),
@@ -494,7 +494,7 @@ namespace Step21
   {}
 
   void
-  SchurComplement::vmult(Vector<double>& dst, const Vector<double>& src) const
+  SchurComplement::vmult(Vector<double> &dst, const Vector<double> &src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
     m_inverse->vmult(tmp2, tmp1);
@@ -504,10 +504,10 @@ namespace Step21
   class ApproximateSchurComplement : public Subscriptor
   {
   public:
-    ApproximateSchurComplement(const BlockSparseMatrix<double>& A);
+    ApproximateSchurComplement(const BlockSparseMatrix<double> &A);
 
     void
-    vmult(Vector<double>& dst, const Vector<double>& src) const;
+    vmult(Vector<double> &dst, const Vector<double> &src) const;
 
   private:
     const SmartPointer<const BlockSparseMatrix<double>> system_matrix;
@@ -516,13 +516,13 @@ namespace Step21
   };
 
   ApproximateSchurComplement::ApproximateSchurComplement(
-    const BlockSparseMatrix<double>& A)
+    const BlockSparseMatrix<double> &A)
     : system_matrix(&A), tmp1(A.block(0, 0).m()), tmp2(A.block(0, 0).m())
   {}
 
   void
-  ApproximateSchurComplement::vmult(Vector<double>&       dst,
-                                    const Vector<double>& src) const
+  ApproximateSchurComplement::vmult(Vector<double> &      dst,
+                                    const Vector<double> &src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
     system_matrix->block(0, 0).precondition_Jacobi(tmp2, tmp1);
@@ -1226,7 +1226,7 @@ main()
       TwoPhaseFlowProblem<2> two_phase_flow_problem(0);
       two_phase_flow_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

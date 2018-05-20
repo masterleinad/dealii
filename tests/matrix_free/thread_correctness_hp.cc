@@ -32,13 +32,13 @@ template <int dim, typename Number>
 class MatrixFreeTestHP
 {
 public:
-  MatrixFreeTestHP(const MatrixFree<dim, Number>& data_in) : data(data_in){};
+  MatrixFreeTestHP(const MatrixFree<dim, Number> &data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              Vector<Number>&                              dst,
-              const Vector<Number>&                        src,
-              const std::pair<unsigned int, unsigned int>& cell_range) const
+  local_apply(const MatrixFree<dim, Number> &              data,
+              Vector<Number> &                             dst,
+              const Vector<Number> &                       src,
+              const std::pair<unsigned int, unsigned int> &cell_range) const
   {
     // Ask MatrixFree for cell_range for different
     // orders
@@ -61,14 +61,14 @@ public:
   }
 
   void
-  vmult(Vector<Number>& dst, const Vector<Number>& src) const
+  vmult(Vector<Number> &dst, const Vector<Number> &src) const
   {
     dst = 0;
     data.cell_loop(&MatrixFreeTestHP<dim, Number>::local_apply, this, dst, src);
   };
 
 private:
-  const MatrixFree<dim, Number>& data;
+  const MatrixFree<dim, Number> &data;
 };
 
 template <int dim, typename number>

@@ -21,7 +21,7 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 
-void cylinder(Triangulation<3>& tria,
+void cylinder(Triangulation<3> &tria,
               const double      radius      = 1,
               const double      half_length = 1)
 {

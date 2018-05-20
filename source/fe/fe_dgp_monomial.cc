@@ -77,11 +77,11 @@ namespace internal
 
       template <int dim>
       void
-      generate_unit_points(const unsigned int, std::vector<Point<dim>>&);
+      generate_unit_points(const unsigned int, std::vector<Point<dim>> &);
 
       template <>
       void
-      generate_unit_points(const unsigned int k, std::vector<Point<1>>& p)
+      generate_unit_points(const unsigned int k, std::vector<Point<1>> &p)
       {
         Assert(p.size() == k + 1, ExcDimensionMismatch(p.size(), k + 1));
         const double h = 1. / k;
@@ -91,7 +91,7 @@ namespace internal
 
       template <>
       void
-      generate_unit_points(const unsigned int k, std::vector<Point<2>>& p)
+      generate_unit_points(const unsigned int k, std::vector<Point<2>> &p)
       {
         Assert(k <= 4, ExcNotImplemented());
         Assert(p.size() == start_index2d[k + 1] - start_index2d[k],
@@ -105,7 +105,7 @@ namespace internal
 
       template <>
       void
-      generate_unit_points(const unsigned int k, std::vector<Point<3>>& p)
+      generate_unit_points(const unsigned int k, std::vector<Point<3>> &p)
       {
         Assert(k <= 2, ExcNotImplemented());
         Assert(p.size() == start_index3d[k + 1] - start_index3d[k],
@@ -180,11 +180,11 @@ FE_DGPMonomial<dim>::clone() const
 template <int dim>
 void
 FE_DGPMonomial<dim>::get_interpolation_matrix(
-  const FiniteElement<dim>& source_fe,
-  FullMatrix<double>&       interpolation_matrix) const
+  const FiniteElement<dim> &source_fe,
+  FullMatrix<double> &      interpolation_matrix) const
 {
-  const FE_DGPMonomial<dim>* source_dgp_monomial
-    = dynamic_cast<const FE_DGPMonomial<dim>*>(&source_fe);
+  const FE_DGPMonomial<dim> *source_dgp_monomial
+    = dynamic_cast<const FE_DGPMonomial<dim> *>(&source_fe);
 
   if(source_dgp_monomial)
     {
@@ -258,8 +258,8 @@ FE_DGPMonomial<dim>::get_dpo_vector(const unsigned int deg)
 template <int dim>
 void
 FE_DGPMonomial<dim>::get_face_interpolation_matrix(
-  const FiniteElement<dim>& x_source_fe,
-  FullMatrix<double>&       interpolation_matrix) const
+  const FiniteElement<dim> &x_source_fe,
+  FullMatrix<double> &      interpolation_matrix) const
 {
   // this is only implemented, if the source
   // FE is also a DGPMonomial element. in that case,
@@ -270,7 +270,7 @@ FE_DGPMonomial<dim>::get_face_interpolation_matrix(
   (void) interpolation_matrix;
   AssertThrow(
     (x_source_fe.get_name().find("FE_DGPMonomial<") == 0)
-      || (dynamic_cast<const FE_DGPMonomial<dim>*>(&x_source_fe) != nullptr),
+      || (dynamic_cast<const FE_DGPMonomial<dim> *>(&x_source_fe) != nullptr),
     typename FiniteElement<dim>::ExcInterpolationNotImplemented());
 
   Assert(interpolation_matrix.m() == 0,
@@ -282,9 +282,9 @@ FE_DGPMonomial<dim>::get_face_interpolation_matrix(
 template <int dim>
 void
 FE_DGPMonomial<dim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim>& x_source_fe,
+  const FiniteElement<dim> &x_source_fe,
   const unsigned int,
-  FullMatrix<double>& interpolation_matrix) const
+  FullMatrix<double> &interpolation_matrix) const
 {
   // this is only implemented, if the source
   // FE is also a DGPMonomial element. in that case,
@@ -295,7 +295,7 @@ FE_DGPMonomial<dim>::get_subface_interpolation_matrix(
   (void) interpolation_matrix;
   AssertThrow(
     (x_source_fe.get_name().find("FE_DGPMonomial<") == 0)
-      || (dynamic_cast<const FE_DGPMonomial<dim>*>(&x_source_fe) != nullptr),
+      || (dynamic_cast<const FE_DGPMonomial<dim> *>(&x_source_fe) != nullptr),
     typename FiniteElement<dim>::ExcInterpolationNotImplemented());
 
   Assert(interpolation_matrix.m() == 0,
@@ -314,11 +314,11 @@ FE_DGPMonomial<dim>::hp_constraints_are_implemented() const
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGPMonomial<dim>::hp_vertex_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> &fe_other) const
 {
   // there are no such constraints for DGPMonomial
   // elements at all
-  if(dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_DGPMonomial<dim> *>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -330,11 +330,11 @@ FE_DGPMonomial<dim>::hp_vertex_dof_identities(
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGPMonomial<dim>::hp_line_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> &fe_other) const
 {
   // there are no such constraints for DGPMonomial
   // elements at all
-  if(dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_DGPMonomial<dim> *>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -346,11 +346,11 @@ FE_DGPMonomial<dim>::hp_line_dof_identities(
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGPMonomial<dim>::hp_quad_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> &fe_other) const
 {
   // there are no such constraints for DGPMonomial
   // elements at all
-  if(dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_DGPMonomial<dim> *>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -362,13 +362,13 @@ FE_DGPMonomial<dim>::hp_quad_dof_identities(
 template <int dim>
 FiniteElementDomination::Domination
 FE_DGPMonomial<dim>::compare_for_face_domination(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> &fe_other) const
 {
   // check whether both are discontinuous
   // elements, see
   // the description of
   // FiniteElementDomination::Domination
-  if(dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_DGPMonomial<dim> *>(&fe_other) != nullptr)
     return FiniteElementDomination::no_requirements;
 
   Assert(false, ExcNotImplemented());

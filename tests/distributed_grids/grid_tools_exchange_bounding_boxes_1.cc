@@ -28,7 +28,7 @@ test_exchange_bbox()
   // For process i the number of boxes n_bboxes[i%7] is created
   std::vector<unsigned int> n_bboxes = {2, 4, 3, 5, 1, 3, 8};
 
-  const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm &mpi_communicator = MPI_COMM_WORLD;
   unsigned int    n_procs = Utilities::MPI::n_mpi_processes(mpi_communicator);
   unsigned int    proc    = Utilities::MPI::this_mpi_process(mpi_communicator);
 
@@ -126,7 +126,7 @@ test_exchange_bbox()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

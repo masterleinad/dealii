@@ -72,9 +72,9 @@ public:
 
 private:
   double
-  dotprod(const Tensor<1, dim>& A, const Tensor<1, dim>& B) const;
+  dotprod(const Tensor<1, dim> &A, const Tensor<1, dim> &B) const;
   double
-  dotprod(const Tensor<1, dim>& A, const Vector<double>& B) const;
+  dotprod(const Tensor<1, dim> &A, const Vector<double> &B) const;
   void
   setup_system();
   void
@@ -105,16 +105,16 @@ public:
   ExactSolution() : Function<dim>(2)
   {}
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> &p, const unsigned int component) const;
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& result) const;
+  vector_value(const Point<dim> &p, Vector<double> &result) const;
   virtual void
-  value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
+  value_list(const std::vector<Point<dim>> &points,
+             std::vector<double> &          values,
              const unsigned int             component) const;
   virtual void
-  vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   values) const;
+  vector_value_list(const std::vector<Point<dim>> &points,
+                    std::vector<Vector<double>> &  values) const;
 
 private:
   static const double bc_constant;
@@ -129,10 +129,10 @@ class RightHandSide : public Function<dim>
 public:
   RightHandSide();
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const;
+  vector_value(const Point<dim> &p, Vector<double> &values) const;
   virtual void
-  vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   value_list) const;
+  vector_value_list(const std::vector<Point<dim>> &points,
+                    std::vector<Vector<double>> &  value_list) const;
 
 private:
   static const double bc_constant;
@@ -143,7 +143,7 @@ const double RightHandSide<dim>::bc_constant = 0.1;
 // DEFINE EXACT SOLUTION MEMBERS
 template <int dim>
 double
-ExactSolution<dim>::value(const Point<dim>&  p,
+ExactSolution<dim>::value(const Point<dim> & p,
                           const unsigned int component) const
 {
   Assert(dim >= 2, ExcNotImplemented());
@@ -161,8 +161,8 @@ ExactSolution<dim>::value(const Point<dim>&  p,
 }
 template <int dim>
 void
-ExactSolution<dim>::vector_value(const Point<dim>& p,
-                                 Vector<double>&   result) const
+ExactSolution<dim>::vector_value(const Point<dim> &p,
+                                 Vector<double> &  result) const
 {
   Assert(dim >= 2, ExcNotImplemented());
   result(0) = cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
@@ -170,8 +170,8 @@ ExactSolution<dim>::vector_value(const Point<dim>& p,
 }
 template <int dim>
 void
-ExactSolution<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
+ExactSolution<dim>::value_list(const std::vector<Point<dim>> &points,
+                               std::vector<double> &          values,
                                const unsigned int             component) const
 {
   Assert(values.size() == points.size(),
@@ -179,7 +179,7 @@ ExactSolution<dim>::value_list(const std::vector<Point<dim>>& points,
   AssertIndexRange(component, dim);
   for(unsigned int i = 0; i < points.size(); ++i)
     {
-      const Point<dim>& p = points[i];
+      const Point<dim> &p = points[i];
       switch(component)
         {
           case 0:
@@ -193,8 +193,8 @@ ExactSolution<dim>::value_list(const std::vector<Point<dim>>& points,
 }
 template <int dim>
 void
-ExactSolution<dim>::vector_value_list(const std::vector<Point<dim>>& points,
-                                      std::vector<Vector<double>>& values) const
+ExactSolution<dim>::vector_value_list(const std::vector<Point<dim>> &points,
+                                      std::vector<Vector<double>> &values) const
 {
   Assert(dim >= 2, ExcNotImplemented());
   Assert(values.size() == points.size(),
@@ -202,7 +202,7 @@ ExactSolution<dim>::vector_value_list(const std::vector<Point<dim>>& points,
 
   for(unsigned int i = 0; i < points.size(); ++i)
     {
-      const Point<dim>& p = points[i];
+      const Point<dim> &p = points[i];
       values[i](0)
         = cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
       values[i](1)
@@ -217,8 +217,8 @@ RightHandSide<dim>::RightHandSide() : Function<dim>(dim)
 {}
 template <int dim>
 inline void
-RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                 Vector<double>&   values) const
+RightHandSide<dim>::vector_value(const Point<dim> &p,
+                                 Vector<double> &  values) const
 {
   Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
   Assert(dim >= 2, ExcNotImplemented());
@@ -234,8 +234,8 @@ RightHandSide<dim>::vector_value(const Point<dim>& p,
 template <int dim>
 void
 RightHandSide<dim>::vector_value_list(
-  const std::vector<Point<dim>>& points,
-  std::vector<Vector<double>>&   value_list) const
+  const std::vector<Point<dim>> &points,
+  std::vector<Vector<double>> &  value_list) const
 {
   Assert(value_list.size() == points.size(),
          ExcDimensionMismatch(value_list.size(), points.size()));
@@ -262,8 +262,8 @@ MaxwellProblem<dim>::~MaxwellProblem()
 
 template <int dim>
 double
-MaxwellProblem<dim>::dotprod(const Tensor<1, dim>& A,
-                             const Tensor<1, dim>& B) const
+MaxwellProblem<dim>::dotprod(const Tensor<1, dim> &A,
+                             const Tensor<1, dim> &B) const
 {
   double return_val = 0;
   for(unsigned int k = 0; k < dim; k++)
@@ -275,8 +275,8 @@ MaxwellProblem<dim>::dotprod(const Tensor<1, dim>& A,
 
 template <int dim>
 double
-MaxwellProblem<dim>::dotprod(const Tensor<1, dim>& A,
-                             const Vector<double>& B) const
+MaxwellProblem<dim>::dotprod(const Tensor<1, dim> &A,
+                             const Vector<double> &B) const
 {
   double return_val = 0;
   for(unsigned int k = 0; k < dim; k++)

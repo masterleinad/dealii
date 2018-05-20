@@ -34,7 +34,7 @@
 
 template <int dim>
 void
-test(const FiniteElement<dim>& fe)
+test(const FiniteElement<dim> &fe)
 {
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);

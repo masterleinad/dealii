@@ -252,16 +252,16 @@ namespace SUNDIALS
        */
       AdditionalData(
         // Global parameters
-        const SolutionStrategy& strategy                      = linesearch,
-        const unsigned int&     maximum_non_linear_iterations = 200,
-        const double&           function_tolerance            = 0.0,
-        const double&           step_tolerance                = 0.0,
-        const bool&             no_init_setup                 = false,
-        const unsigned int&     maximum_setup_calls           = 0,
-        const double&           maximum_newton_step           = 0.0,
-        const double&           dq_relative_error             = 0.0,
-        const unsigned int&     maximum_beta_failures         = 0,
-        const unsigned int&     anderson_subspace_size        = 0)
+        const SolutionStrategy &strategy                      = linesearch,
+        const unsigned int &    maximum_non_linear_iterations = 200,
+        const double &          function_tolerance            = 0.0,
+        const double &          step_tolerance                = 0.0,
+        const bool &            no_init_setup                 = false,
+        const unsigned int &    maximum_setup_calls           = 0,
+        const double &          maximum_newton_step           = 0.0,
+        const double &          dq_relative_error             = 0.0,
+        const unsigned int &    maximum_beta_failures         = 0,
+        const unsigned int &    anderson_subspace_size        = 0)
         : strategy(strategy),
           maximum_non_linear_iterations(maximum_non_linear_iterations),
           function_tolerance(function_tolerance),
@@ -312,7 +312,7 @@ namespace SUNDIALS
        * using `prm`.
        */
       void
-      add_parameters(ParameterHandler& prm)
+      add_parameters(ParameterHandler &prm)
       {
         static std::string strategy_str("newton");
         prm.add_parameter(
@@ -320,7 +320,7 @@ namespace SUNDIALS
           strategy_str,
           "Choose among newton|linesearch|fixed_point|picard",
           Patterns::Selection("newton|linesearch|fixed_point|picard"));
-        prm.add_action("Solution strategy", [&](const std::string& value) {
+        prm.add_action("Solution strategy", [&](const std::string &value) {
           if(value == "newton")
             strategy = newton;
           else if(value == "linesearch")
@@ -447,7 +447,7 @@ namespace SUNDIALS
      * @param data KINSOL configuration data
      * @param mpi_comm MPI communicator
      */
-    KINSOL(const AdditionalData& data     = AdditionalData(),
+    KINSOL(const AdditionalData &data     = AdditionalData(),
            const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
 
     /**
@@ -461,13 +461,13 @@ namespace SUNDIALS
      * initial guess, and stores the final solution in the same vector.
      */
     unsigned int
-    solve(VectorType& initial_guess_and_solution);
+    solve(VectorType &initial_guess_and_solution);
 
     /**
      * A function object that users need to supply and that is intended to
      * reinit the given vector.
      */
-    std::function<void(VectorType&)> reinit_vector;
+    std::function<void(VectorType &)> reinit_vector;
 
     /**
      * A function object that users should supply and that is intended to
@@ -481,7 +481,7 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const VectorType& src, VectorType& dst)> residual;
+    std::function<int(const VectorType &src, VectorType &dst)> residual;
 
     /**
      * A function object that users should supply and that is intended to compute
@@ -496,7 +496,7 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const VectorType& src, VectorType& dst)>
+    std::function<int(const VectorType &src, VectorType &dst)>
       iteration_function;
 
     /**
@@ -539,7 +539,7 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const VectorType& current_u, const VectorType& current_f)>
+    std::function<int(const VectorType &current_u, const VectorType &current_f)>
       setup_jacobian;
 
     /**
@@ -578,10 +578,10 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const VectorType& ycur,
-                      const VectorType& fcur,
-                      const VectorType& rhs,
-                      VectorType&       dst)>
+    std::function<int(const VectorType &ycur,
+                      const VectorType &fcur,
+                      const VectorType &rhs,
+                      VectorType &      dst)>
       solve_jacobian_system;
 
     /**
@@ -590,7 +590,7 @@ namespace SUNDIALS
      * vector norm of the solution. The implementation of this function is
      * optional, and it is used only if implemented.
      */
-    std::function<VectorType&()> get_solution_scaling;
+    std::function<VectorType &()> get_solution_scaling;
 
     /**
      * A function object that users may supply and that is intended to return a
@@ -599,7 +599,7 @@ namespace SUNDIALS
      * implementation of this function is optional, and it is used only if
      * implemented.
      */
-    std::function<VectorType&()> get_function_scaling;
+    std::function<VectorType &()> get_function_scaling;
 
     /**
      * Handle KINSOL exceptions.
@@ -635,7 +635,7 @@ namespace SUNDIALS
     /**
      * KINSOL memory object.
      */
-    void* kinsol_mem;
+    void *kinsol_mem;
 
     /**
      * KINSOL solution vector.

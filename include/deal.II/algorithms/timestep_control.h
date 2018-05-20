@@ -84,12 +84,12 @@ namespace Algorithms
      * Declare the control parameters for parameter handler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler &param);
     /**
      * Read the control parameters from a parameter handler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler &param);
 
     /**
      * The left end of the time interval.
@@ -177,8 +177,8 @@ namespace Algorithms
      * Set the output name template.
      */
     void
-    file_name_format(const char*);
-    const char*
+    file_name_format(const char *);
+    const char *
     file_name_format();
 
   private:
@@ -282,12 +282,12 @@ namespace Algorithms
   }
 
   inline void
-  TimestepControl::file_name_format(const char* fmt)
+  TimestepControl::file_name_format(const char *fmt)
   {
     strcpy(format, fmt);
   }
 
-  inline const char*
+  inline const char *
   TimestepControl::file_name_format()
   {
     return format;

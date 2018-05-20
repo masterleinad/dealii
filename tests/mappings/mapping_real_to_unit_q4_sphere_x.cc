@@ -80,7 +80,7 @@ test_real_to_unit_cell()
     {
       map.transform_real_to_unit_cell(cell, p);
     }
-  catch(const Mapping<dim>::ExcTransformationFailed&)
+  catch(const Mapping<dim>::ExcTransformationFailed &)
     {
       deallog << "Point is outside!" << std::endl;
     }

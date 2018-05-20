@@ -36,7 +36,7 @@ DEAL_II_NAMESPACE_OPEN
 
 #  ifdef DEAL_II_WITH_64BIT_INDICES
 
-IndexSet::IndexSet(const Epetra_Map& map)
+IndexSet::IndexSet(const Epetra_Map &map)
   : is_compressed(true),
     index_space_size(1 + map.MaxAllGID64()),
     largest_range(numbers::invalid_unsigned_int)
@@ -51,8 +51,8 @@ IndexSet::IndexSet(const Epetra_Map& map)
   else
     {
       const size_type n_indices = map.NumMyElements();
-      size_type*      indices
-        = reinterpret_cast<size_type*>(map.MyGlobalElements64());
+      size_type *     indices
+        = reinterpret_cast<size_type *>(map.MyGlobalElements64());
       add_indices(indices, indices + n_indices);
     }
   compress();
@@ -62,7 +62,7 @@ IndexSet::IndexSet(const Epetra_Map& map)
 
 // this is the standard 32-bit implementation
 
-IndexSet::IndexSet(const Epetra_Map& map)
+IndexSet::IndexSet(const Epetra_Map &map)
   : is_compressed(true),
     index_space_size(1 + map.MaxAllGID()),
     largest_range(numbers::invalid_unsigned_int)
@@ -77,8 +77,8 @@ IndexSet::IndexSet(const Epetra_Map& map)
   else
     {
       const size_type n_indices = map.NumMyElements();
-      unsigned int*   indices
-        = reinterpret_cast<unsigned int*>(map.MyGlobalElements());
+      unsigned int *  indices
+        = reinterpret_cast<unsigned int *>(map.MyGlobalElements());
       add_indices(indices, indices + n_indices);
     }
   compress();
@@ -177,7 +177,7 @@ IndexSet::do_compress() const
   Assert(next_index == n_elements(), ExcInternalError());
 }
 
-IndexSet IndexSet::operator&(const IndexSet& is) const
+IndexSet IndexSet::operator&(const IndexSet &is) const
 {
   Assert(size() == is.size(), ExcDimensionMismatch(size(), is.size()));
 
@@ -249,7 +249,7 @@ IndexSet::get_view(const size_type begin, const size_type end) const
 }
 
 void
-IndexSet::subtract_set(const IndexSet& other)
+IndexSet::subtract_set(const IndexSet &other)
 {
   compress();
   other.compress();
@@ -354,7 +354,7 @@ IndexSet::pop_front()
 }
 
 void
-IndexSet::add_indices(const IndexSet& other, const unsigned int offset)
+IndexSet::add_indices(const IndexSet &other, const unsigned int offset)
 {
   if((this == &other) && (offset == 0))
     return;
@@ -406,7 +406,7 @@ IndexSet::add_indices(const IndexSet& other, const unsigned int offset)
 }
 
 void
-IndexSet::write(std::ostream& out) const
+IndexSet::write(std::ostream &out) const
 {
   compress();
   out << size() << " ";
@@ -419,7 +419,7 @@ IndexSet::write(std::ostream& out) const
 }
 
 void
-IndexSet::read(std::istream& in)
+IndexSet::read(std::istream &in)
 {
   AssertThrow(in, ExcIO());
 
@@ -440,39 +440,39 @@ IndexSet::read(std::istream& in)
 }
 
 void
-IndexSet::block_write(std::ostream& out) const
+IndexSet::block_write(std::ostream &out) const
 {
   AssertThrow(out, ExcIO());
-  out.write(reinterpret_cast<const char*>(&index_space_size),
+  out.write(reinterpret_cast<const char *>(&index_space_size),
             sizeof(index_space_size));
   size_t n_ranges = ranges.size();
-  out.write(reinterpret_cast<const char*>(&n_ranges), sizeof(n_ranges));
+  out.write(reinterpret_cast<const char *>(&n_ranges), sizeof(n_ranges));
   if(ranges.empty() == false)
-    out.write(reinterpret_cast<const char*>(&*ranges.begin()),
+    out.write(reinterpret_cast<const char *>(&*ranges.begin()),
               ranges.size() * sizeof(Range));
   AssertThrow(out, ExcIO());
 }
 
 void
-IndexSet::block_read(std::istream& in)
+IndexSet::block_read(std::istream &in)
 {
   size_type size;
   size_t    n_ranges;
-  in.read(reinterpret_cast<char*>(&size), sizeof(size));
-  in.read(reinterpret_cast<char*>(&n_ranges), sizeof(n_ranges));
+  in.read(reinterpret_cast<char *>(&size), sizeof(size));
+  in.read(reinterpret_cast<char *>(&n_ranges), sizeof(n_ranges));
   // we have to clear ranges first
   ranges.clear();
   set_size(size);
   ranges.resize(n_ranges, Range(0, 0));
   if(n_ranges)
-    in.read(reinterpret_cast<char*>(&*ranges.begin()),
+    in.read(reinterpret_cast<char *>(&*ranges.begin()),
             ranges.size() * sizeof(Range));
 
   do_compress(); // needed so that largest_range can be recomputed
 }
 
 void
-IndexSet::fill_index_vector(std::vector<size_type>& indices) const
+IndexSet::fill_index_vector(std::vector<size_type> &indices) const
 {
   compress();
 
@@ -490,7 +490,7 @@ IndexSet::fill_index_vector(std::vector<size_type>& indices) const
 #ifdef DEAL_II_WITH_TRILINOS
 
 Epetra_Map
-IndexSet::make_trilinos_map(const MPI_Comm& communicator,
+IndexSet::make_trilinos_map(const MPI_Comm &communicator,
                             const bool      overlapping) const
 {
   compress();
@@ -539,17 +539,18 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
     {
       std::vector<size_type> indices;
       fill_index_vector(indices);
-      return Epetra_Map(TrilinosWrappers::types::int_type(-1),
-                        TrilinosWrappers::types::int_type(n_elements()),
-                        (n_elements() > 0 ?
-                           reinterpret_cast<TrilinosWrappers::types::int_type*>(
-                             indices.data()) :
-                           nullptr),
-                        0,
+      return Epetra_Map(
+        TrilinosWrappers::types::int_type(-1),
+        TrilinosWrappers::types::int_type(n_elements()),
+        (n_elements() > 0 ?
+           reinterpret_cast<TrilinosWrappers::types::int_type *>(
+             indices.data()) :
+           nullptr),
+        0,
 #  ifdef DEAL_II_WITH_MPI
-                        Epetra_MpiComm(communicator)
+        Epetra_MpiComm(communicator)
 #  else
-                        Epetra_SerialComm()
+        Epetra_SerialComm()
 #  endif
       );
     }
@@ -557,7 +558,7 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
 #endif
 
 bool
-IndexSet::is_ascending_and_one_to_one(const MPI_Comm& communicator) const
+IndexSet::is_ascending_and_one_to_one(const MPI_Comm &communicator) const
 {
   // If the sum of local elements does not add up to the total size,
   // the IndexSet can't be complete.

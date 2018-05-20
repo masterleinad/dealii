@@ -46,15 +46,15 @@ template <int dim,
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
 
   // make function virtual to allow derived
   // classes to define a different function
   virtual void
-  operator()(const MatrixFree<dim, Number>& data,
-             Vector<Number>&,
-             const Vector<Number>&                        src,
-             const std::pair<unsigned int, unsigned int>& cell_range) const
+  operator()(const MatrixFree<dim, Number> &data,
+             Vector<Number> &,
+             const Vector<Number> &                       src,
+             const std::pair<unsigned int, unsigned int> &cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval_plain(data);
@@ -78,7 +78,7 @@ public:
   }
 
   void
-  test_functions(const Vector<Number>& src) const
+  test_functions(const Vector<Number> &src) const
   {
     error = 0;
     total = 0;
@@ -95,13 +95,13 @@ public:
   };
 
 protected:
-  const MatrixFree<dim, Number>& data;
+  const MatrixFree<dim, Number> &data;
   mutable double                 error, total;
 };
 
 template <int dim, int fe_degree, typename number>
 void
-do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
+do_test(const DoFHandler<dim> &dof, const ConstraintMatrix &constraints)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
   //std::cout << "Number of cells: " << dof.get_triangulation().n_active_cells()

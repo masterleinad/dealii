@@ -78,8 +78,8 @@ public:
    * This function overrides the implementation from FE_Q_Base.
    */
   virtual void
-  get_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                           FullMatrix<double>& matrix) const override;
+  get_interpolation_matrix(const FiniteElement<dim, spacedim> &source,
+                           FullMatrix<double> &matrix) const override;
 
   /**
    * FE_Bernstein is not interpolatory in the element interior, which prevents
@@ -88,10 +88,10 @@ public:
    *
    * This function overrides the implementation from FE_Q_Base.
    */
-  virtual const FullMatrix<double>&
+  virtual const FullMatrix<double> &
   get_restriction_matrix(
     const unsigned int         child,
-    const RefinementCase<dim>& refinement_case
+    const RefinementCase<dim> &refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
@@ -101,10 +101,10 @@ public:
    *
    * This function overrides the implementation from FE_Q_Base.
    */
-  virtual const FullMatrix<double>&
+  virtual const FullMatrix<double> &
   get_prolongation_matrix(
     const unsigned int         child,
-    const RefinementCase<dim>& refinement_case
+    const RefinementCase<dim> &refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
@@ -117,8 +117,8 @@ public:
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
   virtual void
-  get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                FullMatrix<double>& matrix) const override;
+  get_face_interpolation_matrix(const FiniteElement<dim, spacedim> &source,
+                                FullMatrix<double> &matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face of
@@ -130,9 +130,9 @@ public:
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
   virtual void
-  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
+  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim> &source,
                                    const unsigned int                  subface,
-                                   FullMatrix<double>& matrix) const override;
+                                   FullMatrix<double> &matrix) const override;
 
   /**
    * Return whether this element implements its hanging node constraints in
@@ -158,7 +158,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_vertex_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> &fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -166,7 +166,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_line_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> &fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -174,7 +174,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_quad_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> &fe_other) const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -187,7 +187,7 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> &fe_other) const override;
 
   /**
    * Return a string that uniquely identifies a finite element. This class

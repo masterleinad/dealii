@@ -206,7 +206,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   deallog.attach(logfile, /*do not print job id*/ false);
@@ -218,7 +218,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

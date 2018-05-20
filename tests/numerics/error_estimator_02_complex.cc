@@ -46,7 +46,7 @@ public:
   MyFunction(const double k);
 
   virtual std::complex<double>
-  value(const dealii::Point<dim>& point,
+  value(const dealii::Point<dim> &point,
         const unsigned int        component = 0) const;
 
   double
@@ -63,7 +63,7 @@ MyFunction<dim>::MyFunction(const double k)
 
 template <int dim>
 std::complex<double>
-MyFunction<dim>::value(const dealii::Point<dim>& point,
+MyFunction<dim>::value(const dealii::Point<dim> &point,
                        const unsigned int) const
 {
   const double x = point[0] - 1.0;
@@ -89,7 +89,7 @@ public:
   NeumanBC(const double c);
 
   virtual std::complex<double>
-  value(const dealii::Point<dim>& point,
+  value(const dealii::Point<dim> &point,
         const unsigned int        component = 0) const;
 
   double
@@ -106,7 +106,7 @@ NeumanBC<dim>::NeumanBC(const double c)
 
 template <int dim>
 std::complex<double>
-NeumanBC<dim>::value(const dealii::Point<dim>& point, const unsigned int) const
+NeumanBC<dim>::value(const dealii::Point<dim> &point, const unsigned int) const
 {
   return std::complex<double>(0, c);
 }
@@ -122,11 +122,11 @@ NeumanBC<dim>::get_c() const
 // area of the squared element with length h
 template <int dim>
 void
-get_h_area(double& h, double& a, const double L);
+get_h_area(double &h, double &a, const double L);
 
 template <>
 void
-get_h_area<2>(double& h, double& a, const double L)
+get_h_area<2>(double &h, double &a, const double L)
 {
   h = L;
   a = L;
@@ -134,7 +134,7 @@ get_h_area<2>(double& h, double& a, const double L)
 
 template <>
 void
-get_h_area<3>(double& h, double& a, const double L)
+get_h_area<3>(double &h, double &a, const double L)
 {
   h = std::sqrt(2.0) * L;
   a = L * L;
@@ -144,11 +144,11 @@ get_h_area<3>(double& h, double& a, const double L)
 // h-refined face.
 template <int dim>
 void
-get_h_area_sub(double& h, double& a, const double L);
+get_h_area_sub(double &h, double &a, const double L);
 
 template <>
 void
-get_h_area_sub<2>(double& h, double& a, const double L)
+get_h_area_sub<2>(double &h, double &a, const double L)
 {
   h = L / 2;
   a = L / 2;
@@ -156,7 +156,7 @@ get_h_area_sub<2>(double& h, double& a, const double L)
 
 template <>
 void
-get_h_area_sub<3>(double& h, double& a, const double L)
+get_h_area_sub<3>(double &h, double &a, const double L)
 {
   h = std::sqrt(2.0) * L / 2;
   a = L * L / 4.0;
@@ -166,10 +166,10 @@ get_h_area_sub<3>(double& h, double& a, const double L)
 template <int dim>
 void
 output(const std::string                   name,
-       const Triangulation<dim>&           triangulation,
-       const hp::DoFHandler<dim>&          dof_handler,
-       const Vector<std::complex<double>>& values,
-       const Vector<float>&                error)
+       const Triangulation<dim> &          triangulation,
+       const hp::DoFHandler<dim> &         dof_handler,
+       const Vector<std::complex<double>> &values,
+       const Vector<float> &               error)
 {
   dealii::Vector<double> fe_degrees(triangulation.n_active_cells());
   {
@@ -194,7 +194,7 @@ output(const std::string                   name,
 // case 1)
 template <int dim>
 void
-test_neumann(const NeumanBC<dim>& func)
+test_neumann(const NeumanBC<dim> &func)
 {
   deallog << "NeumanBC case:" << std::endl;
   deallog << "--------------" << std::endl;
@@ -277,7 +277,7 @@ test_neumann(const NeumanBC<dim>& func)
 // case 2)
 template <int dim>
 void
-test_regular(const MyFunction<dim>& func)
+test_regular(const MyFunction<dim> &func)
 {
   deallog << std::endl;
   deallog << "Regular face:" << std::endl;
@@ -297,7 +297,7 @@ test_regular(const MyFunction<dim>& func)
 
   for(unsigned int i = 0; i < p_degree.size(); i++)
     {
-      const unsigned int& p = p_degree[i];
+      const unsigned int &p = p_degree[i];
       fe_collection.push_back(dealii::FE_Q<dim>(QIterated<1>(QTrapez<1>(), p)));
       quadrature_formula.push_back(dealii::QGauss<dim>(p + 5));
       face_quadrature_formula.push_back(dealii::QGauss<dim - 1>(p + 5));
@@ -391,7 +391,7 @@ test_regular(const MyFunction<dim>& func)
 // case 3)
 template <int dim>
 void
-test_irregular(const MyFunction<dim>& func)
+test_irregular(const MyFunction<dim> &func)
 {
   deallog << std::endl;
   deallog << "Irregular face:" << std::endl;
@@ -413,7 +413,7 @@ test_irregular(const MyFunction<dim>& func)
 
   for(unsigned int i = 0; i < p_degree.size(); i++)
     {
-      const unsigned int& p = p_degree[i];
+      const unsigned int &p = p_degree[i];
       fe_collection.push_back(dealii::FE_Q<dim>(QIterated<1>(QTrapez<1>(), p)));
       quadrature_formula.push_back(dealii::QGauss<dim>(p + 5));
       face_quadrature_formula.push_back(dealii::QGauss<dim - 1>(p + 5));
@@ -547,7 +547,7 @@ public:
   MySecondFunction();
 
   virtual std::complex<double>
-  value(const dealii::Point<dim>& point,
+  value(const dealii::Point<dim> &point,
         const unsigned int        component = 0) const;
 };
 
@@ -558,13 +558,13 @@ MySecondFunction<dim>::MySecondFunction()
 
 template <int dim>
 std::complex<double>
-MySecondFunction<dim>::value(const dealii::Point<dim>& point,
+MySecondFunction<dim>::value(const dealii::Point<dim> &point,
                              const unsigned int) const
 {
   double        f = 0.0;
-  const double& x = point[0];
+  const double &x = point[0];
   Assert(dim > 1, dealii::ExcNotImplemented());
-  const double& y = point[1];
+  const double &y = point[1];
 
   return std::complex<double>(
     0, (1. - x) * (1. - y) * (1. - y) + std::pow(1.0 - y, 4) * std::exp(-x));
@@ -572,7 +572,7 @@ MySecondFunction<dim>::value(const dealii::Point<dim>& point,
 
 template <int dim>
 void
-test(const MySecondFunction<dim>& func)
+test(const MySecondFunction<dim> &func)
 {
   deallog << std::endl;
   deallog << "More complicated mesh:" << std::endl;

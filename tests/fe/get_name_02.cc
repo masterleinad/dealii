@@ -27,7 +27,7 @@
 
 template <int dim, int spacedim>
 void
-test(const FiniteElement<dim, spacedim>& fe)
+test(const FiniteElement<dim, spacedim> &fe)
 {
   deallog << fe.get_name() << std::endl;
 }

@@ -44,7 +44,7 @@ main()
   std::vector<double>       distances;
 
   // Get closest points. Do a few rounds
-  for(auto& p : test_points)
+  for(auto &p : test_points)
     {
       for(unsigned int i = 1; i < points.size() + 1; ++i)
         {

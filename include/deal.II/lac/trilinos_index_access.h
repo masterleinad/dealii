@@ -37,7 +37,7 @@ namespace TrilinosWrappers
    * elements in the map.
    */
   inline TrilinosWrappers::types::int_type
-  n_global_elements(const Epetra_BlockMap& map)
+  n_global_elements(const Epetra_BlockMap &map)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return map.NumGlobalElements64();
@@ -51,7 +51,7 @@ namespace TrilinosWrappers
    * calling processor by calling either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  min_my_gid(const Epetra_BlockMap& map)
+  min_my_gid(const Epetra_BlockMap &map)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return map.MinMyGID64();
@@ -65,7 +65,7 @@ namespace TrilinosWrappers
    * calling processor by calling either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  max_my_gid(const Epetra_BlockMap& map)
+  max_my_gid(const Epetra_BlockMap &map)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return map.MaxMyGID64();
@@ -79,7 +79,7 @@ namespace TrilinosWrappers
    * either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  global_index(const Epetra_BlockMap&                map,
+  global_index(const Epetra_BlockMap &               map,
                const dealii::types::global_dof_index i)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
@@ -94,8 +94,8 @@ namespace TrilinosWrappers
    * global indices assigned to the current process by calling either the 32
    * or 64 bit function.
    */
-  inline TrilinosWrappers::types::int_type*
-  my_global_elements(const Epetra_BlockMap& map)
+  inline TrilinosWrappers::types::int_type *
+  my_global_elements(const Epetra_BlockMap &map)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return map.MyGlobalElements64();
@@ -109,7 +109,7 @@ namespace TrilinosWrappers
    * either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  n_global_rows(const Epetra_CrsGraph& graph)
+  n_global_rows(const Epetra_CrsGraph &graph)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return graph.NumGlobalRows64();
@@ -123,7 +123,7 @@ namespace TrilinosWrappers
    * either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  n_global_cols(const Epetra_CrsGraph& graph)
+  n_global_cols(const Epetra_CrsGraph &graph)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return graph.NumGlobalCols64();
@@ -137,7 +137,7 @@ namespace TrilinosWrappers
    * either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  n_global_entries(const Epetra_CrsGraph& graph)
+  n_global_entries(const Epetra_CrsGraph &graph)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return graph.NumGlobalEntries64();
@@ -151,7 +151,7 @@ namespace TrilinosWrappers
    * either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  global_row_index(const Epetra_CrsMatrix&               matrix,
+  global_row_index(const Epetra_CrsMatrix &              matrix,
                    const dealii::types::global_dof_index i)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
@@ -166,7 +166,7 @@ namespace TrilinosWrappers
    * either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  global_column_index(const Epetra_CrsMatrix&               matrix,
+  global_column_index(const Epetra_CrsMatrix &              matrix,
                       const dealii::types::global_dof_index i)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
@@ -181,7 +181,7 @@ namespace TrilinosWrappers
    * either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  global_length(const Epetra_MultiVector& vector)
+  global_length(const Epetra_MultiVector &vector)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return vector.GlobalLength64();
@@ -195,7 +195,7 @@ namespace TrilinosWrappers
    * either the 32 or 64 bit function.
    */
   inline TrilinosWrappers::types::int_type
-  n_global_rows(const Epetra_RowMatrix& matrix)
+  n_global_rows(const Epetra_RowMatrix &matrix)
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     return matrix.NumGlobalRows64();

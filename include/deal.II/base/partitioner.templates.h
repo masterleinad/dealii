@@ -36,10 +36,10 @@ namespace Utilities
     void
     Partitioner::export_to_ghosted_array_start(
       const unsigned int             communication_channel,
-      const ArrayView<const Number>& locally_owned_array,
-      const ArrayView<Number>&       temporary_storage,
-      const ArrayView<Number>&       ghost_array,
-      std::vector<MPI_Request>&      requests) const
+      const ArrayView<const Number> &locally_owned_array,
+      const ArrayView<Number> &      temporary_storage,
+      const ArrayView<Number> &      ghost_array,
+      std::vector<MPI_Request> &     requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices()
@@ -71,7 +71,7 @@ namespace Utilities
       const bool use_larger_set
         = (n_ghost_indices_in_larger_set > n_ghost_indices()
            && ghost_array.size() == n_ghost_indices_in_larger_set);
-      Number* ghost_array_ptr
+      Number *ghost_array_ptr
         = use_larger_set ? ghost_array.data() + n_ghost_indices_in_larger_set
                              - n_ghost_indices() :
                            ghost_array.data();
@@ -92,7 +92,7 @@ namespace Utilities
           ghost_array_ptr += ghost_targets()[i].second;
         }
 
-      Number* temp_array_ptr = temporary_storage.data();
+      Number *temp_array_ptr = temporary_storage.data();
       for(unsigned int i = 0; i < n_import_targets; i++)
         {
           // copy the data to be sent to the import_data field
@@ -125,8 +125,8 @@ namespace Utilities
     template <typename Number>
     void
     Partitioner::export_to_ghosted_array_finish(
-      const ArrayView<Number>&  ghost_array,
-      std::vector<MPI_Request>& requests) const
+      const ArrayView<Number> & ghost_array,
+      std::vector<MPI_Request> &requests) const
     {
       Assert(ghost_array.size() == n_ghost_indices()
                || ghost_array.size() == n_ghost_indices_in_larger_set,
@@ -179,9 +179,9 @@ namespace Utilities
     Partitioner::import_from_ghosted_array_start(
       const VectorOperation::values vector_operation,
       const unsigned int            communication_channel,
-      const ArrayView<Number>&      ghost_array,
-      const ArrayView<Number>&      temporary_storage,
-      std::vector<MPI_Request>&     requests) const
+      const ArrayView<Number> &     ghost_array,
+      const ArrayView<Number> &     temporary_storage,
+      std::vector<MPI_Request> &    requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices()
@@ -223,7 +223,7 @@ namespace Utilities
       requests.resize(n_import_targets + n_ghost_targets);
 
       // initiate the receive operations
-      Number* temp_array_ptr = temporary_storage.data();
+      Number *temp_array_ptr = temporary_storage.data();
       for(unsigned int i = 0; i < n_import_targets; i++)
         {
           AssertThrow(
@@ -250,7 +250,7 @@ namespace Utilities
       // in case we want to import only from a subset of the ghosts we want to
       // move the data to send to the front of the array
       AssertIndexRange(n_ghost_indices(), n_ghost_indices_in_larger_set + 1);
-      Number* ghost_array_ptr = ghost_array.data();
+      Number *ghost_array_ptr = ghost_array.data();
       for(unsigned int i = 0; i < n_ghost_targets; i++)
         {
           // in case we only sent a subset of indices, we now need to move the data
@@ -329,10 +329,10 @@ namespace Utilities
     void
     Partitioner::import_from_ghosted_array_finish(
       const VectorOperation::values  vector_operation,
-      const ArrayView<const Number>& temporary_storage,
-      const ArrayView<Number>&       locally_owned_array,
-      const ArrayView<Number>&       ghost_array,
-      std::vector<MPI_Request>&      requests) const
+      const ArrayView<const Number> &temporary_storage,
+      const ArrayView<Number> &      locally_owned_array,
+      const ArrayView<Number> &      ghost_array,
+      std::vector<MPI_Request> &     requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices()
@@ -385,7 +385,7 @@ namespace Utilities
             n_import_targets, requests.data(), MPI_STATUSES_IGNORE);
           AssertThrowMPI(ierr);
 
-          const Number* read_position = temporary_storage.data();
+          const Number *read_position = temporary_storage.data();
           std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
             my_imports
             = import_indices_data.begin();

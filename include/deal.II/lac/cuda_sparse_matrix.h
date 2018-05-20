@@ -79,19 +79,19 @@ namespace CUDAWrappers
      * The sparse matrix on the host is copied on the device and the elements
      * are reordered according to the format supported by cuSPARSE.
      */
-    SparseMatrix(Utilities::CUDA::Handle&              handle,
-                 const ::dealii::SparseMatrix<Number>& sparse_matrix_host);
+    SparseMatrix(Utilities::CUDA::Handle &             handle,
+                 const ::dealii::SparseMatrix<Number> &sparse_matrix_host);
 
     /**
      * Move constructor. Create a new SparseMatrix by stealing the internal
      * data.
      */
-    SparseMatrix(CUDAWrappers::SparseMatrix<Number>&&);
+    SparseMatrix(CUDAWrappers::SparseMatrix<Number> &&);
 
     /**
      * Copy constructor is deleted.
      */
-    SparseMatrix(const CUDAWrappers::SparseMatrix<Number>&) = delete;
+    SparseMatrix(const CUDAWrappers::SparseMatrix<Number> &) = delete;
 
     /**
      * Destructor. Free all memory.
@@ -104,8 +104,8 @@ namespace CUDAWrappers
      * supported by cuSPARSE.
      */
     void
-    reinit(Utilities::CUDA::Handle&              handle,
-           const ::dealii::SparseMatrix<Number>& sparse_matrix_host);
+    reinit(Utilities::CUDA::Handle &             handle,
+           const ::dealii::SparseMatrix<Number> &sparse_matrix_host);
     //@}
 
     /**
@@ -142,13 +142,13 @@ namespace CUDAWrappers
     /**
      * Multiply the entire matrix by a fixed factor.
      */
-    SparseMatrix&
+    SparseMatrix &
     operator*=(const Number factor);
 
     /**
      * Divide the entrie matrix by a fixed factor.
      */
-    SparseMatrix&
+    SparseMatrix &
     operator/=(const Number factor);
     //@}
 
@@ -161,8 +161,8 @@ namespace CUDAWrappers
      * being this matrix.
      */
     void
-    vmult(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
-          const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const;
+    vmult(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
+          const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const;
 
     /**
      * Matrix-vector multiplication: let $dst = M^T \cdot src$ with
@@ -170,16 +170,16 @@ namespace CUDAWrappers
      * takes this transposed matrix.
      */
     void
-    Tvmult(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
-           const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const;
+    Tvmult(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
+           const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const;
 
     /**
      * Adding matrix-vector multiplication. Add $M \cdot src$ on $dst$
      * with $M$ being this matrix.
      */
     void
-    vmult_add(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
-              const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const;
+    vmult_add(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
+              const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const;
 
     /**
      * Adding matrix-vector multiplication. Add $M^T \cdot src$ to
@@ -187,8 +187,8 @@ namespace CUDAWrappers
      * as vmult_add() but takes the transposed matrix.
      */
     void
-    Tvmult_add(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
-               const LinearAlgebra::CUDAWrappers::Vector<Number>& src) const;
+    Tvmult_add(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
+               const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const;
 
     /**
      * Return the square of the norm of the vector $v$ with respect to the
@@ -201,15 +201,15 @@ namespace CUDAWrappers
      */
     Number
     matrix_norm_square(
-      const LinearAlgebra::CUDAWrappers::Vector<Number>& v) const;
+      const LinearAlgebra::CUDAWrappers::Vector<Number> &v) const;
 
     /**
      * Compute the matrix scalar product $\left(u,Mv\right)$.
      */
     Number
     matrix_scalar_product(
-      const LinearAlgebra::CUDAWrappers::Vector<Number>& u,
-      const LinearAlgebra::CUDAWrappers::Vector<Number>& v) const;
+      const LinearAlgebra::CUDAWrappers::Vector<Number> &u,
+      const LinearAlgebra::CUDAWrappers::Vector<Number> &v) const;
 
     /**
      * Compute the residual of an equation $M \cdot x=b$, where the residual is
@@ -219,9 +219,9 @@ namespace CUDAWrappers
      * Source $x$ and destination $dst$ must not be the same vector.
      */
     Number
-    residual(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
-             const LinearAlgebra::CUDAWrappers::Vector<Number>& x,
-             const LinearAlgebra::CUDAWrappers::Vector<Number>& b) const;
+    residual(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
+             const LinearAlgebra::CUDAWrappers::Vector<Number> &x,
+             const LinearAlgebra::CUDAWrappers::Vector<Number> &b) const;
     //@}
 
     /**
@@ -264,7 +264,7 @@ namespace CUDAWrappers
      * pointer to the columns indices, the pointer to the rows pointer, and
      * the cuSPARSE matrix description.
      */
-    std::tuple<Number*, int*, int*, cusparseMatDescr_t>
+    std::tuple<Number *, int *, int *, cusparseMatDescr_t>
     get_cusparse_matrix() const;
     //*}
 
@@ -293,17 +293,17 @@ namespace CUDAWrappers
     /**
      * Pointer to the values (on the device) of the sparse matrix.
      */
-    Number* val_dev;
+    Number *val_dev;
 
     /**
      * Pointer to the column indices (on the device) of the sparse matrix.
      */
-    int* column_index_dev;
+    int *column_index_dev;
 
     /**
      * Pointer to the row pointer (on the device) of the sparse matrix.
      */
-    int* row_ptr_dev;
+    int *row_ptr_dev;
 
     /**
      * cuSPARSE description of the sparse matrix.

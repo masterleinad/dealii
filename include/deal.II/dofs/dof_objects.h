@@ -83,7 +83,7 @@ namespace internal
        */
       template <int dh_dim, int spacedim>
       void
-      set_dof_index(const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
+      set_dof_index(const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
                     const unsigned int                          obj_index,
                     const unsigned int                          fe_index,
                     const unsigned int                          local_index,
@@ -103,7 +103,7 @@ namespace internal
        */
       template <int dh_dim, int spacedim>
       types::global_dof_index
-      get_dof_index(const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
+      get_dof_index(const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
                     const unsigned int                          obj_index,
                     const unsigned int                          fe_index,
                     const unsigned int local_index) const;
@@ -116,7 +116,7 @@ namespace internal
       template <int dh_dim, int spacedim>
       unsigned int
       n_active_fe_indices(
-        const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
+        const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
         const types::global_dof_index               index) const;
 
       /**
@@ -126,7 +126,7 @@ namespace internal
       template <int dh_dim, int spacedim>
       bool
       fe_index_is_active(
-        const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
+        const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
         const types::global_dof_index               index,
         const unsigned int                          fe_index) const;
 
@@ -143,7 +143,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive &ar, const unsigned int version);
 
       /**
        * Declare the classes that store levels and faces of DoFs friends so
@@ -161,7 +161,7 @@ namespace internal
     template <int dh_dim, int spacedim>
     inline unsigned int
     DoFObjects<dim>::n_active_fe_indices(
-      const dealii::DoFHandler<dh_dim, spacedim>&,
+      const dealii::DoFHandler<dh_dim, spacedim> &,
       const types::global_dof_index) const
     {
       return 1;
@@ -171,7 +171,7 @@ namespace internal
     template <int dh_dim, int spacedim>
     inline bool
     DoFObjects<dim>::fe_index_is_active(
-      const dealii::DoFHandler<dh_dim, spacedim>&,
+      const dealii::DoFHandler<dh_dim, spacedim> &,
       const types::global_dof_index,
       const unsigned int fe_index) const
     {
@@ -186,7 +186,7 @@ namespace internal
     template <int dh_dim, int spacedim>
     inline types::global_dof_index
     DoFObjects<dim>::get_dof_index(
-      const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
+      const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
       const unsigned int                          obj_index,
       const unsigned int                          fe_index,
       const unsigned int                          local_index) const
@@ -214,9 +214,9 @@ namespace internal
     template <int dim>
     template <class Archive>
     void
-    DoFObjects<dim>::serialize(Archive& ar, const unsigned int)
+    DoFObjects<dim>::serialize(Archive &ar, const unsigned int)
     {
-      ar& dofs;
+      ar &dofs;
     }
 
   } // namespace DoFHandlerImplementation

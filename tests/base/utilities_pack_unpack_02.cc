@@ -25,12 +25,12 @@
 
 template <int dim>
 void
-test(const unsigned int& size)
+test(const unsigned int &size)
 {
   std::vector<Point<dim>> points(size);
   auto                    a_pair = std::make_pair(1, 3.14);
 
-  for(auto& p : points)
+  for(auto &p : points)
     p = random_point<dim>();
 
   auto a_tuple = std::make_tuple(a_pair, points);
@@ -45,7 +45,7 @@ test(const unsigned int& size)
   unsigned int i  = 0;
   bool         ok = (pair_unpacked == a_pair);
 
-  for(const auto& p : points)
+  for(const auto &p : points)
     if(p.distance(points_unpacked[i++]) > 1e-12)
       {
         deallog << "NOT OK: " << p << " != " << points_unpacked[i - 1]

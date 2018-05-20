@@ -40,14 +40,14 @@ public:
   VectorFunction() : Function<dim>(dim)
   {}
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> &p, const unsigned int component) const;
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const;
+  vector_value(const Point<dim> &p, Vector<double> &values) const;
 };
 
 template <>
 double
-VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
+VectorFunction<2>::value(const Point<2> &p, const unsigned int component) const
 {
   Assert(component < 2, ExcIndexRange(component, 0, 1));
 
@@ -67,7 +67,7 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 
 template <>
 double
-VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
+VectorFunction<3>::value(const Point<3> &p, const unsigned int component) const
 {
   Assert(component < 3, ExcIndexRange(component, 0, 2));
 
@@ -90,8 +90,8 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 
 template <int dim>
 void
-VectorFunction<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+VectorFunction<dim>::vector_value(const Point<dim> &p,
+                                  Vector<double> &  values) const
 {
   for(int i = 0; i < dim; ++i)
     values(i) = value(p, i);
@@ -99,7 +99,7 @@ VectorFunction<dim>::vector_value(const Point<dim>& p,
 
 template <int dim>
 void
-test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
+test(const Triangulation<dim> &tr, const FiniteElement<dim> &fe)
 {
   deallog << "FE=" << fe.get_name() << std::endl;
 

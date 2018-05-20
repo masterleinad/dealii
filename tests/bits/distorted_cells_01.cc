@@ -66,7 +66,7 @@ check(const unsigned int testcase)
     {
       coarse_grid.create_triangulation(vertices, cells, SubCellData());
     }
-  catch(typename Triangulation<dim>::DistortedCellList& dcv)
+  catch(typename Triangulation<dim>::DistortedCellList &dcv)
     {
       flag = true;
 

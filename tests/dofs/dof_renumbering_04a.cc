@@ -33,7 +33,7 @@
 
 template <int dim>
 void
-print_dofs(const DoFHandler<dim>& dof)
+print_dofs(const DoFHandler<dim> &dof)
 {
   std::vector<types::global_dof_index> v(dof.get_fe().dofs_per_cell);
 

@@ -65,7 +65,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::new_parameter_value(
 template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::attach_dof_handler(
-  const DoFHandlerType& dof)
+  const DoFHandlerType &dof)
 {
   // Check consistency of redundant
   // template parameter
@@ -78,7 +78,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::attach_dof_handler(
 template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
-  const std::string& name,
+  const std::string &name,
   const VectorType   vector_type)
 {
   std::vector<std::string> names;
@@ -89,7 +89,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
 template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
-  const std::vector<std::string>& names,
+  const std::vector<std::string> &names,
   const VectorType                vector_type)
 {
   // make sure this function is
@@ -137,8 +137,8 @@ template <int dim, int spacedim, typename DoFHandlerType>
 template <typename number>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
-  const Vector<number>& vec,
-  const std::string&    name)
+  const Vector<number> &vec,
+  const std::string &   name)
 {
   const unsigned int n_components = dof_handler->get_fe(0).n_components();
 
@@ -171,8 +171,8 @@ template <int dim, int spacedim, typename DoFHandlerType>
 template <typename number>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
-  const Vector<number>&           vec,
-  const std::vector<std::string>& names)
+  const Vector<number> &          vec,
+  const std::vector<std::string> &names)
 {
   Assert(dof_handler != nullptr,
          Exceptions::DataOutImplementation::ExcNoDoFHandlerSelected());
@@ -288,7 +288,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
   // collection of which we do a
   // shallow copy instead
   const hp::QCollection<dim>   q_collection(patch_points);
-  const hp::FECollection<dim>& fe_collection = dof_handler->get_fe_collection();
+  const hp::FECollection<dim> &fe_collection = dof_handler->get_fe_collection();
 
   hp::FEValues<dim> x_fe_patch_values(
     fe_collection, q_collection, update_values);
@@ -379,7 +379,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
       if(n_datasets > 0)
         {
           x_fe_patch_values.reinit(cell);
-          const FEValues<dim>& fe_patch_values
+          const FEValues<dim> &fe_patch_values
             = x_fe_patch_values.get_present_fe_values();
 
           // first fill dof_data
@@ -454,7 +454,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::memory_consumption() const
 }
 
 template <int dim, int spacedim, typename DoFHandlerType>
-const std::vector<dealii::DataOutBase::Patch<dim + 1, dim + 1>>&
+const std::vector<dealii::DataOutBase::Patch<dim + 1, dim + 1>> &
 DataOutStack<dim, spacedim, DoFHandlerType>::get_patches() const
 {
   return patches;

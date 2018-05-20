@@ -74,7 +74,7 @@ namespace LinearAlgebra
      * Copy constructor. Sets the dimension to that of the given vector and
      * copies all elements.
      */
-    Vector(const Vector<Number>& V);
+    Vector(const Vector<Number> &V);
 
     /**
      * Constructor. Set dimension to @p n and initialize all elements with
@@ -117,7 +117,7 @@ namespace LinearAlgebra
      */
     template <typename Number2>
     void
-    reinit(const ReadWriteVector<Number2>& in_vector,
+    reinit(const ReadWriteVector<Number2> &in_vector,
            const bool                      omit_zeroing_entries = false);
 
     /**
@@ -130,7 +130,7 @@ namespace LinearAlgebra
      * locally_stored_indices.
      */
     virtual void
-    reinit(const IndexSet& locally_stored_indices,
+    reinit(const IndexSet &locally_stored_indices,
            const bool      omit_zeroing_entries = false) override;
 
     /**
@@ -138,63 +138,63 @@ namespace LinearAlgebra
      * copied.
      */
     virtual void
-    reinit(const VectorSpaceVector<Number>& V,
+    reinit(const VectorSpaceVector<Number> &V,
            const bool omit_zeroing_entries = false) override;
 
     /**
      * Copies the data of the input vector @p in_vector.
      */
-    Vector<Number>&
-    operator=(const Vector<Number>& in_vector);
+    Vector<Number> &
+    operator=(const Vector<Number> &in_vector);
 
     /**
      * Copies the data of the input vector @p in_vector.
      */
     template <typename Number2>
-    Vector<Number>&
-    operator=(const Vector<Number2>& in_vector);
+    Vector<Number> &
+    operator=(const Vector<Number2> &in_vector);
 
     /**
      * Sets all elements of the vector to the scalar @p s. This operation is
      * only allowed if @p s is equal to zero.
      */
-    virtual Vector<Number>&
+    virtual Vector<Number> &
     operator=(const Number s) override;
 
     /**
      * Multiply the entire vector by a fixed factor.
      */
-    virtual Vector<Number>&
+    virtual Vector<Number> &
     operator*=(const Number factor) override;
 
     /**
      * Divide the entire vector by a fixed factor.
      */
-    virtual Vector<Number>&
+    virtual Vector<Number> &
     operator/=(const Number factor) override;
 
     /**
      * Add the vector @p V to the present one.
      */
-    virtual Vector<Number>&
-    operator+=(const VectorSpaceVector<Number>& V) override;
+    virtual Vector<Number> &
+    operator+=(const VectorSpaceVector<Number> &V) override;
 
     /**
      * Subtract the vector @p V from the present one.
      */
-    virtual Vector<Number>&
-    operator-=(const VectorSpaceVector<Number>& V) override;
+    virtual Vector<Number> &
+    operator-=(const VectorSpaceVector<Number> &V) override;
 
     /**
      * Return the scalar product of two vectors.
      */
-    virtual Number operator*(const VectorSpaceVector<Number>& V) const override;
+    virtual Number operator*(const VectorSpaceVector<Number> &V) const override;
 
     /**
      * This function is not implemented and will throw an exception.
      */
     virtual void
-    import(const ReadWriteVector<Number>&                  V,
+    import(const ReadWriteVector<Number> &                 V,
            VectorOperation::values                         operation,
            std::shared_ptr<const CommunicationPatternBase> communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>()) override;
@@ -209,7 +209,7 @@ namespace LinearAlgebra
      * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
      */
     virtual void
-    add(const Number a, const VectorSpaceVector<Number>& V) override;
+    add(const Number a, const VectorSpaceVector<Number> &V) override;
 
     /**
      * Multiple addition of a multiple of a vector, i.e. <tt>*this +=
@@ -217,9 +217,9 @@ namespace LinearAlgebra
      */
     virtual void
     add(const Number                     a,
-        const VectorSpaceVector<Number>& V,
+        const VectorSpaceVector<Number> &V,
         const Number                     b,
-        const VectorSpaceVector<Number>& W) override;
+        const VectorSpaceVector<Number> &W) override;
 
     /**
      * Scaling and simple addition of a multiple of a vector, i.e. <tt>*this =
@@ -228,7 +228,7 @@ namespace LinearAlgebra
     virtual void
     sadd(const Number                     s,
          const Number                     a,
-         const VectorSpaceVector<Number>& V) override;
+         const VectorSpaceVector<Number> &V) override;
 
     /**
      * Scale each element of this vector by the corresponding element in the
@@ -236,13 +236,13 @@ namespace LinearAlgebra
      * immediate re-assignment) by a diagonal scaling matrix.
      */
     virtual void
-    scale(const VectorSpaceVector<Number>& scaling_factors) override;
+    scale(const VectorSpaceVector<Number> &scaling_factors) override;
 
     /**
      * Assignment <tt>*this = a*V</tt>.
      */
     virtual void
-    equ(const Number a, const VectorSpaceVector<Number>& V) override;
+    equ(const Number a, const VectorSpaceVector<Number> &V) override;
 
     /**
      * Return whether the vector contains only elements with value zero.
@@ -298,8 +298,8 @@ namespace LinearAlgebra
      */
     virtual Number
     add_and_dot(const Number                     a,
-                const VectorSpaceVector<Number>& V,
-                const VectorSpaceVector<Number>& W) override;
+                const VectorSpaceVector<Number> &V,
+                const VectorSpaceVector<Number> &W) override;
 
     /**
      * Return the global size of the vector, equal to the sum of the number of
@@ -326,7 +326,7 @@ namespace LinearAlgebra
      * Prints the vector to the output stream @p out.
      */
     virtual void
-    print(std::ostream&      out,
+    print(std::ostream &     out,
           const unsigned int precision  = 3,
           const bool         scientific = true,
           const bool         across     = true) const override;
@@ -337,7 +337,7 @@ namespace LinearAlgebra
      * computers using a different operating system or number format.
      */
     void
-    block_write(std::ostream& out) const;
+    block_write(std::ostream &out) const;
 
     /**
      * Read a vector en block from a file. This is done using the inverse
@@ -351,7 +351,7 @@ namespace LinearAlgebra
      * to a file, but not more.
      */
     void
-    block_read(std::istream& in);
+    block_read(std::istream &in);
 
     /**
      * Return the memory consumption of this class in bytes.
@@ -374,7 +374,7 @@ namespace LinearAlgebra
      */
     template <typename Archive>
     void
-    serialize(Archive& ar, const unsigned int version);
+    serialize(Archive &ar, const unsigned int version);
 
     friend class boost::serialization::access;
 
@@ -389,7 +389,7 @@ namespace LinearAlgebra
   /*----------------------- Inline functions ----------------------------------*/
 
   template <typename Number>
-  inline Vector<Number>::Vector(const Vector<Number>& V)
+  inline Vector<Number>::Vector(const Vector<Number> &V)
     : ReadWriteVector<Number>(V)
   {}
 
@@ -422,7 +422,7 @@ namespace LinearAlgebra
 
   template <typename Number>
   inline void
-  Vector<Number>::print(std::ostream&      out,
+  Vector<Number>::print(std::ostream &     out,
                         const unsigned int precision,
                         const bool         scientific,
                         const bool) const
@@ -433,15 +433,15 @@ namespace LinearAlgebra
   template <typename Number>
   template <typename Archive>
   inline void
-  Vector<Number>::serialize(Archive& ar, const unsigned int)
+  Vector<Number>::serialize(Archive &ar, const unsigned int)
   {
     size_type current_size = this->size();
-    ar& static_cast<Subscriptor&>(*this);
+    ar &static_cast<Subscriptor &>(*this);
     ar & this->stored_elements;
     // If necessary, resize the vector during a read operation
     if(this->size() != current_size)
       this->reinit(this->size());
-    ar& boost::serialization::make_array(this->values.get(), this->size());
+    ar &boost::serialization::make_array(this->values.get(), this->size());
   }
 
   template <typename Number>

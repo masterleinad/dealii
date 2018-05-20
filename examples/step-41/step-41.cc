@@ -87,7 +87,7 @@ namespace Step41
     void
     assemble_system();
     void
-    assemble_mass_matrix_diagonal(TrilinosWrappers::SparseMatrix& mass_matrix);
+    assemble_mass_matrix_diagonal(TrilinosWrappers::SparseMatrix &mass_matrix);
     void
     update_solution_and_constraints();
     void
@@ -129,12 +129,12 @@ namespace Step41
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  RightHandSide<dim>::value(const Point<dim>&,
+  RightHandSide<dim>::value(const Point<dim> &,
                             const unsigned int component) const
   {
     (void) component;
@@ -151,12 +151,12 @@ namespace Step41
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  BoundaryValues<dim>::value(const Point<dim>&,
+  BoundaryValues<dim>::value(const Point<dim> &,
                              const unsigned int component) const
   {
     (void) component;
@@ -175,12 +175,12 @@ namespace Step41
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  Obstacle<dim>::value(const Point<dim>& p, const unsigned int component) const
+  Obstacle<dim>::value(const Point<dim> &p, const unsigned int component) const
   {
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
@@ -360,7 +360,7 @@ namespace Step41
   template <int dim>
   void
   ObstacleProblem<dim>::assemble_mass_matrix_diagonal(
-    TrilinosWrappers::SparseMatrix& mass_matrix)
+    TrilinosWrappers::SparseMatrix &mass_matrix)
   {
     Assert(fe.degree == 1, ExcNotImplemented());
 
@@ -645,7 +645,7 @@ namespace Step41
 // functions. The call to initialize MPI exists because the Trilinos library
 // upon which we build our linear solvers in this program requires it.
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   try
     {
@@ -663,7 +663,7 @@ main(int argc, char* argv[])
       ObstacleProblem<2> obstacle_problem;
       obstacle_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

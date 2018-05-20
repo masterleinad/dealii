@@ -24,7 +24,7 @@
 
 template <int dim>
 void
-test(std::ostream& out)
+test(std::ostream &out)
 {
   Triangulation<2> triangulation;
   Triangulation<3> tr;

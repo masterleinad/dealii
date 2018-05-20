@@ -41,14 +41,14 @@ public:
   {}
 
   virtual std::complex<double>
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> &p, const unsigned int component) const
   {
     return std::complex<double>(
       100 * (component + 1) * p.square() * std::sin(p.square()), 0);
   }
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<std::complex<double>>& values) const
+  vector_value(const Point<dim> &p, Vector<std::complex<double>> &values) const
   {
     for(unsigned int d = 0; d < this->n_components; ++d)
       values(d) = value(p, d);
@@ -56,15 +56,15 @@ public:
 };
 
 template <int dim>
-const Quadrature<dim - 1>&
-boundary_q(const hp::DoFHandler<dim>&)
+const Quadrature<dim - 1> &
+boundary_q(const hp::DoFHandler<dim> &)
 {
   static const QGauss<dim - 1> q(4);
   return q;
 }
 
 void
-write_map(const std::map<types::global_dof_index, std::complex<double>>& bv)
+write_map(const std::map<types::global_dof_index, std::complex<double>> &bv)
 {
   for(std::map<types::global_dof_index, std::complex<double>>::const_iterator i
       = bv.begin();
@@ -108,8 +108,8 @@ check()
   // which we want check, and
   // associated list of boundary
   // value functions
-  std::vector<const FiniteElement<dim>*>                  fe_list;
-  std::vector<const Function<dim, std::complex<double>>*> function_list;
+  std::vector<const FiniteElement<dim> *>                  fe_list;
+  std::vector<const Function<dim, std::complex<double>> *> function_list;
 
   // FE1: a system of a quadratic and
   // a linear element

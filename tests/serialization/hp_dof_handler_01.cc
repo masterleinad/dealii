@@ -30,8 +30,8 @@ namespace dealii
 {
   template <int dim, int spacedim>
   bool
-  operator==(const hp::DoFHandler<dim, spacedim>& t1,
-             const hp::DoFHandler<dim, spacedim>& t2)
+  operator==(const hp::DoFHandler<dim, spacedim> &t1,
+             const hp::DoFHandler<dim, spacedim> &t2)
   {
     // test a few attributes, though we can't
     // test everything unfortunately...
@@ -135,7 +135,7 @@ namespace dealii
 
 template <int dim, int spacedim>
 void
-do_boundary(Triangulation<dim, spacedim>& t1)
+do_boundary(Triangulation<dim, spacedim> &t1)
 {
   typename Triangulation<dim, spacedim>::cell_iterator c1 = t1.begin();
   for(; c1 != t1.end(); ++c1)
@@ -145,7 +145,7 @@ do_boundary(Triangulation<dim, spacedim>& t1)
 }
 
 template <int spacedim>
-void do_boundary(Triangulation<1, spacedim>&)
+void do_boundary(Triangulation<1, spacedim> &)
 {}
 
 template <int dim, int spacedim>

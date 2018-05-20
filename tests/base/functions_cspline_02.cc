@@ -32,8 +32,8 @@ check()
     }
 
   // native:
-  gsl_interp_accel* acc    = gsl_interp_accel_alloc();
-  gsl_spline*       spline = gsl_spline_alloc(gsl_interp_cspline, n_points);
+  gsl_interp_accel *acc    = gsl_interp_accel_alloc();
+  gsl_spline *      spline = gsl_spline_alloc(gsl_interp_cspline, n_points);
 
   gsl_spline_init(spline, &x[0], &y[0], n_points);
 

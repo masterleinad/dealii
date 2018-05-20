@@ -31,7 +31,7 @@ std::ofstream logfile("output");
 
 template <int dim>
 void
-output(const Triangulation<dim>& tria)
+output(const Triangulation<dim> &tria)
 {
   deallog << "  " << tria.n_active_cells() << std::endl;
   deallog << "  " << tria.n_cells() << std::endl;

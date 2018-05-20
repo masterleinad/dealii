@@ -49,8 +49,8 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    cell_matrix(FullMatrix<double>&      M,
-                const FEValuesBase<dim>& fe,
+    cell_matrix(FullMatrix<double> &     M,
+                const FEValuesBase<dim> &fe,
                 const double             factor = 1.)
     {
       const unsigned int n_dofs       = fe.dofs_per_cell;
@@ -91,9 +91,9 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    cell_residual(Vector<double>&                    result,
-                  const FEValuesBase<dim>&           fe,
-                  const std::vector<Tensor<1, dim>>& input,
+    cell_residual(Vector<double> &                   result,
+                  const FEValuesBase<dim> &          fe,
+                  const std::vector<Tensor<1, dim>> &input,
                   double                             factor = 1.)
     {
       const unsigned int nq     = fe.n_quadrature_points;
@@ -118,9 +118,9 @@ namespace LocalIntegrators
     template <int dim>
     inline void
     cell_residual(
-      Vector<double>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& input,
+      Vector<double> &                                                   result,
+      const FEValuesBase<dim> &                                          fe,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &input,
       double factor = 1.)
     {
       const unsigned int nq     = fe.n_quadrature_points;
@@ -158,8 +158,8 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    nitsche_matrix(FullMatrix<double>&      M,
-                   const FEValuesBase<dim>& fe,
+    nitsche_matrix(FullMatrix<double> &     M,
+                   const FEValuesBase<dim> &fe,
                    double                   penalty,
                    double                   factor = 1.)
     {
@@ -202,8 +202,8 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    nitsche_tangential_matrix(FullMatrix<double>&      M,
-                              const FEValuesBase<dim>& fe,
+    nitsche_tangential_matrix(FullMatrix<double> &     M,
+                              const FEValuesBase<dim> &fe,
                               double                   penalty,
                               double                   factor = 1.)
     {
@@ -268,11 +268,11 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    nitsche_residual(Vector<double>&                    result,
-                     const FEValuesBase<dim>&           fe,
-                     const std::vector<double>&         input,
-                     const std::vector<Tensor<1, dim>>& Dinput,
-                     const std::vector<double>&         data,
+    nitsche_residual(Vector<double> &                   result,
+                     const FEValuesBase<dim> &          fe,
+                     const std::vector<double> &        input,
+                     const std::vector<Tensor<1, dim>> &Dinput,
+                     const std::vector<double> &        data,
                      double                             penalty,
                      double                             factor = 1.)
     {
@@ -319,11 +319,11 @@ namespace LocalIntegrators
     template <int dim>
     void
     nitsche_residual(
-      Vector<double>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
-      const VectorSlice<const std::vector<std::vector<double>>>&         data,
+      Vector<double> &                                                   result,
+      const FEValuesBase<dim> &                                          fe,
+      const VectorSlice<const std::vector<std::vector<double>>> &        input,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &Dinput,
+      const VectorSlice<const std::vector<std::vector<double>>> &        data,
       double penalty,
       double factor = 1.)
     {
@@ -374,12 +374,12 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    ip_matrix(FullMatrix<double>&      M11,
-              FullMatrix<double>&      M12,
-              FullMatrix<double>&      M21,
-              FullMatrix<double>&      M22,
-              const FEValuesBase<dim>& fe1,
-              const FEValuesBase<dim>& fe2,
+    ip_matrix(FullMatrix<double> &     M11,
+              FullMatrix<double> &     M12,
+              FullMatrix<double> &     M21,
+              FullMatrix<double> &     M22,
+              const FEValuesBase<dim> &fe1,
+              const FEValuesBase<dim> &fe2,
               double                   penalty,
               double                   factor1 = 1.,
               double                   factor2 = -1.)
@@ -454,12 +454,12 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    ip_tangential_matrix(FullMatrix<double>&      M11,
-                         FullMatrix<double>&      M12,
-                         FullMatrix<double>&      M21,
-                         FullMatrix<double>&      M22,
-                         const FEValuesBase<dim>& fe1,
-                         const FEValuesBase<dim>& fe2,
+    ip_tangential_matrix(FullMatrix<double> &     M11,
+                         FullMatrix<double> &     M12,
+                         FullMatrix<double> &     M21,
+                         FullMatrix<double> &     M22,
+                         const FEValuesBase<dim> &fe1,
+                         const FEValuesBase<dim> &fe2,
                          double                   penalty,
                          double                   factor1 = 1.,
                          double                   factor2 = -1.)
@@ -573,14 +573,14 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    ip_residual(Vector<double>&                    result1,
-                Vector<double>&                    result2,
-                const FEValuesBase<dim>&           fe1,
-                const FEValuesBase<dim>&           fe2,
-                const std::vector<double>&         input1,
-                const std::vector<Tensor<1, dim>>& Dinput1,
-                const std::vector<double>&         input2,
-                const std::vector<Tensor<1, dim>>& Dinput2,
+    ip_residual(Vector<double> &                   result1,
+                Vector<double> &                   result2,
+                const FEValuesBase<dim> &          fe1,
+                const FEValuesBase<dim> &          fe2,
+                const std::vector<double> &        input1,
+                const std::vector<Tensor<1, dim>> &Dinput1,
+                const std::vector<double> &        input2,
+                const std::vector<Tensor<1, dim>> &Dinput2,
                 double                             pen,
                 double                             int_factor = 1.,
                 double                             ext_factor = -1.)
@@ -604,17 +604,17 @@ namespace LocalIntegrators
           for(unsigned int i = 0; i < n_dofs; ++i)
             {
               const double          vi   = fe1.shape_value(i, k);
-              const Tensor<1, dim>& Dvi  = fe1.shape_grad(i, k);
+              const Tensor<1, dim> &Dvi  = fe1.shape_grad(i, k);
               const double          dnvi = Dvi * n;
               const double          ve   = fe2.shape_value(i, k);
-              const Tensor<1, dim>& Dve  = fe2.shape_grad(i, k);
+              const Tensor<1, dim> &Dve  = fe2.shape_grad(i, k);
               const double          dnve = Dve * n;
 
               const double          ui   = input1[k];
-              const Tensor<1, dim>& Dui  = Dinput1[k];
+              const Tensor<1, dim> &Dui  = Dinput1[k];
               const double          dnui = Dui * n;
               const double          ue   = input2[k];
-              const Tensor<1, dim>& Due  = Dinput2[k];
+              const Tensor<1, dim> &Due  = Dinput2[k];
               const double          dnue = Due * n;
 
               result1(i) += dx
@@ -647,16 +647,16 @@ namespace LocalIntegrators
     template <int dim>
     void
     ip_residual(
-      Vector<double>&                                            result1,
-      Vector<double>&                                            result2,
-      const FEValuesBase<dim>&                                   fe1,
-      const FEValuesBase<dim>&                                   fe2,
-      const VectorSlice<const std::vector<std::vector<double>>>& input1,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-                                                                 Dinput1,
-      const VectorSlice<const std::vector<std::vector<double>>>& input2,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-             Dinput2,
+      Vector<double> &                                           result1,
+      Vector<double> &                                           result2,
+      const FEValuesBase<dim> &                                  fe1,
+      const FEValuesBase<dim> &                                  fe2,
+      const VectorSlice<const std::vector<std::vector<double>>> &input1,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>
+        &                                                        Dinput1,
+      const VectorSlice<const std::vector<std::vector<double>>> &input2,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>
+        &    Dinput2,
       double pen,
       double int_factor = 1.,
       double ext_factor = -1.)
@@ -682,17 +682,17 @@ namespace LocalIntegrators
             for(unsigned int d = 0; d < n_comp; ++d)
               {
                 const double          vi   = fe1.shape_value_component(i, k, d);
-                const Tensor<1, dim>& Dvi  = fe1.shape_grad_component(i, k, d);
+                const Tensor<1, dim> &Dvi  = fe1.shape_grad_component(i, k, d);
                 const double          dnvi = Dvi * n;
                 const double          ve   = fe2.shape_value_component(i, k, d);
-                const Tensor<1, dim>& Dve  = fe2.shape_grad_component(i, k, d);
+                const Tensor<1, dim> &Dve  = fe2.shape_grad_component(i, k, d);
                 const double          dnve = Dve * n;
 
                 const double          ui   = input1[d][k];
-                const Tensor<1, dim>& Dui  = Dinput1[d][k];
+                const Tensor<1, dim> &Dui  = Dinput1[d][k];
                 const double          dnui = Dui * n;
                 const double          ue   = input2[d][k];
-                const Tensor<1, dim>& Due  = Dinput2[d][k];
+                const Tensor<1, dim> &Due  = Dinput2[d][k];
                 const double          dnue = Due * n;
 
                 result1(i) += dx
@@ -727,8 +727,8 @@ namespace LocalIntegrators
      */
     template <int dim, int spacedim, typename number>
     double
-    compute_penalty(const MeshWorker::DoFInfo<dim, spacedim, number>& dinfo1,
-                    const MeshWorker::DoFInfo<dim, spacedim, number>& dinfo2,
+    compute_penalty(const MeshWorker::DoFInfo<dim, spacedim, number> &dinfo1,
+                    const MeshWorker::DoFInfo<dim, spacedim, number> &dinfo2,
                     unsigned int                                      deg1,
                     unsigned int                                      deg2)
     {

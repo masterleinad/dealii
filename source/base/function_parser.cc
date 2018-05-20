@@ -55,9 +55,9 @@ FunctionParser<dim>::~FunctionParser() = default;
 
 template <int dim>
 void
-FunctionParser<dim>::initialize(const std::string&              variables,
-                                const std::vector<std::string>& expressions,
-                                const std::map<std::string, double>& constants,
+FunctionParser<dim>::initialize(const std::string &             variables,
+                                const std::vector<std::string> &expressions,
+                                const std::map<std::string, double> &constants,
                                 const bool time_dependent)
 {
   this->fp.clear(); // this will reset all thread-local objects
@@ -281,7 +281,7 @@ FunctionParser<dim>::init_muparser() const
           // we may find after function names
           std::string transformed_expression = expressions[component];
 
-          const char* function_names[] = {// functions predefined by muparser
+          const char *function_names[] = {// functions predefined by muparser
                                           "sin",
                                           "cos",
                                           "tan",
@@ -354,7 +354,7 @@ FunctionParser<dim>::init_muparser() const
           // now use the transformed expression
           fp.get()[component]->SetExpr(transformed_expression);
         }
-      catch(mu::ParserError& e)
+      catch(mu::ParserError &e)
         {
           std::cerr << "Message:  <" << e.GetMsg() << ">\n";
           std::cerr << "Formula:  <" << e.GetExpr() << ">\n";
@@ -368,9 +368,9 @@ FunctionParser<dim>::init_muparser() const
 
 template <int dim>
 void
-FunctionParser<dim>::initialize(const std::string&                   vars,
-                                const std::string&                   expression,
-                                const std::map<std::string, double>& constants,
+FunctionParser<dim>::initialize(const std::string &                  vars,
+                                const std::string &                  expression,
+                                const std::map<std::string, double> &constants,
                                 const bool time_dependent)
 {
   initialize(vars,
@@ -381,7 +381,7 @@ FunctionParser<dim>::initialize(const std::string&                   vars,
 
 template <int dim>
 double
-FunctionParser<dim>::value(const Point<dim>&  p,
+FunctionParser<dim>::value(const Point<dim> & p,
                            const unsigned int component) const
 {
   Assert(initialized == true, ExcNotInitialized());
@@ -401,7 +401,7 @@ FunctionParser<dim>::value(const Point<dim>&  p,
     {
       return fp.get()[component]->Eval();
     }
-  catch(mu::ParserError& e)
+  catch(mu::ParserError &e)
     {
       std::cerr << "Message:  <" << e.GetMsg() << ">\n";
       std::cerr << "Formula:  <" << e.GetExpr() << ">\n";
@@ -415,8 +415,8 @@ FunctionParser<dim>::value(const Point<dim>&  p,
 
 template <int dim>
 void
-FunctionParser<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+FunctionParser<dim>::vector_value(const Point<dim> &p,
+                                  Vector<double> &  values) const
 {
   Assert(initialized == true, ExcNotInitialized());
   Assert(values.size() == this->n_components,
@@ -439,9 +439,9 @@ FunctionParser<dim>::vector_value(const Point<dim>& p,
 
 template <int dim>
 void
-FunctionParser<dim>::initialize(const std::string&,
-                                const std::vector<std::string>&,
-                                const std::map<std::string, double>&,
+FunctionParser<dim>::initialize(const std::string &,
+                                const std::vector<std::string> &,
+                                const std::map<std::string, double> &,
                                 const bool)
 {
   Assert(false, ExcNeedsFunctionparser());
@@ -449,9 +449,9 @@ FunctionParser<dim>::initialize(const std::string&,
 
 template <int dim>
 void
-FunctionParser<dim>::initialize(const std::string&,
-                                const std::string&,
-                                const std::map<std::string, double>&,
+FunctionParser<dim>::initialize(const std::string &,
+                                const std::string &,
+                                const std::map<std::string, double> &,
                                 const bool)
 {
   Assert(false, ExcNeedsFunctionparser());
@@ -459,7 +459,7 @@ FunctionParser<dim>::initialize(const std::string&,
 
 template <int dim>
 double
-FunctionParser<dim>::value(const Point<dim>&, unsigned int) const
+FunctionParser<dim>::value(const Point<dim> &, unsigned int) const
 {
   Assert(false, ExcNeedsFunctionparser());
   return 0.;
@@ -467,7 +467,7 @@ FunctionParser<dim>::value(const Point<dim>&, unsigned int) const
 
 template <int dim>
 void
-FunctionParser<dim>::vector_value(const Point<dim>&, Vector<double>&) const
+FunctionParser<dim>::vector_value(const Point<dim> &, Vector<double> &) const
 {
   Assert(false, ExcNeedsFunctionparser());
 }

@@ -20,7 +20,7 @@
 #include <deal.II/base/parameter_handler.h>
 
 void
-check(const char* p)
+check(const char *p)
 {
   ParameterHandler prm;
   prm.declare_entry("test_1",

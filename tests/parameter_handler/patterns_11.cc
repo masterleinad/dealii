@@ -24,7 +24,7 @@ main()
   initlog();
 
   // create a pattern and match a string
-  const auto& pattern
+  const auto &pattern
     = Patterns::Tuple(Patterns::Double(), Patterns::Anything());
   const std::string desc = pattern.description();
 

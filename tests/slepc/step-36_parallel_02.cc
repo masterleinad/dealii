@@ -88,7 +88,7 @@ test(std::string solver_name, std::string preconditioner_name)
       endc = triangulation.end();
     for(; cell != endc; ++cell)
       {
-        const dealii::Point<dim>& center = cell->center();
+        const dealii::Point<dim> &center = cell->center();
         const double              x      = center[0];
 
         const unsigned int id = std::floor((x - x0) / dL);
@@ -204,7 +204,7 @@ test(std::string solver_name, std::string preconditioner_name)
 
   // test SLEPc by
   {
-    PETScWrappers::PreconditionerBase* preconditioner;
+    PETScWrappers::PreconditionerBase *preconditioner;
 
     dealii::deallog << preconditioner_name << std::endl;
     if(preconditioner_name == "Jacobi")
@@ -245,7 +245,7 @@ test(std::string solver_name, std::string preconditioner_name)
     dealii::SolverControl solver_control(
       100, 1e-11, /*log_history*/ false, /*log_results*/ false);
 
-    dealii::SLEPcWrappers::SolverBase* eigensolver;
+    dealii::SLEPcWrappers::SolverBase *eigensolver;
 
     dealii::deallog << solver_name << std::endl;
     // Get a handle on the wanted eigenspectrum solver
@@ -334,7 +334,7 @@ test(std::string solver_name, std::string preconditioner_name)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   dealii::deallog.attach(logfile, /*do not print job id*/ false);
@@ -352,7 +352,7 @@ main(int argc, char** argv)
         //        test ("JacobiDavidson");
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

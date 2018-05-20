@@ -37,7 +37,7 @@ static constexpr int n_cols = 4;
 
 template <typename number>
 void
-make_square_matrix(FullMatrix<number>& m)
+make_square_matrix(FullMatrix<number> &m)
 {
   m.reinit(n_rows, n_rows);
   for(unsigned int i = 0; i < n_rows; ++i)
@@ -47,7 +47,7 @@ make_square_matrix(FullMatrix<number>& m)
 
 template <typename number>
 void
-make_matrix(FullMatrix<number>& m)
+make_matrix(FullMatrix<number> &m)
 {
   m.reinit(n_rows, n_cols);
   for(unsigned int i = 0; i < n_rows; ++i)
@@ -57,7 +57,7 @@ make_matrix(FullMatrix<number>& m)
 
 template <typename number>
 void
-make_complex_square_matrix(FullMatrix<std::complex<number>>& m)
+make_complex_square_matrix(FullMatrix<std::complex<number>> &m)
 {
   m.reinit(n_rows, n_rows);
   for(unsigned int i = 0; i < n_rows; ++i)
@@ -67,7 +67,7 @@ make_complex_square_matrix(FullMatrix<std::complex<number>>& m)
 
 template <typename number>
 void
-make_complex_matrix(FullMatrix<std::complex<number>>& m)
+make_complex_matrix(FullMatrix<std::complex<number>> &m)
 {
   m.reinit(n_rows, n_cols);
   for(unsigned int i = 0; i < n_rows; ++i)
@@ -77,7 +77,7 @@ make_complex_matrix(FullMatrix<std::complex<number>>& m)
 
 template <typename number>
 void
-make_domain_vector(Vector<number>& v)
+make_domain_vector(Vector<number> &v)
 {
   v.reinit(n_cols);
   for(unsigned int i = 0; i < n_cols; ++i)
@@ -86,7 +86,7 @@ make_domain_vector(Vector<number>& v)
 
 template <typename number>
 void
-make_range_vector(Vector<number>& v)
+make_range_vector(Vector<number> &v)
 {
   v.reinit(n_rows);
   for(unsigned int i = 0; i < n_rows; ++i)
@@ -95,7 +95,7 @@ make_range_vector(Vector<number>& v)
 
 template <typename number>
 void
-make_complex_domain_vector(Vector<std::complex<number>>& v)
+make_complex_domain_vector(Vector<std::complex<number>> &v)
 {
   v.reinit(n_cols);
   for(unsigned int i = 0; i < n_cols; ++i)
@@ -104,7 +104,7 @@ make_complex_domain_vector(Vector<std::complex<number>>& v)
 
 template <typename number>
 void
-make_complex_range_vector(Vector<std::complex<number>>& v)
+make_complex_range_vector(Vector<std::complex<number>> &v)
 {
   v.reinit(n_rows);
   for(unsigned int i = 0; i < n_rows; ++i)
@@ -113,7 +113,7 @@ make_complex_range_vector(Vector<std::complex<number>>& v)
 
 template <typename number>
 void
-print_matrix(const FullMatrix<number>& m)
+print_matrix(const FullMatrix<number> &m)
 {
   const number tolerance = 100. * std::numeric_limits<number>::epsilon();
   for(unsigned int i = 0; i < m.m(); ++i)
@@ -124,7 +124,7 @@ print_matrix(const FullMatrix<number>& m)
 
 template <typename number>
 void
-print_matrix(const FullMatrix<std::complex<number>>& m)
+print_matrix(const FullMatrix<std::complex<number>> &m)
 {
   const number tolerance = 100. * std::numeric_limits<number>::epsilon();
   for(unsigned int i = 0; i < m.m(); ++i)
@@ -135,7 +135,7 @@ print_matrix(const FullMatrix<std::complex<number>>& m)
 
 template <typename number>
 void
-print_vector(const Vector<number>& v)
+print_vector(const Vector<number> &v)
 {
   const typename numbers::NumberTraits<number>::real_type tolerance
     = 100.
@@ -176,7 +176,7 @@ display_matrix(FullMatrix<std::complex<number>> M)
 
 template <typename number>
 void
-fill_matrix(FullMatrix<number>& A)
+fill_matrix(FullMatrix<number> &A)
 {
   for(unsigned int i = 0; i < A.m(); i++)
     for(unsigned int j = 0; j < A.n(); j++)
@@ -198,7 +198,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

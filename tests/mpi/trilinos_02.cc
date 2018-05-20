@@ -23,7 +23,7 @@
 #include <vector>
 
 void
-check(TrilinosWrappers::MPI::Vector& v, bool ghost)
+check(TrilinosWrappers::MPI::Vector &v, bool ghost)
 {
   Assert(v.has_ghost_elements() == ghost, ExcMessage("wrong ghost elements"));
 }
@@ -80,7 +80,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

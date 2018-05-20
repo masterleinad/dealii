@@ -22,7 +22,7 @@
 
 template <int dim>
 void
-check(const FiniteElement<dim>& fe)
+check(const FiniteElement<dim> &fe)
 {
   deallog << "dim: " << dim << std::endl;
   deallog << "components: " << fe.n_components() << std::endl;

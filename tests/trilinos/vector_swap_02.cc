@@ -25,7 +25,7 @@
 #include <vector>
 
 void
-print(TrilinosWrappers::MPI::Vector& v, unsigned int first_element)
+print(TrilinosWrappers::MPI::Vector &v, unsigned int first_element)
 {
   deallog << "size= " << v.size() << " el(" << first_element
           << ")= " << v(first_element)
@@ -70,7 +70,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    mpi_log;
@@ -79,7 +79,7 @@ main(int argc, char** argv)
     {
       test();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

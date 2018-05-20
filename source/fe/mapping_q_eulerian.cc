@@ -41,7 +41,7 @@ template <int dim, class VectorType, int spacedim>
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   MappingQEulerianGeneric(
     const unsigned int                                 degree,
-    const MappingQEulerian<dim, VectorType, spacedim>& mapping_q_eulerian)
+    const MappingQEulerian<dim, VectorType, spacedim> &mapping_q_eulerian)
   : MappingQGeneric<dim, spacedim>(degree),
     mapping_q_eulerian(mapping_q_eulerian),
     support_quadrature(degree),
@@ -53,8 +53,8 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
 template <int dim, class VectorType, int spacedim>
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerian(
   const unsigned int               degree,
-  const DoFHandler<dim, spacedim>& euler_dof_handler,
-  const VectorType&                euler_vector,
+  const DoFHandler<dim, spacedim> &euler_dof_handler,
+  const VectorType &               euler_vector,
   const unsigned int               level)
   : MappingQ<dim, spacedim>(degree, true),
     euler_vector(&euler_vector),
@@ -114,11 +114,11 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
 template <int dim, class VectorType, int spacedim>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
 MappingQEulerian<dim, VectorType, spacedim>::get_vertices(
-  const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
+  const typename Triangulation<dim, spacedim>::cell_iterator &cell) const
 {
   // get the vertices as the first 2^dim mapping support points
   const std::vector<Point<spacedim>> a
-    = dynamic_cast<const MappingQEulerianGeneric&>(*this->qp_mapping)
+    = dynamic_cast<const MappingQEulerianGeneric &>(*this->qp_mapping)
         .compute_mapping_support_points(cell);
 
   std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
@@ -134,7 +134,7 @@ template <int dim, class VectorType, int spacedim>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   get_vertices(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell) const
 {
   return mapping_q_eulerian.get_vertices(cell);
 }
@@ -151,7 +151,7 @@ template <int dim, class VectorType, int spacedim>
 std::vector<Point<spacedim>>
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   compute_mapping_support_points(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell) const
 {
   const bool mg_vector
     = mapping_q_eulerian.level != numbers::invalid_unsigned_int;
@@ -229,12 +229,12 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
 template <int dim, class VectorType, int spacedim>
 CellSimilarity::Similarity
 MappingQEulerian<dim, VectorType, spacedim>::fill_fe_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
   const CellSimilarity::Similarity,
-  const Quadrature<dim>&                                   quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
-  internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-    output_data) const
+  const Quadrature<dim> &                                  quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase &internal_data,
+  internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
+    &output_data) const
 {
   // call the function of the base class, but ignoring
   // any potentially detected cell similarity between

@@ -20,9 +20,9 @@
 #include <vector>
 
 void
-test(Vector<std::complex<double>>& v,
-     Vector<std::complex<double>>& w,
-     Vector<std::complex<double>>& x)
+test(Vector<std::complex<double>> &v,
+     Vector<std::complex<double>> &w,
+     Vector<std::complex<double>> &x)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     {
@@ -66,7 +66,7 @@ main()
       Vector<std::complex<double>> x(100);
       test(v, w, x);
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

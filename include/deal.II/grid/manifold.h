@@ -106,7 +106,7 @@ namespace Manifolds
    */
   template <typename MeshIteratorType>
   DEAL_II_DEPRECATED Quadrature<MeshIteratorType::AccessorType::space_dimension>
-                     get_default_quadrature(const MeshIteratorType& iterator,
+                     get_default_quadrature(const MeshIteratorType &iterator,
                                             const bool              with_interpolation = false);
 
   /**
@@ -155,7 +155,7 @@ namespace Manifolds
   std::pair<std::array<Point<MeshIteratorType::AccessorType::space_dimension>,
                        n_default_points_per_cell<MeshIteratorType>()>,
             std::array<double, n_default_points_per_cell<MeshIteratorType>()>>
-  get_default_points_and_weights(const MeshIteratorType& iterator,
+  get_default_points_and_weights(const MeshIteratorType &iterator,
                                  const bool with_interpolation = false);
 } // namespace Manifolds
 
@@ -382,8 +382,8 @@ public:
    * project_to_manifold() method.
    */
   virtual Point<spacedim>
-  get_intermediate_point(const Point<spacedim>& p1,
-                         const Point<spacedim>& p2,
+  get_intermediate_point(const Point<spacedim> &p1,
+                         const Point<spacedim> &p2,
                          const double           w) const;
 
   /**
@@ -403,8 +403,8 @@ public:
    * only the project_to_manifold() function.
    */
   virtual Point<spacedim>
-  get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
-                const ArrayView<const double>&          weights) const;
+  get_new_point(const ArrayView<const Point<spacedim>> &surrounding_points,
+                const ArrayView<const double> &         weights) const;
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -427,8 +427,8 @@ public:
    * objects into the function.
    */
   virtual void
-  get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const Table<2, double>&                 weights,
+  get_new_points(const ArrayView<const Point<spacedim>> &surrounding_points,
+                 const Table<2, double> &                weights,
                  ArrayView<Point<spacedim>>              new_points) const;
 
   /**
@@ -444,8 +444,8 @@ public:
    */
   virtual Point<spacedim>
   project_to_manifold(
-    const ArrayView<const Point<spacedim>>& surrounding_points,
-    const Point<spacedim>&                  candidate) const;
+    const ArrayView<const Point<spacedim>> &surrounding_points,
+    const Point<spacedim> &                 candidate) const;
 
   /**
    * Backward compatibility interface.  Return the point which shall become
@@ -462,7 +462,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point_on_line(
-    const typename Triangulation<dim, spacedim>::line_iterator& line) const;
+    const typename Triangulation<dim, spacedim>::line_iterator &line) const;
 
   /**
    * Backward compatibility interface. Return the point which shall become the
@@ -483,7 +483,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point_on_quad(
-    const typename Triangulation<dim, spacedim>::quad_iterator& quad) const;
+    const typename Triangulation<dim, spacedim>::quad_iterator &quad) const;
 
   /**
    * Backward compatibility interface.  Return the point which shall become
@@ -505,7 +505,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point_on_hex(
-    const typename Triangulation<dim, spacedim>::hex_iterator& hex) const;
+    const typename Triangulation<dim, spacedim>::hex_iterator &hex) const;
 
   /**
    * Backward compatibility interface. Depending on <tt>dim=2</tt> or
@@ -515,7 +515,7 @@ public:
    */
   Point<spacedim>
   get_new_point_on_face(
-    const typename Triangulation<dim, spacedim>::face_iterator& face) const;
+    const typename Triangulation<dim, spacedim>::face_iterator &face) const;
 
   /**
    * Backward compatibility interface.  Depending on <tt>dim=1</tt>,
@@ -525,7 +525,7 @@ public:
    */
   Point<spacedim>
   get_new_point_on_cell(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell) const;
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell) const;
 
   /// @}
 
@@ -569,8 +569,8 @@ public:
    * @return A "direction" vector tangential to the geodesic.
    */
   virtual Tensor<1, spacedim>
-  get_tangent_vector(const Point<spacedim>& x1,
-                     const Point<spacedim>& x2) const;
+  get_tangent_vector(const Point<spacedim> &x1,
+                     const Point<spacedim> &x2) const;
 
   /// @}
 
@@ -626,8 +626,8 @@ public:
    */
   virtual Tensor<1, spacedim>
   normal_vector(
-    const typename Triangulation<dim, spacedim>::face_iterator& face,
-    const Point<spacedim>&                                      p) const;
+    const typename Triangulation<dim, spacedim>::face_iterator &face,
+    const Point<spacedim> &                                     p) const;
 
   /**
    * Compute the normal vectors to the boundary at each vertex of the
@@ -645,8 +645,8 @@ public:
    */
   virtual void
   get_normals_at_vertices(
-    const typename Triangulation<dim, spacedim>::face_iterator& face,
-    FaceVertexNormals& face_vertex_normals) const;
+    const typename Triangulation<dim, spacedim>::face_iterator &face,
+    FaceVertexNormals &face_vertex_normals) const;
 
   /// @}
 };
@@ -693,7 +693,7 @@ public:
    * guaranteed to lie in the periodicity box plus or minus
    * tolerance*periodicity.norm().
    */
-  FlatManifold(const Tensor<1, spacedim>& periodicity = Tensor<1, spacedim>(),
+  FlatManifold(const Tensor<1, spacedim> &periodicity = Tensor<1, spacedim>(),
                const double               tolerance   = 1e-10);
 
   /**
@@ -724,8 +724,8 @@ public:
    * enough.
    */
   virtual Point<spacedim>
-  get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
-                const ArrayView<const double>&          weights) const override;
+  get_new_point(const ArrayView<const Point<spacedim>> &surrounding_points,
+                const ArrayView<const double> &         weights) const override;
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -738,8 +738,8 @@ public:
    * Cartesian space.
    */
   virtual void
-  get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const Table<2, double>&                 weights,
+  get_new_points(const ArrayView<const Point<spacedim>> &surrounding_points,
+                 const Table<2, double> &                weights,
                  ArrayView<Point<spacedim>> new_points) const override;
 
   /**
@@ -750,8 +750,8 @@ public:
    * the one implemented in this class.
    */
   virtual Point<spacedim>
-  project_to_manifold(const ArrayView<const Point<spacedim>>& points,
-                      const Point<spacedim>& candidate) const override;
+  project_to_manifold(const ArrayView<const Point<spacedim>> &points,
+                      const Point<spacedim> &candidate) const override;
 
   /**
    * Return a vector that, at $\mathbf x_1$, is tangential to
@@ -775,8 +775,8 @@ public:
    *   between the points through the periodic boundary as necessary.
    */
   virtual Tensor<1, spacedim>
-  get_tangent_vector(const Point<spacedim>& x1,
-                     const Point<spacedim>& x2) const override;
+  get_tangent_vector(const Point<spacedim> &x1,
+                     const Point<spacedim> &x2) const override;
 
   /**
    * Return the normal vector to the given face at point p taking into account
@@ -787,8 +787,8 @@ public:
    */
   virtual Tensor<1, spacedim>
   normal_vector(
-    const typename Triangulation<dim, spacedim>::face_iterator& face,
-    const Point<spacedim>& p) const override;
+    const typename Triangulation<dim, spacedim>::face_iterator &face,
+    const Point<spacedim> &p) const override;
 
   /**
    * Compute the normal vectors to the boundary at each vertex of the
@@ -800,14 +800,14 @@ public:
    */
   virtual void
   get_normals_at_vertices(
-    const typename Triangulation<dim, spacedim>::face_iterator& face,
-    typename Manifold<dim, spacedim>::FaceVertexNormals& face_vertex_normals)
+    const typename Triangulation<dim, spacedim>::face_iterator &face,
+    typename Manifold<dim, spacedim>::FaceVertexNormals &face_vertex_normals)
     const override;
 
   /**
    * Return the periodicity of this Manifold.
    */
-  const Tensor<1, spacedim>&
+  const Tensor<1, spacedim> &
   get_periodicity() const;
 
 private:
@@ -952,7 +952,7 @@ public:
    * of (2*pi-eps) and (eps) is not pi, but 2*pi (or zero), since, on the
    * manifold, these two points are at distance 2*eps and not (2*pi-eps)
    */
-  ChartManifold(const Tensor<1, chartdim>& periodicity = Tensor<1, chartdim>());
+  ChartManifold(const Tensor<1, chartdim> &periodicity = Tensor<1, chartdim>());
 
   /**
    * Destructor. Does nothing here, but needs to be declared to make it
@@ -965,8 +965,8 @@ public:
    * the base class for more information.
    */
   virtual Point<spacedim>
-  get_intermediate_point(const Point<spacedim>& p1,
-                         const Point<spacedim>& p2,
+  get_intermediate_point(const Point<spacedim> &p1,
+                         const Point<spacedim> &p2,
                          const double           w) const override;
 
   /**
@@ -974,8 +974,8 @@ public:
    * the base class for more information.
    */
   virtual Point<spacedim>
-  get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
-                const ArrayView<const double>&          weights) const override;
+  get_new_point(const ArrayView<const Point<spacedim>> &surrounding_points,
+                const ArrayView<const double> &         weights) const override;
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -999,8 +999,8 @@ public:
    * non-trivial manifolds.
    */
   virtual void
-  get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const Table<2, double>&                 weights,
+  get_new_points(const ArrayView<const Point<spacedim>> &surrounding_points,
+                 const Table<2, double> &                weights,
                  ArrayView<Point<spacedim>> new_points) const override;
   /**
    * Pull back the given point in spacedim to the Euclidean chartdim
@@ -1009,7 +1009,7 @@ public:
    * Refer to the general documentation of this class for more information.
    */
   virtual Point<chartdim>
-  pull_back(const Point<spacedim>& space_point) const = 0;
+  pull_back(const Point<spacedim> &space_point) const = 0;
 
   /**
    * Given a point in the chartdim dimensional Euclidean space, this method
@@ -1018,7 +1018,7 @@ public:
    * Refer to the general documentation of this class for more information.
    */
   virtual Point<spacedim>
-  push_forward(const Point<chartdim>& chart_point) const = 0;
+  push_forward(const Point<chartdim> &chart_point) const = 0;
 
   /**
    * Given a point in the chartdim dimensional Euclidean space, this method
@@ -1037,7 +1037,7 @@ public:
    * Refer to the general documentation of this class for more information.
    */
   virtual DerivativeForm<1, chartdim, spacedim>
-  push_forward_gradient(const Point<chartdim>& chart_point) const;
+  push_forward_gradient(const Point<chartdim> &chart_point) const;
 
   /**
    * Return a vector that, at $\mathbf x_1$, is tangential to
@@ -1095,13 +1095,13 @@ public:
    * @return A "direction" vector tangential to the geodesic.
    */
   virtual Tensor<1, spacedim>
-  get_tangent_vector(const Point<spacedim>& x1,
-                     const Point<spacedim>& x2) const override;
+  get_tangent_vector(const Point<spacedim> &x1,
+                     const Point<spacedim> &x2) const override;
 
   /**
    * Return the periodicity associated with the submanifold.
    */
-  const Tensor<1, chartdim>&
+  const Tensor<1, chartdim> &
   get_periodicity() const;
 
 private:
@@ -1126,37 +1126,37 @@ private:
 template <>
 Point<1>
 Manifold<1, 1>::get_new_point_on_face(
-  const Triangulation<1, 1>::face_iterator&) const;
+  const Triangulation<1, 1>::face_iterator &) const;
 
 template <>
 Point<2>
 Manifold<1, 2>::get_new_point_on_face(
-  const Triangulation<1, 2>::face_iterator&) const;
+  const Triangulation<1, 2>::face_iterator &) const;
 
 template <>
 Point<3>
 Manifold<1, 3>::get_new_point_on_face(
-  const Triangulation<1, 3>::face_iterator&) const;
+  const Triangulation<1, 3>::face_iterator &) const;
 
 template <>
 Point<1>
 Manifold<1, 1>::get_new_point_on_quad(
-  const Triangulation<1, 1>::quad_iterator&) const;
+  const Triangulation<1, 1>::quad_iterator &) const;
 
 template <>
 Point<2>
 Manifold<1, 2>::get_new_point_on_quad(
-  const Triangulation<1, 2>::quad_iterator&) const;
+  const Triangulation<1, 2>::quad_iterator &) const;
 
 template <>
 Point<3>
 Manifold<1, 3>::get_new_point_on_quad(
-  const Triangulation<1, 3>::quad_iterator&) const;
+  const Triangulation<1, 3>::quad_iterator &) const;
 
 template <>
 Point<3>
 Manifold<3, 3>::get_new_point_on_hex(
-  const Triangulation<3, 3>::hex_iterator&) const;
+  const Triangulation<3, 3>::hex_iterator &) const;
 
 /*---Templated functions---*/
 
@@ -1164,7 +1164,7 @@ namespace Manifolds
 {
   template <typename MeshIteratorType>
   Quadrature<MeshIteratorType::AccessorType::space_dimension>
-  get_default_quadrature(const MeshIteratorType& iterator,
+  get_default_quadrature(const MeshIteratorType &iterator,
                          const bool              with_interpolation)
   {
     const auto points_and_weights
@@ -1181,7 +1181,7 @@ namespace Manifolds
   std::pair<std::array<Point<MeshIteratorType::AccessorType::space_dimension>,
                        n_default_points_per_cell<MeshIteratorType>()>,
             std::array<double, n_default_points_per_cell<MeshIteratorType>()>>
-  get_default_points_and_weights(const MeshIteratorType& iterator,
+  get_default_points_and_weights(const MeshIteratorType &iterator,
                                  const bool              with_interpolation)
   {
     const int dim      = MeshIteratorType::AccessorType::structure_dimension;
@@ -1244,10 +1244,9 @@ namespace Manifolds
                                     + GeometryInfo<dim>::faces_per_cell;
             Assert(points_weights.first.size() == np, ExcInternalError());
             Assert(points_weights.second.size() == np, ExcInternalError());
-            auto* sp3 = reinterpret_cast<
-              std::array<Point<3>,
-                         n_default_points_per_cell<decltype(hex)>()>*>(
-              &points_weights.first);
+            auto *sp3 = reinterpret_cast<
+              std::array<Point<3>, n_default_points_per_cell<decltype(hex)>()>
+                *>(&points_weights.first);
 
             unsigned int j = 0;
 

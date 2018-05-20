@@ -78,14 +78,14 @@ namespace Algorithms
      * The actual operation, which is implemented in a derived class.
      */
     virtual void
-    operator()(AnyData& out, const AnyData& in)
+    operator()(AnyData &out, const AnyData &in)
       = 0;
 
     /**
      * Register an event triggered by an outer iteration.
      */
     virtual void
-    notify(const Event&);
+    notify(const Event &);
     /**
      * Clear all #notifications.
      */
@@ -119,7 +119,7 @@ namespace Algorithms
      * The copy constructor is deleted since objects of this class
      * should not be copied.
      */
-    OutputOperator(const OutputOperator<VectorType>&) = delete;
+    OutputOperator(const OutputOperator<VectorType> &) = delete;
 
     /**
      * Empty virtual destructor.
@@ -131,7 +131,7 @@ namespace Algorithms
      * with this function, data goes to @p deallog.
      */
     void
-    initialize_stream(std::ostream& stream);
+    initialize_stream(std::ostream &stream);
     /**
      * Set the current step.
      */
@@ -140,14 +140,14 @@ namespace Algorithms
     /**
      * Output all the vectors in AnyData.
      */
-    virtual OutputOperator<VectorType>&
-    operator<<(const AnyData& vectors);
+    virtual OutputOperator<VectorType> &
+    operator<<(const AnyData &vectors);
 
   protected:
     unsigned int step;
 
   private:
-    std::ostream* os;
+    std::ostream *os;
   };
 
   template <typename VectorType>
@@ -163,8 +163,8 @@ namespace Algorithms
    * @relatesalso OutputOperator
    */
   template <typename VectorType>
-  inline OutputOperator<VectorType>&
-  operator<<(OutputOperator<VectorType>& out, unsigned int step)
+  inline OutputOperator<VectorType> &
+  operator<<(OutputOperator<VectorType> &out, unsigned int step)
   {
     out.set_step(step);
     return out;

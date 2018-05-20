@@ -53,9 +53,9 @@ public:
   LaplaceOperator(){};
 
   void
-  initialize(const Mapping<dim>&                 mapping,
-             const DoFHandler<dim>&              dof_handler,
-             const std::set<types::boundary_id>& dirichlet_boundaries,
+  initialize(const Mapping<dim> &                mapping,
+             const DoFHandler<dim> &             dof_handler,
+             const std::set<types::boundary_id> &dirichlet_boundaries,
              const unsigned int level = numbers::invalid_unsigned_int)
   {
     const QGauss<1>                                  quad(n_q_points_1d);
@@ -88,7 +88,7 @@ public:
                && cell->level_subdomain_id()
                     == numbers::artificial_subdomain_id)
               continue;
-            const FiniteElement<dim>& fe = cell->get_fe();
+            const FiniteElement<dim> &fe = cell->get_fe();
             local_dofs.resize(fe.dofs_per_face);
 
             for(unsigned int face_no = 0;
@@ -116,35 +116,35 @@ public:
   }
 
   void
-  vmult(LinearAlgebra::distributed::Vector<number>&       dst,
-        const LinearAlgebra::distributed::Vector<number>& src) const
+  vmult(LinearAlgebra::distributed::Vector<number> &      dst,
+        const LinearAlgebra::distributed::Vector<number> &src) const
   {
     dst = 0;
     vmult_add(dst, src);
   }
 
   void
-  Tvmult(LinearAlgebra::distributed::Vector<number>&       dst,
-         const LinearAlgebra::distributed::Vector<number>& src) const
+  Tvmult(LinearAlgebra::distributed::Vector<number> &      dst,
+         const LinearAlgebra::distributed::Vector<number> &src) const
   {
     dst = 0;
     vmult_add(dst, src);
   }
 
   void
-  Tvmult_add(LinearAlgebra::distributed::Vector<number>&       dst,
-             const LinearAlgebra::distributed::Vector<number>& src) const
+  Tvmult_add(LinearAlgebra::distributed::Vector<number> &      dst,
+             const LinearAlgebra::distributed::Vector<number> &src) const
   {
     vmult_add(dst, src);
   }
 
   void
-  vmult_add(LinearAlgebra::distributed::Vector<number>&       dst,
-            const LinearAlgebra::distributed::Vector<number>& src) const
+  vmult_add(LinearAlgebra::distributed::Vector<number> &      dst,
+            const LinearAlgebra::distributed::Vector<number> &src) const
   {
     data.cell_loop(&LaplaceOperator::local_apply, this, dst, src);
 
-    const std::vector<unsigned int>& constrained_dofs
+    const std::vector<unsigned int> &constrained_dofs
       = data.get_constrained_dofs();
     for(unsigned int i = 0; i < constrained_dofs.size(); ++i)
       dst.local_element(constrained_dofs[i])
@@ -173,7 +173,7 @@ public:
 
   void
   initialize_dof_vector(
-    LinearAlgebra::distributed::Vector<number>& vector) const
+    LinearAlgebra::distributed::Vector<number> &vector) const
   {
     if(!vector.partitioners_are_compatible(
          *data.get_dof_info(0).vector_partitioner))
@@ -183,7 +183,7 @@ public:
            ExcInternalError());
   }
 
-  const LinearAlgebra::distributed::Vector<number>&
+  const LinearAlgebra::distributed::Vector<number> &
   get_matrix_diagonal_inverse() const
   {
     Assert(inverse_diagonal_entries.size() > 0, ExcNotInitialized());
@@ -192,10 +192,10 @@ public:
 
 private:
   void
-  local_apply(const MatrixFree<dim, number>&                    data,
-              LinearAlgebra::distributed::Vector<number>&       dst,
-              const LinearAlgebra::distributed::Vector<number>& src,
-              const std::pair<unsigned int, unsigned int>& cell_range) const
+  local_apply(const MatrixFree<dim, number> &                   data,
+              LinearAlgebra::distributed::Vector<number> &      dst,
+              const LinearAlgebra::distributed::Vector<number> &src,
+              const std::pair<unsigned int, unsigned int> &cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
@@ -231,10 +231,10 @@ private:
 
   void
   local_diagonal_cell(
-    const MatrixFree<dim, number>&              data,
-    LinearAlgebra::distributed::Vector<number>& dst,
-    const unsigned int&,
-    const std::pair<unsigned int, unsigned int>& cell_range) const
+    const MatrixFree<dim, number> &             data,
+    LinearAlgebra::distributed::Vector<number> &dst,
+    const unsigned int &,
+    const std::pair<unsigned int, unsigned int> &cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
@@ -269,7 +269,7 @@ class MGTransferPrebuiltMF
   : public MGTransferPrebuilt<LinearAlgebra::distributed::Vector<double>>
 {
 public:
-  MGTransferPrebuiltMF(const MGLevelObject<MatrixType>& laplace)
+  MGTransferPrebuiltMF(const MGLevelObject<MatrixType> &laplace)
     : laplace_operator(laplace){};
 
   /**
@@ -278,9 +278,9 @@ public:
    */
   template <int dim, class InVector, int spacedim>
   void
-  copy_to_mg(const DoFHandler<dim, spacedim>&                           mg_dof,
-             MGLevelObject<LinearAlgebra::distributed::Vector<double>>& dst,
-             const InVector& src) const
+  copy_to_mg(const DoFHandler<dim, spacedim> &                          mg_dof,
+             MGLevelObject<LinearAlgebra::distributed::Vector<double>> &dst,
+             const InVector &src) const
   {
     for(unsigned int level = dst.min_level(); level <= dst.max_level(); ++level)
       laplace_operator[level].initialize_dof_vector(dst[level]);
@@ -289,7 +289,7 @@ public:
   }
 
 private:
-  const MGLevelObject<MatrixType>& laplace_operator;
+  const MGLevelObject<MatrixType> &laplace_operator;
 };
 
 template <typename MatrixType, typename Number>
@@ -301,15 +301,15 @@ public:
   {}
 
   void
-  initialize(const MatrixType& matrix)
+  initialize(const MatrixType &matrix)
   {
     coarse_matrix = &matrix;
   }
 
   virtual void
   operator()(const unsigned int                                level,
-             LinearAlgebra::distributed::Vector<double>&       dst,
-             const LinearAlgebra::distributed::Vector<double>& src) const
+             LinearAlgebra::distributed::Vector<double> &      dst,
+             const LinearAlgebra::distributed::Vector<double> &src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
     SolverCG<LinearAlgebra::distributed::Vector<double>> solver_coarse(
@@ -317,12 +317,12 @@ public:
     solver_coarse.solve(*coarse_matrix, dst, src, PreconditionIdentity());
   }
 
-  const MatrixType* coarse_matrix;
+  const MatrixType *coarse_matrix;
 };
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
-do_test(const DoFHandler<dim>& dof)
+do_test(const DoFHandler<dim> &dof)
 {
   if(std::is_same<number, float>::value == true)
     {
@@ -432,7 +432,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 

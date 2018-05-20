@@ -47,7 +47,7 @@ namespace Particles
      * of this particle.
      */
     void
-    write_data(void*& data) const;
+    write_data(void *&data) const;
 
     /**
       * Set the location of this particle. Note that this does not check
@@ -56,14 +56,14 @@ namespace Particles
       * @param [in] new_location The new location for this particle.
       */
     void
-    set_location(const Point<spacedim>& new_location);
+    set_location(const Point<spacedim> &new_location);
 
     /**
      * Get the location of this particle.
      *
      * @return The location of this particle.
      */
-    const Point<spacedim>&
+    const Point<spacedim> &
     get_location() const;
 
     /**
@@ -73,12 +73,12 @@ namespace Particles
      * this particle.
      */
     void
-    set_reference_location(const Point<dim>& new_reference_location);
+    set_reference_location(const Point<dim> &new_reference_location);
 
     /**
      * Return the reference location of this particle in its current cell.
      */
-    const Point<dim>&
+    const Point<dim> &
     get_reference_location() const;
 
     /**
@@ -95,7 +95,7 @@ namespace Particles
      * function is after particle transfer to a new process.
      */
     void
-    set_property_pool(PropertyPool& property_pool);
+    set_property_pool(PropertyPool &property_pool);
 
     /**
       * Return whether this particle has a valid property pool and a valid
@@ -111,7 +111,7 @@ namespace Particles
      * new properties for this particle.
      */
     void
-    set_properties(const std::vector<double>& new_properties);
+    set_properties(const std::vector<double> &new_properties);
 
     /**
      * Get write-access to properties of this particle.
@@ -145,14 +145,14 @@ namespace Particles
      */
     typename Triangulation<dim, spacedim>::cell_iterator
     get_surrounding_cell(
-      const Triangulation<dim, spacedim>& triangulation) const;
+      const Triangulation<dim, spacedim> &triangulation) const;
 
     /**
      * Serialize the contents of this class.
      */
     template <class Archive>
     void
-    serialize(Archive& ar, const unsigned int version);
+    serialize(Archive &ar, const unsigned int version);
 
     /**
      * Advance the ParticleAccessor to the next particle.
@@ -170,13 +170,13 @@ namespace Particles
      * Inequality operator.
      */
     bool
-    operator!=(const ParticleAccessor<dim, spacedim>& other) const;
+    operator!=(const ParticleAccessor<dim, spacedim> &other) const;
 
     /**
      * Equality operator.
      */
     bool
-    operator==(const ParticleAccessor<dim, spacedim>& other) const;
+    operator==(const ParticleAccessor<dim, spacedim> &other) const;
 
   protected:
     /**
@@ -190,17 +190,17 @@ namespace Particles
      * classes.
      */
     ParticleAccessor(
-      const std::multimap<internal::LevelInd, Particle<dim, spacedim>>& map,
+      const std::multimap<internal::LevelInd, Particle<dim, spacedim>> &map,
       const typename std::multimap<internal::LevelInd,
-                                   Particle<dim, spacedim>>::iterator&
-        particle);
+                                   Particle<dim, spacedim>>::iterator
+        &particle);
 
   private:
     /**
      * A pointer to the container that stores the particles. Obviously,
      * this accessor is invalidated if the container changes.
      */
-    std::multimap<internal::LevelInd, Particle<dim, spacedim>>* map;
+    std::multimap<internal::LevelInd, Particle<dim, spacedim>> *map;
 
     /**
      * An iterator into the container of particles. Obviously,

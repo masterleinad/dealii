@@ -325,7 +325,7 @@ public:
    */
   virtual std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
   get_vertices(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell) const;
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell) const;
 
   /**
    * Return whether the mapping preserves vertex locations. In other words,
@@ -359,8 +359,8 @@ public:
    */
   virtual Point<spacedim>
   transform_unit_to_real_cell(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const Point<dim>&                                           p) const = 0;
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+    const Point<dim> &                                          p) const = 0;
 
   /**
    * Map the point @p p on the real @p cell to the corresponding point on the
@@ -392,8 +392,8 @@ public:
    */
   virtual Point<dim>
   transform_real_to_unit_cell(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const Point<spacedim>&                                      p) const = 0;
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+    const Point<spacedim> &                                     p) const = 0;
 
   /**
    * Transform the point @p p on the real @p cell to the corresponding point
@@ -406,9 +406,9 @@ public:
    */
   Point<dim - 1>
   project_real_point_to_unit_point_on_face(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int&                                         face_no,
-    const Point<spacedim>&                                      p) const;
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+    const unsigned int &                                        face_no,
+    const Point<spacedim> &                                     p) const;
 
   /**
    * @}
@@ -541,7 +541,7 @@ public:
     /**
      * Copy construction is forbidden.
      */
-    InternalDataBase(const InternalDataBase&) = delete;
+    InternalDataBase(const InternalDataBase &) = delete;
 
     /**
      * Virtual destructor for derived classes
@@ -648,7 +648,7 @@ protected:
    */
   virtual std::unique_ptr<InternalDataBase>
   get_data(const UpdateFlags      update_flags,
-           const Quadrature<dim>& quadrature) const = 0;
+           const Quadrature<dim> &quadrature) const = 0;
 
   /**
    * Like get_data(), but in preparation for later calls to transform() or
@@ -679,7 +679,7 @@ protected:
    */
   virtual std::unique_ptr<InternalDataBase>
   get_face_data(const UpdateFlags          update_flags,
-                const Quadrature<dim - 1>& quadrature) const = 0;
+                const Quadrature<dim - 1> &quadrature) const = 0;
 
   /**
    * Like get_data() and get_face_data(), but in preparation for later calls
@@ -711,7 +711,7 @@ protected:
    */
   virtual std::unique_ptr<InternalDataBase>
   get_subface_data(const UpdateFlags          update_flags,
-                   const Quadrature<dim - 1>& quadrature) const = 0;
+                   const Quadrature<dim - 1> &quadrature) const = 0;
 
   /**
    * Compute information about the mapping from the reference cell to the real
@@ -798,12 +798,12 @@ protected:
    */
   virtual CellSimilarity::Similarity
   fill_fe_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
     const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
-    dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-      output_data) const = 0;
+    const Quadrature<dim> &                                     quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase &   internal_data,
+    dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
+      &output_data) const = 0;
 
   /**
    * This function is the equivalent to Mapping::fill_fe_values(), but for
@@ -831,12 +831,12 @@ protected:
    */
   virtual void
   fill_fe_face_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
     const unsigned int                                          face_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
-    dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-      output_data) const = 0;
+    const Quadrature<dim - 1> &                                 quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase &   internal_data,
+    dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
+      &output_data) const = 0;
 
   /**
    * This function is the equivalent to Mapping::fill_fe_values(), but for
@@ -866,13 +866,13 @@ protected:
    */
   virtual void
   fill_fe_subface_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
     const unsigned int                                          face_no,
     const unsigned int                                          subface_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
-    dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-      output_data) const = 0;
+    const Quadrature<dim - 1> &                                 quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase &   internal_data,
+    dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
+      &output_data) const = 0;
 
   /**
    * @}
@@ -947,10 +947,10 @@ public:
    * const, but the tensors it points to are not.)
    */
   virtual void
-  transform(const ArrayView<const Tensor<1, dim>>&                   input,
+  transform(const ArrayView<const Tensor<1, dim>> &                  input,
             const MappingType                                        type,
-            const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<1, spacedim>>& output) const = 0;
+            const typename Mapping<dim, spacedim>::InternalDataBase &internal,
+            const ArrayView<Tensor<1, spacedim>> &output) const = 0;
 
   /**
    * Transform a field of differential forms from the reference cell to the
@@ -999,10 +999,10 @@ public:
    * const, but the tensors it points to are not.)
    */
   virtual void
-  transform(const ArrayView<const DerivativeForm<1, dim, spacedim>>& input,
+  transform(const ArrayView<const DerivativeForm<1, dim, spacedim>> &input,
             const MappingType                                        type,
-            const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<2, spacedim>>& output) const = 0;
+            const typename Mapping<dim, spacedim>::InternalDataBase &internal,
+            const ArrayView<Tensor<2, spacedim>> &output) const = 0;
 
   /**
    * Transform a tensor field from the reference cell to the physical cell.
@@ -1056,10 +1056,10 @@ public:
    * const, but the tensors it points to are not.)
    */
   virtual void
-  transform(const ArrayView<const Tensor<2, dim>>&                   input,
+  transform(const ArrayView<const Tensor<2, dim>> &                  input,
             const MappingType                                        type,
-            const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<2, spacedim>>& output) const = 0;
+            const typename Mapping<dim, spacedim>::InternalDataBase &internal,
+            const ArrayView<Tensor<2, spacedim>> &output) const = 0;
 
   /**
    * Transform a tensor field from the reference cell to the physical cell.
@@ -1101,10 +1101,10 @@ public:
    * const, but the tensors it points to are not.)
    */
   virtual void
-  transform(const ArrayView<const DerivativeForm<2, dim, spacedim>>& input,
+  transform(const ArrayView<const DerivativeForm<2, dim, spacedim>> &input,
             const MappingType                                        type,
-            const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<3, spacedim>>& output) const = 0;
+            const typename Mapping<dim, spacedim>::InternalDataBase &internal,
+            const ArrayView<Tensor<3, spacedim>> &output) const = 0;
 
   /**
    * Transform a field of 3-differential forms from the reference cell to the
@@ -1154,10 +1154,10 @@ public:
    * transformed objects should be placed.
    */
   virtual void
-  transform(const ArrayView<const Tensor<3, dim>>&                   input,
+  transform(const ArrayView<const Tensor<3, dim>> &                  input,
             const MappingType                                        type,
-            const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<3, spacedim>>& output) const = 0;
+            const typename Mapping<dim, spacedim>::InternalDataBase &internal,
+            const ArrayView<Tensor<3, spacedim>> &output) const = 0;
 
   /**
    * @}

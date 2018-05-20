@@ -23,11 +23,11 @@ struct ScratchData
 {};
 
 void
-foo(const std::vector<unsigned int>::iterator, ScratchData&, unsigned int&)
+foo(const std::vector<unsigned int>::iterator, ScratchData &, unsigned int &)
 {}
 
 void
-bar(const unsigned int&)
+bar(const unsigned int &)
 {}
 
 void
@@ -41,7 +41,7 @@ test()
   WorkStream::run(v.begin(),
                   v.end(),
                   &foo,
-                  std::function<void(const unsigned int&)>(),
+                  std::function<void(const unsigned int &)>(),
                   ScratchData(),
                   0U);
 
@@ -49,8 +49,8 @@ test()
   WorkStream::run(v.begin(),
                   v.end(),
                   std::function<void(const std::vector<unsigned int>::iterator,
-                                     ScratchData&,
-                                     unsigned int&)>(),
+                                     ScratchData &,
+                                     unsigned int &)>(),
                   &bar,
                   ScratchData(),
                   0U);

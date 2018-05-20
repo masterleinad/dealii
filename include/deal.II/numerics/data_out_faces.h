@@ -39,11 +39,11 @@ namespace internal
     {
       ParallelData(const unsigned int               n_datasets,
                    const unsigned int               n_subdivisions,
-                   const std::vector<unsigned int>& n_postprocessor_outputs,
-                   const Mapping<dim, spacedim>&    mapping,
+                   const std::vector<unsigned int> &n_postprocessor_outputs,
+                   const Mapping<dim, spacedim> &   mapping,
                    const std::vector<
-                     std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                                     finite_elements,
+                     std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
+                     &               finite_elements,
                    const UpdateFlags update_flags);
 
       std::vector<Point<spacedim>> patch_evaluation_points;
@@ -178,7 +178,7 @@ public:
    * hp::MappingCollection in case of a hp::DoFHandler.
    */
   virtual void
-  build_patches(const Mapping<dimension>& mapping,
+  build_patches(const Mapping<dimension> &mapping,
                 const unsigned int        n_subdivisions = 0);
 
   /**
@@ -218,7 +218,7 @@ public:
    * two functions should be done with care.
    */
   virtual FaceDescriptor
-  next_face(const FaceDescriptor& face);
+  next_face(const FaceDescriptor &face);
 
 private:
   /**
@@ -231,10 +231,10 @@ private:
    */
   void
   build_one_patch(
-    const FaceDescriptor* cell_and_face,
-    internal::DataOutFacesImplementation::ParallelData<dimension, dimension>&
-                                                        data,
-    DataOutBase::Patch<dimension - 1, space_dimension>& patch);
+    const FaceDescriptor *cell_and_face,
+    internal::DataOutFacesImplementation::ParallelData<dimension, dimension>
+      &                                                 data,
+    DataOutBase::Patch<dimension - 1, space_dimension> &patch);
 };
 
 DEAL_II_NAMESPACE_CLOSE

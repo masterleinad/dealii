@@ -70,7 +70,7 @@ test2()
     {
       gi.read_xda(in);
     }
-  catch(typename Triangulation<dim>::DistortedCellList& dcv)
+  catch(typename Triangulation<dim>::DistortedCellList &dcv)
     {
       // ignore the exception that we
       // get because the mesh has
@@ -114,7 +114,7 @@ check_file(const std::string name, typename GridIn<dim>::Format format)
     {
       gi.read(name, format);
     }
-  catch(typename Triangulation<dim>::DistortedCellList& dcv)
+  catch(typename Triangulation<dim>::DistortedCellList &dcv)
     {
       // ignore the exception
       deallog << dcv.distorted_cells.size() << " cells are distorted."

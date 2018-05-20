@@ -78,7 +78,7 @@ public:
 
   void
   initialize(std::shared_ptr<const MatrixFree<dim, value_type>> data,
-             const std::vector<MGConstrainedDoFs>& mg_constrained_dofs,
+             const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
              const unsigned int                    level)
   {
     laplace1.initialize(
@@ -88,50 +88,50 @@ public:
   }
 
   void
-  vmult_interface_down(BlockVectorType& dst, const BlockVectorType& src) const
+  vmult_interface_down(BlockVectorType &dst, const BlockVectorType &src) const
   {
     laplace1.vmult_interface_down(dst.block(0), src.block(0));
     laplace2.vmult_interface_down(dst.block(1), src.block(1));
   }
 
   void
-  vmult_interface_up(BlockVectorType& dst, const BlockVectorType& src) const
+  vmult_interface_up(BlockVectorType &dst, const BlockVectorType &src) const
   {
     laplace1.vmult_interface_up(dst.block(0), src.block(0));
     laplace2.vmult_interface_up(dst.block(1), src.block(1));
   }
 
   void
-  vmult(BlockVectorType& dst, const BlockVectorType& src) const
+  vmult(BlockVectorType &dst, const BlockVectorType &src) const
   {
     laplace1.vmult(dst.block(0), src.block(0));
     laplace2.vmult(dst.block(1), src.block(1));
   }
 
   void
-  Tvmult(BlockVectorType& dst, const BlockVectorType& src) const
+  Tvmult(BlockVectorType &dst, const BlockVectorType &src) const
   {
     laplace1.Tvmult(dst.block(0), src.block(0));
     laplace2.Tvmult(dst.block(1), src.block(1));
   }
 
   void
-  vmult_add(BlockVectorType& dst, const BlockVectorType& src) const
+  vmult_add(BlockVectorType &dst, const BlockVectorType &src) const
   {
     laplace1.vmult_add(dst.block(0), src.block(0));
     laplace2.vmult_add(dst.block(1), src.block(1));
   }
 
   void
-  Tvmult_add(BlockVectorType& dst, const BlockVectorType& src) const
+  Tvmult_add(BlockVectorType &dst, const BlockVectorType &src) const
   {
     laplace1.Tvmult_add(dst.block(0), src.block(0));
     laplace2.Tvmult_add(dst.block(1), src.block(1));
   }
 
   void
-  precondition_Jacobi(BlockVectorType&       dst,
-                      const BlockVectorType& src,
+  precondition_Jacobi(BlockVectorType &      dst,
+                      const BlockVectorType &src,
                       const value_type       omega) const
   {
     laplace1.precondition_Jacobi(dst.block(0), src.block(0), omega);
@@ -176,15 +176,15 @@ public:
   {}
 
   void
-  initialize(const MatrixType& matrix)
+  initialize(const MatrixType &matrix)
   {
     coarse_matrix = &matrix;
   }
 
   virtual void
   operator()(const unsigned int                                     level,
-             LinearAlgebra::distributed::BlockVector<Number>&       dst,
-             const LinearAlgebra::distributed::BlockVector<Number>& src) const
+             LinearAlgebra::distributed::BlockVector<Number> &      dst,
+             const LinearAlgebra::distributed::BlockVector<Number> &src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
     SolverCG<LinearAlgebra::distributed::BlockVector<Number>> solver_coarse(
@@ -192,7 +192,7 @@ public:
     solver_coarse.solve(*coarse_matrix, dst, src, PreconditionIdentity());
   }
 
-  const MatrixType* coarse_matrix;
+  const MatrixType *coarse_matrix;
 };
 
 template <int dim,
@@ -201,7 +201,7 @@ template <int dim,
           int n_q_points_1d,
           typename number>
 void
-do_test(const std::vector<const DoFHandler<dim>*>& dof)
+do_test(const std::vector<const DoFHandler<dim> *> &dof)
 {
   const unsigned int nb = 2;
   if(types_are_equal<number, float>::value == true)
@@ -229,8 +229,8 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
   dirichlet_boundary[0] = &zero_function;
 
   // fine-level constraints
-  std::vector<ConstraintMatrix>        constraints(dof.size());
-  std::vector<const ConstraintMatrix*> constraints_ptrs(dof.size());
+  std::vector<ConstraintMatrix>         constraints(dof.size());
+  std::vector<const ConstraintMatrix *> constraints_ptrs(dof.size());
   for(unsigned int i = 0; i < dof.size(); ++i)
     {
       constraints[i].reinit(locally_relevant_dofs[i]);
@@ -320,8 +320,8 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
       mg_additional_data.tasks_block_size = 3;
       mg_additional_data.level_mg_handler = level;
 
-      std::vector<ConstraintMatrix>        level_constraints(dof.size());
-      std::vector<const ConstraintMatrix*> level_constraints_ptrs(dof.size());
+      std::vector<ConstraintMatrix>         level_constraints(dof.size());
+      std::vector<const ConstraintMatrix *> level_constraints_ptrs(dof.size());
       for(unsigned int i = 0; i < dof.size(); ++i)
         {
           IndexSet relevant_dofs;
@@ -431,7 +431,7 @@ test()
       dof_2.distribute_dofs(fe_2);
       dof_2.distribute_mg_dofs();
 
-      std::vector<const DoFHandler<dim, dim>*> dh_ptrs{&dof_1, &dof_2};
+      std::vector<const DoFHandler<dim, dim> *> dh_ptrs{&dof_1, &dof_2};
 
       constexpr int n_q_points_1d
         = std_cxx14::max(fe_degree_1, fe_degree_2) + 1;
@@ -440,7 +440,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 

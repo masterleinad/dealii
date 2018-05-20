@@ -31,14 +31,14 @@ public:
     this->run_no = run_no;
   }
   virtual void
-  declare_parameters(ParameterHandler& prm);
+  declare_parameters(ParameterHandler &prm);
   virtual void
-               run(ParameterHandler& prm);
+               run(ParameterHandler &prm);
   unsigned int run_no;
 };
 
 void
-HelperClass::declare_parameters(ParameterHandler& prm)
+HelperClass::declare_parameters(ParameterHandler &prm)
 {
   prm.enter_subsection("Testing");
   prm.declare_entry("string list",
@@ -51,7 +51,7 @@ HelperClass::declare_parameters(ParameterHandler& prm)
 }
 
 void
-HelperClass::run(ParameterHandler& prm)
+HelperClass::run(ParameterHandler &prm)
 {
   deallog << "Number of run: " << run_no << std::endl;
 
@@ -59,7 +59,7 @@ HelperClass::run(ParameterHandler& prm)
 }
 
 void
-check(const char* p)
+check(const char *p)
 {
   class MultipleParameterLoop prm;
   HelperClass                 h;

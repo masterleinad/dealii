@@ -48,12 +48,12 @@ test(unsigned int n_ref, unsigned int n_points)
   for(size_t i = 0; i < n_points; ++i)
     points.push_back(random_point<spacedim>());
 
-  auto& mapping = StaticMappingQ1<dim, spacedim>::mapping;
+  auto &mapping = StaticMappingQ1<dim, spacedim>::mapping;
 
   GridTools::Cache<dim, spacedim> cache(tria, mapping);
 
   auto cell = tria.begin_active();
-  for(auto& p : points)
+  for(auto &p : points)
     {
       auto c_and_p = GridTools::find_active_cell_around_point(cache, p);
       auto p2

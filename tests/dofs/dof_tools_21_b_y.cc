@@ -52,7 +52,7 @@ using namespace dealii;
  */
 
 /* The 2D case */
-void generate_grid(Triangulation<2>& triangulation)
+void generate_grid(Triangulation<2> &triangulation)
 {
   Point<2> vertices_1[] = {
     Point<2>(-1., -3.),
@@ -108,9 +108,9 @@ void generate_grid(Triangulation<2>& triangulation)
  */
 template <int dim>
 void
-print_matching(DoFHandler<dim>& dof_handler)
+print_matching(DoFHandler<dim> &dof_handler)
 {
-  const FiniteElement<dim>& fe = dof_handler.get_fe();
+  const FiniteElement<dim> &fe = dof_handler.get_fe();
   MappingQ<dim>             mapping(1);
 
   ConstraintMatrix        constraint_matrix;

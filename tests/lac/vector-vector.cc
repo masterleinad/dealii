@@ -21,7 +21,7 @@ unsigned int       check_point = 0;
 
 template <typename number>
 void
-print(const Vector<number>& v)
+print(const Vector<number> &v)
 {
   //  deallog << "Check point " << check_point << std::endl;
   //  check_point++;
@@ -33,7 +33,7 @@ print(const Vector<number>& v)
 
 template <typename number1, typename number2>
 void
-check_vectors(Vector<number1>& d1, Vector<number2>& d2)
+check_vectors(Vector<number1> &d1, Vector<number2> &d2)
 {
   deallog << "Fill & Swap" << std::endl;
   Vector<number1> d3(d1.size());

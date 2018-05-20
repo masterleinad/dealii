@@ -30,7 +30,7 @@ std::ofstream logfile("output");
 
 template <int dim>
 void
-mesh_info(const Triangulation<dim>& tria)
+mesh_info(const Triangulation<dim> &tria)
 {
   deallog << "Mesh info:" << std::endl
           << " dimension: " << dim << std::endl

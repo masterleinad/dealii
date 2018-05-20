@@ -36,13 +36,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> &p, const unsigned int component) const
   {
     return (component + 1) * p.square() + 1;
   }
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const
+  vector_value(const Point<dim> &p, Vector<double> &values) const
   {
     values(0) = value(p, 0);
   }
@@ -56,13 +56,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> &p, const unsigned int component) const
   {
     return std::exp(p(0));
   }
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const
+  vector_value(const Point<dim> &p, Vector<double> &values) const
   {
     values(0) = value(p, 0);
   }
@@ -70,7 +70,7 @@ public:
 
 template <int dim>
 void
-make_mesh(Triangulation<dim>& tria)
+make_mesh(Triangulation<dim> &tria)
 {
   GridGenerator::hyper_cube(tria, -1, 1);
 
@@ -110,9 +110,9 @@ check()
       static const MySquareFunction<dim>          function_1;
       static const Functions::CosineFunction<dim> function_2;
 
-      const Function<dim>& function
-        = (i == 0 ? static_cast<const Function<dim>&>(function_1) :
-                    static_cast<const Function<dim>&>(function_2));
+      const Function<dim> &function
+        = (i == 0 ? static_cast<const Function<dim> &>(function_1) :
+                    static_cast<const Function<dim> &>(function_2));
 
       Vector<double> v(dof.n_dofs());
       VectorTools::interpolate(dof, function, v);

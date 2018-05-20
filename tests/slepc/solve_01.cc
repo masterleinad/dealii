@@ -32,12 +32,12 @@
 
 template <typename SolverType, typename MatrixType, typename VectorType>
 void
-check_solve(SolverType&               solver,
-            const SolverControl&      solver_control,
-            const MatrixType&         A,
-            const MatrixType&         B,
-            std::vector<VectorType>&  u,
-            std::vector<PetscScalar>& v)
+check_solve(SolverType &              solver,
+            const SolverControl &     solver_control,
+            const MatrixType &        A,
+            const MatrixType &        B,
+            std::vector<VectorType> & u,
+            std::vector<PetscScalar> &v)
 {
   deallog << "Solver type: " << typeid(solver).name() << std::endl;
 
@@ -50,14 +50,14 @@ check_solve(SolverType&               solver,
         for(unsigned int j = 0; j < u[i].size(); ++j)
           u[i][j] = random_value<double>();
 
-      for(auto& vector : u)
+      for(auto &vector : u)
         vector.compress(VectorOperation::insert);
 
       solver.set_initial_space(u);
 
       solver.solve(A, B, v, u, v.size());
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch(dealii::SolverControl::NoConvergence &e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -78,7 +78,7 @@ check_solve(SolverType&               solver,
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
   deallog << std::setprecision(7);

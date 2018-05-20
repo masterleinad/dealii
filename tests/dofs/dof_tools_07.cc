@@ -21,7 +21,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> &dof_handler)
 {
   std::vector<types::global_dof_index> n_dofs(
     dof_handler.get_fe().n_components());

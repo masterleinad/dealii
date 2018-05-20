@@ -182,7 +182,7 @@ namespace Step18
   // and straightforward.
   template <int dim>
   inline SymmetricTensor<2, dim>
-  get_strain(const FEValues<dim>& fe_values,
+  get_strain(const FEValues<dim> &fe_values,
              const unsigned int   shape_func,
              const unsigned int   q_point)
   {
@@ -234,7 +234,7 @@ namespace Step18
   // simply abort our program if the condition is not met.
   template <int dim>
   inline SymmetricTensor<2, dim>
-  get_strain(const std::vector<Tensor<1, dim>>& grad)
+  get_strain(const std::vector<Tensor<1, dim>> &grad)
   {
     Assert(grad.size() == dim, ExcInternalError());
 
@@ -268,7 +268,7 @@ namespace Step18
   //
   // So, without further ado to the 2d implementation:
   Tensor<2, 2>
-  get_rotation_matrix(const std::vector<Tensor<1, 2>>& grad_u)
+  get_rotation_matrix(const std::vector<Tensor<1, 2>> &grad_u)
   {
     // First, compute the curl of the velocity field from the gradients. Note
     // that we are in 2d, so the rotation is a scalar:
@@ -287,7 +287,7 @@ namespace Step18
 
   // The 3d case is a little more contrived:
   Tensor<2, 3>
-  get_rotation_matrix(const std::vector<Tensor<1, 3>>& grad_u)
+  get_rotation_matrix(const std::vector<Tensor<1, 3>> &grad_u)
   {
     // Again first compute the curl of the velocity field. This time, it is a
     // real vector:
@@ -564,11 +564,11 @@ namespace Step18
     BodyForce();
 
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& values) const override;
+    vector_value(const Point<dim> &p, Vector<double> &values) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const override;
+    vector_value_list(const std::vector<Point<dim>> &points,
+                      std::vector<Vector<double>> &  value_list) const override;
   };
 
   template <int dim>
@@ -577,8 +577,8 @@ namespace Step18
 
   template <int dim>
   inline void
-  BodyForce<dim>::vector_value(const Point<dim>& /*p*/,
-                               Vector<double>& values) const
+  BodyForce<dim>::vector_value(const Point<dim> & /*p*/,
+                               Vector<double> &values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
 
@@ -592,8 +592,8 @@ namespace Step18
   template <int dim>
   void
   BodyForce<dim>::vector_value_list(
-    const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    const std::vector<Point<dim>> &points,
+    std::vector<Vector<double>> &  value_list) const
   {
     const unsigned int n_points = points.size();
 
@@ -639,11 +639,11 @@ namespace Step18
                               const double present_timestep);
 
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& values) const override;
+    vector_value(const Point<dim> &p, Vector<double> &values) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const override;
+    vector_value_list(const std::vector<Point<dim>> &points,
+                      std::vector<Vector<double>> &  value_list) const override;
 
   private:
     const double velocity;
@@ -663,8 +663,8 @@ namespace Step18
 
   template <int dim>
   void
-  IncrementalBoundaryValues<dim>::vector_value(const Point<dim>& /*p*/,
-                                               Vector<double>& values) const
+  IncrementalBoundaryValues<dim>::vector_value(const Point<dim> & /*p*/,
+                                               Vector<double> &values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
 
@@ -675,8 +675,8 @@ namespace Step18
   template <int dim>
   void
   IncrementalBoundaryValues<dim>::vector_value_list(
-    const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    const std::vector<Point<dim>> &points,
+    std::vector<Vector<double>> &  value_list) const
   {
     const unsigned int n_points = points.size();
 
@@ -992,8 +992,8 @@ namespace Step18
           // corresponding to the first quadrature point of the present cell,
           // and then add an offset corresponding to the index of the
           // quadrature point we presently consider:
-          const PointHistory<dim>* local_quadrature_points_data
-            = reinterpret_cast<PointHistory<dim>*>(cell->user_pointer());
+          const PointHistory<dim> *local_quadrature_points_data
+            = reinterpret_cast<PointHistory<dim> *>(cell->user_pointer());
           // In addition, we need the values of the external body forces at
           // the quadrature points on this cell:
           body_force.vector_value_list(fe_values.get_quadrature_points(),
@@ -1007,7 +1007,7 @@ namespace Step18
 
               for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
                 {
-                  const SymmetricTensor<2, dim>& old_stress
+                  const SymmetricTensor<2, dim> &old_stress
                     = local_quadrature_points_data[q_point].old_stress;
 
                   cell_rhs(i)
@@ -1220,9 +1220,9 @@ namespace Step18
             // points...
             SymmetricTensor<2, dim> accumulated_stress;
             for(unsigned int q = 0; q < quadrature_formula.size(); ++q)
-              accumulated_stress
-                += reinterpret_cast<PointHistory<dim>*>(cell->user_pointer())[q]
-                     .old_stress;
+              accumulated_stress += reinterpret_cast<PointHistory<dim> *>(
+                                      cell->user_pointer())[q]
+                                      .old_stress;
 
             // ...then write the norm of the average to their destination:
             norm_of_stress(cell->active_cell_index())
@@ -1721,8 +1721,8 @@ namespace Step18
           // Next, get a pointer to the quadrature point history data local to
           // the present cell, and, as a defensive measure, make sure that
           // this pointer is within the bounds of the global array:
-          PointHistory<dim>* local_quadrature_points_history
-            = reinterpret_cast<PointHistory<dim>*>(cell->user_pointer());
+          PointHistory<dim> *local_quadrature_points_history
+            = reinterpret_cast<PointHistory<dim> *>(cell->user_pointer());
           Assert(local_quadrature_points_history
                    >= &quadrature_point_history.front(),
                  ExcInternalError());
@@ -1792,7 +1792,7 @@ namespace Step18
 } // namespace Step18
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   try
     {
@@ -1804,7 +1804,7 @@ main(int argc, char** argv)
       TopLevel<3> elastic_problem;
       elastic_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

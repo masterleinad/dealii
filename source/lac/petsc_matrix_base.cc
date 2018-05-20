@@ -46,8 +46,8 @@ namespace PETScWrappers
 
       // get a representation of the present row
       PetscInt           ncols;
-      const PetscInt*    colnums;
-      const PetscScalar* values;
+      const PetscInt *   colnums;
+      const PetscScalar *values;
 
       PetscErrorCode ierr
         = MatGetRow(*matrix, this->a_row, &ncols, &colnums, &values);
@@ -97,7 +97,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-  MatrixBase&
+  MatrixBase &
   MatrixBase::operator=(const value_type d)
   {
     (void) d;
@@ -119,7 +119,7 @@ namespace PETScWrappers
   }
 
   void
-  MatrixBase::clear_rows(const std::vector<size_type>& rows,
+  MatrixBase::clear_rows(const std::vector<size_type> &rows,
                          const PetscScalar             new_diag_value)
   {
     assert_is_compressed();
@@ -250,7 +250,7 @@ namespace PETScWrappers
     PetscInt begin, end;
 
     const PetscErrorCode ierr
-      = MatGetOwnershipRange(static_cast<const Mat&>(matrix), &begin, &end);
+      = MatGetOwnershipRange(static_cast<const Mat &>(matrix), &begin, &end);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     return std::make_pair(begin, end);
@@ -280,8 +280,8 @@ namespace PETScWrappers
     // get a representation of the present
     // row
     PetscInt           ncols;
-    const PetscInt*    colnums;
-    const PetscScalar* values;
+    const PetscInt *   colnums;
+    const PetscScalar *values;
 
     //TODO: this is probably horribly inefficient; we should lobby for a way to
     //query this information from PETSc
@@ -334,7 +334,7 @@ namespace PETScWrappers
   }
 
   PetscScalar
-  MatrixBase::matrix_norm_square(const VectorBase& v) const
+  MatrixBase::matrix_norm_square(const VectorBase &v) const
   {
     VectorBase tmp(v);
     vmult(tmp, v);
@@ -342,8 +342,8 @@ namespace PETScWrappers
   }
 
   PetscScalar
-  MatrixBase::matrix_scalar_product(const VectorBase& u,
-                                    const VectorBase& v) const
+  MatrixBase::matrix_scalar_product(const VectorBase &u,
+                                    const VectorBase &v) const
   {
     VectorBase tmp(u);
     vmult(tmp, v);
@@ -361,7 +361,7 @@ namespace PETScWrappers
     return result;
   }
 
-  MatrixBase&
+  MatrixBase &
   MatrixBase::operator*=(const PetscScalar a)
   {
     const PetscErrorCode ierr = MatScale(matrix, a);
@@ -370,7 +370,7 @@ namespace PETScWrappers
     return *this;
   }
 
-  MatrixBase&
+  MatrixBase &
   MatrixBase::operator/=(const PetscScalar a)
   {
     const PetscScalar    factor = 1. / a;
@@ -380,8 +380,8 @@ namespace PETScWrappers
     return *this;
   }
 
-  MatrixBase&
-  MatrixBase::add(const PetscScalar factor, const MatrixBase& other)
+  MatrixBase &
+  MatrixBase::add(const PetscScalar factor, const MatrixBase &other)
   {
     const PetscErrorCode ierr
       = MatAXPY(matrix, factor, other, DIFFERENT_NONZERO_PATTERN);
@@ -390,14 +390,14 @@ namespace PETScWrappers
     return *this;
   }
 
-  MatrixBase&
-  MatrixBase::add(const MatrixBase& other, const PetscScalar factor)
+  MatrixBase &
+  MatrixBase::add(const MatrixBase &other, const PetscScalar factor)
   {
     return add(factor, other);
   }
 
   void
-  MatrixBase::vmult(VectorBase& dst, const VectorBase& src) const
+  MatrixBase::vmult(VectorBase &dst, const VectorBase &src) const
   {
     Assert(&src != &dst, ExcSourceEqualsDestination());
 
@@ -406,7 +406,7 @@ namespace PETScWrappers
   }
 
   void
-  MatrixBase::Tvmult(VectorBase& dst, const VectorBase& src) const
+  MatrixBase::Tvmult(VectorBase &dst, const VectorBase &src) const
   {
     Assert(&src != &dst, ExcSourceEqualsDestination());
 
@@ -415,7 +415,7 @@ namespace PETScWrappers
   }
 
   void
-  MatrixBase::vmult_add(VectorBase& dst, const VectorBase& src) const
+  MatrixBase::vmult_add(VectorBase &dst, const VectorBase &src) const
   {
     Assert(&src != &dst, ExcSourceEqualsDestination());
 
@@ -424,7 +424,7 @@ namespace PETScWrappers
   }
 
   void
-  MatrixBase::Tvmult_add(VectorBase& dst, const VectorBase& src) const
+  MatrixBase::Tvmult_add(VectorBase &dst, const VectorBase &src) const
   {
     Assert(&src != &dst, ExcSourceEqualsDestination());
 
@@ -435,10 +435,10 @@ namespace PETScWrappers
   namespace internals
   {
     void
-    perform_mmult(const MatrixBase& inputleft,
-                  const MatrixBase& inputright,
-                  MatrixBase&       result,
-                  const VectorBase& V,
+    perform_mmult(const MatrixBase &inputleft,
+                  const MatrixBase &inputright,
+                  MatrixBase &      result,
+                  const VectorBase &V,
                   const bool        transpose_left)
     {
       const bool use_vector = (V.size() == inputright.m() ? true : false);
@@ -505,25 +505,25 @@ namespace PETScWrappers
   } // namespace internals
 
   void
-  MatrixBase::mmult(MatrixBase&       C,
-                    const MatrixBase& B,
-                    const VectorBase& V) const
+  MatrixBase::mmult(MatrixBase &      C,
+                    const MatrixBase &B,
+                    const VectorBase &V) const
   {
     internals::perform_mmult(*this, B, C, V, false);
   }
 
   void
-  MatrixBase::Tmmult(MatrixBase&       C,
-                     const MatrixBase& B,
-                     const VectorBase& V) const
+  MatrixBase::Tmmult(MatrixBase &      C,
+                     const MatrixBase &B,
+                     const VectorBase &V) const
   {
     internals::perform_mmult(*this, B, C, V, true);
   }
 
   PetscScalar
-  MatrixBase::residual(VectorBase&       dst,
-                       const VectorBase& x,
-                       const VectorBase& b) const
+  MatrixBase::residual(VectorBase &      dst,
+                       const VectorBase &x,
+                       const VectorBase &b) const
   {
     // avoid the use of a temporary, and
     // rather do one negation pass more than
@@ -540,7 +540,7 @@ namespace PETScWrappers
     return matrix;
   }
 
-  Mat&
+  Mat &
   MatrixBase::petsc_matrix()
   {
     return matrix;
@@ -591,14 +591,14 @@ namespace PETScWrappers
   }
 
   void
-  MatrixBase::print(std::ostream& out, const bool /*alternative_output*/) const
+  MatrixBase::print(std::ostream &out, const bool /*alternative_output*/) const
   {
     std::pair<MatrixBase::size_type, MatrixBase::size_type> loc_range
       = local_range();
 
     PetscInt           ncols;
-    const PetscInt*    colnums;
-    const PetscScalar* values;
+    const PetscInt *   colnums;
+    const PetscScalar *values;
 
     MatrixBase::size_type row;
     for(row = loc_range.first; row < loc_range.second; ++row)

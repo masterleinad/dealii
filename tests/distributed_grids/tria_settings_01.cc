@@ -31,7 +31,7 @@
 
 template <int dim>
 void
-testit(parallel::distributed::Triangulation<dim>& tr)
+testit(parallel::distributed::Triangulation<dim> &tr)
 {
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
@@ -53,7 +53,7 @@ testit(parallel::distributed::Triangulation<dim>& tr)
 
 template <int dim>
 void
-test(std::ostream& /*out*/)
+test(std::ostream & /*out*/)
 {
   {
     parallel::distributed::Triangulation<dim> tr(
@@ -74,7 +74,7 @@ test(std::ostream& /*out*/)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

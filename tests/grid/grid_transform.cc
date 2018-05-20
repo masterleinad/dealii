@@ -69,7 +69,7 @@ main()
                   vertex_no < GeometryInfo<dim>::vertices_per_face;
                   ++vertex_no)
                 {
-                  const Point<dim>& v = face->vertex(vertex_no);
+                  const Point<dim> &v = face->vertex(vertex_no);
                   if(std::fabs(std::sqrt(v.square()) - outer_radius) < 1e-12)
                     {
                       // leave the

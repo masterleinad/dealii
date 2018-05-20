@@ -31,21 +31,21 @@ namespace Algorithms
 
   template <typename VectorType>
   void
-  OutputOperator<VectorType>::initialize_stream(std::ostream& stream)
+  OutputOperator<VectorType>::initialize_stream(std::ostream &stream)
   {
     os = &stream;
   }
 
   template <typename VectorType>
-  OutputOperator<VectorType>&
-  OutputOperator<VectorType>::operator<<(const AnyData& vectors)
+  OutputOperator<VectorType> &
+  OutputOperator<VectorType>::operator<<(const AnyData &vectors)
   {
     if(os == nullptr)
       {
         deallog << "Step " << step << std::endl;
         for(unsigned int i = 0; i < vectors.size(); ++i)
           {
-            const VectorType* v = vectors.try_read_ptr<VectorType>(i);
+            const VectorType *v = vectors.try_read_ptr<VectorType>(i);
             if(v == nullptr)
               continue;
             deallog << vectors.name(i);
@@ -62,7 +62,7 @@ namespace Algorithms
         (*os) << ' ' << step;
         for(unsigned int i = 0; i < vectors.size(); ++i)
           {
-            const VectorType* v = vectors.try_read_ptr<VectorType>(i);
+            const VectorType *v = vectors.try_read_ptr<VectorType>(i);
             if(v == nullptr)
               continue;
             for(unsigned int j = 0; j < v->size(); ++j)

@@ -22,7 +22,7 @@
 
 template <typename number>
 void
-checkClear(FullMatrix<number>& A)
+checkClear(FullMatrix<number> &A)
 {
   deallog << "clear" << std::endl;
   deallog << "Init with matrix 1" << std::endl;

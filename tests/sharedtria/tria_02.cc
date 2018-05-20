@@ -27,8 +27,8 @@
 
 template <int dim, int spacedim>
 void
-write_mesh(const parallel::shared::Triangulation<dim, spacedim>& tria,
-           const char*                                           filename_)
+write_mesh(const parallel::shared::Triangulation<dim, spacedim> &tria,
+           const char *                                          filename_)
 {
   DataOut<dim> data_out;
   data_out.attach_triangulation(tria);
@@ -61,7 +61,7 @@ test()
 
   AssertThrow(tr.with_artificial_cells() == true, ExcInternalError());
 
-  const std::vector<unsigned int>& true_subdomain_ids_of_cells
+  const std::vector<unsigned int> &true_subdomain_ids_of_cells
     = tr.get_true_subdomain_ids_of_cells();
 
   AssertThrow(true_subdomain_ids_of_cells.size() == tr.n_active_cells(),
@@ -112,7 +112,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    all;

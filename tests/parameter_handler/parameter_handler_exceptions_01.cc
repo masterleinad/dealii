@@ -24,7 +24,7 @@ std::string input = "set test_1 = 1\n"
                     "end\n";
 
 void
-check(const char* p)
+check(const char *p)
 {
   ParameterHandler prm;
   prm.declare_entry("test_1", "0", Patterns::Integer(-1, 1));

@@ -55,7 +55,7 @@ main()
   Test<1> a;
   Test<2> b;
 
-  auto& prm = ParameterAcceptor::prm;
+  auto &prm = ParameterAcceptor::prm;
 
   ParameterAcceptor::declare_all_parameters();
   ParameterAcceptor::parse_all_parameters();

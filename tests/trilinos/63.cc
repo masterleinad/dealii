@@ -22,7 +22,7 @@
 #include <vector>
 
 void
-test(TrilinosWrappers::SparseMatrix& m)
+test(TrilinosWrappers::SparseMatrix &m)
 {
   AssertThrow(m.m() == 100, ExcInternalError());
   AssertThrow(m.n() == 100, ExcInternalError());
@@ -36,7 +36,7 @@ test(TrilinosWrappers::SparseMatrix& m)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -50,7 +50,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

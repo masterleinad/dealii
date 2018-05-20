@@ -51,7 +51,7 @@ using namespace dealii;
  */
 
 /* The 2D case */
-void generate_grid(Triangulation<2>& triangulation, int orientation)
+void generate_grid(Triangulation<2> &triangulation, int orientation)
 {
   Point<2> vertices_1[] = {
     Point<2>(-1., -3.),
@@ -106,7 +106,7 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
 }
 
 /* The 3D case */
-void generate_grid(Triangulation<3>& triangulation, int orientation)
+void generate_grid(Triangulation<3> &triangulation, int orientation)
 {
   Point<3>              vertices_1[] = {Point<3>(-1., -1., -3.),
                            Point<3>(+1., -1., -3.),
@@ -179,10 +179,10 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
  */
 template <int dim>
 void
-print_matching(DoFHandler<dim>& dof_handler,
+print_matching(DoFHandler<dim> &dof_handler,
                bool             constrain_only_velocity = false)
 {
-  const FiniteElement<dim>& fe = dof_handler.get_fe();
+  const FiniteElement<dim> &fe = dof_handler.get_fe();
   MappingQ<dim>             mapping(1);
 
   ConstraintMatrix        constraint_matrix;

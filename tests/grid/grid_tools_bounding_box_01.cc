@@ -23,7 +23,7 @@
 
 template <int dim>
 bool
-pred_mat_id(const typename Triangulation<dim>::active_cell_iterator& cell)
+pred_mat_id(const typename Triangulation<dim>::active_cell_iterator &cell)
 {
   return cell->material_id() == 2;
 }
@@ -58,7 +58,7 @@ test()
         cell->set_material_id(1);
     }
 
-  std::function<bool(const cell_iterator&)> predicate = pred_mat_id<dim>;
+  std::function<bool(const cell_iterator &)> predicate = pred_mat_id<dim>;
 
   // Find bounding box that surrounds cells with material id 2
   auto bounding_box

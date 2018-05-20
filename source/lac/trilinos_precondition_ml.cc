@@ -43,12 +43,12 @@ namespace TrilinosWrappers
     const unsigned int                    n_cycles,
     const bool                            w_cycle,
     const double                          aggregation_threshold,
-    const std::vector<std::vector<bool>>& constant_modes,
+    const std::vector<std::vector<bool>> &constant_modes,
     const unsigned int                    smoother_sweeps,
     const unsigned int                    smoother_overlap,
     const bool                            output_details,
-    const char*                           smoother_type,
-    const char*                           coarse_type)
+    const char *                          smoother_type,
+    const char *                          coarse_type)
     : elliptic(elliptic),
       higher_order_elements(higher_order_elements),
       n_cycles(n_cycles),
@@ -69,15 +69,15 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionAMG::initialize(const SparseMatrix&   matrix,
-                              const AdditionalData& additional_data)
+  PreconditionAMG::initialize(const SparseMatrix &  matrix,
+                              const AdditionalData &additional_data)
   {
     initialize(matrix.trilinos_matrix(), additional_data);
   }
 
   void
-  PreconditionAMG::initialize(const Epetra_RowMatrix& matrix,
-                              const AdditionalData&   additional_data)
+  PreconditionAMG::initialize(const Epetra_RowMatrix &matrix,
+                              const AdditionalData &  additional_data)
   {
     // Build the AMG preconditioner.
     Teuchos::ParameterList parameter_list;
@@ -134,7 +134,7 @@ namespace TrilinosWrappers
     else
       parameter_list.set("ML output", 0);
 
-    const Epetra_Map& domain_map = matrix.OperatorDomainMap();
+    const Epetra_Map &domain_map = matrix.OperatorDomainMap();
 
     const size_type constant_modes_dimension
       = additional_data.constant_modes.size();
@@ -195,8 +195,8 @@ namespace TrilinosWrappers
 
     if(additional_data.output_details)
       {
-        ML_Epetra::MultiLevelPreconditioner* multilevel_operator
-          = dynamic_cast<ML_Epetra::MultiLevelPreconditioner*>(
+        ML_Epetra::MultiLevelPreconditioner *multilevel_operator
+          = dynamic_cast<ML_Epetra::MultiLevelPreconditioner *>(
             preconditioner.get());
         Assert(multilevel_operator != nullptr,
                ExcMessage("Preconditioner setup failed."));
@@ -205,15 +205,15 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionAMG::initialize(const SparseMatrix&           matrix,
-                              const Teuchos::ParameterList& ml_parameters)
+  PreconditionAMG::initialize(const SparseMatrix &          matrix,
+                              const Teuchos::ParameterList &ml_parameters)
   {
     initialize(matrix.trilinos_matrix(), ml_parameters);
   }
 
   void
-  PreconditionAMG::initialize(const Epetra_RowMatrix&       matrix,
-                              const Teuchos::ParameterList& ml_parameters)
+  PreconditionAMG::initialize(const Epetra_RowMatrix &      matrix,
+                              const Teuchos::ParameterList &ml_parameters)
   {
     preconditioner.reset();
     preconditioner = std::make_shared<ML_Epetra::MultiLevelPreconditioner>(
@@ -223,10 +223,10 @@ namespace TrilinosWrappers
   template <typename number>
   void
   PreconditionAMG::initialize(
-    const ::dealii::SparseMatrix<number>& deal_ii_sparse_matrix,
-    const AdditionalData&                 additional_data,
+    const ::dealii::SparseMatrix<number> &deal_ii_sparse_matrix,
+    const AdditionalData &                additional_data,
     const double                          drop_tolerance,
-    const ::dealii::SparsityPattern*      use_this_sparsity)
+    const ::dealii::SparsityPattern *     use_this_sparsity)
   {
     preconditioner.reset();
     const size_type n_rows = deal_ii_sparse_matrix.m();
@@ -254,8 +254,8 @@ namespace TrilinosWrappers
   void
   PreconditionAMG::reinit()
   {
-    ML_Epetra::MultiLevelPreconditioner* multilevel_operator
-      = dynamic_cast<ML_Epetra::MultiLevelPreconditioner*>(
+    ML_Epetra::MultiLevelPreconditioner *multilevel_operator
+      = dynamic_cast<ML_Epetra::MultiLevelPreconditioner *>(
         preconditioner.get());
     multilevel_operator->ReComputePreconditioner();
   }
@@ -281,15 +281,15 @@ namespace TrilinosWrappers
 
   // explicit instantiations
   template void
-  PreconditionAMG::initialize(const ::dealii::SparseMatrix<double>&,
-                              const AdditionalData&,
+  PreconditionAMG::initialize(const ::dealii::SparseMatrix<double> &,
+                              const AdditionalData &,
                               const double,
-                              const ::dealii::SparsityPattern*);
+                              const ::dealii::SparsityPattern *);
   template void
-  PreconditionAMG::initialize(const ::dealii::SparseMatrix<float>&,
-                              const AdditionalData&,
+  PreconditionAMG::initialize(const ::dealii::SparseMatrix<float> &,
+                              const AdditionalData &,
                               const double,
-                              const ::dealii::SparsityPattern*);
+                              const ::dealii::SparsityPattern *);
 
 } // namespace TrilinosWrappers
 

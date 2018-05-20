@@ -35,7 +35,7 @@ public:
             << std::endl;
   }
 
-  C(const C&)
+  C(const C &)
   {
     object_number = ::object_number++;
     deallog << "copy constructor. Object number " << object_number << std::endl;
@@ -48,14 +48,14 @@ public:
 
   template <typename Archive>
   void
-  serialize(Archive& ar, const unsigned int version)
+  serialize(Archive &ar, const unsigned int version)
   {
     deallog << "Serializing object number " << object_number << " via "
             << typeid(Archive).name() << std::endl;
   }
 
   bool
-  operator==(const C&) const
+  operator==(const C &) const
   {
     return true;
   }
@@ -66,16 +66,16 @@ private:
 
 struct P
 {
-  C* c;
+  C *c;
   template <typename Archive>
   void
-  serialize(Archive& ar, const unsigned int)
+  serialize(Archive &ar, const unsigned int)
   {
-    ar& c;
+    ar &c;
   }
 
   bool
-  operator==(const P& p) const
+  operator==(const P &p) const
   {
     // there is no useful operation we
     // can do here for the purposes of
@@ -89,7 +89,7 @@ void
 test()
 {
   {
-    C*              c = new C();
+    C *             c = new C();
     std::pair<P, P> pair_1, pair_2;
     pair_1.first.c  = c;
     pair_1.second.c = c;

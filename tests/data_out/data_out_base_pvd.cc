@@ -26,7 +26,7 @@
 
 template <int dim, int spacedim>
 void
-check(std::ostream& out)
+check(std::ostream &out)
 {
   std::vector<std::pair<double, std::string>> names(5);
   names[0] = std::make_pair(0, "x1");

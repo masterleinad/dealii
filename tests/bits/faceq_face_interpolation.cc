@@ -21,7 +21,7 @@
 //   FE_FaceQ/FaceP/TraceQ::face_interpolation
 
 void
-output_matrix(const FullMatrix<double>& m)
+output_matrix(const FullMatrix<double> &m)
 {
   if((m.m() == 0) || (m.n() == 0))
     {
@@ -40,7 +40,7 @@ output_matrix(const FullMatrix<double>& m)
 
 template <int dim>
 void
-check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
+check_this(const FiniteElement<dim> &fe1, const FiniteElement<dim> &fe2)
 {
   // check all combinations of fe1 and fe2
   FullMatrix<double> face_constraints;
@@ -147,7 +147,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

@@ -30,7 +30,7 @@
 
 template <int dim, int spacedim>
 void
-check(DataOutBase::DXFlags flags, std::ostream& out)
+check(DataOutBase::DXFlags flags, std::ostream &out)
 {
   const unsigned int np = 4;
 
@@ -55,7 +55,7 @@ void
 check_cont(unsigned int         ncells,
            unsigned int         nsub,
            DataOutBase::DXFlags flags,
-           std::ostream&        out)
+           std::ostream &       out)
 {
   std::vector<DataOutBase::Patch<dim, dim>> patches;
 
@@ -69,14 +69,14 @@ check_cont(unsigned int         ncells,
 
 template <int dim, int spacedim>
 void
-check_all(std::ostream& log)
+check_all(std::ostream &log)
 {
 #if SEPARATE_FILES == 0
-  std::ostream& out = log;
+  std::ostream &out = log;
 #endif
 
   char                 name[100];
-  const char*          format = "%d%d%s.dx";
+  const char *         format = "%d%d%s.dx";
   DataOutBase::DXFlags flags(false, false, false, false);
   if(dim == 2 && spacedim == 2)
     {

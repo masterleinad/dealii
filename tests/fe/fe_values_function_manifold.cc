@@ -60,10 +60,10 @@ class HardManufacturedSolution : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim>& point, const unsigned int) const
+  value(const Point<dim> &point, const unsigned int) const
   {
-    const double& x = point[0];
-    const double& y = point[1];
+    const double &x = point[0];
+    const double &y = point[1];
 
     return (Utilities::fixed_power<3>(y)
             + std::exp(-Utilities::fixed_power<2>(y))
@@ -78,10 +78,10 @@ class HardManufacturedForcing : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim>& point, const unsigned int) const
+  value(const Point<dim> &point, const unsigned int) const
   {
-    const double& x = point[0];
-    const double& y = point[1];
+    const double &x = point[0];
+    const double &y = point[1];
     return -40.0
              * (Utilities::fixed_power<3>(y)
                 + std::exp(-Utilities::fixed_power<2>(y))
@@ -114,7 +114,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim> &point, const unsigned int component = 0) const
   {
     switch(component)
       {
@@ -122,7 +122,7 @@ public:
           return point[0];
         case 1:
           {
-            const double& x = point[0];
+            const double &x = point[0];
             return point[1] + 0.25 * (2 * x - 1.0) * (x - 1.0) * x;
           }
         default:
@@ -140,7 +140,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim> &point, const unsigned int component = 0) const
   {
     switch(component)
       {
@@ -148,7 +148,7 @@ public:
           return point[0];
         case 1:
           {
-            const double& x = point[0];
+            const double &x = point[0];
             return point[1] - 0.25 * (2 * x - 1.0) * (x - 1.0) * x;
           }
         default:
@@ -187,7 +187,7 @@ public:
 
 template <int dim>
 std::shared_ptr<Manifold<dim>>
-cubic_roof(Triangulation<dim>& triangulation)
+cubic_roof(Triangulation<dim> &triangulation)
 {
   std::shared_ptr<Manifold<dim>> boundary(new CubicRoofManifold<dim>());
   GridGenerator::hyper_cube(triangulation);
@@ -369,7 +369,7 @@ JxWError<dim>::run()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   // Use exactly one thread so that the CellSimilarity checks are not disabled.
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);

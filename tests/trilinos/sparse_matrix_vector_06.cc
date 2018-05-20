@@ -23,7 +23,7 @@
 #include <vector>
 
 void
-test(TrilinosWrappers::MPI::Vector& v)
+test(TrilinosWrappers::MPI::Vector &v)
 {
   TrilinosWrappers::SparseMatrix m(v.size(), v.size(), v.size());
   for(unsigned int i = 0; i < m.m(); ++i)
@@ -54,7 +54,7 @@ test(TrilinosWrappers::MPI::Vector& v)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -69,7 +69,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

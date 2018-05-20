@@ -24,7 +24,7 @@
 
 template <int dim>
 std::string
-modify_name(const std::string& name)
+modify_name(const std::string &name)
 {
   std::string new_name = name;
   std::string dim_name = std::string("<");
@@ -41,7 +41,7 @@ modify_name(const std::string& name)
 
 template <int dim>
 void
-check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
+check_this(const FiniteElement<dim> &fe1, const FiniteElement<dim> &fe2)
 {
   // check that the name of the fe
   // and the name of the fe that we

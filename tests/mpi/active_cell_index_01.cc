@@ -26,7 +26,7 @@
 
 template <int dim>
 void
-check(const parallel::distributed::Triangulation<dim>& tria)
+check(const parallel::distributed::Triangulation<dim> &tria)
 {
   unsigned int index = 0;
   for(typename Triangulation<dim>::active_cell_iterator cell
@@ -56,7 +56,7 @@ check()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

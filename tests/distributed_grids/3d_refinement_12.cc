@@ -58,8 +58,8 @@ public:
     const typename dealii::Triangulation<dim>::MeshSmoothing smoothing_option
     = dealii::Triangulation<dim>::none);
   void
-  run(std::vector<unsigned int>& n_cell,
-      std::set<Location<dim>>&   position_list);
+  run(std::vector<unsigned int> &n_cell,
+      std::set<Location<dim>> &  position_list);
 
 private:
   void
@@ -77,11 +77,11 @@ template <int dim>
 class Location : public Point<dim>
 {
 public:
-  Location(const Point<dim>& in) : Point<dim>(in)
+  Location(const Point<dim> &in) : Point<dim>(in)
   {}
 
   inline bool
-  operator<(const Location<dim>& op) const
+  operator<(const Location<dim> &op) const
   {
     for(unsigned int d = 0; d < dim; ++d)
       {
@@ -96,7 +96,7 @@ public:
 };
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, /* int max_num_threads */ 1);
@@ -212,8 +212,8 @@ TriaTest<dim>::TriaTest(
 
 template <int dim>
 void
-TriaTest<dim>::run(std::vector<unsigned int>& n_cell,
-                   std::set<Location<dim>>&   position_list)
+TriaTest<dim>::run(std::vector<unsigned int> &n_cell,
+                   std::set<Location<dim>> &  position_list)
 {
   n_cell.clear();
   position_list.clear();

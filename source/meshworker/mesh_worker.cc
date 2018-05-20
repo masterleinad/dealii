@@ -23,7 +23,7 @@ namespace MeshWorker
 {
   template <typename number>
   void
-  LocalResults<number>::reinit(const BlockIndices& bi)
+  LocalResults<number>::reinit(const BlockIndices &bi)
   {
     for(unsigned int i = 0; i < J.size(); ++i)
       J[i] = 0.;
@@ -68,8 +68,8 @@ namespace MeshWorker
   template <int dim, int spacedim, typename number>
   void
   LocalIntegrator<dim, spacedim, number>::cell(
-    DoFInfo<dim, spacedim, number>&,
-    IntegrationInfo<dim, spacedim>&) const
+    DoFInfo<dim, spacedim, number> &,
+    IntegrationInfo<dim, spacedim> &) const
   {
     Assert(false, ExcPureFunction());
   }
@@ -77,8 +77,8 @@ namespace MeshWorker
   template <int dim, int spacedim, typename number>
   void
   LocalIntegrator<dim, spacedim, number>::boundary(
-    DoFInfo<dim, spacedim, number>&,
-    IntegrationInfo<dim, spacedim>&) const
+    DoFInfo<dim, spacedim, number> &,
+    IntegrationInfo<dim, spacedim> &) const
   {
     Assert(false, ExcPureFunction());
   }
@@ -86,10 +86,10 @@ namespace MeshWorker
   template <int dim, int spacedim, typename number>
   void
   LocalIntegrator<dim, spacedim, number>::face(
-    DoFInfo<dim, spacedim, number>&,
-    DoFInfo<dim, spacedim, number>&,
-    IntegrationInfo<dim, spacedim>&,
-    IntegrationInfo<dim, spacedim>&) const
+    DoFInfo<dim, spacedim, number> &,
+    DoFInfo<dim, spacedim, number> &,
+    IntegrationInfo<dim, spacedim> &,
+    IntegrationInfo<dim, spacedim> &) const
   {
     Assert(false, ExcPureFunction());
   }

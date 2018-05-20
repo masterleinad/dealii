@@ -21,7 +21,7 @@
 
 template <typename number>
 void
-checkReinit3(const Vector<number>& V)
+checkReinit3(const Vector<number> &V)
 {
   deallog
     << "Reinit a ReadOnly VectorView<number> with const Vector<number> and const size"

@@ -140,19 +140,19 @@ public:
   /**
    * Write access the value of the <tt>i</tt>th index.
    */
-  std::size_t& operator[](const unsigned int i);
+  std::size_t &operator[](const unsigned int i);
 
   /**
    * Compare two index fields for equality.
    */
   bool
-  operator==(const TableIndices<N>& other) const;
+  operator==(const TableIndices<N> &other) const;
 
   /**
    * Compare two index fields for inequality.
    */
   bool
-  operator!=(const TableIndices<N>& other) const;
+  operator!=(const TableIndices<N> &other) const;
 
   /**
    * Sort the indices in ascending order. While this operation is not very
@@ -167,7 +167,7 @@ public:
    */
   template <class Archive>
   void
-  serialize(Archive& ar, const unsigned int version);
+  serialize(Archive &ar, const unsigned int version);
 
 protected:
   /**
@@ -340,7 +340,7 @@ inline std::size_t TableIndices<N>::operator[](const unsigned int i) const
 }
 
 template <int N>
-inline std::size_t& TableIndices<N>::operator[](const unsigned int i)
+inline std::size_t &TableIndices<N>::operator[](const unsigned int i)
 {
   AssertIndexRange(i, N);
   return indices[i];
@@ -348,7 +348,7 @@ inline std::size_t& TableIndices<N>::operator[](const unsigned int i)
 
 template <int N>
 inline bool
-TableIndices<N>::operator==(const TableIndices<N>& other) const
+TableIndices<N>::operator==(const TableIndices<N> &other) const
 {
   for(unsigned int i = 0; i < N; ++i)
     if(indices[i] != other.indices[i])
@@ -358,7 +358,7 @@ TableIndices<N>::operator==(const TableIndices<N>& other) const
 
 template <int N>
 inline bool
-TableIndices<N>::operator!=(const TableIndices<N>& other) const
+TableIndices<N>::operator!=(const TableIndices<N> &other) const
 {
   return !(*this == other);
 }
@@ -373,9 +373,9 @@ TableIndices<N>::sort()
 template <int N>
 template <class Archive>
 inline void
-TableIndices<N>::serialize(Archive& ar, const unsigned int)
+TableIndices<N>::serialize(Archive &ar, const unsigned int)
 {
-  ar& indices;
+  ar &indices;
 }
 
 /**
@@ -385,8 +385,8 @@ TableIndices<N>::serialize(Archive& ar, const unsigned int)
  * @relatesalso TableIndices
  */
 template <int N>
-std::ostream&
-operator<<(std::ostream& out, const TableIndices<N>& indices)
+std::ostream &
+operator<<(std::ostream &out, const TableIndices<N> &indices)
 {
   out << '[';
   for(unsigned int i = 0; i < N; ++i)

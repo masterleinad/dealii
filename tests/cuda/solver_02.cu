@@ -27,7 +27,7 @@
 #include <deal.II/lac/vector.h>
 
 void
-test(Utilities::CUDA::Handle& cuda_handle)
+test(Utilities::CUDA::Handle &cuda_handle)
 {
   // Create the matrix on the host.
   dealii::SparsityPattern                sparsity_pattern;
@@ -55,7 +55,7 @@ test(Utilities::CUDA::Handle& cuda_handle)
 
   // Generate a random solution and then compute the rhs
   dealii::Vector<double> sol_ref(size);
-  for(auto& val : sol_ref)
+  for(auto &val : sol_ref)
     val = random_value(5., 15.);
 
   dealii::Vector<double> rhs(size);

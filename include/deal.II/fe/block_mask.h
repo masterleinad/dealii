@@ -86,7 +86,7 @@ public:
    * the given vector is zero, then this interpreted as the case where
    * <i>every</i> block is selected.
    */
-  BlockMask(const std::vector<bool>& block_mask);
+  BlockMask(const std::vector<bool> &block_mask);
 
   /**
    * Initialize the block mask with a number of elements that are either all
@@ -176,25 +176,25 @@ public:
    * current object and the one passed as an argument.
    */
   BlockMask
-  operator|(const BlockMask& mask) const;
+  operator|(const BlockMask &mask) const;
 
   /**
    * Return a block mask that has only those elements set that are set both in
    * the current object as well as the one passed as an argument.
    */
-  BlockMask operator&(const BlockMask& mask) const;
+  BlockMask operator&(const BlockMask &mask) const;
 
   /**
    * Return whether this object and the argument are identical.
    */
   bool
-  operator==(const BlockMask& mask) const;
+  operator==(const BlockMask &mask) const;
 
   /**
    * Return whether this object and the argument are not identical.
    */
   bool
-  operator!=(const BlockMask& mask) const;
+  operator!=(const BlockMask &mask) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -211,8 +211,8 @@ private:
 
   // make the output operator a friend so it can access
   // the block_mask array
-  friend std::ostream&
-  operator<<(std::ostream& out, const BlockMask& mask);
+  friend std::ostream &
+  operator<<(std::ostream &out, const BlockMask &mask);
 };
 
 /**
@@ -225,12 +225,12 @@ private:
  * @param out The stream to write to.
  * @param mask The mask to write. @return A reference to the first argument.
  */
-std::ostream&
-operator<<(std::ostream& out, const BlockMask& mask);
+std::ostream &
+operator<<(std::ostream &out, const BlockMask &mask);
 
 // -------------------- inline functions ---------------------
 
-inline BlockMask::BlockMask(const std::vector<bool>& block_mask)
+inline BlockMask::BlockMask(const std::vector<bool> &block_mask)
   : block_mask(block_mask)
 {}
 
@@ -312,7 +312,7 @@ BlockMask::represents_the_all_selected_mask() const
 }
 
 inline BlockMask
-BlockMask::operator|(const BlockMask& mask) const
+BlockMask::operator|(const BlockMask &mask) const
 {
   // if one of the two masks denotes the all-block mask,
   // then return the other one
@@ -333,7 +333,7 @@ BlockMask::operator|(const BlockMask& mask) const
     }
 }
 
-inline BlockMask BlockMask::operator&(const BlockMask& mask) const
+inline BlockMask BlockMask::operator&(const BlockMask &mask) const
 {
   // if one of the two masks denotes the all-block mask,
   // then return the other one
@@ -355,13 +355,13 @@ inline BlockMask BlockMask::operator&(const BlockMask& mask) const
 }
 
 inline bool
-BlockMask::operator==(const BlockMask& mask) const
+BlockMask::operator==(const BlockMask &mask) const
 {
   return block_mask == mask.block_mask;
 }
 
 inline bool
-BlockMask::operator!=(const BlockMask& mask) const
+BlockMask::operator!=(const BlockMask &mask) const
 {
   return block_mask != mask.block_mask;
 }

@@ -23,7 +23,7 @@
 
 template <int dim, typename stream_type>
 void
-test(int n, const Point<dim>& split_point, stream_type& deallog)
+test(int n, const Point<dim> &split_point, stream_type &deallog)
 {
   QSplit<dim> quad(QSimplex<dim>(QIterated<dim>(QTrapez<1>(), n)), split_point);
 

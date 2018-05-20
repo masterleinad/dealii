@@ -27,91 +27,91 @@
 DEAL_II_NAMESPACE_OPEN
 
 extern "C" void
-dnaupd_(int*          ido,
-        char*         bmat,
-        unsigned int* n,
-        char*         which,
-        unsigned int* nev,
-        const double* tol,
-        double*       resid,
-        int*          ncv,
-        double*       v,
-        int*          ldv,
-        int*          iparam,
-        int*          ipntr,
-        double*       workd,
-        double*       workl,
-        int*          lworkl,
-        int*          info);
+dnaupd_(int *         ido,
+        char *        bmat,
+        unsigned int *n,
+        char *        which,
+        unsigned int *nev,
+        const double *tol,
+        double *      resid,
+        int *         ncv,
+        double *      v,
+        int *         ldv,
+        int *         iparam,
+        int *         ipntr,
+        double *      workd,
+        double *      workl,
+        int *         lworkl,
+        int *         info);
 
 extern "C" void
-dsaupd_(int*          ido,
-        char*         bmat,
-        unsigned int* n,
-        char*         which,
-        unsigned int* nev,
-        double*       tol,
-        double*       resid,
-        int*          ncv,
-        double*       v,
-        int*          ldv,
-        int*          iparam,
-        int*          ipntr,
-        double*       workd,
-        double*       workl,
-        int*          lworkl,
-        int*          info);
+dsaupd_(int *         ido,
+        char *        bmat,
+        unsigned int *n,
+        char *        which,
+        unsigned int *nev,
+        double *      tol,
+        double *      resid,
+        int *         ncv,
+        double *      v,
+        int *         ldv,
+        int *         iparam,
+        int *         ipntr,
+        double *      workd,
+        double *      workl,
+        int *         lworkl,
+        int *         info);
 
 extern "C" void
-dneupd_(int*          rvec,
-        char*         howmany,
-        int*          select,
-        double*       d,
-        double*       di,
-        double*       z,
-        int*          ldz,
-        double*       sigmar,
-        double*       sigmai,
-        double*       workev,
-        char*         bmat,
-        unsigned int* n,
-        char*         which,
-        unsigned int* nev,
-        double*       tol,
-        double*       resid,
-        int*          ncv,
-        double*       v,
-        int*          ldv,
-        int*          iparam,
-        int*          ipntr,
-        double*       workd,
-        double*       workl,
-        int*          lworkl,
-        int*          info);
+dneupd_(int *         rvec,
+        char *        howmany,
+        int *         select,
+        double *      d,
+        double *      di,
+        double *      z,
+        int *         ldz,
+        double *      sigmar,
+        double *      sigmai,
+        double *      workev,
+        char *        bmat,
+        unsigned int *n,
+        char *        which,
+        unsigned int *nev,
+        double *      tol,
+        double *      resid,
+        int *         ncv,
+        double *      v,
+        int *         ldv,
+        int *         iparam,
+        int *         ipntr,
+        double *      workd,
+        double *      workl,
+        int *         lworkl,
+        int *         info);
 
 extern "C" void
-dseupd_(int*          rvec,
-        char*         howmany,
-        int*          select,
-        double*       d,
-        double*       z,
-        int*          ldz,
-        double*       sigmar,
-        char*         bmat,
-        unsigned int* n,
-        char*         which,
-        unsigned int* nev,
-        double*       tol,
-        double*       resid,
-        int*          ncv,
-        double*       v,
-        int*          ldv,
-        int*          iparam,
-        int*          ipntr,
-        double*       workd,
-        double*       workl,
-        int*          lworkl,
-        int*          info);
+dseupd_(int *         rvec,
+        char *        howmany,
+        int *         select,
+        double *      d,
+        double *      z,
+        int *         ldz,
+        double *      sigmar,
+        char *        bmat,
+        unsigned int *n,
+        char *        which,
+        unsigned int *nev,
+        double *      tol,
+        double *      resid,
+        int *         ncv,
+        double *      v,
+        int *         ldv,
+        int *         iparam,
+        int *         ipntr,
+        double *      workd,
+        double *      workl,
+        int *         lworkl,
+        int *         info);
 
 /**
  * Interface for using ARPACK. ARPACK is a collection of Fortran77 subroutines
@@ -253,21 +253,21 @@ public:
   /**
    * Access to the object that controls convergence.
    */
-  SolverControl&
+  SolverControl &
   control() const;
 
   /**
    * Constructor.
    */
-  ArpackSolver(SolverControl&        control,
-               const AdditionalData& data = AdditionalData());
+  ArpackSolver(SolverControl &       control,
+               const AdditionalData &data = AdditionalData());
 
   /**
    * Set initial vector for building Krylov space.
    */
   template <typename VectorType>
   void
-  set_initial_vector(const VectorType& vec);
+  set_initial_vector(const VectorType &vec);
 
   /**
    * Set shift @p sigma for shift-and-invert spectral transformation.
@@ -331,11 +331,11 @@ public:
             typename MatrixType2,
             typename INVERSE>
   void
-  solve(const MatrixType1&                 A,
-        const MatrixType2&                 B,
-        const INVERSE&                     inverse,
-        std::vector<std::complex<double>>& eigenvalues,
-        std::vector<VectorType>&           eigenvectors,
+  solve(const MatrixType1 &                A,
+        const MatrixType2 &                B,
+        const INVERSE &                    inverse,
+        std::vector<std::complex<double>> &eigenvalues,
+        std::vector<VectorType> &          eigenvectors,
         const unsigned int                 n_eigenvalues = 0);
 
 protected:
@@ -343,7 +343,7 @@ protected:
    * Reference to the object that controls convergence of the iterative
    * solver.
    */
-  SolverControl& solver_control;
+  SolverControl &solver_control;
 
   /**
    * Store a copy of the flags for this particular solver.
@@ -478,8 +478,8 @@ inline ArpackSolver::AdditionalData::AdditionalData(
     }
 }
 
-inline ArpackSolver::ArpackSolver(SolverControl&        control,
-                                  const AdditionalData& data)
+inline ArpackSolver::ArpackSolver(SolverControl &       control,
+                                  const AdditionalData &data)
   : solver_control(control),
     additional_data(data),
     initial_vector_provided(false),
@@ -496,7 +496,7 @@ ArpackSolver::set_shift(const std::complex<double> sigma)
 
 template <typename VectorType>
 inline void
-ArpackSolver::set_initial_vector(const VectorType& vec)
+ArpackSolver::set_initial_vector(const VectorType &vec)
 {
   initial_vector_provided = true;
   resid.resize(vec.size());
@@ -509,11 +509,11 @@ template <typename VectorType,
           typename MatrixType2,
           typename INVERSE>
 inline void
-ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
-                    const MatrixType2&                 mass_matrix,
-                    const INVERSE&                     inverse,
-                    std::vector<std::complex<double>>& eigenvalues,
-                    std::vector<VectorType>&           eigenvectors,
+ArpackSolver::solve(const MatrixType1 & /*system_matrix*/,
+                    const MatrixType2 &                mass_matrix,
+                    const INVERSE &                    inverse,
+                    std::vector<std::complex<double>> &eigenvalues,
+                    std::vector<VectorType> &          eigenvectors,
                     const unsigned int                 n_eigenvalues)
 {
   // Problem size
@@ -860,7 +860,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
     }
 }
 
-inline SolverControl&
+inline SolverControl &
 ArpackSolver::control() const
 {
   return solver_control;

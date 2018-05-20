@@ -53,7 +53,7 @@ const double rect[] = {4., 3., 2., 1., 5., 8., 1., -2., 11., 13., -4., -5};
 using namespace dealii;
 
 void
-test_rect(unsigned int m, unsigned int n, const double* values)
+test_rect(unsigned int m, unsigned int n, const double *values)
 {
   std::ostringstream prefix;
   prefix << m << 'x' << n;

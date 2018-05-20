@@ -102,11 +102,11 @@ namespace Step27
     void
     create_coarse_grid();
     void
-    estimate_smoothness(Vector<float>& smoothness_indicators);
+    estimate_smoothness(Vector<float> &smoothness_indicators);
     void
     postprocess(const unsigned int cycle);
     std::pair<bool, unsigned int>
-    predicate(const TableIndices<dim>& indices);
+    predicate(const TableIndices<dim> &indices);
 
     Triangulation<dim> triangulation;
 
@@ -143,12 +143,12 @@ namespace Step27
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component) const override;
+    value(const Point<dim> &p, const unsigned int component) const override;
   };
 
   template <int dim>
   double
-  RightHandSide<dim>::value(const Point<dim>& p,
+  RightHandSide<dim>::value(const Point<dim> &p,
                             const unsigned int /*component*/) const
   {
     double product = 1;
@@ -181,7 +181,7 @@ namespace Step27
   // auxiliary function
   template <int dim, typename T>
   void
-  resize(Table<dim, T>& coeff, const unsigned int N)
+  resize(Table<dim, T> &coeff, const unsigned int N)
   {
     TableIndices<dim> size;
     for(unsigned int d = 0; d < dim; d++)
@@ -338,7 +338,7 @@ namespace Step27
 
         hp_fe_values.reinit(cell);
 
-        const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
+        const FEValues<dim> &fe_values = hp_fe_values.get_present_fe_values();
 
         std::vector<double> rhs_values(fe_values.n_quadrature_points);
         rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
@@ -653,7 +653,7 @@ namespace Step27
   // $0 < i*i+j*j < N*N$ and $0 < i*i+j*j+k*k < N*N$ in 2D and 3D, respectively.
   template <int dim>
   std::pair<bool, unsigned int>
-  LaplaceProblem<dim>::predicate(const TableIndices<dim>& ind)
+  LaplaceProblem<dim>::predicate(const TableIndices<dim> &ind)
   {
     unsigned int v = 0;
     for(unsigned int i = 0; i < dim; i++)
@@ -670,7 +670,7 @@ namespace Step27
   // implementational importance.
   template <int dim>
   void
-  LaplaceProblem<dim>::estimate_smoothness(Vector<float>& smoothness_indicators)
+  LaplaceProblem<dim>::estimate_smoothness(Vector<float> &smoothness_indicators)
   {
     // Since most of the hard work is done for us in FESeries::Fourier and
     // we set up the object of this class in the constructor, what we are left
@@ -768,7 +768,7 @@ main()
       LaplaceProblem<2> laplace_problem;
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl
