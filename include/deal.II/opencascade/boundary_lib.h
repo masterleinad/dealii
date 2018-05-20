@@ -14,13 +14,13 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_occ_boundary_lib_h
-#  define dealii_occ_boundary_lib_h
+#define dealii_occ_boundary_lib_h
 
-#  include <deal.II/base/config.h>
+#include <deal.II/base/config.h>
 
-#  ifdef DEAL_II_WITH_OPENCASCADE
+#ifdef DEAL_II_WITH_OPENCASCADE
 
-#    include <deal.II/opencascade/manifold_lib.h>
+#include <deal.II/opencascade/manifold_lib.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -184,7 +184,7 @@ namespace OpenCASCADE
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif // DEAL_II_WITH_OPENCASCADE
+#endif // DEAL_II_WITH_OPENCASCADE
 
 /*------------------------------ occ_boundary_lib.h ------------------------------*/
 #endif

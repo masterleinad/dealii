@@ -238,7 +238,7 @@ namespace parallel
         this->number_cache.level_ghost_owners.insert(
           cell->level_subdomain_id());
 
-#  ifdef DEBUG
+#ifdef DEBUG
     // Check that level_ghost_owners is symmetric by sending a message to everyone
     {
       int ierr = MPI_Barrier(this->mpi_communicator);
@@ -291,7 +291,7 @@ namespace parallel
       ierr = MPI_Barrier(this->mpi_communicator);
       AssertThrowMPI(ierr);
     }
-#  endif
+#endif
 
     Assert(this->number_cache.level_ghost_owners.size()
              < Utilities::MPI::n_mpi_processes(this->mpi_communicator),

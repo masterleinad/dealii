@@ -17,14 +17,14 @@
 
 #ifdef DEAL_II_WITH_ADOLC
 
-#  include <deal.II/differentiation/ad/ad_number_traits.h>
-#  include <deal.II/differentiation/ad/adolc_number_types.h>
+#include <deal.II/differentiation/ad/ad_number_traits.h>
+#include <deal.II/differentiation/ad/adolc_number_types.h>
 
-#  include <utility>
+#include <utility>
 
 DEAL_II_NAMESPACE_OPEN
 
-#  ifdef DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
+#ifdef DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
 
 namespace numbers
 {
@@ -76,11 +76,11 @@ namespace numbers
   }
 } // namespace numbers
 
-#  endif
+#endif
 
 /*---------------------- Explicit Instantiations ----------------------*/
 
-#  include "adolc_number_types.inst"
+#include "adolc_number_types.inst"
 
 DEAL_II_NAMESPACE_CLOSE
 

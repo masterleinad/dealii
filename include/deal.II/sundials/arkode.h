@@ -21,34 +21,34 @@
 
 #ifdef DEAL_II_WITH_SUNDIALS
 
-#  include <deal.II/base/conditional_ostream.h>
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/logstream.h>
-#  include <deal.II/base/mpi.h>
-#  include <deal.II/base/parameter_handler.h>
-#  ifdef DEAL_II_WITH_PETSC
-#    include <deal.II/lac/petsc_parallel_block_vector.h>
-#    include <deal.II/lac/petsc_parallel_vector.h>
-#  endif
-#  include <deal.II/lac/vector.h>
-#  include <deal.II/lac/vector_memory.h>
+#include <deal.II/base/conditional_ostream.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/logstream.h>
+#include <deal.II/base/mpi.h>
+#include <deal.II/base/parameter_handler.h>
+#ifdef DEAL_II_WITH_PETSC
+#include <deal.II/lac/petsc_parallel_block_vector.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
+#endif
+#include <deal.II/lac/vector.h>
+#include <deal.II/lac/vector_memory.h>
 
-#  include <arkode/arkode.h>
-#  include <arkode/arkode_impl.h>
-#  include <nvector/nvector_serial.h>
-#  ifdef DEAL_II_WITH_MPI
-#    include <nvector/nvector_parallel.h>
-#  endif
-#  include <sundials/sundials_math.h>
-#  include <sundials/sundials_types.h>
+#include <arkode/arkode.h>
+#include <arkode/arkode_impl.h>
+#include <nvector/nvector_serial.h>
+#ifdef DEAL_II_WITH_MPI
+#include <nvector/nvector_parallel.h>
+#endif
+#include <sundials/sundials_math.h>
+#include <sundials/sundials_types.h>
 
-#  include <boost/signals2.hpp>
-#  include <memory>
+#include <boost/signals2.hpp>
+#include <memory>
 
 DEAL_II_NAMESPACE_OPEN
 
 // Shorthand notation for ARKODE error codes.
-#  define AssertARKode(code) Assert(code >= 0, ExcARKodeError(code))
+#define AssertARKode(code) Assert(code >= 0, ExcARKodeError(code))
 
 /**
  * A namespace for dealing with ODE solvers through the SUNDIALS package.
@@ -879,8 +879,8 @@ namespace SUNDIALS
      */
     GrowingVectorMemory<VectorType> mem;
 
-#  ifdef DEAL_II_WITH_PETSC
-#    ifdef PETSC_USE_COMPLEX
+#ifdef DEAL_II_WITH_PETSC
+#ifdef PETSC_USE_COMPLEX
     static_assert(!std::is_same<VectorType, PETScWrappers::MPI::Vector>::value,
                   "Sundials does not support complex scalar types, "
                   "but PETSc is configured to use a complex scalar type!");
@@ -889,8 +889,8 @@ namespace SUNDIALS
       !std::is_same<VectorType, PETScWrappers::MPI::BlockVector>::value,
       "Sundials does not support complex scalar types, "
       "but PETSc is configured to use a complex scalar type!");
-#    endif // PETSC_USE_COMPLEX
-#  endif   // DEAL_II_WITH_PETSC
+#endif // PETSC_USE_COMPLEX
+#endif // DEAL_II_WITH_PETSC
   };
 
 } // namespace SUNDIALS

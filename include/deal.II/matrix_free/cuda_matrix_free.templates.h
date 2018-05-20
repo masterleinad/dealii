@@ -20,13 +20,13 @@
 
 #ifdef DEAL_II_WITH_CUDA
 
-#  include <cuda_runtime_api.h>
-#  include <deal.II/base/cuda_size.h>
-#  include <deal.II/base/graph_coloring.h>
-#  include <deal.II/fe/fe_values.h>
-#  include <deal.II/grid/filtered_iterator.h>
-#  include <deal.II/matrix_free/shape_info.h>
-#  include <functional>
+#include <cuda_runtime_api.h>
+#include <deal.II/base/cuda_size.h>
+#include <deal.II/base/graph_coloring.h>
+#include <deal.II/fe/fe_values.h>
+#include <deal.II/grid/filtered_iterator.h>
+#include <deal.II/matrix_free/shape_info.h>
+#include <functional>
 
 DEAL_II_NAMESPACE_OPEN
 

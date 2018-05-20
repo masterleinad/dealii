@@ -19,29 +19,29 @@
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  include <deal.II/base/index_set.h>
-#  include <deal.II/base/mpi.h>
-#  include <deal.II/base/subscriptor.h>
-#  include <deal.II/base/utilities.h>
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/vector.h>
-#  include <deal.II/lac/vector_operation.h>
-#  include <deal.II/lac/vector_type_traits.h>
+#include <deal.II/base/index_set.h>
+#include <deal.II/base/mpi.h>
+#include <deal.II/base/subscriptor.h>
+#include <deal.II/base/utilities.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/vector.h>
+#include <deal.II/lac/vector_operation.h>
+#include <deal.II/lac/vector_type_traits.h>
 
-#  include <memory>
-#  include <utility>
-#  include <vector>
+#include <memory>
+#include <utility>
+#include <vector>
 
-#  include <Epetra_ConfigDefs.h>
-#  ifdef DEAL_II_WITH_MPI // only if MPI is installed
-#    include <Epetra_MpiComm.h>
-#    include <mpi.h>
-#  else
-#    include <Epetra_SerialComm.h>
-#  endif
-#  include <Epetra_FEVector.h>
-#  include <Epetra_LocalMap.h>
-#  include <Epetra_Map.h>
+#include <Epetra_ConfigDefs.h>
+#ifdef DEAL_II_WITH_MPI // only if MPI is installed
+#include <Epetra_MpiComm.h>
+#include <mpi.h>
+#else
+#include <Epetra_SerialComm.h>
+#endif
+#include <Epetra_FEVector.h>
+#include <Epetra_LocalMap.h>
+#include <Epetra_Map.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -183,7 +183,7 @@ namespace TrilinosWrappers
 
   namespace
   {
-#  ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
     // define a helper function that queries the global ID of local ID of
     // an Epetra_BlockMap object  by calling either the 32- or 64-bit
     // function necessary.
@@ -192,7 +192,7 @@ namespace TrilinosWrappers
     {
       return map.GID(i);
     }
-#  else
+#else
     // define a helper function that queries the global ID of local ID of
     // an Epetra_BlockMap object  by calling either the 32- or 64-bit
     // function necessary.
@@ -201,7 +201,7 @@ namespace TrilinosWrappers
     {
       return map.GID64(i);
     }
-#  endif
+#endif
   } // namespace
 
   /**
@@ -1328,7 +1328,7 @@ namespace TrilinosWrappers
     }
   } // namespace MPI
 
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
   namespace internal
   {
@@ -1642,13 +1642,13 @@ namespace TrilinosWrappers
     inline Vector::size_type
     Vector::size() const
     {
-#    ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
       return (size_type)(vector->Map().MaxAllGID() + 1
                          - vector->Map().MinAllGID());
-#    else
+#else
       return (size_type)(vector->Map().MaxAllGID64() + 1
                          - vector->Map().MinAllGID64());
-#    endif
+#endif
     }
 
     inline Vector::size_type
@@ -1660,16 +1660,16 @@ namespace TrilinosWrappers
     inline std::pair<Vector::size_type, Vector::size_type>
     Vector::local_range() const
     {
-#    ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
       const TrilinosWrappers::types::int_type begin = vector->Map().MinMyGID();
       const TrilinosWrappers::types::int_type end
         = vector->Map().MaxMyGID() + 1;
-#    else
+#else
       const TrilinosWrappers::types::int_type begin
         = vector->Map().MinMyGID64();
       const TrilinosWrappers::types::int_type end
         = vector->Map().MaxMyGID64() + 1;
-#    endif
+#endif
 
       Assert(
         end - begin == vector->Map().NumMyElements(),
@@ -2023,17 +2023,17 @@ namespace TrilinosWrappers
     {
       static MPI_Comm comm;
 
-#    ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
       const Epetra_MpiComm* mpi_comm
         = dynamic_cast<const Epetra_MpiComm*>(&vector->Map().Comm());
       comm = mpi_comm->Comm();
 
-#    else
+#else
 
       comm = MPI_COMM_SELF;
 
-#    endif
+#endif
 
       return comm;
     }
@@ -2066,7 +2066,7 @@ namespace TrilinosWrappers
     }
   } /* end of namespace MPI */
 
-#  endif /* DOXYGEN */
+#endif /* DOXYGEN */
 
 } /* end of namespace TrilinosWrappers */
 

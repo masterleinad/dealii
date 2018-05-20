@@ -2523,11 +2523,11 @@ namespace internal
             dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified :
             vector_face_access),
         ghosts_were_set(false)
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
         ,
         tmp_data(n_components),
         requests(n_components)
-#  endif
+#endif
     {
       (void) n_components;
       if(this->vector_face_access
@@ -2540,11 +2540,11 @@ namespace internal
 
     ~VectorDataExchange()
     {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
       for(unsigned int i = 0; i < tmp_data.size(); ++i)
         if(tmp_data[i] != nullptr)
           matrix_free.release_scratch_data_non_threadsafe(tmp_data[i]);
-#  endif
+#endif
     }
 
     unsigned int
@@ -2555,11 +2555,11 @@ namespace internal
       (void) check_global_compatibility;
       for(unsigned int c = 0; c < matrix_free.n_components(); ++c)
         if(
-#  ifdef DEBUG
+#ifdef DEBUG
           check_global_compatibility ?
             vec.get_partitioner()->is_globally_compatible(
               *matrix_free.get_dof_info(c).vector_partitioner) :
-#  endif
+#endif
             vec.get_partitioner()->is_compatible(
               *matrix_free.get_dof_info(c).vector_partitioner))
           {
@@ -2604,7 +2604,7 @@ namespace internal
                                       + channel_shift);
       else
         {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
           const unsigned int mf_component = find_vector_in_mf(vec);
           if(&get_partitioner(mf_component)
              == matrix_free.get_dof_info(mf_component).vector_partitioner.get())
@@ -2634,7 +2634,7 @@ namespace internal
                                 + vec.get_partitioner()->local_size(),
                               vec.get_partitioner()->n_ghost_indices()),
             this->requests[component_in_block_vector]);
-#  endif
+#endif
         }
     }
 
@@ -2650,7 +2650,7 @@ namespace internal
         vec.update_ghost_values_finish();
       else
         {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
           AssertIndexRange(component_in_block_vector, tmp_data.size());
           AssertDimension(requests.size(), tmp_data.size());
@@ -2677,7 +2677,7 @@ namespace internal
           matrix_free.release_scratch_data_non_threadsafe(
             tmp_data[component_in_block_vector]);
           tmp_data[component_in_block_vector] = nullptr;
-#  endif
+#endif
         }
     }
 
@@ -2693,7 +2693,7 @@ namespace internal
         vec.compress_start(component_in_block_vector + channel_shift);
       else
         {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
           const unsigned int mf_component = find_vector_in_mf(vec);
           const Utilities::MPI::Partitioner& part
@@ -2722,7 +2722,7 @@ namespace internal
             ArrayView<Number>(tmp_data[component_in_block_vector]->begin(),
                               part.n_import_indices()),
             this->requests[component_in_block_vector]);
-#  endif
+#endif
         }
     }
 
@@ -2737,7 +2737,7 @@ namespace internal
         vec.compress_finish(dealii::VectorOperation::add);
       else
         {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
           AssertIndexRange(component_in_block_vector, tmp_data.size());
           AssertDimension(requests.size(), tmp_data.size());
 
@@ -2768,7 +2768,7 @@ namespace internal
           matrix_free.release_scratch_data_non_threadsafe(
             tmp_data[component_in_block_vector]);
           tmp_data[component_in_block_vector] = nullptr;
-#  endif
+#endif
         }
     }
 
@@ -2785,7 +2785,7 @@ namespace internal
         vec.zero_out_ghosts();
       else
         {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
           AssertDimension(requests.size(), tmp_data.size());
 
           const unsigned int mf_component = find_vector_in_mf(vec);
@@ -2810,7 +2810,7 @@ namespace internal
                       = 0.;
                   }
             }
-#  endif
+#endif
         }
     }
 
@@ -2858,10 +2858,10 @@ namespace internal
     const typename dealii::MatrixFree<dim, Number>::DataAccessOnFaces
          vector_face_access;
     bool ghosts_were_set;
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     std::vector<AlignedVector<Number>*>   tmp_data;
     std::vector<std::vector<MPI_Request>> requests;
-#  endif
+#endif
   };
 
   template <typename VectorStruct>

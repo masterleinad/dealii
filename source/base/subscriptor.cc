@@ -137,7 +137,7 @@ Subscriptor::subscribe(const char* id) const
 
   // This feature is disabled when we compile with threads: see the
   // documentation of this class.
-#  ifndef DEAL_II_WITH_THREADS
+#ifndef DEAL_II_WITH_THREADS
   const char* const name = (id != 0) ? id : unknown_subscriber;
 
   map_iterator it = counter_map.find(name);
@@ -146,9 +146,9 @@ Subscriptor::subscribe(const char* id) const
 
   else
     it->second++;
-#  else
+#else
   (void) id;
-#  endif
+#endif
 #else
   (void) id;
 #endif
@@ -169,14 +169,14 @@ Subscriptor::unsubscribe(const char* id) const
 
   // This feature is disabled when we compile with threads: see the
   // documentation of this class.
-#  ifndef DEAL_II_WITH_THREADS
+#ifndef DEAL_II_WITH_THREADS
   map_iterator it = counter_map.find(name);
   AssertNothrow(it != counter_map.end(),
                 ExcNoSubscriber(object_info->name(), name));
   AssertNothrow(it->second > 0, ExcNoSubscriber(object_info->name(), name));
 
   it->second--;
-#  endif
+#endif
 #else
   (void) id;
 #endif

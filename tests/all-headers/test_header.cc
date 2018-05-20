@@ -18,7 +18,7 @@
 #include HEADER
 
 #if !defined(DEAL_II_NAMESPACE_OPEN) && !defined(dealii_revision_h)
-#  error "HEADER does not include config.h."
+#error "HEADER does not include config.h."
 #endif
 
 int

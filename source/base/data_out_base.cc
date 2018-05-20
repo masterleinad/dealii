@@ -51,11 +51,11 @@
 #include <stdint.h>
 
 #ifdef DEAL_II_WITH_ZLIB
-#  include <zlib.h>
+#include <zlib.h>
 #endif
 
 #ifdef DEAL_II_WITH_HDF5
-#  include <hdf5.h>
+#include <hdf5.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -4439,7 +4439,7 @@ namespace DataOutBase
 
     AssertThrow(out, ExcIO());
 
-#  ifndef DEAL_II_WITH_MPI
+#ifndef DEAL_II_WITH_MPI
     // verify that there are indeed
     // patches to be written out. most
     // of the times, people just forget
@@ -4454,10 +4454,10 @@ namespace DataOutBase
     // that case it is legit if there
     // are no patches
     Assert(patches.size() > 0, ExcNoPatches());
-#  else
+#else
     if(patches.size() == 0)
       return;
-#  endif
+#endif
 
     const unsigned int n_data_sets = data_names.size();
     // check against # of data sets in
@@ -7280,7 +7280,7 @@ DataOutBase::write_hdf5_parallel(
   (void) comm;
   AssertThrow(false, ExcMessage("HDF5 support is disabled."));
 #else
-#  ifndef DEAL_II_WITH_MPI
+#ifndef DEAL_II_WITH_MPI
   // verify that there are indeed patches to be written out.
   // most of the times, people just forget to call build_patches when there
   // are no patches, so a warning is in order. that said, the assertion is
@@ -7289,7 +7289,7 @@ DataOutBase::write_hdf5_parallel(
   // it is legit if there are no patches
   Assert(data_filter.n_nodes() > 0, ExcNoPatches());
   (void) comm;
-#  endif
+#endif
 
   hid_t h5_mesh_file_id = -1, h5_solution_file_id, file_plist_id, plist_id;
   hid_t node_dataspace, node_dataset, node_file_dataspace,
@@ -7306,8 +7306,8 @@ DataOutBase::write_hdf5_parallel(
   std::vector<unsigned int> cell_data_vec;
 
   // If HDF5 is not parallel and we're using multiple processes, abort
-#  ifndef H5_HAVE_PARALLEL
-#    ifdef DEAL_II_WITH_MPI
+#ifndef H5_HAVE_PARALLEL
+#ifdef DEAL_II_WITH_MPI
   int world_size;
   ierr = MPI_Comm_size(comm, &world_size);
   AssertThrowMPI(ierr);
@@ -7315,8 +7315,8 @@ DataOutBase::write_hdf5_parallel(
     world_size <= 1,
     ExcMessage(
       "Serial HDF5 output on multiple processes is not yet supported."));
-#    endif
-#  endif
+#endif
+#endif
 
   local_node_cell_count[0] = data_filter.n_nodes();
   local_node_cell_count[1] = data_filter.n_cells();
@@ -7325,17 +7325,17 @@ DataOutBase::write_hdf5_parallel(
   file_plist_id = H5Pcreate(H5P_FILE_ACCESS);
   AssertThrow(file_plist_id != -1, ExcIO());
   // If MPI is enabled *and* HDF5 is parallel, we can do parallel output
-#  ifdef DEAL_II_WITH_MPI
-#    ifdef H5_HAVE_PARALLEL
+#ifdef DEAL_II_WITH_MPI
+#ifdef H5_HAVE_PARALLEL
   // Set the access to use the specified MPI_Comm object
   status = H5Pset_fapl_mpio(file_plist_id, comm, MPI_INFO_NULL);
   AssertThrow(status >= 0, ExcIO());
-#    endif
-#  endif
+#endif
+#endif
 
   // Compute the global total number of nodes/cells
   // And determine the offset of the data for this process
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
   ierr = MPI_Allreduce(local_node_cell_count,
                        global_node_cell_count,
                        2,
@@ -7352,21 +7352,21 @@ DataOutBase::write_hdf5_parallel(
   AssertThrowMPI(ierr);
   global_node_cell_offsets[0] -= local_node_cell_count[0];
   global_node_cell_offsets[1] -= local_node_cell_count[1];
-#  else
+#else
   global_node_cell_count[0] = local_node_cell_count[0];
   global_node_cell_count[1] = local_node_cell_count[1];
   global_node_cell_offsets[0] = global_node_cell_offsets[1] = 0;
-#  endif
+#endif
 
   // Create the property list for a collective write
   plist_id = H5Pcreate(H5P_DATASET_XFER);
   AssertThrow(plist_id >= 0, ExcIO());
-#  ifdef DEAL_II_WITH_MPI
-#    ifdef H5_HAVE_PARALLEL
+#ifdef DEAL_II_WITH_MPI
+#ifdef H5_HAVE_PARALLEL
   status = H5Pset_dxpl_mpio(plist_id, H5FD_MPIO_COLLECTIVE);
   AssertThrow(status >= 0, ExcIO());
-#    endif
-#  endif
+#endif
+#endif
 
   if(write_mesh_file)
     {
@@ -7388,13 +7388,13 @@ DataOutBase::write_hdf5_parallel(
       AssertThrow(cell_dataspace >= 0, ExcIO());
 
       // Create the dataset for the nodes and cells
-#  if H5Gcreate_vers == 1
+#if H5Gcreate_vers == 1
       node_dataset = H5Dcreate(h5_mesh_file_id,
                                "nodes",
                                H5T_NATIVE_DOUBLE,
                                node_dataspace,
                                H5P_DEFAULT);
-#  else
+#else
       node_dataset = H5Dcreate(h5_mesh_file_id,
                                "nodes",
                                H5T_NATIVE_DOUBLE,
@@ -7402,12 +7402,12 @@ DataOutBase::write_hdf5_parallel(
                                H5P_DEFAULT,
                                H5P_DEFAULT,
                                H5P_DEFAULT);
-#  endif
+#endif
       AssertThrow(node_dataset >= 0, ExcIO());
-#  if H5Gcreate_vers == 1
+#if H5Gcreate_vers == 1
       cell_dataset = H5Dcreate(
         h5_mesh_file_id, "cells", H5T_NATIVE_UINT, cell_dataspace, H5P_DEFAULT);
-#  else
+#else
       cell_dataset = H5Dcreate(h5_mesh_file_id,
                                "cells",
                                H5T_NATIVE_UINT,
@@ -7415,7 +7415,7 @@ DataOutBase::write_hdf5_parallel(
                                H5P_DEFAULT,
                                H5P_DEFAULT,
                                H5P_DEFAULT);
-#  endif
+#endif
       AssertThrow(cell_dataset >= 0, ExcIO());
 
       // Close the node and cell dataspaces since we're done with them
@@ -7536,13 +7536,13 @@ DataOutBase::write_hdf5_parallel(
       pt_data_dataspace = H5Screate_simple(2, node_ds_dim, nullptr);
       AssertThrow(pt_data_dataspace >= 0, ExcIO());
 
-#  if H5Gcreate_vers == 1
+#if H5Gcreate_vers == 1
       pt_data_dataset = H5Dcreate(h5_solution_file_id,
                                   vector_name.c_str(),
                                   H5T_NATIVE_DOUBLE,
                                   pt_data_dataspace,
                                   H5P_DEFAULT);
-#  else
+#else
       pt_data_dataset = H5Dcreate(h5_solution_file_id,
                                   vector_name.c_str(),
                                   H5T_NATIVE_DOUBLE,
@@ -7550,7 +7550,7 @@ DataOutBase::write_hdf5_parallel(
                                   H5P_DEFAULT,
                                   H5P_DEFAULT,
                                   H5P_DEFAULT);
-#  endif
+#endif
       AssertThrow(pt_data_dataset >= 0, ExcIO());
 
       // Create the data subset we'll use to read from memory

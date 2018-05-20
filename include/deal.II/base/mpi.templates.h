@@ -112,7 +112,7 @@ namespace Utilities
 #ifdef DEAL_II_WITH_MPI
         if(job_supports_mpi())
           {
-#  ifdef DEBUG
+#ifdef DEBUG
             {
               const unsigned int rank     = this_mpi_process(mpi_communicator);
               unsigned int       size     = values.size();
@@ -140,7 +140,7 @@ namespace Utilities
                        ExcMessage(
                          "values has different size across MPI processes."));
             }
-#  endif
+#endif
             const int ierr = MPI_Allreduce(
               values != output ?
                 // TODO This const_cast is only needed for older

@@ -20,13 +20,13 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <cmath>
-#  include <deal.II/base/table.h>
-#  include <deal.II/lac/block_matrix_base.h>
-#  include <deal.II/lac/block_sparsity_pattern.h>
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/petsc_parallel_block_vector.h>
-#  include <deal.II/lac/petsc_parallel_sparse_matrix.h>
+#include <cmath>
+#include <deal.II/base/table.h>
+#include <deal.II/lac/block_matrix_base.h>
+#include <deal.II/lac/block_sparsity_pattern.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_parallel_block_vector.h>
+#include <deal.II/lac/petsc_parallel_sparse_matrix.h>
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -14,17 +14,17 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_time_dependent_h
-#  define dealii_time_dependent_h
+#define dealii_time_dependent_h
 
 /*----------------------------   time-dependent.h     ---------------------------*/
 
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/smartpointer.h>
-#  include <deal.II/base/subscriptor.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/smartpointer.h>
+#include <deal.II/base/subscriptor.h>
 
-#  include <utility>
-#  include <vector>
+#include <utility>
+#include <vector>
 
 DEAL_II_NAMESPACE_OPEN
 

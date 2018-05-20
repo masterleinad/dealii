@@ -14,13 +14,13 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_thread_local_storage_h
-#  define dealii_thread_local_storage_h
+#define dealii_thread_local_storage_h
 
-#  include <deal.II/base/config.h>
+#include <deal.II/base/config.h>
 
-#  ifdef DEAL_II_WITH_THREADS
-#    include <tbb/enumerable_thread_specific.h>
-#  endif
+#ifdef DEAL_II_WITH_THREADS
+#include <tbb/enumerable_thread_specific.h>
+#endif
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -157,24 +157,24 @@ namespace Threads
      * implementation. This function is really only useful if deal.II has been
      * configured with multithreading and has no useful purpose otherwise.
      */
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     tbb::enumerable_thread_specific<T>&
-#  else
+#else
     T&
-#  endif
+#endif
     get_implementation();
 
   private:
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     /**
      * The data element we store. If we support threads, then this object will
      * be of a type that provides a separate object for each thread.
      * Otherwise, it is simply a single object of type T.
      */
     tbb::enumerable_thread_specific<T> data;
-#  else
+#else
     T data;
-#  endif
+#endif
   };
 
   // ----------------- inline and template functions ----------------------------
@@ -193,23 +193,23 @@ namespace Threads
   inline T&
   ThreadLocalStorage<T>::get()
   {
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     return data.local();
-#  else
+#else
     return data;
-#  endif
+#endif
   }
 
   template <typename T>
   inline T&
   ThreadLocalStorage<T>::get(bool& exists)
   {
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     return data.local(exists);
-#  else
+#else
     exists = true;
     return data;
-#  endif
+#endif
   }
 
   template <typename T>
@@ -228,11 +228,11 @@ namespace Threads
 
   template <typename T>
   inline
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     tbb::enumerable_thread_specific<T>&
-#  else
+#else
     T&
-#  endif
+#endif
     ThreadLocalStorage<T>::get_implementation()
   {
     return data;
@@ -242,11 +242,11 @@ namespace Threads
   inline void
   ThreadLocalStorage<T>::clear()
   {
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     data.clear();
-#  else
+#else
     data = T{};
-#  endif
+#endif
   }
 } // namespace Threads
 

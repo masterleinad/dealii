@@ -381,7 +381,7 @@ namespace Utilities
           import_indices_data = compressed_import_indices;
 
           // sanity check
-#  ifdef DEBUG
+#ifdef DEBUG
           const types::global_dof_index n_local_dofs
             = local_range_data.second - local_range_data.first;
           for(unsigned int i = 0; i < import_indices_data.size(); ++i)
@@ -389,7 +389,7 @@ namespace Utilities
               AssertIndexRange(import_indices_data[i].first, n_local_dofs);
               AssertIndexRange(import_indices_data[i].second - 1, n_local_dofs);
             }
-#  endif
+#endif
         }
       }
 #endif // #ifdef DEAL_II_WITH_MPI

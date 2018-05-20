@@ -30,7 +30,7 @@ namespace Utilities
   {
 #ifndef DOXYGEN
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
     template <typename Number>
     void
@@ -197,10 +197,10 @@ namespace Utilities
       // inserted data, therefore the communication is still initialized.
       // Having different code in debug and optimized mode is somewhat
       // dangerous, but it really saves communication so do it anyway
-#    ifndef DEBUG
+#ifndef DEBUG
       if(vector_operation == VectorOperation::insert)
         return;
-#    endif
+#endif
 
       // nothing to do when we neither have import
       // nor ghost indices.
@@ -343,7 +343,7 @@ namespace Utilities
 
       // in optimized mode, no communication was started, so leave the
       // function directly (and only clear ghosts)
-#    ifndef DEBUG
+#ifndef DEBUG
       if(vector_operation == VectorOperation::insert)
         {
           Assert(
@@ -353,11 +353,11 @@ namespace Utilities
                              "vector_operation argument was passed to "
                              "import_from_ghosted_array_start as is passed "
                              "to import_from_ghosted_array_finish."));
-#      ifdef DEAL_II_WITH_CXX17
+#ifdef DEAL_II_WITH_CXX17
           if constexpr(std::is_trivial<Number>::value)
-#      else
+#else
           if(std::is_trivial<Number>::value)
-#      endif
+#endif
             std::memset(
               ghost_array.data(), 0, sizeof(Number) * ghost_array.size());
           else
@@ -365,7 +365,7 @@ namespace Utilities
               ghost_array.data(), ghost_array.data() + ghost_array.size(), 0);
           return;
         }
-#    endif
+#endif
 
       // nothing to do when we neither have import nor ghost indices.
       if(n_ghost_indices() == 0 && n_import_indices() == 0)
@@ -440,11 +440,11 @@ namespace Utilities
       if(ghost_array.size() > 0)
         {
           Assert(ghost_array.begin() != nullptr, ExcInternalError());
-#    ifdef DEAL_II_WITH_CXX17
+#ifdef DEAL_II_WITH_CXX17
           if constexpr(std::is_trivial<Number>::value)
-#    else
+#else
           if(std::is_trivial<Number>::value)
-#    endif
+#endif
             std::memset(
               ghost_array.data(), 0, sizeof(Number) * n_ghost_indices());
           else
@@ -456,8 +456,8 @@ namespace Utilities
       requests.resize(0);
     }
 
-#  endif // ifdef DEAL_II_WITH_MPI
-#endif   // ifndef DOXYGEN
+#endif // ifdef DEAL_II_WITH_MPI
+#endif // ifndef DOXYGEN
 
   } // end of namespace MPI
 

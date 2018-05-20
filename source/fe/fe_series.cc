@@ -21,7 +21,7 @@
 
 #include <deal.II/base/config.h>
 #ifdef DEAL_II_WITH_GSL
-#  include <gsl/gsl_sf_legendre.h>
+#include <gsl/gsl_sf_legendre.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

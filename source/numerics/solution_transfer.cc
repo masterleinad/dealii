@@ -582,7 +582,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::Pointerstruct::
 /*-------------- Explicit Instantiations -------------------------------*/
 #define SPLIT_INSTANTIATIONS_COUNT 4
 #ifndef SPLIT_INSTANTIATIONS_INDEX
-#  define SPLIT_INSTANTIATIONS_INDEX 0
+#define SPLIT_INSTANTIATIONS_INDEX 0
 #endif
 #include "solution_transfer.inst"
 

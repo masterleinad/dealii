@@ -24,11 +24,11 @@
 #include <deal.II/lac/vector_operations_internal.h>
 
 #ifdef DEAL_II_WITH_PETSC
-#  include <deal.II/lac/petsc_vector_base.h>
+#include <deal.II/lac/petsc_vector_base.h>
 #endif
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/lac/trilinos_vector.h>
 #endif
 
 #include <algorithm>

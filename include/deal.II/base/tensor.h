@@ -25,7 +25,7 @@
 #include <deal.II/base/utilities.h>
 
 #ifdef DEAL_II_WITH_ADOLC
-#  include <adolc/adouble.h> // Taped double
+#include <adolc/adouble.h> // Taped double
 #endif
 
 #include <cmath>
@@ -2231,7 +2231,7 @@ linfty_norm(const Tensor<2, dim, Number>& t)
 
 #ifndef DOXYGEN
 
-#  ifdef DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
+#ifdef DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
 
 // Specialization of functions for Adol-C number types when
 // the advanced branching feature is used
@@ -2269,7 +2269,7 @@ linfty_norm(const Tensor<2, dim, adouble>& t)
   return max;
 }
 
-#  endif // DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
+#endif // DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
 
 #endif // DOXYGEN
 

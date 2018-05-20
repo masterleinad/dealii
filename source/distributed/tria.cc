@@ -1933,15 +1933,15 @@ namespace parallel
              ExcMessage("Incompatible version found in .info file."));
       Assert(this->n_cells(0) == n_coarse_cells,
              ExcMessage("Number of coarse cells differ!"));
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
-#  else
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#else
       AssertThrow(
         numcpus <= Utilities::MPI::n_mpi_processes(this->mpi_communicator),
         ExcMessage(
           "parallel::distributed::Triangulation::load() only supports loading "
           "saved data with a greater or equal number of processes than were used to "
           "save() when using p4est 0.3.4.2."));
-#  endif
+#endif
 
       // clear all of the callback data, as explained in the documentation of
       // register_data_attach()
@@ -1949,7 +1949,7 @@ namespace parallel
       cell_attached_data.n_attached_datas           = 0;
       cell_attached_data.n_attached_deserialize     = attached_count;
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       parallel_forest = dealii::internal::p4est::functions<dim>::load_ext(
         filename,
         this->mpi_communicator,
@@ -1959,7 +1959,7 @@ namespace parallel
         0,
         this,
         &connectivity);
-#  else
+#else
       (void) autopartition;
       parallel_forest
         = dealii::internal::p4est::functions<dim>::load(filename,
@@ -1968,7 +1968,7 @@ namespace parallel
                                                         attached_size > 0,
                                                         this,
                                                         &connectivity);
-#  endif
+#endif
       if(numcpus != Utilities::MPI::n_mpi_processes(this->mpi_communicator))
         // We are changing the number of CPUs so we need to repartition.
         // Note that p4est actually distributes the cells between the changed
@@ -2058,11 +2058,11 @@ namespace parallel
       // arrays. set vertex information only in debug mode (saves a few bytes
       // in optimized mode)
       const bool set_vertex_info
-#  ifdef DEBUG
+#ifdef DEBUG
         = true
-#  else
+#else
         = false
-#  endif
+#endif
         ;
 
       connectivity = dealii::internal::p4est::functions<2>::connectivity_new(
@@ -2121,11 +2121,11 @@ namespace parallel
       // arrays. set vertex information only in debug mode (saves a few bytes
       // in optimized mode)
       const bool set_vertex_info
-#  ifdef DEBUG
+#ifdef DEBUG
         = true
-#  else
+#else
         = false
-#  endif
+#endif
         ;
 
       connectivity = dealii::internal::p4est::functions<2>::connectivity_new(
@@ -2187,11 +2187,11 @@ namespace parallel
 
       // now create a connectivity object with the right sizes for all arrays
       const bool set_vertex_info
-#  ifdef DEBUG
+#ifdef DEBUG
         = true
-#  else
+#else
         = false
-#  endif
+#endif
         ;
 
       connectivity = dealii::internal::p4est::functions<3>::connectivity_new(
@@ -2735,7 +2735,7 @@ namespace parallel
         }
       while(mesh_changed);
 
-#  ifdef DEBUG
+#ifdef DEBUG
       // check if correct number of ghosts is created
       unsigned int num_ghosts = 0;
 
@@ -2751,7 +2751,7 @@ namespace parallel
 
       Assert(num_ghosts == parallel_ghost->ghosts.elem_count,
              ExcInternalError());
-#  endif
+#endif
 
       // fill level_subdomain_ids for geometric multigrid
       // the level ownership of a cell is defined as the owner if the cell is active or as the owner of child(0)
@@ -2890,7 +2890,7 @@ namespace parallel
     Triangulation<dim, spacedim>::execute_coarsening_and_refinement()
     {
       // do not allow anisotropic refinement
-#  ifdef DEBUG
+#ifdef DEBUG
       for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
           = this->begin_active();
           cell != this->end();
@@ -2900,7 +2900,7 @@ namespace parallel
             cell->refine_flag_set()
               == RefinementPossibilities<dim>::isotropic_refinement,
             ExcMessage("This class does not support anisotropic refinement"));
-#  endif
+#endif
 
       // safety check: p4est has an upper limit on the level of a cell
       if(this->n_levels() == dealii::internal::p4est::functions<dim>::max_level)
@@ -3042,7 +3042,7 @@ namespace parallel
           Assert(false, ExcInternalError());
         }
 
-#  ifdef DEBUG
+#ifdef DEBUG
       // Check that we know the level subdomain ids of all our neighbors. This
       // also involves coarser cells that share a vertex if they are active.
       //
@@ -3095,7 +3095,7 @@ namespace parallel
                   }
             }
         }
-#  endif
+#endif
 
       this->update_number_cache();
 
@@ -3111,7 +3111,7 @@ namespace parallel
     void
     Triangulation<dim, spacedim>::repartition()
     {
-#  ifdef DEBUG
+#ifdef DEBUG
       for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
           = this->begin_active();
           cell != this->end();
@@ -3121,7 +3121,7 @@ namespace parallel
             !cell->refine_flag_set() && !cell->coarsen_flag_set(),
             ExcMessage(
               "Error: There shouldn't be any cells flagged for coarsening/refinement when calling repartition()."));
-#  endif
+#endif
 
       // before repartitioning the mesh let others attach mesh related info
       // (such as SolutionTransfer data) to the p4est
@@ -3182,7 +3182,7 @@ namespace parallel
       Assert(
         vertex_locally_moved.size() == this->n_vertices(),
         ExcDimensionMismatch(vertex_locally_moved.size(), this->n_vertices()));
-#  ifdef DEBUG
+#ifdef DEBUG
       {
         const std::vector<bool> locally_owned_vertices
           = dealii::GridTools::get_locally_owned_vertices(*this);
@@ -3192,7 +3192,7 @@ namespace parallel
                  ExcMessage("The vertex_locally_moved argument must not "
                             "contain vertices that are not locally owned"));
       }
-#  endif
+#endif
 
       // First find out which process should receive which vertices.
       // These are specifically the ones that are located on cells at the
@@ -3350,7 +3350,7 @@ namespace parallel
       const std::function<void(const cell_iterator&, const CellStatus, void*)>&
         pack_callback)
     {
-#  ifdef DEBUG
+#ifdef DEBUG
       Assert(size > 0, ExcMessage("register_data_attach(), size==0"));
 
       unsigned int remaining_callback_counter = 0;
@@ -3362,7 +3362,7 @@ namespace parallel
         remaining_callback_counter == cell_attached_data.n_attached_datas,
         ExcMessage(
           "register_data_attach(), not all data has been unpacked last time?"));
-#  endif
+#endif
 
       // add new pair with offset and pack_callback
       cell_attached_data.pack_callbacks.push_back(
@@ -3563,7 +3563,7 @@ namespace parallel
       const std::vector<dealii::GridTools::PeriodicFacePair<cell_iterator>>&
         periodicity_vector)
     {
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 1)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 1)
       Assert(triangulation_has_content == true,
              ExcMessage("The triangulation is empty!"));
       Assert(this->n_levels() == 1,
@@ -3721,9 +3721,9 @@ namespace parallel
 
       // The range of ghost_owners might have changed so update that information
       this->update_number_cache();
-#  else
+#else
       Assert(false, ExcMessage("Need p4est version >= 0.3.4.1!"));
-#  endif
+#endif
     }
 
     template <int dim, int spacedim>

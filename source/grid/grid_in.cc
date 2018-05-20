@@ -31,13 +31,13 @@
 #include <map>
 
 #ifdef DEAL_II_WITH_NETCDF
-#  include <netcdfcpp.h>
+#include <netcdfcpp.h>
 #endif
 
 #ifdef DEAL_II_WITH_ASSIMP
-#  include <assimp/Importer.hpp>  // C++ importer interface
-#  include <assimp/postprocess.h> // Post processing flags
-#  include <assimp/scene.h>       // Output data structure
+#include <assimp/Importer.hpp>  // C++ importer interface
+#include <assimp/postprocess.h> // Post processing flags
+#include <assimp/scene.h>       // Output data structure
 #endif
 
 DEAL_II_NAMESPACE_OPEN

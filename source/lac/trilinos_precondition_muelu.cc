@@ -17,22 +17,22 @@
 #include <deal.II/lac/trilinos_precondition.h>
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  if DEAL_II_TRILINOS_VERSION_GTE(11, 14, 0)
+#if DEAL_II_TRILINOS_VERSION_GTE(11, 14, 0)
 
-#    include <deal.II/lac/sparse_matrix.h>
-#    include <deal.II/lac/trilinos_index_access.h>
-#    include <deal.II/lac/trilinos_sparse_matrix.h>
-#    include <deal.II/lac/vector.h>
+#include <deal.II/lac/sparse_matrix.h>
+#include <deal.II/lac/trilinos_index_access.h>
+#include <deal.II/lac/trilinos_sparse_matrix.h>
+#include <deal.II/lac/vector.h>
 
-#    include <Epetra_MultiVector.h>
-#    include <Teuchos_ParameterList.hpp>
-#    include <Teuchos_RCP.hpp>
-#    include <ml_MultiLevelPreconditioner.h>
-#    include <ml_include.h>
+#include <Epetra_MultiVector.h>
+#include <Teuchos_ParameterList.hpp>
+#include <Teuchos_RCP.hpp>
+#include <ml_MultiLevelPreconditioner.h>
+#include <ml_include.h>
 
-#    include <MueLu.hpp>
-#    include <MueLu_EpetraOperator.hpp>
-#    include <MueLu_MLParameterListInterpreter.hpp>
+#include <MueLu.hpp>
+#include <MueLu_EpetraOperator.hpp>
+#include <MueLu_MLParameterListInterpreter.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -63,11 +63,11 @@ namespace TrilinosWrappers
 
   PreconditionAMGMueLu::PreconditionAMGMueLu()
   {
-#    ifdef DEAL_II_WITH_64BIT_INDICES
+#ifdef DEAL_II_WITH_64BIT_INDICES
     AssertThrow(
       false,
       ExcMessage("PreconditionAMGMueLu does not support 64bit-indices!"));
-#    endif
+#endif
   }
 
   PreconditionAMGMueLu::~PreconditionAMGMueLu()
@@ -296,5 +296,5 @@ namespace TrilinosWrappers
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif // DEAL_II_TRILINOS_VERSION_GTE(11,14,0)
-#endif   // DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_TRILINOS_VERSION_GTE(11,14,0)
+#endif // DEAL_II_WITH_TRILINOS

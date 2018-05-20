@@ -17,14 +17,14 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <cmath>
-#  include <deal.II/base/utilities.h>
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/petsc_compatibility.h>
-#  include <deal.II/lac/petsc_matrix_base.h>
-#  include <deal.II/lac/petsc_solver.h>
-#  include <deal.II/lac/petsc_vector_base.h>
-#  include <petscconf.h>
+#include <cmath>
+#include <deal.II/base/utilities.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_compatibility.h>
+#include <deal.II/lac/petsc_matrix_base.h>
+#include <deal.II/lac/petsc_solver.h>
+#include <deal.II/lac/petsc_vector_base.h>
+#include <petscconf.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -83,11 +83,11 @@ namespace PETScWrappers
     ierr = PCCreate(comm, &pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-#  if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
+#if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
     ierr = PCSetOperators(pc, matrix, matrix, SAME_PRECONDITIONER);
-#  else
+#else
     ierr = PCSetOperators(pc, matrix, matrix);
-#  endif
+#endif
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -408,14 +408,14 @@ namespace PETScWrappers
     PetscErrorCode ierr = PCCreate(comm, &pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-#  ifdef DEAL_II_PETSC_WITH_HYPRE
+#ifdef DEAL_II_PETSC_WITH_HYPRE
     initialize();
-#  else // DEAL_II_PETSC_WITH_HYPRE
+#else // DEAL_II_PETSC_WITH_HYPRE
     (void) pc;
     Assert(false,
            ExcMessage("Your PETSc installation does not include a copy of "
                       "the hypre package necessary for this preconditioner."));
-#  endif
+#endif
   }
 
   PreconditionBoomerAMG::PreconditionBoomerAMG(
@@ -428,7 +428,7 @@ namespace PETScWrappers
   void
   PreconditionBoomerAMG::initialize()
   {
-#  ifdef DEAL_II_PETSC_WITH_HYPRE
+#ifdef DEAL_II_PETSC_WITH_HYPRE
     PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCHYPRE));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -471,18 +471,18 @@ namespace PETScWrappers
 
     ierr = PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
-#  else
+#else
     Assert(false,
            ExcMessage("Your PETSc installation does not include a copy of "
                       "the hypre package necessary for this preconditioner."));
-#  endif
+#endif
   }
 
   void
   PreconditionBoomerAMG::initialize(const MatrixBase&     matrix_,
                                     const AdditionalData& additional_data_)
   {
-#  ifdef DEAL_II_PETSC_WITH_HYPRE
+#ifdef DEAL_II_PETSC_WITH_HYPRE
     clear();
 
     matrix          = static_cast<Mat>(matrix_);
@@ -494,13 +494,13 @@ namespace PETScWrappers
     PetscErrorCode ierr = PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-#  else // DEAL_II_PETSC_WITH_HYPRE
+#else // DEAL_II_PETSC_WITH_HYPRE
     (void) matrix_;
     (void) additional_data_;
     Assert(false,
            ExcMessage("Your PETSc installation does not include a copy of "
                       "the hypre package necessary for this preconditioner."));
-#  endif
+#endif
   }
 
   /* ----------------- PreconditionParaSails -------------------- */
@@ -534,7 +534,7 @@ namespace PETScWrappers
     matrix          = static_cast<Mat>(matrix_);
     additional_data = additional_data_;
 
-#  ifdef DEAL_II_PETSC_WITH_HYPRE
+#ifdef DEAL_II_PETSC_WITH_HYPRE
     create_pc();
 
     PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCHYPRE));
@@ -601,12 +601,12 @@ namespace PETScWrappers
     ierr = PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-#  else // DEAL_II_PETSC_WITH_HYPRE
+#else // DEAL_II_PETSC_WITH_HYPRE
     (void) pc;
     Assert(false,
            ExcMessage("Your PETSc installation does not include a copy of "
                       "the hypre package necessary for this preconditioner."));
-#  endif
+#endif
   }
 
   /* ----------------- PreconditionNone ------------------------- */

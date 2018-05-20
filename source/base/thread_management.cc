@@ -20,7 +20,7 @@
 #include <iostream>
 
 #ifdef DEAL_II_HAVE_UNISTD_H
-#  include <unistd.h>
+#include <unistd.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -142,9 +142,9 @@ namespace Threads
   }
 
 #else
-#  ifdef DEAL_II_USE_MT_POSIX
+#ifdef DEAL_II_USE_MT_POSIX
 
-#    ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
+#ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
   PosixThreadBarrier::PosixThreadBarrier(const unsigned int count,
                                          const char*,
                                          void*)
@@ -152,7 +152,7 @@ namespace Threads
     pthread_barrier_init(&barrier, nullptr, count);
   }
 
-#    else
+#else
 
   PosixThreadBarrier::PosixThreadBarrier(const unsigned int count,
                                          const char*,
@@ -171,27 +171,27 @@ namespace Threads
                            "this class, but the rest of the threading\n"
                            "functionality is available."));
   }
-#    endif
+#endif
 
   PosixThreadBarrier::~PosixThreadBarrier()
   {
-#    ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
+#ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
     pthread_barrier_destroy(&barrier);
-#    else
+#else
     // unless the barrier is a no-op,
     // complain again (how did we get
     // here then?)
     if(count != 1)
       std::abort();
-#    endif
+#endif
   }
 
   int
   PosixThreadBarrier::wait()
   {
-#    ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
+#ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
     return pthread_barrier_wait(&barrier);
-#    else
+#else
     // in the special case, this
     // function is a no-op. otherwise
     // complain about the missing
@@ -203,10 +203,10 @@ namespace Threads
         std::abort();
         return 1;
       };
-#    endif
+#endif
   }
 
-#  endif
+#endif
 #endif
 
   std::vector<std::pair<unsigned int, unsigned int>>

@@ -20,12 +20,12 @@
 
 #ifdef DEAL_II_WITH_CUDA
 
-#  include <deal.II/base/exceptions.h>
+#include <deal.II/base/exceptions.h>
 
-#  include <cusolverDn.h>
-#  include <cusolverSp.h>
-#  include <cusparse.h>
-#  include <vector>
+#include <cusolverDn.h>
+#include <cusolverSp.h>
+#include <cusparse.h>
+#include <vector>
 
 DEAL_II_NAMESPACE_OPEN
 namespace Utilities

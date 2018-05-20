@@ -17,19 +17,19 @@
 #include <deal.II/base/utilities.h>
 
 #ifdef DEAL_II_HAVE_UNISTD_H
-#  include <unistd.h>
+#include <unistd.h>
 #endif
 
 #if(defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
-#  include <sys/sysctl.h>
-#  include <sys/types.h>
+#include <sys/sysctl.h>
+#include <sys/types.h>
 #endif
 
 #include <algorithm>
 
 #ifdef DEAL_II_WITH_THREADS
-#  include <deal.II/base/thread_management.h>
-#  include <tbb/task_scheduler_init.h>
+#include <deal.II/base/thread_management.h>
+#include <tbb/task_scheduler_init.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -43,8 +43,7 @@ DEAL_II_NAMESPACE_OPEN
    system, please let us know.
  */
 
-#  if defined(__linux__) || defined(__sun__) || defined(__osf__) \
-    || defined(_AIX)
+#if defined(__linux__) || defined(__sun__) || defined(__osf__) || defined(_AIX)
 
 unsigned int
 MultithreadInfo::get_n_cpus()
@@ -52,7 +51,7 @@ MultithreadInfo::get_n_cpus()
   return sysconf(_SC_NPROCESSORS_ONLN);
 }
 
-#  elif(defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
+#elif(defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
 // This is only tested on a dual G5 2.5GHz running MacOSX 10.3.6
 // and on an Intel Mac Book Pro.
 // If it doesn't work please contact the mailinglist.
@@ -71,7 +70,7 @@ MultithreadInfo::get_n_cpus()
   return n_cpus;
 }
 
-#  else
+#else
 
 // If you get n_cpus=1 although you are on a multi-processor machine,
 // then this may have two reasons: either because the system macros,
@@ -100,7 +99,7 @@ MultithreadInfo::get_n_cpus()
   return 1;
 }
 
-#  endif
+#endif
 
 unsigned int
 MultithreadInfo::n_cores()

@@ -460,7 +460,7 @@ namespace Particles
      */
     unsigned int handle;
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     /**
      * Transfer particles that have crossed subdomain boundaries to other
      * processors.
@@ -497,7 +497,7 @@ namespace Particles
         types::subdomain_id,
         std::vector<
           typename Triangulation<dim, spacedim>::active_cell_iterator>>());
-#  endif
+#endif
 
     /**
      * Called by listener functions from Triangulation for every cell

@@ -20,7 +20,7 @@
 #include <deal.II/lac/lapack_support.h>
 
 #ifdef DEAL_II_HAVE_FP_EXCEPTIONS
-#  include <cfenv>
+#include <cfenv>
 #endif
 
 extern "C"
@@ -2856,10 +2856,10 @@ syevr(const char*            jobz,
    * causing floating point exceptions to be thrown (at least in debug mode). Therefore, we wrap the calls
    * to dsyevr into the following code to suppress the exception.
    */
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fenv_t fp_exceptions;
   feholdexcept(&fp_exceptions);
-#  endif
+#endif
 
   dsyevr_(jobz,
           range,
@@ -2883,9 +2883,9 @@ syevr(const char*            jobz,
           liwork,
           info);
 
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fesetenv(&fp_exceptions);
-#  endif
+#endif
 }
 
 inline void
@@ -2916,10 +2916,10 @@ syevr(const char*            jobz,
    * causing floating point exceptions to be thrown (at least in debug mode). Therefore, we wrap the calls
    * to ssyevr into the following code to suppress the exception.
    */
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fenv_t fp_exceptions;
   feholdexcept(&fp_exceptions);
-#  endif
+#endif
 
   ssyevr_(jobz,
           range,
@@ -2943,9 +2943,9 @@ syevr(const char*            jobz,
           liwork,
           info);
 
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fesetenv(&fp_exceptions);
-#  endif
+#endif
 }
 #endif
 

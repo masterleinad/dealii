@@ -14,14 +14,14 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_petsc_matrix_free_h
-#  define dealii_petsc_matrix_free_h
+#define dealii_petsc_matrix_free_h
 
-#  include <deal.II/base/config.h>
+#include <deal.II/base/config.h>
 
-#  ifdef DEAL_II_WITH_PETSC
-#    include <deal.II/lac/exceptions.h>
-#    include <deal.II/lac/petsc_matrix_base.h>
-#    include <deal.II/lac/petsc_parallel_vector.h>
+#ifdef DEAL_II_WITH_PETSC
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_matrix_base.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
 DEAL_II_NAMESPACE_OPEN
 
 namespace PETScWrappers
@@ -294,7 +294,7 @@ namespace PETScWrappers
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif // DEAL_II_WITH_PETSC
+#endif // DEAL_II_WITH_PETSC
 
 /*----------------------------   petsc_matrix_free.h     ---------------------------*/
 

@@ -20,16 +20,16 @@
 
 #if defined(DEAL_II_WITH_TRILINOS) && defined(DEAL_II_WITH_MPI)
 
-#  include <deal.II/base/index_set.h>
-#  include <deal.II/base/subscriptor.h>
-#  include <deal.II/lac/trilinos_epetra_communication_pattern.h>
-#  include <deal.II/lac/vector_operation.h>
-#  include <deal.II/lac/vector_space_vector.h>
-#  include <deal.II/lac/vector_type_traits.h>
-#  include <memory>
+#include <deal.II/base/index_set.h>
+#include <deal.II/base/subscriptor.h>
+#include <deal.II/lac/trilinos_epetra_communication_pattern.h>
+#include <deal.II/lac/vector_operation.h>
+#include <deal.II/lac/vector_space_vector.h>
+#include <deal.II/lac/vector_type_traits.h>
+#include <memory>
 
-#  include <Epetra_FEVector.h>
-#  include <mpi.h>
+#include <Epetra_FEVector.h>
+#include <mpi.h>
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -20,12 +20,12 @@
 
 #ifdef DEAL_II_WITH_SCALAPACK
 
-#  include <deal.II/base/mpi.h>
-#  include <deal.II/base/mpi.templates.h>
+#include <deal.II/base/mpi.h>
+#include <deal.II/base/mpi.templates.h>
 
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
-#    include <cfenv>
-#  endif
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#include <cfenv>
+#endif
 
 // useful examples:
 // https://stackoverflow.com/questions/14147705/cholesky-decomposition-scalapack-error/14203864
@@ -2080,10 +2080,10 @@ psyevr(const char*   jobz,
    * causing floating point exceptions to be thrown (at least in debug mode). Therefore, we wrap the calls
    * to pdsyevr into the following code to suppress the exception.
    */
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fenv_t fp_exceptions;
   feholdexcept(&fp_exceptions);
-#  endif
+#endif
 
   pdsyevr_(jobz,
            range,
@@ -2110,9 +2110,9 @@ psyevr(const char*   jobz,
            liwork,
            info);
 
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fesetenv(&fp_exceptions);
-#  endif
+#endif
 }
 
 inline void
@@ -2146,10 +2146,10 @@ psyevr(const char*  jobz,
    * causing floating point exceptions to be thrown (at least in debug mode). Therefore, we wrap the calls
    * to pssyevr into the following code to suppress the exception.
    */
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fenv_t fp_exceptions;
   feholdexcept(&fp_exceptions);
-#  endif
+#endif
 
   pssyevr_(jobz,
            range,
@@ -2176,9 +2176,9 @@ psyevr(const char*  jobz,
            liwork,
            info);
 
-#  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
+#ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fesetenv(&fp_exceptions);
-#  endif
+#endif
 }
 
 #endif // DEAL_II_WITH_SCALAPACK

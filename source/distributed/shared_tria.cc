@@ -68,7 +68,7 @@ namespace parallel
     void
     Triangulation<dim, spacedim>::partition()
     {
-#  ifdef DEBUG
+#ifdef DEBUG
       // Check that all meshes are the same (or at least have the same
       // total number of active cells):
       const unsigned int max_active_cells
@@ -79,24 +79,24 @@ namespace parallel
           "A parallel::shared::Triangulation needs to be refined in the same"
           "way on all processors, but the participating processors don't "
           "agree on the number of active cells."))
-#  endif
+#endif
 
         auto partition_settings
         = (partition_zoltan | partition_metis | partition_zorder
            | partition_custom_signal)
           & settings;
       if(partition_settings == partition_auto)
-#  ifdef DEAL_II_TRILINOS_WITH_ZOLTAN
+#ifdef DEAL_II_TRILINOS_WITH_ZOLTAN
         partition_settings = partition_zoltan;
-#  elif defined DEAL_II_WITH_METIS
+#elif defined DEAL_II_WITH_METIS
         partition_settings = partition_metis;
-#  else
+#else
         partition_settings = partition_zorder;
-#  endif
+#endif
 
       if(partition_settings == partition_zoltan)
         {
-#  ifndef DEAL_II_TRILINOS_WITH_ZOLTAN
+#ifndef DEAL_II_TRILINOS_WITH_ZOLTAN
           AssertThrow(
             false,
             ExcMessage("Choosing 'partition_zoltan' requires the library "
@@ -104,14 +104,14 @@ namespace parallel
                        "Instead, you might use 'partition_auto' to select "
                        "a partitioning algorithm that is supported "
                        "by your current configuration."));
-#  else
+#else
           GridTools::partition_triangulation(
             this->n_subdomains, *this, SparsityTools::Partitioner::zoltan);
-#  endif
+#endif
         }
       else if(partition_settings == partition_metis)
         {
-#  ifndef DEAL_II_WITH_METIS
+#ifndef DEAL_II_WITH_METIS
           AssertThrow(
             false,
             ExcMessage("Choosing 'partition_metis' requires the library "
@@ -119,10 +119,10 @@ namespace parallel
                        "Instead, you might use 'partition_auto' to select "
                        "a partitioning algorithm that is supported "
                        "by your current configuration."));
-#  else
+#else
           GridTools::partition_triangulation(
             this->n_subdomains, *this, SparsityTools::Partitioner::metis);
-#  endif
+#endif
         }
       else if(partition_settings == partition_zorder)
         {
@@ -264,7 +264,7 @@ namespace parallel
             true_subdomain_ids_of_cells[index] = cell->subdomain_id();
         }
 
-#  ifdef DEBUG
+#ifdef DEBUG
       {
         // Assert that each cell is owned by a processor
         unsigned int n_my_cells = 0;
@@ -301,7 +301,7 @@ namespace parallel
           Assert(total_cells == this->n_cells(),
                  ExcMessage("Not all cells are assigned to a processor."))
         }
-#  endif
+#endif
     }
 
     template <int dim, int spacedim>

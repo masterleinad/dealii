@@ -25,12 +25,12 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <petscconf.h>
-#  include <petscksp.h>
-#  include <petscmat.h>
-#  include <petscpc.h>
+#include <petscconf.h>
+#include <petscksp.h>
+#include <petscmat.h>
+#include <petscpc.h>
 
-#  include <string>
+#include <string>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -44,13 +44,13 @@ namespace PETScWrappers
   inline void
   set_option_value(const std::string& name, const std::string& value)
   {
-#  if DEAL_II_PETSC_VERSION_LT(3, 7, 0)
+#if DEAL_II_PETSC_VERSION_LT(3, 7, 0)
     const PetscErrorCode ierr
       = PetscOptionsSetValue(name.c_str(), value.c_str());
-#  else
+#else
     const PetscErrorCode ierr
       = PetscOptionsSetValue(nullptr, name.c_str(), value.c_str());
-#  endif
+#endif
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -111,11 +111,11 @@ namespace PETScWrappers
   inline void
   close_matrix(Mat& matrix)
   {
-#  ifdef DEBUG
+#ifdef DEBUG
     set_matrix_option(matrix, MAT_NEW_NONZERO_LOCATION_ERR, PETSC_TRUE);
-#  else
+#else
     set_matrix_option(matrix, MAT_NEW_NONZERO_LOCATIONS, PETSC_FALSE);
-#  endif
+#endif
   }
 
   /**

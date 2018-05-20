@@ -17,21 +17,21 @@
 
 #ifdef DEAL_II_WITH_OPENCASCADE
 
-#  include <BRepAdaptor_CompCurve.hxx>
-#  include <BRepAdaptor_Curve.hxx>
-#  include <BRepAdaptor_HCompCurve.hxx>
-#  include <BRepAdaptor_HCurve.hxx>
-#  include <BRepTools.hxx>
-#  include <BRep_Tool.hxx>
-#  include <GCPnts_AbscissaPoint.hxx>
-#  include <ShapeAnalysis_Curve.hxx>
-#  include <ShapeAnalysis_Surface.hxx>
-#  include <TopoDS.hxx>
+#include <BRepAdaptor_CompCurve.hxx>
+#include <BRepAdaptor_Curve.hxx>
+#include <BRepAdaptor_HCompCurve.hxx>
+#include <BRepAdaptor_HCurve.hxx>
+#include <BRepTools.hxx>
+#include <BRep_Tool.hxx>
+#include <GCPnts_AbscissaPoint.hxx>
+#include <ShapeAnalysis_Curve.hxx>
+#include <ShapeAnalysis_Surface.hxx>
+#include <TopoDS.hxx>
 
-#  include <Standard_Version.hxx>
-#  if(OCC_VERSION_MAJOR < 7)
-#    include <Handle_Adaptor3d_HCurve.hxx>
-#  endif
+#include <Standard_Version.hxx>
+#if(OCC_VERSION_MAJOR < 7)
+#include <Handle_Adaptor3d_HCurve.hxx>
+#endif
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -95,13 +95,13 @@ namespace OpenCASCADE
     const Point<spacedim>&                  candidate) const
   {
     (void) surrounding_points;
-#  ifdef DEBUG
+#ifdef DEBUG
     for(unsigned int i = 0; i < surrounding_points.size(); ++i)
       Assert(closest_point(sh, surrounding_points[i], tolerance)
                  .distance(surrounding_points[i])
                < std::max(tolerance * surrounding_points[i].norm(), tolerance),
              ExcPointNotOnManifold<spacedim>(surrounding_points[i]));
-#  endif
+#endif
     return closest_point(sh, candidate, tolerance);
   }
 
@@ -131,13 +131,13 @@ namespace OpenCASCADE
     const Point<spacedim>&                  candidate) const
   {
     (void) surrounding_points;
-#  ifdef DEBUG
+#ifdef DEBUG
     for(unsigned int i = 0; i < surrounding_points.size(); ++i)
       Assert(closest_point(sh, surrounding_points[i], tolerance)
                  .distance(surrounding_points[i])
                < std::max(tolerance * surrounding_points[i].norm(), tolerance),
              ExcPointNotOnManifold<spacedim>(surrounding_points[i]));
-#  endif
+#endif
     return line_intersection(sh, candidate, direction, tolerance);
   }
 
@@ -171,7 +171,7 @@ namespace OpenCASCADE
   {
     TopoDS_Shape out_shape;
     Tensor<1, 3> average_normal;
-#  ifdef DEBUG
+#ifdef DEBUG
     for(unsigned int i = 0; i < surrounding_points.size(); ++i)
       {
         Assert(
@@ -180,7 +180,7 @@ namespace OpenCASCADE
             < std::max(tolerance * surrounding_points[i].norm(), tolerance),
           ExcPointNotOnManifold<spacedim>(surrounding_points[i]));
       }
-#  endif
+#endif
 
     switch(surrounding_points.size())
       {
@@ -418,7 +418,7 @@ namespace OpenCASCADE
   }
 
 // Explicit instantiations
-#  include "manifold_lib.inst"
+#include "manifold_lib.inst"
 } // end namespace OpenCASCADE
 
 DEAL_II_NAMESPACE_CLOSE

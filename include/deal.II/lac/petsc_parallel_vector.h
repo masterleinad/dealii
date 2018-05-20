@@ -14,19 +14,19 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_petsc_parallel_vector_h
-#  define dealii_petsc_parallel_vector_h
+#define dealii_petsc_parallel_vector_h
 
-#  include <deal.II/base/config.h>
+#include <deal.II/base/config.h>
 
-#  ifdef DEAL_II_WITH_PETSC
+#ifdef DEAL_II_WITH_PETSC
 
-#    include <deal.II/base/index_set.h>
-#    include <deal.II/base/subscriptor.h>
-#    include <deal.II/lac/exceptions.h>
-#    include <deal.II/lac/petsc_vector_base.h>
-#    include <deal.II/lac/vector.h>
-#    include <deal.II/lac/vector_operation.h>
-#    include <deal.II/lac/vector_type_traits.h>
+#include <deal.II/base/index_set.h>
+#include <deal.II/base/subscriptor.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_vector_base.h>
+#include <deal.II/lac/vector.h>
+#include <deal.II/lac/vector_operation.h>
+#include <deal.II/lac/vector_type_traits.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -425,7 +425,7 @@ namespace PETScWrappers
       u.swap(v);
     }
 
-#    ifndef DOXYGEN
+#ifndef DOXYGEN
 
     template <typename number>
     Vector::Vector(const MPI_Comm&               communicator,
@@ -492,8 +492,8 @@ namespace PETScWrappers
       return communicator;
     }
 
-#    endif // DOXYGEN
-  }        // namespace MPI
+#endif // DOXYGEN
+  }    // namespace MPI
 } // namespace PETScWrappers
 
 namespace internal
@@ -548,7 +548,7 @@ struct is_serial_vector<PETScWrappers::MPI::Vector> : std::false_type
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif // DEAL_II_WITH_PETSC
+#endif // DEAL_II_WITH_PETSC
 
 /*----------------------------   petsc_parallel_vector.h     ---------------------------*/
 

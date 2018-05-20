@@ -14,21 +14,21 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_slepc_solver_h
-#  define dealii_slepc_solver_h
+#define dealii_slepc_solver_h
 
-#  include <deal.II/base/config.h>
+#include <deal.II/base/config.h>
 
-#  ifdef DEAL_II_WITH_SLEPC
+#ifdef DEAL_II_WITH_SLEPC
 
-#    include <deal.II/lac/petsc_matrix_base.h>
-#    include <deal.II/lac/slepc_spectral_transformation.h>
-#    include <deal.II/lac/solver_control.h>
+#include <deal.II/lac/petsc_matrix_base.h>
+#include <deal.II/lac/slepc_spectral_transformation.h>
+#include <deal.II/lac/solver_control.h>
 
-#    include <petscconf.h>
-#    include <petscksp.h>
-#    include <slepceps.h>
+#include <petscconf.h>
+#include <petscksp.h>
+#include <slepceps.h>
 
-#    include <memory>
+#include <memory>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -805,7 +805,7 @@ namespace SLEPcWrappers
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif // DEAL_II_WITH_SLEPC
+#endif // DEAL_II_WITH_SLEPC
 
 /*----------------------------   slepc_solver.h  ---------------------------*/
 

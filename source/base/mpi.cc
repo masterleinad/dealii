@@ -25,31 +25,31 @@
 #include <iostream>
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  ifdef DEAL_II_WITH_MPI
-#    include <Epetra_MpiComm.h>
-#    include <deal.II/lac/trilinos_parallel_block_vector.h>
-#    include <deal.II/lac/trilinos_vector.h>
-#    include <deal.II/lac/vector_memory.h>
-#  endif
+#ifdef DEAL_II_WITH_MPI
+#include <Epetra_MpiComm.h>
+#include <deal.II/lac/trilinos_parallel_block_vector.h>
+#include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/lac/vector_memory.h>
+#endif
 #endif
 
 #ifdef DEAL_II_WITH_PETSC
-#  include <deal.II/lac/petsc_parallel_block_vector.h>
-#  include <deal.II/lac/petsc_parallel_vector.h>
-#  include <petscsys.h>
+#include <deal.II/lac/petsc_parallel_block_vector.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
+#include <petscsys.h>
 #endif
 
 #ifdef DEAL_II_WITH_SLEPC
-#  include <deal.II/lac/slepc_solver.h>
-#  include <slepcsys.h>
+#include <deal.II/lac/slepc_solver.h>
+#include <slepcsys.h>
 #endif
 
 #ifdef DEAL_II_WITH_P4EST
-#  include <p4est_bits.h>
+#include <p4est_bits.h>
 #endif
 
 #ifdef DEAL_II_TRILINOS_WITH_ZOLTAN
-#  include <zoltan_cpp.h>
+#include <zoltan_cpp.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -94,9 +94,9 @@ namespace Utilities
                  const int        tag,
                  MPI_Comm*        new_comm)
     {
-#  if DEAL_II_MPI_VERSION_GTE(3, 0)
+#if DEAL_II_MPI_VERSION_GTE(3, 0)
       return MPI_Comm_create_group(comm, group, tag, new_comm);
-#  else
+#else
       int rank;
       int ierr = MPI_Comm_rank(comm, &rank);
       AssertThrowMPI(ierr);
@@ -165,7 +165,7 @@ namespace Utilities
         }
 
       return MPI_SUCCESS;
-#  endif
+#endif
     }
 
     std::vector<unsigned int>
@@ -413,15 +413,15 @@ namespace Utilities
       // we are allowed to call MPI_Init ourselves and PETScInitialize will
       // detect this. This allows us to use MPI_Init_thread instead.
 #ifdef DEAL_II_WITH_PETSC
-#  ifdef DEAL_II_WITH_SLEPC
+#ifdef DEAL_II_WITH_SLEPC
       // Initialize SLEPc (with PETSc):
       ierr = SlepcInitialize(&argc, &argv, nullptr, nullptr);
       AssertThrow(ierr == 0, SLEPcWrappers::SolverBase::ExcSLEPcError(ierr));
-#  else
+#else
       // or just initialize PETSc alone:
       ierr = PetscInitialize(&argc, &argv, nullptr, nullptr);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
-#  endif
+#endif
 
       // Disable PETSc exception handling. This just prints a large wall
       // of text that is not particularly helpful for what we do:
@@ -436,13 +436,13 @@ namespace Utilities
 
 #ifdef DEAL_II_WITH_P4EST
       //Initialize p4est and libsc components
-#  if !(DEAL_II_P4EST_VERSION_GTE(2, 0, 0, 0))
+#if !(DEAL_II_P4EST_VERSION_GTE(2, 0, 0, 0))
       // This feature is broken in version 2.0.0 for calls to
       // MPI_Comm_create_group (see cburstedde/p4est#30).
       // Disabling it leads to more verbose p4est error messages
       // which should be fine.
       sc_init(MPI_COMM_WORLD, 0, 0, nullptr, SC_LP_SILENT);
-#  endif
+#endif
       p4est_init(nullptr, SC_LP_SILENT);
 #endif
 
@@ -542,12 +542,12 @@ namespace Utilities
         release_unused_memory();
 
       // Next with Trilinos:
-#  if defined(DEAL_II_WITH_TRILINOS)
+#if defined(DEAL_II_WITH_TRILINOS)
       GrowingVectorMemory<
         TrilinosWrappers::MPI::Vector>::release_unused_memory();
       GrowingVectorMemory<
         TrilinosWrappers::MPI::BlockVector>::release_unused_memory();
-#  endif
+#endif
 #endif
 
       // Now deal with PETSc (with or without MPI). Only delete the vectors if
@@ -561,13 +561,13 @@ namespace Utilities
           GrowingVectorMemory<
             PETScWrappers::MPI::BlockVector>::release_unused_memory();
 
-#  ifdef DEAL_II_WITH_SLEPC
+#ifdef DEAL_II_WITH_SLEPC
           // and now end SLEPc (with PETSc)
           SlepcFinalize();
-#  else
+#else
           // or just end PETSc.
           PetscFinalize();
-#  endif
+#endif
         }
 #endif
 

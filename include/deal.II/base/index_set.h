@@ -26,16 +26,16 @@
 #include <vector>
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  include <Epetra_Map.h>
+#include <Epetra_Map.h>
 #endif
 
 #if defined(DEAL_II_WITH_MPI) || defined(DEAL_II_WITH_PETSC)
-#  include <mpi.h>
+#include <mpi.h>
 #else
 typedef int MPI_Comm;
-#  ifndef MPI_COMM_WORLD
-#    define MPI_COMM_WORLD 0
-#  endif
+#ifndef MPI_COMM_WORLD
+#define MPI_COMM_WORLD 0
+#endif
 #endif
 
 DEAL_II_NAMESPACE_OPEN

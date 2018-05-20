@@ -34,7 +34,7 @@
 #include <deal.II/lac/vector.h>
 
 #ifdef DEAL_II_WITH_MPI
-#  include <deal.II/lac/la_parallel_vector.h>
+#include <deal.II/lac/la_parallel_vector.h>
 #endif
 
 #include <algorithm>

@@ -27,13 +27,13 @@
 #include <vector>
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  include <Epetra_Comm.h>
-#  include <Epetra_Map.h>
-#  ifdef DEAL_II_WITH_MPI
-#    include <Epetra_MpiComm.h>
-#  else
-#    include <Epetra_SerialComm.h>
-#  endif
+#include <Epetra_Comm.h>
+#include <Epetra_Map.h>
+#ifdef DEAL_II_WITH_MPI
+#include <Epetra_MpiComm.h>
+#else
+#include <Epetra_SerialComm.h>
+#endif
 #endif
 
 #include <boost/archive/binary_iarchive.hpp>
@@ -42,10 +42,10 @@
 #include <boost/serialization/vector.hpp>
 
 #ifdef DEAL_II_WITH_ZLIB
-#  include <boost/iostreams/device/back_inserter.hpp>
-#  include <boost/iostreams/filter/gzip.hpp>
-#  include <boost/iostreams/filtering_stream.hpp>
-#  include <boost/iostreams/stream.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/stream.hpp>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -992,11 +992,11 @@ namespace Utilities
 #if __GNUG__ && __GNUC__ < 5
     if(__has_trivial_copy(T) && sizeof(T) < 256)
 #else
-#  ifdef DEAL_II_WITH_CXX17
+#ifdef DEAL_II_WITH_CXX17
     if constexpr(std::is_trivially_copyable<T>() && sizeof(T) < 256)
-#  else
+#else
     if(std::is_trivially_copyable<T>() && sizeof(T) < 256)
-#  endif
+#endif
 #endif
       {
         const size_t previous_size = dest_buffer.size();
@@ -1060,11 +1060,11 @@ namespace Utilities
 #if __GNUG__ && __GNUC__ < 5
     if(__has_trivial_copy(T) && sizeof(T) < 256)
 #else
-#  ifdef DEAL_II_WITH_CXX17
+#ifdef DEAL_II_WITH_CXX17
     if constexpr(std::is_trivially_copyable<T>() && sizeof(T) < 256)
-#  else
+#else
     if(std::is_trivially_copyable<T>() && sizeof(T) < 256)
-#  endif
+#endif
 #endif
       {
         Assert(std::distance(cbegin, cend) == sizeof(T), ExcInternalError());

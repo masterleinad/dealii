@@ -39,18 +39,18 @@
 // present in the compilation unit but also working properly.
 
 #if DEAL_II_COMPILER_VECTORIZATION_LEVEL >= 2 && !defined(__AVX__)
-#  error \
-    "Mismatch in vectorization capabilities: AVX was detected during configuration of deal.II and switched on, but it is apparently not available for the file you are trying to compile at the moment. Check compilation flags controlling the instruction set, such as -march=native."
+#error \
+  "Mismatch in vectorization capabilities: AVX was detected during configuration of deal.II and switched on, but it is apparently not available for the file you are trying to compile at the moment. Check compilation flags controlling the instruction set, such as -march=native."
 #endif
 #if DEAL_II_COMPILER_VECTORIZATION_LEVEL >= 3 && !defined(__AVX512F__)
-#  error \
-    "Mismatch in vectorization capabilities: AVX-512F was detected during configuration of deal.II and switched on, but it is apparently not available for the file you are trying to compile at the moment. Check compilation flags controlling the instruction set, such as -march=native."
+#error \
+  "Mismatch in vectorization capabilities: AVX-512F was detected during configuration of deal.II and switched on, but it is apparently not available for the file you are trying to compile at the moment. Check compilation flags controlling the instruction set, such as -march=native."
 #endif
 
 #if DEAL_II_COMPILER_VECTORIZATION_LEVEL >= 2 // AVX, AVX-512
-#  include <immintrin.h>
+#include <immintrin.h>
 #elif DEAL_II_COMPILER_VECTORIZATION_LEVEL == 1 // SSE2
-#  include <emmintrin.h>
+#include <emmintrin.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -595,11 +595,11 @@ public:
     // additions with multiplication (fused multiply-add) if those
     // instructions are available. Otherwise, we need to use the built-in
     // intrinsic command for __m512d
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data += vec.data;
-#  else
+#else
     data = _mm512_add_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -610,11 +610,11 @@ public:
   VectorizedArray&
   operator-=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data -= vec.data;
-#  else
+#else
     data = _mm512_sub_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
   /**
@@ -624,11 +624,11 @@ public:
   VectorizedArray&
   operator*=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data *= vec.data;
-#  else
+#else
     data = _mm512_mul_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -639,11 +639,11 @@ public:
   VectorizedArray&
   operator/=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data /= vec.data;
-#  else
+#else
     data = _mm512_div_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -991,11 +991,11 @@ public:
     // additions with multiplication (fused multiply-add) if those
     // instructions are available. Otherwise, we need to use the built-in
     // intrinsic command for __m512d
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data += vec.data;
-#  else
+#else
     data = _mm512_add_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1006,11 +1006,11 @@ public:
   VectorizedArray&
   operator-=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data -= vec.data;
-#  else
+#else
     data = _mm512_sub_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
   /**
@@ -1020,11 +1020,11 @@ public:
   VectorizedArray&
   operator*=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data *= vec.data;
-#  else
+#else
     data = _mm512_mul_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1035,11 +1035,11 @@ public:
   VectorizedArray&
   operator/=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data /= vec.data;
-#  else
+#else
     data = _mm512_div_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1420,11 +1420,11 @@ public:
     // additions with multiplication (fused multiply-add) if those
     // instructions are available. Otherwise, we need to use the built-in
     // intrinsic command for __m256d
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data += vec.data;
-#  else
+#else
     data = _mm256_add_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1435,11 +1435,11 @@ public:
   VectorizedArray&
   operator-=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data -= vec.data;
-#  else
+#else
     data = _mm256_sub_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
   /**
@@ -1449,11 +1449,11 @@ public:
   VectorizedArray&
   operator*=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data *= vec.data;
-#  else
+#else
     data = _mm256_mul_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1464,11 +1464,11 @@ public:
   VectorizedArray&
   operator/=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data /= vec.data;
-#  else
+#else
     data = _mm256_div_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1525,17 +1525,17 @@ public:
   void
   gather(const double* base_ptr, const unsigned int* offsets)
   {
-#  ifdef __AVX2__
+#ifdef __AVX2__
     // unfortunately, there does not appear to be a 128 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
     const __m128  index_val = _mm_loadu_ps((const float*) offsets);
     const __m128i index     = *((__m128i*) (&index_val));
     data                    = _mm256_i32gather_pd(base_ptr, index, 8);
-#  else
+#else
     for(unsigned int i = 0; i < 4; ++i)
       *(reinterpret_cast<double*>(&data) + i) = base_ptr[offsets[i]];
-#  endif
+#endif
   }
 
   /**
@@ -1793,11 +1793,11 @@ public:
     // additions with multiplication (fused multiply-add) if those
     // instructions are available. Otherwise, we need to use the built-in
     // intrinsic command for __m256d
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data += vec.data;
-#  else
+#else
     data = _mm256_add_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1808,11 +1808,11 @@ public:
   VectorizedArray&
   operator-=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data -= vec.data;
-#  else
+#else
     data = _mm256_sub_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
   /**
@@ -1822,11 +1822,11 @@ public:
   VectorizedArray&
   operator*=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data *= vec.data;
-#  else
+#else
     data = _mm256_mul_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1837,11 +1837,11 @@ public:
   VectorizedArray&
   operator/=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data /= vec.data;
-#  else
+#else
     data = _mm256_div_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -1898,17 +1898,17 @@ public:
   void
   gather(const float* base_ptr, const unsigned int* offsets)
   {
-#  ifdef __AVX2__
+#ifdef __AVX2__
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
     const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
     const __m256i index     = *((__m256i*) (&index_val));
     data                    = _mm256_i32gather_ps(base_ptr, index, 4);
-#  else
+#else
     for(unsigned int i = 0; i < 8; ++i)
       *(reinterpret_cast<float*>(&data) + i) = base_ptr[offsets[i]];
-#  endif
+#endif
   }
 
   /**
@@ -2192,11 +2192,11 @@ public:
   VectorizedArray&
   operator+=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data += vec.data;
-#  else
+#else
     data = _mm_add_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -2207,11 +2207,11 @@ public:
   VectorizedArray&
   operator-=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data -= vec.data;
-#  else
+#else
     data = _mm_sub_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -2222,11 +2222,11 @@ public:
   VectorizedArray&
   operator*=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data *= vec.data;
-#  else
+#else
     data = _mm_mul_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -2237,11 +2237,11 @@ public:
   VectorizedArray&
   operator/=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data /= vec.data;
-#  else
+#else
     data = _mm_div_pd(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -2525,11 +2525,11 @@ public:
   VectorizedArray&
   operator+=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data += vec.data;
-#  else
+#else
     data = _mm_add_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -2540,11 +2540,11 @@ public:
   VectorizedArray&
   operator-=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data -= vec.data;
-#  else
+#else
     data = _mm_sub_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -2555,11 +2555,11 @@ public:
   VectorizedArray&
   operator*=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data *= vec.data;
-#  else
+#else
     data = _mm_mul_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 
@@ -2570,11 +2570,11 @@ public:
   VectorizedArray&
   operator/=(const VectorizedArray& vec)
   {
-#  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
+#ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
     data /= vec.data;
-#  else
+#else
     data = _mm_div_ps(data, vec.data);
-#  endif
+#endif
     return *this;
   }
 

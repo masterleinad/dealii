@@ -672,7 +672,7 @@ unpack_to_cell_data(const CellIteratorType&                      cell,
     }
 }
 
-#  ifdef DEAL_II_WITH_P4EST
+#ifdef DEAL_II_WITH_P4EST
 
 namespace parallel
 {
@@ -852,7 +852,7 @@ namespace parallel
 
 } // namespace parallel
 
-#  endif // DEAL_II_WITH_P4EST
+#endif // DEAL_II_WITH_P4EST
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

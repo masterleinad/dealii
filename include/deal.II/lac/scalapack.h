@@ -20,15 +20,15 @@
 
 #ifdef DEAL_II_WITH_SCALAPACK
 
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/mpi.h>
-#  include <deal.II/base/process_grid.h>
-#  include <deal.II/base/thread_management.h>
-#  include <deal.II/lac/full_matrix.h>
-#  include <deal.II/lac/lapack_support.h>
-#  include <mpi.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/mpi.h>
+#include <deal.II/base/process_grid.h>
+#include <deal.II/base/thread_management.h>
+#include <deal.II/lac/full_matrix.h>
+#include <deal.II/lac/lapack_support.h>
+#include <mpi.h>
 
-#  include <memory>
+#include <memory>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -907,7 +907,7 @@ private:
 
 // ----------------------- inline functions ----------------------------
 
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
 template <typename NumberType>
 inline NumberType
@@ -953,7 +953,7 @@ ScaLAPACKMatrix<NumberType>::local_n() const
   return n_local_columns;
 }
 
-#  endif // DOXYGEN
+#endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE
 

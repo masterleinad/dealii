@@ -193,7 +193,7 @@ namespace Utilities
 
     /*----------------------- Inline functions ----------------------------------*/
 
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
     inline unsigned int
     ProcessGrid::get_process_grid_rows() const
@@ -213,7 +213,7 @@ namespace Utilities
       return mpi_process_is_active;
     }
 
-#  endif // ifndef DOXYGEN
+#endif // ifndef DOXYGEN
 
   } // end of namespace MPI
 

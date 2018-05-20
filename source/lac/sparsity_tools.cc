@@ -24,21 +24,21 @@
 #include <set>
 
 #ifdef DEAL_II_WITH_MPI
-#  include <deal.II/base/mpi.h>
-#  include <deal.II/base/utilities.h>
-#  include <deal.II/lac/block_sparsity_pattern.h>
-#  include <deal.II/lac/dynamic_sparsity_pattern.h>
+#include <deal.II/base/mpi.h>
+#include <deal.II/base/utilities.h>
+#include <deal.II/lac/block_sparsity_pattern.h>
+#include <deal.II/lac/dynamic_sparsity_pattern.h>
 #endif
 
 #ifdef DEAL_II_WITH_METIS
 extern "C"
 {
-#  include <metis.h>
+#include <metis.h>
 }
 #endif
 
 #ifdef DEAL_II_TRILINOS_WITH_ZOLTAN
-#  include <zoltan_cpp.h>
+#include <zoltan_cpp.h>
 #endif
 
 #include <string>

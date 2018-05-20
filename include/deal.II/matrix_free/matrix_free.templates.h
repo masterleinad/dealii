@@ -33,8 +33,8 @@
 #include <deal.II/matrix_free/shape_info.templates.h>
 
 #ifdef DEAL_II_WITH_THREADS
-#  include <deal.II/base/parallel.h>
-#  include <tbb/concurrent_unordered_map.h>
+#include <deal.II/base/parallel.h>
+#include <tbb/concurrent_unordered_map.h>
 #endif
 
 #include <fstream>

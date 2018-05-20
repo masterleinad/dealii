@@ -14,19 +14,19 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_tria_iterator_h
-#  define dealii_tria_iterator_h
+#define dealii_tria_iterator_h
 
 /*----------------------------   tria-iterator.h     ---------------------------*/
 
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/exceptions.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/exceptions.h>
 
-#  include <deal.II/base/point.h>
-#  include <deal.II/grid/tria_iterator_base.h>
+#include <deal.II/base/point.h>
+#include <deal.II/grid/tria_iterator_base.h>
 
-#  include <iterator>
+#include <iterator>
 
-#  include <ostream>
+#include <ostream>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -1086,7 +1086,7 @@ inline TriaIterator<Accessor>::TriaIterator(
   const TriaRawIterator<OtherAccessor>& i)
   : TriaRawIterator<Accessor>(i.accessor)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   // do this like this, because:
   // if we write
   // "Assert (IteratorState::past_the_end || used)"
@@ -1095,7 +1095,7 @@ inline TriaIterator<Accessor>::TriaIterator(
   // throw the exception!
   if(this->state() != IteratorState::past_the_end)
     Assert(this->accessor.used(), ExcAssignmentOfUnusedObject());
-#  endif
+#endif
 }
 
 template <typename Accessor>
@@ -1103,7 +1103,7 @@ template <typename OtherAccessor>
 TriaIterator<Accessor>::TriaIterator(const OtherAccessor& a)
   : TriaRawIterator<Accessor>(a)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   // do this like this, because:
   // if we write
   // "Assert (IteratorState::past_the_end || used)"
@@ -1112,7 +1112,7 @@ TriaIterator<Accessor>::TriaIterator(const OtherAccessor& a)
   // throw the exception!
   if(this->state() != IteratorState::past_the_end)
     Assert(this->accessor.used(), ExcAssignmentOfUnusedObject());
-#  endif
+#endif
 }
 
 template <typename Accessor>
@@ -1128,7 +1128,7 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
   const TriaRawIterator<OtherAccessor>& i)
   : TriaIterator<Accessor>(i)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   // do this like this, because:
   // if we write
   // "Assert (IteratorState::past_the_end || !has_children())"
@@ -1138,7 +1138,7 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
   if(this->state() != IteratorState::past_the_end)
     Assert(this->accessor.has_children() == false,
            ExcAssignmentOfInactiveObject());
-#  endif
+#endif
 }
 
 /**
@@ -1189,9 +1189,9 @@ operator<<(std::ostream& out, const TriaActiveIterator<Accessor>& i)
 DEAL_II_NAMESPACE_CLOSE
 
 // if in optimized mode: include more templates
-#  ifndef DEBUG
-#    include "tria_iterator.templates.h"
-#  endif
+#ifndef DEBUG
+#include "tria_iterator.templates.h"
+#endif
 
 /*----------------------------   tria-iterator.h     ---------------------------*/
 #endif

@@ -19,10 +19,10 @@
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_CUDA
-#  include <deal.II/base/cuda.h>
-#  include <deal.II/lac/cuda_sparse_matrix.h>
-#  include <deal.II/lac/cuda_vector.h>
-#  include <deal.II/lac/solver_control.h>
+#include <deal.II/base/cuda.h>
+#include <deal.II/lac/cuda_sparse_matrix.h>
+#include <deal.II/lac/cuda_vector.h>
+#include <deal.II/lac/solver_control.h>
 
 DEAL_II_NAMESPACE_OPEN
 

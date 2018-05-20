@@ -24,8 +24,8 @@
 #include <type_traits>
 
 #ifdef DEAL_II_WITH_CUDA
-#  include <cusolverSp.h>
-#  include <cusparse.h>
+#include <cusolverSp.h>
+#include <cusparse.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -181,9 +181,9 @@ private:
  * @author Wolfgang Bangerth, November 1997
  * @ingroup Exceptions
  */
-#  define DeclException0(Exception0)                \
-    class Exception0 : public dealii::ExceptionBase \
-    {}
+#define DeclException0(Exception0)                \
+  class Exception0 : public dealii::ExceptionBase \
+  {}
 
 /**
  * Declare an exception class derived from ExceptionBase that can take one
@@ -193,23 +193,23 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclExceptionMsg(Exception, defaulttext)               \
-    class Exception : public dealii::ExceptionBase               \
-    {                                                            \
-    public:                                                      \
-      Exception(const std::string& msg = defaulttext) : arg(msg) \
-      {}                                                         \
-      virtual ~Exception() noexcept                              \
-      {}                                                         \
-      virtual void                                               \
-      print_info(std::ostream& out) const override               \
-      {                                                          \
-        out << "    " << arg << std::endl;                       \
-      }                                                          \
-                                                                 \
-    private:                                                     \
-      const std::string arg;                                     \
-    }
+#define DeclExceptionMsg(Exception, defaulttext)               \
+  class Exception : public dealii::ExceptionBase               \
+  {                                                            \
+  public:                                                      \
+    Exception(const std::string& msg = defaulttext) : arg(msg) \
+    {}                                                         \
+    virtual ~Exception() noexcept                              \
+    {}                                                         \
+    virtual void                                               \
+    print_info(std::ostream& out) const override               \
+    {                                                          \
+      out << "    " << arg << std::endl;                       \
+    }                                                          \
+                                                               \
+  private:                                                     \
+    const std::string arg;                                     \
+  }
 
 /**
  * Declare an exception class derived from ExceptionBase with one additional
@@ -217,23 +217,23 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException1(Exception1, type1, outsequence) \
-    class Exception1 : public dealii::ExceptionBase      \
-    {                                                    \
-    public:                                              \
-      Exception1(const type1 a1) : arg1(a1)              \
-      {} /*NOLINT*/                                      \
-      virtual ~Exception1() noexcept                     \
-      {}                                                 \
-      virtual void                                       \
-      print_info(std::ostream& out) const override       \
-      {                                                  \
-        out << "    " outsequence << std::endl;          \
-      }                                                  \
-                                                         \
-    private:                                             \
-      const type1 arg1;                                  \
-    }
+#define DeclException1(Exception1, type1, outsequence) \
+  class Exception1 : public dealii::ExceptionBase      \
+  {                                                    \
+  public:                                              \
+    Exception1(const type1 a1) : arg1(a1)              \
+    {} /*NOLINT*/                                      \
+    virtual ~Exception1() noexcept                     \
+    {}                                                 \
+    virtual void                                       \
+    print_info(std::ostream& out) const override       \
+    {                                                  \
+      out << "    " outsequence << std::endl;          \
+    }                                                  \
+                                                       \
+  private:                                             \
+    const type1 arg1;                                  \
+  }
 
 /**
  * Declare an exception class derived from ExceptionBase with two additional
@@ -241,27 +241,27 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException2(Exception2, type1, type2, outsequence) \
-    class Exception2 : public dealii::ExceptionBase             \
-    {                                                           \
-    public:                                                     \
-      Exception2(const type1 a1, const type2 a2)                \
-        : /*NOLINT*/                                            \
-          arg1(a1),                                             \
-          arg2(a2)                                              \
-      {}                                                        \
-      virtual ~Exception2() noexcept                            \
-      {}                                                        \
-      virtual void                                              \
-      print_info(std::ostream& out) const override              \
-      {                                                         \
-        out << "    " outsequence << std::endl;                 \
-      }                                                         \
-                                                                \
-    private:                                                    \
-      const type1 arg1;                                         \
-      const type2 arg2;                                         \
-    }
+#define DeclException2(Exception2, type1, type2, outsequence) \
+  class Exception2 : public dealii::ExceptionBase             \
+  {                                                           \
+  public:                                                     \
+    Exception2(const type1 a1, const type2 a2)                \
+      : /*NOLINT*/                                            \
+        arg1(a1),                                             \
+        arg2(a2)                                              \
+    {}                                                        \
+    virtual ~Exception2() noexcept                            \
+    {}                                                        \
+    virtual void                                              \
+    print_info(std::ostream& out) const override              \
+    {                                                         \
+      out << "    " outsequence << std::endl;                 \
+    }                                                         \
+                                                              \
+  private:                                                    \
+    const type1 arg1;                                         \
+    const type2 arg2;                                         \
+  }
 
 /**
  * Declare an exception class derived from ExceptionBase with three additional
@@ -269,29 +269,29 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException3(Exception3, type1, type2, type3, outsequence) \
-    class Exception3 : public dealii::ExceptionBase                    \
-    {                                                                  \
-    public:                                                            \
-      Exception3(const type1 a1, const type2 a2, const type3 a3)       \
-        : /*NOLINT*/                                                   \
-          arg1(a1),                                                    \
-          arg2(a2),                                                    \
-          arg3(a3)                                                     \
-      {}                                                               \
-      virtual ~Exception3() noexcept                                   \
-      {}                                                               \
-      virtual void                                                     \
-      print_info(std::ostream& out) const override                     \
-      {                                                                \
-        out << "    " outsequence << std::endl;                        \
-      }                                                                \
-                                                                       \
-    private:                                                           \
-      const type1 arg1;                                                \
-      const type2 arg2;                                                \
-      const type3 arg3;                                                \
-    }
+#define DeclException3(Exception3, type1, type2, type3, outsequence) \
+  class Exception3 : public dealii::ExceptionBase                    \
+  {                                                                  \
+  public:                                                            \
+    Exception3(const type1 a1, const type2 a2, const type3 a3)       \
+      : /*NOLINT*/                                                   \
+        arg1(a1),                                                    \
+        arg2(a2),                                                    \
+        arg3(a3)                                                     \
+    {}                                                               \
+    virtual ~Exception3() noexcept                                   \
+    {}                                                               \
+    virtual void                                                     \
+    print_info(std::ostream& out) const override                     \
+    {                                                                \
+      out << "    " outsequence << std::endl;                        \
+    }                                                                \
+                                                                     \
+  private:                                                           \
+    const type1 arg1;                                                \
+    const type2 arg2;                                                \
+    const type3 arg3;                                                \
+  }
 
 /**
  * Declare an exception class derived from ExceptionBase with four additional
@@ -299,34 +299,34 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException4(Exception4, type1, type2, type3, type4, outsequence) \
-    class Exception4 : public dealii::ExceptionBase                           \
-    {                                                                         \
-    public:                                                                   \
-      Exception4(const type1 a1,                                              \
-                 const type2 a2, /*NOLINT*/                                   \
-                 const type3 a3,                                              \
-                 const type4 a4)                                              \
-        : /*NOLINT*/                                                          \
-          arg1(a1),                                                           \
-          arg2(a2),                                                           \
-          arg3(a3),                                                           \
-          arg4(a4)                                                            \
-      {}                                                                      \
-      virtual ~Exception4() noexcept                                          \
-      {}                                                                      \
-      virtual void                                                            \
-      print_info(std::ostream& out) const override                            \
-      {                                                                       \
-        out << "    " outsequence << std::endl;                               \
-      }                                                                       \
-                                                                              \
-    private:                                                                  \
-      const type1 arg1;                                                       \
-      const type2 arg2;                                                       \
-      const type3 arg3;                                                       \
-      const type4 arg4;                                                       \
-    }
+#define DeclException4(Exception4, type1, type2, type3, type4, outsequence) \
+  class Exception4 : public dealii::ExceptionBase                           \
+  {                                                                         \
+  public:                                                                   \
+    Exception4(const type1 a1,                                              \
+               const type2 a2, /*NOLINT*/                                   \
+               const type3 a3,                                              \
+               const type4 a4)                                              \
+      : /*NOLINT*/                                                          \
+        arg1(a1),                                                           \
+        arg2(a2),                                                           \
+        arg3(a3),                                                           \
+        arg4(a4)                                                            \
+    {}                                                                      \
+    virtual ~Exception4() noexcept                                          \
+    {}                                                                      \
+    virtual void                                                            \
+    print_info(std::ostream& out) const override                            \
+    {                                                                       \
+      out << "    " outsequence << std::endl;                               \
+    }                                                                       \
+                                                                            \
+  private:                                                                  \
+    const type1 arg1;                                                       \
+    const type2 arg2;                                                       \
+    const type3 arg3;                                                       \
+    const type4 arg4;                                                       \
+  }
 
 /**
  * Declare an exception class derived from ExceptionBase with five additional
@@ -334,38 +334,38 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException5(                                       \
-    Exception5, type1, type2, type3, type4, type5, outsequence) \
-    class Exception5 : public dealii::ExceptionBase             \
-    {                                                           \
-    public:                                                     \
-      Exception5(const type1 a1,                                \
-                 const type2 a2,                                \
-                 const type3 a3, /*NOLINT*/                     \
-                 const type4 a4,                                \
-                 const type5 a5)                                \
-        : /*NOLINT*/                                            \
-          arg1(a1),                                             \
-          arg2(a2),                                             \
-          arg3(a3),                                             \
-          arg4(a4),                                             \
-          arg5(a5)                                              \
-      {}                                                        \
-      virtual ~Exception5() noexcept                            \
-      {}                                                        \
-      virtual void                                              \
-      print_info(std::ostream& out) const override              \
-      {                                                         \
-        out << "    " outsequence << std::endl;                 \
-      }                                                         \
-                                                                \
-    private:                                                    \
-      const type1 arg1;                                         \
-      const type2 arg2;                                         \
-      const type3 arg3;                                         \
-      const type4 arg4;                                         \
-      const type5 arg5;                                         \
-    }
+#define DeclException5(                                       \
+  Exception5, type1, type2, type3, type4, type5, outsequence) \
+  class Exception5 : public dealii::ExceptionBase             \
+  {                                                           \
+  public:                                                     \
+    Exception5(const type1 a1,                                \
+               const type2 a2,                                \
+               const type3 a3, /*NOLINT*/                     \
+               const type4 a4,                                \
+               const type5 a5)                                \
+      : /*NOLINT*/                                            \
+        arg1(a1),                                             \
+        arg2(a2),                                             \
+        arg3(a3),                                             \
+        arg4(a4),                                             \
+        arg5(a5)                                              \
+    {}                                                        \
+    virtual ~Exception5() noexcept                            \
+    {}                                                        \
+    virtual void                                              \
+    print_info(std::ostream& out) const override              \
+    {                                                         \
+      out << "    " outsequence << std::endl;                 \
+    }                                                         \
+                                                              \
+  private:                                                    \
+    const type1 arg1;                                         \
+    const type2 arg2;                                         \
+    const type3 arg3;                                         \
+    const type4 arg4;                                         \
+    const type5 arg5;                                         \
+  }
 
 #else /*ifndef DOXYGEN*/
 
@@ -377,9 +377,9 @@ private:
  * @author Wolfgang Bangerth, November 1997
  * @ingroup Exceptions
  */
-#  define DeclException0(Exception0) \
-    /** @ingroup Exceptions */       \
-    static dealii::ExceptionBase& Exception0()
+#define DeclException0(Exception0) \
+  /** @ingroup Exceptions */       \
+  static dealii::ExceptionBase& Exception0()
 
 /**
  * Declare an exception class derived from ExceptionBase that can take one
@@ -389,10 +389,10 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclExceptionMsg(Exception, defaulttext) \
-    /** @ingroup Exceptions */                     \
-    /** @dealiiExceptionMessage{defaulttext} */    \
-    static dealii::ExceptionBase& Exception()
+#define DeclExceptionMsg(Exception, defaulttext) \
+  /** @ingroup Exceptions */                     \
+  /** @dealiiExceptionMessage{defaulttext} */    \
+  static dealii::ExceptionBase& Exception()
 
 /**
  * Declare an exception class derived from ExceptionBase with one additional
@@ -400,10 +400,10 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException1(Exception1, type1, outsequence) \
-    /** @ingroup Exceptions */                           \
-    /** @dealiiExceptionMessage{outsequence} */          \
-    static dealii::ExceptionBase& Exception1(type1 arg1)
+#define DeclException1(Exception1, type1, outsequence) \
+  /** @ingroup Exceptions */                           \
+  /** @dealiiExceptionMessage{outsequence} */          \
+  static dealii::ExceptionBase& Exception1(type1 arg1)
 
 /**
  * Declare an exception class derived from ExceptionBase with two additional
@@ -411,10 +411,10 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException2(Exception2, type1, type2, outsequence) \
-    /** @ingroup Exceptions */                                  \
-    /** @dealiiExceptionMessage{outsequence} */                 \
-    static dealii::ExceptionBase& Exception2(type1 arg1, type2 arg2)
+#define DeclException2(Exception2, type1, type2, outsequence) \
+  /** @ingroup Exceptions */                                  \
+  /** @dealiiExceptionMessage{outsequence} */                 \
+  static dealii::ExceptionBase& Exception2(type1 arg1, type2 arg2)
 
 /**
  * Declare an exception class derived from ExceptionBase with three additional
@@ -422,10 +422,10 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException3(Exception3, type1, type2, type3, outsequence) \
-    /** @ingroup Exceptions */                                         \
-    /** @dealiiExceptionMessage{outsequence} */                        \
-    static dealii::ExceptionBase& Exception3(type1 arg1, type2 arg2, type3 arg3)
+#define DeclException3(Exception3, type1, type2, type3, outsequence) \
+  /** @ingroup Exceptions */                                         \
+  /** @dealiiExceptionMessage{outsequence} */                        \
+  static dealii::ExceptionBase& Exception3(type1 arg1, type2 arg2, type3 arg3)
 
 /**
  * Declare an exception class derived from ExceptionBase with four additional
@@ -433,11 +433,11 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException4(Exception4, type1, type2, type3, type4, outsequence) \
-    /** @ingroup Exceptions */                                                \
-    /** @dealiiExceptionMessage{outsequence} */                               \
-    static dealii::ExceptionBase& Exception4(                                 \
-      type1 arg1, type2 arg2, type3 arg3, type4 arg4)
+#define DeclException4(Exception4, type1, type2, type3, type4, outsequence) \
+  /** @ingroup Exceptions */                                                \
+  /** @dealiiExceptionMessage{outsequence} */                               \
+  static dealii::ExceptionBase& Exception4(                                 \
+    type1 arg1, type2 arg2, type3 arg3, type4 arg4)
 
 /**
  * Declare an exception class derived from ExceptionBase with five additional
@@ -445,12 +445,12 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException5(                                       \
-    Exception5, type1, type2, type3, type4, type5, outsequence) \
-    /** @ingroup Exceptions */                                  \
-    /** @dealiiExceptionMessage{outsequence} */                 \
-    static dealii::ExceptionBase& Exception5(                   \
-      type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5)
+#define DeclException5(                                       \
+  Exception5, type1, type2, type3, type4, type5, outsequence) \
+  /** @ingroup Exceptions */                                  \
+  /** @dealiiExceptionMessage{outsequence} */                 \
+  static dealii::ExceptionBase& Exception5(                   \
+    type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5)
 
 #endif /*ifndef DOXYGEN*/
 
@@ -1204,36 +1204,36 @@ namespace deal_II_exceptions
  * @author Wolfgang Bangerth, 1997, 1998, Matthias Maier, 2013
  */
 #ifdef DEBUG
-#  ifdef DEAL_II_HAVE_BUILTIN_EXPECT
-#    define Assert(cond, exc)                                            \
-      {                                                                  \
-        if(__builtin_expect(!(cond), false))                             \
-          ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
-            ::dealii::deal_II_exceptions::internals::abort_on_exception, \
-            __FILE__,                                                    \
-            __LINE__,                                                    \
-            __PRETTY_FUNCTION__,                                         \
-            #cond,                                                       \
-            #exc,                                                        \
-            exc);                                                        \
-      }
-#  else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
-#    define Assert(cond, exc)                                            \
-      {                                                                  \
-        if(!(cond))                                                      \
-          ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
-            ::dealii::deal_II_exceptions::internals::abort_on_exception, \
-            __FILE__,                                                    \
-            __LINE__,                                                    \
-            __PRETTY_FUNCTION__,                                         \
-            #cond,                                                       \
-            #exc,                                                        \
-            exc);                                                        \
-      }
-#  endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
+#ifdef DEAL_II_HAVE_BUILTIN_EXPECT
+#define Assert(cond, exc)                                            \
+  {                                                                  \
+    if(__builtin_expect(!(cond), false))                             \
+      ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
+        ::dealii::deal_II_exceptions::internals::abort_on_exception, \
+        __FILE__,                                                    \
+        __LINE__,                                                    \
+        __PRETTY_FUNCTION__,                                         \
+        #cond,                                                       \
+        #exc,                                                        \
+        exc);                                                        \
+  }
+#else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
+#define Assert(cond, exc)                                            \
+  {                                                                  \
+    if(!(cond))                                                      \
+      ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
+        ::dealii::deal_II_exceptions::internals::abort_on_exception, \
+        __FILE__,                                                    \
+        __LINE__,                                                    \
+        __PRETTY_FUNCTION__,                                         \
+        #cond,                                                       \
+        #exc,                                                        \
+        exc);                                                        \
+  }
+#endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 #else
-#  define Assert(cond, exc) \
-    {}
+#define Assert(cond, exc) \
+  {}
 #endif
 
 /**
@@ -1253,38 +1253,36 @@ namespace deal_II_exceptions
  * @author Wolfgang Bangerth, 1997, 1998, Matthias Maier, 2013
  */
 #ifdef DEBUG
-#  ifdef DEAL_II_HAVE_BUILTIN_EXPECT
-#    define AssertNothrow(cond, exc)                                    \
-      {                                                                 \
-        if(__builtin_expect(!(cond), false))                            \
-          ::dealii::deal_II_exceptions::internals::issue_error_nothrow( \
-            ::dealii::deal_II_exceptions::internals::                   \
-              abort_nothrow_on_exception,                               \
-            __FILE__,                                                   \
-            __LINE__,                                                   \
-            __PRETTY_FUNCTION__,                                        \
-            #cond,                                                      \
-            #exc,                                                       \
-            exc);                                                       \
-      }
-#  else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
-#    define AssertNothrow(cond, exc)                                    \
-      {                                                                 \
-        if(!(cond))                                                     \
-          ::dealii::deal_II_exceptions::internals::issue_error_nothrow( \
-            ::dealii::deal_II_exceptions::internals::                   \
-              abort_nothrow_on_exception,                               \
-            __FILE__,                                                   \
-            __LINE__,                                                   \
-            __PRETTY_FUNCTION__,                                        \
-            #cond,                                                      \
-            #exc,                                                       \
-            exc);                                                       \
-      }
-#  endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
+#ifdef DEAL_II_HAVE_BUILTIN_EXPECT
+#define AssertNothrow(cond, exc)                                             \
+  {                                                                          \
+    if(__builtin_expect(!(cond), false))                                     \
+      ::dealii::deal_II_exceptions::internals::issue_error_nothrow(          \
+        ::dealii::deal_II_exceptions::internals::abort_nothrow_on_exception, \
+        __FILE__,                                                            \
+        __LINE__,                                                            \
+        __PRETTY_FUNCTION__,                                                 \
+        #cond,                                                               \
+        #exc,                                                                \
+        exc);                                                                \
+  }
+#else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
+#define AssertNothrow(cond, exc)                                             \
+  {                                                                          \
+    if(!(cond))                                                              \
+      ::dealii::deal_II_exceptions::internals::issue_error_nothrow(          \
+        ::dealii::deal_II_exceptions::internals::abort_nothrow_on_exception, \
+        __FILE__,                                                            \
+        __LINE__,                                                            \
+        __PRETTY_FUNCTION__,                                                 \
+        #cond,                                                               \
+        #exc,                                                                \
+        exc);                                                                \
+  }
+#endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 #else
-#  define AssertNothrow(cond, exc) \
-    {}
+#define AssertNothrow(cond, exc) \
+  {}
 #endif
 
 /**
@@ -1304,31 +1302,31 @@ namespace deal_II_exceptions
  * @author Wolfgang Bangerth, 1997, 1998, Matthias Maier, 2013
  */
 #ifdef DEAL_II_HAVE_BUILTIN_EXPECT
-#  define AssertThrow(cond, exc)                                       \
-    {                                                                  \
-      if(__builtin_expect(!(cond), false))                             \
-        ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
-          ::dealii::deal_II_exceptions::internals::throw_on_exception, \
-          __FILE__,                                                    \
-          __LINE__,                                                    \
-          __PRETTY_FUNCTION__,                                         \
-          #cond,                                                       \
-          #exc,                                                        \
-          exc);                                                        \
-    }
+#define AssertThrow(cond, exc)                                       \
+  {                                                                  \
+    if(__builtin_expect(!(cond), false))                             \
+      ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
+        ::dealii::deal_II_exceptions::internals::throw_on_exception, \
+        __FILE__,                                                    \
+        __LINE__,                                                    \
+        __PRETTY_FUNCTION__,                                         \
+        #cond,                                                       \
+        #exc,                                                        \
+        exc);                                                        \
+  }
 #else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
-#  define AssertThrow(cond, exc)                                       \
-    {                                                                  \
-      if(!(cond))                                                      \
-        ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
-          ::dealii::deal_II_exceptions::internals::throw_on_exception, \
-          __FILE__,                                                    \
-          __LINE__,                                                    \
-          __PRETTY_FUNCTION__,                                         \
-          #cond,                                                       \
-          #exc,                                                        \
-          exc);                                                        \
-    }
+#define AssertThrow(cond, exc)                                       \
+  {                                                                  \
+    if(!(cond))                                                      \
+      ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
+        ::dealii::deal_II_exceptions::internals::throw_on_exception, \
+        __FILE__,                                                    \
+        __LINE__,                                                    \
+        __PRETTY_FUNCTION__,                                         \
+        #cond,                                                       \
+        #exc,                                                        \
+        exc);                                                        \
+  }
 #endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 
 /**
@@ -1412,11 +1410,11 @@ namespace internal
  * @ingroup Exceptions
  * @author David Wells, 2016
  */
-#  define AssertThrowMPI(error_code) \
-    AssertThrow(error_code == MPI_SUCCESS, dealii::ExcMPI(error_code))
+#define AssertThrowMPI(error_code) \
+  AssertThrow(error_code == MPI_SUCCESS, dealii::ExcMPI(error_code))
 #else
-#  define AssertThrowMPI(error_code) \
-    {}
+#define AssertThrowMPI(error_code) \
+  {}
 #endif // DEAL_II_WITH_MPI
 
 #ifdef DEAL_II_WITH_CUDA
@@ -1427,16 +1425,16 @@ namespace internal
  * @ingroup Exceptions
  * @author Bruno Turcksin, 2016
  */
-#  ifdef DEBUG
-#    define AssertCuda(error_code)      \
-      Assert(error_code == cudaSuccess, \
-             dealii::ExcCudaError(cudaGetErrorString(error_code)))
-#  else
-#    define AssertCuda(error_code) \
-      {                            \
-        (void) (error_code);       \
-      }
-#  endif
+#ifdef DEBUG
+#define AssertCuda(error_code)      \
+  Assert(error_code == cudaSuccess, \
+         dealii::ExcCudaError(cudaGetErrorString(error_code)))
+#else
+#define AssertCuda(error_code) \
+  {                            \
+    (void) (error_code);       \
+  }
+#endif
 
 /**
  * An assertion that checks that the error code produced by calling a cuSPARSE
@@ -1445,33 +1443,31 @@ namespace internal
  * @ingroup Exceptions
  * @author Bruno Turcksin, 2018
  */
-#  ifdef DEBUG
-#    define AssertCusparse(error_code)                                      \
-      Assert(                                                               \
-        error_code == CUSPARSE_STATUS_SUCCESS,                              \
-        dealii::ExcCusparseError(                                           \
-          dealii::deal_II_exceptions::internals::get_cusparse_error_string( \
-            error_code)))
-#  else
-#    define AssertCusparse(error_code) \
-      {                                \
-        (void) (error_code);           \
-      }
-#  endif
+#ifdef DEBUG
+#define AssertCusparse(error_code)                                           \
+  Assert(error_code == CUSPARSE_STATUS_SUCCESS,                              \
+         dealii::ExcCusparseError(                                           \
+           dealii::deal_II_exceptions::internals::get_cusparse_error_string( \
+             error_code)))
+#else
+#define AssertCusparse(error_code) \
+  {                                \
+    (void) (error_code);           \
+  }
+#endif
 
-#  ifdef DEBUG
-#    define AssertCusolver(error_code)                                      \
-      Assert(                                                               \
-        error_code == CUSOLVER_STATUS_SUCCESS,                              \
-        dealii::ExcCusparseError(                                           \
-          dealii::deal_II_exceptions::internals::get_cusolver_error_string( \
-            error_code)))
-#  else
-#    define AssertCusolver(error_code) \
-      {                                \
-        (void) (error_code);           \
-      }
-#  endif
+#ifdef DEBUG
+#define AssertCusolver(error_code)                                           \
+  Assert(error_code == CUSOLVER_STATUS_SUCCESS,                              \
+         dealii::ExcCusparseError(                                           \
+           dealii::deal_II_exceptions::internals::get_cusolver_error_string( \
+             error_code)))
+#else
+#define AssertCusolver(error_code) \
+  {                                \
+    (void) (error_code);           \
+  }
+#endif
 
 #endif
 

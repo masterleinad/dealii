@@ -19,14 +19,14 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <cmath>
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/petsc_compatibility.h>
-#  include <deal.II/lac/petsc_matrix_base.h>
-#  include <deal.II/lac/petsc_precondition.h>
-#  include <deal.II/lac/petsc_vector_base.h>
+#include <cmath>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_compatibility.h>
+#include <deal.II/lac/petsc_matrix_base.h>
+#include <deal.II/lac/petsc_precondition.h>
+#include <deal.II/lac/petsc_vector_base.h>
 
-#  include <petscversion.h>
+#include <petscversion.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -80,14 +80,14 @@ namespace PETScWrappers
 
         // setting the preconditioner overwrites the used matrices.
         // hence, we need to set the matrices after the preconditioner.
-#  if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
+#if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
         // the last argument is irrelevant here,
         // since we use the solver only once anyway
         ierr = KSPSetOperators(
           solver_data->ksp, A, preconditioner, SAME_PRECONDITIONER);
-#  else
+#else
         ierr = KSPSetOperators(solver_data->ksp, A, preconditioner);
-#  endif
+#endif
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         // then a convergence monitor
@@ -607,7 +607,7 @@ namespace PETScWrappers
                            VectorBase&       x,
                            const VectorBase& b)
   {
-#  ifdef DEAL_II_PETSC_WITH_MUMPS
+#ifdef DEAL_II_PETSC_WITH_MUMPS
     /**
      * factorization matrix to be obtained from MUMPS
      */
@@ -646,12 +646,12 @@ namespace PETScWrappers
          * set the matrices involved. the last argument is irrelevant here,
          * since we use the solver only once anyway
          */
-#    if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
+#if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
         ierr
           = KSPSetOperators(solver_data->ksp, A, A, DIFFERENT_NONZERO_PATTERN);
-#    else
+#else
         ierr = KSPSetOperators(solver_data->ksp, A, A);
-#    endif
+#endif
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         /**
@@ -690,21 +690,21 @@ namespace PETScWrappers
          * factorization here we start to see differences with the base
          * class solve function
          */
-#    if DEAL_II_PETSC_VERSION_LT(3, 9, 0)
+#if DEAL_II_PETSC_VERSION_LT(3, 9, 0)
         ierr = PCFactorSetMatSolverPackage(solver_data->pc, MATSOLVERMUMPS);
-#    else
+#else
         ierr = PCFactorSetMatSolverType(solver_data->pc, MATSOLVERMUMPS);
-#    endif
+#endif
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         /**
          * set up the package to call for the factorization
          */
-#    if DEAL_II_PETSC_VERSION_LT(3, 9, 0)
+#if DEAL_II_PETSC_VERSION_LT(3, 9, 0)
         ierr = PCFactorSetUpMatSolverPackage(solver_data->pc);
-#    else
+#else
         ierr = PCFactorSetUpMatSolverType(solver_data->pc);
-#    endif
+#endif
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         /**
@@ -762,7 +762,7 @@ namespace PETScWrappers
         AssertThrow(ierr == 0, ExcPETScError(ierr));
       }
 
-#  else // DEAL_II_PETSC_WITH_MUMPS
+#else // DEAL_II_PETSC_WITH_MUMPS
     Assert(
       false,
       ExcMessage(
@@ -775,7 +775,7 @@ namespace PETScWrappers
     (void) A;
     (void) x;
     (void) b;
-#  endif
+#endif
   }
 
   PetscErrorCode

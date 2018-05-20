@@ -19,7 +19,7 @@
 // because Intel implementation of TBB includes winsock.h,
 // and we'll get a conflict between winsock.h and winsock2.h otherwise.
 #ifdef DEAL_II_MSVC
-#  include <winsock2.h>
+#include <winsock2.h>
 #endif
 
 #include <deal.II/base/exceptions.h>
@@ -45,22 +45,22 @@
 #include <sstream>
 
 #if defined(DEAL_II_HAVE_UNISTD_H) && defined(DEAL_II_HAVE_GETHOSTNAME)
-#  include <unistd.h>
+#include <unistd.h>
 #endif
 
 #ifndef DEAL_II_MSVC
-#  include <stdlib.h>
+#include <stdlib.h>
 #endif
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  ifdef DEAL_II_WITH_MPI
-#    include <Epetra_MpiComm.h>
-#    include <deal.II/lac/trilinos_parallel_block_vector.h>
-#    include <deal.II/lac/trilinos_vector.h>
-#    include <deal.II/lac/vector_memory.h>
-#  endif
-#  include <Epetra_SerialComm.h>
-#  include <Teuchos_RCP.hpp>
+#ifdef DEAL_II_WITH_MPI
+#include <Epetra_MpiComm.h>
+#include <deal.II/lac/trilinos_parallel_block_vector.h>
+#include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/lac/vector_memory.h>
+#endif
+#include <Epetra_SerialComm.h>
+#include <Teuchos_RCP.hpp>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -707,13 +707,13 @@ namespace Utilities
     const Epetra_Comm&
     comm_world()
     {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
       static Teuchos::RCP<Epetra_MpiComm> communicator
         = Teuchos::rcp(new Epetra_MpiComm(MPI_COMM_WORLD), true);
-#  else
+#else
       static Teuchos::RCP<Epetra_SerialComm> communicator
         = Teuchos::rcp(new Epetra_SerialComm(), true);
-#  endif
+#endif
 
       return *communicator;
     }
@@ -721,13 +721,13 @@ namespace Utilities
     const Epetra_Comm&
     comm_self()
     {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
       static Teuchos::RCP<Epetra_MpiComm> communicator
         = Teuchos::rcp(new Epetra_MpiComm(MPI_COMM_SELF), true);
-#  else
+#else
       static Teuchos::RCP<Epetra_SerialComm> communicator
         = Teuchos::rcp(new Epetra_SerialComm(), true);
-#  endif
+#endif
 
       return *communicator;
     }
@@ -735,7 +735,7 @@ namespace Utilities
     Epetra_Comm*
     duplicate_communicator(const Epetra_Comm& communicator)
     {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
       // see if the communicator is in fact a
       // parallel MPI communicator; if so,
@@ -745,7 +745,7 @@ namespace Utilities
       if(mpi_comm != nullptr)
         return new Epetra_MpiComm(
           Utilities::MPI::duplicate_communicator(mpi_comm->GetMpiComm()));
-#  endif
+#endif
 
       // if we don't support MPI, or if the
       // communicator in question was in fact
@@ -762,7 +762,7 @@ namespace Utilities
     {
       // save the communicator, reset the map, and delete the communicator if
       // this whole thing was created as an MPI communicator
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
       Epetra_MpiComm* mpi_comm = dynamic_cast<Epetra_MpiComm*>(&communicator);
       if(mpi_comm != nullptr)
         {
@@ -771,7 +771,7 @@ namespace Utilities
           const int ierr = MPI_Comm_free(&comm);
           AssertThrowMPI(ierr);
         }
-#  endif
+#endif
     }
 
     unsigned int

@@ -20,12 +20,12 @@
 
 #ifdef DEAL_II_WITH_TRILINOS
 
-#  include <deal.II/lac/block_indices.h>
-#  include <deal.II/lac/block_vector_base.h>
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/lac/block_indices.h>
+#include <deal.II/lac/block_vector_base.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/trilinos_vector.h>
 
-#  include <functional>
+#include <functional>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -369,10 +369,10 @@ namespace TrilinosWrappers
     BlockVector::has_ghost_elements() const
     {
       bool ghosted = block(0).has_ghost_elements();
-#  ifdef DEBUG
+#ifdef DEBUG
       for(unsigned int i = 0; i < this->n_blocks(); ++i)
         Assert(block(i).has_ghost_elements() == ghosted, ExcInternalError());
-#  endif
+#endif
       return ghosted;
     }
 

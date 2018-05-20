@@ -302,13 +302,13 @@ namespace internal
               AssertThrowMPI(ierr);
               requests.clear();
             }
-#  ifdef DEBUG
+#ifdef DEBUG
           // Make sure in debug mode, that everybody sent/received all packages
           // on this level. If a deadlock occurs here, the list of expected
           // senders is not computed correctly.
           const int ierr = MPI_Barrier(tria->get_communicator());
           AssertThrowMPI(ierr);
-#  endif
+#endif
         }
 #endif
 

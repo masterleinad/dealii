@@ -14,14 +14,14 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_sparse_matrix_ez_h
-#  define dealii_sparse_matrix_ez_h
+#define dealii_sparse_matrix_ez_h
 
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/smartpointer.h>
-#  include <deal.II/base/subscriptor.h>
-#  include <deal.II/lac/exceptions.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/smartpointer.h>
+#include <deal.II/base/subscriptor.h>
+#include <deal.II/lac/exceptions.h>
 
-#  include <vector>
+#include <vector>
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -17,12 +17,12 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <deal.II/base/mpi.h>
-#  include <deal.II/lac/dynamic_sparsity_pattern.h>
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/petsc_compatibility.h>
-#  include <deal.II/lac/petsc_parallel_vector.h>
-#  include <deal.II/lac/sparsity_pattern.h>
+#include <deal.II/base/mpi.h>
+#include <deal.II/lac/dynamic_sparsity_pattern.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_compatibility.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
+#include <deal.II/lac/sparsity_pattern.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -340,7 +340,7 @@ namespace PETScWrappers
       Assert(local_rows.is_ascending_and_one_to_one(communicator),
              ExcNotImplemented());
 
-#  ifdef DEBUG
+#ifdef DEBUG
       {
         // check indexsets
         types::global_dof_index row_owners
@@ -363,7 +363,7 @@ namespace PETScWrappers
             + " but sum(local_columns.n_elements())="
             + Utilities::to_string(col_owners) + ")"));
       }
-#  endif
+#endif
 
       // create the matrix. We do not set row length but set the
       // correct SparsityPattern later.

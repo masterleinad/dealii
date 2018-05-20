@@ -17,7 +17,7 @@
 #include <deal.II/base/job_identifier.h>
 
 #ifdef DEAL_II_HAVE_UNISTD_H
-#  include <unistd.h>
+#include <unistd.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

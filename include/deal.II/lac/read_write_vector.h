@@ -31,10 +31,10 @@
 #include <iomanip>
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  include <deal.II/lac/trilinos_epetra_communication_pattern.h>
-#  include <deal.II/lac/trilinos_epetra_vector.h>
+#include <deal.II/lac/trilinos_epetra_communication_pattern.h>
+#include <deal.II/lac/trilinos_epetra_vector.h>
 
-#  include <Epetra_MultiVector.h>
+#include <Epetra_MultiVector.h>
 
 #endif
 
@@ -210,7 +210,7 @@ namespace LinearAlgebra
            const bool      omit_zeroing_entries = false);
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     /**
      * Initialize this ReadWriteVector by supplying access to all locally available
      * entries in the given ghosted or non-ghosted vector.
@@ -224,7 +224,7 @@ namespace LinearAlgebra
      */
     void
     reinit(const TrilinosWrappers::MPI::Vector& trilinos_vec);
-#  endif
+#endif
 #endif
 
     /**
@@ -328,7 +328,7 @@ namespace LinearAlgebra
            std::shared_ptr<const CommunicationPatternBase> communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>());
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     /**
      * Imports all the elements present in the vector's IndexSet from the input
      * vector @p epetra_vec. VectorOperation::values @p operation is used to
@@ -342,7 +342,7 @@ namespace LinearAlgebra
            VectorOperation::values                         operation,
            std::shared_ptr<const CommunicationPatternBase> communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>());
-#  endif
+#endif
 #endif
 
 #ifdef DEAL_II_WITH_CUDA

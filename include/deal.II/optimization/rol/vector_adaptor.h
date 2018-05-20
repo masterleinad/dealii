@@ -19,12 +19,12 @@
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_TRILINOS_WITH_ROL
-#  include <ROL_Vector.hpp>
+#include <ROL_Vector.hpp>
 
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/lac/vector.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/lac/vector.h>
 
-#  include <type_traits>
+#include <type_traits>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -252,7 +252,7 @@ namespace Rol
   };
 
   /*------------------------------member definitions--------------------------*/
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
   template <typename VectorType>
   VectorAdaptor<VectorType>::VectorAdaptor(
@@ -444,7 +444,7 @@ namespace Rol
     vector_ptr->print(outStream);
   }
 
-#  endif // DOXYGEN
+#endif // DOXYGEN
 
 } // namespace Rol
 

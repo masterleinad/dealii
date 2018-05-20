@@ -43,7 +43,7 @@
 // definition of PetscScalar available
 // without including other PETSc stuff
 #ifdef DEAL_II_WITH_PETSC
-#  include <petsc.h>
+#include <petsc.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

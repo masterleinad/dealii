@@ -24,10 +24,10 @@
 #include <cstdlib>
 
 #ifdef DEAL_II_WITH_CUDA
-#  include <cuda_runtime_api.h>
-#  define DEAL_II_CUDA_HOST_DEV __host__ __device__
+#include <cuda_runtime_api.h>
+#define DEAL_II_CUDA_HOST_DEV __host__ __device__
 #else
-#  define DEAL_II_CUDA_HOST_DEV
+#define DEAL_II_CUDA_HOST_DEV
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -43,15 +43,15 @@ DEAL_II_NAMESPACE_CLOSE
 // Declare / Import auto-differentiable math functions in(to) standard
 // namespace before numbers::NumberTraits is defined
 #ifdef DEAL_II_WITH_ADOLC
-#  include <adolc/adouble.h> // Taped double
-#  include <deal.II/differentiation/ad/adolc_math.h>
+#include <adolc/adouble.h> // Taped double
+#include <deal.II/differentiation/ad/adolc_math.h>
 #endif
 // Ideally we'd like to #include <deal.II/differentiation/ad/sacado_math.h>
 // but header indirectly references numbers.h. We therefore simply
 // import the whole Sacado header at this point to get the math
 // functions imported into the standard namespace.
 #ifdef DEAL_II_WITH_TRILINOS
-#  include <Sacado.hpp>
+#include <Sacado.hpp>
 #endif
 
 namespace std

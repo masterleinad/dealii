@@ -17,32 +17,32 @@
 
 #ifdef DEAL_II_WITH_TRILINOS
 
-#  include <deal.II/lac/sparse_matrix.h>
-#  include <deal.II/lac/trilinos_sparse_matrix.h>
-#  include <deal.II/lac/vector.h>
+#include <deal.II/lac/sparse_matrix.h>
+#include <deal.II/lac/trilinos_sparse_matrix.h>
+#include <deal.II/lac/vector.h>
 
-#  include <Epetra_MultiVector.h>
-#  include <Ifpack.h>
-#  include <Ifpack_Chebyshev.h>
-#  include <Teuchos_ParameterList.hpp>
-#  include <Teuchos_RCP.hpp>
+#include <Epetra_MultiVector.h>
+#include <Ifpack.h>
+#include <Ifpack_Chebyshev.h>
+#include <Teuchos_ParameterList.hpp>
+#include <Teuchos_RCP.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 
 namespace TrilinosWrappers
 {
   PreconditionBase::PreconditionBase()
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     : communicator(MPI_COMM_SELF)
-#  endif
+#endif
   {}
 
   PreconditionBase::PreconditionBase(const PreconditionBase& base)
     : Subscriptor(),
       preconditioner(base.preconditioner),
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
       communicator(base.communicator),
-#  endif
+#endif
       vector_distributor(new Epetra_Map(*base.vector_distributor))
   {}
 
@@ -50,20 +50,20 @@ namespace TrilinosWrappers
   PreconditionBase::clear()
   {
     preconditioner.reset();
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     communicator = MPI_COMM_SELF;
-#  endif
+#endif
     vector_distributor.reset();
   }
 
   MPI_Comm
   PreconditionBase::get_mpi_communicator() const
   {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     return communicator.Comm();
-#  else
+#else
     return MPI_COMM_SELF;
-#  endif
+#endif
   }
 
   Epetra_Operator&

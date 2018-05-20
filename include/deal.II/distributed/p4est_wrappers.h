@@ -19,22 +19,22 @@
 #include <deal.II/base/geometry_info.h>
 
 #ifdef DEAL_II_WITH_P4EST
-#  include <p4est_bits.h>
-#  include <p4est_communication.h>
-#  include <p4est_extended.h>
-#  include <p4est_ghost.h>
-#  include <p4est_iterate.h>
-#  include <p4est_vtk.h>
+#include <p4est_bits.h>
+#include <p4est_communication.h>
+#include <p4est_extended.h>
+#include <p4est_ghost.h>
+#include <p4est_iterate.h>
+#include <p4est_vtk.h>
 
-#  include <p8est_bits.h>
-#  include <p8est_communication.h>
-#  include <p8est_extended.h>
-#  include <p8est_ghost.h>
-#  include <p8est_iterate.h>
-#  include <p8est_vtk.h>
+#include <p8est_bits.h>
+#include <p8est_communication.h>
+#include <p8est_extended.h>
+#include <p8est_ghost.h>
+#include <p8est_iterate.h>
+#include <p8est_vtk.h>
 
-#  include <map>
-#  include <set>
+#include <map>
+#include <set>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -70,11 +70,11 @@ namespace internal
       typedef p4est_quadrant_t     quadrant;
       typedef p4est_topidx_t       topidx;
       typedef p4est_locidx_t       locidx;
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       typedef p4est_connect_type_t balance_type;
-#  else
+#else
       typedef p4est_balance_type_t balance_type;
-#  endif
+#endif
       typedef p4est_ghost_t ghost;
     };
 
@@ -87,11 +87,11 @@ namespace internal
       typedef p8est_quadrant_t     quadrant;
       typedef p4est_topidx_t       topidx;
       typedef p4est_locidx_t       locidx;
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       typedef p8est_connect_type_t balance_type;
-#  else
+#else
       typedef p8est_balance_type_t balance_type;
-#  endif
+#endif
       typedef p8est_ghost_t ghost;
     };
 
@@ -177,21 +177,21 @@ namespace internal
                              types<2>::balance_type btype,
                              p4est_init_t           init_fn);
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       static p4est_gloidx_t (&partition)(types<2>::forest* p4est,
                                          int partition_for_coarsening,
                                          p4est_weight_t weight_fn);
-#  else
+#else
       static void (&partition)(types<2>::forest* p4est,
                                int               partition_for_coarsening,
                                p4est_weight_t    weight_fn);
-#  endif
+#endif
 
       static void (&save)(const char*       filename,
                           types<2>::forest* p4est,
                           int               save_data);
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       static types<2>::forest* (&load_ext)(const char* filename,
                                            MPI_Comm    mpicomm,
                                            size_t      data_size,
@@ -200,35 +200,35 @@ namespace internal
                                            int         broadcasthead,
                                            void*       user_pointer,
                                            types<2>::connectivity** p4est);
-#  else
+#else
       static types<2>::forest* (&load)(const char*              filename,
                                        MPI_Comm                 mpicomm,
                                        size_t                   data_size,
                                        int                      load_data,
                                        void*                    user_pointer,
                                        types<2>::connectivity** p4est);
-#  endif
+#endif
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       static int (&connectivity_save)(const char*             filename,
                                       types<2>::connectivity* connectivity);
-#  else
+#else
       static void (&connectivity_save)(const char*             filename,
                                        types<2>::connectivity* connectivity);
-#  endif
+#endif
 
       static int (&connectivity_is_valid)(types<2>::connectivity* connectivity);
 
-#  if DEAL_II_P4EST_VERSION_GTE(1, 0, 0, 0)
+#if DEAL_II_P4EST_VERSION_GTE(1, 0, 0, 0)
       static types<2>::connectivity* (&connectivity_load)(const char* filename,
                                                           size_t*     length);
-#  elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       static types<2>::connectivity* (
         &connectivity_load)(const char* filename, long unsigned* length);
-#  else
+#else
       static types<2>::connectivity* (&connectivity_load)(const char* filename,
                                                           long*       length);
-#  endif
+#endif
 
       static unsigned int (&checksum)(types<2>::forest* p4est);
 
@@ -333,21 +333,21 @@ namespace internal
                              types<3>::balance_type btype,
                              p8est_init_t           init_fn);
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       static p4est_gloidx_t (&partition)(types<3>::forest* p8est,
                                          int partition_for_coarsening,
                                          p8est_weight_t weight_fn);
-#  else
+#else
       static void (&partition)(types<3>::forest* p8est,
                                int               partition_for_coarsening,
                                p8est_weight_t    weight_fn);
-#  endif
+#endif
 
       static void (&save)(const char*       filename,
                           types<3>::forest* p4est,
                           int               save_data);
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       static types<3>::forest* (&load_ext)(const char* filename,
                                            MPI_Comm    mpicomm,
                                            std::size_t data_size,
@@ -356,35 +356,35 @@ namespace internal
                                            int         broadcasthead,
                                            void*       user_pointer,
                                            types<3>::connectivity** p4est);
-#  else
+#else
       static types<3>::forest* (&load)(const char*              filename,
                                        MPI_Comm                 mpicomm,
                                        std::size_t              data_size,
                                        int                      load_data,
                                        void*                    user_pointer,
                                        types<3>::connectivity** p4est);
-#  endif
+#endif
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       static int (&connectivity_save)(const char*             filename,
                                       types<3>::connectivity* connectivity);
-#  else
+#else
       static void (&connectivity_save)(const char*             filename,
                                        types<3>::connectivity* connectivity);
-#  endif
+#endif
 
       static int (&connectivity_is_valid)(types<3>::connectivity* connectivity);
 
-#  if DEAL_II_P4EST_VERSION_GTE(1, 0, 0, 0)
+#if DEAL_II_P4EST_VERSION_GTE(1, 0, 0, 0)
       static types<3>::connectivity* (&connectivity_load)(const char* filename,
                                                           size_t*     length);
-#  elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       static types<3>::connectivity* (
         &connectivity_load)(const char* filename, long unsigned* length);
-#  else
+#else
       static types<3>::connectivity* (&connectivity_load)(const char* filename,
                                                           long*       length);
-#  endif
+#endif
 
       static unsigned int (&checksum)(types<3>::forest* p8est);
 

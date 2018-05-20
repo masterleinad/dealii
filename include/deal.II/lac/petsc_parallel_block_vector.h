@@ -20,11 +20,11 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <deal.II/lac/block_indices.h>
-#  include <deal.II/lac/block_vector_base.h>
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/petsc_parallel_vector.h>
-#  include <deal.II/lac/vector_type_traits.h>
+#include <deal.II/lac/block_indices.h>
+#include <deal.II/lac/block_vector_base.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
+#include <deal.II/lac/vector_type_traits.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -436,10 +436,10 @@ namespace PETScWrappers
     BlockVector::has_ghost_elements() const
     {
       bool ghosted = block(0).has_ghost_elements();
-#  ifdef DEBUG
+#ifdef DEBUG
       for(unsigned int i = 0; i < this->n_blocks(); ++i)
         Assert(block(i).has_ghost_elements() == ghosted, ExcInternalError());
-#  endif
+#endif
       return ghosted;
     }
 

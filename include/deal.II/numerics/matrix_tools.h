@@ -26,7 +26,7 @@
 #include <map>
 
 #ifdef DEAL_II_WITH_PETSC
-#  include <petscsys.h>
+#include <petscsys.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

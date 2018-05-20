@@ -14,29 +14,29 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_trilinos_precondition_h
-#  define dealii_trilinos_precondition_h
+#define dealii_trilinos_precondition_h
 
-#  include <deal.II/base/config.h>
+#include <deal.II/base/config.h>
 
-#  ifdef DEAL_II_WITH_TRILINOS
+#ifdef DEAL_II_WITH_TRILINOS
 
-#    include <deal.II/base/subscriptor.h>
+#include <deal.II/base/subscriptor.h>
 
-#    include <deal.II/lac/la_parallel_vector.h>
-#    include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/lac/la_parallel_vector.h>
+#include <deal.II/lac/trilinos_vector.h>
 
-#    include <memory>
+#include <memory>
 
-#    ifdef DEAL_II_WITH_MPI
-#      include <Epetra_MpiComm.h>
-#    else
-#      include <Epetra_SerialComm.h>
-#    endif
-#    include <Epetra_Map.h>
+#ifdef DEAL_II_WITH_MPI
+#include <Epetra_MpiComm.h>
+#else
+#include <Epetra_SerialComm.h>
+#endif
+#include <Epetra_Map.h>
 
-#    include <Epetra_RowMatrix.h>
-#    include <Epetra_Vector.h>
-#    include <Teuchos_ParameterList.hpp>
+#include <Epetra_RowMatrix.h>
+#include <Epetra_Vector.h>
+#include <Teuchos_ParameterList.hpp>
 
 // forward declarations
 class Ifpack_Preconditioner;
@@ -237,11 +237,11 @@ namespace TrilinosWrappers
      * Internal communication pattern in case the matrix needs to be copied
      * from deal.II format.
      */
-#    ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     Epetra_MpiComm communicator;
-#    else
+#else
     Epetra_SerialComm communicator;
-#    endif
+#endif
 
     /**
      * Internal Trilinos map in case the matrix needs to be copied from
@@ -1592,7 +1592,7 @@ namespace TrilinosWrappers
     std::shared_ptr<SparseMatrix> trilinos_matrix;
   };
 
-#    if defined(DOXYGEN) || DEAL_II_TRILINOS_VERSION_GTE(11, 14, 0)
+#if defined(DOXYGEN) || DEAL_II_TRILINOS_VERSION_GTE(11, 14, 0)
   /**
    * This class implements an algebraic multigrid (AMG) preconditioner based
    * on the Trilinos MueLu implementation, which is a black-box preconditioner
@@ -1830,7 +1830,7 @@ namespace TrilinosWrappers
      */
     std::shared_ptr<SparseMatrix> trilinos_matrix;
   };
-#    endif
+#endif
 
   /**
    * A wrapper class for an identity preconditioner for Trilinos matrices.
@@ -1910,7 +1910,7 @@ namespace TrilinosWrappers
 
   // -------------------------- inline and template functions ----------------------
 
-#    ifndef DOXYGEN
+#ifndef DOXYGEN
 
   inline void
   PreconditionBase::transpose()
@@ -2053,7 +2053,7 @@ namespace TrilinosWrappers
     preconditioner->SetUseTranspose(false);
   }
 
-#    endif
+#endif
 
 } // namespace TrilinosWrappers
 
@@ -2061,7 +2061,7 @@ namespace TrilinosWrappers
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif // DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_WITH_TRILINOS
 
 /*----------------------------   trilinos_precondition.h     ---------------------------*/
 

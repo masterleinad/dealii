@@ -29,21 +29,21 @@
 typedef int MPI_Comm;
 typedef int MPI_Datatype;
 typedef int MPI_Op;
-#  ifndef MPI_COMM_WORLD
-#    define MPI_COMM_WORLD 0
-#  endif
-#  ifndef MPI_COMM_SELF
-#    define MPI_COMM_SELF 0
-#  endif
-#  ifndef MPI_MIN
-#    define MPI_MIN 0
-#  endif
-#  ifndef MPI_MAX
-#    define MPI_MAX 0
-#  endif
-#  ifndef MPI_SUM
-#    define MPI_SUM 0
-#  endif
+#ifndef MPI_COMM_WORLD
+#define MPI_COMM_WORLD 0
+#endif
+#ifndef MPI_COMM_SELF
+#define MPI_COMM_SELF 0
+#endif
+#ifndef MPI_MIN
+#define MPI_MIN 0
+#endif
+#ifndef MPI_MAX
+#define MPI_MAX 0
+#endif
+#ifndef MPI_SUM
+#define MPI_SUM 0
+#endif
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -659,7 +659,7 @@ namespace Utilities
     some_to_some(const MPI_Comm&                  comm,
                  const std::map<unsigned int, T>& objects_to_send)
     {
-#  ifndef DEAL_II_WITH_MPI
+#ifndef DEAL_II_WITH_MPI
       (void) comm;
       Assert(objects_to_send.size() == 0,
              ExcMessage("Cannot send to more than one processor."));
@@ -667,7 +667,7 @@ namespace Utilities
                || objects_to_send.size() == 0,
              ExcMessage("Can only send to myself or to nobody."));
       return objects_to_send;
-#  else
+#else
 
       std::vector<unsigned int> send_to(objects_to_send.size());
       {
@@ -739,18 +739,18 @@ namespace Utilities
         send_to.size(), buffer_send_requests.data(), MPI_STATUSES_IGNORE);
 
       return received_objects;
-#  endif // deal.II with MPI
+#endif // deal.II with MPI
     }
 
     template <typename T>
     std::vector<T>
     all_gather(const MPI_Comm& comm, const T& object)
     {
-#  ifndef DEAL_II_WITH_MPI
+#ifndef DEAL_II_WITH_MPI
       (void) comm;
       std::vector<T> v(1, object);
       return v;
-#  else
+#else
       const auto n_procs = dealii::Utilities::MPI::n_mpi_processes(comm);
 
       std::vector<char> buffer = Utilities::pack(object);
@@ -794,7 +794,7 @@ namespace Utilities
         }
 
       return received_objects;
-#  endif
+#endif
     }
 
     template <typename T>
@@ -803,12 +803,12 @@ namespace Utilities
            const T&           object_to_send,
            const unsigned int root_process)
     {
-#  ifndef DEAL_II_WITH_MPI
+#ifndef DEAL_II_WITH_MPI
       (void) comm;
       (void) root_process;
       std::vector<T> v(1, object_to_send);
       return v;
-#  else
+#else
       const auto n_procs = dealii::Utilities::MPI::n_mpi_processes(comm);
       const auto my_rank = dealii::Utilities::MPI::this_mpi_process(comm);
 
@@ -875,7 +875,7 @@ namespace Utilities
             }
         }
       return received_objects;
-#  endif
+#endif
     }
 
 #endif

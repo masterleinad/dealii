@@ -14,19 +14,19 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_fe_system_h
-#  define dealii_fe_system_h
+#define dealii_fe_system_h
 
 /*----------------------------   fe_system.h     ---------------------------*/
 
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/thread_management.h>
-#  include <deal.II/fe/fe.h>
-#  include <deal.II/fe/fe_tools.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/thread_management.h>
+#include <deal.II/fe/fe.h>
+#include <deal.II/fe/fe_tools.h>
 
-#  include <memory>
-#  include <type_traits>
-#  include <utility>
-#  include <vector>
+#include <memory>
+#include <type_traits>
+#include <utility>
+#include <vector>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -1206,7 +1206,7 @@ private:
 
 //------------------------variadic template constructor------------------------
 
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 namespace
 {
   template <int dim, int spacedim>
@@ -1288,7 +1288,7 @@ FESystem<dim, spacedim>::FESystem(
   initialize(fes, multiplicities);
 }
 
-#  endif //DOXYGEN
+#endif //DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE
 
