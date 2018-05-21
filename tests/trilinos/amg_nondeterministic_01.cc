@@ -539,7 +539,7 @@ run()
 
   for(unsigned int i = 0; i < n; ++i)
     {
-      ierr = mat.InsertGlobalValues(mati[i], 1, &matv[i], (int*) &matj[i]);
+      ierr = mat.InsertGlobalValues(mati[i], 1, &matv[i], (int*)&matj[i]);
       assert(ierr == 0);
     }
 

@@ -52,7 +52,7 @@ main()
   Vector<double> u(25);
   for(unsigned int i = 0; i < u.size(); ++i)
     {
-      u[i] = (double) (i + 1);
+      u[i] = (double)(i + 1);
     }
 
   deallog << "u: " << u << std::endl;

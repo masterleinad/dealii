@@ -67,9 +67,9 @@ PolynomialsBDM<dim>::compute(
          ExcDimensionMismatch(fourth_derivatives.size(), n_pols));
 
   // third and fourth derivatives not implemented
-  (void) third_derivatives;
+  (void)third_derivatives;
   Assert(third_derivatives.size() == 0, ExcNotImplemented());
-  (void) fourth_derivatives;
+  (void)fourth_derivatives;
   Assert(fourth_derivatives.size() == 0, ExcNotImplemented());
 
   const unsigned int n_sub = polynomial_space.n();

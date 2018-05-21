@@ -2266,7 +2266,7 @@ namespace Step14
       // Because of WorkStream, estimate_on_one_cell requires a CopyData object
       // even if it is no used. The next line silences a warning about this unused
       // variable.
-      (void) copy_data;
+      (void)copy_data;
 
       // First task on each cell is to compute the cell residual
       // contributions of this cell, and put them into the
@@ -2493,7 +2493,7 @@ namespace Step14
         = cell->neighbor(face_no);
       Assert(neighbor.state() == IteratorState::valid, ExcInternalError());
       Assert(neighbor->has_children(), ExcInternalError());
-      (void) neighbor;
+      (void)neighbor;
 
       // Then find out which neighbor the present cell is of the adjacent
       // cell. Note that we will operate on the children of this adjacent

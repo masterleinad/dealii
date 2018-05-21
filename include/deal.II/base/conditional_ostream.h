@@ -128,7 +128,7 @@ public:
    * and can't be bound directly to a template type.
    */
   const ConditionalOStream&
-  operator<<(std::ostream& (*p)(std::ostream&) ) const;
+  operator<<(std::ostream& (*p)(std::ostream&)) const;
 
 private:
   /**
@@ -155,7 +155,7 @@ ConditionalOStream::operator<<(const T& t) const
 }
 
 inline const ConditionalOStream&
-ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&) ) const
+ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&)) const
 {
   if(active_flag == true)
     output_stream << p;

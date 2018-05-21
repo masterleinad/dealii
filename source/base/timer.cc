@@ -112,8 +112,8 @@ CPUClock::now() noexcept
   if(succeeded)
     {
       system_cpu_duration
-        = (double) (((unsigned long long) cpuTime.dwHighDateTime << 32)
-                    | cpuTime.dwLowDateTime)
+        = (double)(((unsigned long long)cpuTime.dwHighDateTime << 32)
+                   | cpuTime.dwLowDateTime)
           / 1e7;
     }
     // keep the zero value if GetProcessTimes didn't work

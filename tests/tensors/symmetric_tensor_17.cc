@@ -49,7 +49,7 @@ test()
   deallog << "t*1=" << std::endl;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
-      deallog << i << ' ' << j << ": " << (int) (t_times_1[i][j]) << std::endl;
+      deallog << i << ' ' << j << ": " << (int)(t_times_1[i][j]) << std::endl;
 
   // t_times_1 should be a multiple of the
   // unit tensor, given the structure we have

@@ -98,9 +98,9 @@ private:
 
                     deallog
                       << data.get_face_info(face).cells_interior[v] << " "
-                      << (int) data.get_face_info(face).interior_face_no << " "
-                      << (int) data.get_face_info(face).face_orientation << " "
-                      << (int) data.get_face_info(face).subface_index
+                      << (int)data.get_face_info(face).interior_face_no << " "
+                      << (int)data.get_face_info(face).face_orientation << " "
+                      << (int)data.get_face_info(face).subface_index
                       << std::endl;
                     deallog << std::endl;
                   }
@@ -148,9 +148,9 @@ private:
 
                     deallog
                       << data.get_face_info(face).cells_exterior[v] << " "
-                      << (int) data.get_face_info(face).exterior_face_no << " "
-                      << (int) data.get_face_info(face).face_orientation << " "
-                      << (int) data.get_face_info(face).subface_index
+                      << (int)data.get_face_info(face).exterior_face_no << " "
+                      << (int)data.get_face_info(face).face_orientation << " "
+                      << (int)data.get_face_info(face).subface_index
                       << std::endl;
                     deallog << std::endl;
                   }
@@ -226,7 +226,7 @@ test()
     {
       if(constraints.is_constrained(i))
         continue;
-      const double entry = Testing::rand() / (double) RAND_MAX;
+      const double entry = Testing::rand() / (double)RAND_MAX;
       in(i)              = entry;
     }
 

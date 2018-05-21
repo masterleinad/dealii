@@ -33,7 +33,7 @@ test(TrilinosWrappers::SparseMatrix& m)
   // initialize the sparsity pattern for m2
   for(unsigned int i = 0; i < m.m(); ++i)
     for(unsigned int j = 0; j < m.n(); ++j)
-      if(std::fabs((double) i - j) < 2)
+      if(std::fabs((double)i - j) < 2)
         {
           double value;
           if(i == j)

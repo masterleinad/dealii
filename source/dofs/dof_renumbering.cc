@@ -251,7 +251,7 @@ namespace DoFRenumbering
       const bool                            reversed_numbering,
       const bool                            use_constraints)
     {
-      (void) use_constraints;
+      (void)use_constraints;
       Assert(use_constraints == false, ExcNotImplemented());
 
       // the following code is pretty
@@ -852,7 +852,7 @@ namespace DoFRenumbering
               cumulated += all_dof_counts[c + n_buckets * i];
           }
 #else
-        (void) tria;
+        (void)tria;
         Assert(false, ExcInternalError());
 #endif
       }
@@ -1141,7 +1141,7 @@ namespace DoFRenumbering
               cumulated += all_dof_counts[c + n_buckets * i];
           }
 #else
-        (void) tria;
+        (void)tria;
         Assert(false, ExcInternalError());
 #endif
       }
@@ -1616,7 +1616,7 @@ namespace DoFRenumbering
 
     for(cell = cells.begin(); cell != cells.end(); ++cell)
       {
-        Assert((*cell)->level() == (int) level, ExcInternalError());
+        Assert((*cell)->level() == (int)level, ExcInternalError());
 
         (*cell)->get_active_or_mg_dof_indices(cell_dofs);
         std::sort(cell_dofs.begin(), cell_dofs.end());

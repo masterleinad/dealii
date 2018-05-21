@@ -87,16 +87,16 @@ check_select(const FiniteElement<dim>& fe,
   u0 = 1;
   transfer.prolongate(1, u1, u0);
   transfer.prolongate(2, u2, u1);
-  deallog << "u0\t" << (int) (u0 * u0 + .5) << std::endl
-          << "u1\t" << (int) (u1 * u1 + .5) << std::endl
-          << "u2\t" << (int) (u2 * u2 + .5) << std::endl;
+  deallog << "u0\t" << (int)(u0 * u0 + .5) << std::endl
+          << "u1\t" << (int)(u1 * u1 + .5) << std::endl
+          << "u2\t" << (int)(u2 * u2 + .5) << std::endl;
   // Now restrict the same vectors.
   u1 = 0.;
   u0 = 0.;
   transfer.restrict_and_add(2, u1, u2);
   transfer.restrict_and_add(1, u0, u1);
-  deallog << "u1\t" << (int) (u1 * u1 + .5) << std::endl
-          << "u0\t" << (int) (u0 * u0 + .5) << std::endl;
+  deallog << "u1\t" << (int)(u1 * u1 + .5) << std::endl
+          << "u0\t" << (int)(u0 * u0 + .5) << std::endl;
   // Check copy to mg and back
   BlockVector<double> u;
   u.reinit(ndofs);
@@ -109,7 +109,7 @@ check_select(const FiniteElement<dim>& fe,
 
   transfer.copy_to_mg(mgdof, v, u);
   for(unsigned int i = 0; i < v[2].size(); ++i)
-    deallog << ' ' << (int) v[2](i);
+    deallog << ' ' << (int)v[2](i);
   deallog << std::endl;
 }
 

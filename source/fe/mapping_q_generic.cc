@@ -312,7 +312,7 @@ namespace internal
         const std::vector<Point<1>>&                 unit_points,
         dealii::MappingQGeneric<1, 1>::InternalData& data)
       {
-        (void) n_shape_functions;
+        (void)n_shape_functions;
         const unsigned int n_points = unit_points.size();
         for(unsigned int k = 0; k < n_points; ++k)
           {
@@ -370,7 +370,7 @@ namespace internal
         const std::vector<Point<2>>&                 unit_points,
         dealii::MappingQGeneric<2, 2>::InternalData& data)
       {
-        (void) n_shape_functions;
+        (void)n_shape_functions;
         const unsigned int n_points = unit_points.size();
         for(unsigned int k = 0; k < n_points; ++k)
           {
@@ -450,7 +450,7 @@ namespace internal
         const std::vector<Point<3>>&                 unit_points,
         dealii::MappingQGeneric<3, 3>::InternalData& data)
       {
-        (void) n_shape_functions;
+        (void)n_shape_functions;
         const unsigned int n_points = unit_points.size();
         for(unsigned int k = 0; k < n_points; ++k)
           {
@@ -1178,7 +1178,7 @@ namespace internal
         const unsigned int spacedim = dim;
 
         const unsigned int n_shapes = mdata.shape_values.size();
-        (void) n_shapes;
+        (void)n_shapes;
         Assert(n_shapes != 0, ExcInternalError());
         AssertDimension(mdata.shape_derivatives.size(), n_shapes);
 
@@ -1356,7 +1356,7 @@ namespace internal
         const unsigned int spacedim = dim + 1;
 
         const unsigned int n_shapes = mdata.shape_values.size();
-        (void) n_shapes;
+        (void)n_shapes;
         Assert(n_shapes != 0, ExcInternalError());
         Assert(mdata.shape_derivatives.size() == n_shapes, ExcInternalError());
         Assert(mdata.shape_second_derivatives.size() == n_shapes,

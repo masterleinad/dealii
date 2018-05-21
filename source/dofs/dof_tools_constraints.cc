@@ -2337,7 +2337,7 @@ namespace DoFTools
            ExcMessage("The supplied (rotation or interpolation) matrix must "
                       "be a square matrix"));
 
-    Assert(first_vector_components.empty() || matrix.m() == (int) spacedim,
+    Assert(first_vector_components.empty() || matrix.m() == (int)spacedim,
            ExcMessage("first_vector_components is nonempty, so matrix must "
                       "be a rotation matrix exactly of size spacedim"));
 
@@ -2353,7 +2353,7 @@ namespace DoFTools
             || (first_vector_components.empty()
                 && matrix.m() == n_dofs_per_face)
             || (!first_vector_components.empty()
-                && matrix.m() == (int) spacedim),
+                && matrix.m() == (int)spacedim),
           ExcMessage("The matrix must have either size 0 or spacedim "
                      "(if first_vector_components is nonempty) "
                      "or the size must be equal to the # of DoFs on the face "
@@ -2371,7 +2371,7 @@ namespace DoFTools
             || (first_vector_components.empty()
                 && matrix.m() == n_dofs_per_face)
             || (!first_vector_components.empty()
-                && matrix.m() == (int) spacedim),
+                && matrix.m() == (int)spacedim),
           ExcMessage("The matrix must have either size 0 or spacedim "
                      "(if first_vector_components is nonempty) "
                      "or the size must be equal to the # of DoFs on the face "
@@ -2581,7 +2581,7 @@ namespace DoFTools
                                const ComponentMask&      component_mask)
   {
     static const int space_dim = DoFHandlerType::space_dimension;
-    (void) space_dim;
+    (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
            ExcIndexRange(direction, 0, space_dim));
 
@@ -3188,7 +3188,7 @@ namespace DoFTools
                                               coarse_to_fine_grid_map,
                                               weights,
                                               weight_mapping);
-    (void) n_parameters_on_fine_grid;
+    (void)n_parameters_on_fine_grid;
 
     // global numbers of dofs
     const types::global_dof_index n_coarse_dofs = coarse_grid.n_dofs(),

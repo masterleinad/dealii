@@ -74,7 +74,7 @@ vector_values(const FiniteElement<dim>& fe)
         {
           deallog << "Component " << c;
           for(unsigned int k = 0; k < quadrature.size(); ++k)
-            deallog << '\t' << (int) local[k](c);
+            deallog << '\t' << (int)local[k](c);
           deallog << std::endl;
         }
       ++cell;

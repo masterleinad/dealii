@@ -85,7 +85,7 @@ double
 FE_Nothing<dim, spacedim>::shape_value(const unsigned int /*i*/,
                                        const Point<dim>& /*p*/) const
 {
-  (void) internal::FE_Nothing::zero_dof_message;
+  (void)internal::FE_Nothing::zero_dof_message;
   Assert(false, ExcMessage(internal::FE_Nothing::zero_dof_message));
   return 0;
 }
@@ -295,7 +295,7 @@ FE_Nothing<dim, spacedim>::get_subface_interpolation_matrix(
   // since this element has no face dofs, the
   // interpolation matrix is necessarily empty
 
-  (void) interpolation_matrix;
+  (void)interpolation_matrix;
   Assert(interpolation_matrix.m() == 0,
          ExcDimensionMismatch(interpolation_matrix.m(), 0));
   Assert(interpolation_matrix.n() == 0,

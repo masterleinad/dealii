@@ -37,7 +37,7 @@ main(int argc, char** argv)
 
     TrilinosWrappers::MPI::Vector temp(local_owned, MPI_COMM_WORLD);
     for(unsigned int i = 0; i < temp.size(); ++i)
-      temp[i] = (double) (i + 1);
+      temp[i] = (double)(i + 1);
 
     PRINTME("Vector", temp);
 

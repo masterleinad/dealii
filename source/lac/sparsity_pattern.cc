@@ -55,7 +55,7 @@ SparsityPattern::SparsityPattern(const SparsityPattern& s)
     compressed(false),
     store_diagonal_first_in_row(false)
 {
-  (void) s;
+  (void)s;
   Assert(s.empty(),
          ExcMessage(
            "This constructor can only be called if the provided argument "
@@ -183,7 +183,7 @@ SparsityPattern::SparsityPattern(const SparsityPattern& original,
 SparsityPattern&
 SparsityPattern::operator=(const SparsityPattern& s)
 {
-  (void) s;
+  (void)s;
   Assert(
     s.empty(),
     ExcMessage("This operator can only be called if the provided argument "

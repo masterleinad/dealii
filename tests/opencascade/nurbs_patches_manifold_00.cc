@@ -50,7 +50,7 @@ main()
   int len = 10;
   for(unsigned int i = 0; i <= 10; ++i)
     {
-      double step = ((double) i) / 10;
+      double step = ((double)i) / 10;
       deallog << " pos = " << step << std::endl;
       double   u_pos = step * u_min + (1 - step) * u_max;
       double   v_pos = step * v_min + (1 - step) * v_max;

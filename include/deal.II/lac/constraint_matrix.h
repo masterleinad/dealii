@@ -1917,7 +1917,7 @@ public:
    * derived from BlockMatrixBase<T>).
    */
   static const bool value
-    = (sizeof(check_for_block_matrix((MatrixType*) nullptr))
+    = (sizeof(check_for_block_matrix((MatrixType*)nullptr))
        == sizeof(yes_type));
 };
 

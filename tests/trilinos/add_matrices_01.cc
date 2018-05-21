@@ -73,12 +73,12 @@ test()
     for(unsigned int j = 0; j < local_owned.size(); ++j)
       if((i + j) % 2 == 1 && j % 2 == 0)
         {
-          Assert(m1.el(i, j) == (double) i + j + 2 * i + 4 * j + 2,
+          Assert(m1.el(i, j) == (double)i + j + 2 * i + 4 * j + 2,
                  ExcInternalError());
         }
       else if((i + j) % 2 == 1)
         {
-          Assert(m1.el(i, j) == (double) i + j, ExcInternalError());
+          Assert(m1.el(i, j) == (double)i + j, ExcInternalError());
         }
       else
         {

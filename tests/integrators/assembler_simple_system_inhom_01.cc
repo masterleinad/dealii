@@ -271,7 +271,7 @@ SystemIntegrator<dim>::face(
   for(unsigned int k = 0; k < n_points; ++k)
     {
       const double      dx = fe1.JxW(k);
-      const Point<dim>& n  = (Point<dim>) fe1.normal_vector(k);
+      const Point<dim>& n  = (Point<dim>)fe1.normal_vector(k);
       for(unsigned int i = 0; i < n_dofs; ++i)
         {
           // average
@@ -372,7 +372,7 @@ MatrixIntegrator<dim>::face(
   for(unsigned int k = 0; k < n_points; ++k)
     {
       const double      dx = fe1.JxW(k);
-      const Point<dim>& n  = (Point<dim>) fe1.normal_vector(k);
+      const Point<dim>& n  = (Point<dim>)fe1.normal_vector(k);
       for(unsigned int i = 0; i < n_dofs; ++i)
         {
           // average

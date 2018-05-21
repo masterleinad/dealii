@@ -83,7 +83,7 @@ test()
     {
       if(constraints.is_constrained(i))
         continue;
-      const double entry = Testing::rand() / (double) RAND_MAX;
+      const double entry = Testing::rand() / (double)RAND_MAX;
       in(i)              = entry;
     }
 

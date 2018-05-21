@@ -39,7 +39,7 @@ test()
         {
           if(cell->face(face)->at_boundary()
              && cell->face(face)->boundary_id() != 0)
-            deallog << "boundary id = " << (int) cell->face(face)->boundary_id()
+            deallog << "boundary id = " << (int)cell->face(face)->boundary_id()
                     << " center = " << cell->face(face)->center()
                     << " faceidx = " << face << std::endl;
         }

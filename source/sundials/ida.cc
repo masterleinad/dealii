@@ -88,10 +88,10 @@ namespace SUNDIALS
                  N_Vector tmp2,
                  N_Vector tmp3)
     {
-      (void) tmp1;
-      (void) tmp2;
-      (void) tmp3;
-      (void) resp;
+      (void)tmp1;
+      (void)tmp2;
+      (void)tmp3;
+      (void)resp;
       IDA<VectorType>& solver
         = *static_cast<IDA<VectorType>*>(IDA_mem->ida_user_data);
       GrowingVectorMemory<VectorType> mem;
@@ -120,10 +120,10 @@ namespace SUNDIALS
                 N_Vector yp,
                 N_Vector resp)
     {
-      (void) weight;
-      (void) yy;
-      (void) yp;
-      (void) resp;
+      (void)weight;
+      (void)yy;
+      (void)yp;
+      (void)resp;
       IDA<VectorType>& solver
         = *static_cast<IDA<VectorType>*>(IDA_mem->ida_user_data);
       GrowingVectorMemory<VectorType> mem;
@@ -349,7 +349,7 @@ namespace SUNDIALS
     status = IDASetInitStep(ida_mem, current_time_step);
     AssertIDA(status);
 
-    status = IDASetUserData(ida_mem, (void*) this);
+    status = IDASetUserData(ida_mem, (void*)this);
     AssertIDA(status);
 
     if(data.ic_type == AdditionalData::use_y_diff
@@ -379,7 +379,7 @@ namespace SUNDIALS
 
     // Initialize solver
     IDAMem IDA_mem;
-    IDA_mem = (IDAMem) ida_mem;
+    IDA_mem = (IDAMem)ida_mem;
 
     IDA_mem->ida_lsetup = t_dae_lsetup<VectorType>;
     IDA_mem->ida_lsolve = t_dae_solve<VectorType>;

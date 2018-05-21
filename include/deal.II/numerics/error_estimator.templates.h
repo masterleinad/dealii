@@ -799,7 +799,7 @@ namespace internal
 
       const typename DoFHandlerType::cell_iterator neighbor
         = cell->neighbor(face_no);
-      (void) neighbor;
+      (void)neighbor;
       const unsigned int n_solution_vectors             = solutions.size();
       const typename DoFHandlerType::face_iterator face = cell->face(face_no);
 

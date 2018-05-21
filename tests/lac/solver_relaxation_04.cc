@@ -92,8 +92,8 @@ main()
           relax_data_reorder.block_list.reinit(n_blocks, dim, blocksize + 2);
           for(unsigned int block = 0; block < n_blocks; ++block)
             {
-              for(int i = -1; i < (int) blocksize + 1; ++i)
-                if((int) (i + block * blocksize) > -1
+              for(int i = -1; i < (int)blocksize + 1; ++i)
+                if((int)(i + block * blocksize) > -1
                    && (i + block * blocksize) < dim)
                   {
                     relax_data.block_list.add(block, i + block * blocksize);

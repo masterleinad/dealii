@@ -49,7 +49,7 @@ test()
 
       if(myid == numproc - 1)
         {
-          Assert(tr.begin_active()->subdomain_id() == (unsigned int) myid,
+          Assert(tr.begin_active()->subdomain_id() == (unsigned int)myid,
                  ExcInternalError());
         }
       else

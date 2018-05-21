@@ -52,7 +52,7 @@ test(unsigned int ref = 1)
       deallog << "C: " << cell << std::endl;
       for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         deallog << "F: " << cell->face(f)
-                << ", mid: " << (int) cell->face(f)->manifold_id() << std::endl;
+                << ", mid: " << (int)cell->face(f)->manifold_id() << std::endl;
     }
 
   GridOut gridout;

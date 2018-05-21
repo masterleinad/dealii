@@ -370,7 +370,7 @@ BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes,
   // first set sizes of blocks, but
   // don't initialize them as we will
   // copy elements soon
-  (void) end;
+  (void)end;
   reinit(block_sizes, true);
   InputIterator start = first;
   for(size_type b = 0; b < block_sizes.size(); ++b)

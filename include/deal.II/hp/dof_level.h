@@ -339,7 +339,7 @@ namespace internal
       // convert the active_fe_index into a signed type, flip all
       // bits, and get the unsigned representation back
       return (active_fe_index_type) ~(
-        signed_active_fe_index_type) active_fe_index;
+        signed_active_fe_index_type)active_fe_index;
     }
 
     inline types::global_dof_index
@@ -347,7 +347,7 @@ namespace internal
                             const unsigned int fe_index,
                             const unsigned int local_index) const
     {
-      (void) fe_index;
+      (void)fe_index;
       Assert(obj_index < dof_offsets.size(),
              ExcIndexRange(obj_index, 0, dof_offsets.size()));
 
@@ -379,7 +379,7 @@ namespace internal
                             const unsigned int            local_index,
                             const types::global_dof_index global_index)
     {
-      (void) fe_index;
+      (void)fe_index;
       Assert(obj_index < dof_offsets.size(),
              ExcIndexRange(obj_index, 0, dof_offsets.size()));
 
@@ -443,7 +443,7 @@ namespace internal
     DoFLevel::get_cell_cache_start(const unsigned int obj_index,
                                    const unsigned int dofs_per_cell) const
     {
-      (void) dofs_per_cell;
+      (void)dofs_per_cell;
       Assert(
         (obj_index < cell_cache_offsets.size())
           && (cell_cache_offsets[obj_index] + dofs_per_cell

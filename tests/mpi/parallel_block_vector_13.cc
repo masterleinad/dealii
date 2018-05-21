@@ -71,28 +71,28 @@ test()
   for(unsigned int i = 0; i < n_blocks; ++i)
     if(myid == 0)
       {
-        AssertDimension(i + 1, (unsigned int) w.block(i)(1));
+        AssertDimension(i + 1, (unsigned int)w.block(i)(1));
       }
     else
       {
-        AssertDimension(0, (unsigned int) w.block(i)(1));
+        AssertDimension(0, (unsigned int)w.block(i)(1));
       }
 
   // import ghost values, all processors should still have i+1
   w.update_ghost_values();
   for(unsigned int i = 0; i < n_blocks; ++i)
-    AssertDimension(i + 1, (unsigned int) w.block(i)(1));
+    AssertDimension(i + 1, (unsigned int)w.block(i)(1));
 
   // zero out ghosts, now all processors except processor 1 should have 0.
   w.zero_out_ghosts();
   for(unsigned int i = 0; i < n_blocks; ++i)
     if(myid == 0)
       {
-        AssertDimension(i + 1, (unsigned int) w.block(i)(1));
+        AssertDimension(i + 1, (unsigned int)w.block(i)(1));
       }
     else
       {
-        AssertDimension(0, (unsigned int) w.block(i)(1));
+        AssertDimension(0, (unsigned int)w.block(i)(1));
       }
 
   // create a vector copy that gets the entries from w. First, it should not
@@ -102,11 +102,11 @@ test()
   for(unsigned int i = 0; i < n_blocks; ++i)
     if(myid == 0)
       {
-        AssertDimension(i + 1, (unsigned int) x.block(i)(1));
+        AssertDimension(i + 1, (unsigned int)x.block(i)(1));
       }
     else
       {
-        AssertDimension(0, (unsigned int) x.block(i)(1));
+        AssertDimension(0, (unsigned int)x.block(i)(1));
       }
 
   // now we zero the vector, which should disable ghost elements
@@ -120,11 +120,11 @@ test()
   for(unsigned int i = 0; i < n_blocks; ++i)
     if(myid == 0)
       {
-        AssertDimension(i + 1, (unsigned int) x.block(i)(1));
+        AssertDimension(i + 1, (unsigned int)x.block(i)(1));
       }
     else
       {
-        AssertDimension(0, (unsigned int) x.block(i)(1));
+        AssertDimension(0, (unsigned int)x.block(i)(1));
       }
 
   x.update_ghost_values();
@@ -134,20 +134,20 @@ test()
   w(1) += myid + 1;
   w.compress(VectorOperation::add);
   if(myid == 0)
-    AssertDimension((unsigned int) w(1), 1 + (numproc * (numproc + 1)) / 2);
+    AssertDimension((unsigned int)w(1), 1 + (numproc * (numproc + 1)) / 2);
 
   // add again and check if everything is still correct
   w(1 + v.size()) += myid + 1;
   w.compress(VectorOperation::add);
   if(myid == 0)
-    AssertDimension((unsigned int) w(1), 1 + (numproc * (numproc + 1)) / 2);
+    AssertDimension((unsigned int)w(1), 1 + (numproc * (numproc + 1)) / 2);
   if(myid == 0)
-    AssertDimension((unsigned int) w(v.size() + 1),
+    AssertDimension((unsigned int)w(v.size() + 1),
                     2 + (numproc * (numproc + 1)) / 2);
 
   w.update_ghost_values();
-  AssertDimension((unsigned int) w(1), 1 + (numproc * (numproc + 1)) / 2);
-  AssertDimension((unsigned int) w(v.size() + 1),
+  AssertDimension((unsigned int)w(1), 1 + (numproc * (numproc + 1)) / 2);
+  AssertDimension((unsigned int)w(v.size() + 1),
                   2 + (numproc * (numproc + 1)) / 2);
 
   if(myid == 0)

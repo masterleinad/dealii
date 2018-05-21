@@ -61,7 +61,7 @@ template <typename number>
 SparseMatrixEZ<number>&
 SparseMatrixEZ<number>::operator=(const SparseMatrixEZ<number>& m)
 {
-  (void) m;
+  (void)m;
   Assert(m.empty(),
          ExcMessage("This operator can only be called if the provided right "
                     "hand side is an empty matrix. This operator can not be "
@@ -74,7 +74,7 @@ template <typename number>
 SparseMatrixEZ<number>&
 SparseMatrixEZ<number>::operator=(const double d)
 {
-  (void) d;
+  (void)d;
   Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
   typename std::vector<Entry>::iterator       e   = data.begin();

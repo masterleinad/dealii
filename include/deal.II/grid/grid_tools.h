@@ -3419,9 +3419,9 @@ namespace GridTools
                              const DataType&)>&         unpack)
   {
 #    ifndef DEAL_II_WITH_MPI
-    (void) mesh;
-    (void) pack;
-    (void) unpack;
+    (void)mesh;
+    (void)pack;
+    (void)unpack;
     Assert(
       false,
       ExcMessage("GridTools::exchange_cell_data_to_ghosts() requires MPI."));

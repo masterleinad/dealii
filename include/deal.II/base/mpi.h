@@ -660,7 +660,7 @@ namespace Utilities
                  const std::map<unsigned int, T>& objects_to_send)
     {
 #  ifndef DEAL_II_WITH_MPI
-      (void) comm;
+      (void)comm;
       Assert(objects_to_send.size() == 0,
              ExcMessage("Cannot send to more than one processor."));
       Assert(objects_to_send.find(0) != objects_to_send.end()
@@ -747,7 +747,7 @@ namespace Utilities
     all_gather(const MPI_Comm& comm, const T& object)
     {
 #  ifndef DEAL_II_WITH_MPI
-      (void) comm;
+      (void)comm;
       std::vector<T> v(1, object);
       return v;
 #  else
@@ -804,8 +804,8 @@ namespace Utilities
            const unsigned int root_process)
     {
 #  ifndef DEAL_II_WITH_MPI
-      (void) comm;
-      (void) root_process;
+      (void)comm;
+      (void)root_process;
       std::vector<T> v(1, object_to_send);
       return v;
 #  else

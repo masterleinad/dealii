@@ -922,7 +922,7 @@ inline FilteredIterator<BaseIterator>::FilteredIterator(
     // address of fi, GCC would not cast fi to the base class of type
     // BaseIterator but tries to go through constructing a new
     // BaseIterator with an Accessor.
-    BaseIterator(*(BaseIterator*) (&fi)),
+    BaseIterator(*(BaseIterator*)(&fi)),
     predicate(fi.predicate->clone())
 {}
 

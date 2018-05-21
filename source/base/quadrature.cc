@@ -438,7 +438,7 @@ QProjector<1>::project_to_face(const Quadrature<0>&,
   AssertIndexRange(face_no, GeometryInfo<dim>::faces_per_cell);
   AssertDimension(q_points.size(), 1);
 
-  q_points[0] = Point<dim>((double) face_no);
+  q_points[0] = Point<dim>((double)face_no);
 }
 
 template <>
@@ -528,7 +528,7 @@ QProjector<1>::project_to_subface(const Quadrature<0>&,
   AssertIndexRange(face_no, GeometryInfo<dim>::faces_per_cell);
   AssertDimension(q_points.size(), 1);
 
-  q_points[0] = Point<dim>((double) face_no);
+  q_points[0] = Point<dim>((double)face_no);
 }
 
 template <>
@@ -660,7 +660,7 @@ QProjector<3>::project_to_subface(const Quadrature<2>&     quadrature,
     }
   // set the scale and translation parameter
   // for individual subfaces
-  switch((unsigned char) ref_case)
+  switch((unsigned char)ref_case)
     {
       case RefinementCase<dim - 1>::cut_x:
         xi_scale       = 0.5;

@@ -991,7 +991,7 @@ Vector<Number>::allocate(const size_type copy_n_el)
   // allocate memory with the proper alignment requirements of 64 bytes
   Number* new_values;
   Utilities::System::posix_memalign(
-    (void**) &new_values, 64, sizeof(Number) * max_vec_size);
+    (void**)&new_values, 64, sizeof(Number) * max_vec_size);
   // copy:
   for(size_type i = 0; i < copy_n_el; ++i)
     new_values[i] = values[i];

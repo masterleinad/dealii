@@ -119,7 +119,7 @@ namespace DoFTools
                                     const ComponentMask& component_mask)
     {
       std::vector<unsigned char> local_component_association(
-        fe.dofs_per_cell, (unsigned char) (-1));
+        fe.dofs_per_cell, (unsigned char)(-1));
 
       // compute the component each local dof belongs to.
       // if the shape function is primitive, then this
@@ -161,7 +161,7 @@ namespace DoFTools
 
       Assert(std::find(local_component_association.begin(),
                        local_component_association.end(),
-                       (unsigned char) (-1))
+                       (unsigned char)(-1))
                == local_component_association.end(),
              ExcInternalError());
 
@@ -272,13 +272,13 @@ namespace DoFTools
                               DoFHandlerType::space_dimension>& fe
             = fe_collection[f];
           local_block_association[f].resize(fe.dofs_per_cell,
-                                            (unsigned char) (-1));
+                                            (unsigned char)(-1));
           for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
             local_block_association[f][i] = fe.system_to_block_index(i).first;
 
           Assert(std::find(local_block_association[f].begin(),
                            local_block_association[f].end(),
-                           (unsigned char) (-1))
+                           (unsigned char)(-1))
                    == local_block_association[f].end(),
                  ExcInternalError());
         }
@@ -313,7 +313,7 @@ namespace DoFTools
     const unsigned int dim                   = DoFHandlerType::dimension;
     const unsigned int spacedim              = DoFHandlerType::space_dimension;
     const Triangulation<dim, spacedim>& tria = dof_handler.get_triangulation();
-    (void) tria;
+    (void)tria;
 
     AssertDimension(cell_data.size(), tria.n_active_cells());
     AssertDimension(dof_data.size(), dof_handler.n_dofs());
@@ -394,7 +394,7 @@ namespace DoFTools
                std::vector<bool>&               selected_dofs)
   {
     const FiniteElement<dim, spacedim>& fe = dof.get_fe();
-    (void) fe;
+    (void)fe;
 
     Assert(component_mask.represents_n_components(fe.n_components()),
            ExcMessage(
@@ -440,7 +440,7 @@ namespace DoFTools
                std::vector<bool>&                   selected_dofs)
   {
     const FiniteElement<dim, spacedim>& fe = dof.begin_active()->get_fe();
-    (void) fe;
+    (void)fe;
 
     Assert(component_mask.represents_n_components(fe.n_components()),
            ExcMessage(
@@ -2566,7 +2566,7 @@ namespace DoFTools
               if(cell->at_boundary(face))
                 vertex_boundary[vg] = true;
               else if((!level_boundary_patches)
-                      && (cell->neighbor(face)->level() != (int) level))
+                      && (cell->neighbor(face)->level() != (int)level))
                 vertex_boundary[vg] = true;
             }
         }

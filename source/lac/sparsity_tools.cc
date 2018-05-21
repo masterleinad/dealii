@@ -58,10 +58,10 @@ namespace SparsityTools
       // Make sure that METIS is actually
       // installed and detected
 #ifndef DEAL_II_WITH_METIS
-      (void) sparsity_pattern;
-      (void) cell_weights;
-      (void) n_partitions;
-      (void) partition_indices;
+      (void)sparsity_pattern;
+      (void)cell_weights;
+      (void)n_partitions;
+      (void)partition_indices;
       AssertThrow(false, ExcMETISNotInstalled());
 #else
 
@@ -285,10 +285,10 @@ namespace SparsityTools
       // Make sure that ZOLTAN is actually
       // installed and detected
 #ifndef DEAL_II_TRILINOS_WITH_ZOLTAN
-      (void) sparsity_pattern;
-      (void) cell_weights;
-      (void) n_partitions;
-      (void) partition_indices;
+      (void)sparsity_pattern;
+      (void)cell_weights;
+      (void)n_partitions;
+      (void)partition_indices;
       AssertThrow(false, ExcZOLTANNotInstalled());
 #else
 
@@ -296,7 +296,7 @@ namespace SparsityTools
         cell_weights.size() == 0,
         ExcMessage(
           "The cell weighting functionality for Zoltan has not yet been implemented."));
-      (void) cell_weights;
+      (void)cell_weights;
 
       //MPI environment must have been initialized by this point.
       std::unique_ptr<Zoltan> zz
@@ -364,7 +364,7 @@ namespace SparsityTools
                                       export_local_ids,
                                       export_procs,
                                       export_to_part);
-      (void) rc;
+      (void)rc;
 
       //check for error code in partitioner
       Assert(rc == ZOLTAN_OK, ExcInternalError());
@@ -437,8 +437,8 @@ namespace SparsityTools
     // Make sure that ZOLTAN is actually
     // installed and detected
 #ifndef DEAL_II_TRILINOS_WITH_ZOLTAN
-    (void) sparsity_pattern;
-    (void) color_indices;
+    (void)sparsity_pattern;
+    (void)color_indices;
     AssertThrow(false, ExcZOLTANNotInstalled());
     return 0;
 #else
@@ -480,7 +480,7 @@ namespace SparsityTools
     int rc = zz->Color(
       num_gid_entries, num_objects, global_ids.data(), color_exp.data());
 
-    (void) rc;
+    (void)rc;
     //Check for error code
     Assert(rc == ZOLTAN_OK, ExcInternalError());
 

@@ -337,8 +337,8 @@ test()
   fine_matrix.compute_diagonal_by_face(res1);
   fine_matrix.compute_diagonal_by_cell(res2);
   res2 -= res1;
-  deallog << "Error in diagonal on active cells: "
-          << (double) res2.linfty_norm() << std::endl;
+  deallog << "Error in diagonal on active cells: " << (double)res2.linfty_norm()
+          << std::endl;
 
   for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
       ++level)

@@ -3044,7 +3044,7 @@ template <int dim, int spacedim>
 inline const FiniteElement<dim, spacedim>& FiniteElement<dim, spacedim>::
                                            operator[](const unsigned int fe_index) const
 {
-  (void) fe_index;
+  (void)fe_index;
   Assert(fe_index == 0,
          ExcMessage("A fe_index of zero is the only index allowed here"));
   return *this;

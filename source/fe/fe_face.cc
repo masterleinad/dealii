@@ -530,7 +530,7 @@ FE_FaceQ<1, spacedim>::get_subface_interpolation_matrix(
   const unsigned int /*subface*/,
   FullMatrix<double>& interpolation_matrix) const
 {
-  (void) x_source_fe;
+  (void)x_source_fe;
   Assert(interpolation_matrix.n() == this->dofs_per_face,
          ExcDimensionMismatch(interpolation_matrix.n(), this->dofs_per_face));
   Assert(
@@ -867,7 +867,7 @@ FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
               v_in(k) = this->poly_space.compute_value(i, p);
             }
           const double result = H.least_squares(v_out, v_in);
-          (void) result;
+          (void)result;
           Assert(result < 1e-12, FETools::ExcLeastSquaresError(result));
 
           for(unsigned int j = 0; j < source_fe->dofs_per_face; ++j)

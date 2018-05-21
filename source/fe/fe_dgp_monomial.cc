@@ -193,8 +193,8 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
       // matrix is simple
       const unsigned int m = interpolation_matrix.m();
       const unsigned int n = interpolation_matrix.n();
-      (void) m;
-      (void) n;
+      (void)m;
+      (void)n;
       Assert(m == this->dofs_per_cell,
              ExcDimensionMismatch(m, this->dofs_per_cell));
       Assert(n == source_dgp_monomial->dofs_per_cell,
@@ -267,7 +267,7 @@ FE_DGPMonomial<dim>::get_face_interpolation_matrix(
   // faces and the face interpolation matrix
   // is necessarily empty -- i.e. there isn't
   // much we need to do here.
-  (void) interpolation_matrix;
+  (void)interpolation_matrix;
   AssertThrow(
     (x_source_fe.get_name().find("FE_DGPMonomial<") == 0)
       || (dynamic_cast<const FE_DGPMonomial<dim>*>(&x_source_fe) != nullptr),
@@ -292,7 +292,7 @@ FE_DGPMonomial<dim>::get_subface_interpolation_matrix(
   // faces and the face interpolation matrix
   // is necessarily empty -- i.e. there isn't
   // much we need to do here.
-  (void) interpolation_matrix;
+  (void)interpolation_matrix;
   AssertThrow(
     (x_source_fe.get_name().find("FE_DGPMonomial<") == 0)
       || (dynamic_cast<const FE_DGPMonomial<dim>*>(&x_source_fe) != nullptr),

@@ -61,7 +61,7 @@ main()
       deallog << "Test " << test_no << std::endl;
       for(unsigned int i = 0; i < n_intermediates; ++i)
         {
-          weights[0] = (double) i / ((double) n_intermediates - 1);
+          weights[0] = (double)i / ((double)n_intermediates - 1);
           weights[1] = 1.0 - weights[0];
 
           deallog << manifold.get_new_point(make_array_view(points),

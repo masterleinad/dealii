@@ -174,7 +174,7 @@ public:
   DEAL_II_ALWAYS_INLINE
   Number& operator[](const unsigned int comp)
   {
-    (void) comp;
+    (void)comp;
     AssertIndexRange(comp, 1);
     return data;
   }
@@ -185,7 +185,7 @@ public:
   DEAL_II_ALWAYS_INLINE
   const Number& operator[](const unsigned int comp) const
   {
-    (void) comp;
+    (void)comp;
     AssertIndexRange(comp, 1);
     return data;
   }
@@ -703,8 +703,8 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
+    const __m256  index_val = _mm256_loadu_ps((const float*)offsets);
+    const __m256i index     = *((__m256i*)(&index_val));
     data                    = _mm512_i32gather_pd(index, base_ptr, 8);
   }
 
@@ -733,8 +733,8 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
+    const __m256  index_val = _mm256_loadu_ps((const float*)offsets);
+    const __m256i index     = *((__m256i*)(&index_val));
     _mm512_i32scatter_pd(base_ptr, index, data, 8);
   }
 
@@ -773,7 +773,7 @@ private:
     // is a bitwise operation so the data type does not matter)
     __m512d         mask = _mm512_set1_pd(-0.);
     VectorizedArray res;
-    res.data = (__m512d) _mm512_andnot_epi64((__m512i) mask, (__m512i) data);
+    res.data = (__m512d)_mm512_andnot_epi64((__m512i)mask, (__m512i)data);
     return res;
   }
 
@@ -848,13 +848,13 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
           __m256d t1 = _mm256_permute2f128_pd(u1, u3, 0x20);
           __m256d t2 = _mm256_permute2f128_pd(u0, u2, 0x31);
           __m256d t3 = _mm256_permute2f128_pd(u1, u3, 0x31);
-          *(__m256d*) ((double*) (&out[4 * i + 0].data) + outer)
+          *(__m256d*)((double*)(&out[4 * i + 0].data) + outer)
             = _mm256_unpacklo_pd(t0, t1);
-          *(__m256d*) ((double*) (&out[4 * i + 1].data) + outer)
+          *(__m256d*)((double*)(&out[4 * i + 1].data) + outer)
             = _mm256_unpackhi_pd(t0, t1);
-          *(__m256d*) ((double*) (&out[4 * i + 2].data) + outer)
+          *(__m256d*)((double*)(&out[4 * i + 2].data) + outer)
             = _mm256_unpacklo_pd(t2, t3);
-          *(__m256d*) ((double*) (&out[4 * i + 3].data) + outer)
+          *(__m256d*)((double*)(&out[4 * i + 3].data) + outer)
             = _mm256_unpackhi_pd(t2, t3);
         }
       for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
@@ -887,13 +887,13 @@ vectorized_transpose_and_store(const bool                     add_into,
       for(unsigned int i = 0; i < n_chunks; ++i)
         {
           __m256d u0
-            = *(const __m256d*) ((const double*) (&in[4 * i + 0].data) + outer);
+            = *(const __m256d*)((const double*)(&in[4 * i + 0].data) + outer);
           __m256d u1
-            = *(const __m256d*) ((const double*) (&in[4 * i + 1].data) + outer);
+            = *(const __m256d*)((const double*)(&in[4 * i + 1].data) + outer);
           __m256d u2
-            = *(const __m256d*) ((const double*) (&in[4 * i + 2].data) + outer);
+            = *(const __m256d*)((const double*)(&in[4 * i + 2].data) + outer);
           __m256d u3
-            = *(const __m256d*) ((const double*) (&in[4 * i + 3].data) + outer);
+            = *(const __m256d*)((const double*)(&in[4 * i + 3].data) + outer);
           __m256d t0   = _mm256_permute2f128_pd(u0, u2, 0x20);
           __m256d t1   = _mm256_permute2f128_pd(u1, u3, 0x20);
           __m256d t2   = _mm256_permute2f128_pd(u0, u2, 0x31);
@@ -1099,8 +1099,8 @@ public:
     // unfortunately, there does not appear to be a 512 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m512  index_val = _mm512_loadu_ps((const float*) offsets);
-    const __m512i index     = *((__m512i*) (&index_val));
+    const __m512  index_val = _mm512_loadu_ps((const float*)offsets);
+    const __m512i index     = *((__m512i*)(&index_val));
     data                    = _mm512_i32gather_ps(index, base_ptr, 4);
   }
 
@@ -1129,8 +1129,8 @@ public:
     // unfortunately, there does not appear to be a 512 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m512  index_val = _mm512_loadu_ps((const float*) offsets);
-    const __m512i index     = *((__m512i*) (&index_val));
+    const __m512  index_val = _mm512_loadu_ps((const float*)offsets);
+    const __m512i index     = *((__m512i*)(&index_val));
     _mm512_i32scatter_ps(base_ptr, index, data, 4);
   }
 
@@ -1169,7 +1169,7 @@ private:
     // is a bitwise operation so the data type does not matter)
     __m512          mask = _mm512_set1_ps(-0.f);
     VectorizedArray res;
-    res.data = (__m512) _mm512_andnot_epi32((__m512i) mask, (__m512i) data);
+    res.data = (__m512)_mm512_andnot_epi32((__m512i)mask, (__m512i)data);
     return res;
   }
 
@@ -1254,13 +1254,13 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
           __m256 v1 = _mm256_shuffle_ps(t0, t1, 0xee);
           __m256 v2 = _mm256_shuffle_ps(t2, t3, 0x44);
           __m256 v3 = _mm256_shuffle_ps(t2, t3, 0xee);
-          *(__m256*) ((float*) (&out[4 * i + 0].data) + outer)
+          *(__m256*)((float*)(&out[4 * i + 0].data) + outer)
             = _mm256_shuffle_ps(v0, v2, 0x88);
-          *(__m256*) ((float*) (&out[4 * i + 1].data) + outer)
+          *(__m256*)((float*)(&out[4 * i + 1].data) + outer)
             = _mm256_shuffle_ps(v0, v2, 0xdd);
-          *(__m256*) ((float*) (&out[4 * i + 2].data) + outer)
+          *(__m256*)((float*)(&out[4 * i + 2].data) + outer)
             = _mm256_shuffle_ps(v1, v3, 0x88);
-          *(__m256*) ((float*) (&out[4 * i + 3].data) + outer)
+          *(__m256*)((float*)(&out[4 * i + 3].data) + outer)
             = _mm256_shuffle_ps(v1, v3, 0xdd);
         }
       for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
@@ -1286,13 +1286,13 @@ vectorized_transpose_and_store(const bool                    add_into,
       for(unsigned int i = 0; i < n_chunks; ++i)
         {
           __m256 u0
-            = *(const __m256*) ((const float*) (&in[4 * i + 0].data) + outer);
+            = *(const __m256*)((const float*)(&in[4 * i + 0].data) + outer);
           __m256 u1
-            = *(const __m256*) ((const float*) (&in[4 * i + 1].data) + outer);
+            = *(const __m256*)((const float*)(&in[4 * i + 1].data) + outer);
           __m256 u2
-            = *(const __m256*) ((const float*) (&in[4 * i + 2].data) + outer);
+            = *(const __m256*)((const float*)(&in[4 * i + 2].data) + outer);
           __m256 u3
-            = *(const __m256*) ((const float*) (&in[4 * i + 3].data) + outer);
+            = *(const __m256*)((const float*)(&in[4 * i + 3].data) + outer);
           __m256 t0   = _mm256_shuffle_ps(u0, u1, 0x44);
           __m256 t1   = _mm256_shuffle_ps(u0, u1, 0xee);
           __m256 t2   = _mm256_shuffle_ps(u2, u3, 0x44);
@@ -1529,8 +1529,8 @@ public:
     // unfortunately, there does not appear to be a 128 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m128  index_val = _mm_loadu_ps((const float*) offsets);
-    const __m128i index     = *((__m128i*) (&index_val));
+    const __m128  index_val = _mm_loadu_ps((const float*)offsets);
+    const __m128i index     = *((__m128i*)(&index_val));
     data                    = _mm256_i32gather_pd(base_ptr, index, 8);
 #  else
     for(unsigned int i = 0; i < 4; ++i)
@@ -1902,8 +1902,8 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
+    const __m256  index_val = _mm256_loadu_ps((const float*)offsets);
+    const __m256i index     = *((__m256i*)(&index_val));
     data                    = _mm256_i32gather_ps(base_ptr, index, 4);
 #  else
     for(unsigned int i = 0; i < 8; ++i)

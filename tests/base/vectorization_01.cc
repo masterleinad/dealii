@@ -64,7 +64,7 @@ test()
   deallog << "OK" << std::endl << "Unary operator -: ";
   d = -c;
   for(unsigned int i = 0; i < n_vectors; ++i)
-    AssertThrow(d[i] == -(Number) i, ExcInternalError());
+    AssertThrow(d[i] == -(Number)i, ExcInternalError());
   deallog << "OK" << std::endl << "Unary operator +: ";
   d = c;
   for(unsigned int i = 0; i < n_vectors; ++i)

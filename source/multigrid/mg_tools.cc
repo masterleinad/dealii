@@ -671,8 +671,8 @@ namespace MGTools
 
     const types::global_dof_index fine_dofs   = dof.n_dofs(level);
     const types::global_dof_index coarse_dofs = dof.n_dofs(level - 1);
-    (void) fine_dofs;
-    (void) coarse_dofs;
+    (void)fine_dofs;
+    (void)coarse_dofs;
 
     // Matrix maps from fine level to coarse level
 
@@ -740,8 +740,8 @@ namespace MGTools
     const FiniteElement<dim>&     fe     = dof.get_fe();
     const types::global_dof_index n_dofs = dof.n_dofs(level);
     const unsigned int            n_comp = fe.n_components();
-    (void) n_dofs;
-    (void) n_comp;
+    (void)n_dofs;
+    (void)n_comp;
 
     Assert(sparsity.n_rows() == n_dofs,
            ExcDimensionMismatch(sparsity.n_rows(), n_dofs));
@@ -924,15 +924,15 @@ namespace MGTools
   {
     const FiniteElement<dim>& fe     = dof.get_fe();
     const unsigned int        n_comp = fe.n_components();
-    (void) n_comp;
+    (void)n_comp;
 
     Assert((level >= 1) && (level < dof.get_triangulation().n_global_levels()),
            ExcIndexRange(level, 1, dof.get_triangulation().n_global_levels()));
 
     const types::global_dof_index fine_dofs   = dof.n_dofs(level);
     const types::global_dof_index coarse_dofs = dof.n_dofs(level - 1);
-    (void) fine_dofs;
-    (void) coarse_dofs;
+    (void)fine_dofs;
+    (void)coarse_dofs;
 
     // Matrix maps from fine level to coarse level
 

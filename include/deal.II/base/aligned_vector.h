@@ -400,8 +400,8 @@ namespace internal
       // never arrive here because they are non-trivial).
 
       if(std::is_trivial<T>::value == true)
-        std::memcpy((void*) (destination_ + begin),
-                    (void*) (source_ + begin),
+        std::memcpy((void*)(destination_ + begin),
+                    (void*)(source_ + begin),
                     (end - begin) * sizeof(T));
       else
         for(std::size_t i = begin; i < end; ++i)
@@ -465,8 +465,8 @@ namespace internal
       // never arrive here because they are non-trivial).
 
       if(std::is_trivial<T>::value == true)
-        std::memcpy((void*) (destination_ + begin),
-                    (void*) (source_ + begin),
+        std::memcpy((void*)(destination_ + begin),
+                    (void*)(source_ + begin),
                     (end - begin) * sizeof(T));
       else
         for(std::size_t i = begin; i < end; ++i)
@@ -524,7 +524,7 @@ namespace internal
           // cast element to (void*) to silence compiler warning for virtual
           // classes (they will never arrive here because they are
           // non-trivial).
-          if(std::memcmp(zero, (void*) &element, sizeof(T)) == 0)
+          if(std::memcmp(zero, (void*)&element, sizeof(T)) == 0)
             trivial_element = true;
         }
       if(size < minimum_parallel_grain_size)
@@ -546,7 +546,7 @@ namespace internal
       // non-trivial).
       if(std::is_trivial<T>::value == true && trivial_element)
         std::memset(
-          (void*) (destination_ + begin), 0, (end - begin) * sizeof(T));
+          (void*)(destination_ + begin), 0, (end - begin) * sizeof(T));
       else
         copy_construct_or_assign(
           begin, end, std::integral_constant<bool, initialize_memory>());
@@ -626,7 +626,7 @@ namespace internal
       // non-trivial).
       if(std::is_trivial<T>::value == true)
         std::memset(
-          (void*) (destination_ + begin), 0, (end - begin) * sizeof(T));
+          (void*)(destination_ + begin), 0, (end - begin) * sizeof(T));
       else
         default_construct_or_assign(
           begin, end, std::integral_constant<bool, initialize_memory>());
@@ -815,7 +815,7 @@ AlignedVector<T>::reserve(const size_type size_alloc)
       // levels of vectorization currently supported by deal.II)
       T* new_data;
       Utilities::System::posix_memalign(
-        (void**) &new_data, 64, size_actual_allocate);
+        (void**)&new_data, 64, size_actual_allocate);
 
       // copy data in case there was some content before and release the old
       // memory with the function corresponding to the one used for allocating

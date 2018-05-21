@@ -146,7 +146,7 @@ namespace CUDAWrappers
 
       if(row < n_rows)
         {
-          sums[row] = (Number) 0.;
+          sums[row] = (Number)0.;
           for(int j = row_ptr_dev[row]; j < row_ptr_dev[row + 1]; ++j)
             sums[row] += abs(val_dev[j]);
         }

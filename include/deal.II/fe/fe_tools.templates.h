@@ -2614,7 +2614,7 @@ namespace FETools
         if(pos2 - pos1 == 2)
           {
             const char dimchar = '0' + dim;
-            (void) dimchar;
+            (void)dimchar;
             if(name.at(pos1 + 1) != 'd')
               Assert(name.at(pos1 + 1) == dimchar,
                      ExcInvalidFEDimension(name.at(pos1 + 1), dim));
@@ -3094,7 +3094,7 @@ namespace FETools
             // first the eight vertices
             h2l[next_index++] = 0;                        // 0
             h2l[next_index++] = (1) * degree;             // 1
-            h2l[next_index++] = (n) *degree;              // 2
+            h2l[next_index++] = (n)*degree;               // 2
             h2l[next_index++] = (n + 1) * degree;         // 3
             h2l[next_index++] = (n * n) * degree;         // 4
             h2l[next_index++] = (n * n + 1) * degree;     // 5

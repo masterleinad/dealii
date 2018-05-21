@@ -267,7 +267,7 @@ namespace
     const typename internal::p4est::types<dim>::locidx num_vtt
       = std::accumulate(
         vertex_touch_count.begin(), vertex_touch_count.end(), 0u);
-    (void) num_vtt;
+    (void)num_vtt;
     Assert(connectivity->ctt_offset[triangulation.n_vertices()] == num_vtt,
            ExcInternalError());
 
@@ -1960,7 +1960,7 @@ namespace parallel
         this,
         &connectivity);
 #  else
-      (void) autopartition;
+      (void)autopartition;
       parallel_forest
         = dealii::internal::p4est::functions<dim>::load(filename,
                                                         this->mpi_communicator,
@@ -2686,11 +2686,11 @@ namespace parallel
             {
               while(
                 g_idx
-                >= (unsigned int) parallel_ghost->proc_offsets[ghost_owner + 1])
+                >= (unsigned int)parallel_ghost->proc_offsets[ghost_owner + 1])
                 ++ghost_owner;
               while(
                 g_idx
-                >= (unsigned int) parallel_ghost->tree_offsets[ghost_tree + 1])
+                >= (unsigned int)parallel_ghost->tree_offsets[ghost_tree + 1])
                 ++ghost_tree;
 
               quadr = static_cast<

@@ -2485,7 +2485,7 @@ namespace internal
                                       const types::global_dof_index n_dofs,
                                       const unsigned int            n_procs)
         {
-          (void) n_procs;
+          (void)n_procs;
           std::vector<types::subdomain_id> subdomain_association(
             n_dofs, numbers::invalid_subdomain_id);
           std::vector<types::global_dof_index> local_dof_indices;
@@ -2548,7 +2548,7 @@ namespace internal
           const unsigned int            n_procs,
           const unsigned int            level)
         {
-          (void) n_procs;
+          (void)n_procs;
           std::vector<types::subdomain_id> level_subdomain_association(
             n_dofs_on_level, numbers::invalid_subdomain_id);
           std::vector<types::global_dof_index> local_dof_indices;
@@ -2953,7 +2953,7 @@ namespace internal
         const std::vector<types::global_dof_index>& new_numbers) const
       {
 #ifndef DEAL_II_WITH_MPI
-        (void) new_numbers;
+        (void)new_numbers;
         Assert(false, ExcNotImplemented());
         return NumberCache();
 #else
@@ -3035,7 +3035,7 @@ namespace internal
                   displacements[i] = shift;
                   shift += rcounts[i];
                 }
-              Assert(((int) new_numbers_copy.size())
+              Assert(((int)new_numbers_copy.size())
                        == rcounts[Utilities::MPI::this_mpi_process(
                             tr->get_communicator())],
                      ExcInternalError());
@@ -3713,7 +3713,7 @@ namespace internal
           const std::vector<dealii::types::global_dof_index>&)
         {
 #  ifndef DEAL_II_WITH_MPI
-          (void) vertices_with_ghost_neighbors;
+          (void)vertices_with_ghost_neighbors;
           Assert(false, ExcNotImplemented());
 #  else
           const unsigned int dim = DoFHandlerType::dimension;
@@ -4743,7 +4743,7 @@ namespace internal
           Implementation::renumber_mg_dofs(
             ghosted_new_numbers, relevant_dofs, *dof_handler, level, true);
 #else
-        (void) new_numbers;
+        (void)new_numbers;
         Assert(false, ExcNotImplemented());
 #endif
 

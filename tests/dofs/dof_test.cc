@@ -255,8 +255,8 @@ TestCases<dim>::run(const unsigned int test_case)
 
           // set the boundary function
           tria->set_manifold(1,
-                             (test_case == 2) ? ((Manifold<dim>&) ball) :
-                                                ((Manifold<dim>&) curved_line));
+                             (test_case == 2) ? ((Manifold<dim>&)ball) :
+                                                ((Manifold<dim>&)curved_line));
 
           // refine once
           tria->begin_active()->set_refine_flag();

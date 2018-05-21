@@ -2917,8 +2917,8 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
                   mapping_data->descriptor[active_quad_index].n_q_points);
   Assert(
     dof_info->start_components.back() == 1
-      || (int) n_components_
-           <= (int) dof_info->start_components
+      || (int)n_components_
+           <= (int)dof_info->start_components
                   [dof_info->component_to_base_index[first_selected_component]
                    + 1]
                 - first_selected_component,
@@ -3010,7 +3010,7 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
                 >= n_components_,
          ExcMessage("The underlying element must at least contain as many "
                     "components as requested by this class"));
-  (void) base_element_number;
+  (void)base_element_number;
 }
 
 template <int dim, int n_components_, typename Number, bool is_face>
@@ -3358,8 +3358,8 @@ namespace internal
     const VectorType&                             vec,
     const internal::MatrixFreeFunctions::DoFInfo& dof_info)
   {
-    (void) vec;
-    (void) dof_info;
+    (void)vec;
+    (void)dof_info;
 
     AssertDimension(vec.size(), dof_info.vector_partitioner->size());
   }
@@ -3370,8 +3370,8 @@ namespace internal
     const LinearAlgebra::distributed::Vector<Number>& vec,
     const internal::MatrixFreeFunctions::DoFInfo&     dof_info)
   {
-    (void) vec;
-    (void) dof_info;
+    (void)vec;
+    (void)dof_info;
     Assert(
       vec.partitioners_are_compatible(*dof_info.vector_partitioner),
       ExcMessage("The parallel layout of the given vector is not "

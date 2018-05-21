@@ -225,7 +225,7 @@ run()
 
   for(unsigned int f = 0; f < 6; ++f)
     deallog << "Face=" << f << ", boundary_id="
-            << (int) triangulation.begin_active()->face(f)->boundary_id()
+            << (int)triangulation.begin_active()->face(f)->boundary_id()
             << std::endl;
 
   std::set<types::boundary_id> no_normal_flux_boundaries;

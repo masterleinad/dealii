@@ -59,7 +59,7 @@ check_vmult_quadratic(std::vector<double>& residuals,
     control, mem, SolverRichardson<>::AdditionalData(/*omega=*/1.));
 
   const types::global_dof_index block_size
-    = (types::global_dof_index) std::sqrt(A.n() + .3);
+    = (types::global_dof_index)std::sqrt(A.n() + .3);
   const unsigned int n_blocks = A.n() / block_size;
 
   typename PreconditionBlock<MatrixType, float>::AdditionalData data(block_size,
@@ -139,7 +139,7 @@ check_vmult_quadratic(std::vector<double>&             residuals,
   jacobi.initialize(A, .5);
 
   PreconditionBlock<BlockSparseMatrix<double>, float>::AdditionalData data(
-    (unsigned int) std::sqrt(A.n() + .3), 1.2);
+    (unsigned int)std::sqrt(A.n() + .3), 1.2);
 
   PreconditionBlockJacobi<BlockSparseMatrix<double>, float> block_jacobi;
   block_jacobi.initialize(A, data);

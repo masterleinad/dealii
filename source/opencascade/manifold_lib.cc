@@ -94,7 +94,7 @@ namespace OpenCASCADE
     const ArrayView<const Point<spacedim>>& surrounding_points,
     const Point<spacedim>&                  candidate) const
   {
-    (void) surrounding_points;
+    (void)surrounding_points;
 #  ifdef DEBUG
     for(unsigned int i = 0; i < surrounding_points.size(); ++i)
       Assert(closest_point(sh, surrounding_points[i], tolerance)
@@ -130,7 +130,7 @@ namespace OpenCASCADE
     const ArrayView<const Point<spacedim>>& surrounding_points,
     const Point<spacedim>&                  candidate) const
   {
-    (void) surrounding_points;
+    (void)surrounding_points;
 #  ifdef DEBUG
     for(unsigned int i = 0; i < surrounding_points.size(); ++i)
       Assert(closest_point(sh, surrounding_points[i], tolerance)
@@ -322,7 +322,7 @@ namespace OpenCASCADE
       curve->GetCurve(), point(space_point), tolerance, proj, t, true);
     Assert(dist < tolerance * length,
            ExcPointNotOnManifold<spacedim>(space_point));
-    (void) dist; // Silence compiler warning in Release mode.
+    (void)dist; // Silence compiler warning in Release mode.
     return Point<1>(GCPnts_AbscissaPoint::Length(
       curve->GetCurve(), curve->GetCurve().FirstParameter(), t));
   }

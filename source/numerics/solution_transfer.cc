@@ -256,7 +256,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
 
   const unsigned int n_active_cells
     = dof_handler->get_triangulation().n_active_cells();
-  (void) n_active_cells;
+  (void)n_active_cells;
   n_dofs_old = dof_handler->n_dofs();
 
   for(unsigned int i = 0; i < in_size; ++i)

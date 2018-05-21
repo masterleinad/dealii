@@ -1159,7 +1159,7 @@ namespace PETScWrappers
                 const unsigned int ghostidx
                   = ghost_indices.index_within_set(index);
 
-                Assert(ghostidx + end - begin < (unsigned int) lsize,
+                Assert(ghostidx + end - begin < (unsigned int)lsize,
                        ExcInternalError());
                 *(values_begin + i) = *(ptr + ghostidx + end - begin);
               }

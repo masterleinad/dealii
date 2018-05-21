@@ -184,7 +184,7 @@ namespace OpenCASCADE
   Point<spacedim>
   point(const gp_Pnt& p, const double& tolerance)
   {
-    (void) tolerance;
+    (void)tolerance;
     switch(spacedim)
       {
         case 1:
@@ -715,7 +715,7 @@ namespace OpenCASCADE
     // something is wrong
     std::tuple<unsigned int, unsigned int, unsigned int> numbers
       = count_elements(out_shape);
-    (void) numbers;
+    (void)numbers;
 
     Assert(
       std::get<0>(numbers) > 0,

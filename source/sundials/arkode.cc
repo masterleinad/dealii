@@ -127,7 +127,7 @@ namespace SUNDIALS
                                       arkode_mem->ark_gamma,
                                       *src_ypred,
                                       *src_fpred,
-                                      (bool&) *jcurPtr);
+                                      (bool&)*jcurPtr);
 
       return err;
     }
@@ -404,7 +404,7 @@ namespace SUNDIALS
     status = ARKodeSetInitStep(arkode_mem, current_time_step);
     AssertARKode(status);
 
-    status = ARKodeSetUserData(arkode_mem, (void*) this);
+    status = ARKodeSetUserData(arkode_mem, (void*)this);
     AssertARKode(status);
 
     status = ARKodeSetStopTime(arkode_mem, data.final_time);
@@ -415,7 +415,7 @@ namespace SUNDIALS
     AssertARKode(status);
 
     // Initialize solver
-    ARKodeMem ARKode_mem = (ARKodeMem) arkode_mem;
+    ARKodeMem ARKode_mem = (ARKodeMem)arkode_mem;
 
     if(solve_jacobian_system)
       {

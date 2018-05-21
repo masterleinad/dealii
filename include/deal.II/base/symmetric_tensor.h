@@ -1068,7 +1068,7 @@ SymmetricTensor<rank_, dim, Number>::operator=(const Number& d)
 {
   Assert(numbers::value_is_zero(d),
          ExcMessage("Only assignment with zero is allowed"));
-  (void) d;
+  (void)d;
 
   data = internal::NumberType<Number>::value(0.0);
 
@@ -1303,7 +1303,7 @@ namespace internal
           diagonal_sum += std::fabs(tmp.data[i][i]);
         const Number typical_diagonal_element
           = diagonal_sum / static_cast<double>(N);
-        (void) typical_diagonal_element;
+        (void)typical_diagonal_element;
 
         unsigned int p[N];
         for(unsigned int i = 0; i < N; ++i)
@@ -2265,7 +2265,7 @@ namespace internal
       inline unsigned int
       component_to_unrolled_index(const TableIndices<rank_>& indices)
       {
-        (void) indices;
+        (void)indices;
         Assert(false, ExcNotImplemented());
         return numbers::invalid_unsigned_int;
       }
@@ -2361,7 +2361,7 @@ namespace internal
       unrolled_to_component_indices(const unsigned int i,
                                     const std::integral_constant<int, rank_>&)
       {
-        (void) i;
+        (void)i;
         Assert((i < dealii::SymmetricTensor<rank_, dim, double>::
                       n_independent_components),
                ExcIndexRange(i,

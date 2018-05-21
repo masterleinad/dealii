@@ -215,7 +215,7 @@ namespace Testing
     r[k % 32] = nonoverflow_add(r[(k + 32 - 31) % 32], r[(k + 32 - 3) % 32]);
     int ret   = r[k % 32];
     k         = (k + 1) % 32;
-    return (unsigned int) ret >> 1;
+    return (unsigned int)ret >> 1;
   }
 
   // reseed our random number generator

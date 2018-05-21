@@ -301,7 +301,7 @@ namespace MatrixTools
     for(; dof != endd; ++dof)
       {
         Assert(dof->first < n_dofs, ExcInternalError());
-        (void) n_dofs;
+        (void)n_dofs;
 
         // get global index and index
         // in the block in which this

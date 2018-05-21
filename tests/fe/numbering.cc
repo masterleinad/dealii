@@ -106,9 +106,8 @@ check(const FE_Q<dim>& fe)
           // first the eight vertices
           hierarchic_to_lexicographic_numbering[next_index++] = 0; // 0
           hierarchic_to_lexicographic_numbering[next_index++]
-            = (1) * degree; // 1
-          hierarchic_to_lexicographic_numbering[next_index++]
-            = (n) *degree; // 2
+            = (1) * degree;                                                 // 1
+          hierarchic_to_lexicographic_numbering[next_index++] = (n)*degree; // 2
           hierarchic_to_lexicographic_numbering[next_index++]
             = (n + 1) * degree; // 3
           hierarchic_to_lexicographic_numbering[next_index++]

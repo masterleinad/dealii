@@ -2649,7 +2649,7 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
                   cells[valid_cell].vertices[f]
                     = mFaces[i].mIndices[f] + v_offset;
                 }
-              cells[valid_cell].material_id = (types::material_id) m;
+              cells[valid_cell].material_id = (types::material_id)m;
               ++valid_cell;
             }
           else
@@ -2702,11 +2702,11 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
   else
     tria->create_triangulation(vertices, cells, subcelldata);
 #else
-  (void) filename;
-  (void) mesh_index;
-  (void) remove_duplicates;
-  (void) tol;
-  (void) ignore_unsupported_types;
+  (void)filename;
+  (void)mesh_index;
+  (void)remove_duplicates;
+  (void)tol;
+  (void)ignore_unsupported_types;
   Assert(false, ExcNeedsAssimp());
 #endif
 }
@@ -3102,7 +3102,7 @@ namespace
   // Reference: http://www.codeguru.com/forum/showthread.php?t=231054
   template <class T>
   bool
-  from_string(T& t, const std::string& s, std::ios_base& (*f)(std::ios_base&) )
+  from_string(T& t, const std::string& s, std::ios_base& (*f)(std::ios_base&))
   {
     std::istringstream iss(s);
     return !(iss >> f >> t).fail();
@@ -3429,7 +3429,7 @@ namespace
         std::getline(input_stream, line);
 
       cont:
-        (void) 0;
+        (void)0;
       }
   }
 

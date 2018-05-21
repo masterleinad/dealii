@@ -208,7 +208,7 @@ namespace TrilinosWrappers
               // parallel distribution
               int ierr;
               ierr = vector->GlobalAssemble(last_action);
-              (void) ierr;
+              (void)ierr;
               Assert(ierr == 0, ExcTrilinosError(ierr));
 
               ierr = vector->PutScalar(0.0);
@@ -354,7 +354,7 @@ namespace TrilinosWrappers
           else
             {
               const int ierr = vector->PutScalar(0.);
-              (void) ierr;
+              (void)ierr;
               Assert(ierr == 0, ExcTrilinosError(ierr));
             }
 

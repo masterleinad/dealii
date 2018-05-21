@@ -60,7 +60,7 @@ namespace LinearAlgebra
       {
         Number* new_values;
         Utilities::System::posix_memalign(
-          (void**) &new_values, 64, sizeof(Number) * new_alloc_size);
+          (void**)&new_values, 64, sizeof(Number) * new_alloc_size);
         values.reset(new_values);
 
         if(new_alloc_size >= 4
@@ -209,7 +209,7 @@ namespace LinearAlgebra
   {
     Assert(s == static_cast<Number>(0),
            ExcMessage("Only 0 can be assigned to a vector."));
-    (void) s;
+    (void)s;
 
     const size_type this_size = n_elements();
     if(this_size > 0)

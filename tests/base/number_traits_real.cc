@@ -43,14 +43,14 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  check((float) 1.5);
-  check((float) -1.5);
+  check((float)1.5);
+  check((float)-1.5);
 
-  check((double) 1.5);
-  check((double) -1.5);
+  check((double)1.5);
+  check((double)-1.5);
 
-  check((long double) 1.5);
-  check((long double) -1.5);
+  check((long double)1.5);
+  check((long double)-1.5);
 
   return 0;
 }

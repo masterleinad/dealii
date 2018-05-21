@@ -158,7 +158,7 @@ print(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
         {
           cell->get_mg_dof_indices(dof_indices);
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            deallog << ' ' << (int) u[l](dof_indices[i]);
+            deallog << ' ' << (int)u[l](dof_indices[i]);
         }
     }
 }

@@ -239,9 +239,8 @@ test(const FESystem<dim>& fe)
   for(unsigned int j = 0; j < system_rhs.size(); ++j)
     if(constraints.is_constrained(j) == false)
       {
-        const double val
-          = -1 + 2. * (double) Testing::rand() / double(RAND_MAX);
-        system_rhs(j) = val;
+        const double val = -1 + 2. * (double)Testing::rand() / double(RAND_MAX);
+        system_rhs(j)    = val;
       }
 
   // setup matrix-free structure

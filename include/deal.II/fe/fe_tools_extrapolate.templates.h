@@ -1224,7 +1224,7 @@ namespace FETools
         = std::lower_bound(cells_list.begin(), cells_list.end(), cell_data);
 
       if((bound != cells_list.end()) && !(cell_data < *bound))
-        return (int) (bound - cells_list.begin());
+        return (int)(bound - cells_list.begin());
 
       return (-1);
     }

@@ -1470,7 +1470,7 @@ template <>
 double
 TriaAccessor<1, 1, 1>::extent_in_direction(const unsigned int axis) const
 {
-  (void) axis;
+  (void)axis;
   Assert(axis == 0, ExcIndexRange(axis, 0, 1));
 
   return this->diameter();
@@ -1480,7 +1480,7 @@ template <>
 double
 TriaAccessor<1, 1, 2>::extent_in_direction(const unsigned int axis) const
 {
-  (void) axis;
+  (void)axis;
   Assert(axis == 0, ExcIndexRange(axis, 0, 1));
 
   return this->diameter();

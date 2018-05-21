@@ -65,7 +65,7 @@ namespace LinearAlgebra
         {
           const int ierr = vector->PutScalar(0.);
           Assert(ierr == 0, ExcTrilinosError(ierr));
-          (void) ierr;
+          (void)ierr;
         }
     }
 
@@ -104,7 +104,7 @@ namespace LinearAlgebra
               const int ierr
                 = vector->Import(V.trilinos_vector(), data_exchange, Insert);
               Assert(ierr == 0, ExcTrilinosError(ierr));
-              (void) ierr;
+              (void)ierr;
             }
           else
             vector
@@ -121,7 +121,7 @@ namespace LinearAlgebra
 
       const int ierr = vector->PutScalar(s);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
 
       return *this;
     }
@@ -205,7 +205,7 @@ namespace LinearAlgebra
         {
           const int ierr = vector->Update(1., down_V.trilinos_vector(), 1.);
           Assert(ierr == 0, ExcTrilinosError(ierr));
-          (void) ierr;
+          (void)ierr;
         }
       else
         {
@@ -218,7 +218,7 @@ namespace LinearAlgebra
           const int     ierr = vector->Import(
             down_V.trilinos_vector(), data_exchange, Epetra_AddLocalAlso);
           Assert(ierr == 0, ExcTrilinosError(ierr));
-          (void) ierr;
+          (void)ierr;
 #    else
           // In versions older than 11.11 the Import function is broken for adding
           // Hence, we provide a workaround in this case
@@ -233,7 +233,7 @@ namespace LinearAlgebra
 
           ierr = vector->Update(1.0, dummy, 1.0);
           Assert(ierr == 0, ExcTrilinosError(ierr));
-          (void) ierr;
+          (void)ierr;
 #    endif
         }
 
@@ -264,7 +264,7 @@ namespace LinearAlgebra
       double    result(0.);
       const int ierr = vector->Dot(down_V.trilinos_vector(), &result);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
 
       return result;
     }
@@ -293,7 +293,7 @@ namespace LinearAlgebra
 
       const int ierr = vector->Update(a, down_V.trilinos_vector(), 1.);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
     }
 
     void
@@ -323,7 +323,7 @@ namespace LinearAlgebra
       const int ierr = vector->Update(
         a, down_V.trilinos_vector(), b, down_W.trilinos_vector(), 1.);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
     }
 
     void
@@ -359,7 +359,7 @@ namespace LinearAlgebra
       const int ierr = vector->Multiply(
         1.0, down_scaling_factors.trilinos_vector(), *vector, 0.0);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
     }
 
     void
@@ -379,7 +379,7 @@ namespace LinearAlgebra
           // Otherwise, just update
           int ierr = vector->Update(a, down_V.trilinos_vector(), 0.);
           Assert(ierr == 0, ExcTrilinosError(ierr));
-          (void) ierr;
+          (void)ierr;
         }
     }
 
@@ -417,7 +417,7 @@ namespace LinearAlgebra
 
       int ierr = vector->MeanValue(&mean_value);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
 
       return mean_value;
     }
@@ -428,7 +428,7 @@ namespace LinearAlgebra
       double norm(0.);
       int    ierr = vector->Norm1(&norm);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
 
       return norm;
     }
@@ -439,7 +439,7 @@ namespace LinearAlgebra
       double norm(0.);
       int    ierr = vector->Norm2(&norm);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
 
       return norm;
     }
@@ -450,7 +450,7 @@ namespace LinearAlgebra
       double norm(0.);
       int    ierr = vector->NormInf(&norm);
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
 
       return norm;
     }
@@ -504,10 +504,10 @@ namespace LinearAlgebra
           const size_type n_indices = vector->Map().NumMyElements();
 #    ifndef DEAL_II_WITH_64BIT_INDICES
           unsigned int* vector_indices
-            = (unsigned int*) vector->Map().MyGlobalElements();
+            = (unsigned int*)vector->Map().MyGlobalElements();
 #    else
           size_type* vector_indices
-            = (size_type*) vector->Map().MyGlobalElements64();
+            = (size_type*)vector->Map().MyGlobalElements64();
 #    endif
           is.add_indices(vector_indices, vector_indices + n_indices);
         }
@@ -544,7 +544,7 @@ namespace LinearAlgebra
       int     ierr = vector->ExtractView(&val, &leading_dimension);
 
       Assert(ierr == 0, ExcTrilinosError(ierr));
-      (void) ierr;
+      (void)ierr;
       out.precision(precision);
       if(scientific)
         out.setf(std::ios::scientific, std::ios::floatfield);

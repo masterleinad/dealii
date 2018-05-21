@@ -60,7 +60,7 @@ namespace parallel
     const dealii::Triangulation<dim, spacedim>& other_tria)
   {
 #ifndef DEAL_II_WITH_MPI
-    (void) other_tria;
+    (void)other_tria;
     Assert(false,
            ExcMessage("You compiled deal.II without MPI support, for "
                       "which parallel::Triangulation is not available."));

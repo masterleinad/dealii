@@ -307,10 +307,10 @@ namespace Differentiation
       template <typename ADNumberTrait>
       struct HasRequiredADInfo<
         ADNumberTrait,
-        decltype((void) ADNumberTrait::type_code,
-                 (void) ADNumberTrait::is_taped,
-                 (void) std::declval<typename ADNumberTrait::real_type>(),
-                 (void) std::declval<typename ADNumberTrait::derivative_type>(),
+        decltype((void)ADNumberTrait::type_code,
+                 (void)ADNumberTrait::is_taped,
+                 (void)std::declval<typename ADNumberTrait::real_type>(),
+                 (void)std::declval<typename ADNumberTrait::derivative_type>(),
                  void())> : std::true_type
       {};
 

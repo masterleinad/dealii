@@ -93,7 +93,7 @@ test_exchange_bbox()
                       deallog << "Value for proc: " << p << std::endl;
                       deallog << "BBox " << b << " Point " << pt
                               << " Dimension " << d << std::endl;
-                      deallog << "Value found: " << (int) boundary_pt[pt][d]
+                      deallog << "Value found: " << (int)boundary_pt[pt][d]
                               << std::endl;
                       deallog << "Value expected: "
                               << (p + (2 * b + pt) * spacedim + d) * (p + 1)

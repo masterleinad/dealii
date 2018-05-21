@@ -672,7 +672,7 @@ namespace internal
                       ++j)
                     if(cell_t[j] > most_general_type)
                       most_general_type = cell_t[j];
-                  AssertIndexRange((unsigned int) most_general_type, 4U);
+                  AssertIndexRange((unsigned int)most_general_type, 4U);
                   mapping_info.cell_type[cell] = most_general_type;
                 }
 
@@ -1814,7 +1814,7 @@ namespace internal
             tasks += Threads::new_task(
               &compute_normal_times_jacobian<dim, Number>,
               work_per_chunk * i,
-              std::min(work_per_chunk * (i + 1), (unsigned int) faces.size()),
+              std::min(work_per_chunk * (i + 1), (unsigned int)faces.size()),
               face_type,
               faces,
               face_data[my_q]);

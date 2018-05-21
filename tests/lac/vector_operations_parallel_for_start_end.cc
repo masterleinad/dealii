@@ -34,7 +34,7 @@ check()
 
       Number* val;
       Utilities::System::posix_memalign(
-        (void**) &val, 64, sizeof(Number) * size);
+        (void**)&val, 64, sizeof(Number) * size);
 
       const Number                                   s = 3.1415;
       internal::VectorOperations::Vector_set<Number> setter(s, val);

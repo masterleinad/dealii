@@ -104,7 +104,7 @@ main()
   op_a.reinit_domain_vector(u, true);
   for(unsigned int i = 0; i < u.size(); ++i)
     {
-      u[i] = (double) (i + 1);
+      u[i] = (double)(i + 1);
     }
 
   PRINTME("u", u);

@@ -216,7 +216,7 @@ namespace PETScWrappers
     void
     Vector::create_vector(const size_type n, const size_type local_size)
     {
-      (void) n;
+      (void)n;
       Assert(local_size <= n, ExcIndexRange(local_size, 0, n));
       ghosted = false;
 
@@ -232,7 +232,7 @@ namespace PETScWrappers
                           const size_type local_size,
                           const IndexSet& ghostnodes)
     {
-      (void) n;
+      (void)n;
       Assert(local_size <= n, ExcIndexRange(local_size, 0, n));
       ghosted       = true;
       ghost_indices = ghostnodes;
@@ -241,7 +241,7 @@ namespace PETScWrappers
       ghostnodes.fill_index_vector(ghostindices);
 
       const PetscInt* ptr
-        = (ghostindices.size() > 0 ? (const PetscInt*) (&(ghostindices[0])) :
+        = (ghostindices.size() > 0 ? (const PetscInt*)(&(ghostindices[0])) :
                                      nullptr);
 
       PetscErrorCode ierr = VecCreateGhost(communicator,
@@ -275,7 +275,7 @@ namespace PETScWrappers
         ierr = VecGhostRestoreLocalForm(vector, &l);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        Assert(lsize == end - begin + (PetscInt) ghost_indices.n_elements(),
+        Assert(lsize == end - begin + (PetscInt)ghost_indices.n_elements(),
                ExcInternalError());
       }
 #  endif

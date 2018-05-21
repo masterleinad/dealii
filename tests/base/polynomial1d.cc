@@ -122,7 +122,7 @@ main()
   for(unsigned int i = 0; i < p.size(); ++i)
     for(unsigned int j = 0; j < p.size(); ++j)
       deallog << 'P' << i << "(x" << j
-              << ") = " << p[i].value((double) j / p.size()) + 1.0001
+              << ") = " << p[i].value((double)j / p.size()) + 1.0001
               << std::endl;
 
   for(unsigned int i = 0; i < p.size(); ++i)
@@ -130,17 +130,17 @@ main()
       q[i].scale(.5);
       for(unsigned int j = 0; j < p.size(); ++j)
         {
-          double x = (double) j / p.size();
+          double x = (double)j / p.size();
           if(std::fabs(q[i].value(2. * x) - p[i].value(x)) > 1.e-15)
             deallog << "Polynomial " << i << ": Values q(" << 2. * x
                     << ") and p(" << x
                     << ") differ after scale: " << q[i].value(2. * x)
                     << " != " << p[i].value(x) << std::endl;
         }
-      q[i].shift((double) 1.);
+      q[i].shift((double)1.);
       for(unsigned int j = 0; j < p.size(); ++j)
         {
-          double x    = (double) j / p.size();
+          double x    = (double)j / p.size();
           double diff = std::fabs(q[i].value(2. * x - 1.) - p[i].value(x));
           if(diff > 1.e-13)
             deallog << "Polynomial " << i << ": Values q(" << 2. * x - 1.

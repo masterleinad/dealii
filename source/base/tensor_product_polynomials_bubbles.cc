@@ -29,7 +29,7 @@ TensorProductPolynomialsBubbles<dim>::compute_value(const unsigned int i,
   const unsigned int q_degree      = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
   const unsigned int n_bubbles     = ((q_degree <= 1) ? 1 : dim);
-  (void) n_bubbles;
+  (void)n_bubbles;
   Assert(i < max_q_indices + n_bubbles, ExcInternalError());
 
   // treat the regular basis functions
@@ -65,7 +65,7 @@ TensorProductPolynomialsBubbles<dim>::compute_grad(const unsigned int i,
   const unsigned int q_degree      = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
   const unsigned int n_bubbles     = ((q_degree <= 1) ? 1 : dim);
-  (void) n_bubbles;
+  (void)n_bubbles;
   Assert(i < max_q_indices + n_bubbles, ExcInternalError());
 
   // treat the regular basis functions
@@ -111,7 +111,7 @@ TensorProductPolynomialsBubbles<dim>::compute_grad_grad(
   const unsigned int q_degree      = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
   const unsigned int n_bubbles     = ((q_degree <= 1) ? 1 : dim);
-  (void) n_bubbles;
+  (void)n_bubbles;
   Assert(i < max_q_indices + n_bubbles, ExcInternalError());
 
   // treat the regular basis functions
@@ -217,7 +217,7 @@ TensorProductPolynomialsBubbles<dim>::compute(
 {
   const unsigned int q_degree      = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
-  (void) max_q_indices;
+  (void)max_q_indices;
   const unsigned int n_bubbles = ((q_degree <= 1) ? 1 : dim);
   Assert(values.size() == max_q_indices + n_bubbles || values.size() == 0,
          ExcDimensionMismatch2(values.size(), max_q_indices + n_bubbles, 0));

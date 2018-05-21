@@ -73,7 +73,7 @@ namespace PETScWrappers
               const size_type ghostidx
                 = vector.ghost_indices.index_within_set(index);
 
-              Assert(ghostidx + end - begin < (size_type) lsize,
+              Assert(ghostidx + end - begin < (size_type)lsize,
                      ExcInternalError());
               value = *(ptr + ghostidx + end - begin);
             }
@@ -156,7 +156,7 @@ namespace PETScWrappers
       {
         const PetscErrorCode ierr = VecDestroy(&vector);
         AssertNothrow(ierr == 0, ExcPETScError(ierr));
-        (void) ierr;
+        (void)ierr;
       }
   }
 

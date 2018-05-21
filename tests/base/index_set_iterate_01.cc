@@ -24,7 +24,7 @@ test(IndexSet& index_set)
 {
   index_set.print(deallog);
 
-  Assert((int) index_set.n_intervals()
+  Assert((int)index_set.n_intervals()
            == index_set.end_intervals() - index_set.begin_intervals(),
          ExcInternalError());
 
@@ -72,9 +72,8 @@ test(IndexSet& index_set)
       Assert(it < endit, ExcInternalError());
       Assert(!(it < it), ExcInternalError());
 
-      Assert((it - index_set.begin_intervals()) == (int) c, ExcInternalError());
-      Assert((index_set.begin_intervals() - it) == -(int) c,
-             ExcInternalError());
+      Assert((it - index_set.begin_intervals()) == (int)c, ExcInternalError());
+      Assert((index_set.begin_intervals() - it) == -(int)c, ExcInternalError());
 
       deallog << c << ": n_el: " << it->n_elements() << std::endl;
     }

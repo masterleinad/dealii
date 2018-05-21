@@ -31,7 +31,7 @@ main()
   if(false)
     {
       SparseMatrix<double>::iterator* i;
-      (*i)->value() = (int) 0;
+      (*i)->value() = (int)0;
     }
 
   deallog << "OK" << std::endl;

@@ -134,11 +134,11 @@ check_faces(const std::vector<Quadrature<dim - 1>*>& quadratures,
               switch(dim)
                 {
                   case 3:
-                    f *= std::pow((long double) points[x](2), i * 1.0L);
+                    f *= std::pow((long double)points[x](2), i * 1.0L);
                   case 2:
-                    f *= std::pow((long double) points[x](1), i * 1.0L);
+                    f *= std::pow((long double)points[x](1), i * 1.0L);
                   case 1:
-                    f *= std::pow((long double) points[x](0), i * 1.0L);
+                    f *= std::pow((long double)points[x](0), i * 1.0L);
                 }
               quadrature_int += f * weights[x];
             }
@@ -148,11 +148,11 @@ check_faces(const std::vector<Quadrature<dim - 1>*>& quadratures,
           switch(dim)
             {
               case 2:
-                exact_int = 2 * (sub ? 2 : 1) / (double) (i + 1);
+                exact_int = 2 * (sub ? 2 : 1) / (double)(i + 1);
                 break;
               case 3:
-                exact_int = 3 * (sub ? (4 + 2 + 2) : 1) * 8 / (double) (i + 1)
-                            / (i + 1);
+                exact_int
+                  = 3 * (sub ? (4 + 2 + 2) : 1) * 8 / (double)(i + 1) / (i + 1);
                 break;
             }
 

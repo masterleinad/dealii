@@ -761,7 +761,7 @@ namespace
                    const ArrayView<const double>&       weights,
                    const Point<3>&                      candidate_point)
   {
-    (void) distances;
+    (void)distances;
 
     AssertDimension(directions.size(), distances.size());
     AssertDimension(directions.size(), weights.size());

@@ -99,7 +99,7 @@ FE_DGP<dim, spacedim>::get_face_interpolation_matrix(
   // case, both elements have no dofs on their faces and the face
   // interpolation matrix is necessarily empty -- i.e. there isn't much we
   // need to do here.
-  (void) interpolation_matrix;
+  (void)interpolation_matrix;
   typedef FiniteElement<dim, spacedim> FE;
   typedef FE_DGP<dim, spacedim>        FEDGP;
   AssertThrow((x_source_fe.get_name().find("FE_DGP<") == 0)
@@ -123,7 +123,7 @@ FE_DGP<dim, spacedim>::get_subface_interpolation_matrix(
   // case, both elements have no dofs on their faces and the face
   // interpolation matrix is necessarily empty -- i.e. there isn't much we
   // need to do here.
-  (void) interpolation_matrix;
+  (void)interpolation_matrix;
   typedef FiniteElement<dim, spacedim> FE;
   typedef FE_DGP<dim, spacedim>        FEDGP;
   AssertThrow((x_source_fe.get_name().find("FE_DGP<") == 0)

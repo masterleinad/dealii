@@ -32,7 +32,7 @@ check_large_numbers()
               ExcInternalError());
 
   for(unsigned int i = 0; i < v.size(); ++i)
-    v[i] = (float) 0.;
+    v[i] = (float)0.;
   v(5)                  = 1e-30;
   v(9)                  = 1e-32;
   const double correct2 = std::sqrt(1e-60 + 1e-64);
@@ -48,7 +48,7 @@ check_large_numbers()
               ExcInternalError());
 
   for(unsigned int i = 0; i < w.size(); ++i)
-    w[i] = (float) 0.;
+    w[i] = (float)0.;
   w(1)                  = 1e-302;
   w(2)                  = 1e-303;
   w(3)                  = 2e-303;

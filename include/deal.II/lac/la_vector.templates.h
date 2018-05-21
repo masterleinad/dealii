@@ -111,7 +111,7 @@ namespace LinearAlgebra
   {
     Assert(s == static_cast<Number>(0),
            ExcMessage("Only 0 can be assigned to a vector."));
-    (void) s;
+    (void)s;
 
     internal::VectorOperations::Vector_set<Number> setter(Number(),
                                                           this->values.get());

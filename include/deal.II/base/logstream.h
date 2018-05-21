@@ -265,7 +265,7 @@ public:
    * therefore necessary to pick one element from this overload set.
    */
   LogStream&
-  operator<<(std::ostream& (*p)(std::ostream&) );
+  operator<<(std::ostream& (*p)(std::ostream&));
 
   /**
    * Return an estimate for the memory consumption, in bytes, of this object.

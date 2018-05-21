@@ -749,7 +749,7 @@ namespace internal
           const typename dealii::mg::Signals& signals,
           ...)
     {
-      (void) uses_dof_handler_vector;
+      (void)uses_dof_handler_vector;
       Assert(!uses_dof_handler_vector, ExcInternalError());
 
       signals.transfer_to_mg(true);
@@ -811,7 +811,7 @@ namespace internal
       const typename dealii::mg::Signals& signals,
       ...)
     {
-      (void) uses_dof_handler_vector;
+      (void)uses_dof_handler_vector;
       Assert(!uses_dof_handler_vector, ExcInternalError());
 
       signals.transfer_to_mg(true);

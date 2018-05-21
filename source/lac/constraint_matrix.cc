@@ -563,7 +563,7 @@ ConstraintMatrix::merge(const ConstraintMatrix&     other_constraints,
                         const MergeConflictBehavior merge_conflict_behavior,
                         const bool                  allow_different_local_lines)
 {
-  (void) allow_different_local_lines;
+  (void)allow_different_local_lines;
   Assert(
     allow_different_local_lines || local_lines == other_constraints.local_lines,
     ExcMessage("local_lines for this and the other objects are not the same "

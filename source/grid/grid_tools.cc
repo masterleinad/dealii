@@ -1008,7 +1008,7 @@ namespace GridTools
         distributed_triangulation->communicate_locally_moved_vertices(
           locally_owned_vertices);
 #else
-        (void) distributed_triangulation;
+        (void)distributed_triangulation;
         Assert(false, ExcInternalError());
 #endif
       }
@@ -2127,7 +2127,7 @@ namespace GridTools
     // without MPI, this function doesn't make sense because on cannot
     // use parallel::distributed::Triangulation in any meaningful
     // way
-    (void) triangulation;
+    (void)triangulation;
     Assert(false,
            ExcMessage("This function does not make any sense "
                       "for parallel::distributed::Triangulation "
@@ -2769,7 +2769,7 @@ namespace GridTools
       if(cell->active())
         {
           while(current_cell_idx
-                >= floor((long) n_active_cells * (current_proc_idx + 1)
+                >= floor((long)n_active_cells * (current_proc_idx + 1)
                          / n_partitions))
             ++current_proc_idx;
           cell->set_subdomain_id(current_proc_idx);
@@ -3605,7 +3605,7 @@ namespace GridTools
                                            src_boundary_ids.end(),
                                            bid)
                                  - src_boundary_ids.begin();
-                if((unsigned int) ind < src_boundary_ids.size())
+                if((unsigned int)ind < src_boundary_ids.size())
                   cell->face(f)->line(e)->set_manifold_id(
                     dst_manifold_ids[ind]);
               }
@@ -3623,7 +3623,7 @@ namespace GridTools
               = std::find(src_boundary_ids.begin(), src_boundary_ids.end(), bid)
                 - src_boundary_ids.begin();
 
-            if((unsigned int) ind < src_boundary_ids.size())
+            if((unsigned int)ind < src_boundary_ids.size())
               {
                 // assign the manifold id
                 cell->face(f)->set_manifold_id(dst_manifold_ids[ind]);
@@ -3640,7 +3640,7 @@ namespace GridTools
                                              src_boundary_ids.end(),
                                              bid)
                                    - src_boundary_ids.begin();
-                  if((unsigned int) ind < src_boundary_ids.size())
+                  if((unsigned int)ind < src_boundary_ids.size())
                     cell->face(f)->line(e)->set_boundary_id(
                       reset_boundary_ids[ind]);
                 }
@@ -4574,9 +4574,9 @@ namespace GridTools
     const std::vector<std::vector<BoundingBox<spacedim>>>& global_bboxes)
   {
 #ifndef DEAL_II_WITH_MPI
-    (void) cache;
-    (void) local_points;
-    (void) global_bboxes;
+    (void)cache;
+    (void)local_points;
+    (void)global_bboxes;
     Assert(false,
            ExcMessage(
              "GridTools::distributed_compute_point_locations() requires MPI."));
@@ -4857,8 +4857,8 @@ namespace GridTools
     MPI_Comm                                  mpi_communicator)
   {
 #ifndef DEAL_II_WITH_MPI
-    (void) local_bboxes;
-    (void) mpi_communicator;
+    (void)local_bboxes;
+    (void)mpi_communicator;
     Assert(
       false,
       ExcMessage("GridTools::exchange_local_bounding_boxes() requires MPI."));

@@ -263,7 +263,7 @@ MGLevelGlobalTransfer<VectorType>::copy_from_mg(
   OutVector&                       dst,
   const MGLevelObject<VectorType>& src) const
 {
-  (void) mg_dof_handler;
+  (void)mg_dof_handler;
   AssertIndexRange(src.max_level(),
                    mg_dof_handler.get_triangulation().n_global_levels());
   AssertIndexRange(src.min_level(), src.max_level() + 1);
@@ -467,7 +467,7 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_from_mg(
   LinearAlgebra::distributed::Vector<Number2>& dst,
   const MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& src) const
 {
-  (void) mg_dof_handler;
+  (void)mg_dof_handler;
   AssertIndexRange(src.max_level(),
                    mg_dof_handler.get_triangulation().n_global_levels());
   AssertIndexRange(src.min_level(), src.max_level() + 1);

@@ -45,7 +45,7 @@ main()
 
   // use variations of ways we can declare lambdas
   tg += Threads::new_task([]() -> double { return test(1); });
-  tg += Threads::new_task([]() -> double { return (float) test(2); });
+  tg += Threads::new_task([]() -> double { return (float)test(2); });
 
   tg.join_all();
 

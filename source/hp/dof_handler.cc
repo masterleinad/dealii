@@ -458,7 +458,7 @@ namespace internal
             // allocate offsets for all faces, though only the active
             // ones will have a non-invalid value later on
             face_dof_offsets = std::vector<unsigned int>(
-              dof_handler.tria->n_raw_faces(), (unsigned int) (-1));
+              dof_handler.tria->n_raw_faces(), (unsigned int)(-1));
             face_dof_indices = std::vector<types::global_dof_index>(
               n_face_slots, numbers::invalid_dof_index);
 
@@ -900,7 +900,7 @@ namespace internal
               // up, and because every vector entry has exactly one processor
               // that owns it, the sum is correct
               std::vector<unsigned int> active_fe_indices(tr->n_active_cells(),
-                                                          (unsigned int) 0);
+                                                          (unsigned int)0);
               for(const auto& cell : dof_handler.active_cell_iterators())
                 if(cell->is_locally_owned())
                   active_fe_indices[cell->active_cell_index()]

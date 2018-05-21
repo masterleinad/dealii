@@ -84,7 +84,7 @@ run(bool random_p, unsigned int* indx)
     {
       for(; cell != endc; ++cell)
         {
-          cell->set_active_fe_index((int) (4.0 * random_value<double>()));
+          cell->set_active_fe_index((int)(4.0 * random_value<double>()));
         }
     }
   else

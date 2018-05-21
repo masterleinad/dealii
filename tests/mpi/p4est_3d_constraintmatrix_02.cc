@@ -99,7 +99,7 @@ test()
     if(myid == 0)
       deallog << out.str() << std::endl;
     else
-      MPI_Send((void*) out.str().c_str(),
+      MPI_Send((void*)out.str().c_str(),
                out.str().size() + 1,
                MPI_CHAR,
                0,

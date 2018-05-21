@@ -1092,7 +1092,7 @@ namespace BlockMatrixIterators
     const size_type        col)
     : matrix(matrix), base_iterator(matrix->block(0, 0).begin())
   {
-    (void) col;
+    (void)col;
     Assert(col == 0, ExcNotImplemented());
 
     // check if this is a regular row or
@@ -1279,7 +1279,7 @@ namespace BlockMatrixIterators
                                                     const size_type  col)
     : matrix(matrix), base_iterator(matrix->block(0, 0).begin())
   {
-    (void) col;
+    (void)col;
     Assert(col == 0, ExcNotImplemented());
     // check if this is a regular row or
     // the end of the matrix

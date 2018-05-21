@@ -427,7 +427,7 @@ namespace VectorTools
                                 /* starting_offset = */ 0,
                                 fe_values,
                                 function_values);
-            (void) offset;
+            (void)offset;
             Assert(offset == n_components, ExcInternalError());
           }
 
@@ -786,7 +786,7 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim>& dof1 = intergridmap.get_source_grid();
     const DoFHandlerType<dim, spacedim>& dof2
       = intergridmap.get_destination_grid();
-    (void) dof2;
+    (void)dof2;
 
     Assert(u1.size() == dof1.n_dofs(),
            ExcDimensionMismatch(u1.size(), dof1.n_dofs()));
@@ -1075,9 +1075,9 @@ namespace VectorTools
     {
       Assert(project_to_boundary_first == false, ExcNotImplemented());
       Assert(enforce_zero_boundary == false, ExcNotImplemented());
-      (void) enforce_zero_boundary;
-      (void) project_to_boundary_first;
-      (void) q_boundary;
+      (void)enforce_zero_boundary;
+      (void)project_to_boundary_first;
+      (void)q_boundary;
 
       Assert(dof.get_fe(0).n_components() == function.n_components,
              ExcDimensionMismatch(dof.get_fe(0).n_components(),
@@ -3371,7 +3371,7 @@ namespace VectorTools
         dof_to_boundary_mapping,
         (const Function<
           spacedim,
-          typename numbers::NumberTraits<number>::real_type>*) nullptr,
+          typename numbers::NumberTraits<number>::real_type>*)nullptr,
         component_mapping);
 
       // For certain weird elements,
@@ -8767,7 +8767,7 @@ namespace VectorTools
     internal_subtract_mean_value(VectorType&              v,
                                  const std::vector<bool>& p_select)
     {
-      (void) p_select;
+      (void)p_select;
       Assert(p_select.size() == 0, ExcNotImplemented());
       // In case of an empty boolean mask operate on the whole vector:
       v.add(-v.mean_value());

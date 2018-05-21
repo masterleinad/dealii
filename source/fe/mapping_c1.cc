@@ -51,7 +51,7 @@ MappingC1<1>::MappingC1Generic::add_line_support_points(
   std::vector<Point<1>>&) const
 {
   const unsigned int dim = 1;
-  (void) dim;
+  (void)dim;
   Assert(dim > 1, ExcImpossibleInDim(dim));
 }
 
@@ -175,7 +175,7 @@ MappingC1<1>::MappingC1Generic::add_quad_support_points(
   std::vector<Point<1>>&) const
 {
   const unsigned int dim = 1;
-  (void) dim;
+  (void)dim;
   Assert(dim > 2, ExcImpossibleInDim(dim));
 }
 
@@ -186,7 +186,7 @@ MappingC1<2>::MappingC1Generic::add_quad_support_points(
   std::vector<Point<2>>&) const
 {
   const unsigned int dim = 2;
-  (void) dim;
+  (void)dim;
   Assert(dim > 2, ExcImpossibleInDim(dim));
 }
 

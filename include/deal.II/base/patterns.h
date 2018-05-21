@@ -1488,7 +1488,7 @@ namespace Patterns
         if(std::is_same<T, unsigned char>::value
            || std::is_same<T, signed char>::value
            || std::is_same<T, char>::value)
-          str << (int) value;
+          str << (int)value;
         else if(std::is_same<T, bool>::value)
           str << (value ? "true" : "false");
         else

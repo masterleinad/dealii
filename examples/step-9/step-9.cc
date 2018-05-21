@@ -327,7 +327,7 @@ namespace Step9
   RightHandSide<dim>::value(const Point<dim>&  p,
                             const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     const double diameter = 0.1;
     return ((p - center_point).norm_square() < diameter * diameter ?
@@ -371,7 +371,7 @@ namespace Step9
   BoundaryValues<dim>::value(const Point<dim>&  p,
                              const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     const double sine_term

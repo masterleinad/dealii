@@ -40,7 +40,7 @@ namespace SLEPcWrappers
     if(st != nullptr)
       {
         const PetscErrorCode ierr = STDestroy(&st);
-        (void) ierr;
+        (void)ierr;
         AssertNothrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
       }
   }
@@ -116,7 +116,7 @@ namespace SLEPcWrappers
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
 #  else
     // PETSc/SLEPc version must be < 3.5.0.
-    (void) st;
+    (void)st;
     Assert((false),
            ExcMessage(
              "Folding transformation has been removed in SLEPc 3.5.0 and newer."

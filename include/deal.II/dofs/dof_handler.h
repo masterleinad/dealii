@@ -1358,7 +1358,7 @@ template <int dim, int spacedim>
 inline const FiniteElement<dim, spacedim>&
 DoFHandler<dim, spacedim>::get_fe(const unsigned int index) const
 {
-  (void) index;
+  (void)index;
   Assert(index == 0,
          ExcMessage(
            "There is only one FiniteElement stored. The index must be zero!"));

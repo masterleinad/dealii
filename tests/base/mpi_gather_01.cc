@@ -50,9 +50,9 @@ main(int argc, char* argv[])
                       << " have wrong size. " << std::endl;
             }
           for(unsigned int p = 0; p < gathered_points[i].size(); ++p)
-            if(gathered_points[i][p][0] != (double) i
-               || gathered_points[i][p][1] != (double) -i
-               || gathered_points[i][p][2] != (double) p)
+            if(gathered_points[i][p][0] != (double)i
+               || gathered_points[i][p][1] != (double)-i
+               || gathered_points[i][p][2] != (double)p)
               {
                 test_passed = false;
                 deallog << "Error with point " << p << " from rank " << i

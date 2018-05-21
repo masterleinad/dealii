@@ -772,9 +772,9 @@ namespace PETScWrappers
         "and recompile deal.II as well."));
 
     // Cast to void to silence compiler warnings
-    (void) A;
-    (void) x;
-    (void) b;
+    (void)A;
+    (void)x;
+    (void)b;
 #  endif
   }
 

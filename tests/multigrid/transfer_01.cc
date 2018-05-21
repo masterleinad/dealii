@@ -110,7 +110,7 @@ check_simple(const FiniteElement<dim>& fe)
 
   transfer.copy_to_mg(mgdof, u, v);
   for(unsigned int i = 0; i < u[2].size(); ++i)
-    deallog << ' ' << (int) u[2](i);
+    deallog << ' ' << (int)u[2](i);
   deallog << std::endl;
 
   // Now do the opposite: fill a
@@ -121,7 +121,7 @@ check_simple(const FiniteElement<dim>& fe)
     u[2](i) = i + 1;
   transfer.copy_from_mg(mgdof, v, u);
   for(unsigned int i = 0; i < v.size(); ++i)
-    deallog << ' ' << (int) v(i);
+    deallog << ' ' << (int)v(i);
   deallog << std::endl;
   v.equ(-1., v);
   transfer.copy_from_mg_add(mgdof, v, u);

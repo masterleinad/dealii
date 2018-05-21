@@ -1965,9 +1965,9 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
   const ArrayView<Tensor<2, spacedim>>&                    output) const
 {
-  (void) input;
-  (void) output;
-  (void) mapping_data;
+  (void)input;
+  (void)output;
+  (void)mapping_data;
   AssertDimension(input.size(), output.size());
 
   AssertThrow(false, ExcNotImplemented());
@@ -2027,9 +2027,9 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
   const ArrayView<Tensor<3, spacedim>>&                    output) const
 {
-  (void) input;
-  (void) output;
-  (void) mapping_data;
+  (void)input;
+  (void)output;
+  (void)mapping_data;
   AssertDimension(input.size(), output.size());
 
   AssertThrow(false, ExcNotImplemented());
@@ -2131,7 +2131,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
     InternalData&                                               mdata) const
 {
   const unsigned int n_shapes = mdata.shape_values.size();
-  (void) n_shapes;
+  (void)n_shapes;
   Assert(n_shapes != 0, ExcInternalError());
   AssertDimension(mdata.shape_derivatives.size(), n_shapes);
 

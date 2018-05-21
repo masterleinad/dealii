@@ -85,7 +85,7 @@ check(const FiniteElement<dim>& fe)
             level, vectors[level - 1], vectors[level]);
           transfer.restrict_and_add(level, vec2, vectors[level]);
           vec2 -= vectors[level - 1];
-          deallog << "Error in restriction:  " << (double) vec2.linfty_norm()
+          deallog << "Error in restriction:  " << (double)vec2.linfty_norm()
                   << std::endl;
         }
 
@@ -96,7 +96,7 @@ check(const FiniteElement<dim>& fe)
             level + 1, vectors[level + 1], vectors[level]);
           transfer.prolongate(level + 1, vec2, vectors[level]);
           vec2 -= vectors[level + 1];
-          deallog << "Error in prolongation: " << (double) vec2.linfty_norm()
+          deallog << "Error in prolongation: " << (double)vec2.linfty_norm()
                   << std::endl;
         }
     }

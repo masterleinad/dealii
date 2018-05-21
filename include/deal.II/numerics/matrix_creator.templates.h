@@ -602,7 +602,7 @@ namespace MatrixCreator
                          VectorType*                            right_hand_side)
     {
       const unsigned int dofs_per_cell = data.dof_indices.size();
-      (void) dofs_per_cell;
+      (void)dofs_per_cell;
 
       Assert(data.cell_matrix.m() == dofs_per_cell, ExcInternalError());
       Assert(data.cell_matrix.n() == dofs_per_cell, ExcInternalError());
@@ -715,7 +715,7 @@ namespace MatrixCreator
           copy_local_to_global<number, SparseMatrix<number>, Vector<number>>,
         std::placeholders::_1,
         &matrix,
-        (Vector<number>*) nullptr),
+        (Vector<number>*)nullptr),
       assembler_data,
       copy_data);
   }
@@ -865,7 +865,7 @@ namespace MatrixCreator
           copy_local_to_global<number, SparseMatrix<number>, Vector<number>>,
         std::placeholders::_1,
         &matrix,
-        (Vector<number>*) nullptr),
+        (Vector<number>*)nullptr),
       assembler_data,
       copy_data);
   }
@@ -1946,7 +1946,7 @@ namespace MatrixCreator
           copy_local_to_global<double, SparseMatrix<double>, Vector<double>>,
         std::placeholders::_1,
         &matrix,
-        (Vector<double>*) (nullptr)),
+        (Vector<double>*)(nullptr)),
       assembler_data,
       copy_data);
   }
@@ -2086,7 +2086,7 @@ namespace MatrixCreator
           copy_local_to_global<double, SparseMatrix<double>, Vector<double>>,
         std::placeholders::_1,
         &matrix,
-        (Vector<double>*) nullptr),
+        (Vector<double>*)nullptr),
       assembler_data,
       copy_data);
   }

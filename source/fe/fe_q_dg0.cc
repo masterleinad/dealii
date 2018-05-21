@@ -65,7 +65,7 @@ FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const Quadrature<1>& points)
       get_riaf_vector(points.size() - 1))
 {
   const int degree = points.size() - 1;
-  (void) degree;
+  (void)degree;
 
   Assert(degree > 0,
          ExcMessage("This element can only be used for polynomial degrees "
@@ -122,7 +122,7 @@ FE_Q_DG0<dim, spacedim>::get_name() const
 
   // Check whether the support points are equidistant.
   for(unsigned int j = 0; j < n_points; j++)
-    if(std::fabs(points[j] - (double) j / this->degree) > 1e-15)
+    if(std::fabs(points[j] - (double)j / this->degree) > 1e-15)
       {
         type = false;
         break;

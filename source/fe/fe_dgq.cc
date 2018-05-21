@@ -322,7 +322,7 @@ FE_DGQ<dim, spacedim>::get_face_interpolation_matrix(
   // faces and the face interpolation matrix
   // is necessarily empty -- i.e. there isn't
   // much we need to do here.
-  (void) interpolation_matrix;
+  (void)interpolation_matrix;
   typedef FiniteElement<dim, spacedim> FE;
   AssertThrow(
     (dynamic_cast<const FE_DGQ<dim, spacedim>*>(&x_source_fe) != nullptr),
@@ -700,7 +700,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
 
   // Check whether the support points are equidistant.
   for(unsigned int j = 0; j <= this->degree; j++)
-    if(std::abs(points[j] - (double) j / this->degree) > 1e-15)
+    if(std::abs(points[j] - (double)j / this->degree) > 1e-15)
       {
         equidistant = false;
         break;
