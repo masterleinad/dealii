@@ -150,21 +150,21 @@ namespace Step22
 
     switch(component)
       {
-        //velocity
+        // velocity
         case 0:
           return 2 * (x - 1) * (x - 1) * x * x * (y - 1) * y * (2 * y - 1);
           break;
         case 1:
           return -2 * (y - 1) * (y - 1) * y * y * (x - 1) * x * (2 * x - 1);
           break;
-        //pressure
+        // pressure
         case 2:
-          //discontinuous Boffi
+          // discontinuous Boffi
           return y * (1 - y) * exp((x - .5) * (x - .5)) - .5 + (x < .5);
-          //discontinuous simple
-          //return (x<.5)-.5;
-          //continuous
-          //return .5*x*x-1/6;
+          // discontinuous simple
+          // return (x<.5)-.5;
+          // continuous
+          // return .5*x*x-1/6;
       }
     ExcNotImplemented();
 
@@ -186,7 +186,7 @@ namespace Step22
 
     switch(component)
       {
-        //velocity
+        // velocity
         case 0:
           gradient[0] = x
                         * (x
@@ -209,17 +209,17 @@ namespace Step22
                                 + y * (y * (24 * y - 36) + 12))
                            + y * ((12 - 8 * y) * y - 4));
           break;
-        //pressure
+        // pressure
         case 2:
-          //discontinuous Boffi
+          // discontinuous Boffi
           gradient[0] = -exp((x - .5) * (x - .5)) * (2 * x - 1) * (y - 1) * y;
           gradient[1] = -exp((x - .5) * (x - .5)) * (2 * y - 1);
-          //discontinuous simple
-          //gradient[0]=0;
-          //gradient[1]=0;
-          //continuous
-          //gradient[0]=x;
-          //gradient[1]=0;
+          // discontinuous simple
+          // gradient[0]=0;
+          // gradient[1]=0;
+          // continuous
+          // gradient[0]=x;
+          // gradient[1]=0;
       }
 
     return gradient;
@@ -238,7 +238,7 @@ namespace Step22
 
     switch(component)
       {
-        //velocity
+        // velocity
         case 0:
           return x
                    * (x
@@ -275,14 +275,14 @@ namespace Step22
   {
     double x = p[0];
     double y = p[1];
-    //discontinuous
+    // discontinuous
     if(std::abs(x - .5) > 1e-10)
       return 0;
     if(normal[0] > 0)
       return -1;
     return 1;
-    //continuous
-    //return 0;
+    // continuous
+    // return 0;
   }
 
   template <int dim>
@@ -307,7 +307,7 @@ namespace Step22
            ExcIndexRange(component, 0, this->n_components));
     if(component == dim)
       return 0;
-    //grad p -laplace u
+    // grad p -laplace u
     return solution.gradient(p, dim)[component]
            - solution.laplacian(p, component);
   }
@@ -732,8 +732,8 @@ namespace Step22
     //    std::cout<<"maximum divergence per cell: "
     //             <<difference_per_cell.linfty_norm()<<std::endl;
 
-    //int_\Omega (f(x)-c)^2 dx is minimized for c=1/|\Omega|\int_\Omega f(x)dx.
-    //That gives \int_\Omega f(x)^2 dx - 1/|\Omega|(\int_\Omega f(x) dx)^2
+    // int_\Omega (f(x)-c)^2 dx is minimized for c=1/|\Omega|\int_\Omega f(x)dx.
+    // That gives \int_\Omega f(x)^2 dx - 1/|\Omega|(\int_\Omega f(x) dx)^2
     //=\int_\Omega f(x)^2 dx - |\Omega|c^2=\int_\Omega f(x)^2 dx - c^2
     VectorTools::integrate_difference(dof_handler,
                                       solution,
@@ -758,7 +758,7 @@ namespace Step22
                                       VectorTools::mean,
                                       &pressure_mask);
     double integral = difference_per_cell.mean_value() * n_active_cells;
-    //std::cout<<"mean difference "<<integral *integral<<std::endl;
+    // std::cout<<"mean difference "<<integral *integral<<std::endl;
     L2_error_pressure -= integral * integral;
 
     //    std::cout<<"Pressure error squared: "<<L2_error_pressure<<std::endl;
@@ -874,8 +874,8 @@ namespace Step22
     convergence_table.set_tex_format("cells", "r");
     convergence_table.set_tex_format("dofs", "r");
 
-    //std::cout << std::endl;
-    //convergence_table.write_text(std::cout);
+    // std::cout << std::endl;
+    // convergence_table.write_text(std::cout);
 
     convergence_table.add_column_to_supercolumn("cycle", "n cells");
     convergence_table.add_column_to_supercolumn("cells", "n cells");
@@ -903,7 +903,7 @@ namespace Step22
     convergence_table.write_text(deallog.get_file_stream());
   }
 
-  //squared l^2 norm of divergence of velocity
+  // squared l^2 norm of divergence of velocity
   template <int dim>
   void
   StokesProblem<dim>::divergence_velocity(
@@ -942,9 +942,9 @@ namespace Step22
               }
             if(norm)
               output_vector(cell->index())
-                += div * div * fe_v.JxW(q); //L^2-Norm
+                += div * div * fe_v.JxW(q); // L^2-Norm
             else
-              output_vector(cell->index()) += div * fe_v.JxW(q); //Integral
+              output_vector(cell->index()) += div * fe_v.JxW(q); // Integral
           }
       }
   }

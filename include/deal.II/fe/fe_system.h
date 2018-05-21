@@ -378,9 +378,9 @@ public:
    *
    *     struct VectorElementDestroyer {
    *       const std::vector<const FiniteElement<dim>*> data;
-   *       VectorElementDestroyer (const std::vector<const FiniteElement<dim>*> &pointers);
-   *       ~VectorElementDestroyer (); // destructor to delete the pointers
-   *       const std::vector<const FiniteElement<dim>*> & get_data () const;
+   *       VectorElementDestroyer (const std::vector<const FiniteElement<dim>*>
+   * &pointers); ~VectorElementDestroyer (); // destructor to delete the
+   * pointers const std::vector<const FiniteElement<dim>*> & get_data () const;
    *     };
    *
    *     static std::vector<const FiniteElement<dim>*>
@@ -392,8 +392,8 @@ public:
    *
    *   template <int dim>
    *   MySimulator<dim>::VectorElementDestroyer::
-   *   VectorElementDestroyer (const std::vector<const FiniteElement<dim>*> &pointers)
-   *     : data(pointers)
+   *   VectorElementDestroyer (const std::vector<const FiniteElement<dim>*>
+   * &pointers) : data(pointers)
    *   {}
    *
    *   template <int dim>
@@ -416,8 +416,8 @@ public:
    *   template <int dim>
    *   MySimulator<dim>::MySimulator (const unsigned int polynomial_degree)
    *     :
-   *     fe (VectorElementDestroyer(create_fe_list (polynomial_degree)).get_data(),
-   *         create_fe_multiplicities ())
+   *     fe (VectorElementDestroyer(create_fe_list
+   * (polynomial_degree)).get_data(), create_fe_multiplicities ())
    *   {}
    * @endcode
    *
@@ -435,19 +435,19 @@ public:
 
   /**
    * Constructor taking an arbitrary number of parameters of type
-   * <code>std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int></code>.
-   * In combination with FiniteElement::operator^, this allows to construct FESystem objects
-   * as follows:
+   * <code>std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned
+   * int></code>. In combination with FiniteElement::operator^, this allows to
+   * construct FESystem objects as follows:
    * @code
    *   FiniteElementType1<dim,spacedim> fe_1;
    *   FiniteElementType1<dim,spacedim> fe_2;
    *   FESystem<dim,spacedim> fe_system = ( fe_1^dim, fe_2^1 );
    * @endcode
    *
-   * The FiniteElement objects are not actually used for anything other than creating a
-   * copy that will then be owned by the current object. In other words, it is
-   * completely fine to call this constructor with a temporary object for the
-   * finite element, as in this code snippet:
+   * The FiniteElement objects are not actually used for anything other than
+   * creating a copy that will then be owned by the current object. In other
+   * words, it is completely fine to call this constructor with a temporary
+   * object for the finite element, as in this code snippet:
    * @code
    *   FESystem<dim> fe (FE_Q<dim>(2)^2);
    * @endcode
@@ -1247,9 +1247,10 @@ namespace
   }
 } // namespace
 
-// We are just forwarding/delegating to the constructor taking a std::initializer_list.
-// If we decide to remove the deprecated constructors, we might just use the variadic
-// constructor with a suitable static_assert instead of the std::enable_if.
+// We are just forwarding/delegating to the constructor taking a
+// std::initializer_list. If we decide to remove the deprecated constructors, we
+// might just use the variadic constructor with a suitable static_assert instead
+// of the std::enable_if.
 template <int dim, int spacedim>
 template <class... FEPairs, typename>
 FESystem<dim, spacedim>::FESystem(FEPairs&&... fe_pairs)
@@ -1288,7 +1289,7 @@ FESystem<dim, spacedim>::FESystem(
   initialize(fes, multiplicities);
 }
 
-#  endif //DOXYGEN
+#  endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// check TrilinosWrappers::MPI::Vector::operator*(Vector) on two vectors that are
-// not orthogonal
+// check TrilinosWrappers::MPI::Vector::operator*(Vector) on two vectors that
+// are not orthogonal
 
 #include "../tests.h"
 #include <deal.II/base/utilities.h>

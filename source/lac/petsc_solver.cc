@@ -48,10 +48,16 @@ namespace PETScWrappers
                     const PreconditionerBase& preconditioner)
   {
     /*
-      TODO: PETSc duplicates communicators, so this does not work (you put MPI_COMM_SELF in, but get something other out when you ask PETSc for the communicator. This mainly fails due to the MatrixFree classes, that can not ask PETSc for a communicator. //Timo Heister
-    Assert(A.get_mpi_communicator()==mpi_communicator, ExcMessage("PETSc Solver and Matrix need to use the same MPI_Comm."));
-    Assert(x.get_mpi_communicator()==mpi_communicator, ExcMessage("PETSc Solver and Vector need to use the same MPI_Comm."));
-    Assert(b.get_mpi_communicator()==mpi_communicator, ExcMessage("PETSc Solver and Vector need to use the same MPI_Comm."));
+      TODO: PETSc duplicates communicators, so this does not work (you put
+    MPI_COMM_SELF in, but get something other out when you ask PETSc for the
+    communicator. This mainly fails due to the MatrixFree classes, that can not
+    ask PETSc for a communicator. //Timo Heister
+    Assert(A.get_mpi_communicator()==mpi_communicator, ExcMessage("PETSc Solver
+    and Matrix need to use the same MPI_Comm."));
+    Assert(x.get_mpi_communicator()==mpi_communicator, ExcMessage("PETSc Solver
+    and Vector need to use the same MPI_Comm."));
+    Assert(b.get_mpi_communicator()==mpi_communicator, ExcMessage("PETSc Solver
+    and Vector need to use the same MPI_Comm."));
     */
 
     // first create a solver object if this
@@ -579,10 +585,10 @@ namespace PETScWrappers
   SparseDirectMUMPS::set_solver_type(KSP& ksp) const
   {
     /**
-    * KSPPREONLY implements a stub method that applies only the
-    * preconditioner.  Its use is due to SparseDirectMUMPS being a direct
-    * (rather than iterative) solver
-    */
+     * KSPPREONLY implements a stub method that applies only the
+     * preconditioner.  Its use is due to SparseDirectMUMPS being a direct
+     * (rather than iterative) solver
+     */
     PetscErrorCode ierr = KSPSetType(ksp, KSPPREONLY);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -660,8 +666,8 @@ namespace PETScWrappers
         set_solver_type(solver_data->ksp);
 
         /**
-        * getting the associated preconditioner context
-        */
+         * getting the associated preconditioner context
+         */
         ierr = KSPGetPC(solver_data->ksp, &solver_data->pc);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -742,8 +748,8 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     /**
-    * in case of failure throw exception
-    */
+     * in case of failure throw exception
+     */
     if(solver_control.last_check() != SolverControl::success)
       {
         AssertThrow(false,

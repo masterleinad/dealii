@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// similar to data_out_multi_dh_02 but using the same finite element with different DoFHandlers (renumberings)
+// similar to data_out_multi_dh_02 but using the same finite element with
+// different DoFHandlers (renumberings)
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>

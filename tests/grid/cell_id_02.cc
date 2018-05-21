@@ -58,7 +58,8 @@ check(TRIA& tr)
 int
 main(int argc, char* argv[])
 {
-  // Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv, testing_max_num_threads());
+  // Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv,
+  // testing_max_num_threads());
 
   initlog();
   deal_II_exceptions::disable_abort_on_exception();

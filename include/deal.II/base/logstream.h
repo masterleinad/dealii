@@ -354,7 +354,8 @@ private:
   operator<<(LogStream& log, const T& t);
 };
 
-/* ----------------------------- Inline functions and templates ---------------- */
+/* ----------------------------- Inline functions and templates ----------------
+ */
 
 /**
  * Output a constant something through LogStream:

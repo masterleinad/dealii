@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Test LinearAlgebra::distributed::Vector::operator=(PETScWrappers::MPI::Vector&)
+// Test
+// LinearAlgebra::distributed::Vector::operator=(PETScWrappers::MPI::Vector&)
 
 #include "../tests.h"
 #include <deal.II/base/index_set.h>

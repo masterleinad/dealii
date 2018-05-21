@@ -15,9 +15,9 @@
 
 // Check that QuadraturePointManager class. To that end first evaluate some
 // quadratic function at quadrature points. Then refine cells and project using
-// FE_Q(2). Finally check that the values at quadrature points are still consistent
-// with the original function.
-// Same as quadrature_point_data.cc, but for DATA class with 2 scalars.
+// FE_Q(2). Finally check that the values at quadrature points are still
+// consistent with the original function. Same as quadrature_point_data.cc, but
+// for DATA class with 2 scalars.
 
 #include "../tests.h"
 
@@ -92,7 +92,8 @@ DeclException3(ExcWrongValue,
                << arg1 << " != " << arg2 << " with delta = " << arg3);
 
 /**
- * Loop over quadrature points and check that value is the same as given by the function.
+ * Loop over quadrature points and check that value is the same as given by the
+ * function.
  */
 template <int dim, typename DATA>
 void

@@ -74,10 +74,9 @@ namespace hp
  * is as follows:
  * @code{.bib}
  * @Article{KGZB83,
- *   author =       {Kelly, D. W. and {De S. R. Gago}, J. P. and Zienkiewicz, O. C.
- *                   and Babu\v{s}ka, I.},
- *   title =        {A posteriori error analysis and adaptive processes
- *                   in the finite element method: Part {I}--Error Analysis},
+ *   author =       {Kelly, D. W. and {De S. R. Gago}, J. P. and Zienkiewicz, O.
+ * C. and Babu\v{s}ka, I.}, title =        {A posteriori error analysis and
+ * adaptive processes in the finite element method: Part {I}--Error Analysis},
  *   journal =      {Int. J. Num. Meth. Engrg.},
  *   year =         {1983},
  *   volume =       {19},
@@ -92,13 +91,14 @@ namespace hp
  * \eta_K^2 = \sum_{F\in\partial K} c_F \int_{\partial K_F} \left[a
  * \frac{\partial u_h}{\partial n}\right]^2 do \f] be the error estimator for
  * cell $K$. $[\cdot]$ denotes the jump of the argument at the face. In the
- * paper of Ainsworth $ c_F=\frac {h_K}{24} $, but this factor is a bit esoteric,
- * stemming from interpolation estimates and stability constants which may
- * hold for the Poisson problem, but may not hold for more general situations.
- * Alternatively, we consider the case when $ c_F=\frac {h_F}{2p_F} $, where $
- * h_F $ is face diagonal and $ p_F=max(p^+,p^-) $ is the maximum polynomial
- * degree of adjacent elements; or $c_F=h_K$. The choice between these factors is done by means of
- * the enumerator, provided as the last argument in all functions.
+ * paper of Ainsworth $ c_F=\frac {h_K}{24} $, but this factor is a bit
+ * esoteric, stemming from interpolation estimates and stability constants which
+ * may hold for the Poisson problem, but may not hold for more general
+ * situations. Alternatively, we consider the case when $ c_F=\frac {h_F}{2p_F}
+ * $, where $ h_F $ is face diagonal and $ p_F=max(p^+,p^-) $ is the maximum
+ * polynomial degree of adjacent elements; or $c_F=h_K$. The choice between
+ * these factors is done by means of the enumerator, provided as the last
+ * argument in all functions.
  *
  * To perform the integration, use is made of the FEFaceValues and
  * FESubfaceValues classes. The integration is performed by looping over all
@@ -258,7 +258,8 @@ public:
   {
     //! Kelly error estimator with the factor $\frac {h_K}{24}$.
     cell_diameter_over_24 = 0,
-    //! the boundary residual estimator with the factor $\frac {h_F}{2 max(p^+,p^-)}$.
+    //! the boundary residual estimator with the factor $\frac {h_F}{2
+    //! max(p^+,p^-)}$.
     face_diameter_over_twice_max_degree,
     //! Kelly error estimator with the factor $h_K$.
     cell_diameter
@@ -577,7 +578,8 @@ public:
   {
     //! Kelly error estimator with the factor $\frac {h_K}{24}$.
     cell_diameter_over_24 = 0,
-    //! the boundary residual estimator with the factor $\frac {h_F}{2 max(p^+,p^-)}$.
+    //! the boundary residual estimator with the factor $\frac {h_F}{2
+    //! max(p^+,p^-)}$.
     face_diameter_over_twice_max_degree,
     //! Kelly error estimator with the factor $h_K$.
     cell_diameter

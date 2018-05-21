@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// check setting elements in a sparse matrix using ChunkSparseMatrix::set(). make
-// sure they are correct, and make sure that for the nonexisting entries
+// check setting elements in a sparse matrix using ChunkSparseMatrix::set().
+// make sure they are correct, and make sure that for the nonexisting entries
 // ChunkSparseMatrix::el() returns zero and operator() throws an exception
 
 #include "../tests.h"

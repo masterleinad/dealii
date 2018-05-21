@@ -561,9 +561,9 @@ public:
   BlockVectorBase(const BlockVectorBase& /*V*/) = default;
 
   /**
-   * Move constructor. Each block of the argument vector is moved into the current
-   * object if the underlying <code>VectorType</code> is move-constructible,
-   * otherwise they are copied.
+   * Move constructor. Each block of the argument vector is moved into the
+   * current object if the underlying <code>VectorType</code> is
+   * move-constructible, otherwise they are copied.
    */
   BlockVectorBase(BlockVectorBase&& /*V*/) noexcept = default;
 
@@ -844,7 +844,8 @@ public:
    * operations are memory transfer limited, this reduces the time by 25\% (or
    * 50\% if @p W equals @p this).
    *
-   * For complex-valued vectors, the scalar product in the second step is implemented as
+   * For complex-valued vectors, the scalar product in the second step is
+   * implemented as
    * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
    */
   value_type
@@ -1456,7 +1457,7 @@ namespace internal
 
   } // namespace BlockVectorIterators
 
-} //namespace internal
+} // namespace internal
 
 template <class VectorType>
 inline std::size_t
@@ -1627,7 +1628,8 @@ typename BlockVectorBase<VectorType>::value_type
 BlockVectorBase<VectorType>::mean_value() const
 {
   value_type sum = 0.;
-  // need to do static_cast as otherwise it won't work with value_type=complex<T>
+  // need to do static_cast as otherwise it won't work with
+  // value_type=complex<T>
   for(size_type i = 0; i < n_blocks(); ++i)
     sum += components[i].mean_value()
            * (typename numbers::NumberTraits<value_type>::real_type(

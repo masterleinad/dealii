@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// like particle_handler_03, but for distributed triangulations in parallel computations
+// like particle_handler_03, but for distributed triangulations in parallel
+// computations
 
 #include "../tests.h"
 #include <deal.II/particles/particle_handler.h>
@@ -34,7 +35,8 @@ test()
     tr.refine_global(2);
     MappingQ<dim, spacedim> mapping(1);
 
-    // both processes create a particle handler, but only the first creates particles
+    // both processes create a particle handler, but only the first creates
+    // particles
     Particles::ParticleHandler<dim, spacedim> particle_handler(tr, mapping);
 
     if(Utilities::MPI::this_mpi_process(tr.get_communicator()) == 0)
@@ -83,8 +85,8 @@ test()
               << std::flush << std::endl;
 
     // Move all points up by 0.5. This will change cell for particle 1, and will
-    // move particle 2 out of the domain. Note that we need to change the coordinate
-    // dim-1 despite having a spacedim point.
+    // move particle 2 out of the domain. Note that we need to change the
+    // coordinate dim-1 despite having a spacedim point.
     Point<spacedim> shift;
     shift(dim - 1) = 0.5;
     for(auto particle = particle_handler.begin();

@@ -70,7 +70,8 @@ namespace OpenCASCADE
     }
   } // namespace
 
-  /*============================== NormalProjectionManifold ==============================*/
+  /*============================== NormalProjectionManifold
+   * ==============================*/
   template <int dim, int spacedim>
   NormalProjectionManifold<dim, spacedim>::NormalProjectionManifold(
     const TopoDS_Shape& sh,
@@ -105,7 +106,8 @@ namespace OpenCASCADE
     return closest_point(sh, candidate, tolerance);
   }
 
-  /*============================== DirectionalProjectionManifold ==============================*/
+  /*============================== DirectionalProjectionManifold
+   * ==============================*/
   template <int dim, int spacedim>
   DirectionalProjectionManifold<dim, spacedim>::DirectionalProjectionManifold(
     const TopoDS_Shape&        sh,
@@ -141,7 +143,8 @@ namespace OpenCASCADE
     return line_intersection(sh, candidate, direction, tolerance);
   }
 
-  /*============================== NormalToMeshProjectionManifold ==============================*/
+  /*============================== NormalToMeshProjectionManifold
+   * ==============================*/
   template <int dim, int spacedim>
   NormalToMeshProjectionManifold<dim, spacedim>::NormalToMeshProjectionManifold(
     const TopoDS_Shape& sh,
@@ -285,7 +288,8 @@ namespace OpenCASCADE
     return line_intersection(sh, candidate, average_normal, tolerance);
   }
 
-  /*============================== ArclengthProjectionLineManifold ==============================*/
+  /*============================== ArclengthProjectionLineManifold
+   * ==============================*/
   template <int dim, int spacedim>
   ArclengthProjectionLineManifold<dim, spacedim>::
     ArclengthProjectionLineManifold(const TopoDS_Shape& sh,

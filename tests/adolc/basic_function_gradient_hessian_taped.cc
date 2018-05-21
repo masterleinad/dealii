@@ -16,7 +16,8 @@
 // Test of basic functionality:
 //  - Taped doubles
 //  - Gradient and hessian computations
-// Adapted from https://github.com/Homebrew/homebrew-science/blob/master/adol-c.rb
+// Adapted from
+// https://github.com/Homebrew/homebrew-science/blob/master/adol-c.rb
 
 #include "../tests.h"
 #include <adolc/adouble.h>

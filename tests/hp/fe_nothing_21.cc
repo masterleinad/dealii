@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// interpolate() can not deal with FE_Nothing, simplified version of fe_nothing_20.cc
+// interpolate() can not deal with FE_Nothing, simplified version of
+// fe_nothing_20.cc
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -65,7 +66,7 @@ main()
 {
   initlog();
 
-  //test<1> ();
+  // test<1> ();
   test<2>();
   test<3>();
 

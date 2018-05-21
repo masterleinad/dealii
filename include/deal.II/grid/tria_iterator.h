@@ -16,7 +16,7 @@
 #ifndef dealii_tria_iterator_h
 #  define dealii_tria_iterator_h
 
-/*----------------------------   tria-iterator.h     ---------------------------*/
+/*----------------------------   tria-iterator.h ---------------------------*/
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
@@ -1193,6 +1193,6 @@ DEAL_II_NAMESPACE_CLOSE
 #    include "tria_iterator.templates.h"
 #  endif
 
-/*----------------------------   tria-iterator.h     ---------------------------*/
+/*----------------------------   tria-iterator.h ---------------------------*/
 #endif
-/*----------------------------   tria-iterator.h     ---------------------------*/
+/*----------------------------   tria-iterator.h ---------------------------*/

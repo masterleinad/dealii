@@ -51,7 +51,7 @@ namespace internals
   class GlobalRowsFromLocal;
 }
 
-//TODO[WB]: We should have a function of the kind
+// TODO[WB]: We should have a function of the kind
 //   ConstraintMatrix::add_constraint (const size_type constrained_dof,
 //                const std::vector<std::pair<size_type, double> > &entries,
 //                const double inhomogeneity = 0);
@@ -830,18 +830,20 @@ public:
    * Same as the previous function, except that it uses two (possibly) different
    * index sets to correctly handle inhomogeneities when the local matrix is
    * computed from a combination of two neighboring elements, for example for an
-   * edge integral term in DG. Note that in the case that these two elements have
-   * different polynomial degree, the local matrix is rectangular.
+   * edge integral term in DG. Note that in the case that these two elements
+   * have different polynomial degree, the local matrix is rectangular.
    *
    * <tt>local_dof_indices_row</tt> is the set of row indices and
-   * <tt>local_dof_indices_col</tt> is the set of column indices of the local matrix.
-   * <tt>diagonal=false</tt> says whether the two index sets are equal or not.
+   * <tt>local_dof_indices_col</tt> is the set of column indices of the local
+   * matrix. <tt>diagonal=false</tt> says whether the two index sets are equal
+   * or not.
    *
    * If both index sets are equal, <tt>diagonal</tt> must be set to true or we
-   * simply use the previous function. If both index sets are different (diagonal=false)
-   * the <tt>global_vector</tt> is modified to handle inhomogeneities but no
-   * entries from <tt>local_vector</tt> are added. Note that the edge integrals for inner
-   * edged for DG do not contribute any values to the right hand side.
+   * simply use the previous function. If both index sets are different
+   * (diagonal=false) the <tt>global_vector</tt> is modified to handle
+   * inhomogeneities but no entries from <tt>local_vector</tt> are added. Note
+   * that the edge integrals for inner edged for DG do not contribute any values
+   * to the right hand side.
    */
   template <typename VectorType, typename LocalType>
   void
@@ -1726,7 +1728,7 @@ ConstraintMatrix::get_inhomogeneity(const size_type line) const
 inline types::global_dof_index
 ConstraintMatrix::calculate_line_index(const size_type line) const
 {
-  //IndexSet is unused (serial case)
+  // IndexSet is unused (serial case)
   if(!local_lines.size())
     return line;
 

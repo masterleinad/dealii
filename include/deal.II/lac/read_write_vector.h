@@ -212,8 +212,8 @@ namespace LinearAlgebra
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
     /**
-     * Initialize this ReadWriteVector by supplying access to all locally available
-     * entries in the given ghosted or non-ghosted vector.
+     * Initialize this ReadWriteVector by supplying access to all locally
+     * available entries in the given ghosted or non-ghosted vector.
      *
      * @note This function currently copies the values from the argument into
      * the ReadWriteVector, so modifications here will not modify @p trilinos_vec.
@@ -237,8 +237,8 @@ namespace LinearAlgebra
      * };
      * @endcode
      *
-     * @note This function requires that the header read_write_vector.templates.h
-     * be included.
+     * @note This function requires that the header
+     * read_write_vector.templates.h be included.
      */
     template <typename Functor>
     void
@@ -696,7 +696,8 @@ namespace LinearAlgebra
 
   /*@}*/
 
-  /*----------------------- Inline functions ----------------------------------*/
+  /*----------------------- Inline functions
+   * ----------------------------------*/
 
 #ifndef DOXYGEN
 

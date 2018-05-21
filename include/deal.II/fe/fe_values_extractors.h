@@ -205,7 +205,8 @@ namespace FEValuesExtractors
   };
 } // namespace FEValuesExtractors
 
-/*------------------------ Inline functions: namespace FEValuesExtractors --------*/
+/*------------------------ Inline functions: namespace FEValuesExtractors
+ * --------*/
 
 namespace FEValuesExtractors
 {

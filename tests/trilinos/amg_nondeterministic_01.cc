@@ -560,7 +560,7 @@ run()
     ML_Epetra::SetDefaults("NSSA", parameter_list);
     parameter_list.set("smoother: type", "Chebyshev");
     parameter_list.set("initialize random seed", true);
-    parameter_list.set("ML output", 0); //or 10 for details
+    parameter_list.set("ML output", 0); // or 10 for details
     check(mat, parameter_list, x1, x2, b);
   }
   {
@@ -569,7 +569,7 @@ run()
     ML_Epetra::SetDefaults("SA", parameter_list);
     parameter_list.set("smoother: type", "symmetric Gauss-Seidel");
     parameter_list.set("initialize random seed", true);
-    parameter_list.set("ML output", 0); //or 10 for details
+    parameter_list.set("ML output", 0); // or 10 for details
     check(mat, parameter_list, x1, x2, b);
   }
   {
@@ -578,7 +578,7 @@ run()
     ML_Epetra::SetDefaults("SA", parameter_list);
     parameter_list.set("smoother: type", "Chebyshev");
     parameter_list.set("initialize random seed", true);
-    parameter_list.set("ML output", 0); //or 10 for details
+    parameter_list.set("ML output", 0); // or 10 for details
     check(mat, parameter_list, x1, x2, b);
   }
 }

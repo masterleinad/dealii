@@ -53,6 +53,8 @@ BreakStringLiterals: false
 
 ColumnLimit: 80
 
+CommentPragmas: '@(ref|p) '
+
 CompactNamespaces: false
 
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
@@ -86,7 +88,7 @@ NamespaceIndentation: All
 
 PointerAlignment: Left
 
-ReflowComments: false
+ReflowComments: true
 
 SortIncludes: true
 SortUsingDeclarations: true

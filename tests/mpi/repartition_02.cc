@@ -124,7 +124,7 @@ test()
 
       tr.notify_ready_to_unpack(offset, unpack_function<dim>);
 
-      //tr.write_mesh_vtk("a");
+      // tr.write_mesh_vtk("a");
 
       deallog << "* repartition:" << std::endl;
 
@@ -132,7 +132,7 @@ test()
 
       tr.repartition();
 
-      //tr.write_mesh_vtk("b");
+      // tr.write_mesh_vtk("b");
 
       deallog << "locally owned cells: " << tr.n_locally_owned_active_cells()
               << " / " << tr.n_global_active_cells() << std::endl;

@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// check that computation of hp constraints works for Bernstein elements correctly
+// check that computation of hp constraints works for Bernstein elements
+// correctly
 
 char logname[] = "output";
 

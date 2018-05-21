@@ -258,7 +258,7 @@ SolverCG<VectorType>::compute_eigs_and_cond(
                                                eigenvalues_signal,
   const boost::signals2::signal<void(double)>& cond_signal)
 {
-  //Avoid computing eigenvalues unless they are needed.
+  // Avoid computing eigenvalues unless they are needed.
   if(!cond_signal.empty() || !eigenvalues_signal.empty())
     {
       TridiagonalMatrix<double> T(diagonal.size(), true);
@@ -269,14 +269,14 @@ SolverCG<VectorType>::compute_eigs_and_cond(
             T(i, i + 1) = offdiagonal[i];
         }
       T.compute_eigenvalues();
-      //Need two eigenvalues to estimate the condition number.
+      // Need two eigenvalues to estimate the condition number.
       if(diagonal.size() > 1)
         {
           double condition_number = T.eigenvalue(T.n() - 1) / T.eigenvalue(0);
           cond_signal(condition_number);
         }
-      //Avoid copying the eigenvalues of T to a vector unless a signal is
-      //connected.
+      // Avoid copying the eigenvalues of T to a vector unless a signal is
+      // connected.
       if(!eigenvalues_signal.empty())
         {
           std::vector<double> eigenvalues(T.n());

@@ -27,7 +27,8 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-/* -------------- Adol-C taped (Differentiation::AD::NumberTypes::adolc_taped) -------------- */
+/* -------------- Adol-C taped (Differentiation::AD::NumberTypes::adolc_taped)
+ * -------------- */
 
 namespace internal
 {
@@ -37,9 +38,10 @@ namespace internal
     typedef adouble type;
   };
 
-  // Typedefs for "adub"s are all that's necessary to ensure that no temporary Adol-C types
-  // "adub" are created when a scalar product is performed.
-  // If this is not done, then intermediate tensors are filled with unconstructable types.
+  // Typedefs for "adub"s are all that's necessary to ensure that no temporary
+  // Adol-C types "adub" are created when a scalar product is performed. If this
+  // is not done, then intermediate tensors are filled with unconstructable
+  // types.
   template <>
   struct ProductTypeImpl<adub, adouble>
   {
@@ -176,7 +178,8 @@ struct EnableIfScalar<std::complex<adub>>
   typedef std::complex<adouble> type;
 };
 
-/* -------------- Adol-C tapeless (Differentiation::AD::NumberTypes::adolc_tapeless) -------------- */
+/* -------------- Adol-C tapeless
+ * (Differentiation::AD::NumberTypes::adolc_tapeless) -------------- */
 
 namespace internal
 {

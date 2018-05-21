@@ -15,7 +15,7 @@
 
 // like _01 but on adaptively refined grid
 
-//TODO:[GK] Add checks for RT again!
+// TODO:[GK] Add checks for RT again!
 #include "../tests.h"
 #include <deal.II/base/mg_level_object.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -78,7 +78,7 @@ refine_mesh(Triangulation<dim>& triangulation)
             }
         }
     }
-  if(!cell_refined) //if no cell was selected for refinement, refine global
+  if(!cell_refined) // if no cell was selected for refinement, refine global
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
         cell != triangulation.end();
@@ -211,7 +211,7 @@ check_simple(const FiniteElement<dim>& fe)
   reinit_vector(mgdof, v);
 
   transfer.copy_to_mg(mgdof, v, u);
-  //print(mgdof, v);
+  // print(mgdof, v);
 
   u = 0;
   initialize(mgdof, v);
@@ -227,7 +227,7 @@ check_simple(const FiniteElement<dim>& fe)
   reinit_vector(mgdof_renumbered, v);
   transfer_renumbered.copy_to_mg(mgdof_renumbered, v, u);
   deallog << "copy_to_mg" << std::endl;
-  //print(mgdof_renumbered, v);
+  // print(mgdof_renumbered, v);
 
   u = 0;
   initialize(mgdof_renumbered, v);
@@ -245,6 +245,6 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  //check_simple (FESystem<2>(FE_Q<2>(1), 2));
+  // check_simple (FESystem<2>(FE_Q<2>(1), 2));
   check_simple(FESystem<2>(FE_Q<2>(1), 4));
 }

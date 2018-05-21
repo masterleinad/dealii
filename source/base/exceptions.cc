@@ -93,8 +93,8 @@ ExceptionBase::ExceptionBase(const ExceptionBase& exc)
     stacktrace(
       nullptr), // don't copy stacktrace to avoid double de-allocation problem
     n_stacktrace_frames(0),
-    what_str(
-      "") // don't copy the error message, it gets generated dynamically by what()
+    what_str("") // don't copy the error message, it gets generated dynamically
+                 // by what()
 {
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
   for(unsigned int i = 0;

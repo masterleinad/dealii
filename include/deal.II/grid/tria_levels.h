@@ -200,7 +200,7 @@ namespace internal
                      << ", which is not as expected.");
     };
 
-    //TODO: Replace TriaObjectsHex to avoid this specialization
+    // TODO: Replace TriaObjectsHex to avoid this specialization
 
     /**
      * Specialization of TriaLevels for 3D. Since we need TriaObjectsHex

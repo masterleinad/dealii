@@ -72,11 +72,11 @@ test()
 
   {
     // disabled:
-    //typename LA::MPI::SparseMatrix mat2(mat);
+    // typename LA::MPI::SparseMatrix mat2(mat);
   } {
     // disabled:
-    //typename LA::MPI::SparseMatrix mat2;
-    //mat2 = mat;
+    // typename LA::MPI::SparseMatrix mat2;
+    // mat2 = mat;
   }
 
   {
@@ -130,6 +130,6 @@ main(int argc, char** argv)
   }
 
   // compile, don't run
-  //if (myid==9999)
+  // if (myid==9999)
   //  test<LA_Dummy>();
 }

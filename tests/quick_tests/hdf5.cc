@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Test HDF5. Copy-paste from https://support.hdfgroup.org/HDF5/Tutor/crtfile.html
+// Test HDF5. Copy-paste from
+// https://support.hdfgroup.org/HDF5/Tutor/crtfile.html
 
 #include <cstdio>
 #include <hdf5.h>

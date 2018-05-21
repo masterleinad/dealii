@@ -425,8 +425,8 @@ namespace MeshWorker
       hessian_selection.add(name);
   }
 
-  //inline void
-  //VectorSelector::add(const std::string& name,
+  // inline void
+  // VectorSelector::add(const std::string& name,
   //   const unsigned int block,
   //   bool values, bool gradients, bool hessians)
   //{

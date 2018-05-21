@@ -653,7 +653,8 @@ operator!=(const const_iterator& other) const
   return !(*this == other);
 }
 
-//------------------------------- FilteredMatrix ---------------------------------------//
+//------------------------------- FilteredMatrix
+//---------------------------------------//
 
 template <typename number>
 inline typename FilteredMatrix<number>::const_iterator
@@ -942,4 +943,4 @@ FilteredMatrix<VectorType>::memory_consumption() const
 DEAL_II_NAMESPACE_CLOSE
 
 #endif
-/*----------------------------   filtered_matrix.h     ---------------------------*/
+/*----------------------------   filtered_matrix.h ---------------------------*/

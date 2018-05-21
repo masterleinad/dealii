@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// check that LinearAlgebra::distributed::Vector::add_and_dot works correctly for complex-valued
-// vectors
+// check that LinearAlgebra::distributed::Vector::add_and_dot works correctly
+// for complex-valued vectors
 
 #include "../tests.h"
 #include <deal.II/lac/la_parallel_vector.h>

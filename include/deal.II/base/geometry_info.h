@@ -29,7 +29,8 @@ namespace internal
 {
   namespace GeometryInfoHelper
   {
-    // A struct that holds the values for all the arrays we want to initialize in GeometryInfo
+    // A struct that holds the values for all the arrays we want to initialize
+    // in GeometryInfo
     template <int dim>
     struct Initializers;
 
@@ -215,7 +216,7 @@ namespace internal
     };
   } // namespace GeometryInfoHelper
 } // namespace internal
-#endif //DOXYGEN
+#endif // DOXYGEN
 
 /**
  * A class that can represent the kinds of objects a triangulation is made up
@@ -886,8 +887,8 @@ namespace internal
    *
    * *---*---*
    * | 1 | 3 |
-   * *---*---*    case_x1y2y   (successive refinement: first cut_x, then cut_y for both children)
-   * | 0 | 2 |
+   * *---*---*    case_x1y2y   (successive refinement: first cut_x, then cut_y
+   * for both children) | 0 | 2 |
    * *---*---*
    *
    * *-------*
@@ -910,8 +911,8 @@ namespace internal
    *
    * *---*---*
    * | 2 | 3 |
-   * *---*---*    case_y1x2x   (successive refinement: first cut_y, then cut_x for both children)
-   * | 0 | 1 |
+   * *---*---*    case_y1x2x   (successive refinement: first cut_y, then cut_x
+   * for both children) | 0 | 1 |
    * *---+---*
    *
    * *---*---*
@@ -2905,27 +2906,27 @@ GeometryInfo<3>::standard_to_real_face_vertex(const unsigned int vertex,
   // forth index: face_rotation: 0: standard,
   // 1: face rotated by 90 degrees
 
-  constexpr unsigned int vertex_translation[4][2][2][2] = {
-    {{{0,
-       2}, // vertex 0, face_orientation=false, face_flip=false, face_rotation=false and true
-      {3,
-       1}}, // vertex 0, face_orientation=false, face_flip=true, face_rotation=false and true
-     {{0,
-       2}, // vertex 0, face_orientation=true, face_flip=false, face_rotation=false and true
-      {3,
-       1}}}, // vertex 0, face_orientation=true, face_flip=true, face_rotation=false and true
+  constexpr unsigned int vertex_translation[4][2][2][2]
+    = {{{{0, 2},   // vertex 0, face_orientation=false, face_flip=false,
+                   // face_rotation=false and true
+         {3, 1}},  // vertex 0, face_orientation=false, face_flip=true,
+                   // face_rotation=false and true
+        {{0, 2},   // vertex 0, face_orientation=true, face_flip=false,
+                   // face_rotation=false and true
+         {3, 1}}}, // vertex 0, face_orientation=true, face_flip=true,
+                   // face_rotation=false and true
 
-    {{{2, 3}, // vertex 1 ...
-      {1, 0}},
-     {{1, 0}, {2, 3}}},
+       {{{2, 3}, // vertex 1 ...
+         {1, 0}},
+        {{1, 0}, {2, 3}}},
 
-    {{{1, 0}, // vertex 2 ...
-      {2, 3}},
-     {{2, 3}, {1, 0}}},
+       {{{1, 0}, // vertex 2 ...
+         {2, 3}},
+        {{2, 3}, {1, 0}}},
 
-    {{{3, 1}, // vertex 3 ...
-      {0, 2}},
-     {{3, 1}, {0, 2}}}};
+       {{{3, 1}, // vertex 3 ...
+         {0, 2}},
+        {{3, 1}, {0, 2}}}};
 
   return vertex_translation[vertex][face_orientation][face_flip][face_rotation];
 }
@@ -3399,22 +3400,22 @@ GeometryInfo<3>::min_cell_refinement_case_for_face_refinement(
     = (face_orientation == face_rotation) ? flip[face_refinement_case] :
                                             face_refinement_case;
 
-  const RefinementCase<dim> face_to_cell[3][4] = {
-    {RefinementCase<dim>::no_refinement, // faces 0 and 1
-     RefinementCase<dim>::cut_y, // cut_x in face 0 means cut_y for the cell
-     RefinementCase<dim>::cut_z,
-     RefinementCase<dim>::cut_yz},
+  const RefinementCase<dim> face_to_cell[3][4]
+    = {{RefinementCase<dim>::no_refinement, // faces 0 and 1
+        RefinementCase<dim>::cut_y, // cut_x in face 0 means cut_y for the cell
+        RefinementCase<dim>::cut_z,
+        RefinementCase<dim>::cut_yz},
 
-    {RefinementCase<dim>::
-       no_refinement, // faces 2 and 3 (note that x and y are "exchanged on faces 2 and 3")
-     RefinementCase<dim>::cut_z,
-     RefinementCase<dim>::cut_x,
-     RefinementCase<dim>::cut_xz},
+       {RefinementCase<dim>::no_refinement, // faces 2 and 3 (note that x and y
+                                            // are "exchanged on faces 2 and 3")
+        RefinementCase<dim>::cut_z,
+        RefinementCase<dim>::cut_x,
+        RefinementCase<dim>::cut_xz},
 
-    {RefinementCase<dim>::no_refinement, // faces 4 and 5
-     RefinementCase<dim>::cut_x,
-     RefinementCase<dim>::cut_y,
-     RefinementCase<dim>::cut_xy}};
+       {RefinementCase<dim>::no_refinement, // faces 4 and 5
+        RefinementCase<dim>::cut_x,
+        RefinementCase<dim>::cut_y,
+        RefinementCase<dim>::cut_xy}};
 
   return face_to_cell[face_no / 2][std_face_ref];
 }
@@ -3501,27 +3502,27 @@ GeometryInfo<3>::real_to_standard_face_vertex(const unsigned int vertex,
   // forth index: face_rotation: 0: standard,
   // 1: face rotated by 90 degrees
 
-  const unsigned int vertex_translation[4][2][2][2] = {
-    {{{0,
-       2}, // vertex 0, face_orientation=false, face_flip=false, face_rotation=false and true
-      {3,
-       1}}, // vertex 0, face_orientation=false, face_flip=true, face_rotation=false and true
-     {{0,
-       1}, // vertex 0, face_orientation=true, face_flip=false, face_rotation=false and true
-      {3,
-       2}}}, // vertex 0, face_orientation=true, face_flip=true, face_rotation=false and true
+  const unsigned int vertex_translation[4][2][2][2]
+    = {{{{0, 2},   // vertex 0, face_orientation=false, face_flip=false,
+                   // face_rotation=false and true
+         {3, 1}},  // vertex 0, face_orientation=false, face_flip=true,
+                   // face_rotation=false and true
+        {{0, 1},   // vertex 0, face_orientation=true, face_flip=false,
+                   // face_rotation=false and true
+         {3, 2}}}, // vertex 0, face_orientation=true, face_flip=true,
+                   // face_rotation=false and true
 
-    {{{2, 3}, // vertex 1 ...
-      {1, 0}},
-     {{1, 3}, {2, 0}}},
+       {{{2, 3}, // vertex 1 ...
+         {1, 0}},
+        {{1, 3}, {2, 0}}},
 
-    {{{1, 0}, // vertex 2 ...
-      {2, 3}},
-     {{2, 0}, {1, 3}}},
+       {{{1, 0}, // vertex 2 ...
+         {2, 3}},
+        {{2, 0}, {1, 3}}},
 
-    {{{3, 1}, // vertex 3 ...
-      {0, 2}},
-     {{3, 2}, {0, 1}}}};
+       {{{3, 1}, // vertex 3 ...
+         {0, 2}},
+        {{3, 2}, {0, 1}}}};
 
   return vertex_translation[vertex][face_orientation][face_flip][face_rotation];
 }
@@ -3566,27 +3567,27 @@ GeometryInfo<3>::standard_to_real_face_line(const unsigned int line,
   // forth index: face_rotation: 0: standard,
   // 1: face rotated by 90 degrees
 
-  const unsigned int line_translation[4][2][2][2] = {
-    {{{2,
-       0}, // line 0, face_orientation=false, face_flip=false, face_rotation=false and true
-      {3,
-       1}}, // line 0, face_orientation=false, face_flip=true, face_rotation=false and true
-     {{0,
-       3}, // line 0, face_orientation=true, face_flip=false, face_rotation=false and true
-      {1,
-       2}}}, // line 0, face_orientation=true, face_flip=true, face_rotation=false and true
+  const unsigned int line_translation[4][2][2][2]
+    = {{{{2, 0},   // line 0, face_orientation=false, face_flip=false,
+                   // face_rotation=false and true
+         {3, 1}},  // line 0, face_orientation=false, face_flip=true,
+                   // face_rotation=false and true
+        {{0, 3},   // line 0, face_orientation=true, face_flip=false,
+                   // face_rotation=false and true
+         {1, 2}}}, // line 0, face_orientation=true, face_flip=true,
+                   // face_rotation=false and true
 
-    {{{3, 1}, // line 1 ...
-      {2, 0}},
-     {{1, 2}, {0, 3}}},
+       {{{3, 1}, // line 1 ...
+         {2, 0}},
+        {{1, 2}, {0, 3}}},
 
-    {{{0, 3}, // line 2 ...
-      {1, 2}},
-     {{2, 0}, {3, 1}}},
+       {{{0, 3}, // line 2 ...
+         {1, 2}},
+        {{2, 0}, {3, 1}}},
 
-    {{{1, 2}, // line 3 ...
-      {0, 3}},
-     {{3, 1}, {2, 0}}}};
+       {{{1, 2}, // line 3 ...
+         {0, 3}},
+        {{3, 1}, {2, 0}}}};
 
   return line_translation[line][face_orientation][face_flip][face_rotation];
 }
@@ -3629,27 +3630,27 @@ GeometryInfo<3>::real_to_standard_face_line(const unsigned int line,
   // forth index: face_rotation: 0: standard,
   // 1: face rotated by 90 degrees
 
-  const unsigned int line_translation[4][2][2][2] = {
-    {{{2,
-       0}, // line 0, face_orientation=false, face_flip=false, face_rotation=false and true
-      {3,
-       1}}, // line 0, face_orientation=false, face_flip=true, face_rotation=false and true
-     {{0,
-       2}, // line 0, face_orientation=true, face_flip=false, face_rotation=false and true
-      {1,
-       3}}}, // line 0, face_orientation=true, face_flip=true, face_rotation=false and true
+  const unsigned int line_translation[4][2][2][2]
+    = {{{{2, 0},   // line 0, face_orientation=false, face_flip=false,
+                   // face_rotation=false and true
+         {3, 1}},  // line 0, face_orientation=false, face_flip=true,
+                   // face_rotation=false and true
+        {{0, 2},   // line 0, face_orientation=true, face_flip=false,
+                   // face_rotation=false and true
+         {1, 3}}}, // line 0, face_orientation=true, face_flip=true,
+                   // face_rotation=false and true
 
-    {{{3, 1}, // line 1 ...
-      {2, 0}},
-     {{1, 3}, {0, 2}}},
+       {{{3, 1}, // line 1 ...
+         {2, 0}},
+        {{1, 3}, {0, 2}}},
 
-    {{{0, 3}, // line 2 ...
-      {1, 2}},
-     {{2, 1}, {3, 0}}},
+       {{{0, 3}, // line 2 ...
+         {1, 2}},
+        {{2, 1}, {3, 0}}},
 
-    {{{1, 2}, // line 3 ...
-      {0, 3}},
-     {{3, 0}, {2, 1}}}};
+       {{{1, 2}, // line 3 ...
+         {0, 3}},
+        {{3, 0}, {2, 1}}}};
 
   return line_translation[line][face_orientation][face_flip][face_rotation];
 }
@@ -3785,66 +3786,50 @@ GeometryInfo<3>::child_cell_on_face(const RefinementCase<3>& ref_case,
   // third index:  face_flip
   // forth index:  face_rotation
   // fifth index:  subface index
-  const unsigned int subface_exchange[4][2][2][2][4] = {
-    // no_refinement (subface 0 stays 0,
-    // all others are invalid)
-    {{{{0, e, e, e}, {0, e, e, e}}, {{0, e, e, e}, {0, e, e, e}}},
-     {{{0, e, e, e}, {0, e, e, e}}, {{0, e, e, e}, {0, e, e, e}}}},
-    // cut_x (here, if the face is only
-    // rotated OR only falsely oriented,
-    // then subface 0 of the non-standard
-    // face does NOT correspond to one of
-    // the subfaces of a standard
-    // face. Thus we indicate the subface
-    // which is located at the lower left
-    // corner (the origin of the face's
-    // local coordinate system) with
-    // '0'. The rest of this issue is
-    // taken care of using the above
-    // conversion to a 'standard face
-    // refine case')
-    {{{{0, 1, e, e}, {0, 1, e, e}}, {{1, 0, e, e}, {1, 0, e, e}}},
-     {{{0, 1, e, e}, {0, 1, e, e}}, {{1, 0, e, e}, {1, 0, e, e}}}},
-    // cut_y (the same applies as for
-    // cut_x)
-    {{{{0, 1, e, e}, {1, 0, e, e}}, {{1, 0, e, e}, {0, 1, e, e}}},
-     {{{0, 1, e, e}, {1, 0, e, e}}, {{1, 0, e, e}, {0, 1, e, e}}}},
-    // cut_xyz: this information is
-    // identical to the information
-    // returned by
-    // GeometryInfo<3>::real_to_standard_face_vertex()
-    {{{{0,
-        2,
-        1,
-        3}, // face_orientation=false, face_flip=false, face_rotation=false, subfaces 0,1,2,3
-       {2,
-        3,
-        0,
-        1}}, // face_orientation=false, face_flip=false, face_rotation=true,  subfaces 0,1,2,3
-      {{3,
-        1,
-        2,
-        0}, // face_orientation=false, face_flip=true,  face_rotation=false, subfaces 0,1,2,3
-       {1,
-        0,
-        3,
-        2}}}, // face_orientation=false, face_flip=true,  face_rotation=true,  subfaces 0,1,2,3
-     {{{0,
-        1,
-        2,
-        3}, // face_orientation=true,  face_flip=false, face_rotation=false, subfaces 0,1,2,3
-       {1,
-        3,
-        0,
-        2}}, // face_orientation=true,  face_flip=false, face_rotation=true,  subfaces 0,1,2,3
-      {{3,
-        2,
-        1,
-        0}, // face_orientation=true,  face_flip=true,  face_rotation=false, subfaces 0,1,2,3
-       {2,
-        0,
-        3,
-        1}}}}}; // face_orientation=true,  face_flip=true,  face_rotation=true,  subfaces 0,1,2,3
+  const unsigned int subface_exchange[4][2][2][2][4]
+    = {// no_refinement (subface 0 stays 0,
+       // all others are invalid)
+       {{{{0, e, e, e}, {0, e, e, e}}, {{0, e, e, e}, {0, e, e, e}}},
+        {{{0, e, e, e}, {0, e, e, e}}, {{0, e, e, e}, {0, e, e, e}}}},
+       // cut_x (here, if the face is only
+       // rotated OR only falsely oriented,
+       // then subface 0 of the non-standard
+       // face does NOT correspond to one of
+       // the subfaces of a standard
+       // face. Thus we indicate the subface
+       // which is located at the lower left
+       // corner (the origin of the face's
+       // local coordinate system) with
+       // '0'. The rest of this issue is
+       // taken care of using the above
+       // conversion to a 'standard face
+       // refine case')
+       {{{{0, 1, e, e}, {0, 1, e, e}}, {{1, 0, e, e}, {1, 0, e, e}}},
+        {{{0, 1, e, e}, {0, 1, e, e}}, {{1, 0, e, e}, {1, 0, e, e}}}},
+       // cut_y (the same applies as for
+       // cut_x)
+       {{{{0, 1, e, e}, {1, 0, e, e}}, {{1, 0, e, e}, {0, 1, e, e}}},
+        {{{0, 1, e, e}, {1, 0, e, e}}, {{1, 0, e, e}, {0, 1, e, e}}}},
+       // cut_xyz: this information is
+       // identical to the information
+       // returned by
+       // GeometryInfo<3>::real_to_standard_face_vertex()
+       {{{{0, 2, 1, 3},     // face_orientation=false, face_flip=false,
+                            // face_rotation=false, subfaces 0,1,2,3
+          {2, 3, 0, 1}},    // face_orientation=false, face_flip=false,
+                            // face_rotation=true,  subfaces 0,1,2,3
+         {{3, 1, 2, 0},     // face_orientation=false, face_flip=true,
+                            // face_rotation=false, subfaces 0,1,2,3
+          {1, 0, 3, 2}}},   // face_orientation=false, face_flip=true,
+                            // face_rotation=true,  subfaces 0,1,2,3
+        {{{0, 1, 2, 3},     // face_orientation=true,  face_flip=false,
+                            // face_rotation=false, subfaces 0,1,2,3
+          {1, 3, 0, 2}},    // face_orientation=true,  face_flip=false,
+                            // face_rotation=true,  subfaces 0,1,2,3
+         {{3, 2, 1, 0},     // face_orientation=true,  face_flip=true,
+                            // face_rotation=false, subfaces 0,1,2,3
+          {2, 0, 3, 1}}}}}; // face_orientation=true,  face_flip=true,
+                            // face_rotation=true,  subfaces 0,1,2,3
 
   const unsigned int std_subface
     = subface_exchange[face_ref_case][face_orientation][face_flip]
@@ -3867,7 +3852,7 @@ GeometryInfo<3>::child_cell_on_face(const RefinementCase<3>& ref_case,
         {0, 0, 1, 1},  // face 3, subfaces 0,1,2,3
         {0, 1, 0, 1},  // face 4, subfaces 0,1,2,3
         {0, 1, 0, 1}}, // face 5, subfaces 0,1,2,3
-       // cut_y
+                       // cut_y
        {{0, 1, 0, 1},
         {0, 1, 0, 1},
         {0, 0, 0, 0},

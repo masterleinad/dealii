@@ -271,7 +271,8 @@ public:
   serialize(Archive& ar, const unsigned int version);
 };
 
-/*------------------------------- Inline functions: Point ---------------------------*/
+/*------------------------------- Inline functions: Point
+ * ---------------------------*/
 
 #ifndef DOXYGEN
 
@@ -484,7 +485,8 @@ Point<dim, Number>::serialize(Archive& ar, const unsigned int)
 
 #endif // DOXYGEN
 
-/*------------------------------- Global functions: Point ---------------------------*/
+/*------------------------------- Global functions: Point
+ * ---------------------------*/
 
 /**
  * Global operator scaling a point vector by a scalar.

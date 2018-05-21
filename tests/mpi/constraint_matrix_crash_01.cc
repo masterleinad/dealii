@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// ConstraintMatrix::add_line crashes in release mode (missing compress inside ConstraintMatrix)
+// ConstraintMatrix::add_line crashes in release mode (missing compress inside
+// ConstraintMatrix)
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_tools.h>
@@ -29,7 +30,7 @@ test()
 
   IndexSet local_active_together(3);
   local_active_together.add_range(0, 3);
-  //local_active_together.compress();
+  // local_active_together.compress();
 
   ConstraintMatrix cm(local_active_together);
   cm.add_line(1);

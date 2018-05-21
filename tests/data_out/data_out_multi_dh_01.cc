@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// tests DataOut with multiple DoFHandler objects (two different scalar elements)
+// tests DataOut with multiple DoFHandler objects (two different scalar
+// elements)
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>

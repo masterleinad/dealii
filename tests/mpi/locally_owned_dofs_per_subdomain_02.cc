@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Test DoFTools::locally_owned_dofs_per_subdomain (for a standard Triangulation)
+// Test DoFTools::locally_owned_dofs_per_subdomain (for a standard
+// Triangulation)
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>

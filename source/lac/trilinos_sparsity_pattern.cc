@@ -1050,7 +1050,7 @@ namespace TrilinosWrappers
     AssertThrow(out, ExcIO());
   }
 
-  //TODO: Implement!
+  // TODO: Implement!
   std::size_t
   SparsityPattern::memory_consumption() const
   {

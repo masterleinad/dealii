@@ -55,8 +55,9 @@ test()
     dof, 0, Functions::ZeroFunction<dim>(), constraints);
   constraints.close();
 
-  //std::cout << "Number of cells: " << dof.get_triangulation().n_active_cells() << std::endl;
-  //std::cout << "Number of degrees of freedom: " << dof.n_dofs() << std::endl;
+  // std::cout << "Number of cells: " <<
+  // dof.get_triangulation().n_active_cells() << std::endl; std::cout << "Number
+  // of degrees of freedom: " << dof.n_dofs() << std::endl;
 
   // set up MatrixFree
   MappingQGeneric<dim> mapping(fe_degree);

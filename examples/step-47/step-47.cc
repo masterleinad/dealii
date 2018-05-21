@@ -241,10 +241,10 @@ namespace Step47
     system_rhs.reinit(dof_handler.n_dofs());
 
     constraints.clear();
-    //TODO: fix this, it currently crashes
+    // TODO: fix this, it currently crashes
     // DoFTools::make_hanging_node_constraints (dof_handler, constraints);
 
-    //TODO: component 1 must satisfy zero boundary conditions
+    // TODO: component 1 must satisfy zero boundary conditions
     constraints.close();
 
     DynamicSparsityPattern dsp(dof_handler.n_dofs());
@@ -316,8 +316,8 @@ namespace Step47
           }
         else
           {
-            //TODO: verify that the order of support points equals the order of vertices
-            //of the cells, as we use below
+            // TODO: verify that the order of support points equals the order of
+            // vertices of the cells, as we use below
             Assert(cell->active_fe_index() == 1, ExcInternalError());
             Assert(interface_intersects_cell(cell) == true, ExcInternalError());
 
@@ -620,9 +620,9 @@ namespace Step47
             F(1) = 0.5 * (1. + B(1));
           }
 
-        //std::cout << A << std::endl; std::cout << B << std::endl; std::cout
+        // std::cout << A << std::endl; std::cout << B << std::endl; std::cout
         //<< C << std::endl; std::cout << D << std::endl; std::cout << E <<
-        //std::endl; std::cout << F << std::endl;
+        // std::endl; std::cout << F << std::endl;
 
         std::string   filename = "vertices.dat";
         std::ofstream output(filename);
@@ -697,22 +697,22 @@ namespace Step47
 
             for(unsigned int subcell = 0; subcell < 5; subcell++)
               {
-                //std::cout << "subcell : " << subcell << std::endl;
+                // std::cout << "subcell : " << subcell << std::endl;
                 std::vector<Point<dim>> vertices;
                 for(unsigned int i = 0; i < 4; i++)
                   {
                     vertices.push_back(
                       subcell_vertices[subcell_v_indices[Pos][subcell][i]]);
-                    //std::cout << "i : " << i << std::endl; std::cout <<
+                    // std::cout << "i : " << i << std::endl; std::cout <<
                     //"subcell v : " << subcell_v_indices[Pos][subcell][i] <<
-                    //std::endl; std::cout << vertices[i](0) << " " <<
-                    //vertices[i](1) << std::endl;
+                    // std::endl; std::cout << vertices[i](0) << " " <<
+                    // vertices[i](1) << std::endl;
                   }
-                //std::cout << std::endl; create quadrature rule
+                // std::cout << std::endl; create quadrature rule
                 append_quadrature(
                   plain_quadrature, vertices, xfem_points, xfem_weights);
-                //initialize xfem_quadrature with quadrature points of all
-                //subelements
+                // initialize xfem_quadrature with quadrature points of all
+                // subelements
                 xfem_quadrature.initialize(xfem_points, xfem_weights);
               }
           }
@@ -770,15 +770,15 @@ namespace Step47
             assert(0);
           }
 
-        //std::cout << "Pos " << Pos << std::endl; std::cout << A <<
-        //std::endl; std::cout << B << std::endl;
+        // std::cout << "Pos " << Pos << std::endl; std::cout << A <<
+        // std::endl; std::cout << B << std::endl;
         std::string   filename = "vertices.dat";
         std::ofstream output(filename);
         output << "#vertices of xfem subcells" << std::endl;
         output << A(0) << "   " << A(1) << std::endl;
         output << B(0) << "   " << B(1) << std::endl;
 
-        //fill xfem_quadrature
+        // fill xfem_quadrature
         Point<dim> subcell_vertices[6];
         subcell_vertices[0] = v0;
         subcell_vertices[1] = v1;
@@ -795,25 +795,25 @@ namespace Step47
             unsigned int subcell_v_indices[2][2][4]
               = {{{0, 1, 4, 5}, {4, 5, 2, 3}}, {{0, 4, 2, 5}, {4, 1, 5, 3}}};
 
-            //std::cout << "Pos : " << Pos << std::endl;
+            // std::cout << "Pos : " << Pos << std::endl;
             for(unsigned int subcell = 0; subcell < 2; subcell++)
               {
-                //std::cout << "subcell : " << subcell << std::endl;
+                // std::cout << "subcell : " << subcell << std::endl;
                 std::vector<Point<dim>> vertices;
                 for(unsigned int i = 0; i < 4; i++)
                   {
                     vertices.push_back(
                       subcell_vertices[subcell_v_indices[Pos][subcell][i]]);
-                    //std::cout << "i : " << i << std::endl; std::cout <<
+                    // std::cout << "i : " << i << std::endl; std::cout <<
                     //"subcell v : " << subcell_v_indices[Pos][subcell][i] <<
-                    //std::endl; std::cout << vertices[i](0) << " " <<
-                    //vertices[i](1) << std::endl;
+                    // std::endl; std::cout << vertices[i](0) << " " <<
+                    // vertices[i](1) << std::endl;
                   }
-                //std::cout << std::endl; create quadrature rule
+                // std::cout << std::endl; create quadrature rule
                 append_quadrature(
                   plain_quadrature, vertices, xfem_points, xfem_weights);
-                //initialize xfem_quadrature with quadrature points of all
-                //subelements
+                // initialize xfem_quadrature with quadrature points of all
+                // subelements
                 xfem_quadrature.initialize(xfem_points, xfem_weights);
               }
           }
@@ -1007,7 +1007,7 @@ namespace Step47
       {
         computed_quantities[q](0)
           = (inputs.solution_values[q](0) +
-             //TODO: shift in weight function is missing!
+             // TODO: shift in weight function is missing!
              inputs.solution_values[q](1)
                * std::fabs(level_set(inputs.evaluation_points[q])));
         computed_quantities[q](1)
@@ -1095,7 +1095,7 @@ namespace Step47
         if(cycle == 0)
           {
             GridGenerator::hyper_ball(triangulation);
-            //GridGenerator::hyper_cube (triangulation, -1, 1);
+            // GridGenerator::hyper_cube (triangulation, -1, 1);
             triangulation.refine_global(2);
           }
         else

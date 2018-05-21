@@ -448,7 +448,7 @@ namespace SparseMatrixIterators
  * @}
  */
 
-//TODO: Add multithreading to the other vmult functions.
+// TODO: Add multithreading to the other vmult functions.
 
 /**
  * Sparse matrix. This class implements the functionality to store matrix
@@ -2386,21 +2386,21 @@ template <typename number>
 inline void
 SparseMatrix<number>::prepare_add()
 {
-  //nothing to do here
+  // nothing to do here
 }
 
 template <typename number>
 inline void
 SparseMatrix<number>::prepare_set()
 {
-  //nothing to do here
+  // nothing to do here
 }
 
 #  endif // DOXYGEN
 
-/*----------------------------   sparse_matrix.h     ---------------------------*/
+/*----------------------------   sparse_matrix.h ---------------------------*/
 
 DEAL_II_NAMESPACE_CLOSE
 
 #endif
-/*----------------------------   sparse_matrix.h     ---------------------------*/
+/*----------------------------   sparse_matrix.h ---------------------------*/

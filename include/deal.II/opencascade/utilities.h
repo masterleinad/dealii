@@ -90,8 +90,8 @@ DEAL_II_NAMESPACE_OPEN
  * will be set to zero.
  *
  * If you wish to use these tools when the dimension of the space is two, then
- * make sure your CAD files are actually flat and that all z coordinates are equal
- * to zero, as otherwise you will get many exceptions.
+ * make sure your CAD files are actually flat and that all z coordinates are
+ * equal to zero, as otherwise you will get many exceptions.
  *
  * @author Luca Heltai, Andrea Mola, 2011--2017.
  */
@@ -423,6 +423,8 @@ DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_OPENCASCADE
 
-/*------------------------------ occ_utilities.h ------------------------------*/
+/*------------------------------ occ_utilities.h
+ * ------------------------------*/
 #endif
-/*------------------------------ occ_utilities.h ------------------------------*/
+/*------------------------------ occ_utilities.h
+ * ------------------------------*/

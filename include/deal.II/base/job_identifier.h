@@ -71,7 +71,8 @@ private:
   std::string id;
 };
 
-/*------------------------------ Inline functions ------------------------------*/
+/*------------------------------ Inline functions
+ * ------------------------------*/
 
 /**
  * Global object to identify the presently running program.

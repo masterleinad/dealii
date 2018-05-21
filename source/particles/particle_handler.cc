@@ -551,8 +551,8 @@ namespace Particles
                       std::cref(vertex_to_particle),
                       std::cref(vertex_to_cell_centers[closest_vertex_index])));
 
-          // Search all of the cells adjacent to the closest vertex of the previous cell
-          // Most likely we will find the particle in them.
+          // Search all of the cells adjacent to the closest vertex of the
+          // previous cell Most likely we will find the particle in them.
           for(unsigned int i = 0; i < n_neighbor_cells; ++i)
             {
               try
@@ -601,7 +601,8 @@ namespace Particles
                 }
             }
 
-          // If we are here, we found a cell and reference position for this particle
+          // If we are here, we found a cell and reference position for this
+          // particle
           (*it)->set_reference_location(current_reference_position);
 
           // Reinsert the particle into our domain if we own its cell.
@@ -745,12 +746,14 @@ namespace Particles
     if(send_cells.size() != 0)
       Assert(particles_to_send.size() == send_cells.size(), ExcInternalError());
 
-    // If we do not know the subdomain this particle needs to be send to, throw an error
+    // If we do not know the subdomain this particle needs to be send to, throw
+    // an error
     Assert(particles_to_send.find(numbers::artificial_subdomain_id)
              == particles_to_send.end(),
            ExcInternalError());
 
-    // TODO: Implement the shipping of particles to processes that are not ghost owners of the local domain
+    // TODO: Implement the shipping of particles to processes that are not ghost
+    // owners of the local domain
     for(auto send_particles = particles_to_send.begin();
         send_particles != particles_to_send.end();
         ++send_particles)
@@ -902,7 +905,8 @@ namespace Particles
       AssertThrowMPI(ierr);
     }
 
-    // Put the received particles into the domain if they are in the triangulation
+    // Put the received particles into the domain if they are in the
+    // triangulation
     const void* recv_data_it = static_cast<const void*>(recv_data.data());
 
     while(reinterpret_cast<std::size_t>(recv_data_it)
@@ -975,8 +979,8 @@ namespace Particles
                       std::placeholders::_3);
 
         // Compute the size per serialized particle. This is simple if we own
-        // particles, simply ask one of them. Otherwise create a temporary particle,
-        // ask it for its size and add the size of its properties.
+        // particles, simply ask one of them. Otherwise create a temporary
+        // particle, ask it for its size and add the size of its properties.
         const std::size_t size_per_particle
           = (particles.size() > 0) ?
               begin()->serialized_size_in_bytes() :
@@ -1029,8 +1033,8 @@ namespace Particles
                       std::placeholders::_3);
 
         // Compute the size per serialized particle. This is simple if we own
-        // particles, simply ask one of them. Otherwise create a temporary particle,
-        // ask it for its size and add the size of its properties.
+        // particles, simply ask one of them. Otherwise create a temporary
+        // particle, ask it for its size and add the size of its properties.
         const std::size_t size_per_particle
           = (particles.size() > 0) ?
               begin()->serialized_size_in_bytes() :
@@ -1080,7 +1084,8 @@ namespace Particles
   {
     unsigned int n_particles(0);
 
-    // If the cell persist or is refined store all particles of the current cell.
+    // If the cell persist or is refined store all particles of the current
+    // cell.
     if(status
          == parallel::distributed::Triangulation<dim, spacedim>::CELL_PERSIST
        || status
@@ -1254,10 +1259,10 @@ namespace Particles
                     if(GeometryInfo<dim>::is_inside_unit_cell(p_unit))
                       {
                         p.set_reference_location(p_unit);
-                        // Use std::multimap::emplace_hint to speed up insertion of
-                        // particles. This is a C++11 function, but not all compilers
-                        // that report a -std=c++11 (like gcc 4.6) implement it, so
-                        // require C++14 instead.
+                        // Use std::multimap::emplace_hint to speed up insertion
+                        // of particles. This is a C++11 function, but not all
+                        // compilers that report a -std=c++11 (like gcc 4.6)
+                        // implement it, so require C++14 instead.
 #  ifdef DEAL_II_WITH_CXX14
                         position_hints[child_index] = particles.emplace_hint(
                           position_hints[child_index],

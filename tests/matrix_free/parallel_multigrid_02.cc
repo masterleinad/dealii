@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// similar to parallel_multigrid.cc but using MatrixFreeOperators::LaplaceOperator
-// class
+// similar to parallel_multigrid.cc but using
+// MatrixFreeOperators::LaplaceOperator class
 
 #include "../tests.h"
 

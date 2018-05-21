@@ -13,8 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-// Check that refinement of the flat surfaces of a GridGenerator::half_hyper_ball
-// works correctly using SphericalManifold as boundary description.
+// Check that refinement of the flat surfaces of a
+// GridGenerator::half_hyper_ball works correctly using SphericalManifold as
+// boundary description.
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>

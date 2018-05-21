@@ -444,7 +444,8 @@ public:
   VectorizedArray<Number>
   get_divergence(const unsigned int q_point) const;
 
-  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face>::get_symmetric_gradient()
+  /** @copydoc
+   * FEEvaluationAccess<dim,dim,Number,is_face>::get_symmetric_gradient()
    * @note Only available for n_components_==dim.
    */
   SymmetricTensor<2, dim, VectorizedArray<Number>>
@@ -468,7 +469,8 @@ public:
   submit_divergence(const VectorizedArray<Number> div_in,
                     const unsigned int            q_point);
 
-  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face>::submit_symmetric_gradient()
+  /** @copydoc
+   * FEEvaluationAccess<dim,dim,Number,is_face>::submit_symmetric_gradient()
    * @note Only available for n_components_==dim.
    *
    * @note This operation writes the data to the same field as
@@ -1211,7 +1213,8 @@ public:
   void
   submit_gradient(const gradient_type grad_in, const unsigned int q_point);
 
-  /** @copydoc FEEvaluationBase<dim,1,Number,is_face>::submit_normal_derivative()
+  /** @copydoc
+   * FEEvaluationBase<dim,1,Number,is_face>::submit_normal_derivative()
    */
   void
   submit_normal_derivative(const value_type   grad_in,
@@ -1374,8 +1377,8 @@ public:
    * containing the values on quadrature points with component @p q_point.
    * Access to the same field as through @p get_symmetric_gradient. If applied before
    * the function @p integrate(...,true) is called, this specifies the
-   * symmetric gradient which is tested by all basis function symmetric gradients on the current
-   * cell and integrated over.
+   * symmetric gradient which is tested by all basis function symmetric
+   * gradients on the current cell and integrated over.
    */
   void
   submit_symmetric_gradient(
@@ -1642,7 +1645,8 @@ protected:
  *           phi.quadrature_point(q_index);
  *         // Need to evaluate function for each component in VectorizedArray
  *         VectorizedArray<double> f_value;
- *         for (unsigned int v=0; v<VectorizedArray<double>::n_array_elements; ++v)
+ *         for (unsigned int v=0; v<VectorizedArray<double>::n_array_elements;
+ * ++v)
  *           {
  *             Point<dim> p;
  *             for (unsigned int d=0; d<dim; ++d)
@@ -1968,7 +1972,8 @@ protected:
  *
  * @code
  * get_value -> Tensor<1,n_components,VectorizedArray<double> >
- * get_gradient -> Tensor<1,n_components,Tensor<1,dim,VectorizedArray<double> > >
+ * get_gradient -> Tensor<1,n_components,Tensor<1,dim,VectorizedArray<double> >
+ * >
  * @endcode
  *
  * In a similar vein, the submit_value() and submit_gradient() calls take
@@ -2030,7 +2035,8 @@ protected:
  * Stokes operator described above is found at
  * https://github.com/dealii/dealii/blob/master/tests/matrix_free/matrix_vector_stokes_noflux.cc
  *
- * <h3>Handling several integration tasks and data storage in quadrature points</h3>
+ * <h3>Handling several integration tasks and data storage in quadrature
+ * points</h3>
  *
  * The design of FEEvaluation and MatrixFree separates the geometry from the
  * basis functions. Therefore, several DoFHandler objects (or the same
@@ -2275,9 +2281,9 @@ public:
   /**
    * Constructor for the reduced functionality. Similar to the other
    * constructor with FiniteElement argument but using another
-   * FEEvaluationBase object to provide information about the geometry. This allows
-   * several FEEvaluation objects to share the geometry evaluation, i.e., the
-   * underlying mapping and quadrature points do only need to be evaluated
+   * FEEvaluationBase object to provide information about the geometry. This
+   * allows several FEEvaluation objects to share the geometry evaluation, i.e.,
+   * the underlying mapping and quadrature points do only need to be evaluated
    * once. Make sure to not pass an optional object around when you intend to
    * use the FEEvaluation object in %parallel to the given one because
    * otherwise the intended sharing may create race conditions.
@@ -2564,9 +2570,10 @@ public:
 
   /**
    * The static number of quadrature points determined from the given template
-   * argument `n_q_points_1d` taken to the power of dim-1. Note that the actual number of quadrature
-   * points, `n_q_points`, can be different if `fe_degree=-1` is given and
-   * run-time loop lengths are used rather than compile time ones.
+   * argument `n_q_points_1d` taken to the power of dim-1. Note that the actual
+   * number of quadrature points, `n_q_points`, can be different if
+   * `fe_degree=-1` is given and run-time loop lengths are used rather than
+   * compile time ones.
    */
   static constexpr unsigned int static_n_q_points
     = Utilities::pow(n_q_points_1d, dim - 1);
@@ -2807,8 +2814,8 @@ namespace internal
 {
   namespace MatrixFreeFunctions
   {
-    // a helper function to compute the number of DoFs of a DGP element at compile
-    // time, depending on the degree
+    // a helper function to compute the number of DoFs of a DGP element at
+    // compile time, depending on the degree
     template <int dim, int degree>
     struct DGP_dofs_per_component
     {
@@ -5228,7 +5235,7 @@ inline void DEAL_II_ALWAYS_INLINE
         = this->J_value[0] * this->quadrature_weights[q_index];
       this->values_quad[0][q_index] = val_in * JxW;
     }
-  else //if (this->cell_type < internal::MatrixFreeFunctions::general)
+  else // if (this->cell_type < internal::MatrixFreeFunctions::general)
     {
       this->values_quad[0][q_index] = val_in * this->J_value[q_index];
     }
@@ -5649,7 +5656,8 @@ FEEvaluationAccess<dim, dim, Number, is_face>::submit_curl(
   submit_gradient(grad, q_point);
 }
 
-/*-------------------- FEEvaluationAccess scalar for 1d ----------------------------*/
+/*-------------------- FEEvaluationAccess scalar for 1d
+ * ----------------------------*/
 
 template <typename Number, bool is_face>
 inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
@@ -5805,7 +5813,7 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_value(
       const VectorizedArray<Number> JxW = this->J_value[q_point];
       this->values_quad[0][q_point]     = val_in * JxW;
     }
-  else //if (this->cell_type == internal::MatrixFreeFunctions::general)
+  else // if (this->cell_type == internal::MatrixFreeFunctions::general)
     {
       const VectorizedArray<Number> JxW
         = this->J_value[0] * this->quadrature_weights[q_point];

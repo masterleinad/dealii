@@ -39,9 +39,9 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-// The following is necessary for compilation under Visual Studio which is unable to correctly
-// distinguish between dealii::DoFHandler and dealii::hp::DoFHandler.
-// Plus it makes code in dof_handler.cc easier to read.
+// The following is necessary for compilation under Visual Studio which is
+// unable to correctly distinguish between dealii::DoFHandler and
+// dealii::hp::DoFHandler. Plus it makes code in dof_handler.cc easier to read.
 #if defined(_MSC_VER) && (_MSC_VER >= 1800)
 template <int dim, int spacedim>
 using HpDoFHandler = ::dealii::hp::DoFHandler<dim, spacedim>;
@@ -302,10 +302,10 @@ namespace internal
               Assert(dof_handler.levels[level]->dof_indices.size() == counter,
                      ExcInternalError());
 
-              // also check that the number of unassigned slots in the dof_offsets
-              // equals the number of cells on that level minus the number of
-              // active, non-artificial cells (because these are exactly the cells
-              // on which we do something)
+              // also check that the number of unassigned slots in the
+              // dof_offsets equals the number of cells on that level minus the
+              // number of active, non-artificial cells (because these are
+              // exactly the cells on which we do something)
               unsigned int n_active_non_artificial_cells = 0;
               for(cell = dof_handler.begin_active(level); cell != endc; ++cell)
                 if(!cell->has_children() && !cell->is_artificial())
@@ -428,8 +428,8 @@ namespace internal
                              && !cell->neighbor(face)->is_artificial()
                              && (cell->active_fe_index()
                                  == cell->neighbor(face)->active_fe_index())))
-                        // ok, one set of dofs. that makes one active_fe_index, 1
-                        // times dofs_per_face dofs, and one stop index
+                        // ok, one set of dofs. that makes one active_fe_index,
+                        // 1 times dofs_per_face dofs, and one stop index
                         n_face_slots
                           += 1
                              + dof_handler.get_fe(cell->active_fe_index())
@@ -437,7 +437,8 @@ namespace internal
                              + 1;
 
                       // otherwise we do indeed need two sets, i.e. two
-                      // active_fe_indices, two sets of dofs, and one stop index:
+                      // active_fe_indices, two sets of dofs, and one stop
+                      // index:
                       else
                         n_face_slots
                           += (2
@@ -847,7 +848,8 @@ namespace internal
         static unsigned int
         max_couplings_between_dofs(const DoFHandler<3, spacedim>& dof_handler)
         {
-          //TODO:[?] Invent significantly better estimates than the ones in this function
+          // TODO:[?] Invent significantly better estimates than the ones in
+          // this function
           // doing the same thing here is a rather complicated thing,
           // compared to the 2d case, since it is hard to draw
           // pictures with several refined hexahedra :-) so I
@@ -875,9 +877,9 @@ namespace internal
         }
 
         /**
-         * Given a hp::DoFHandler object, make sure that the active_fe_indices that
-         * a user has set for locally owned cells are communicated to all ghost
-         * cells as well.
+         * Given a hp::DoFHandler object, make sure that the active_fe_indices
+         * that a user has set for locally owned cells are communicated to all
+         * ghost cells as well.
          */
         template <int dim, int spacedim>
         static void
@@ -926,11 +928,12 @@ namespace internal
                     const parallel::distributed::Triangulation<dim, spacedim>*>(
                     &dof_handler.get_triangulation()))
             {
-              // For completely distributed meshes, use the function that is able to move
-              // data from locally owned cells on one processor to the corresponding
-              // ghost cells on others. To this end, we need to have functions that can pack
-              // and unpack the data we want to transport -- namely, the single unsigned int
-              // active_fe_index objects
+              // For completely distributed meshes, use the function that is
+              // able to move data from locally owned cells on one processor to
+              // the corresponding ghost cells on others. To this end, we need
+              // to have functions that can pack and unpack the data we want to
+              // transport -- namely, the single unsigned int active_fe_index
+              // objects
               auto pack
                 = [](const typename dealii::hp::DoFHandler<dim, spacedim>::
                        active_cell_iterator& cell) -> unsigned int {
@@ -1387,7 +1390,8 @@ namespace hp
   void
   DoFHandler<dim, spacedim>::setup_policy_and_listeners()
   {
-    // decide whether we need a sequential or a parallel shared/distributed policy
+    // decide whether we need a sequential or a parallel shared/distributed
+    // policy
     if(dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(
          &*this->tria)
        != nullptr)

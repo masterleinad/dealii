@@ -14,7 +14,8 @@
 // ---------------------------------------------------------------------
 
 // tests that the matrix-free implementation works correctly with periodic
-// boundary conditions by counting the number of faces in the different categories
+// boundary conditions by counting the number of faces in the different
+// categories
 
 #include "../tests.h"
 #include <deal.II/base/function.h>

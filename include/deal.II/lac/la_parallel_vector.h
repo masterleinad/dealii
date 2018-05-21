@@ -594,8 +594,8 @@ namespace LinearAlgebra
        * vector @p V. VectorOperation::values @p operation is used to decide if
        * the elements in @p V should be added to the current vector or replace the
        * current elements. The last parameter can be used if the same
-       * communication pattern is used multiple times. This can be used to improve
-       * performance.
+       * communication pattern is used multiple times. This can be used to
+       * improve performance.
        */
       virtual void
       import(
@@ -705,7 +705,8 @@ namespace LinearAlgebra
        * most vector operations are memory transfer limited, this reduces the
        * time by 25\% (or 50\% if @p W equals @p this).
        *
-       * For complex-valued vectors, the scalar product in the second step is implemented as
+       * For complex-valued vectors, the scalar product in the second step is
+       * implemented as
        * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       virtual Number
@@ -977,8 +978,8 @@ namespace LinearAlgebra
       /**
        * Instead of getting individual elements of a vector via operator(),
        * this function allows getting a whole set of elements at once. The
-       * indices of the elements to be read are stated in the first argument, the
-       * corresponding values are returned in the second.
+       * indices of the elements to be read are stated in the first argument,
+       * the corresponding values are returned in the second.
        *
        * If the current vector is called @p v, then this function is the equivalent
        * to the code
@@ -1302,7 +1303,8 @@ namespace LinearAlgebra
     };
     /*@}*/
 
-    /*----------------------- Inline functions ----------------------------------*/
+    /*----------------------- Inline functions
+     * ----------------------------------*/
 
 #ifndef DOXYGEN
 

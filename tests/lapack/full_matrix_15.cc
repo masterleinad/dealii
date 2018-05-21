@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// test LAPACKFullMatrix::compute_cholesky_factorization by comparing with FullMatrix
+// test LAPACKFullMatrix::compute_cholesky_factorization by comparing with
+// FullMatrix
 
 #include "../tests.h"
 #include "create_matrix.h"

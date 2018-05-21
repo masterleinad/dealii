@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Computes diameter, extent_in_direction, and minimum_vertex_distance on a variety of cells
+// Computes diameter, extent_in_direction, and minimum_vertex_distance on a
+// variety of cells
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>

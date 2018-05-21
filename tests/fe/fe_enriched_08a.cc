@@ -57,9 +57,9 @@ test2cellsFESystem(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
     Triangulation<dim> triangulationL;
     Triangulation<dim> triangulationR;
     GridGenerator::hyper_cube(
-      triangulationL, -1, 0); //create a square [-1,0]^d domain
+      triangulationL, -1, 0); // create a square [-1,0]^d domain
     GridGenerator::hyper_cube(
-      triangulationR, -1, 0); //create a square [-1,0]^d domain
+      triangulationR, -1, 0); // create a square [-1,0]^d domain
     Point<dim> shift_vector;
     shift_vector[0] = 1.0;
     GridTools::shift(shift_vector, triangulationR);

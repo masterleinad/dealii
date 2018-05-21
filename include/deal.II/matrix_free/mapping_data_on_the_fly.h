@@ -146,7 +146,8 @@ namespace internal
       MappingInfoStorage<dim, dim, Number> mapping_info_storage;
     };
 
-    /*----------------------- Inline functions ----------------------------------*/
+    /*----------------------- Inline functions
+     * ----------------------------------*/
 
     template <int dim, typename Number>
     inline MappingDataOnTheFly<dim, Number>::MappingDataOnTheFly(

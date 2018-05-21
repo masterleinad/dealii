@@ -134,7 +134,7 @@ check_fe(FiniteElement<dim>& fe)
         {
           unsigned int index
             = dofh.locally_owned_mg_dofs(level).nth_index_in_set(i);
-          u[level][index] = 1; //1000+level*100+index;
+          u[level][index] = 1; // 1000+level*100+index;
         }
       u[level].compress(VectorOperation::insert);
     }
@@ -151,7 +151,7 @@ check_fe(FiniteElement<dim>& fe)
         deallog << v[index] << " ";
       }
   }
-  //v.print(deallog.get_file_stream());
+  // v.print(deallog.get_file_stream());
   deallog << "ok" << std::endl;
 }
 
@@ -167,7 +167,7 @@ check()
 
   check_fe(q1);
   //  check_fe(q2);
-  //check_fe(s1);
+  // check_fe(s1);
 }
 
 int
@@ -177,5 +177,5 @@ main(int argc, char* argv[])
   MPILogInitAll                    log;
 
   check<2>();
-  //check<3> ();
+  // check<3> ();
 }

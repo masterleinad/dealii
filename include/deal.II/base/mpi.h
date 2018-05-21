@@ -48,7 +48,7 @@ typedef int MPI_Op;
 
 DEAL_II_NAMESPACE_OPEN
 
-//Forward type declarations to allow MPI sums over tensorial types
+// Forward type declarations to allow MPI sums over tensorial types
 template <int rank, int dim, typename Number>
 class Tensor;
 template <int rank, int dim, typename Number>
@@ -595,8 +595,8 @@ namespace Utilities
      *
      * @param[in] comm MPI communicator.
      * @param[in] object_to_send an object to send to the root process
-     * @param[in] root_process The process, which receives the objects from all processes.
-     *  By default the process with rank 0 is the root process.
+     * @param[in] root_process The process, which receives the objects from all
+     * processes. By default the process with rank 0 is the root process.
      *
      * @return The @p root_process receives a vector of objects, with size equal to the number of
      *  processes in the MPI communicator. Each entry contains the object

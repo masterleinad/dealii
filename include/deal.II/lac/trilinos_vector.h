@@ -861,7 +861,8 @@ namespace TrilinosWrappers
        * not natively supported and thus the cost is completely equivalent as
        * calling the two methods separately.
        *
-       * For complex-valued vectors, the scalar product in the second step is implemented as
+       * For complex-valued vectors, the scalar product in the second step is
+       * implemented as
        * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       TrilinosScalar
@@ -926,8 +927,8 @@ namespace TrilinosWrappers
       /**
        * Instead of getting individual elements of a vector via operator(),
        * this function allows getting a whole set of elements at once. The
-       * indices of the elements to be read are stated in the first argument, the
-       * corresponding values are returned in the second.
+       * indices of the elements to be read are stated in the first argument,
+       * the corresponding values are returned in the second.
        *
        * If the current vector is called @p v, then this function is the equivalent
        * to the code
@@ -2126,6 +2127,6 @@ DEAL_II_NAMESPACE_CLOSE
 
 #endif // DEAL_II_WITH_TRILINOS
 
-/*----------------------------   trilinos_vector.h     ---------------------------*/
+/*----------------------------   trilinos_vector.h ---------------------------*/
 
 #endif // dealii_trilinos_vector_h

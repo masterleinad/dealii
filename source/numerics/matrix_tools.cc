@@ -68,7 +68,8 @@ namespace MatrixTools
     }
   } // namespace
 
-  //TODO:[WB] I don't think that the optimized storage of diagonals is needed (GK)
+  // TODO:[WB] I don't think that the optimized storage of diagonals is needed
+  // (GK)
   template <typename number>
   void
   apply_boundary_values(

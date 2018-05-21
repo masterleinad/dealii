@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Test that all of the nested Sacado number extractors return the correct information
+// Test that all of the nested Sacado number extractors return the correct
+// information
 
 #include "../tests.h"
 #include <deal.II/differentiation/ad/ad_number_types.h>

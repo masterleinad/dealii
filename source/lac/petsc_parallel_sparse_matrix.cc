@@ -298,7 +298,9 @@ namespace PETScWrappers
       const std::vector<PetscInt> int_offdiag_row_lengths(
         offdiag_row_lengths.begin(), offdiag_row_lengths.end());
 
-      //TODO: There must be a significantly better way to provide information about the off-diagonal blocks of the matrix. this way, petsc keeps allocating tiny chunks of memory, and gets completely hung up over this
+      // TODO: There must be a significantly better way to provide information
+      // about the off-diagonal blocks of the matrix. this way, petsc keeps
+      // allocating tiny chunks of memory, and gets completely hung up over this
       const PetscErrorCode ierr = MatCreateAIJ(
         communicator,
         local_rows,
@@ -311,7 +313,11 @@ namespace PETScWrappers
         offdiag_row_lengths.size() ? int_offdiag_row_lengths.data() : nullptr,
         &matrix);
 
-      //TODO: Sometimes the actual number of nonzero entries allocated is greater than the number of nonzero entries, which petsc will complain about unless explicitly disabled with MatSetOption. There is probably a way to prevent a different number nonzero elements being allocated in the first place. (See also previous TODO).
+      // TODO: Sometimes the actual number of nonzero entries allocated is
+      // greater than the number of nonzero entries, which petsc will complain
+      // about unless explicitly disabled with MatSetOption. There is probably a
+      // way to prevent a different number nonzero elements being allocated in
+      // the first place. (See also previous TODO).
       set_matrix_option(matrix, MAT_NEW_NONZERO_ALLOCATION_ERR, PETSC_FALSE);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -392,7 +398,7 @@ namespace PETScWrappers
       // for the usefulness of this option
       // read the documentation of this
       // class.
-      //if (preset_nonzero_locations == true)
+      // if (preset_nonzero_locations == true)
       if(local_rows.n_elements() > 0)
         {
           Assert(local_columns.n_elements() > 0, ExcInternalError());

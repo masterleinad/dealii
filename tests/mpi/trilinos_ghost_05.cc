@@ -14,7 +14,8 @@
 // ---------------------------------------------------------------------
 
 // check correct behaviour of Trilinos ghosted vectors
-// check if assignment from a normal vector works correctly and updates the ghost values
+// check if assignment from a normal vector works correctly and updates the
+// ghost values
 
 #include "../tests.h"
 #include <deal.II/base/index_set.h>

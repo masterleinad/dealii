@@ -239,7 +239,8 @@ namespace parallel
           cell->level_subdomain_id());
 
 #  ifdef DEBUG
-    // Check that level_ghost_owners is symmetric by sending a message to everyone
+    // Check that level_ghost_owners is symmetric by sending a message to
+    // everyone
     {
       int ierr = MPI_Barrier(this->mpi_communicator);
       AssertThrowMPI(ierr);

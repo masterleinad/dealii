@@ -708,7 +708,7 @@ SolverGMRES<VectorType>::compute_eigs_and_cond(
                                                hessenberg_signal,
   const boost::signals2::signal<void(double)>& cond_signal)
 {
-  //Avoid copying the Hessenberg matrix if it isn't needed.
+  // Avoid copying the Hessenberg matrix if it isn't needed.
   if(!eigenvalues_signal.empty() || !hessenberg_signal.empty()
      || !cond_signal.empty())
     {
@@ -717,24 +717,25 @@ SolverGMRES<VectorType>::compute_eigs_and_cond(
         for(unsigned int j = 0; j < dim; ++j)
           mat(i, j) = H_orig(i, j);
       hessenberg_signal(H_orig);
-      //Avoid computing eigenvalues if they are not needed.
+      // Avoid computing eigenvalues if they are not needed.
       if(!eigenvalues_signal.empty())
         {
-          //Copy mat so that we can compute svd below. Necessary since
-          //compute_eigenvalues will leave mat in state LAPACKSupport::unusable.
+          // Copy mat so that we can compute svd below. Necessary since
+          // compute_eigenvalues will leave mat in state
+          // LAPACKSupport::unusable.
           LAPACKFullMatrix<double> mat_eig(mat);
           mat_eig.compute_eigenvalues();
           std::vector<std::complex<double>> eigenvalues(dim);
           for(unsigned int i = 0; i < mat_eig.n(); ++i)
             eigenvalues[i] = mat_eig.eigenvalue(i);
-          //Sort eigenvalues for nicer output.
+          // Sort eigenvalues for nicer output.
           std::sort(eigenvalues.begin(),
                     eigenvalues.end(),
                     internal::SolverGMRESImplementation::complex_less_pred);
           eigenvalues_signal(eigenvalues);
         }
-      //Calculate condition number, avoid calculating the svd if a slot
-      //isn't connected. Need at least a 2-by-2 matrix to do the estimate.
+      // Calculate condition number, avoid calculating the svd if a slot
+      // isn't connected. Need at least a 2-by-2 matrix to do the estimate.
       if(!cond_signal.empty() && (mat.n() > 1))
         {
           mat.compute_svd();
@@ -753,8 +754,9 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
                                const VectorType&         b,
                                const PreconditionerType& preconditioner)
 {
-  //TODO:[?] Check, why there are two different start residuals.
-  //TODO:[GK] Make sure the parameter in the constructor means maximum basis size
+  // TODO:[?] Check, why there are two different start residuals.
+  // TODO:[GK] Make sure the parameter in the constructor means maximum basis
+  // size
 
   LogStream::Prefix prefix("GMRES");
 
@@ -918,8 +920,8 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
                                                  re_orthogonalize_signal);
           h(inner_iteration + 1) = s;
 
-          //s=0 is a lucky breakdown, the solver will reach convergence,
-          //but we must not divide by zero here.
+          // s=0 is a lucky breakdown, the solver will reach convergence,
+          // but we must not divide by zero here.
           if(s != 0)
             vv *= 1. / s;
 

@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// check ParameterHandler::print_parameters_section (..., XML, 0, true). have a few
-// names that contain all sorts of weird (for XML) characters
+// check ParameterHandler::print_parameters_section (..., XML, 0, true). have a
+// few names that contain all sorts of weird (for XML) characters
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>

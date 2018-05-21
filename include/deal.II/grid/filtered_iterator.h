@@ -472,9 +472,8 @@ namespace IteratorFilters
  *
  * The same can be achieved by the following snippet, though harder to read:
  * @code
- *   typedef FilteredIterator<typename Triangulation<dim>::active_cell_iterator> FI;
- *   n_flagged_cells =
- *      std::distance (FI(IteratorFilters::UserFlagSet())
+ *   typedef FilteredIterator<typename Triangulation<dim>::active_cell_iterator>
+ * FI; n_flagged_cells = std::distance (FI(IteratorFilters::UserFlagSet())
  *                            .set_to_next_positive(tria.begin_active()),
  *                     FI(IteratorFilters::UserFlagSet(), tria.end()));
  * @endcode

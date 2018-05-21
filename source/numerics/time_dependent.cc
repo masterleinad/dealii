@@ -1096,11 +1096,10 @@ template <int dim>
 typename TimeStepBase_Tria_Flags::RefinementFlags<dim>::CorrectionRelaxations
   TimeStepBase_Tria_Flags::RefinementFlags<dim>::default_correction_relaxations(
     1, // one element, denoting the first and all subsequent sweeps
-    std::vector<std::pair<unsigned int, double>>(
-      1, // one element, denoting the upper bound
-      // for the following
-      // relaxation
-      std::make_pair(0U, 0.)));
+    std::vector<std::pair<unsigned int, double>>(1, // one element, denoting the
+                                                    // upper bound for the
+                                                    // following relaxation
+                                                 std::make_pair(0U, 0.)));
 
 template <int dim>
 TimeStepBase_Tria_Flags::RefinementFlags<dim>::RefinementFlags(

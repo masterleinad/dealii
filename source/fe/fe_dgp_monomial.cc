@@ -176,7 +176,7 @@ FE_DGPMonomial<dim>::clone() const
   return std_cxx14::make_unique<FE_DGPMonomial<dim>>(*this);
 }
 
-//TODO: Remove this function and use the one in FETools, if needed
+// TODO: Remove this function and use the one in FETools, if needed
 template <int dim>
 void
 FE_DGPMonomial<dim>::get_interpolation_matrix(

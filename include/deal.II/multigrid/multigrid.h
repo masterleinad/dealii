@@ -36,7 +36,8 @@ DEAL_II_NAMESPACE_OPEN
 namespace mg
 {
   /**
-   * A structure containing boost::signal objects for optional processing in multigrid solvers.
+   * A structure containing boost::signal objects for optional processing in
+   * multigrid solvers.
    *
    * Each of these signals is called twice, once before and once after
    * the action is performed. The two function calls differ in the
@@ -340,7 +341,7 @@ public:
 private:
   /**
    * Signals for the various actions that the Multigrid algorithm uses.
-    */
+   */
   mg::Signals signals;
 
   /**
@@ -547,9 +548,9 @@ public:
 
   /**
    * Return the partitioning of the range space of this preconditioner, i.e.,
-   * the partitioning of the vectors that are result from matrix-vector products.
-   * By default, the respective information for the first DoFHandler object
-   * are returned.
+   * the partitioning of the vectors that are result from matrix-vector
+   * products. By default, the respective information for the first DoFHandler
+   * object are returned.
    */
   IndexSet
   locally_owned_range_indices(const unsigned int block = 0) const;

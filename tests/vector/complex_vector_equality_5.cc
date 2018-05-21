@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// check Vector<std::complex<double> >::operator==(Vector<std::complex<float> >) for vectors that are not
-// equal and different template arguments
+// check Vector<std::complex<double> >::operator==(Vector<std::complex<float> >)
+// for vectors that are not equal and different template arguments
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>

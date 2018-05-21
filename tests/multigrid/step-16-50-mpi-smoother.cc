@@ -14,9 +14,9 @@
  * ---------------------------------------------------------------------
  */
 
-// Same as step-16-50, but use Jacobi smoother at the coarsest grid via MGCoarseGridApplySmoother.
-// In this particular case, the number of iterations until convergence is
-// exactly the same as for MGCoarseGridLACIteration.
+// Same as step-16-50, but use Jacobi smoother at the coarsest grid via
+// MGCoarseGridApplySmoother. In this particular case, the number of iterations
+// until convergence is exactly the same as for MGCoarseGridLACIteration.
 
 #include "../tests.h"
 
@@ -369,23 +369,21 @@ namespace Step50
 
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              if(
-                interface_dofs_on_level.is_element(
-                  local_dof_indices[i]) // at_refinement_edge(i)
-                && !interface_dofs_on_level.is_element(
-                     local_dof_indices[j]) // !at_refinement_edge(j)
-                && ((!mg_constrained_dofs.is_boundary_index(
-                       lvl, local_dof_indices[i])
-                     && !mg_constrained_dofs.is_boundary_index(
-                          lvl,
-                          local_dof_indices
-                            [j])) // ( !boundary(i) && !boundary(j) )
-                    || (mg_constrained_dofs.is_boundary_index(
-                          lvl, local_dof_indices[i])
-                        && local_dof_indices[i]
-                             == local_dof_indices
-                                  [j]) // ( boundary(i) && boundary(j) && i==j )
-                    ))
+              if(interface_dofs_on_level.is_element(
+                   local_dof_indices[i]) // at_refinement_edge(i)
+                 && !interface_dofs_on_level.is_element(
+                      local_dof_indices[j]) // !at_refinement_edge(j)
+                 && ((!mg_constrained_dofs.is_boundary_index(
+                        lvl, local_dof_indices[i])
+                      && !mg_constrained_dofs.is_boundary_index(
+                           lvl, local_dof_indices[j])) // ( !boundary(i) &&
+                                                       // !boundary(j) )
+                     || (mg_constrained_dofs.is_boundary_index(
+                           lvl, local_dof_indices[i])
+                         && local_dof_indices[i]
+                              == local_dof_indices[j]) // ( boundary(i) &&
+                                                       // boundary(j) && i==j )
+                     ))
                 {
                 }
               else

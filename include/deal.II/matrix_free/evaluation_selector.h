@@ -31,15 +31,17 @@ namespace
   // 2. If the current assumption on fe_degree doesn't match the runtime
   //    parameter, increase fe_degree  by one and try again.
   //    If fe_degree==10 use the class Default which serves as a fallback.
-  // 3. After fixing the fe_degree, DEPTH is increased (DEPTH=1) and we start with
+  // 3. After fixing the fe_degree, DEPTH is increased (DEPTH=1) and we start
+  // with
   //    n_q_points=fe_degree+1.
   // 4. If the current assumption on n_q_points_1d doesn't match the runtime
   //    parameter, increase n_q_points_1d by one and try again.
-  //    If n_q_points_1d==degree+3 use the class Default which serves as a fallback.
+  //    If n_q_points_1d==degree+3 use the class Default which serves as a
+  //    fallback.
 
   /**
-   * This class serves as a fallback in case we don't have the appropriate template
-   * specialization for the run time and template parameters given.
+   * This class serves as a fallback in case we don't have the appropriate
+   * template specialization for the run time and template parameters given.
    */
   template <int dim, int n_components, typename Number>
   struct Default
@@ -112,7 +114,8 @@ namespace
 
   /**
    * This specialization sets the maximal fe_degree for
-   * which we want to determine the correct template parameters based at runtime.
+   * which we want to determine the correct template parameters based at
+   * runtime.
    */
   template <int n_q_points_1d, int dim, int n_components, typename Number>
   struct Factory<dim, n_components, Number, 0, 10, n_q_points_1d>
@@ -121,7 +124,8 @@ namespace
 
   /**
    * This specialization sets the maximal number of n_q_points_1d for
-   * which we want to determine the correct template parameters based at runtime.
+   * which we want to determine the correct template parameters based at
+   * runtime.
    */
   template <int degree,
             int n_q_points_1d,
@@ -219,7 +223,8 @@ namespace
   };
 
   /**
-   * This class chooses the correct template n_q_points_1d after degree was chosen.
+   * This class chooses the correct template n_q_points_1d after degree was
+   * chosen.
    */
   template <int degree,
             int n_q_points_1d,
@@ -445,7 +450,8 @@ namespace
  * pass these values to the respective template specializations.
  * Otherwise, we perform a runtime matching of the runtime parameters to find
  * the correct specialization. This matching currently supports
- * $0\leq fe\_degree \leq 9$ and $degree+1\leq n\_q\_points\_1d\leq fe\_degree+2$.
+ * $0\leq fe\_degree \leq 9$ and $degree+1\leq n\_q\_points\_1d\leq
+ * fe\_degree+2$.
  */
 template <int dim,
           int fe_degree,
@@ -458,8 +464,8 @@ struct SelectEvaluator
    * Chooses an appropriate evaluation strategy for the evaluate function, i.e.
    * this calls internal::FEEvaluationImpl::evaluate(),
    * internal::FEEvaluationImplCollocation::evaluate() or
-   * internal::FEEvaluationImplTransformToCollocation::evaluate() with appropriate
-   * template parameters.
+   * internal::FEEvaluationImplTransformToCollocation::evaluate() with
+   * appropriate template parameters.
    */
   static void
   evaluate(const internal::MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
@@ -476,8 +482,8 @@ struct SelectEvaluator
    * Chooses an appropriate evaluation strategy for the integrate function, i.e.
    * this calls internal::FEEvaluationImpl::integrate(),
    * internal::FEEvaluationImplCollocation::integrate() or
-   * internal::FEEvaluationImplTransformToCollocation::integrate() with appropriate
-   * template parameters.
+   * internal::FEEvaluationImplTransformToCollocation::integrate() with
+   * appropriate template parameters.
    */
   static void
   integrate(const internal::MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
@@ -507,8 +513,8 @@ struct SelectEvaluator<dim, -1, n_q_points_1d, n_components, Number>
    * chooses an appropriate evaluation strategy for the integrate function, i.e.
    * this calls internal::FEEvaluationImpl::evaluate(),
    * internal::FEEvaluationImplCollocation::evaluate() or
-   * internal::FEEvaluationImplTransformToCollocation::evaluate() with appropriate
-   * template parameters.
+   * internal::FEEvaluationImplTransformToCollocation::evaluate() with
+   * appropriate template parameters.
    */
   static void
   evaluate(const internal::MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
@@ -526,8 +532,8 @@ struct SelectEvaluator<dim, -1, n_q_points_1d, n_components, Number>
    * chooses an appropriate evaluation strategy for the integrate function, i.e.
    * this calls internal::FEEvaluationImpl::integrate(),
    * internal::FEEvaluationImplCollocation::integrate() or
-   * internal::FEEvaluationImplTransformToCollocation::integrate() with appropriate
-   * template parameters.
+   * internal::FEEvaluationImplTransformToCollocation::integrate() with
+   * appropriate template parameters.
    */
   static void
   integrate(const internal::MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
@@ -951,7 +957,7 @@ SelectEvaluator<dim, -1, dummy, n_components, Number>::integrate(
       integrate_values,
       integrate_gradients);
 }
-#endif //DOXYGEN
+#endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE
 

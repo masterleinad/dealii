@@ -570,7 +570,8 @@ namespace PETScWrappers
      * natively supported and thus the cost is completely equivalent as
      * calling the two methods separately.
      *
-     * For complex-valued vectors, the scalar product in the second step is implemented as
+     * For complex-valued vectors, the scalar product in the second step is
+     * implemented as
      * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
      */
     PetscScalar
@@ -1150,12 +1151,12 @@ namespace PETScWrappers
             if(index >= static_cast<unsigned int>(begin)
                && index < static_cast<unsigned int>(end))
               {
-                //local entry
+                // local entry
                 *(values_begin + i) = *(ptr + index - begin);
               }
             else
               {
-                //ghost entry
+                // ghost entry
                 const unsigned int ghostidx
                   = ghost_indices.index_within_set(index);
 
@@ -1207,7 +1208,9 @@ DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_PETSC
 
-/*----------------------------   petsc_vector_base.h     ---------------------------*/
+/*----------------------------   petsc_vector_base.h
+ * ---------------------------*/
 
 #endif
-/*----------------------------   petsc_vector_base.h     ---------------------------*/
+/*----------------------------   petsc_vector_base.h
+ * ---------------------------*/

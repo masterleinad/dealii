@@ -13,10 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-// In Trilinos 10.12.1 interpolate() hangs with a small number of cells (smaller than the number of CPUs). This works fine in 10.4.2 and 10.8.5
-// As it turns out, this is because vector creation after interpolate()
-// reacts differently in 10.12.1 and causes a hang. The bug is
-// that interpolate() does not call compress()!
+// In Trilinos 10.12.1 interpolate() hangs with a small number of cells (smaller
+// than the number of CPUs). This works fine in 10.4.2 and 10.8.5 As it turns
+// out, this is because vector creation after interpolate() reacts differently
+// in 10.12.1 and causes a hang. The bug is that interpolate() does not call
+// compress()!
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -54,7 +55,7 @@ test()
 
   GridGenerator::hyper_cube(tr);
 
-  //tr.refine_global (2);
+  // tr.refine_global (2);
 
   const FE_Q<dim> fe(2);
   DoFHandler<dim> dofh(tr);

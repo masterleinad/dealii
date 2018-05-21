@@ -101,8 +101,8 @@ ConstraintMatrix::is_consistent_in_parallel(
   empty.inhomogeneity = 0.0;
 
   // Helper to return a reference to the ConstraintLine object that belongs to row @p row.
-  // We don't want to make copies but to return a reference, we need an empty object that
-  // we store above.
+  // We don't want to make copies but to return a reference, we need an empty
+  // object that we store above.
   auto get_line = [&](const size_type row) -> const ConstraintLine& {
     const size_type line_index = calculate_line_index(row);
     if(line_index >= lines_cache.size()
@@ -123,8 +123,9 @@ ConstraintMatrix::is_consistent_in_parallel(
   const unsigned int nproc
     = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
 
-  // We will send all locally active dofs that are not locally owned for checking. Note
-  // that we allow constraints to differ on locally_relevant (and not active) DoFs.
+  // We will send all locally active dofs that are not locally owned for
+  // checking. Note that we allow constraints to differ on locally_relevant (and
+  // not active) DoFs.
   IndexSet non_owned = locally_active_dofs;
   non_owned.subtract_set(locally_owned_dofs[myid]);
   for(unsigned int owner = 0; owner < nproc; ++owner)
@@ -352,8 +353,9 @@ ConstraintMatrix::close()
           ++line)
         {
 #ifdef DEBUG
-          // we need to keep track of how many replacements we do in this line, because we can
-          // end up in a cycle A->B->C->A without the number of entries growing.
+          // we need to keep track of how many replacements we do in this line,
+          // because we can end up in a cycle A->B->C->A without the number of
+          // entries growing.
           size_type n_replacements = 0;
 #endif
 
@@ -589,8 +591,9 @@ ConstraintMatrix::merge(const ConstraintMatrix&     other_constraints,
       tmp.clear();
       for(size_type i = 0; i < line->entries.size(); ++i)
         {
-          // if the present dof is not stored, or not constrained, or if we won't take the
-          // constraint from the other object, then simply copy it over
+          // if the present dof is not stored, or not constrained, or if we
+          // won't take the constraint from the other object, then simply copy
+          // it over
           if((other_constraints.local_lines.size() != 0
               && other_constraints.local_lines.is_element(
                    line->entries[i].first)

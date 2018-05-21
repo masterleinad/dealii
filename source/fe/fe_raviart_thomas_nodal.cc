@@ -80,7 +80,8 @@ FE_RaviartThomasNodal<dim>::FE_RaviartThomasNodal(const unsigned int deg)
     }
   // Fill prolongation matrices with embedding operators
   FETools::compute_embedding_matrices(*this, this->prolongation);
-  // TODO[TL]: for anisotropic refinement we will probably need a table of submatrices with an array for each refine case
+  // TODO[TL]: for anisotropic refinement we will probably need a table of
+  // submatrices with an array for each refine case
   FullMatrix<double> face_embeddings[GeometryInfo<dim>::max_children_per_face];
   for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
     face_embeddings[i].reinit(this->dofs_per_face, this->dofs_per_face);
@@ -330,7 +331,11 @@ FE_RaviartThomasNodal<dim>::
   Assert(fbase == this->dofs_per_cell, ExcInternalError());
 }
 
-//TODO: There are tests that check that the following few functions don't produce assertion failures, but none that actually check whether they do the right thing. one example for such a test would be to project a function onto an hp space and make sure that the convergence order is correct with regard to the lowest used polynomial degree
+// TODO: There are tests that check that the following few functions don't
+// produce assertion failures, but none that actually check whether they do the
+// right thing. one example for such a test would be to project a function onto
+// an hp space and make sure that the convergence order is correct with regard to
+// the lowest used polynomial degree
 
 template <int dim>
 bool
@@ -382,10 +387,10 @@ FE_RaviartThomasNodal<dim>::hp_line_dof_identities(
       // following two cases (remember that
       // the face support points are Gauss
       // points):
-      //1. this->degree = fe_q_other->degree,
+      // 1. this->degree = fe_q_other->degree,
       //   in the case, all the dofs on
       //   the line are identical
-      //2. this->degree-1 and fe_q_other->degree-1
+      // 2. this->degree-1 and fe_q_other->degree-1
       //   are both even, i.e. this->dof_per_line
       //   and fe_q_other->dof_per_line are both odd,
       //   there exists only one point (the middle one)

@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Like particle_02, but tests particle serialization and deserialization using boost archive.
+// Like particle_02, but tests particle serialization and deserialization using
+// boost archive.
 
 #include "../tests.h"
 #include <deal.II/base/array_view.h>

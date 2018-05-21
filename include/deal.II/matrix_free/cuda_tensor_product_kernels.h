@@ -243,7 +243,8 @@ namespace CUDAWrappers
             }
           default:
             {
-              // Do nothing. We should throw but we can't from a __device__ function.
+              // Do nothing. We should throw but we can't from a __device__
+              // function.
             }
         }
     }
@@ -284,7 +285,8 @@ namespace CUDAWrappers
             }
           default:
             {
-              // Do nothing. We should throw but we can't from a __device__ function.
+              // Do nothing. We should throw but we can't from a __device__
+              // function.
             }
         }
     }
@@ -340,7 +342,8 @@ namespace CUDAWrappers
             }
           default:
             {
-              // Do nothing. We should throw but we can't from a __device__ function.
+              // Do nothing. We should throw but we can't from a __device__
+              // function.
             }
         }
     }
@@ -400,7 +403,8 @@ namespace CUDAWrappers
             }
           default:
             {
-              // Do nothing. We should throw but we can't from a __device__ function.
+              // Do nothing. We should throw but we can't from a __device__
+              // function.
             }
         }
     }

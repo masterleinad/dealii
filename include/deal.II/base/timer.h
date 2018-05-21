@@ -417,7 +417,7 @@ private:
   Utilities::MPI::MinMaxAvg accumulated_wall_time_data;
 };
 
-//TODO: The following class is not thread-safe
+// TODO: The following class is not thread-safe
 /**
  * This class can be used to generate formatted output from time measurements
  * of different subsections in a program. It is possible to create several
@@ -787,7 +787,8 @@ public:
   void
   enter_section(const std::string& section_name);
 
-  //TODO: make some of these functions DEPRECATED (I would keep enter/exit_section)
+  // TODO: make some of these functions DEPRECATED (I would keep
+  // enter/exit_section)
 
   /**
    * Leave a section. If no name is given, the last section that was entered

@@ -102,7 +102,8 @@ protected:
    * The transfer operators only act on the blocks having a <tt>true</tt>
    * entry here.
    */
-  //TODO: rename this to block_mask, in the same way as has already been done in MGTransferComponent, and give it type BlockMask
+  // TODO: rename this to block_mask, in the same way as has already been done
+  // in MGTransferComponent, and give it type BlockMask
   std::vector<bool> selected;
 
   /**
@@ -116,7 +117,8 @@ protected:
    * fewer multilevel blocks than original blocks, some of the entries may be
    * illegal unsigned integers.
    */
-  //TODO: rename this to mg_block_mask, in the same way as has already been done in MGTransferComponent, and give it type BlockMask
+  // TODO: rename this to mg_block_mask, in the same way as has already been
+  // done in MGTransferComponent, and give it type BlockMask
   std::vector<unsigned int> mg_block;
 
   /**
@@ -287,7 +289,7 @@ private:
   SmartPointer<VectorMemory<Vector<number>>, MGTransferBlock<number>> memory;
 };
 
-//TODO:[GK] Update documentation for copy_* functions
+// TODO:[GK] Update documentation for copy_* functions
 
 /**
  * Implementation of the MGTransferBase interface for block matrices and
@@ -480,7 +482,8 @@ private:
 
 /*@}*/
 
-//----------inline function definition--------------------------------------------------
+//----------inline function
+//definition--------------------------------------------------
 template <typename number>
 inline void
 MGTransferBlockSelect<number>::select(const unsigned int block)

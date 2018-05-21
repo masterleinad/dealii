@@ -628,7 +628,7 @@ namespace Utilities
           else if(name == "VmRSS:")
             {
               file >> stats.VmRSS;
-              break; //this is always the last entry
+              break; // this is always the last entry
             }
 
           getline(file, line);

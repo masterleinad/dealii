@@ -25,7 +25,8 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-/*------------------------- Static variables: DoFAccessor -----------------------*/
+/*------------------------- Static variables: DoFAccessor
+ * -----------------------*/
 
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
 const unsigned int
@@ -35,7 +36,8 @@ template <int structdim, typename DoFHandlerType, bool level_dof_access>
 const unsigned int
   DoFAccessor<structdim, DoFHandlerType, level_dof_access>::space_dimension;
 
-/*------------------------ Functions: DoFInvalidAccessor ---------------------------*/
+/*------------------------ Functions: DoFInvalidAccessor
+ * ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
 DoFInvalidAccessor<structdim, dim, spacedim>::DoFInvalidAccessor(

@@ -33,9 +33,9 @@ main()
   t[0][1][2][0][1][2][0][1][2] = 42;
 
   // Reorder index 4 (count begins at 0) to last place:
-  TensorAccessors::internal::
-    ReorderedIndexView<4, 9, Tensor<9, 3, int>> // auto ...
-      foo
+  TensorAccessors::internal::ReorderedIndexView<4, 9, Tensor<9, 3, int>> // auto
+                                                                         // ...
+                                                                           foo
     = TensorAccessors::reordered_index_view<4, 9>(t);
 
   // test access and assignment:

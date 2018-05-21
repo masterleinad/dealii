@@ -31,9 +31,9 @@
 #include <iostream>
 #include <sstream>
 
-//TODO: implement the adjust_quad_dof_index_for_face_orientation_table and
-//adjust_line_dof_index_for_line_orientation_table fields, and write tests
-//similar to bits/face_orientation_and_fe_q_*
+// TODO: implement the adjust_quad_dof_index_for_face_orientation_table and
+// adjust_line_dof_index_for_line_orientation_table fields, and write tests
+// similar to bits/face_orientation_and_fe_q_*
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -81,13 +81,15 @@ FE_ABF<dim>::FE_ABF(const unsigned int deg)
 
   initialize_restriction();
 
-  // TODO[TL]: for anisotropic refinement we will probably need a table of submatrices with an array for each refine case
+  // TODO[TL]: for anisotropic refinement we will probably need a table of
+  // submatrices with an array for each refine case
   std::vector<FullMatrix<double>> face_embeddings(
     1 << (dim - 1),
     FullMatrix<double>(this->dofs_per_face, this->dofs_per_face));
   // TODO: Something goes wrong there. The error of the least squares fit
   // is to large ...
-  // FETools::compute_face_embedding_matrices(*this, face_embeddings.data(), 0, 0);
+  // FETools::compute_face_embedding_matrices(*this, face_embeddings.data(), 0,
+  // 0);
   this->interface_constraints.reinit((1 << (dim - 1)) * this->dofs_per_face,
                                      this->dofs_per_face);
   unsigned int target_row = 0;
@@ -269,7 +271,8 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
           poly_grad = polynomials_abf[i % dim]->compute_grad(
                         i / dim, cell_quadrature.point(k))
                       * cell_quadrature.weight(k);
-          // The minus sign comes from the use of the Gauss theorem to replace the divergence.
+          // The minus sign comes from the use of the Gauss theorem to replace
+          // the divergence.
           for(unsigned int d = 0; d < dim; ++d)
             interior_weights_abf(k, i, d) = -poly_grad[d];
         }
@@ -557,7 +560,8 @@ FE_ABF<dim>::convert_generalized_support_point_values_to_dof_values(
         = (double) GeometryInfo<dim>::unit_normal_orientation[face];
       for(unsigned int fp = 0; fp < n_face_points; ++fp)
         {
-          // TODO: Check what the face_orientation, face_flip and face_rotation have to be in 3D
+          // TODO: Check what the face_orientation, face_flip and face_rotation
+          // have to be in 3D
           unsigned int k = QProjector<dim>::DataSetDescriptor::face(
             face, false, false, false, n_face_points);
           for(unsigned int i = 0; i < boundary_weights_abf.size(1); ++i)

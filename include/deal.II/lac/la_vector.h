@@ -293,7 +293,8 @@ namespace LinearAlgebra
      * most vector operations are memory transfer limited, this reduces the time
      * by 25\% (or 50\% if @p W equals @p this).
      *
-     * For complex-valued vectors, the scalar product in the second step is implemented as
+     * For complex-valued vectors, the scalar product in the second step is
+     * implemented as
      * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
      */
     virtual Number
@@ -386,7 +387,8 @@ namespace LinearAlgebra
   };
 
   /*@}*/
-  /*----------------------- Inline functions ----------------------------------*/
+  /*----------------------- Inline functions
+   * ----------------------------------*/
 
   template <typename Number>
   inline Vector<Number>::Vector(const Vector<Number>& V)

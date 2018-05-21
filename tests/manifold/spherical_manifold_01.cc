@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Check SphericalManifold for get_intermediate_point and get_tangent_vector issues.
+// Check SphericalManifold for get_intermediate_point and get_tangent_vector
+// issues.
 
 #include "../tests.h"
 
@@ -184,6 +185,7 @@ main()
     deallog << "=================================" << std::endl;
   }
 
-  // Quadrature (const std::vector< Point< dim > > &points, const std::vector< double > &weights);
+  // Quadrature (const std::vector< Point< dim > > &points, const std::vector<
+  // double > &weights);
   return 0;
 }

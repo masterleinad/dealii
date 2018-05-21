@@ -177,7 +177,9 @@ ConstraintMatrix::condense(SparseMatrix<number>& uncondensed,
                       ++q)
                     {
                       // need a temporary variable to avoid errors like
-                      // no known conversion from 'complex<typename ProductType<float, double>::type>' to 'const complex<float>' for 3rd argument
+                      // no known conversion from 'complex<typename
+                      // ProductType<float, double>::type>' to 'const
+                      // complex<float>' for 3rd argument
                       number v = static_cast<number>(entry->value());
                       v *= lines[distribute[column]].entries[q].second;
                       uncondensed.add(
@@ -229,7 +231,9 @@ ConstraintMatrix::condense(SparseMatrix<number>& uncondensed,
                       ++q)
                     {
                       // need a temporary variable to avoid errors like
-                      // no known conversion from 'complex<typename ProductType<float, double>::type>' to 'const complex<float>' for 3rd argument
+                      // no known conversion from 'complex<typename
+                      // ProductType<float, double>::type>' to 'const
+                      // complex<float>' for 3rd argument
                       number v = static_cast<number>(entry->value());
                       v *= lines[distribute[row]].entries[q].second;
                       uncondensed.add(
@@ -256,7 +260,9 @@ ConstraintMatrix::condense(SparseMatrix<number>& uncondensed,
                           ++q)
                         {
                           // need a temporary variable to avoid errors like
-                          // no known conversion from 'complex<typename ProductType<float, double>::type>' to 'const complex<float>' for 3rd argument
+                          // no known conversion from 'complex<typename
+                          // ProductType<float, double>::type>' to 'const
+                          // complex<float>' for 3rd argument
                           number v = static_cast<number>(entry->value());
                           v *= lines[distribute[row]].entries[p].second
                                * lines[distribute[column]].entries[q].second;
@@ -506,10 +512,10 @@ ConstraintMatrix::condense(BlockSparseMatrix<number>& uncondensed,
     }
 }
 
-//TODO: I'm sure the following could be made more elegant by using a bit of
-//introspection using static member variables of the various vector
-//classes to dispatch between the different functions, rather than using
-//knowledge of the individual types
+// TODO: I'm sure the following could be made more elegant by using a bit of
+// introspection using static member variables of the various vector
+// classes to dispatch between the different functions, rather than using
+// knowledge of the individual types
 
 // number of functions to select the right implementation for set_zero().
 namespace internal
@@ -901,15 +907,16 @@ ConstraintMatrix::distribute(VectorType& vec) const
       // every processor should be able to simply communicate those elements
       // it owns and for which it knows that they act as sources to constrained
       // DoFs to the owner of these DoFs. This would lead to a scheme where all
-      // we need to do is to add some local elements to (possibly non-local) ones
-      // and then call compress().
+      // we need to do is to add some local elements to (possibly non-local)
+      // ones and then call compress().
       //
-      // Alas, this scheme does not work as evidenced by the disaster of bug #51,
-      // see http://code.google.com/p/dealii/issues/detail?id=51 and the
+      // Alas, this scheme does not work as evidenced by the disaster of bug
+      // #51, see http://code.google.com/p/dealii/issues/detail?id=51 and the
       // reversion of one attempt that implements this in r29662. Rather, we
       // need to get a vector that has all the *sources* or constraints we
       // own locally, possibly as ghost vector elements, then read from them,
-      // and finally throw away the ghosted vector. Implement this in the following.
+      // and finally throw away the ghosted vector. Implement this in the
+      // following.
       IndexSet needed_elements = vec_owned_elements;
 
       typedef std::vector<ConstraintLine>::const_iterator constraint_iterator;
@@ -2348,8 +2355,8 @@ ConstraintMatrix::distribute_local_to_global(
             }
         }
     }
-  // Drop the elements of vector_indices and vector_values that we do not use (we may
-  // always elide writing zero values to vectors)
+  // Drop the elements of vector_indices and vector_values that we do not use
+  // (we may always elide writing zero values to vectors)
   const size_type n_local_rows = local_row_n;
   vector_indices.resize(n_local_rows);
   vector_values.resize(n_local_rows);

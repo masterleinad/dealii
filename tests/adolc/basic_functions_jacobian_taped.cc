@@ -15,7 +15,8 @@
 // Test of basic functionality:
 //  - Taped doubles
 //  - Multiple dependent functions and Jacobian computations
-// Adapted from https://github.com/Homebrew/homebrew-science/blob/master/adol-c.rb
+// Adapted from
+// https://github.com/Homebrew/homebrew-science/blob/master/adol-c.rb
 
 #include "../tests.h"
 #include <adolc/adouble.h>

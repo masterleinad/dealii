@@ -519,8 +519,9 @@ namespace internal
                   root->wait_for_all();
                   root->destroy(*root);
                 }
-              // case when we only have one partition: this is the usual coloring
-              // scheme, and we just schedule a parallel for loop for each color
+              // case when we only have one partition: this is the usual
+              // coloring scheme, and we just schedule a parallel for loop for
+              // each color
               else
                 {
                   Assert(evens <= 1, ExcInternalError());
@@ -1021,7 +1022,8 @@ namespace internal
 
       unsigned int partition = 0, counter = 0;
 
-      // Create connectivity graph for blocks based on connectivity graph for cells.
+      // Create connectivity graph for blocks based on connectivity graph for
+      // cells.
       DynamicSparsityPattern connectivity(n_blocks, n_blocks);
       make_connectivity_cells_to_blocks(
         irregular_cells, connectivity_large, connectivity);
@@ -1042,7 +1044,7 @@ namespace internal
       // This vector points to the start of each partition.
       std::vector<unsigned int> partition_size(2, 0);
 
-      //blocking_connectivity = true;
+      // blocking_connectivity = true;
 
       // The cluster_size in make_partitioning defines that the no. of cells
       // in each partition should be a multiple of cluster_size.
@@ -1373,7 +1375,7 @@ namespace internal
 
       unsigned int partition = 0;
       // Here, we do not block inside the connectivity graph
-      //blocking_connectivity = false;
+      // blocking_connectivity = false;
 
       // Make the partitioning of the first layer of the blocks of cells.
       make_partitioning(connectivity,
@@ -1467,7 +1469,8 @@ namespace internal
 
       // List of cells in previous partition
       std::vector<unsigned int> neighbor_list;
-      // List of cells in current partition for use as neighbors in next partition
+      // List of cells in current partition for use as neighbors in next
+      // partition
       std::vector<unsigned int> neighbor_neighbor_list;
 
       std::vector<unsigned int> renumbering(n_active_cells);
@@ -1762,7 +1765,8 @@ namespace internal
         }
     }
 
-    // Function to create coloring on the second layer within each partition. Version assumes preblocking.
+    // Function to create coloring on the second layer within each partition.
+    // Version assumes preblocking.
     void
     TaskInfo::make_coloring_within_partitions_pre_blocked(
       const DynamicSparsityPattern&    connectivity,
@@ -1850,19 +1854,20 @@ namespace internal
       // For each block of cells, this variable saves to which partitions the
       // block belongs. Initialize all to n_macro_cells to mark them as not
       // yet assigned a partition.
-      //std::vector<unsigned int> cell_partition (n_active_cells,
+      // std::vector<unsigned int> cell_partition (n_active_cells,
       //                                          numbers::invalid_unsigned_int);
       // List of cells in previous partition
       std::vector<unsigned int> neighbor_list;
-      // List of cells in current partition for use as neighbors in next partition
+      // List of cells in current partition for use as neighbors in next
+      // partition
       std::vector<unsigned int> neighbor_neighbor_list;
 
       // In element j of this variable, one puts the old number of the block
       // that should be the jth block in the new numeration.
-      //std::vector<unsigned int> partition_list(n_active_cells,0);
+      // std::vector<unsigned int> partition_list(n_active_cells,0);
 
       // This vector points to the start of each partition.
-      //std::vector<unsigned int> partition_size(2,0);
+      // std::vector<unsigned int> partition_size(2,0);
 
       partition            = 0;
       unsigned int counter = 0;

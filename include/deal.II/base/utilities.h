@@ -612,8 +612,9 @@ namespace Utilities
     get_cpu_load();
 
     /**
-     * Return the current level of vectorization as described by DEAL_II_COMPILER_VECTORIZATION_LEVEL
-     * in vectorization.h as a string. The list of possible return values is:
+     * Return the current level of vectorization as described by
+     * DEAL_II_COMPILER_VECTORIZATION_LEVEL in vectorization.h as a string. The
+     * list of possible return values is:
      *
      * <table>
      * <tr>
@@ -668,7 +669,8 @@ namespace Utilities
       unsigned long int VmHWM;
 
       /**
-       * Current resident memory size in kB. Also known as "resident set size" (RSS).
+       * Current resident memory size in kB. Also known as "resident set size"
+       * (RSS).
        */
       unsigned long int VmRSS;
     };
@@ -1172,7 +1174,8 @@ namespace boost
 {
   namespace serialization
   {
-    // Provides boost and c++11 with a way to serialize tuples and pairs automatically
+    // Provides boost and c++11 with a way to serialize tuples and pairs
+    // automatically
     template <int N>
     struct Serialize
     {

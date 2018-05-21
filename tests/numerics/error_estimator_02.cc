@@ -308,7 +308,7 @@ test_neumann(const NeumanBC<dim>& func)
     dealii::deallog << " " << error[i];
   dealii::deallog << std::endl;
 
-  //output("neuman.vtu",
+  // output("neuman.vtu",
   //       triangulation,
   //       dof_handler,
   //       values,
@@ -421,7 +421,7 @@ test_regular(const MyFunction<dim>& func)
     dealii::deallog << " " << error[i];
   dealii::deallog << std::endl;
 
-  //output("regular.vtu",
+  // output("regular.vtu",
   //       triangulation,
   //       dof_handler,
   //       values,
@@ -551,7 +551,7 @@ test_irregular(const MyFunction<dim>& func)
     dealii::deallog << " " << error[i];
   dealii::deallog << std::endl;
 
-  //output("irregular.vtu",
+  // output("irregular.vtu",
   //       triangulation,
   //       dof_handler,
   //       values,

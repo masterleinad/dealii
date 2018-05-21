@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// This tests the stability of the polynomial evaluation of IntegratedLegendreSZ.
+// This tests the stability of the polynomial evaluation of
+// IntegratedLegendreSZ.
 
 #include "../tests.h"
 
@@ -26,8 +27,9 @@ using namespace Polynomials;
 void
 check_at_one(const std::vector<Polynomial<double>>& p)
 {
-  // Ignore first two polynomials as the integrated Legendre polynomials are only defined
-  // for degree > 1, it is only added to maintain the recursive relation.
+  // Ignore first two polynomials as the integrated Legendre polynomials are
+  // only defined for degree > 1, it is only added to maintain the recursive
+  // relation.
 
   deallog << "Function value of polynomial at right end point: ";
   for(unsigned int i = 2; i < p.size(); ++i)
@@ -43,8 +45,9 @@ check_at_one(const std::vector<Polynomial<double>>& p)
 void
 check_at_half(const std::vector<Polynomial<double>>& p)
 {
-  // Ignore first two polynomials as the integrated Legendre polynomials are only defined
-  // for degree > 1, it is only added to maintain the recursive relation.
+  // Ignore first two polynomials as the integrated Legendre polynomials are
+  // only defined for degree > 1, it is only added to maintain the recursive
+  // relation.
 
   deallog << "Function value of polynomial at -0.5 | 0.5:" << std::endl;
   for(unsigned int i = 2; i < p.size(); ++i)

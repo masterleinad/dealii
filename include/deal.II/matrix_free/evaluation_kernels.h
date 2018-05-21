@@ -347,7 +347,8 @@ namespace internal
                     temp2, hessians_quad + n_q_points);
                 }
 
-              // grad z: can use the values applied in x direction stored in temp1
+              // grad z: can use the values applied in x direction stored in
+              // temp1
               eval.template values<1, true, false>(temp1, temp2);
               if(evaluate_gradients == true)
                 eval.template gradients<2, true, false>(
@@ -359,7 +360,8 @@ namespace internal
                 eval.template hessians<2, true, false>(
                   temp2, hessians_quad + 2 * n_q_points);
 
-              // val: can use the values applied in x & y direction stored in temp2
+              // val: can use the values applied in x & y direction stored in
+              // temp2
               if(evaluate_values == true)
                 eval.template values<2, true, false>(temp2, values_quad);
 
@@ -651,14 +653,13 @@ namespace internal
      * @param values_out   The array of size basis_size_2^dim where the results
      *                     of the transformation are stored. It may alias with
      *                     the values_in array.
-     * @param basis_size_1_variable In case the template argument basis_size_1 is
-     *                     zero, the size of the first basis can alternatively be
-     *                     passed in as a run time argument. The template
-     *                     argument takes precedence in case it is nonzero
-     *                     for efficiency reasons.
-     * @param basis_size_2_variable In case the template argument basis_size_1 is
-     *                     zero, the size of the second basis can alternatively be
-     *                     passed in as a run time argument.
+     * @param basis_size_1_variable In case the template argument basis_size_1
+     * is zero, the size of the first basis can alternatively be passed in as a
+     * run time argument. The template argument takes precedence in case it is
+     * nonzero for efficiency reasons.
+     * @param basis_size_2_variable In case the template argument basis_size_1
+     * is zero, the size of the second basis can alternatively be passed in as a
+     * run time argument.
      */
 #ifndef DEBUG
     DEAL_II_ALWAYS_INLINE
@@ -769,14 +770,13 @@ namespace internal
      * @param values_out   The array of size basis_size_1^dim where the results
      *                     of the transformation are stored. It may alias with
      *                     the @p values_in array.
-     * @param basis_size_1_variable In case the template argument basis_size_1 is
-     *                     zero, the size of the first basis can alternatively be
-     *                     passed in as a run time argument. The template
-     *                     argument takes precedence in case it is nonzero
-     *                     for efficiency reasons.
-     * @param basis_size_2_variable In case the template argument basis_size_1 is
-     *                     zero, the size of the second basis can alternatively be
-     *                     passed in as a run time argument.
+     * @param basis_size_1_variable In case the template argument basis_size_1
+     * is zero, the size of the first basis can alternatively be passed in as a
+     * run time argument. The template argument takes precedence in case it is
+     * nonzero for efficiency reasons.
+     * @param basis_size_2_variable In case the template argument basis_size_1
+     * is zero, the size of the second basis can alternatively be passed in as a
+     * run time argument.
      */
 #ifndef DEBUG
     DEAL_II_ALWAYS_INLINE

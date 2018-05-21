@@ -178,8 +178,8 @@ namespace Step50
       deallog << "   " << 'L' << l << ": " << mg_dof_handler.n_dofs(l);
     deallog << std::endl;
 
-    //solution.reinit (mg_dof_handler.n_dofs());
-    //system_rhs.reinit (mg_dof_handler.n_dofs());
+    // solution.reinit (mg_dof_handler.n_dofs());
+    // system_rhs.reinit (mg_dof_handler.n_dofs());
     solution.reinit(mg_dof_handler.locally_owned_dofs(), MPI_COMM_WORLD);
     system_rhs.reinit(mg_dof_handler.locally_owned_dofs(), MPI_COMM_WORLD);
 
@@ -354,23 +354,21 @@ namespace Step50
 
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              if(
-                mg_constrained_dofs.at_refinement_edge(lvl,
-                                                       local_dof_indices[i])
-                && !mg_constrained_dofs.at_refinement_edge(lvl,
-                                                           local_dof_indices[j])
-                && ((!mg_constrained_dofs.is_boundary_index(
-                       lvl, local_dof_indices[i])
-                     && !mg_constrained_dofs.is_boundary_index(
-                          lvl,
-                          local_dof_indices
-                            [j])) // ( !boundary(i) && !boundary(j) )
-                    || (mg_constrained_dofs.is_boundary_index(
-                          lvl, local_dof_indices[i])
-                        && local_dof_indices[i]
-                             == local_dof_indices
-                                  [j]) // ( boundary(i) && boundary(j) && i==j )
-                    ))
+              if(mg_constrained_dofs.at_refinement_edge(lvl,
+                                                        local_dof_indices[i])
+                 && !mg_constrained_dofs.at_refinement_edge(
+                      lvl, local_dof_indices[j])
+                 && ((!mg_constrained_dofs.is_boundary_index(
+                        lvl, local_dof_indices[i])
+                      && !mg_constrained_dofs.is_boundary_index(
+                           lvl, local_dof_indices[j])) // ( !boundary(i) &&
+                                                       // !boundary(j) )
+                     || (mg_constrained_dofs.is_boundary_index(
+                           lvl, local_dof_indices[i])
+                         && local_dof_indices[i]
+                              == local_dof_indices[j]) // ( boundary(i) &&
+                                                       // boundary(j) && i==j )
+                     ))
                 {
                   // do nothing, so add entries to interface matrix
                 }

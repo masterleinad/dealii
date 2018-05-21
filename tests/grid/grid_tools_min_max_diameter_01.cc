@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// test GridTools::minimal_cell_diameter and GridTools::maximal_cell_diameter with a mapping
+// test GridTools::minimal_cell_diameter and GridTools::maximal_cell_diameter
+// with a mapping
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -67,8 +68,8 @@ test(const unsigned int degree)
 
   VectorTools::get_position_vector(dof_sys, euler, mask);
 
-  // By using MappingQEulerian with the position vector, we are making everything
-  // bigger by a factor 2.
+  // By using MappingQEulerian with the position vector, we are making
+  // everything bigger by a factor 2.
   MappingQEulerian<dim, Vector<double>, spacedim> map_fe(
     degree, dof_sys, euler);
 

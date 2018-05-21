@@ -15,7 +15,8 @@
 
 /*
 
-  FEFieldFunction could not deal with ExcTransformationFailed from transform_real_to_unit_cell()
+  FEFieldFunction could not deal with ExcTransformationFailed from
+  transform_real_to_unit_cell()
   */
 
 #include "../tests.h"
@@ -48,12 +49,12 @@ test2()
 
   Vector<double>                solution(dof_handler.n_dofs());
   Functions::FEFieldFunction<2> fe_function(dof_handler, solution);
-  fe_function.value(p); //this works <<<<<<<<<<<
+  fe_function.value(p); // this works <<<<<<<<<<<
 
   std::vector<Point<dim>> points(19 * 19);
   std::vector<double>     m(19 * 19);
 
-  if(1) //works if changed to "if (0)"   <<<<<<<<<
+  if(1) // works if changed to "if (0)"   <<<<<<<<<
     for(unsigned int i = 0; i < 19; i++)
       for(unsigned int j = 0; j < 19; j++)
         {
@@ -62,9 +63,8 @@ test2()
           points[19 * i + j](1) = -0.7 + (j + 1) * .07;
         }
   points[95] = p;
-  fe_function.value_list(
-    points,
-    m); // <<<< this fails at point[95] but only if the other points are filled in?!
+  fe_function.value_list(points, m); // <<<< this fails at point[95] but only if
+                                     // the other points are filled in?!
 
   triangulation.reset_manifold(0);
 

@@ -64,12 +64,12 @@ namespace PETScWrappers
           if(index >= static_cast<size_type>(begin)
              && index < static_cast<size_type>(end))
             {
-              //local entry
+              // local entry
               value = *(ptr + index - begin);
             }
           else
             {
-              //ghost entry
+              // ghost entry
               const size_type ghostidx
                 = vector.ghost_indices.index_within_set(index);
 
@@ -180,7 +180,7 @@ namespace PETScWrappers
   {
     AssertIsFinite(s);
 
-    //TODO[TH]: assert(is_compressed())
+    // TODO[TH]: assert(is_compressed())
 
     PetscErrorCode ierr = VecSet(vector, s);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -755,7 +755,7 @@ namespace PETScWrappers
   void
   VectorBase::write_ascii(const PetscViewerFormat format)
   {
-    //TODO[TH]:assert(is_compressed())
+    // TODO[TH]:assert(is_compressed())
 
     // Set options
     PetscErrorCode ierr
@@ -840,7 +840,7 @@ namespace PETScWrappers
     if(ghosted)
       mem += ghost_indices.n_elements() * (sizeof(PetscScalar) + sizeof(int));
 
-    //TODO[TH]: size of constant memory for PETSc?
+    // TODO[TH]: size of constant memory for PETSc?
     return mem;
   }
 
