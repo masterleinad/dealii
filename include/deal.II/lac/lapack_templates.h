@@ -1269,11 +1269,11 @@ potrf(const char*            uplo,
 #ifdef DEAL_II_WITH_LAPACK
   dpotrf_(uplo, n, A, lda, info);
 #else
-  (void) uplo;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) info;
+  (void)uplo;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)info;
 
   Assert(false, LAPACKSupport::ExcMissing("dpotrf"));
 #endif
@@ -1289,11 +1289,11 @@ potrf(const char*            uplo,
 #ifdef DEAL_II_WITH_LAPACK
   spotrf_(uplo, n, A, lda, info);
 #else
-  (void) uplo;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) info;
+  (void)uplo;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)info;
 
   Assert(false, LAPACKSupport::ExcMissing("spotrf"));
 #endif
@@ -1331,16 +1331,16 @@ trcon(const char*            norm,
 #ifdef DEAL_II_WITH_LAPACK
   dtrcon_(norm, uplo, diag, n, A, lda, rcond, work, iwork, info);
 #else
-  (void) norm;
-  (void) uplo;
-  (void) diag;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) rcond;
-  (void) work;
-  (void) iwork;
-  (void) info;
+  (void)norm;
+  (void)uplo;
+  (void)diag;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)rcond;
+  (void)work;
+  (void)iwork;
+  (void)info;
 
   Assert(false, LAPACKSupport::ExcMissing("dtrcon"));
 #endif
@@ -1361,16 +1361,16 @@ trcon(const char*            norm,
 #ifdef DEAL_II_WITH_LAPACK
   strcon_(norm, uplo, diag, n, A, lda, rcond, work, iwork, info);
 #else
-  (void) norm;
-  (void) uplo;
-  (void) diag;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) rcond;
-  (void) work;
-  (void) iwork;
-  (void) info;
+  (void)norm;
+  (void)uplo;
+  (void)diag;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)rcond;
+  (void)work;
+  (void)iwork;
+  (void)info;
 
   Assert(false, LAPACKSupport::ExcMissing("dtrcon"));
 #endif
@@ -1406,15 +1406,15 @@ pocon(const char*            uplo,
 #ifdef DEAL_II_WITH_LAPACK
   dpocon_(uplo, n, A, lda, anorm, rcond, work, iwork, info);
 #else
-  (void) uplo;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) anorm;
-  (void) rcond;
-  (void) work;
-  (void) iwork;
-  (void) info;
+  (void)uplo;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)anorm;
+  (void)rcond;
+  (void)work;
+  (void)iwork;
+  (void)info;
 
   Assert(false, LAPACKSupport::ExcMissing("dpocon"));
 #endif
@@ -1434,15 +1434,15 @@ pocon(const char*            uplo,
 #ifdef DEAL_II_WITH_LAPACK
   spocon_(uplo, n, A, lda, anorm, rcond, work, iwork, info);
 #else
-  (void) uplo;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) anorm;
-  (void) rcond;
-  (void) work;
-  (void) iwork;
-  (void) info;
+  (void)uplo;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)anorm;
+  (void)rcond;
+  (void)work;
+  (void)iwork;
+  (void)info;
 
   Assert(false, LAPACKSupport::ExcMissing("dpocon"));
 #endif
@@ -1470,11 +1470,11 @@ potri(const char*            uplo,
 #ifdef DEAL_II_WITH_LAPACK
   dpotri_(uplo, n, A, lda, info);
 #else
-  (void) uplo;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) info;
+  (void)uplo;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)info;
 
   Assert(false, LAPACKSupport::ExcMissing("dpotri"));
 #endif
@@ -1490,11 +1490,11 @@ potri(const char*            uplo,
 #ifdef DEAL_II_WITH_LAPACK
   spotri_(uplo, n, A, lda, info);
 #else
-  (void) uplo;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) info;
+  (void)uplo;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)info;
 
   Assert(false, LAPACKSupport::ExcMissing("spotri"));
 #endif
@@ -1525,12 +1525,12 @@ lansy(const char*            norm,
 #ifdef DEAL_II_WITH_LAPACK
   return dlansy_(norm, uplo, n, A, lda, work);
 #else
-  (void) norm;
-  (void) uplo;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) work;
+  (void)norm;
+  (void)uplo;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)work;
 
   Assert(false, LAPACKSupport::ExcMissing("lansy"));
   return 0.;
@@ -1548,12 +1548,12 @@ lansy(const char*            norm,
 #ifdef DEAL_II_WITH_LAPACK
   return slansy_(norm, uplo, n, A, lda, work);
 #else
-  (void) norm;
-  (void) uplo;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) work;
+  (void)norm;
+  (void)uplo;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)work;
 
   Assert(false, LAPACKSupport::ExcMissing("lansy"));
   return 0.;
@@ -1585,12 +1585,12 @@ lange(const char*            norm,
 #ifdef DEAL_II_WITH_LAPACK
   return dlange_(norm, m, n, A, lda, work);
 #else
-  (void) norm;
-  (void) m;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) work;
+  (void)norm;
+  (void)m;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)work;
 
   Assert(false, LAPACKSupport::ExcMissing("lange"));
   return 0.;
@@ -1608,12 +1608,12 @@ lange(const char*            norm,
 #ifdef DEAL_II_WITH_LAPACK
   return slange_(norm, m, n, A, lda, work);
 #else
-  (void) norm;
-  (void) m;
-  (void) n;
-  (void) A;
-  (void) lda;
-  (void) work;
+  (void)norm;
+  (void)m;
+  (void)n;
+  (void)A;
+  (void)lda;
+  (void)work;
 
   Assert(false, LAPACKSupport::ExcMissing("lange"));
   return 0.;

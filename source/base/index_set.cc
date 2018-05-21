@@ -494,7 +494,7 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
                             const bool      overlapping) const
 {
   compress();
-  (void) communicator;
+  (void)communicator;
 
 #  ifdef DEBUG
   if(!overlapping)

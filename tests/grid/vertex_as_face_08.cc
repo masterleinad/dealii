@@ -33,7 +33,7 @@ test()
   std::vector<types::boundary_id> boundary_ids = tria.get_boundary_ids();
 
   for(unsigned int i = 0; i < boundary_ids.size(); ++i)
-    deallog << (int) boundary_ids[i] << std::endl;
+    deallog << (int)boundary_ids[i] << std::endl;
 }
 
 int

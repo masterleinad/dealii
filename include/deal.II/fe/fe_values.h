@@ -4314,7 +4314,7 @@ namespace FEValuesViews
     symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 1>& t)
     {
       Assert(n < 1, ExcIndexRange(n, 0, 1));
-      (void) n;
+      (void)n;
 
       const double array[1] = {t[0]};
       return dealii::SymmetricTensor<2, 1>(array);

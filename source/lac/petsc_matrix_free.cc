@@ -202,7 +202,7 @@ namespace PETScWrappers
     // object of dimension m x n and local size
     // local_rows x local_columns
     PetscErrorCode ierr = MatCreateShell(
-      communicator, local_rows, local_columns, m, n, (void*) this, &matrix);
+      communicator, local_rows, local_columns, m, n, (void*)this, &matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
     // register the MatrixFree::matrix_free_mult function
     // as the matrix multiplication used by this matrix

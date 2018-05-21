@@ -100,7 +100,7 @@ MGTransferPrebuilt<VectorType>::restrict_and_add(const unsigned int from_level,
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),
          ExcIndexRange(from_level, 1, prolongation_matrices.size() + 1));
-  (void) from_level;
+  (void)from_level;
 
   prolongation_matrices[from_level - 1]->Tvmult_add(dst, src);
 }

@@ -1751,7 +1751,7 @@ namespace internals
               const size_type       column,
               SparseMatrixIterator& matrix_values)
     {
-      (void) row;
+      (void)row;
       if(value != LocalType())
         {
           while(matrix_values->column() < column)

@@ -65,29 +65,28 @@ check_solve(SolverType&               solver,
   switch(solver_number)
     {
       case 1:
-        check_solver_within_range(
-          (void) true, solver_control.last_step(), 5, 5);
+        check_solver_within_range((void)true, solver_control.last_step(), 5, 5);
         break;
       case 2:
         check_solver_within_range(
-          (void) true, solver_control.last_step(), 24, 24);
+          (void)true, solver_control.last_step(), 24, 24);
         break;
       case 3:
         check_solver_within_range(
-          (void) true, solver_control.last_step(), 21, 21);
+          (void)true, solver_control.last_step(), 21, 21);
         break;
       // below the spread is bigger since Slepc 3.8:
       case 4:
         check_solver_within_range(
-          (void) true, solver_control.last_step(), 119, 128);
+          (void)true, solver_control.last_step(), 119, 128);
         break;
       case 5:
         check_solver_within_range(
-          (void) true, solver_control.last_step(), 127, 138);
+          (void)true, solver_control.last_step(), 127, 138);
         break;
       case 6:
         check_solver_within_range(
-          (void) true, solver_control.last_step(), 44, 51);
+          (void)true, solver_control.last_step(), 44, 51);
         break;
       default:
         Assert(false, ExcNotImplemented());

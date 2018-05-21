@@ -59,7 +59,7 @@ test()
 
       for(cell = tr.begin_active(); cell != tr.end(); ++cell)
         {
-          if(cell->subdomain_id() != (unsigned int) myid)
+          if(cell->subdomain_id() != (unsigned int)myid)
             {
               AssertThrow(cell->is_ghost() || cell->is_artificial(),
                           ExcInternalError());

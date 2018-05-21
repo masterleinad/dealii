@@ -142,7 +142,7 @@ check_smoother(const MGLevelObject<MatrixType>& m,
       for(unsigned int b = 0; b < u.n_blocks(); ++b)
         {
           for(unsigned int i = 0; i < u.block(b).size(); ++i)
-            deallog << '\t' << (int) (u.block(b)(i) + .5);
+            deallog << '\t' << (int)(u.block(b)(i) + .5);
           deallog << std::endl;
         }
 
@@ -152,7 +152,7 @@ check_smoother(const MGLevelObject<MatrixType>& m,
       for(unsigned int b = 0; b < u.n_blocks(); ++b)
         {
           for(unsigned int i = 0; i < u.block(b).size(); ++i)
-            deallog << '\t' << (int) (u.block(b)(i) + .5);
+            deallog << '\t' << (int)(u.block(b)(i) + .5);
           deallog << std::endl;
         }
 
@@ -164,7 +164,7 @@ check_smoother(const MGLevelObject<MatrixType>& m,
       for(unsigned int b = 0; b < u.n_blocks(); ++b)
         {
           for(unsigned int i = 0; i < u.block(b).size(); ++i)
-            deallog << '\t' << (int) (u.block(b)(i) + .5);
+            deallog << '\t' << (int)(u.block(b)(i) + .5);
           deallog << std::endl;
         }
 

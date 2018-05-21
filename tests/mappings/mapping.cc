@@ -85,7 +85,7 @@ plot_faces(Mapping<dim>&                            mapping,
 
   QGauss<dim - 1>    q(4);
   const unsigned int nq
-    = (unsigned int) (.01 + std::pow(q.size(), 1. / (dim - 1)));
+    = (unsigned int)(.01 + std::pow(q.size(), 1. / (dim - 1)));
 
   FEFaceValues<dim> fe_values(mapping,
                               fe,
@@ -129,7 +129,7 @@ plot_subfaces(Mapping<dim>&                            mapping,
 
   QGauss<dim - 1>    q(4);
   const unsigned int nq
-    = (unsigned int) (.01 + std::pow(q.size(), 1. / (dim - 1)));
+    = (unsigned int)(.01 + std::pow(q.size(), 1. / (dim - 1)));
 
   FESubfaceValues<dim> fe_values(
     mapping,

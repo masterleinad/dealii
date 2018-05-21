@@ -353,7 +353,7 @@ copy_from_4()
   FullMatrix<double> sparsity_pattern(M, M);
   for(unsigned int i = 0; i < M; ++i)
     for(unsigned int j = 0; j < M; ++j)
-      if(std::abs((int) (i - j)) == 3)
+      if(std::abs((int)(i - j)) == 3)
         sparsity_pattern(i, j) = 1;
 
   SP sp4;
@@ -383,7 +383,7 @@ copy_from_4()
 
   for(unsigned int i = 0; i < M; ++i)
     for(unsigned int j = 0; j < M; ++j)
-      if(std::abs((int) (i - j)) == 3)
+      if(std::abs((int)(i - j)) == 3)
         AssertThrow(sp4.exists(i, j) == true, ExcInternalError());
 
   deallog << "OK" << std::endl;

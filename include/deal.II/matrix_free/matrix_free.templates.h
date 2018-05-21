@@ -1439,10 +1439,10 @@ MatrixFree<dim, Number>::initialize_indices(
             compressed_set.subtract_set(
               dof_info[no].vector_partitioner->locally_owned_range());
             const bool all_ghosts_equal = Utilities::MPI::min(
-              (int) (compressed_set.n_elements()
-                     == dof_info[no]
-                          .vector_partitioner->ghost_indices()
-                          .n_elements()),
+              (int)(compressed_set.n_elements()
+                    == dof_info[no]
+                         .vector_partitioner->ghost_indices()
+                         .n_elements()),
               dof_info[no].vector_partitioner->get_mpi_communicator());
             if(all_ghosts_equal)
               dof_info[no].vector_partitioner_face_variants[0]
@@ -1536,7 +1536,7 @@ MatrixFree<dim, Number>::initialize_indices(
                         has_noncontiguous_cell = true;
                     }
                 has_noncontiguous_cell = Utilities::MPI::min(
-                  (int) has_noncontiguous_cell, task_info.communicator);
+                  (int)has_noncontiguous_cell, task_info.communicator);
 
                 std::sort(ghost_indices.begin(), ghost_indices.end());
                 ghost_indices.erase(
@@ -1548,10 +1548,10 @@ MatrixFree<dim, Number>::initialize_indices(
                 compressed_set.subtract_set(
                   dof_info[no].vector_partitioner->locally_owned_range());
                 const bool all_ghosts_equal = Utilities::MPI::min(
-                  (int) (compressed_set.n_elements()
-                         == dof_info[no]
-                              .vector_partitioner->ghost_indices()
-                              .n_elements()),
+                  (int)(compressed_set.n_elements()
+                        == dof_info[no]
+                             .vector_partitioner->ghost_indices()
+                             .n_elements()),
                   dof_info[no].vector_partitioner->get_mpi_communicator());
                 if(all_ghosts_equal || has_noncontiguous_cell)
                   dof_info[no].vector_partitioner_face_variants[1]
@@ -1652,10 +1652,10 @@ MatrixFree<dim, Number>::initialize_indices(
                 compressed_set.subtract_set(
                   dof_info[no].vector_partitioner->locally_owned_range());
                 const bool all_ghosts_equal = Utilities::MPI::min(
-                  (int) (compressed_set.n_elements()
-                         == dof_info[no]
-                              .vector_partitioner->ghost_indices()
-                              .n_elements()),
+                  (int)(compressed_set.n_elements()
+                        == dof_info[no]
+                             .vector_partitioner->ghost_indices()
+                             .n_elements()),
                   dof_info[no].vector_partitioner->get_mpi_communicator());
                 if(all_ghosts_equal)
                   dof_info[no].vector_partitioner_face_variants[2]

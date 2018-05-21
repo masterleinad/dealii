@@ -49,7 +49,7 @@ test()
       if(cell->subdomain_id() == myid)
         {
           ++my_cell_index;
-          indicators(cell_index) = std::pow(2., (int) my_cell_index / 4);
+          indicators(cell_index) = std::pow(2., (int)my_cell_index / 4);
           min_indicator = std::min(min_indicator, indicators(cell_index));
           max_indicator = std::max(max_indicator, indicators(cell_index));
         }

@@ -72,7 +72,7 @@ test()
   // Check for correctness of entries (all floating point comparisons should
   // be exact)
   for(unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
-    Assert(m1.el(i, i) == (double) i + 2 + 8, ExcInternalError());
+    Assert(m1.el(i, i) == (double)i + 2 + 8, ExcInternalError());
   if(myid == 0)
     Assert(m1.el(0, 1) == 3., ExcInternalError());
 

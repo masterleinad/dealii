@@ -396,7 +396,7 @@ namespace StokesClass
   ExactSolution_BoundaryValues<dim>::vector_value(const Point<dim>& p,
                                                   Vector<double>& values) const
   {
-    (void) p;
+    (void)p;
     for(unsigned int i = 0; i < values.size(); ++i)
       values(i) = 0.0;
     return;
@@ -417,7 +417,7 @@ namespace StokesClass
     const Point<dim>& p,
     Vector<double>&   values) const
   {
-    (void) p;
+    (void)p;
     for(unsigned int i = 0; i < values.size(); ++i)
       values(i) = 0.0;
     return;
@@ -985,7 +985,7 @@ namespace StokesClass
         std::vector<double> coords(dim);
         if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
           for(unsigned int i = 0; i < dim; ++i)
-            coords[i] = std::rand() / (double) RAND_MAX;
+            coords[i] = std::rand() / (double)RAND_MAX;
 
         MPI_Bcast(&(coords[0]), dim, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 

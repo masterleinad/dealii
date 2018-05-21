@@ -55,7 +55,7 @@ test1()
 
   for(unsigned int i = 0; i < n_intermediates + 1; ++i)
     {
-      w[0] = 1.0 - (double) i / ((double) n_intermediates);
+      w[0] = 1.0 - (double)i / ((double)n_intermediates);
       w[1] = 1.0 - w[0];
 
       Point<spacedim> ip

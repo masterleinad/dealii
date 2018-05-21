@@ -61,9 +61,9 @@ main()
                   {
                     double x = quad.point(q)[0];
                     double y = quad.point(q)[1];
-                    approx_integral += (pow(x, (double) i) * pow(y, (double) j)
-                                        * quad.weight(q)
-                                        / (quad.point(q) - split_point).norm());
+                    approx_integral
+                      += (pow(x, (double)i) * pow(y, (double)j) * quad.weight(q)
+                          / (quad.point(q) - split_point).norm());
                   }
                 error[index][m][i][j] = approx_integral - exact_integral;
               }

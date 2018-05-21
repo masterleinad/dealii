@@ -160,8 +160,8 @@ namespace Utilities
         else
 #endif
           {
-            (void) mpi_op;
-            (void) mpi_communicator;
+            (void)mpi_op;
+            (void)mpi_communicator;
             if(values != output)
               std::copy(values.begin(), values.end(), output.begin());
           }
@@ -197,8 +197,8 @@ namespace Utilities
         else
 #endif
           {
-            (void) mpi_op;
-            (void) mpi_communicator;
+            (void)mpi_op;
+            (void)mpi_communicator;
             if(values != output)
               std::copy(values.begin(), values.end(), output.begin());
           }
@@ -292,7 +292,7 @@ namespace Utilities
           mpi_communicator,
           ArrayView<Number>(&global.val[0], global.n_nonzero_elements()));
 #else
-      (void) mpi_communicator;
+      (void)mpi_communicator;
       if(!PointerComparison::equal(&local, &global))
         global = local;
 #endif

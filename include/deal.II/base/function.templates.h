@@ -43,7 +43,7 @@ template <int dim, typename RangeNumberType>
 Function<dim, RangeNumberType>&
 Function<dim, RangeNumberType>::operator=(const Function& f)
 {
-  (void) f;
+  (void)f;
   AssertDimension(n_components, f.n_components);
   return *this;
 }
@@ -368,7 +368,7 @@ namespace Functions
     const unsigned int             component) const
   {
     // To avoid warning of unused parameter
-    (void) points;
+    (void)points;
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
     Assert(return_values.size() == points.size(),
@@ -562,7 +562,7 @@ ScalarFunctionFromFunctionObject<dim, RangeNumberType>::value(
   const Point<dim>&  p,
   const unsigned int component) const
 {
-  (void) component;
+  (void)component;
   Assert(component == 0,
          ExcMessage("This object represents only scalar functions"));
   return function_object(p);

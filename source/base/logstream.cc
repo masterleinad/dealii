@@ -106,7 +106,7 @@ LogStream::~LogStream()
 }
 
 LogStream&
-LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
+LogStream::operator<<(std::ostream& (*p)(std::ostream&))
 {
   std::ostringstream& stream = get_stream();
 

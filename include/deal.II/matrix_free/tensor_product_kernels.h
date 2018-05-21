@@ -157,8 +157,8 @@ namespace internal
       Assert(shape_hessians.size() == 0
                || shape_hessians.size() == n_rows * n_columns,
              ExcDimensionMismatch(shape_hessians.size(), n_rows * n_columns));
-      (void) dummy1;
-      (void) dummy2;
+      (void)dummy1;
+      (void)dummy2;
     }
 
     template <int direction, bool contract_over_rows, bool add>
@@ -882,8 +882,8 @@ namespace internal
       Assert(shape_hessians.size() == 0
                || shape_hessians.size() == n_rows * n_columns,
              ExcDimensionMismatch(shape_hessians.size(), n_rows * n_columns));
-      (void) dummy1;
-      (void) dummy2;
+      (void)dummy1;
+      (void)dummy2;
     }
 
     template <int direction, bool contract_over_rows, bool add>
@@ -1478,8 +1478,8 @@ namespace internal
         AssertDimension(shape_gradients.size(), n_rows * ((n_columns + 1) / 2));
       if(!shape_hessians.empty())
         AssertDimension(shape_hessians.size(), n_rows * ((n_columns + 1) / 2));
-      (void) dummy1;
-      (void) dummy2;
+      (void)dummy1;
+      (void)dummy2;
     }
 
     template <int direction, bool contract_over_rows, bool add>

@@ -2979,7 +2979,7 @@ namespace TrilinosWrappers
               *column_space_map, matrix->RowMap(), false);
 
             Assert(ierr == 0, ExcTrilinosError(ierr));
-            (void) ierr; // removes -Wunused-but-set-variable in optimized mode
+            (void)ierr; // removes -Wunused-but-set-variable in optimized mode
           }
 
         last_action = Add;

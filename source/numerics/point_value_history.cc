@@ -508,7 +508,7 @@ PointValueHistory<dim>::add_component_names(
     = component_mask.find(vector_name);
   Assert(mask != component_mask.end(), ExcMessage("vector_name not in class"));
   unsigned int n_stored = mask->second.n_selected_components();
-  (void) n_stored;
+  (void)n_stored;
   Assert(component_names.size() == n_stored,
          ExcDimensionMismatch(component_names.size(), n_stored));
 
@@ -570,7 +570,7 @@ PointValueHistory<dim>::evaluate_field(const std::string& vector_name,
     != 0) // hopefully this will get optimized, can't test independent_values[0] unless n_indep > 0
     {
       Assert(
-        std::abs((int) dataset_key.size() - (int) independent_values[0].size())
+        std::abs((int)dataset_key.size() - (int)independent_values[0].size())
           < 2,
         ExcDataLostSync());
     }
@@ -640,7 +640,7 @@ PointValueHistory<dim>::evaluate_field(
     != 0) // hopefully this will get optimized, can't test independent_values[0] unless n_indep > 0
     {
       Assert(
-        std::abs((int) dataset_key.size() - (int) independent_values[0].size())
+        std::abs((int)dataset_key.size() - (int)independent_values[0].size())
           < 2,
         ExcDataLostSync());
     }
@@ -877,7 +877,7 @@ PointValueHistory<dim>::evaluate_field_at_requested_location(
     != 0) // hopefully this will get optimized, can't test independent_values[0] unless n_indep > 0
     {
       Assert(
-        std::abs((int) dataset_key.size() - (int) independent_values[0].size())
+        std::abs((int)dataset_key.size() - (int)independent_values[0].size())
           < 2,
         ExcDataLostSync());
     }
@@ -954,7 +954,7 @@ PointValueHistory<dim>::push_back_independent(
   Assert(indep_values.size() == n_indep,
          ExcDimensionMismatch(indep_values.size(), n_indep));
   Assert(n_indep != 0, ExcNoIndependent());
-  Assert(std::abs((int) dataset_key.size() - (int) independent_values[0].size())
+  Assert(std::abs((int)dataset_key.size() - (int)independent_values[0].size())
            < 2,
          ExcDataLostSync());
 
@@ -1436,7 +1436,7 @@ PointValueHistory<dim>::deep_check(const bool strict)
     }
   if(n_indep != 0)
     {
-      if(std::abs((int) dataset_key.size() - (int) independent_values[0].size())
+      if(std::abs((int)dataset_key.size() - (int)independent_values[0].size())
          >= 2)
         {
           return false;
@@ -1452,8 +1452,8 @@ PointValueHistory<dim>::deep_check(const bool strict)
         {
           Assert(data_store_begin->second.size() > 0, ExcInternalError());
 
-          if(std::abs((int) (data_store_begin->second)[0].size()
-                      - (int) dataset_key.size())
+          if(std::abs((int)(data_store_begin->second)[0].size()
+                      - (int)dataset_key.size())
              >= 2)
             return false;
           // this loop only tests one member

@@ -219,7 +219,7 @@ DynamicSparsityPattern::DynamicSparsityPattern()
 DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
   : Subscriptor(), have_entries(false), rows(0), cols(0), rowset(0)
 {
-  (void) s;
+  (void)s;
   Assert(s.rows == 0 && s.cols == 0,
          ExcMessage(
            "This constructor can only be called if the provided argument "
@@ -250,7 +250,7 @@ DynamicSparsityPattern::DynamicSparsityPattern(const size_type n)
 DynamicSparsityPattern&
 DynamicSparsityPattern::operator=(const DynamicSparsityPattern& s)
 {
-  (void) s;
+  (void)s;
   Assert(
     s.rows == 0 && s.cols == 0,
     ExcMessage("This operator can only be called if the provided argument "

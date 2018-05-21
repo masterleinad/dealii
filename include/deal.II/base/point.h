@@ -359,7 +359,7 @@ template <int dim, typename Number>
 inline Number
 Point<dim, Number>::operator()(const unsigned int index) const
 {
-  AssertIndexRange((int) index, dim);
+  AssertIndexRange((int)index, dim);
   return this->values[index];
 }
 
@@ -367,7 +367,7 @@ template <int dim, typename Number>
 inline Number&
 Point<dim, Number>::operator()(const unsigned int index)
 {
-  AssertIndexRange((int) index, dim);
+  AssertIndexRange((int)index, dim);
   return this->values[index];
 }
 

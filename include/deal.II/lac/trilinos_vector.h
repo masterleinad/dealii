@@ -1547,7 +1547,7 @@ namespace TrilinosWrappers
             {
               const int ierr = vector->ReplaceGlobalValues(
                 1,
-                (const TrilinosWrappers::types::int_type*) (&row),
+                (const TrilinosWrappers::types::int_type*)(&row),
                 &values[i]);
               AssertThrow(ierr == 0, ExcTrilinosError(ierr));
               compressed = false;
@@ -1616,7 +1616,7 @@ namespace TrilinosWrappers
             {
               const int ierr = vector->SumIntoGlobalValues(
                 1,
-                (const TrilinosWrappers::types::int_type*) (&row),
+                (const TrilinosWrappers::types::int_type*)(&row),
                 &values[i]);
               AssertThrow(ierr == 0, ExcTrilinosError(ierr));
               compressed = false;
@@ -1654,7 +1654,7 @@ namespace TrilinosWrappers
     inline Vector::size_type
     Vector::local_size() const
     {
-      return (size_type) vector->Map().NumMyElements();
+      return (size_type)vector->Map().NumMyElements();
     }
 
     inline std::pair<Vector::size_type, Vector::size_type>

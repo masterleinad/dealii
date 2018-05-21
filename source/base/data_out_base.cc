@@ -109,7 +109,7 @@ namespace
         = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
       if(value_in > 63)
         return '=';
-      return encoding[(int) value_in];
+      return encoding[(int)value_in];
     }
 
     int
@@ -269,12 +269,12 @@ namespace
         uLongf compressed_data_length = compressBound(data.size() * sizeof(T));
         char*  compressed_data        = new char[compressed_data_length];
         int    err
-          = compress2((Bytef*) compressed_data,
+          = compress2((Bytef*)compressed_data,
                       &compressed_data_length,
-                      (const Bytef*) data.data(),
+                      (const Bytef*)data.data(),
                       data.size() * sizeof(T),
                       get_zlib_compression_level(flags.compression_level));
-        (void) err;
+        (void)err;
         Assert(err == Z_OK, ExcInternalError());
 
         // now encode the compression header
@@ -429,7 +429,7 @@ namespace DataOutBase
           ++patch)
         {
           const unsigned int n_subdivisions = patch->n_subdivisions;
-          (void) n_subdivisions;
+          (void)n_subdivisions;
 
           Assert((patch->data.n_rows() == n_data_sets
                   && !patch->points_are_available)
@@ -4422,7 +4422,7 @@ namespace DataOutBase
     // ASCII function and use the
     // ostream @p{out} instead of doing
     // something silly later
-    char* file_name = (char*) flags.tecplot_binary_file_name;
+    char* file_name = (char*)flags.tecplot_binary_file_name;
 
     if(file_name == NULL)
       {
@@ -4647,13 +4647,13 @@ namespace DataOutBase
                   for(unsigned int i1 = 0; i1 < n_subdivisions; ++i1)
                     {
                       tm.cd(0, elem)
-                        = first_vertex_of_patch + (i1) *d1 + (i2) *d2 + 1;
+                        = first_vertex_of_patch + (i1)*d1 + (i2)*d2 + 1;
                       tm.cd(1, elem)
-                        = first_vertex_of_patch + (i1 + 1) * d1 + (i2) *d2 + 1;
+                        = first_vertex_of_patch + (i1 + 1) * d1 + (i2)*d2 + 1;
                       tm.cd(2, elem) = first_vertex_of_patch + (i1 + 1) * d1
                                        + (i2 + 1) * d2 + 1;
                       tm.cd(3, elem)
-                        = first_vertex_of_patch + (i1) *d1 + (i2 + 1) * d2 + 1;
+                        = first_vertex_of_patch + (i1)*d1 + (i2 + 1) * d2 + 1;
 
                       elem++;
                     }
@@ -4668,21 +4668,21 @@ namespace DataOutBase
                       {
                         // note: vertex indices start with 1!
 
-                        tm.cd(0, elem) = first_vertex_of_patch + (i1) *d1
-                                         + (i2) *d2 + (i3) *d3 + 1;
+                        tm.cd(0, elem) = first_vertex_of_patch + (i1)*d1
+                                         + (i2)*d2 + (i3)*d3 + 1;
                         tm.cd(1, elem) = first_vertex_of_patch + (i1 + 1) * d1
-                                         + (i2) *d2 + (i3) *d3 + 1;
+                                         + (i2)*d2 + (i3)*d3 + 1;
                         tm.cd(2, elem) = first_vertex_of_patch + (i1 + 1) * d1
-                                         + (i2 + 1) * d2 + (i3) *d3 + 1;
-                        tm.cd(3, elem) = first_vertex_of_patch + (i1) *d1
-                                         + (i2 + 1) * d2 + (i3) *d3 + 1;
-                        tm.cd(4, elem) = first_vertex_of_patch + (i1) *d1
-                                         + (i2) *d2 + (i3 + 1) * d3 + 1;
+                                         + (i2 + 1) * d2 + (i3)*d3 + 1;
+                        tm.cd(3, elem) = first_vertex_of_patch + (i1)*d1
+                                         + (i2 + 1) * d2 + (i3)*d3 + 1;
+                        tm.cd(4, elem) = first_vertex_of_patch + (i1)*d1
+                                         + (i2)*d2 + (i3 + 1) * d3 + 1;
                         tm.cd(5, elem) = first_vertex_of_patch + (i1 + 1) * d1
-                                         + (i2) *d2 + (i3 + 1) * d3 + 1;
+                                         + (i2)*d2 + (i3 + 1) * d3 + 1;
                         tm.cd(6, elem) = first_vertex_of_patch + (i1 + 1) * d1
                                          + (i2 + 1) * d2 + (i3 + 1) * d3 + 1;
-                        tm.cd(7, elem) = first_vertex_of_patch + (i1) *d1
+                        tm.cd(7, elem) = first_vertex_of_patch + (i1)*d1
                                          + (i2 + 1) * d2 + (i3 + 1) * d3 + 1;
 
                         elem++;
@@ -5767,25 +5767,25 @@ namespace DataOutBase
                              0,
                              n_subdivisions);
 
-                x_min = std::min(x_min, (double) projected_points[0][0]);
-                x_min = std::min(x_min, (double) projected_points[1][0]);
-                x_min = std::min(x_min, (double) projected_points[2][0]);
-                x_min = std::min(x_min, (double) projected_points[3][0]);
+                x_min = std::min(x_min, (double)projected_points[0][0]);
+                x_min = std::min(x_min, (double)projected_points[1][0]);
+                x_min = std::min(x_min, (double)projected_points[2][0]);
+                x_min = std::min(x_min, (double)projected_points[3][0]);
 
-                x_max = std::max(x_max, (double) projected_points[0][0]);
-                x_max = std::max(x_max, (double) projected_points[1][0]);
-                x_max = std::max(x_max, (double) projected_points[2][0]);
-                x_max = std::max(x_max, (double) projected_points[3][0]);
+                x_max = std::max(x_max, (double)projected_points[0][0]);
+                x_max = std::max(x_max, (double)projected_points[1][0]);
+                x_max = std::max(x_max, (double)projected_points[2][0]);
+                x_max = std::max(x_max, (double)projected_points[3][0]);
 
-                y_min = std::min(y_min, (double) projected_points[0][1]);
-                y_min = std::min(y_min, (double) projected_points[1][1]);
-                y_min = std::min(y_min, (double) projected_points[2][1]);
-                y_min = std::min(y_min, (double) projected_points[3][1]);
+                y_min = std::min(y_min, (double)projected_points[0][1]);
+                y_min = std::min(y_min, (double)projected_points[1][1]);
+                y_min = std::min(y_min, (double)projected_points[2][1]);
+                y_min = std::min(y_min, (double)projected_points[3][1]);
 
-                y_max = std::max(y_max, (double) projected_points[0][1]);
-                y_max = std::max(y_max, (double) projected_points[1][1]);
-                y_max = std::max(y_max, (double) projected_points[2][1]);
-                y_max = std::max(y_max, (double) projected_points[3][1]);
+                y_max = std::max(y_max, (double)projected_points[0][1]);
+                y_max = std::max(y_max, (double)projected_points[1][1]);
+                y_max = std::max(y_max, (double)projected_points[2][1]);
+                y_max = std::max(y_max, (double)projected_points[3][1]);
 
                 Assert(
                   (flags.height_vector < patch->data.n_rows())
@@ -5794,31 +5794,31 @@ namespace DataOutBase
 
                 z_min = std::min(
                   z_min,
-                  (double) patch->data(flags.height_vector, i1 * d1 + i2 * d2));
+                  (double)patch->data(flags.height_vector, i1 * d1 + i2 * d2));
                 z_min = std::min(z_min,
-                                 (double) patch->data(flags.height_vector,
-                                                      (i1 + 1) * d1 + i2 * d2));
+                                 (double)patch->data(flags.height_vector,
+                                                     (i1 + 1) * d1 + i2 * d2));
                 z_min = std::min(z_min,
-                                 (double) patch->data(flags.height_vector,
-                                                      i1 * d1 + (i2 + 1) * d2));
+                                 (double)patch->data(flags.height_vector,
+                                                     i1 * d1 + (i2 + 1) * d2));
                 z_min = std::min(
                   z_min,
-                  (double) patch->data(flags.height_vector,
-                                       (i1 + 1) * d1 + (i2 + 1) * d2));
+                  (double)patch->data(flags.height_vector,
+                                      (i1 + 1) * d1 + (i2 + 1) * d2));
 
                 z_max = std::max(
                   z_max,
-                  (double) patch->data(flags.height_vector, i1 * d1 + i2 * d2));
+                  (double)patch->data(flags.height_vector, i1 * d1 + i2 * d2));
                 z_max = std::max(z_max,
-                                 (double) patch->data(flags.height_vector,
-                                                      (i1 + 1) * d1 + i2 * d2));
+                                 (double)patch->data(flags.height_vector,
+                                                     (i1 + 1) * d1 + i2 * d2));
                 z_max = std::max(z_max,
-                                 (double) patch->data(flags.height_vector,
-                                                      i1 * d1 + (i2 + 1) * d2));
+                                 (double)patch->data(flags.height_vector,
+                                                     i1 * d1 + (i2 + 1) * d2));
                 z_max = std::max(
                   z_max,
-                  (double) patch->data(flags.height_vector,
-                                       (i1 + 1) * d1 + (i2 + 1) * d2));
+                  (double)patch->data(flags.height_vector,
+                                      (i1 + 1) * d1 + (i2 + 1) * d2));
               }
           }
       }
@@ -6049,40 +6049,40 @@ namespace DataOutBase
                                       camera_focus);
 
                 x_min_perspective = std::min(
-                  x_min_perspective, (double) projection_decompositions[0][0]);
+                  x_min_perspective, (double)projection_decompositions[0][0]);
                 x_min_perspective = std::min(
-                  x_min_perspective, (double) projection_decompositions[1][0]);
+                  x_min_perspective, (double)projection_decompositions[1][0]);
                 x_min_perspective = std::min(
-                  x_min_perspective, (double) projection_decompositions[2][0]);
+                  x_min_perspective, (double)projection_decompositions[2][0]);
                 x_min_perspective = std::min(
-                  x_min_perspective, (double) projection_decompositions[3][0]);
+                  x_min_perspective, (double)projection_decompositions[3][0]);
 
                 x_max_perspective = std::max(
-                  x_max_perspective, (double) projection_decompositions[0][0]);
+                  x_max_perspective, (double)projection_decompositions[0][0]);
                 x_max_perspective = std::max(
-                  x_max_perspective, (double) projection_decompositions[1][0]);
+                  x_max_perspective, (double)projection_decompositions[1][0]);
                 x_max_perspective = std::max(
-                  x_max_perspective, (double) projection_decompositions[2][0]);
+                  x_max_perspective, (double)projection_decompositions[2][0]);
                 x_max_perspective = std::max(
-                  x_max_perspective, (double) projection_decompositions[3][0]);
+                  x_max_perspective, (double)projection_decompositions[3][0]);
 
                 y_min_perspective = std::min(
-                  y_min_perspective, (double) projection_decompositions[0][1]);
+                  y_min_perspective, (double)projection_decompositions[0][1]);
                 y_min_perspective = std::min(
-                  y_min_perspective, (double) projection_decompositions[1][1]);
+                  y_min_perspective, (double)projection_decompositions[1][1]);
                 y_min_perspective = std::min(
-                  y_min_perspective, (double) projection_decompositions[2][1]);
+                  y_min_perspective, (double)projection_decompositions[2][1]);
                 y_min_perspective = std::min(
-                  y_min_perspective, (double) projection_decompositions[3][1]);
+                  y_min_perspective, (double)projection_decompositions[3][1]);
 
                 y_max_perspective = std::max(
-                  y_max_perspective, (double) projection_decompositions[0][1]);
+                  y_max_perspective, (double)projection_decompositions[0][1]);
                 y_max_perspective = std::max(
-                  y_max_perspective, (double) projection_decompositions[1][1]);
+                  y_max_perspective, (double)projection_decompositions[1][1]);
                 y_max_perspective = std::max(
-                  y_max_perspective, (double) projection_decompositions[2][1]);
+                  y_max_perspective, (double)projection_decompositions[2][1]);
                 y_max_perspective = std::max(
-                  y_max_perspective, (double) projection_decompositions[3][1]);
+                  y_max_perspective, (double)projection_decompositions[3][1]);
               }
           }
       }
@@ -6637,9 +6637,8 @@ namespace DataOutBase
               out << "; font-weight:bold";
 
             out << "\">"
-                << (float) (((int) ((z_min + index * (z_dimension / 4.))
-                                    * 10000))
-                            / 10000.);
+                << (float)(((int)((z_min + index * (z_dimension / 4.)) * 10000))
+                           / 10000.);
 
             if(index == 4)
               out << " max";
@@ -6984,11 +6983,11 @@ DataOutInterface<dim, spacedim>::create_xdmf_entry(
   // throw an exception, but first make
   // sure the compiler does not warn about
   // the now unused function arguments
-  (void) data_filter;
-  (void) h5_mesh_filename;
-  (void) h5_solution_filename;
-  (void) cur_time;
-  (void) comm;
+  (void)data_filter;
+  (void)h5_mesh_filename;
+  (void)h5_solution_filename;
+  (void)cur_time;
+  (void)comm;
   AssertThrow(false, ExcMessage("XDMF support requires HDF5 to be turned on."));
 #endif
   AssertThrow(spacedim == 2 || spacedim == 3,
@@ -7273,11 +7272,11 @@ DataOutBase::write_hdf5_parallel(
 #ifndef DEAL_II_WITH_HDF5
   // throw an exception, but first make sure the compiler does not warn about
   // the now unused function arguments
-  (void) data_filter;
-  (void) write_mesh_file;
-  (void) mesh_filename;
-  (void) solution_filename;
-  (void) comm;
+  (void)data_filter;
+  (void)write_mesh_file;
+  (void)mesh_filename;
+  (void)solution_filename;
+  (void)comm;
   AssertThrow(false, ExcMessage("HDF5 support is disabled."));
 #else
 #  ifndef DEAL_II_WITH_MPI
@@ -7288,7 +7287,7 @@ DataOutBase::write_hdf5_parallel(
   // mesh, a processor simply has no cells it actually owns, and in that case
   // it is legit if there are no patches
   Assert(data_filter.n_nodes() > 0, ExcNoPatches());
-  (void) comm;
+  (void)comm;
 #  endif
 
   hid_t h5_mesh_file_id = -1, h5_solution_file_id, file_plist_id, plist_id;

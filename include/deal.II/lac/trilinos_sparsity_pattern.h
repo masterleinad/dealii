@@ -1435,7 +1435,7 @@ namespace TrilinosWrappers
            ExcNotImplemented());
 
     TrilinosWrappers::types::int_type* col_index_ptr
-      = (TrilinosWrappers::types::int_type*) (&*begin);
+      = (TrilinosWrappers::types::int_type*)(&*begin);
     const int n_cols = static_cast<int>(end - begin);
 
     int ierr;
@@ -1457,7 +1457,7 @@ namespace TrilinosWrappers
       }
     else
       ierr = graph->InsertGlobalIndices(
-        1, (TrilinosWrappers::types::int_type*) &row, n_cols, col_index_ptr);
+        1, (TrilinosWrappers::types::int_type*)&row, n_cols, col_index_ptr);
 
     AssertThrow(ierr >= 0, ExcTrilinosError(ierr));
   }

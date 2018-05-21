@@ -184,7 +184,7 @@ namespace internal
         functor(start, end);
 #else
       functor(start, end);
-      (void) partitioner;
+      (void)partitioner;
 #endif
     }
 
@@ -1298,7 +1298,7 @@ namespace internal
         accumulate_recursive(op, start, end, result);
 #else
       accumulate_recursive(op, start, end, result);
-      (void) partitioner;
+      (void)partitioner;
 #endif
     }
   } // namespace VectorOperations

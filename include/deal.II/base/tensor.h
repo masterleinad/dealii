@@ -1133,7 +1133,7 @@ Tensor<rank_, dim, Number>::operator=(const Number& d)
 {
   Assert(numbers::value_is_zero(d),
          ExcMessage("Only assignment with zero is allowed"));
-  (void) d;
+  (void)d;
 
   for(unsigned int i = 0; i < dim; ++i)
     values[i] = internal::NumberType<Number>::value(0.0);

@@ -1803,7 +1803,7 @@ namespace GridTools
     const FullMatrix<double>& matrix)
   {
     static const int space_dim = CellIterator::AccessorType::space_dimension;
-    (void) space_dim;
+    (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
            ExcIndexRange(direction, 0, space_dim));
 
@@ -1863,8 +1863,8 @@ namespace GridTools
   {
     static const int dim       = MeshType::dimension;
     static const int space_dim = MeshType::space_dimension;
-    (void) dim;
-    (void) space_dim;
+    (void)dim;
+    (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
            ExcIndexRange(direction, 0, space_dim));
 
@@ -1944,8 +1944,8 @@ namespace GridTools
   {
     static const int dim       = MeshType::dimension;
     static const int space_dim = MeshType::space_dimension;
-    (void) dim;
-    (void) space_dim;
+    (void)dim;
+    (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
            ExcIndexRange(direction, 0, space_dim));
 

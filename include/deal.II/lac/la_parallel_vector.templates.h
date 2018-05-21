@@ -63,7 +63,7 @@ namespace LinearAlgebra
 
           Number* new_val;
           Utilities::System::posix_memalign(
-            (void**) &new_val, 64, sizeof(Number) * new_alloc_size);
+            (void**)&new_val, 64, sizeof(Number) * new_alloc_size);
           values.reset(new_val);
 
           allocated_size = new_alloc_size;
@@ -475,8 +475,8 @@ namespace LinearAlgebra
     Vector<Number>::compress_start(const unsigned int                counter,
                                    ::dealii::VectorOperation::values operation)
     {
-      (void) counter;
-      (void) operation;
+      (void)counter;
+      (void)operation;
       Assert(vector_is_ghosted == false,
              ExcMessage("Cannot call compress() on a ghosted vector"));
 
@@ -1116,9 +1116,9 @@ namespace LinearAlgebra
       Number local_result = mean_value_local();
       if(partitioner->n_mpi_processes() > 1)
         return Utilities::MPI::sum(local_result
-                                     * (real_type) partitioner->local_size(),
+                                     * (real_type)partitioner->local_size(),
                                    partitioner->get_mpi_communicator())
-               / (real_type) partitioner->size();
+               / (real_type)partitioner->size();
       else
         return local_result;
     }

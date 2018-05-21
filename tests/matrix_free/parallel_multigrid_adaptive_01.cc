@@ -96,7 +96,7 @@ public:
             edge_constrained_indices.push_back(
               locally_owned.index_within_set(interface_indices[i]));
         have_interface_matrices
-          = Utilities::MPI::max((unsigned int) edge_constrained_indices.size(),
+          = Utilities::MPI::max((unsigned int)edge_constrained_indices.size(),
                                 MPI_COMM_WORLD)
             > 0;
       }

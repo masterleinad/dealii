@@ -213,7 +213,7 @@ SwappableVector<number>::kill_file()
   if(filename != "")
     {
       int status = std::remove(filename.c_str());
-      (void) status;
+      (void)status;
       AssertThrow(status == 0, ExcIO());
 
       filename = "";

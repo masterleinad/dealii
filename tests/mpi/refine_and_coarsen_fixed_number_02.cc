@@ -54,7 +54,7 @@ test()
       if(cell->subdomain_id() == myid)
         {
           ++my_cell_index;
-          indicators(cell_index) = std::pow(10, (float) my_cell_index);
+          indicators(cell_index) = std::pow(10, (float)my_cell_index);
         }
   }
 

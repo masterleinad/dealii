@@ -236,7 +236,7 @@ namespace Utilities
       void
       max_reduce(const void* in_lhs_, void* inout_rhs_, int* len, MPI_Datatype*)
       {
-        (void) len;
+        (void)len;
         const MinMaxAvg* in_lhs    = static_cast<const MinMaxAvg*>(in_lhs_);
         MinMaxAvg*       inout_rhs = static_cast<MinMaxAvg*>(inout_rhs_);
 
@@ -302,7 +302,7 @@ namespace Utilities
         = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
 
       MPI_Op op;
-      int    ierr = MPI_Op_create((MPI_User_function*) &max_reduce, true, &op);
+      int    ierr = MPI_Op_create((MPI_User_function*)&max_reduce, true, &op);
       AssertThrowMPI(ierr);
 
       MinMaxAvg in;
@@ -375,7 +375,7 @@ namespace Utilities
                                        const unsigned int max_num_threads)
     {
       static bool constructor_has_already_run = false;
-      (void) constructor_has_already_run;
+      (void)constructor_has_already_run;
       Assert(constructor_has_already_run == false,
              ExcMessage("You can only create a single object of this class "
                         "in a program since it initializes the MPI system."));
@@ -594,7 +594,7 @@ namespace Utilities
           else
             {
               const int ierr = MPI_Finalize();
-              (void) ierr;
+              (void)ierr;
               AssertNothrow(ierr == MPI_SUCCESS, dealii::ExcMPI(ierr));
             }
         }

@@ -72,7 +72,7 @@ main()
                     double x = quad.point(q)[0];
                     double y = quad.point(q)[1];
                     double R = sqrt(x * x + y * y);
-                    approx_integral += (pow(x, (double) i) * pow(y, (double) j)
+                    approx_integral += (pow(x, (double)i) * pow(y, (double)j)
                                         / R * quad.weight(q));
                   }
 
@@ -81,9 +81,8 @@ main()
                     double x = quad2.point(q)[0];
                     double y = quad2.point(q)[1];
                     double R = sqrt(x * x + y * y);
-                    approx_integral_2
-                      += (pow(x, (double) i) * pow(y, (double) j)
-                          * quad2.weight(q));
+                    approx_integral_2 += (pow(x, (double)i) * pow(y, (double)j)
+                                          * quad2.weight(q));
                   }
 
                 deallog << "f(x,y) = x^" << i << " y^" << j

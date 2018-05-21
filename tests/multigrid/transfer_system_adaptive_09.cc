@@ -144,7 +144,7 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
     {
       deallog << "Level " << l << std::endl;
       for(unsigned int i = 0; i < v[l].size(); ++i)
-        deallog << ' ' << (int) v[l](i);
+        deallog << ' ' << (int)v[l](i);
       deallog << std::endl;
     }
 
@@ -156,10 +156,10 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
   transfer.copy_from_mg(mg_dof_handler, u, v);
   deallog << "Global" << std::endl;
   for(unsigned int i = 0; i < u.block(selected_block).size(); ++i)
-    deallog << ' ' << (int) u.block(selected_block)(i);
+    deallog << ' ' << (int)u.block(selected_block)(i);
   deallog << std::endl;
   for(unsigned int i = 0; i < u.size(); ++i)
-    deallog << ' ' << (int) u(i);
+    deallog << ' ' << (int)u(i);
   deallog << std::endl;
 }
 

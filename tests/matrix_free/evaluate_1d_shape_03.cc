@@ -30,7 +30,7 @@ test()
   for(unsigned int i = 0; i < M; ++i)
     for(unsigned int j = 0; j < (N + 1) / 2; ++j)
       {
-        shape[i * N + j] = -1. + 2. * (double) Testing::rand() / RAND_MAX;
+        shape[i * N + j] = -1. + 2. * (double)Testing::rand() / RAND_MAX;
         if(((i + type) % 2) == 1)
           shape[i * N + N - 1 - j] = -shape[i * N + j];
         else
@@ -41,7 +41,7 @@ test()
 
   double x[N], x_ref[N], y[M], y_ref[M];
   for(unsigned int i = 0; i < N; ++i)
-    x[i] = (double) Testing::rand() / RAND_MAX;
+    x[i] = (double)Testing::rand() / RAND_MAX;
 
   // compute reference
   for(unsigned int i = 0; i < M; ++i)
@@ -72,7 +72,7 @@ test()
   deallog << std::endl;
 
   for(unsigned int i = 0; i < M; ++i)
-    y[i] = (double) Testing::rand() / RAND_MAX;
+    y[i] = (double)Testing::rand() / RAND_MAX;
 
   // compute reference
   for(unsigned int i = 0; i < N; ++i)

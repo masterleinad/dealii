@@ -954,7 +954,7 @@ namespace Step60
         *space_dh,
         QGauss<spacedim>(2 * space_fe->degree + 1),
         stiffness_matrix,
-        (const Function<spacedim>*) nullptr,
+        (const Function<spacedim>*)nullptr,
         constraints);
 
       VectorTools::create_right_hand_side(

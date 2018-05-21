@@ -688,7 +688,7 @@ namespace Utilities
       // Windows does not appear to have posix_memalign. just use the
       // regular malloc in that case
       *memptr = malloc(size);
-      (void) alignment;
+      (void)alignment;
       AssertThrow(*memptr != 0, ExcOutOfMemory());
 #endif
     }

@@ -63,7 +63,7 @@ namespace MatrixTools
     PETScWrappers::VectorBase&                            right_hand_side,
     const bool                                            eliminate_columns)
   {
-    (void) eliminate_columns;
+    (void)eliminate_columns;
     Assert(eliminate_columns == false, ExcNotImplemented());
 
     Assert(matrix.n() == right_hand_side.size(),
@@ -248,7 +248,7 @@ namespace MatrixTools
                             const bool                      eliminate_columns)
       {
         Assert(eliminate_columns == false, ExcNotImplemented());
-        (void) eliminate_columns;
+        (void)eliminate_columns;
 
         Assert(matrix.n() == right_hand_side.size(),
                ExcDimensionMismatch(matrix.n(), right_hand_side.size()));

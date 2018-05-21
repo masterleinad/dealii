@@ -66,7 +66,7 @@ main()
                 double x = quad.point(q)[0];
                 double y = quad.point(q)[1];
                 approx_integral
-                  += (pow(x, (double) i) * pow(y, (double) j) * quad.weight(q)
+                  += (pow(x, (double)i) * pow(y, (double)j) * quad.weight(q)
                       / (quad.point(q) - split_point).norm());
               }
 
@@ -75,8 +75,7 @@ main()
                 double x = quad_de.point(q)[0];
                 double y = quad_de.point(q)[1];
                 approx_integral_de
-                  += (pow(x, (double) i) * pow(y, (double) j)
-                      * quad_de.weight(q)
+                  += (pow(x, (double)i) * pow(y, (double)j) * quad_de.weight(q)
                       / (quad_de.point(q) - split_point).norm());
               }
 

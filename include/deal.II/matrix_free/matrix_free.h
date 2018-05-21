@@ -2529,7 +2529,7 @@ namespace internal
         requests(n_components)
 #  endif
     {
-      (void) n_components;
+      (void)n_components;
       if(this->vector_face_access
          != dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified)
         for(unsigned int c = 0; c < matrix_free.n_components(); ++c)
@@ -2552,7 +2552,7 @@ namespace internal
                       const bool check_global_compatibility = true) const
     {
       unsigned int mf_component = numbers::invalid_unsigned_int;
-      (void) check_global_compatibility;
+      (void)check_global_compatibility;
       for(unsigned int c = 0; c < matrix_free.n_components(); ++c)
         if(
 #  ifdef DEBUG
@@ -2643,7 +2643,7 @@ namespace internal
       const unsigned int component_in_block_vector,
       const LinearAlgebra::distributed::Vector<Number>& vec)
     {
-      (void) component_in_block_vector;
+      (void)component_in_block_vector;
       if(vector_face_access
            == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
          || vec.size() == 0)
@@ -2730,7 +2730,7 @@ namespace internal
     compress_finish(const unsigned int component_in_block_vector,
                     LinearAlgebra::distributed::Vector<Number>& vec)
     {
-      (void) component_in_block_vector;
+      (void)component_in_block_vector;
       if(vector_face_access
            == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
          || vec.size() == 0)

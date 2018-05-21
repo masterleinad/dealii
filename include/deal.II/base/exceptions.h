@@ -1434,7 +1434,7 @@ namespace internal
 #  else
 #    define AssertCuda(error_code) \
       {                            \
-        (void) (error_code);       \
+        (void)(error_code);        \
       }
 #  endif
 
@@ -1455,7 +1455,7 @@ namespace internal
 #  else
 #    define AssertCusparse(error_code) \
       {                                \
-        (void) (error_code);           \
+        (void)(error_code);            \
       }
 #  endif
 
@@ -1469,7 +1469,7 @@ namespace internal
 #  else
 #    define AssertCusolver(error_code) \
       {                                \
-        (void) (error_code);           \
+        (void)(error_code);            \
       }
 #  endif
 

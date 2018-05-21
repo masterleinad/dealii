@@ -125,8 +125,8 @@ double
 FE_DGPNonparametric<dim, spacedim>::shape_value(const unsigned int i,
                                                 const Point<dim>&  p) const
 {
-  (void) i;
-  (void) p;
+  (void)i;
+  (void)p;
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   AssertThrow(false,
               (typename FiniteElement<dim>::ExcUnitShapeValuesDoNotExist()));
@@ -140,9 +140,9 @@ FE_DGPNonparametric<dim, spacedim>::shape_value_component(
   const Point<dim>&  p,
   const unsigned int component) const
 {
-  (void) i;
-  (void) p;
-  (void) component;
+  (void)i;
+  (void)p;
+  (void)component;
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   Assert(component == 0, ExcIndexRange(component, 0, 1));
   AssertThrow(false,
@@ -155,8 +155,8 @@ Tensor<1, dim>
 FE_DGPNonparametric<dim, spacedim>::shape_grad(const unsigned int i,
                                                const Point<dim>&  p) const
 {
-  (void) i;
-  (void) p;
+  (void)i;
+  (void)p;
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   AssertThrow(false,
               (typename FiniteElement<dim>::ExcUnitShapeValuesDoNotExist()));
@@ -170,9 +170,9 @@ FE_DGPNonparametric<dim, spacedim>::shape_grad_component(
   const Point<dim>&  p,
   const unsigned int component) const
 {
-  (void) i;
-  (void) p;
-  (void) component;
+  (void)i;
+  (void)p;
+  (void)component;
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   Assert(component == 0, ExcIndexRange(component, 0, 1));
   AssertThrow(false,
@@ -185,8 +185,8 @@ Tensor<2, dim>
 FE_DGPNonparametric<dim, spacedim>::shape_grad_grad(const unsigned int i,
                                                     const Point<dim>&  p) const
 {
-  (void) i;
-  (void) p;
+  (void)i;
+  (void)p;
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   AssertThrow(false,
               (typename FiniteElement<dim>::ExcUnitShapeValuesDoNotExist()));
@@ -200,9 +200,9 @@ FE_DGPNonparametric<dim, spacedim>::shape_grad_grad_component(
   const Point<dim>&  p,
   const unsigned int component) const
 {
-  (void) i;
-  (void) p;
-  (void) component;
+  (void)i;
+  (void)p;
+  (void)component;
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   Assert(component == 0, ExcIndexRange(component, 0, 1));
   AssertThrow(false,
@@ -444,7 +444,7 @@ FE_DGPNonparametric<dim, spacedim>::get_face_interpolation_matrix(
   // faces and the face interpolation matrix
   // is necessarily empty -- i.e. there isn't
   // much we need to do here.
-  (void) interpolation_matrix;
+  (void)interpolation_matrix;
   AssertThrow(
     (x_source_fe.get_name().find("FE_DGPNonparametric<") == 0)
       || (dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&x_source_fe)
@@ -470,7 +470,7 @@ FE_DGPNonparametric<dim, spacedim>::get_subface_interpolation_matrix(
   // faces and the face interpolation matrix
   // is necessarily empty -- i.e. there isn't
   // much we need to do here.
-  (void) interpolation_matrix;
+  (void)interpolation_matrix;
   AssertThrow(
     (x_source_fe.get_name().find("FE_DGPNonparametric<") == 0)
       || (dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&x_source_fe)

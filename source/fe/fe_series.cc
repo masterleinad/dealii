@@ -208,8 +208,8 @@ namespace FESeries
 
 #else
 
-    (void) x_q;
-    (void) indices;
+    (void)x_q;
+    (void)indices;
     AssertThrow(false,
                 ExcMessage("deal.II has to be configured with GSL"
                            "in order to use Legendre transformation."));

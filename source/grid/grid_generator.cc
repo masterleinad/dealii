@@ -951,7 +951,7 @@ namespace GridGenerator
         default:
           Assert(false, ExcInternalError());
       }
-    (void) twisted_data; // make the static analyzer happy
+    (void)twisted_data; // make the static analyzer happy
     Assert(
       !twisted_data,
       ExcInvalidInputOrientation(
@@ -1169,23 +1169,22 @@ namespace GridGenerator
       {
         case 1:
           for(unsigned int x = 0; x <= repetitions[0]; ++x)
-            points.push_back(p1 + (double) x * delta[0]);
+            points.push_back(p1 + (double)x * delta[0]);
           break;
 
         case 2:
           for(unsigned int y = 0; y <= repetitions[1]; ++y)
             for(unsigned int x = 0; x <= repetitions[0]; ++x)
-              points.push_back(p1 + (double) x * delta[0]
-                               + (double) y * delta[1]);
+              points.push_back(p1 + (double)x * delta[0]
+                               + (double)y * delta[1]);
           break;
 
         case 3:
           for(unsigned int z = 0; z <= repetitions[2]; ++z)
             for(unsigned int y = 0; y <= repetitions[1]; ++y)
               for(unsigned int x = 0; x <= repetitions[0]; ++x)
-                points.push_back(p1 + (double) x * delta[0]
-                                 + (double) y * delta[1]
-                                 + (double) z * delta[2]);
+                points.push_back(p1 + (double)x * delta[0]
+                                 + (double)y * delta[1] + (double)z * delta[2]);
           break;
 
         default:
@@ -1793,23 +1792,22 @@ namespace GridGenerator
       {
         case 1:
           for(unsigned int x = 0; x <= repetitions[0]; ++x)
-            points.push_back(p1 + (double) x * delta[0]);
+            points.push_back(p1 + (double)x * delta[0]);
           break;
 
         case 2:
           for(unsigned int y = 0; y <= repetitions[1]; ++y)
             for(unsigned int x = 0; x <= repetitions[0]; ++x)
-              points.push_back(p1 + (double) x * delta[0]
-                               + (double) y * delta[1]);
+              points.push_back(p1 + (double)x * delta[0]
+                               + (double)y * delta[1]);
           break;
 
         case 3:
           for(unsigned int z = 0; z <= repetitions[2]; ++z)
             for(unsigned int y = 0; y <= repetitions[1]; ++y)
               for(unsigned int x = 0; x <= repetitions[0]; ++x)
-                points.push_back(p1 + (double) x * delta[0]
-                                 + (double) y * delta[1]
-                                 + (double) z * delta[2]);
+                points.push_back(p1 + (double)x * delta[0]
+                                 + (double)y * delta[1] + (double)z * delta[2]);
           break;
 
         default:
@@ -4160,7 +4158,7 @@ namespace GridGenerator
                       treated_vertices[vv] = true;
                       for(unsigned int i = 0; i <= Nz; ++i)
                         {
-                          double d = ((double) i) * L / ((double) Nz);
+                          double d = ((double)i) * L / ((double)Nz);
                           switch(vv - i * 16)
                             {
                               case 1:
@@ -4251,7 +4249,7 @@ namespace GridGenerator
       = dynamic_cast<
         const parallel::distributed::Triangulation<dim, spacedim1>*>(&in_tria);
 
-    (void) pt;
+    (void)pt;
     Assert(
       pt == nullptr,
       ExcMessage(

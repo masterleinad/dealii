@@ -411,7 +411,7 @@ namespace PETScWrappers
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
     initialize();
 #  else // DEAL_II_PETSC_WITH_HYPRE
-    (void) pc;
+    (void)pc;
     Assert(false,
            ExcMessage("Your PETSc installation does not include a copy of "
                       "the hypre package necessary for this preconditioner."));
@@ -495,8 +495,8 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
 #  else // DEAL_II_PETSC_WITH_HYPRE
-    (void) matrix_;
-    (void) additional_data_;
+    (void)matrix_;
+    (void)additional_data_;
     Assert(false,
            ExcMessage("Your PETSc installation does not include a copy of "
                       "the hypre package necessary for this preconditioner."));
@@ -602,7 +602,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
 #  else // DEAL_II_PETSC_WITH_HYPRE
-    (void) pc;
+    (void)pc;
     Assert(false,
            ExcMessage("Your PETSc installation does not include a copy of "
                       "the hypre package necessary for this preconditioner."));

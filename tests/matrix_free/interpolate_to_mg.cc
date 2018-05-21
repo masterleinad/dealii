@@ -67,7 +67,7 @@ public:
   double
   value(const Point<dim>& p, const unsigned int component = 0) const
   {
-    (void) component;
+    (void)component;
     return p[0] * 2. + p[1] - 10.;
   }
 };

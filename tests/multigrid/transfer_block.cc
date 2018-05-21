@@ -134,13 +134,13 @@ check_block(const FiniteElement<dim>& fe,
   // number of dofs on each level
   deallog << "u0";
   for(unsigned int b = 0; b < u[0].n_blocks(); ++b)
-    deallog << '\t' << (int) (u[0].block(b) * u[0].block(b) + .4);
+    deallog << '\t' << (int)(u[0].block(b) * u[0].block(b) + .4);
   deallog << std::endl << "u1";
   for(unsigned int b = 0; b < u[1].n_blocks(); ++b)
-    deallog << '\t' << (int) (u[1].block(b) * u[1].block(b) + .4);
+    deallog << '\t' << (int)(u[1].block(b) * u[1].block(b) + .4);
   deallog << std::endl << "u2";
   for(unsigned int b = 0; b < u[2].n_blocks(); ++b)
-    deallog << '\t' << (int) (u[2].block(b) * u[2].block(b) + .4);
+    deallog << '\t' << (int)(u[2].block(b) * u[2].block(b) + .4);
   deallog << std::endl;
 
   u[1] = 0.;
@@ -151,10 +151,10 @@ check_block(const FiniteElement<dim>& fe,
   // things get bigger.
   deallog << "u1";
   for(unsigned int b = 0; b < u[1].n_blocks(); ++b)
-    deallog << '\t' << (int) (u[1].block(b) * u[1].block(b) + .5);
+    deallog << '\t' << (int)(u[1].block(b) * u[1].block(b) + .5);
   deallog << std::endl << "u0";
   for(unsigned int b = 0; b < u[0].n_blocks(); ++b)
-    deallog << '\t' << (int) (u[0].block(b) * u[0].block(b) + .5);
+    deallog << '\t' << (int)(u[0].block(b) * u[0].block(b) + .5);
   deallog << std::endl;
 
   // Check copy to mg and back
@@ -171,7 +171,7 @@ check_block(const FiniteElement<dim>& fe,
 
   transfer.copy_to_mg(mgdof, u, v);
   for(unsigned int i = 0; i < u[2].size(); ++i)
-    deallog << ' ' << (int) u[2](i);
+    deallog << ' ' << (int)u[2](i);
   deallog << std::endl;
 
   // Now do the opposite: fill a
@@ -182,7 +182,7 @@ check_block(const FiniteElement<dim>& fe,
   v = 0.;
   transfer.copy_from_mg(mgdof, v, u);
   for(unsigned int i = 0; i < v.size(); ++i)
-    deallog << ' ' << (int) v(i);
+    deallog << ' ' << (int)v(i);
   deallog << std::endl;
   v.equ(-1., v);
   transfer.copy_from_mg_add(mgdof, v, u);

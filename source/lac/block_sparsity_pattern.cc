@@ -38,7 +38,7 @@ BlockSparsityPatternBase<SparsityPatternBase>::BlockSparsityPatternBase(
   const BlockSparsityPatternBase& s)
   : Subscriptor(), rows(0), columns(0)
 {
-  (void) s;
+  (void)s;
   Assert(s.rows == 0 && s.columns == 0,
          ExcMessage(
            "This constructor can only be called if the provided argument "

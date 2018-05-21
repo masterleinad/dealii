@@ -137,7 +137,7 @@ namespace Threads
 #ifndef DEAL_II_WITH_THREADS
   DummyBarrier::DummyBarrier(const unsigned int count, const char*, void*)
   {
-    (void) count;
+    (void)count;
     Assert(count == 1, ExcBarrierSizeNotUseful(count));
   }
 

@@ -61,7 +61,7 @@ namespace SLEPcWrappers
         // Destroy the solver object.
         const PetscErrorCode ierr = EPSDestroy(&eps);
 
-        (void) ierr;
+        (void)ierr;
         AssertNothrow(ierr == 0, ExcSLEPcError(ierr));
       }
   }
@@ -272,11 +272,11 @@ namespace SLEPcWrappers
         "but this function is not defined for complex types."));
 
     // Cast to void to silence compiler warnings
-    (void) index;
-    (void) real_eigenvalues;
-    (void) imag_eigenvalues;
-    (void) real_eigenvectors;
-    (void) imag_eigenvectors;
+    (void)index;
+    (void)real_eigenvalues;
+    (void)imag_eigenvalues;
+    (void)real_eigenvectors;
+    (void)imag_eigenvectors;
 #  endif
   }
 

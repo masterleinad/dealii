@@ -73,8 +73,8 @@ main()
                   double y = quad.point(q)[1];
                   double R = sqrt((x - center[0]) * (x - center[0])
                                   + (y - center[1]) * (y - center[1]));
-                  approx_integral += (pow(x, (double) i) * pow(y, (double) j)
-                                      / R * quad.weight(q));
+                  approx_integral += (pow(x, (double)i) * pow(y, (double)j) / R
+                                      * quad.weight(q));
                 }
 
               for(unsigned int q = 0; q < quad_2.size(); ++q)
@@ -83,7 +83,7 @@ main()
                   double y = quad_2.point(q)[1];
                   double R = sqrt((x - center[0]) * (x - center[0])
                                   + (y - center[1]) * (y - center[1]));
-                  approx_integral_2 += (pow(x, (double) i) * pow(y, (double) j)
+                  approx_integral_2 += (pow(x, (double)i) * pow(y, (double)j)
                                         / R * quad_2.weight(q));
                 }
 

@@ -811,7 +811,7 @@ namespace parallel
       Assert((status
               != parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN),
              ExcNotImplemented());
-      (void) status;
+      (void)status;
 
       const double* data_store = reinterpret_cast<const double*>(data);
 

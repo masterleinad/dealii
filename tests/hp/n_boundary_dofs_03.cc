@@ -74,7 +74,7 @@ test()
     {
       const unsigned int N
         = dof_handler.n_boundary_dofs(std::set<types::boundary_id>{b});
-      deallog << (int) b << ' ' << N << std::endl;
+      deallog << (int)b << ' ' << N << std::endl;
     }
 }
 

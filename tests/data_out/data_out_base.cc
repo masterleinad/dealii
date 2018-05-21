@@ -143,7 +143,7 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
             = PatchInfo<dim>::vertices[i][j] + PatchInfo<dim>::offsets[c][j];
 
       for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
-        p.neighbors[i] = (unsigned int) PatchInfo<dim>::neighbors[c][i];
+        p.neighbors[i] = (unsigned int)PatchInfo<dim>::neighbors[c][i];
 
       unsigned int ndata = 1;
       for(unsigned int i = 0; i < dim; ++i)
@@ -153,7 +153,7 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
       for(unsigned int i = 0; i < ndata; ++i)
         {
           p.data(0, i) = i;
-          p.data(1, i) = -(float) i;
+          p.data(1, i) = -(float)i;
         }
     }
 }

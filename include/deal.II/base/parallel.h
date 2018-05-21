@@ -171,7 +171,7 @@ namespace parallel
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
     // warnings about unused arguments
-    (void) grainsize;
+    (void)grainsize;
 
     for(OutputIterator in = begin_in; in != end_in;)
       *out++ = predicate(*in++);
@@ -225,7 +225,7 @@ namespace parallel
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
     // warnings about unused arguments
-    (void) grainsize;
+    (void)grainsize;
 
     for(OutputIterator in1 = begin_in1; in1 != end_in1;)
       *out++ = predicate(*in1++, *in2++);
@@ -282,7 +282,7 @@ namespace parallel
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
     // warnings about unused arguments
-    (void) grainsize;
+    (void)grainsize;
 
     for(OutputIterator in1 = begin_in1; in1 != end_in1;)
       *out++ = predicate(*in1++, *in2++, *in3++);
@@ -399,7 +399,7 @@ namespace parallel
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
     // warnings about unused arguments
-    (void) grainsize;
+    (void)grainsize;
 
 #  ifndef DEAL_II_BIND_NO_CONST_OP_PARENTHESES
     f(begin, end);
@@ -634,7 +634,7 @@ namespace parallel
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
     // warnings about unused arguments
-    (void) grainsize;
+    (void)grainsize;
 
 #  ifndef DEAL_II_BIND_NO_CONST_OP_PARENTHESES
     return f(begin, end);
@@ -792,7 +792,7 @@ namespace parallel
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
     // warnings about unused arguments
-    (void) minimum_parallel_grain_size;
+    (void)minimum_parallel_grain_size;
 
     apply_to_subrange(begin, end);
 #else

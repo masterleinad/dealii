@@ -56,10 +56,10 @@ namespace TrilinosWrappers
           // get a representation of the present row
           int       ncols;
           const int ierr = sparsity_pattern->graph->ExtractGlobalRowCopy(
-            (TrilinosWrappers::types::int_type) this->a_row,
+            (TrilinosWrappers::types::int_type)this->a_row,
             colnum_cache->size(),
             ncols,
-            (TrilinosWrappers::types::int_type*) &(*colnum_cache)[0]);
+            (TrilinosWrappers::types::int_type*)&(*colnum_cache)[0]);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
           AssertThrow(static_cast<std::vector<size_type>::size_type>(ncols)
                         == colnum_cache->size(),
@@ -150,7 +150,7 @@ namespace TrilinosWrappers
       graph(
         new Epetra_FECrsGraph(View, *column_space_map, *column_space_map, 0))
   {
-    (void) input_sparsity;
+    (void)input_sparsity;
     Assert(
       input_sparsity.n_rows() == 0,
       ExcMessage("Copy constructor only works for empty sparsity patterns."));
@@ -792,7 +792,7 @@ namespace TrilinosWrappers
               static_cast<TrilinosWrappers::types::int_type>(trilinos_i),
               nnz_extracted,
               col_indices);
-            (void) ierr;
+            (void)ierr;
             Assert(ierr == 0, ExcTrilinosError(ierr));
             Assert(nnz_present == nnz_extracted,
                    ExcDimensionMismatch(nnz_present, nnz_extracted));
@@ -821,7 +821,7 @@ namespace TrilinosWrappers
             // an error.
             int ierr
               = graph->ExtractMyRowView(trilinos_i, nnz_extracted, col_indices);
-            (void) ierr;
+            (void)ierr;
             Assert(ierr == 0, ExcTrilinosError(ierr));
 
             Assert(nnz_present == nnz_extracted,
@@ -847,12 +847,12 @@ namespace TrilinosWrappers
   {
     size_type                         local_b  = 0;
     TrilinosWrappers::types::int_type global_b = 0;
-    for(int i = 0; i < (int) local_size(); ++i)
+    for(int i = 0; i < (int)local_size(); ++i)
       {
         int* indices;
         int  num_entries;
         graph->ExtractMyRowView(i, num_entries, indices);
-        for(unsigned int j = 0; j < (unsigned int) num_entries; ++j)
+        for(unsigned int j = 0; j < (unsigned int)num_entries; ++j)
           {
             if(static_cast<size_type>(
                  std::abs(static_cast<TrilinosWrappers::types::int_type>(
@@ -863,7 +863,7 @@ namespace TrilinosWrappers
           }
       }
     graph->Comm().MaxAll(
-      (TrilinosWrappers::types::int_type*) &local_b, &global_b, 1);
+      (TrilinosWrappers::types::int_type*)&local_b, &global_b, 1);
     return static_cast<size_type>(global_b);
   }
 

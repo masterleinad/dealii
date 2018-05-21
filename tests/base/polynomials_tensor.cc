@@ -44,11 +44,11 @@ check_point(const Point<dim>& x, const PolynomialType& p)
     {
       deallog << "p[" << i << "] value ";
       for(unsigned int d = 0; d < dim; ++d)
-        deallog << (int) (values[i][d] + .5) << ' ';
+        deallog << (int)(values[i][d] + .5) << ' ';
       deallog << " first ";
       for(unsigned int d1 = 0; d1 < dim; ++d1)
         for(unsigned int d2 = 0; d2 < dim; ++d2)
-          deallog << (int) (gradients[i][d1][d2] + .5) << ' ';
+          deallog << (int)(gradients[i][d1][d2] + .5) << ' ';
       deallog << std::endl;
     }
 }

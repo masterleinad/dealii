@@ -92,7 +92,7 @@ main()
                   double approx_integral_factored = 0;
                   for(unsigned int q = 0; q < quad.size(); ++q)
                     {
-                      double qpow = pow(quad.point(q)[0], (double) power);
+                      double qpow = pow(quad.point(q)[0], (double)power);
                       approx_integral += qpow * quad.weight(q);
                       double factor = log(
                         std::abs((factored_quad.point(q) - origins[nos])[0])

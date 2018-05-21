@@ -42,7 +42,7 @@ namespace internal
       const unsigned int                          local_index,
       const types::global_dof_index               global_index)
     {
-      (void) fe_index;
+      (void)fe_index;
       Assert(
         (fe_index == dealii::DoFHandler<dh_dim, spacedim>::default_fe_index),
         ExcMessage(

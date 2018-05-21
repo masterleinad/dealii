@@ -54,7 +54,7 @@ namespace internal
            const DoFHandlerType&)
     {
       sparsity.copy_from(sp);
-      (void) level;
+      (void)level;
       matrix.reinit(sparsity);
     }
   };

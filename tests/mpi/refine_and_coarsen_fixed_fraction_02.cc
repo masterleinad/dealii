@@ -57,7 +57,7 @@ test()
       if(cell->subdomain_id() == myid)
         {
           ++my_cell_index;
-          indicators(cell_index) = std::pow(2, (float) my_cell_index);
+          indicators(cell_index) = std::pow(2, (float)my_cell_index);
         }
   }
 
@@ -81,7 +81,7 @@ test()
   parallel::distributed::GridRefinement ::refine_and_coarsen_fixed_fraction(
     tr,
     indicators,
-    30.00000000001 / total_error * std::pow(2, (double) 16),
+    30.00000000001 / total_error * std::pow(2, (double)16),
     29.9 / total_error);
 
   // now count number of cells

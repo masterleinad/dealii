@@ -180,7 +180,7 @@ test()
               << (std::distance(v1.end() - 6, v1.end()) == 6 ? "true" : "false")
               << std::endl;
       deallog << "Check 10: "
-              << (std::distance(v1.begin(), v1.end()) == (signed) v1.size() ?
+              << (std::distance(v1.begin(), v1.end()) == (signed)v1.size() ?
                     "true" :
                     "false")
               << std::endl;
@@ -218,7 +218,7 @@ test()
           const TrilinosWrappers::MPI::BlockVector::iterator p
             = (v1.begin() + i);
           for(unsigned int j = 0; j < v1.size(); ++j)
-            AssertThrow(p[(signed) j - (signed) i] == j, ExcInternalError());
+            AssertThrow(p[(signed)j - (signed)i] == j, ExcInternalError());
         };
 
       // if we came thus far,

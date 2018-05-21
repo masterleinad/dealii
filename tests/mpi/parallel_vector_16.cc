@@ -57,7 +57,7 @@ test()
   for(types::global_dof_index i = min_index + myid * local_size;
       i < min_index + (myid + 1) * local_size;
       ++i)
-    v(i) = (double) i;
+    v(i) = (double)i;
 
   deallog << "vector norm: " << v.l2_norm() << std::endl;
 

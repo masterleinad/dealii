@@ -187,7 +187,7 @@ namespace Step23
   InitialValuesU<dim>::value(const Point<dim>& /*p*/,
                              const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return 0;
   }
@@ -197,7 +197,7 @@ namespace Step23
   InitialValuesV<dim>::value(const Point<dim>& /*p*/,
                              const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return 0;
   }
@@ -220,7 +220,7 @@ namespace Step23
   RightHandSide<dim>::value(const Point<dim>& /*p*/,
                             const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return 0;
   }
@@ -254,7 +254,7 @@ namespace Step23
   BoundaryValuesU<dim>::value(const Point<dim>&  p,
                               const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     if((this->get_time() <= 0.5) && (p[0] < 0) && (p[1] < 1. / 3)
@@ -269,7 +269,7 @@ namespace Step23
   BoundaryValuesV<dim>::value(const Point<dim>&  p,
                               const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     if((this->get_time() <= 0.5) && (p[0] < 0) && (p[1] < 1. / 3)

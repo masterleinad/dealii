@@ -1840,7 +1840,7 @@ namespace Functions
   FourierCosineFunction<dim>::value(const Point<dim>&  p,
                                     const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return std::cos(fourier_coefficients * p);
   }
@@ -1850,7 +1850,7 @@ namespace Functions
   FourierCosineFunction<dim>::gradient(const Point<dim>&  p,
                                        const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return -fourier_coefficients * std::sin(fourier_coefficients * p);
   }
@@ -1860,7 +1860,7 @@ namespace Functions
   FourierCosineFunction<dim>::laplacian(const Point<dim>&  p,
                                         const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return (fourier_coefficients * fourier_coefficients)
            * (-std::cos(fourier_coefficients * p));
@@ -1879,7 +1879,7 @@ namespace Functions
   FourierSineFunction<dim>::value(const Point<dim>&  p,
                                   const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return std::sin(fourier_coefficients * p);
   }
@@ -1889,7 +1889,7 @@ namespace Functions
   FourierSineFunction<dim>::gradient(const Point<dim>&  p,
                                      const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return fourier_coefficients * std::cos(fourier_coefficients * p);
   }
@@ -1899,7 +1899,7 @@ namespace Functions
   FourierSineFunction<dim>::laplacian(const Point<dim>&  p,
                                       const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return (fourier_coefficients * fourier_coefficients)
            * (-std::sin(fourier_coefficients * p));
@@ -1925,7 +1925,7 @@ namespace Functions
   FourierSineSum<dim>::value(const Point<dim>&  p,
                              const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     const unsigned int n   = weights.size();
@@ -1941,7 +1941,7 @@ namespace Functions
   FourierSineSum<dim>::gradient(const Point<dim>&  p,
                                 const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     const unsigned int n = weights.size();
@@ -1957,7 +1957,7 @@ namespace Functions
   FourierSineSum<dim>::laplacian(const Point<dim>&  p,
                                  const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     const unsigned int n   = weights.size();
@@ -1989,7 +1989,7 @@ namespace Functions
   FourierCosineSum<dim>::value(const Point<dim>&  p,
                                const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     const unsigned int n   = weights.size();
@@ -2005,7 +2005,7 @@ namespace Functions
   FourierCosineSum<dim>::gradient(const Point<dim>&  p,
                                   const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     const unsigned int n = weights.size();
@@ -2021,7 +2021,7 @@ namespace Functions
   FourierCosineSum<dim>::laplacian(const Point<dim>&  p,
                                    const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     const unsigned int n   = weights.size();
@@ -2045,7 +2045,7 @@ namespace Functions
   double
   Monomial<dim>::value(const Point<dim>& p, const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
 
@@ -2077,7 +2077,7 @@ namespace Functions
   Monomial<dim>::gradient(const Point<dim>&  p,
                           const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     Tensor<1, dim> r;
@@ -2152,8 +2152,8 @@ namespace Functions
     Assert(dim == 2, ExcNotImplemented());
     AssertDimension(points.size(), values.size());
 #ifndef DEAL_II_HAVE_JN
-    (void) points;
-    (void) values;
+    (void)points;
+    (void)values;
     Assert(false, ExcMessage("The Bessel function jn was not found by CMake."));
 #else
     for(unsigned int k = 0; k < points.size(); ++k)
@@ -2170,7 +2170,7 @@ namespace Functions
   {
     Assert(dim == 2, ExcNotImplemented());
 #ifndef DEAL_II_HAVE_JN
-    (void) p;
+    (void)p;
     Assert(false, ExcMessage("The Bessel function jn was not found by CMake."));
     return Tensor<1, dim>();
 #else
@@ -2278,7 +2278,7 @@ namespace Functions
                          const Point<1>&         p_unit,
                          const Point<1>&         dx)
     {
-      (void) p_unit;
+      (void)p_unit;
       Tensor<1, 1> grad;
       grad[0] = (data_values[ix[0] + 1] - data_values[ix[0]]) / dx[0];
       return grad;
@@ -2407,7 +2407,7 @@ namespace Functions
     const Point<dim>&  p,
     const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(
       component == 0,
       ExcMessage(
@@ -2436,7 +2436,7 @@ namespace Functions
     const Point<dim>&  p,
     const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(
       component == 0,
       ExcMessage(
@@ -2484,7 +2484,7 @@ namespace Functions
   InterpolatedUniformGridData<dim>::value(const Point<dim>&  p,
                                           const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(
       component == 0,
       ExcMessage(
@@ -2504,7 +2504,7 @@ namespace Functions
           ix[d] = n_subintervals[d] - 1;
         else
           ix[d]
-            = (unsigned int) ((p[d] - interval_endpoints[d].first) / delta_x);
+            = (unsigned int)((p[d] - interval_endpoints[d].first) / delta_x);
       }
 
     // now compute the relative point within the interval/rectangle/box
@@ -2544,7 +2544,7 @@ namespace Functions
   Polynomial<dim>::value(const Point<dim>&  p,
                          const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     double sum = 0;
@@ -2582,7 +2582,7 @@ namespace Functions
   Polynomial<dim>::gradient(const Point<dim>&  p,
                             const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     Tensor<1, dim> r;

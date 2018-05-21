@@ -51,8 +51,8 @@ check_file(const std::string name, typename GridIn<dim>::Format format)
       ++cell)
     for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
-        deallog << cell << ' ' << f << ": "
-                << (int) cell->face(f)->boundary_id() << std::endl;
+        deallog << cell << ' ' << f << ": " << (int)cell->face(f)->boundary_id()
+                << std::endl;
 }
 
 void

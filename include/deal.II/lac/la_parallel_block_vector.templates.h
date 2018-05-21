@@ -543,14 +543,14 @@ namespace LinearAlgebra
       Number local_result = Number();
       for(unsigned int i = 0; i < this->n_blocks(); ++i)
         local_result += this->block(i).mean_value_local()
-                        * (real_type) this->block(i).partitioner->local_size();
+                        * (real_type)this->block(i).partitioner->local_size();
 
       if(this->block(0).partitioner->n_mpi_processes() > 1)
         return Utilities::MPI::sum(
                  local_result, this->block(0).partitioner->get_communicator())
-               / (real_type) this->size();
+               / (real_type)this->size();
       else
-        return local_result / (real_type) this->size();
+        return local_result / (real_type)this->size();
     }
 
     template <typename Number>

@@ -195,7 +195,7 @@ test()
   Testing::srand(42);
   for(unsigned int i = 0; i < in_orig.local_size(); ++i)
     {
-      const double entry       = Testing::rand() / (double) RAND_MAX;
+      const double entry       = Testing::rand() / (double)RAND_MAX;
       in_orig.local_element(i) = entry;
       in(renumbering[i])       = entry;
     }

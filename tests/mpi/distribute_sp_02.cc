@@ -38,8 +38,7 @@ test_mpi()
   unsigned int          n         = numprocs * num_local;
   std::vector<IndexSet> locally_owned_dofs_per_cpu(numprocs, IndexSet(n));
   for(unsigned int i = 0; i < numprocs; ++i)
-    locally_owned_dofs_per_cpu[i].add_range((i) *num_local,
-                                            (i + 1) * num_local);
+    locally_owned_dofs_per_cpu[i].add_range((i)*num_local, (i + 1) * num_local);
 
   IndexSet locally_rel(n);
   locally_rel.add_range(myid * num_local, (myid + 1) * num_local);
@@ -106,7 +105,7 @@ test_mpi()
 
   std::vector<IndexSet> locally_owned_dofs_per_cpu2(numprocs, IndexSet(n));
   for(unsigned int i = 0; i < numprocs; ++i)
-    locally_owned_dofs_per_cpu2[i].add_range((i) *num_local,
+    locally_owned_dofs_per_cpu2[i].add_range((i)*num_local,
                                              (i + 1) * num_local);
 
   SparsityTools::distribute_sparsity_pattern(

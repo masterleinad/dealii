@@ -31,22 +31,22 @@ print_info(const Triangulation<dim, spacedim>& tria)
 {
   for(auto cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
-      deallog << "C: " << cell << ", manifold id: " << (int) cell->manifold_id()
+      deallog << "C: " << cell << ", manifold id: " << (int)cell->manifold_id()
               << std::endl;
       for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           deallog << "f: " << cell->face(f)
-                  << ", boundary id: " << (int) cell->face(f)->boundary_id()
-                  << ", manifold id: " << (int) cell->face(f)->manifold_id()
+                  << ", boundary id: " << (int)cell->face(f)->boundary_id()
+                  << ", manifold id: " << (int)cell->face(f)->manifold_id()
                   << std::endl;
           if(dim >= 3)
             for(signed int e = 0;
                 e < static_cast<signed int>(GeometryInfo<dim>::lines_per_face);
                 ++e)
               deallog << "e: " << cell->face(f)->line(e) << ", boundary id: "
-                      << (int) cell->face(f)->line(e)->boundary_id()
+                      << (int)cell->face(f)->line(e)->boundary_id()
                       << ", manifold id: "
-                      << (int) cell->face(f)->line(e)->manifold_id()
+                      << (int)cell->face(f)->line(e)->manifold_id()
                       << std::endl;
         }
     }

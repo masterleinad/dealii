@@ -2333,8 +2333,8 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
   // of the iterator which calls the accessor with argument list (0,-2,-2,0), so
   // in this particular case accept this call and create an object that corresponds
   // to the default constructed (invalid) vertex accessor
-  (void) level;
-  (void) index;
+  (void)level;
+  (void)index;
   Assert((level == -2) && (index == -2), ExcInternalError());
 }
 
@@ -2431,7 +2431,7 @@ inline unsigned int
 TriaAccessor<0, 1, spacedim>::vertex_index(const unsigned int i) const
 {
   Assert(i == 0, ExcIndexRange(i, 0, 1));
-  (void) i;
+  (void)i;
   return global_vertex_index;
 }
 
@@ -2440,7 +2440,7 @@ inline Point<spacedim>&
 TriaAccessor<0, 1, spacedim>::vertex(const unsigned int i) const
 {
   Assert(i == 0, ExcIndexRange(i, 0, 1));
-  (void) i;
+  (void)i;
   return const_cast<Point<spacedim>&>(
     this->tria->vertices[global_vertex_index]);
 }

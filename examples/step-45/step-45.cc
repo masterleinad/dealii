@@ -128,7 +128,7 @@ namespace Step45
   BoundaryValues<dim>::value(const Point<dim>& /*p*/,
                              const unsigned int component) const
   {
-    (void) component;
+    (void)component;
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
 

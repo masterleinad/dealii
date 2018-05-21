@@ -123,7 +123,7 @@ main()
   op_a.reinit_domain_vector(u, false);
   for(unsigned int i = 0; i < u.size(); ++i)
     {
-      u[i] = (double) (i + 1);
+      u[i] = (double)(i + 1);
     }
 
   PRINTME("u", u);
@@ -189,7 +189,7 @@ main()
   op_upp_x_upu.reinit_domain_vector(u, false);
   for(unsigned int i = 0; i < u.size(); ++i)
     {
-      u[i] = (double) (i + 1);
+      u[i] = (double)(i + 1);
     }
   PRINTME("u", u);
 
@@ -214,7 +214,7 @@ main()
   op_long.reinit_domain_vector(u, false);
   for(unsigned int i = 0; i < u.size(); ++i)
     {
-      u[i] = (double) (i + 1);
+      u[i] = (double)(i + 1);
     }
   PRINTME("u", u);
 

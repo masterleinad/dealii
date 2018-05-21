@@ -57,7 +57,7 @@ check_support_points(const FiniteElement<dim>& fe)
           for(unsigned int d = 0; d < dim; ++d)
             {
               const double sf = fe.shape_value_component(i, p, d);
-              deallog << ' ' << (int) rint(60 * sf);
+              deallog << ' ' << (int)rint(60 * sf);
 
               const double diff
                 = std::abs(sf - vals.shape_value_component(i, k, d));
@@ -111,7 +111,7 @@ check_face_support_points(const FiniteElement<dim>& fe)
               for(unsigned int d = 0; d < dim; ++d)
                 {
                   const double sf = fe.shape_value_component(i, p, d);
-                  deallog << ' ' << (int) rint(60 * sf);
+                  deallog << ' ' << (int)rint(60 * sf);
 
                   const double diff
                     = std::abs(sf - vals.shape_value_component(i, k, d));

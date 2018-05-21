@@ -46,7 +46,7 @@ main(int argc, char** argv)
     TrilinosWrappers::MPI::BlockVector temp(local_owned, MPI_COMM_WORLD);
     for(unsigned int i = 0; i < 5; ++i)
       for(unsigned int j = 0; j < 2; ++j)
-        temp.block(i)[j] = (double) (10 * i + j);
+        temp.block(i)[j] = (double)(10 * i + j);
 
     PRINTBLOCK("BlockVector", temp);
 

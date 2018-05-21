@@ -175,7 +175,7 @@ namespace internal
       const types::global_dof_index,
       const unsigned int fe_index) const
     {
-      (void) fe_index;
+      (void)fe_index;
       Assert(fe_index == 0,
              ExcMessage("Only zero fe_index values are allowed for "
                         "non-hp DoFHandlers."));
@@ -191,7 +191,7 @@ namespace internal
       const unsigned int                          fe_index,
       const unsigned int                          local_index) const
     {
-      (void) fe_index;
+      (void)fe_index;
       Assert(
         (fe_index == dealii::DoFHandler<dh_dim, spacedim>::default_fe_index),
         ExcMessage(

@@ -73,11 +73,10 @@ main()
                     {
                       double x = quad.point(q)[0];
                       double y = quad.point(q)[1];
-                      approx_integral
-                        += (pow(x, (double) i) * pow(y, (double) j)
-                            * quad.weight(q));
+                      approx_integral += (pow(x, (double)i) * pow(y, (double)j)
+                                          * quad.weight(q));
                       approx_integral_2
-                        += (pow(x, (double) i) * pow(y, (double) j)
+                        += (pow(x, (double)i) * pow(y, (double)j)
                             * quad_de.weight(q)
                             / (quad_de.point(q)
                                - GeometryInfo<2>::unit_cell_vertex(index))

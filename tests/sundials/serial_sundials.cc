@@ -28,15 +28,15 @@ main()
   initlog();
 
   SUNDIALS::IDA<Vector<double>> ida_solver;
-  (void) ida_solver;
+  (void)ida_solver;
   deallog << "IDA OK" << std::endl;
 
   SUNDIALS::KINSOL<Vector<double>> kinsol_solver;
-  (void) kinsol_solver;
+  (void)kinsol_solver;
   deallog << "KINSOL OK" << std::endl;
 
   SUNDIALS::ARKode<Vector<double>> arkode_solver;
-  (void) arkode_solver;
+  (void)arkode_solver;
   deallog << "ARKODE OK" << std::endl;
 
   return 0;

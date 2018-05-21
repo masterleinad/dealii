@@ -38,7 +38,7 @@ main()
     BlockVector<double> u(5, 2);
     for(unsigned int i = 0; i < 5; ++i)
       for(unsigned int j = 0; j < 2; ++j)
-        u.block(i)[j] = (double) (10 * i + j);
+        u.block(i)[j] = (double)(10 * i + j);
 
     PRINTME("BlockVector", u);
 

@@ -239,15 +239,13 @@ test()
   for(unsigned int j = 0; j < system_rhs.block(0).size(); ++j)
     if(constraints.is_constrained(j) == false)
       {
-        const double val
-          = -1 + 2. * (double) Testing::rand() / double(RAND_MAX);
+        const double val = -1 + 2. * (double)Testing::rand() / double(RAND_MAX);
         system_rhs.block(0)(j) = val;
       }
   for(unsigned int j = 0; j < system_rhs.block(1).size(); ++j)
     if(constraints.is_constrained(j + system_rhs.block(0).size()) == false)
       {
-        const double val
-          = -1 + 2. * (double) Testing::rand() / double(RAND_MAX);
+        const double val = -1 + 2. * (double)Testing::rand() / double(RAND_MAX);
         system_rhs.block(1)(j) = val;
       }
 
