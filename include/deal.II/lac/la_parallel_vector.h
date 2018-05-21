@@ -1512,10 +1512,9 @@ namespace LinearAlgebra
       AssertDimension(indices.size(), values.size());
       for(size_type i = 0; i < indices.size(); ++i)
         {
-          Assert(
-            numbers::is_finite(values[i]),
-            ExcMessage(
-              "The given value is not finite but either infinite or Not A Number (NaN)"));
+          Assert(numbers::is_finite(values[i]),
+                 ExcMessage("The given value is not finite but either infinite "
+                            "or Not A Number (NaN)"));
           this->operator()(indices[i]) += values(i);
         }
     }
@@ -1529,10 +1528,9 @@ namespace LinearAlgebra
     {
       for(size_type i = 0; i < n_elements; ++i, ++indices, ++values)
         {
-          Assert(
-            numbers::is_finite(*values),
-            ExcMessage(
-              "The given value is not finite but either infinite or Not A Number (NaN)"));
+          Assert(numbers::is_finite(*values),
+                 ExcMessage("The given value is not finite but either infinite "
+                            "or Not A Number (NaN)"));
           this->operator()(*indices) += *values;
         }
     }

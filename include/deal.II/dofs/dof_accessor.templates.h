@@ -927,8 +927,8 @@ namespace internal
         (void) fe_index;
         Assert(
           (fe_index == dealii::DoFHandler<dim, spacedim>::default_fe_index),
-          ExcMessage(
-            "Only the default FE index is allowed for non-hp DoFHandler objects"));
+          ExcMessage("Only the default FE index is allowed for non-hp "
+                     "DoFHandler objects"));
         Assert(
           local_index < dof_handler.get_fe().dofs_per_vertex,
           ExcIndexRange(local_index, 0, dof_handler.get_fe().dofs_per_vertex));
@@ -1016,8 +1016,8 @@ namespace internal
         (void) fe_index;
         Assert(
           (fe_index == dealii::DoFHandler<dim, spacedim>::default_fe_index),
-          ExcMessage(
-            "Only the default FE index is allowed for non-hp DoFHandler objects"));
+          ExcMessage("Only the default FE index is allowed for non-hp "
+                     "DoFHandler objects"));
         Assert(
           local_index < dof_handler.get_fe().dofs_per_vertex,
           ExcIndexRange(local_index, 0, dof_handler.get_fe().dofs_per_vertex));

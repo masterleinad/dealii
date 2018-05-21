@@ -1214,10 +1214,9 @@ IndexSet::ElementIterator::is_valid() const
 
 inline IndexSet::size_type IndexSet::ElementIterator::operator*() const
 {
-  Assert(
-    is_valid(),
-    ExcMessage(
-      "Impossible to dereference an IndexSet::ElementIterator that is invalid"));
+  Assert(is_valid(),
+         ExcMessage("Impossible to dereference an IndexSet::ElementIterator "
+                    "that is invalid"));
   return idx;
 }
 
@@ -1317,11 +1316,10 @@ operator-(const IndexSet::ElementIterator& other) const
       ++range)
     c += index_set->ranges[range].end - index_set->ranges[range].begin;
 
-  Assert(
-    other.range_idx < index_set->ranges.size()
-      || other.range_idx == numbers::invalid_dof_index,
-    ExcMessage(
-      "Inconsistent iterator state. Did you invalidate iterators by modifying the IndexSet?"));
+  Assert(other.range_idx < index_set->ranges.size()
+           || other.range_idx == numbers::invalid_dof_index,
+         ExcMessage("Inconsistent iterator state. Did you invalidate iterators "
+                    "by modifying the IndexSet?"));
 
   // We might have walked too far because we went until the end of other.range_idx, so walk backwards to other.idx:
   if(other.range_idx != numbers::invalid_dof_index)

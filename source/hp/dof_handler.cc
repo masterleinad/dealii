@@ -1276,11 +1276,10 @@ namespace hp
   DoFHandler<dim, spacedim>::distribute_dofs(
     const hp::FECollection<dim, spacedim>& ff)
   {
-    Assert(
-      tria != nullptr,
-      ExcMessage(
-        "You need to set the Triangulation in the DoFHandler using initialize() or "
-        "in the constructor before you can distribute DoFs."));
+    Assert(tria != nullptr,
+           ExcMessage("You need to set the Triangulation in the DoFHandler "
+                      "using initialize() or "
+                      "in the constructor before you can distribute DoFs."));
     Assert(tria->n_levels() > 0,
            ExcMessage("The Triangulation you are using is empty!"));
     Assert(ff.size() > 0, ExcMessage("The hp::FECollection given is empty!"));

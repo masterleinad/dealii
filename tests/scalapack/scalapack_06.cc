@@ -123,10 +123,10 @@ test(const unsigned int size,
 
   // the actual test:
 
-  pcout
-    << "comparing " << max_n_eigenvalues
-    << " eigenvalues and eigenvectors computed using LAPACK and ScaLAPACK pdsyev:"
-    << std::endl;
+  pcout << "comparing " << max_n_eigenvalues
+        << " eigenvalues and eigenvectors computed using LAPACK and ScaLAPACK "
+           "pdsyev:"
+        << std::endl;
   const std::vector<NumberType> eigenvalues_psyev
     = scalapack_syev.eigenpairs_symmetric_by_index(std::make_pair(0, size - 1),
                                                    true);

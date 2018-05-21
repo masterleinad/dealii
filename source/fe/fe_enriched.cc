@@ -257,10 +257,9 @@ double
 FE_Enriched<dim, spacedim>::shape_value(const unsigned int i,
                                         const Point<dim>&  p) const
 {
-  Assert(
-    !is_enriched,
-    ExcMessage(
-      "For enriched finite elements shape_value() can not be defined on the reference element."));
+  Assert(!is_enriched,
+         ExcMessage("For enriched finite elements shape_value() can not be "
+                    "defined on the reference element."));
   return fe_system->shape_value(i, p);
 }
 

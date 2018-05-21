@@ -214,18 +214,16 @@ public:
         typename BlockPayload::BlockType(payload, payload))
   {
     n_block_rows = []() -> unsigned int {
-      Assert(
-        false,
-        ExcMessage(
-          "Uninitialized BlockLinearOperator<Range, Domain>::n_block_rows called"));
+      Assert(false,
+             ExcMessage("Uninitialized BlockLinearOperator<Range, "
+                        "Domain>::n_block_rows called"));
       return 0;
     };
 
     n_block_cols = []() -> unsigned int {
-      Assert(
-        false,
-        ExcMessage(
-          "Uninitialized BlockLinearOperator<Range, Domain>::n_block_cols called"));
+      Assert(false,
+             ExcMessage("Uninitialized BlockLinearOperator<Range, "
+                        "Domain>::n_block_cols called"));
       return 0;
     };
 

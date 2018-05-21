@@ -2789,9 +2789,11 @@ FEValuesBase<dim, spacedim>::CellIterator<CI>::get_interpolated_dof_values(
 template <int dim, int spacedim>
 const char* const FEValuesBase<dim, spacedim>::TriaCellIterator::message_string
   = ("You have previously called the FEValues::reinit function with a\n"
-     "cell iterator of type Triangulation<dim,spacedim>::cell_iterator. However,\n"
+     "cell iterator of type Triangulation<dim,spacedim>::cell_iterator. "
+     "However,\n"
      "when you do this, you cannot call some functions in the FEValues\n"
-     "class, such as the get_function_values/gradients/hessians/third_derivatives\n"
+     "class, such as the "
+     "get_function_values/gradients/hessians/third_derivatives\n"
      "functions. If you need these functions, then you need to call\n"
      "FEValues::reinit with an iterator type that allows to extract\n"
      "degrees of freedom, such as DoFHandler<dim,spacedim>::cell_iterator.");

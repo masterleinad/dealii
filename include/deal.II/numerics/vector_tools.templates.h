@@ -821,11 +821,10 @@ namespace VectorTools
         if(!cell1->active() && !cell2->active())
           continue;
 
-        Assert(
-          internal::is_locally_owned(cell1)
-            == internal::is_locally_owned(cell2),
-          ExcMessage(
-            "The two Triangulations are required to have the same parallel partitioning."));
+        Assert(internal::is_locally_owned(cell1)
+                 == internal::is_locally_owned(cell2),
+               ExcMessage("The two Triangulations are required to have the "
+                          "same parallel partitioning."));
 
         // Skip foreign cells.
         if(cell1->active() && !cell1->is_locally_owned())
@@ -833,10 +832,9 @@ namespace VectorTools
         if(cell2->active() && !cell2->is_locally_owned())
           continue;
 
-        Assert(
-          cell1->get_fe().get_name() == cell2->get_fe().get_name(),
-          ExcMessage(
-            "Source and destination cells need to use the same finite element"));
+        Assert(cell1->get_fe().get_name() == cell2->get_fe().get_name(),
+               ExcMessage("Source and destination cells need to use the same "
+                          "finite element"));
 
         cache.reinit(cell1->get_fe().dofs_per_cell);
 
@@ -2808,12 +2806,12 @@ namespace VectorTools
                       for(unsigned int c = 0; c < n_components; ++c)
                         if((nonzero_component_array[c] == true)
                            && (component_mask[c] == true))
-                          Assert(
-                            cell->get_fe().is_primitive(i),
-                            ExcMessage(
-                              "This function can only deal with requested boundary "
-                              "values that correspond to primitive (scalar) base "
-                              "elements"));
+                          Assert(cell->get_fe().is_primitive(i),
+                                 ExcMessage("This function can only deal with "
+                                            "requested boundary "
+                                            "values that correspond to "
+                                            "primitive (scalar) base "
+                                            "elements"));
                     }
 
                   const typename DoFHandlerType<dim, spacedim>::face_iterator
@@ -3345,9 +3343,12 @@ namespace VectorTools
                           level == cell->level(),
                           ExcMessage(
                             "The mesh you use in projecting boundary values "
-                            "has hanging nodes at the boundary. This would require "
-                            "dealing with hanging node constraints when solving "
-                            "the linear system on the boundary, but this is not "
+                            "has hanging nodes at the boundary. This would "
+                            "require "
+                            "dealing with hanging node constraints when "
+                            "solving "
+                            "the linear system on the boundary, but this is "
+                            "not "
                             "currently implemented."));
                       }
                   }
@@ -6895,11 +6896,10 @@ namespace VectorTools
                     internal::VectorDoFTuple<dim> vector_dofs;
                     vector_dofs.dof_indices[0] = face_dofs[i];
 
-                    Assert(
-                      first_vector_component + dim <= fe.n_components(),
-                      ExcMessage(
-                        "Error: the finite element does not have enough components "
-                        "to define a normal direction."));
+                    Assert(first_vector_component + dim <= fe.n_components(),
+                           ExcMessage("Error: the finite element does not have "
+                                      "enough components "
+                                      "to define a normal direction."));
 
                     for(unsigned int k = 0; k < fe.dofs_per_face; ++k)
                       if((k != i)
@@ -7166,10 +7166,9 @@ namespace VectorTools
                     for(unsigned int j = 0; j < dim; ++j)
                       t[i][j] = x->second.first[j];
 
-                  Assert(
-                    std::fabs(determinant(t)) > 1e-3,
-                    ExcMessage(
-                      "Found a set of normal vectors that are nearly collinear."));
+                  Assert(std::fabs(determinant(t)) > 1e-3,
+                         ExcMessage("Found a set of normal vectors that are "
+                                    "nearly collinear."));
                 }
 
                 // so all components of this vector dof are constrained. enter
@@ -7950,7 +7949,8 @@ namespace VectorTools
                   n_components >= idx + dim,
                   ExcMessage(
                     "You can only ask for the Hdiv norm for a finite element "
-                    "with at least 'dim' components. In that case, this function "
+                    "with at least 'dim' components. In that case, this "
+                    "function "
                     "will find the index of the first non-zero weight and take "
                     "the divergence of the 'dim' components that follow it."));
 
@@ -8232,10 +8232,9 @@ namespace VectorTools
         = tria.begin_active();
       for(; i < cellwise_error.size(); ++i, ++it)
         if(!it->is_locally_owned())
-          Assert(
-            std::fabs(cellwise_error[i]) < 1e-20,
-            ExcMessage(
-              "cellwise_error of cells that are not locally owned need to be zero!"));
+          Assert(std::fabs(cellwise_error[i]) < 1e-20,
+                 ExcMessage("cellwise_error of cells that are not locally "
+                            "owned need to be zero!"));
     }
 #endif
 
@@ -8908,10 +8907,9 @@ namespace VectorTools
         if(fe_mask[i])
           fe_to_real[i] = size++;
       }
-    Assert(
-      size == spacedim,
-      ExcMessage(
-        "The Component Mask you provided is invalid. It has to select exactly spacedim entries."));
+    Assert(size == spacedim,
+           ExcMessage("The Component Mask you provided is invalid. It has to "
+                      "select exactly spacedim entries."));
 
     if(fe.has_support_points())
       {

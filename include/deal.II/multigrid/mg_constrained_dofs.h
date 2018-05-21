@@ -206,11 +206,10 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
                 {
                   if(cell->is_locally_owned_on_level())
                     {
-                      Assert(
-                        cell->periodic_neighbor(f)->level_subdomain_id()
-                          != numbers::artificial_subdomain_id,
-                        ExcMessage(
-                          "Periodic neighbor of a locally owned cell must either be owned or ghost."));
+                      Assert(cell->periodic_neighbor(f)->level_subdomain_id()
+                               != numbers::artificial_subdomain_id,
+                             ExcMessage("Periodic neighbor of a locally owned "
+                                        "cell must either be owned or ghost."));
                     }
                   // Cell is a level-ghost and its neighbor is a level-artificial cell
                   // nothing to do here

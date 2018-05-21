@@ -676,12 +676,12 @@ public:
   /**
    * Exception.
    */
-  DeclException1(
-    ExcInvalidRefinementCase,
-    int,
-    << "The refinement flags given (" << arg1
-    << ") contain set bits that do not "
-    << "make sense for the space dimension of the object to which they are applied.");
+  DeclException1(ExcInvalidRefinementCase,
+                 int,
+                 << "The refinement flags given (" << arg1
+                 << ") contain set bits that do not "
+                 << "make sense for the space dimension of the object to which "
+                    "they are applied.");
 
 private:
   /**

@@ -112,11 +112,11 @@ ParameterAcceptor::initialize(
           outfile << "# Parameter file generated with " << std::endl
                   << "# DEAL_II_PACKAGE_VERSION = " << DEAL_II_PACKAGE_VERSION
                   << std::endl;
-          Assert(
-            output_style_for_prm_format == ParameterHandler::Text
-              || output_style_for_prm_format == ParameterHandler::ShortText,
-            ExcMessage(
-              "Only Text or ShortText can be specified in output_style_for_prm_format."))
+          Assert(output_style_for_prm_format == ParameterHandler::Text
+                   || output_style_for_prm_format
+                        == ParameterHandler::ShortText,
+                 ExcMessage("Only Text or ShortText can be specified in "
+                            "output_style_for_prm_format."))
             prm.print_parameters(outfile, output_style_for_prm_format);
         }
       else if(extension == "xml")

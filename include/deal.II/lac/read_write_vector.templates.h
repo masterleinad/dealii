@@ -416,10 +416,9 @@ namespace LinearAlgebra
     // While the import does work with Trilinos 12.8.x, it fails with 12.4.x. To be safe,
     // we disable it here. Note that it would be a useful case, as ReadWriteVector is
     // supposed to replace ghosted vectors anyways.
-    AssertThrow(
-      !trilinos_vec.has_ghost_elements(),
-      ExcMessage(
-        "Import() from TrilinosWrappers::MPI::Vector with ghost entries is not supported!"));
+    AssertThrow(!trilinos_vec.has_ghost_elements(),
+                ExcMessage("Import() from TrilinosWrappers::MPI::Vector with "
+                           "ghost entries is not supported!"));
     import(trilinos_vec.trilinos_vector(),
            trilinos_vec.locally_owned_elements(),
            operation,

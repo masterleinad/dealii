@@ -124,8 +124,8 @@ check()
   xdmf_file << "<!DOCTYPE Xdmf SYSTEM \"Xdmf.dtd\" []>\n";
   xdmf_file << "<Xdmf Version=\"2.0\">\n";
   xdmf_file << "  <Domain>\n";
-  xdmf_file
-    << "    <Grid Name=\"CellTime\" GridType=\"Collection\" CollectionType=\"Temporal\">\n";
+  xdmf_file << "    <Grid Name=\"CellTime\" GridType=\"Collection\" "
+               "CollectionType=\"Temporal\">\n";
 
   // Write out the entry
   xdmf_file << entry.get_xdmf_content(3);

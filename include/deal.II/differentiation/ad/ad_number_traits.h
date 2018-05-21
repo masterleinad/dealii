@@ -348,10 +348,9 @@ namespace Differentiation
         static void
         dependent_variable(ADNumberType&, const ScalarType&)
         {
-          AssertThrow(
-            false,
-            ExcMessage(
-              "Floating point numbers cannot be marked as dependent variables."));
+          AssertThrow(false,
+                      ExcMessage("Floating point numbers cannot be marked as "
+                                 "dependent variables."));
         }
       };
 

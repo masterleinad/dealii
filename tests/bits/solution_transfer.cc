@@ -171,10 +171,10 @@ transfer(std::ostream& out)
   dgq_data_out.clear_data_vectors();
   dgq_data_out.add_data_vector(dgq_solution, "solution");
   dgq_data_out.build_patches();
-  deallog
-    << "Interpolated/tranferred solution after coarsening and refinement, FE_DGQ"
-    << std::endl
-    << std::endl;
+  deallog << "Interpolated/tranferred solution after coarsening and "
+             "refinement, FE_DGQ"
+          << std::endl
+          << std::endl;
   dgq_data_out.write_gnuplot(out);
 }
 

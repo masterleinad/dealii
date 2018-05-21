@@ -124,10 +124,10 @@ test(const Triangulation<dim>& tr,
                   deallog << "    bulk integral=" << bulk_integral << std::endl;
                   deallog << "boundary integral=" << boundary_integral
                           << std::endl;
-                  deallog
-                    << "Error! difference between bulk and surface integrals is greater than "
-                    << tolerance << "!\n\n"
-                    << std::endl;
+                  deallog << "Error! difference between bulk and surface "
+                             "integrals is greater than "
+                          << tolerance << "!\n\n"
+                          << std::endl;
                   cell_ok = false;
                 }
 

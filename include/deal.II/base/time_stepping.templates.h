@@ -41,14 +41,12 @@ namespace TimeStepping
     double      delta_t,
     VectorType& y)
   {
-    AssertThrow(
-      F.size() == 0,
-      ExcMessage(
-        "RungeKutta methods cannot handle more that one function to integate."));
-    AssertThrow(
-      J_inverse.size() == 0,
-      ExcMessage(
-        "RungeKutta methods cannot handle more that one function to integate."));
+    AssertThrow(F.size() == 0,
+                ExcMessage("RungeKutta methods cannot handle more that one "
+                           "function to integate."));
+    AssertThrow(J_inverse.size() == 0,
+                ExcMessage("RungeKutta methods cannot handle more that one "
+                           "function to integate."));
 
     return evolve_one_time_step(F[0], J_inverse[0], t, delta_t, y);
   }

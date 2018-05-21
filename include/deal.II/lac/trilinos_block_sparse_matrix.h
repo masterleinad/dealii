@@ -617,7 +617,8 @@ namespace TrilinosWrappers
             typeid(PayloadBlockType)
               == typeid(
                    internal::LinearOperatorImplementation::TrilinosPayload),
-            "TrilinosBlockPayload can only accept a payload of type TrilinosPayload.");
+            "TrilinosBlockPayload can only accept a payload of type "
+            "TrilinosPayload.");
         }
       };
 

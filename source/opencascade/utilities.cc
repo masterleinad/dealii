@@ -717,14 +717,12 @@ namespace OpenCASCADE
       = count_elements(out_shape);
     (void) numbers;
 
-    Assert(
-      std::get<0>(numbers) > 0,
-      ExcMessage(
-        "Could not find normal: the shape containing the closest point has 0 faces."));
-    Assert(
-      std::get<0>(numbers) < 2,
-      ExcMessage(
-        "Could not find normal: the shape containing the closest point has more than 1 face."));
+    Assert(std::get<0>(numbers) > 0,
+           ExcMessage("Could not find normal: the shape containing the closest "
+                      "point has 0 faces."));
+    Assert(std::get<0>(numbers) < 2,
+           ExcMessage("Could not find normal: the shape containing the closest "
+                      "point has more than 1 face."));
 
     TopExp_Explorer exp;
     exp.Init(out_shape, TopAbs_FACE);

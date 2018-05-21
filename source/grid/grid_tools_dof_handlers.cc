@@ -76,15 +76,15 @@ namespace GridTools
     // I.e., if p is true q must be true
     // (if p is false, q could be false or true).
     // p implies q logic is encapsulated in ~p|q.
-    Assert(
-      marked_vertices.size() == 0
-        || std::equal(marked_vertices.begin(),
-                      marked_vertices.end(),
-                      tria.get_used_vertices().begin(),
-                      [](bool p, bool q) { return !p || q; }),
-      ExcMessage(
-        "marked_vertices should be a subset of used vertices in the triangulation "
-        "but marked_vertices contains one or more vertices that are not used vertices!"));
+    Assert(marked_vertices.size() == 0
+             || std::equal(marked_vertices.begin(),
+                           marked_vertices.end(),
+                           tria.get_used_vertices().begin(),
+                           [](bool p, bool q) { return !p || q; }),
+           ExcMessage("marked_vertices should be a subset of used vertices in "
+                      "the triangulation "
+                      "but marked_vertices contains one or more vertices that "
+                      "are not used vertices!"));
 
     // In addition, if a vector bools
     // is specified (marked_vertices)
@@ -155,15 +155,15 @@ namespace GridTools
     // I.e., if p is true q must be true
     // (if p is false, q could be false or true).
     // p implies q logic is encapsulated in ~p|q.
-    Assert(
-      marked_vertices.size() == 0
-        || std::equal(marked_vertices.begin(),
-                      marked_vertices.end(),
-                      tria.get_used_vertices().begin(),
-                      [](bool p, bool q) { return !p || q; }),
-      ExcMessage(
-        "marked_vertices should be a subset of used vertices in the triangulation "
-        "but marked_vertices contains one or more vertices that are not used vertices!"));
+    Assert(marked_vertices.size() == 0
+             || std::equal(marked_vertices.begin(),
+                           marked_vertices.end(),
+                           tria.get_used_vertices().begin(),
+                           [](bool p, bool q) { return !p || q; }),
+           ExcMessage("marked_vertices should be a subset of used vertices in "
+                      "the triangulation "
+                      "but marked_vertices contains one or more vertices that "
+                      "are not used vertices!"));
 
     // Remove from the map unwanted elements.
     if(marked_vertices.size())

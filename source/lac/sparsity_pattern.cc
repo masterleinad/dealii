@@ -840,23 +840,23 @@ SparsityPattern::print_svg(std::ostream& out) const
 {
   unsigned int m = this->n_rows();
   unsigned int n = this->n_cols();
-  out
-    << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"0 0 "
-    << n + 2 << " " << m + 2
-    << " \">\n"
-       "<style type=\"text/css\" >\n"
-       "     <![CDATA[\n"
-       "      rect.pixel {\n"
-       "          fill:   #ff0000;\n"
-       "      }\n"
-       "    ]]>\n"
-       "  </style>\n\n"
-       "   <rect width=\""
-    << n + 2 << "\" height=\"" << m + 2
-    << "\" fill=\"rgb(128, 128, 128)\"/>\n"
-       "   <rect x=\"1\" y=\"1\" width=\""
-    << n + 0.1 << "\" height=\"" << m + 0.1
-    << "\" fill=\"rgb(255, 255, 255)\"/>\n\n";
+  out << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" "
+         "viewBox=\"0 0 "
+      << n + 2 << " " << m + 2
+      << " \">\n"
+         "<style type=\"text/css\" >\n"
+         "     <![CDATA[\n"
+         "      rect.pixel {\n"
+         "          fill:   #ff0000;\n"
+         "      }\n"
+         "    ]]>\n"
+         "  </style>\n\n"
+         "   <rect width=\""
+      << n + 2 << "\" height=\"" << m + 2
+      << "\" fill=\"rgb(128, 128, 128)\"/>\n"
+         "   <rect x=\"1\" y=\"1\" width=\""
+      << n + 0.1 << "\" height=\"" << m + 0.1
+      << "\" fill=\"rgb(255, 255, 255)\"/>\n\n";
 
   SparsityPattern::iterator it = this->begin(), end = this->end();
   for(; it != end; ++it)

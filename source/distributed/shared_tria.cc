@@ -49,19 +49,18 @@ namespace parallel
            | partition_custom_signal)
           & settings;
       (void) partition_settings;
-      Assert(
-        partition_settings == partition_auto
-          || partition_settings == partition_metis
-          || partition_settings == partition_zoltan
-          || partition_settings == partition_zorder
-          || partition_settings == partition_custom_signal,
-        ExcMessage(
-          "Settings must contain exactly one type of the active cell partitioning scheme."))
+      Assert(partition_settings == partition_auto
+               || partition_settings == partition_metis
+               || partition_settings == partition_zoltan
+               || partition_settings == partition_zorder
+               || partition_settings == partition_custom_signal,
+             ExcMessage("Settings must contain exactly one type of the active "
+                        "cell partitioning scheme."))
 
-        if(settings & construct_multigrid_hierarchy) Assert(
-          allow_artificial_cells,
-          ExcMessage(
-            "construct_multigrid_hierarchy requires allow_artificial_cells to be set to true."))
+        if(settings & construct_multigrid_hierarchy)
+          Assert(allow_artificial_cells,
+                 ExcMessage("construct_multigrid_hierarchy requires "
+                            "allow_artificial_cells to be set to true."))
     }
 
     template <int dim, int spacedim>

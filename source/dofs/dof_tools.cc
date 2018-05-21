@@ -1443,10 +1443,9 @@ namespace DoFTools
           {
             const typename DoFHandlerType::active_cell_iterator& cell
               = *it_cell;
-            Assert(
-              cell->subdomain_id() != subdomain_id,
-              ExcMessage(
-                "The subdomain ID of the halo cell should not match that of the vector entry."));
+            Assert(cell->subdomain_id() != subdomain_id,
+                   ExcMessage("The subdomain ID of the halo cell should not "
+                              "match that of the vector entry."));
 
             local_dof_indices.resize(cell->get_fe().dofs_per_cell);
             cell->get_dof_indices(local_dof_indices);

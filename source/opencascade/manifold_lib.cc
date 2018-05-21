@@ -149,10 +149,9 @@ namespace OpenCASCADE
     : sh(sh), tolerance(tolerance)
   {
     Assert(spacedim == 3, ExcNotImplemented());
-    Assert(
-      std::get<0>(count_elements(sh)) > 0,
-      ExcMessage(
-        "NormalToMeshProjectionManifold needs a shape containing faces to operate."));
+    Assert(std::get<0>(count_elements(sh)) > 0,
+           ExcMessage("NormalToMeshProjectionManifold needs a shape containing "
+                      "faces to operate."));
   }
 
   template <int dim, int spacedim>
@@ -196,10 +195,11 @@ namespace OpenCASCADE
 
             average_normal /= 2.0;
 
-            Assert(
-              average_normal.norm() > 1e-4,
-              ExcMessage(
-                "Failed to refine cell: the average of the surface normals at the surrounding edge turns out to be a null vector, making the projection direction undetermined."));
+            Assert(average_normal.norm() > 1e-4,
+                   ExcMessage(
+                     "Failed to refine cell: the average of the surface "
+                     "normals at the surrounding edge turns out to be a null "
+                     "vector, making the projection direction undetermined."));
 
             Tensor<1, 3> T = surrounding_points[0] - surrounding_points[1];
             T /= T.norm();
@@ -228,8 +228,9 @@ namespace OpenCASCADE
 
             Assert(
               average_normal.norm() > tolerance,
-              ExcMessage(
-                "Failed to refine cell: the normal estimated via the surrounding points turns out to be a null vector, making the projection direction undetermined."));
+              ExcMessage("Failed to refine cell: the normal estimated via the "
+                         "surrounding points turns out to be a null vector, "
+                         "making the projection direction undetermined."));
 
             average_normal /= average_normal.norm();
             break;
@@ -269,8 +270,9 @@ namespace OpenCASCADE
 
             Assert(
               average_normal.norm() > tolerance,
-              ExcMessage(
-                "Failed to refine cell: the normal estimated via the surrounding points turns out to be a null vector, making the projection direction undetermined."));
+              ExcMessage("Failed to refine cell: the normal estimated via the "
+                         "surrounding points turns out to be a null vector, "
+                         "making the projection direction undetermined."));
 
             average_normal /= average_normal.norm();
             break;

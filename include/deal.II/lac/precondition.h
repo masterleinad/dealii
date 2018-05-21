@@ -1883,10 +1883,9 @@ namespace internal
           if(preconditioner.get() == nullptr)
             preconditioner = std::make_shared<DiagonalMatrix<VectorType>>();
 
-          Assert(
-            preconditioner->m() == 0,
-            ExcMessage(
-              "Preconditioner appears to be initialized but not sized correctly"));
+          Assert(preconditioner->m() == 0,
+                 ExcMessage("Preconditioner appears to be initialized but not "
+                            "sized correctly"));
 
           // Check if we can initialize from vector that then gets set to zero
           // as the matrix will own the memory

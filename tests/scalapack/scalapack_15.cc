@@ -162,10 +162,10 @@ test(const unsigned int size,
 
   // the actual test:
 
-  pcout
-    << "comparing " << max_n_eigenvalues
-    << " eigenvalues and eigenvectors computed using LAPACK and ScaLAPACK p_syevr:"
-    << std::endl;
+  pcout << "comparing " << max_n_eigenvalues
+        << " eigenvalues and eigenvectors computed using LAPACK and ScaLAPACK "
+           "p_syevr:"
+        << std::endl;
   const std::vector<NumberType> eigenvalues_psyer
     = scalapack_syevr.eigenpairs_symmetric_by_index_MRRR(
       std::make_pair(0, size - 1), true);

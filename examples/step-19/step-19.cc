@@ -70,13 +70,15 @@ namespace Step19
   {
     static const char* message
       = "\n"
-        "Converter from deal.II intermediate format to other graphics formats.\n"
+        "Converter from deal.II intermediate format to other graphics "
+        "formats.\n"
         "\n"
         "Usage:\n"
         "    ./step-19 [-p parameter_file] list_of_input_files \n"
         "              [-x output_format] [-o output_file]\n"
         "\n"
-        "Parameter sequences in brackets can be omitted if a parameter file is\n"
+        "Parameter sequences in brackets can be omitted if a parameter file "
+        "is\n"
         "specified on the command line and if it provides values for these\n"
         "missing parameters.\n"
         "\n"

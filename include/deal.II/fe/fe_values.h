@@ -3155,10 +3155,13 @@ public:
   DeclException1(
     ExcAccessToUninitializedField,
     char*,
-    << "You are requesting information from an FEValues/FEFaceValues/FESubfaceValues "
+    << "You are requesting information from an "
+       "FEValues/FEFaceValues/FESubfaceValues "
     << "object for which this kind of information has not been computed. What "
-    << "information these objects compute is determined by the update_* flags you "
-    << "pass to the constructor. Here, the operation you are attempting requires "
+    << "information these objects compute is determined by the update_* flags "
+       "you "
+    << "pass to the constructor. Here, the operation you are attempting "
+       "requires "
     << "the <" << arg1
     << "> flag to be set, but it was apparently not specified "
     << "upon construction.");
@@ -3170,7 +3173,8 @@ public:
    */
   DeclExceptionMsg(
     ExcFEDontMatch,
-    "The FiniteElement you provided to FEValues and the FiniteElement that belongs "
+    "The FiniteElement you provided to FEValues and the FiniteElement that "
+    "belongs "
     "to the DoFHandler that provided the cell iterator do not match.");
   /**
    * A given shape function is not primitive, but it needs to be.
@@ -3191,10 +3195,11 @@ public:
    *
    * @ingroup Exceptions
    */
-  DeclExceptionMsg(
-    ExcFENotPrimitive,
-    "The given FiniteElement is not a primitive element but the requested operation "
-    "only works for those. See FiniteElement::is_primitive() for more information.");
+  DeclExceptionMsg(ExcFENotPrimitive,
+                   "The given FiniteElement is not a primitive element but the "
+                   "requested operation "
+                   "only works for those. See FiniteElement::is_primitive() "
+                   "for more information.");
 
 protected:
   /**

@@ -1116,11 +1116,10 @@ void
 DoFHandler<dim, spacedim>::distribute_dofs(
   const FiniteElement<dim, spacedim>& ff)
 {
-  Assert(
-    tria != nullptr,
-    ExcMessage(
-      "You need to set the Triangulation in the DoFHandler using initialize() or "
-      "in the constructor before you can distribute DoFs."));
+  Assert(tria != nullptr,
+         ExcMessage("You need to set the Triangulation in the DoFHandler using "
+                    "initialize() or "
+                    "in the constructor before you can distribute DoFs."));
   Assert(tria->n_levels() > 0,
          ExcMessage("The Triangulation you are using is empty!"));
 
@@ -1173,17 +1172,17 @@ template <int dim, int spacedim>
 void
 DoFHandler<dim, spacedim>::distribute_mg_dofs()
 {
-  Assert(
-    levels.size() > 0,
-    ExcMessage(
-      "Distribute active DoFs using distribute_dofs() before calling distribute_mg_dofs()."));
+  Assert(levels.size() > 0,
+         ExcMessage("Distribute active DoFs using distribute_dofs() before "
+                    "calling distribute_mg_dofs()."));
 
   Assert(
     ((tria->get_mesh_smoothing()
       & Triangulation<dim, spacedim>::limit_level_difference_at_vertices)
      != Triangulation<dim, spacedim>::none),
     ExcMessage(
-      "The mesh smoothing requirement 'limit_level_difference_at_vertices' has to be set for using multigrid!"));
+      "The mesh smoothing requirement 'limit_level_difference_at_vertices' has "
+      "to be set for using multigrid!"));
 
   clear_mg_space();
 
@@ -1292,10 +1291,9 @@ DoFHandler<dim, spacedim>::renumber_dofs(
   const unsigned int                          level,
   const std::vector<types::global_dof_index>& new_numbers)
 {
-  Assert(
-    mg_levels.size() > 0 && levels.size() > 0,
-    ExcMessage(
-      "You need to distribute active and level DoFs before you can renumber level DoFs."));
+  Assert(mg_levels.size() > 0 && levels.size() > 0,
+         ExcMessage("You need to distribute active and level DoFs before you "
+                    "can renumber level DoFs."));
   AssertIndexRange(level, get_triangulation().n_global_levels());
   AssertDimension(new_numbers.size(),
                   locally_owned_mg_dofs(level).n_elements());

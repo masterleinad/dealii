@@ -3430,10 +3430,9 @@ namespace GridTools
     constexpr int spacedim = MeshType::space_dimension;
     auto tria = static_cast<const parallel::Triangulation<dim, spacedim>*>(
       &mesh.get_triangulation());
-    Assert(
-      tria != nullptr,
-      ExcMessage(
-        "The function exchange_cell_data_to_ghosts() only works with parallel triangulations."));
+    Assert(tria != nullptr,
+           ExcMessage("The function exchange_cell_data_to_ghosts() only works "
+                      "with parallel triangulations."));
 
     // map neighbor_id -> data_buffer where we accumulate the data to send
     typedef std::map<dealii::types::subdomain_id,

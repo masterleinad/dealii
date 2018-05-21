@@ -1141,15 +1141,15 @@ namespace GridTools
     // I.e., if p is true q must be true
     // (if p is false, q could be false or true).
     // p implies q logic is encapsulated in ~p|q.
-    Assert(
-      marked_vertices.size() == 0
-        || std::equal(marked_vertices.begin(),
-                      marked_vertices.end(),
-                      tria.get_used_vertices().begin(),
-                      [](bool p, bool q) { return !p || q; }),
-      ExcMessage(
-        "marked_vertices should be a subset of used vertices in the triangulation "
-        "but marked_vertices contains one or more vertices that are not used vertices!"));
+    Assert(marked_vertices.size() == 0
+             || std::equal(marked_vertices.begin(),
+                           marked_vertices.end(),
+                           tria.get_used_vertices().begin(),
+                           [](bool p, bool q) { return !p || q; }),
+           ExcMessage("marked_vertices should be a subset of used vertices in "
+                      "the triangulation "
+                      "but marked_vertices contains one or more vertices that "
+                      "are not used vertices!"));
 
     // In addition, if a vector bools
     // is specified (marked_vertices)
@@ -1220,15 +1220,15 @@ namespace GridTools
     // I.e., if p is true q must be true
     // (if p is false, q could be false or true).
     // p implies q logic is encapsulated in ~p|q.
-    Assert(
-      marked_vertices.size() == 0
-        || std::equal(marked_vertices.begin(),
-                      marked_vertices.end(),
-                      tria.get_used_vertices().begin(),
-                      [](bool p, bool q) { return !p || q; }),
-      ExcMessage(
-        "marked_vertices should be a subset of used vertices in the triangulation "
-        "but marked_vertices contains one or more vertices that are not used vertices!"));
+    Assert(marked_vertices.size() == 0
+             || std::equal(marked_vertices.begin(),
+                           marked_vertices.end(),
+                           tria.get_used_vertices().begin(),
+                           [](bool p, bool q) { return !p || q; }),
+           ExcMessage("marked_vertices should be a subset of used vertices in "
+                      "the triangulation "
+                      "but marked_vertices contains one or more vertices that "
+                      "are not used vertices!"));
 
     // Remove from the map unwanted elements.
     if(marked_vertices.size())
@@ -1891,10 +1891,9 @@ namespace GridTools
     // refinement_level (and coarser levels if there are active cells) which have the predicate
     // property. These are then merged
 
-    Assert(
-      refinement_level <= mesh.n_levels(),
-      ExcMessage(
-        "Error: refinement level is higher then total levels in the triangulation!"));
+    Assert(refinement_level <= mesh.n_levels(),
+           ExcMessage("Error: refinement level is higher then total levels in "
+                      "the triangulation!"));
 
     const unsigned int                 spacedim = MeshType::space_dimension;
     std::vector<BoundingBox<spacedim>> bounding_boxes;
@@ -4594,10 +4593,9 @@ namespace GridTools
       = dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
         &cache.get_triangulation());
     // If the dynamic cast failed we can't recover the mpi communicator: throwing an assertion error
-    Assert(
-      tria_mpi,
-      ExcMessage(
-        "GridTools::distributed_compute_point_locations() requires a parallel triangulation."));
+    Assert(tria_mpi,
+           ExcMessage("GridTools::distributed_compute_point_locations() "
+                      "requires a parallel triangulation."));
     auto mpi_communicator = tria_mpi->get_communicator();
     // Preparing the output tuple
     std::tuple<

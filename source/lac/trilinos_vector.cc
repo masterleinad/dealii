@@ -528,8 +528,8 @@ namespace TrilinosWrappers
              && (given_last_action == ::dealii::VectorOperation::add))
               || ((last_action == Insert)
                   && (given_last_action == ::dealii::VectorOperation::insert)),
-            ExcMessage(
-              "The last operation on the Vector and the given last action in the compress() call do not agree!"));
+            ExcMessage("The last operation on the Vector and the given last "
+                       "action in the compress() call do not agree!"));
         }
 
 #  ifdef DEBUG

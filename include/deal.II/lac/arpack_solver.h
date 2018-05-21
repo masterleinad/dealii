@@ -467,14 +467,12 @@ inline ArpackSolver::AdditionalData::AdditionalData(
         eigenvalue_of_interest != smallest_real_part,
         ExcMessage(
           "'smallest real part' can only be used for non-symmetric problems!"));
-      Assert(
-        eigenvalue_of_interest != largest_imaginary_part,
-        ExcMessage(
-          "'largest imaginary part' can only be used for non-symmetric problems!"));
-      Assert(
-        eigenvalue_of_interest != smallest_imaginary_part,
-        ExcMessage(
-          "'smallest imaginary part' can only be used for non-symmetric problems!"));
+      Assert(eigenvalue_of_interest != largest_imaginary_part,
+             ExcMessage("'largest imaginary part' can only be used for "
+                        "non-symmetric problems!"));
+      Assert(eigenvalue_of_interest != smallest_imaginary_part,
+             ExcMessage("'smallest imaginary part' can only be used for "
+                        "non-symmetric problems!"));
     }
 }
 

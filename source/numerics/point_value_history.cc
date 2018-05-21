@@ -1068,8 +1068,8 @@ PointValueHistory<dim>::write_gnuplot(
                          << point->support_point_locations[component] << "\n";
             }
           if(triangulation_changed)
-            to_gnuplot
-              << "# (Original components and locations, may be invalidated by mesh change.)\n";
+            to_gnuplot << "# (Original components and locations, may be "
+                          "invalidated by mesh change.)\n";
 
           if(postprocessor_locations.size() != 0)
             {
@@ -1350,8 +1350,8 @@ PointValueHistory<dim>::status(std::ostream& out)
     = data_store.begin();
   if(data_store_begin != data_store.end())
     {
-      out
-        << "Mnemonic: data set size (mask size, n true components) : n data sets\n";
+      out << "Mnemonic: data set size (mask size, n true components) : n data "
+             "sets\n";
     }
   for(; data_store_begin != data_store.end(); ++data_store_begin)
     {
