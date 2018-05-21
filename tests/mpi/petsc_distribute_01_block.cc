@@ -25,6 +25,8 @@
 
 #include <sstream>
 
+
+
 void
 test()
 {
@@ -141,6 +143,7 @@ test()
                   == vec.block(1).local_range().first + 105,
                 ExcInternalError());
 
+
   for(unsigned int i = vec.block(0).local_range().first;
       i < vec.block(0).local_range().second;
       ++i)
@@ -192,10 +195,13 @@ test()
   }
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

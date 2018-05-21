@@ -176,6 +176,7 @@ namespace polytest
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
 
+
     constraints.clear();
     SimplePolynomial<dim> boundary_function;
 
@@ -221,6 +222,7 @@ namespace polytest
     const FEValuesExtractors::Vector vec(0);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
+
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);

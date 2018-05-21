@@ -109,6 +109,7 @@ test()
   Assert(all == complete_index_set(N), ExcInternalError());
 }
 
+
 int
 main(int argc, char* argv[])
 {

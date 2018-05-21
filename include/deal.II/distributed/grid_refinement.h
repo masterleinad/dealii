@@ -111,6 +111,7 @@ namespace parallel
   }   // namespace distributed
 } // namespace parallel
 
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif //dealii_distributed_grid_refinement_h

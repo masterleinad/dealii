@@ -287,6 +287,7 @@ namespace Algorithms
     strcpy(format, fmt);
   }
 
+
   inline const char*
   TimestepControl::file_name_format()
   {

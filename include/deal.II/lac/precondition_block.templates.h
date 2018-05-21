@@ -514,6 +514,8 @@ PreconditionBlock<MatrixType, inverse_type>::memory_consumption() const
           + PreconditionBlockBase<inverse_type>::memory_consumption());
 }
 
+
+
 /*--------------------- PreconditionBlockJacobi -----------------------*/
 
 template <typename MatrixType, typename inverse_type>
@@ -661,6 +663,8 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::Tstep(
   this->backward_step(*aux, dst, src, true);
   dst = *aux;
 }
+
+
 
 /*--------------------- PreconditionBlockSOR -----------------------*/
 
@@ -916,6 +920,8 @@ PreconditionBlockSOR<MatrixType, inverse_type>::Tstep(
 {
   this->backward_step(dst, dst, src, true);
 }
+
+
 
 //---------------------------------------------------------------------------
 

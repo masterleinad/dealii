@@ -106,10 +106,13 @@ namespace Differentiation
 
     } // namespace internal
 
+
+
   } // namespace AD
 } // namespace Differentiation
 
 /* --------------------------- inline and template functions and specializations ------------------------- */
+
 
 #  ifndef DOXYGEN
 
@@ -590,7 +593,9 @@ namespace Differentiation
           NumberTypes::sacado_rad>
     {};
 
+
 #    ifdef DEAL_II_TRILINOS_CXX_SUPPORTS_SACADO_COMPLEX_RAD
+
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -634,7 +639,9 @@ namespace Differentiation
                      NumberTypes::sacado_rad>
     {};
 
+
 #    endif
+
 
     /* -------------- NumberTypes::sacado_dfad_dfad -------------- */
 
@@ -769,7 +776,9 @@ namespace Differentiation
                      NumberTypes::sacado_rad_dfad>
     {};
 
+
 #    ifdef DEAL_II_TRILINOS_CXX_SUPPORTS_SACADO_COMPLEX_RAD
+
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -817,7 +826,9 @@ namespace Differentiation
                      NumberTypes::sacado_rad_dfad>
     {};
 
+
 #    endif
+
 
     /* -------------- Additional type traits -------------- */
 
@@ -851,6 +862,9 @@ namespace Differentiation
 
   } // namespace AD
 } // namespace Differentiation
+
+#  endif // DOXYGEN
+
 
 #  endif // DOXYGEN
 

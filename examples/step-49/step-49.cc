@@ -277,6 +277,7 @@ struct Grid6Func
   }
 };
 
+
 void
 grid_6()
 {

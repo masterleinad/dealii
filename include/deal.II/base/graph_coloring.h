@@ -23,9 +23,16 @@
 #  include <deal.II/base/thread_management.h>
 #  include <deal.II/lac/sparsity_tools.h>
 
+#  include <boost/unordered_map.hpp>
+#  include <boost/unordered_set.hpp>
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/thread_management.h>
+#  include <deal.II/lac/sparsity_tools.h>
+
 #  include <functional>
 #  include <set>
 #  include <vector>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -441,6 +448,7 @@ namespace GraphColoring
       return coloring;
     }
   } // namespace internal
+
 
   /**
    * Create a partitioning of the given range of iterators so that iterators

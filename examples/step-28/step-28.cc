@@ -195,6 +195,53 @@ namespace Step28
                     sigma_s[m][group_1][group_2] = 0.0;
               }
 
+
+            diffusion[5][1] = 0.2;
+
+            sigma_r[4][0] = 0.026;
+            sigma_r[5][0] = 0.051;
+            sigma_r[6][0] = 0.026;
+            sigma_r[7][0] = 0.050;
+
+            sigma_r[0][1] = 0.100;
+            sigma_r[1][1] = 0.200;
+            sigma_r[2][1] = 0.250;
+            sigma_r[3][1] = 0.300;
+            sigma_r[4][1] = 0.020;
+            sigma_r[5][1] = 0.040;
+            sigma_r[6][1] = 0.020;
+            sigma_r[7][1] = 0.800;
+
+            nu_sigma_f[0][0] = 0.0050;
+            nu_sigma_f[1][0] = 0.0075;
+            nu_sigma_f[2][0] = 0.0075;
+            nu_sigma_f[3][0] = 0.0075;
+            nu_sigma_f[4][0] = 0.000;
+            nu_sigma_f[5][0] = 0.000;
+            nu_sigma_f[6][0] = 1e-7;
+            nu_sigma_f[7][0] = 0.00;
+
+            nu_sigma_f[0][1] = 0.125;
+            nu_sigma_f[1][1] = 0.300;
+            nu_sigma_f[2][1] = 0.375;
+            nu_sigma_f[3][1] = 0.450;
+            nu_sigma_f[4][1] = 0.000;
+            nu_sigma_f[5][1] = 0.000;
+            nu_sigma_f[6][1] = 3e-6;
+            nu_sigma_f[7][1] = 0.00;
+
+            sigma_s[0][0][1] = 0.020;
+            sigma_s[1][0][1] = 0.015;
+            sigma_s[2][0][1] = 0.015;
+            sigma_s[3][0][1] = 0.015;
+            sigma_s[4][0][1] = 0.025;
+            sigma_s[5][0][1] = 0.050;
+            sigma_s[6][0][1] = 0.025;
+            sigma_s[7][0][1] = 0.010;
+
+            break;
+          }
+
             diffusion[5][1] = 0.2;
 
             sigma_r[4][0] = 0.026;
@@ -501,6 +548,9 @@ namespace Step28
     SparseMatrix<double> system_matrix;
 
     Vector<double> system_rhs;
+
+    std::map<types::global_dof_index, double> boundary_values;
+    ConstraintMatrix                          hanging_node_constraints;
 
     std::map<types::global_dof_index, double> boundary_values;
     ConstraintMatrix                          hanging_node_constraints;
@@ -1166,6 +1216,10 @@ namespace Step28
     NeutronDiffusionProblem(const Parameters& parameters);
     ~NeutronDiffusionProblem();
 
+
+    NeutronDiffusionProblem(const Parameters& parameters);
+    ~NeutronDiffusionProblem();
+
     void
     run();
 
@@ -1181,6 +1235,9 @@ namespace Step28
 
     void
     refine_grid();
+
+    double
+    get_total_fission_source() const;
 
     double
     get_total_fission_source() const;
@@ -1262,6 +1319,8 @@ namespace Step28
     convergence_tolerance = prm.get_double("Power iteration tolerance");
   }
 
+
+
   // @sect4{Implementation of the <code>NeutronDiffusionProblem</code> class}
 
   // Now for the <code>NeutronDiffusionProblem</code> class. The constructor
@@ -1327,6 +1386,7 @@ namespace Step28
     Triangulation<dim> coarse_grid;
     GridGenerator::subdivided_hyper_rectangle(
       coarse_grid, n_subdivisions, bottom_left, upper_right, true);
+
 
     // The second part of the function deals with material numbers of pin
     // cells of each type of assembly. Here, we define four different types of
@@ -1505,6 +1565,8 @@ namespace Step28
     return fission_source;
   }
 
+
+
   // @sect5{<code>NeutronDiffusionProblem::refine_grid</code>}
   //
   // The next function lets the individual energy group objects refine their
@@ -1665,6 +1727,8 @@ namespace Step28
   }
 } // namespace Step28
 
+
+
 // @sect3{The <code>main()</code> function}
 //
 // The last thing in the program in the <code>main()</code> function. The
@@ -1703,6 +1767,8 @@ main(int argc, char** argv)
       parameters.declare_parameters(parameter_handler);
 
       parameter_handler.parse_input(filename);
+
+      parameters.get_parameters(parameter_handler);
 
       parameters.get_parameters(parameter_handler);
 

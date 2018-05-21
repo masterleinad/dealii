@@ -16,6 +16,7 @@
 #ifndef dealii_matrix_free_mapping_data_on_the_fly_h
 #define dealii_matrix_free_mapping_data_on_the_fly_h
 
+
 #include <deal.II/base/aligned_vector.h>
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
@@ -26,6 +27,7 @@
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/matrix_free/mapping_info.h>
 #include <deal.II/matrix_free/shape_info.h>
+
 
 DEAL_II_NAMESPACE_OPEN
 

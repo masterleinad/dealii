@@ -21,6 +21,8 @@
 //   FE::hp_constraints_are_implemented
 // a bit like fe_tools_14, but works on a different set of elements
 
+
+
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)

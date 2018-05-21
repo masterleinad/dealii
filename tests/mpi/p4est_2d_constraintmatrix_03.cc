@@ -53,6 +53,7 @@ test()
   const double R0 = 6371000. - 2890000.;
   const double R1 = 6371000. - 35000.;
 
+
   GridGenerator::hyper_shell(tr, Point<dim>(), R0, R1, 12, true);
   GridTools::copy_boundary_to_manifold_id(tr);
 
@@ -110,6 +111,9 @@ test()
   VectorTools::compute_no_normal_flux_constraints(
     dofh, 0, no_normal_flux_boundaries, cm);
 
+  VectorTools::compute_no_normal_flux_constraints(
+    dofh, 0, no_normal_flux_boundaries, cm);
+
   cm.close();
 
   cm.distribute(x);
@@ -125,6 +129,7 @@ test()
   tr.reset_manifold(0);
   tr.reset_manifold(1);
 }
+
 
 int
 main(int argc, char* argv[])

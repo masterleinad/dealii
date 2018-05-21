@@ -21,6 +21,7 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 
+
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
@@ -51,6 +52,7 @@ test(std::ostream& out)
   GridOut go;
   go.write_gnuplot(triangulation, out);
 }
+
 
 int
 main()

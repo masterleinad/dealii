@@ -34,6 +34,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int, int>
 class MappingQ;
 
+
 /*!@addtogroup mapping */
 /*@{*/
 
@@ -287,6 +288,7 @@ public:
      */
     void
     compute_shape_function_values(const std::vector<Point<dim>>& unit_points);
+
 
     /**
      * Shape function at quadrature point. Shape functions are in tensor

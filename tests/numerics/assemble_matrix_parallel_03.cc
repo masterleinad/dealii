@@ -263,6 +263,7 @@ LaplaceProblem<dim>::setup_system()
                 this,
                 std::placeholders::_1)));
 
+
   BlockDynamicSparsityPattern csp(2, 2);
   for(unsigned int i = 0; i < 2; ++i)
     for(unsigned int j = 0; j < 2; ++j)
@@ -406,6 +407,8 @@ LaplaceProblem<dim>::postprocess()
     cell->set_active_fe_index(rand() % fe_collection.size());
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -427,6 +430,8 @@ LaplaceProblem<dim>::run()
         postprocess();
     }
 }
+
+
 
 int
 main()

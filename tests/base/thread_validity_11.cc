@@ -26,6 +26,7 @@ void
 execute()
 {}
 
+
 void
 test()
 {
@@ -36,6 +37,8 @@ test()
   t.join();
   deallog << "After second join()" << std::endl;
 }
+
+
 
 int
 main()

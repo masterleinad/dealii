@@ -37,8 +37,11 @@ test()
 
   verify(v1, v2);
 
+  verify(v1, v2);
+
   verify(v1, v3);
 }
+
 
 int
 main()

@@ -16,11 +16,13 @@
 #ifndef dealii_chunk_sparse_matrix_templates_h
 #define dealii_chunk_sparse_matrix_templates_h
 
+
 #include <deal.II/base/parallel.h>
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/lac/chunk_sparse_matrix.h>
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/vector.h>
+
 
 #include <algorithm>
 #include <cmath>
@@ -259,6 +261,8 @@ namespace internal
   } // namespace ChunkSparseMatrixImplementation
 } // namespace internal
 
+
+
 template <typename number>
 ChunkSparseMatrix<number>::ChunkSparseMatrix()
   : cols(nullptr, "ChunkSparseMatrix"), val(nullptr), max_len(0)
@@ -336,6 +340,8 @@ namespace internal
     }
   } // namespace ChunkSparseMatrixImplementation
 } // namespace internal
+
+
 
 template <typename number>
 ChunkSparseMatrix<number>&
@@ -1178,6 +1184,7 @@ ChunkSparseMatrix<number>::precondition_SOR(Vector<somenumber>&       dst,
   Assert(m() == n(),
          ExcMessage("This operation is only valid on square matrices."));
 
+
   dst = src;
   SOR(dst, om);
 }
@@ -1193,6 +1200,7 @@ ChunkSparseMatrix<number>::precondition_TSOR(Vector<somenumber>&       dst,
   Assert(val != nullptr, ExcNotInitialized());
   Assert(m() == n(),
          ExcMessage("This operation is only valid on square matrices."));
+
 
   dst = src;
   TSOR(dst, om);

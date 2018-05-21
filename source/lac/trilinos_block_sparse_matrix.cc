@@ -88,6 +88,13 @@ namespace TrilinosWrappers
            ExcDimensionMismatch(n_block_rows,
                                 block_sparsity_pattern.n_block_cols()));
 
+    Assert(n_block_rows == block_sparsity_pattern.n_block_rows(),
+           ExcDimensionMismatch(n_block_rows,
+                                block_sparsity_pattern.n_block_rows()));
+    Assert(n_block_rows == block_sparsity_pattern.n_block_cols(),
+           ExcDimensionMismatch(n_block_rows,
+                                block_sparsity_pattern.n_block_cols()));
+
     // Call the other basic reinit function, ...
     reinit(block_sparsity_pattern.n_block_rows(),
            block_sparsity_pattern.n_block_cols());
@@ -226,6 +233,8 @@ namespace TrilinosWrappers
     reinit(parallel_partitioning, dealii_block_sparse_matrix, drop_tolerance);
   }
 
+
+
   void
   BlockSparseMatrix::collect_sizes()
   {
@@ -352,6 +361,8 @@ namespace TrilinosWrappers
                             const dealii::BlockDynamicSparsityPattern&,
                             const MPI_Comm&,
                             const bool);
+
+} // namespace TrilinosWrappers
 
 } // namespace TrilinosWrappers
 

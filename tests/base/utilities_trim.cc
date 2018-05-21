@@ -27,6 +27,8 @@ check(const std::string& input, const std::string& expected)
   AssertThrow(Utilities::trim(input) == expected, ExcInternalError());
 }
 
+
+
 void
 test()
 {
@@ -43,6 +45,7 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

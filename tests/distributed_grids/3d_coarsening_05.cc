@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -45,6 +47,7 @@ test(std::ostream& /*out*/)
   tr2.refine_global(1);
 
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
+
 
   while(tr.n_active_cells() < 50000)
     {
@@ -89,12 +92,16 @@ test(std::ostream& /*out*/)
       tr.execute_coarsening_and_refinement();
       tr2.execute_coarsening_and_refinement();
 
+      tr.execute_coarsening_and_refinement();
+      tr2.execute_coarsening_and_refinement();
+
       deallog << " Number of cells: " << tr.n_active_cells() << ' '
               << tr2.n_active_cells() << std::endl;
 
       assert_tria_equal(tr, tr2);
     }
 }
+
 
 int
 main(int argc, char* argv[])

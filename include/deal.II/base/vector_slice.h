@@ -161,6 +161,8 @@ make_slice(VectorType& v, const unsigned int start, const unsigned int length)
   return r;
 }
 
+
+
 //---------------------------------------------------------------------------
 
 template <typename VectorType>

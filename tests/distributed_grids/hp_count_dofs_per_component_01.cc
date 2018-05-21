@@ -37,6 +37,7 @@
 #include <fstream>
 #include <numeric>
 
+
 template <int dim>
 void
 test()
@@ -70,6 +71,7 @@ test()
                 << " global dofs" << std::endl;
     }
 }
+
 
 int
 main(int argc, char* argv[])

@@ -72,12 +72,14 @@ boundary_q(const DoFHandler<dim>&)
   return q;
 }
 
+
 const Quadrature<0>&
 boundary_q(const DoFHandler<1>&)
 {
   static const Quadrature<0>* q = nullptr;
   return *q;
 }
+
 
 void
 write_map(const std::map<types::global_dof_index, double>& bv)
@@ -91,6 +93,8 @@ write_map(const std::map<types::global_dof_index, double>& bv)
                                           -10000)
             << std::endl;
 }
+
+
 
 template <int dim>
 void
@@ -170,6 +174,7 @@ check()
       delete function_list[i];
     };
 }
+
 
 int
 main()

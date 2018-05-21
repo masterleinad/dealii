@@ -251,6 +251,8 @@ namespace TrilinosWrappers
     initialize(*trilinos_matrix, additional_data);
   }
 
+
+
   void
   PreconditionAMG::reinit()
   {
@@ -259,6 +261,8 @@ namespace TrilinosWrappers
         preconditioner.get());
     multilevel_operator->ReComputePreconditioner();
   }
+
+
 
   void
   PreconditionAMG::clear()
@@ -279,6 +283,8 @@ namespace TrilinosWrappers
     return memory;
   }
 
+
+
   // explicit instantiations
   template void
   PreconditionAMG::initialize(const ::dealii::SparseMatrix<double>&,
@@ -290,6 +296,8 @@ namespace TrilinosWrappers
                               const AdditionalData&,
                               const double,
                               const ::dealii::SparsityPattern*);
+
+
 
 } // namespace TrilinosWrappers
 

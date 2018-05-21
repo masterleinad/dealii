@@ -26,6 +26,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/fe_field_function.h>
 
+
+
 template <int dim>
 void
 check()
@@ -69,6 +71,7 @@ check()
   for(unsigned int q_point = 0; q_point < quadrature.size(); ++q_point)
     deallog << gradients[q_point] << std::endl;
 }
+
 
 int
 main()

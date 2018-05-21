@@ -177,6 +177,8 @@ IndexSet::do_compress() const
   Assert(next_index == n_elements(), ExcInternalError());
 }
 
+
+
 IndexSet IndexSet::operator&(const IndexSet& is) const
 {
   Assert(size() == is.size(), ExcDimensionMismatch(size(), is.size()));
@@ -471,6 +473,8 @@ IndexSet::block_read(std::istream& in)
   do_compress(); // needed so that largest_range can be recomputed
 }
 
+
+
 void
 IndexSet::fill_index_vector(std::vector<size_type>& indices) const
 {
@@ -486,6 +490,8 @@ IndexSet::fill_index_vector(std::vector<size_type>& indices) const
 
   Assert(indices.size() == n_elements(), ExcInternalError());
 }
+
+
 
 #ifdef DEAL_II_WITH_TRILINOS
 

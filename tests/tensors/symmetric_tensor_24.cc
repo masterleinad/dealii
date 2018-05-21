@@ -36,6 +36,7 @@ check()
     }
 }
 
+
 int
 main()
 {

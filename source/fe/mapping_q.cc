@@ -233,6 +233,7 @@ MappingQ<dim, spacedim>::fill_fe_values(
   data.use_mapping_q1_on_current_cell
     = !(use_mapping_q_on_all_cells || cell->has_boundary_lines());
 
+
   // call the base class. we need to ensure that the flag indicating whether
   // we can use some similarity has to be modified - for a general MappingQ,
   // the data needs to be recomputed anyway since then the mapping changes the

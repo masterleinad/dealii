@@ -19,6 +19,7 @@
 
 #include <deal.II/base/utilities.h>
 
+
 void
 test()
 {
@@ -39,6 +40,8 @@ test()
     deallog << Utilities::split_string_list(p, ' ').size() << std::endl;
   }
 }
+
+
 
 int
 main()

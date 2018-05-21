@@ -57,6 +57,8 @@ namespace internal
   } // namespace DataOutImplementation
 } // namespace internal
 
+
+
 template <int dim, typename DoFHandlerType>
 void
 DataOut<dim, DoFHandlerType>::build_one_patch(
@@ -134,6 +136,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
       patch.data.reinit(scratch_data.n_datasets, n_q_points);
       patch.points_are_available = false;
     }
+
 
   if(scratch_data.n_datasets > 0)
     {
@@ -353,6 +356,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
             }
         }
     }
+
 
   for(unsigned int f = 0;
       f < GeometryInfo<DoFHandlerType::dimension>::faces_per_cell;

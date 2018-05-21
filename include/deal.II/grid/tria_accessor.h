@@ -41,6 +41,9 @@ class TriaActiveIterator;
 template <int dim, int spacedim>
 class Manifold;
 
+template <int dim, int spacedim>
+class Manifold;
+
 namespace internal
 {
   namespace TriangulationImplementation
@@ -250,6 +253,7 @@ namespace TriaAccessorExceptions
     << "You can only set the child index of an even numbered child."
     << "The number of the child given was " << arg1 << ".");
 } // namespace TriaAccessorExceptions
+
 
 /**
  * A base class for the accessor classes used by TriaRawIterator and derived
@@ -1678,6 +1682,8 @@ private:
   friend struct dealii::internal::TriaAccessorImplementation::Implementation;
 };
 
+
+
 /**
  * This class is a specialization of <code>TriaAccessor<structdim, dim, spacedim></code>
  * for the case that @p structdim is zero. This
@@ -2338,6 +2344,7 @@ public:
   types::manifold_id
   manifold_id() const;
 
+
   /**
    * @name Orientation of sub-objects
    */
@@ -2533,6 +2540,8 @@ protected:
    */
   unsigned int global_vertex_index;
 };
+
+
 
 /**
  * This class allows access to a cell: a line in one dimension, a quad in two
@@ -3181,6 +3190,7 @@ public:
   set_level_subdomain_id(
     const types::subdomain_id new_level_subdomain_id) const;
 
+
   /**
    * Set the subdomain id of this cell (if it is active) or all its terminal
    * children (and grand-children, and so on, as long as they have no children
@@ -3459,6 +3469,8 @@ protected:
   template <int dim_, int spacedim_>
   bool
   point_inside_codim(const Point<spacedim_>& p) const;
+
+
 
 private:
   /**

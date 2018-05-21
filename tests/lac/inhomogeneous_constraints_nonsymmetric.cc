@@ -157,6 +157,14 @@ AdvectionProblem<dim>::setup_system()
   test_matrix.reinit(sparsity_pattern);
 }
 
+  DynamicSparsityPattern csp(dof_handler.n_dofs(), dof_handler.n_dofs());
+  DoFTools::make_sparsity_pattern(dof_handler, csp, hanging_nodes_only, true);
+  sparsity_pattern.copy_from(csp);
+
+  reference_matrix.reinit(sparsity_pattern);
+  test_matrix.reinit(sparsity_pattern);
+}
+
 // test whether we are equal with the
 // standard matrix and right hand side
 template <int dim>
@@ -199,6 +207,8 @@ AdvectionProblem<dim>::test_equality()
 
   Assert(test_rhs.l2_norm() < 1e-14, ExcInternalError());
 }
+
+
 
 template <int dim>
 void
@@ -277,6 +287,7 @@ AdvectionProblem<dim>::assemble_test_1()
 {
   test_matrix = 0;
   test_rhs    = 0;
+
 
   QGauss<dim>   quadrature_formula(3);
   FEValues<dim> fe_values(fe,
@@ -442,6 +453,8 @@ AdvectionProblem<dim>::run()
   assemble_test_1();
   assemble_test_2();
 }
+
+
 
 int
 main()

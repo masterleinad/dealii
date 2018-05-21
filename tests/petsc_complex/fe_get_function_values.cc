@@ -68,6 +68,10 @@ test()
       Triangulation<dim>::smoothing_on_refinement
       | Triangulation<dim>::smoothing_on_coarsening));
 
+
+  GridGenerator::hyper_cube(tria, -1, 0);
+  tria.refine_global(2);
+
   GridGenerator::hyper_cube(tria, -1, 0);
   tria.refine_global(2);
 
@@ -159,6 +163,7 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

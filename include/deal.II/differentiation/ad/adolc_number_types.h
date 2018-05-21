@@ -60,6 +60,7 @@ namespace Differentiation
   } // namespace AD
 } // namespace Differentiation
 
+
 DEAL_II_NAMESPACE_CLOSE
 
 #ifdef DEAL_II_WITH_ADOLC
@@ -91,9 +92,12 @@ DeclExceptionMsg(ExcADOLCAdvancedBranching,
                  "This function has not yet been implemented for taped Adol-C "
                  "numbers when the advanced branching feature is activated.");
 
+
 /* --------------------------- inline and template functions and specializations ------------------------- */
 
+
 #  ifndef DOXYGEN
+
 
 namespace Differentiation
 {
@@ -135,6 +139,7 @@ namespace Differentiation
         typedef double            derivative_type;
         static const unsigned int n_supported_derivative_levels = 1;
       };
+
 
       template <typename ADNumberType>
       struct Marking<
@@ -484,7 +489,9 @@ namespace Differentiation
   } // namespace AD
 } // namespace Differentiation
 
+
 #  endif // DOXYGEN
+
 
 DEAL_II_NAMESPACE_CLOSE
 

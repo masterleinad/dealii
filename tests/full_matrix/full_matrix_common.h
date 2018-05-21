@@ -26,6 +26,7 @@
 #include <iostream>
 #include <string>
 
+
 // forward declaration of the function that must be provided in the
 // .cc files
 template <typename number>
@@ -101,6 +102,8 @@ make_complex_domain_vector(Vector<std::complex<number>>& v)
   for(unsigned int i = 0; i < n_cols; ++i)
     v(i) = std::complex<number>(i + 1, i + 3);
 }
+
+
 
 template <typename number>
 void

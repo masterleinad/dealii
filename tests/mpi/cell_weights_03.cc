@@ -27,6 +27,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <int dim>
 unsigned int
 cell_weight(
@@ -84,6 +86,7 @@ test()
       deallog << "processor " << p << ": " << integrated_weights[p] << " weight"
               << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

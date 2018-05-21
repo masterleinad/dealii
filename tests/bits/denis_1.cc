@@ -33,6 +33,7 @@
 #include <deal.II/numerics/derivative_approximation.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 class F : public Function<2>
 {
 public:
@@ -47,6 +48,7 @@ public:
     return 0.5 * (1 - std::tanh((r - 0.5) / (2 * M_SQRT2 * delta)));
   }
 };
+
 
 int
 main()

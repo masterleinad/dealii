@@ -30,13 +30,18 @@ namespace
   Threads::Mutex write_lock;
 } // namespace
 
+
 // The standard log object of deal.II:
 LogStream deallog;
+
+
 
 LogStream::Prefix::Prefix(const std::string& text) : stream(&deallog)
 {
   stream->push(text);
 }
+
+
 
 LogStream::Prefix::Prefix(const std::string& text, LogStream& s) : stream(&s)
 {
@@ -104,6 +109,7 @@ LogStream::~LogStream()
       }
   }
 }
+
 
 LogStream&
 LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
@@ -204,6 +210,7 @@ LogStream::attach(std::ostream& o, const bool print_job_id)
     o << dealjobid();
 }
 
+
 void
 LogStream::detach()
 {
@@ -211,11 +218,14 @@ LogStream::detach()
   file = nullptr;
 }
 
+
 std::ostream&
 LogStream::get_console()
 {
   return *std_out;
 }
+
+
 
 std::ostringstream&
 LogStream::get_stream()
@@ -238,6 +248,8 @@ LogStream::get_stream()
   return *outstreams.get();
 }
 
+
+
 std::ostream&
 LogStream::get_file_stream()
 {
@@ -252,6 +264,8 @@ LogStream::has_file() const
 {
   return (file != nullptr);
 }
+
+
 
 const std::string&
 LogStream::get_prefix() const
@@ -275,6 +289,8 @@ LogStream::push(const std::string& text)
   pre += std::string(":");
   get_prefixes().push(pre);
 }
+
+
 
 void
 LogStream::pop()
@@ -327,6 +343,8 @@ LogStream::log_thread_id(const bool flag)
   print_thread_id              = flag;
   return h;
 }
+
+
 
 std::stack<std::string>&
 LogStream::get_prefixes() const

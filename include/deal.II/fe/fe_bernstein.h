@@ -189,6 +189,7 @@ public:
   compare_for_face_domination(
     const FiniteElement<dim, spacedim>& fe_other) const override;
 
+
   /**
    * Return a string that uniquely identifies a finite element. This class
    * returns <tt>FE_Bernstein<dim>(degree)</tt>, with @p dim and @p degree

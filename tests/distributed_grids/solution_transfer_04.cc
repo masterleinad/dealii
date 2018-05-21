@@ -92,6 +92,7 @@ test(std::ostream& /*out*/)
           << interpolated_solution.l2_norm() << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

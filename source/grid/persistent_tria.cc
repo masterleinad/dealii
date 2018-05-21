@@ -26,6 +26,7 @@ const unsigned int PersistentTriangulation<dim, spacedim>::dimension;
 template <int dim, int spacedim>
 const unsigned int PersistentTriangulation<dim, spacedim>::spacedimension;
 
+
 template <int dim, int spacedim>
 PersistentTriangulation<dim, spacedim>::PersistentTriangulation(
   const Triangulation<dim, spacedim>& coarse_grid)

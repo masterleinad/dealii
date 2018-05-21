@@ -277,6 +277,7 @@ check_simple(const FiniteElement<dim>& fe)
   print_diff(mgdof_renumbered, mgdof, u, diff);
 }
 
+
 int
 main()
 {

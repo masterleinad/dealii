@@ -27,6 +27,8 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 test()
@@ -97,10 +99,13 @@ test()
     }
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

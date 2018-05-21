@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
 
+
+
 void
 test()
 {
@@ -57,6 +59,7 @@ test()
           indicators(cell_index) = std::pow(10, (float) my_cell_index);
         }
   }
+
 
   parallel::distributed::GridRefinement ::refine_and_coarsen_fixed_number(
     tr, indicators, 0.2, 0.2);
@@ -106,10 +109,13 @@ test()
             << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

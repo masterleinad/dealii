@@ -23,12 +23,15 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 bool
 predicate(const Point<3>& p, const double diameter)
 {
   return ((p[0] - .2) * (p[0] - .2) + (p[2] - p[1] / 4) * (p[2] - p[1] / 4)
           < diameter * diameter);
 }
+
 
 int
 main()
@@ -60,6 +63,7 @@ main()
   tria.execute_coarsening_and_refinement();
 
   deallog << "n_cells=" << tria.n_active_cells() << std::endl;
+
 
   for(cell = tria.begin_active(); cell != endc; ++cell)
     if(!predicate(cell->center(), cell->diameter()))

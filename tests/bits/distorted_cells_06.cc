@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 class MyManifold : public Manifold<dim>
 {
@@ -109,6 +111,7 @@ check()
   // child cells
   GridOut().write_gnuplot(coarse_grid, deallog.get_file_stream());
 }
+
 
 int
 main()

@@ -97,6 +97,7 @@ check_4()
     }
 }
 
+
 int
 main()
 {

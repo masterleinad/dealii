@@ -18,6 +18,7 @@
 #include "../tests.h"
 #include <iostream>
 
+
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_nedelec.h>
@@ -86,6 +87,7 @@ test_renumbering()
 
   deallog.pop();
 }
+
 
 int
 main()

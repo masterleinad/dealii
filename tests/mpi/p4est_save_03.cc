@@ -34,6 +34,8 @@
 
 #include <deal.II/fe/fe_q.h>
 
+
+
 template <int dim>
 void
 test()
@@ -101,6 +103,9 @@ test()
     soltrans.prepare_serialization(solution);
     soltrans2.prepare_serialization(solution2);
 
+    soltrans.prepare_serialization(solution);
+    soltrans2.prepare_serialization(solution2);
+
     tr.save(filename.c_str());
 
     if(myid == 0)
@@ -163,12 +168,15 @@ test()
     deallog << "OK" << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+
+  deallog.push(Utilities::int_to_string(myid));
 
   deallog.push(Utilities::int_to_string(myid));
 

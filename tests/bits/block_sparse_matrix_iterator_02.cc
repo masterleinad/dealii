@@ -31,6 +31,7 @@
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/constraint_matrix.h>
 
+
 void
 test()
 {
@@ -80,6 +81,8 @@ test()
   Assert(begin != end, ExcInternalError());
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

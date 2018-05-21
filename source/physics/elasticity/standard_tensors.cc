@@ -24,13 +24,19 @@ template <int dim>
 const SymmetricTensor<2, dim> Physics::Elasticity::StandardTensors<dim>::I
   = unit_symmetric_tensor<dim>();
 
+
+
 template <int dim>
 const SymmetricTensor<4, dim> Physics::Elasticity::StandardTensors<dim>::S
   = identity_tensor<dim>();
 
+
+
 template <int dim>
 const SymmetricTensor<4, dim> Physics::Elasticity::StandardTensors<dim>::IxI
   = outer_product(unit_symmetric_tensor<dim>(), unit_symmetric_tensor<dim>());
+
+
 
 template <int dim>
 const SymmetricTensor<4, dim> Physics::Elasticity::StandardTensors<dim>::dev_P

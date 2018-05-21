@@ -18,6 +18,7 @@
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -33,6 +34,8 @@ test()
 
   deallog << ' ' << csp.max_entries_per_row() << std::endl;
 }
+
+
 
 int
 main()

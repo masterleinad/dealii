@@ -19,6 +19,7 @@
 
 #include <deal.II/base/utilities.h>
 
+
 void
 test()
 {
@@ -77,6 +78,8 @@ test()
   deallog << Utilities::generate_normal_random_number(13, 44) << ' ';
   deallog << std::endl;
 }
+
+
 
 int
 main()

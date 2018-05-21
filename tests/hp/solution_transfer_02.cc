@@ -86,6 +86,7 @@ transfer(std::ostream& out)
   soltrans.interpolate(old_solution, solution);
 }
 
+
 int
 main()
 {

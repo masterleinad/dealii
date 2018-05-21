@@ -245,6 +245,8 @@ namespace internal
               + MemoryConsumption::memory_consumption(cell_dof_indices_cache));
     }
 
+
+
     void
     DoFLevel::normalize_active_fe_indices()
     {

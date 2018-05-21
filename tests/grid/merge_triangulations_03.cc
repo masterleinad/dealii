@@ -111,6 +111,7 @@ mesh_info(const Triangulation<dim>& tria, const std::string& filename)
   }
 }
 
+
 void
 test()
 {
@@ -153,6 +154,7 @@ test()
   GridGenerator::merge_triangulations(flat_ball, shell, tria_out);
   mesh_info(tria_out, "tria_out.eps");
 }
+
 
 int
 main()

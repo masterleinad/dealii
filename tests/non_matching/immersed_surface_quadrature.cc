@@ -83,6 +83,8 @@ construct_quadrature_and_print_points()
   test_non_default_constructor<dim>();
 }
 
+
+
 int
 main()
 {

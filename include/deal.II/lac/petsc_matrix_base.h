@@ -18,6 +18,8 @@
 
 #  include <deal.II/base/config.h>
 
+#  include <deal.II/base/config.h>
+
 #  ifdef DEAL_II_WITH_PETSC
 
 #    include <deal.II/base/subscriptor.h>
@@ -37,6 +39,7 @@ DEAL_II_NAMESPACE_OPEN
 
 template <typename Matrix>
 class BlockMatrixBase;
+
 
 namespace PETScWrappers
 {
@@ -243,6 +246,7 @@ namespace PETScWrappers
     };
 
   } // namespace MatrixIterators
+
 
   /**
    * Base class for all matrix classes that are implemented on top of the
@@ -685,6 +689,7 @@ namespace PETScWrappers
     PetscReal
     frobenius_norm() const;
 
+
     /**
      * Return the square of the norm of the vector $v$ with respect to the
      * norm induced by this matrix, i.e. $\left(v,Mv\right)$. This is useful,
@@ -706,6 +711,7 @@ namespace PETScWrappers
      */
     PetscScalar
     matrix_norm_square(const VectorBase& v) const;
+
 
     /**
      * Compute the matrix scalar product $\left(u,Mv\right)$.
@@ -742,12 +748,14 @@ namespace PETScWrappers
     MatrixBase&
     operator/=(const PetscScalar factor);
 
+
     /**
      * Add the matrix @p other scaled by the factor @p factor to the current
      * matrix.
      */
     MatrixBase&
     add(const PetscScalar factor, const MatrixBase& other);
+
 
     /**
      * Add the matrix @p other scaled by the factor @p factor to the current
@@ -1067,8 +1075,11 @@ namespace PETScWrappers
     friend class dealii::BlockMatrixBase;
   };
 
+
+
 #    ifndef DOXYGEN
   // -------------------------- inline and template functions ----------------------
+
 
   namespace MatrixIterators
   {
@@ -1080,12 +1091,15 @@ namespace PETScWrappers
       visit_present_row();
     }
 
+
+
     inline const_iterator::Accessor::size_type
     const_iterator::Accessor::row() const
     {
       Assert(a_row < matrix->m(), ExcBeyondEndOfMatrix());
       return a_row;
     }
+
 
     inline const_iterator::Accessor::size_type
     const_iterator::Accessor::column() const
@@ -1094,12 +1108,14 @@ namespace PETScWrappers
       return (*colnum_cache)[a_index];
     }
 
+
     inline const_iterator::Accessor::size_type
     const_iterator::Accessor::index() const
     {
       Assert(a_row < matrix->m(), ExcBeyondEndOfMatrix());
       return a_index;
     }
+
 
     inline PetscScalar
     const_iterator::Accessor::value() const
@@ -1108,11 +1124,14 @@ namespace PETScWrappers
       return (*value_cache)[a_index];
     }
 
+
     inline const_iterator::const_iterator(const MatrixBase* matrix,
                                           const size_type   row,
                                           const size_type   index)
       : accessor(matrix, row, index)
     {}
+
+
 
     inline const_iterator&
     const_iterator::operator++()
@@ -1138,6 +1157,7 @@ namespace PETScWrappers
       return *this;
     }
 
+
     inline const_iterator
     const_iterator::operator++(int)
     {
@@ -1146,15 +1166,18 @@ namespace PETScWrappers
       return old_state;
     }
 
+
     inline const const_iterator::Accessor& const_iterator::operator*() const
     {
       return accessor;
     }
 
+
     inline const const_iterator::Accessor* const_iterator::operator->() const
     {
       return &accessor;
     }
+
 
     inline bool
     const_iterator::operator==(const const_iterator& other) const
@@ -1163,11 +1186,13 @@ namespace PETScWrappers
               && accessor.a_index == other.accessor.a_index);
     }
 
+
     inline bool
     const_iterator::operator!=(const const_iterator& other) const
     {
       return !(*this == other);
     }
+
 
     inline bool
     const_iterator::operator<(const const_iterator& other) const
@@ -1178,6 +1203,8 @@ namespace PETScWrappers
     }
 
   } // namespace MatrixIterators
+
+
 
   // Inline the set() and add()
   // functions, since they will be
@@ -1193,6 +1220,8 @@ namespace PETScWrappers
 
     set(i, 1, &j, &value, false);
   }
+
+
 
   inline void
   MatrixBase::set(const std::vector<size_type>&  indices,
@@ -1210,6 +1239,8 @@ namespace PETScWrappers
           &values(i, 0),
           elide_zero_values);
   }
+
+
 
   inline void
   MatrixBase::set(const std::vector<size_type>&  row_indices,
@@ -1230,6 +1261,8 @@ namespace PETScWrappers
           elide_zero_values);
   }
 
+
+
   inline void
   MatrixBase::set(const size_type                 row,
                   const std::vector<size_type>&   col_indices,
@@ -1245,6 +1278,8 @@ namespace PETScWrappers
         values.data(),
         elide_zero_values);
   }
+
+
 
   inline void
   MatrixBase::set(const size_type    row,
@@ -1306,6 +1341,8 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
+
+
   inline void
   MatrixBase::add(const size_type i, const size_type j, const PetscScalar value)
   {
@@ -1325,6 +1362,8 @@ namespace PETScWrappers
       add(i, 1, &j, &value, false);
   }
 
+
+
   inline void
   MatrixBase::add(const std::vector<size_type>&  indices,
                   const FullMatrix<PetscScalar>& values,
@@ -1341,6 +1380,8 @@ namespace PETScWrappers
           &values(i, 0),
           elide_zero_values);
   }
+
+
 
   inline void
   MatrixBase::add(const std::vector<size_type>&  row_indices,
@@ -1361,6 +1402,8 @@ namespace PETScWrappers
           elide_zero_values);
   }
 
+
+
   inline void
   MatrixBase::add(const size_type                 row,
                   const std::vector<size_type>&   col_indices,
@@ -1376,6 +1419,8 @@ namespace PETScWrappers
         values.data(),
         elide_zero_values);
   }
+
+
 
   inline void
   MatrixBase::add(const size_type    row,
@@ -1435,11 +1480,15 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
+
+
   inline PetscScalar
   MatrixBase::operator()(const size_type i, const size_type j) const
   {
     return el(i, j);
   }
+
+
 
   inline MatrixBase::const_iterator
   MatrixBase::begin() const
@@ -1447,11 +1496,13 @@ namespace PETScWrappers
     return const_iterator(this, 0, 0);
   }
 
+
   inline MatrixBase::const_iterator
   MatrixBase::end() const
   {
     return const_iterator(this, m(), 0);
   }
+
 
   inline MatrixBase::const_iterator
   MatrixBase::begin(const size_type r) const
@@ -1464,6 +1515,7 @@ namespace PETScWrappers
     else
       return end(r);
   }
+
 
   inline MatrixBase::const_iterator
   MatrixBase::end(const size_type r) const
@@ -1490,6 +1542,8 @@ namespace PETScWrappers
     return end();
   }
 
+
+
   inline bool
   MatrixBase::in_local_range(const size_type index) const
   {
@@ -1503,6 +1557,8 @@ namespace PETScWrappers
             && (index < static_cast<size_type>(end)));
   }
 
+
+
   inline void
   MatrixBase::prepare_action(const VectorOperation::values new_action)
   {
@@ -1511,6 +1567,8 @@ namespace PETScWrappers
 
     Assert(last_action == new_action, ExcWrongMode(last_action, new_action));
   }
+
+
 
   inline void
   MatrixBase::assert_is_compressed()
@@ -1521,11 +1579,15 @@ namespace PETScWrappers
                 ExcMessage("Error: missing compress() call."));
   }
 
+
+
   inline void
   MatrixBase::prepare_add()
   {
     prepare_action(VectorOperation::add);
   }
+
+
 
   inline void
   MatrixBase::prepare_set()
@@ -1536,9 +1598,12 @@ namespace PETScWrappers
 #    endif // DOXYGEN
 } // namespace PETScWrappers
 
+
 DEAL_II_NAMESPACE_CLOSE
 
+
 #  endif // DEAL_II_WITH_PETSC
+
 
 /*----------------------------   petsc_matrix_base.h     ---------------------------*/
 

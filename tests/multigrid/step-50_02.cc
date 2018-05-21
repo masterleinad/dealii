@@ -21,6 +21,7 @@
 
 #include "../tests.h"
 
+
 #include <deal.II/base/conditional_ostream.h>
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
@@ -65,6 +66,7 @@
 #include <deal.II/multigrid/mg_tools.h>
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
+
 
 #include <deal.II/lac/generic_linear_algebra.h>
 
@@ -123,6 +125,8 @@ namespace Step50
     MGLevelObject<matrix_t> mg_interface_matrices;
     MGConstrainedDoFs       mg_constrained_dofs;
   };
+
+
 
   template <int dim>
   class Coefficient : public Function<dim>
@@ -216,10 +220,17 @@ namespace Step50
     system_matrix.reinit(
       mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
 
+    DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(),
+                               mg_dof_handler.n_dofs());
+    DoFTools::make_sparsity_pattern(mg_dof_handler, dsp, constraints);
+    system_matrix.reinit(
+      mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
+
     mg_constrained_dofs.clear();
     mg_constrained_dofs.initialize(mg_dof_handler);
     mg_constrained_dofs.make_zero_boundary_constraints(mg_dof_handler,
                                                        dirichlet_boundary_ids);
+
 
     const unsigned int n_levels = triangulation.n_global_levels();
 
@@ -331,6 +342,8 @@ namespace Step50
     const Coefficient<dim> coefficient;
     std::vector<double>    coefficient_values(n_q_points);
 
+
+
     std::vector<ConstraintMatrix> boundary_constraints(
       triangulation.n_global_levels());
     ConstraintMatrix empty_constraints;
@@ -374,6 +387,7 @@ namespace Step50
           boundary_constraints[cell->level()].distribute_local_to_global(
             cell_matrix, local_dof_indices, mg_matrices[cell->level()]);
 
+
           const IndexSet& interface_dofs_on_level
             = mg_constrained_dofs.get_refinement_edge_indices(cell->level());
           const unsigned int lvl = cell->level();
@@ -404,6 +418,7 @@ namespace Step50
                   cell_matrix(i, j) = 0;
                 }
 
+
           empty_constraints.distribute_local_to_global(
             cell_matrix,
             local_dof_indices,
@@ -416,6 +431,8 @@ namespace Step50
         mg_interface_matrices[i].compress(VectorOperation::add);
       }
   }
+
+
 
   template <int dim>
   void
@@ -450,6 +467,7 @@ namespace Step50
 
     PreconditionMG<dim, vector_t, MGTransferPrebuilt<vector_t>> preconditioner(
       mg_dof_handler, mg, mg_transfer);
+
 
     SolverControl      solver_control(500, 1e-8 * system_rhs.l2_norm(), false);
     SolverCG<vector_t> solver(solver_control);
@@ -531,6 +549,7 @@ namespace Step50
       }
   }
 } // namespace Step50
+
 
 int
 main(int argc, char* argv[])

@@ -74,6 +74,7 @@ transfer(std::ostream& out)
   soltrans.refine_interpolate(old_solution, solution);
 }
 
+
 int
 main()
 {

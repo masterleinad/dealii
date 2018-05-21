@@ -21,6 +21,8 @@
 
 #  include <deal.II/lac/trilinos_block_sparse_matrix.h>
 
+#  include <deal.II/lac/trilinos_block_sparse_matrix.h>
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace TrilinosWrappers
@@ -33,6 +35,8 @@ namespace TrilinosWrappers
       BaseClass::operator=(s);
       return *this;
     }
+
+
 
     BlockVector&
     BlockVector::operator=(const BlockVector& v)
@@ -52,6 +56,8 @@ namespace TrilinosWrappers
 
       return *this;
     }
+
+
 
     BlockVector&
     BlockVector::operator=(BlockVector&& v) noexcept
@@ -159,6 +165,8 @@ namespace TrilinosWrappers
 
       collect_sizes();
     }
+
+
 
     void
     BlockVector::print(std::ostream&      out,

@@ -26,6 +26,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 extern "C" void
 dnaupd_(int*          ido,
         char*         bmat,
@@ -448,6 +449,7 @@ private:
                    " Arnoldi vectors.");
 };
 
+
 inline ArpackSolver::AdditionalData::AdditionalData(
   const unsigned int     number_of_arnoldi_vectors,
   const WhichEigenvalues eigenvalue_of_interest,
@@ -478,6 +480,7 @@ inline ArpackSolver::AdditionalData::AdditionalData(
     }
 }
 
+
 inline ArpackSolver::ArpackSolver(SolverControl&        control,
                                   const AdditionalData& data)
   : solver_control(control),
@@ -486,6 +489,8 @@ inline ArpackSolver::ArpackSolver(SolverControl&        control,
     sigmar(0.0),
     sigmai(0.0)
 {}
+
+
 
 inline void
 ArpackSolver::set_shift(const std::complex<double> sigma)
@@ -503,6 +508,7 @@ ArpackSolver::set_initial_vector(const VectorType& vec)
   for(size_type i = 0; i < vec.size(); ++i)
     resid[i] = vec[i];
 }
+
 
 template <typename VectorType,
           typename MatrixType1,
@@ -688,6 +694,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       dst.reinit(src);
                       tmp.reinit(src);
 
+
                       for(size_type i = 0; i < src.size(); ++i)
                         src(i) = workd[ipntr[0] - 1 + i];
 
@@ -859,6 +866,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
           = std::complex<double>(eigenvalues_real[i], eigenvalues_im[i]);
     }
 }
+
 
 inline SolverControl&
 ArpackSolver::control() const

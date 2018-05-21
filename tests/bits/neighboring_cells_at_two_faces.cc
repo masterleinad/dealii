@@ -20,6 +20,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 // generate two degenerate quads which reduce to the form of triangles, where
 // two sides of the quad form one side of the triangle. the neighboring quads
 // are neighboring along both of these sides.
@@ -74,6 +76,7 @@ void create_grid(Triangulation<2>& tria)
     }
 }
 
+
 void
 check_neighbors(const Triangulation<2>& tria)
 {
@@ -88,6 +91,8 @@ check_neighbors(const Triangulation<2>& tria)
                ExcMessage("Error in neighbor_of_neighbor() function!"));
       }
 }
+
+
 
 int
 main()

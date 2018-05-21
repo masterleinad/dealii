@@ -18,6 +18,7 @@
 #include "serialization.h"
 #include <deal.II/base/symmetric_tensor.h>
 
+
 void
 test()
 {
@@ -30,8 +31,12 @@ test()
   double a2[3][3] = {{10., 11., 12.}, {11., 14., 15.}, {12., 15., 18.}};
   SymmetricTensor<rank, dim> t2((Tensor<rank, dim>(a2)));
 
+  double a2[3][3] = {{10., 11., 12.}, {11., 14., 15.}, {12., 15., 18.}};
+  SymmetricTensor<rank, dim> t2((Tensor<rank, dim>(a2)));
+
   verify(t1, t2);
 }
+
 
 int
 main()

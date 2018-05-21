@@ -24,6 +24,7 @@
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/utilities.h>
 
+
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/constraint_matrix.templates.h>
 #include <deal.II/lac/generic_linear_algebra.h>
@@ -42,6 +43,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
+
 
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -65,6 +67,7 @@
 
 #include <cmath>
 #include <sstream>
+
 
 unsigned int       minlevel        = 0;
 const unsigned int velocity_degree = 2;
@@ -145,6 +148,7 @@ namespace StokesClass
       const double         A_block_tolerance;
       const double         S_block_tolerance;
     };
+
 
     template <class StokesMatrixType,
               class MassMatrixType,
@@ -271,6 +275,7 @@ namespace StokesClass
         }
     }
   } // namespace StokesSolver
+
 
   // Parameters for Sinker example
   double beta  = 10.0;
@@ -956,6 +961,8 @@ namespace StokesClass
     Sinker<dim> sinker;
   };
 
+
+
   template <int dim>
   StokesProblem<dim>::StokesProblem()
     : degree_u(velocity_degree),
@@ -1090,6 +1097,7 @@ namespace StokesClass
     mg_constrained_dofs.initialize(dof_handler_u);
     mg_constrained_dofs.make_zero_boundary_constraints(dof_handler_u,
                                                        dirichlet_boundary);
+
 
     for(unsigned int level = 0; level < n_levels; ++level)
       {
@@ -1303,6 +1311,10 @@ namespace StokesClass
       mg_matrix, mg_coarse, mg_transfer, mg_smoother, mg_smoother, 0);
     mg.set_edge_matrices(mg_interface, mg_interface);
 
+    Multigrid<vector_t> mg(
+      mg_matrix, mg_coarse, mg_transfer, mg_smoother, mg_smoother, 0);
+    mg.set_edge_matrices(mg_interface, mg_interface);
+
     PreconditionMG<dim, vector_t, Transfer> prec_A(
       dof_handler_u, mg, mg_transfer);
 
@@ -1416,6 +1428,7 @@ namespace StokesClass
       }
   }
 } // namespace StokesClass
+
 
 int
 main(int argc, char* argv[])

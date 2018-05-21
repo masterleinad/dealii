@@ -27,6 +27,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
 {
@@ -44,6 +45,8 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
   deallog << "OK" << std::endl;
 }
 
+
+
 int
 main(int argc, char** argv)
 {
@@ -51,6 +54,7 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
+
 
   try
     {

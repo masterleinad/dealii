@@ -22,6 +22,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 namespace dealii
 {
   template <int dim, int spacedim>
@@ -118,6 +119,7 @@ namespace dealii
   }
 } // namespace dealii
 
+
 template <int dim, int spacedim>
 void
 do_boundary(Triangulation<dim, spacedim>& t1)
@@ -164,6 +166,7 @@ test()
 
   verify(tria_1, tria_2);
 }
+
 
 int
 main()

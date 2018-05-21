@@ -371,6 +371,7 @@ namespace LinearAlgebra
       std::shared_ptr<const CommunicationPattern> epetra_comm_pattern;
     };
 
+
     inline bool
     Vector::has_ghost_elements() const
     {
@@ -378,6 +379,7 @@ namespace LinearAlgebra
     }
   } // namespace EpetraWrappers
 } // namespace LinearAlgebra
+
 
 /**
  * Declare dealii::LinearAlgebra::EpetraWrappers::Vector as distributed vector.

@@ -13,6 +13,7 @@
 //
 //-----------------------------------------------------------
 
+
 #include <deal.II/base/config.h>
 #include <deal.II/sundials/ida.h>
 
@@ -78,6 +79,8 @@ namespace SUNDIALS
       return err;
     }
 
+
+
     template <typename VectorType>
     int
     t_dae_lsetup(IDAMem   IDA_mem,
@@ -110,6 +113,7 @@ namespace SUNDIALS
 
       return err;
     }
+
 
     template <typename VectorType>
     int

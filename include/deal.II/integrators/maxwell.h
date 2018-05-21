@@ -489,8 +489,10 @@ namespace LocalIntegrators
         }
     }
 
+
   } // namespace Maxwell
 } // namespace LocalIntegrators
+
 
 DEAL_II_NAMESPACE_CLOSE
 

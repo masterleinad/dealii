@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+
+
 // DerivativeApproximation didn't work in parallel at all. This test verifies
 // that it now does.
 
@@ -85,6 +87,8 @@ test()
   if(myid == 0)
     deallog << sum << std::endl;
 }
+
+
 
 int
 main(int argc, char* argv[])

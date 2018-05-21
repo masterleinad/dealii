@@ -22,6 +22,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int spacedim>
 void
 test()
@@ -35,6 +37,8 @@ test()
   deallog << (int) tria.begin_active()->face(0)->boundary_id() << std::endl;
   deallog << (int) tria.begin_active()->face(1)->boundary_id() << std::endl;
 }
+
+
 
 int
 main()

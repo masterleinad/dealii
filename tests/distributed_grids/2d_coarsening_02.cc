@@ -40,6 +40,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -53,6 +55,8 @@ test(std::ostream& /*out*/)
 
   GridGenerator::hyper_cube(tr2);
   tr2.refine_global(2);
+
+  Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
 
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
 
@@ -108,6 +112,7 @@ test(std::ostream& /*out*/)
       assert_tria_equal(tr, tr2);
     }
 }
+
 
 int
 main(int argc, char* argv[])

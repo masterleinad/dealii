@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/polynomials_bernstein.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
@@ -25,6 +26,7 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
 #include <vector>
+
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -42,6 +42,7 @@ test()
           << std::endl;
 }
 
+
 int
 main()
 {

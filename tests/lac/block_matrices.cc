@@ -19,6 +19,8 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/block_vector.h>
 
+
+
 void
 test()
 {
@@ -112,6 +114,8 @@ test()
   AssertThrow(total_nonzero_elements == bsp.n_nonzero_elements(),
               ExcInternalError());
 
+
+
   // now make a matrix with this
   // sparsity pattern
   BlockSparseMatrix<double> bsm(bsp);
@@ -129,6 +133,7 @@ test()
   for(unsigned int row = 0; row < 19; ++row)
     for(unsigned int i = 0; i < 10; ++i)
       bsm.add(row, (row * 5 + i * 9) % 29, 0.5);
+
 
   // Check the iterator
   deallog.push("Iterator");
@@ -188,6 +193,8 @@ test()
   Assert(msp1 == msp2, ExcInternalError());
   deallog << "matrix_scalar_product " << msp1 << ' ' << msp2 << std::endl;
 }
+
+
 
 int
 main()

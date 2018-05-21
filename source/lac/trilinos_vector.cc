@@ -55,6 +55,7 @@ namespace TrilinosWrappers
                vector.vector->Map().MinMyGID(),
                vector.vector->Map().MaxMyGID()));
 
+
       return (*(vector.vector))[0][local_index];
     }
   } // namespace internal
@@ -70,12 +71,16 @@ namespace TrilinosWrappers
           Epetra_Map(0, 0, 0, Utilities::Trilinos::comm_self())))
     {}
 
+
+
     Vector::Vector(const IndexSet& parallel_partitioning,
                    const MPI_Comm& communicator)
       : Vector()
     {
       reinit(parallel_partitioning, communicator);
     }
+
+
 
     Vector::Vector(const Vector& v) : Vector()
     {
@@ -84,11 +89,15 @@ namespace TrilinosWrappers
       owned_elements = v.owned_elements;
     }
 
+
+
     Vector::Vector(Vector&& v) noexcept : Vector()
     {
       // initialize a minimal, valid object and swap
       swap(v);
     }
+
+
 
     Vector::Vector(const IndexSet& parallel_partitioner,
                    const Vector&   v,
@@ -106,6 +115,8 @@ namespace TrilinosWrappers
         parallel_partitioner.make_trilinos_map(communicator, true));
       reinit(v, false, true);
     }
+
+
 
     Vector::Vector(const IndexSet& local,
                    const IndexSet& ghost,
@@ -325,6 +336,8 @@ namespace TrilinosWrappers
 #  endif
     }
 
+
+
     void
     Vector::reinit(const IndexSet& locally_owned_entries,
                    const IndexSet& ghost_entries,
@@ -380,6 +393,8 @@ namespace TrilinosWrappers
       Assert(has_ghosts || n_elements_global == size(), ExcInternalError());
 #  endif
     }
+
+
 
     Vector&
     Vector::operator=(const Vector& v)
@@ -458,6 +473,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
+
     Vector&
     Vector::operator=(Vector&& v) noexcept
     {
@@ -531,6 +548,7 @@ namespace TrilinosWrappers
             ExcMessage(
               "The last operation on the Vector and the given last action in the compress() call do not agree!"));
         }
+
 
 #  ifdef DEBUG
 #    ifdef DEAL_II_WITH_MPI
@@ -725,6 +743,7 @@ namespace TrilinosWrappers
     {
       AssertThrow(out, ExcIO());
       boost::io::ios_flags_saver restore_flags(out);
+
 
       out.precision(precision);
       if(scientific)

@@ -14,6 +14,7 @@
 #include <fstream>
 #include <iostream>
 
+
 void create_mesh(Triangulation<2>& tria, const double scale_grid = 1.)
 {
   const unsigned int      dim = 2;
@@ -61,6 +62,8 @@ void create_mesh(Triangulation<2>& tria, const double scale_grid = 1.)
 
   tria.create_triangulation(points, cells, SubCellData());
 }
+
+
 
 void create_mesh(Triangulation<3>& tria, const double scale_grid = 1.)
 {

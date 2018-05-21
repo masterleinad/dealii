@@ -28,6 +28,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 check(const Triangulation<dim>& tria)
@@ -80,6 +82,7 @@ check(const Triangulation<dim>& tria)
               << std::endl;
     }
 }
+
 
 int
 main()

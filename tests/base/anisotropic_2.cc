@@ -23,6 +23,7 @@ using namespace Polynomials;
 
 typedef std::vector<Polynomial<double>> PolVector;
 
+
 void
 print_2d(const AnisotropicPolynomials<2>& aniso)
 {
@@ -67,6 +68,7 @@ check_2d()
     print_2d(aniso);
   }
 }
+
 
 void
 print_3d(const AnisotropicPolynomials<3>& aniso)
@@ -135,6 +137,8 @@ check()
   check_2d<Pol>();
   check_3d<Pol>();
 }
+
+
 
 int
 main()

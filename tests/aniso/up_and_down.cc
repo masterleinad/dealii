@@ -217,6 +217,8 @@ test()
 
       tr.execute_coarsening_and_refinement();
 
+
+
       for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
         if(fe_list[i] != nullptr)
           {
@@ -225,6 +227,7 @@ test()
             check_element(tr, *fe_list[i]);
           }
     }
+
 
   for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
     if(fe_list[i] != nullptr)

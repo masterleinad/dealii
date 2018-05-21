@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/fe/fe_nothing.h>
 
@@ -28,6 +29,8 @@ namespace internal
     }
   } // namespace FE_Nothing
 } // namespace internal
+
+
 
 template <int dim, int spacedim>
 FE_Nothing<dim, spacedim>::FE_Nothing(const unsigned int n_components,

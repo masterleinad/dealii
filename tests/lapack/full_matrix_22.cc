@@ -53,6 +53,7 @@ test(const unsigned int size)
   deallog << rcond << std::endl;
 }
 
+
 int
 main()
 {

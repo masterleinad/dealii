@@ -80,6 +80,7 @@ protected:
    * because we otherwise run into a compiler error with MS Visual Studio.
    */
 
+
   virtual std::unique_ptr<
     typename FiniteElement<dim, spacedim>::InternalDataBase>
   get_data(const UpdateFlags /*update_flags*/,

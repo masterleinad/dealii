@@ -261,6 +261,8 @@ namespace Step36
 
     std::vector<double> potential_values(n_q_points);
 
+    std::vector<double> potential_values(n_q_points);
+
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
@@ -305,6 +307,7 @@ namespace Step36
     // be compressed as no more entries will be added:
     stiffness_matrix.compress(VectorOperation::add);
     mass_matrix.compress(VectorOperation::add);
+
 
     // Before leaving the function, we calculate spurious eigenvalues,
     // introduced to the system by zero Dirichlet constraints. As

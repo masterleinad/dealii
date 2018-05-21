@@ -28,9 +28,13 @@
 #include <deal.II/grid/tria.h>
 #include <sstream>
 
+
+
 #include <string>
 
 #define PRECISION 5
+
+
 
 template <int dim>
 void
@@ -57,6 +61,8 @@ test()
   cm.print(ss);
 
   deallog << ss.str() << std::endl;
+
+
 
   deallog << "ok" << std::endl;
 }

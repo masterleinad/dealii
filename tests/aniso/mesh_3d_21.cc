@@ -32,6 +32,7 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 
+
 // declare these global in order to reduce time needed upon construction of
 // these objects which is considerable
 FE_DGQ<3>          fe(1);
@@ -180,6 +181,8 @@ void check2(Triangulation<3>& orig_tria)
       check_this(tria);
     }
 }
+
+
 
 int
 main()

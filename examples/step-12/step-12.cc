@@ -73,6 +73,7 @@
 #include <fstream>
 #include <iostream>
 
+
 namespace Step12
 {
   using namespace dealii;
@@ -621,6 +622,7 @@ namespace Step12
         else
           refine_grid();
 
+
         deallog << "Number of active cells:       "
                 << triangulation.n_active_cells() << std::endl;
 
@@ -636,6 +638,7 @@ namespace Step12
       }
   }
 } // namespace Step12
+
 
 // The following <code>main</code> function is similar to previous examples as
 // well, and need not be commented on.

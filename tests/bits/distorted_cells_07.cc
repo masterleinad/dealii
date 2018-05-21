@@ -26,6 +26,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 // create a (i) pinched cell (where two vertices coincide), or (ii)
 // twisted cell (where two vertices are swapped)
 template <int dim>
@@ -45,6 +47,7 @@ check(const unsigned int testcase)
       default:
         Assert(false, ExcNotImplemented());
     }
+
 
   std::vector<CellData<dim>> cells;
   {
@@ -82,6 +85,7 @@ check(const unsigned int testcase)
       deallog << e.get_exc_name() << std::endl;
     }
 }
+
 
 int
 main()

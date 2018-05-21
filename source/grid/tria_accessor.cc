@@ -1231,6 +1231,8 @@ namespace
     return Point<spacedim>();
   }
 
+
+
   template <int dim, int spacedim>
   double
   measure(const TriaAccessor<1, dim, spacedim>& accessor)
@@ -1396,6 +1398,8 @@ namespace
   }
 } // namespace
 
+
+
 /*------------------------ Static variables: TriaAccessorBase ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
@@ -1407,6 +1411,7 @@ const unsigned int TriaAccessorBase<structdim, dim, spacedim>::space_dimension;
 template <int structdim, int dim, int spacedim>
 const unsigned int
   TriaAccessorBase<structdim, dim, spacedim>::structure_dimension;
+
 
 /*------------------------ Functions: TriaAccessor ---------------------------*/
 
@@ -1619,6 +1624,7 @@ namespace
   const double TransformR2UAffine<1>::Kb[GeometryInfo<1>::vertices_per_cell]
     = {1.000000, 0.000000};
 
+
   /*
     Octave code:
     M=[0 1 0 1;0 0 1 1;1 1 1 1];
@@ -1641,6 +1647,7 @@ namespace
   template <>
   const double TransformR2UAffine<2>::Kb[GeometryInfo<2>::vertices_per_cell]
     = {0.750000, 0.250000, 0.250000, -0.250000};
+
 
   template <>
   const double TransformR2UAffine<3>::KA[GeometryInfo<3>::vertices_per_cell][3]
@@ -1666,6 +1673,7 @@ namespace
        0.000000,
        -0.250000};
 } // namespace
+
 
 template <int structdim, int dim, int spacedim>
 Point<structdim>
@@ -1721,6 +1729,8 @@ CellAccessor<1>::point_inside(const Point<1>& p) const
 {
   return (this->vertex(0)[0] <= p[0]) && (p[0] <= this->vertex(1)[0]);
 }
+
+
 
 /*------------------------ Functions: CellAccessor<2> -----------------------*/
 
@@ -1780,6 +1790,8 @@ CellAccessor<2>::point_inside(const Point<2>& p) const
   return true;
 }
 
+
+
 /*------------------------ Functions: CellAccessor<3> -----------------------*/
 
 template <>
@@ -1831,6 +1843,8 @@ CellAccessor<3>::point_inside(const Point<3>& p) const
       return false;
     }
 }
+
+
 
 /*------------------------ Functions: CellAccessor<dim,spacedim> -----------------------*/
 
@@ -2771,6 +2785,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
           return sub_neighbor;
         }
 
+
       case 3:
         {
           // this function returns the neighbor's
@@ -2840,6 +2855,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
           const TriaIterator<CellAccessor<dim, spacedim>> neighbor
             = this->neighbor(face);
 
+
           const RefinementCase<dim - 1> mother_face_ref_case
             = mother_face->refinement_case();
           if(mother_face_ref_case
@@ -2894,6 +2910,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
                   std::pair<unsigned int, unsigned int> indices
                     = neighbor_of_coarser_neighbor(face);
                   neighbor_neighbor = indices.first;
+
 
                   // we have to translate our
                   // subface_index according to the

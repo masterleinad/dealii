@@ -122,6 +122,7 @@ transfer(std::ostream& out)
   data_out.write_gnuplot(out);
 }
 
+
 int
 main()
 {

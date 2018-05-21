@@ -51,6 +51,8 @@ test(Vector<double>& v, Vector<double>& w)
   deallog << "OK" << std::endl;
 }
 
+
+
 int
 main()
 {

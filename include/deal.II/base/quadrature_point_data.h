@@ -538,6 +538,8 @@ CellDataStorage<CellIteratorType, DataType>::erase(const CellIteratorType& cell)
   return (map.erase(cell) == 1);
 }
 
+
+
 template <typename CellIteratorType, typename DataType>
 void
 CellDataStorage<CellIteratorType, DataType>::clear()
@@ -560,6 +562,8 @@ CellDataStorage<CellIteratorType, DataType>::clear()
     }
 }
 
+
+
 template <typename CellIteratorType, typename DataType>
 template <typename T>
 std::vector<std::shared_ptr<T>>
@@ -581,6 +585,8 @@ CellDataStorage<CellIteratorType, DataType>::get_data(
     res[q] = std::dynamic_pointer_cast<T>(it->second[q]);
   return res;
 }
+
+
 
 template <typename CellIteratorType, typename DataType>
 template <typename T>
@@ -643,6 +649,8 @@ pack_cell_data(const CellIteratorType&                            cell,
     }
 }
 
+
+
 /*
  * the opposite of the pack function above.
  */
@@ -671,6 +679,7 @@ unpack_to_cell_data(const CellIteratorType&                      cell,
       qpd[q]->unpack_values(single_qp_data);
     }
 }
+
 
 #  ifdef DEAL_II_WITH_P4EST
 

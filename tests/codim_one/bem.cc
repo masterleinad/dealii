@@ -74,6 +74,7 @@ private:
   void
   write_grid(std::string filename);
 
+
   Triangulation<spacedim - 1, spacedim> tria;
   FE_DGQ<spacedim - 1, spacedim>        fe;
   DoFHandler<spacedim - 1, spacedim>    dof_handler;

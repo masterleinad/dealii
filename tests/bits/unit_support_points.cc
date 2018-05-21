@@ -26,6 +26,7 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_trace.h>
 
+
 template <int dim>
 void
 check_cell1(const FiniteElement<dim>& fe)
@@ -46,6 +47,7 @@ check_face1(const FiniteElement<dim>& fe)
                 ExcInternalError());
   deallog << "dim=" << dim << ", face=ok" << std::endl;
 }
+
 
 void
 check_face1(const FiniteElement<1>&)
@@ -78,6 +80,7 @@ check_face2(const FiniteElement<dim>& fe, const unsigned int comp)
       deallog << i << " " << fe.unit_face_support_point(i) << std::endl;
   deallog << "dim=" << dim << ", face=ok" << std::endl;
 }
+
 
 void
 check_face2(const FiniteElement<1>&, const unsigned int)
@@ -113,6 +116,13 @@ check()
   check1(FE_Q<dim>(2));
   check1(FE_DGQ<dim>(2));
   check1(FESystem<dim>(FE_Q<dim>(2), 2, FE_DGQ<dim>(2), 1));
+
+  check1(FESystem<dim>(FE_Q<dim>(2), 2, FE_DGQ<dim>(2), 1));
+
+  check2(FESystem<dim>(FE_Q<dim>(2), 1, FE_DGQ<dim>(2), 1), 1);
+  check2(FESystem<dim>(FE_Q<dim>(2), 1, FE_DGP<dim>(2), 1), 0);
+  face_check<dim>();
+}
 
   check1(FESystem<dim>(FE_Q<dim>(2), 2, FE_DGQ<dim>(2), 1));
 

@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void check_this(Triangulation<3>& tria)
 {
   QMidpoint<2>    q;
@@ -80,6 +82,7 @@ void check_this(Triangulation<3>& tria)
         }
 }
 
+
 void check(Triangulation<3>& tria)
 {
   deallog << "Initial check" << std::endl;
@@ -100,6 +103,7 @@ void check(Triangulation<3>& tria)
   deallog << "Check " << 2 << std::endl;
   check_this(tria);
 }
+
 
 int
 main()

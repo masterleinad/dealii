@@ -33,6 +33,7 @@ operator==(const BlockVector<number>& v1, const BlockVector<number>& v2)
   return true;
 }
 
+
 void
 test()
 {
@@ -312,6 +313,8 @@ test()
       deallog << "Check 19: true" << std::endl;
     };
 }
+
+
 
 int
 main()

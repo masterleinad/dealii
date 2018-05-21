@@ -54,6 +54,7 @@ check(double r1, double r2, unsigned int n)
   deallog << "OK" << std::endl;
 }
 
+
 int
 main()
 {

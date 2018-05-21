@@ -45,6 +45,7 @@
 #include <iomanip>
 #include <iostream>
 
+
 namespace Step48
 {
   using namespace dealii;
@@ -602,6 +603,8 @@ namespace Step48
           << "s on computations." << std::endl;
   }
 } // namespace Step48
+
+
 
 // @sect3{The <code>main</code> function}
 

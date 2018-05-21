@@ -71,6 +71,7 @@ test()
           << bounding_box.get_boundary_points().second << std::endl;
 }
 
+
 int
 main()
 {

@@ -28,6 +28,7 @@ test1()
           << " @ " << point << " is " << result << std::endl;
 }
 
+
 void
 test2()
 {
@@ -68,6 +69,7 @@ test2()
   deallog << "Function '" << expressions[0] << "," << expressions[1] << "'"
           << " @ " << point << " is " << result << std::endl;
 }
+
 
 int
 main()

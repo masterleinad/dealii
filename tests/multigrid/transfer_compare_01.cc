@@ -104,6 +104,8 @@ reinit_vector_by_blocks(
     }
 }
 
+
+
 template <int dim>
 void
 check_block(const FiniteElement<dim>& fe)
@@ -202,6 +204,7 @@ check_block(const FiniteElement<dim>& fe)
   deallog << "Select   " << v0.block(0).l2_norm() << ' '
           << v1.block(0).l2_norm() << std::endl;
 
+
   // Check copy to mg and back
   BlockVector<double> u;
   u.reinit(ndofs);
@@ -250,6 +253,7 @@ check_block(const FiniteElement<dim>& fe)
   u.add(-1., uu);
   deallog << u.l2_norm() << std::endl;
 }
+
 
 int
 main()

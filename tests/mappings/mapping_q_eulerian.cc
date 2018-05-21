@@ -105,6 +105,7 @@ MappingTest<dim>::MappingTest(unsigned int degree)
   : dof_handler(triangulation), fe(FE_Q<dim>(degree), dim), degree(degree)
 {}
 
+
 // .... DESTRUCTOR
 
 template <int dim>
@@ -163,6 +164,7 @@ MappingTest<dim>::run_test()
                                dof_handler,
                                imposed_displacement,
                                displacements);
+
 
       table.add_value("cells", triangulation.n_active_cells());
       table.add_value("dofs", dof_handler.n_dofs());

@@ -49,6 +49,7 @@ test(const bool apply_constrains, const unsigned int hp)
   hp::DoFHandler<dim>   dof_handler(triangulation);
   ConstraintMatrix      constraints; //for boundary conditions
 
+
   // populate fe system:
   fe.push_back(FE_Q_Hierarchical<dim>(2));
   fe.push_back(FE_Q_Hierarchical<dim>(4));

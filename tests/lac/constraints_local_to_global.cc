@@ -105,6 +105,7 @@ test()
           << full.frobenius_norm() << std::endl;
 }
 
+
 int
 main()
 {

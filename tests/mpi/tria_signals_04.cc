@@ -100,6 +100,7 @@ test()
       dealii::Triangulation<dim, spacedim>::smoothing_on_refinement
       | dealii::Triangulation<dim, spacedim>::smoothing_on_coarsening));
 
+
   GridGenerator::hyper_cube(tria);
   SignalListener<dim, spacedim> count_cell_via_signal(tria);
 

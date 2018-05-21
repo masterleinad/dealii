@@ -259,6 +259,7 @@ print_matching(DoFHandler<dim>& dof_handler,
   deallog << "Orientation: " << orientation[0] << orientation[1]
           << orientation[2] << std::endl;
 
+
   DoFTools::make_periodicity_constraints(face_1,
                                          face_2,
                                          constraint_matrix,
@@ -282,6 +283,8 @@ print_matching(DoFHandler<dim>& dof_handler,
   constraint_matrix_reverse.print(deallog.get_file_stream());
   constraint_matrix_reverse.close();
 }
+
+
 
 int
 main()
@@ -325,6 +328,9 @@ main()
   deallog << "Test for 3D, Q1, correct subface iteration:" << std::endl
           << std::endl;
 
+  deallog << "Test for 3D, Q1, correct subface iteration:" << std::endl
+          << std::endl;
+
   for(int i = 0; i < 8; ++i)
     {
       // Generate a triangulation and match:
@@ -339,6 +345,9 @@ main()
       dof_handler.initialize(triangulation, fe);
       print_matching(dof_handler);
     }
+
+  deallog << "Test for 3D, Taylor-Hood with Component-Mask on v:" << std::endl
+          << std::endl;
 
   deallog << "Test for 3D, Taylor-Hood with Component-Mask on v:" << std::endl
           << std::endl;

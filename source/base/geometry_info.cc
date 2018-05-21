@@ -18,6 +18,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 template <int dim>
 constexpr unsigned int GeometryInfo<dim>::max_children_per_cell;
 template <int dim>
@@ -114,6 +115,7 @@ GeometryInfo<2>::alternating_form_at_vertices
   (const Point<3>*, Tensor<3 - 2, 3>*)
 #endif
     ;
+
 
 template void
 GeometryInfo<3>::alternating_form_at_vertices

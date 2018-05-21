@@ -21,6 +21,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void my_cylinder(Triangulation<3>& tria,
                  const double      radius,
                  const double      half_length)
@@ -76,6 +78,7 @@ void my_cylinder(Triangulation<3>& tria,
                             SubCellData()); // no boundary information
 }
 
+
 void
 check_grid()
 {
@@ -108,6 +111,7 @@ check_grid()
         }
     }
 }
+
 
 int
 main()

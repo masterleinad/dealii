@@ -33,6 +33,7 @@
 
 #include "../tests.h"
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/function_parser.h>
 #include <deal.II/base/parameter_handler.h>
@@ -99,6 +100,8 @@ template <int dim>
 EigenvalueProblem<dim>::EigenvalueProblem(unsigned int n_eigenvalues)
   : fe(1), dof_handler(triangulation), n_eigenvalues(n_eigenvalues)
 {}
+
+
 
 template <int dim>
 void
@@ -291,6 +294,7 @@ EigenvalueProblem<dim>::run()
   for(unsigned int i = 0; i < n_eigenvalues; ++i)
     deallog << "      Eigenvalue " << i << " : " << eigenvalues[i] << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

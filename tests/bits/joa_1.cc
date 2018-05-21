@@ -38,6 +38,7 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 // From the following include file we
 // will import the declaration of
 // H1-conforming finite element shape
@@ -407,6 +408,9 @@ LaplaceProblem<dim>::setup_system()
                           dof_handler.n_dofs(),
                           dof_handler.max_couplings_between_dofs());
   DoFTools::make_sparsity_pattern(dof_handler, sparsity_pattern);
+
+  solution.reinit(dof_handler.n_dofs());
+  system_rhs.reinit(dof_handler.n_dofs());
 
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
@@ -1031,6 +1035,7 @@ LaplaceProblem<dim>::run()
         }
       else
         refine_grid();
+
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;

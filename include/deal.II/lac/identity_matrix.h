@@ -130,6 +130,7 @@ public:
   void
   Tvmult(OutVectorType& out, const InVectorType& in) const;
 
+
   /**
    * Matrix-vector multiplication with the transpose matrix, with addition to
    * the output vector. For the present case, this of course amounts to simply
@@ -146,14 +147,21 @@ private:
   size_type size;
 };
 
+
+
 // ------------------------- inline and template functions -------------
 #ifndef DOXYGEN
+
 
 inline IdentityMatrix::IdentityMatrix() : size(0)
 {}
 
+
+
 inline IdentityMatrix::IdentityMatrix(const size_type n) : size(n)
 {}
+
+
 
 inline void
 IdentityMatrix::reinit(const size_type n)
@@ -161,11 +169,15 @@ IdentityMatrix::reinit(const size_type n)
   size = n;
 }
 
+
+
 inline IdentityMatrix::size_type
 IdentityMatrix::m() const
 {
   return size;
 }
+
+
 
 inline IdentityMatrix::size_type
 IdentityMatrix::n() const

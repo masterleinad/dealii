@@ -208,6 +208,7 @@ public:
   static DifferenceFormula
   get_formula_of_order(const unsigned int ord);
 
+
 private:
   /**
    * Step size of the difference formula. Set by the set_h() function.

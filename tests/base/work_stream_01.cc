@@ -44,6 +44,7 @@ struct X
   }
 };
 
+
 void
 test()
 {
@@ -55,6 +56,8 @@ test()
   WorkStream::run(
     v.begin(), v.end(), x, &X::worker, &X::copier, ScratchData(), CopyData());
 }
+
+
 
 int
 main()

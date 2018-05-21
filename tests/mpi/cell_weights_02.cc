@@ -27,6 +27,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <int dim>
 unsigned int
 cell_weight(
@@ -58,6 +60,7 @@ test()
               << tr.n_locally_owned_active_cells_per_processor()[p]
               << " locally owned active cells" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

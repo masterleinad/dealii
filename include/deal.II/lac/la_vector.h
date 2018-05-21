@@ -133,6 +133,7 @@ namespace LinearAlgebra
     reinit(const IndexSet& locally_stored_indices,
            const bool      omit_zeroing_entries = false) override;
 
+
     /**
      * Change the dimension to that of the vector V. The elements of V are not
      * copied.
@@ -460,6 +461,7 @@ namespace LinearAlgebra
 template <typename Number>
 struct is_serial_vector<LinearAlgebra::Vector<Number>> : std::true_type
 {};
+
 
 DEAL_II_NAMESPACE_CLOSE
 

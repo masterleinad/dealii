@@ -114,6 +114,8 @@ check()
     deallog << rhs(i) << std::endl;
 }
 
+
+
 int
 main()
 {

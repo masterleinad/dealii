@@ -110,6 +110,8 @@ test()
   deallog << "Error on squares: " << projected_squares.l2_norm() << std::endl;
 }
 
+
+
 int
 main()
 {

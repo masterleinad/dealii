@@ -30,6 +30,8 @@
 #include <deal.II/numerics/vector_tools.h>
 #include <deal.II/numerics/vector_tools.templates.h>
 
+
+
 template <int dim>
 void
 test_hyper_cube()
@@ -56,6 +58,7 @@ test_hyper_cube()
 
   cm.print(deallog.get_file_stream());
 }
+
 
 int
 main()

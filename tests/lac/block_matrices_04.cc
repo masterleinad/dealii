@@ -305,6 +305,7 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::assemble_system()
         system_rhs(local_dof_indices[i]) += cell_rhs(i);
     };
 
+
   std::map<types::global_dof_index, typename VectorType::value_type>
     boundary_values;
   VectorTools::interpolate_boundary_values(
@@ -346,6 +347,8 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::run()
       //<< '-'
       << i << ' ' << solution(i) << std::endl;
 }
+
+
 
 int
 main()

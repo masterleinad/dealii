@@ -334,6 +334,8 @@ LaplaceProblem<dim>::output_gpl(const DoFHandler<dim>&         dof,
     }
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::test()
@@ -411,6 +413,7 @@ LaplaceProblem<dim>::refine_local()
         cell != triangulation.end();
         ++cell)
       cell->set_refine_flag();
+
 
   triangulation.execute_coarsening_and_refinement();
 }

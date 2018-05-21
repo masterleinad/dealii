@@ -45,6 +45,8 @@ namespace LinearAlgebra
   }
 } // namespace LinearAlgebra
 
+
+
 /*! @addtogroup Preconditioners
  *@{
  */
@@ -684,6 +686,7 @@ public:
   void
   Tvmult(VectorType&, const VectorType&) const;
 
+
   /**
    * Perform one step of the preconditioned Richardson iteration
    */
@@ -1031,6 +1034,7 @@ public:
     std::shared_ptr<PreconditionerType> preconditioner;
   };
 
+
   PreconditionChebyshev();
 
   /**
@@ -1238,6 +1242,7 @@ inline PreconditionRichardson::AdditionalData::AdditionalData(
   const double relaxation)
   : relaxation(relaxation)
 {}
+
 
 inline PreconditionRichardson::PreconditionRichardson()
   : relaxation(0), n_rows(0), n_columns(0)
@@ -1636,6 +1641,7 @@ PreconditionPSOR<MatrixType>::AdditionalData::AdditionalData(
     parameters(parameters)
 {}
 
+
 //---------------------------------------------------------------------------
 
 template <typename MatrixType, class VectorType>
@@ -1965,6 +1971,8 @@ namespace internal
   } // namespace PreconditionChebyshevImplementation
 } // namespace internal
 
+
+
 // avoid warning about deprecated variable nonzero_starting
 
 template <typename MatrixType, class VectorType, typename PreconditionerType>
@@ -2024,6 +2032,8 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::clear()
   }
   data.preconditioner.reset();
 }
+
+
 
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void

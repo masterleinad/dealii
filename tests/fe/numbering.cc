@@ -18,7 +18,9 @@
 #include <deal.II/fe/fe_tools.h>
 #include <vector>
 
+
 std::ofstream logfile("output");
+
 
 template <int dim>
 void
@@ -169,6 +171,7 @@ check(const FE_Q<dim>& fe)
             hierarchic_to_lexicographic_numbering[next_index++]
               = n - 1 + (i + 1) * n * n + n * (n - 1);
 
+
           // inside quads
           Assert(fe.dofs_per_quad == fe.dofs_per_line * fe.dofs_per_line,
                  ExcInternalError());
@@ -257,6 +260,7 @@ check_dim()
       check(fe);
     };
 }
+
 
 int
 main()

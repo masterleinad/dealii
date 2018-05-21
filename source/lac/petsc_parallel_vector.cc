@@ -35,6 +35,8 @@ namespace PETScWrappers
       Vector::create_vector(0, 0);
     }
 
+
+
     Vector::Vector(const MPI_Comm& communicator,
                    const size_type n,
                    const size_type local_size)
@@ -42,6 +44,8 @@ namespace PETScWrappers
     {
       Vector::create_vector(n, local_size);
     }
+
+
 
     Vector::Vector(const MPI_Comm&   communicator,
                    const VectorBase& v,
@@ -60,6 +64,8 @@ namespace PETScWrappers
       (void) local_size;
     }
 
+
+
     Vector::Vector(const IndexSet& local,
                    const IndexSet& ghost,
                    const MPI_Comm& communicator)
@@ -74,6 +80,8 @@ namespace PETScWrappers
       Vector::create_vector(local.size(), local.n_elements(), ghost_set);
     }
 
+
+
     Vector::Vector(const IndexSet& local, const MPI_Comm& communicator)
       : communicator(communicator)
     {
@@ -81,6 +89,8 @@ namespace PETScWrappers
              ExcNotImplemented());
       Vector::create_vector(local.size(), local.n_elements());
     }
+
+
 
     Vector&
     Vector::operator=(const Vector& v)
@@ -279,6 +289,7 @@ namespace PETScWrappers
                ExcInternalError());
       }
 #  endif
+
 
       // in PETSc versions up to 3.5, VecCreateGhost zeroed out the locally
       // owned vector elements but forgot about the ghost elements. we need to

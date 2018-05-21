@@ -115,10 +115,14 @@ namespace Step8
       }
   }
 
+
+
   template <int dim>
   ElasticProblem<dim>::ElasticProblem()
     : dof_handler(triangulation), fe(FE_Q<dim>(1), dim)
   {}
+
+
 
   template <int dim>
   ElasticProblem<dim>::~ElasticProblem()
@@ -250,6 +254,14 @@ namespace Step8
       boundary_values, system_matrix, solution, system_rhs);
   }
 
+
+    std::map<types::global_dof_index, double> boundary_values;
+    VectorTools::interpolate_boundary_values(
+      dof_handler, 0, Functions::ZeroFunction<dim>(dim), boundary_values);
+    MatrixTools::apply_boundary_values(
+      boundary_values, system_matrix, solution, system_rhs);
+  }
+
   template <int dim>
   void
   ElasticProblem<dim>::solve()
@@ -328,6 +340,8 @@ namespace Step8
     DataOut<dim> data_out;
     data_out.attach_dof_handler(dof_handler);
 
+
+
     std::vector<DataComponentInterpretation::DataComponentInterpretation>
       data_component_interpretation(
         dim, DataComponentInterpretation::component_is_part_of_vector);
@@ -339,6 +353,8 @@ namespace Step8
     data_out.build_patches();
     data_out.write_gnuplot(deallog.get_file_stream());
   }
+
+
 
   template <int dim>
   void
@@ -370,6 +386,7 @@ namespace Step8
       }
   }
 } // namespace Step8
+
 
 int
 main()

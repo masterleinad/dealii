@@ -33,6 +33,8 @@
 
 #include <iostream>
 
+
+
 template <int dim, int fe_degree>
 void
 test(const unsigned int n_blocks = 5)
@@ -139,6 +141,7 @@ test(const unsigned int n_blocks = 5)
   deallog << "Norm of difference: " << diff_norm << " " << diff_norm2
           << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

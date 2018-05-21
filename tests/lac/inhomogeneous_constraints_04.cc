@@ -137,6 +137,7 @@ test(bool use_constraint_matrix)
   solution.print(logfile);
 }
 
+
 int
 main()
 {

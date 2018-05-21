@@ -28,6 +28,8 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
 
+
+
 template <int dim>
 void
 test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
@@ -82,6 +84,7 @@ test_hyper_cube()
                    SymmetricTensor<2, dim>::n_independent_components);
   test(tr, fe);
 }
+
 
 int
 main()

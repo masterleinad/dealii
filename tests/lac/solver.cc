@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+
+
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/lac/precondition.h>
@@ -133,6 +135,7 @@ main()
             else
               permutation[k++] = (size - i - 2) * (size - 1) + size - j - 2;
           }
+
 
       for(unsigned int i = 0; i < dim; ++i)
         inverse_permutation[permutation[i]] = i;

@@ -22,6 +22,7 @@
 #include <map>
 #include <vector>
 
+
 void
 test()
 {
@@ -42,6 +43,9 @@ test()
     }
 
   tria.execute_coarsening_and_refinement();
+
+  std::map<unsigned int, types::global_vertex_index> local_to_global_id
+    = GridTools::compute_local_to_global_vertex_index_map(tria);
 
   std::map<unsigned int, types::global_vertex_index> local_to_global_id
     = GridTools::compute_local_to_global_vertex_index_map(tria);
@@ -96,6 +100,7 @@ test()
                     ExcMessage("Wrong global index"));
     }
 }
+
 
 int
 main(int argc, char* argv[])

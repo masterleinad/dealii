@@ -29,6 +29,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 template <typename number>
 class Vector;
 template <int rank, int dim, typename Number>
@@ -365,6 +366,7 @@ public:
     std::vector<std::vector<SymmetricTensor<2, dim, RangeNumberType>>>& values)
     const;
 
+
   /**
    * Return an estimate for the memory consumption, in bytes, of this object.
    * This is not exact (but will usually be close) because calculating the
@@ -503,6 +505,8 @@ template <int dim, typename RangeNumberType = double>
 using ZeroFunction DEAL_II_DEPRECATED
   = Functions::ZeroFunction<dim, RangeNumberType>;
 
+
+
 /**
  * This is a constant vector-valued function, in which one or more components
  * of the vector have a constant value and all other components are zero.  It
@@ -546,6 +550,7 @@ public:
    */
   ComponentSelectFunction(const std::pair<unsigned int, unsigned int>& selected,
                           const unsigned int n_components);
+
 
   /**
    * Substitute function value with value of a <tt>ConstantFunction@<dim,

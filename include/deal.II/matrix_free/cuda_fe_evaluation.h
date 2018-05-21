@@ -40,6 +40,8 @@ namespace CUDAWrappers
     }
   } // namespace internal
 
+
+
   /**
    * This class provides all the functions necessary to evaluate functions at
    * quadrature points and cell integrations. In functionality, this class is
@@ -185,6 +187,8 @@ namespace CUDAWrappers
     Number* gradients[dim];
   };
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -207,6 +211,8 @@ namespace CUDAWrappers
     for(unsigned int i = 0; i < dim; ++i)
       gradients[i] = shdata->gradients[i];
   }
+
+
 
   template <int dim,
             int fe_degree,
@@ -235,6 +241,8 @@ namespace CUDAWrappers
     __syncthreads();
   }
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -250,6 +258,7 @@ namespace CUDAWrappers
       internal::resolve_hanging_nodes_shmem<dim, fe_degree, true>(
         values, constraint_mask);
 
+
     const unsigned int idx
       = (threadIdx.x % n_q_points_1d)
         + (dim > 1 ? threadIdx.y : 0) * n_q_points_1d
@@ -258,6 +267,8 @@ namespace CUDAWrappers
 
     dst[destination_idx] += values[idx];
   }
+
+
 
   template <int dim,
             int fe_degree,
@@ -290,6 +301,8 @@ namespace CUDAWrappers
         __syncthreads();
       }
   }
+
+
 
   template <int dim,
             int fe_degree,
@@ -326,6 +339,8 @@ namespace CUDAWrappers
       }
   }
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -342,6 +357,8 @@ namespace CUDAWrappers
     return values[q_point];
   }
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -353,6 +370,8 @@ namespace CUDAWrappers
   {
     values[q_point] = val_in * JxW[q_point];
   }
+
+
 
   template <int dim,
             int fe_degree,
@@ -384,6 +403,8 @@ namespace CUDAWrappers
     return grad;
   }
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -404,6 +425,8 @@ namespace CUDAWrappers
         gradients[d_1][q_point] = tmp * JxW[q_point];
       }
   }
+
+
 
   template <int dim,
             int fe_degree,

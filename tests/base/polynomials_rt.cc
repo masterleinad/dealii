@@ -36,6 +36,7 @@ plot(const PolynomialsRaviartThomas<dim>& poly)
   std::vector<Tensor<4, dim>> thirds;
   std::vector<Tensor<5, dim>> fourths;
 
+
   for(unsigned int k = 0; k < quadrature.size(); ++k)
     {
       if(k % (poly.degree() + 4) == 0)

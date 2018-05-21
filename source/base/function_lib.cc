@@ -108,7 +108,9 @@ namespace Functions
       gradients[i] = static_cast<Tensor<1, dim>>(points[i]) * 2;
   }
 
+
   //////////////////////////////////////////////////////////////////////
+
 
   template <int dim>
   double
@@ -222,7 +224,9 @@ namespace Functions
       }
   }
 
+
   //////////////////////////////////////////////////////////////////////
+
 
   template <int dim>
   PillowFunction<dim>::PillowFunction(const double offset) : offset(offset)
@@ -973,6 +977,7 @@ namespace Functions
       }
   }
 
+
   //////////////////////////////////////////////////////////////////////
 
   template <int dim>
@@ -1129,6 +1134,7 @@ namespace Functions
 
   //////////////////////////////////////////////////////////////////////
 
+
   double
   LSingularityFunction::value(const Point<2>& p, const unsigned int) const
   {
@@ -1213,6 +1219,7 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = 0.;
   }
+
 
   Tensor<1, 2>
   LSingularityFunction::gradient(const Point<2>& p, const unsigned int) const
@@ -1373,6 +1380,8 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = 0.;
   }
+
+
 
   Tensor<1, 2>
   LSingularityGradFunction::gradient(const Point<2>& /*p*/,
@@ -1565,6 +1574,7 @@ namespace Functions
 
   //////////////////////////////////////////////////////////////////////
 
+
   double
   SlitHyperSingularityFunction::value(const Point<2>& p,
                                       const unsigned int) const
@@ -1641,6 +1651,7 @@ namespace Functions
       values[i] = 0.;
   }
 
+
   Tensor<1, 2>
   SlitHyperSingularityFunction::gradient(const Point<2>& p,
                                          const unsigned int) const
@@ -1649,6 +1660,7 @@ namespace Functions
     double y   = p(1);
     double phi = std::atan2(x, y) + numbers::PI;
     double r78 = std::pow(x * x + y * y, 7. / 8.);
+
 
     Tensor<1, 2> result;
     result[0] = 1. / 4.
@@ -1827,6 +1839,8 @@ namespace Functions
     return sizeof(*this);
   }
 
+
+
   /* ---------------------- FourierCosineFunction ----------------------- */
 
   template <int dim>
@@ -1866,6 +1880,8 @@ namespace Functions
            * (-std::cos(fourier_coefficients * p));
   }
 
+
+
   /* ---------------------- FourierSineFunction ----------------------- */
 
   template <int dim>
@@ -1904,6 +1920,8 @@ namespace Functions
     return (fourier_coefficients * fourier_coefficients)
            * (-std::sin(fourier_coefficients * p));
   }
+
+
 
   /* ---------------------- FourierSineSum ----------------------- */
 
@@ -2032,6 +2050,8 @@ namespace Functions
 
     return sum;
   }
+
+
 
   /* ---------------------- Monomial ----------------------- */
 
@@ -2284,6 +2304,7 @@ namespace Functions
       return grad;
     }
 
+
     Tensor<1, 2>
     gradient_interpolate(const Table<2, double>& data_values,
                          const TableIndices<2>&  ix,
@@ -2302,6 +2323,7 @@ namespace Functions
         = ((1 - p_unit[0]) * (u10 - u00) + p_unit[0] * (u11 - u01)) / dx[1];
       return grad;
     }
+
 
     Tensor<1, 3>
     gradient_interpolate(const Table<3, double>& data_values,
@@ -2621,6 +2643,7 @@ namespace Functions
       }
     return r;
   }
+
 
   // explicit instantiations
   template class SquareFunction<1>;

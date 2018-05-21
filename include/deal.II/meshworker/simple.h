@@ -510,6 +510,7 @@ namespace MeshWorker
                const std::vector<types::global_dof_index>& i2);
     };
 
+
     //----------------------------------------------------------------------//
 
     template <typename VectorType>
@@ -572,6 +573,7 @@ namespace MeshWorker
       assemble(info2);
     }
 
+
     //----------------------------------------------------------------------//
 
     template <typename MatrixType>
@@ -602,6 +604,7 @@ namespace MeshWorker
     {
       constraints = &c;
     }
+
 
     template <typename MatrixType>
     template <class DOFINFO>
@@ -737,6 +740,7 @@ namespace MeshWorker
         }
     }
 
+
     //----------------------------------------------------------------------//
 
     template <typename MatrixType>
@@ -777,6 +781,7 @@ namespace MeshWorker
       interface_in  = &in;
       interface_out = &out;
     }
+
 
     template <typename MatrixType>
     template <class DOFINFO>

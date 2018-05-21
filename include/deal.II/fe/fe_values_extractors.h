@@ -205,6 +205,7 @@ namespace FEValuesExtractors
   };
 } // namespace FEValuesExtractors
 
+
 /*------------------------ Inline functions: namespace FEValuesExtractors --------*/
 
 namespace FEValuesExtractors
@@ -212,12 +213,17 @@ namespace FEValuesExtractors
   inline Scalar::Scalar() : component(numbers::invalid_unsigned_int)
   {}
 
+
+
   inline Scalar::Scalar(const unsigned int component) : component(component)
   {}
+
+
 
   inline Vector::Vector()
     : first_vector_component(numbers::invalid_unsigned_int)
   {}
+
 
   inline Vector::Vector(const unsigned int first_vector_component)
     : first_vector_component(first_vector_component)
@@ -244,6 +250,8 @@ namespace FEValuesExtractors
     : first_tensor_component(first_tensor_component)
   {}
 } // namespace FEValuesExtractors
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -30,6 +31,7 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <iostream>
 #include <sstream>
+
 
 //TODO: implement the adjust_quad_dof_index_for_face_orientation_table and
 //adjust_line_dof_index_for_line_orientation_table fields, and write tests
@@ -141,6 +143,10 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
   // compute (deg+1)^(dim-1)
   for(unsigned int d = 1; d < dim; ++d)
     n_face_points *= deg + 1;
+
+  this->generalized_support_points.resize(
+    GeometryInfo<dim>::faces_per_cell * n_face_points + n_interior_points);
+  this->generalized_face_support_points.resize(n_face_points);
 
   this->generalized_support_points.resize(
     GeometryInfo<dim>::faces_per_cell * n_face_points + n_interior_points);

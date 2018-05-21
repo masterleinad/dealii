@@ -31,6 +31,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void check(Triangulation<3>& tria)
 {
   FE_Q<3>       fe(1);
@@ -80,6 +82,7 @@ void check(Triangulation<3>& tria)
               << std::endl;
     }
 }
+
 
 int
 main()

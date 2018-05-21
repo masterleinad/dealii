@@ -19,6 +19,8 @@
 // check
 //   DoFTools::count_dofs_per_component
 
+
+
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)

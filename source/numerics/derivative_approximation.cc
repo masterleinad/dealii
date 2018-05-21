@@ -741,6 +741,7 @@ namespace DerivativeApproximation
       // matrix Y=sum_i y_i y_i^T
       Tensor<2, dim> Y;
 
+
       // vector to hold iterators to all
       // active neighbors of a cell
       // reserve the maximal number of
@@ -815,6 +816,7 @@ namespace DerivativeApproximation
           // ...and the place where it lives
           const Point<dim> neighbor_center
             = neighbor_fe_midpoint_value.quadrature_point(0);
+
 
           // vector for the
           // normalized
@@ -1003,6 +1005,7 @@ namespace DerivativeApproximation
       mapping, dof_handler, solution, component, derivative_norm);
   }
 
+
   template <int dim,
             template <int, int> class DoFHandlerType,
             class InputVector,
@@ -1021,6 +1024,7 @@ namespace DerivativeApproximation
       derivative_norm);
   }
 
+
   template <int dim,
             template <int, int> class DoFHandlerType,
             class InputVector,
@@ -1036,6 +1040,7 @@ namespace DerivativeApproximation
     internal::approximate_derivative<internal::SecondDerivative<dim>, dim>(
       mapping, dof_handler, solution, component, derivative_norm);
   }
+
 
   template <int dim,
             template <int, int> class DoFHandlerType,
@@ -1102,6 +1107,8 @@ namespace DerivativeApproximation
       component);
   }
 
+
+
   template <int dim, int order>
   double
   derivative_norm(const Tensor<order, dim>& derivative)
@@ -1111,6 +1118,7 @@ namespace DerivativeApproximation
   }
 
 } // namespace DerivativeApproximation
+
 
 // --------------------------- explicit instantiations ---------------------
 #include "derivative_approximation.inst"

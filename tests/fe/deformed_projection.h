@@ -62,6 +62,9 @@
 void
 test();
 
+void
+test();
+
 template <int dim>
 class TestMap1 : public Function<dim>
 {
@@ -343,6 +346,7 @@ create_mass_matrix(const Mapping<dim>&        mapping,
                             }
                     }
 
+
               for(unsigned int i = 0; i < dofs_per_cell; ++i)
                 for(unsigned int comp_i = 0; comp_i < fe.n_components();
                     ++comp_i)
@@ -547,6 +551,7 @@ project(const Mapping<dim>&     mapping,
         */
     }
 
+
   // set up mass matrix and right hand side
   vec.reinit(dof.n_dofs());
   SparsityPattern sparsity(
@@ -583,6 +588,7 @@ project(const Mapping<dim>&     mapping,
   // distribute solution
   constraints.distribute(vec);
 }
+
 
 int
 create_tria(unsigned int elm, Triangulation<2>& tria)
@@ -637,6 +643,7 @@ create_tria(unsigned int elm, Triangulation<2>& tria)
   return (0);
 }
 
+
 void plot_shapes(DoFHandler<2>& dof_handler)
 {
   Vector<double>         solution(dof_handler.n_dofs());
@@ -681,6 +688,7 @@ void plot_shapes(DoFHandler<2>& dof_handler)
     }
 }
 
+
 int
 main(int /*argc*/, char** /*argv*/)
 {
@@ -694,6 +702,8 @@ main(int /*argc*/, char** /*argv*/)
 
   test();
 }
+
+
 
 void
 check(const FiniteElement<2>&            fe,

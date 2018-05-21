@@ -38,6 +38,7 @@
 #include <memory>
 #include <numeric>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
@@ -464,6 +465,8 @@ namespace internal
   }   // namespace MappingManifoldImplementation
 } // namespace internal
 
+
+
 template <int dim, int spacedim>
 CellSimilarity::Similarity
 MappingManifold<dim, spacedim>::fill_fe_values(
@@ -503,6 +506,11 @@ MappingManifold<dim, spacedim>::fill_fe_values(
   if(update_flags & (update_normal_vectors | update_JxW_values))
     {
       AssertDimension(output_data.JxW_values.size(), n_q_points);
+
+      Assert(
+        !(update_flags & update_normal_vectors)
+          || (output_data.normal_vectors.size() == n_q_points),
+        ExcDimensionMismatch(output_data.normal_vectors.size(), n_q_points));
 
       Assert(
         !(update_flags & update_normal_vectors)
@@ -605,6 +613,8 @@ MappingManifold<dim, spacedim>::fill_fe_values(
 
   return cell_similarity;
 }
+
+
 
 namespace internal
 {
@@ -999,6 +1009,8 @@ namespace internal
           }
       }
 
+
+
       template <int dim, int spacedim>
       void
       transform_hessians(
@@ -1167,6 +1179,8 @@ namespace internal
           }
       }
 
+
+
       template <int dim, int spacedim, int rank>
       void
       transform_differential_forms(
@@ -1207,6 +1221,8 @@ namespace internal
     } // namespace
   }   // namespace MappingManifoldImplementation
 } // namespace internal
+
+
 
 template <int dim, int spacedim>
 void

@@ -44,6 +44,7 @@
 
 #include <deal.II/numerics/vector_tools.h>
 
+
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
@@ -147,6 +148,7 @@ test()
   const unsigned int this_mpi_process
     = dealii::Utilities::MPI::this_mpi_process(mpi_communicator);
 
+
   dealii::Triangulation<dim> triangulation;
   dealii::DoFHandler<dim>    dof_handler(triangulation);
   dealii::FE_Q<dim>          fe(1);
@@ -222,6 +224,8 @@ test()
   for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
     eigenfunctions[i].reinit(locally_owned_dofs,
                              mpi_communicator); //without ghost dofs
+
+  eigenvalues.resize(eigenfunctions.size());
 
   eigenvalues.resize(eigenfunctions.size());
 
@@ -340,9 +344,11 @@ test()
     }
   }
 
+
   dof_handler.clear();
   dealii::deallog << "Ok" << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

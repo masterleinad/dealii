@@ -104,6 +104,8 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
+
+
 template <int dim>
 class BoundaryValues : public Function<dim>
 {
@@ -114,6 +116,8 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
+
+
 
 template <int dim>
 double
@@ -181,6 +185,7 @@ Step4<dim>::setup_system()
   IndexSet locally_relevant_dofs;
 
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
+
 
   DynamicSparsityPattern dsp(dof_handler.n_dofs());
   DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints, false);
@@ -327,6 +332,7 @@ Step4<dim>::run()
   assemble_system();
   solve();
 }
+
 
 int
 main(int argc, char** argv)

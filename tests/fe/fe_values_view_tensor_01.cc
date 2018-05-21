@@ -38,6 +38,7 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 using namespace dealii;
 
 template <int dim>
@@ -57,6 +58,7 @@ private:
   const unsigned int degree;
   const unsigned int n_stress_components; // components of stress
   const unsigned int n_gamma_components;  // scalar plastic multiplier
+
 
   Triangulation<dim> triangulation;
   FESystem<dim>      fe;
@@ -166,9 +168,16 @@ MixedElastoPlasticity<dim>::assemble_system()
   const FEValuesExtractors::Tensor<2> stress_extr(0); //rank2
   const FEValuesExtractors::Scalar    gamma_extr(n_stress_components);
 
+  const FEValuesExtractors::Tensor<2> stress_extr(0); //rank2
+  const FEValuesExtractors::Scalar    gamma_extr(n_stress_components);
+
   deallog << "fe.dofs_per_cell: " << fe.dofs_per_cell
           << "\tquadrature_formula.size(): " << quadrature_formula.size()
           << std::endl;
+
+  typename DoFHandler<dim>::active_cell_iterator cell
+    = dof_handler.begin_active(),
+    endc = dof_handler.end();
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -225,6 +234,7 @@ check()
 
   deallog << "Analysis complete" << std::endl;
 }
+
 
 int
 main()

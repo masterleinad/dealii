@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/path_search.h>
 #include <deal.II/base/utilities.h>
@@ -22,6 +23,7 @@
 #include <iostream>
 
 DEAL_II_NAMESPACE_OPEN
+
 
 std::map<std::string, std::vector<std::string>> PathSearch::path_lists;
 std::map<std::string, std::vector<std::string>> PathSearch::suffix_lists;
@@ -80,6 +82,7 @@ PathSearch::get_path_list(const std::string& cls)
   return path_lists.find(cls)->second;
 }
 
+
 std::vector<std::string>&
 PathSearch::get_suffix_list(const std::string& cls)
 {
@@ -95,6 +98,7 @@ PathSearch::get_suffix_list(const std::string& cls)
 
   return suffix_lists.find(cls)->second;
 }
+
 
 PathSearch::PathSearch(const std::string& cls, const unsigned int debug)
   : cls(cls),

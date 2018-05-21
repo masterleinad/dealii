@@ -44,6 +44,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 
+
+
 template <int dim>
 void
 check()
@@ -125,6 +127,8 @@ check()
   for(unsigned int i = 0; i < dof.n_dofs(); ++i)
     deallog << rhs(i) << std::endl;
 }
+
+
 
 int
 main()

@@ -147,6 +147,7 @@ Step4<dim>::setup_system()
 
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
+
   DynamicSparsityPattern dsp(dof_handler.n_dofs());
   DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints, false);
   SparsityTools::distribute_sparsity_pattern(
@@ -283,6 +284,7 @@ Step4<dim>::run()
   assemble_system();
   solve();
 }
+
 
 int
 main(int argc, char** argv)

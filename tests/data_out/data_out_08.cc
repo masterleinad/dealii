@@ -38,6 +38,7 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
 
+
 template <int dim>
 class FilteredDataOut : public DataOut<dim>
 {

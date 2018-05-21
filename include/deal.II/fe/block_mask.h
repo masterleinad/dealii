@@ -228,21 +228,25 @@ private:
 std::ostream&
 operator<<(std::ostream& out, const BlockMask& mask);
 
+
 // -------------------- inline functions ---------------------
 
 inline BlockMask::BlockMask(const std::vector<bool>& block_mask)
   : block_mask(block_mask)
 {}
 
+
 inline BlockMask::BlockMask(const unsigned int n_blocks, const bool initializer)
   : block_mask(n_blocks, initializer)
 {}
+
 
 inline unsigned int
 BlockMask::size() const
 {
   return block_mask.size();
 }
+
 
 inline bool BlockMask::operator[](const unsigned int block_index) const
 {
@@ -260,11 +264,13 @@ inline bool BlockMask::operator[](const unsigned int block_index) const
     }
 }
 
+
 inline bool
 BlockMask::represents_n_blocks(const unsigned int n) const
 {
   return ((block_mask.size() == 0) || (block_mask.size() == n));
 }
+
 
 inline unsigned int
 BlockMask::n_selected_blocks(const unsigned int n) const
@@ -286,6 +292,7 @@ BlockMask::n_selected_blocks(const unsigned int n) const
     }
 }
 
+
 inline unsigned int
 BlockMask::first_selected_block(const unsigned int n) const
 {
@@ -305,11 +312,15 @@ BlockMask::first_selected_block(const unsigned int n) const
     }
 }
 
+
+
 inline bool
 BlockMask::represents_the_all_selected_mask() const
 {
   return (block_mask.size() == 0);
 }
+
+
 
 inline BlockMask
 BlockMask::operator|(const BlockMask& mask) const
@@ -333,6 +344,7 @@ BlockMask::operator|(const BlockMask& mask) const
     }
 }
 
+
 inline BlockMask BlockMask::operator&(const BlockMask& mask) const
 {
   // if one of the two masks denotes the all-block mask,
@@ -354,11 +366,13 @@ inline BlockMask BlockMask::operator&(const BlockMask& mask) const
     }
 }
 
+
 inline bool
 BlockMask::operator==(const BlockMask& mask) const
 {
   return block_mask == mask.block_mask;
 }
+
 
 inline bool
 BlockMask::operator!=(const BlockMask& mask) const

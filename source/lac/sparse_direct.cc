@@ -33,6 +33,8 @@ DEAL_II_NAMESPACE_OPEN
 #  include <umfpack.h>
 #endif
 
+
+
 SparseDirectUMFPACK::~SparseDirectUMFPACK()
 {
   clear();
@@ -341,6 +343,7 @@ SparseDirectUMFPACK::solve(const Matrix&        matrix,
 }
 
 #else
+
 
 SparseDirectUMFPACK::SparseDirectUMFPACK()
   : _m(0),

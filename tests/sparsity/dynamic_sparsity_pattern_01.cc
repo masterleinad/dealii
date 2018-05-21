@@ -19,6 +19,7 @@
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -36,6 +37,8 @@ test()
   Assert(csp.n_cols() == N, ExcInternalError());
   deallog << csp.n_nonzero_elements() << std::endl;
 }
+
+
 
 int
 main()

@@ -27,6 +27,8 @@ compare(const U& u, const V& v)
               ExcInternalError());
 }
 
+
+
 int
 main()
 {

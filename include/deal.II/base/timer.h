@@ -906,6 +906,7 @@ private:
 
 /* ---------------- inline functions ----------------- */
 
+
 inline void
 Timer::restart()
 {
@@ -913,11 +914,15 @@ Timer::restart()
   start();
 }
 
+
+
 inline const Utilities::MPI::MinMaxAvg&
 Timer::get_data() const
 {
   return last_lap_wall_time_data;
 }
+
+
 
 inline const Utilities::MPI::MinMaxAvg&
 Timer::get_last_lap_wall_time_data() const
@@ -925,11 +930,15 @@ Timer::get_last_lap_wall_time_data() const
   return last_lap_wall_time_data;
 }
 
+
+
 inline const Utilities::MPI::MinMaxAvg&
 Timer::get_total_data() const
 {
   return accumulated_wall_time_data;
 }
+
+
 
 inline const Utilities::MPI::MinMaxAvg&
 Timer::get_accumulated_wall_time_data() const
@@ -971,11 +980,15 @@ Timer::print_accumulated_wall_time_data(StreamType& stream) const
          << statistic.min_index << ", avg=" << statistic.avg << std::endl;
 }
 
+
+
 inline void
 TimerOutput::enter_section(const std::string& section_name)
 {
   enter_subsection(section_name);
 }
+
+
 
 inline void
 TimerOutput::exit_section(const std::string& section_name)
@@ -989,6 +1002,8 @@ inline TimerOutput::Scope::Scope(dealii::TimerOutput& timer_,
 {
   timer.enter_section(section_name);
 }
+
+
 
 inline void
 TimerOutput::Scope::stop()

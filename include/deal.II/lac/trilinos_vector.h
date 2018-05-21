@@ -1311,7 +1311,10 @@ namespace TrilinosWrappers
       friend class internal::VectorReference;
     };
 
+
+
     // ------------------- inline and template functions --------------
+
 
     /**
      * Global function @p swap which overloads the default implementation of
@@ -1337,6 +1340,7 @@ namespace TrilinosWrappers
       : vector(vector), index(index)
     {}
 
+
     inline const VectorReference&
     VectorReference::operator=(const VectorReference& r) const
     {
@@ -1349,6 +1353,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
+
     inline VectorReference&
     VectorReference::operator=(const VectorReference& r)
     {
@@ -1358,6 +1364,7 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
     inline const VectorReference&
     VectorReference::operator=(const TrilinosScalar& value) const
     {
@@ -1365,12 +1372,16 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
+
     inline const VectorReference&
     VectorReference::operator+=(const TrilinosScalar& value) const
     {
       vector.add(1, &index, &value);
       return *this;
     }
+
+
 
     inline const VectorReference&
     VectorReference::operator-=(const TrilinosScalar& value) const
@@ -1380,6 +1391,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
+
     inline const VectorReference&
     VectorReference::operator*=(const TrilinosScalar& value) const
     {
@@ -1387,6 +1400,8 @@ namespace TrilinosWrappers
       vector.set(1, &index, &new_value);
       return *this;
     }
+
+
 
     inline const VectorReference&
     VectorReference::operator/=(const TrilinosScalar& value) const
@@ -1407,6 +1422,8 @@ namespace TrilinosWrappers
       return ((index >= range.first) && (index < range.second));
     }
 
+
+
     inline IndexSet
     Vector::locally_owned_elements() const
     {
@@ -1418,15 +1435,21 @@ namespace TrilinosWrappers
       return owned_elements;
     }
 
+
+
     inline bool
     Vector::has_ghost_elements() const
     {
       return has_ghosts;
     }
 
+
+
     inline void
     Vector::update_ghost_values() const
     {}
+
+
 
     inline internal::VectorReference
     Vector::operator()(const size_type index)
@@ -1434,15 +1457,21 @@ namespace TrilinosWrappers
       return internal::VectorReference(*this, index);
     }
 
+
+
     inline internal::VectorReference Vector::operator[](const size_type index)
     {
       return operator()(index);
     }
 
+
+
     inline TrilinosScalar Vector::operator[](const size_type index) const
     {
       return operator()(index);
     }
+
+
 
     inline void
     Vector::extract_subvector_to(const std::vector<size_type>& indices,
@@ -1466,11 +1495,15 @@ namespace TrilinosWrappers
         }
     }
 
+
+
     inline Vector::iterator
     Vector::begin()
     {
       return (*vector)[0];
     }
+
+
 
     inline Vector::iterator
     Vector::end()
@@ -1478,17 +1511,23 @@ namespace TrilinosWrappers
       return (*vector)[0] + local_size();
     }
 
+
+
     inline Vector::const_iterator
     Vector::begin() const
     {
       return (*vector)[0];
     }
 
+
+
     inline Vector::const_iterator
     Vector::end() const
     {
       return (*vector)[0] + local_size();
     }
+
+
 
     inline void
     Vector::set(const std::vector<size_type>&      indices,
@@ -1504,6 +1543,8 @@ namespace TrilinosWrappers
       set(indices.size(), indices.data(), values.data());
     }
 
+
+
     inline void
     Vector::set(const std::vector<size_type>&           indices,
                 const ::dealii::Vector<TrilinosScalar>& values)
@@ -1517,6 +1558,8 @@ namespace TrilinosWrappers
 
       set(indices.size(), indices.data(), values.begin());
     }
+
+
 
     inline void
     Vector::set(const size_type       n_elements,
@@ -1560,6 +1603,8 @@ namespace TrilinosWrappers
         }
     }
 
+
+
     inline void
     Vector::add(const std::vector<size_type>&      indices,
                 const std::vector<TrilinosScalar>& values)
@@ -1573,6 +1618,8 @@ namespace TrilinosWrappers
       add(indices.size(), indices.data(), values.data());
     }
 
+
+
     inline void
     Vector::add(const std::vector<size_type>&           indices,
                 const ::dealii::Vector<TrilinosScalar>& values)
@@ -1585,6 +1632,8 @@ namespace TrilinosWrappers
 
       add(indices.size(), indices.data(), values.begin());
     }
+
+
 
     inline void
     Vector::add(const size_type       n_elements,
@@ -1639,6 +1688,8 @@ namespace TrilinosWrappers
         }
     }
 
+
+
     inline Vector::size_type
     Vector::size() const
     {
@@ -1651,11 +1702,15 @@ namespace TrilinosWrappers
 #    endif
     }
 
+
+
     inline Vector::size_type
     Vector::local_size() const
     {
       return (size_type) vector->Map().NumMyElements();
     }
+
+
 
     inline std::pair<Vector::size_type, Vector::size_type>
     Vector::local_range() const
@@ -1681,6 +1736,8 @@ namespace TrilinosWrappers
       return std::make_pair(begin, end);
     }
 
+
+
     inline TrilinosScalar Vector::operator*(const Vector& vec) const
     {
       Assert(vector->Map().SameAs(vec.vector->Map()),
@@ -1695,12 +1752,16 @@ namespace TrilinosWrappers
       return result;
     }
 
+
+
     inline Vector::real_type
     Vector::norm_sqr() const
     {
       const TrilinosScalar d = l2_norm();
       return d * d;
     }
+
+
 
     inline TrilinosScalar
     Vector::mean_value() const
@@ -1714,6 +1775,8 @@ namespace TrilinosWrappers
       return mean;
     }
 
+
+
     inline TrilinosScalar
     Vector::min() const
     {
@@ -1724,6 +1787,8 @@ namespace TrilinosWrappers
       return min_value;
     }
 
+
+
     inline TrilinosScalar
     Vector::max() const
     {
@@ -1733,6 +1798,8 @@ namespace TrilinosWrappers
 
       return max_value;
     }
+
+
 
     inline Vector::real_type
     Vector::l1_norm() const
@@ -1746,6 +1813,8 @@ namespace TrilinosWrappers
       return d;
     }
 
+
+
     inline Vector::real_type
     Vector::l2_norm() const
     {
@@ -1757,6 +1826,8 @@ namespace TrilinosWrappers
 
       return d;
     }
+
+
 
     inline Vector::real_type
     Vector::lp_norm(const TrilinosScalar p) const
@@ -1777,6 +1848,8 @@ namespace TrilinosWrappers
       return norm;
     }
 
+
+
     inline Vector::real_type
     Vector::linfty_norm() const
     {
@@ -1791,6 +1864,8 @@ namespace TrilinosWrappers
 
       return d;
     }
+
+
 
     inline TrilinosScalar
     Vector::add_and_dot(const TrilinosScalar a,
@@ -1817,6 +1892,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
+
     inline Vector&
     Vector::operator/=(const TrilinosScalar a)
     {
@@ -1832,6 +1909,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
+
     inline Vector&
     Vector::operator+=(const Vector& v)
     {
@@ -1844,6 +1923,8 @@ namespace TrilinosWrappers
 
       return *this;
     }
+
+
 
     inline Vector&
     Vector::operator-=(const Vector& v)
@@ -1858,6 +1939,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
+
     inline void
     Vector::add(const TrilinosScalar s)
     {
@@ -1870,6 +1953,8 @@ namespace TrilinosWrappers
       for(size_type i = 0; i < n_local; i++)
         (*vector)[0][i] += s;
     }
+
+
 
     inline void
     Vector::add(const TrilinosScalar a, const Vector& v)
@@ -1885,6 +1970,8 @@ namespace TrilinosWrappers
       const int ierr = vector->Update(a, *(v.vector), 1.);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     }
+
+
 
     inline void
     Vector::add(const TrilinosScalar a,
@@ -1907,6 +1994,8 @@ namespace TrilinosWrappers
 
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     }
+
+
 
     inline void
     Vector::sadd(const TrilinosScalar s, const Vector& v)
@@ -1933,6 +2022,8 @@ namespace TrilinosWrappers
           this->add(v, true);
         }
     }
+
+
 
     inline void
     Vector::sadd(const TrilinosScalar s,
@@ -1964,6 +2055,8 @@ namespace TrilinosWrappers
         }
     }
 
+
+
     inline void
     Vector::scale(const Vector& factors)
     {
@@ -1976,6 +2069,8 @@ namespace TrilinosWrappers
       const int ierr = vector->Multiply(1.0, *(factors.vector), *vector, 0.0);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     }
+
+
 
     inline void
     Vector::equ(const TrilinosScalar a, const Vector& v)
@@ -2000,11 +2095,15 @@ namespace TrilinosWrappers
         }
     }
 
+
+
     inline const Epetra_MultiVector&
     Vector::trilinos_vector() const
     {
       return static_cast<const Epetra_MultiVector&>(*vector);
     }
+
+
 
     inline Epetra_FEVector&
     Vector::trilinos_vector()
@@ -2012,11 +2111,15 @@ namespace TrilinosWrappers
       return *vector;
     }
 
+
+
     inline const Epetra_Map&
     Vector::vector_partitioner() const
     {
       return static_cast<const Epetra_Map&>(vector->Map());
     }
+
+
 
     inline const MPI_Comm&
     Vector::get_mpi_communicator() const
@@ -2047,6 +2150,8 @@ namespace TrilinosWrappers
         = Vector(parallel_partitioner.make_trilinos_map(communicator, true), v);
       owned_elements = parallel_partitioner;
     }
+
+
 
     inline Vector&
     Vector::operator=(const TrilinosScalar s)
@@ -2121,6 +2226,7 @@ namespace internal
 template <>
 struct is_serial_vector<TrilinosWrappers::MPI::Vector> : std::false_type
 {};
+
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -66,6 +66,7 @@ test(bool use_inhomogeneity_for_rhs)
   cm.close();
   cm.print(logfile);
 
+
   DynamicSparsityPattern csp(5, 5);
   for(unsigned int i = 0; i < 5; ++i)
     csp.add(i, i);
@@ -92,6 +93,7 @@ test(bool use_inhomogeneity_for_rhs)
   mat.print(logfile);
   rhs.print(logfile);
 }
+
 
 int
 main()

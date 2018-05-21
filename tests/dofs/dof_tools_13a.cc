@@ -26,6 +26,8 @@
 // a preset vector and make sure that we get the same result as in
 // dof_tools_13.
 
+
+
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)
@@ -73,6 +75,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   for(unsigned int i = 0; i < dof_data.size(); ++i)
     if(component_dofs[i] == false)
       AssertThrow(dof_data(i) == 0, ExcInternalError());
+
 
   // distribute to last component. by
   // default we distribute to

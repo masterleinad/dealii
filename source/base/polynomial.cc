@@ -43,6 +43,7 @@ namespace Polynomials
 {
   // -------------------- class Polynomial ---------------- //
 
+
   template <typename number>
   Polynomial<number>::Polynomial(const std::vector<number>& a)
     : coefficients(a), in_lagrange_product_form(false), lagrange_weight(1.)
@@ -440,6 +441,8 @@ namespace Polynomials
     return *this;
   }
 
+
+
   template <typename number>
   bool
   Polynomial<number>::operator==(const Polynomial<number>& p) const
@@ -616,6 +619,8 @@ namespace Polynomials
         }
   }
 
+
+
   // ------------------ class Monomial -------------------------- //
 
   template <typename number>
@@ -643,6 +648,8 @@ namespace Polynomials
     return v;
   }
 
+
+
   // ------------------ class LagrangeEquidistant --------------- //
 
   namespace internal
@@ -660,6 +667,8 @@ namespace Polynomials
       }
     } // namespace LagrangeEquidistantImplementation
   }   // namespace internal
+
+
 
   LagrangeEquidistant::LagrangeEquidistant(const unsigned int n,
                                            const unsigned int support_point)
@@ -739,6 +748,8 @@ namespace Polynomials
       a[i] = x[support_point * n_functions + i];
   }
 
+
+
   std::vector<Polynomial<double>>
   LagrangeEquidistant::generate_complete_basis(const unsigned int degree)
   {
@@ -759,6 +770,10 @@ namespace Polynomials
 
   //----------------------------------------------------------------------//
 
+
+  //----------------------------------------------------------------------//
+
+
   std::vector<Polynomial<double>>
   generate_complete_Lagrange_basis(const std::vector<Point<1>>& points)
   {
@@ -771,6 +786,11 @@ namespace Polynomials
   }
 
   // ------------------ class Legendre --------------- //
+
+
+  // ------------------ class Legendre --------------- //
+
+
 
   Legendre::Legendre(const unsigned int k) : Polynomial<double>(0)
   {
@@ -795,6 +815,8 @@ namespace Polynomials
     this->lagrange_weight = std::sqrt(double(2 * k + 1)) / prod;
   }
 
+
+
   std::vector<Polynomial<double>>
   Legendre::generate_complete_basis(const unsigned int degree)
   {
@@ -806,6 +828,13 @@ namespace Polynomials
   }
 
   // ------------------ class Lobatto -------------------- //
+
+  Lobatto::Lobatto(const unsigned int p)
+    : Polynomial<double>(compute_coefficients(p))
+  {}
+
+  // ------------------ class Lobatto -------------------- //
+
 
   Lobatto::Lobatto(const unsigned int p)
     : Polynomial<double>(compute_coefficients(p))
@@ -914,6 +943,16 @@ namespace Polynomials
   // for the start.
   std::vector<std::unique_ptr<const std::vector<double>>>
     Hierarchical::recursive_coefficients(20);
+
+  // ------------------ class Hierarchical --------------- //
+
+
+  // Reserve space for polynomials up to degree 19. Should be sufficient
+  // for the start.
+  std::vector<std::unique_ptr<const std::vector<double>>>
+    Hierarchical::recursive_coefficients(20);
+
+
 
   Hierarchical::Hierarchical(const unsigned int k)
     : Polynomial<double>(get_coefficients(k))
@@ -1056,6 +1095,8 @@ namespace Polynomials
       };
   }
 
+
+
   const std::vector<double>&
   Hierarchical::get_coefficients(const unsigned int k)
   {
@@ -1069,6 +1110,8 @@ namespace Polynomials
     Threads::Mutex::ScopedLock lock(coefficients_lock);
     return *recursive_coefficients[k];
   }
+
+
 
   std::vector<Polynomial<double>>
   Hierarchical::generate_complete_basis(const unsigned int degree)
@@ -1094,6 +1137,9 @@ namespace Polynomials
         return v;
       }
   }
+
+  // ------------------ HermiteInterpolation --------------- //
+
 
   // ------------------ HermiteInterpolation --------------- //
 
@@ -1147,6 +1193,7 @@ namespace Polynomials
       }
   }
 
+
   std::vector<Polynomial<double>>
   HermiteInterpolation::generate_complete_basis(const unsigned int n)
   {
@@ -1160,6 +1207,7 @@ namespace Polynomials
 
     return basis;
   }
+
 
   // ------------------ HermiteLikeInterpolation --------------- //
   namespace
@@ -1209,6 +1257,8 @@ namespace Polynomials
                  * integral_right;
     }
   } // namespace
+
+
 
   HermiteLikeInterpolation::HermiteLikeInterpolation(const unsigned int degree,
                                                      const unsigned int index)
@@ -1434,6 +1484,8 @@ namespace Polynomials
           }
       }
   }
+
+
 
   std::vector<Polynomial<double>>
   HermiteLikeInterpolation::generate_complete_basis(const unsigned int degree)

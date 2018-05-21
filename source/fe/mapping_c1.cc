@@ -206,6 +206,8 @@ MappingC1<dim, spacedim>::clone() const
   return std_cxx14::make_unique<MappingC1<dim, spacedim>>();
 }
 
+
+
 // explicit instantiations
 #include "mapping_c1.inst"
 

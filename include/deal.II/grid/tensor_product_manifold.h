@@ -360,6 +360,7 @@ TensorProductManifold<dim,
   DerivativeForm<1, chartdim_B, spacedim_B> result_B
     = manifold_B->push_forward_gradient(chart_point_B);
 
+
   DerivativeForm<1, chartdim, spacedim> result;
   for(unsigned int i = 0; i < chartdim_A; ++i)
     for(unsigned int j = 0; j < spacedim_A; ++j)
@@ -370,6 +371,8 @@ TensorProductManifold<dim,
 
   return result;
 }
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -90,6 +90,8 @@ Quadrature<1>::Quadrature(const Point<1>& point)
     is_tensor_product_flag(true)
 {}
 
+
+
 template <>
 Quadrature<0>::Quadrature(const SubQuadrature&, const Quadrature<1>&)
 {
@@ -705,6 +707,7 @@ QProjector<1>::project_to_all_faces(const Quadrature<0>& quadrature)
   q_points.reserve(n_points * n_faces);
   std::vector<Point<dim>> help(n_points);
 
+
   // project to each face and append
   // results
   for(unsigned int face = 0; face < n_faces; ++face)
@@ -779,6 +782,8 @@ QProjector<3>::project_to_all_faces(const SubQuadrature& quadrature)
                         rotate(q_reflected, 2),
                         rotate(q_reflected, 1)};
 
+
+
   const unsigned int n_points = quadrature.size(),
                      n_faces  = GeometryInfo<dim>::faces_per_cell;
 
@@ -810,6 +815,7 @@ QProjector<3>::project_to_all_faces(const SubQuadrature& quadrature)
                   q[mutation].get_weights().end(),
                   std::back_inserter(weights));
     }
+
 
   Assert(q_points.size() == n_points * n_faces * 8, ExcInternalError());
   Assert(weights.size() == n_points * n_faces * 8, ExcInternalError());
@@ -1024,6 +1030,8 @@ QProjector<dim>::project_to_all_children(const Quadrature<dim>& quadrature)
   return Quadrature<dim>(q_points, weights);
 }
 
+
+
 template <int dim>
 Quadrature<dim>
 QProjector<dim>::project_to_line(const Quadrature<1>& quadrature,
@@ -1060,6 +1068,7 @@ QProjector<dim>::DataSetDescriptor::face(const unsigned int face_no,
       case 1:
       case 2:
         return face_no * n_quadrature_points;
+
 
       case 3:
         {
@@ -1616,6 +1625,7 @@ QIterated<1>::QIterated(const Quadrature<1>& base_quadrature,
       // has only one quadrature point
       // per end point
       Assert(n_end_points == 2, ExcInvalidQuadratureFormula());
+
 
       for(unsigned int copy = 0; copy < n_copies; ++copy)
         for(unsigned int q_point = 0; q_point < base_quadrature.size();

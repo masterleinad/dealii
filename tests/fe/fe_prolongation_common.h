@@ -76,6 +76,7 @@ check_prolongation(FiniteElement<dim>& fe, const char* name)
     }
 }
 
+
 #define CHECK_ALL(EL, deg, dim)       \
   {                                   \
     FE_##EL<dim> EL(deg);             \

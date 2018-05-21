@@ -36,6 +36,7 @@ check(const FiniteElement<dim>& fe)
                 << std::endl;
 }
 
+
 #define check_el(fe)             \
   {                              \
     deallog << #fe << std::endl; \
@@ -69,6 +70,7 @@ check()
   if(dim > 1)
     check_el(FESystem<dim>(FE_Nedelec<dim>(0), 2));
 }
+
 
 int
 main()

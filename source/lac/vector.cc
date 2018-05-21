@@ -54,8 +54,13 @@ TEMPL_COPY_CONSTRUCTOR(std::complex<float>, std::complex<double>);
   template void Vector<S1>::scale(const Vector<S2>&); \
   template void Vector<S1>::equ(const S1, const Vector<S2>&)
 
+#define TEMPL_OP_EQ(S1, S2)                           \
+  template void Vector<S1>::scale(const Vector<S2>&); \
+  template void Vector<S1>::equ(const S1, const Vector<S2>&)
+
 TEMPL_OP_EQ(double, float);
 TEMPL_OP_EQ(float, double);
+
 
 TEMPL_OP_EQ(std::complex<double>, std::complex<float>);
 TEMPL_OP_EQ(std::complex<float>, std::complex<double>);

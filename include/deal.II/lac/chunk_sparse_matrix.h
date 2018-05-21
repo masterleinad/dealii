@@ -23,7 +23,15 @@
 #  include <deal.II/lac/exceptions.h>
 #  include <deal.II/lac/identity_matrix.h>
 
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/smartpointer.h>
+#  include <deal.II/base/subscriptor.h>
+#  include <deal.II/lac/chunk_sparsity_pattern.h>
+#  include <deal.II/lac/exceptions.h>
+#  include <deal.II/lac/identity_matrix.h>
+
 #  include <memory>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -390,6 +398,8 @@ namespace ChunkSparseMatrixIterators
   };
 
 } // namespace ChunkSparseMatrixIterators
+
+
 
 /**
  * Sparse matrix. This class implements the function to store values in the
@@ -1765,6 +1775,8 @@ namespace ChunkSparseMatrixIterators
     return Reference(this, true);
   }
 
+
+
   template <typename number>
   inline typename Accessor<number, false>::MatrixType&
   Accessor<number, false>::get_matrix() const
@@ -1894,6 +1906,8 @@ namespace ChunkSparseMatrixIterators
 
 } // namespace ChunkSparseMatrixIterators
 
+
+
 template <typename number>
 inline typename ChunkSparseMatrix<number>::const_iterator
 ChunkSparseMatrix<number>::begin() const
@@ -1954,7 +1968,10 @@ ChunkSparseMatrix<number>::end(const unsigned int r)
   return iterator(this, r + 1);
 }
 
+
+
 #  endif // DOXYGEN
+
 
 /*----------------------------   chunk_sparse_matrix.h     ---------------------------*/
 

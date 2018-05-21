@@ -16,6 +16,7 @@
 #ifndef dealii_function_parser_h
 #define dealii_function_parser_h
 
+
 #include <deal.II/base/auto_derivative_function.h>
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
@@ -33,8 +34,10 @@ namespace mu
 
 DEAL_II_NAMESPACE_OPEN
 
+
 template <typename>
 class Vector;
+
 
 /**
  * This class implements a function object that gets its value by parsing a

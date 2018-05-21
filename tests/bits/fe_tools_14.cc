@@ -21,6 +21,8 @@
 // a bit like hp_constraints_are_implemented, but with a different
 // set of elements
 
+
+
 template <int dim>
 void
 check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)

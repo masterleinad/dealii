@@ -49,6 +49,8 @@ test()
 
   typedef decltype(cell) Iterator;
 
+
+
   auto cell_worker = [](const Iterator& cell, ScratchData& s, CopyData& c) {
     deallog << "Cell worker on : " << cell << std::endl;
   };
@@ -84,6 +86,7 @@ test()
   deallog << "CELLS ONLY" << std::endl << std::endl;
 
   mesh_loop(cell, endc, cell_worker, copier, scratch, copy, assemble_own_cells);
+
 
   deallog << "BOUNDARY ONLY" << std::endl << std::endl;
 
@@ -130,6 +133,7 @@ test()
             empty_boundary_worker,
             face_worker);
 
+
   deallog << "ONLY FACES BOTH" << std::endl << std::endl;
 
   mesh_loop(cell,
@@ -142,6 +146,7 @@ test()
             empty_boundary_worker,
             face_worker);
 }
+
 
 int
 main()

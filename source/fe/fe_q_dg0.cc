@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -20,6 +21,7 @@
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_q_dg0.h>
+
 
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
@@ -204,6 +206,16 @@ FE_Q_DG0<dim, spacedim>::get_interpolation_matrix(
     (x_source_fe.get_name().find("FE_Q_DG0<") == 0)
       || (dynamic_cast<const FEQDG0*>(&x_source_fe) != nullptr),
     (typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented()));
+
+  Assert(interpolation_matrix.m() == this->dofs_per_cell,
+         ExcDimensionMismatch(interpolation_matrix.m(), this->dofs_per_cell));
+  Assert(
+    interpolation_matrix.n() == x_source_fe.dofs_per_cell,
+    ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_cell));
+
+  this->FE_Q_Base<TensorProductPolynomialsConst<dim>, dim, spacedim>::
+    get_interpolation_matrix(x_source_fe, interpolation_matrix);
+}
 
   Assert(interpolation_matrix.m() == this->dofs_per_cell,
          ExcDimensionMismatch(interpolation_matrix.m(), this->dofs_per_cell));

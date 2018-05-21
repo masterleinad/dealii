@@ -47,6 +47,7 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 
+
 template <int dim>
 class TestFunction : public Function<dim>
 {
@@ -119,6 +120,7 @@ TestFEQConstraints<dim>::TestFEQConstraints(unsigned int p_order,
     fe(p_order),
     dof_handler(triangulation)
 {}
+
 
 // Actually this function creates with pseudo-random numbers errors,
 // which are then used to refine the grid. This should be a tough test for
@@ -226,6 +228,7 @@ TestFEQConstraints<dim>::run()
   make_grid_and_dofs();
   test();
 }
+
 
 int
 main()

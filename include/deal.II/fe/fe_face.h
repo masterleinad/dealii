@@ -345,6 +345,7 @@ protected:
    * because we otherwise run into a compiler error with MS Visual Studio.
    */
 
+
   virtual std::unique_ptr<typename FiniteElement<1, spacedim>::InternalDataBase>
   get_data(const UpdateFlags /*update_flags*/,
            const Mapping<1, spacedim>& /*mapping*/,

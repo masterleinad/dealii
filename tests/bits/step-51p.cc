@@ -19,6 +19,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include <deal.II/base/convergence_table.h>
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -62,6 +63,7 @@ namespace Step51
     SolutionBase<1>::source_centers[SolutionBase<1>::n_source_centers]
     = {Point<1>(-1.0 / 3.0), Point<1>(0.0), Point<1>(+1.0 / 3.0)};
 
+
   template <>
   const Point<2>
     SolutionBase<2>::source_centers[SolutionBase<2>::n_source_centers]
@@ -76,6 +78,7 @@ namespace Step51
 
   template <int dim>
   const double SolutionBase<dim>::width = 1. / 5.;
+
 
   template <int dim>
   class Solution : public Function<dim>, protected SolutionBase<dim>
@@ -261,6 +264,12 @@ namespace Step51
 
     void
     copy_local_to_global(const PerTaskData& data);
+
+    void
+    postprocess_one_cell(
+      const typename DoFHandler<dim>::active_cell_iterator& cell,
+      PostProcessScratchData&                               scratch,
+      unsigned int&                                         empty_data);
 
     void
     postprocess_one_cell(
@@ -771,6 +780,8 @@ namespace Step51
     assemble_system(true);
   }
 
+
+
   template <int dim>
   void
   HDG<dim>::postprocess()
@@ -954,6 +965,8 @@ namespace Step51
   }
 
 } // end of namespace Step51
+
+
 
 int
 main()

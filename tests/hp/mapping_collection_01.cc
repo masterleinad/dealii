@@ -22,6 +22,8 @@
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/hp/mapping_collection.h>
 
+
+
 template <int dim>
 void
 test()
@@ -37,6 +39,8 @@ test()
     hp::MappingCollection<dim> copy(mapping_collection);
   }
 }
+
+
 
 int
 main()

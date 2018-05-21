@@ -30,6 +30,7 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 
+
 template <int dim>
 void
 test()
@@ -85,6 +86,8 @@ test()
         deallog << r << ' ' << c << ' ' << i->row() << ' ' << i->column()
                 << std::endl;
 }
+
+
 
 int
 main()

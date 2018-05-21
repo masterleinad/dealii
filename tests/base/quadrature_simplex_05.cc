@@ -39,6 +39,7 @@ test(int n, const Point<dim>& split_point, stream_type& deallog)
     deallog << p << std::endl;
 }
 
+
 int
 main()
 {

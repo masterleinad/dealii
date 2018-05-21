@@ -32,6 +32,8 @@ CellId::CellId()
     child_indices[i] = std::numeric_limits<char>::max();
 }
 
+
+
 CellId::CellId(const unsigned int               coarse_cell_id,
                const std::vector<std::uint8_t>& id)
   : coarse_cell_id(coarse_cell_id), n_child_indices(id.size())
@@ -48,6 +50,8 @@ CellId::CellId(const unsigned int  coarse_cell_id,
   Assert(n_child_indices < child_indices.size(), ExcInternalError());
   memcpy(&(child_indices[0]), id, n_child_indices);
 }
+
+
 
 CellId::CellId(const CellId::binary_type& binary_representation)
 {

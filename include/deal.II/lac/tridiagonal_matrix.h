@@ -29,6 +29,7 @@ DEAL_II_NAMESPACE_OPEN
 template <typename number>
 class Vector;
 
+
 /*! @addtogroup Matrix1
  *@{
  */
@@ -69,6 +70,7 @@ public:
    */
   void
   reinit(size_type n, bool symmetric = false);
+
 
   //@}
 

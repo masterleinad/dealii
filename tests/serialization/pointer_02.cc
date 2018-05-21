@@ -67,6 +67,7 @@ private:
   unsigned int object_number;
 };
 
+
 void
 test()
 {
@@ -95,6 +96,7 @@ test()
   // error messages from memory checkers about leaked memory
   delete backup;
 }
+
 
 int
 main()

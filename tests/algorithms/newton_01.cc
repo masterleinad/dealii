@@ -84,6 +84,8 @@ SquareRoot::solve(AnyData& out, const AnyData& in)
   v(0) = 1. / 2. / x(0) * r(0);
 }
 
+
+
 void
 test()
 {
@@ -110,6 +112,8 @@ test()
   deallog << " square root " << (*out_data.read<Vector<double>*>(0))(0)
           << std::endl;
 }
+
+
 
 int
 main()

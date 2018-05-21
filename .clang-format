@@ -80,7 +80,7 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 
 Language: Cpp
 
-MaxEmptyLinesToKeep: 1
+MaxEmptyLinesToKeep: 3
 
 NamespaceIndentation: All
 

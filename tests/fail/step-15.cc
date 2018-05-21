@@ -67,6 +67,8 @@ public:
   value(const Point<1>& p, const unsigned int component = 0) const;
 };
 
+
+
 double
 InitializationValues::value(const Point<1>& p, const unsigned int) const
 {
@@ -101,6 +103,7 @@ private:
 
   static double
   energy(const DoFHandler<dim>& dof_handler, const Vector<double>& function);
+
 
   const unsigned int run_number;
 
@@ -534,6 +537,7 @@ MinimizationProblem<dim>::run()
 
   deallog << std::endl;
 }
+
 
 int
 main()

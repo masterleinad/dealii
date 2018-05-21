@@ -31,6 +31,8 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_pattern.h>
 
+
+
 template <int dim>
 void
 check()
@@ -77,6 +79,8 @@ check()
 
   sparsity.print(deallog.get_file_stream());
 }
+
+
 
 int
 main()

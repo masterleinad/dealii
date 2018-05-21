@@ -133,6 +133,7 @@ namespace Functions
     return sizeof(*this) + 2 * sizeof(double) * interpolation_values.size();
   }
 
+
   // explicit instantiations
   template class CSpline<1>;
 

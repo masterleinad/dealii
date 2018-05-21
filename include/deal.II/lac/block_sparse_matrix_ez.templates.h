@@ -132,6 +132,7 @@ BlockSparseMatrixEZ<number>::collect_sizes()
   // indices with this array
   row_indices.reinit(row_sizes);
 
+
   // then do the same with the columns
   for(unsigned int c = 0; c < columns; ++c)
     col_sizes[c] = blocks[0][c].n();
@@ -144,6 +145,8 @@ BlockSparseMatrixEZ<number>::collect_sizes()
   // indices with this array
   column_indices.reinit(col_sizes);
 }
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

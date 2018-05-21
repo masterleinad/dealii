@@ -27,6 +27,10 @@ foo(const std::vector<unsigned int>::iterator, ScratchData&, unsigned int&)
 {}
 
 void
+foo(const std::vector<unsigned int>::iterator, ScratchData&, unsigned int&)
+{}
+
+void
 bar(const unsigned int&)
 {}
 
@@ -55,6 +59,8 @@ test()
                   ScratchData(),
                   0U);
 }
+
+
 
 int
 main()

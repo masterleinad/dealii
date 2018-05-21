@@ -29,6 +29,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 
+
+
 template <int dim>
 void
 print_dofs(const DoFHandler<dim>& dof)
@@ -100,6 +102,9 @@ check_renumbering(DoFHandler<dim>& mgdof, bool discontinuous)
   DoFRenumbering::component_wise(dof, order);
   print_dofs(dof);
 
+  DoFRenumbering::component_wise(dof, order);
+  print_dofs(dof);
+
   std::vector<bool> selected_dofs(dof.n_dofs(), false);
   for(unsigned int i = 0; i < dof.n_dofs(); ++i)
     if(i % 2 == 0)
@@ -167,6 +172,7 @@ check()
   check_renumbering(mgdof, true);
   mgdof.clear();
 }
+
 
 int
 main()

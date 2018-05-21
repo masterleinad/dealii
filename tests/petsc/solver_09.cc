@@ -18,6 +18,8 @@
 // note that this test fails on PETSc 2.1.6 due to a bug in the TCQMR
 // implementation. this is reported and should be fixed soonish
 
+
+
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/lac/petsc_parallel_vector.h>
@@ -27,6 +29,7 @@
 #include <deal.II/lac/vector_memory.h>
 #include <iostream>
 #include <typeinfo>
+
 
 int
 main(int argc, char** argv)

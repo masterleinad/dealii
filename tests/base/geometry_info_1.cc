@@ -18,6 +18,7 @@
 #include "../tests.h"
 #include <deal.II/base/geometry_info.h>
 
+
 double
 rand_2()
 {
@@ -85,6 +86,7 @@ test()
         }
     }
 }
+
 
 int
 main()

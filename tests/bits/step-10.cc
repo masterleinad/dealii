@@ -18,6 +18,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include <deal.II/base/convergence_table.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -61,6 +62,7 @@ gnuplot_output()
 
           const MappingQ<dim> mapping(degree);
 
+
           GridOut               grid_out;
           GridOutFlags::Gnuplot gnuplot_flags(false, 30);
           grid_out.set_flags(gnuplot_flags);
@@ -101,6 +103,7 @@ compute_pi_by_area()
         mapping, dummy_fe, quadrature, update_JxW_values);
 
       ConvergenceTable table;
+
 
       for(unsigned int refinement = 0; refinement < (degree != 4 ? 6 : 4);
           ++refinement, triangulation.refine_global(1))
@@ -202,6 +205,7 @@ compute_pi_by_perimeter()
       deallog << std::endl;
     };
 }
+
 
 int
 main()

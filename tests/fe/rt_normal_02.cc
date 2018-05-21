@@ -22,6 +22,7 @@
 
 #define PRECISION 8
 
+
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
 #include <deal.II/grid/grid_generator.h>
@@ -44,6 +45,8 @@
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
+
+std::ofstream logfile("output");
 
 std::ofstream logfile("output");
 
@@ -233,6 +236,7 @@ void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
         }
     }
 }
+
 
 int
 main(int /*argc*/, char** /*argv*/)

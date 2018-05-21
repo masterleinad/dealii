@@ -38,6 +38,8 @@ test()
   Assert(s * t == t * s, ExcInternalError());
 }
 
+
+
 int
 main()
 {

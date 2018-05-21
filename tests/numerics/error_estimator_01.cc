@@ -30,6 +30,7 @@
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 template <int dim, int spacedim>
 void
 check()
@@ -38,6 +39,10 @@ check()
   Triangulation<dim, spacedim>        tr;
 
   GridGenerator::hyper_cube(tr, -1, 1);
+
+  tr.refine_global(1);
+  tr.begin_active()->set_refine_flag();
+  tr.execute_coarsening_and_refinement();
 
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
@@ -66,6 +71,7 @@ check()
     deallog << error(i) * 100 << std::endl;
 }
 
+
 int
 main()
 {
@@ -73,6 +79,7 @@ main()
   deallog << std::setprecision(2);
   deallog << std::fixed;
   deallog.attach(logfile);
+
 
   deallog.push("2d_2");
   check<2, 2>();

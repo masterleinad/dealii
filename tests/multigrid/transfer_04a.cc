@@ -71,6 +71,7 @@ setup_tria(parallel::distributed::Triangulation<dim>& tr)
     }
   tr.execute_coarsening_and_refinement();
 
+
   for(typename parallel::distributed::Triangulation<dim>::cell_iterator cell
       = tr.begin();
       cell != tr.end();
@@ -81,6 +82,8 @@ setup_tria(parallel::distributed::Triangulation<dim>& tr)
               << std::endl;
     }
 }
+
+
 
 template <int dim>
 void
@@ -110,6 +113,7 @@ check_fe(FiniteElement<dim>& fe)
       std::ofstream output(filename.c_str());
       data_out.write_vtu(output);
     }
+
 
   Functions::ZeroFunction<dim>    zero;
   typename FunctionMap<dim>::type fmap;

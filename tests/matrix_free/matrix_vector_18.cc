@@ -36,6 +36,8 @@
 
 #include <iostream>
 
+
+
 template <int dim,
           int fe_degree,
           typename Number,
@@ -139,6 +141,7 @@ do_test(const DoFHandler<dim>&  dof,
 
   mf.vmult(out_dist, in_dist);
 
+
   // assemble sparse matrix with (\nabla v, \nabla u + 3.2221 * \nabla^2 u * ones) + (v, 10 * u)
   SparsityPattern sparsity;
   {
@@ -228,6 +231,8 @@ test()
 
   do_test<dim, fe_degree, double>(dof, constraints);
 }
+
+
 
 int
 main()

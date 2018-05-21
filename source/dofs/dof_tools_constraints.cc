@@ -481,6 +481,7 @@ namespace DoFTools
           Assert(master_dofs[col] != numbers::invalid_dof_index,
                  ExcInternalError());
 
+
         for(unsigned int row = 0; row != n_slave_dofs; ++row)
           if(constraints.is_constrained(slave_dofs[row]) == false)
             {
@@ -526,6 +527,8 @@ namespace DoFTools
       }
 
     } // namespace
+
+
 
     void
     make_hp_hanging_node_constraints(const dealii::DoFHandler<1>&,
@@ -595,6 +598,7 @@ namespace DoFTools
       // nothing to do for regular dof handlers in 1d
     }
 
+
     //   currently not used but may be in the future:
 
     //     void
@@ -605,6 +609,8 @@ namespace DoFTools
     //                                     // dof handlers in 1d
     //     }
 
+
+
     //     void
     //     make_oldstyle_hanging_node_constraints (const dealii::DoFHandler<1,2> &,
     //                                          ConstraintMatrix    &,
@@ -613,6 +619,7 @@ namespace DoFTools
     //                                     // nothing to do for regular
     //                                     // dof handlers in 1d
     //     }
+
 
     //     void
     //     make_oldstyle_hanging_node_constraints (const dealii::hp::DoFHandler<1,2> &/*dof_handler*/,
@@ -627,6 +634,8 @@ namespace DoFTools
     // //TODO[WB]: think about what to do here...
     //     }
     //#endif
+
+
 
     template <typename DoFHandlerType>
     void
@@ -1384,6 +1393,8 @@ namespace DoFTools
                                            constraint_matrix,
                                            constraints);
 
+
+
                         // next we have to deal with the subfaces. do as
                         // discussed in the hp paper
                         for(unsigned int sf = 0;
@@ -1754,6 +1765,8 @@ namespace DoFTools
         }
     }
   } // namespace internal
+
+
 
   template <typename DoFHandlerType>
   void
@@ -2638,6 +2651,7 @@ namespace DoFTools
       struct Scratch
       {};
 
+
       template <int dim, int spacedim>
       struct CopyData
       {
@@ -2954,6 +2968,7 @@ namespace DoFTools
                 coarse_fe.component_to_base_index(coarse_component).first)
               .dofs_per_cell;
 
+
         // Try to find out whether the grids stem from the same coarse
         // grid. This is a rather crude test, but better than nothing
         Assert(coarse_grid.get_triangulation().n_cells(0)
@@ -2965,6 +2980,7 @@ namespace DoFTools
                ExcGridsDontMatch());
         Assert(&coarse_to_fine_grid_map.get_destination_grid() == &fine_grid,
                ExcGridsDontMatch());
+
 
         // check whether component numbers are valid
         AssertIndexRange(coarse_component, coarse_fe.n_components());
@@ -3109,6 +3125,7 @@ namespace DoFTools
                                     weight_mapping,
                                     weights);
 
+
         // ok, now we have all weights for each dof on the fine grid. if in
         // debug mode lets see if everything went smooth, i.e. each dof has
         // sum of weights one
@@ -3138,8 +3155,11 @@ namespace DoFTools
         return n_parameters_on_fine_grid;
       }
 
+
     } // namespace
   }   // namespace internal
+
+
 
   template <int dim, int spacedim>
   void

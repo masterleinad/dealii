@@ -16,7 +16,13 @@
 #ifndef dealii_fe_system_h
 #  define dealii_fe_system_h
 
+
 /*----------------------------   fe_system.h     ---------------------------*/
+
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/thread_management.h>
+#  include <deal.II/fe/fe.h>
+#  include <deal.II/fe/fe_tools.h>
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/thread_management.h>
@@ -28,10 +34,12 @@
 #  include <utility>
 #  include <vector>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
 class FE_Enriched;
+
 
 /**
  * This class provides an interface to group several elements together into
@@ -878,6 +886,7 @@ public:
   get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
                                 FullMatrix<double>& matrix) const override;
 
+
   /**
    * Return the matrix interpolating from a face of one element to the
    * subface of the neighboring element.  The size of the matrix is then
@@ -1246,6 +1255,8 @@ namespace
       p);
   }
 } // namespace
+
+
 
 // We are just forwarding/delegating to the constructor taking a std::initializer_list.
 // If we decide to remove the deprecated constructors, we might just use the variadic

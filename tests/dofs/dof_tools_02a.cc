@@ -23,6 +23,8 @@
 //                          Table<2,DoFTools::Coupling> &,
 //                      SparsityPattern       &);
 
+
+
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)

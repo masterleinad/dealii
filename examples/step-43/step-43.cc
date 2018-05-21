@@ -214,6 +214,7 @@ namespace Step43
     }
   } // namespace SingleCurvingCrack
 
+
   namespace RandomMedium
   {
     template <int dim>
@@ -237,6 +238,7 @@ namespace Step43
     template <int dim>
     std::vector<Point<dim>> KInverse<dim>::centers
       = KInverse<dim>::get_centers();
+
 
     template <int dim>
     std::vector<Point<dim>>
@@ -279,6 +281,7 @@ namespace Step43
     }
   } // namespace RandomMedium
 
+
   // @sect3{Physical quantities}
 
   // The implementations of all the physical quantities such as total mobility
@@ -296,6 +299,7 @@ namespace Step43
     return 1.0 / (1.0 / viscosity * S * S + (1 - S) * (1 - S));
   }
 
+
   double
   fractional_flow(const double S, const double viscosity)
   {
@@ -304,6 +308,7 @@ namespace Step43
 
     return S * S / (S * S + viscosity * (1 - S) * (1 - S));
   }
+
 
   double
   fractional_flow_derivative(const double S, const double viscosity)
@@ -339,6 +344,7 @@ namespace Step43
     public:
       InverseMatrix(const MatrixType&         m,
                     const PreconditionerType& preconditioner);
+
 
       template <typename VectorType>
       void
@@ -428,6 +434,7 @@ namespace Step43
       m_inverse->vmult(dst.block(1), tmp);
     }
   } // namespace LinearSolvers
+
 
   // @sect3{The TwoPhaseFlowProblem class}
 
@@ -521,6 +528,7 @@ namespace Step43
       const double                       global_S_variation,
       const double                       cell_diameter) const;
 
+
     // This all is followed by the member variables, most of which are similar
     // to the ones in step-31, with the exception of the ones that pertain to
     // the macro time stepping for the velocity/pressure system:
@@ -545,12 +553,20 @@ namespace Step43
     TrilinosWrappers::MPI::BlockVector last_computed_darcy_solution;
     TrilinosWrappers::MPI::BlockVector second_last_computed_darcy_solution;
 
+    TrilinosWrappers::MPI::BlockVector last_computed_darcy_solution;
+    TrilinosWrappers::MPI::BlockVector second_last_computed_darcy_solution;
+
     const unsigned int saturation_degree;
     FE_Q<dim>          saturation_fe;
     DoFHandler<dim>    saturation_dof_handler;
     ConstraintMatrix   saturation_constraints;
 
     TrilinosWrappers::SparseMatrix saturation_matrix;
+
+    TrilinosWrappers::MPI::Vector saturation_solution;
+    TrilinosWrappers::MPI::Vector old_saturation_solution;
+    TrilinosWrappers::MPI::Vector old_old_saturation_solution;
+    TrilinosWrappers::MPI::Vector saturation_rhs;
 
     TrilinosWrappers::MPI::Vector saturation_solution;
     TrilinosWrappers::MPI::Vector old_saturation_solution;
@@ -703,6 +719,7 @@ namespace Step43
       darcy_preconditioner_constraints.close();
     }
 
+
     std::vector<types::global_dof_index> darcy_dofs_per_block(2);
     DoFTools::count_dofs_per_block(
       darcy_dof_handler, darcy_dofs_per_block, darcy_block_component);
@@ -736,6 +753,9 @@ namespace Step43
             coupling[c][d] = DoFTools::always;
           else
             coupling[c][d] = DoFTools::none;
+
+      DoFTools::make_sparsity_pattern(
+        darcy_dof_handler, coupling, dsp, darcy_constraints, false);
 
       DoFTools::make_sparsity_pattern(
         darcy_dof_handler, coupling, dsp, darcy_constraints, false);
@@ -778,6 +798,7 @@ namespace Step43
 
       DoFTools::make_sparsity_pattern(
         saturation_dof_handler, dsp, saturation_constraints, false);
+
 
       saturation_matrix.reinit(dsp);
     }
@@ -1698,6 +1719,9 @@ namespace Step43
       SolutionTransfer<dim, TrilinosWrappers::MPI::BlockVector> darcy_soltrans(
         darcy_dof_handler);
 
+      SolutionTransfer<dim, TrilinosWrappers::MPI::BlockVector> darcy_soltrans(
+        darcy_dof_handler);
+
       triangulation.prepare_coarsening_and_refinement();
       saturation_soltrans.prepare_for_coarsening_and_refinement(x_saturation);
 
@@ -2158,6 +2182,10 @@ namespace Step43
     triangulation.refine_global(initial_refinement);
     global_Omega_diameter = GridTools::diameter(triangulation);
 
+    GridGenerator::hyper_cube(triangulation, 0, 1);
+    triangulation.refine_global(initial_refinement);
+    global_Omega_diameter = GridTools::diameter(triangulation);
+
     setup_dofs();
 
     unsigned int pre_refinement_step = 0;
@@ -2207,6 +2235,8 @@ namespace Step43
     while(time <= end_time);
   }
 } // namespace Step43
+
+
 
 // @sect3{The <code>main()</code> function}
 //

@@ -664,6 +664,8 @@ namespace GridTools
     }
   } // namespace
 
+
+
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   compute_ghost_cell_halo_layer(const MeshType& mesh)
@@ -865,6 +867,8 @@ namespace GridTools
 
     return ghost_cell_layer_within_distance;
   }
+
+
 
   template <class MeshType>
   std::pair<Point<MeshType::space_dimension>, Point<MeshType::space_dimension>>
@@ -1072,6 +1076,7 @@ namespace GridTools
         double best_distance = 1e-10;
         int    best_level    = -1;
 
+
         // Find closest vertex and determine
         // all adjacent cells
         unsigned int vertex = find_closest_vertex(mesh, p);
@@ -1109,6 +1114,7 @@ namespace GridTools
                     const Point<dim> p_cell
                       = mapping[(*cell)->active_fe_index()]
                           .transform_real_to_unit_cell(*cell, p);
+
 
                     // calculate the infinity norm of
                     // the distance vector to the unit cell.
@@ -1440,6 +1446,7 @@ namespace GridTools
       }
     while(refinement_necessary);
 
+
     // Last assertion check to make sure we have the right cells and centers
     // in the map, and hence the correct vertices of the triangulation
     for(typename Triangulation<Container::dimension,
@@ -1461,6 +1468,7 @@ namespace GridTools
           }
       }
 
+
     typename std::map<
       typename Triangulation<Container::dimension,
                              Container::space_dimension>::cell_iterator,
@@ -1472,6 +1480,8 @@ namespace GridTools
     for(; map_tmp_it != map_tmp_end; ++map_tmp_it)
       patch_to_global_tria_map[map_tmp_it->first] = map_tmp_it->second;
   }
+
+
 
   template <class DoFHandlerType>
   std::map<types::global_dof_index,
@@ -1513,6 +1523,7 @@ namespace GridTools
                                          DoFHandlerType::space_dimension>&>(
           dof_handler.get_triangulation())
           .clear_user_flags();
+
 
         typename DoFHandlerType::active_cell_iterator cell
           = dof_handler.begin_active(),
@@ -1757,6 +1768,7 @@ namespace GridTools
               }     // if DoFHandlerType::dimension == 3
           }         // if cell->is_locally_owned()
       }             // for cells
+
 
     if(DoFHandlerType::dimension == 3)
       {
@@ -2196,7 +2208,10 @@ namespace GridTools
     return orthogonal_equality(dummy, face1, face2, direction, offset, matrix);
   }
 
+
+
 } // namespace GridTools
+
 
 #include "grid_tools_dof_handlers.inst"
 

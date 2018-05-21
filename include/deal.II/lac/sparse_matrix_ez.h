@@ -21,6 +21,11 @@
 #  include <deal.II/base/subscriptor.h>
 #  include <deal.II/lac/exceptions.h>
 
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/smartpointer.h>
+#  include <deal.II/base/subscriptor.h>
+#  include <deal.II/lac/exceptions.h>
+
 #  include <vector>
 
 DEAL_II_NAMESPACE_OPEN
@@ -1274,6 +1279,8 @@ SparseMatrixEZ<number>::add(const std::vector<size_type>& row_indices,
         add(row_indices[i], col_indices[j], full_matrix(i, j));
 }
 
+
+
 template <typename number>
 template <typename number2>
 void
@@ -1303,6 +1310,8 @@ SparseMatrixEZ<number>::add(const size_type  row,
     if((values[j] != 0) || (elide_zero_values == false))
       add(row, col_indices[j], values[j]);
 }
+
+
 
 template <typename number>
 inline number

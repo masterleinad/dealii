@@ -31,6 +31,7 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 using namespace dealii;
 
 // First dim components:
@@ -142,6 +143,7 @@ test()
   test<dim>(VectorTools::Hdiv_seminorm, true_value);
   deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

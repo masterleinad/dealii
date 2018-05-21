@@ -260,6 +260,8 @@ template <>
 std::array<unsigned int, 3>
 PolynomialSpace<3>::compute_index(const unsigned int n) const;
 
+
+
 /* -------------- inline and template functions ------------- */
 
 template <int dim>

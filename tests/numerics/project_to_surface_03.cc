@@ -23,6 +23,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 test()
@@ -43,6 +45,7 @@ test()
   cell->vertex(6)[0] -= 0.25;
   cell->vertex(2)[0] += 0.25;
   cell->vertex(4)[0] += 0.25;
+
 
   for(unsigned int point = 0; point < 9; ++point)
     {
@@ -89,6 +92,8 @@ test()
       deallog << std::endl;
     }
 }
+
+
 
 int
 main()

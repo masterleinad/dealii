@@ -40,6 +40,7 @@ struct X
   int i;
 };
 
+
 void
 execute_ref(const X& x)
 {
@@ -58,6 +59,7 @@ execute_value(X x)
   deallog << "OK" << std::endl;
 }
 
+
 void
 test()
 {
@@ -72,6 +74,8 @@ test()
     t.join();
   }
 }
+
+
 
 int
 main()

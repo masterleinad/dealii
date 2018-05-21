@@ -22,6 +22,7 @@
 #include <functional>
 #include <limits>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 // please note: for a given dimension, we need the quadrature formulae
@@ -123,6 +124,8 @@ namespace internal
     }
   } // namespace QGaussLobatto
 } // namespace internal
+
+
 
 template <>
 QGaussLobatto<1>::QGaussLobatto(const unsigned int n) : Quadrature<1>(n)
@@ -276,6 +279,7 @@ QGaussLog<1>::get_quadrature_points(const unsigned int n)
         q_points[5] = 0.922668851372116;
         break;
 
+
       case 7:
         q_points[0] = 0.0167193554082585;
         q_points[1] = 0.100185677915675;
@@ -321,6 +325,7 @@ QGaussLog<1>::get_quadrature_points(const unsigned int n)
         q_points[8] = 0.898161091216429;
         q_points[9] = 0.9688479887196;
         break;
+
 
       case 11:
         q_points[0]  = 0.007643941174637681;
@@ -405,6 +410,7 @@ QGaussLog<1>::get_quadrature_weights(const unsigned int n)
         quadrature_weights[5] = -0.01016895869293513;
         break;
 
+
       case 7:
         quadrature_weights[0] = -0.1961693894252476;
         quadrature_weights[1] = -0.2703026442472726;
@@ -450,6 +456,7 @@ QGaussLog<1>::get_quadrature_weights(const unsigned int n)
         quadrature_weights[8] = -0.00951518260454442;
         quadrature_weights[9] = -0.001638157633217673;
         break;
+
 
       case 11:
         quadrature_weights[0]  = -0.1056522560990997;
@@ -940,6 +947,7 @@ namespace internal
   } // namespace QGaussChebyshev
 } // namespace internal
 
+
 template <>
 QGaussChebyshev<1>::QGaussChebyshev(const unsigned int n) : Quadrature<1>(n)
 {
@@ -1032,6 +1040,7 @@ namespace internal
   } // namespace QGaussRadauChebyshev
 } // namespace internal
 
+
 template <>
 QGaussRadauChebyshev<1>::QGaussRadauChebyshev(const unsigned int n, EndPoint ep)
   : Quadrature<1>(n), ep(ep)
@@ -1098,6 +1107,8 @@ namespace internal
   } // namespace QGaussLobattoChebyshev
 } // namespace internal
 
+
+
 template <>
 QGaussLobattoChebyshev<1>::QGaussLobattoChebyshev(const unsigned int n)
   : Quadrature<1>(n)
@@ -1122,6 +1133,8 @@ QGaussLobattoChebyshev<dim>::QGaussLobattoChebyshev(const unsigned int n)
   : Quadrature<dim>(QGaussLobattoChebyshev<1>(n))
 {}
 
+
+
 template <int dim>
 QSimplex<dim>::QSimplex(const Quadrature<dim>& quad)
 {
@@ -1140,6 +1153,8 @@ QSimplex<dim>::QSimplex(const Quadrature<dim>& quad)
         }
     }
 }
+
+
 
 template <int dim>
 Quadrature<dim>
@@ -1169,6 +1184,8 @@ QSimplex<dim>::compute_affine_transformation(
   return Quadrature<dim>(qp, w);
 }
 
+
+
 QTrianglePolar::QTrianglePolar(const Quadrature<1>& radial_quadrature,
                                const Quadrature<1>& angular_quadrature)
   : QSimplex<2>(Quadrature<2>())
@@ -1197,9 +1214,13 @@ QTrianglePolar::QTrianglePolar(const Quadrature<1>& radial_quadrature,
     }
 }
 
+
+
 QTrianglePolar::QTrianglePolar(const unsigned int& n)
   : QTrianglePolar(QGauss<1>(n), QGauss<1>(n))
 {}
+
+
 
 QDuffy::QDuffy(const Quadrature<1>& radial_quadrature,
                const Quadrature<1>& angular_quadrature,
@@ -1230,6 +1251,8 @@ QDuffy::QDuffy(const Quadrature<1>& radial_quadrature,
 QDuffy::QDuffy(const unsigned int n, const double beta)
   : QDuffy(QGauss<1>(n), QGauss<1>(n), beta)
 {}
+
+
 
 template <int dim>
 QSplit<dim>::QSplit(const QSimplex<dim>& base, const Point<dim>& split_point)

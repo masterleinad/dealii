@@ -51,6 +51,7 @@ test()
   test_initializer<3, rank, NumberType, OtherNumberType>();
 }
 
+
 int
 main()
 {

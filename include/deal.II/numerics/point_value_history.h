@@ -64,6 +64,8 @@ namespace internal
   } // namespace PointValueHistoryImplementation
 } // namespace internal
 
+
+
 /**
  * PointValueHistory tackles the overhead of plotting time (or any other
  * iterative process) graphs of solution values at specific points on the
@@ -271,6 +273,8 @@ public:
   void
   add_points(const std::vector<Point<dim>>& locations);
 
+
+
   /**
    * Put another mnemonic string (and hence @p VectorType) into the class.
    * This method adds storage space for variables equal to the number of true
@@ -309,6 +313,8 @@ public:
   void
   add_independent_names(const std::vector<std::string>& independent_names);
 
+
+
   /**
    * Extract values at the stored points from the VectorType supplied and add
    * them to the new dataset in vector_name. The component mask supplied when
@@ -320,6 +326,7 @@ public:
   template <class VectorType>
   void
   evaluate_field(const std::string& name, const VectorType& solution);
+
 
   /**
    * Compute values using a @p DataPostprocessor object with the @p VectorType
@@ -357,6 +364,7 @@ public:
                  const DataPostprocessor<dim>& data_postprocessor,
                  const Quadrature<dim>&        quadrature);
 
+
   /**
    * Extract values at the points actually requested from the VectorType
    * supplied and add them to the new dataset in vector_name. Unlike the other
@@ -373,6 +381,7 @@ public:
   void
   evaluate_field_at_requested_location(const std::string& name,
                                        const VectorType&  solution);
+
 
   /**
    * Add the key for the current dataset to the dataset. Although calling this
@@ -393,6 +402,7 @@ public:
    */
   void
   push_back_independent(const std::vector<double>& independent_values);
+
 
   /**
    * Write out a series of .gpl files named base_name + "-00.gpl", base_name +
@@ -415,6 +425,7 @@ public:
   write_gnuplot(const std::string&             base_name,
                 const std::vector<Point<dim>>& postprocessor_locations
                 = std::vector<Point<dim>>());
+
 
   /**
    * Return a @p Vector with the indices of selected points flagged with a 1.
@@ -489,6 +500,7 @@ public:
   void
   close();
 
+
   /**
    * Delete the lock this object has to the @p DoFHandler used the last time
    * the class was created.  This method should not normally need to be
@@ -508,6 +520,7 @@ public:
    */
   void
   status(std::ostream& out);
+
 
   /**
    * Check the internal data sizes to test for a loss of data sync. This is
@@ -539,6 +552,7 @@ public:
     "to be added with out restricting the order the user choses to do so. "
     "Special cases of no FHandler and no independent values should not "
     "trigger this error.");
+
 
   /**
    * Exception
@@ -592,6 +606,7 @@ private:
    */
   std::map<std::string, ComponentMask> component_mask;
 
+
   /**
    * Save a vector listing component names associated with a mnemonic. This
    * will be an empty vector if the user does not supplies names.
@@ -603,6 +618,7 @@ private:
    */
   std::vector<internal::PointValueHistoryImplementation::PointGeometryData<dim>>
     point_geometry_data;
+
 
   /**
    * Used to enforce @p closed state for some methods.
@@ -619,6 +635,7 @@ private:
    * be released by calling @p clear().
    */
   SmartPointer<const DoFHandler<dim>, PointValueHistory<dim>> dof_handler;
+
 
   /**
    * Variable to check if the triangulation has changed. If it has changed,

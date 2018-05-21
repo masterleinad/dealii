@@ -42,6 +42,8 @@ namespace Particles
       handle(numbers::invalid_unsigned_int)
   {}
 
+
+
   template <int dim, int spacedim>
   ParticleHandler<dim, spacedim>::ParticleHandler(
     const parallel::distributed::Triangulation<dim, spacedim>& triangulation,
@@ -61,9 +63,13 @@ namespace Particles
       handle(numbers::invalid_unsigned_int)
   {}
 
+
+
   template <int dim, int spacedim>
   ParticleHandler<dim, spacedim>::~ParticleHandler()
   {}
+
+
 
   template <int dim, int spacedim>
   void
@@ -79,6 +85,8 @@ namespace Particles
     property_pool = std_cxx14::make_unique<PropertyPool>(n_properties);
   }
 
+
+
   template <int dim, int spacedim>
   void
   ParticleHandler<dim, spacedim>::clear()
@@ -89,12 +97,16 @@ namespace Particles
     global_max_particles_per_cell = 0;
   }
 
+
+
   template <int dim, int spacedim>
   void
   ParticleHandler<dim, spacedim>::clear_particles()
   {
     particles.clear();
   }
+
+
 
   template <int dim, int spacedim>
   void
@@ -132,12 +144,16 @@ namespace Particles
       local_max_particles_per_cell, triangulation->get_communicator());
   }
 
+
+
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
   ParticleHandler<dim, spacedim>::begin() const
   {
     return (const_cast<ParticleHandler<dim, spacedim>*>(this))->begin();
   }
+
+
 
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
@@ -146,12 +162,16 @@ namespace Particles
     return particle_iterator(particles, particles.begin());
   }
 
+
+
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
   ParticleHandler<dim, spacedim>::end() const
   {
     return (const_cast<ParticleHandler<dim, spacedim>*>(this))->end();
   }
+
+
 
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
@@ -160,12 +180,16 @@ namespace Particles
     return particle_iterator(particles, particles.end());
   }
 
+
+
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
   ParticleHandler<dim, spacedim>::begin_ghost() const
   {
     return (const_cast<ParticleHandler<dim, spacedim>*>(this))->begin_ghost();
   }
+
+
 
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
@@ -174,6 +198,8 @@ namespace Particles
     return particle_iterator(ghost_particles, ghost_particles.begin());
   }
 
+
+
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
   ParticleHandler<dim, spacedim>::end_ghost() const
@@ -181,12 +207,16 @@ namespace Particles
     return (const_cast<ParticleHandler<dim, spacedim>*>(this))->end_ghost();
   }
 
+
+
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
   ParticleHandler<dim, spacedim>::end_ghost()
   {
     return particle_iterator(ghost_particles, ghost_particles.end());
   }
+
+
 
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator_range
@@ -197,6 +227,8 @@ namespace Particles
     return (const_cast<ParticleHandler<dim, spacedim>*>(this))
       ->particles_in_cell(cell);
   }
+
+
 
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator_range
@@ -220,6 +252,8 @@ namespace Particles
       particle_iterator(particles, particles_in_cell.second));
   }
 
+
+
   template <int dim, int spacedim>
   void
   ParticleHandler<dim, spacedim>::remove_particle(
@@ -227,6 +261,8 @@ namespace Particles
   {
     particles.erase(particle->particle);
   }
+
+
 
   template <int dim, int spacedim>
   typename ParticleHandler<dim, spacedim>::particle_iterator
@@ -249,6 +285,8 @@ namespace Particles
     return particle_it;
   }
 
+
+
   template <int dim, int spacedim>
   void
   ParticleHandler<dim, spacedim>::insert_particles(
@@ -266,6 +304,8 @@ namespace Particles
 
     update_cached_numbers();
   }
+
+
 
   template <int dim, int spacedim>
   void
@@ -326,12 +366,16 @@ namespace Particles
     update_cached_numbers();
   }
 
+
+
   template <int dim, int spacedim>
   types::particle_index
   ParticleHandler<dim, spacedim>::n_global_particles() const
   {
     return global_number_of_particles;
   }
+
+
 
   template <int dim, int spacedim>
   types::particle_index
@@ -340,6 +384,8 @@ namespace Particles
     return global_max_particles_per_cell;
   }
 
+
+
   template <int dim, int spacedim>
   types::particle_index
   ParticleHandler<dim, spacedim>::n_locally_owned_particles() const
@@ -347,12 +393,16 @@ namespace Particles
     return particles.size();
   }
 
+
+
   template <int dim, int spacedim>
   unsigned int
   ParticleHandler<dim, spacedim>::n_properties_per_particle() const
   {
     return property_pool->n_properties_per_slot();
   }
+
+
 
   template <int dim, int spacedim>
   unsigned int
@@ -372,6 +422,8 @@ namespace Particles
 
     return 0;
   }
+
+
 
   template <int dim, int spacedim>
   types::particle_index
@@ -415,6 +467,8 @@ namespace Particles
       return (scalar_product_a > scalar_product_b);
     }
   } // namespace
+
+
 
   template <int dim, int spacedim>
   void
@@ -722,6 +776,8 @@ namespace Particles
 #  endif
   }
 
+
+
 #  ifdef DEAL_II_WITH_MPI
   template <int dim, int spacedim>
   void
@@ -934,6 +990,8 @@ namespace Particles
                  "does not match the amount of data sent around."));
   }
 #  endif
+
+
 
   template <int dim, int spacedim>
   void

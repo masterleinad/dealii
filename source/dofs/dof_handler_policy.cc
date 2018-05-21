@@ -138,8 +138,10 @@ namespace internal
                           /* chunk_size = */ 32);
         }
 
+
         typedef std::vector<std::pair<unsigned int, unsigned int>>
           DoFIdentities;
+
 
         /**
          * Make sure that the given @p identities pointer points to a
@@ -259,6 +261,8 @@ namespace internal
             }
         }
       } // namespace
+
+
 
       struct Implementation
       {
@@ -1021,6 +1025,7 @@ namespace internal
           std::map<types::global_dof_index, types::global_dof_index>
             dof_identities;
 
+
           // we will mark quads that we have already treated, so first
           // save and clear the user flags on quads and later restore
           // them
@@ -1256,6 +1261,7 @@ namespace internal
           renumber_dofs(
             new_dof_indices, IndexSet(0), dof_handler, check_validity);
 
+
           return next_free_dof;
         }
 
@@ -1421,6 +1427,7 @@ namespace internal
             for(unsigned int d = 0; d < cell->get_fe().dofs_per_quad; ++d)
               cell->set_mg_dof_index(cell->level(), d, next_free_dof++);
 
+
           // note that this cell has been processed
           cell->set_user_flag();
 
@@ -1485,6 +1492,7 @@ namespace internal
           if(cell->get_fe().dofs_per_hex > 0)
             for(unsigned int d = 0; d < cell->get_fe().dofs_per_hex; ++d)
               cell->set_mg_dof_index(cell->level(), d, next_free_dof++);
+
 
           // note that this cell has been processed
           cell->set_user_flag();
@@ -2023,6 +2031,8 @@ namespace internal
           }
         }
 
+
+
         /**
          * Implementation of DoFHandler::renumber_dofs()
          *
@@ -2096,6 +2106,21 @@ namespace internal
                 {
                   const dealii::types::global_dof_index idx = i->get_index(
                     level, d, dof_handler.get_fe().dofs_per_vertex);
+
+                  if(check_validity)
+                    Assert(idx != numbers::invalid_dof_index,
+                           ExcInternalError());
+
+                  if(idx != numbers::invalid_dof_index)
+                    i->set_index(
+                      level,
+                      d,
+                      dof_handler.get_fe().dofs_per_vertex,
+                      (indices.size() == 0) ?
+                        (new_numbers[idx]) :
+                        (new_numbers[indices.index_within_set(idx)]));
+                }
+        }
 
                   if(check_validity)
                     Assert(idx != numbers::invalid_dof_index,
@@ -2601,6 +2626,8 @@ namespace internal
         }
       } // namespace
 
+
+
       template <class DoFHandlerType>
       NumberCache
       ParallelShared<DoFHandlerType>::distribute_dofs() const
@@ -2947,6 +2974,8 @@ namespace internal
         return number_caches;
       }
 
+
+
       template <class DoFHandlerType>
       NumberCache
       ParallelShared<DoFHandlerType>::renumber_dofs(
@@ -3150,6 +3179,7 @@ namespace internal
                                                        quadrants;
           std::vector<dealii::types::global_dof_index> dof_numbers_and_indices;
 
+
           /**
            * Write the data of this object to a stream for the purpose of
            * serialization.
@@ -3268,6 +3298,8 @@ namespace internal
           }
         };
 
+
+
         template <int dim, int spacedim>
         void
         get_mg_dofindices_recursively(
@@ -3286,6 +3318,7 @@ namespace internal
               Assert(dealii_cell->level_subdomain_id()
                        == tria.locally_owned_subdomain(),
                      ExcInternalError());
+
 
               std::vector<dealii::types::global_dof_index> local_dof_indices(
                 dealii_cell->get_fe().dofs_per_cell);
@@ -3340,6 +3373,7 @@ namespace internal
                 p4est_child[GeometryInfo<dim>::max_children_per_cell];
               internal::p4est::init_quadrant_children<dim>(p4est_cell,
                                                            p4est_child);
+
 
               for(unsigned int c = 0;
                   c < GeometryInfo<dim>::max_children_per_cell;
@@ -3653,6 +3687,8 @@ namespace internal
           Assert(false, ExcNotImplemented());
         }
 
+
+
         template <int spacedim>
         void
         communicate_mg_ghost_cells(
@@ -3842,6 +3878,7 @@ namespace internal
           // our internal data structures are consistent
           update_all_active_cell_dof_indices_caches(dof_handler);
 
+
           // have a barrier so that sends between two calls to this
           // function are not mixed up.
           //
@@ -3872,6 +3909,8 @@ namespace internal
 #  endif
         }
 
+
+
       } // namespace
 
 #endif // DEAL_II_WITH_P4EST
@@ -3881,6 +3920,8 @@ namespace internal
         DoFHandlerType& dof_handler)
         : dof_handler(&dof_handler)
       {}
+
+
 
       template <class DoFHandlerType>
       NumberCache
@@ -3898,6 +3939,9 @@ namespace internal
             const_cast<dealii::Triangulation<dim, spacedim>*>(
               &dof_handler->get_triangulation())));
         Assert(triangulation != nullptr, ExcInternalError());
+
+        const unsigned int n_cpus
+          = Utilities::MPI::n_mpi_processes(triangulation->get_communicator());
 
         const unsigned int n_cpus
           = Utilities::MPI::n_mpi_processes(triangulation->get_communicator());
@@ -4160,6 +4204,7 @@ namespace internal
                      "Triangulation if the flag construct_multigrid_hierarchy "
                      "is set in the constructor."));
 
+
         const unsigned int n_cpus
           = Utilities::MPI::n_mpi_processes(triangulation->get_communicator());
 
@@ -4386,6 +4431,8 @@ namespace internal
           triangulation->load_user_flags(user_flags);
         }
 
+
+
 #  ifdef DEBUG
         // check that we are really done
         {
@@ -4437,6 +4484,7 @@ namespace internal
             const_cast<dealii::Triangulation<dim, spacedim>*>(
               &dof_handler->get_triangulation())));
         Assert(triangulation != nullptr, ExcInternalError());
+
 
         // First figure out the new set of locally owned DoF indices.
         // If we own no DoFs, we still need to go through this function,
@@ -4521,6 +4569,7 @@ namespace internal
           const std::map<unsigned int, std::set<dealii::types::subdomain_id>>
             vertices_with_ghost_neighbors
             = triangulation->compute_vertices_with_ghost_neighbors();
+
 
           // Send and receive cells. After this, only the local cells
           // are marked, that received new data. This has to be
@@ -4753,6 +4802,8 @@ namespace internal
     } // namespace Policy
   }   // namespace DoFHandlerImplementation
 } // namespace internal
+
+
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "dof_handler_policy.inst"

@@ -46,6 +46,7 @@ struct copy_data
   int value;
 };
 
+
 void
 assemble(const std::vector<int>::iterator& it,
          scratch_data&                     scratch,

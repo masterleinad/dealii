@@ -50,6 +50,11 @@ test()
     FESystem<1, spacedim>(FE_Q<1, spacedim>(1), 1, FE_DGQ<1, spacedim>(1), 1));
   fe.push_back(FESystem<1, spacedim>(FE_Q<1, spacedim>(2), 2));
 
+  hp::FECollection<1, spacedim> fe;
+  fe.push_back(
+    FESystem<1, spacedim>(FE_Q<1, spacedim>(1), 1, FE_DGQ<1, spacedim>(1), 1));
+  fe.push_back(FESystem<1, spacedim>(FE_Q<1, spacedim>(2), 2));
+
   hp::DoFHandler<1, spacedim> dof_handler(triangulation);
 
   unsigned int index = 0;
@@ -64,6 +69,7 @@ test()
   const unsigned int N = dof_handler.n_boundary_dofs();
   deallog << N << std::endl;
 }
+
 
 int
 main()

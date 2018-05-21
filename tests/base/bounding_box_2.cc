@@ -29,6 +29,7 @@ test_bounding_box()
   deallog << "Empty BoundingBox: " << std::endl;
   deallog << a.volume() << std::endl;
 
+
   std::pair<Point<spacedim>, Point<spacedim>> unit;
   for(int i = 0; i < spacedim; i++)
     {

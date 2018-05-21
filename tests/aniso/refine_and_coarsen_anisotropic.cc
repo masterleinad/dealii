@@ -114,6 +114,8 @@ test_isotropic(int type, std::ostream* logfile)
     }
 }
 
+
+
 int
 main()
 {

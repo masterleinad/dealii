@@ -25,11 +25,14 @@
 #include <algorithm>
 #include <numeric>
 
+
 DeclException2(ExcNumberMismatch,
                int,
                int,
                << "The numbers " << arg1 << " and " << arg2
                << " should be equation, but are not.");
+
+
 
 typedef Triangulation<2>::active_cell_iterator active_cell_iterator;
 
@@ -39,6 +42,8 @@ always_true(const Iterator)
 {
   return true;
 }
+
+
 
 void
 test()
@@ -93,6 +98,7 @@ test()
               << std::endl;
     };
 }
+
 
 int
 main()

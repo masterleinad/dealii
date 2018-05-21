@@ -22,6 +22,7 @@
 char logname[] = "output";
 #include "deformed_projection.h"
 
+
 void
 test()
 {

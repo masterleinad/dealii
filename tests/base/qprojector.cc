@@ -84,6 +84,7 @@ void check_faces(Quadrature<1>& q1)
 
   deallog << "Checking dim " << dim << " 1d-points " << nq << std::endl;
 
+
   Quadrature<dim - 1> subquadrature(q1);
   const unsigned int  nqs = subquadrature.size();
 
@@ -137,6 +138,7 @@ void check_faces(Quadrature<1>& q1)
   }
   */
 }
+
 
 void check(Quadrature<1>& q)
 {

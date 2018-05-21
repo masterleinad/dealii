@@ -48,6 +48,7 @@ private:
   operator=(const X&);
 };
 
+
 void
 test1()
 {
@@ -81,6 +82,7 @@ private:
   operator=(const Y&);
 };
 
+
 void
 test2()
 {
@@ -88,6 +90,8 @@ test2()
   Threads::Thread<void> t = Threads::new_thread(&Y::execute, y);
   t.join();
 }
+
+
 
 int
 main()

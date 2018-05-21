@@ -66,6 +66,8 @@ check()
       deallog << "Exception " << e.what() << std::endl;
     }
 
+
+
   deallog << std::endl
           << "* Check non empty path before parse_input()" << std::endl;
 
@@ -75,6 +77,7 @@ check()
     prm.parse_input_from_string(s.c_str());
     prm.leave_subsection();
   }
+
 
   deallog << std::endl
           << "* Check parse_input() catches messing with path:" << std::endl;
@@ -93,6 +96,7 @@ check()
     prm.leave_subsection();
   }
 }
+
 
 int
 main()

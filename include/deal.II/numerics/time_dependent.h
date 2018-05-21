@@ -16,7 +16,13 @@
 #ifndef dealii_time_dependent_h
 #  define dealii_time_dependent_h
 
+
 /*----------------------------   time-dependent.h     ---------------------------*/
+
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/exceptions.h>
+#  include <deal.II/base/smartpointer.h>
+#  include <deal.II/base/subscriptor.h>
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
@@ -425,6 +431,7 @@ public:
                 const TimeSteppingData& data_dual,
                 const TimeSteppingData& data_postprocess);
 
+
   /**
    * Destructor. This will delete the objects pointed to by the pointers given
    * to the <tt>insert_*</tt> and @p add_timestep functions, i.e. it will
@@ -546,6 +553,7 @@ public:
           LoopFunctionObject      loop_function,
           const TimeSteppingData& timestepping_data,
           const Direction         direction);
+
 
   /**
    * Initialize the objects for the next sweep. This function specifically
@@ -912,6 +920,7 @@ private:
   void
   set_sweep_no(const unsigned int sweep_no);
 
+
   /**
    * Copy constructor. I can see no reason why someone might want to use it,
    * so I don't provide it. Since this class has pointer members, making it
@@ -933,6 +942,8 @@ private:
   // make the manager object a friend
   friend class TimeDependent;
 };
+
+
 
 /**
  * Namespace in which some classes are declared that encapsulate flags for the
@@ -1163,6 +1174,7 @@ namespace TimeStepBase_Tria_Flags
      */
     const unsigned int first_sweep_with_correction;
 
+
     /**
      * Apply cell number correction with the previous time level only if there
      * are more than this number of cells.
@@ -1267,6 +1279,8 @@ namespace TimeStepBase_Tria_Flags
   };
 } // namespace TimeStepBase_Tria_Flags
 
+
+
 /**
  * Specialization of TimeStepBase which addresses some aspects of grid
  * handling. In particular, this class is thought to make handling of grids
@@ -1298,6 +1312,7 @@ public:
   typedef typename TimeStepBase_Tria_Flags::RefinementFlags<dim>
                                                                 RefinementFlags;
   typedef typename TimeStepBase_Tria_Flags::RefinementData<dim> RefinementData;
+
 
   /**
    * Extension of the enum in the base class denoting the next action to be
@@ -1495,6 +1510,8 @@ private:
   restore_grid();
 };
 
+
+
 /*----------------------------- template functions ------------------------------*/
 
 template <typename InitFunctionObject, typename LoopFunctionObject>
@@ -1529,6 +1546,24 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
           init_function((&*timesteps[n_timesteps - step - 1]));
           break;
       };
+
+
+  // wake up the first few time levels
+  for(int step = -timestepping_data.look_ahead; step < 0; ++step)
+    for(int look_ahead = 0;
+        look_ahead <= static_cast<int>(timestepping_data.look_ahead);
+        ++look_ahead)
+      switch(direction)
+        {
+          case forward:
+            if(step + look_ahead >= 0)
+              timesteps[step + look_ahead]->wake_up(look_ahead);
+            break;
+          case backward:
+            if(n_timesteps - (step + look_ahead) < n_timesteps)
+              timesteps[n_timesteps - (step + look_ahead)]->wake_up(look_ahead);
+            break;
+        };
 
   // wake up the first few time levels
   for(int step = -timestepping_data.look_ahead; step < 0; ++step)

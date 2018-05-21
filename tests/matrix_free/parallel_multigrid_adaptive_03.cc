@@ -43,6 +43,7 @@
 #include <deal.II/matrix_free/fe_evaluation.h>
 #include <deal.II/matrix_free/matrix_free.h>
 
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
@@ -53,6 +54,7 @@ public:
   typedef number value_type;
 
   LaplaceOperator(){};
+
 
   void
   initialize(const Mapping<dim>&                    mapping,
@@ -344,6 +346,7 @@ private:
           = 1.;
       }
 
+
     for(unsigned int i = 0; i < inverse_diagonal_entries.local_size(); ++i)
       if(std::abs(inverse_diagonal_entries.local_element(i)) > 1e-10)
         inverse_diagonal_entries.local_element(i)
@@ -485,6 +488,8 @@ public:
 
   const MatrixType* coarse_matrix;
 };
+
+
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -634,6 +639,8 @@ test()
       deallog.pop();
     }
 }
+
+
 
 int
 main(int argc, char** argv)

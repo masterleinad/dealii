@@ -122,6 +122,7 @@ namespace SparsityTools
       idx_t* const p_int_cell_weights
         = (cell_weights.size() > 0 ? int_cell_weights.data() : nullptr);
 
+
       // Make use of METIS' error code.
       int ierr;
 
@@ -183,6 +184,7 @@ namespace SparsityTools
       return graph->n_rows();
     }
 
+
     void
     get_object_list(void* data,
                     int /*sizeGID*/,
@@ -209,6 +211,7 @@ namespace SparsityTools
         }
     }
 
+
     void
     get_num_edges_list(void* data,
                        int /*sizeGID*/,
@@ -233,6 +236,8 @@ namespace SparsityTools
             numEdges[i] = graph->row_length(globalID[i]);
         }
     }
+
+
 
     void
     get_edge_list(void* data,
@@ -275,6 +280,7 @@ namespace SparsityTools
         }
     }
 #endif
+
 
     void
     partition_zoltan(const SparsityPattern&           sparsity_pattern,
@@ -380,6 +386,7 @@ namespace SparsityTools
     }
   } // namespace
 
+
   void
   partition(const SparsityPattern&     sparsity_pattern,
             const unsigned int         n_partitions,
@@ -395,6 +402,7 @@ namespace SparsityTools
               partition_indices,
               partitioner);
   }
+
 
   void
   partition(const SparsityPattern&           sparsity_pattern,
@@ -429,6 +437,7 @@ namespace SparsityTools
     else
       AssertThrow(false, ExcInternalError());
   }
+
 
   unsigned int
   color_sparsity_pattern(const SparsityPattern&     sparsity_pattern,
@@ -548,6 +557,8 @@ namespace SparsityTools
       return starting_point;
     }
   } // namespace internal
+
+
 
   void
   reorder_Cuthill_McKee(

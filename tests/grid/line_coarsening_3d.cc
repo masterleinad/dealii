@@ -19,6 +19,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 std::ofstream logfile("output");
 
 // create a triangulation of a cylinder, where the line along the axis is common
@@ -63,6 +65,7 @@ void create_star_structured_cylinder(Triangulation<3>&  coarse_grid,
   coarse_grid.create_triangulation_compatibility(points, cells, SubCellData());
 }
 
+
 void
 check()
 {
@@ -95,6 +98,7 @@ check()
 
   go.write_ucd(tria, logfile);
 }
+
 
 int
 main()

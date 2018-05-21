@@ -29,6 +29,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
 
+
+
 namespace EquationData
 {
   const double R0 = 6371000. - 2890000.;
@@ -66,6 +68,8 @@ test()
   double min_indicator
     = *std::min_element(indicators.begin(), indicators.end()),
     max_indicator = *std::max_element(indicators.begin(), indicators.end());
+
+
 
   // use one strategy to compute
   // thresholds and obtain those
@@ -133,10 +137,13 @@ test()
   }
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

@@ -55,6 +55,8 @@ namespace internal
     return internal::ElementAccess<VectorType>::get(vector, cell_number);
   }
 
+
+
   IndexSet::value_type inline get_vector_element(
     const IndexSet&               is,
     const types::global_dof_index cell_number)
@@ -122,6 +124,8 @@ namespace internal
     };
   } // namespace
 } // namespace internal
+
+
 
 namespace FEValuesViews
 {
@@ -1601,6 +1605,14 @@ namespace FEValuesViews
       values);
   }
 
+
+    internal::do_function_values<dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_values,
+      shape_function_data,
+      values);
+  }
+
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1645,6 +1657,14 @@ namespace FEValuesViews
     Assert(fe_values->present_cell.get() != nullptr,
            ExcMessage("FEValues object is not reinit'ed to any cell"));
     AssertDimension(dof_values.size(), fe_values->dofs_per_cell);
+
+    internal::do_function_derivatives<1, dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_gradients,
+      shape_function_data,
+      gradients);
+  }
+
 
     internal::do_function_derivatives<1, dim, spacedim>(
       make_array_view(dof_values.begin(), dof_values.end()),
@@ -1705,6 +1725,14 @@ namespace FEValuesViews
       hessians);
   }
 
+
+    internal::do_function_derivatives<2, dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_hessians,
+      shape_function_data,
+      hessians);
+  }
+
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1757,6 +1785,14 @@ namespace FEValuesViews
       laplacians);
   }
 
+
+    internal::do_function_laplacians<dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_hessians,
+      shape_function_data,
+      laplacians);
+  }
+
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1800,6 +1836,14 @@ namespace FEValuesViews
     Assert(fe_values->present_cell.get() != nullptr,
            ExcMessage("FEValues object is not reinit'ed to any cell"));
     AssertDimension(dof_values.size(), fe_values->dofs_per_cell);
+
+    internal::do_function_derivatives<3, dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_3rd_derivatives,
+      shape_function_data,
+      third_derivatives);
+  }
+
 
     internal::do_function_derivatives<3, dim, spacedim>(
       make_array_view(dof_values.begin(), dof_values.end()),
@@ -1860,6 +1904,14 @@ namespace FEValuesViews
       values);
   }
 
+
+    internal::do_function_values<dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_values,
+      shape_function_data,
+      values);
+  }
+
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1904,6 +1956,14 @@ namespace FEValuesViews
     Assert(fe_values->present_cell.get() != nullptr,
            ExcMessage("FEValues object is not reinit'ed to any cell"));
     AssertDimension(dof_values.size(), fe_values->dofs_per_cell);
+
+    internal::do_function_derivatives<1, dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_gradients,
+      shape_function_data,
+      gradients);
+  }
+
 
     internal::do_function_derivatives<1, dim, spacedim>(
       make_array_view(dof_values.begin(), dof_values.end()),
@@ -1963,6 +2023,14 @@ namespace FEValuesViews
       symmetric_gradients);
   }
 
+
+    internal::do_function_symmetric_gradients<dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_gradients,
+      shape_function_data,
+      symmetric_gradients);
+  }
+
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2008,6 +2076,14 @@ namespace FEValuesViews
     Assert(fe_values->present_cell.get() != nullptr,
            ExcMessage("FEValues object is not reinit'ed to any cell"));
     AssertDimension(dof_values.size(), fe_values->dofs_per_cell);
+
+    internal::do_function_divergences<dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_gradients,
+      shape_function_data,
+      divergences);
+  }
+
 
     internal::do_function_divergences<dim, spacedim>(
       make_array_view(dof_values.begin(), dof_values.end()),
@@ -2120,6 +2196,14 @@ namespace FEValuesViews
       hessians);
   }
 
+
+    internal::do_function_derivatives<2, dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_hessians,
+      shape_function_data,
+      hessians);
+  }
+
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2180,6 +2264,14 @@ namespace FEValuesViews
       laplacians);
   }
 
+
+    internal::do_function_laplacians<dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_hessians,
+      shape_function_data,
+      laplacians);
+  }
+
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2223,6 +2315,14 @@ namespace FEValuesViews
     Assert(fe_values->present_cell.get() != nullptr,
            ExcMessage("FEValues object is not reinit'ed to any cell"));
     AssertDimension(dof_values.size(), fe_values->dofs_per_cell);
+
+    internal::do_function_derivatives<3, dim, spacedim>(
+      make_array_view(dof_values.begin(), dof_values.end()),
+      fe_values->finite_element_output.shape_3rd_derivatives,
+      shape_function_data,
+      third_derivatives);
+  }
+
 
     internal::do_function_derivatives<3, dim, spacedim>(
       make_array_view(dof_values.begin(), dof_values.end()),
@@ -2497,6 +2597,7 @@ namespace FEValuesViews
 
 } // namespace FEValuesViews
 
+
 namespace internal
 {
   namespace FEValuesViews
@@ -2578,6 +2679,7 @@ namespace internal
     }
   } // namespace FEValuesViews
 } // namespace internal
+
 
 /* ---------------- FEValuesBase<dim,spacedim>::CellIteratorBase --------- */
 
@@ -2740,6 +2842,8 @@ private:
    */
   static const char* const message_string;
 };
+
+
 
 /* ---------------- FEValuesBase<dim,spacedim>::CellIterator<CI> --------- */
 
@@ -2967,6 +3071,8 @@ namespace internal
         }
     }
 
+
+
     template <int dim, int spacedim>
     std::size_t
     FiniteElementRelatedData<dim, spacedim>::memory_consumption() const
@@ -2980,6 +3086,8 @@ namespace internal
     }
   } // namespace FEValuesImplementation
 } // namespace internal
+
+
 
 /*------------------------------- FEValuesBase ---------------------------*/
 
@@ -3454,6 +3562,8 @@ namespace internal
         }
   }
 } // namespace internal
+
+
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -4216,6 +4326,8 @@ FEValuesBase<dim, spacedim>::get_cell_similarity() const
 template <int dim, int spacedim>
 const unsigned int FEValuesBase<dim, spacedim>::dimension;
 
+
+
 template <int dim, int spacedim>
 const unsigned int FEValuesBase<dim, spacedim>::space_dimension;
 
@@ -4223,6 +4335,8 @@ const unsigned int FEValuesBase<dim, spacedim>::space_dimension;
 
 template <int dim, int spacedim>
 const unsigned int FEValues<dim, spacedim>::integral_dimension;
+
+
 
 template <int dim, int spacedim>
 FEValues<dim, spacedim>::FEValues(const Mapping<dim, spacedim>&       mapping,
@@ -4331,6 +4445,8 @@ namespace
       present_cell = std_cxx14::make_unique<Type>(new_cell);
   }
 } // namespace
+
+
 
 template <int dim, int spacedim>
 void
@@ -4460,8 +4576,12 @@ FEFaceValuesBase<dim, spacedim>::memory_consumption() const
 template <int dim, int spacedim>
 const unsigned int FEFaceValues<dim, spacedim>::dimension;
 
+
+
 template <int dim, int spacedim>
 const unsigned int FEFaceValues<dim, spacedim>::integral_dimension;
+
+
 
 template <int dim, int spacedim>
 FEFaceValues<dim, spacedim>::FEFaceValues(
@@ -4619,8 +4739,12 @@ FEFaceValues<dim, spacedim>::do_reinit(const unsigned int face_no)
 template <int dim, int spacedim>
 const unsigned int FESubfaceValues<dim, spacedim>::dimension;
 
+
+
 template <int dim, int spacedim>
 const unsigned int FESubfaceValues<dim, spacedim>::integral_dimension;
+
+
 
 template <int dim, int spacedim>
 FESubfaceValues<dim, spacedim>::FESubfaceValues(

@@ -20,6 +20,8 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 
+
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -50,6 +52,7 @@ test()
   if(dim != 1)
     grid_out.write_dx(tria, logfile);
 }
+
 
 int
 main()

@@ -209,6 +209,7 @@ namespace LinearAlgebra
     reinit(const IndexSet& locally_stored_indices,
            const bool      omit_zeroing_entries = false);
 
+
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
     /**
@@ -926,6 +927,8 @@ namespace LinearAlgebra
 #endif // ifndef DOXYGEN
 
 } // end of namespace LinearAlgebra
+
+
 
 /**
  * Global function @p swap which overloads the default implementation of the

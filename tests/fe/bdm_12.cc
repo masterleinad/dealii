@@ -36,6 +36,7 @@
 
 #define PRECISION 2
 
+
 std::ofstream logfile("output");
 
 template <int dim>

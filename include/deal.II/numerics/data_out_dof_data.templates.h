@@ -142,6 +142,8 @@ namespace internal
             dealii::Vector<double>(n_postprocessor_outputs[dataset]));
     }
 
+
+
     // implement copy constructor to create a thread's own version of
     // x_fe_values
     template <int dim, int spacedim>
@@ -284,6 +286,8 @@ namespace internal
           patch_values_system.solution_hessians[k].resize(n_components);
         }
     }
+
+
 
     /**
      * In a WorkStream context, use this function to append the patch computed
@@ -613,12 +617,15 @@ namespace internal
         return internal::ElementAccess<VectorType>::get(vector, cell_number);
       }
 
+
       inline double
       get_vector_element(const IndexSet& is, const unsigned int cell_number)
       {
         return (is.is_element(cell_number) ? 1 : 0);
       }
     } // namespace
+
+
 
     template <typename DoFHandlerType, typename VectorType>
     double
@@ -953,6 +960,8 @@ namespace internal
   } // namespace DataOutImplementation
 } // namespace internal
 
+
+
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::DataOut_DoFData()
   : triangulation(nullptr, typeid(*this).name()),
@@ -1034,6 +1043,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
            vec.size(),
            dof_handler.n_dofs(),
            dof_handler.get_triangulation().n_active_cells()));
+
 
   auto new_entry = std_cxx14::make_unique<
     internal::DataOutImplementation::DataEntry<DoFHandlerType, VectorType>>(
@@ -1184,6 +1194,8 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     cell_data.emplace_back(std::move(new_entry));
 }
 
+
+
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
@@ -1196,6 +1208,8 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
   std::vector<Patch> dummy;
   patches.swap(dummy);
 }
+
+
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
@@ -1212,6 +1226,8 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     dofs = nullptr;
 }
 
+
+
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::clear()
@@ -1226,6 +1242,8 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::clear()
   std::vector<Patch> dummy;
   patches.swap(dummy);
 }
+
+
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 std::vector<std::string>
@@ -1262,6 +1280,8 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_dataset_names()
 
   return names;
 }
+
+
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 std::vector<std::tuple<unsigned int, unsigned int, std::string>>
@@ -1341,12 +1361,16 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
   return ranges;
 }
 
+
+
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 const std::vector<dealii::DataOutBase::Patch<patch_dim, patch_space_dim>>&
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_patches() const
 {
   return patches;
 }
+
+
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 std::vector<
@@ -1390,6 +1414,8 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_fes() const
     }
   return finite_elements;
 }
+
+
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 std::size_t

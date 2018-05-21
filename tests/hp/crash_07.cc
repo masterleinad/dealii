@@ -38,6 +38,8 @@ char logname[] = "output";
 
 #include <vector>
 
+
+
 int
 main()
 {
@@ -45,6 +47,9 @@ main()
   logfile.precision(3);
 
   deallog.attach(logfile);
+
+  std::vector<Point<2>> points_glob;
+  std::vector<Point<2>> points;
 
   std::vector<Point<2>> points_glob;
   std::vector<Point<2>> points;

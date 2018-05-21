@@ -126,6 +126,7 @@ namespace NonMatching
     const Mapping<dim1, spacedim>&          immersed_mapping
     = StaticMappingQ1<dim1, spacedim>::mapping);
 
+
   /**
    * Create a coupling mass matrix for non-matching, overlapping grids.
    *

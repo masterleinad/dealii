@@ -22,6 +22,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test()
 {
@@ -89,9 +90,12 @@ test()
       AssertDimension(v.n_import_indices(), 0);
     }
 
+
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

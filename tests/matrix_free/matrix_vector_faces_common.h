@@ -52,6 +52,8 @@ template <int dim, int fe_degree>
 void
 test();
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d   = fe_degree + 1,
@@ -153,6 +155,7 @@ private:
         fe_eval_neighbor.distribute_local_to_global(dst);
       }
   }
+
 
   void
   local_apply_boundary_face(

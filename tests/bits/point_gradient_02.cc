@@ -47,6 +47,7 @@ public:
     values[0] = value(p, 0);
   }
 
+
   virtual Tensor<1, dim>
   gradient(const Point<dim>& p, const unsigned int component) const
   {
@@ -119,6 +120,8 @@ make_mesh(Triangulation<dim>& tria)
     }
 }
 
+
+
 template <int dim>
 void
 check()
@@ -181,6 +184,7 @@ check()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

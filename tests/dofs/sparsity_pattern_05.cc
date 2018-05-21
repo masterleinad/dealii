@@ -31,6 +31,8 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_pattern.h>
 
+
+
 bool
 operator==(const BlockSparsityPattern& sp1, const BlockSparsityPattern& sp2)
 {
@@ -50,6 +52,8 @@ operator==(const BlockSparsityPattern& sp1, const BlockSparsityPattern& sp2)
 
   return true;
 }
+
+
 
 template <int dim>
 void
@@ -78,6 +82,7 @@ check()
   DoFTools::make_hanging_node_constraints(dof, constraints);
   constraints.close();
 
+
   //--------------- Regular sparsity pattern checks -----------------
 
   // first way: directly
@@ -93,6 +98,7 @@ check()
   DoFTools::make_sparsity_pattern(dof, csp_2, constraints);
   sparsity_2.copy_from(csp_2);
 
+
   // the exact content of sparsity
   // patterns is checked in other
   // tests, so only make sure that
@@ -100,6 +106,8 @@ check()
   deallog << "Check 1:"
           << " -- " << (sparsity_1 == sparsity_2 ? "ok" : "failed")
           << std::endl;
+
+
 
   //--------------- Block sparsity pattern checks -----------------
 
@@ -135,6 +143,8 @@ check()
           << " -- " << (sparsity_3 == sparsity_4 ? "ok" : "failed")
           << std::endl;
 }
+
+
 
 int
 main()

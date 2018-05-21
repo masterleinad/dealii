@@ -68,6 +68,7 @@ test(std::ostream& /*out*/)
   deallog << "norm: " << interpolated_solution.l2_norm() << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

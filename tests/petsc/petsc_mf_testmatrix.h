@@ -96,6 +96,8 @@ inline PetscFDMatrix::PetscFDMatrix(unsigned int size, unsigned int dim)
   : PETScWrappers::MatrixFree(dim, dim, dim, dim), nx(size), ny(size)
 {}
 
+
+
 inline void
 PetscFDMatrix::vmult_add(dealii::PETScWrappers::VectorBase&       dst,
                          const dealii::PETScWrappers::VectorBase& src) const
@@ -125,6 +127,8 @@ PetscFDMatrix::vmult_add(dealii::PETScWrappers::VectorBase&       dst,
     }
 }
 
+
+
 inline void
 PetscFDMatrix::vmult(dealii::PETScWrappers::VectorBase&       dst,
                      const dealii::PETScWrappers::VectorBase& src) const
@@ -133,6 +137,8 @@ PetscFDMatrix::vmult(dealii::PETScWrappers::VectorBase&       dst,
   vmult_add(dst, src);
 }
 
+
+
 inline void
 PetscFDMatrix::Tvmult(dealii::PETScWrappers::VectorBase&       dst,
                       const dealii::PETScWrappers::VectorBase& src) const
@@ -140,6 +146,8 @@ PetscFDMatrix::Tvmult(dealii::PETScWrappers::VectorBase&       dst,
   dst = 0;
   vmult_add(dst, src);
 }
+
+
 
 inline void
 PetscFDMatrix::Tvmult_add(dealii::PETScWrappers::VectorBase&       dst,

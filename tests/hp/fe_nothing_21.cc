@@ -31,6 +31,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 test()
@@ -40,6 +42,9 @@ test()
   triangulation.refine_global(4);
 
   FESystem<dim> fe(FE_Nothing<dim>(), 1, FE_Q<dim>(1), 1);
+
+  deallog << "n support points: " << fe.get_unit_support_points().size()
+          << std::endl;
 
   deallog << "n support points: " << fe.get_unit_support_points().size()
           << std::endl;
@@ -59,6 +64,8 @@ test()
 
   deallog << "l2_norm = " << solution.l2_norm() << std::endl;
 }
+
+
 
 int
 main()

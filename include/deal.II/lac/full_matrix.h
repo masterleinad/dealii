@@ -35,6 +35,7 @@ class Vector;
 template <typename number>
 class LAPACKFullMatrix;
 
+
 /*! @addtogroup Matrix1
  *@{
  */
@@ -289,6 +290,7 @@ public:
   FullMatrix<number>&
   operator=(const LAPACKFullMatrix<number2>&);
 
+
   /**
    * Assignment from different matrix classes. This assignment operator uses
    * iterators of the typename MatrixType. Therefore, sparse matrices are
@@ -393,6 +395,7 @@ public:
        const size_type            dst_offset_j = 0,
        const size_type            src_offset_i = 0,
        const size_type            src_offset_j = 0);
+
 
   /**
    * Make function of base class available.
@@ -1192,6 +1195,8 @@ public:
 
 #ifndef DOXYGEN
 /*-------------------------Inline functions -------------------------------*/
+
+
 
 template <typename number>
 inline typename FullMatrix<number>::size_type

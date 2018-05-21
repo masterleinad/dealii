@@ -61,6 +61,7 @@ namespace internal
        */
       NumberCache(const types::global_dof_index n_global_dofs);
 
+
       /**
        * Create a NumberCache object that corresponds to a parallel
        * DoFHandler object with as many processors as the size of the
@@ -176,6 +177,7 @@ namespace internal
 
   } // namespace DoFHandlerImplementation
 } // namespace internal
+
 
 DEAL_II_NAMESPACE_CLOSE
 

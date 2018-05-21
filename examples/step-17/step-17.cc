@@ -477,6 +477,7 @@ namespace Step17
     RightHandSide<dim>          right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim));
 
+
     // The next thing is the loop over all elements. Note that we do
     // not have to do <i>all</i> the work on every process: our job
     // here is only to assemble the system on cells that actually
@@ -815,6 +816,11 @@ namespace Step17
         distributed_all_errors(i) = local_error_per_cell(i);
     distributed_all_errors.compress(VectorOperation::insert);
 
+    for(unsigned int i = 0; i < local_error_per_cell.size(); ++i)
+      if(local_error_per_cell(i) != 0)
+        distributed_all_errors(i) = local_error_per_cell(i);
+    distributed_all_errors.compress(VectorOperation::insert);
+
     // So now we have this distributed vector that contains the
     // refinement indicators for all cells. To use it, we need to
     // obtain a local copy and then use it to mark cells for
@@ -1013,6 +1019,7 @@ namespace Step17
       }
   }
 } // namespace Step17
+
 
 // @sect3{The <code>main</code> function}
 

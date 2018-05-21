@@ -37,6 +37,8 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 
+
+
 template <int dim>
 void
 test(const Triangulation<dim>& tr)
@@ -88,6 +90,8 @@ test(const Triangulation<dim>& tr)
     }
 }
 
+
+
 void
 test()
 {
@@ -112,6 +116,7 @@ test()
 
   test<dim>(tr);
 }
+
 
 int
 main()

@@ -133,6 +133,7 @@ public:
                              const RateMode     rate_mode,
                              const unsigned int dim = 2);
 
+
   /**
    * Evaluate the convergence rates of the data column
    * <tt>data_column_key</tt> due to the #RateMode.  Be sure that the value

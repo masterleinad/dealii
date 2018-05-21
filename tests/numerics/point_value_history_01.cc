@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+
+
 // ************************************************
 // A test program for the PointValueHistory class
 // Currently this only tests a finite element system
@@ -57,9 +59,15 @@ private:
   PointValueHistory<dim> test_copy;
 };
 
+
+
 template <int dim>
 TestPointValueHistory<dim>::TestPointValueHistory()
   : finite_element(FE_Q<dim>(1 + 1), dim, FE_Q<dim>(1), 1),
+
+    dof_handler(triangulation)
+{}
+
 
     dof_handler(triangulation)
 {}
@@ -254,6 +262,8 @@ TestPointValueHistory<dim>::run()
       deallog << std::endl;
     }
 }
+
+
 
 int
 main()

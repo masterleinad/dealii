@@ -25,6 +25,7 @@
 
 using namespace std;
 
+
 void
 test()
 {
@@ -57,6 +58,8 @@ test()
               << (cell->direction_flag() ? "true" : "false") << std::endl;
     }
 }
+
+
 
 int
 main()

@@ -26,6 +26,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void
 test(const char* filename)
 {
@@ -61,6 +63,7 @@ test(const char* filename)
         }
   deallog << "  " << misoriented_faces << " misoriented faces" << std::endl;
 }
+
 
 int
 main()

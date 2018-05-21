@@ -19,6 +19,7 @@
 #include "../tests.h"
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -50,6 +51,8 @@ test()
       Assert(p == q, ExcInternalError());
     }
 }
+
+
 
 int
 main(int argc, char** argv)

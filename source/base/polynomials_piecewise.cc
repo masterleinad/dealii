@@ -109,6 +109,8 @@ namespace Polynomials
       values[j] *= derivative_change_sign;
   }
 
+
+
   std::vector<PiecewisePolynomial<double>>
   generate_complete_Lagrange_basis_on_subdivisions(
     const unsigned int n_subdivisions,

@@ -217,6 +217,7 @@ private:
   std::vector<std::string> names;
 };
 
+
 unsigned int inline AnyData::size() const
 {
   AssertDimension(data.size(), names.size());
@@ -297,12 +298,14 @@ AnyData::try_read(const unsigned int i) const
   return p;
 }
 
+
 inline const std::string&
 AnyData::name(const unsigned int i) const
 {
   AssertIndexRange(i, size());
   return names[i];
 }
+
 
 inline unsigned int
 AnyData::try_find(const std::string& n) const
@@ -315,6 +318,7 @@ AnyData::try_find(const std::string& n) const
 
   return it - names.begin();
 }
+
 
 inline unsigned int
 AnyData::find(const std::string& n) const
@@ -415,6 +419,7 @@ AnyData::add(type ent, const std::string& n)
   data.push_back(e);
   names.push_back(n);
 }
+
 
 inline void
 AnyData::merge(const AnyData& other)

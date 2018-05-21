@@ -32,6 +32,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/variant.hpp>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 class TableHandler;
@@ -97,6 +98,7 @@ namespace internal
     const std::string&
     get_cached_string() const;
 
+
     /**
      * Return a TableEntry object that has the same data type of the stored
      * value but with a value that is default constructed for this data type.
@@ -144,6 +146,7 @@ namespace internal
     friend class dealii::TableHandler;
   };
 } // namespace internal
+
 
 /**
  * The TableHandler stores TableEntries of arbitrary value type and writes the
@@ -350,6 +353,7 @@ public:
    * Constructor.
    */
   TableHandler();
+
 
   /**
    * Declare the existence of a column in the table by giving it a name.
@@ -877,6 +881,8 @@ namespace internal
       }
   }
 } // namespace internal
+
+
 
 template <typename T>
 void

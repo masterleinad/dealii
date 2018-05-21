@@ -251,6 +251,7 @@ namespace internal
 
 } // namespace internal
 
+
 template <>
 struct EnableIfScalar<adtl::adouble>
 {

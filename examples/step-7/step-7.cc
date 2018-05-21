@@ -140,6 +140,8 @@ namespace Step7
   template <int dim>
   const double SolutionBase<dim>::width = 1. / 8.;
 
+
+
   // After declaring and defining the characteristics of solution and right
   // hand side, we can declare the classes representing these two. They both
   // represent continuous functions, so they are derived from the
@@ -994,6 +996,7 @@ namespace Step7
           }
         else
           refine_grid();
+
 
         // The next steps are already known from previous examples. This is
         // mostly the basic set-up of every finite element program:

@@ -36,6 +36,8 @@
 
 #include <deal.II/fe/mapping_q1.h>
 
+
+
 void check(Triangulation<2>& tria)
 {
   const std::vector<Point<2>>& v = tria.get_vertices();
@@ -52,6 +54,7 @@ void check(Triangulation<2>& tria)
       deallog << " [local: " << cell.second << "]" << std::endl;
     }
 }
+
 
 int
 main()

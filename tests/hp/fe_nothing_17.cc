@@ -96,6 +96,7 @@ transfer(std::ostream& out)
   deallog << "OK" << std::endl;
 }
 
+
 int
 main()
 {

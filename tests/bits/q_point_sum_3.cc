@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 check(const Triangulation<dim>& tria)
@@ -86,6 +88,7 @@ check(const Triangulation<dim>& tria)
   deallog << " subface integration is ok: " << std::sqrt(n2 * n2) << std::endl;
 }
 
+
 int
 main()
 {
@@ -104,6 +107,7 @@ main()
   //     GridGenerator::hyper_cube (coarse_grid, -1, 1);
   //     check (coarse_grid);
   //   }
+
 
   {
     Triangulation<2> coarse_grid;

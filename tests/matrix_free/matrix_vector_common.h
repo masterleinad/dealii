@@ -44,6 +44,8 @@ template <int dim, int fe_degree>
 void
 test();
 
+
+
 template <int dim, int fe_degree, typename number, int n_q_points_1d>
 void
 do_test(const DoFHandler<dim>&  dof,
@@ -95,6 +97,7 @@ do_test(const DoFHandler<dim>&  dof,
     }
 
   mf.vmult(out_dist, in_dist);
+
 
   // assemble sparse matrix with (\nabla v, \nabla u) + (v, 10 * u)
   SparsityPattern sparsity;
@@ -149,6 +152,7 @@ do_test(const DoFHandler<dim>&  dof,
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
+
 
 int
 main()

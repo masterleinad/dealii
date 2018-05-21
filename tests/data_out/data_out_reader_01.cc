@@ -71,6 +71,7 @@ check()
   std::remove("outfile");
 }
 
+
 int
 main()
 {

@@ -56,6 +56,7 @@ template <int dim>
 void
 test();
 
+
 template <int dim>
 class F : public Function<dim>
 {
@@ -75,6 +76,7 @@ public:
     return val;
   }
 
+
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
@@ -91,10 +93,13 @@ private:
   const unsigned int q;
 };
 
+
+
 DeclException1(ExcFailedProjection,
                double,
                << "The projection was supposed to exactly represent the "
                << "original function, but the relative residual is " << arg1);
+
 
 template <int dim>
 void
@@ -178,6 +183,8 @@ test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
       do_project(triangulation, fe, p, order_difference);
     }
 }
+
+
 
 int
 main()

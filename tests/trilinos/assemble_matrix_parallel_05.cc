@@ -203,6 +203,7 @@ LaplaceProblem<dim>::LaplaceProblem()
     quadrature(fe.degree + 1)
 {}
 
+
 template <int dim>
 LaplaceProblem<dim>::~LaplaceProblem()
 {
@@ -406,6 +407,8 @@ LaplaceProblem<dim>::postprocess()
   triangulation.execute_coarsening_and_refinement();
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -427,6 +430,8 @@ LaplaceProblem<dim>::run()
         postprocess();
     }
 }
+
+
 
 int
 main(int argc, char** argv)

@@ -28,6 +28,8 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 class F : public Function<2>
 {
 public:
@@ -43,11 +45,14 @@ public:
   }
 };
 
+
+
 Tensor<1, 1>
 curl(const Tensor<2, 2>& grads)
 {
   return Point<1>(grads[1][0] - grads[0][1]);
 }
+
 
 Tensor<1, 3>
 curl(const Tensor<2, 3>& grads)
@@ -122,6 +127,7 @@ test_hyper_cube()
       test(tr, fe, degree);
     }
 }
+
 
 int
 main()

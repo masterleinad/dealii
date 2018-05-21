@@ -38,6 +38,8 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 check()
@@ -120,6 +122,8 @@ check()
       matrix.diag_element(i) = 0;
   deallog << "Matrix error Frobenius: " << matrix.frobenius_norm() << std::endl;
 }
+
+
 
 int
 main()

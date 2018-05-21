@@ -32,6 +32,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 check()
@@ -57,6 +59,7 @@ check()
   for(unsigned int d = 0; d < count.size(); ++d)
     deallog << count[d] << std::endl;
 }
+
 
 int
 main()

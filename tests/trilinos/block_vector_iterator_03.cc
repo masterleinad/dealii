@@ -38,6 +38,7 @@ operator==(const TrilinosWrappers::MPI::BlockVector& v1,
   return true;
 }
 
+
 void
 test()
 {
@@ -227,6 +228,8 @@ test()
     };
 }
 
+
+
 int
 main(int argc, char** argv)
 {
@@ -237,6 +240,7 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
+
 
   try
     {

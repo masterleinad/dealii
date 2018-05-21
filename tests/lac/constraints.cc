@@ -29,7 +29,10 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
 
+
+
 std::ofstream logfile("output");
+
 
 void make_tria(Triangulation<3>& tria, int step)
 {
@@ -164,6 +167,7 @@ void make_tria(Triangulation<3>& tria, int step)
           break;
         };
 
+
       case 6:
       case 7:
       case 8:
@@ -233,6 +237,8 @@ void make_tria(Triangulation<3>& tria, int step)
         };
     };
 }
+
+
 
 int
 main()

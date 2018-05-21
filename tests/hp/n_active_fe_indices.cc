@@ -26,6 +26,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
 
+
+
 template <int dim>
 void
 check_cells(const hp::DoFHandler<dim>& dof_handler)
@@ -45,6 +47,7 @@ check_cells(const hp::DoFHandler<dim>& dof_handler)
       Assert(cell->n_active_fe_indices() == 1, ExcInternalError());
     }
 }
+
 
 void
 check_faces(const hp::DoFHandler<1>&)
@@ -72,9 +75,11 @@ check_faces(const hp::DoFHandler<dim>& dof_handler)
       }
 }
 
+
 void
 check_edges(const hp::DoFHandler<1>&)
 {}
+
 
 void
 check_edges(const hp::DoFHandler<2>&)
@@ -135,6 +140,7 @@ test()
   check_faces(dof_handler);
   check_edges(dof_handler);
 }
+
 
 int
 main()

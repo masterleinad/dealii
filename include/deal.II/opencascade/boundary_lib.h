@@ -184,6 +184,7 @@ namespace OpenCASCADE
 
 DEAL_II_NAMESPACE_CLOSE
 
+
 #  endif // DEAL_II_WITH_OPENCASCADE
 
 /*------------------------------ occ_boundary_lib.h ------------------------------*/

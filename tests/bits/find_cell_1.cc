@@ -24,6 +24,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void check(Triangulation<2>& tria)
 {
   Point<2> p(1. / 3., 1. / 2. - 1e-10); // avoid ambiguity for hypercube mesh
@@ -38,6 +40,7 @@ void check(Triangulation<2>& tria)
 
   Assert(p.distance(cell->center()) < cell->diameter() / 2, ExcInternalError());
 }
+
 
 int
 main()

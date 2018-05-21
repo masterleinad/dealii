@@ -15,6 +15,7 @@
 
 // copied from bits/step-11 with slight modifications to make it run faster
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/table_handler.h>
@@ -195,11 +196,15 @@ LaplaceProblem<dim>::run()
 
   AssertThrow(last_error < 1e-3, ExcMessage("solution is not converging"));
 
+
+
   output_table.set_precision("|u|_1", 6);
   output_table.set_precision("error", 6);
   output_table.write_text(std::cout);
   deallog << std::endl;
 }
+
+
 
 int
 main()

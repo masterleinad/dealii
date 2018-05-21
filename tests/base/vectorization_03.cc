@@ -45,6 +45,7 @@ struct Evaluation
   VectorizedArray<double> values[1];
 };
 
+
 void
 initialize(Evaluation& eval)
 {
@@ -56,6 +57,7 @@ initialize(Evaluation& eval)
   eval.general_weight[0] = 0.2313342 * eval.cartesian_weight;
   eval.jac_weight[0]     = random_value<double>();
 }
+
 
 void
 test()
@@ -91,6 +93,7 @@ test()
                   - (2. * vec[v] - ol[v] - weight[v] * std::sin(vec[v])));
   deallog << "error: " << error << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

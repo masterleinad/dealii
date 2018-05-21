@@ -20,6 +20,7 @@
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -34,6 +35,8 @@ test()
     for(unsigned int j = 0; j < csp.row_length(i); ++j)
       deallog << i << ' ' << j << ' ' << csp.column_number(i, j) << std::endl;
 }
+
+
 
 int
 main()

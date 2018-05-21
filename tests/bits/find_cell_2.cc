@@ -23,6 +23,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void check(Triangulation<3>& tria)
 {
   Point<3> p(1. / 3., 1. / 2., 1. / 5.);
@@ -37,6 +39,7 @@ void check(Triangulation<3>& tria)
 
   Assert(p.distance(cell->center()) < cell->diameter() / 2, ExcInternalError());
 }
+
 
 int
 main()

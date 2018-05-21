@@ -17,6 +17,7 @@
 // multiple periodic boundary pairs that meet at an edge.
 // This tests the 2D case.
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -135,6 +136,7 @@ get_point_value(const DoFHandler<dim>& dof_handler,
   VectorTools::point_value(dof_handler, solution, point, value);
 }
 
+
 void
 check_periodicity(const DoFHandler<2>& dof_handler,
                   Vector<double>&      solution,
@@ -206,6 +208,7 @@ check_periodicity(const DoFHandler<2>& dof_handler,
         }
     }
 }
+
 
 int
 main(int argc, char* argv[])

@@ -37,6 +37,8 @@
 #include <deal.II/meshworker/integration_info.h>
 #include <deal.II/meshworker/loop.h>
 
+
+
 template <int dim>
 class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
 {
@@ -121,6 +123,8 @@ private:
   Vector<double> solution;
   Vector<double> system_rhs;
 };
+
+
 
 template <int dim>
 Step4<dim>::Step4() : fe(1), dof_handler(triangulation)
@@ -210,6 +214,7 @@ Step4<dim>::run()
       solve();
     }
 }
+
 
 int
 main(int argc, char** argv)

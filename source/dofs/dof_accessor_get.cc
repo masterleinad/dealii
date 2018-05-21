@@ -110,6 +110,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
       Assert(values.size() == this->dof_handler->n_dofs(),
              typename BaseClass::ExcVectorDoesNotMatch());
 
+
       // see if the finite element we have on the current cell has any
       // degrees of freedom to begin with; if not (e.g., when
       // interpolating FE_Nothing), then simply skip all of the

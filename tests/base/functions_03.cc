@@ -24,6 +24,8 @@
 #include <string>
 #include <vector>
 
+
+
 template <int dim>
 void
 check_value(const Function<dim>& f)
@@ -131,6 +133,7 @@ check_laplacian_list(const Function<dim>& f)
 
   deallog << " laplacian_list checked" << std::endl;
 }
+
 
 int
 main()

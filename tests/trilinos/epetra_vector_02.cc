@@ -162,6 +162,7 @@ test()
                     ExcMessage("Problem in scale."));
     }
 
+
   a.equ(2., c);
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
@@ -179,6 +180,8 @@ test()
 
   AssertThrow(b.l1_norm() == 95., ExcMessage("Problem in l1_norm."));
 
+  AssertThrow(b.l1_norm() == 95., ExcMessage("Problem in l1_norm."));
+
   const double eps = 1e-6;
   AssertThrow(std::fabs(b.l2_norm() - 31.3847096) < eps,
               ExcMessage("Problem in l2_norm"));
@@ -189,6 +192,7 @@ test()
   const double val = a.add_and_dot(2., a, b);
   AssertThrow(val == 1530., ExcMessage("Problem in add_and_dot"));
 }
+
 
 int
 main(int argc, char** argv)

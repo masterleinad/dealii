@@ -111,6 +111,7 @@ check_poly(const Point<dim>&      x,
                 << fourth_derivative1 << " != " << fourth_derivative2
                 << std::endl;
 
+
       // finally output values, gradients, etc, to make sure that they are
       // not only consistent, but also correct.
       values1[k] *= std::pow(10., dim);

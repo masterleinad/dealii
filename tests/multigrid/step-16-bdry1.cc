@@ -462,6 +462,7 @@ LaplaceProblem<dim>::assemble_multigrid(bool use_mw)
                   cell_matrix(i, j) = 0;
                 }
 
+
           empty_constraints.distribute_local_to_global(
             cell_matrix, local_dof_indices, mg_interface_in[cell->level()]);
         }
@@ -588,6 +589,7 @@ LaplaceProblem<dim>::run()
       else
         refine_grid("center");
 
+
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
 
@@ -611,6 +613,7 @@ LaplaceProblem<dim>::run()
       // output_results (cycle);
     }
 }
+
 
 int
 main()

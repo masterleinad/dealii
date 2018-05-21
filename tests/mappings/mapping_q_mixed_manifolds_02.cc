@@ -48,6 +48,7 @@ const double Y_C = 0.2; // center
 
 const unsigned int MANIFOLD_ID = 1;
 
+
 void create_triangulation(Triangulation<2>& tria)
 {
   AssertThrow(std::abs((X_2 - X_1) - 2.0 * (X_C - X_1)) < 1.0e-12,
@@ -240,6 +241,7 @@ test()
               << std::endl;
     }
 }
+
 
 int
 main()

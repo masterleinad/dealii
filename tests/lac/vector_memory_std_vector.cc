@@ -19,6 +19,8 @@ test_std_vector_pointer()
   va.emplace_back(mem);
 }
 
+
+
 int
 main()
 {

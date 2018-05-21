@@ -294,6 +294,7 @@ namespace Differentiation
       struct HasRequiredADInfo : std::false_type
       {};
 
+
       /**
        * Specialization to detect whether the input AD number
        * is internally supported or not. In particular, we
@@ -313,6 +314,7 @@ namespace Differentiation
                  (void) std::declval<typename ADNumberTrait::derivative_type>(),
                  void())> : std::true_type
       {};
+
 
       /**
        * A dummy specialization for floating point numbers. This is helpful
@@ -542,6 +544,7 @@ namespace Differentiation
         static_assert(Differentiation::AD::is_ad_number<ADNumberType>::value,
                       "Expected an auto-differentiable number.");
 
+
         /**
          * Extract the floating point value.
          */
@@ -730,11 +733,13 @@ namespace Differentiation
        */
       static const bool is_taped;
 
+
       /**
        * A flag to indicate whether the number is of
        * the tapeless variety or not
        */
       static const bool is_tapeless;
+
 
       /**
        * A flag to indicate whether the number represents
@@ -742,11 +747,13 @@ namespace Differentiation
        */
       static const bool is_real_valued;
 
+
       /**
        * A flag to indicate whether the number represents
        * a complex value
        */
       static const bool is_complex_valued;
+
 
       /**
        * The number of directional derivatives that can be
@@ -764,12 +771,14 @@ namespace Differentiation
         typename internal::RemoveComplexWrapper<ScalarType>::type,
         ADNumberTypeCode>::is_taped;
 
+
       /**
        * A flag to indicate whether the number is of
        * the tapeless variety or not
        */
       static constexpr bool is_tapeless
         = !(NumberTraits<ScalarType, ADNumberTypeCode>::is_taped);
+
 
       /**
        * A flag to indicate whether the number represents
@@ -778,12 +787,14 @@ namespace Differentiation
       static constexpr bool is_real_valued
         = (!boost::is_complex<ScalarType>::value);
 
+
       /**
        * A flag to indicate whether the number represents
        * a complex value
        */
       static constexpr bool is_complex_valued
         = !(NumberTraits<ScalarType, ADNumberTypeCode>::is_real_valued);
+
 
       /**
        * The number of directional derivatives that can be
@@ -796,11 +807,14 @@ namespace Differentiation
 
 #  endif
 
+#  endif
+
       /**
        * Underlying floating point value type.
        * This could real-valued or complex-valued.
        */
       typedef ScalarType scalar_type;
+
 
       /**
        * Type for real numbers
@@ -809,10 +823,12 @@ namespace Differentiation
         typename internal::RemoveComplexWrapper<ScalarType>::type,
         ADNumberTypeCode>::real_type real_type;
 
+
       /**
        * Type for complex numbers
        */
       typedef std::complex<real_type> complex_type;
+
 
       /**
        * The actual auto-differentiable number type
@@ -833,6 +849,7 @@ namespace Differentiation
           typename internal::RemoveComplexWrapper<ScalarType>::type,
           ADNumberTypeCode>::derivative_type>>::type derivative_type;
 
+
       /**
        * Extract the value of an auto-differentiable number
        */
@@ -848,6 +865,7 @@ namespace Differentiation
           internal::ExtractData<ad_type>::value(x));
       }
 
+
       /**
      * Extract the derivative value of an auto-differentiable number
      */
@@ -858,6 +876,7 @@ namespace Differentiation
           x, direction);
       }
 
+
       /**
      * Extract the number of directional derivatives value tracked by
      * an auto-differentiable number
@@ -866,6 +885,7 @@ namespace Differentiation
       {
         return internal::ExtractData<ad_type>::n_directional_derivatives(x);
       }
+
 
       static_assert((is_real_valued == true ?
                        std::is_same<ad_type, real_type>::value :
@@ -897,6 +917,7 @@ namespace Differentiation
         typename internal::RemoveComplexWrapper<ScalarType>::type,
         ADNumberTypeCode>::is_taped;
 
+
     template <typename ScalarType, enum NumberTypes ADNumberTypeCode>
     const bool NumberTraits<
       ScalarType,
@@ -907,6 +928,7 @@ namespace Differentiation
             && std::is_floating_point<typename internal::RemoveComplexWrapper<
                  ScalarType>::type>::value)>::type>::is_tapeless
       = !(NumberTraits<ScalarType, ADNumberTypeCode>::is_taped);
+
 
     template <typename ScalarType, enum NumberTypes ADNumberTypeCode>
     const bool NumberTraits<
@@ -919,6 +941,7 @@ namespace Differentiation
                  ScalarType>::type>::value)>::type>::is_real_valued
       = (!boost::is_complex<ScalarType>::value);
 
+
     template <typename ScalarType, enum NumberTypes ADNumberTypeCode>
     const bool NumberTraits<
       ScalarType,
@@ -929,6 +952,7 @@ namespace Differentiation
             && std::is_floating_point<typename internal::RemoveComplexWrapper<
                  ScalarType>::type>::value)>::type>::is_complex_valued
       = !(NumberTraits<ScalarType, ADNumberTypeCode>::is_real_valued);
+
 
     template <typename ScalarType, enum NumberTypes ADNumberTypeCode>
     const unsigned int NumberTraits<
@@ -943,6 +967,8 @@ namespace Differentiation
       = internal::ADNumberInfoFromEnum<
         typename internal::RemoveComplexWrapper<ScalarType>::type,
         ADNumberTypeCode>::n_supported_derivative_levels;
+
+#  endif
 
 #  endif
 

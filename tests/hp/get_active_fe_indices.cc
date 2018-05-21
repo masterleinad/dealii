@@ -27,6 +27,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
 
+
+
 template <int dim>
 void
 test()
@@ -59,6 +61,7 @@ test()
   for(unsigned int i = 0; i < tria.n_active_cells(); ++i)
     deallog << active_fe_indices[i] << std::endl;
 }
+
 
 int
 main()

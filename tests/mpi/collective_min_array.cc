@@ -34,6 +34,7 @@ test()
     deallog << minima[0] << ' ' << minima[1] << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

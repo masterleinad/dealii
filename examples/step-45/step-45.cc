@@ -339,6 +339,7 @@ namespace Step45
     triangulation.refine_global(4 - dim);
   }
 
+
   // @sect3{Setting up periodicity constraints on distributed triangulations}
   template <int dim>
   void
@@ -486,6 +487,7 @@ namespace Step45
     solution.reinit(
       owned_partitioning, relevant_partitioning, mpi_communicator);
   }
+
 
   // @cond SKIP
   template <int dim>
@@ -736,6 +738,7 @@ namespace Step45
       }
   }
 } // namespace Step45
+
 
 int
 main(int argc, char* argv[])

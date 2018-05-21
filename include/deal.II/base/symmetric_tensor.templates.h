@@ -699,6 +699,7 @@ namespace internal
       return eig_vals_vecs;
     }
 
+
     template <typename Number>
     Tensor<2, 1, Number>
     dediagonalize_tensor(const dealii::SymmetricTensor<2, 1, Number>& T,
@@ -708,6 +709,7 @@ namespace internal
       AssertThrow(false, ExcNotImplemented());
       return Tensor<2, 1, Number>({{T[0][0]}});
     }
+
 
     template <typename Number>
     Tensor<2, 2, Number>
@@ -720,6 +722,7 @@ namespace internal
           rotation_angle);
       return R * T;
     }
+
 
     template <typename Number>
     Tensor<2, 3, Number>
@@ -785,6 +788,7 @@ namespace internal
       AssertThrow(false, ExcNotImplemented());
       return std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>();
     }
+
 
   } // namespace SymmetricTensorImplementation
 } // namespace internal
@@ -1000,6 +1004,8 @@ eigenvalues(const SymmetricTensor<2, 1, adouble>& /*T*/)
   return std::array<adouble, 1>();
 }
 
+
+
 template <>
 std::array<adouble, 2>
 eigenvalues(const SymmetricTensor<2, 2, adouble>& /*T*/)
@@ -1007,6 +1013,8 @@ eigenvalues(const SymmetricTensor<2, 2, adouble>& /*T*/)
   AssertThrow(false, ExcADOLCAdvancedBranching());
   return std::array<adouble, 2>();
 }
+
+
 
 template <>
 std::array<adouble, 3>

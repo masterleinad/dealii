@@ -50,6 +50,7 @@ test(const unsigned int size)
   deallog << "difference: " << error << std::endl;
 }
 
+
 int
 main()
 {

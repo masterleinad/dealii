@@ -33,6 +33,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 
+
+
 template <int dim>
 void
 check()
@@ -104,6 +106,8 @@ check()
       ++p)
     deallog << p->value() * 100 << std::endl;
 }
+
+
 
 int
 main()

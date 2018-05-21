@@ -104,6 +104,7 @@ test()
   data_out.write_gnuplot(logfile);
 }
 
+
 int
 main()
 {

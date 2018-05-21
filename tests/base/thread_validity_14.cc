@@ -61,11 +61,15 @@ public:
   int value;
 };
 
+
+
 X
 foo()
 {
   return X(42);
 }
+
+
 
 int
 main()

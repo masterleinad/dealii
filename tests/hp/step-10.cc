@@ -18,6 +18,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include <deal.II/base/convergence_table.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -62,6 +63,7 @@ gnuplot_output()
           deallog << "Degree = " << degree << std::endl;
 
           const MappingQ<dim> mapping(degree);
+
 
           GridOut               grid_out;
           GridOutFlags::Gnuplot gnuplot_flags(false, 30);
@@ -206,6 +208,7 @@ compute_pi_by_perimeter()
       deallog << std::endl;
     };
 }
+
 
 int
 main()

@@ -25,6 +25,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/lac/petsc_parallel_vector.h>
 
+
 void
 test()
 {
@@ -71,6 +72,7 @@ test()
 
   constraints.condense(force);
 }
+
 
 int
 main(int argc, char* argv[])

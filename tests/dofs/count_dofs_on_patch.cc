@@ -25,6 +25,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 test()
@@ -85,6 +87,7 @@ test()
                  GridTools::get_patch_around_cell<DoFHandler<dim>>(cell))
             << std::endl;
 }
+
 
 int
 main()

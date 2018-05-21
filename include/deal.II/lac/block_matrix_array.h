@@ -443,6 +443,7 @@ public:
   void
   reinit(const unsigned int n_block_rows);
 
+
   /**
    * Enter a block. This calls BlockMatrixArray::enter(). Remember that the
    * diagonal blocks should actually be inverse matrices or preconditioners.

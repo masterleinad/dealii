@@ -339,6 +339,7 @@ namespace LocalIntegrators
       const double fe      = (ext_factor < 0) ? int_factor : ext_factor;
       const double penalty = .5 * pen * (fi + fe);
 
+
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx    = fe1.JxW(k);

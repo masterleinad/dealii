@@ -50,6 +50,8 @@ do_test(MPI_Comm communicator)
   deallog << v1.l2_norm() << " " << v3->l2_norm() << std::endl;
 }
 
+
+
 int
 main(int argc, char** argv)
 {

@@ -18,10 +18,12 @@
 
 #include <deal.II/base/config.h>
 
+
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -40,6 +42,7 @@ namespace LinearAlgebraDealII
 
   typedef PreconditionSSOR<SparseMatrix> PreconditionSSOR;
 } // namespace LinearAlgebraDealII
+
 
 DEAL_II_NAMESPACE_CLOSE
 
@@ -206,6 +209,8 @@ namespace LinearAlgebraTrilinos
      * Typedef for the SSOR preconditioner
      */
     typedef TrilinosWrappers::PreconditionSSOR PreconditionSSOR;
+
+  } // namespace MPI
 
   } // namespace MPI
 

@@ -303,6 +303,8 @@ namespace DoFTools
     }
   } // namespace internal
 
+
+
   template <typename DoFHandlerType, typename Number>
   void
   distribute_cell_to_dof_vector(const DoFHandlerType& dof_handler,
@@ -998,6 +1000,8 @@ namespace DoFTools
       }
     } // namespace
   }   // namespace internal
+
+
 
   template <int dim, int spacedim>
   void
@@ -1775,6 +1779,8 @@ namespace DoFTools
     }
   } // namespace internal
 
+
+
   namespace internal
   {
     namespace
@@ -1831,6 +1837,7 @@ namespace DoFTools
     else
       Assert(target_component.size() == n_components,
              ExcDimensionMismatch(target_component.size(), n_components));
+
 
     const unsigned int max_component
       = *std::max_element(target_component.begin(), target_component.end());
@@ -1933,6 +1940,8 @@ namespace DoFTools
         else
           Assert(target_block.size() == fe.n_blocks(),
                  ExcDimensionMismatch(target_block.size(), fe.n_blocks()));
+
+
 
         const unsigned int max_block
           = *std::max_element(target_block.begin(), target_block.end());

@@ -22,6 +22,10 @@ Point<3> periodicity(/*r=*/0,
                      /*phi=*/2 * numbers::PI,
                      /*z=*/0);
 
+Point<3> periodicity(/*r=*/0,
+                     /*phi=*/2 * numbers::PI,
+                     /*z=*/0);
+
 class MyCylinderManifold : public ChartManifold<2, 3, 3>
 {
 public:
@@ -32,11 +36,13 @@ public:
   MyCylinderManifold() : ChartManifold<dim, spacedim, spacedim>(periodicity)
   {}
 
+
   virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override
   {
     return std::unique_ptr<Manifold<dim, spacedim>>(new MyCylinderManifold());
   }
+
 
   virtual Point<spacedim>
   pull_back(const Point<spacedim>& space_point) const override
@@ -50,6 +56,7 @@ public:
 
     return Point<3>(r, phi, z);
   }
+
 
   virtual Point<spacedim>
   push_forward(const Point<spacedim>& chart_point) const override
@@ -86,6 +93,8 @@ public:
   }
 };
 
+
+
 void
 test_direction(const Point<3>& x1, const Point<3>& x2)
 {
@@ -97,6 +106,7 @@ test_direction(const Point<3>& x1, const Point<3>& x2)
   deallog << '[' << x2 << "] -> [" << x1
           << "]: " << manifold.get_tangent_vector(x2, x1) << std::endl;
 }
+
 
 void
 test()
@@ -134,6 +144,7 @@ test()
                  manifold.push_forward(Point<3>(/*r  =*/4,
                                                 /*phi=*/numbers::PI / 2,
                                                 /*z  =*/-1)));
+
 
   // check two points that are at the same radius but not horizontal
   test_direction(manifold.push_forward(Point<3>(/*r  =*/4,

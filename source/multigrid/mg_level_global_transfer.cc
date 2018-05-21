@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 
@@ -415,5 +416,6 @@ MGLevelGlobalTransfer<
 // create an additional instantiation currently not supported by the automatic
 // template instantiation scheme
 template class MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<float>>;
+
 
 DEAL_II_NAMESPACE_CLOSE

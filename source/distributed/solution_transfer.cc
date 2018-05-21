@@ -171,6 +171,7 @@ namespace parallel
           std::placeholders::_3,
           std::ref(all_out)));
 
+
       for(typename std::vector<VectorType*>::iterator it = all_out.begin();
           it != all_out.end();
           ++it)
@@ -256,8 +257,10 @@ namespace parallel
         }
     }
 
+
   } // namespace distributed
 } // namespace parallel
+
 
 // explicit instantiations
 #  include "solution_transfer.inst"

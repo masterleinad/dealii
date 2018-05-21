@@ -103,6 +103,7 @@ main()
   data_out.build_patches();
   data_out.write_gnuplot(deallog.get_file_stream());
 
+
   /* Set refine flags:
    * -----------
    * |    |  R |

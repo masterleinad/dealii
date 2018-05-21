@@ -34,6 +34,8 @@
 
 #include <iostream>
 
+
+
 template <int dim, int fe_degree>
 void
 test(const unsigned int n = 5, const unsigned int m = 3)
@@ -139,6 +141,11 @@ test(const unsigned int n = 5, const unsigned int m = 3)
     for(unsigned int j = 0; j < n; ++j)
       metric(i, j) = 0.3 + (i * 3 + j * 7);
 
+  FullMatrix<number> metric(m, n);
+  for(unsigned int i = 0; i < m; ++i)
+    for(unsigned int j = 0; j < n; ++j)
+      metric(i, j) = 0.3 + (i * 3 + j * 7);
+
   right.mmult(left, metric);         // L = RM
   right.mmult(left, metric, 2., 3.); // L = 2L + 3 RM = 5RM
 
@@ -151,6 +158,7 @@ test(const unsigned int n = 5, const unsigned int m = 3)
   const double diff_norm = left2.linfty_norm();
   deallog << "Norm of difference: " << diff_norm << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

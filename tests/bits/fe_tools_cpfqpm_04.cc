@@ -28,6 +28,8 @@
 // these support points as quadrature points, that the resulting
 // matrix is the unit matrix
 
+
+
 template <int dim>
 void
 check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)

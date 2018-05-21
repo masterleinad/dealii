@@ -157,6 +157,7 @@ check(const int          degree,
 #endif
 }
 
+
 int
 main()
 {

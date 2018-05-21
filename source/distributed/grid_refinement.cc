@@ -33,6 +33,11 @@
 #  include <limits>
 #  include <numeric>
 
+#  include <algorithm>
+#  include <functional>
+#  include <limits>
+#  include <numeric>
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace
@@ -198,6 +203,8 @@ namespace
         }
   }
 
+
+
   namespace RefineAndCoarsenFixedNumber
   {
     /**
@@ -284,6 +291,8 @@ namespace
       return -1;
     }
   } // namespace RefineAndCoarsenFixedNumber
+
+
 
   namespace RefineAndCoarsenFixedFraction
   {
@@ -394,6 +403,8 @@ namespace
   } // namespace RefineAndCoarsenFixedFraction
 } // namespace
 
+
+
 namespace parallel
 {
   namespace distributed
@@ -441,6 +452,7 @@ namespace parallel
         const std::pair<Number, Number> global_min_and_max
           = compute_global_min_and_max_at_root(locally_owned_indicators,
                                                mpi_communicator);
+
 
         double top_threshold, bottom_threshold;
         top_threshold = RefineAndCoarsenFixedNumber::compute_threshold(
@@ -533,6 +545,7 @@ namespace parallel
     } // namespace GridRefinement
   }   // namespace distributed
 } // namespace parallel
+
 
 // explicit instantiations
 #  include "grid_refinement.inst"

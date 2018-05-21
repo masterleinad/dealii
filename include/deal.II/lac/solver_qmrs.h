@@ -270,6 +270,7 @@ SolverQMRS<VectorType>::solve(const MatrixType&         A,
 {
   LogStream::Prefix prefix("SQMR");
 
+
   // temporary vectors, allocated trough the @p VectorMemory object at the
   // start of the actual solution process and deallocated at the end.
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
@@ -298,6 +299,7 @@ SolverQMRS<VectorType>::solve(const MatrixType&         A,
       state = iterate(A, x, b, preconditioner, *Vr, *Vu, *Vq, *Vt, *Vd);
     }
   while(state.state == SolverControl::iterate);
+
 
   // in case of failure: throw exception
   AssertThrow(state.state == SolverControl::success,

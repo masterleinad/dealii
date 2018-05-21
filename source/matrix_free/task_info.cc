@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/conditional_ostream.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/mpi.h>
@@ -586,10 +587,14 @@ namespace internal
       funct.vector_compress_finish();
     }
 
+
+
     TaskInfo::TaskInfo()
     {
       clear();
     }
+
+
 
     void
     TaskInfo::clear()
@@ -1142,6 +1147,7 @@ namespace internal
       }
 #endif
 
+
       update_task_info(
         partition); // Actually sets too much for partition color case
 
@@ -1363,6 +1369,7 @@ namespace internal
       std::vector<unsigned int> cell_partition(n_active_cells,
                                                numbers::invalid_unsigned_int);
 
+
       // In element j of this variable, one puts the old number of the block
       // that should be the jth block in the new numeration.
       std::vector<unsigned int> partition_list(n_active_cells, 0);
@@ -1445,6 +1452,8 @@ namespace internal
               }
           }
     }
+
+
 
     // Function to create partitioning on the second layer within each
     // partition. Version without preblocking.
@@ -1890,6 +1899,7 @@ namespace internal
       if(start_nonboundary > n_blocks)
         start_nonboundary = n_blocks;
 
+
       unsigned int start_up  = 0;
       bool         work      = true;
       unsigned int remainder = cluster_size;
@@ -2092,6 +2102,8 @@ namespace internal
   } // namespace MatrixFreeFunctions
 } // namespace internal
 
+
+
 // explicit instantiations of template functions
 template void
 internal::MatrixFreeFunctions::TaskInfo::print_memory_statistics<std::ostream>(
@@ -2100,5 +2112,6 @@ internal::MatrixFreeFunctions::TaskInfo::print_memory_statistics<std::ostream>(
 template void
 internal::MatrixFreeFunctions::TaskInfo::print_memory_statistics<
   ConditionalOStream>(ConditionalOStream&, const std::size_t) const;
+
 
 DEAL_II_NAMESPACE_CLOSE

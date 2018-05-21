@@ -36,6 +36,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 class Step4
 {
@@ -86,6 +88,8 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
+
+
 
 template <int dim>
 double
@@ -249,6 +253,7 @@ Step4<dim>::run()
   assemble_system();
   solve();
 }
+
 
 int
 main(int argc, char** argv)

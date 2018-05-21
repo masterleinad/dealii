@@ -105,6 +105,7 @@ namespace Step51
     SolutionBase<1>::source_centers[SolutionBase<1>::n_source_centers]
     = {Point<1>(-1.0 / 3.0), Point<1>(0.0), Point<1>(+1.0 / 3.0)};
 
+
   template <>
   const Point<2>
     SolutionBase<2>::source_centers[SolutionBase<2>::n_source_centers]
@@ -119,6 +120,7 @@ namespace Step51
 
   template <int dim>
   const double SolutionBase<dim>::width = 1. / 5.;
+
 
   template <int dim>
   class Solution : public Function<dim>, protected SolutionBase<dim>
@@ -173,6 +175,8 @@ namespace Step51
                                          * this->width);
   }
 
+
+
   // This class implements a function where the scalar solution and its negative
   // gradient are collected together. This function is used when computing the
   // error of the HDG approximation and its implementation is to simply call
@@ -200,6 +204,8 @@ namespace Step51
       v[d] = -grad[d];
     v[dim] = solution.value(p);
   }
+
+
 
   // Next comes the implementation of the convection velocity. As described in
   // the introduction, we choose a velocity field that is $(y, -x)$ in 2D and
@@ -239,6 +245,8 @@ namespace Step51
       }
     return convection;
   }
+
+
 
   // The last function we implement is the right hand side for the manufactured
   // solution. It is very similar to step-7, with the exception that we now have
@@ -342,6 +350,12 @@ namespace Step51
 
     void
     copy_local_to_global(const PerTaskData& data);
+
+    void
+    postprocess_one_cell(
+      const typename DoFHandler<dim>::active_cell_iterator& cell,
+      PostProcessScratchData&                               scratch,
+      unsigned int&                                         empty_data);
 
     void
     postprocess_one_cell(
@@ -1377,6 +1391,8 @@ namespace Step51
   }
 
 } // end of namespace Step51
+
+
 
 int
 main()

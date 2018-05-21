@@ -43,6 +43,7 @@
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
+
 namespace Step
 {
   using namespace dealii;
@@ -100,6 +101,9 @@ namespace Step
     constraints.clear();
     constraints.close();
 
+    constraints.clear();
+    constraints.close();
+
     DynamicSparsityPattern csp(dof_handler.n_dofs(), dof_handler.n_dofs());
     DoFTools::make_flux_sparsity_pattern(dof_handler, csp, constraints, false);
     sparsity_pattern.copy_from(csp);
@@ -123,6 +127,7 @@ namespace Step
   }
 } // namespace Step
 
+
 template <int dim>
 void
 test()
@@ -139,6 +144,7 @@ test()
       problem.refine_mesh();
     }
 }
+
 
 int
 main()

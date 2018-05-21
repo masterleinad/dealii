@@ -60,6 +60,7 @@
 #include <fstream>
 #include <iostream>
 
+
 // Finally, this is as in previous programs:
 namespace Step27
 {
@@ -156,6 +157,8 @@ namespace Step27
       product *= (p[d] + 1);
     return product;
   }
+
+
 
   // @sect3{Implementation of the main class}
 
@@ -265,6 +268,19 @@ namespace Step27
 
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
+
+    constraints.clear();
+    DoFTools::make_hanging_node_constraints(dof_handler, constraints);
+    VectorTools::interpolate_boundary_values(
+      dof_handler, 0, Functions::ZeroFunction<dim>(), constraints);
+    constraints.close();
+
+    DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
+    DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints, false);
+    sparsity_pattern.copy_from(dsp);
+
+    system_matrix.reinit(sparsity_pattern);
+  }
 
     constraints.clear();
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
@@ -409,6 +425,7 @@ namespace Step27
                                        typename FunctionMap<dim>::type(),
                                        solution,
                                        estimated_error_per_cell);
+
 
     Vector<float> smoothness_indicators(triangulation.n_active_cells());
     estimate_smoothness(smoothness_indicators);
@@ -600,6 +617,8 @@ namespace Step27
     triangulation.refine_global(3);
   }
 
+
+
   // @sect4{LaplaceProblem::run}
 
   // This function implements the logic of the program, as did the respective
@@ -750,6 +769,7 @@ namespace Step27
       }
   }
 } // namespace Step27
+
 
 // @sect3{The main function}
 

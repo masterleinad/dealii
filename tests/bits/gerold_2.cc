@@ -60,6 +60,7 @@ LaplaceProblem<dim>::run()
     deallog << permutation[i] << std::endl;
 }
 
+
 int
 main()
 {

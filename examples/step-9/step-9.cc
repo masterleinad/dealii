@@ -150,6 +150,7 @@ namespace Step9
     void
     copy_local_to_global(const AssemblyCopyData& copy_data);
 
+
     // The following functions again are as in previous examples, as are the
     // subsequent variables.
     void
@@ -274,6 +275,8 @@ namespace Step9
       values[i] = AdvectionField<dim>::value(points[i]);
   }
 
+
+
   // Besides the advection field, we need two functions describing the source
   // terms (<code>right hand side</code>) and the boundary values. First for
   // the right hand side, which follows the same pattern as in previous
@@ -311,6 +314,8 @@ namespace Step9
 
   template <>
   const Point<3> RightHandSide<3>::center_point = Point<3>(-0.75, -0.75, -0.75);
+
+
 
   // The only new thing here is that we check for the value of the
   // <code>component</code> parameter. As this is a scalar function, it is
@@ -616,6 +621,8 @@ namespace Step9
                        | update_JxW_values | update_normal_vectors)
   {}
 
+
+
   // Now, this is the function that does the actual work. It is not very
   // different from the <code>assemble_system</code> functions of previous
   // example programs, so we will again only comment on the differences. The
@@ -687,6 +694,7 @@ namespace Step9
     std::vector<Tensor<1, dim>> advection_directions(n_q_points);
     std::vector<double>         face_boundary_values(n_face_q_points);
     std::vector<Tensor<1, dim>> face_advection_directions(n_face_q_points);
+
 
     // ... then initialize the <code>FEValues</code> object...
     scratch_data.fe_values.reinit(cell);
@@ -817,6 +825,8 @@ namespace Step9
         system_rhs(copy_data.local_dof_indices[i]) += copy_data.cell_rhs(i);
       }
   }
+
+
 
   // Following is the function that solves the linear system of equations. As
   // the system is no more symmetric positive definite as in all the previous
@@ -1030,6 +1040,7 @@ namespace Step9
     // outer products of the y-vectors.
     Tensor<2, dim> Y;
 
+
     // Then we allocate a vector to hold iterators to all active neighbors of
     // a cell. We reserve the maximal number of active neighbors in order to
     // avoid later reallocations. Note how this maximal number of active
@@ -1046,6 +1057,7 @@ namespace Step9
     // Then allocate the vector that will be the sum over the y-vectors
     // times the approximate directional derivative:
     Tensor<1, dim> projected_gradient;
+
 
     // Now before going on first compute a list of all active neighbors of
     // the present cell. We do so by first looping over all faces and see
@@ -1154,6 +1166,7 @@ namespace Step9
     scratch_data.fe_midpoint_value.get_function_values(scratch_data.solution,
                                                        this_midpoint_value);
 
+
     // Now loop over all active neighbors and collect the data we
     // need. Allocate a vector just like <code>this_midpoint_value</code>
     // which we will use to store the value of the solution in the
@@ -1244,6 +1257,7 @@ namespace Step9
          * std::sqrt(gradient.norm_square()));
   }
 } // namespace Step9
+
 
 // @sect3{Main function}
 

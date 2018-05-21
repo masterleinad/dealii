@@ -74,6 +74,8 @@ private:
   mutable double                 errors[5];
 };
 
+
+
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
@@ -112,6 +114,7 @@ operator()(const MatrixFree<dim, Number>& data,
       fe_eval5.reinit(cell);
       fe_eval5.read_dof_values(src);
       fe_eval5.evaluate(false, false, true);
+
 
       // compare values with the values that we get
       // when expanding the full
@@ -176,6 +179,7 @@ test()
   mf.test_functions(solution_dist);
   deallog << std::endl;
 }
+
 
 int
 main()

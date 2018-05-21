@@ -26,6 +26,8 @@
 
 #  include <type_traits>
 
+#  include <type_traits>
+
 DEAL_II_NAMESPACE_OPEN
 
 using namespace dealii;
@@ -254,11 +256,14 @@ namespace Rol
   /*------------------------------member definitions--------------------------*/
 #  ifndef DOXYGEN
 
+
   template <typename VectorType>
   VectorAdaptor<VectorType>::VectorAdaptor(
     const Teuchos::RCP<VectorType>& vector_ptr)
     : vector_ptr(vector_ptr)
   {}
+
+
 
   template <typename VectorType>
   Teuchos::RCP<VectorType>
@@ -267,12 +272,16 @@ namespace Rol
     return vector_ptr;
   }
 
+
+
   template <typename VectorType>
   Teuchos::RCP<const VectorType>
   VectorAdaptor<VectorType>::getVector() const
   {
     return vector_ptr;
   }
+
+
 
   template <typename VectorType>
   void
@@ -283,6 +292,8 @@ namespace Rol
 
     (*vector_ptr) = *(vector_adaptor.getVector());
   }
+
+
 
   template <typename VectorType>
   void
@@ -296,6 +307,8 @@ namespace Rol
 
     *vector_ptr += *(vector_adaptor.getVector());
   }
+
+
 
   template <typename VectorType>
   void
@@ -311,6 +324,8 @@ namespace Rol
     vector_ptr->add(alpha, *(vector_adaptor.getVector()));
   }
 
+
+
   template <typename VectorType>
   int
   VectorAdaptor<VectorType>::dimension() const
@@ -321,12 +336,16 @@ namespace Rol
     return static_cast<int>(vector_ptr->size());
   }
 
+
+
   template <typename VectorType>
   void
   VectorAdaptor<VectorType>::scale(const value_type alpha)
   {
     (*vector_ptr) *= alpha;
   }
+
+
 
   template <typename VectorType>
   typename VectorType::value_type
@@ -342,12 +361,16 @@ namespace Rol
     return (*vector_ptr) * (*vector_adaptor.getVector());
   }
 
+
+
   template <typename VectorType>
   typename VectorType::value_type
   VectorAdaptor<VectorType>::norm() const
   {
     return vector_ptr->l2_norm();
   }
+
+
 
   template <typename VectorType>
   Teuchos::RCP<ROL::Vector<typename VectorType::value_type>>
@@ -358,6 +381,8 @@ namespace Rol
 
     return Teuchos::rcp(new VectorAdaptor(vec_ptr));
   }
+
+
 
   template <typename VectorType>
   Teuchos::RCP<ROL::Vector<typename VectorType::value_type>>
@@ -378,6 +403,8 @@ namespace Rol
     return e;
   }
 
+
+
   template <typename VectorType>
   void
   VectorAdaptor<VectorType>::applyUnary(
@@ -392,6 +419,8 @@ namespace Rol
 
     vector_ptr->compress(VectorOperation::insert);
   }
+
+
 
   template <typename VectorType>
   void
@@ -419,6 +448,8 @@ namespace Rol
     vector_ptr->compress(VectorOperation::insert);
   }
 
+
+
   template <typename VectorType>
   typename VectorType::value_type
   VectorAdaptor<VectorType>::reduce(
@@ -437,6 +468,8 @@ namespace Rol
     return result;
   }
 
+
+
   template <typename VectorType>
   void
   VectorAdaptor<VectorType>::print(std::ostream& outStream) const
@@ -444,7 +477,9 @@ namespace Rol
     vector_ptr->print(outStream);
   }
 
+
 #  endif // DOXYGEN
+
 
 } // namespace Rol
 

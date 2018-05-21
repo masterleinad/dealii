@@ -30,6 +30,7 @@
 #include <set>
 #include <vector>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 class BlockMask;
@@ -297,6 +298,7 @@ namespace DoFTools
   template <int dim, int spacedim>
   DEAL_II_DEPRECATED unsigned int
   max_dofs_per_cell(const hp::DoFHandler<dim, spacedim>& dh);
+
 
   /**
    * Maximal number of degrees of freedom on a face.
@@ -938,6 +940,7 @@ namespace DoFTools
     const InterGridMap<DoFHandler<dim, spacedim>>& coarse_to_fine_grid_map,
     ConstraintMatrix&                              constraints);
 
+
   /**
    * This function generates a matrix such that when a vector of data with as
    * many elements as there are degrees of freedom of this component on the
@@ -1140,6 +1143,8 @@ namespace DoFTools
     const std::vector<unsigned int>& first_vector_components
     = std::vector<unsigned int>());
 
+
+
   /**
    * Insert the (algebraic) constraints due to periodic boundary conditions
    * into a ConstraintMatrix @p constraint_matrix.
@@ -1170,6 +1175,8 @@ namespace DoFTools
     const ComponentMask&             component_mask = ComponentMask(),
     const std::vector<unsigned int>& first_vector_components
     = std::vector<unsigned int>());
+
+
 
   /**
    * Insert the (algebraic) constraints due to periodic boundary conditions
@@ -1210,6 +1217,8 @@ namespace DoFTools
                                dealii::ConstraintMatrix& constraint_matrix,
                                const ComponentMask&      component_mask
                                = ComponentMask());
+
+
 
   /**
    * This compatibility version of make_periodicity_constraints only works on
@@ -1606,6 +1615,7 @@ namespace DoFTools
                          const types::subdomain_id subdomain_id,
                          std::vector<bool>&        selected_dofs);
 
+
   /**
    * Extract the set of global DoF indices that are owned by the current
    * processor. For regular DoFHandler objects, this set is the complete set
@@ -1619,6 +1629,7 @@ namespace DoFTools
   DEAL_II_DEPRECATED void
   extract_locally_owned_dofs(const DoFHandlerType& dof_handler,
                              IndexSet&             dof_set);
+
 
   /**
    * Extract the set of global DoF indices that are active on the current
@@ -1693,6 +1704,7 @@ namespace DoFTools
   std::vector<IndexSet>
   locally_relevant_dofs_per_subdomain(const DoFHandlerType& dof_handler);
 
+
   /**
    * Same as extract_locally_relevant_dofs() but for multigrid DoFs for the
    * given @p level.
@@ -1702,6 +1714,7 @@ namespace DoFTools
   extract_locally_relevant_level_dofs(const DoFHandlerType& dof_handler,
                                       const unsigned int    level,
                                       IndexSet&             dof_set);
+
 
   /**
    * For each degree of freedom, return in the output array to which subdomain
@@ -2319,6 +2332,7 @@ namespace DoFTools
     const hp::DoFHandler<dim, spacedim>&                dof_handler,
     std::map<types::global_dof_index, Point<spacedim>>& support_points);
 
+
   /**
    * This is the opposite function to the one above. It generates a map where
    * the keys are the support points of the degrees of freedom, while the
@@ -2391,6 +2405,7 @@ namespace DoFTools
                                 const Vector<Number>& cell_data,
                                 Vector<double>&       dof_data,
                                 const unsigned int    component = 0);
+
 
   /**
    * Generate text output readable by gnuplot with point data based on the
@@ -2469,6 +2484,7 @@ namespace DoFTools
   write_gnuplot_dof_support_point_info(
     std::ostream&                                             out,
     const std::map<types::global_dof_index, Point<spacedim>>& support_points);
+
 
   /**
    * Make a constraint matrix for the constraints that result from zero
@@ -2581,6 +2597,8 @@ namespace DoFTools
    */
 } // namespace DoFTools
 
+
+
 /* ------------------------- inline functions -------------- */
 
 #ifndef DOXYGEN
@@ -2616,6 +2634,7 @@ namespace DoFTools
       return nonzero;
     return none;
   }
+
 
   // ---------------------- inline and template functions --------------------
 

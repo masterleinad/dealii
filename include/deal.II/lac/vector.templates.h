@@ -16,6 +16,7 @@
 #ifndef dealii_vector_templates_h
 #define dealii_vector_templates_h
 
+
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/lac/block_vector.h>
@@ -125,6 +126,8 @@ namespace internal
     AssertNothrow(ierr == 0, ExcPETScError(ierr));
   }
 } // namespace internal
+
+
 
 template <typename Number>
 Vector<Number>::Vector(const PETScWrappers::VectorBase& v)
@@ -948,6 +951,7 @@ Vector<Number>::block_read(std::istream& in)
   size_type sz;
 
   char buf[16];
+
 
   in.getline(buf, 16, '\n');
   sz = std::atoi(buf);

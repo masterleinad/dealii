@@ -84,6 +84,7 @@ do_test(const unsigned int size)
   deallog << "Verification of inverse: " << v3.linfty_norm() << std::endl;
 }
 
+
 int
 main()
 {

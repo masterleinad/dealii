@@ -29,6 +29,7 @@
 
 using namespace std;
 
+
 void
 test()
 {
@@ -56,6 +57,8 @@ test()
               << cell->neighbor(1) << std::endl;
     }
 }
+
+
 
 int
 main()

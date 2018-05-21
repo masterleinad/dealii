@@ -90,6 +90,8 @@ make_mesh(Triangulation<dim>& tria)
     }
 }
 
+
+
 template <int dim>
 void
 check()
@@ -162,6 +164,7 @@ check()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

@@ -50,6 +50,7 @@ test_tensor()
           << left << " : " << right << std::endl;
 }
 
+
 int
 main()
 {

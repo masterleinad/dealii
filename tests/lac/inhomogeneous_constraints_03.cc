@@ -69,6 +69,7 @@ test(bool use_inhomogeneity_for_rhs)
   cm.close();
   cm.print(logfile);
 
+
   DynamicSparsityPattern csp(8, 8);
   for(unsigned int i = 0; i < 8; ++i)
     csp.add(i, i);
@@ -101,6 +102,7 @@ test(bool use_inhomogeneity_for_rhs)
   cm.distribute_local_to_global(
     local_mat, local_vec, local_dofs2, mat, rhs, use_inhomogeneity_for_rhs);
 
+
   mat.print(logfile);
   rhs.print(logfile);
 
@@ -114,6 +116,7 @@ test(bool use_inhomogeneity_for_rhs)
   cm.distribute(solution);
   solution.print(logfile);
 }
+
 
 int
 main()

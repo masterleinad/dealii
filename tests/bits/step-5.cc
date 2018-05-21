@@ -100,6 +100,8 @@ Coefficient<dim>::value(const Point<dim>& p,
     return 1;
 }
 
+
+
 template <int dim>
 void
 Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -122,9 +124,13 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
+
+
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
+
+
 
 template <int dim>
 void
@@ -146,6 +152,8 @@ LaplaceProblem<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
+
+
 
 template <int dim>
 void
@@ -195,6 +203,7 @@ LaplaceProblem<dim>::assemble_system()
             cell_rhs(i) += (fe_values.shape_value(i, q_point) * 1.0
                             * fe_values.JxW(q_point));
           }
+
 
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -254,6 +263,8 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   data_out.write_eps(deallog.get_file_stream());
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -290,6 +301,8 @@ LaplaceProblem<dim>::run()
       output_results(cycle);
     }
 }
+
+
 
 int
 main()

@@ -33,6 +33,8 @@
 
 #include <vector>
 
+
+
 template <int dim>
 void
 test()
@@ -63,6 +65,7 @@ test()
           continue;
         }
 
+
       deallog << "Cell = " << cell << ", DoFs=";
       for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         {
@@ -74,6 +77,8 @@ test()
       deallog << std::endl;
     }
 }
+
+
 
 int
 main()

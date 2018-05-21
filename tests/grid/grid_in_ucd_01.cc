@@ -29,6 +29,7 @@
 
 #include <string>
 
+
 int
 main()
 {
@@ -42,6 +43,7 @@ main()
   gi.attach_triangulation(tria);
   gi.read_ucd(in, true);
   deallog << '\t' << tria.n_vertices() << '\t' << tria.n_cells() << std::endl;
+
 
   deallog << "Material IDs: " << std::endl;
   Triangulation<2, 3>::active_cell_iterator cell = tria.begin_active();

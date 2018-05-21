@@ -36,6 +36,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 class MySquareFunction : public Function<dim>
 {
@@ -95,6 +97,8 @@ check()
   for(unsigned int i = 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
+
+
 
 int
 main()

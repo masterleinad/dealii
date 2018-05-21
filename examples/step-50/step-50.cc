@@ -71,6 +71,7 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
 
+
 #include <deal.II/lac/generic_linear_algebra.h>
 
 // #define USE_PETSC_LA PETSc is not quite supported yet
@@ -295,6 +296,12 @@ namespace Step50
     system_matrix.reinit(
       mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
 
+    DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(),
+                               mg_dof_handler.n_dofs());
+    DoFTools::make_sparsity_pattern(mg_dof_handler, dsp, constraints);
+    system_matrix.reinit(
+      mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
+
     // The multigrid constraints have to be
     // initialized. They need to know about
     // the boundary values as well, so we
@@ -304,6 +311,7 @@ namespace Step50
     mg_constrained_dofs.initialize(mg_dof_handler);
     mg_constrained_dofs.make_zero_boundary_constraints(mg_dof_handler,
                                                        dirichlet_boundary_ids);
+
 
     // Now for the things that concern the
     // multigrid data structures. First, we
@@ -655,6 +663,7 @@ namespace Step50
                   cell_matrix(i, j) = 0;
                 }
 
+
           empty_constraints.distribute_local_to_global(
             cell_matrix,
             local_dof_indices,
@@ -776,6 +785,7 @@ namespace Step50
 
     PreconditionMG<dim, vector_t, MGTransferPrebuilt<vector_t>> preconditioner(
       mg_dof_handler, mg, mg_transfer);
+
 
     // With all this together, we can finally
     // get about solving the linear system in
@@ -948,6 +958,7 @@ namespace Step50
       }
   }
 } // namespace Step50
+
 
 // @sect3{The main() function}
 //

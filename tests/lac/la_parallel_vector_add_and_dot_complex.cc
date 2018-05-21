@@ -19,6 +19,8 @@
 #include "../tests.h"
 #include <deal.II/lac/la_parallel_vector.h>
 
+
+
 template <typename number>
 void
 check()
@@ -60,6 +62,7 @@ check()
               << ", is " << prod_check / static_cast<number>(size) << std::endl;
     }
 }
+
 
 int
 main()

@@ -41,6 +41,8 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 std::ofstream logfile("output");
 
 template <int dim, int spacedim>
@@ -82,6 +84,8 @@ test(std::string filename)
   deallog << "no. of dofs per cell " << fe.dofs_per_cell << std::endl;
   deallog << "no. of help dofs " << dof_handler_help.n_dofs() << std::endl;
   deallog << "no. of help dofs per cell " << fe_help.dofs_per_cell << std::endl;
+
+
 
   //  definition of the exact function
   //  and calculation of the projected
@@ -171,6 +175,8 @@ test(std::string filename)
   dataout.build_patches();
   dataout.write_vtk(logfile);
 }
+
+
 
 int
 main()

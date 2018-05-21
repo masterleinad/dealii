@@ -27,6 +27,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <int dim>
 void
 test()
@@ -48,6 +50,7 @@ test()
 
   deallog << "begin(1)==end(1)? " << (tr.begin(1) == tr.end(1)) << std::endl;
 
+
   deallog << "subdomainid = " << tr.begin_active()->subdomain_id() << std::endl;
 
   //if (myid!=0)
@@ -60,6 +63,7 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

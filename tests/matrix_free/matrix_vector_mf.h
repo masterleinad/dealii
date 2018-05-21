@@ -26,6 +26,7 @@
 #include <deal.II/lac/la_parallel_vector.h>
 #include <deal.II/lac/vector.h>
 
+
 template <int dim, int fe_degree, typename VectorType, int n_q_points_1d>
 void
 helmholtz_operator(const MatrixFree<dim, typename VectorType::value_type>& data,
@@ -51,6 +52,8 @@ helmholtz_operator(const MatrixFree<dim, typename VectorType::value_type>& data,
       fe_eval.distribute_local_to_global(dst);
     }
 }
+
+
 
 template <int dim,
           int fe_degree,

@@ -33,6 +33,7 @@
 #  include <deal.II/lac/vector.h>
 #  include <deal.II/lac/vector_memory.h>
 
+
 #  include <arkode/arkode.h>
 #  include <arkode/arkode_impl.h>
 #  include <nvector/nvector_serial.h>
@@ -44,6 +45,7 @@
 
 #  include <boost/signals2.hpp>
 #  include <memory>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -719,6 +721,7 @@ namespace SUNDIALS
                       VectorType&       dst)>
       solve_jacobian_system;
 
+
     /**
      * A function object that users may supply and that is intended to setup
      * the mass matrix. This function is called by ARKode any time a mass
@@ -829,6 +832,7 @@ namespace SUNDIALS
                    << "One of the SUNDIALS ARKode internal functions "
                    << " returned a negative error code: " << arg1
                    << ". Please consult SUNDIALS manual.");
+
 
   private:
     /**

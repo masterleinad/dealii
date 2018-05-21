@@ -26,6 +26,7 @@
 #include <deal.II/lac/sparse_direct.h>
 #include <deal.II/lac/vector.h>
 
+
 void
 test()
 {
@@ -62,6 +63,7 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

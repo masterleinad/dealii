@@ -109,6 +109,7 @@ public:
   void
   vmult(Vector<somenumber>& dst, const Vector<somenumber>& src) const;
 
+
   /**
    * Apply the transpose of the incomplete decomposition, i.e. do one forward-
    * backward step $dst=(LU)^{-T}src$.
@@ -118,6 +119,7 @@ public:
   template <typename somenumber>
   void
   Tvmult(Vector<somenumber>& dst, const Vector<somenumber>& src) const;
+
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this

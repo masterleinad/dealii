@@ -100,6 +100,7 @@ namespace SparsityTools
             std::vector<unsigned int>& partition_indices,
             const Partitioner          partitioner = Partitioner::metis);
 
+
   /**
    * This function performs the same operation as the one above, except that
    * it takes into consideration a set of @p cell_weights, which allow the

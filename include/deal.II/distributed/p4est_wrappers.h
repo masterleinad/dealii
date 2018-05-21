@@ -36,6 +36,7 @@
 #  include <map>
 #  include <set>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace parallel
@@ -46,6 +47,7 @@ namespace parallel
     class Triangulation;
   }
 } // namespace parallel
+
 
 namespace internal
 {
@@ -148,6 +150,8 @@ namespace internal
                                              int                     face_left,
                                              int                     face_right,
                                              int orientation);
+
+
 
       static void (&connectivity_destroy)(p4est_connectivity_t* connectivity);
 
@@ -258,6 +262,7 @@ namespace internal
 
       static const unsigned int max_level = P4EST_MAXLEVEL;
     };
+
 
     template <>
     struct functions<3>
@@ -405,8 +410,12 @@ namespace internal
 
       static size_t (&connectivity_memory_used)(types<3>::connectivity* p4est);
 
+
+
       static const unsigned int max_level = P8EST_MAXLEVEL;
     };
+
+
 
     /**
      * This struct templatizes the p4est iterate structs and function
@@ -453,12 +462,16 @@ namespace internal
       typename types<dim>::quadrant (
         &p4est_children)[dealii::GeometryInfo<dim>::max_children_per_cell]);
 
+
+
     /**
      * Initialize quadrant to represent a coarse cell.
      */
     template <int dim>
     void
     init_coarse_quadrant(typename types<dim>::quadrant& quad);
+
+
 
     /**
      * Return whether q1 and q2 are equal
@@ -468,6 +481,8 @@ namespace internal
     quadrant_is_equal(const typename types<dim>::quadrant& q1,
                       const typename types<dim>::quadrant& q2);
 
+
+
     /**
      * Return whether q1 is an ancestor of q2
      */
@@ -476,6 +491,8 @@ namespace internal
     quadrant_is_ancestor(const typename types<dim>::quadrant& q1,
                          const typename types<dim>::quadrant& q2);
 
+
+
     /**
      * Return whether the children of a coarse cell are stored locally
      */
@@ -483,6 +500,8 @@ namespace internal
     bool
     tree_exists_locally(const typename types<dim>::forest* parallel_forest,
                         const typename types<dim>::topidx  coarse_grid_cell);
+
+
 
     /**
      * Compute the ghost neighbors surrounding each vertex by querying p4est

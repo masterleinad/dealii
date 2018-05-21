@@ -23,6 +23,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim, int spacedim>
 void
 do_test(const Triangulation<dim, spacedim>& tria, const Point<spacedim>& p)
@@ -104,6 +105,7 @@ test3()
 
   do_test(triangulation, p);
 }
+
 
 int
 main()

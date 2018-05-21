@@ -29,6 +29,8 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 
+
+
 template <int spacedim>
 void
 print_dofs(const typename hp::DoFHandler<1, spacedim>::face_iterator& i,
@@ -103,6 +105,8 @@ test()
         cell->face(1), cell->active_fe_index(), cell->get_fe().dofs_per_face);
     }
 }
+
+
 
 int
 main()

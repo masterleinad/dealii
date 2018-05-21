@@ -87,9 +87,14 @@ test()
                     ++locals;
                     if(locals > 5)
 
+
                       break;
                   }
             }
+
+          Assert(index == tr.n_active_cells(), ExcInternalError());
+          tr.execute_coarsening_and_refinement();
+
 
           Assert(index == tr.n_active_cells(), ExcInternalError());
           tr.execute_coarsening_and_refinement();
@@ -107,10 +112,13 @@ test()
     deallog << "OK" << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

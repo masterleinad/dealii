@@ -25,6 +25,8 @@
 
 #include <deal.II/fe/mapping_q.h>
 
+
+
 void check(Triangulation<3>& tria)
 {
   MappingQ<3> map(3);
@@ -44,6 +46,7 @@ void check(Triangulation<3>& tria)
   Assert(p.distance(cell.first->center()) < cell.first->diameter() / 2,
          ExcInternalError());
 }
+
 
 int
 main()

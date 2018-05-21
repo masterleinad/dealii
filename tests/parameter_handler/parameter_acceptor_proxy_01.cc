@@ -19,6 +19,7 @@
 
 // Test proxy class
 
+
 int
 main()
 {

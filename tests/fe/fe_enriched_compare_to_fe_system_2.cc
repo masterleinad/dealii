@@ -151,6 +151,14 @@ check_consistency(const Point<dim>&     p,
   const Tensor<1, dim>          g_f3 = func3.gradient(p);
   const SymmetricTensor<2, dim> h_f3 = func3.hessian(p);
 
+  const double                  v_f2 = func2.value(p);
+  const Tensor<1, dim>          g_f2 = func2.gradient(p);
+  const SymmetricTensor<2, dim> h_f2 = func2.hessian(p);
+
+  const double                  v_f3 = func3.value(p);
+  const Tensor<1, dim>          g_f3 = func3.gradient(p);
+  const SymmetricTensor<2, dim> h_f3 = func3.hessian(p);
+
   // product rule:
   const double         v_s = v_s0 + v_s1 * v_f1 + v_s2 * v_f2 + v_s3 * v_f3;
   const Tensor<1, dim> g_s = g_s0 + g_s1 * v_f1 + v_s1 * g_f1 + g_s2 * v_f2
@@ -363,6 +371,8 @@ test(const FiniteElement<dim>&  fe_base,
   dof_handler_enriched.clear();
   dof_handler_system.clear();
 }
+
+
 
 int
 main(int argc, char** argv)

@@ -31,6 +31,7 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/vector.h>
 
+
 template <int dim>
 void
 test()
@@ -77,6 +78,8 @@ test()
     if(constraints.is_constrained(i))
       AssertThrow(b(i) == 0, ExcInternalError());
 }
+
+
 
 int
 main()

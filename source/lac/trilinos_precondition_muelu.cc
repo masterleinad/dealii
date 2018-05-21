@@ -261,6 +261,8 @@ namespace TrilinosWrappers
     initialize(*trilinos_matrix, additional_data);
   }
 
+
+
   void
   PreconditionAMGMueLu::clear()
   {

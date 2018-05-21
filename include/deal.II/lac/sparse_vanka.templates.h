@@ -241,6 +241,7 @@ SparseVanka<number>::apply_preconditioner(
   // will be used quite often
   const SparsityPattern& structure = matrix->get_sparsity_pattern();
 
+
   // store whether we shall work on
   // the whole matrix, or only on
   // blocks. this variable is used to

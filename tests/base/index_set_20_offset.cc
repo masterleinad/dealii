@@ -46,6 +46,8 @@ testor(IndexSet& a, IndexSet& other, unsigned int offset, bool verbose)
     }
 }
 
+
+
 void
 test()
 {
@@ -71,6 +73,8 @@ test()
   id2.add_index(3);
   testor(id, id2, 3, true);
 }
+
+
 
 int
 main()

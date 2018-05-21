@@ -279,6 +279,7 @@ LaplaceProblem<dim>::setup_system()
                 this,
                 std::placeholders::_1)));
 
+
   DynamicSparsityPattern csp(dof_handler.n_dofs(), dof_handler.n_dofs());
   DoFTools::make_sparsity_pattern(dof_handler, csp, constraints, false);
   sparsity_pattern.copy_from(csp);
@@ -463,6 +464,8 @@ LaplaceProblem<dim>::postprocess()
     cell->set_active_fe_index(rand() % fe_collection.size());
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -485,6 +488,8 @@ LaplaceProblem<dim>::run()
         postprocess();
     }
 }
+
+
 
 int
 main()

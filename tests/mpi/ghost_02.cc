@@ -21,6 +21,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test()
 {
@@ -59,6 +60,7 @@ test()
   vb *= 2.0;
   v = vb;
 
+
   // check local values
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
@@ -72,6 +74,7 @@ test()
          ExcInternalError());
   Assert(get_real_assert_zero_imag(v(myid * 2 + 1)) == myid * 4.0 + 2.0,
          ExcInternalError());
+
 
   // check ghost values
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
@@ -92,6 +95,8 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

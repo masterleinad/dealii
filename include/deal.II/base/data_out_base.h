@@ -1401,6 +1401,7 @@ namespace DataOutBase
     void
     flush_cells();
 
+
   private:
     /**
      * Empty class to provide comparison function for Map3DPoint.
@@ -1647,6 +1648,7 @@ namespace DataOutBase
     const EpsFlags& flags,
     std::ostream&   out);
 
+
   /**
    * Write the given list of patches to the output stream in GMV format.
    *
@@ -1884,6 +1886,7 @@ namespace DataOutBase
                     vector_data_ranges,
     const VtkFlags& flags,
     std::ostream&   out);
+
 
   /**
    * Write the given list of patches to the output stream in VTU format. The
@@ -2351,6 +2354,8 @@ namespace DataOutBase
   //@}
 } // namespace DataOutBase
 
+
+
 /**
  * This class is the interface to the functions in the DataOutBase namespace,
  * as already its name might suggest. It does not offer much functionality
@@ -2722,6 +2727,7 @@ public:
   void
   write_filtered_data(DataOutBase::DataOutFilter& filtered_data) const;
 
+
   /**
    * Write data and grid to <tt>out</tt> according to the given data format.
    * This function simply calls the appropriate <tt>write_*</tt> function. If
@@ -2742,6 +2748,7 @@ public:
   void
   set_default_format(const DataOutBase::OutputFormat default_format);
 
+
   /**
    * Set the flags to be used for output. This method expects <tt>flags</tt>
    * to be a member of one of the child classes of <tt>OutputFlagsBase</tt>.
@@ -2749,6 +2756,7 @@ public:
   template <typename FlagType>
   void
   set_flags(const FlagType& flags);
+
 
   /**
    * A function that returns the same string as the respective function in the
@@ -2843,6 +2851,7 @@ protected:
    */
   void
   validate_dataset_names() const;
+
 
   /**
    * The default number of subdivisions for patches. This is filled by
@@ -3089,6 +3098,8 @@ private:
     vector_data_ranges;
 };
 
+
+
 /**
  * A class to store relevant data to use when writing a lightweight XDMF
  * file. The XDMF file in turn points to heavy data files (such as HDF5)
@@ -3233,6 +3244,8 @@ namespace DataOutBase
   std::ostream&
   operator<<(std::ostream& out, const Patch<dim, spacedim>& patch);
 
+
+
   /**
    * Input operator for an object of type <tt>DataOutBase::Patch</tt>. This
    * operator reads the intermediate graphics format represented by the patch
@@ -3245,6 +3258,7 @@ namespace DataOutBase
   std::istream&
   operator>>(std::istream& in, Patch<dim, spacedim>& patch);
 } // namespace DataOutBase
+
 
 DEAL_II_NAMESPACE_CLOSE
 

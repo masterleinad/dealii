@@ -172,6 +172,8 @@ namespace Step22
       values(c) = RightHandSide<dim>::value(p, c);
   }
 
+
+
   template <class Matrix, class Preconditioner>
   class InverseMatrix : public Preconditioner
   {
@@ -269,6 +271,8 @@ namespace Step22
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
 
+
+
   template <int dim>
   StokesProblem<dim>::StokesProblem (const unsigned int degree)
     :
@@ -288,6 +292,8 @@ namespace Step22
            (Utilities::MPI::this_mpi_process(mpi_communicator)
             == 0))
   {}
+
+
 
   template <int dim>
   void
@@ -472,6 +478,10 @@ namespace Step22
             for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
               local_matrix(i, j) = local_matrix(j, i);
 
+          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+              local_matrix(i, j) = local_matrix(j, i);
+
           cell->get_dof_indices(local_dof_indices);
           constraints.distribute_local_to_global(local_matrix,
                                                  local_rhs,
@@ -485,6 +495,8 @@ namespace Step22
 
     pcout << "   Computing preconditioner..." << std::endl << std::flush;
   }
+
+
 
   template <int dim>
   void
@@ -762,6 +774,8 @@ namespace Step22
       }
   }
 } // namespace Step22
+
+
 
 int
 main(int argc, char* argv[])

@@ -16,6 +16,7 @@
 #ifndef dealii_point_h
 #define dealii_point_h
 
+
 #include <cmath>
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>

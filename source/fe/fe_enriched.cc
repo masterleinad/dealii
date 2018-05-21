@@ -124,6 +124,7 @@ namespace internal
   }   // namespace FE_Enriched
 } // namespace internal
 
+
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(
   const FiniteElement<dim, spacedim>& fe_base)
@@ -132,6 +133,7 @@ FE_Enriched<dim, spacedim>::FE_Enriched(
       FE_Nothing<dim, spacedim>(fe_base.n_components(), true),
       nullptr)
 {}
+
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(

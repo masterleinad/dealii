@@ -22,6 +22,7 @@
 #include "../tests.h"
 #include <deal.II/lac/block_vector.h>
 
+
 void
 test(BlockVector<double>& v)
 {
@@ -33,6 +34,8 @@ test(BlockVector<double>& v)
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

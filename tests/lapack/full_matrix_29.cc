@@ -114,6 +114,7 @@ test()
   A.print_formatted(deallog.get_file_stream(), 5);
 }
 
+
 int
 main()
 {

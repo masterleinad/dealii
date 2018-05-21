@@ -61,6 +61,8 @@ check()
   cm.print(deallog.get_file_stream());
 }
 
+
+
 int
 main()
 {

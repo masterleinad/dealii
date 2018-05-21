@@ -52,6 +52,7 @@ check()
   deallog << "t =" << t << std::endl;
 }
 
+
 int
 main()
 {

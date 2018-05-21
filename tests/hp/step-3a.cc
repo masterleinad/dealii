@@ -83,8 +83,11 @@ private:
   Vector<double> system_rhs;
 };
 
+
 LaplaceProblem::LaplaceProblem() : dof_handler(triangulation)
 {}
+
+
 
 void
 LaplaceProblem::make_grid_and_dofs()
@@ -138,6 +141,8 @@ LaplaceProblem::make_grid_and_dofs()
   sparsity_pattern.compress();
   system_matrix.reinit(sparsity_pattern);
 }
+
+
 
 void
 LaplaceProblem::assemble_system()
@@ -204,6 +209,8 @@ LaplaceProblem::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
+
+
 void
 LaplaceProblem::solve()
 {
@@ -217,6 +224,8 @@ LaplaceProblem::solve()
   hanging_node_constraints.distribute(solution);
 }
 
+
+
 void
 LaplaceProblem::output_results() const
 {
@@ -228,10 +237,23 @@ LaplaceProblem::output_results() const
   data_out.write_gnuplot(deallog.get_file_stream());
 }
 
+
+
 void
 LaplaceProblem::run()
 {
   FE_Q<2> fe_1(1), fe_2(2), fe_3(3), fe_4(4);
+
+  fe.push_back(fe_1);
+  fe.push_back(fe_2);
+  fe.push_back(fe_3);
+  fe.push_back(fe_4);
+
+  make_grid_and_dofs();
+  assemble_system();
+  solve();
+  output_results();
+}
 
   fe.push_back(fe_1);
   fe.push_back(fe_2);

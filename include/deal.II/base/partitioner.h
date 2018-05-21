@@ -679,17 +679,23 @@ namespace Utilities
       return global_size;
     }
 
+
+
     inline const IndexSet&
     Partitioner::locally_owned_range() const
     {
       return locally_owned_range_data;
     }
 
+
+
     inline std::pair<types::global_dof_index, types::global_dof_index>
     Partitioner::local_range() const
     {
       return local_range_data;
     }
+
+
 
     inline unsigned int
     Partitioner::local_size() const
@@ -701,6 +707,8 @@ namespace Utilities
       return static_cast<unsigned int>(size);
     }
 
+
+
     inline bool
     Partitioner::in_local_range(
       const types::global_dof_index global_index) const
@@ -708,6 +716,8 @@ namespace Utilities
       return (local_range_data.first <= global_index
               && global_index < local_range_data.second);
     }
+
+
 
     inline bool
     Partitioner::is_ghost_entry(
@@ -719,6 +729,8 @@ namespace Utilities
       else
         return ghost_indices().is_element(global_index);
     }
+
+
 
     inline unsigned int
     Partitioner::global_to_local(
@@ -739,6 +751,8 @@ namespace Utilities
         return numbers::invalid_unsigned_int;
     }
 
+
+
     inline types::global_dof_index
     Partitioner::local_to_global(const unsigned int local_index) const
     {
@@ -749,11 +763,15 @@ namespace Utilities
         return ghost_indices_data.nth_index_in_set(local_index - local_size());
     }
 
+
+
     inline const IndexSet&
     Partitioner::ghost_indices() const
     {
       return ghost_indices_data;
     }
+
+
 
     inline unsigned int
     Partitioner::n_ghost_indices() const
@@ -761,11 +779,15 @@ namespace Utilities
       return n_ghost_indices_data;
     }
 
+
+
     inline const std::vector<std::pair<unsigned int, unsigned int>>&
     Partitioner::ghost_indices_within_larger_ghost_set() const
     {
       return ghost_indices_subset_data;
     }
+
+
 
     inline const std::vector<std::pair<unsigned int, unsigned int>>&
     Partitioner::ghost_targets() const
@@ -773,11 +795,14 @@ namespace Utilities
       return ghost_targets_data;
     }
 
+
     inline const std::vector<std::pair<unsigned int, unsigned int>>&
     Partitioner::import_indices() const
     {
       return import_indices_data;
     }
+
+
 
     inline unsigned int
     Partitioner::n_import_indices() const
@@ -785,11 +810,15 @@ namespace Utilities
       return n_import_indices_data;
     }
 
+
+
     inline const std::vector<std::pair<unsigned int, unsigned int>>&
     Partitioner::import_targets() const
     {
       return import_targets_data;
     }
+
+
 
     inline unsigned int
     Partitioner::this_mpi_process() const
@@ -800,6 +829,8 @@ namespace Utilities
       return my_pid;
     }
 
+
+
     inline unsigned int
     Partitioner::n_mpi_processes() const
     {
@@ -809,17 +840,23 @@ namespace Utilities
       return n_procs;
     }
 
+
+
     inline const MPI_Comm&
     Partitioner::get_communicator() const
     {
       return communicator;
     }
 
+
+
     inline const MPI_Comm&
     Partitioner::get_mpi_communicator() const
     {
       return communicator;
     }
+
+
 
     inline bool
     Partitioner::ghost_indices_initialized() const

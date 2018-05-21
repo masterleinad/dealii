@@ -48,6 +48,7 @@ PolynomialsBernstein<number>::PolynomialsBernstein(const unsigned int index,
       get_bernstein_coefficients<number>(index, degree))
 {}
 
+
 #include "polynomials_bernstein.inst"
 
 DEAL_II_NAMESPACE_CLOSE

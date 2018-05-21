@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 bool
 satisfies_level1_at_vertex_rule(const Triangulation<dim>& tr)
@@ -110,6 +112,7 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

@@ -62,6 +62,7 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
 
+
 #include <deal.II/lac/generic_linear_algebra.h>
 
 namespace LA
@@ -104,6 +105,10 @@ namespace Step50
     refine_grid();
     void
     output_results(const unsigned int cycle) const;
+
+    parallel::distributed::Triangulation<dim> triangulation;
+    FE_Q<dim>                                 fe;
+    DoFHandler<dim>                           mg_dof_handler;
 
     parallel::distributed::Triangulation<dim> triangulation;
     FE_Q<dim>                                 fe;
@@ -158,6 +163,12 @@ namespace Step50
     VectorTools::interpolate_boundary_values(
       mg_dof_handler, dirichlet_boundary, constraints);
     constraints.close();
+
+    DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(),
+                               mg_dof_handler.n_dofs());
+    DoFTools::make_sparsity_pattern(mg_dof_handler, dsp, constraints);
+    system_matrix.reinit(
+      mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
 
     DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(),
                                mg_dof_handler.n_dofs());
@@ -310,6 +321,7 @@ namespace Step50
             = mg_constrained_dofs.get_refinement_edge_indices(cell->level());
           const unsigned int lvl = cell->level();
 
+
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)
               if(
@@ -336,6 +348,7 @@ namespace Step50
                 {
                   cell_matrix(i, j) = 0;
                 }
+
 
           empty_constraints.distribute_local_to_global(
             cell_matrix,
@@ -457,6 +470,8 @@ namespace Step50
     deallog << "check residual: " << residual << std::endl;
   }
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -506,6 +521,7 @@ namespace Step50
   LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   {}
 
+
   template <int dim>
   void
   LaplaceProblem<dim>::run()
@@ -545,6 +561,7 @@ namespace Step50
       }
   }
 } // namespace Step50
+
 
 int
 main(int argc, char* argv[])

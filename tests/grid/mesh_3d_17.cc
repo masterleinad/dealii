@@ -27,6 +27,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 
+
+
 void check(Triangulation<3>& tria)
 {
   deallog << "Coarse cell 0 vertices:" << std::endl;
@@ -38,6 +40,9 @@ void check(Triangulation<3>& tria)
   for(unsigned int i = 0; i < 8; ++i)
     deallog << ' ' << (++tria.begin_active())->vertex_index(i);
   deallog << std::endl;
+
+  tria.begin_active()->set_refine_flag();
+  tria.execute_coarsening_and_refinement();
 
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
@@ -108,6 +113,7 @@ void check(Triangulation<3>& tria)
           }
       }
 }
+
 
 int
 main()

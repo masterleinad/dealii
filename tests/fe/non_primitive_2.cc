@@ -36,6 +36,8 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
 
+
+
 // note: create_stokes_matrix_1 from non_primitive_1 does not work here,
 // since the elements in use are actually non-primitive
 
@@ -99,6 +101,7 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
                           * fe_values.shape_grad_component(j, q, comp_j)[comp_j]
                           * fe_values.JxW(q));
                 };
+
 
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -175,12 +178,15 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
                               * fe_values.JxW(q));
                     };
 
+
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         for(unsigned int j = 0; j < dofs_per_cell; ++j)
           A.add(local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
     };
 }
+
+
 
 template <int dim>
 void
@@ -233,6 +239,8 @@ test(const unsigned int p)
       Assert(p3->value() == p2->value(), ExcInternalError());
     };
 }
+
+
 
 int
 main()

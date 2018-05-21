@@ -69,6 +69,7 @@ compare(const std::pair<T*, T*>& t1, const std::pair<T*, T*>& t2)
   return (*t1.first == *t2.first) && (*t1.second == *t2.second);
 }
 
+
 void
 test()
 {
@@ -95,6 +96,7 @@ test()
     delete p;
   }
 }
+
 
 int
 main()

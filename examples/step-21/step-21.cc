@@ -255,6 +255,8 @@ namespace Step21
     Functions::ZeroFunction<dim>(dim + 2).vector_value(p, values);
   }
 
+
+
   // @sect3{The inverse permeability tensor}
 
   // As announced in the introduction, we implement two different permeability
@@ -308,6 +310,7 @@ namespace Step21
         }
     }
   } // namespace SingleCurvingCrack
+
 
   // @sect4{Random medium permeability}
 
@@ -365,6 +368,7 @@ namespace Step21
     std::vector<Point<dim>> KInverse<dim>::centers
       = KInverse<dim>::get_centers();
 
+
     template <int dim>
     std::vector<Point<dim>>
     KInverse<dim>::get_centers()
@@ -406,6 +410,8 @@ namespace Step21
     }
   } // namespace RandomMedium
 
+
+
   // @sect3{The inverse mobility and saturation functions}
 
   // There are two more pieces of data that we need to describe, namely the
@@ -422,6 +428,8 @@ namespace Step21
   {
     return S * S / (S * S + viscosity * (1 - S) * (1 - S));
   }
+
+
 
   // @sect3{Linear solvers and preconditioners}
 
@@ -484,6 +492,8 @@ namespace Step21
     mutable Vector<double> tmp1, tmp2;
   };
 
+
+
   SchurComplement::SchurComplement(
     const BlockSparseMatrix<double>&           A,
     const InverseMatrix<SparseMatrix<double>>& Minv)
@@ -492,6 +502,7 @@ namespace Step21
       tmp1(A.block(0, 0).m()),
       tmp2(A.block(0, 0).m())
   {}
+
 
   void
   SchurComplement::vmult(Vector<double>& dst, const Vector<double>& src) const
@@ -515,10 +526,12 @@ namespace Step21
     mutable Vector<double> tmp1, tmp2;
   };
 
+
   ApproximateSchurComplement::ApproximateSchurComplement(
     const BlockSparseMatrix<double>& A)
     : system_matrix(&A), tmp1(A.block(0, 0).m()), tmp2(A.block(0, 0).m())
   {}
+
 
   void
   ApproximateSchurComplement::vmult(Vector<double>&       dst,
@@ -528,6 +541,8 @@ namespace Step21
     system_matrix->block(0, 0).precondition_Jacobi(tmp2, tmp1);
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
+
+
 
   // @sect3{<code>TwoPhaseFlowProblem</code> class implementation}
 
@@ -604,7 +619,9 @@ namespace Step21
     DoFTools::make_sparsity_pattern(dof_handler, sparsity_pattern);
     sparsity_pattern.compress();
 
+
     system_matrix.reinit(sparsity_pattern);
+
 
     solution.reinit(3);
     solution.block(0).reinit(n_u);
@@ -913,6 +930,7 @@ namespace Step21
                     = old_solution_values_face_neighbor[q](dim + 1);
               }
 
+
             for(unsigned int q = 0; q < n_face_q_points; ++q)
               {
                 Tensor<1, dim> present_u_face;
@@ -957,6 +975,7 @@ namespace Step21
     Vector<double> schur_rhs(solution.block(1).size());
     Vector<double> tmp2(solution.block(2).size());
 
+
     // First the pressure, using the pressure Schur complement of the first
     // two equations:
     {
@@ -966,7 +985,12 @@ namespace Step21
 
       SchurComplement schur_complement(system_matrix, m_inverse);
 
+      SchurComplement schur_complement(system_matrix, m_inverse);
+
       ApproximateSchurComplement approximate_schur_complement(system_matrix);
+
+      InverseMatrix<ApproximateSchurComplement> preconditioner(
+        approximate_schur_complement);
 
       InverseMatrix<ApproximateSchurComplement> preconditioner(
         approximate_schur_complement);
@@ -1208,6 +1232,7 @@ namespace Step21
     while(time <= 1.);
   }
 } // namespace Step21
+
 
 // @sect3{The <code>main</code> function}
 

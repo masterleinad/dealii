@@ -181,6 +181,7 @@ test2(TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>&          solver,
       exact_solution[i] = my(final_time);
     }
 
+
   while(time < final_time)
     {
       if(time + time_step > final_time)

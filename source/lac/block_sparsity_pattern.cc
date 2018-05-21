@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/vector_slice.h>
 #include <deal.II/lac/block_sparsity_pattern.h>
@@ -129,6 +130,7 @@ BlockSparsityPatternBase<SparsityPatternBase>::collect_sizes()
   // finally initialize the row
   // indices with this array
   row_indices.reinit(row_sizes);
+
 
   // then do the same with the columns
   for(size_type c = 0; c < columns; ++c)
@@ -292,6 +294,8 @@ BlockSparsityPatternBase<SparsityPatternBase>::print_gnuplot(
     }
 }
 
+
+
 BlockSparsityPattern::BlockSparsityPattern(const size_type n_rows,
                                            const size_type n_columns)
   : BlockSparsityPatternBase<SparsityPattern>(n_rows, n_columns)
@@ -371,11 +375,15 @@ BlockSparsityPattern::copy_from(const BlockDynamicSparsityPattern& dsp)
   collect_sizes();
 }
 
+
+
 BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   const size_type n_rows,
   const size_type n_columns)
   : BlockSparsityPatternBase<DynamicSparsityPattern>(n_rows, n_columns)
 {}
+
+
 
 BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   const std::vector<size_type>& row_indices,
@@ -389,6 +397,7 @@ BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   this->collect_sizes();
 }
 
+
 BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   const std::vector<IndexSet>& partitioning)
   : BlockSparsityPatternBase<DynamicSparsityPattern>(partitioning.size(),
@@ -400,6 +409,7 @@ BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
         partitioning[i].size(), partitioning[j].size(), partitioning[i]);
   this->collect_sizes();
 }
+
 
 BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   const BlockIndices& row_indices,
@@ -454,6 +464,8 @@ namespace TrilinosWrappers
     : dealii::BlockSparsityPatternBase<SparsityPattern>(n_rows, n_columns)
   {}
 
+
+
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<size_type>& row_indices,
     const std::vector<size_type>& col_indices)
@@ -465,6 +477,8 @@ namespace TrilinosWrappers
         this->block(i, j).reinit(row_indices[i], col_indices[j]);
     this->collect_sizes();
   }
+
+
 
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<Epetra_Map>& parallel_partitioning)
@@ -478,6 +492,8 @@ namespace TrilinosWrappers
     this->collect_sizes();
   }
 
+
+
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<IndexSet>& parallel_partitioning,
     const MPI_Comm&              communicator)
@@ -490,6 +506,8 @@ namespace TrilinosWrappers
           parallel_partitioning[i], parallel_partitioning[j], communicator);
     this->collect_sizes();
   }
+
+
 
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<IndexSet>& row_parallel_partitioning,

@@ -16,6 +16,7 @@
 #ifndef dealii_fe_field_function_templates_h
 #define dealii_fe_field_function_templates_h
 
+
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/utilities.h>
 #include <deal.II/fe/fe_values.h>
@@ -47,6 +48,8 @@ namespace Functions
       cache(dh->get_triangulation(), mymapping),
       cell_hint(dh->end())
   {}
+
+
 
   template <int dim, typename DoFHandlerType, typename VectorType>
   void

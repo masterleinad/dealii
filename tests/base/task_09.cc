@@ -24,14 +24,17 @@
 #include <chrono>
 #include <thread>
 
+
 #include <deal.II/base/multithread_info.h>
 #include <deal.II/base/thread_management.h>
+
 
 void
 test()
 {
   std::this_thread::sleep_for(std::chrono::seconds(1));
 }
+
 
 void
 outer()
@@ -46,6 +49,8 @@ outer()
 
   Threads::new_task(test).join();
 }
+
+
 
 int
 main()

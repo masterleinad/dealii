@@ -35,6 +35,7 @@
 #include <deal.II/lac/sparsity_tools.h>
 #include <metis.h>
 
+
 void
 partition(const SparsityPattern& sparsity_pattern,
           const unsigned int     n_partitions)
@@ -130,6 +131,8 @@ test()
   sp_cell_connectivity.copy_from(cell_connectivity);
   partition(sp_cell_connectivity, 5);
 }
+
+
 
 int
 main()

@@ -145,6 +145,7 @@ public:
     laplace2.compute_diagonal();
   }
 
+
   virtual void
   clear()
   {
@@ -194,6 +195,8 @@ public:
 
   const MatrixType* coarse_matrix;
 };
+
+
 
 template <int dim,
           int fe_degree_1,
@@ -438,6 +441,8 @@ test()
       do_test<dim, fe_degree_1, fe_degree_2, n_q_points_1d, double>(dh_ptrs);
     }
 }
+
+
 
 int
 main(int argc, char** argv)

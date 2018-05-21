@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_face.h>
 #include <deal.II/fe/fe_nothing.h>
@@ -786,6 +787,8 @@ FE_FaceP<dim, spacedim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
+
+
 template <int dim, int spacedim>
 void
 FE_FaceP<dim, spacedim>::get_face_interpolation_matrix(
@@ -852,6 +855,7 @@ FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
       Householder<double> H(mass);
       Vector<double>      v_in(face_quadrature.size());
       Vector<double>      v_out(source_fe->dofs_per_face);
+
 
       // compute the interpolation matrix by evaluating on the fine side and
       // then solving the least squares problem

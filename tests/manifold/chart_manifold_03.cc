@@ -27,6 +27,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim, int spacedim>
 class MyFlatManifold : public ChartManifold<dim, spacedim, spacedim>
 {
@@ -47,6 +48,7 @@ public:
   {
     return space_point;
   }
+
 
   virtual Point<spacedim>
   push_forward(const Point<spacedim>& chart_point) const override

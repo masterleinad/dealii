@@ -622,6 +622,7 @@ public:
                  << "5 Hexahedron (8 nodes, 12 edges, 6 faces) when in 3d.\n"
                  << "15 Point (1 node, ignored when read)");
 
+
   DeclException0(ExcGmshNoCellInformation);
 
 protected:
@@ -705,6 +706,7 @@ void
 GridIn<2>::debug_output_grid(const std::vector<CellData<2>>& cells,
                              const std::vector<Point<2>>&    vertices,
                              std::ostream&                   out);
+
 
 template <>
 void

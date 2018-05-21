@@ -19,6 +19,7 @@
 
 #include <deal.II/base/array_view.h>
 
+
 void
 test()
 {
@@ -39,6 +40,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

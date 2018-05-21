@@ -19,6 +19,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 // verify that all debug vectors have the correct size
 
 using namespace dealii;
@@ -110,6 +111,7 @@ test()
   newton.debug_vectors = true;
   newton(out_data, in_data);
 }
+
 
 int
 main()

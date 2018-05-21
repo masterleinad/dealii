@@ -33,6 +33,7 @@
 
 #include <numeric>
 
+
 void
 test()
 {
@@ -100,6 +101,7 @@ test()
     ExcInternalError());
   deallog << rhs_vector.l2_norm() << std::endl;
 }
+
 
 int
 main()

@@ -63,6 +63,7 @@ boundary_q(const hp::DoFHandler<dim>&)
   return q;
 }
 
+
 void
 write_map(const std::map<types::global_dof_index, std::complex<double>>& bv)
 {
@@ -72,6 +73,8 @@ write_map(const std::map<types::global_dof_index, std::complex<double>>& bv)
       ++i)
     deallog << i->first << ' ' << i->second << std::endl;
 }
+
+
 
 template <int dim>
 void
@@ -103,6 +106,7 @@ check()
   MappingQ<dim>              mapping(3);
   hp::MappingCollection<dim> mappings;
   mappings.push_back(mapping);
+
 
   // list of finite elements for
   // which we want check, and
@@ -150,6 +154,7 @@ check()
       delete function_list[i];
     }
 }
+
 
 int
 main()

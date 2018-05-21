@@ -85,6 +85,8 @@ struct P
   }
 };
 
+
+
 void
 test()
 {
@@ -117,6 +119,7 @@ test()
     delete c;
   }
 }
+
 
 int
 main()

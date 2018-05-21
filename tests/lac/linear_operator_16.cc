@@ -16,6 +16,7 @@
 
 // test the null_operator LinearOperator and its payload initialization
 
+
 #include "../testmatrix.h"
 #include "../tests.h"
 

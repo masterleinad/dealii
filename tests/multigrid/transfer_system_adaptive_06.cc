@@ -65,6 +65,8 @@ make_matrix(const Transfer&     transfer,
     }
 }
 
+
+
 void
 print_matrix(const FullMatrix<double>& m)
 {
@@ -168,6 +170,7 @@ check(const FiniteElement<dim>& fe)
   make_matrix(transfer, 1, prolong_0_1);
   print_matrix(prolong_0_1);
 }
+
 
 int
 main()

@@ -19,6 +19,7 @@
 
 // Check if Triangulation<1>::get_boundary_ids() works for 1d grids.
 
+
 int
 main()
 {

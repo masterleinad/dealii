@@ -59,6 +59,8 @@ QuadratureSelector<dim>::QuadratureSelector(const std::string& s,
                     create_quadrature(s, order).get_weights())
 {}
 
+
+
 template <int dim>
 std::string
 QuadratureSelector<dim>::get_quadrature_names()

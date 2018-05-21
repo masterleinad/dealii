@@ -34,6 +34,7 @@
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 template <int dim>
 class MyFunction : public Function<dim>
 {
@@ -102,6 +103,7 @@ test(std::ostream& /*out*/)
                                     VectorTools::L2_norm);
   deallog << "error: " << difference.l2_norm() << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

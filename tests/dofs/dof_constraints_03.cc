@@ -33,6 +33,7 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/vector.h>
 
+
 template <int dim>
 void
 test()
@@ -100,6 +101,8 @@ test()
   for(SparseMatrix<double>::const_iterator i = A.begin(); i != A.end(); ++i)
     deallog << i->row() << ' ' << i->column() << ' ' << i->value() << std::endl;
 }
+
+
 
 int
 main()

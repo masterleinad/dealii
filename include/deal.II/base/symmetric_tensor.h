@@ -16,6 +16,7 @@
 #ifndef dealii_symmetric_tensor_h
 #define dealii_symmetric_tensor_h
 
+
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/table_indices.h>
 #include <deal.II/base/template_constraints.h>
@@ -61,6 +62,8 @@ deviator(const SymmetricTensor<2, dim, Number>&);
 template <int dim, typename Number>
 Number
 determinant(const SymmetricTensor<2, dim, Number>&);
+
+
 
 namespace internal
 {
@@ -470,6 +473,8 @@ namespace internal
     };
   } // namespace SymmetricTensorAccessors
 } // namespace internal
+
+
 
 /**
  * Provide a class that stores symmetric tensors of rank 2,4,... efficiently,
@@ -910,6 +915,7 @@ private:
   friend SymmetricTensor<4, dim2, Number2>
   identity_tensor();
 
+
   /**
    * Make a few helper classes friends as well.
    */
@@ -978,6 +984,8 @@ namespace internal
   } // namespace SymmetricTensorAccessors
 } // namespace internal
 
+
+
 template <int rank_, int dim, typename Number>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor()
 {
@@ -1030,6 +1038,38 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
     }
 }
 
+        data[0] = t[0][0];
+        data[1] = t[1][1];
+        data[2] = t[0][1];
+
+        break;
+      case 3:
+        Assert(t[0][1] == t[1][0], ExcInternalError());
+        Assert(t[0][2] == t[2][0], ExcInternalError());
+        Assert(t[1][2] == t[2][1], ExcInternalError());
+
+        data[0] = t[0][0];
+        data[1] = t[1][1];
+        data[2] = t[2][2];
+        data[3] = t[0][1];
+        data[4] = t[0][2];
+        data[5] = t[1][2];
+
+        break;
+      default:
+        for(unsigned int d = 0; d < dim; ++d)
+          for(unsigned int e = 0; e < d; ++e)
+            Assert(t[d][e] == t[e][d], ExcInternalError());
+
+        for(unsigned int d = 0; d < dim; ++d)
+          data[d] = t[d][d];
+
+        for(unsigned int d = 0, c = 0; d < dim; ++d)
+          for(unsigned int e = d + 1; e < dim; ++e, ++c)
+            data[dim + c] = t[d][e];
+    }
+}
+
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
@@ -1040,6 +1080,8 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
       = internal::NumberType<typename base_tensor_type::value_type>::value(
         initializer.data[i]);
 }
+
+
 
 template <int rank_, int dim, typename Number>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
@@ -1387,6 +1429,8 @@ namespace internal
 
   } // namespace SymmetricTensorImplementation
 } // namespace internal
+
+
 
 template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>::
@@ -1987,6 +2031,7 @@ namespace internal
   } // namespace SymmetricTensorImplementation
 } // namespace internal
 
+
 template <int rank_, int dim, typename Number>
 internal::SymmetricTensorAccessors::
   Accessor<rank_, dim, true, rank_ - 1, Number>
@@ -2077,6 +2122,8 @@ namespace internal
 
   } // namespace SymmetricTensorImplementation
 } // namespace internal
+
+
 
 template <int rank_, int dim, typename Number>
 inline const Number&
@@ -2272,6 +2319,7 @@ namespace internal
     } // namespace
   }   // namespace SymmetricTensorImplementation
 } // namespace internal
+
 
 template <int rank_, int dim, typename Number>
 inline unsigned int
@@ -2671,6 +2719,8 @@ template <typename Number>
 std::array<Number, 1>
 eigenvalues(const SymmetricTensor<2, 1, Number>& T);
 
+
+
 /**
  * Return the eigenvalues of a symmetric 2x2 tensor of rank 2.
  * The array of eigenvalues is sorted in descending order.
@@ -2696,6 +2746,8 @@ template <typename Number>
 std::array<Number, 2>
 eigenvalues(const SymmetricTensor<2, 2, Number>& T);
 
+
+
 /**
  * Return the eigenvalues of a symmetric 3x3 tensor of rank 2.
  * The array of eigenvalues is sorted in descending order.
@@ -2718,6 +2770,8 @@ eigenvalues(const SymmetricTensor<2, 2, Number>& T);
 template <typename Number>
 std::array<Number, 3>
 eigenvalues(const SymmetricTensor<2, 3, Number>& T);
+
+
 
 namespace internal
 {
@@ -2766,6 +2820,8 @@ namespace internal
                    std::array<Number, dim>&                       d,
                    std::array<Number, dim - 1>&                   e);
 
+
+
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
      * symmetric tensor using the QL algorithm with implicit shifts.
@@ -2807,6 +2863,8 @@ namespace internal
     template <int dim, typename Number>
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
     ql_implicit_shifts(const dealii::SymmetricTensor<2, dim, Number>& A);
+
+
 
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
@@ -2850,6 +2908,8 @@ namespace internal
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
       jacobi(dealii::SymmetricTensor<2, dim, Number> A);
 
+
+
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
      * symmetric 2x2 tensor using the characteristic equation to compute eigenvalues
@@ -2868,6 +2928,8 @@ namespace internal
     template <typename Number>
     std::array<std::pair<Number, Tensor<1, 2, Number>>, 2>
     hybrid(const dealii::SymmetricTensor<2, 2, Number>& A);
+
+
 
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
@@ -3022,6 +3084,8 @@ std::array<std::pair<Number, Tensor<1, dim, Number>>,
 eigenvectors(const SymmetricTensor<2, dim, Number>& T,
              const SymmetricTensorEigenvectorMethod method
              = SymmetricTensorEigenvectorMethod::ql_implicit_shifts);
+
+
 
 /**
  * Return the transpose of the given symmetric tensor. Since we are working

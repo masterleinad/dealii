@@ -64,6 +64,9 @@ test()
   AssertThrow(true_subdomain_ids_of_cells.size() == tr.n_active_cells(),
               ExcInternalError());
 
+  AssertThrow(true_subdomain_ids_of_cells.size() == tr.n_active_cells(),
+              ExcInternalError());
+
   GridGenerator::hyper_cube(tr);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
@@ -101,6 +104,7 @@ test()
 
   //write_mesh(tr, "mesh");
 }
+
 
 int
 main(int argc, char* argv[])

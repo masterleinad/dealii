@@ -24,7 +24,9 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 #include <deal.II/fe/mapping_q1.h>
+
 
 void check(Triangulation<3>& tria)
 {
@@ -47,6 +49,7 @@ void check(Triangulation<3>& tria)
   deallog << pp.distance(p) << std::endl;
   Assert(pp.distance(p) < 1e-13, ExcInternalError());
 }
+
 
 int
 main()

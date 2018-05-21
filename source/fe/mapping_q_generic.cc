@@ -44,6 +44,7 @@
 #include <memory>
 #include <numeric>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -274,6 +275,7 @@ namespace internal
                    ExcInternalError());
             grad4.resize(n_shape_functions);
           }
+
 
         if(data.shape_values.size() != 0 || data.shape_derivatives.size() != 0
            || data.shape_second_derivatives.size() != 0
@@ -623,6 +625,8 @@ namespace internal
   }   // namespace MappingQ1
 } // namespace internal
 
+
+
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::InternalData::InternalData(
   const unsigned int polynomial_degree)
@@ -865,6 +869,8 @@ MappingQGeneric<dim, spacedim>::InternalData::initialize_face(
         }
     }
 }
+
+
 
 template <>
 void
@@ -1185,6 +1191,9 @@ namespace internal
         std::vector<Point<spacedim>>& points = mdata.mapping_support_points;
         AssertDimension(points.size(), n_shapes);
 
+        std::vector<Point<spacedim>>& points = mdata.mapping_support_points;
+        AssertDimension(points.size(), n_shapes);
+
         // Newton iteration to solve
         //    f(x)=p(x)-p=0
         // where we are looking for 'x' and p(x) is the forward transformation
@@ -1394,6 +1403,7 @@ namespace internal
         p_minus_F = p;
         p_minus_F -= compute_mapped_location_of_point<dim, spacedim>(mdata);
 
+
         for(unsigned int j = 0; j < dim; ++j)
           f[j] = DF[j] * p_minus_F;
 
@@ -1403,6 +1413,7 @@ namespace internal
             for(unsigned int l = 0; l < dim; ++l)
               df[j][l] = -DF[j] * DF[l] + D2F[j][l] * p_minus_F;
           }
+
 
         const double       eps        = 1.e-12 * cell->diameter();
         const unsigned int loop_limit = 10;
@@ -2205,6 +2216,8 @@ namespace internal
   }   // namespace MappingQGenericImplementation
 } // namespace internal
 
+
+
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::MappingQGeneric(const unsigned int p)
   : polynomial_degree(p),
@@ -2235,12 +2248,16 @@ MappingQGeneric<dim, spacedim>::MappingQGeneric(
     support_point_weights_cell(mapping.support_point_weights_cell)
 {}
 
+
+
 template <int dim, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
 MappingQGeneric<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<MappingQGeneric<dim, spacedim>>(*this);
 }
+
+
 
 template <int dim, int spacedim>
 unsigned int
@@ -2798,6 +2815,7 @@ MappingQGeneric<dim, spacedim>::fill_fe_values(
           || (output_data.normal_vectors.size() == n_q_points),
         ExcDimensionMismatch(output_data.normal_vectors.size(), n_q_points));
 
+
       if(computed_cell_similarity != CellSimilarity::translation)
         for(unsigned int point = 0; point < n_q_points; ++point)
           {
@@ -2896,6 +2914,8 @@ MappingQGeneric<dim, spacedim>::fill_fe_values(
 
   return computed_cell_similarity;
 }
+
+
 
 namespace internal
 {
@@ -3151,6 +3171,8 @@ namespace internal
     } // namespace
   }   // namespace MappingQGenericImplementation
 } // namespace internal
+
+
 
 template <int dim, int spacedim>
 void
@@ -3423,6 +3445,8 @@ namespace internal
           }
       }
 
+
+
       template <int dim, int spacedim>
       void
       transform_hessians(
@@ -3591,6 +3615,8 @@ namespace internal
           }
       }
 
+
+
       template <int dim, int spacedim, int rank>
       void
       transform_differential_forms(
@@ -3631,6 +3657,8 @@ namespace internal
     } // namespace
   }   // namespace MappingQGenericImplementation
 } // namespace internal
+
+
 
 template <int dim, int spacedim>
 void

@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/timer.h>
 #include <deal.II/base/utilities.h>
 #include <deal.II/grid/grid_reordering.h>
@@ -177,6 +178,8 @@ namespace
     unsigned int cell_index;
     unsigned int edge_within_cell;
   };
+
+
 
   template <int dim>
   class AdjacentCells;
@@ -394,6 +397,8 @@ namespace
     unsigned int edge_indices[GeometryInfo<dim>::lines_per_cell];
   };
 
+
+
   template <int dim>
   class EdgeDeltaSet;
 
@@ -497,6 +502,8 @@ namespace
   template <>
   class EdgeDeltaSet<3> : public std::set<unsigned int>
   {};
+
+
 
   /**
    * From a list of cells, build a sorted vector that contains all of the edges
@@ -974,6 +981,7 @@ namespace
   {}
 } // namespace
 
+
 // anonymous namespace for internal helper functions
 namespace
 {
@@ -989,11 +997,13 @@ namespace
   void reorder_new_to_old_style(std::vector<CellData<1>>&)
   {}
 
+
   void reorder_new_to_old_style(std::vector<CellData<2>>& cells)
   {
     for(unsigned int cell = 0; cell < cells.size(); ++cell)
       std::swap(cells[cell].vertices[2], cells[cell].vertices[3]);
   }
+
 
   void reorder_new_to_old_style(std::vector<CellData<3>>& cells)
   {
@@ -1013,11 +1023,13 @@ namespace
   void reorder_old_to_new_style(std::vector<CellData<1>>&)
   {}
 
+
   void reorder_old_to_new_style(std::vector<CellData<2>>& cells)
   {
     // just invert the permutation:
     reorder_new_to_old_style(cells);
   }
+
 
   void reorder_old_to_new_style(std::vector<CellData<3>>& cells)
   {
@@ -1032,6 +1044,8 @@ namespace
       }
   }
 } // namespace
+
+
 
 template <int dim, int spacedim>
 void

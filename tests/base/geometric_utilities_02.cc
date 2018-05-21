@@ -20,12 +20,14 @@
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/geometric_utilities.h>
 
+
 DeclException3(DifferentComponent,
                int,
                double,
                double,
                << arg1 << "-th component is different: " << arg2
                << "!=" << arg3);
+
 
 template <int dim>
 void

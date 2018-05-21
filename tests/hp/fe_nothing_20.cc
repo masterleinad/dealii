@@ -33,6 +33,8 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 test()
@@ -45,6 +47,11 @@ test()
 
   fe_collection.push_back(
     FESystem<dim>(FE_Q<dim>(2), dim, FE_Q<dim>(1), 1, FE_Nothing<dim>(), dim));
+
+  fe_collection.push_back(
+    FESystem<dim>(FE_Nothing<dim>(dim + 1), 1, FE_Q<dim>(2), dim));
+
+  hp::DoFHandler<dim> dof_handler(triangulation);
 
   fe_collection.push_back(
     FESystem<dim>(FE_Nothing<dim>(dim + 1), 1, FE_Q<dim>(2), dim));
@@ -65,6 +72,8 @@ test()
 
   deallog << "l2_norm = " << solution.l2_norm() << std::endl;
 }
+
+
 
 int
 main()

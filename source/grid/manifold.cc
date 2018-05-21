@@ -448,6 +448,8 @@ namespace internal
       return Tensor<1, 3>();
     }
 
+
+
     Tensor<1, 3>
     normalized_alternating_product(const Tensor<1, 3> (&basis_vectors)[2])
     {
@@ -464,6 +466,8 @@ FlatManifold<dim, spacedim>::FlatManifold(
   const double               tolerance)
   : periodicity(periodicity), tolerance(tolerance)
 {}
+
+
 
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>

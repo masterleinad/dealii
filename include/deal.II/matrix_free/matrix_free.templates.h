@@ -16,6 +16,7 @@
 #ifndef dealii_matrix_free_templates_h
 #define dealii_matrix_free_templates_h
 
+
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/mpi.h>
 #include <deal.II/base/polynomials_piecewise.h>
@@ -172,6 +173,17 @@ MatrixFree<dim, Number>::get_hp_cell_iterator(
   AssertIndexRange(dof_index, dof_handlers.n_dof_handlers);
   AssertIndexRange(macro_cell_number, task_info.cell_partition_data.back());
   AssertIndexRange(vector_number, n_components_filled(macro_cell_number));
+
+  Assert(dof_handlers.active_dof_handler == DoFHandlers::hp,
+         ExcNotImplemented());
+  const hp::DoFHandler<dim>* dofh = dof_handlers.hp_dof_handler[dof_index];
+  std::pair<unsigned int, unsigned int> index
+    = cell_level_index[macro_cell_number * vectorization_length
+                       + vector_number];
+  return typename hp::DoFHandler<dim>::cell_iterator(
+    &dofh->get_triangulation(), index.first, index.second, dofh);
+}
+
 
   Assert(dof_handlers.active_dof_handler == DoFHandlers::hp,
          ExcNotImplemented());
@@ -580,6 +592,8 @@ namespace internal
     }
   } // namespace MatrixFreeFunctions
 } // namespace internal
+
+
 
 template <int dim, typename Number>
 void

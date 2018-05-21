@@ -23,6 +23,7 @@
 #include <deal.II/lac/vector.h>
 #include <map>
 
+
 void
 eval(const std::string& exp, const Point<2>& p, double expected)
 {
@@ -38,6 +39,7 @@ eval(const std::string& exp, const Point<2>& p, double expected)
   if(fabs(result - expected) > 1e-10)
     deallog << "ERROR!" << std::endl;
 }
+
 
 void
 test()

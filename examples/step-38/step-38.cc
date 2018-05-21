@@ -113,6 +113,7 @@ namespace Step38
     void
     compute_error() const;
 
+
     Triangulation<dim, spacedim> triangulation;
     FE_Q<dim, spacedim>          fe;
     DoFHandler<dim, spacedim>    dof_handler;
@@ -415,6 +416,11 @@ namespace Step38
       boundary_values, system_matrix, solution, system_rhs, false);
   }
 
+
+    MatrixTools::apply_boundary_values(
+      boundary_values, system_matrix, solution, system_rhs, false);
+  }
+
   // @sect4{LaplaceBeltramiProblem::solve}
 
   // The next function is the one that solves the linear system. Here, too, no
@@ -518,6 +524,7 @@ namespace Step38
     compute_error();
   }
 } // namespace Step38
+
 
 // @sect3{The main() function}
 

@@ -204,6 +204,7 @@ namespace Step29
     }
     prm.leave_subsection();
 
+
     // Last but not least we would like to be able to change some properties
     // of the output, like filename and format, through entries in the
     // configuration file, which is the purpose of the last subsection:
@@ -452,6 +453,7 @@ namespace Step29
                                      Point<dim>(0.5, focal_distance) :
                                      Point<dim>(0.5, 0.5, focal_distance);
 
+
     // As initial coarse grid we take a simple unit square with 5 subdivisions
     // in each direction. The number of subdivisions is chosen so that the
     // line segment $[0.4,0.6]$ that we want to designate as the transducer
@@ -679,6 +681,7 @@ namespace Step29
               // face:
               fe_face_values.reinit(cell, face);
 
+
               // Next, we loop through all DoFs of the current cell to find
               // pairs that belong to different components and both have
               // support on the current face:
@@ -725,6 +728,7 @@ namespace Step29
         // DoFs...
         cell->get_dof_indices(local_dof_indices);
 
+
         // ...and then add the entries to the system matrix one by one:
         for(unsigned int i = 0; i < dofs_per_cell; ++i)
           for(unsigned int j = 0; j < dofs_per_cell; ++j)
@@ -739,6 +743,13 @@ namespace Step29
     std::map<types::global_dof_index, double> boundary_values;
     VectorTools::interpolate_boundary_values(
       dof_handler, 1, DirichletBoundaryValues<dim>(), boundary_values);
+
+    MatrixTools::apply_boundary_values(
+      boundary_values, system_matrix, solution, system_rhs);
+
+    timer.stop();
+    deallog << "done (" << timer.cpu_time() << "s)" << std::endl;
+  }
 
     MatrixTools::apply_boundary_values(
       boundary_values, system_matrix, solution, system_rhs);
@@ -866,6 +877,7 @@ namespace Step29
     output_results();
   }
 } // namespace Step29
+
 
 // @sect4{The <code>main</code> function}
 

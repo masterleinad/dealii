@@ -238,6 +238,8 @@ AdvectionProblem<dim>::test_equality()
   Assert(test_rhs.l2_norm() < 1e-14, ExcInternalError());
 }
 
+
+
 template <int dim>
 void
 AdvectionProblem<dim>::assemble_reference()
@@ -321,6 +323,7 @@ AdvectionProblem<dim>::assemble_test_1()
 {
   test_matrix = 0;
   test_rhs    = 0;
+
 
   QGauss<dim>   quadrature_formula(3);
   FEValues<dim> fe_values(fe,
@@ -496,6 +499,8 @@ AdvectionProblem<dim>::run()
   assemble_test_1();
   assemble_test_2();
 }
+
+
 
 int
 main()

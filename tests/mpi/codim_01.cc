@@ -92,6 +92,7 @@ test(std::ostream& /*out*/)
   cat_file(name.c_str());
 }
 
+
 int
 main(int argc, char* argv[])
 {

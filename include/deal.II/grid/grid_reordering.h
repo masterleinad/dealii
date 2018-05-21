@@ -30,6 +30,7 @@ DEAL_II_NAMESPACE_OPEN
 DeclExceptionMsg(ExcMeshNotOrientable,
                  "The edges of the mesh are not consistently orientable.");
 
+
 /**
  * This class reorders the vertices of cells such that they meet the standard
  * requirements of the Triangulation class when creating grids, i.e. all lines

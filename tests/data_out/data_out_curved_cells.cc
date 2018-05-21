@@ -238,6 +238,8 @@ curved_grid(std::ofstream& out)
   data_out.write_gnuplot(out);
 }
 
+
+
 int
 main()
 {

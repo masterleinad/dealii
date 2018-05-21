@@ -206,6 +206,7 @@ LaplaceProblem<dim>::assemble_system()
                             * fe_values.JxW(q_point));
           }
 
+
       cell->get_dof_indices(local_dof_indices);
 
       // use standard function with matrix and
@@ -288,6 +289,7 @@ LaplaceProblem<dim>::run()
       solve();
     }
 }
+
 
 int
 main()

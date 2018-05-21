@@ -139,6 +139,7 @@ do_test(const unsigned int size)
   deallog << "Verification of inverse: " << vec_flat.linfty_norm() << std::endl;
 }
 
+
 int
 main()
 {

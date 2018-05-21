@@ -43,6 +43,7 @@
 #include <memory>
 #include <stdlib.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -1696,6 +1697,7 @@ private:
    */
   std::vector<std::pair<unsigned int, unsigned int>> cell_level_index;
 
+
   /**
    * For discontinuous Galerkin, the cell_level_index includes cells that are
    * not on the local processor but that are needed to evaluate the cell
@@ -2202,6 +2204,8 @@ MatrixFree<dim, Number>::mapping_initialized() const
   return mapping_is_initialized;
 }
 
+
+
 template <int dim, typename Number>
 AlignedVector<VectorizedArray<Number>>*
 MatrixFree<dim, Number>::acquire_scratch_data() const
@@ -2237,6 +2241,8 @@ MatrixFree<dim, Number>::release_scratch_data(
       }
   AssertThrow(false, ExcMessage("Tried to release invalid scratch pad"));
 }
+
+
 
 template <int dim, typename Number>
 AlignedVector<Number>*
@@ -2313,6 +2319,8 @@ namespace internal
     }
   } // namespace MatrixFreeImplementation
 } // namespace internal
+
+
 
 template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
@@ -3377,6 +3385,8 @@ namespace internal
     };
   } // namespace MatrixFreeFunctions
 
+
+
   // A implementation class for the worker object that runs the various
   // operations we want to perform during the matrix-free loop
   template <typename MF,
@@ -3774,7 +3784,10 @@ MatrixFree<dim, Number>::loop(
   task_info.loop(worker);
 }
 
+
 #endif // ifndef DOXYGEN
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

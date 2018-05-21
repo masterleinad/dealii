@@ -56,6 +56,7 @@
 #include <fstream>
 #include <iostream>
 
+
 namespace Step59
 {
   using namespace dealii;
@@ -1341,6 +1342,8 @@ namespace Step59
       };
   }
 } // namespace Step59
+
+
 
 // There is nothing unexpected in the `main()` function. We call `MPI_Init()`
 // through the `MPI_InitFinalize` class, pass on the two parameters on the

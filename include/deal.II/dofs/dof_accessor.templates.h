@@ -93,6 +93,8 @@ inline DoFAccessor<structdim, DoFHandlerType, level_dof_access>::DoFAccessor(
     dof_handler(const_cast<DoFHandlerType*>(other.dof_handler))
 {}
 
+
+
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
 inline void
 DoFAccessor<structdim, DoFHandlerType, level_dof_access>::set_dof_handler(
@@ -1399,6 +1401,8 @@ namespace internal
   } // namespace DoFAccessorImplementation
 } // namespace internal
 
+
+
 template <int dim, typename DoFHandlerType, bool level_dof_access>
 inline types::global_dof_index
 DoFAccessor<dim, DoFHandlerType, level_dof_access>::dof_index(
@@ -1545,6 +1549,11 @@ DoFAccessor<structdim, DoFHandlerType, level_dof_access>::
   Assert(
     i < this->dof_handler->get_fe(fe_index).dofs_per_vertex,
     ExcIndexRange(i, 0, this->dof_handler->get_fe(fe_index).dofs_per_vertex));
+
+  return dealii::internal::DoFAccessorImplementation::Implementation::
+    set_mg_vertex_dof_index(
+      *this->dof_handler, level, this->vertex_index(vertex), i, index);
+}
 
   return dealii::internal::DoFAccessorImplementation::Implementation::
     set_mg_vertex_dof_index(
@@ -1795,6 +1804,14 @@ namespace internal
       Assert(next == dof_indices.end(), ExcInternalError());
     }
 
+      const FiniteElement<DoFHandlerType::dimension,
+                          DoFHandlerType::space_dimension>& fe
+        = handler.get_fe(fe_index);
+      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+
+  } // namespace DoFAccessorImplementation
+} // namespace internal
+
   } // namespace DoFAccessorImplementation
 } // namespace internal
 
@@ -1975,6 +1992,7 @@ namespace internal
                DoFHandlerType*)
     {}
 
+
     template <bool level_dof_access>
     inline typename dealii::internal::DoFHandlerImplementation::
       Iterators<dealii::DoFHandler<2, 2>, level_dof_access>::quad_iterator
@@ -2026,6 +2044,7 @@ namespace internal
     }
   } // namespace DoFAccessorImplementation
 } // namespace internal
+
 
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
 inline typename dealii::internal::DoFHandlerImplementation::
@@ -2102,6 +2121,7 @@ inline typename dealii::internal::DoFHandlerImplementation::
 
 /*------------------------- Functions: DoFAccessor<0,1,spacedim> ---------------------------*/
 
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2110,6 +2130,8 @@ inline DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
 {
   Assert(false, ExcInvalidObject());
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2123,6 +2145,8 @@ inline DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   : BaseClass(tria, vertex_kind, vertex_index),
     dof_handler(const_cast<DoFHandlerType<1, spacedim>*>(dof_handler))
 {}
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2139,6 +2163,8 @@ inline DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
     ExcMessage("This constructor can not be called for face iterators in 1d."));
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2148,6 +2174,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::DoFAccessor(
 {
   Assert(false, ExcInvalidObject());
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2159,6 +2187,8 @@ inline DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   Assert(false, ExcInvalidObject());
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2168,6 +2198,8 @@ inline void DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   Assert(dh != nullptr, ExcInvalidObject());
   this->dof_handler = dh;
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2180,6 +2212,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::set_dof_index(
 {
   Assert(false, ExcNotImplemented());
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2194,6 +2228,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   Assert(false, ExcNotImplemented());
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2203,6 +2239,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::get_dof_handler()
 {
   return *this->dof_handler;
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2217,6 +2255,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::get_dof_indices(
       Implementation::get_vertex_dof_index(
         *dof_handler, this->global_vertex_index, fe_index, i);
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2237,6 +2277,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   Assert(false, ExcNotImplemented());
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2252,6 +2294,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::vertex_dof_index(
     get_vertex_dof_index(*dof_handler, this->global_vertex_index, fe_index, i);
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2265,6 +2309,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::dof_index(
       *this->dof_handler, this->vertex_index(0), fe_index, i);
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2275,6 +2321,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   Assert(false, ExcNotImplemented());
   return numbers::invalid_unsigned_int;
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2287,6 +2335,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   return numbers::invalid_unsigned_int;
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2297,6 +2347,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   Assert(false, ExcNotImplemented());
   return false;
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2310,6 +2362,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::get_fe(
   return dof_handler->get_fe(fe_index);
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2320,6 +2374,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::copy_from(
   Assert(this->dof_handler != nullptr, ExcInvalidObject());
   BaseClass::copy_from(da);
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2333,6 +2389,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::copy_from(
   set_dof_handler(a.dof_handler);
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2344,6 +2402,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::child(
   return TriaIterator<
     DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>>();
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2358,6 +2418,8 @@ inline typename dealii::internal::DoFHandlerImplementation::
     Iterators<DoFHandlerType<1, spacedim>, level_dof_access>::line_iterator();
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2371,6 +2433,8 @@ inline typename dealii::internal::DoFHandlerImplementation::
     Iterators<DoFHandlerType<1, spacedim>, level_dof_access>::quad_iterator();
 }
 
+
+
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
           bool level_dof_access>
@@ -2383,6 +2447,8 @@ operator==(const DoFAccessor<dim2, DoFHandlerType2, level_dof_access2>& a) const
   Assert(this->dof_handler == a.dof_handler, ExcCantCompareIterators());
   return (BaseClass::operator==(a));
 }
+
+
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2789,6 +2855,8 @@ namespace internal
           accessor.present_index, i);
       }
 
+
+
       template <int  dim,
                 int  spacedim,
                 bool level_dof_access,
@@ -2825,6 +2893,8 @@ namespace internal
         global_destination.add(n_dofs, dofs, local_source_begin);
       }
 
+
+
       template <int  dim,
                 int  spacedim,
                 bool level_dof_access,
@@ -2860,6 +2930,8 @@ namespace internal
         // distribute cell vector
         global_destination.add(n_dofs, dofs.begin(), local_source_begin);
       }
+
+
 
       template <int  dim,
                 int  spacedim,
@@ -2898,6 +2970,8 @@ namespace internal
         constraints.distribute_local_to_global(
           local_source_begin, local_source_end, dofs, global_destination);
       }
+
+
 
       template <int  dim,
                 int  spacedim,
@@ -2938,6 +3012,8 @@ namespace internal
                                                dofs.begin(),
                                                global_destination);
       }
+
+
 
       template <int  dim,
                 int  spacedim,
@@ -2980,6 +3056,8 @@ namespace internal
           global_destination.add(dofs[i], n_dofs, dofs, &local_source(i, 0));
       }
 
+
+
       template <int  dim,
                 int  spacedim,
                 bool level_dof_access,
@@ -3019,6 +3097,8 @@ namespace internal
         // distribute cell matrix
         global_destination.add(dofs, local_source);
       }
+
+
 
       template <int  dim,
                 int  spacedim,
@@ -3071,6 +3151,8 @@ namespace internal
             global_vector(dofs[i]) += local_vector(i);
           }
       }
+
+
 
       template <int  dim,
                 int  spacedim,
@@ -3127,6 +3209,7 @@ namespace internal
     };
   } // namespace DoFCellAccessorImplementation
 } // namespace internal
+
 
 template <typename DoFHandlerType, bool level_dof_access>
 inline DoFCellAccessor<DoFHandlerType, level_dof_access>::DoFCellAccessor(
@@ -3255,6 +3338,7 @@ namespace internal
   } // namespace DoFCellAccessorImplementation
 } // namespace internal
 
+
 template <typename DoFHandlerType, bool level_dof_access>
 inline typename DoFCellAccessor<DoFHandlerType, level_dof_access>::face_iterator
 DoFCellAccessor<DoFHandlerType, level_dof_access>::face(
@@ -3376,6 +3460,12 @@ DoFCellAccessor<DoFHandlerType, level_dof_access>::get_dof_values(
   Assert(values.size() == this->get_dof_handler().n_dofs(),
          typename DoFCellAccessor::ExcVectorDoesNotMatch());
 
+  Assert(static_cast<unsigned int>(local_values_end - local_values_begin)
+           == this->get_fe().dofs_per_cell,
+         typename DoFCellAccessor::ExcVectorDoesNotMatch());
+  Assert(values.size() == this->get_dof_handler().n_dofs(),
+         typename DoFCellAccessor::ExcVectorDoesNotMatch());
+
   const types::global_dof_index* cache
     = this->dof_handler->levels[this->present_level]->get_cell_cache_start(
       this->present_index, this->get_fe().dofs_per_cell);
@@ -3394,6 +3484,12 @@ DoFCellAccessor<DoFHandlerType, level_dof_access>::set_dof_values(
   Assert(this->is_artificial() == false,
          ExcMessage("Can't ask for DoF indices on artificial cells."));
   Assert(!this->has_children(), ExcMessage("Cell must be active."));
+
+  Assert(static_cast<unsigned int>(local_values.size())
+           == this->get_fe().dofs_per_cell,
+         typename DoFCellAccessor::ExcVectorDoesNotMatch());
+  Assert(values.size() == this->get_dof_handler().n_dofs(),
+         typename DoFCellAccessor::ExcVectorDoesNotMatch());
 
   Assert(static_cast<unsigned int>(local_values.size())
            == this->get_fe().dofs_per_cell,
@@ -3486,6 +3582,8 @@ DoFCellAccessor<DoFHandlerType, level_dof_access>::set_active_fe_index(
   dealii::internal::DoFCellAccessorImplementation::Implementation::
     set_active_fe_index(*this, i);
 }
+
+
 
 template <typename DoFHandlerType, bool level_dof_access>
 template <typename number, typename OutputVector>

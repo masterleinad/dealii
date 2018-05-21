@@ -71,9 +71,13 @@ namespace PETScWrappers
     }
   } // namespace MatrixIterators
 
+
+
   MatrixBase::MatrixBase()
     : matrix(nullptr), last_action(VectorOperation::unknown)
   {}
+
+
 
   MatrixBase::~MatrixBase()
   {
@@ -96,6 +100,8 @@ namespace PETScWrappers
       PETSC_COMM_SELF, m, n, n_nonzero_per_row, nullptr, &matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
+
+
 
   MatrixBase&
   MatrixBase::operator=(const value_type d)
@@ -361,6 +367,8 @@ namespace PETScWrappers
     return result;
   }
 
+
+
   MatrixBase&
   MatrixBase::operator*=(const PetscScalar a)
   {
@@ -369,6 +377,8 @@ namespace PETScWrappers
 
     return *this;
   }
+
+
 
   MatrixBase&
   MatrixBase::operator/=(const PetscScalar a)
@@ -380,6 +390,7 @@ namespace PETScWrappers
     return *this;
   }
 
+
   MatrixBase&
   MatrixBase::add(const PetscScalar factor, const MatrixBase& other)
   {
@@ -389,6 +400,8 @@ namespace PETScWrappers
 
     return *this;
   }
+
+
 
   MatrixBase&
   MatrixBase::add(const MatrixBase& other, const PetscScalar factor)
@@ -534,6 +547,8 @@ namespace PETScWrappers
 
     return dst.l2_norm();
   }
+
+
 
   MatrixBase::operator Mat() const
   {

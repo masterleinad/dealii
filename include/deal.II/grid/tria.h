@@ -38,6 +38,7 @@
 #include <numeric>
 #include <vector>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
@@ -476,6 +477,7 @@ namespace internal
     };
   } // namespace TriangulationImplementation
 } // namespace internal
+
 
 /*------------------------------------------------------------------------*/
 
@@ -1727,6 +1729,7 @@ public:
   set_manifold(const types::manifold_id       number,
                const Manifold<dim, spacedim>& manifold_object);
 
+
   /**
    * Reset those parts of the triangulation with the given manifold_id
    * to use a FlatManifold object. This is the default state of a
@@ -2458,6 +2461,7 @@ public:
   void
   load_user_flags_quad(const std::vector<bool>& v);
 
+
   /**
    * Clear all user flags on quads.  See also
    * @ref GlossUserFlags.
@@ -2672,6 +2676,7 @@ public:
    */
   active_cell_iterator
   end_active(const unsigned int level) const;
+
 
   /**
    * Return an iterator pointing to the last used cell.
@@ -2965,6 +2970,7 @@ public:
   virtual types::global_dof_index
   n_global_active_cells() const;
 
+
   /**
    * Return the total number of active cells on level @p level.  Maps to
    * <tt>n_active_lines(level)</tt> in one space dimension and so on.
@@ -3112,6 +3118,7 @@ public:
   const Triangulation<dim, spacedim>&
   get_triangulation() const;
 
+
   /*
    * @}
    */
@@ -3251,6 +3258,7 @@ public:
   template <class Archive>
   void
   load(Archive& ar, const unsigned int version);
+
 
   /**
    * Declare the (coarse) face pairs given in the argument of this function as
@@ -3393,6 +3401,7 @@ protected:
    */
   void
   update_periodic_face_map();
+
 
 private:
   /**
@@ -3632,6 +3641,7 @@ private:
   std::unique_ptr<dealii::internal::TriangulationImplementation::TriaFaces<dim>>
     faces;
 
+
   /**
    * Array of the vertices of this triangulation.
    */
@@ -3653,6 +3663,7 @@ private:
    * Flag indicating whether anisotropic refinement took place.
    */
   bool anisotropic_refinement;
+
 
   /**
    * A flag that determines whether we are to check for distorted cells upon
@@ -3687,6 +3698,7 @@ private:
    */
   std::unique_ptr<std::map<unsigned int, types::boundary_id>>
     vertex_to_boundary_id_map_1d;
+
 
   /**
    * A map that relates the number of a boundary vertex to the manifold
@@ -3786,6 +3798,7 @@ namespace internal
 
   } // namespace TriangulationImplementation
 } // namespace internal
+
 
 template <int dim, int spacedim>
 inline bool
@@ -3955,8 +3968,10 @@ template <>
 unsigned int
 Triangulation<1, 1>::max_adjacent_cells() const;
 
+
 // -------------------------------------------------------------------
 // -- Explicit specializations for codimension one grids
+
 
 template <>
 unsigned int
@@ -3989,6 +4004,7 @@ Triangulation<1, 2>::max_adjacent_cells() const;
 // -------------------------------------------------------------------
 // -- Explicit specializations for codimension two grids
 
+
 template <>
 unsigned int
 Triangulation<1, 3>::n_raw_lines(const unsigned int level) const;
@@ -4016,6 +4032,7 @@ Triangulation<1, 3>::n_active_quads() const;
 template <>
 unsigned int
 Triangulation<1, 3>::max_adjacent_cells() const;
+
 
 #endif // DOXYGEN
 

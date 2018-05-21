@@ -391,6 +391,8 @@ namespace LinearAlgebra
     return sum;
   }
 
+
+
   template <typename Number>
   typename VectorSpaceVector<Number>::real_type
   Vector<Number>::l2_norm() const

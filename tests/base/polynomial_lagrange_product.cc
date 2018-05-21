@@ -23,6 +23,7 @@
 
 using namespace Polynomials;
 
+
 void
 check_derivatives(const std::vector<Polynomial<double>>& p,
                   const unsigned int                     n_deriv)
@@ -80,6 +81,8 @@ check_lge(unsigned int n)
     check_derivatives(p, i);
   deallog << std::endl;
 }
+
+
 
 int
 main()

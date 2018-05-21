@@ -18,6 +18,7 @@
 #include "serialization.h"
 #include <deal.II/base/point.h>
 
+
 void
 test()
 {
@@ -29,6 +30,7 @@ test()
 
   verify(p1, p2);
 }
+
 
 int
 main()

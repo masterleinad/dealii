@@ -28,6 +28,7 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/matrix_free/fe_evaluation.h>
 
+
 std::ofstream logfile("output");
 
 const unsigned int degree_p = 1;
@@ -200,6 +201,8 @@ test()
   dof.distribute_dofs(fe);
   do_test<dim>(dof);
 }
+
+
 
 int
 main()

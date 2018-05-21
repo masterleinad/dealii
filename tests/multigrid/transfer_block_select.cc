@@ -159,6 +159,7 @@ check_select(const FiniteElement<dim>& fe, unsigned int selected)
   deallog << "diff " << v.l2_norm() << std::endl;
 }
 
+
 int
 main()
 {

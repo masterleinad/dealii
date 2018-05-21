@@ -334,6 +334,17 @@ namespace Step40
       locally_owned_dofs, locally_owned_dofs, dsp, mpi_communicator);
   }
 
+    DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints, false);
+    SparsityTools::distribute_sparsity_pattern(
+      dsp,
+      dof_handler.n_locally_owned_dofs_per_processor(),
+      mpi_communicator,
+      locally_relevant_dofs);
+
+    system_matrix.reinit(
+      locally_owned_dofs, locally_owned_dofs, dsp, mpi_communicator);
+  }
+
   // @sect4{LaplaceProblem::assemble_system}
 
   // The function that then assembles the linear system is comparatively
@@ -679,6 +690,8 @@ namespace Step40
       }
   }
 } // namespace Step40
+
+
 
 // @sect4{main()}
 

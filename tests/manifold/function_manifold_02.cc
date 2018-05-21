@@ -76,6 +76,7 @@ main()
 {
   initlog();
 
+
   test<2, 2>();
   test<3, 3>();
 

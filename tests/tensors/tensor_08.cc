@@ -40,6 +40,7 @@ test_select(double f1, double f2)
   deallog << std::endl;
 }
 
+
 int
 main()
 {

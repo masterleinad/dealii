@@ -456,6 +456,9 @@ namespace Step30
     FullMatrix<double> ui_vi_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> ue_vi_matrix(dofs_per_cell, dofs_per_cell);
 
+    FullMatrix<double> ui_vi_matrix(dofs_per_cell, dofs_per_cell);
+    FullMatrix<double> ue_vi_matrix(dofs_per_cell, dofs_per_cell);
+
     FullMatrix<double> ui_ve_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> ue_ve_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -971,6 +974,7 @@ namespace Step30
         else
           refine_grid();
 
+
         std::cout << "   Number of active cells:       "
                   << triangulation.n_active_cells() << std::endl;
 
@@ -989,6 +993,8 @@ namespace Step30
       }
   }
 } // namespace Step30
+
+
 
 int
 main()

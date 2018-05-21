@@ -59,6 +59,8 @@ namespace parallel
   }
 } // namespace parallel
 
+
+
 namespace internal
 {
   namespace hp
@@ -321,6 +323,8 @@ namespace internal
             }
 #endif
         }
+
+
 
         /**
          * Do that part of reserving space that pertains to faces,
@@ -666,6 +670,7 @@ namespace internal
           reserve_space_cells(dof_handler);
           reserve_space_faces(dof_handler);
 
+
           // LINE DOFS
 
           // the situation here is pretty much like with vertices:
@@ -970,6 +975,7 @@ namespace internal
   }   // namespace hp
 } // namespace internal
 
+
 namespace hp
 {
   template <int dim, int spacedim>
@@ -980,6 +986,8 @@ namespace hp
 
   template <int dim, int spacedim>
   const unsigned int DoFHandler<dim, spacedim>::default_fe_index;
+
+
 
   template <int dim, int spacedim>
   DoFHandler<dim, spacedim>::DoFHandler()
@@ -1096,7 +1104,10 @@ namespace hp
       begin_active(level), end_active(level));
   }
 
+
+
   //------------------------------------------------------------------
+
 
   template <int dim, int spacedim>
   types::global_dof_index
@@ -1213,6 +1224,8 @@ namespace hp
 
     return mem;
   }
+
+
 
   template <int dim, int spacedim>
   void
@@ -1333,9 +1346,11 @@ namespace hp
           cell->active_fe_index() < fe_collection.size(),
           ExcInvalidFEIndex(cell->active_fe_index(), fe_collection.size()));
 
+
     // then allocate space for all the other tables
     dealii::internal::hp::DoFHandlerImplementation::Implementation::
       reserve_space(*this);
+
 
     // now undo the subdomain modification
     if(const parallel::shared::Triangulation<dim, spacedim>* shared_tria
@@ -1359,6 +1374,7 @@ namespace hp
     std::vector<bool> user_flags;
     tria->save_user_flags(user_flags);
     const_cast<Triangulation<dim, spacedim>&>(*tria).clear_user_flags();
+
 
     /////////////////////////////////
 
@@ -1712,6 +1728,8 @@ namespace hp
     vertex_dof_offsets = std::move(std::vector<unsigned int>());
   }
 } // namespace hp
+
+
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "dof_handler.inst"

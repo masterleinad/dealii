@@ -276,6 +276,7 @@ private:
    */
   std::vector<FullMatrix<number>> var_diagonal;
 
+
   /**
    * This is true, if the field #var_diagonal is to be used.
    */

@@ -24,6 +24,7 @@
 
 std::ofstream logfile("output");
 
+
 void
 merge_check()
 {
@@ -80,6 +81,7 @@ merge_check()
       c1.print(logfile);
     }
 }
+
 
 int
 main()

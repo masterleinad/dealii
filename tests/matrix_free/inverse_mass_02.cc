@@ -34,6 +34,8 @@
 
 std::ofstream logfile("output");
 
+
+
 template <int dim,
           int fe_degree,
           typename Number,
@@ -186,6 +188,8 @@ test()
 
   do_test<dim, fe_degree, double>(dof);
 }
+
+
 
 int
 main()

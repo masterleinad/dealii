@@ -66,6 +66,7 @@ test(const unsigned int size, const bool nonsymmetric)
   deallog << y.l2_norm() << std::endl;
 }
 
+
 int
 main()
 {

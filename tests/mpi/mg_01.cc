@@ -96,6 +96,7 @@ test()
             << "<= global levels:" << tr.n_global_levels() << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

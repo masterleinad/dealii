@@ -88,6 +88,7 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
   //   GridOut grid_out;
   //   grid_out.write_eps (tr, grid_output);
 
+
   DoFHandler<dim> mg_dof_handler(tr);
   mg_dof_handler.distribute_dofs(fe);
   mg_dof_handler.distribute_mg_dofs(fe);
@@ -96,6 +97,10 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
   block_component[2] = 1;
   block_component[3] = 1;
   block_component[4] = 2;
+
+  DoFRenumbering::component_wise(mg_dof_handler, block_component);
+  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+    DoFRenumbering::component_wise(mg_dof_handler, level, block_component);
 
   DoFRenumbering::component_wise(mg_dof_handler, block_component);
   for(unsigned int level = 0; level < tr.n_levels(); ++level)
@@ -162,6 +167,7 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
     deallog << ' ' << (int) u(i);
   deallog << std::endl;
 }
+
 
 int
 main()

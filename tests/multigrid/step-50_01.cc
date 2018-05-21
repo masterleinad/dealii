@@ -64,6 +64,7 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
 
+
 #include <deal.II/lac/generic_linear_algebra.h>
 
 namespace LA
@@ -207,6 +208,12 @@ namespace Step50
     VectorTools::interpolate_boundary_values(
       mg_dof_handler, dirichlet_boundary, constraints);
     constraints.close();
+
+    DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(),
+                               mg_dof_handler.n_dofs());
+    DoFTools::make_sparsity_pattern(mg_dof_handler, dsp, constraints);
+    system_matrix.reinit(
+      mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
 
     DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(),
                                mg_dof_handler.n_dofs());
@@ -373,6 +380,7 @@ namespace Step50
             = mg_constrained_dofs.get_refinement_edge_indices(cell->level());
           const unsigned int lvl = cell->level();
 
+
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)
               if(
@@ -399,6 +407,7 @@ namespace Step50
                 {
                   cell_matrix(i, j) = 0;
                 }
+
 
           empty_constraints.distribute_local_to_global(
             cell_matrix,
@@ -452,6 +461,7 @@ namespace Step50
     PreconditionMG<dim, vector_t, MGTransferPrebuilt<vector_t>> preconditioner(
       mg_dof_handler, mg, mg_transfer);
 
+
     SolverControl      solver_control(500, 1e-8 * system_rhs.l2_norm(), false);
     SolverCG<vector_t> solver(solver_control);
 
@@ -476,6 +486,8 @@ namespace Step50
 
         deallog << "check3 iteration: " << check3.linfty_norm() << std::endl;
       }
+
+    solver.solve(system_matrix, solution, system_rhs, preconditioner);
 
     solver.solve(system_matrix, solution, system_rhs, preconditioner);
 
@@ -512,6 +524,7 @@ namespace Step50
   void
   LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   {}
+
 
   template <int dim>
   void
@@ -579,6 +592,7 @@ namespace Step50
       }
   }
 } // namespace Step50
+
 
 int
 main(int argc, char* argv[])

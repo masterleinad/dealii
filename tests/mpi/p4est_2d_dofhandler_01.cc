@@ -60,6 +60,7 @@ test()
   const unsigned int dofs_per_cell = dofh.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
+
   if(myid == 0)
     for(; cell != dofh.end(); ++cell)
       if(!cell->is_artificial())
@@ -73,10 +74,13 @@ test()
         }
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

@@ -33,6 +33,7 @@ test()
     deallog << maxima[0] << ' ' << maxima[1] << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

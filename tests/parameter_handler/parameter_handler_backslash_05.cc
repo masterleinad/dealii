@@ -43,6 +43,7 @@ main()
         "Function_2", "d", Patterns::List(Patterns::Selection("d|e|f")));
       prm.leave_subsection();
 
+
       // We need a local path for the file to get consistent output messages.
       const int chdir_return_code = chdir(SOURCE_DIR);
       AssertThrow(chdir_return_code == 0, ExcInternalError());

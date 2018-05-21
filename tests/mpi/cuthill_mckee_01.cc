@@ -39,6 +39,7 @@ test()
   DoFRenumbering::Cuthill_McKee(dofh);
 }
 
+
 int
 main(int argc, char* argv[])
 {

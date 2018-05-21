@@ -18,6 +18,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -78,6 +79,8 @@ const Point<3>
 
 template <int dim>
 const double SolutionBase<dim>::width = 1. / 3.;
+
+
 
 template <int dim>
 class Solution : public Function<dim>, protected SolutionBase<dim>
@@ -211,6 +214,8 @@ private:
   ConvergenceTable convergence_table;
 };
 
+
+
 template <int dim>
 HelmholtzProblem<dim>::HelmholtzProblem(const unsigned int   fe_degree,
                                         const RefinementMode refinement_mode)
@@ -247,6 +252,9 @@ HelmholtzProblem<dim>::setup_system()
   }
 
   system_matrix.reinit(sparsity_pattern);
+
+  solution.reinit(dof_handler.n_dofs());
+  system_rhs.reinit(dof_handler.n_dofs());
 
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
@@ -602,6 +610,8 @@ HelmholtzProblem<dim>::run()
 
       setup_system();
 
+      setup_system();
+
       assemble_system(false);
       solve();
       assemble_system(true);
@@ -624,6 +634,7 @@ HelmholtzProblem<dim>::run()
   deallog << std::endl;
   convergence_table.write_text(deallog.get_file_stream());
 }
+
 
 int
 main()

@@ -23,6 +23,8 @@
 
 #include <algorithm>
 
+
+
 void
 test()
 {
@@ -47,6 +49,8 @@ test()
   deallog << IsBlockMatrix<BlockSparsityPattern>::value << ' '
           << IsBlockMatrix<BlockDynamicSparsityPattern>::value << std::endl;
 }
+
+
 
 int
 main()

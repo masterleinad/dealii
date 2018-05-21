@@ -44,6 +44,7 @@ public:
     return std::unique_ptr<Manifold<dim, spacedim>>(new MyFlatManifold());
   }
 
+
   virtual Point<spacedim + 1>
   pull_back(const Point<spacedim>& space_point) const override
   {
@@ -52,6 +53,7 @@ public:
       p[d] = space_point[d];
     return p;
   }
+
 
   virtual Point<spacedim>
   push_forward(const Point<spacedim + 1>& chart_point) const override
@@ -138,6 +140,7 @@ main()
 
   test<2, 2>(2, MappingQ<2>(4, false));
   test<2, 2>(2, MappingQ<2>(4, true));
+
 
   return 0;
 }

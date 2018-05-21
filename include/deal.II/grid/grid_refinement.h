@@ -226,6 +226,8 @@ namespace GridRefinement
                                     const unsigned int max_n_cells
                                     = std::numeric_limits<unsigned int>::max());
 
+
+
   /**
    * This function flags cells of a triangulation for refinement with the
    * aim to reach a grid that
@@ -358,6 +360,8 @@ namespace GridRefinement
    */
   DeclException0(ExcInvalidParameterValue);
 } // namespace GridRefinement
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

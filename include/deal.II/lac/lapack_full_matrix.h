@@ -39,6 +39,7 @@ class FullMatrix;
 template <typename number>
 class SparseMatrix;
 
+
 /**
  * A variant of FullMatrix using LAPACK functions wherever possible. In order
  * to do this, the matrix is stored in transposed order. The element access
@@ -71,10 +72,12 @@ public:
    */
   explicit LAPACKFullMatrix(const size_type size = 0);
 
+
   /**
    * Constructor. Initialize the matrix as a rectangular matrix $\rm{rows} \times \rm{cols}$.
    */
   LAPACKFullMatrix(const size_type rows, const size_type cols);
+
 
   /**
    * Copy constructor. This constructor does a deep copy of the matrix.
@@ -287,6 +290,7 @@ public:
        const number      factor       = 1.,
        const bool        transpose    = false);
 
+
   /**
    * Matrix-vector-multiplication.
    *
@@ -382,6 +386,7 @@ public:
    */
   void
   Tvmult_add(Vector<number>& w, const Vector<number>& v) const;
+
 
   /**
    * Matrix-matrix-multiplication.

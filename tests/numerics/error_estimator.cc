@@ -29,6 +29,8 @@
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 class MySquareFunction : public Function<dim>
 {
@@ -100,6 +102,7 @@ check()
   for(unsigned int i = 0; i < error.size(); ++i)
     deallog << error(i) * 100 << std::endl;
 }
+
 
 int
 main()

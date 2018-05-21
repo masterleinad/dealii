@@ -301,6 +301,7 @@ namespace Step16
     mg_constrained_dofs.make_zero_boundary_constraints(dof_handler,
                                                        dirichlet_boundary_ids);
 
+
     // Now for the things that concern the multigrid data structures. First,
     // we resize the multilevel objects to hold matrices and sparsity
     // patterns for every level. The coarse level is zero (this is mandatory
@@ -631,6 +632,7 @@ namespace Step16
       }
   }
 } // namespace Step16
+
 
 // @sect3{The main() function}
 //

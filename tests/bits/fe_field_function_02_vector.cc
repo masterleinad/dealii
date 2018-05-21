@@ -32,6 +32,7 @@
 #include <deal.II/numerics/fe_field_function.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 template <int dim>
 class F : public Function<dim>
 {
@@ -45,6 +46,7 @@ public:
     v[0] = p.square();
   }
 };
+
 
 double
 abs_zero(double a)

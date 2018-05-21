@@ -305,6 +305,12 @@ FullMatrix<number>::fill(const FullMatrix<number2>& src,
         = src(src_offset_i + i, src_offset_j + j);
 }
 
+  for(size_type i = 0; i < rows; ++i)
+    for(size_type j = 0; j < cols; ++j)
+      (*this)(dst_offset_i + i, dst_offset_j + j)
+        = src(src_offset_i + i, src_offset_j + j);
+}
+
 template <typename number>
 template <typename number2>
 void
@@ -557,6 +563,7 @@ FullMatrix<number>::Tmmult(FullMatrix<number2>&       dst,
   Assert(n() == dst.m(), ExcDimensionMismatch(n(), dst.m()));
   Assert(src.n() == dst.n(), ExcDimensionMismatch(src.n(), dst.n()));
 
+
   // see if we can use BLAS algorithms for this and if the type for 'number'
   // works for us (it is usually not efficient to use BLAS for very small
   // matrices):
@@ -753,6 +760,7 @@ FullMatrix<number>::TmTmult(FullMatrix<number2>&       dst,
   Assert(m() == src.n(), ExcDimensionMismatch(m(), src.n()));
   Assert(n() == dst.m(), ExcDimensionMismatch(n(), dst.m()));
   Assert(src.m() == dst.n(), ExcDimensionMismatch(src.m(), dst.n()));
+
 
   // see if we can use BLAS algorithms for this and if the type for 'number'
   // works for us (it is usually not efficient to use BLAS for very small
@@ -1045,6 +1053,7 @@ FullMatrix<number>::add(const number               a,
   Assert(m() == C.m(), ExcDimensionMismatch(m(), C.m()));
   Assert(n() == C.n(), ExcDimensionMismatch(n(), C.n()));
 
+
   for(size_type i = 0; i < m(); ++i)
     for(size_type j = 0; j < n(); ++j)
       (*this)(i, j)
@@ -1094,6 +1103,7 @@ FullMatrix<number>::Tadd(const FullMatrix<number2>& src,
   // Compute maximal size of copied block
   const size_type rows = std::min(m() - dst_offset_i, src.n() - src_offset_j);
   const size_type cols = std::min(n() - dst_offset_j, src.m() - src_offset_i);
+
 
   for(size_type i = 0; i < rows; ++i)
     for(size_type j = 0; j < cols; ++j)
@@ -1175,6 +1185,7 @@ namespace internal
 
   } // namespace
 } // namespace internal
+
 
 template <typename number>
 number
@@ -1434,6 +1445,7 @@ FullMatrix<number>::invert(const FullMatrix<number2>& M)
 
             break;
           }
+
 
         default:
           // if no inversion is

@@ -19,6 +19,8 @@
 #include <algorithm>
 #include <iostream>
 
+
+
 void
 test()
 {
@@ -32,6 +34,8 @@ test()
           << IsBlockVector<BlockVector<double>>::value << ' '
           << IsBlockVector<BlockVector<float>>::value << std::endl;
 }
+
+
 
 int
 main()

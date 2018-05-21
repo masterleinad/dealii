@@ -60,6 +60,7 @@ test(const unsigned int size)
   deallog << "OK" << std::endl;
 }
 
+
 int
 main()
 {

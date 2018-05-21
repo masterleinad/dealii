@@ -27,6 +27,7 @@ char logname[] = "output";
 
 #include "../tests.h"
 
+
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
@@ -35,6 +36,8 @@ char logname[] = "output";
 #include <iostream>
 
 using namespace dealii;
+
+
 
 void
 test()
@@ -95,6 +98,8 @@ test()
   // prepare_c_and_r :-(
   deallog << "n_active_cells = " << triangulation.n_active_cells() << std::endl;
 }
+
+
 
 int
 main()

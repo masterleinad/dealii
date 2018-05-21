@@ -107,7 +107,10 @@ FindBug<dim>::make_grid_and_dofs()
 
   deallog << "Total number of cells: " << triangulation.n_cells() << std::endl;
 
+  deallog << "Total number of cells: " << triangulation.n_cells() << std::endl;
+
   dof_handler.distribute_dofs(fe);
+
 
   deallog << "Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
@@ -142,6 +145,7 @@ FindBug<dim>::dirichlet_conditions()
   // checks that it has been
   // correctly implemented by now
 
+
   std::map<types::global_dof_index, double> dirichlet_dofs;
 
   // we declare a vector of bools,
@@ -169,6 +173,7 @@ FindBug<dim>::dirichlet_conditions()
                                            Functions::ZeroFunction<dim>(2),
                                            dirichlet_dofs,
                                            component_mask);
+
 
   std::vector<bool>            fixed_dofs(dof_handler.n_dofs());
   std::set<types::boundary_id> boundary_ids;
@@ -218,6 +223,8 @@ FindBug<dim>::run()
   make_grid_and_dofs();
   dirichlet_conditions();
 }
+
+
 
 int
 main()

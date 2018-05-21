@@ -25,6 +25,7 @@
 #include <iterator>
 #include <vector>
 
+
 #ifdef DEAL_II_WITH_TRILINOS
 #  include <Epetra_Map.h>
 #endif
@@ -463,6 +464,7 @@ public:
   template <class Archive>
   void
   serialize(Archive& ar, const unsigned int version);
+
 
   /**
    * @name Iterators
@@ -980,9 +982,13 @@ inline IndexSet::IntervalAccessor::IntervalAccessor(
          ExcInternalError("Invalid range index"));
 }
 
+
+
 inline IndexSet::IntervalAccessor::IntervalAccessor(const IndexSet* idxset)
   : index_set(idxset), range_idx(numbers::invalid_dof_index)
 {}
+
+
 
 inline IndexSet::IntervalAccessor::IntervalAccessor(
   const IndexSet::IntervalAccessor& other)
@@ -992,6 +998,8 @@ inline IndexSet::IntervalAccessor::IntervalAccessor(
          ExcMessage("invalid iterator"));
 }
 
+
+
 inline IndexSet::size_type
 IndexSet::IntervalAccessor::n_elements() const
 {
@@ -999,11 +1007,15 @@ IndexSet::IntervalAccessor::n_elements() const
   return index_set->ranges[range_idx].end - index_set->ranges[range_idx].begin;
 }
 
+
+
 inline bool
 IndexSet::IntervalAccessor::is_valid() const
 {
   return index_set != nullptr && range_idx < index_set->n_intervals();
 }
+
+
 
 inline IndexSet::ElementIterator
 IndexSet::IntervalAccessor::begin() const
@@ -1012,6 +1024,8 @@ IndexSet::IntervalAccessor::begin() const
   return IndexSet::ElementIterator(
     index_set, range_idx, index_set->ranges[range_idx].begin);
 }
+
+
 
 inline IndexSet::ElementIterator
 IndexSet::IntervalAccessor::end() const
@@ -1026,6 +1040,8 @@ IndexSet::IntervalAccessor::end() const
     return index_set->end();
 }
 
+
+
 inline IndexSet::size_type
 IndexSet::IntervalAccessor::last() const
 {
@@ -1033,6 +1049,8 @@ IndexSet::IntervalAccessor::last() const
 
   return index_set->ranges[range_idx].end - 1;
 }
+
+
 
 inline IndexSet::IntervalAccessor&
 IndexSet::IntervalAccessor::operator=(const IndexSet::IntervalAccessor& other)
@@ -1044,6 +1062,8 @@ IndexSet::IntervalAccessor::operator=(const IndexSet::IntervalAccessor& other)
   return *this;
 }
 
+
+
 inline bool
 IndexSet::IntervalAccessor::
 operator==(const IndexSet::IntervalAccessor& other) const
@@ -1054,6 +1074,8 @@ operator==(const IndexSet::IntervalAccessor& other) const
   return range_idx == other.range_idx;
 }
 
+
+
 inline bool
 IndexSet::IntervalAccessor::
 operator<(const IndexSet::IntervalAccessor& other) const
@@ -1063,6 +1085,8 @@ operator<(const IndexSet::IntervalAccessor& other) const
     ExcMessage("Can not compare accessors pointing to different IndexSets"));
   return range_idx < other.range_idx;
 }
+
+
 
 inline void
 IndexSet::IntervalAccessor::advance()
@@ -1086,17 +1110,25 @@ inline IndexSet::IntervalIterator::IntervalIterator(
   : accessor(idxset, range_idx)
 {}
 
+
+
 inline IndexSet::IntervalIterator::IntervalIterator() : accessor(nullptr)
 {}
+
+
 
 inline IndexSet::IntervalIterator::IntervalIterator(const IndexSet* idxset)
   : accessor(idxset)
 {}
 
+
+
 inline IndexSet::IntervalIterator::IntervalIterator(
   const IndexSet::IntervalIterator& other)
   : accessor(other.accessor)
 {}
+
+
 
 inline IndexSet::IntervalIterator&
 IndexSet::IntervalIterator::operator=(const IntervalIterator& other)
@@ -1105,12 +1137,16 @@ IndexSet::IntervalIterator::operator=(const IntervalIterator& other)
   return *this;
 }
 
+
+
 inline IndexSet::IntervalIterator&
 IndexSet::IntervalIterator::operator++()
 {
   accessor.advance();
   return *this;
 }
+
+
 
 inline IndexSet::IntervalIterator
 IndexSet::IntervalIterator::operator++(int)
@@ -1120,17 +1156,23 @@ IndexSet::IntervalIterator::operator++(int)
   return iter;
 }
 
+
+
 inline const IndexSet::IntervalAccessor& IndexSet::IntervalIterator::
                                          operator*() const
 {
   return accessor;
 }
 
+
+
 inline const IndexSet::IntervalAccessor* IndexSet::IntervalIterator::
                                          operator->() const
 {
   return &accessor;
 }
+
+
 
 inline bool
 IndexSet::IntervalIterator::
@@ -1139,6 +1181,8 @@ operator==(const IndexSet::IntervalIterator& other) const
   return accessor == other.accessor;
 }
 
+
+
 inline bool
 IndexSet::IntervalIterator::
 operator!=(const IndexSet::IntervalIterator& other) const
@@ -1146,12 +1190,16 @@ operator!=(const IndexSet::IntervalIterator& other) const
   return !(*this == other);
 }
 
+
+
 inline bool
 IndexSet::IntervalIterator::
 operator<(const IndexSet::IntervalIterator& other) const
 {
   return accessor < other.accessor;
 }
+
+
 
 inline int
 IndexSet::IntervalIterator::
@@ -1193,11 +1241,15 @@ inline IndexSet::ElementIterator::ElementIterator(
       "Invalid index argument for IndexSet::ElementIterator constructor."));
 }
 
+
+
 inline IndexSet::ElementIterator::ElementIterator(const IndexSet* idxset)
   : index_set(idxset),
     range_idx(numbers::invalid_dof_index),
     idx(numbers::invalid_dof_index)
 {}
+
+
 
 inline bool
 IndexSet::ElementIterator::is_valid() const
@@ -1212,6 +1264,8 @@ IndexSet::ElementIterator::is_valid() const
           && idx < index_set->ranges[range_idx].end);
 }
 
+
+
 inline IndexSet::size_type IndexSet::ElementIterator::operator*() const
 {
   Assert(
@@ -1220,6 +1274,8 @@ inline IndexSet::size_type IndexSet::ElementIterator::operator*() const
       "Impossible to dereference an IndexSet::ElementIterator that is invalid"));
   return idx;
 }
+
+
 
 inline bool
 IndexSet::ElementIterator::
@@ -1230,6 +1286,8 @@ operator==(const IndexSet::ElementIterator& other) const
     ExcMessage("Can not compare iterators belonging to different IndexSets"));
   return range_idx == other.range_idx && idx == other.idx;
 }
+
+
 
 inline void
 IndexSet::ElementIterator::advance()
@@ -1258,12 +1316,16 @@ IndexSet::ElementIterator::advance()
     }
 }
 
+
+
 inline IndexSet::ElementIterator&
 IndexSet::ElementIterator::operator++()
 {
   advance();
   return *this;
 }
+
+
 
 inline IndexSet::ElementIterator
 IndexSet::ElementIterator::operator++(int)
@@ -1273,12 +1335,16 @@ IndexSet::ElementIterator::operator++(int)
   return it;
 }
 
+
+
 inline bool
 IndexSet::ElementIterator::
 operator!=(const IndexSet::ElementIterator& other) const
 {
   return !(*this == other);
 }
+
+
 
 inline bool
 IndexSet::ElementIterator::
@@ -1290,6 +1356,8 @@ operator<(const IndexSet::ElementIterator& other) const
   return range_idx < other.range_idx
          || (range_idx == other.range_idx && idx < other.idx);
 }
+
+
 
 inline std::ptrdiff_t
 IndexSet::ElementIterator::
@@ -1338,6 +1406,8 @@ inline IndexSet::Range::Range()
     nth_index_in_set(numbers::invalid_dof_index)
 {}
 
+
+
 inline IndexSet::Range::Range(const size_type i1, const size_type i2)
   : begin(i1), end(i2), nth_index_in_set(numbers::invalid_dof_index)
 {}
@@ -1350,11 +1420,15 @@ inline IndexSet::IndexSet()
     largest_range(numbers::invalid_unsigned_int)
 {}
 
+
+
 inline IndexSet::IndexSet(const size_type size)
   : is_compressed(true),
     index_space_size(size),
     largest_range(numbers::invalid_unsigned_int)
 {}
+
+
 
 inline IndexSet::IndexSet(IndexSet&& is) noexcept
   : ranges(std::move(is.ranges)),
@@ -1369,6 +1443,8 @@ inline IndexSet::IndexSet(IndexSet&& is) noexcept
 
   compress();
 }
+
+
 
 inline IndexSet&
 IndexSet::operator=(IndexSet&& is) noexcept
@@ -1388,6 +1464,8 @@ IndexSet::operator=(IndexSet&& is) noexcept
   return *this;
 }
 
+
+
 inline IndexSet::ElementIterator
 IndexSet::begin() const
 {
@@ -1397,6 +1475,8 @@ IndexSet::begin() const
   else
     return end();
 }
+
+
 
 inline IndexSet::ElementIterator
 IndexSet::at(const size_type global_index) const
@@ -1447,12 +1527,16 @@ IndexSet::at(const size_type global_index) const
     return IndexSet::ElementIterator(this, p - ranges.begin(), global_index);
 }
 
+
+
 inline IndexSet::ElementIterator
 IndexSet::end() const
 {
   compress();
   return IndexSet::ElementIterator(this);
 }
+
+
 
 inline IndexSet::IntervalIterator
 IndexSet::begin_intervals() const
@@ -1464,12 +1548,16 @@ IndexSet::begin_intervals() const
     return end_intervals();
 }
 
+
+
 inline IndexSet::IntervalIterator
 IndexSet::end_intervals() const
 {
   compress();
   return IndexSet::IntervalIterator(this);
 }
+
+
 
 inline void
 IndexSet::clear()
@@ -1481,6 +1569,8 @@ IndexSet::clear()
   largest_range = numbers::invalid_unsigned_int;
 }
 
+
+
 inline void
 IndexSet::set_size(const size_type sz)
 {
@@ -1491,11 +1581,15 @@ IndexSet::set_size(const size_type sz)
   is_compressed    = true;
 }
 
+
+
 inline IndexSet::size_type
 IndexSet::size() const
 {
   return index_space_size;
 }
+
+
 
 inline void
 IndexSet::compress() const
@@ -1505,6 +1599,8 @@ IndexSet::compress() const
 
   do_compress();
 }
+
+
 
 inline void
 IndexSet::add_index(const size_type index)
@@ -1546,6 +1642,8 @@ IndexSet::add_indices(const ForwardIterator& begin, const ForwardIterator& end)
       p = q;
     }
 }
+
+
 
 inline bool
 IndexSet::is_element(const size_type index) const
@@ -1595,6 +1693,8 @@ IndexSet::is_element(const size_type index) const
   return false;
 }
 
+
+
 inline bool
 IndexSet::is_contiguous() const
 {
@@ -1602,11 +1702,15 @@ IndexSet::is_contiguous() const
   return (ranges.size() <= 1);
 }
 
+
+
 inline bool
 IndexSet::is_empty() const
 {
   return ranges.empty();
 }
+
+
 
 inline IndexSet::size_type
 IndexSet::n_elements() const
@@ -1633,12 +1737,16 @@ IndexSet::n_elements() const
   return v;
 }
 
+
+
 inline unsigned int
 IndexSet::n_intervals() const
 {
   compress();
   return ranges.size();
 }
+
+
 
 inline unsigned int
 IndexSet::largest_range_starting_index() const
@@ -1651,6 +1759,8 @@ IndexSet::largest_range_starting_index() const
 
   return main_range->nth_index_in_set;
 }
+
+
 
 inline IndexSet::size_type
 IndexSet::nth_index_in_set(const unsigned int n) const
@@ -1691,6 +1801,8 @@ IndexSet::nth_index_in_set(const unsigned int n) const
   Assert(p != ranges.end(), ExcInternalError());
   return p->begin + (n - p->nth_index_in_set);
 }
+
+
 
 inline IndexSet::size_type
 IndexSet::index_within_set(const size_type n) const
@@ -1738,6 +1850,8 @@ IndexSet::index_within_set(const size_type n) const
   return (n - p->begin) + p->nth_index_in_set;
 }
 
+
+
 inline bool
 IndexSet::operator==(const IndexSet& is) const
 {
@@ -1748,6 +1862,8 @@ IndexSet::operator==(const IndexSet& is) const
 
   return ranges == is.ranges;
 }
+
+
 
 inline bool
 IndexSet::operator!=(const IndexSet& is) const

@@ -105,6 +105,8 @@ namespace Step37
       values[i] = value<double>(points[i], component);
   }
 
+
+
   template <int dim, int fe_degree, typename number>
   class LaplaceOperator : public Subscriptor
   {
@@ -217,6 +219,8 @@ namespace Step37
       }
   }
 
+
+
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::local_apply(
@@ -240,6 +244,8 @@ namespace Step37
         phi.distribute_local_to_global(dst);
       }
   }
+
+
 
   template <int dim, int fe_degree, typename number>
   void
@@ -356,6 +362,8 @@ namespace Step37
       dof_handler(triangulation)
   {}
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::setup_system()
@@ -402,6 +410,8 @@ namespace Step37
       }
     coarse_matrix.reinit(dof_handler.n_dofs(0), dof_handler.n_dofs(0));
   }
+
+
 
   template <int dim>
   void
@@ -562,6 +572,8 @@ namespace Step37
       };
   }
 } // namespace Step37
+
+
 
 int
 main()

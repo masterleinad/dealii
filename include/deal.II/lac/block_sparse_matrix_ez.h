@@ -93,6 +93,7 @@ public:
   BlockSparseMatrixEZ&
   operator=(const double d);
 
+
   /**
    * Set matrix to zero dimensions and release memory.
    */
@@ -122,6 +123,7 @@ public:
    */
   SparseMatrixEZ<Number>&
   block(const unsigned int row, const unsigned int column);
+
 
   /**
    * Access the block with the given coordinates. Version for constant
@@ -185,6 +187,7 @@ public:
   void
   add(const size_type i, const size_type j, const Number value);
 
+
   /**
    * Matrix-vector multiplication: let $dst = M*src$ with $M$ being this
    * matrix.
@@ -221,6 +224,7 @@ public:
   void
   Tvmult_add(BlockVector<somenumber>&       dst,
              const BlockVector<somenumber>& src) const;
+
 
   /**
    * Print statistics. If @p full is @p true, prints a histogram of all
@@ -366,6 +370,8 @@ BlockSparseMatrixEZ<Number>::vmult_add(BlockVector<somenumber>&       dst,
     for(unsigned int col = 0; col < n_block_cols(); ++col)
       block(row, col).vmult_add(dst.block(row), src.block(col));
 }
+
+
 
 template <typename Number>
 template <typename somenumber>

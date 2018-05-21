@@ -26,6 +26,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -70,6 +71,7 @@ mesh_info(const Triangulation<dim>& tria)
   grid_out.write_gnuplot(tria, deallog.get_file_stream());
 }
 
+
 void
 make_grid()
 {
@@ -90,6 +92,7 @@ make_grid()
           << std::endl;
   deallog << "Total number of cells: " << triangulation2.n_cells() << std::endl;
 }
+
 
 int
 main()

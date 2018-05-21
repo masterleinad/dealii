@@ -57,6 +57,7 @@ check_vmult()
   deallog << std::endl;
 }
 
+
 int
 main()
 {

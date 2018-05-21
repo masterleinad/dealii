@@ -80,6 +80,7 @@ main()
   solver(outdata, indata);
 }
 
+
 Explicit::Explicit(const FullMatrix<double>& M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
@@ -100,6 +101,7 @@ Explicit::operator()(AnyData& out, const AnyData& in)
   m.vmult(*out.entry<Vector<double>*>(0),
           *in.read_ptr<Vector<double>>("Previous iterate"));
 }
+
 
 Implicit::Implicit(const FullMatrix<double>& M) : matrix(&M)
 {

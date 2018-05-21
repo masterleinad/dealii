@@ -493,6 +493,8 @@ PrimitiveVectorMemory<VectorType>::free(const VectorType* const v)
   delete v;
 }
 
+
+
 #endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE

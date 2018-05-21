@@ -16,6 +16,13 @@
 #ifndef dealii_thread_local_storage_h
 #  define dealii_thread_local_storage_h
 
+
+#  include <deal.II/base/config.h>
+
+#  ifdef DEAL_II_WITH_THREADS
+#    include <tbb/enumerable_thread_specific.h>
+#  endif
+
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_THREADS

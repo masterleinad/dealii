@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+
+
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <cstdio>
@@ -28,6 +30,7 @@
 #include <set>
 #include <sstream>
 
+
 const unsigned int N = 15;
 
 // chunk size to be used for ChunkSparsityPattern. may be overwritten in
@@ -41,17 +44,23 @@ do_reinit(SparsityPattern& sp)
   sp.reinit((N - 1) * (N - 1), (N - 1) * (N - 1), 5);
 }
 
+
+
 void
 do_reinit(ChunkSparsityPattern& sp)
 {
   sp.reinit((N - 1) * (N - 1), (N - 1) * (N - 1), 5, chunk_size);
 }
 
+
+
 void
 do_reinit(DynamicSparsityPattern& sp, const IndexSet& index_set = IndexSet())
 {
   sp.reinit((N - 1) * (N - 1), (N - 1) * (N - 1), index_set);
 }
+
+
 
 template <typename SP>
 void
@@ -61,6 +70,12 @@ build_sparsity(SP& sparsity_pattern)
   do_reinit(sparsity_pattern);
   FDMatrix(N, N).five_point_structure(sparsity_pattern);
   sparsity_pattern.compress();
+
+  deallog << sparsity_pattern.n_rows() << " " << sparsity_pattern.n_cols()
+          << " " << sparsity_pattern.bandwidth() << " "
+          << sparsity_pattern.n_nonzero_elements() << std::endl;
+}
+
 
   deallog << sparsity_pattern.n_rows() << " " << sparsity_pattern.n_cols()
           << " " << sparsity_pattern.bandwidth() << " "
@@ -490,6 +505,9 @@ test_index_set(const bool contiguous)
 
   FDMatrix(N, N).five_point_structure(sp1);
   FDMatrix(N, N).five_point_structure(sp2);
+
+  sp1.compress();
+  sp2.compress();
 
   sp1.compress();
   sp2.compress();

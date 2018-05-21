@@ -41,6 +41,7 @@ test()
   IndexSet local_relevant(numproc * 2);
   local_relevant.add_range(1, 2);
 
+
   typename LA::MPI::Vector x;
   x.reinit(local_active, MPI_COMM_WORLD);
   x = 0;
@@ -57,6 +58,8 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

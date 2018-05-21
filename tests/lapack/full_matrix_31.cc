@@ -73,6 +73,7 @@ test(const unsigned int m,
       AssertThrow(std::abs(2. * C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                   ExcEl(i, j, 2. * C(i, j), CL(i, j), 2. * C(i, j) - CL(i, j)));
 
+
   deallog << "OK non-symmetric adding" << std::endl;
 
   // symmetric (B==A)

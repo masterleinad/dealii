@@ -31,6 +31,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 bool
 satisfies_level1_at_vertex_rule(const Triangulation<dim>& tr)
@@ -114,6 +116,8 @@ test()
             deallog << std::endl;
           }
 
+
+
       triangulation.execute_coarsening_and_refinement();
 
       // verify that none of the cells
@@ -121,12 +125,14 @@ test()
       AssertThrow(satisfies_level1_at_vertex_rule(triangulation),
                   ExcInternalError());
 
+
       deallog << "Iteration " << i
               << ": cells=" << triangulation.n_active_cells() << std::endl;
     }
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

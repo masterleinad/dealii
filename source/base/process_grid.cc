@@ -200,6 +200,8 @@ namespace Utilities
 #  endif
     }
 
+
+
     ProcessGrid::ProcessGrid(MPI_Comm           mpi_comm,
                              const unsigned int n_rows_matrix,
                              const unsigned int n_columns_matrix,
@@ -213,11 +215,15 @@ namespace Utilities
                                                  column_block_size))
     {}
 
+
+
     ProcessGrid::ProcessGrid(MPI_Comm           mpi_comm,
                              const unsigned int n_rows,
                              const unsigned int n_columns)
       : ProcessGrid(mpi_comm, std::make_pair(n_rows, n_columns))
     {}
+
+
 
     ProcessGrid::~ProcessGrid()
     {

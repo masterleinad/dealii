@@ -22,6 +22,7 @@
 #include <deal.II/base/polynomial_space.h>
 #include <deal.II/base/tensor_product_polynomials.h>
 
+
 using namespace Polynomials;
 
 template <int dim, class PolynomialType>
@@ -79,6 +80,7 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
       if((grad3 - third[k]).norm_square() > eps * eps)
         deallog << 'P' << k << ": fourth derivatives differ " << grad4
                 << " != " << fourth[k] << std::endl;
+
 
       // finally output values,
       // gradients, etc, to make sure

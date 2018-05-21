@@ -54,6 +54,7 @@ main()
   // Create a boundary projector.
   NormalProjectionBoundary<3, 3> sphere(face);
 
+
   // The unit cube.
   Triangulation<3, 3> tria;
   GridGenerator::hyper_cube(tria);

@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/path_search.h>
 #include <deal.II/base/utilities.h>
@@ -29,6 +30,7 @@
 #include <fstream>
 #include <functional>
 #include <map>
+
 
 #ifdef DEAL_II_WITH_NETCDF
 #  include <netcdfcpp.h>
@@ -167,6 +169,7 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
     AssertThrow(
       false,
       ExcMessage("While reading VTK file, failed to find POINTS section"));
+
 
   //////////////////ignoring space between points and cells sections////////////////////
   std::string checkline;
@@ -325,6 +328,7 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
               + " in 3d or the number of lines ("
               + Utilities::int_to_string(subcelldata.boundary_lines.size())
               + ") in 2d."));
+
 
           std::string linenew;
           std::string textnew[2];
@@ -655,6 +659,7 @@ GridIn<dim, spacedim>::read_ucd(std::istream& in,
   // skip comments at start of file
   skip_comment_lines(in, '#');
 
+
   unsigned int n_vertices;
   unsigned int n_cells;
   int          dummy;
@@ -983,6 +988,7 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
     ;
   skip_empty_lines(in);
 
+
   // now read vertices
   getline(in, line);
   AssertThrow(line == "Vertices", ExcInvalidDBMESHInput(line));
@@ -1117,6 +1123,7 @@ GridIn<2>::read_xda(std::istream& in)
   // skip comments at start of file
   getline(in, line);
 
+
   unsigned int n_vertices;
   unsigned int n_cells;
 
@@ -1185,6 +1192,7 @@ GridIn<3>::read_xda(std::istream& in)
   // skip comments at start of file
   getline(in, line);
 
+
   unsigned int n_vertices;
   unsigned int n_cells;
 
@@ -1244,6 +1252,8 @@ GridIn<3>::read_xda(std::istream& in)
   GridReordering<3>::reorder_cells(cells);
   tria->create_triangulation_compatibility(vertices, cells, subcelldata);
 }
+
+
 
 template <int dim, int spacedim>
 void
@@ -2310,6 +2320,8 @@ GridIn<dim, spacedim>::parse_tecplot_header(
           "Tecplot file does not contain a complete and consistent set of parameters"));
     }
 }
+
+
 
 template <>
 void
@@ -3626,6 +3638,7 @@ namespace
       }
   }
 } // namespace
+
 
 //explicit instantiations
 #include "grid_in.inst"

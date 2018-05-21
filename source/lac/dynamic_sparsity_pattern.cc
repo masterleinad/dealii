@@ -212,9 +212,12 @@ DynamicSparsityPattern::Line::memory_consumption() const
   return entries.capacity() * sizeof(size_type) + sizeof(Line);
 }
 
+
 DynamicSparsityPattern::DynamicSparsityPattern()
   : have_entries(false), rows(0), cols(0), rowset(0)
 {}
+
+
 
 DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
   : Subscriptor(), have_entries(false), rows(0), cols(0), rowset(0)
@@ -227,6 +230,8 @@ DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
            "not be used to copy-construct a non-empty sparsity pattern."));
 }
 
+
+
 DynamicSparsityPattern::DynamicSparsityPattern(const size_type m,
                                                const size_type n,
                                                const IndexSet& rowset_)
@@ -235,17 +240,21 @@ DynamicSparsityPattern::DynamicSparsityPattern(const size_type m,
   reinit(m, n, rowset_);
 }
 
+
 DynamicSparsityPattern::DynamicSparsityPattern(const IndexSet& rowset_)
   : have_entries(false), rows(0), cols(0), rowset(0)
 {
   reinit(rowset_.size(), rowset_.size(), rowset_);
 }
 
+
 DynamicSparsityPattern::DynamicSparsityPattern(const size_type n)
   : have_entries(false), rows(0), cols(0), rowset(0)
 {
   reinit(n, n);
 }
+
+
 
 DynamicSparsityPattern&
 DynamicSparsityPattern::operator=(const DynamicSparsityPattern& s)
@@ -423,6 +432,7 @@ DynamicSparsityPattern::print_gnuplot(std::ostream& out) const
         // the order of output
         out << *j << " " << -static_cast<signed int>(rowindex) << std::endl;
     }
+
 
   AssertThrow(out, ExcIO());
 }

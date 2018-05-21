@@ -45,6 +45,8 @@
 // we need to make sure that in row 0 there is a coupling to
 // DoF 4. this was previously missing
 
+
+
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)

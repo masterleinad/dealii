@@ -15,6 +15,7 @@
 
 // test the Richardson solver using the Trilinos matrix and vector classes
 
+
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
@@ -31,6 +32,7 @@
 #include <iostream>
 #include <typeinfo>
 
+
 int
 main(int argc, char** argv)
 {
@@ -39,6 +41,7 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
+
 
   {
     const unsigned int size = 32;

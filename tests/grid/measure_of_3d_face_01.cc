@@ -23,6 +23,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 // move backward two adjacent vertices of the top face up by one
 // unit. all faces remain flat this way
 Point<3> distort_planar(Point<3> p)
@@ -44,6 +45,8 @@ Point<3> distort_twisted(Point<3> p)
     }
   return p;
 }
+
+
 
 void
 test()
@@ -90,6 +93,8 @@ test()
 
   deallog << std::endl;
 }
+
+
 
 int
 main()

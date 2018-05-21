@@ -512,6 +512,11 @@ namespace Step40
                                             Triangulation<dim>::cell_iterator>>
               periodicity_vector;
 
+            std::vector<
+              GridTools::PeriodicFacePair<typename parallel::distributed::
+                                            Triangulation<dim>::cell_iterator>>
+              periodicity_vector;
+
             for(int i = 1; i < dim; ++i)
               GridTools::collect_periodic_faces(triangulation,
                                                 /*b_id1*/ 2 * i,

@@ -225,6 +225,7 @@ namespace LAPACKSupport
     << "configuration time.");
 } // namespace LAPACKSupport
 
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

@@ -34,6 +34,8 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 // a function that shows something useful on the surface of a sphere
 template <int dim>
 class RadialFunction : public Function<dim>
@@ -125,6 +127,7 @@ test_hyper_sphere()
       test(tr, fe);
     }
 }
+
 
 int
 main()

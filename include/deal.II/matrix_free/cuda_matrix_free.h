@@ -30,6 +30,7 @@
 #  include <deal.II/lac/constraint_matrix.h>
 #  include <deal.II/lac/cuda_vector.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace CUDAWrappers

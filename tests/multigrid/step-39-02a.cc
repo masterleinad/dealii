@@ -59,6 +59,8 @@ namespace Step39
 
   Functions::SlitSingularityFunction<2> exact_solution;
 
+
+
   template <int dim>
   class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
   {
@@ -363,6 +365,8 @@ namespace Step39
     dinfo1.value(0) = std::sqrt(dinfo1.value(0));
     dinfo2.value(0) = dinfo1.value(0);
   }
+
+
 
   template <int dim>
   class InteriorPenaltyProblem
@@ -766,6 +770,8 @@ namespace Step39
       }
   }
 } // namespace Step39
+
+
 
 int
 main()

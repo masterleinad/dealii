@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/utilities.h>
@@ -29,6 +30,7 @@
 #include <fstream>
 #include <iostream>
 #include <numeric>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -426,6 +428,9 @@ namespace
         internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
                                                             p4est_child);
 
+        internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
+                                                            p4est_child);
+
         for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
             ++c)
           {
@@ -488,6 +493,7 @@ namespace
                   default:
                     Assert(false, ExcNotImplemented());
                 }
+
 
             internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
                                                                 p4est_child);
@@ -1038,6 +1044,7 @@ namespace
     refine_list.reserve(n_refine_flags);
     coarsen_list.reserve(n_coarsen_flags);
 
+
     // now build the lists of cells that are flagged. note that p4est will
     // traverse its cells in the order in which trees appear in the
     // forest. this order is not the same as the order of coarse cells in the
@@ -1060,6 +1067,7 @@ namespace
         p4est_cell.p.which_tree = c;
         build_lists(cell, p4est_cell, my_subdomain);
       }
+
 
     Assert(refine_list.size() == n_refine_flags, ExcInternalError());
     Assert(coarsen_list.size() == n_coarsen_flags, ExcInternalError());
@@ -1303,6 +1311,7 @@ namespace
   }
 } // namespace
 
+
 namespace parallel
 {
   namespace distributed
@@ -1354,6 +1363,8 @@ namespace parallel
       AssertNothrow(connectivity == nullptr, ExcInternalError());
       AssertNothrow(parallel_forest == nullptr, ExcInternalError());
     }
+
+
 
     template <int dim, int spacedim>
     void
@@ -1583,6 +1594,7 @@ namespace parallel
               dealii::internal::p4est::init_quadrant_children<dim>(p4est_cell,
                                                                    p4est_child);
 
+
               for(unsigned int c = 0;
                   c < GeometryInfo<dim>::max_children_per_cell;
                   ++c)
@@ -1737,6 +1749,8 @@ namespace parallel
         }
       } // namespace
     }   // namespace CommunicateLocallyMovedVertices
+
+
 
     template <int dim, int spacedim>
     void
@@ -1904,6 +1918,7 @@ namespace parallel
         this->n_levels() == 1,
         ExcMessage(
           "Triangulation may only contain coarse cells when calling load()."));
+
 
       if(parallel_ghost != nullptr)
         {
@@ -2517,6 +2532,8 @@ namespace parallel
       }
     } // namespace
 
+
+
     template <int dim, int spacedim>
     bool
     Triangulation<dim, spacedim>::prepare_coarsening_and_refinement()
@@ -2622,6 +2639,8 @@ namespace parallel
                       P4EST_CONNECT_CORNER) :
                     typename dealii::internal::p4est::types<dim>::balance_type(
                       P8EST_CONNECT_CORNER)));
+
+      Assert(parallel_ghost, ExcInternalError());
 
       Assert(parallel_ghost, ExcInternalError());
 
@@ -2752,6 +2771,8 @@ namespace parallel
       Assert(num_ghosts == parallel_ghost->ghosts.elem_count,
              ExcInternalError());
 #  endif
+
+
 
       // fill level_subdomain_ids for geometric multigrid
       // the level ownership of a cell is defined as the owner if the cell is active or as the owner of child(0)
@@ -2901,6 +2922,7 @@ namespace parallel
               == RefinementPossibilities<dim>::isotropic_refinement,
             ExcMessage("This class does not support anisotropic refinement"));
 #  endif
+
 
       // safety check: p4est has an upper limit on the level of a cell
       if(this->n_levels() == dealii::internal::p4est::functions<dim>::max_level)
@@ -3688,6 +3710,7 @@ namespace parallel
             p4est_orientation);
         }
 
+
       Assert(dealii::internal::p4est::functions<dim>::connectivity_is_valid(
                connectivity)
                == 1,
@@ -3704,6 +3727,7 @@ namespace parallel
         /* user_data_size = */ 0,
         /* user_data_constructor = */ nullptr,
         /* user_pointer */ this);
+
 
       try
         {
@@ -4030,7 +4054,10 @@ namespace parallel
   } // namespace distributed
 } // namespace parallel
 
+
 #endif // DEAL_II_WITH_P4EST
+
+
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "tria.inst"

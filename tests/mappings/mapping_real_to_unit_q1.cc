@@ -25,6 +25,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 
+
 template <int dim, int spacedim>
 void
 test_real_to_unit_cell()
@@ -70,6 +71,8 @@ test_real_to_unit_cell()
 
   MappingQGeneric<dim, spacedim> map(1);
 
+  MappingQGeneric<dim, spacedim> map(1);
+
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = triangulation.begin_active();
 
@@ -109,6 +112,10 @@ main()
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
+
+  test_real_to_unit_cell<1, 1>();
+  test_real_to_unit_cell<2, 2>();
+  test_real_to_unit_cell<3, 3>();
 
   test_real_to_unit_cell<1, 1>();
   test_real_to_unit_cell<2, 2>();

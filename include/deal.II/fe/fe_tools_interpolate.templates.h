@@ -16,6 +16,7 @@
 #ifndef dealii_fe_tools_interpolate_templates_H
 #define dealii_fe_tools_interpolate_templates_H
 
+
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/std_cxx14/memory.h>
@@ -42,6 +43,7 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector.h>
 
+
 #include <deal.II/base/index_set.h>
 
 #include <iostream>
@@ -67,6 +69,8 @@ namespace FETools
     dummy.close();
     interpolate(dof1, u1, dof2, dummy, u2);
   }
+
+
 
   template <int dim,
             int spacedim,
@@ -169,6 +173,13 @@ namespace FETools
                        || cell1->neighbor(face)->level() == cell1->level(),
                      ExcHangingNodesNotAllowed(0));
 
+          if(hanging_nodes_not_allowed)
+            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+                ++face)
+              Assert(cell1->at_boundary(face)
+                       || cell1->neighbor(face)->level() == cell1->level(),
+                     ExcHangingNodesNotAllowed(0));
+
           const unsigned int dofs_per_cell1 = cell1->get_fe().dofs_per_cell;
           const unsigned int dofs_per_cell2 = cell2->get_fe().dofs_per_cell;
           u1_local.reinit(dofs_per_cell1);
@@ -238,6 +249,7 @@ namespace FETools
               ::dealii::internal::ElementAccess<OutVector>::get(touch_count, i))
               != typename OutVector::value_type(0),
             ExcInternalError());
+
 
           const typename OutVector::value_type val
             = ::dealii::internal::ElementAccess<OutVector>::get(u2, i);
@@ -459,6 +471,8 @@ namespace FETools
     } // namespace
   }   // namespace internal
 
+
+
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   back_interpolate(const DoFHandler<dim, spacedim>& dof1,
@@ -612,6 +626,8 @@ namespace FETools
 #endif
     } // namespace
   }   // namespace internal
+
+
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void

@@ -172,6 +172,7 @@ public:
                VectorMemory<VectorType>& mem,
                const AdditionalData&     data = AdditionalData());
 
+
   /**
    * Virtual destructor.
    */

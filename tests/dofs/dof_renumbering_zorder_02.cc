@@ -67,6 +67,8 @@ print_dofs(const DoFHandler<dim>& dof, stream& out)
     }
 }
 
+
+
 template <int dim>
 void
 check()

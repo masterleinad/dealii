@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void create_two_cubes(Triangulation<3>& coarse_grid)
 {
   const Point<3>        points[6] = {Point<3>(0, 0, 0),
@@ -64,6 +66,7 @@ void create_two_cubes(Triangulation<3>& coarse_grid)
   coarse_grid.create_triangulation_compatibility(
     vertices, cells, SubCellData());
 }
+
 
 void check(Triangulation<3>& tria)
 {
@@ -110,6 +113,7 @@ void check(Triangulation<3>& tria)
             }
         }
 }
+
 
 int
 main()

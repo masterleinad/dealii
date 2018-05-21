@@ -79,6 +79,7 @@ namespace Functions
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
 
+
     if(this->selected == CutOffFunctionBase<dim>::no_component
        || component == this->selected)
       for(unsigned int k = 0; k < values.size(); ++k)
@@ -278,6 +279,11 @@ namespace Functions
               (p - this->center) / d
                 * (-2.0 * r * r / pow(-r * r + d * d, 2.0) * d * exp(e)));
   }
+
+  // explicit instantiations
+  template class CutOffFunctionLinfty<1>;
+  template class CutOffFunctionLinfty<2>;
+  template class CutOffFunctionLinfty<3>;
 
   // explicit instantiations
   template class CutOffFunctionLinfty<1>;

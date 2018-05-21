@@ -21,6 +21,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 std::ofstream logfile("output");
 
 // 1: continuous refinement of the unit square always in the middle
@@ -100,6 +101,8 @@ CurvedLine<dim>::get_new_point_on_line(
 
   double x = middle(0), y = middle(1);
 
+  double x = middle(0), y = middle(1);
+
   if(y < x)
     if(y < 1 - x)
       middle(1) = 0.04 * std::sin(6 * 3.141592 * middle(0));
@@ -167,6 +170,7 @@ test(const int test_case)
       return;
     };
 
+
   switch(test_case)
     {
       case 1:
@@ -202,6 +206,7 @@ test(const int test_case)
               tria.begin_active()->face(4)->set_manifold_id(1);
               tria.begin_active()->face(5)->set_manifold_id(1);
             };
+
 
           // set the manifold function
           Ball<dim>       ball;
@@ -247,6 +252,7 @@ test(const int test_case)
 
   deallog.pop();
 }
+
 
 int
 main()

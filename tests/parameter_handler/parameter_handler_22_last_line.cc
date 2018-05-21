@@ -33,6 +33,7 @@ check(const char* p, std::string last_line)
           << "var_2=" << prm.get("var_2") << std::endl;
 }
 
+
 int
 main()
 {

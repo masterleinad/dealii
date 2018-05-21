@@ -87,6 +87,7 @@ test(std::ostream& /*out*/)
     }
 }
 
+
 int
 main(int argc, char* argv[])
 {

@@ -20,6 +20,7 @@
 
 #include <iostream>
 
+
 void
 test(const unsigned int size)
 {
@@ -58,6 +59,7 @@ test(const unsigned int size)
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

@@ -33,6 +33,7 @@ check(const std::string in,
     }
 }
 
+
 void
 test()
 {
@@ -48,6 +49,7 @@ test()
   check("small SMALL", "LL", "ll", "small SMAll");
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

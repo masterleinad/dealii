@@ -37,6 +37,9 @@ class TriaRawIterator;
 template <int, int>
 class FiniteElement;
 
+template <int, int>
+class FiniteElement;
+
 namespace internal
 {
   namespace DoFCellAccessorImplementation
@@ -114,6 +117,7 @@ namespace internal
     };
   } // namespace DoFAccessorImplementation
 } // namespace internal
+
 
 /* -------------------------------------------------------------------------- */
 
@@ -1189,6 +1193,7 @@ protected:
   template <typename>
   friend class TriaRawIterator;
 
+
   /**
    * Make the DoFHandler class a friend so that it can call the set_xxx()
    * functions.
@@ -1277,6 +1282,8 @@ public:
                 const unsigned int            fe_index
                 = DoFHandler<dim, spacedim>::default_fe_index) const;
 };
+
+
 
 /* -------------------------------------------------------------------------- */
 

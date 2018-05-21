@@ -173,6 +173,7 @@ LaplaceKernelIntegration<dim>::term_D(const Tensor<1, 3>& r,
   return integral;
 }
 
+
 double integration(Point<3> point)
 {
   Triangulation<2, 3> square;
@@ -188,6 +189,8 @@ double integration(Point<3> point)
   laplace.compute_SD_integral_on_cell(integrals, cell, point);
   return integrals[0];
 }
+
+
 
 int
 main()

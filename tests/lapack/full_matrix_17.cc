@@ -46,6 +46,7 @@ test(const unsigned int size)
   deallog << 1. / (l1 * inv_l1) << " " << rcond << std::endl;
 }
 
+
 int
 main()
 {

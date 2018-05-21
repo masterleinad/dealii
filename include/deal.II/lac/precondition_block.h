@@ -291,6 +291,7 @@ public:
                 const Vector<number2>& src,
                 const bool             transpose_diagonal) const;
 
+
   /**
    * Return the size of the blocks.
    */
@@ -594,6 +595,7 @@ public:
    */
   const_iterator
   end(const size_type r) const;
+
 
 private:
   /**

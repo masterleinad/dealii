@@ -38,6 +38,7 @@ const bool errors = false;
 #include <string>
 #include <vector>
 
+
 template <int dim>
 void
 check(const unsigned int        level,
@@ -213,6 +214,7 @@ loop()
   for(unsigned int e = 0; e < elements.size(); ++e)
     delete elements[e];
 }
+
 
 int
 main()

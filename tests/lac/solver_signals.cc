@@ -16,6 +16,7 @@
 // Connects slots to all signals in solver_cg and solver_gmres and writes all
 //output to deallog.
 
+
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <complex>
@@ -27,6 +28,7 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_memory.h>
 #include <string>
+
 
 void
 output_double_number(double input, const std::string& text)
@@ -100,6 +102,8 @@ check_solve(SolverType&         solver,
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
 }
+
+
 
 int
 main()

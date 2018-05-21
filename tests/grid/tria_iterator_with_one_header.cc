@@ -24,6 +24,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -34,6 +35,7 @@ test()
   GridGenerator::hyper_cube(tria);
   deallog << tria.begin_active()->center() << std::endl;
 }
+
 
 int
 main()

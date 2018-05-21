@@ -25,6 +25,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 unsigned int
 count_wrong_faces(const Triangulation<3>& tria)
 {
@@ -40,6 +42,8 @@ count_wrong_faces(const Triangulation<3>& tria)
         ++count;
   return count;
 }
+
+
 
 void check(Triangulation<3>& tria)
 {
@@ -66,6 +70,8 @@ void check(Triangulation<3>& tria)
     Assert(count == initial_count * (4 << (2 * 2)), ExcInternalError());
   }
 }
+
+
 
 int
 main()

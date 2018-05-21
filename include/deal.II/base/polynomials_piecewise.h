@@ -165,6 +165,8 @@ namespace Polynomials
 
 } // namespace Polynomials
 
+} // namespace Polynomials
+
 /** @} */
 
 /* -------------------------- inline functions --------------------- */

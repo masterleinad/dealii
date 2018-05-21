@@ -74,6 +74,7 @@ test()
   test_operators<3, rank, NumberType, OtherNumberType>();
 }
 
+
 int
 main()
 {

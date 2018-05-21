@@ -31,6 +31,7 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_pattern.h>
 
+
 template <int dim>
 void
 test()
@@ -72,6 +73,8 @@ test()
   for(SparsityPattern::const_iterator i = A.begin(); i != A.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 }
+
+
 
 int
 main()

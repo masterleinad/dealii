@@ -333,6 +333,7 @@ namespace Step14
     }
   } // namespace Evaluation
 
+
   // @sect3{The Laplace solver classes}
 
   // Next are the actual solver classes. Again, we discuss only the
@@ -473,6 +474,7 @@ namespace Step14
         const typename DoFHandler<dim>::active_cell_iterator& cell,
         AssemblyScratchData&                                  scratch_data,
         AssemblyCopyData&                                     copy_data) const;
+
 
       void
       copy_local_to_global(const AssemblyCopyData& copy_data,
@@ -665,6 +667,8 @@ namespace Step14
       DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
       DoFTools::make_sparsity_pattern(dof_handler, dsp);
 
+
+
       // Wait for the side task to be done before going further
       side_task.join();
 
@@ -690,6 +694,8 @@ namespace Step14
 
       hanging_node_constraints.distribute(solution);
     }
+
+
 
     // @sect4{The PrimalSolver class}
 
@@ -744,6 +750,12 @@ namespace Step14
       data_out.attach_dof_handler(this->dof_handler);
       data_out.add_data_vector(this->solution, "solution");
       data_out.build_patches();
+
+      std::ofstream out("solution-" + std::to_string(this->refinement_cycle)
+                        + ".gnuplot");
+      data_out.write(out, DataOutBase::gnuplot);
+    }
+
 
       std::ofstream out("solution-" + std::to_string(this->refinement_cycle)
                         + ".gnuplot");
@@ -969,6 +981,7 @@ namespace Step14
 
   } // namespace LaplaceSolver
 
+
   // @sect3{Equation data}
   //
   // In this example program, we work with the same data sets as in the
@@ -1067,6 +1080,9 @@ namespace Step14
     {
       virtual const Function<dim>&
       get_boundary_values() const override;
+
+      virtual const Function<dim>&
+      get_right_hand_side() const override;
 
       virtual const Function<dim>&
       get_right_hand_side() const override;
@@ -1600,7 +1616,9 @@ namespace Step14
       rhs /= total_volume;
     }
 
+
   } // namespace DualFunctional
+
 
   // @sect3{Extending the LaplaceSolver namespace}
   namespace LaplaceSolver
@@ -2580,6 +2598,7 @@ namespace Step14
 
   } // namespace LaplaceSolver
 
+
   // @sect3{A simulation framework}
 
   // In the previous example program, we have had two functions that were used
@@ -2605,6 +2624,7 @@ namespace Step14
     // data types:
     typedef Evaluation::EvaluationBase<dim> Evaluator;
     typedef std::list<Evaluator*>           EvaluatorList;
+
 
     // Then we have the structure which declares all the parameters that may
     // be set. In the default constructor of the structure, these values are
@@ -2793,6 +2813,7 @@ namespace Step14
             solver->postprocess(**e);
           }
 
+
         if(solver->n_dofs() < descriptor.max_degrees_of_freedom)
           solver->refine_grid();
         else
@@ -2804,6 +2825,8 @@ namespace Step14
   }
 
 } // namespace Step14
+
+
 
 // @sect3{The main function}
 

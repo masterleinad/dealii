@@ -26,6 +26,7 @@
 #include <deal.II/lac/vector.h>
 #include <iostream>
 
+
 void
 test()
 {
@@ -60,6 +61,7 @@ test()
           }
       }
   sparsity.compress();
+
 
   // next build the sparse matrix itself
   SparseMatrix<double> matrix(sparsity);
@@ -100,6 +102,8 @@ test()
 
   deallog << v1 * v2 << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

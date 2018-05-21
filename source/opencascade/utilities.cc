@@ -25,6 +25,7 @@
 #  include <iostream>
 #  include <set>
 
+
 #  include <IGESControl_Controller.hxx>
 #  include <IGESControl_Reader.hxx>
 #  include <IGESControl_Writer.hxx>
@@ -76,6 +77,7 @@
 #  include <GCPnts_AbscissaPoint.hxx>
 #  include <ShapeAnalysis_Surface.hxx>
 
+
 #  include <algorithm>
 #  include <vector>
 
@@ -125,6 +127,7 @@ namespace OpenCASCADE
         vertices.push_back(TopoDS::Vertex(exp.Current()));
       }
   }
+
 
   void
   extract_compound_shapes(const TopoDS_Shape&            shape,
@@ -230,6 +233,7 @@ namespace OpenCASCADE
     return false;
   }
 
+
   TopoDS_Shape
   read_IGES(const std::string& filename, const double scale_factor)
   {
@@ -332,6 +336,9 @@ namespace OpenCASCADE
 
     for(unsigned int i = 0; i < edges.size(); ++i)
       tolerance = fmax(tolerance, BRep_Tool::Tolerance(edges[i]));
+
+    for(unsigned int i = 0; i < faces.size(); ++i)
+      tolerance = fmax(tolerance, BRep_Tool::Tolerance(faces[i]));
 
     for(unsigned int i = 0; i < faces.size(); ++i)
       tolerance = fmax(tolerance, BRep_Tool::Tolerance(faces[i]));
@@ -502,6 +509,8 @@ namespace OpenCASCADE
     return out_shape;
   }
 
+
+
   template <int spacedim>
   std::vector<TopoDS_Edge>
   create_curves_from_triangulation_boundary(
@@ -605,6 +614,7 @@ namespace OpenCASCADE
     return interpolation_curves;
   }
 
+
   template <int dim>
   std::tuple<Point<dim>, TopoDS_Shape, double, double>
   project_point_and_pull_back(const TopoDS_Shape& in_shape,
@@ -687,6 +697,7 @@ namespace OpenCASCADE
       point<dim>(Pproj), out_shape, u, v);
   }
 
+
   template <int dim>
   Point<dim>
   closest_point(const TopoDS_Shape& in_shape,
@@ -725,6 +736,7 @@ namespace OpenCASCADE
       std::get<0>(numbers) < 2,
       ExcMessage(
         "Could not find normal: the shape containing the closest point has more than 1 face."));
+
 
     TopExp_Explorer exp;
     exp.Init(out_shape, TopAbs_FACE);
@@ -785,6 +797,8 @@ namespace OpenCASCADE
     return std::tuple<Point<3>, Tensor<1, 3>, double, double>(
       point<3>(Value), normal, Min_Curvature, Max_Curvature);
   }
+
+
 
   template <int spacedim>
   void

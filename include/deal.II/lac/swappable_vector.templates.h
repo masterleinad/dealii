@@ -236,6 +236,8 @@ SwappableVector<number>::memory_consumption() const
           + Vector<number>::memory_consumption());
 }
 
+
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif // dealii_swappable_vector_templates_h

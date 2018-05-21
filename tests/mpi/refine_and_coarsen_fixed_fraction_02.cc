@@ -33,6 +33,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
 
+
+
 void
 test()
 {
@@ -129,10 +131,13 @@ test()
             << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

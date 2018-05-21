@@ -27,7 +27,9 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 std::ofstream logfile("output");
+
 
 void
 test(const char* filename)
@@ -73,6 +75,8 @@ test1()
   std::ofstream gnufile("square.gnuplot");
   grid_out.write_gnuplot(tria, gnufile);
 }
+
+
 
 int
 main()

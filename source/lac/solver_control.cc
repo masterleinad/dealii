@@ -25,6 +25,7 @@ DEAL_II_NAMESPACE_OPEN
 
 /*----------------------- SolverControl ---------------------------------*/
 
+
 SolverControl::SolverControl(const unsigned int maxiter,
                              const double       tolerance,
                              const bool         m_log_history,
@@ -136,6 +137,8 @@ SolverControl::enable_history_data()
   history_data_enabled = true;
 }
 
+
+
 const std::vector<double>&
 SolverControl::get_history_data() const
 {
@@ -191,6 +194,7 @@ SolverControl::declare_parameters(ParameterHandler& param)
   param.declare_entry("Log result", "true", Patterns::Bool());
 }
 
+
 void
 SolverControl::parse_parameters(ParameterHandler& param)
 {
@@ -213,6 +217,7 @@ ReductionControl::ReductionControl(const unsigned int n,
     reduced_tol(numbers::signaling_nan<double>())
 {}
 
+
 ReductionControl::ReductionControl(const SolverControl& c)
   : SolverControl(c),
     reduce(numbers::signaling_nan<double>()),
@@ -220,6 +225,7 @@ ReductionControl::ReductionControl(const SolverControl& c)
 {
   set_reduction(0.);
 }
+
 
 ReductionControl&
 ReductionControl::operator=(const SolverControl& c)
@@ -286,6 +292,8 @@ IterationNumberControl::IterationNumberControl(const unsigned int n,
   : SolverControl(n, tolerance, m_log_history, m_log_result)
 {}
 
+
+
 SolverControl::State
 IterationNumberControl::check(const unsigned int step, const double check_value)
 {
@@ -308,6 +316,7 @@ IterationNumberControl::check(const unsigned int step, const double check_value)
 
 /*------------------------ ConsecutiveControl -------------------------------*/
 
+
 ConsecutiveControl::ConsecutiveControl(
   const unsigned int n,
   const double       tolerance,
@@ -322,9 +331,13 @@ ConsecutiveControl::ConsecutiveControl(
               ExcMessage("n_consecutive_iterations should be positive"));
 }
 
+
+
 ConsecutiveControl::ConsecutiveControl(const SolverControl& c)
   : SolverControl(c), n_consecutive_iterations(1), n_converged_iterations(0)
 {}
+
+
 
 ConsecutiveControl&
 ConsecutiveControl::operator=(const SolverControl& c)

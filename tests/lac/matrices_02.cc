@@ -53,6 +53,8 @@ public:
   }
 };
 
+
+
 template <int dim>
 void
 check_boundary(const DoFHandler<dim>& dof, const Mapping<dim>& mapping)
@@ -101,6 +103,8 @@ check_boundary(const DoFHandler<dim>& dof, const Mapping<dim>& mapping)
 void
 check_boundary(const DoFHandler<1>&, const Mapping<1>&)
 {}
+
+
 
 template <int dim>
 void
@@ -185,6 +189,8 @@ check()
   if(dim > 1)
     check_boundary(dof, mapping);
 }
+
+
 
 int
 main()

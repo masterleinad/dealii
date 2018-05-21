@@ -27,6 +27,7 @@
 
 #include "../tests.h"
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/function_parser.h>
 #include <deal.II/base/parameter_handler.h>
@@ -95,6 +96,8 @@ namespace Step36
     : fe(1), dof_handler(triangulation)
   {}
 
+
+
   template <int dim>
   void
   EigenvalueProblem<dim>::make_grid_and_dofs()
@@ -145,6 +148,7 @@ namespace Step36
 
     std::vector<double> potential_values(n_q_points);
 
+
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
@@ -184,6 +188,7 @@ namespace Step36
 
     stiffness_matrix.compress(VectorOperation::add);
     mass_matrix.compress(VectorOperation::add);
+
 
     double min_spurious_eigenvalue = std::numeric_limits<double>::max(),
            max_spurious_eigenvalue = -std::numeric_limits<double>::max();
@@ -280,6 +285,7 @@ namespace Step36
     data_out.write_vtk(output);
   }
 
+
   bool
   my_compare(std::complex<double> a, std::complex<double> b)
   {
@@ -313,6 +319,7 @@ main(int argc, char** argv)
       using namespace Step36;
 
       initlog();
+
 
       EigenvalueProblem<2> problem("");
       problem.run();

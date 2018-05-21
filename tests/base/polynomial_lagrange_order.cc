@@ -24,6 +24,7 @@
 
 using namespace Polynomials;
 
+
 void
 check_interpolation(const std::vector<Polynomial<double>>& p,
                     const std::vector<Point<1>>&           x)
@@ -51,6 +52,8 @@ check_interpolation(const std::vector<Polynomial<double>>& p,
       deallog << std::endl;
     }
 }
+
+
 
 void
 check_constant(const std::vector<Polynomial<double>>& p)
@@ -99,6 +102,8 @@ check_lge(unsigned int n)
   check_constant(p);
   deallog << std::endl;
 }
+
+
 
 int
 main()

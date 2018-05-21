@@ -47,6 +47,7 @@ print(const VECTOR& vec)
   deallog << std::endl;
 }
 
+
 template <class PRECONDITIONER,
           class MATRIX,
           class VECTOR,

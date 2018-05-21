@@ -44,6 +44,7 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
@@ -111,6 +112,7 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
   return index_sets;
 } //locally_owned_dofs_per_subdomain
 
+
 void
 test()
 {
@@ -122,6 +124,7 @@ test()
     = Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
     = Utilities::MPI::this_mpi_process(mpi_communicator);
+
 
   Triangulation<dim> triangulation;
   DoFHandler<dim>    dof_handler(triangulation);
@@ -156,6 +159,7 @@ test()
         cell->set_subdomain_id(id);
       }
   }
+
 
   dof_handler.distribute_dofs(fe);
   DoFRenumbering::subdomain_wise(dof_handler);
@@ -196,6 +200,8 @@ test()
   for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
     eigenfunctions[i].reinit(locally_owned_dofs,
                              mpi_communicator); //without ghost dofs
+
+  eigenvalues.resize(eigenfunctions.size());
 
   eigenvalues.resize(eigenfunctions.size());
 
@@ -334,9 +340,11 @@ test()
     }
   }
 
+
   dof_handler.clear();
   deallog << "Ok" << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

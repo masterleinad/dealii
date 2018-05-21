@@ -22,6 +22,8 @@
 #include <deal.II/base/utilities.h>
 #include <iostream>
 
+
+
 void
 test()
 {
@@ -46,6 +48,8 @@ test()
   my_set.compress();
   my_set.make_trilinos_map(MPI_COMM_WORLD, false);
 }
+
+
 
 int
 main(int argc, char** argv)

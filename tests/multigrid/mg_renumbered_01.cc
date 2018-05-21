@@ -418,6 +418,8 @@ LaplaceProblem<dim>::test()
   print_diff(mg_dof_handler_renumbered, mg_dof_handler, dst_renumbered, dst);
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::refine_local()
@@ -451,6 +453,7 @@ LaplaceProblem<dim>::refine_local()
         cell != triangulation.end();
         ++cell)
       cell->set_refine_flag();
+
 
   triangulation.execute_coarsening_and_refinement();
 }

@@ -325,6 +325,8 @@ namespace Utilities
 
     } // namespace internal
 
+
+
     template <typename Number>
     void
     Partitioner::import_from_ghosted_array_finish(
@@ -455,6 +457,7 @@ namespace Utilities
       // clear the compress requests
       requests.resize(0);
     }
+
 
 #  endif // ifdef DEAL_II_WITH_MPI
 #endif   // ifndef DOXYGEN

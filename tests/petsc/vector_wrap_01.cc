@@ -21,6 +21,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test(PETScWrappers::VectorBase& v, PETScWrappers::MPI::Vector& w)
 {
@@ -37,6 +38,7 @@ test(PETScWrappers::VectorBase& v, PETScWrappers::MPI::Vector& w)
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

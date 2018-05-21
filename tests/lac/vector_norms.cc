@@ -20,6 +20,8 @@
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 
+
+
 template <typename number>
 void
 check_norms()
@@ -110,6 +112,7 @@ check_complex_norms()
                   ExcInternalError());
     }
 }
+
 
 int
 main()

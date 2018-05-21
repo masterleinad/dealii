@@ -41,6 +41,8 @@
 #    include <gp_Pnt.hxx>
 #    undef HAVE_CONFIG_H
 
+
+
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -132,6 +134,7 @@ namespace OpenCASCADE
    */
   TopoDS_Shape
   read_STEP(const std::string& filename, const double scale_factor = 1e-3);
+
 
   /**
    * Write the given topological shape into an STEP file.
@@ -230,6 +233,7 @@ namespace OpenCASCADE
   create_triangulation(const TopoDS_Face&          face,
                        Triangulation<2, spacedim>& tria);
 
+
   /**
    * Given a Triangulation and an optional Mapping, create a vector of smooth
    * curves that interpolate the connected parts of the boundary vertices of
@@ -314,6 +318,7 @@ namespace OpenCASCADE
   Point<dim>
   push_forward(const TopoDS_Shape& in_shape, const double u, const double v);
 
+
   /**
    * Given a TopoDS_Face @p face and the reference coordinates within this
    * face, returns the corresponding point in real space, the normal to the
@@ -324,6 +329,7 @@ namespace OpenCASCADE
                                       const double       u,
                                       const double       v,
                                       const double       tolerance = 1e-7);
+
 
   /**
    * Get the closest point to the given topological shape, together with the
@@ -336,6 +342,7 @@ namespace OpenCASCADE
   closest_point_and_differential_forms(const TopoDS_Shape& in_shape,
                                        const Point<3>&     origin,
                                        const double        tolerance = 1e-7);
+
 
   /**
    * Intersect a line passing through the given @p origin point along @p
@@ -351,6 +358,7 @@ namespace OpenCASCADE
                     const Tensor<1, dim>& direction,
                     const double          tolerance = 1e-7);
 
+
   /**
    * Convert OpenCASCADE point into a Point<spacedim>.
    *
@@ -362,12 +370,14 @@ namespace OpenCASCADE
   Point<spacedim>
   point(const gp_Pnt& p, const double& tolerance = 1e-10);
 
+
   /**
    * Convert Point<3> into OpenCASCADE point.
    */
   template <int spacedim>
   gp_Pnt
   point(const Point<spacedim>& p);
+
 
   /**
    * Sort two points according to their scalar product with direction. If the
@@ -381,6 +391,7 @@ namespace OpenCASCADE
                 const Point<dim>&     p2,
                 const Tensor<1, dim>& direction = Tensor<1, dim>(),
                 const double          tolerance = 1e-10);
+
 
   /**
    * Exception thrown when the point specified as argument does not lie
@@ -418,6 +429,7 @@ namespace OpenCASCADE
    */
   DeclException0(ExcUnsupportedShape);
 } // namespace OpenCASCADE
+
 
 DEAL_II_NAMESPACE_CLOSE
 

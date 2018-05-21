@@ -74,6 +74,7 @@ namespace internal
                  const int i4,
                  const int i5);
 
+
       /**
        * Return the index of the ith face object.
        */
@@ -189,8 +190,10 @@ namespace internal
       ar& faces;
     }
 
+
   } // namespace TriangulationImplementation
 } // namespace internal
+
 
 DEAL_II_NAMESPACE_CLOSE
 

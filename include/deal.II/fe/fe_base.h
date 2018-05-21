@@ -137,6 +137,7 @@ namespace FiniteElementDomination
   inline Domination operator&(const Domination d1, const Domination d2);
 } // namespace FiniteElementDomination
 
+
 /**
  * A class that declares a number of scalar constant variables that describe
  * basic properties of a finite element implementation. This includes, for
@@ -510,6 +511,7 @@ namespace FiniteElementDomination
     return neither_element_dominates;
   }
 } // namespace FiniteElementDomination
+
 
 template <int dim>
 inline unsigned int

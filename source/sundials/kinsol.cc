@@ -13,6 +13,7 @@
 //
 //-----------------------------------------------------------
 
+
 #include <deal.II/base/config.h>
 #include <deal.II/sundials/kinsol.h>
 
@@ -79,6 +80,8 @@ namespace SUNDIALS
       return err;
     }
 
+
+
     template <typename VectorType>
     int
     t_kinsol_setup_jacobian(KINMem kinsol_mem)
@@ -99,6 +102,8 @@ namespace SUNDIALS
       int err = solver.setup_jacobian(*src_ycur, *src_fcur);
       return err;
     }
+
+
 
     template <typename VectorType>
     int

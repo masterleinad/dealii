@@ -22,6 +22,8 @@
 //                   const DoFHandler<dim> &,
 //                   std::vector<Point<dim> > &)
 
+
+
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)

@@ -214,6 +214,8 @@ namespace Step35
                         "the solution. ");
     }
 
+
+
     void
     Data_Storage::read_data(const char* filename)
     {
@@ -264,6 +266,8 @@ namespace Step35
       output_interval = prm.get_integer("output_interval");
     }
   } // namespace RunTimeParameters
+
+
 
   // @sect3{Equation data}
 
@@ -394,6 +398,8 @@ namespace Step35
         values[i] = Pressure<dim>::value(points[i]);
     }
   } // namespace EquationData
+
+
 
   // @sect3{The <code>NavierStokesProjection</code> class}
 
@@ -1389,6 +1395,7 @@ namespace Step35
     prec_vel_mass.solve(rot_u);
   }
 } // namespace Step35
+
 
 // @sect3{ The main function }
 

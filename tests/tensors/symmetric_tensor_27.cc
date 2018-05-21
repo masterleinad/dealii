@@ -48,6 +48,8 @@ test()
   AssertThrow(scalar_product(t, s) == symmetrize(t) * s, ExcInternalError());
 }
 
+
+
 int
 main()
 {

@@ -22,6 +22,7 @@
 
 #define PRECISION 8
 
+
 template <int dim>
 void
 test(const unsigned int degree)

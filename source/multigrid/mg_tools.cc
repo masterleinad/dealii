@@ -85,6 +85,8 @@ namespace MGTools
     Assert(false, ExcNotImplemented());
   }
 
+
+
   // Template for 2D and 3D. For 1D see specialization above
   template <int dim, int spacedim>
   void
@@ -266,6 +268,7 @@ namespace MGTools
       }
     user_flags_triangulation.load_user_flags(old_flags);
   }
+
 
   // This is the template for 2D and 3D. See version for 1D above
   template <int dim, int spacedim>
@@ -1443,6 +1446,7 @@ namespace MGTools
     typename DoFHandler<dim>::cell_iterator cell = mg_dof_handler.begin(),
                                             endc = mg_dof_handler.end();
 
+
     for(; cell != endc; ++cell)
       {
         if(mg_dof_handler.get_triangulation().locally_owned_subdomain()
@@ -1623,6 +1627,7 @@ namespace MGTools
     return global_min;
   }
 } // namespace MGTools
+
 
 // explicit instantiations
 #include "mg_tools.inst"

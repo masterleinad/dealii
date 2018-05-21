@@ -27,6 +27,7 @@ std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
 
+
 double
 f_x(double x_m)
 {

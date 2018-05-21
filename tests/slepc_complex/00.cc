@@ -24,6 +24,8 @@
 
 std::ofstream logfile("output");
 
+std::ofstream logfile("output");
+
 int
 main(int argc, char** argv)
 {
@@ -47,6 +49,7 @@ main(int argc, char** argv)
         logfile << "   pi+1i:           " << pi_1i << std::endl
                 << "   two:             " << two << std::endl
                 << "   two times pi+1i: " << two * pi_1i << std::endl;
+
 
         logfile << "Finalizing SLEPc (PETSc): " << std::flush;
       }

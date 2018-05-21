@@ -31,6 +31,8 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim, int spacedim>
 class FiniteElement;
 
+
+
 namespace internal
 {
   namespace hp
@@ -180,6 +182,8 @@ namespace internal
 
 } // namespace internal
 
+} // namespace internal
+
 namespace hp
 {
   /**
@@ -254,6 +258,7 @@ namespace hp
       const dealii::hp::QCollection<dim>&                 q_collection,
       const UpdateFlags                                   update_flags);
 
+
     /**
      * Constructor. This constructor is equivalent to the other one except
      * that it makes the object use a $Q_1$ mapping (i.e., an object of type
@@ -268,6 +273,7 @@ namespace hp
     FEValues(const hp::FECollection<dim, spacedim>& fe_collection,
              const hp::QCollection<dim>&            q_collection,
              const UpdateFlags                      update_flags);
+
 
     /**
      * Reinitialize the object for the given cell.
@@ -385,6 +391,7 @@ namespace hp
                  const hp::FECollection<dim, spacedim>&      fe_collection,
                  const hp::QCollection<dim - 1>&             q_collection,
                  const UpdateFlags                           update_flags);
+
 
     /**
      * Constructor. This constructor is equivalent to the other one except
@@ -504,6 +511,7 @@ namespace hp
       const hp::QCollection<dim - 1>&             q_collection,
       const UpdateFlags                           update_flags);
 
+
     /**
      * Constructor. This constructor is equivalent to the other one except
      * that it makes the object use a $Q_1$ mapping (i.e., an object of type
@@ -587,6 +595,7 @@ namespace hp
   };
 
 } // namespace hp
+
 
 // -------------- inline and template functions --------------
 

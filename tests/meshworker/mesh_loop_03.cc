@@ -50,6 +50,8 @@ test()
 
   typedef decltype(cell) Iterator;
 
+
+
   auto cell_worker = [](const Iterator& cell, ScratchData& s, CopyData& c) {
     deallog << "Cell worker on : " << cell << std::endl;
   };
@@ -84,6 +86,7 @@ test()
 
   WorkStream::run(cell, endc, cell_worker, copier, scratch, copy);
 }
+
 
 int
 main()

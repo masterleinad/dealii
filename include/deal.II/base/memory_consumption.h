@@ -33,6 +33,7 @@ DEAL_II_NAMESPACE_OPEN
 template <typename T>
 class VectorizedArray;
 
+
 /**
  * This namespace provides functions helping to determine the amount of memory
  * used by objects. The goal is not necessarily to give the amount of memory
@@ -259,6 +260,8 @@ namespace MemoryConsumption
   memory_consumption(const std::unique_ptr<T>&);
 } // namespace MemoryConsumption
 
+
+
 // now comes the implementation of these functions
 
 namespace MemoryConsumption
@@ -270,6 +273,8 @@ namespace MemoryConsumption
   {
     return sizeof(T);
   }
+
+
 
   inline std::size_t
   memory_consumption(const char* string)
@@ -297,6 +302,8 @@ namespace MemoryConsumption
   {
     return sizeof(VectorizedArray<T>);
   }
+
+
 
   inline std::size_t
   memory_consumption(const std::string& s)
@@ -352,6 +359,8 @@ namespace MemoryConsumption
       mem += memory_consumption(v[i]);
     return mem;
   }
+
+
 
   inline std::size_t
   memory_consumption(const std::vector<bool>& v)

@@ -40,6 +40,7 @@ DEAL_II_NAMESPACE_OPEN
 template <typename>
 class BlockVectorBase;
 
+
 /**
  * A class that can be used to determine whether a given type is a block
  * vector type or not. For example,
@@ -99,6 +100,8 @@ public:
 template <typename VectorType>
 const bool IsBlockVector<VectorType>::value;
 
+
+
 namespace internal
 {
   /**
@@ -115,6 +118,8 @@ namespace internal
     template <class BlockVectorType, bool Constness>
     struct Types
     {};
+
+
 
     /**
      * Declaration of a specialized template of a structure which is used to
@@ -255,6 +260,7 @@ namespace internal
        * (via <code>static_assert</code>).
        */
       Iterator(const Iterator<BlockVectorType, !Constness>& c);
+
 
       /**
        * Copy constructor from an iterator with the same constness.
@@ -460,6 +466,7 @@ namespace internal
       void
       move_backward();
 
+
       /**
        * Mark all other instances of this template as friends.
        */
@@ -468,6 +475,7 @@ namespace internal
     };
   } // namespace BlockVectorIterators
 } // namespace internal
+
 
 /**
  * A vector composed of several blocks each representing a vector of its own.
@@ -887,6 +895,7 @@ public:
   BlockVectorBase&
   operator-=(const BlockVectorBase& V);
 
+
   /**
    * A collective add operation: This function adds a whole set of values
    * stored in @p values to the vector components specified by @p indices.
@@ -1095,6 +1104,8 @@ namespace internal
         next_break_forward(next_break_forward),
         next_break_backward(next_break_backward)
     {}
+
+
 
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>&
@@ -1791,6 +1802,7 @@ BlockVectorBase<VectorType>::add(const value_type                   a,
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
   Assert(n_blocks() == w.n_blocks(),
          ExcDimensionMismatch(n_blocks(), w.n_blocks()));
+
 
   for(size_type i = 0; i < n_blocks(); ++i)
     {

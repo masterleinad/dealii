@@ -514,6 +514,7 @@ namespace internal
 
 #ifndef DOXYGEN
 
+
     inline unsigned int
     DoFInfo::fe_index_from_degree(const unsigned int first_selected_component,
                                   const unsigned int fe_degree) const

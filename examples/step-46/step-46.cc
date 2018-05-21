@@ -60,6 +60,7 @@
 #include <fstream>
 #include <iostream>
 
+
 namespace Step46
 {
   using namespace dealii;
@@ -109,6 +110,7 @@ namespace Step46
     static bool
     cell_is_in_solid_domain(
       const typename hp::DoFHandler<dim>::cell_iterator& cell);
+
 
     void
     make_grid();
@@ -280,6 +282,8 @@ namespace Step46
     fe_collection.push_back(elasticity_fe);
   }
 
+
+
   template <int dim>
   bool
   FluidStructureProblem<dim>::cell_is_in_fluid_domain(
@@ -322,6 +326,7 @@ namespace Step46
         if(cell->face(f)->at_boundary()
            && (cell->face(f)->center()[dim - 1] == 1))
           cell->face(f)->set_all_boundary_ids(1);
+
 
     for(typename Triangulation<dim>::active_cell_iterator cell
         = dof_handler.begin_active();
@@ -1062,6 +1067,8 @@ namespace Step46
       }
   }
 } // namespace Step46
+
+
 
 // @sect4{The <code>main()</code> function}
 

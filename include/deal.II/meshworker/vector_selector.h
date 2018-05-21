@@ -409,6 +409,7 @@ namespace MeshWorker
     initialize(const MGLevelObject<VectorType>*, const std::string& name);
   };
 
+
   //----------------------------------------------------------------------//
 
   inline void
@@ -528,12 +529,14 @@ namespace MeshWorker
     s << std::endl;
   }
 
+
   inline std::size_t
   VectorSelector::memory_consumption() const
   {
     return sizeof(*this);
   }
 } // namespace MeshWorker
+
 
 DEAL_II_NAMESPACE_CLOSE
 

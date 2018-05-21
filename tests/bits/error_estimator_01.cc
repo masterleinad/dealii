@@ -30,6 +30,8 @@
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 class MySquareFunction : public Function<dim>
 {
@@ -98,6 +100,8 @@ make_mesh(Triangulation<dim>& tria)
       cell->set_subdomain_id(subdomain);
     }
 }
+
+
 
 template <int dim>
 void
@@ -181,6 +185,7 @@ check()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

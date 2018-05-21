@@ -43,6 +43,7 @@ private:
   Point<dim> p;
 };
 
+
 int
 main()
 {

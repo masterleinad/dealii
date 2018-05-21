@@ -829,6 +829,9 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
   Assert(n_eigenvalues <= eigenvalues.size(),
          PArpackExcInvalidEigenvalueSize(n_eigenvalues, eigenvalues.size()));
 
+  Assert(n_eigenvalues <= eigenvalues.size(),
+         PArpackExcInvalidEigenvalueSize(n_eigenvalues, eigenvalues.size()));
+
   // use eigenvectors to get the problem size so that it is possible to
   // employ LinearOperator for mass_matrix.
   Assert(n_eigenvalues < eigenvectors[0]->size(),

@@ -192,6 +192,7 @@ check_function(const Functions::FlowFunction<dim>& f,
     DataOutBase::write_dx(patches, names, vectors, dxflags, out);
 }
 
+
 int
 main()
 {

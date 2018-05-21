@@ -37,6 +37,8 @@ namespace TrilinosWrappers
 #  endif
   {}
 
+
+
   PreconditionBase::PreconditionBase(const PreconditionBase& base)
     : Subscriptor(),
       preconditioner(base.preconditioner),
@@ -45,6 +47,8 @@ namespace TrilinosWrappers
 #  endif
       vector_distributor(new Epetra_Map(*base.vector_distributor))
   {}
+
+
 
   void
   PreconditionBase::clear()
@@ -65,6 +69,7 @@ namespace TrilinosWrappers
     return MPI_COMM_SELF;
 #  endif
   }
+
 
   Epetra_Operator&
   PreconditionBase::trilinos_operator() const
@@ -652,6 +657,8 @@ namespace TrilinosWrappers
     ierr = ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
+
+
 
   /* -------------------------- PreconditionIdentity --------------------- */
 

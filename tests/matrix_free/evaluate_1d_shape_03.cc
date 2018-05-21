@@ -66,10 +66,12 @@ test()
   if(type == 2)
     evaluator.template hessians<0, false, add>(x, y);
 
+
   deallog << "Errors no transpose: ";
   for(unsigned int i = 0; i < M; ++i)
     deallog << y[i] - y_ref[i] << " ";
   deallog << std::endl;
+
 
   for(unsigned int i = 0; i < M; ++i)
     y[i] = (double) Testing::rand() / RAND_MAX;

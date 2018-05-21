@@ -25,6 +25,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <int dim>
 void
 pack_function(
@@ -126,6 +128,8 @@ test()
 
       //tr.write_mesh_vtk("a");
 
+
+
       deallog << "* repartition:" << std::endl;
 
       offset = tr.register_data_attach(sizeof(int), pack_function<dim>);
@@ -147,6 +151,7 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

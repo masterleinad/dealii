@@ -487,6 +487,8 @@ namespace LinearAlgebra
         (*this)(indices[i]) += values[i];
     }
 
+
+
     template <typename Number>
     bool
     BlockVector<Number>::all_zero() const
@@ -746,6 +748,8 @@ namespace LinearAlgebra
           matrix.set_property(LAPACKSupport::general);
       }
     } // namespace
+
+
 
     template <typename Number>
     template <typename FullMatrixType>

@@ -370,6 +370,8 @@ namespace Polynomials
   std::vector<Polynomial<double>>
   generate_complete_Lagrange_basis(const std::vector<Point<1>>& points);
 
+
+
   /**
    * Legendre polynomials of arbitrary degree. Constructing a Legendre
    * polynomial of degree <tt>p</tt>, the roots will be computed by the Gauss
@@ -718,6 +720,7 @@ namespace Polynomials
                           const int          beta,
                           const Number       x);
 
+
   /**
    * Compute the roots of the Jacobi polynomials on the unit interval $[0, 1]$
    * of the given degree. These roots are used in several places inside the
@@ -736,6 +739,7 @@ namespace Polynomials
                           const int          alpha,
                           const int          beta);
 } // namespace Polynomials
+
 
 /** @} */
 

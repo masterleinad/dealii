@@ -25,6 +25,7 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector_operations_internal.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace LinearAlgebra
@@ -174,6 +175,7 @@ namespace LinearAlgebra
 
       // initialize to zero
       this->operator=(Number());
+
 
       // do not reallocate import_data directly, but only upon request. It
       // is only used as temporary storage for compress() and
@@ -349,6 +351,8 @@ namespace LinearAlgebra
             copier, 0, partitioner->local_size(), thread_loop_partitioner);
         }
     }
+
+
 
 #ifdef DEAL_II_WITH_PETSC
 
@@ -853,6 +857,8 @@ namespace LinearAlgebra
           this->operator()(indices[i]) += values[i];
         }
     }
+
+
 
     template <typename Number>
     void
@@ -1378,6 +1384,7 @@ namespace LinearAlgebra
   } // end of namespace distributed
 
 } // namespace LinearAlgebra
+
 
 DEAL_II_NAMESPACE_CLOSE
 

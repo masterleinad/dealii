@@ -19,6 +19,7 @@
 // version is used, but the blessed output file is obtained using the
 // modified 8.4 version.
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/utilities.h>
@@ -49,6 +50,7 @@
 #include <complex>
 #include <fstream>
 #include <iostream>
+
 
 namespace Step27
 {
@@ -180,6 +182,13 @@ namespace Step27
     system_matrix.reinit(sparsity_pattern);
   }
 
+    DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
+    DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints, false);
+    sparsity_pattern.copy_from(dsp);
+
+    system_matrix.reinit(sparsity_pattern);
+  }
+
   template <int dim>
   void
   LaplaceProblem<dim>::assemble_system()
@@ -238,6 +247,8 @@ namespace Step27
       }
   }
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -254,6 +265,8 @@ namespace Step27
     constraints.distribute(solution);
   }
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::postprocess(const unsigned int cycle)
@@ -264,6 +277,7 @@ namespace Step27
                                        typename FunctionMap<dim>::type(),
                                        solution,
                                        estimated_error_per_cell);
+
 
     Vector<float> smoothness_indicators(triangulation.n_active_cells());
     estimate_smoothness(smoothness_indicators);
@@ -396,6 +410,8 @@ namespace Step27
     triangulation.refine_global(3);
   }
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::run()
@@ -488,11 +504,13 @@ namespace Step27
     for(unsigned int i = 0; i < n_fourier_modes; ++i)
       ln_k[i] = std::log(k_vectors[i].norm());
 
+
     std::vector<Table<2, std::complex<double>>> fourier_transform_matrices(
       fe_collection.size());
 
     QGauss<1>      base_quadrature(2);
     QIterated<dim> quadrature(base_quadrature, N);
+
 
     for(unsigned int fe = 0; fe < fe_collection.size(); ++fe)
       {
@@ -603,6 +621,8 @@ namespace Step27
 #endif
   }
 } // namespace Step27
+
+
 
 int
 main()

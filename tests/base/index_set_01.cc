@@ -19,6 +19,7 @@
 
 #include <deal.II/base/index_set.h>
 
+
 void
 test()
 {
@@ -34,6 +35,8 @@ test()
     deallog << i << ' ' << (index_set.is_element(i) ? "true" : "false")
             << std::endl;
 }
+
+
 
 int
 main()

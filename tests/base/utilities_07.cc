@@ -22,6 +22,8 @@
 
 using namespace dealii;
 
+
+
 void
 verify(const std::string& s)
 {
@@ -38,6 +40,8 @@ verify(const std::string& s)
 
   deallog << "Done correctly: " << s << std::endl;
 }
+
+
 
 int
 main()

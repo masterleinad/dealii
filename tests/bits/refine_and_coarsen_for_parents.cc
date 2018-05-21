@@ -25,6 +25,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void do_refine(Triangulation<1>& tria)
 {
   const int dim = 1;
@@ -33,6 +35,7 @@ void do_refine(Triangulation<1>& tria)
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 }
+
 
 void do_refine(Triangulation<2>& tria)
 {
@@ -46,6 +49,7 @@ void do_refine(Triangulation<2>& tria)
   tria.begin_active()->set_refine_flag(RefinementPossibilities<dim>::cut_y);
   tria.execute_coarsening_and_refinement();
 }
+
 
 void do_refine(Triangulation<3>& tria)
 {
@@ -105,6 +109,7 @@ check()
 
   deallog << "OK for " << dim << "d" << std::endl;
 }
+
 
 int
 main()

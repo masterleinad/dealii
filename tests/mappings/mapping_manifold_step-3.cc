@@ -46,6 +46,8 @@
 
 std::ofstream logfile("output");
 
+
+
 class LaplaceProblem
 {
 public:
@@ -75,8 +77,11 @@ private:
   Vector<double> system_rhs;
 };
 
+
 LaplaceProblem::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
+
+
 
 void
 LaplaceProblem::make_grid_and_dofs()
@@ -102,6 +107,8 @@ LaplaceProblem::make_grid_and_dofs()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
+
+
 
 void
 LaplaceProblem::assemble_system()
@@ -156,12 +163,26 @@ LaplaceProblem::assemble_system()
         system_rhs(local_dof_indices[i]) += cell_rhs(i);
     }
 
+      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            cell_matrix(i, j)
+              += (fe_values.shape_grad(i, q_point)
+                  * fe_values.shape_grad(j, q_point) * fe_values.JxW(q_point));
+
   std::map<types::global_dof_index, double> boundary_values;
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, Functions::ZeroFunction<2>(), boundary_values);
   MatrixTools::apply_boundary_values(
     boundary_values, system_matrix, solution, system_rhs);
 }
+
+      cell->get_dof_indices(local_dof_indices);
+
+      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          system_matrix.add(
+            local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
 void
 LaplaceProblem::solve()
@@ -170,6 +191,19 @@ LaplaceProblem::solve()
   SolverCG<>    cg(solver_control);
 
   cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
+}
+
+
+
+void
+LaplaceProblem::output_results() const
+{
+  DataOut<2, DoFHandler<2>> data_out;
+  data_out.attach_dof_handler(dof_handler);
+  data_out.add_data_vector(solution, "solution");
+  data_out.build_patches();
+
+  data_out.write_gnuplot(deallog.get_file_stream());
 }
 
 void
@@ -191,6 +225,8 @@ LaplaceProblem::run()
   solve();
   output_results();
 }
+
+
 
 int
 main()

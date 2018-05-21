@@ -16,6 +16,7 @@
 #ifndef dealii_fe_dg_vector_templates_h
 #define dealii_fe_dg_vector_templates_h
 
+
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_dg_vector.h>
 #include <deal.II/fe/fe_tools.h>

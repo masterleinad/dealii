@@ -16,6 +16,7 @@
 #ifndef dealii_qprojector_h
 #define dealii_qprojector_h
 
+
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/quadrature.h>
 
@@ -367,6 +368,7 @@ template <>
 Quadrature<1>
 QProjector<1>::project_to_all_faces(const Quadrature<0>& quadrature);
 
+
 template <>
 void
 QProjector<1>::project_to_subface(const Quadrature<0>&,
@@ -396,6 +398,7 @@ QProjector<1>::project_to_all_subfaces(const Quadrature<0>& quadrature);
 template <>
 QIterated<1>::QIterated(const Quadrature<1>& base_quadrature,
                         const unsigned int   n_copies);
+
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

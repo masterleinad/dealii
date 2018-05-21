@@ -192,6 +192,8 @@ private:
   operator<<(std::ostream& os, const CellId& cid);
 };
 
+
+
 /**
  * Write a CellId object into a stream.
  */
@@ -270,6 +272,8 @@ CellId::operator!=(const CellId& other) const
 {
   return !(*this == other);
 }
+
+
 
 inline bool
 CellId::operator<(const CellId& other) const

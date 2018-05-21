@@ -320,6 +320,7 @@ namespace internal
       }
     } // namespace
 
+
     int (&functions<2>::quadrant_compare)(const void* v1, const void* v2)
       = p4est_quadrant_compare;
 
@@ -558,6 +559,8 @@ namespace internal
 
     const unsigned int functions<2>::max_level;
 
+
+
     int (&functions<3>::quadrant_compare)(const void* v1, const void* v2)
       = p8est_quadrant_compare;
 
@@ -767,6 +770,7 @@ namespace internal
             default:
               Assert(false, ExcNotImplemented());
           }
+
 
       functions<dim>::quadrant_childrenv(&p4est_cell, p4est_children);
     }

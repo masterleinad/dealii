@@ -53,6 +53,7 @@ test()
   verify(q1, q3);
 }
 
+
 int
 main()
 {

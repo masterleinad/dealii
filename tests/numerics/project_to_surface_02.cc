@@ -23,6 +23,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 class Rotate2d
 {
 public:
@@ -51,6 +53,7 @@ do_rotate(Triangulation<dim>& tria)
 {
   GridTools::transform(Rotate2d(numbers::PI / 4), tria);
 }
+
 
 void do_rotate(Triangulation<1>&)
 {}
@@ -118,6 +121,8 @@ test()
       tria.clear();
     }
 }
+
+
 
 int
 main()

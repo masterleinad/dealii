@@ -269,6 +269,7 @@ namespace Physics
                      << ", but needs to be either " << arg2 << " or " << arg3
                      << ".");
 
+
       /**
        * Input matrix has incorrect number of rows.
        */
@@ -281,6 +282,7 @@ namespace Physics
                      << ", but needs to be either " << arg2 << "," << arg3
                      << ", or " << arg4 << ".");
 
+
       /**
        * Input matrix has incorrect number of columns.
        */
@@ -291,6 +293,7 @@ namespace Physics
                      << "The number of columns in the input matrix is " << arg1
                      << ", but needs to be either " << arg2 << " or " << arg3
                      << ".");
+
 
       /**
        * Input matrix has incorrect number of columns.
@@ -303,6 +306,7 @@ namespace Physics
                      << "The number of columns in the input matrix is " << arg1
                      << ", but needs to be either " << arg2 << "," << arg3
                      << ", or " << arg4 << ".");
+
 
       /**
        * @name Forward operation: Tensor notation to Kelvin notation
@@ -318,6 +322,7 @@ namespace Physics
       Vector<Number>
       to_vector(const Number& s);
 
+
       /**
        * Convert a rank-0 tensor to its compressed vector equivalent.
        *
@@ -326,6 +331,7 @@ namespace Physics
       template <int dim, typename Number>
       Vector<Number>
       to_vector(const Tensor<0, dim, Number>& s);
+
 
       /**
        * Convert a rank-1 tensor to its compressed vector equivalent.
@@ -336,6 +342,7 @@ namespace Physics
       Vector<Number>
       to_vector(const Tensor<1, dim, Number>& v);
 
+
       /**
        * Convert a rank-2 tensor to its compressed vector equivalent.
        *
@@ -344,6 +351,7 @@ namespace Physics
       template <int dim, typename Number>
       Vector<Number>
       to_vector(const Tensor<2, dim, Number>& t);
+
 
       /**
        * Convert a rank-2 symmetric tensor to its compressed vector equivalent.
@@ -355,6 +363,7 @@ namespace Physics
       Vector<Number>
       to_vector(const SymmetricTensor<2, dim, Number>& st);
 
+
       /**
        * Convert a scalar value to its compressed matrix equivalent.
        *
@@ -363,6 +372,7 @@ namespace Physics
       template <typename Number>
       FullMatrix<Number>
       to_matrix(const Number& s);
+
 
       /**
        * Convert a rank-0 tensor to its compressed matrix equivalent.
@@ -373,6 +383,7 @@ namespace Physics
       FullMatrix<Number>
       to_matrix(const Tensor<0, dim, Number>& s);
 
+
       /**
        * Convert a rank-1 tensor to its compressed matrix equivalent.
        *
@@ -382,6 +393,7 @@ namespace Physics
       FullMatrix<Number>
       to_matrix(const Tensor<1, dim, Number>& v);
 
+
       /**
        * Convert a rank-2 tensor to its compressed matrix equivalent.
        *
@@ -390,6 +402,7 @@ namespace Physics
       template <int dim, typename Number>
       FullMatrix<Number>
       to_matrix(const Tensor<2, dim, Number>& t);
+
 
       /**
        * Convert a rank-2 symmetric tensor to its compressed matrix equivalent.
@@ -437,6 +450,7 @@ namespace Physics
       FullMatrix<Number>
       to_matrix(const Tensor<3, dim, Number>& t);
 
+
       /**
        * Convert a rank-4 tensor to its compressed matrix equivalent.
        *
@@ -446,6 +460,7 @@ namespace Physics
       template <int dim, typename Number>
       FullMatrix<Number>
       to_matrix(const Tensor<4, dim, Number>& t);
+
 
       /**
        * Convert a rank-4 symmetric tensor to its compressed matrix equivalent.
@@ -471,12 +486,14 @@ namespace Physics
       void
       to_tensor(const Vector<Number>& vec, Number& s);
 
+
       /**
        * Convert a compressed vector to its equivalent rank-0 tensor.
        */
       template <int dim, typename Number>
       void
       to_tensor(const Vector<Number>& vec, Tensor<0, dim, Number>& s);
+
 
       /**
        * Convert a compressed vector to its equivalent rank-1 tensor.
@@ -485,12 +502,14 @@ namespace Physics
       void
       to_tensor(const Vector<Number>& vec, Tensor<1, dim, Number>& v);
 
+
       /**
        * Convert a compressed vector to its equivalent rank-2 tensor.
        */
       template <int dim, typename Number>
       void
       to_tensor(const Vector<Number>& vec, Tensor<2, dim, Number>& t);
+
 
       /**
        * Convert a compressed vector to its equivalent rank-2 symmetric tensor.
@@ -499,12 +518,14 @@ namespace Physics
       void
       to_tensor(const Vector<Number>& vec, SymmetricTensor<2, dim, Number>& st);
 
+
       /**
        * Convert a compressed matrix to its equivalent scalar value.
        */
       template <typename Number>
       void
       to_tensor(const FullMatrix<Number>& mtrx, Number& s);
+
 
       /**
        * Convert a compressed matrix to its equivalent rank-0 tensor.
@@ -513,12 +534,14 @@ namespace Physics
       void
       to_tensor(const FullMatrix<Number>& mtrx, Tensor<0, dim, Number>& s);
 
+
       /**
        * Convert a compressed matrix to its equivalent rank-1 tensor.
        */
       template <int dim, typename Number>
       void
       to_tensor(const FullMatrix<Number>& mtrx, Tensor<1, dim, Number>& v);
+
 
       /**
        * Convert a compressed matrix to its equivalent rank-2 tensor.
@@ -527,6 +550,7 @@ namespace Physics
       void
       to_tensor(const FullMatrix<Number>& mtrx, Tensor<2, dim, Number>& t);
 
+
       /**
        * Convert a compressed matrix to its equivalent rank-2 symmetric tensor.
        */
@@ -534,6 +558,7 @@ namespace Physics
       void
       to_tensor(const FullMatrix<Number>&        mtrx,
                 SymmetricTensor<2, dim, Number>& st);
+
 
       /**
        * Convert a compressed matrix to its equivalent rank-3 tensor.
@@ -548,12 +573,14 @@ namespace Physics
       void
       to_tensor(const FullMatrix<Number>& mtrx, Tensor<3, dim, Number>& t);
 
+
       /**
        * Convert a compressed matrix to its equivalent rank-4 tensor.
        */
       template <int dim, typename Number>
       void
       to_tensor(const FullMatrix<Number>& mtrx, Tensor<4, dim, Number>& t);
+
 
       /**
        * Convert a compressed matrix to its equivalent rank-4 symmetric tensor.
@@ -563,6 +590,7 @@ namespace Physics
       to_tensor(const FullMatrix<Number>&        mtrx,
                 SymmetricTensor<4, dim, Number>& st);
 
+
       /**
        * A generic helper function that will convert a compressed vector
        * to its equivalent @p TensorType.
@@ -570,6 +598,7 @@ namespace Physics
       template <typename TensorType, typename Number>
       TensorType
       to_tensor(const Vector<Number>& vec);
+
 
       /**
        * A generic helper function that will convert a compressed matrix
@@ -581,6 +610,9 @@ namespace Physics
       //@}
 
     } // namespace Kelvin
+
+  } // namespace Notation
+} // namespace Physics
 
   } // namespace Notation
 } // namespace Physics
@@ -609,6 +641,7 @@ namespace Physics
         indices_from_component(const unsigned int component_n,
                                const bool         symmetric);
 
+
         template <int dim>
         std::pair<unsigned int, unsigned int>
         indices_from_component(const unsigned int component_n, const bool)
@@ -616,6 +649,7 @@ namespace Physics
           AssertThrow(false, ExcNotImplemented());
           return std::pair<unsigned int, unsigned int>();
         }
+
 
         template <>
         inline std::pair<unsigned int, unsigned int>
@@ -625,6 +659,7 @@ namespace Physics
 
           return std::make_pair(0u, 0u);
         }
+
 
         template <>
         inline std::pair<unsigned int, unsigned int>
@@ -651,6 +686,7 @@ namespace Physics
           return std::make_pair(indices[component_n][0],
                                 indices[component_n][1]);
         }
+
 
         template <>
         inline std::pair<unsigned int, unsigned int>
@@ -728,6 +764,7 @@ namespace Physics
 
       } // namespace internal
 
+
       template <typename Number>
       Vector<Number>
       to_vector(const Number& s)
@@ -739,12 +776,14 @@ namespace Physics
         return out;
       }
 
+
       template <int dim, typename Number>
       Vector<Number>
       to_vector(const Tensor<0, dim, Number>& s)
       {
         return to_vector(s.operator const Number&());
       }
+
 
       template <int dim, typename Number>
       Vector<Number>
@@ -762,6 +801,7 @@ namespace Physics
           }
         return out;
       }
+
 
       template <int dim, typename Number>
       Vector<Number>
@@ -781,6 +821,7 @@ namespace Physics
           }
         return out;
       }
+
 
       template <int dim, typename Number>
       Vector<Number>
@@ -806,6 +847,7 @@ namespace Physics
         return out;
       }
 
+
       template <typename Number>
       FullMatrix<Number>
       to_matrix(const Number& s)
@@ -815,12 +857,14 @@ namespace Physics
         return out;
       }
 
+
       template <int dim, typename Number>
       FullMatrix<Number>
       to_matrix(const Tensor<0, dim, Number>& s)
       {
         return to_matrix(s.operator const Number&());
       }
+
 
       template <int dim, typename Number>
       FullMatrix<Number>
@@ -844,6 +888,7 @@ namespace Physics
           }
         return out;
       }
+
 
       template <int dim, typename Number>
       FullMatrix<Number>
@@ -874,6 +919,7 @@ namespace Physics
         return out;
       }
 
+
       template <int dim, typename Number>
       FullMatrix<Number>
       to_matrix(const SymmetricTensor<2, dim, Number>& st)
@@ -895,6 +941,7 @@ namespace Physics
           {};
         } // namespace
       }   // namespace internal
+
 
       template <int dim,
                 typename SubTensor1,
@@ -1001,6 +1048,7 @@ namespace Physics
         return out;
       }
 
+
       template <int dim, typename Number>
       FullMatrix<Number>
       to_matrix(const Tensor<4, dim, Number>& t)
@@ -1033,6 +1081,7 @@ namespace Physics
           }
         return out;
       }
+
 
       template <int dim, typename Number>
       FullMatrix<Number>
@@ -1073,6 +1122,7 @@ namespace Physics
         return out;
       }
 
+
       template <typename Number>
       void
       to_tensor(const Vector<Number>& vec, Number& s)
@@ -1081,12 +1131,14 @@ namespace Physics
         s = vec(0);
       }
 
+
       template <int dim, typename Number>
       void
       to_tensor(const Vector<Number>& vec, Tensor<0, dim, Number>& s)
       {
         return to_tensor(vec, s.operator Number&());
       }
+
 
       template <int dim, typename Number>
       void
@@ -1104,6 +1156,7 @@ namespace Physics
             v[i]                 = vec(r);
           }
       }
+
 
       template <int dim, typename Number>
       void
@@ -1123,6 +1176,7 @@ namespace Physics
             t[i][j]              = vec(r);
           }
       }
+
 
       template <int dim, typename Number>
       void
@@ -1148,6 +1202,7 @@ namespace Physics
           }
       }
 
+
       template <typename Number>
       void
       to_tensor(const FullMatrix<Number>& mtrx, Number& s)
@@ -1159,12 +1214,14 @@ namespace Physics
         s = mtrx(0, 0);
       }
 
+
       template <int dim, typename Number>
       void
       to_tensor(const FullMatrix<Number>& mtrx, Tensor<0, dim, Number>& s)
       {
         return to_tensor(mtrx, s.operator Number&());
       }
+
 
       template <int dim, typename Number>
       void
@@ -1193,6 +1250,7 @@ namespace Physics
               }
           }
       }
+
 
       template <int dim, typename Number>
       void
@@ -1227,6 +1285,7 @@ namespace Physics
           }
       }
 
+
       template <int dim, typename Number>
       void
       to_tensor(const FullMatrix<Number>&        mtrx,
@@ -1250,6 +1309,7 @@ namespace Physics
                ExcMessage(
                  "The entries stored inside the matrix were not symmetric"));
       }
+
 
       template <int dim, typename Number>
       void
@@ -1389,6 +1449,7 @@ namespace Physics
           }
       }
 
+
       template <int dim, typename Number>
       void
       to_tensor(const FullMatrix<Number>& mtrx, Tensor<4, dim, Number>& t)
@@ -1427,6 +1488,7 @@ namespace Physics
               }
           }
       }
+
 
       template <int dim, typename Number>
       void
@@ -1475,6 +1537,7 @@ namespace Physics
           }
       }
 
+
       template <typename TensorType, typename Number>
       inline TensorType
       to_tensor(const Vector<Number>& vec)
@@ -1483,6 +1546,7 @@ namespace Physics
         to_tensor(vec, out);
         return out;
       }
+
 
       template <typename TensorType, typename Number>
       inline TensorType
@@ -1496,6 +1560,7 @@ namespace Physics
     } // namespace Kelvin
   }   // namespace Notation
 } // namespace Physics
+
 
 #endif // DOXYGEN
 

@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/lac/block_indices.h>
 #include <deal.II/meshworker/local_integrator.h>
 #include <deal.II/meshworker/local_results.h>
@@ -94,6 +95,7 @@ namespace MeshWorker
     Assert(false, ExcPureFunction());
   }
 
+
   template class LocalIntegrator<1, 1, float>;
   template class LocalIntegrator<1, 1, double>;
   template class LocalIntegrator<1, 2, float>;
@@ -107,5 +109,6 @@ namespace MeshWorker
   template class LocalIntegrator<3, 3, float>;
   template class LocalIntegrator<3, 3, double>;
 } // namespace MeshWorker
+
 
 DEAL_II_NAMESPACE_CLOSE

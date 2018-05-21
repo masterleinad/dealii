@@ -18,6 +18,7 @@
 // test GMRES without using the default residual, which caused a double
 // memory freeing (see issue #886).
 
+
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/lac/precondition.h>

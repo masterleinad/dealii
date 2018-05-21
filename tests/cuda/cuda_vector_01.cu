@@ -40,6 +40,7 @@ test()
   a.reinit(size);
   AssertThrow(a.size() == size, ExcMessage("Vector has the wrong size."));
 
+
   LinearAlgebra::ReadWriteVector<double> read_write_1(size);
   LinearAlgebra::ReadWriteVector<double> read_write_2(size);
   LinearAlgebra::ReadWriteVector<double> read_write_3(size);

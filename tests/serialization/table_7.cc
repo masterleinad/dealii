@@ -72,6 +72,7 @@ test()
   verify(t1, t3);
 }
 
+
 int
 main()
 {

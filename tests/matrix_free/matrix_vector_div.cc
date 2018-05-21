@@ -122,6 +122,11 @@ test()
   DoFHandler<dim> dof_handler_sca(tria);
   DoFHandler<dim> dof_handler(tria);
 
+  FE_Q<dim>       fe_sca(QGaussLobatto<1>(fe_degree + 1));
+  FESystem<dim>   fe(fe_sca, dim);
+  DoFHandler<dim> dof_handler_sca(tria);
+  DoFHandler<dim> dof_handler(tria);
+
   MatrixFree<dim, double> mf_data;
 
   ConstraintMatrix constraints;
@@ -265,6 +270,8 @@ test()
           << error / relative << std::endl
           << std::endl;
 }
+
+
 
 int
 main()

@@ -156,6 +156,8 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const override;
 };
 
+
+
 // For this example, we choose as right hand side function to function
 // $4(x^4+y^4)$ in 2D, or $4(x^4+y^4+z^4)$ in 3D. We could write this
 // distinction using an if-statement on the space dimension, but here is a

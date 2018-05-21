@@ -25,6 +25,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test()
 {
@@ -194,6 +195,8 @@ test()
   if(my_id == 0)
     deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

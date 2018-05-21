@@ -32,6 +32,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 check(const Triangulation<dim>& tria)
@@ -94,6 +96,7 @@ check(const Triangulation<dim>& tria)
   deallog << " face integration: " << v1 / dim << std::endl;
   deallog << " subface integration: " << v2 / dim << std::endl;
 }
+
 
 int
 main()

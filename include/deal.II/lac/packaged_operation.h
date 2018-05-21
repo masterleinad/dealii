@@ -32,6 +32,7 @@ class LinearOperator;
 template <typename Range = Vector<double>>
 class PackagedOperation;
 
+
 /**
  * A class to store a computation.
  *
@@ -493,6 +494,7 @@ namespace
     typedef decltype(test<T>(nullptr, nullptr, nullptr)) type;
   };
 } // namespace
+
 
 /**
  * @relatesalso PackagedOperation

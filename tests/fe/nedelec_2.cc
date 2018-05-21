@@ -121,6 +121,7 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
                                  update_values | update_quadrature_points
                                    | update_normal_vectors);
 
+
   for(typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
       c != dof.end();
       ++c)

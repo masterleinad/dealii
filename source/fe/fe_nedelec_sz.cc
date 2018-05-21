@@ -166,6 +166,7 @@ FE_NedelecSZ<dim>::get_data(
   std::vector<Point<dim>> p_list(n_q_points);
   p_list = quadrature.get_points();
 
+
   switch(dim)
     {
       case 2:
@@ -796,6 +797,7 @@ FE_NedelecSZ<dim>::get_data(
                         }
                     }
 
+
                   // only need poly values and 1st derivative for update_values,
                   // but need 2nd derivative too for update_gradients.
                   const unsigned int poly_length(
@@ -1096,6 +1098,7 @@ FE_NedelecSZ<dim>::fill_edge_values(
   // Calculate edge orderings:
   std::vector<std::vector<unsigned int>> edge_order(
     lines_per_cell, std::vector<unsigned int>(vertices_per_line));
+
 
   switch(dim)
     {

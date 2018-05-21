@@ -67,6 +67,7 @@ test_rotation_matrix_3d(const Point<3>& axis, const double angle)
           * (static_cast<Tensor<2, 3>>(unit_symmetric_tensor<3>()) - u_dyad_u)
       + std::sin(angle) * Tensor<2, 3>(u_skew_array);
 
+
   Assert(std::abs(determinant(R_rodrigues) - 1.0) < 1e-9,
          ExcMessage("Rodrigues rotation matrix determinant is not unity"));
   const Tensor<2, 3> R

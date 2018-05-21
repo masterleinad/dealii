@@ -33,6 +33,7 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/constraint_matrix.h>
 
+
 template <int dim>
 void
 check()
@@ -141,6 +142,9 @@ check()
 
       intergrid_constraints.print(deallog.get_file_stream());
 
+
+      intergrid_constraints.print(deallog.get_file_stream());
+
       // now refine grids a little,
       // but make sure that grid 2 is
       // always more refined than
@@ -196,6 +200,8 @@ check()
   delete fe_2;
   delete fe_dq_quadratic;
 }
+
+
 
 int
 main()

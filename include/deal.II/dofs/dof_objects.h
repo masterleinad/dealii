@@ -34,6 +34,7 @@ namespace internal
     template <int>
     class DoFFaces;
 
+
     /**
      * Store the indices of the degrees of freedom which are located on
      * objects of dimension @p dim.
@@ -154,6 +155,7 @@ namespace internal
       template <int>
       friend class DoFFaces;
     };
+
 
     // --------------------- template and inline functions ------------------
 

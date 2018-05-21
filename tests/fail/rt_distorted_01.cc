@@ -24,6 +24,9 @@
 
 std::ofstream logfile("output");
 
+std::ofstream logfile("output");
+
+
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
 #include <deal.II/grid/grid_generator.h>
@@ -278,6 +281,7 @@ double EvaluateArea(Mapping<2>&     mapping,
 
   return (result_v);
 }
+
 
 int
 main(int /*argc*/, char** /*argv*/)

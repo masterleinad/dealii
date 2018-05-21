@@ -58,7 +58,10 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 std::ofstream logfile("output");
+
 
 int
 main()
@@ -329,6 +332,7 @@ main()
               << ", mesh dof: " << solid_mesh_pairs[i].second << std::endl;
     }
   deallog << "------------------------------------------" << std::endl;
+
 
   //code crashes in the fluid assembly, mocked up below
   {

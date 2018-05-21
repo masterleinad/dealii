@@ -137,6 +137,7 @@ main()
   multiply4.Tvmult_add
     = [](RightVector& v, const LeftVector& u) { v.value += 4 * u.value; };
 
+
   // Small unit tests for all functions:
 
   RightVector u = {4.};

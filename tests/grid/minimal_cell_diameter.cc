@@ -19,6 +19,8 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 
+
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -56,6 +58,8 @@ test1()
         };
     };
 }
+
+
 
 int
 main()

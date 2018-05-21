@@ -31,6 +31,7 @@ check()
   AssertThrow(typeid(T() * U()) == typeid(CompareType), ExcInternalError());
 }
 
+
 int
 main()
 {

@@ -68,6 +68,7 @@ namespace internal
   }
 } // namespace internal
 
+
 /**
  * Given a triangulation and a description of a finite element, this
  * class enumerates degrees of freedom on all vertices, edges, faces,
@@ -294,6 +295,9 @@ public:
 
   typedef typename LevelSelector::CellAccessor level_cell_accessor;
   typedef typename LevelSelector::FaceAccessor level_face_accessor;
+
+  typedef typename LevelSelector::cell_iterator level_cell_iterator;
+  typedef typename LevelSelector::face_iterator level_face_iterator;
 
   typedef typename LevelSelector::cell_iterator level_cell_iterator;
   typedef typename LevelSelector::face_iterator level_face_iterator;
@@ -640,6 +644,7 @@ public:
   active_cell_iterator
   end_active(const unsigned int level) const;
 
+
   /**
    * Iterator to the first used cell on level @p level. This returns a
    * level_cell_iterator that returns level dofs when dof_indices() is called.
@@ -881,6 +886,7 @@ public:
   const BlockInfo&
   block_info() const;
 
+
   /**
    * Return the number of degrees of freedom that belong to this process.
    *
@@ -1060,6 +1066,7 @@ public:
                  << "You tried to do something on level " << arg1
                  << ", but this level is empty.");
 
+
 private:
   /**
    * An object containing information on the block structure.
@@ -1071,6 +1078,7 @@ private:
    */
   SmartPointer<const Triangulation<dim, spacedim>, DoFHandler<dim, spacedim>>
     tria;
+
 
   /**
    * Store a hp::FECollection object containing the (one)
@@ -1263,6 +1271,8 @@ private:
 #endif
 };
 
+
+
 #ifndef DOXYGEN
 
 /* ----------------------- Inline functions ---------------------------------- */
@@ -1428,6 +1438,8 @@ namespace internal
                      PolicyBase<dim, spacedim>& policy);
 } // namespace internal
 
+
+
 template <int dim, int spacedim>
 template <class Archive>
 void
@@ -1523,6 +1535,8 @@ DoFHandler<dim, spacedim>::load(Archive& ar, const unsigned int)
                  "DoFHandler previously stored ("
                + policy_name + ")."));
 }
+
+
 
 template <int dim, int spacedim>
 inline types::global_dof_index

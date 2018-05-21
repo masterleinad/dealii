@@ -22,6 +22,7 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -43,6 +44,7 @@ test1()
         };
     };
 }
+
 
 int
 main()

@@ -20,6 +20,7 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/manifold_lib.h>
 
+
 void
 check()
 {
@@ -61,6 +62,7 @@ check()
       }
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

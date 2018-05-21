@@ -100,6 +100,7 @@ check(const FiniteElement<dim>& fe_scalar)
   deallog << "Norm after restriction: " << vec[0].l2_norm() << std::endl;
 }
 
+
 int
 main(int argc, char** argv)
 {

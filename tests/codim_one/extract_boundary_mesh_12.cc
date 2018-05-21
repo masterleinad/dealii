@@ -23,6 +23,8 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 
+
+
 void
 test()
 {
@@ -54,6 +56,7 @@ test()
   deallog << triangulation_surface.n_used_vertices() << std::endl;
   deallog << triangulation_surface.n_active_cells() << std::endl;
 }
+
 
 int
 main()

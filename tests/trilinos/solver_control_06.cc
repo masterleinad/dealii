@@ -483,6 +483,7 @@ Test_Solver_Output::refine_grid()
   triangulation.execute_coarsening_and_refinement();
 }
 
+
 int
 main(int argc, char* argv[])
 {

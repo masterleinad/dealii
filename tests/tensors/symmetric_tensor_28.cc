@@ -39,6 +39,8 @@ test()
               << (int) t[i][j] << " " << (int) u[i][j] << std::endl;
 }
 
+
+
 int
 main()
 {

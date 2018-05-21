@@ -218,6 +218,7 @@ namespace hp
     std::size_t
     memory_consumption() const;
 
+
     /**
      * Return whether all elements in this collection implement the hanging
      * node constraints in the new way, which has to be used to make elements
@@ -456,6 +457,7 @@ namespace hp
      */
     BlockMask
     block_mask(const ComponentMask& component_mask) const;
+
 
     /**
      * Exception

@@ -315,6 +315,9 @@ namespace Step60
     void
     output_results();
 
+    void
+    output_results();
+
     // first we gather all the objects related to the embedding space geometry
 
     std::unique_ptr<Triangulation<spacedim>> space_grid;
@@ -366,6 +369,7 @@ namespace Step60
 
     ParameterAcceptorProxy<Functions::ParsedFunction<spacedim>>
       embedded_configuration_function;
+
 
     // The embedded mapping. Notice that the order in which we construct these
     // unique pointers is important. They will be destroyed in reversed order,
@@ -597,6 +601,7 @@ namespace Step60
     embedded_configuration_function.declare_parameters_call_back.connect(
       []() -> void {
         ParameterAcceptor::prm.set("Function constants", "R=.3, Cx=.4, Cy=.4");
+
 
         ParameterAcceptor::prm.set("Function expression",
                                    "R*cos(2*pi*x)+Cx; R*sin(2*pi*x)+Cy");
@@ -1075,6 +1080,8 @@ namespace Step60
     output_results();
   }
 } // namespace Step60
+
+
 
 int
 main(int argc, char** argv)

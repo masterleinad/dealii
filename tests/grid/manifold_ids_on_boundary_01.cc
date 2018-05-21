@@ -25,6 +25,7 @@
 
 #include <iostream>
 
+
 void
 dim_2(std::ostream& os)
 {
@@ -68,6 +69,7 @@ dim_3(std::ostream& os)
   GridOut gout;
   gout.write_vtk(tr, os);
 }
+
 
 int
 main()

@@ -34,6 +34,7 @@ std::ofstream logfile("output");
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 void
 output_double_number(double input, const std::string& text)
 {
@@ -137,6 +138,7 @@ test(const FiniteElement<dim>& fe, const unsigned int n_iterations)
     {}
   deallog << std::endl;
 }
+
 
 int
 main()

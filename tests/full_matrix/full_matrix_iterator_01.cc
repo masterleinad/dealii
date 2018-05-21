@@ -18,6 +18,7 @@
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 
+
 void
 test()
 {
@@ -48,6 +49,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

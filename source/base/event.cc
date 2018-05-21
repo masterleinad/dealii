@@ -38,6 +38,7 @@ namespace Algorithms
     return result;
   }
 
+
   Event::Event() : all_true(false), flags(names.size(), false)
   {}
 

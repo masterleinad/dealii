@@ -23,6 +23,7 @@
 
 using namespace Polynomials;
 
+
 void
 check_at_one(const std::vector<Polynomial<double>>& p)
 {
@@ -46,6 +47,8 @@ check_poly(const unsigned int n)
   check_at_one(p);
   deallog << std::endl;
 }
+
+
 
 int
 main()

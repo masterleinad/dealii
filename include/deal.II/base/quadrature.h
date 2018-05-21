@@ -16,6 +16,7 @@
 #ifndef dealii_quadrature_h
 #define dealii_quadrature_h
 
+
 #include <array>
 #include <deal.II/base/config.h>
 #include <deal.II/base/point.h>

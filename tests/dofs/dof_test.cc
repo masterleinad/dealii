@@ -27,6 +27,8 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
 
+
+
 // 1: continuous refinement of the unit square always in the middle
 // 2: refinement of the circle at the boundary
 // 2: refinement of a wiggled area at the boundary
@@ -115,6 +117,8 @@ CurvedLine<dim>::get_new_point_on_line(
 
   double x = middle(0), y = middle(1);
 
+  double x = middle(0), y = middle(1);
+
   if(y < x)
     if(y < 1 - x)
       middle(1) = 0.04 * std::sin(6 * 3.141592 * middle(0));
@@ -183,6 +187,8 @@ private:
 template <int dim>
 TestCases<dim>::TestCases() : tria(nullptr), dof(nullptr)
 {}
+
+
 
 template <int dim>
 TestCases<dim>::~TestCases()
@@ -281,6 +287,10 @@ TestCases<dim>::run(const unsigned int test_case)
         }
     };
 
+          break;
+        }
+    };
+
   deallog << "    Distributing degrees of freedom..." << std::endl;
   FE_Q<dim> fe(1);
   dof->distribute_dofs(fe);
@@ -290,11 +300,14 @@ TestCases<dim>::run(const unsigned int test_case)
 
   SparsityPattern sparsity(dof->n_dofs(), dof->max_couplings_between_dofs());
 
+  SparsityPattern sparsity(dof->n_dofs(), dof->max_couplings_between_dofs());
+
   DoFTools::make_sparsity_pattern(*dof, sparsity);
   int unconstrained_bandwidth = sparsity.bandwidth();
 
   deallog << "    Writing sparsity pattern..." << std::endl;
   sparsity.print_gnuplot(logfile);
+
 
   // computing constraints
   deallog << "    Computing constraints..." << std::endl;
@@ -305,6 +318,7 @@ TestCases<dim>::run(const unsigned int test_case)
 
   deallog << "    Writing condensed sparsity pattern..." << std::endl;
   sparsity.print_gnuplot(logfile);
+
 
   deallog << std::endl
           << "    Total number of cells         = " << tria->n_cells()
@@ -325,6 +339,8 @@ TestCases<dim>::run(const unsigned int test_case)
   // finite element object
   dof->clear();
 }
+
+
 
 int
 main()

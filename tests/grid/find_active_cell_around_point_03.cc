@@ -35,6 +35,7 @@ test()
   const double a = -0.3;
   const double b = 0.7;
 
+
   Triangulation<dim, spacedim> triangulation;
   GridGenerator::hyper_cube(triangulation, a, b);
   triangulation.refine_global(dim == 2 ? 2 : 1);

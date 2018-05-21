@@ -210,6 +210,7 @@ Step5<dim>::assemble_system()
             }
         }
 
+
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         {

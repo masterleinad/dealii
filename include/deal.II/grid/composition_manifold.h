@@ -92,6 +92,7 @@ public:
   virtual Point<chartdim>
   pull_back(const Point<spacedim>& space_point) const;
 
+
   /**
    * Push forward the chartdim dimensional point to a spacedim
    * Euclidean point. The function calls first the push_forward() of
@@ -114,6 +115,7 @@ private:
     const ChartManifold<dim1, intermediate_dim, chartdim>,
     CompositionManifold<dim, spacedim, chartdim, dim1, dim2, intermediate_dim>>
     F;
+
 
   /**
    * The second ChartManifold.
@@ -143,6 +145,7 @@ CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
          ExcMessage("The second manifold cannot be periodic."));
 }
 
+
 template <int dim,
           int spacedim,
           int chartdim,
@@ -158,6 +161,7 @@ CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
     *F, *G);
 }
 
+
 template <int dim,
           int spacedim,
           int chartdim,
@@ -171,6 +175,8 @@ CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
   return F->pull_back(G->pull_back(space_point));
 }
 
+
+
 template <int dim,
           int spacedim,
           int chartdim,
@@ -183,6 +189,8 @@ CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
 {
   return G->push_forward(F->push_forward(chart_point));
 }
+
+
 
 template <int dim,
           int spacedim,

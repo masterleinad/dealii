@@ -125,6 +125,7 @@ test()
   MPI_Barrier(MPI_COMM_WORLD);
   std::remove((base + "cm_" + Utilities::int_to_string(myid) + ".dot").c_str());
 
+
   // print the number of constraints. since
   // processors might write info in different
   // orders, copy all numbers to root processor
@@ -177,6 +178,7 @@ test()
     deallog << "OK" << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {
@@ -184,6 +186,7 @@ main(int argc, char* argv[])
     Utilities::MPI::MPI_InitFinalize mpi_initialization(
       argc, argv, testing_max_num_threads());
     unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+
 
     deallog.push(Utilities::int_to_string(myid));
 

@@ -394,6 +394,7 @@ namespace LocalIntegrators
           AssertVectorVectorDimension(velocity, dim, fe.n_quadrature_points);
         }
 
+
       for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = factor * fe.JxW(k);
@@ -459,6 +460,7 @@ namespace LocalIntegrators
         {
           AssertVectorVectorDimension(velocity, dim, fe.n_quadrature_points);
         }
+
 
       for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
         {
@@ -718,6 +720,7 @@ namespace LocalIntegrators
 
   } // namespace Advection
 } // namespace LocalIntegrators
+
 
 DEAL_II_NAMESPACE_CLOSE
 

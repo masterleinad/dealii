@@ -1098,6 +1098,7 @@ namespace VectorTools
     std::map<types::global_dof_index, number>& boundary_values,
     const ComponentMask& component_mask = ComponentMask());
 
+
   /**
    * Call the other interpolate_boundary_values() function, see above, with
    * <tt>mapping=MappingQGeneric@<dim,spacedim@>(1)</tt>. The same comments
@@ -1115,6 +1116,7 @@ namespace VectorTools
                                                function_map,
     std::map<types::global_dof_index, number>& boundary_values,
     const ComponentMask& component_mask = ComponentMask());
+
 
   /**
    * Insert the (algebraic) constraints due to Dirichlet boundary conditions
@@ -1237,6 +1239,7 @@ namespace VectorTools
     ConstraintMatrix&                    constraints,
     const ComponentMask&                 component_mask = ComponentMask());
 
+
   /**
    * Call the other interpolate_boundary_values() function, see above, with
    * <tt>mapping=MappingQGeneric@<dim,spacedim@>(1)</tt>. The same comments
@@ -1256,6 +1259,7 @@ namespace VectorTools
                          function_map,
     ConstraintMatrix&    constraints,
     const ComponentMask& component_mask = ComponentMask());
+
 
   /**
    * Project a function or a set of functions to the boundary of the domain.
@@ -1438,6 +1442,7 @@ namespace VectorTools
     const Quadrature<dim - 1>& q,
     ConstraintMatrix&          constraints,
     std::vector<unsigned int>  component_mapping = std::vector<unsigned int>());
+
 
   /**
    * Compute constraints that correspond to boundary conditions of the form
@@ -1627,6 +1632,7 @@ namespace VectorTools
     ConstraintMatrix&            constraints,
     const Mapping<dim>&          mapping = StaticMappingQ1<dim>::mapping);
 
+
   /**
    * hp-namespace version of project_boundary_values_curl_conforming_l2
    * (above).
@@ -1643,6 +1649,7 @@ namespace VectorTools
     ConstraintMatrix&                      constraints,
     const hp::MappingCollection<dim, dim>& mapping_collection
     = hp::StaticMappingQ1<dim>::mapping_collection);
+
 
   /**
    * Compute constraints that correspond to boundary conditions of the form
@@ -1718,6 +1725,7 @@ namespace VectorTools
     ConstraintMatrix&                      constraints,
     const hp::MappingCollection<dim, dim>& mapping_collection
     = hp::StaticMappingQ1<dim>::mapping_collection);
+
 
   /**
    * This function computes the constraints that correspond to boundary
@@ -2017,6 +2025,7 @@ namespace VectorTools
     const std::set<types::boundary_id>&  boundary_ids,
     ConstraintMatrix&                    constraints,
     const Mapping<dim, spacedim>& mapping = StaticMappingQ1<dim>::mapping);
+
 
   //@}
   /**
@@ -3012,6 +3021,7 @@ namespace VectorTools
   subtract_mean_value(VectorType&              v,
                       const std::vector<bool>& p_select = std::vector<bool>());
 
+
   /**
    * Compute the mean value of one component of the solution.
    *
@@ -3103,6 +3113,7 @@ namespace VectorTools
                    "parallel::distributed::Triangulation that is not "
                    "locally owned by this processor.");
 } // namespace VectorTools
+
 
 DEAL_II_NAMESPACE_CLOSE
 

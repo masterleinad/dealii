@@ -57,6 +57,7 @@ namespace FE_Q_3d
     -0.046875, 0.140625,  -0.09375, 0.28125,   -0.09375,  0.28125,  0.5625};
 } // namespace FE_Q_3d
 
+
 namespace Matrices
 {
   const double* const constraint_matrices[]
@@ -65,6 +66,8 @@ namespace Matrices
   const unsigned int n_constraint_matrices
     = sizeof(constraint_matrices) / sizeof(constraint_matrices[0]);
 } // namespace Matrices
+
+
 
 void
 check()
@@ -92,6 +95,7 @@ check()
     }
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

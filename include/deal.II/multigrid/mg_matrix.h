@@ -107,6 +107,7 @@ namespace mg
 
 } // namespace mg
 
+
 /**
  * Multilevel matrix selecting from block matrices. This class implements the
  * interface defined by MGMatrixBase.  The template parameter @p MatrixType
@@ -290,6 +291,7 @@ namespace mg
     return sizeof(*this) + matrices->memory_consumption();
   }
 } // namespace mg
+
 
 /*----------------------------------------------------------------------*/
 

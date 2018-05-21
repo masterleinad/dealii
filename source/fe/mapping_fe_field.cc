@@ -48,6 +48,8 @@
 #include <memory>
 #include <numeric>
 
+
+
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
@@ -201,6 +203,8 @@ namespace
     return quad;
   }
 } // namespace
+
+
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
@@ -387,6 +391,8 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
 
   return out;
 }
+
+
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
@@ -1477,6 +1483,7 @@ namespace internal
   }   // namespace MappingFEFieldImplementation
 } // namespace internal
 
+
 // Note that the CellSimilarity flag is modifiable, since MappingFEField can need to
 // recalculate data even when cells are similar.
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
@@ -1528,6 +1535,11 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
   if(update_flags & (update_normal_vectors | update_JxW_values))
     {
       AssertDimension(output_data.JxW_values.size(), n_q_points);
+
+      Assert(
+        !(update_flags & update_normal_vectors)
+          || (output_data.normal_vectors.size() == n_q_points),
+        ExcDimensionMismatch(output_data.normal_vectors.size(), n_q_points));
 
       Assert(
         !(update_flags & update_normal_vectors)
@@ -1865,6 +1877,16 @@ namespace internal
                   typename FEValuesBase<dim>::ExcAccessToUninitializedField(
                     "update_contravariant_transformation"));
 
+            //We still allow this operation as in the
+            //reference cell Derivatives are Tensor
+            //rather than DerivativeForm
+            case mapping_covariant:
+              {
+                Assert(
+                  data.update_each & update_contravariant_transformation,
+                  typename FEValuesBase<dim>::ExcAccessToUninitializedField(
+                    "update_contravariant_transformation"));
+
                 for(unsigned int i = 0; i < output.size(); ++i)
                   output[i] = apply_transformation(data.covariant[i], input[i]);
 
@@ -1875,6 +1897,7 @@ namespace internal
               Assert(false, ExcNotImplemented());
           }
       }
+
 
       template <int dim,
                 int spacedim,
@@ -1926,6 +1949,8 @@ namespace internal
     } // namespace
   }   // namespace MappingFEFieldImplementation
 } // namespace internal
+
+
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
@@ -2134,6 +2159,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   (void) n_shapes;
   Assert(n_shapes != 0, ExcInternalError());
   AssertDimension(mdata.shape_derivatives.size(), n_shapes);
+
 
   // Newton iteration to solve
   // f(x)=p(x)-p=0

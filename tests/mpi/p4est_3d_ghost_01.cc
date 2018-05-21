@@ -26,6 +26,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <int dim>
 void
 test()
@@ -50,6 +52,7 @@ test()
       GridGenerator::subdivided_hyper_rectangle(tr, repetitions, p, q, false);
 
       tr.refine_global(ref);
+
 
       if(myid == 0)
         {
@@ -103,6 +106,7 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

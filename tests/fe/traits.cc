@@ -23,6 +23,7 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim>
 void
 check(const FiniteElement<dim>& fe)
@@ -103,6 +104,8 @@ check()
       check(FESystem<dim>(FESystem<dim>(FE_Q<dim>(p), 2), 2));
     };
 }
+
+
 
 int
 main()

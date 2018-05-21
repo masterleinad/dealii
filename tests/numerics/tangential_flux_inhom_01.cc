@@ -105,6 +105,7 @@ test_hyper_cube()
     }
 }
 
+
 int
 main()
 {

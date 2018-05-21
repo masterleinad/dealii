@@ -57,6 +57,7 @@ test()
           tr.execute_coarsening_and_refinement();
           deallog.pop();
 
+
           if(myid == 0)
             {
               deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
@@ -70,10 +71,13 @@ test()
     deallog << "OK" << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

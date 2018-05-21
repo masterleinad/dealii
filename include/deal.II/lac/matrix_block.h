@@ -618,6 +618,7 @@ namespace internal
   }
 } // namespace internal
 
+
 template <typename MatrixType>
 inline MatrixBlock<MatrixType>::MatrixBlock()
   : row(numbers::invalid_size_type), column(numbers::invalid_size_type)
@@ -1083,6 +1084,8 @@ MGMatrixBlockVector<MatrixType>::clear(bool really_clean)
       clear_object(flux_matrices_down);
     }
 }
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

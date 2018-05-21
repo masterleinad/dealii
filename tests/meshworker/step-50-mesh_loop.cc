@@ -65,6 +65,7 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
 
+
 #include <deal.II/lac/generic_linear_algebra.h>
 
 namespace LA
@@ -205,6 +206,8 @@ namespace Step50
       values[i] = Coefficient<dim>::value(points[i]);
   }
 
+
+
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
     : triangulation(MPI_COMM_WORLD,
@@ -247,10 +250,17 @@ namespace Step50
     system_matrix.reinit(
       mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
 
+    DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(),
+                               mg_dof_handler.n_dofs());
+    DoFTools::make_sparsity_pattern(mg_dof_handler, dsp, constraints);
+    system_matrix.reinit(
+      mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
+
     mg_constrained_dofs.clear();
     mg_constrained_dofs.initialize(mg_dof_handler);
     mg_constrained_dofs.make_zero_boundary_constraints(mg_dof_handler,
                                                        dirichlet_boundary_ids);
+
 
     const unsigned int n_levels = triangulation.n_global_levels();
 
@@ -421,6 +431,8 @@ namespace Step50
       }
   }
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -454,6 +466,7 @@ namespace Step50
 
     PreconditionMG<dim, vector_t, MGTransferPrebuilt<vector_t>> preconditioner(
       mg_dof_handler, mg, mg_transfer);
+
 
     SolverControl      solver_control(500, 1e-8 * system_rhs.l2_norm(), false);
     SolverCG<vector_t> solver(solver_control);
@@ -516,6 +529,7 @@ namespace Step50
       }
   }
 } // namespace Step50
+
 
 int
 main(int argc, char* argv[])

@@ -16,6 +16,7 @@
 #ifndef dealii_matrix_free_shape_info_templates_h
 #define dealii_matrix_free_shape_info_templates_h
 
+
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/polynomial.h>
 #include <deal.II/base/polynomials_piecewise.h>

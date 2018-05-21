@@ -96,6 +96,7 @@ public:
     const double y3 = y2 * y;
     const double r3 = r * r * r;
 
+
     SymmetricTensor<2, dim> res;
     res[0][0] = (3. * x * z2) / r3 + (3 * x * y2) / r3 + (2. * x3) / r3;
     res[1][1] = (x * z2) / r3 + x3 / r3;
@@ -193,6 +194,7 @@ check()
           const Tensor<1, dim> g2 = func2.gradient(p);
           const Tensor<1, dim> gd = g1 - g2;
           AssertThrow(gd.norm() <= g1.norm() * 1e-10, ExcInternalError());
+
 
           // check hessian:
           const SymmetricTensor<2, dim> h1 = func.hessian(p);

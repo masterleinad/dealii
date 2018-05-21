@@ -122,6 +122,7 @@ private:
 template <int dim>
 const double ExactSolution<dim>::bc_constant = 0.1;
 
+
 // RIGHT HAND SIDE CLASS
 template <int dim>
 class RightHandSide : public Function<dim>

@@ -48,6 +48,8 @@
 
 #include <deal.II/numerics/error_estimator.h>
 
+
+
 template <int dim>
 class LaplaceProblem
 {
@@ -83,6 +85,8 @@ private:
   Vector<double> solution;
   Vector<double> system_rhs;
 };
+
+
 
 template <int dim>
 class Coefficient : public Function<dim>
@@ -132,6 +136,8 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
+
+
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
   : dof_handler(triangulation), fe(FE_Q<dim>(2))
@@ -156,6 +162,10 @@ LaplaceProblem<dim>::setup_system()
 
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
+
+  hanging_node_constraints.clear();
+  DoFTools::make_hanging_node_constraints(dof_handler,
+                                          hanging_node_constraints);
 
   hanging_node_constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler,
@@ -241,6 +251,14 @@ LaplaceProblem<dim>::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
+
+  std::map<types::global_dof_index, double> boundary_values;
+  VectorTools::interpolate_boundary_values(
+    dof_handler, 0, Functions::ZeroFunction<dim>(), boundary_values);
+  MatrixTools::apply_boundary_values(
+    boundary_values, system_matrix, solution, system_rhs);
+}
+
 template <int dim>
 void
 LaplaceProblem<dim>::solve()
@@ -291,6 +309,8 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   grid_out.write_eps(triangulation, deallog.get_file_stream());
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -310,6 +330,7 @@ LaplaceProblem<dim>::run()
         }
       else
         refine_grid();
+
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
@@ -336,6 +357,8 @@ LaplaceProblem<dim>::run()
 
   data_out.write_eps(deallog.get_file_stream());
 }
+
+
 
 int
 main()

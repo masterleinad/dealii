@@ -34,6 +34,7 @@ split_string(const std::string& text, const char delim = '|')
   return result;
 }
 
+
 void
 test_function(const std::string& original_text,
               const unsigned int width,
@@ -42,6 +43,8 @@ test_function(const std::string& original_text,
 {
   std::vector<std::string> res_vec
     = Utilities::break_text_into_lines(original_text, width, delimiter);
+
+  std::vector<std::string> should_be_vec = split_string(result);
 
   std::vector<std::string> should_be_vec = split_string(result);
 
@@ -54,6 +57,7 @@ test_function(const std::string& original_text,
       Assert(res_vec[i] == should_be_vec[i], ExcInternalError());
     }
 }
+
 
 void
 test()
@@ -72,8 +76,11 @@ test()
                 ' ',
                 "combining|whitespace|and new|line");
 
+
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

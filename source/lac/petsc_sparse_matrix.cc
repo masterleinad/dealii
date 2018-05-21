@@ -35,6 +35,8 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
+
+
   SparseMatrix::SparseMatrix(const size_type m,
                              const size_type n,
                              const size_type n_nonzero_per_row,
@@ -42,6 +44,8 @@ namespace PETScWrappers
   {
     do_reinit(m, n, n_nonzero_per_row, is_symmetric);
   }
+
+
 
   SparseMatrix::SparseMatrix(const size_type               m,
                              const size_type               n,
@@ -57,6 +61,8 @@ namespace PETScWrappers
   {
     do_reinit(sparsity_pattern, preset_nonzero_locations);
   }
+
+
 
   SparseMatrix&
   SparseMatrix::operator=(const double d)
@@ -105,6 +111,8 @@ namespace PETScWrappers
 
     do_reinit(sparsity_pattern, preset_nonzero_locations);
   }
+
+
 
   const MPI_Comm&
   SparseMatrix::get_mpi_communicator() const
@@ -277,6 +285,7 @@ namespace PETScWrappers
   template void
   SparseMatrix::do_reinit(const DynamicSparsityPattern&, const bool);
 } // namespace PETScWrappers
+
 
 DEAL_II_NAMESPACE_CLOSE
 

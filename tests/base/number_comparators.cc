@@ -41,6 +41,8 @@ check(const Number& a, const Number& b)
               ExcMessage("Comparator is incorrect."));
 }
 
+
+
 int
 main()
 {

@@ -45,6 +45,7 @@ main(int argc, char** argv)
                 << "   two:          " << two << std::endl
                 << "   two times pi: " << two * pi << std::endl;
 
+
         logfile << "Finalizing SLEPc (PETSc): " << std::flush;
       }
       SlepcFinalize();

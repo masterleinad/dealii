@@ -27,6 +27,8 @@
 
 #include <deal.II/fe/mapping_q.h>
 
+
+
 void check(Triangulation<2>& tria)
 {
   MappingQ<2> map(5);
@@ -53,6 +55,7 @@ void check(Triangulation<2>& tria)
       Assert(pp.distance(p) < 5.e-12, ExcInternalError());
     }
 }
+
 
 int
 main()

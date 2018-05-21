@@ -23,6 +23,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test()
 {
@@ -107,6 +108,11 @@ test()
       AssertThrow(v(ghost_indices[i]) == v.local_element(local_size + i - 5),
                   ExcInternalError());
 
+  if(myid == 0)
+    for(unsigned int i = 5; i < 10; ++i)
+      AssertThrow(v(ghost_indices[i]) == v.local_element(local_size + i - 5),
+                  ExcInternalError());
+
   // now the same again, but import ghosts automatically because v had ghosts
   // set before calling operator =
   v.reinit(local_owned, local_relevant, MPI_COMM_WORLD);
@@ -144,6 +150,8 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

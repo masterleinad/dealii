@@ -31,6 +31,7 @@ DEAL_II_NAMESPACE_OPEN
 template <typename Matrix>
 class BlockMatrixBase;
 
+
 namespace PETScWrappers
 {
   namespace MPI
@@ -256,6 +257,7 @@ namespace PETScWrappers
        */
       SparseMatrix&
       operator=(const value_type d);
+
 
       /**
        * Make a copy of the PETSc matrix @p other. It is assumed that both
@@ -507,6 +509,9 @@ namespace PETScWrappers
        */
       friend class BlockMatrixBase<SparseMatrix>;
     };
+
+    // -------- template and inline functions ----------
+
 
     // -------- template and inline functions ----------
 

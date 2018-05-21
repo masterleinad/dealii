@@ -47,6 +47,7 @@ check()
   foo.leave_subsection();
 }
 
+
 int
 main()
 {

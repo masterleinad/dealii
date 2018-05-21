@@ -32,6 +32,8 @@
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 check()
@@ -74,6 +76,7 @@ check()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

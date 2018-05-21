@@ -16,6 +16,7 @@
 #ifndef dealii_work_stream_h
 #  define dealii_work_stream_h
 
+
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/graph_coloring.h>
 #  include <deal.II/base/multithread_info.h>
@@ -28,6 +29,13 @@
 #    include <deal.II/base/thread_management.h>
 #    include <tbb/pipeline.h>
 #  endif
+
+#  include <functional>
+#  include <memory>
+#  include <utility>
+#  include <vector>
+
+DEAL_II_NAMESPACE_OPEN
 
 #  include <functional>
 #  include <memory>
@@ -655,6 +663,7 @@ namespace WorkStream
 
     } // namespace Implementation2
 
+
     /**
      * A namespace for the implementation of details of the WorkStream pattern
      * and function. This namespace holds classes that deal with the third
@@ -702,6 +711,8 @@ namespace WorkStream
             currently_in_use(o.currently_in_use)
         {}
       };
+
+
 
       /**
        * A class that manages calling the worker and copier functions. Unlike
@@ -853,6 +864,9 @@ namespace WorkStream
 
   } // namespace internal
 
+
+#  endif // DEAL_II_WITH_THREADS
+
 #  endif // DEAL_II_WITH_THREADS
 
   /**
@@ -902,6 +916,7 @@ namespace WorkStream
       const CopyData&                           sample_copy_data,
       const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
       const unsigned int chunk_size   = 8);
+
 
   /**
    * This is one of two main functions of the WorkStream concept, doing work
@@ -1126,6 +1141,8 @@ namespace WorkStream
 #  endif
   }
 
+
+
   /**
    * This is a variant of one of the two main functions of the WorkStream
    * concept, doing work as described in the introduction to this namespace.
@@ -1187,7 +1204,11 @@ namespace WorkStream
 
 } // namespace WorkStream
 
+
+
 DEAL_II_NAMESPACE_CLOSE
+
+
 
 //----------------------------   work_stream.h     ---------------------------
 // end of #ifndef dealii_work_stream_h

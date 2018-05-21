@@ -28,6 +28,7 @@
 #include <stack>
 #include <string>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -131,6 +132,7 @@ public:
    */
   LogStream();
 
+
   /**
    * Destructor.
    */
@@ -144,6 +146,7 @@ public:
   void
   attach(std::ostream& o, const bool print_job_id = true);
 
+
   /**
    * Disable output to the second stream. You may want to call <tt>close</tt>
    * on the stream that was previously attached to this object.
@@ -151,17 +154,20 @@ public:
   void
   detach();
 
+
   /**
    * Return the default stream (<tt>std_out</tt>).
    */
   std::ostream&
   get_console();
 
+
   /**
    * Return the file stream.
    */
   std::ostream&
   get_file_stream();
+
 
   /**
    * Return @p true if file stream has already been attached,
@@ -170,11 +176,13 @@ public:
   bool
   has_file() const;
 
+
   /**
    * Return the prefix string.
    */
   const std::string&
   get_prefix() const;
+
 
   /**
    * Push another prefix on the stack. Prefixes are automatically separated by
@@ -191,11 +199,13 @@ public:
   void
   push(const std::string& text);
 
+
   /**
    * Remove the last prefix added with push().
    */
   void
   pop();
+
 
   /**
    * Maximum number of levels to be printed on the console. The default is 0,
@@ -210,6 +220,7 @@ public:
   unsigned int
   depth_console(const unsigned int n);
 
+
   /**
    * Maximum number of levels to be written to the log file. The functionality
    * is the same as <tt>depth_console</tt>, nevertheless, this function should
@@ -220,11 +231,13 @@ public:
   unsigned int
   depth_file(const unsigned int n);
 
+
   /**
    * Log the thread id.
    */
   bool
   log_thread_id(const bool flag);
+
 
   /**
    * set the precision for the underlying stream and returns the previous
@@ -234,6 +247,7 @@ public:
   std::streamsize
   precision(const std::streamsize prec);
 
+
   /**
    * set the width for the underlying stream and returns the previous stream
    * width. This function mimics
@@ -242,6 +256,7 @@ public:
   std::streamsize
   width(const std::streamsize wide);
 
+
   /**
    * set the flags for the underlying stream and returns the previous stream
    * flags. This function mimics
@@ -249,6 +264,7 @@ public:
    */
   std::ios::fmtflags
   flags(const std::ios::fmtflags f);
+
 
   /**
    * Treat ostream manipulators. This passes on the whole thing to the
@@ -266,6 +282,7 @@ public:
    */
   LogStream&
   operator<<(std::ostream& (*p)(std::ostream&) );
+
 
   /**
    * Return an estimate for the memory consumption, in bytes, of this object.
@@ -371,6 +388,8 @@ operator<<(LogStream& log, const T& t)
   log.get_stream() << t;
   return log;
 }
+
+
 
 /**
  * The standard log object of deal.II:

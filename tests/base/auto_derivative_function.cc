@@ -82,6 +82,8 @@ public:
                   typename std::vector<Tensor<1, dim>>& gradients) const;
 };
 
+
+
 template <int dim>
 Tensor<1, dim>
 ExactSinExp<dim>::gradient(const Point<dim>& p, const unsigned int) const
@@ -105,6 +107,7 @@ ExactSinExp<dim>::vector_gradient(
   gradients[1] = gradient(p);
 }
 
+
 int
 main()
 {
@@ -117,6 +120,8 @@ main()
   ExactSinExp<dim>        exact_function;
   Point<dim>              p(0.23, 0.1);
   std::vector<Point<dim>> ps(1, p);
+
+  Tensor<1, dim> u_grad = exact_function.gradient(p);
 
   Tensor<1, dim> u_grad = exact_function.gradient(p);
 

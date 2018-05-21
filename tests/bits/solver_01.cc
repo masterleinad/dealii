@@ -26,6 +26,7 @@
 #include <deal.II/lac/sparse_direct.h>
 #include <deal.II/lac/vector_memory.h>
 
+
 struct Entry
 {
   int    row;
@@ -3281,6 +3282,8 @@ test()
     Assert(tmp.l2_norm() < tolerance, ExcInternalError());
   }
 }
+
+
 
 int
 main()

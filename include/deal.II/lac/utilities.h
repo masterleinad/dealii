@@ -201,6 +201,8 @@ namespace Utilities
 
 } // namespace Utilities
 
+} // namespace Utilities
+
 /*------------------------- Implementation ----------------------------*/
 
 #ifndef DOXYGEN
@@ -218,6 +220,8 @@ namespace Utilities
       std::array<NumberType, 3> res;
       return res;
     }
+
+
 
     template <typename NumberType>
     std::array<NumberType, 3>
@@ -239,6 +243,8 @@ namespace Utilities
       return csr;
     }
 
+
+
     template <typename NumberType>
     std::array<std::complex<NumberType>, 3>
     givens_rotation(const std::complex<NumberType>& /*f*/,
@@ -248,6 +254,8 @@ namespace Utilities
       std::array<NumberType, 3> res;
       return res;
     }
+
+
 
     template <typename NumberType>
     std::array<NumberType, 3>

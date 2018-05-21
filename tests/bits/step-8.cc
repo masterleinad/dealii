@@ -18,6 +18,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -44,6 +45,8 @@ std::ofstream logfile("output");
 
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
+
+
 
 template <int dim>
 class ElasticProblem
@@ -137,10 +140,14 @@ RightHandSide<dim>::vector_value_list(
     RightHandSide<dim>::vector_value(points[p], value_list[p]);
 }
 
+
+
 template <int dim>
 ElasticProblem<dim>::ElasticProblem()
   : dof_handler(triangulation), fe(FE_Q<dim>(1), dim)
 {}
+
+
 
 template <int dim>
 ElasticProblem<dim>::~ElasticProblem()
@@ -198,6 +205,7 @@ ElasticProblem<dim>::assemble_system()
 
   RightHandSide<dim>          right_hand_side;
   std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim));
+
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -277,6 +285,14 @@ ElasticProblem<dim>::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
+
+  std::map<types::global_dof_index, double> boundary_values;
+  VectorTools::interpolate_boundary_values(
+    dof_handler, 0, Functions::ZeroFunction<dim>(dim), boundary_values);
+  MatrixTools::apply_boundary_values(
+    boundary_values, system_matrix, solution, system_rhs);
+}
+
 template <int dim>
 void
 ElasticProblem<dim>::solve()
@@ -324,6 +340,8 @@ ElasticProblem<dim>::output_results(const unsigned int cycle) const
   DataOut<dim, DoFHandler<dim>> data_out;
   data_out.attach_dof_handler(dof_handler);
 
+
+
   std::vector<std::string> solution_names;
   switch(dim)
     {
@@ -347,6 +365,8 @@ ElasticProblem<dim>::output_results(const unsigned int cycle) const
   data_out.build_patches();
   data_out.write_gmv(deallog.get_file_stream());
 }
+
+
 
 template <int dim>
 void
@@ -377,6 +397,7 @@ ElasticProblem<dim>::run()
       output_results(cycle);
     }
 }
+
 
 int
 main()

@@ -102,6 +102,7 @@ do_test()
   deallog << "Verification of inverse: " << v3.linfty_norm() << std::endl;
 }
 
+
 int
 main()
 {

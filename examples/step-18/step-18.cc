@@ -697,6 +697,8 @@ namespace Step18
     = get_stress_strain_tensor<dim>(/*lambda = */ 9.695e10,
                                     /*mu     = */ 7.617e10);
 
+
+
   // @sect4{The public interface}
 
   // The next step is the definition of constructors and destructors. There
@@ -793,6 +795,8 @@ namespace Step18
     // present processor.
     setup_quadrature_point_history();
   }
+
+
 
   // @sect4{TopLevel::setup_system}
 
@@ -980,6 +984,10 @@ namespace Step18
                   const SymmetricTensor<2, dim> eps_phi_i
                     = get_strain(fe_values, i, q_point),
                     eps_phi_j = get_strain(fe_values, j, q_point);
+
+                  cell_matrix(i, j) += (eps_phi_i * stress_strain_tensor
+                                        * eps_phi_j * fe_values.JxW(q_point));
+                }
 
                   cell_matrix(i, j) += (eps_phi_i * stress_strain_tensor
                                         * eps_phi_j * fe_values.JxW(q_point));
@@ -1194,6 +1202,7 @@ namespace Step18
 
     data_out.add_data_vector(incremental_displacement, solution_names);
 
+
     // The next thing is that we wanted to output something like the average
     // norm of the stresses that we have stored in each cell. This may seem
     // complicated, since on the present processor we only store the stresses
@@ -1254,6 +1263,7 @@ namespace Step18
     // information and produce some intermediate data structures that contain
     // all these solution and other data vectors:
     data_out.build_patches();
+
 
     // Let us determine the name of the file we will want to write it to. We
     // compose it of the prefix <code>solution-</code>, followed by the time
@@ -1397,6 +1407,8 @@ namespace Step18
         present_timestep -= (present_time - end_time);
         present_time = end_time;
       }
+
+    solve_timestep();
 
     solve_timestep();
 
@@ -1652,6 +1664,8 @@ namespace Step18
            ExcInternalError());
   }
 
+
+
   // @sect4{TopLevel::update_quadrature_point_history}
 
   // At the end of each time step, we should have computed an incremental
@@ -1790,6 +1804,7 @@ namespace Step18
   // actual work, and makes sure that we catch all exceptions that propagate
   // up to this point:
 } // namespace Step18
+
 
 int
 main(int argc, char** argv)

@@ -16,6 +16,7 @@
 #ifndef dealii_sparse_decomposition_templates_h
 #define dealii_sparse_decomposition_templates_h
 
+
 #include <algorithm>
 #include <cstring>
 #include <deal.II/base/memory_consumption.h>

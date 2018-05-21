@@ -26,6 +26,7 @@
 
 #include <iostream>
 
+
 void
 test()
 {
@@ -61,6 +62,7 @@ test()
   if(Comm.MyPID() == 0)
     AssertThrow(x1[0][0] == 1, ExcInternalError());
 }
+
 
 int
 main(int argc, char** argv)

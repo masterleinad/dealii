@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -27,6 +28,7 @@
 #include <deal.II/grid/tria.h>
 
 #include <deal.II/grid/grid_generator.h>
+
 
 #include <deal.II/base/std_cxx14/memory.h>
 #include <memory>
@@ -173,6 +175,7 @@ namespace internal
     } // namespace
   }   // namespace FE_Q_Bubbles
 } // namespace internal
+
 
 template <int dim, int spacedim>
 FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree)

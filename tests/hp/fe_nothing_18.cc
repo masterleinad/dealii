@@ -59,6 +59,7 @@
 #include <iostream>
 #include <memory> //smart pointers
 
+
 template <int dim>
 class ElasticProblem
 {
@@ -394,6 +395,7 @@ ElasticProblem<dim>::run()
   make_grid();
   setup_system();
 }
+
 
 int
 main()

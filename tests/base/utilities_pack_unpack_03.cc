@@ -69,6 +69,7 @@ check(const T& object)
   deallog << std::endl;
 }
 
+
 void
 test()
 {

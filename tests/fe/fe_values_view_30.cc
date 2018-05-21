@@ -33,6 +33,7 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 template <int dim>
 class VectorFunction : public Function<dim>
 {
@@ -174,10 +175,12 @@ test_hyper_sphere()
   static const SphericalManifold<dim> boundary;
   tr.set_manifold(0, boundary);
 
+
   const unsigned int order = 3;
 
   test(tr, FESystem<dim>(FE_Q<dim>(QIterated<1>(QTrapez<1>(), order)), dim));
 }
+
 
 int
 main()

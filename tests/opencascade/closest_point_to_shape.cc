@@ -35,6 +35,7 @@
 
 using namespace OpenCASCADE;
 
+
 int
 main()
 {
@@ -64,6 +65,7 @@ main()
   // should give the same result.
   points.push_back(Point<3>(.1, 0, 3));
   points.push_back(Point<3>(.1, 0, 4));
+
 
   double       u, v;
   TopoDS_Shape sh;

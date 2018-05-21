@@ -33,6 +33,8 @@ testit()
   m.free(m.alloc());
 }
 
+
+
 void
 test()
 {
@@ -48,6 +50,7 @@ test()
   if(myid == 0)
     deallog << "done" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

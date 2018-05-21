@@ -175,6 +175,7 @@ print_matching(DoFHandler<dim>& dof_handler)
     deallog << dofs_2[i] << " is located at " << support_points[dofs_2[i]]
             << std::endl;
 
+
   std::bitset<3> orientation;
   orientation[0] = 1;
   orientation[1] = 1;
@@ -191,6 +192,8 @@ print_matching(DoFHandler<dim>& dof_handler)
   constraint_matrix.close();
   deallog << "Matching:" << std::endl;
 }
+
+
 
 int
 main()

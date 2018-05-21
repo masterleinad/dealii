@@ -53,6 +53,7 @@ public:
   }
 };
 
+
 int
 main()
 {
@@ -62,6 +63,12 @@ main()
 
   Test        a("A");
   const Test& b("B");
+
+  SmartPointer<Test, Test>       r(&a, "Test R");
+  SmartPointer<const Test, Test> s(&a, "const Test S");
+  //  SmartPointer<Test,Test>       t=&b;    // this one should not work
+  SmartPointer<Test, Test>       t(const_cast<Test*>(&b), "Test T");
+  SmartPointer<const Test, Test> u(&b, "const Test");
 
   SmartPointer<Test, Test>       r(&a, "Test R");
   SmartPointer<const Test, Test> s(&a, "const Test S");

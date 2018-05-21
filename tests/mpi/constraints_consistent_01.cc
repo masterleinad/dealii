@@ -17,6 +17,7 @@
 
 #include "../tests.h"
 
+
 #include <deal.II/base/utilities.h>
 #include <deal.II/distributed/grid_refinement.h>
 #include <deal.II/distributed/tria.h>
@@ -85,6 +86,8 @@ check(parallel::distributed::Triangulation<dim>& tria)
           << std::endl;
 }
 
+
+
 template <int dim>
 void
 test()
@@ -140,6 +143,7 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

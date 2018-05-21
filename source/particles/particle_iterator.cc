@@ -114,6 +114,7 @@ namespace Particles
   }
 } // namespace Particles
 
+
 DEAL_II_NAMESPACE_CLOSE
 
 DEAL_II_NAMESPACE_OPEN

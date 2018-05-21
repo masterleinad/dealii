@@ -41,6 +41,7 @@ main()
 {
   initlog();
 
+
   std::vector<int>          l0(2, -1);
   std::vector<unsigned int> l1(3, 2);
   std::vector<double>       l2(4, 3.14);

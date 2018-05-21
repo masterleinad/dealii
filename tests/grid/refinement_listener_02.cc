@@ -20,6 +20,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 
+
 std::ofstream logfile("output");
 
 template <int dim, int spacedim>
@@ -91,6 +92,8 @@ test()
                                              std::placeholders::_1,
                                              std::cref(tria_2)))};
 
+
+
   // this should print the create note
   GridGenerator::hyper_cube(tria_1);
 
@@ -110,6 +113,7 @@ test()
 
   (void) connections_2;
 }
+
 
 int
 main()
