@@ -618,7 +618,7 @@ namespace internal
       {
         return (is.is_element(cell_number) ? 1 : 0);
       }
-    } // namespace
+    }
 
     template <typename DoFHandlerType, typename VectorType>
     double
@@ -950,8 +950,8 @@ namespace internal
       vector            = nullptr;
       this->dof_handler = nullptr;
     }
-  } // namespace DataOutImplementation
-} // namespace internal
+  }
+}
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::DataOut_DoFData()

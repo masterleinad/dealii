@@ -414,7 +414,7 @@ namespace Particles
       // therefore return if the scalar product of a is larger.
       return (scalar_product_a > scalar_product_b);
     }
-  } // namespace
+  }
 
   template <int dim, int spacedim>
   void

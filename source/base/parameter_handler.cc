@@ -243,7 +243,7 @@ namespace
   {
     return static_cast<bool>(p.get_optional<std::string>("alias"));
   }
-} // namespace
+}
 
 std::string
 ParameterHandler::collate_path_string(
@@ -500,7 +500,7 @@ namespace
           }
       }
   }
-} // namespace
+}
 
 void
 ParameterHandler::parse_input_from_xml(std::istream& in)

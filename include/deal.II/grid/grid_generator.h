@@ -1276,7 +1276,7 @@ namespace GridGenerator
                    "The input to this function is oriented in a way that will"
                    " cause all cells to have negative measure.");
   ///@}
-} // namespace GridGenerator
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -491,8 +491,7 @@ namespace SUNDIALS
 #    endif   // DEAL_II_WITH_PETSC
 
 #  endif //DEAL_II_WITH_MPI
-
-} // namespace SUNDIALS
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

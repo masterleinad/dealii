@@ -143,7 +143,7 @@ namespace internal
 
     friend class dealii::TableHandler;
   };
-} // namespace internal
+}
 
 /**
  * The TableHandler stores TableEntries of arbitrary value type and writes the
@@ -876,7 +876,7 @@ namespace internal
           Assert(false, ExcInternalError());
       }
   }
-} // namespace internal
+}
 
 template <typename T>
 void

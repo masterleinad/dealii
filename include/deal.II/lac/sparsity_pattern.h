@@ -94,9 +94,8 @@ namespace internals
     template <typename value>
     size_type
     get_column_index_from_iterator(const std::pair<const size_type, value>& i);
-
-  } // namespace SparsityPatternTools
-} // namespace internals
+  }
+}
 
 /**
  * Iterators on objects of type SparsityPattern.
@@ -326,7 +325,7 @@ namespace SparsityPatternIterators
      */
     Accessor accessor;
   };
-} // namespace SparsityPatternIterators
+}
 
 /**
  * A class that can store which elements of a matrix are nonzero (or, in fact,
@@ -1307,7 +1306,7 @@ namespace SparsityPatternIterators
 
     return (*this)->index_within_sparsity - other->index_within_sparsity;
   }
-} // namespace SparsityPatternIterators
+}
 
 inline SparsityPattern::iterator
 SparsityPattern::begin() const
@@ -1471,8 +1470,8 @@ namespace internal
     {
       return i.first;
     }
-  } // namespace SparsityPatternTools
-} // namespace internal
+  }
+}
 
 template <typename ForwardIterator>
 void

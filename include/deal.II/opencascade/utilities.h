@@ -417,7 +417,7 @@ namespace OpenCASCADE
    * Trying to make operations on the wrong type of shapes.
    */
   DeclException0(ExcUnsupportedShape);
-} // namespace OpenCASCADE
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -440,7 +440,7 @@ namespace GraphColoring
 
       return coloring;
     }
-  } // namespace internal
+  }
 
   /**
    * Create a partitioning of the given range of iterators so that iterators

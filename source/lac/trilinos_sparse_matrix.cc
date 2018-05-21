@@ -99,7 +99,7 @@ namespace TrilinosWrappers
       return V.trilinos_vector()[0] + V.trilinos_vector().MyLength();
     }
 #  endif
-  } // namespace internal
+  }
 
   namespace SparseMatrixIterators
   {
@@ -154,7 +154,7 @@ namespace TrilinosWrappers
       // iterator for an empty line (what
       // would it point to?)
     }
-  } // namespace SparseMatrixIterators
+  }
 
   // The constructor is actually the
   // only point where we have to check
@@ -743,7 +743,7 @@ namespace TrilinosWrappers
 
       matrix = std_cxx14::make_unique<Epetra_FECrsMatrix>(Copy, *graph, false);
     }
-  } // namespace
+  }
 
   template <typename SparsityPatternType>
   void
@@ -1946,8 +1946,8 @@ namespace TrilinosWrappers
         (void) in;
         (void) out;
       }
-    } // namespace SparseMatrixImplementation
-  }   // namespace internal
+    }
+  }
 
   template <typename VectorType>
   void
@@ -2313,7 +2313,7 @@ namespace TrilinosWrappers
       ML_Operator_Destroy(&C_);
       ML_Comm_Destroy(&comm);
     }
-  } // namespace internals
+  }
 
   void
   SparseMatrix::mmult(SparseMatrix&       C,
@@ -2421,7 +2421,7 @@ namespace TrilinosWrappers
 
 #  endif
   }
-} // namespace TrilinosWrappers
+}
 
 namespace TrilinosWrappers
 {
@@ -2441,7 +2441,7 @@ namespace TrilinosWrappers
           Epetra_SerialComm());
       }
 #  endif
-    } // namespace
+    }
 
     namespace LinearOperatorImplementation
     {
@@ -3360,7 +3360,7 @@ namespace TrilinosWrappers
         return return_op;
       }
 
-    } // namespace LinearOperatorImplementation
+    } /* namespace LinearOperator */
   }   /* namespace internal */
 } /* namespace TrilinosWrappers */
 
@@ -3468,7 +3468,7 @@ namespace TrilinosWrappers
     dealii::LinearAlgebra::EpetraWrappers::Vector&,
     const dealii::LinearAlgebra::EpetraWrappers::Vector&) const;
 #  endif
-} // namespace TrilinosWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

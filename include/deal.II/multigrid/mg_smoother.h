@@ -760,7 +760,7 @@ namespace mg
            + MGLevelObject<RelaxationType>::memory_consumption()
            + this->vector_memory.memory_consumption();
   }
-} // namespace mg
+}
 
 //----------------------------------------------------------------------//
 

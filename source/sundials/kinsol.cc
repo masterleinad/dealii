@@ -355,8 +355,7 @@ namespace SUNDIALS
 #    endif
 
 #  endif
-
-} // namespace SUNDIALS
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -322,8 +322,7 @@ namespace Utilities
       {
         return a;
       }
-
-    } // namespace internal
+    }
 
     template <typename Number>
     void

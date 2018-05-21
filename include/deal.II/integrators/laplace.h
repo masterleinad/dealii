@@ -750,8 +750,8 @@ namespace LocalIntegrators
       const double penalty = 0.5 * (penalty1 + penalty2);
       return penalty;
     }
-  } // namespace Laplace
-} // namespace LocalIntegrators
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

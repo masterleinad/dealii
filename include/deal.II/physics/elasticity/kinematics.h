@@ -256,9 +256,9 @@ namespace Physics
       w(const Tensor<2, dim, Number>& F, const Tensor<2, dim, Number>& dF_dt);
 
       //@}
-    } // namespace Kinematics
-  }   // namespace Elasticity
-} // namespace Physics
+    }
+  }
+}
 
 #ifndef DOXYGEN
 

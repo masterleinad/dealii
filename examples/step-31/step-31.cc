@@ -201,7 +201,7 @@ namespace Step31
       for(unsigned int c = 0; c < this->n_components; ++c)
         values(c) = TemperatureRightHandSide<dim>::value(p, c);
     }
-  } // namespace EquationData
+  }
 
   // @sect3{Linear solvers and preconditioners}
 
@@ -423,7 +423,7 @@ namespace Step31
       tmp *= -1;
       m_inverse->vmult(dst.block(1), tmp);
     }
-  } // namespace LinearSolvers
+  }
 
   // @sect3{The <code>BoussinesqFlowProblem</code> class template}
 
@@ -2115,7 +2115,7 @@ namespace Step31
     // Do all the above until we arrive at time 100.
     while(time <= 100);
   }
-} // namespace Step31
+}
 
 // @sect3{The <code>main</code> function}
 //

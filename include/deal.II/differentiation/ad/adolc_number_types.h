@@ -57,8 +57,8 @@ namespace Differentiation
     template <typename NumberType, typename = void>
     struct is_adolc_tapeless_number : std::false_type
     {};
-  } // namespace AD
-} // namespace Differentiation
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

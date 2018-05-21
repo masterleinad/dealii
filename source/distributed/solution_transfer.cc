@@ -255,9 +255,8 @@ namespace parallel
           data_store += dofs_per_cell;
         }
     }
-
-  } // namespace distributed
-} // namespace parallel
+  }
+}
 
 // explicit instantiations
 #  include "solution_transfer.inst"

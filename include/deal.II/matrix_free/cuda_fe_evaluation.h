@@ -38,7 +38,7 @@ namespace CUDAWrappers
     {
       //TODO
     }
-  } // namespace internal
+  }
 
   /**
    * This class provides all the functions necessary to evaluate functions at

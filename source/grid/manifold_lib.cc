@@ -104,7 +104,7 @@ namespace internal
       normal /= normal.norm();
     return normal;
   }
-} // namespace internal
+}
 
 // ============================================================
 // PolarManifold
@@ -871,7 +871,7 @@ namespace
     }
     return candidate;
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -1673,7 +1673,7 @@ namespace
       }
     return new_point;
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 Point<spacedim>

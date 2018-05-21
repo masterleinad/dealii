@@ -188,9 +188,8 @@ namespace internal
     {
       ar& faces;
     }
-
-  } // namespace TriangulationImplementation
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

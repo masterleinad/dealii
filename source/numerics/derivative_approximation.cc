@@ -1109,8 +1109,7 @@ namespace DerivativeApproximation
     return internal::DerivativeSelector<order, dim>::DerivDescr::
       derivative_norm(derivative);
   }
-
-} // namespace DerivativeApproximation
+}
 
 // --------------------------- explicit instantiations ---------------------
 #include "derivative_approximation.inst"

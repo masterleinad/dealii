@@ -65,7 +65,7 @@ namespace internal
   {
     dinfo.assemble(*assembler);
   }
-} // namespace internal
+}
 
 namespace MeshWorker
 {
@@ -528,8 +528,7 @@ namespace MeshWorker
                         assembler,
                         lctrl);
   }
-
-} // namespace MeshWorker
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

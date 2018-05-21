@@ -73,7 +73,7 @@ namespace parallel
   {
     class TBBPartitioner;
   }
-} // namespace parallel
+}
 
 /*! @addtogroup Vectors
  *@{

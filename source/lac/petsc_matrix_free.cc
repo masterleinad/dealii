@@ -215,7 +215,7 @@ namespace PETScWrappers
     ierr = MatSetFromOptions(matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

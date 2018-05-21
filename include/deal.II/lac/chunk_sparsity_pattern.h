@@ -211,7 +211,7 @@ namespace ChunkSparsityPatternIterators
      */
     Accessor accessor;
   };
-} // namespace ChunkSparsityPatternIterators
+}
 
 /**
  * Structure representing the sparsity pattern of a sparse matrix. This class
@@ -1055,8 +1055,7 @@ namespace ChunkSparsityPatternIterators
   {
     return accessor < other.accessor;
   }
-
-} // namespace ChunkSparsityPatternIterators
+}
 
 inline ChunkSparsityPattern::iterator
 ChunkSparsityPattern::begin() const

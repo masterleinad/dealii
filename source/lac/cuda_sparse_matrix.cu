@@ -151,7 +151,7 @@ namespace CUDAWrappers
             sums[row] += abs(val_dev[j]);
         }
     }
-  } // namespace internal
+  }
 
   template <typename Number>
   SparseMatrix<Number>::SparseMatrix()

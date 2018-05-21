@@ -388,8 +388,7 @@ namespace ChunkSparseMatrixIterators
      */
     Accessor<number, Constness> accessor;
   };
-
-} // namespace ChunkSparseMatrixIterators
+}
 
 /**
  * Sparse matrix. This class implements the function to store values in the
@@ -1891,8 +1890,7 @@ namespace ChunkSparseMatrixIterators
 
     return x;
   }
-
-} // namespace ChunkSparseMatrixIterators
+}
 
 template <typename number>
 inline typename ChunkSparseMatrix<number>::const_iterator

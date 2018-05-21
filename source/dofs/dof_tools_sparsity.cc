@@ -1228,9 +1228,8 @@ namespace DoFTools
                 }
             }
       }
-    } // namespace
-
-  } // namespace internal
+    }
+  }
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void

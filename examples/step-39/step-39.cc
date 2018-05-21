@@ -979,7 +979,7 @@ namespace Step39
         output_results(s);
       }
   }
-} // namespace Step39
+}
 
 int
 main()

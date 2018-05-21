@@ -1219,8 +1219,7 @@ namespace FETools
                                           face_system_to_component_table,
       const FiniteElement<dim, spacedim>& finite_element,
       const bool                          do_tensor_product = true);
-
-  } // namespace Compositing
+  }
 
   /**
    * Parse the name of a finite element and generate a finite element object
@@ -1416,7 +1415,7 @@ namespace FETools
                  int,
                  int,
                  << arg1 << " must be greater than " << arg2);
-} // namespace FETools
+}
 
 #ifndef DOXYGEN
 

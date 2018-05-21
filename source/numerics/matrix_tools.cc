@@ -597,7 +597,7 @@ namespace MatrixTools
           }
       }
   }
-} // namespace MatrixTools
+}
 
 // explicit instantiations
 #include "matrix_tools.inst"

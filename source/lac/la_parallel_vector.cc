@@ -39,7 +39,7 @@ namespace LinearAlgebra
     TEMPL_COPY_CONSTRUCTOR(std::complex<float>, std::complex<double>);
 
 #undef TEMPL_COPY_CONSTRUCTOR
-  } // namespace distributed
-} // namespace LinearAlgebra
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE

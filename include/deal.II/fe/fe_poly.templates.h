@@ -514,7 +514,7 @@ namespace internal
   {
     return poly.get_numbering_inverse();
   }
-} // namespace internal
+}
 
 template <class PolynomialType, int dim, int spacedim>
 std::vector<unsigned int>

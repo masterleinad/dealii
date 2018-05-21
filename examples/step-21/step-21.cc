@@ -307,7 +307,7 @@ namespace Step21
             values[p][d][d] = 1. / permeability;
         }
     }
-  } // namespace SingleCurvingCrack
+  }
 
   // @sect4{Random medium permeability}
 
@@ -404,7 +404,7 @@ namespace Step21
             values[p][d][d] = 1. / normalized_permeability;
         }
     }
-  } // namespace RandomMedium
+  }
 
   // @sect3{The inverse mobility and saturation functions}
 
@@ -1207,7 +1207,7 @@ namespace Step21
       }
     while(time <= 1.);
   }
-} // namespace Step21
+}
 
 // @sect3{The <code>main</code> function}
 

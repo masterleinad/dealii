@@ -1126,7 +1126,7 @@ namespace internal
               renumbering[block], row_entries.begin(), row_entries.end());
           }
       }
-    } // namespace
+    }
 
     void
     DoFInfo::make_connectivity_graph(

@@ -66,7 +66,7 @@ DerivePointerAlignment: false
 
 DisableFormat: false
 
-FixNamespaceComments: true
+FixNamespaceComments: false
 
 IncludeBlocks: Preserve
 

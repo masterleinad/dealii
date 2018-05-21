@@ -196,10 +196,8 @@ namespace Utilities
                      const std::pair<double, double> unwanted_spectrum,
                      const double                    tau,
                      VectorMemory<VectorType>&       vector_memory);
-
-  } // namespace LinearAlgebra
-
-} // namespace Utilities
+  }
+}
 
 /*------------------------- Implementation ----------------------------*/
 
@@ -460,9 +458,8 @@ namespace Utilities
 
       x.swap(y);
     }
-
-  } // namespace LinearAlgebra
-} // namespace Utilities
+  }
+}
 
 #endif
 

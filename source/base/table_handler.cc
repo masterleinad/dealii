@@ -124,8 +124,7 @@ namespace internal
 
     return new_entry;
   }
-
-} // namespace internal
+}
 
 /* ------------------------------------------------ */
 

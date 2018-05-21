@@ -739,6 +739,6 @@ namespace Functions
   template class PoisseuilleFlow<3>;
   template class StokesCosine<2>;
   template class StokesCosine<3>;
-} // namespace Functions
+}
 
 DEAL_II_NAMESPACE_CLOSE

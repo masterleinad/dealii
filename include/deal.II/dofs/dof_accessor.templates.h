@@ -1396,8 +1396,8 @@ namespace internal
       }
 #endif
     };
-  } // namespace DoFAccessorImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, typename DoFHandlerType, bool level_dof_access>
 inline types::global_dof_index
@@ -1794,9 +1794,8 @@ namespace internal
 
       Assert(next == dof_indices.end(), ExcInternalError());
     }
-
-  } // namespace DoFAccessorImplementation
-} // namespace internal
+  }
+}
 
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
 inline void
@@ -2024,8 +2023,8 @@ namespace internal
         dealii::hp::DoFHandler<2, 3>,
         level_dof_access>::line_iterator();
     }
-  } // namespace DoFAccessorImplementation
-} // namespace internal
+  }
+}
 
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
 inline typename dealii::internal::DoFHandlerImplementation::
@@ -3125,8 +3124,8 @@ namespace internal
         global_vector.add(dofs, local_vector);
       }
     };
-  } // namespace DoFCellAccessorImplementation
-} // namespace internal
+  }
+}
 
 template <typename DoFHandlerType, bool level_dof_access>
 inline DoFCellAccessor<DoFHandlerType, level_dof_access>::DoFCellAccessor(
@@ -3252,8 +3251,8 @@ namespace internal
     {
       return cell.quad(i);
     }
-  } // namespace DoFCellAccessorImplementation
-} // namespace internal
+  }
+}
 
 template <typename DoFHandlerType, bool level_dof_access>
 inline typename DoFCellAccessor<DoFHandlerType, level_dof_access>::face_iterator

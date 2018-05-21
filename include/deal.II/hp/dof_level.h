@@ -29,7 +29,7 @@ namespace hp
   class DoFHandler;
   template <int, int>
   class FECollection;
-} // namespace hp
+}
 
 namespace internal
 {
@@ -44,7 +44,7 @@ namespace internal
   {
     struct Implementation;
   }
-} // namespace internal
+}
 
 namespace internal
 {

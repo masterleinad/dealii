@@ -262,7 +262,7 @@ namespace MGTools
   template <int dim, int spacedim>
   unsigned int
   max_level_for_coarse_mesh(const Triangulation<dim, spacedim>& tria);
-} // namespace MGTools
+}
 
 /* @} */
 

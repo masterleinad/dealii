@@ -117,9 +117,9 @@ namespace internal
             p[i](2) = points3d[start_index3d[k] + i][2];
           }
       }
-    } // namespace
-  }   // namespace FE_DGPMonomial
-} // namespace internal
+    }
+  }
+}
 
 template <int dim>
 FE_DGPMonomial<dim>::FE_DGPMonomial(const unsigned int degree)

@@ -635,7 +635,7 @@ namespace Step12
         output_results(cycle);
       }
   }
-} // namespace Step12
+}
 
 // The following <code>main</code> function is similar to previous examples as
 // well, and need not be commented on.

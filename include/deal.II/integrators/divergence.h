@@ -557,9 +557,8 @@ namespace LocalIntegrators
         }
       return result;
     }
-
-  } // namespace Divergence
-} // namespace LocalIntegrators
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

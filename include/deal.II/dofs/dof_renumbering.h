@@ -504,7 +504,7 @@ namespace DoFRenumbering
       const DoFHandlerType&,
       const bool reversed_numbering = false,
       const bool use_constraints    = false);
-  } // namespace boost
+  }
 
   /**
    * Renumber the degrees of freedom according to the Cuthill-McKee method,
@@ -1205,7 +1205,7 @@ namespace DoFRenumbering
    * @ingroup Exceptions
    */
   DeclException0(ExcNotDGFEM);
-} // namespace DoFRenumbering
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

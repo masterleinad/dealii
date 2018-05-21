@@ -72,7 +72,7 @@ namespace LACExceptions
                  << " occurred while calling a Trilinos function");
 
   //@}
-} // namespace LACExceptions
+}
 
 using namespace LACExceptions;
 

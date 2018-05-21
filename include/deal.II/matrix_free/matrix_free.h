@@ -2311,8 +2311,8 @@ namespace internal
           locally_owned_set.push_back(dofh[j]->locally_owned_mg_dofs(level));
       return locally_owned_set;
     }
-  } // namespace MatrixFreeImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
@@ -3375,7 +3375,7 @@ namespace internal
         const InVector&,
         const std::pair<unsigned int, unsigned int>&);
     };
-  } // namespace MatrixFreeFunctions
+  }
 
   // A implementation class for the worker object that runs the various
   // operations we want to perform during the matrix-free loop

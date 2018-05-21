@@ -267,8 +267,7 @@ namespace FESeries
    */
   std::pair<double, double>
   linear_regression(const std::vector<double>& x, const std::vector<double>& y);
-
-} // namespace FESeries
+}
 
 /*@}*/
 
@@ -363,8 +362,7 @@ namespace
                  "complex-valued coefficients and VectorTools::mean norm."));
     return std::abs(value);
   }
-
-} // namespace
+}
 
 template <int dim, typename T>
 std::pair<std::vector<unsigned int>, std::vector<double>>

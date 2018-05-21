@@ -79,7 +79,7 @@ namespace DoFRenumbering
       typedef graph_traits<Graph>::vertices_size_type size_type;
 
       typedef std::pair<size_type, size_type> Pair;
-    } // namespace boosttypes
+    }
 
     namespace internal
     {
@@ -116,7 +116,7 @@ namespace DoFRenumbering
         for(::boost::tie(ui, ui_end) = vertices(graph); ui != ui_end; ++ui)
           graph_degree[*ui] = degree(*ui, graph);
       }
-    } // namespace internal
+    }
 
     template <typename DoFHandlerType>
     void
@@ -1275,7 +1275,7 @@ namespace DoFRenumbering
 
       return current_next_free_dof_offset;
     }
-  } // namespace
+  }
 
   template <int dim>
   void
@@ -1921,7 +1921,7 @@ namespace DoFRenumbering
         return false;
       }
     };
-  } // namespace internal
+  }
 
   template <typename DoFHandlerType>
   void

@@ -203,7 +203,7 @@ namespace FEValuesExtractors
      */
     Tensor(const unsigned int first_tensor_component);
   };
-} // namespace FEValuesExtractors
+}
 
 /*------------------------ Inline functions: namespace FEValuesExtractors --------*/
 
@@ -243,7 +243,7 @@ namespace FEValuesExtractors
   inline Tensor<rank>::Tensor(const unsigned int first_tensor_component)
     : first_tensor_component(first_tensor_component)
   {}
-} // namespace FEValuesExtractors
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

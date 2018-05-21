@@ -131,8 +131,7 @@ namespace Polynomials
                        i == (base_degree - 1) && s < n_subdivisions - 1);
     return p;
   }
-
-} // namespace Polynomials
+}
 
 // ------------------ explicit instantiations --------------- //
 

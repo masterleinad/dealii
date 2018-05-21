@@ -578,7 +578,7 @@ namespace PETScWrappers
              ExcMessage("You can't ask a complex value "
                         "whether it is non-negative.")) return true;
     }
-  } // namespace internal
+  }
 
   bool
   VectorBase::is_non_negative() const
@@ -878,8 +878,7 @@ namespace PETScWrappers
     // written elements or whether the list was empty
     last_action = action;
   }
-
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

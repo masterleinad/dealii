@@ -148,8 +148,8 @@ namespace internal
     {
       std::fill(dst + begin, dst + end, 0);
     }
-  } // namespace SparseMatrixImplementation
-} // namespace internal
+  }
+}
 
 template <typename number>
 SparseMatrix<number>&
@@ -466,8 +466,8 @@ namespace internal
             *dst_ptr++ = s;
           }
     }
-  } // namespace SparseMatrixImplementation
-} // namespace internal
+  }
+}
 
 template <typename number>
 template <typename number2>
@@ -832,8 +832,8 @@ namespace internal
         }
       return norm_sqr;
     }
-  } // namespace SparseMatrixImplementation
-} // namespace internal
+  }
+}
 
 template <typename number>
 template <typename somenumber>
@@ -894,8 +894,8 @@ namespace internal
         }
       return norm_sqr;
     }
-  } // namespace SparseMatrixImplementation
-} // namespace internal
+  }
+}
 
 template <typename number>
 template <typename somenumber>
@@ -1254,8 +1254,8 @@ namespace internal
         }
       return norm_sqr;
     }
-  } // namespace SparseMatrixImplementation
-} // namespace internal
+  }
+}
 
 template <typename number>
 template <typename somenumber>
@@ -1319,7 +1319,7 @@ namespace
     (void) matrix;
 #endif
   }
-} // namespace
+}
 
 template <typename number>
 template <typename somenumber>

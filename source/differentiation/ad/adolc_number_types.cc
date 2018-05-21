@@ -74,7 +74,7 @@ namespace numbers
         return dealii::internal::NumberType<adouble>::value(a < b);
       });
   }
-} // namespace numbers
+}
 
 #  endif
 

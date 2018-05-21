@@ -182,8 +182,8 @@ namespace internal
             }
         }
     }
-  } // namespace PolynomialsRannacherTurekImplementation
-} // namespace internal
+  }
+}
 
 // template functions
 template <int dim>

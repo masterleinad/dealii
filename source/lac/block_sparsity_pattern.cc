@@ -582,8 +582,7 @@ namespace TrilinosWrappers
                                  communicator);
     this->collect_sizes();
   }
-
-} // namespace TrilinosWrappers
+}
 
 #endif
 

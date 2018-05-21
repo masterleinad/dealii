@@ -658,8 +658,8 @@ namespace Polynomials
           points[k](0) = static_cast<double>(k) * one_over_n;
         return points;
       }
-    } // namespace LagrangeEquidistantImplementation
-  }   // namespace internal
+    }
+  }
 
   LagrangeEquidistant::LagrangeEquidistant(const unsigned int n,
                                            const unsigned int support_point)
@@ -1208,7 +1208,7 @@ namespace Polynomials
              - (guess_right - guess_left) / (integral_right - integral_left)
                  * integral_right;
     }
-  } // namespace
+  }
 
   HermiteLikeInterpolation::HermiteLikeInterpolation(const unsigned int degree,
                                                      const unsigned int index)
@@ -1445,8 +1445,7 @@ namespace Polynomials
 
     return basis;
   }
-
-} // namespace Polynomials
+}
 
 // ------------------ explicit instantiations --------------- //
 

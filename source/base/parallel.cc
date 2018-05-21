@@ -30,7 +30,7 @@ namespace internal
     // split into enough chunks and the problem becomes badly balanced. the
     // tests are documented at https://github.com/dealii/dealii/issues/2496
     unsigned int minimum_parallel_grain_size = 4096;
-  } // namespace VectorImplementation
+  }
 
   namespace SparseMatrixImplementation
   {
@@ -88,7 +88,7 @@ namespace parallel
 #else
     TBBPartitioner::TBBPartitioner() = default;
 #endif
-  } // namespace internal
-} // namespace parallel
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE

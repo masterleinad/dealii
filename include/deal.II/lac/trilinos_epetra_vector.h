@@ -376,8 +376,8 @@ namespace LinearAlgebra
     {
       return false;
     }
-  } // namespace EpetraWrappers
-} // namespace LinearAlgebra
+  }
+}
 
 /**
  * Declare dealii::LinearAlgebra::EpetraWrappers::Vector as distributed vector.

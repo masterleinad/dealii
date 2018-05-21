@@ -357,7 +357,7 @@ namespace GridRefinement
    * coarsening thresholds overlap.
    */
   DeclException0(ExcInvalidParameterValue);
-} // namespace GridRefinement
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

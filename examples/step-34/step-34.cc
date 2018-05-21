@@ -110,7 +110,7 @@ namespace Step34
             return Tensor<1, dim>();
         }
     }
-  } // namespace LaplaceKernel
+  }
 
   // @sect3{The BEMProblem class}
 
@@ -1075,7 +1075,7 @@ namespace Step34
     if(extend_solution == true)
       compute_exterior_solution();
   }
-} // namespace Step34
+}
 
 // @sect3{The main() function}
 

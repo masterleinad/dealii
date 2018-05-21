@@ -394,7 +394,7 @@ namespace Step10
         std::cout << std::endl;
       }
   }
-} // namespace Step10
+}
 
 // The following main function just calls the above functions in the order of
 // their appearance. Apart from this, it looks just like the main functions of

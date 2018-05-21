@@ -200,7 +200,7 @@ namespace
       }
     return quad;
   }
-} // namespace
+}
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
@@ -1473,9 +1473,9 @@ namespace internal
           data,
           output_data);
       }
-    } // namespace
-  }   // namespace MappingFEFieldImplementation
-} // namespace internal
+    }
+  }
+}
 
 // Note that the CellSimilarity flag is modifiable, since MappingFEField can need to
 // recalculate data even when cells are similar.
@@ -1923,9 +1923,9 @@ namespace internal
               Assert(false, ExcNotImplemented());
           }
       }
-    } // namespace
-  }   // namespace MappingFEFieldImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void

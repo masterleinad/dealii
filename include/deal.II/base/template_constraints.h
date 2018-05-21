@@ -326,7 +326,7 @@ namespace internal
   template <bool B>
   struct DEAL_II_DEPRECATED bool2type
   {};
-} // namespace internal
+}
 
 /**
  * A type that can be used to determine whether two types are equal. It allows
@@ -370,8 +370,7 @@ namespace internal
   {
     typedef decltype(std::declval<T>() * std::declval<U>()) type;
   };
-
-} // namespace internal
+}
 
 /**
  * A class with a local typedef that represents the type that results from the
@@ -471,8 +470,7 @@ namespace internal
   {
     typedef std::complex<typename ProductType<T, float>::type> type;
   };
-
-} // namespace internal
+}
 
 /**
  * This class provides a local typedef @p type that is equal to the template

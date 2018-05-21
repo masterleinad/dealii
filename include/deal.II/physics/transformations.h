@@ -91,8 +91,7 @@ namespace Physics
       rotation_matrix_3d(const Point<3, Number>& axis, const Number& angle);
 
       //@}
-
-    } // namespace Rotations
+    }
 
     /**
      * Transformation of tensors that are defined in terms of a set of
@@ -309,7 +308,7 @@ namespace Physics
                 const Tensor<2, dim, Number>&          F);
 
       //@}
-    } // namespace Contravariant
+    }
 
     /**
      * Transformation of tensors that are defined in terms of a set of
@@ -527,7 +526,7 @@ namespace Physics
                 const Tensor<2, dim, Number>&          F);
 
       //@}
-    } // namespace Covariant
+    }
 
     /**
      * Transformation of tensors that are defined in terms of a set of
@@ -743,7 +742,7 @@ namespace Physics
                 const Tensor<2, dim, Number>&          F);
 
       //@}
-    } // namespace Piola
+    }
 
     /**
      * @name Special operations
@@ -778,8 +777,8 @@ namespace Physics
                     const Tensor<2, dim, Number>& F);
 
     //@}
-  } // namespace Transformations
-} // namespace Physics
+  }
+}
 
 #ifndef DOXYGEN
 
@@ -900,9 +899,9 @@ namespace internal
 
         return out;
       }
-    } // namespace
-  }   // namespace Physics
-} // namespace internal
+    }
+  }
+}
 
 template <typename Number>
 Tensor<2, 2, Number>

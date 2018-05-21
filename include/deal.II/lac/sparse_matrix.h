@@ -48,7 +48,7 @@ namespace Utilities
     void
     sum(const SparseMatrix<Number>&, const MPI_Comm&, SparseMatrix<Number>&);
   }
-} // namespace Utilities
+}
 #  endif
 
 #  ifdef DEAL_II_WITH_TRILINOS
@@ -441,8 +441,7 @@ namespace SparseMatrixIterators
      */
     Accessor<number, Constness> accessor;
   };
-
-} // namespace SparseMatrixIterators
+}
 
 /**
  * @}
@@ -2262,8 +2261,7 @@ namespace SparseMatrixIterators
 
     return x;
   }
-
-} // namespace SparseMatrixIterators
+}
 
 template <typename number>
 inline typename SparseMatrix<number>::const_iterator

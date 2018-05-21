@@ -840,9 +840,8 @@ namespace internal
     template <>
     void
     TriaObjects<TriaObject<2>>::monitor_memory(const unsigned int) const;
-
-  } // namespace TriangulationImplementation
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

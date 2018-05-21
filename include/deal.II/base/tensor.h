@@ -745,7 +745,7 @@ namespace internal
       return tmp;
     }
   };
-} // namespace internal
+}
 
 /*---------------------- Inline functions: Tensor<0,dim> ---------------------*/
 
@@ -1046,8 +1046,8 @@ namespace internal
       static ArrayElementType t;
       return t;
     }
-  } // namespace TensorSubscriptor
-} // namespace internal
+  }
+}
 
 template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE                       DEAL_II_CUDA_HOST_DEV

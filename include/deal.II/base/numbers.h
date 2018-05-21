@@ -88,7 +88,7 @@ namespace std
   template <typename Number>
   ::dealii::VectorizedArray<Number>
   log(const ::dealii::VectorizedArray<Number>&);
-} // namespace std
+}
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -487,8 +487,7 @@ namespace numbers
   {
     return std::norm(x);
   }
-
-} // namespace numbers
+}
 
 // Forward declarations
 namespace Differentiation
@@ -505,8 +504,8 @@ namespace Differentiation
     // Defined in differentiation/ad/ad_number_traits.h
     template <typename NumberType>
     struct is_ad_number;
-  } // namespace AD
-} // namespace Differentiation
+  }
+}
 
 namespace internal
 {

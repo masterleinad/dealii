@@ -30,7 +30,7 @@ namespace LinearAlgebra
   class CommunicationPatternBase;
   template <typename Number>
   class ReadWriteVector;
-} // namespace LinearAlgebra
+}
 
 namespace LinearAlgebra
 {

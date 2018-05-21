@@ -547,7 +547,7 @@ namespace SparsityTools
 
       return starting_point;
     }
-  } // namespace internal
+  }
 
   void
   reorder_Cuthill_McKee(

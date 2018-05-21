@@ -43,7 +43,7 @@ namespace LinearAlgebra
     template <typename number>
     class Vector;
   }
-} // namespace LinearAlgebra
+}
 
 /*! @addtogroup Preconditioners
  *@{
@@ -1962,8 +1962,8 @@ namespace internal
 
       std::vector<double> values;
     };
-  } // namespace PreconditionChebyshevImplementation
-} // namespace internal
+  }
+}
 
 // avoid warning about deprecated variable nonzero_starting
 

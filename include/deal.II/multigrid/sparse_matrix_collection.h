@@ -121,8 +121,7 @@ namespace mg
     matrix_up   = 0.;
     matrix_down = 0.;
   }
-
-} // namespace mg
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

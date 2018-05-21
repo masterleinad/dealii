@@ -112,8 +112,8 @@ namespace internal
        */
       typedef dealii::CellAccessor<dim, spacedim> BaseClass;
     };
-  } // namespace DoFAccessorImplementation
-} // namespace internal
+  }
+}
 
 /* -------------------------------------------------------------------------- */
 

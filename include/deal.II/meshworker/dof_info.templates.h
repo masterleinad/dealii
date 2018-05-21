@@ -50,7 +50,7 @@ namespace MeshWorker
     for(unsigned int i = 0; i < indices.size(); ++i)
       indices[this->block_info->renumber(i)] = indices_org[i];
   }
-} // namespace MeshWorker
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

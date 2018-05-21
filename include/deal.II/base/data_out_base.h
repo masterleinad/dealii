@@ -2349,7 +2349,7 @@ namespace DataOutBase
                  << " for output.");
 
   //@}
-} // namespace DataOutBase
+}
 
 /**
  * This class is the interface to the functions in the DataOutBase namespace,
@@ -3244,7 +3244,7 @@ namespace DataOutBase
   template <int dim, int spacedim>
   std::istream&
   operator>>(std::istream& in, Patch<dim, spacedim>& patch);
-} // namespace DataOutBase
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -26,7 +26,7 @@ namespace std_cxx11
   using std::enable_shared_from_this;
   using std::make_shared;
   using std::shared_ptr;
-} // namespace std_cxx11
+}
 DEAL_II_NAMESPACE_CLOSE
 
 // then allow using the old namespace name instead of the new one

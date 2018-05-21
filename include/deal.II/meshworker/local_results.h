@@ -643,8 +643,7 @@ namespace MeshWorker
         os << std::endl;
       }
   }
-
-} // namespace MeshWorker
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

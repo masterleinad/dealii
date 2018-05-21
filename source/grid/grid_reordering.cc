@@ -972,7 +972,7 @@ namespace
   // to orient in that case
   void reorient(std::vector<CellData<1>>&)
   {}
-} // namespace
+}
 
 // anonymous namespace for internal helper functions
 namespace
@@ -1031,7 +1031,7 @@ namespace
           cells[cell].vertices[GeometryInfo<3>::ucd_to_deal[i]] = tmp[i];
       }
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void

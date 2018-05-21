@@ -649,7 +649,7 @@ namespace
 
     return grids_changed;
   }
-} // namespace
+}
 
 template <int dim>
 void

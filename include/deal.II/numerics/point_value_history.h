@@ -61,8 +61,8 @@ namespace internal
       std::vector<Point<dim>>              support_point_locations;
       std::vector<types::global_dof_index> solution_indices;
     };
-  } // namespace PointValueHistoryImplementation
-} // namespace internal
+  }
+}
 
 /**
  * PointValueHistory tackles the overhead of plotting time (or any other

@@ -299,9 +299,9 @@ namespace internal
                              const Quadrature<0>&,
                              const unsigned int)
       {}
-    } // namespace
-  }   // namespace FE_BDM
-} // namespace internal
+    }
+  }
+}
 
 template <int dim>
 void

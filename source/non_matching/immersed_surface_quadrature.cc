@@ -66,6 +66,5 @@ namespace NonMatching
   template class ImmersedSurfaceQuadrature<1>;
   template class ImmersedSurfaceQuadrature<2>;
   template class ImmersedSurfaceQuadrature<3>;
-
-} // namespace NonMatching
+}
 DEAL_II_NAMESPACE_CLOSE

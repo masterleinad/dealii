@@ -480,10 +480,8 @@ namespace PETScWrappers
     {
       u.swap(v);
     }
-
-  } // namespace MPI
-
-} // namespace PETScWrappers
+  }
+}
 
 namespace internal
 {

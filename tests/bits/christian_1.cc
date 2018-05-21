@@ -41,7 +41,7 @@ namespace DoFToolsEx
            const InVector&        source_vector,
            const DoFHandler<dim>& target_dof,
            OutVector&             target_vector);
-} // namespace DoFToolsEx
+}
 
 /**
  * Detailed desc.

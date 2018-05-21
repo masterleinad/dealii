@@ -97,9 +97,9 @@ namespace internal
         data.min_index = numbers::invalid_unsigned_int;
         data.max_index = numbers::invalid_unsigned_int;
       }
-    } // namespace
-  }   // namespace TimerImplementation
-} // namespace internal
+    }
+  }
+}
 
 CPUClock::time_point
 CPUClock::now() noexcept

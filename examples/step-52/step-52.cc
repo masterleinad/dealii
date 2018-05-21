@@ -716,7 +716,7 @@ namespace Step52
               << std::endl;
     std::cout << "                steps performed=" << n_steps << std::endl;
   }
-} // namespace Step52
+}
 
 // @sect3{The <code>main()</code> function}
 //

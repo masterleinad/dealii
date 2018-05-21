@@ -82,8 +82,8 @@ namespace SUNDIALS
     copy(Vector<double>& dst, const N_Vector& src);
     void
     copy(N_Vector& dst, const Vector<double>& src);
-  } // namespace internal
-} // namespace SUNDIALS
+  }
+}
 DEAL_II_NAMESPACE_CLOSE
 
 #endif // DEAL_II_WITH_SUNDIALS

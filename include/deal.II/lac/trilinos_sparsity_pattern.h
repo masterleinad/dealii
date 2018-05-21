@@ -247,8 +247,7 @@ namespace TrilinosWrappers
 
       friend class TrilinosWrappers::SparsityPattern;
     };
-
-  } // namespace SparsityPatternIterators
+  }
 
   /**
    * This class implements a wrapper class to use the Trilinos distributed
@@ -1337,8 +1336,7 @@ namespace TrilinosWrappers
               || (accessor.row() == other.accessor.row()
                   && accessor.index() < other.accessor.index()));
     }
-
-  } // namespace SparsityPatternIterators
+  }
 
   inline SparsityPattern::const_iterator
   SparsityPattern::begin() const
@@ -1481,7 +1479,7 @@ namespace TrilinosWrappers
   }
 
 #    endif // DOXYGEN
-} // namespace TrilinosWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

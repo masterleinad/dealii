@@ -257,8 +257,8 @@ namespace internal
     {
       dst = src;
     }
-  } // namespace
-} // namespace internal
+  }
+}
 
 template <typename Sparsity>
 void

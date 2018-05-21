@@ -97,7 +97,7 @@ namespace internal
       type;
   };
 #  endif
-} // namespace internal
+}
 
 /**
  * This namespace is a collection of algorithms working on triangulations,
@@ -3050,8 +3050,8 @@ namespace GridTools
 
         return x_k;
       }
-    } // namespace ProjectToObject
-  }   // namespace internal
+    }
+  }
 
   namespace internal
   {

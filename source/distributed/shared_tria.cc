@@ -419,8 +419,8 @@ namespace parallel
       Assert(false, ExcNotImplemented());
       return true_level_subdomain_ids_of_cells;
     }
-  } // namespace shared
-} // namespace parallel
+  }
+}
 
 #endif
 

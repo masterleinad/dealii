@@ -56,7 +56,7 @@ namespace internal
   {
     return &dealii::numbers::invalid_dof_index;
   }
-} // namespace internal
+}
 
 namespace internal
 {
@@ -791,8 +791,8 @@ namespace internal
           dof_handler, obj_index, fe_index, local_index, global_index);
       }
     };
-  } // namespace DoFHandlerImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 DoFHandler<dim, spacedim>::DoFHandler(const Triangulation<dim, spacedim>& tria)

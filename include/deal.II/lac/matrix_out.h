@@ -262,9 +262,9 @@ namespace internal
       {
         return matrix(i, j);
       }
-    } // namespace
-  }   // namespace MatrixOutImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <class Matrix>
 inline double

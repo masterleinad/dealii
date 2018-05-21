@@ -75,7 +75,7 @@ namespace Algorithms
   {
     dof = &dof_handler;
   }
-} // namespace Algorithms
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

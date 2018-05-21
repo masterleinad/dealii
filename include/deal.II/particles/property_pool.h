@@ -100,8 +100,7 @@ namespace Particles
      */
     const unsigned int n_properties;
   };
-
-} // namespace Particles
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -39,7 +39,7 @@ namespace LinearAlgebraDealII
   typedef SparseMatrix<double> SparseMatrix;
 
   typedef PreconditionSSOR<SparseMatrix> PreconditionSSOR;
-} // namespace LinearAlgebraDealII
+}
 
 DEAL_II_NAMESPACE_CLOSE
 
@@ -120,10 +120,8 @@ namespace LinearAlgebraPETSc
      * Typedef for the SSOR preconditioner.
      */
     typedef PETScWrappers::PreconditionSSOR PreconditionSSOR;
-
-  } // namespace MPI
-
-} // namespace LinearAlgebraPETSc
+  }
+}
 DEAL_II_NAMESPACE_CLOSE
 
 #endif // DEAL_II_WITH_PETSC
@@ -206,10 +204,8 @@ namespace LinearAlgebraTrilinos
      * Typedef for the SSOR preconditioner
      */
     typedef TrilinosWrappers::PreconditionSSOR PreconditionSSOR;
-
-  } // namespace MPI
-
-} // namespace LinearAlgebraTrilinos
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

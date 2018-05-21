@@ -427,8 +427,8 @@ namespace internal
       for(unsigned int i = 0; i < n_rows; ++i, ++eigenvalues)
         *eigenvalues = deriv_copy.eigenvalue(i).real();
     }
-  } // namespace TensorProductMatrix
-} // namespace internal
+  }
+}
 
 template <int dim, typename Number, int size>
 inline unsigned int

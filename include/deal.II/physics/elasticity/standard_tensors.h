@@ -271,9 +271,8 @@ namespace Physics
 
       //@}
     };
-
-  } // namespace Elasticity
-} // namespace Physics
+  }
+}
 
 #ifndef DOXYGEN
 

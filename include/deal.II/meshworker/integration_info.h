@@ -872,8 +872,7 @@ namespace MeshWorker
   void
   IntegrationInfoBox<dim, sdim>::post_faces(const DoFInfoBox<dim, DOFINFO>&)
   {}
-
-} // namespace MeshWorker
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

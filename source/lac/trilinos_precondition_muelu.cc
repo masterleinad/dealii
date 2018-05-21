@@ -291,8 +291,7 @@ namespace TrilinosWrappers
                                    const AdditionalData&,
                                    const double,
                                    const ::dealii::SparsityPattern*);
-
-} // namespace TrilinosWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

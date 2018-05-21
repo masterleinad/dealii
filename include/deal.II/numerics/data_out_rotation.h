@@ -51,8 +51,8 @@ namespace internal
 
       std::vector<Point<spacedim>> patch_evaluation_points;
     };
-  } // namespace DataOutRotationImplementation
-} // namespace internal
+  }
+}
 
 /**
  * This class generates output in the full domain of computations that were

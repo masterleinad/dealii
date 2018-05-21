@@ -715,7 +715,7 @@ namespace Utilities
      */
     void
     posix_memalign(void** memptr, size_t alignment, size_t size);
-  } // namespace System
+  }
 
 #ifdef DEAL_II_WITH_TRILINOS
   /**
@@ -841,11 +841,10 @@ namespace Utilities
      */
     Epetra_Map
     duplicate_map(const Epetra_BlockMap& map, const Epetra_Comm& comm);
-  } // namespace Trilinos
+  }
 
 #endif
-
-} // namespace Utilities
+}
 
 // --------------------- inline functions
 
@@ -1162,8 +1161,7 @@ namespace Utilities
   {
     unpack<T, N>(buffer.cbegin(), buffer.cend(), unpacked_object);
   }
-
-} // namespace Utilities
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

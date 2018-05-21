@@ -351,6 +351,6 @@ namespace NonMatching
   }
 
 #include "coupling.inst"
-} // namespace NonMatching
+}
 
 DEAL_II_NAMESPACE_CLOSE

@@ -892,8 +892,7 @@ namespace SUNDIALS
 #    endif // PETSC_USE_COMPLEX
 #  endif   // DEAL_II_WITH_PETSC
   };
-
-} // namespace SUNDIALS
+}
 
 DEAL_II_NAMESPACE_CLOSE
 #endif

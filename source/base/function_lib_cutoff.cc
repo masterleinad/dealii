@@ -291,6 +291,6 @@ namespace Functions
   template class CutOffFunctionCinfty<1>;
   template class CutOffFunctionCinfty<2>;
   template class CutOffFunctionCinfty<3>;
-} // namespace Functions
+}
 
 DEAL_II_NAMESPACE_CLOSE

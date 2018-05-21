@@ -321,10 +321,8 @@ namespace PETScWrappers
     {
       BaseClass::Tvmult_nonblock_nonblock(dst, src);
     }
-
-  } // namespace MPI
-
-} // namespace PETScWrappers
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

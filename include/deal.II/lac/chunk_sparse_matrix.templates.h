@@ -256,8 +256,8 @@ namespace internal
                == rowstart[end_row] * chunk_size * chunk_size,
              ExcInternalError());
     }
-  } // namespace ChunkSparseMatrixImplementation
-} // namespace internal
+  }
+}
 
 template <typename number>
 ChunkSparseMatrix<number>::ChunkSparseMatrix()
@@ -334,8 +334,8 @@ namespace internal
     {
       std::memset(dst + begin, 0, (end - begin) * sizeof(T));
     }
-  } // namespace ChunkSparseMatrixImplementation
-} // namespace internal
+  }
+}
 
 template <typename number>
 ChunkSparseMatrix<number>&

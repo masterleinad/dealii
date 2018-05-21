@@ -652,8 +652,7 @@ namespace WorkStream
          */
         const std::function<void(const CopyData&)> copier;
       };
-
-    } // namespace Implementation2
+    }
 
     /**
      * A namespace for the implementation of details of the WorkStream pattern
@@ -849,9 +848,8 @@ namespace WorkStream
         const ScratchData& sample_scratch_data;
         const CopyData&    sample_copy_data;
       };
-    } // namespace Implementation3
-
-  } // namespace internal
+    }
+  }
 
 #  endif // DEAL_II_WITH_THREADS
 
@@ -1184,8 +1182,7 @@ namespace WorkStream
         queue_length,
         chunk_size);
   }
-
-} // namespace WorkStream
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -80,7 +80,7 @@ namespace TensorAccessors
     class Contract;
     template <int rank_1, int rank_2, int dim>
     class Contract3;
-  } // namespace internal
+  }
 
   /**
    * This class provides a local typedef @p value_type denoting the resulting

@@ -290,8 +290,7 @@ namespace Functions
     const unsigned int n_components)
     : ConstantFunction<dim, RangeNumberType>(RangeNumberType(), n_components)
   {}
-
-} // namespace Functions
+}
 
 //---------------------------------------------------------------------------
 
@@ -458,8 +457,7 @@ namespace Functions
           gradients[i][c].clear();
       };
   }
-
-} // namespace Functions
+}
 
 //---------------------------------------------------------------------------
 

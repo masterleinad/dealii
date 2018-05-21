@@ -218,9 +218,8 @@ namespace internal
     {
       ar& dofs;
     }
-
-  } // namespace DoFHandlerImplementation
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

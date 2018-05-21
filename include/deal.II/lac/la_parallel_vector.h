@@ -1552,9 +1552,8 @@ namespace LinearAlgebra
     }
 
 #endif
-
-  } // namespace distributed
-} // namespace LinearAlgebra
+  }
+}
 
 /**
  * Global function @p swap which overloads the default implementation of the

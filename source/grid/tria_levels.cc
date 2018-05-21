@@ -189,8 +189,8 @@ namespace internal
               + MemoryConsumption::memory_consumption(direction_flags)
               + MemoryConsumption::memory_consumption(cells));
     }
-  } // namespace TriangulationImplementation
-} // namespace internal
+  }
+}
 
 template class internal::TriangulationImplementation::TriaLevel<1>;
 template class internal::TriangulationImplementation::TriaLevel<2>;

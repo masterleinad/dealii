@@ -95,7 +95,7 @@ namespace internal
   {
     typedef Tensor<1, 3, NumberType> type;
   };
-} // namespace internal
+}
 
 /**
  * A namespace for "views" on a FEValues, FEFaceValues, or FESubfaceValues
@@ -1852,8 +1852,7 @@ namespace FEValuesViews
      */
     std::vector<ShapeFunctionData> shape_function_data;
   };
-
-} // namespace FEValuesViews
+}
 
 namespace internal
 {
@@ -1885,8 +1884,8 @@ namespace internal
        */
       Cache(const FEValuesBase<dim, spacedim>& fe_values);
     };
-  } // namespace FEValuesViews
-} // namespace internal
+  }
+}
 
 /**
  * FEValues, FEFaceValues and FESubfaceValues objects are interfaces to finite
@@ -4370,7 +4369,7 @@ namespace FEValuesViews
             }
         }
     }
-  } // namespace
+  }
 
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::symmetric_gradient_type
@@ -4684,8 +4683,7 @@ namespace FEValuesViews
         return return_value;
       }
   }
-
-} // namespace FEValuesViews
+}
 
 /*------------------------ Inline functions: FEValuesBase ------------------------*/
 

@@ -112,9 +112,8 @@ namespace internal
     {
       typedef int type;
     };
-
-  } // namespace TriaAccessorImplementation
-} // namespace internal
+  }
+}
 template <int structdim, int dim, int spacedim>
 class TriaAccessor;
 template <int dim, int spacedim>
@@ -249,7 +248,7 @@ namespace TriaAccessorExceptions
     int,
     << "You can only set the child index of an even numbered child."
     << "The number of the child given was " << arg1 << ".");
-} // namespace TriaAccessorExceptions
+}
 
 /**
  * A base class for the accessor classes used by TriaRawIterator and derived

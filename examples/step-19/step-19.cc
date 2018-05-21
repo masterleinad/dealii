@@ -480,7 +480,7 @@ namespace Step19
 
     AssertThrow(false, ExcNotImplemented());
   }
-} // namespace Step19
+}
 
 // @sect4{main()}
 

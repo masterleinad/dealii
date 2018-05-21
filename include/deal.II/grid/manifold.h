@@ -157,7 +157,7 @@ namespace Manifolds
             std::array<double, n_default_points_per_cell<MeshIteratorType>()>>
   get_default_points_and_weights(const MeshIteratorType& iterator,
                                  const bool with_interpolation = false);
-} // namespace Manifolds
+}
 
 /**
  * Manifolds are used to describe the geometry of boundaries of domains as

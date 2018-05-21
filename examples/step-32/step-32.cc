@@ -197,8 +197,7 @@ namespace Step32
     // times in seconds yields numbers that one can't relate to reality, and
     // so we convert to years using the factor defined here:
     const double year_in_seconds = 60 * 60 * 24 * 365.2425;
-
-  } // namespace EquationData
+  }
 
   // @sect3{Preconditioning the Stokes system}
 
@@ -281,7 +280,7 @@ namespace Step32
       const PreconditionerTypeA&  a_preconditioner;
       const bool                  do_solve_A;
     };
-  } // namespace LinearSolvers
+  }
 
   // @sect3{Definition of assembly data structures}
   //
@@ -576,7 +575,7 @@ namespace Step32
           old_temperature_laplacians(scratch.old_temperature_laplacians),
           old_old_temperature_laplacians(scratch.old_old_temperature_laplacians)
       {}
-    } // namespace Scratch
+    }
 
     // The CopyData objects are even simpler than the Scratch objects as all
     // they have to do is to store the results of local computations until
@@ -687,8 +686,8 @@ namespace Step32
           local_dof_indices(data.local_dof_indices),
           matrix_for_bc(data.matrix_for_bc)
       {}
-    } // namespace CopyData
-  }   // namespace Assembly
+    }
+  }
 
   // @sect3{The <code>BoussinesqFlowProblem</code> class template}
   //
@@ -3623,7 +3622,7 @@ namespace Step32
        && !((timestep_number - 1) % parameters.graphical_output_interval == 0))
       output_results();
   }
-} // namespace Step32
+}
 
 // @sect3{The <code>main</code> function}
 

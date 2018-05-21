@@ -44,8 +44,8 @@ namespace LinearAlgebra
     TEMPL_COPY_CONSTRUCTOR(float, double);
 
 #  undef TEMPL_COPY_CONSTRUCTOR
-  } // namespace distributed
-} // namespace LinearAlgebra
+  }
+}
 
 #endif // ! DEAL_II_MSVC
 

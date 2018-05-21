@@ -326,7 +326,7 @@ namespace hp
 
     return mem;
   }
-} // namespace hp
+}
 
 // explicit instantiations
 #include "fe_collection.inst"

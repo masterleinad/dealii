@@ -454,9 +454,8 @@ namespace internal
       Tensor<1, 3> tmp = cross_product_3d(basis_vectors[0], basis_vectors[1]);
       return tmp / tmp.norm();
     }
-
-  } // namespace
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 FlatManifold<dim, spacedim>::FlatManifold(

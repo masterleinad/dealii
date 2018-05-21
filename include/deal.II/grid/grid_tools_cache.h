@@ -201,7 +201,7 @@ namespace GridTools
   {
     return *mapping;
   }
-} // namespace GridTools
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

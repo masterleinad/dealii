@@ -159,8 +159,7 @@ namespace Patterns
      */
     std::string
     escape(const std::string& input, const PatternBase::OutputStyle style);
-
-  } // namespace internal
+  }
 
   /**
    * Test for the string being an integer. If bounds are given to the
@@ -1387,8 +1386,8 @@ namespace Patterns
                    << "The string " << arg1 << " does not match the pattern \""
                    << arg2.description() << "\"");
     //@}
-  } // namespace Tools
-} // namespace Patterns
+  }
+}
 
 // ---------------------- inline and template functions --------------------
 namespace Patterns
@@ -1592,7 +1591,7 @@ namespace Patterns
         std::unordered_multimap<Key, T, Hash, KeyEqual, Allocator>>
         : std::true_type
       {};
-    } // namespace internal
+    }
 
     // type trait to use the implementation type traits as well as decay the type
     template <typename T>
@@ -2204,8 +2203,8 @@ namespace Patterns
     {
       t = Convert<T>::to_value(s);
     }
-  } // namespace Tools
-} // namespace Patterns
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

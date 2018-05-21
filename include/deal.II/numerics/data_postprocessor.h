@@ -325,8 +325,7 @@ namespace DataPostprocessorInputs
      */
     std::vector<std::vector<Tensor<2, spacedim>>> solution_hessians;
   };
-
-} // namespace DataPostprocessorInputs
+}
 
 /**
  * This class provides an interface to compute derived quantities from a

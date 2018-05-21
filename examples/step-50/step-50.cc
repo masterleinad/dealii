@@ -947,7 +947,7 @@ namespace Step50
         output_results(cycle);
       }
   }
-} // namespace Step50
+}
 
 // @sect3{The main() function}
 //

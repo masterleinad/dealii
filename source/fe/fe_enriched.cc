@@ -120,9 +120,9 @@ namespace internal
 
         return false;
       }
-    } // namespace
-  }   // namespace FE_Enriched
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(

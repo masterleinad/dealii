@@ -184,9 +184,8 @@ namespace internal
     {
       ar& lines& quads;
     }
-
-  } // namespace DoFHandlerImplementation
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

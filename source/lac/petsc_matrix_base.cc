@@ -69,7 +69,7 @@ namespace PETScWrappers
       ierr = MatRestoreRow(*matrix, this->a_row, &ncols, &colnums, &values);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
     }
-  } // namespace MatrixIterators
+  }
 
   MatrixBase::MatrixBase()
     : matrix(nullptr), last_action(VectorOperation::unknown)
@@ -628,8 +628,7 @@ namespace PETScWrappers
 
     return sizeof(*this) + static_cast<size_type>(info.memory);
   }
-
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

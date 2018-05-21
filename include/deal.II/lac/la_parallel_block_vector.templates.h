@@ -745,7 +745,7 @@ namespace LinearAlgebra
         else
           matrix.set_property(LAPACKSupport::general);
       }
-    } // namespace
+    }
 
     template <typename Number>
     template <typename FullMatrixType>

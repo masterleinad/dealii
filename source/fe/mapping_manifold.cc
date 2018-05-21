@@ -460,9 +460,9 @@ namespace internal
               }
           }
       }
-    } // namespace
-  }   // namespace MappingManifoldImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 CellSimilarity::Similarity
@@ -1204,9 +1204,9 @@ namespace internal
               Assert(false, ExcNotImplemented());
           }
       }
-    } // namespace
-  }   // namespace MappingManifoldImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 void

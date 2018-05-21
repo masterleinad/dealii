@@ -66,8 +66,8 @@ namespace internal
       patches.push_back(patch);
       patches.back().patch_index = patches.size() - 1;
     }
-  } // namespace DataOutFacesImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, typename DoFHandlerType>
 DataOutFaces<dim, DoFHandlerType>::DataOutFaces(const bool so)

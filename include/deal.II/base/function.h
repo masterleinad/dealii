@@ -481,8 +481,7 @@ namespace Functions
      */
     ZeroFunction(const unsigned int n_components = 1);
   };
-
-} // namespace Functions
+}
 
 /**
  * Provide a function which always returns the constant values handed to the

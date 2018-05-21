@@ -662,8 +662,7 @@ namespace SUNDIALS
      */
     GrowingVectorMemory<VectorType> mem;
   };
-
-} // namespace SUNDIALS
+}
 
 DEAL_II_NAMESPACE_CLOSE
 #endif

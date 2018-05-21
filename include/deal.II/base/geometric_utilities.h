@@ -70,9 +70,8 @@ namespace GeometricUtilities
     template <std::size_t dim>
     Point<dim>
     from_spherical(const std::array<double, dim>& scoord);
-
-  } // namespace Coordinates
-} // namespace GeometricUtilities
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

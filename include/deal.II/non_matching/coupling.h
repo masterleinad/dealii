@@ -207,7 +207,7 @@ namespace NonMatching
     const ComponentMask&                    immersed_comps = ComponentMask(),
     const Mapping<dim1, spacedim>&          immersed_mapping
     = StaticMappingQ1<dim1, spacedim>::mapping);
-} // namespace NonMatching
+}
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

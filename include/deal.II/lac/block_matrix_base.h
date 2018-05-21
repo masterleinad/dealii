@@ -277,7 +277,7 @@ namespace BlockMatrixIterators
     template <typename>
     friend class dealii::MatrixIterator;
   };
-} // namespace BlockMatrixIterators
+}
 
 /**
  * Blocked matrix class. The behaviour of objects of this type is almost as
@@ -1441,7 +1441,7 @@ namespace BlockMatrixIterators
 
     return false;
   }
-} // namespace BlockMatrixIterators
+}
 
 //---------------------------------------------------------------------------
 

@@ -292,9 +292,8 @@ namespace internal
       ar& direction_flags;
       ar& cells;
     }
-
-  } // namespace TriangulationImplementation
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

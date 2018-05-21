@@ -112,7 +112,7 @@ namespace Particles
 
     return tmp;
   }
-} // namespace Particles
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

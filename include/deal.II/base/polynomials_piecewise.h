@@ -162,8 +162,7 @@ namespace Polynomials
   generate_complete_Lagrange_basis_on_subdivisions(
     const unsigned int n_subdivisions,
     const unsigned int base_degree);
-
-} // namespace Polynomials
+}
 
 /** @} */
 
@@ -229,8 +228,7 @@ namespace Polynomials
     ar& interval;
     ar& spans_two_intervals;
   }
-
-} // namespace Polynomials
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

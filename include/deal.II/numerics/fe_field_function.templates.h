@@ -484,8 +484,7 @@ namespace Functions
         return boost::optional<Point<dim>>();
       }
   }
-
-} // namespace Functions
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

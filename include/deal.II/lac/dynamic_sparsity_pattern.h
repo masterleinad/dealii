@@ -245,7 +245,7 @@ namespace DynamicSparsityPatternIterators
      */
     Accessor accessor;
   };
-} // namespace DynamicSparsityPatternIterators
+}
 
 /**
  * This class acts as an intermediate form of the SparsityPattern class. From
@@ -861,7 +861,7 @@ namespace DynamicSparsityPatternIterators
 
     return 0;
   }
-} // namespace DynamicSparsityPatternIterators
+}
 
 inline void
 DynamicSparsityPattern::Line::add(const size_type j)

@@ -280,7 +280,7 @@ namespace internal
     DoFLevel::uncompress_data(const dealii::hp::FECollection<2, 3>&);
     template void
     DoFLevel::uncompress_data(const dealii::hp::FECollection<3, 3>&);
-  } // namespace hp
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE

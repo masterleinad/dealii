@@ -517,7 +517,7 @@ namespace Step38
     output_results();
     compute_error();
   }
-} // namespace Step38
+}
 
 // @sect3{The main() function}
 

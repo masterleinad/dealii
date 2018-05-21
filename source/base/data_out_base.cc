@@ -201,7 +201,7 @@ namespace
 
       return codechar - code_out;
     }
-  } // namespace base64
+  }
 
   /**
    * Do a base64 encoding of the given data.
@@ -302,7 +302,7 @@ namespace
       }
   }
 #endif
-} // namespace
+}
 
 // some declarations of functions and locally used classes
 namespace DataOutBase
@@ -453,7 +453,7 @@ namespace DataOutBase
       for(unsigned int data_set = 0; data_set < n_data_sets; ++data_set)
         Assert(data_vectors[data_set].size() == next_value, ExcInternalError());
     }
-  } // namespace
+  }
 
   DataOutFilter::DataOutFilter()
     : flags(false, true),
@@ -637,7 +637,7 @@ namespace DataOutBase
           }
       }
   }
-} // namespace DataOutBase
+}
 
 //----------------------------------------------------------------------//
 //Auxiliary data
@@ -1531,7 +1531,7 @@ namespace
 
     return stream;
   }
-} // namespace
+}
 
 namespace DataOutBase
 {
@@ -2655,7 +2655,7 @@ namespace DataOutBase
 
       return gradient_parameters;
     }
-  } // namespace
+  }
 
   template <int dim, int spacedim>
   void
@@ -4378,8 +4378,7 @@ namespace DataOutBase
     {
       return connData[i + j * n_vert];
     }
-
-  } // namespace
+  }
 
 #endif
   //---------------------------------------------------------------------------
@@ -8162,7 +8161,7 @@ namespace
       res += "  ";
     return res;
   }
-} // namespace
+}
 
 std::string
 XDMFEntry::get_xdmf_content(const unsigned int indent_level) const
@@ -8325,7 +8324,7 @@ namespace DataOutBase
 
     return in;
   }
-} // namespace DataOutBase
+}
 
 // explicit instantiations
 #include "data_out_base.inst"

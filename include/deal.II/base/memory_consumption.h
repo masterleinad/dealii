@@ -257,7 +257,7 @@ namespace MemoryConsumption
   template <typename T>
   inline std::size_t
   memory_consumption(const std::unique_ptr<T>&);
-} // namespace MemoryConsumption
+}
 
 // now comes the implementation of these functions
 

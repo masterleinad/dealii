@@ -127,9 +127,8 @@ namespace internal
         copy_indices_global_mine,
       MGLevelObject<LinearAlgebra::distributed::Vector<Number>>&
         ghosted_level_vector);
-
-  } // namespace MGTransfer
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

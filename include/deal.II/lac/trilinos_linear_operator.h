@@ -44,7 +44,7 @@ namespace TrilinosWrappers
       template <typename PayloadBlockType>
       class TrilinosBlockPayload;
     }
-  } // namespace internal
+  }
 
   /**
    * @name Creation of a LinearOperator

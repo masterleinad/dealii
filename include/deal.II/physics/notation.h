@@ -579,11 +579,9 @@ namespace Physics
       TensorType
       to_tensor(const FullMatrix<Number>& vec);
       //@}
-
-    } // namespace Kelvin
-
-  } // namespace Notation
-} // namespace Physics
+    }
+  }
+}
 
 #ifndef DOXYGEN
 
@@ -725,8 +723,7 @@ namespace Physics
           else // ((component_i >= dim && component_j < dim) || (component_i < dim && component_j >= dim))
             return numbers::SQRT2;
         }
-
-      } // namespace internal
+      }
 
       template <typename Number>
       Vector<Number>
@@ -1492,10 +1489,9 @@ namespace Physics
         to_tensor(mtrx, out);
         return out;
       }
-
-    } // namespace Kelvin
-  }   // namespace Notation
-} // namespace Physics
+    }
+  }
+}
 
 #endif // DOXYGEN
 

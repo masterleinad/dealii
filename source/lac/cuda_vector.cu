@@ -457,7 +457,7 @@ namespace LinearAlgebra
         reduce<Number, DotProduct<Number>>(
           res, res_buf, local_idx, global_idx, N);
       }
-    } // namespace internal
+    }
 
     template <typename Number>
     Vector<Number>::Vector() : val(nullptr), n_elements(0)

@@ -45,7 +45,7 @@ namespace parallel
     template <int dim, int spacedim>
     class Triangulation;
   }
-} // namespace parallel
+}
 
 namespace internal
 {
@@ -493,9 +493,8 @@ namespace internal
       const dealii::parallel::distributed::Triangulation<dim, spacedim>& tria,
       typename dealii::internal::p4est::types<dim>::forest* parallel_forest,
       typename dealii::internal::p4est::types<dim>::ghost*  parallel_ghost);
-
-  } // namespace p4est
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

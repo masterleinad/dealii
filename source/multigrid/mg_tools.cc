@@ -1622,7 +1622,7 @@ namespace MGTools
 
     return global_min;
   }
-} // namespace MGTools
+}
 
 // explicit instantiations
 #include "mg_tools.inst"

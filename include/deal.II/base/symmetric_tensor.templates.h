@@ -786,7 +786,7 @@ namespace internal
       return std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>();
     }
 
-  } // namespace SymmetricTensorImplementation
+  } // namespace SymmetricTensor
 } // namespace internal
 
 template <int dim, typename Number>

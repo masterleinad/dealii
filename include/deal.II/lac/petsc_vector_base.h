@@ -1201,7 +1201,7 @@ namespace PETScWrappers
   }
 
 #    endif // DOXYGEN
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

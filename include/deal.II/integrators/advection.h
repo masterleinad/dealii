@@ -715,9 +715,8 @@ namespace LocalIntegrators
               }
         }
     }
-
-  } // namespace Advection
-} // namespace LocalIntegrators
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -57,7 +57,7 @@ namespace parallel
     template <int, int>
     class Triangulation;
   }
-} // namespace parallel
+}
 
 namespace internal
 {
@@ -966,9 +966,9 @@ namespace internal
             }
         }
       };
-    } // namespace DoFHandlerImplementation
-  }   // namespace hp
-} // namespace internal
+    }
+  }
+}
 
 namespace hp
 {
@@ -1711,7 +1711,7 @@ namespace hp
     vertex_dofs        = std::move(std::vector<types::global_dof_index>());
     vertex_dof_offsets = std::move(std::vector<unsigned int>());
   }
-} // namespace hp
+}
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "dof_handler.inst"

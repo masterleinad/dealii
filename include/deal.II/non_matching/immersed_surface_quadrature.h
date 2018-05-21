@@ -126,8 +126,7 @@ namespace NonMatching
      */
     std::vector<Tensor<1, dim>> normals;
   };
-
-} // namespace NonMatching
+}
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

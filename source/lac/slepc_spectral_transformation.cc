@@ -145,8 +145,7 @@ namespace SLEPcWrappers
     ierr = STCayleySetAntishift(st, additional_data.antishift_parameter);
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
   }
-
-} // namespace SLEPcWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

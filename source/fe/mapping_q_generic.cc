@@ -619,9 +619,9 @@ namespace internal
               }
           }
       }
-    } // namespace
-  }   // namespace MappingQ1
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::InternalData::InternalData(
@@ -2201,9 +2201,9 @@ namespace internal
               }
           }
       }
-    } // namespace
-  }   // namespace MappingQGenericImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::MappingQGeneric(const unsigned int p)
@@ -3148,9 +3148,9 @@ namespace internal
                                 data,
                                 output_data);
       }
-    } // namespace
-  }   // namespace MappingQGenericImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 void
@@ -3628,9 +3628,9 @@ namespace internal
               Assert(false, ExcNotImplemented());
           }
       }
-    } // namespace
-  }   // namespace MappingQGenericImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 void

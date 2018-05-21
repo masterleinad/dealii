@@ -244,9 +244,8 @@ namespace Utilities
           AssertThrowMPI(ierr);
         }
     }
-
-  } // namespace MPI
-} // namespace Utilities
+  }
+}
 
 // instantiations
 

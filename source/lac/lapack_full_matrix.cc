@@ -328,7 +328,7 @@ namespace
   {
     AssertThrow(false, ExcNotImplemented());
   }
-} // namespace
+}
 
 template <typename number>
 void

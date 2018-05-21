@@ -172,9 +172,8 @@ namespace internal
       for(unsigned int d = 0; d < dim2; ++d)
         p2[d] = source[dim1 + d];
     }
-
-  } // namespace TensorProductManifoldImplementation
-} // namespace internal
+  }
+}
 
 template <int dim,
           int dim_A,

@@ -10148,8 +10148,8 @@ namespace internal
       static const FlatManifold<dim, spacedim> flat_manifold;
       return flat_manifold;
     }
-  } // namespace TriangulationImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 const unsigned int Triangulation<dim, spacedim>::dimension;
@@ -10917,7 +10917,7 @@ namespace
     faces->lines.clear_user_data();
     faces->quads.clear_user_data();
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void
@@ -10948,7 +10948,7 @@ namespace
   {
     faces->lines.clear_user_flags();
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void
@@ -10985,7 +10985,7 @@ namespace
   {
     faces->quads.clear_user_flags();
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void
@@ -11020,7 +11020,7 @@ namespace
     for(unsigned int level = 0; level < levels.size(); ++level)
       levels[level]->cells.clear_user_flags();
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void
@@ -11228,7 +11228,7 @@ namespace
   {
     Assert(false, ExcInternalError());
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void
@@ -11440,7 +11440,7 @@ namespace
   {
     Assert(false, ExcInternalError());
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void
@@ -11566,7 +11566,7 @@ namespace
   {
     Assert(false, ExcInternalError());
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void
@@ -12248,8 +12248,8 @@ namespace internal
     {
       return c.n_active_hexes;
     }
-  } // namespace TriangulationImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 unsigned int
@@ -13562,7 +13562,7 @@ namespace
           }
       }
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 bool

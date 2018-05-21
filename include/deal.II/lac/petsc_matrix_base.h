@@ -241,8 +241,7 @@ namespace PETScWrappers
        */
       Accessor accessor;
     };
-
-  } // namespace MatrixIterators
+  }
 
   /**
    * Base class for all matrix classes that are implemented on top of the
@@ -1176,8 +1175,7 @@ namespace PETScWrappers
               || (accessor.row() == other.accessor.row()
                   && accessor.index() < other.accessor.index()));
     }
-
-  } // namespace MatrixIterators
+  }
 
   // Inline the set() and add()
   // functions, since they will be
@@ -1534,7 +1532,7 @@ namespace PETScWrappers
   }
 
 #    endif // DOXYGEN
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

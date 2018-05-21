@@ -1245,7 +1245,7 @@ namespace
       std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>(
       p);
   }
-} // namespace
+}
 
 // We are just forwarding/delegating to the constructor taking a std::initializer_list.
 // If we decide to remove the deprecated constructors, we might just use the variadic

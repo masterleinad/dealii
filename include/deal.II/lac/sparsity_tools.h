@@ -325,7 +325,7 @@ namespace SparsityTools
     ExcZOLTANNotInstalled,
     "The function you called requires ZOLTAN, but you did not "
     "configure deal.II with ZOLTAN or zoltan_cpp.h is not available.");
-} // namespace SparsityTools
+}
 
 /**
  * @}
