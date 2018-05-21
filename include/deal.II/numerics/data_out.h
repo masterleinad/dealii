@@ -293,7 +293,7 @@ public:
   build_patches(const Mapping<DoFHandlerType::dimension,
                               DoFHandlerType::space_dimension>& mapping,
                 const unsigned int     n_subdivisions = 0,
-                const CurvedCellRegion curved_region  = curved_boundary);
+                const CurvedCellRegion curved_region = curved_boundary);
 
   /**
    * Return the first cell which we want output for. The default

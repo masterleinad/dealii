@@ -106,8 +106,8 @@ public:
      * default values.
      */
     Options(const bool         show_absolute_values = false,
-            const unsigned int block_size           = 1,
-            const bool         discontinuous        = false);
+            const unsigned int block_size = 1,
+            const bool         discontinuous = false);
   };
 
   /**
@@ -287,7 +287,7 @@ MatrixOut::get_gridpoint_value(const Matrix&   matrix,
 
   // if blocksize greater than one,
   // then compute average of elements
-  double    average    = 0;
+  double    average = 0;
   size_type n_elements = 0;
   for(size_type row = i * options.block_size;
       row < std::min(size_type(matrix.m()),

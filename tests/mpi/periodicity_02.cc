@@ -398,7 +398,7 @@ namespace Step22
   StokesProblem<dim>::assemble_system()
   {
     system_matrix = 0.;
-    system_rhs    = 0.;
+    system_rhs = 0.;
 
     QGauss<dim> quadrature_formula(degree + 2);
 
@@ -446,7 +446,7 @@ namespace Step22
                   symgrad_phi_u[k]
                     = fe_values[velocities].symmetric_gradient(k, q);
                   div_phi_u[k] = fe_values[velocities].divergence(k, q);
-                  phi_p[k]     = fe_values[pressure].value(k, q);
+                  phi_p[k] = fe_values[pressure].value(k, q);
                 }
 
               for(unsigned int i = 0; i < dofs_per_cell; ++i)

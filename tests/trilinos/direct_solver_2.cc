@@ -214,7 +214,7 @@ Step4<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -231,8 +231,8 @@ Step4<dim>::assemble_system()
       if(cell->is_locally_owned())
         {
           fe_values.reinit(cell);
-          cell_matrix  = 0;
-          cell_rhs     = 0;
+          cell_matrix = 0;
+          cell_rhs = 0;
           cell_rhs_two = 0;
 
           for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
@@ -291,7 +291,7 @@ Step4<dim>::solve()
 
   // do CG solve for new rhs
   temp_solution = 0;
-  solution      = 0;
+  solution = 0;
   solver.solve(system_matrix, temp_solution, system_rhs_two, preconditioner);
 
   constraints.distribute(temp_solution);
@@ -326,7 +326,7 @@ Step4<dim>::solve()
 
   // do solve 2 without refactorizing
   temp_solution = 0;
-  solution      = 0;
+  solution = 0;
   direct_solver.solve(temp_solution, system_rhs_two);
 
   constraints.distribute(temp_solution);
@@ -335,7 +335,7 @@ Step4<dim>::solve()
   // calculate l2 errors
   output_two.add(-1.0, temp_solution);
 
-  const double local_error_two  = output_two.l2_norm();
+  const double local_error_two = output_two.l2_norm();
   const double global_error_two = std::sqrt(
     Utilities::MPI::sum(local_error_two * local_error_two, MPI_COMM_WORLD));
 

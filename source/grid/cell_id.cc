@@ -57,8 +57,8 @@ CellId::CellId(const CellId::binary_type& binary_representation)
   // The rightmost two bits of the second entry store the dimension,
   // the rest stores the number of child indices.
   const unsigned int two_bit_mask = (1 << 2) - 1;
-  const unsigned int dim          = binary_representation[1] & two_bit_mask;
-  n_child_indices                 = (binary_representation[1] >> 2);
+  const unsigned int dim = binary_representation[1] & two_bit_mask;
+  n_child_indices = (binary_representation[1] >> 2);
 
   Assert(n_child_indices < child_indices.size(), ExcInternalError());
 
@@ -68,7 +68,7 @@ CellId::CellId(const CellId::binary_type& binary_representation)
   const unsigned int child_mask = (1 << dim) - 1;
 
   // Loop until all child indices have been read
-  unsigned int child_level  = 0;
+  unsigned int child_level = 0;
   unsigned int binary_entry = 2;
   while(child_level < n_child_indices)
     {
@@ -106,7 +106,7 @@ CellId::to_binary() const
   // Each child requires 'dim' bits to store its index
   const unsigned int children_per_value
     = sizeof(binary_type::value_type) * 8 / dim;
-  unsigned int child_level  = 0;
+  unsigned int child_level = 0;
   unsigned int binary_entry = 2;
 
   // Loop until all child indices have been written

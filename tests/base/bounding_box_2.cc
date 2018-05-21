@@ -50,7 +50,7 @@ test_bounding_box()
   std::pair<Point<spacedim>, Point<spacedim>> boundaries;
   for(int i = 0; i < spacedim; i++)
     {
-      unit.first[i]  = 1.0;
+      unit.first[i] = 1.0;
       unit.second[i] = 2.0 + i;
     }
 

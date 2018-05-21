@@ -199,7 +199,7 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
   typedef VectorType* vecptr;
   vecptr              u[3] = {Vu0.get(), Vu1.get(), Vu2.get()};
   vecptr              m[3] = {Vm0.get(), Vm1.get(), Vm2.get()};
-  VectorType&         v    = *Vv;
+  VectorType&         v = *Vv;
 
   // resize the vectors, but do not set the values since they'd be overwritten
   // soon anyway.
@@ -213,15 +213,15 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
 
   // some values needed
   double delta[3] = {0, 0, 0};
-  double f[2]     = {0, 0};
-  double e[2]     = {0, 0};
+  double f[2] = {0, 0};
+  double e[2] = {0, 0};
 
   double r_l2 = 0;
-  double r0   = 0;
-  double tau  = 0;
-  double c    = 0;
-  double s    = 0;
-  double d_   = 0;
+  double r0 = 0;
+  double tau = 0;
+  double c = 0;
+  double s = 0;
+  double d_ = 0;
 
   // The iteration step.
   unsigned int j = 1;

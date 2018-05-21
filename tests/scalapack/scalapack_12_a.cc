@@ -43,7 +43,7 @@ test()
   std::cout << std::setprecision(10);
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));
 
-  const unsigned int proc_rows    = std::floor(std::sqrt(n_mpi_processes));
+  const unsigned int proc_rows = std::floor(std::sqrt(n_mpi_processes));
   const unsigned int proc_columns = std::floor(n_mpi_processes / proc_rows);
   //create 2d process grid
   std::shared_ptr<Utilities::MPI::ProcessGrid> grid

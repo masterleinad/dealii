@@ -42,10 +42,10 @@ test(TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>&          solver,
      std::function<double(double const)>                                my)
 {
   double         initial_time = 0.0, final_time = 1.0;
-  double         time_step    = 0.1;
-  unsigned int   size         = 1;
+  double         time_step = 0.1;
+  unsigned int   size = 1;
   unsigned int   n_time_steps = 0;
-  double         time         = initial_time;
+  double         time = initial_time;
   Vector<double> solution(size);
   for(unsigned int i = 0; i < size; ++i)
     solution[i] = my(initial_time);
@@ -54,7 +54,7 @@ test(TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>&          solver,
     {
       if(time + time_step > final_time)
         time_step = final_time - time;
-      time      = solver.evolve_one_time_step(f, time, time_step, solution);
+      time = solver.evolve_one_time_step(f, time, time_step, solution);
       time_step = solver.get_status().delta_t_guess;
       ++n_time_steps;
     }

@@ -92,9 +92,9 @@ test()
     Triangulation<2> tmp_tria_solid;
     //-------Generate and colorize triangulation:-------
     //Triangulation parameters
-    const unsigned int h_cells       = 11;
+    const unsigned int h_cells = 11;
     const unsigned int outflow_cells = 25;
-    const unsigned int inflow_cells  = 5;
+    const unsigned int inflow_cells = 5;
     const unsigned int solid_cells_x = 20;
     const unsigned int solid_cells_y = 1;
     const unsigned int v_space_cells = 5;
@@ -103,7 +103,7 @@ test()
     const double cell_size_y = 0.1;
     const double length
       = solid_cells_x * cell_size_x,
-      height     = static_cast<double>(h_cells * cell_size_y),
+      height = static_cast<double>(h_cells * cell_size_y),
       h_distance = static_cast<double>(cell_size_x * inflow_cells),
       v_distance = static_cast<double>(cell_size_y * v_space_cells),
       solid_top = static_cast<double>(v_distance + solid_cells_y * cell_size_y),

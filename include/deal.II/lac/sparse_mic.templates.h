@@ -95,7 +95,7 @@ SparseMIC<number>::initialize(const SparseMatrix<somenumber>& matrix,
 
   for(size_type row = 0; row < this->m(); row++)
     {
-      const number temp  = this->begin(row)->value();
+      const number temp = this->begin(row)->value();
       number       temp1 = 0;
 
       // work on the lower left part of the matrix. we know

@@ -1398,7 +1398,7 @@ namespace FETools
     Assert(block_data.size() == element.n_blocks(),
            ExcDimensionMismatch(block_data.size(), element.n_blocks()));
 
-    types::global_dof_index k     = 0;
+    types::global_dof_index k = 0;
     unsigned int            count = 0;
     for(unsigned int b = 0; b < element.n_base_elements(); ++b)
       for(unsigned int m = 0; m < element.element_multiplicity(b); ++m)
@@ -1606,8 +1606,8 @@ namespace FETools
           for(unsigned int k = 0; k < quadrature.size(); ++k)
             {
               const double dx = val2.JxW(k);
-              const double u  = val1.shape_value(j, k);
-              const double v  = val2.shape_value(i, k);
+              const double u = val1.shape_value(j, k);
+              const double v = val2.shape_value(i, k);
               b(i) += u * v * dx;
             }
 
@@ -1716,7 +1716,7 @@ namespace FETools
                                          FullMatrix<number>& this_matrix,
                                          const double        threshold)
     {
-      const unsigned int n  = fe.dofs_per_cell;
+      const unsigned int n = fe.dofs_per_cell;
       const unsigned int nd = fe.n_components();
       const unsigned int nq = coarse.n_quadrature_points;
 
@@ -1731,7 +1731,7 @@ namespace FETools
       // each quadrature point.
       if(fe.is_primitive())
         {
-          const unsigned int d     = fe.system_to_component_index(i).first;
+          const unsigned int d = fe.system_to_component_index(i).first;
           const double*      phi_i = &coarse.shape_value(i, 0);
 
           for(unsigned int k = 0; k < nq; ++k)
@@ -1934,9 +1934,9 @@ namespace FETools
     Assert(face_coarse == 0, ExcNotImplemented());
     Assert(face_fine == 0, ExcNotImplemented());
 
-    const unsigned int nc     = GeometryInfo<dim>::max_children_per_face;
-    const unsigned int n      = fe.dofs_per_face;
-    const unsigned int nd     = fe.n_components();
+    const unsigned int nc = GeometryInfo<dim>::max_children_per_face;
+    const unsigned int n = fe.dofs_per_face;
+    const unsigned int nd = fe.n_components();
     const unsigned int degree = fe.degree;
 
     const bool normal     = fe.conforms(FiniteElementData<dim>::Hdiv);
@@ -2140,8 +2140,8 @@ namespace FETools
     std::vector<std::vector<FullMatrix<number>>>& matrices,
     const bool                                    isotropic_only)
   {
-    const unsigned int n      = fe.dofs_per_cell;
-    const unsigned int nd     = fe.n_components();
+    const unsigned int n = fe.dofs_per_cell;
+    const unsigned int nd = fe.n_components();
     const unsigned int degree = fe.degree;
 
     // prepare FEValues, quadrature etc on
@@ -2170,7 +2170,7 @@ namespace FETools
             {
               const double* coarse_i = &coarse.shape_value(i, 0);
               const double* coarse_j = &coarse.shape_value(j, 0);
-              double        mass_ij  = 0;
+              double        mass_ij = 0;
               for(unsigned int k = 0; k < nq; ++k)
                 mass_ij += JxW[k] * coarse_i[k] * coarse_j[k];
               mass(i, j) = mass_ij;
@@ -2255,7 +2255,7 @@ namespace FETools
                       if(fe.is_primitive())
                         {
                           const double* coarse_i = &coarse.shape_value(i, 0);
-                          const double* fine_j   = &fine.shape_value(j, 0);
+                          const double* fine_j = &fine.shape_value(j, 0);
 
                           double update = 0;
                           for(unsigned int k = 0; k < nq; ++k)
@@ -2308,7 +2308,7 @@ namespace FETools
   {
     // Erase everything after the
     // actual class name
-    std::string  name     = parameter_name;
+    std::string  name = parameter_name;
     unsigned int name_end = name.find_first_not_of(std::string(
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"));
     if(name_end < name.size())
@@ -2604,7 +2604,7 @@ namespace FETools
     // string where all template
     // parameters are eliminated.
     for(unsigned int pos1 = name.find('<'); pos1 < name.size();
-        pos1              = name.find('<'))
+        pos1 = name.find('<'))
       {
         const unsigned int pos2 = name.find('>');
         // If there is only a single
@@ -2632,13 +2632,13 @@ namespace FETools
     // by "^d" to be handled by the
     // next loop
     for(unsigned int pos = name.find("^dim"); pos < name.size();
-        pos              = name.find("^dim"))
+        pos = name.find("^dim"))
       name.erase(pos + 2, 2);
 
     // Replace all occurrences of "^d"
     // by using the actual dimension
     for(unsigned int pos = name.find("^d"); pos < name.size();
-        pos              = name.find("^d"))
+        pos = name.find("^d"))
       name.at(pos + 1) = '0' + dim;
 
     try
@@ -2815,7 +2815,7 @@ namespace FETools
         // row-column entry of tensor corresponding the unrolled index
         TableIndices<2> row_column_index
           = SymmetricTensor<2, dim>::unrolled_to_component_indices(ii);
-        const unsigned int row    = row_column_index[0];
+        const unsigned int row = row_column_index[0];
         const unsigned int column = row_column_index[1];
 
         //  populate the vector of components at the qps

@@ -412,7 +412,7 @@ namespace Step37
       fe, quadrature_formula, update_values | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     const Coefficient<dim>               coefficient;
@@ -448,7 +448,7 @@ namespace Step37
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     const Coefficient<dim>               coefficient;

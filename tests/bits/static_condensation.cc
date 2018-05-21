@@ -285,7 +285,7 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
   QGauss<dim>     quadrature_formula(fe.degree + 1);
   QGauss<dim - 1> face_quadrature_formula(fe.degree + 1);
 
-  const unsigned int n_q_points      = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
   const unsigned int n_face_q_points = face_quadrature_formula.size();
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
@@ -339,11 +339,11 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
         {
           for(unsigned int j = 0; j < dofs_per_cell; ++j)
             {
-              double                sum          = 0;
+              double                sum = 0;
               const Tensor<1, dim>* shape_grad_i = &fe_values.shape_grad(i, 0);
               const Tensor<1, dim>* shape_grad_j = &fe_values.shape_grad(j, 0);
-              const double* shape_value_i        = &fe_values.shape_value(i, 0);
-              const double* shape_value_j        = &fe_values.shape_value(j, 0);
+              const double* shape_value_i = &fe_values.shape_value(i, 0);
+              const double* shape_value_j = &fe_values.shape_value(j, 0);
               for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
                 sum += (shape_grad_i[q_index] * shape_grad_j[q_index]
                         + shape_value_i[q_index] * shape_value_j[q_index])
@@ -542,7 +542,7 @@ HelmholtzProblem<dim>::process_solution(const unsigned int cycle)
     const double H1_error = difference_per_cell.l2_norm();
 
     const unsigned int n_active_cells = triangulation.n_active_cells();
-    const unsigned int n_dofs         = dof_handler.n_dofs();
+    const unsigned int n_dofs = dof_handler.n_dofs();
 
     convergence_table.add_value("cycle", cycle);
     convergence_table.add_value("cells", n_active_cells);
@@ -569,7 +569,7 @@ HelmholtzProblem<dim>::process_solution(const unsigned int cycle)
     const double H1_error = difference_per_cell.l2_norm();
 
     const unsigned int n_active_cells = triangulation.n_active_cells();
-    const unsigned int n_dofs         = dof_handler.n_dofs();
+    const unsigned int n_dofs = dof_handler.n_dofs();
 
     convergence_table.add_value("L2 sc", L2_error);
     convergence_table.add_value("H1 sc", H1_error);

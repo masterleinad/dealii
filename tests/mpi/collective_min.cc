@@ -29,9 +29,9 @@ test()
   double       double_sum;
   float        float_sum;
 
-  int_sum  = Utilities::MPI::min<int>(numprocs + myid, MPI_COMM_WORLD);
+  int_sum = Utilities::MPI::min<int>(numprocs + myid, MPI_COMM_WORLD);
   uint_sum = Utilities::MPI::min<unsigned int>(numprocs + myid, MPI_COMM_WORLD);
-  float_sum  = Utilities::MPI::min<float>(numprocs + myid, MPI_COMM_WORLD);
+  float_sum = Utilities::MPI::min<float>(numprocs + myid, MPI_COMM_WORLD);
   double_sum = Utilities::MPI::min<double>(numprocs + myid, MPI_COMM_WORLD);
 
   if(myid == 0)

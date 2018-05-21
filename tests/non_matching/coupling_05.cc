@@ -80,7 +80,7 @@ test()
   space_dh.distribute_dofs(space_fe);
 
   auto space_locally_owned_dofs = space_dh.locally_owned_dofs();
-  auto locally_owned_dofs       = dh.locally_owned_dofs();
+  auto locally_owned_dofs = dh.locally_owned_dofs();
 
   deallog << "Dofs      : " << dh.n_dofs() << std::endl
           << "Space dofs: " << space_dh.n_dofs() << std::endl;

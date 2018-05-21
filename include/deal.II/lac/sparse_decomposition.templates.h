@@ -154,8 +154,8 @@ SparseLUDecomposition<number>::copy_from(const SparseMatrix<somenumber>& matrix)
   if(&this->get_sparsity_pattern() == &matrix.get_sparsity_pattern())
     {
       const somenumber*   input_ptr = matrix.val.get();
-      number*             this_ptr  = this->val.get();
-      const number* const end_ptr   = this_ptr + this->n_nonzero_elements();
+      number*             this_ptr = this->val.get();
+      const number* const end_ptr = this_ptr + this->n_nonzero_elements();
       if(std::is_same<somenumber, number>::value == true)
         std::memcpy(
           this_ptr, input_ptr, this->n_nonzero_elements() * sizeof(number));

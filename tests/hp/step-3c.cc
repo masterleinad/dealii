@@ -162,7 +162,7 @@ LaplaceProblem::assemble_system()
       const FEValues<2>& fe_values = x_fe_values.get_present_fe_values();
 
       cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_rhs = 0;
 
       const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
       const unsigned int n_q_points

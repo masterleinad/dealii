@@ -121,9 +121,9 @@ public:
      * the @p breakdown_threshold set at 1e-16.
      */
     explicit AdditionalData(const bool   left_preconditioning = false,
-                            const double solver_tolerance     = 1.e-9,
-                            const bool   breakdown_testing    = true,
-                            const double breakdown_threshold  = 1.e-16)
+                            const double solver_tolerance = 1.e-9,
+                            const bool   breakdown_testing = true,
+                            const double breakdown_threshold = 1.e-16)
       : left_preconditioning(left_preconditioning),
         solver_tolerance(solver_tolerance),
         breakdown_testing(breakdown_testing),

@@ -40,11 +40,11 @@ test(unsigned int ref = 1)
     {
       case 2:
         push_forward_expression = "x^2; y^2";
-        pull_back_expression    = "sqrt(x); sqrt(y)";
+        pull_back_expression = "sqrt(x); sqrt(y)";
         break;
       case 3:
         push_forward_expression = "x^2; y^2; z^2";
-        pull_back_expression    = "sqrt(x); sqrt(y); sqrt(z)";
+        pull_back_expression = "sqrt(x); sqrt(y); sqrt(z)";
         break;
       default:
         Assert(false, ExcInternalError());

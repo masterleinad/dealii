@@ -135,7 +135,7 @@ namespace Step14
 
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
-        endc                      = dof_handler.end();
+        endc = dof_handler.end();
       bool evaluation_point_found = false;
       for(; (cell != endc) && !evaluation_point_found; ++cell)
         for(unsigned int vertex = 0;
@@ -220,7 +220,7 @@ namespace Step14
       // often the vertex has been found:
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
-        endc                             = dof_handler.end();
+        endc = dof_handler.end();
       unsigned int evaluation_point_hits = 0;
       for(; cell != endc; ++cell)
         for(unsigned int vertex = 0;
@@ -584,7 +584,7 @@ namespace Step14
       AssemblyCopyData&                                     copy_data) const
     {
       const unsigned int dofs_per_cell = fe->dofs_per_cell;
-      const unsigned int n_q_points    = quadrature->size();
+      const unsigned int n_q_points = quadrature->size();
 
       copy_data.cell_matrix.reinit(dofs_per_cell, dofs_per_cell);
 
@@ -760,7 +760,7 @@ namespace Step14
                                 | update_JxW_values);
 
       const unsigned int dofs_per_cell = this->fe->dofs_per_cell;
-      const unsigned int n_q_points    = this->quadrature->size();
+      const unsigned int n_q_points = this->quadrature->size();
 
       Vector<double>                       cell_rhs(dofs_per_cell);
       std::vector<double>                  rhs_values(n_q_points);
@@ -1163,7 +1163,7 @@ namespace Step14
       double q = p(0);
       for(unsigned int i = 1; i < dim; ++i)
         q += std::sin(10 * p(i) + 5 * p(0) * p(0));
-      const double u  = std::exp(q);
+      const double u = std::exp(q);
       double       t1 = 1, t2 = 0, t3 = 0;
       for(unsigned int i = 1; i < dim; ++i)
         {
@@ -1543,7 +1543,7 @@ namespace Step14
                               quadrature,
                               update_gradients | update_quadrature_points
                                 | update_JxW_values);
-      const unsigned int n_q_points    = fe_values.n_quadrature_points;
+      const unsigned int n_q_points = fe_values.n_quadrature_points;
       const unsigned int dofs_per_cell = dof_handler.get_fe().dofs_per_cell;
 
       // ...and have two objects that are used to store the global indices of
@@ -2836,7 +2836,7 @@ main()
       // Then set the polynomial degrees of primal and dual problem. We choose
       // here bi-linear and bi-quadratic ones:
       descriptor.primal_fe_degree = 1;
-      descriptor.dual_fe_degree   = 2;
+      descriptor.dual_fe_degree = 2;
 
       // Then set the description of the test case, i.e. domain, boundary
       // values, and right hand side. These are prepackaged in classes. We

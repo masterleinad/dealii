@@ -310,7 +310,7 @@ KellyErrorEstimator<1, spacedim>::estimate(
   const types::subdomain_id subdomain_id = subdomain_id_;
 #endif
 
-  const unsigned int n_components       = dof_handler.get_fe(0).n_components();
+  const unsigned int n_components = dof_handler.get_fe(0).n_components();
   const unsigned int n_solution_vectors = solutions.size();
 
   // sanity checks

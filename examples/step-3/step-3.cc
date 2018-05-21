@@ -363,7 +363,7 @@ Step3::assemble_system()
   // and `dofs_per_cell` and `n_q_points` are more or less by convention the
   // standard names for these purposes:
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   // Now, we said that we wanted to assemble the global matrix and vector
   // cell-by-cell. We could write the results directly into the global matrix,

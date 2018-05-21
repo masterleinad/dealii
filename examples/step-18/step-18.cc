@@ -299,7 +299,7 @@ namespace Step18
     // of rotation, and from it the actual angle of rotation with respect to
     // the Cartesian basis:
     const double tan_angle = std::sqrt(curl * curl);
-    const double angle     = std::atan(tan_angle);
+    const double angle = std::atan(tan_angle);
 
     // Now, here's one problem: if the angle of rotation is too small, that
     // means that there is no rotation going on (for example a translational
@@ -582,10 +582,10 @@ namespace Step18
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
 
-    const double g   = 9.81;
+    const double g = 9.81;
     const double rho = 7700;
 
-    values          = 0;
+    values = 0;
     values(dim - 1) = -rho * g;
   }
 
@@ -940,7 +940,7 @@ namespace Step18
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);

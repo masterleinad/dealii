@@ -68,10 +68,10 @@ main()
   deallog.attach(logfile);
 
   // setting up some constants
-  const unsigned int dim       = 2;
+  const unsigned int dim = 2;
   const unsigned int solid_dim = 2 * dim;
   const unsigned int fluid_dim = dim + 1;
-  const unsigned int mesh_dim  = dim;
+  const unsigned int mesh_dim = dim;
   const unsigned int total_dim = solid_dim + fluid_dim + mesh_dim;
 
   // make the tria and domain
@@ -226,7 +226,7 @@ main()
   ConstraintMatrix constraints;
 
   const unsigned int dofs_per_fl_msh_face = fluid_fe->dofs_per_face;
-  const unsigned int dofs_per_solid_face  = solid_fe->dofs_per_face;
+  const unsigned int dofs_per_solid_face = solid_fe->dofs_per_face;
   std::vector<types::global_dof_index> fl_msh_face_dof_indices(
     dofs_per_fl_msh_face);
   std::vector<types::global_dof_index> solid_face_dof_indices(

@@ -145,7 +145,7 @@ namespace
     if(cell->has_children())
       {
         unsigned int       children_to_coarsen = 0;
-        const unsigned int n_children          = cell->n_children();
+        const unsigned int n_children = cell->n_children();
 
         for(unsigned int c = 0; c < n_children; ++c)
           if(cell->child(c)->active() && cell->child(c)->coarsen_flag_set())
@@ -1356,7 +1356,7 @@ namespace internal
             for(unsigned int level = 0; level < number_cache.n_levels; ++level)
               {
                 // count lines on this level
-                number_cache.n_lines_level[level]        = 0;
+                number_cache.n_lines_level[level] = 0;
                 number_cache.n_active_lines_level[level] = 0;
 
                 line_iterator line = triangulation.begin_line(level),
@@ -1458,7 +1458,7 @@ namespace internal
             for(unsigned int level = 0; level < n_levels; ++level)
               {
                 // count quads on this level
-                number_cache.n_quads_level[level]        = 0;
+                number_cache.n_quads_level[level] = 0;
                 number_cache.n_active_quads_level[level] = 0;
 
                 quad_iterator quad = triangulation.begin_quad(level),
@@ -1565,10 +1565,10 @@ namespace internal
             for(unsigned int level = 0; level < n_levels; ++level)
               {
                 // count hexes on this level
-                number_cache.n_hexes_level[level]        = 0;
+                number_cache.n_hexes_level[level] = 0;
                 number_cache.n_active_hexes_level[level] = 0;
 
-                hex_iterator hex  = triangulation.begin_hex(level),
+                hex_iterator hex = triangulation.begin_hex(level),
                              endc = (level == n_levels - 1 ?
                                        hex_iterator(triangulation.end_hex()) :
                                        triangulation.begin_hex(level + 1));
@@ -1591,7 +1591,7 @@ namespace internal
             number_cache.n_hexes_level.clear();
             number_cache.n_active_hexes_level.clear();
 
-            hex_iterator hex  = triangulation.begin_hex(),
+            hex_iterator hex = triangulation.begin_hex(),
                          endc = triangulation.end_hex();
             for(; hex != endc; ++hex)
               {
@@ -1631,7 +1631,7 @@ namespace internal
         const unsigned int dim = 1;
 
         // copy vertices
-        triangulation.vertices      = v;
+        triangulation.vertices = v;
         triangulation.vertices_used = std::vector<bool>(v.size(), true);
 
         // Check that all cells have positive volume. This check is not run in
@@ -1830,7 +1830,7 @@ namespace internal
         const unsigned int dim = 2;
 
         // copy vertices
-        triangulation.vertices      = v;
+        triangulation.vertices = v;
         triangulation.vertices_used = std::vector<bool>(v.size(), true);
 
         // Check that all cells have positive volume. This check is not run in
@@ -2216,7 +2216,7 @@ namespace internal
         const unsigned int dim = 3;
 
         // copy vertices
-        triangulation.vertices      = v;
+        triangulation.vertices = v;
         triangulation.vertices_used = std::vector<bool>(v.size(), true);
 
         // Check that all cells have positive volume.
@@ -2692,8 +2692,8 @@ namespace internal
                       // face)
                       face_iterator[face]    = needed_quads[quad].first;
                       face_orientation[face] = true;
-                      face_flip[face]        = false;
-                      face_rotation[face]    = false;
+                      face_flip[face] = false;
+                      face_rotation[face] = false;
                     }
                   else
                     {
@@ -2749,56 +2749,56 @@ namespace internal
                         {
                           face_iterator[face] = needed_quads[test_quad_1].first;
                           face_orientation[face] = false;
-                          face_flip[face]        = false;
-                          face_rotation[face]    = false;
+                          face_flip[face] = false;
+                          face_rotation[face] = false;
                         }
                       else if(needed_quads.find(test_quad_2)
                               != needed_quads.end())
                         {
                           face_iterator[face] = needed_quads[test_quad_2].first;
                           face_orientation[face] = false;
-                          face_flip[face]        = false;
-                          face_rotation[face]    = true;
+                          face_flip[face] = false;
+                          face_rotation[face] = true;
                         }
                       else if(needed_quads.find(test_quad_3)
                               != needed_quads.end())
                         {
                           face_iterator[face] = needed_quads[test_quad_3].first;
                           face_orientation[face] = false;
-                          face_flip[face]        = true;
-                          face_rotation[face]    = false;
+                          face_flip[face] = true;
+                          face_rotation[face] = false;
                         }
                       else if(needed_quads.find(test_quad_4)
                               != needed_quads.end())
                         {
                           face_iterator[face] = needed_quads[test_quad_4].first;
                           face_orientation[face] = false;
-                          face_flip[face]        = true;
-                          face_rotation[face]    = true;
+                          face_flip[face] = true;
+                          face_rotation[face] = true;
                         }
                       else if(needed_quads.find(test_quad_5)
                               != needed_quads.end())
                         {
                           face_iterator[face] = needed_quads[test_quad_5].first;
                           face_orientation[face] = true;
-                          face_flip[face]        = false;
-                          face_rotation[face]    = true;
+                          face_flip[face] = false;
+                          face_rotation[face] = true;
                         }
                       else if(needed_quads.find(test_quad_6)
                               != needed_quads.end())
                         {
                           face_iterator[face] = needed_quads[test_quad_6].first;
                           face_orientation[face] = true;
-                          face_flip[face]        = true;
-                          face_rotation[face]    = false;
+                          face_flip[face] = true;
+                          face_rotation[face] = false;
                         }
                       else if(needed_quads.find(test_quad_7)
                               != needed_quads.end())
                         {
                           face_iterator[face] = needed_quads[test_quad_7].first;
                           face_orientation[face] = true;
-                          face_flip[face]        = true;
-                          face_rotation[face]    = true;
+                          face_flip[face] = true;
+                          face_rotation[face] = true;
                         }
 
                       else
@@ -2882,8 +2882,8 @@ namespace internal
               for(; map_iter != cell_to_face_lines.end(); ++map_iter)
                 {
                   const unsigned int cell_line = map_iter->first;
-                  const unsigned int face1     = map_iter->second.first;
-                  const unsigned int line1     = map_iter->second.second;
+                  const unsigned int face1 = map_iter->second.first;
+                  const unsigned int line1 = map_iter->second.second;
                   ++map_iter;
                   Assert(map_iter != cell_to_face_lines.end(),
                          ExcInternalErrorOnCell(c));
@@ -3344,7 +3344,7 @@ namespace internal
         std::vector<unsigned int>&                          line_cell_count,
         std::vector<unsigned int>&)
       {
-        const unsigned int        dim      = 2;
+        const unsigned int        dim = 2;
         const RefinementCase<dim> ref_case = cell->refinement_case();
 
         Assert(line_cell_count.size() == triangulation.n_raw_lines(),
@@ -3658,7 +3658,7 @@ namespace internal
                     // refined twice anisotropically,
                     // first check, whether we may
                     // delete possible grand_children
-                    unsigned int deleted_grandchildren       = 0;
+                    unsigned int deleted_grandchildren = 0;
                     unsigned int number_of_child_refinements = 0;
 
                     for(unsigned int c = 0; c < 2; ++c)
@@ -5224,11 +5224,11 @@ namespace internal
         // and quads in pairs for refinement of old ones and lines and
         // quads, that can be stored as single ones, as they are newly
         // created in the inside of an existing cell
-        unsigned int needed_vertices     = 0;
+        unsigned int needed_vertices = 0;
         unsigned int needed_lines_single = 0;
         unsigned int needed_quads_single = 0;
-        unsigned int needed_lines_pair   = 0;
-        unsigned int needed_quads_pair   = 0;
+        unsigned int needed_lines_pair = 0;
+        unsigned int needed_quads_pair = 0;
         for(int level = triangulation.levels.size() - 2; level >= 0; --level)
           {
             // count number of flagged cells on this level and compute
@@ -5965,7 +5965,7 @@ namespace internal
                             const typename Triangulation<dim, spacedim>::
                               quad_iterator switch_1
                               = quad->child(1),
-                              switch_2               = quad->child(2);
+                              switch_2 = quad->child(2);
                             const int switch_1_index = switch_1->index();
                             const int switch_2_index = switch_2->index();
                             for(unsigned int l = 0;
@@ -10486,10 +10486,10 @@ Triangulation<dim, spacedim>::copy_triangulation(
                "contain anything at all."));
 
   // copy normal elements
-  vertices               = other_tria.vertices;
-  vertices_used          = other_tria.vertices_used;
+  vertices = other_tria.vertices;
+  vertices_used = other_tria.vertices_used;
   anisotropic_refinement = other_tria.anisotropic_refinement;
-  smooth_grid            = other_tria.smooth_grid;
+  smooth_grid = other_tria.smooth_grid;
 
   if(dim > 1)
     faces = std_cxx14::make_unique<
@@ -10674,7 +10674,7 @@ Triangulation<dim, spacedim>::create_triangulation(
                       neighbor = (*cell)->neighbor(i);
 
                       unsigned int cf = (*cell)->face_index(i);
-                      unsigned int j  = 0;
+                      unsigned int j = 0;
                       while(neighbor->face_index(j) != cf)
                         {
                           ++j;
@@ -10771,7 +10771,7 @@ void
 Triangulation<dim, spacedim>::save_refine_flags(std::vector<bool>& v) const
 {
   v.resize(dim * n_active_cells(), false);
-  std::vector<bool>::iterator i    = v.begin();
+  std::vector<bool>::iterator i = v.begin();
   active_cell_iterator        cell = begin_active(), endc = end();
   for(; cell != endc; ++cell)
     for(unsigned int j = 0; j < dim; ++j, ++i)
@@ -10831,7 +10831,7 @@ void
 Triangulation<dim, spacedim>::save_coarsen_flags(std::vector<bool>& v) const
 {
   v.resize(n_active_cells(), false);
-  std::vector<bool>::iterator i    = v.begin();
+  std::vector<bool>::iterator i = v.begin();
   active_cell_iterator        cell = begin_active(), endc = end();
   for(; cell != endc; ++cell, ++i)
     *i = cell->coarsen_flag_set();
@@ -11138,7 +11138,7 @@ void
 Triangulation<dim, spacedim>::save_user_flags_line(std::vector<bool>& v) const
 {
   v.resize(n_lines(), false);
-  std::vector<bool>::iterator i    = v.begin();
+  std::vector<bool>::iterator i = v.begin();
   line_iterator               line = begin_line(), endl = end_line();
   for(; line != endl; ++line, ++i)
     *i = line->user_flag_set();
@@ -11238,7 +11238,7 @@ Triangulation<dim, spacedim>::save_user_flags_quad(std::vector<bool>& v) const
 
   if(dim >= 2)
     {
-      std::vector<bool>::iterator i    = v.begin();
+      std::vector<bool>::iterator i = v.begin();
       quad_iterator               quad = begin_quad(), endq = end_quad();
       for(; quad != endq; ++quad, ++i)
         *i = get_user_flag(quad);
@@ -11295,7 +11295,7 @@ Triangulation<dim, spacedim>::save_user_flags_hex(std::vector<bool>& v) const
 
   if(dim >= 3)
     {
-      std::vector<bool>::iterator i   = v.begin();
+      std::vector<bool>::iterator i = v.begin();
       hex_iterator                hex = begin_hex(), endh = end_hex();
       for(; hex != endh; ++hex, ++i)
         *i = get_user_flag(hex);
@@ -11448,7 +11448,7 @@ Triangulation<dim, spacedim>::save_user_indices_line(
   std::vector<unsigned int>& v) const
 {
   v.resize(n_lines(), 0);
-  std::vector<unsigned int>::iterator i    = v.begin();
+  std::vector<unsigned int>::iterator i = v.begin();
   line_iterator                       line = begin_line(), endl = end_line();
   for(; line != endl; ++line, ++i)
     *i = line->user_index();
@@ -11508,7 +11508,7 @@ Triangulation<dim, spacedim>::save_user_indices_hex(
 
   if(dim >= 3)
     {
-      std::vector<unsigned int>::iterator i   = v.begin();
+      std::vector<unsigned int>::iterator i = v.begin();
       hex_iterator                        hex = begin_hex(), endh = end_hex();
       for(; hex != endh; ++hex, ++i)
         *i = get_user_index(hex);
@@ -11637,7 +11637,7 @@ Triangulation<dim, spacedim>::save_user_pointers_line(
   std::vector<void*>& v) const
 {
   v.resize(n_lines(), nullptr);
-  std::vector<void*>::iterator i    = v.begin();
+  std::vector<void*>::iterator i = v.begin();
   line_iterator                line = begin_line(), endl = end_line();
   for(; line != endl; ++line, ++i)
     *i = line->user_pointer();
@@ -11665,7 +11665,7 @@ Triangulation<dim, spacedim>::save_user_pointers_quad(
 
   if(dim >= 2)
     {
-      std::vector<void*>::iterator i    = v.begin();
+      std::vector<void*>::iterator i = v.begin();
       quad_iterator                quad = begin_quad(), endq = end_quad();
       for(; quad != endq; ++quad, ++i)
         *i = get_user_pointer(quad);
@@ -11697,7 +11697,7 @@ Triangulation<dim, spacedim>::save_user_pointers_hex(
 
   if(dim >= 3)
     {
-      std::vector<void*>::iterator i   = v.begin();
+      std::vector<void*>::iterator i = v.begin();
       hex_iterator                 hex = begin_hex(), endh = end_hex();
       for(; hex != endh; ++hex, ++i)
         *i = get_user_pointer(hex);
@@ -13254,7 +13254,7 @@ Triangulation<dim, spacedim>::fix_coarsen_flags()
           if(cell->active())
             continue;
 
-          const unsigned int n_children       = cell->n_children();
+          const unsigned int n_children = cell->n_children();
           unsigned int       flagged_children = 0;
           for(unsigned int child = 0; child < n_children; ++child)
             if(cell->child(child)->active()
@@ -14007,7 +14007,7 @@ Triangulation<dim, spacedim>::prepare_coarsening_and_refinement()
               // children. check the grandchildren. note that the
               // children are also patch_level_1, and so we only ever
               // need to check their first child
-              const unsigned int n_children               = cell->n_children();
+              const unsigned int n_children = cell->n_children();
               bool               has_active_grandchildren = false;
 
               for(unsigned int i = 0; i < n_children; ++i)
@@ -14097,7 +14097,7 @@ Triangulation<dim, spacedim>::prepare_coarsening_and_refinement()
       bool changed = true;
       while(changed)
         {
-          changed                   = false;
+          changed = false;
           active_cell_iterator cell = last_active(), endc = end();
 
           for(; cell != endc; --cell)
@@ -14287,8 +14287,8 @@ Triangulation<dim, spacedim>::prepare_coarsening_and_refinement()
                                     std::pair<unsigned int, unsigned int>
                                       nb_indices
                                       = cell->neighbor_of_coarser_neighbor(i);
-                                    unsigned int refined_along_x       = 0,
-                                                 refined_along_y       = 0,
+                                    unsigned int refined_along_x = 0,
+                                                 refined_along_y = 0,
                                                  to_be_refined_along_x = 0,
                                                  to_be_refined_along_y = 0;
 
@@ -14513,7 +14513,7 @@ Triangulation<dim, spacedim>::write_bool_vector(
   const unsigned int       magic_number2,
   std::ostream&            out)
 {
-  const unsigned int N     = v.size();
+  const unsigned int N = v.size();
   unsigned char*     flags = new unsigned char[N / 8 + 1];
   for(unsigned int i = 0; i < N / 8 + 1; ++i)
     flags[i] = 0;

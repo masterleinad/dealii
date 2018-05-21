@@ -30,7 +30,7 @@ test(PETScWrappers::MPI::Vector& v)
   std::vector<bool> pattern(v.size(), false);
   for(unsigned int k = 0; k < v.size(); k += 1 + k)
     {
-      v(k)       = std::complex<double>(0., k);
+      v(k) = std::complex<double>(0., k);
       pattern[k] = true;
     }
 

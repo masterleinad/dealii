@@ -56,7 +56,7 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
         {
           const unsigned int ds = 1 << d;
           const unsigned int id = vertex / ds;
-          v[d]                  = (id % 2 != 0) ? 1. : 0.;
+          v[d] = (id % 2 != 0) ? 1. : 0.;
         }
 
       for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)

@@ -587,9 +587,9 @@ namespace PETScWrappers
        * Constructor. (Default values taken from function PCCreate_LU of the
        * PETSc lib.)
        */
-      AdditionalData(const double pivoting   = 1.e-6,
+      AdditionalData(const double pivoting = 1.e-6,
                      const double zero_pivot = 1.e-12,
-                     const double damping    = 0.0);
+                     const double damping = 0.0);
 
       /**
        * Determines, when Pivoting is done during LU decomposition. 0.0
@@ -666,8 +666,8 @@ namespace PETScWrappers
        * than what is exposed here.
        */
       AdditionalData(const bool         symmetric_operator = false,
-                     const double       strong_threshold   = 0.25,
-                     const double       max_row_sum        = 0.9,
+                     const double       strong_threshold = 0.25,
+                     const double       max_row_sum = 0.9,
                      const unsigned int aggressive_coarsening_num_levels = 0,
                      const bool         output_details = false);
 
@@ -792,10 +792,10 @@ namespace PETScWrappers
       /**
        * Constructor.
        */
-      AdditionalData(const unsigned int symmetric      = 1,
-                     const unsigned int n_levels       = 1,
-                     const double       threshold      = 0.1,
-                     const double       filter         = 0.05,
+      AdditionalData(const unsigned int symmetric = 1,
+                     const unsigned int n_levels = 1,
+                     const double       threshold = 0.1,
+                     const double       filter = 0.05,
                      const bool         output_details = false);
 
       /**

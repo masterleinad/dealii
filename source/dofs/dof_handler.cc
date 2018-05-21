@@ -383,7 +383,7 @@ namespace internal
         const dealii::Triangulation<1, spacedim>& tria
           = dof_handler.get_triangulation();
         const unsigned int& dofs_per_line = dof_handler.get_fe().dofs_per_line;
-        const unsigned int& n_levels      = tria.n_levels();
+        const unsigned int& n_levels = tria.n_levels();
 
         for(unsigned int i = 0; i < n_levels; ++i)
           {
@@ -1432,7 +1432,7 @@ DoFHandler<dim, spacedim>::MGVertexDoFs::init(
   const unsigned int dofs_per_vertex)
 {
   coarsest_level = cl;
-  finest_level   = fl;
+  finest_level = fl;
 
   if(coarsest_level <= finest_level)
     {

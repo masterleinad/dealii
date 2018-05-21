@@ -81,7 +81,7 @@ public:
             SymmetricTensor<2, dim, vector_t> sym_grad_u
               = velocity.get_symmetric_gradient(q);
             vector_t pres = pressure.get_value(q);
-            vector_t div  = -velocity.get_divergence(q);
+            vector_t div = -velocity.get_divergence(q);
             pressure.submit_value(div, q);
 
             // subtract p * I
@@ -203,7 +203,7 @@ test()
                               | update_gradients);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -229,8 +229,8 @@ test()
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 phi_grads_u[k] = fe_values[velocities].symmetric_gradient(k, q);
-                div_phi_u[k]   = fe_values[velocities].divergence(k, q);
-                phi_p[k]       = fe_values[pressure].value(k, q);
+                div_phi_u[k] = fe_values[velocities].divergence(k, q);
+                phi_p[k] = fe_values[pressure].value(k, q);
               }
 
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -258,7 +258,7 @@ test()
   for(unsigned int i = 0; i < dim + 1; ++i)
     for(unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
       {
-        const double val       = -1. + 2. * random_value<double>();
+        const double val = -1. + 2. * random_value<double>();
         system_rhs.block(i)(j) = val;
         vec1[i](j)             = val;
       }

@@ -36,8 +36,8 @@ void
 write_mat_id_to_file(const Triangulation<dim>& tria)
 {
   int                                               count = 0;
-  typename Triangulation<dim>::active_cell_iterator cell  = tria.begin_active(),
-                                                    endc  = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
+                                                    endc = tria.end();
   for(; cell != endc; ++cell, ++count)
     {
       deallog << count << " " << static_cast<int>(cell->material_id())

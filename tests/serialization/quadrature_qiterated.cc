@@ -22,7 +22,7 @@
 void
 test()
 {
-  const unsigned int dim      = 2;
+  const unsigned int dim = 2;
   unsigned int       n_copies = 3;
 
   std::vector<Point<1>> points1;

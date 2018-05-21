@@ -178,14 +178,14 @@ namespace
                          accessor.vertex(1)(1),
                          accessor.vertex(2)(1),
                          accessor.vertex(3)(1)};
-    const double t1   = x[0] * x[1];
-    const double t3   = x[0] * x[0];
-    const double t5   = x[1] * x[1];
-    const double t9   = y[0] * x[0];
-    const double t11  = y[1] * x[1];
-    const double t14  = x[2] * x[2];
-    const double t16  = x[3] * x[3];
-    const double t20  = x[2] * x[3];
+    const double t1 = x[0] * x[1];
+    const double t3 = x[0] * x[0];
+    const double t5 = x[1] * x[1];
+    const double t9 = y[0] * x[0];
+    const double t11 = y[1] * x[1];
+    const double t14 = x[2] * x[2];
+    const double t16 = x[3] * x[3];
+    const double t20 = x[2] * x[3];
     const double t27 = t1 * y[1] + t3 * y[1] - t5 * y[0] - t3 * y[2] + t5 * y[3]
                        + t9 * x[2] - t11 * x[3] - t1 * y[0] - t14 * y[3]
                        + t16 * y[2] - t16 * y[1] + t14 * y[0] - t20 * y[3]
@@ -610,10 +610,10 @@ namespace
          + x[2] * y[6] * z[3] + z[2] * x[6] * y[3] + z[1] * x[6] * y[2]
          + z[2] * x[3] * y[1] - z[2] * x[1] * y[3] - z[2] * x[3] * y[6]
          + y[2] * x[1] * z[3] + y[1] * x[2] * z[6] - z[0] * x[7] * y[3] + s7;
-    s4                    = 1 / s5;
-    s2                    = s3 * s4;
+    s4 = 1 / s5;
+    s2 = s3 * s4;
     const double unknown0 = s1 * s2;
-    s1                    = 1.0 / 6.0;
+    s1 = 1.0 / 6.0;
     s8 = 2.0 * x[1] * y[0] * y[0] * z[4] + x[5] * y[0] * y[0] * z[4]
          - x[1] * y[4] * y[4] * z[0] + z[1] * x[0] * y[4] * y[4]
          + x[1] * y[0] * y[0] * z[5] - z[1] * x[5] * y[0] * y[0]
@@ -913,10 +913,10 @@ namespace
          + x[2] * y[6] * z[3] + z[2] * x[6] * y[3] + z[1] * x[6] * y[2]
          + z[2] * x[3] * y[1] - z[2] * x[1] * y[3] - z[2] * x[3] * y[6]
          + y[2] * x[1] * z[3] + y[1] * x[2] * z[6] - z[0] * x[7] * y[3] + s7;
-    s4                    = 1 / s5;
-    s2                    = s3 * s4;
+    s4 = 1 / s5;
+    s2 = s3 * s4;
     const double unknown1 = s1 * s2;
-    s1                    = 1.0 / 6.0;
+    s1 = 1.0 / 6.0;
     s8 = -z[2] * x[1] * y[2] * z[5] + z[2] * y[1] * x[2] * z[5]
          - z[2] * z[1] * x[2] * y[5] + z[2] * z[1] * x[5] * y[2]
          + 2.0 * y[5] * x[7] * z[4] * z[4] - y[1] * x[2] * z[0] * z[0]
@@ -1214,8 +1214,8 @@ namespace
          + x[2] * y[6] * z[3] + z[2] * x[6] * y[3] + z[1] * x[6] * y[2]
          + z[2] * x[3] * y[1] - z[2] * x[1] * y[3] - z[2] * x[3] * y[6]
          + y[2] * x[1] * z[3] + y[1] * x[2] * z[6] - z[0] * x[7] * y[3] + s7;
-    s4                    = 1 / s5;
-    s2                    = s3 * s4;
+    s4 = 1 / s5;
+    s2 = s3 * s4;
     const double unknown2 = s1 * s2;
 
     return Point<3>(unknown0, unknown1, unknown2);
@@ -1334,7 +1334,7 @@ namespace
 
     // the face is planar. then its area is 1/2 of the norm of the
     // cross product of the two diagonals
-    const Tensor<1, 3> v12        = accessor.vertex(2) - accessor.vertex(1);
+    const Tensor<1, 3> v12 = accessor.vertex(2) - accessor.vertex(1);
     const Tensor<1, 3> twice_area = cross_product_3d(v03, v12);
     return 0.5 * twice_area.norm();
   }
@@ -1796,8 +1796,8 @@ CellAccessor<3>::point_inside(const Point<3>& p) const
   // check there.
   const unsigned int dim      = 3;
   const unsigned int spacedim = 3;
-  Point<spacedim>    maxp     = this->vertex(0);
-  Point<spacedim>    minp     = this->vertex(0);
+  Point<spacedim>    maxp = this->vertex(0);
+  Point<spacedim>    minp = this->vertex(0);
 
   for(unsigned int v = 1; v < GeometryInfo<dim>::vertices_per_cell; ++v)
     for(unsigned int d = 0; d < dim; ++d)
@@ -2095,7 +2095,7 @@ CellAccessor<dim, spacedim>::id() const
 {
   std::array<unsigned char, 30> id;
 
-  CellAccessor<dim, spacedim> ptr             = *this;
+  CellAccessor<dim, spacedim> ptr = *this;
   const unsigned int          n_child_indices = ptr.level();
 
   while(ptr.level() > 0)
@@ -2502,7 +2502,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_child_on_subface(
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
   cell_iterator parent_nb_it = my_face_pair->second.first.first;
-  unsigned int  nb_face_num  = my_face_pair->second.first.second;
+  unsigned int  nb_face_num = my_face_pair->second.first.second;
   TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> nb_parent_face_it
     = parent_nb_it->face(nb_face_num);
   /*
@@ -2555,7 +2555,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
    */
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
-  cell_iterator nb_it          = my_face_pair->second.first.first;
+  cell_iterator nb_it = my_face_pair->second.first.first;
   unsigned int  face_num_of_nb = my_face_pair->second.first.second;
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
@@ -2678,7 +2678,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser(
    */
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
-  cell_iterator nb_it          = my_face_pair->second.first.first;
+  cell_iterator nb_it = my_face_pair->second.first.first;
   unsigned int  face_num_of_nb = my_face_pair->second.first.second;
   const typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
@@ -2692,7 +2692,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser(
    */
   Assert(nb_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
-  const unsigned int my_level       = this->level();
+  const unsigned int my_level = this->level();
   const unsigned int neighbor_level = nb_face_pair->second.first.first->level();
   Assert(my_level >= neighbor_level, ExcInternalError());
   return my_level > neighbor_level;
@@ -2959,7 +2959,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
                 }
               else //neighbor is not coarser
                 {
-                  neighbor_neighbor    = neighbor_of_neighbor(face);
+                  neighbor_neighbor = neighbor_of_neighbor(face);
                   neighbor_child_index = GeometryInfo<dim>::child_cell_on_face(
                     neighbor->refinement_case(),
                     neighbor_neighbor,

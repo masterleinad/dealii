@@ -43,7 +43,7 @@ test_point_owner(unsigned int n_procs)
     for(unsigned int box = 0; box < rk; ++box)
       {
         std::pair<Point<spacedim>, Point<spacedim>> boundaries;
-        boundaries.first[0]  = tot_bbox;
+        boundaries.first[0] = tot_bbox;
         boundaries.second[0] = tot_bbox + 1;
         for(int i = 1; i < spacedim; i++)
           boundaries.second[i] = 1;

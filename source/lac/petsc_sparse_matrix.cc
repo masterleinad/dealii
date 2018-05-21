@@ -203,7 +203,7 @@ namespace PETScWrappers
               row_entries[j] = sparsity_pattern.column_number(i, j);
 
             const PetscInt       int_row = i;
-            const PetscErrorCode ierr    = MatSetValues(matrix,
+            const PetscErrorCode ierr = MatSetValues(matrix,
                                                      1,
                                                      &int_row,
                                                      row_lengths[i],

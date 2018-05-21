@@ -101,7 +101,7 @@ template <int dim>
 LaplaceKernelIntegration<dim>::~LaplaceKernelIntegration()
 {
   FEValues<dim, dim + 1>* fp = fe_values;
-  fe_values                  = nullptr;
+  fe_values = nullptr;
   delete fp;
 }
 
@@ -119,19 +119,19 @@ LaplaceKernelIntegration<2>::compute_SD_integral_on_cell(
 
   Tensor<1, 3> n, n_c;
   Tensor<1, 3> r_c = point - cell->center();
-  n_c              = normals[4];
+  n_c = normals[4];
 
   double         rn_c = r_c * n_c;
   vector<double> i_S(4);
   vector<double> i_D(4);
   for(unsigned int q_point = 0; q_point < 4; ++q_point)
     {
-      const Tensor<1, 3> r  = point - cell->vertex(q_point);
+      const Tensor<1, 3> r = point - cell->vertex(q_point);
       const Tensor<1, 3> a1 = transpose(jacobians[q_point])[0];
       const Tensor<1, 3> a2 = transpose(jacobians[q_point])[1];
-      n                     = normals[q_point];
-      i_S[q_point]          = term_S(r, a1, a2, n, rn_c);
-      i_D[q_point]          = term_D(r, a1, a2);
+      n = normals[q_point];
+      i_S[q_point] = term_S(r, a1, a2, n, rn_c);
+      i_D[q_point] = term_D(r, a1, a2);
     }
   dst[0] = (i_S[3] - i_S[1] - i_S[2] + i_S[0]);
   dst[1] = (i_D[3] - i_D[1] - i_D[2] + i_D[0]);
@@ -201,12 +201,12 @@ main()
   deallog << "Error on  " << point << " : " << integration(point) - true_result
           << endl;
 
-  point       = Point<3>(3, 3, 0);
+  point = Point<3>(3, 3, 0);
   true_result = -.2306783616;
   deallog << "Error on  " << point << " : " << integration(point) - true_result
           << endl;
 
-  point       = Point<3>(1.5, .5, 0);
+  point = Point<3>(1.5, .5, 0);
   true_result = -1.006860525;
   deallog << "Error on  " << point << " : " << integration(point) - true_result
           << endl;

@@ -248,8 +248,8 @@ namespace SUNDIALS
   {
     unsigned int system_size = solution.size();
 
-    double       t           = data.initial_time;
-    double       h           = data.initial_step_size;
+    double       t = data.initial_time;
+    double       h = data.initial_step_size;
     unsigned int step_number = 0;
 
     int status;
@@ -261,7 +261,7 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is                = solution.locally_owned_elements();
+        const IndexSet is = solution.locally_owned_elements();
         const size_t   local_system_size = is.n_elements();
 
         yy = N_VNew_Parallel(communicator, local_system_size, system_size);
@@ -275,7 +275,7 @@ namespace SUNDIALS
         Assert(is_serial_vector<VectorType>::value,
                ExcInternalError(
                  "Trying to use a serial code with a parallel vector."));
-        yy        = N_VNew_Serial(system_size);
+        yy = N_VNew_Serial(system_size);
         abs_tolls = N_VNew_Serial(system_size);
       }
     reset(data.initial_time, data.initial_step_size, solution);
@@ -359,7 +359,7 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is                = solution.locally_owned_elements();
+        const IndexSet is = solution.locally_owned_elements();
         const size_t   local_system_size = is.n_elements();
 
         yy = N_VNew_Parallel(communicator, local_system_size, system_size);
@@ -370,7 +370,7 @@ namespace SUNDIALS
     else
 #  endif
       {
-        yy        = N_VNew_Serial(system_size);
+        yy = N_VNew_Serial(system_size);
         abs_tolls = N_VNew_Serial(system_size);
       }
 

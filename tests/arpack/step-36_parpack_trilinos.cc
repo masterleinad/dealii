@@ -78,7 +78,7 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
 
   // loop over subdomain_association and populate IndexSet when a
   // change in subdomain ID is found
-  types::global_dof_index i_min          = 0;
+  types::global_dof_index i_min = 0;
   types::global_dof_index this_subdomain = subdomain_association[0];
 
   for(types::global_dof_index index = 1; index < subdomain_association.size();
@@ -88,7 +88,7 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
       if(subdomain_association[index] != this_subdomain)
         {
           index_sets[this_subdomain].add_range(i_min, index);
-          i_min          = index;
+          i_min = index;
           this_subdomain = subdomain_association[index];
         }
     }
@@ -115,7 +115,7 @@ void
 test()
 {
   const unsigned int global_mesh_refinement_steps = 5;
-  const unsigned int number_of_eigenvalues        = 5;
+  const unsigned int number_of_eigenvalues = 5;
 
   MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
@@ -150,7 +150,7 @@ test()
     for(; cell != endc; ++cell)
       {
         const Point<dim>& center = cell->center();
-        const double      x      = center[0];
+        const double      x = center[0];
 
         const unsigned int id = std::floor((x - x0) / dL);
         cell->set_subdomain_id(id);
@@ -210,7 +210,7 @@ test()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_stiffness_matrix(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
@@ -225,7 +225,7 @@ test()
       {
         fe_values.reinit(cell);
         cell_stiffness_matrix = 0;
-        cell_mass_matrix      = 0;
+        cell_mass_matrix = 0;
 
         for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           for(unsigned int i = 0; i < dofs_per_cell; ++i)

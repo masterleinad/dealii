@@ -572,7 +572,7 @@ namespace LinearAlgebra
      */
     void
     print(std::ostream&      out,
-          const unsigned int precision  = 3,
+          const unsigned int precision = 3,
           const bool         scientific = true) const;
 
     /**

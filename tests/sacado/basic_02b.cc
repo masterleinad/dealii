@@ -189,11 +189,11 @@ main()
   // related to the dependent function "f"
   Sacado::Rad::ADvar<Sacado::Fad::DFad<double>>::Outvar_Gradcomp(f_rfad);
   // Extract value and derivatives
-  const double                    f_ad         = f_rfad.val().val(); // f
-  const Sacado::Fad::DFad<double> df_dx_fad    = x_ad.adj();         // df/dx
-  const Sacado::Fad::DFad<double> df_dy_fad    = y_ad.adj();         // df/dy
-  const double                    df_dx_ad     = df_dx_fad.val();    // df/dx
-  const double                    df_dy_ad     = df_dy_fad.val();    // df/dy
+  const double                    f_ad = f_rfad.val().val();       // f
+  const Sacado::Fad::DFad<double> df_dx_fad = x_ad.adj();          // df/dx
+  const Sacado::Fad::DFad<double> df_dy_fad = y_ad.adj();          // df/dy
+  const double                    df_dx_ad = df_dx_fad.val();      // df/dx
+  const double                    df_dy_ad = df_dy_fad.val();      // df/dy
   const double                    d2f_dx_dx_ad = x_ad.adj().dx(0); // d^2f/dx^2
   const double                    d2f_dy_dx_ad = x_ad.adj().dx(1); // d^2f/dy_dx
   const double                    d2f_dx_dy_ad = y_ad.adj().dx(0); // d^2f/dx_dy
@@ -215,8 +215,8 @@ main()
   const Sacado::Fad::DFad<double> dg_dy_fad
     = y_ad.adj()
       - d_dy_rad_acc; // dg/dy ; Note: Accumulation of partial derivatives
-  const double dg_dx_ad     = dg_dx_fad.val(); // dg/dx
-  const double dg_dy_ad     = dg_dy_fad.val(); // dg/dy
+  const double dg_dx_ad = dg_dx_fad.val();     // dg/dx
+  const double dg_dy_ad = dg_dy_fad.val();     // dg/dy
   const double d2g_dx_dx_ad = dg_dx_fad.dx(0); // d^2g/dx^2
   const double d2g_dy_dx_ad = dg_dx_fad.dx(1); // d^2g/dy_dx
   const double d2g_dx_dy_ad = dg_dy_fad.dx(0); // d^2g/dx_dy
@@ -238,8 +238,8 @@ main()
   const Sacado::Fad::DFad<double> dh_dy_fad
     = y_ad.adj()
       - d_dy_rad_acc; // dh/dy ; Note: Accumulation of partial derivatives
-  const double dh_dx_ad     = dh_dx_fad.val(); // dg/dx
-  const double dh_dy_ad     = dh_dy_fad.val(); // dg/dy
+  const double dh_dx_ad = dh_dx_fad.val();     // dg/dx
+  const double dh_dy_ad = dh_dy_fad.val();     // dg/dy
   const double d2h_dx_dx_ad = dh_dx_fad.dx(0); // d^2h/dx^2
   const double d2h_dy_dx_ad = dh_dx_fad.dx(1); // d^2h/dy_dx
   const double d2h_dx_dy_ad = dh_dy_fad.dx(0); // d^2h/dx_dy

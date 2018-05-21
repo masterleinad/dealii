@@ -58,7 +58,7 @@ PolynomialSpace<2>::compute_index(const unsigned int i) const
   // linear in n_1d), someone
   // should think about this...
   const unsigned int n_1d = polynomials.size();
-  unsigned int       k    = 0;
+  unsigned int       k = 0;
   for(unsigned int iy = 0; iy < n_1d; ++iy)
     if(n < k + n_1d - iy)
       {
@@ -85,7 +85,7 @@ PolynomialSpace<3>::compute_index(const unsigned int i) const
   // (ah, and yes: the original
   // algorithm was even cubic!)
   const unsigned int n_1d = polynomials.size();
-  unsigned int       k    = 0;
+  unsigned int       k = 0;
   for(unsigned int iz = 0; iz < n_1d; ++iz)
     for(unsigned int iy = 0; iy < n_1d - iz; ++iy)
       if(n < k + n_1d - iy - iz)
@@ -213,27 +213,27 @@ PolynomialSpace<dim>::compute(
   if(values.size() == n_pols)
     {
       update_values = true;
-      v_size        = 1;
+      v_size = 1;
     }
   if(grads.size() == n_pols)
     {
       update_grads = true;
-      v_size       = 2;
+      v_size = 2;
     }
   if(grad_grads.size() == n_pols)
     {
       update_grad_grads = true;
-      v_size            = 3;
+      v_size = 3;
     }
   if(third_derivatives.size() == n_pols)
     {
       update_3rd_derivatives = true;
-      v_size                 = 4;
+      v_size = 4;
     }
   if(fourth_derivatives.size() == n_pols)
     {
       update_4th_derivatives = true;
-      v_size                 = 5;
+      v_size = 5;
     }
 
   // Store data in a single

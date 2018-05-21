@@ -188,8 +188,8 @@ namespace Algorithms
     if(all_true)
       return true;
 
-    const unsigned int n     = flags.size();
-    const unsigned int m     = event.flags.size();
+    const unsigned int n = flags.size();
+    const unsigned int m = event.flags.size();
     const unsigned int n_min = (n < m) ? n : m;
 
     // Now, if all_true set in the

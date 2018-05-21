@@ -26,14 +26,14 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   const unsigned int set = 200;
   AssertIndexRange(numproc, set - 2);
-  const unsigned int      local_size  = set - myid;
+  const unsigned int      local_size = set - myid;
   types::global_dof_index global_size = 0;
-  types::global_dof_index my_start    = 0;
+  types::global_dof_index my_start = 0;
   for(unsigned int i = 0; i < numproc; ++i)
     {
       global_size += set - i;
@@ -47,7 +47,7 @@ test()
   IndexSet local_owned(global_size);
   local_owned.add_range(my_start, my_start + local_size);
   IndexSet local_relevant(global_size);
-  local_relevant                            = local_owned;
+  local_relevant = local_owned;
   types::global_dof_index ghost_indices[10] = {1,
                                                2,
                                                13,
@@ -60,7 +60,7 @@ test()
                                                2 * set + 3};
   local_relevant.add_indices(&ghost_indices[0], &ghost_indices[0] + 10);
   types::global_dof_index before_start = myid > 0 ? my_start - set / 4 : 0;
-  types::global_dof_index after_end    = myid < numproc - 1 ?
+  types::global_dof_index after_end = myid < numproc - 1 ?
                                         my_start + local_size + set / 3 :
                                         my_start + local_size;
   if(before_start < my_start)

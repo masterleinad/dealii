@@ -137,10 +137,10 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
   auto output_tuple = distributed_compute_point_locations(
     cache, loc_owned_points, global_bboxes);
   deallog << "Comparing results" << std::endl;
-  const auto& output_cells   = std::get<0>(output_tuple);
+  const auto& output_cells = std::get<0>(output_tuple);
   const auto& output_qpoints = std::get<1>(output_tuple);
-  const auto& output_points  = std::get<3>(output_tuple);
-  const auto& output_ranks   = std::get<4>(output_tuple);
+  const auto& output_points = std::get<3>(output_tuple);
+  const auto& output_ranks = std::get<4>(output_tuple);
 
   // Comparing the output with the previously computed computed result
   bool test_passed = true;
@@ -190,7 +190,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
               for(unsigned int pt_idx = 0; pt_idx < output_points[c].size();
                   pt_idx++)
                 {
-                  const auto& pt    = output_points[c][pt_idx];
+                  const auto& pt = output_points[c][pt_idx];
                   auto        pt_it = std::find(computed_points[c_cell].begin(),
                                          computed_points[c_cell].end(),
                                          pt);

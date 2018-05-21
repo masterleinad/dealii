@@ -38,7 +38,7 @@ test()
     {
       if(dim == 2)
         {
-          p2[d]           = dim - d;
+          p2[d] = dim - d;
           subdivisions[d] = 2 - d;
         }
       else

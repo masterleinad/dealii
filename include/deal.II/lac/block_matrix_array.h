@@ -111,7 +111,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat
  * @date 2000-2005, 2010
  */
-template <typename number          = double,
+template <typename number = double,
           typename BlockVectorType = BlockVector<number>>
 class DEAL_II_DEPRECATED BlockMatrixArray : public Subscriptor
 {
@@ -161,7 +161,7 @@ public:
   enter(const MatrixType&  matrix,
         const unsigned int row,
         const unsigned int col,
-        const number       prefix    = 1.,
+        const number       prefix = 1.,
         const bool         transpose = false);
 
   /**
@@ -414,7 +414,7 @@ private:
  * @ingroup Preconditioners
  * @author Guido Kanschat, 2001, 2005
  */
-template <typename number          = double,
+template <typename number = double,
           typename BlockVectorType = BlockVector<number>>
 class DEAL_II_DEPRECATED BlockTrianglePrecondition
   : private BlockMatrixArray<number, BlockVectorType>
@@ -452,7 +452,7 @@ public:
   enter(const MatrixType& matrix,
         const size_type   row,
         const size_type   col,
-        const number      prefix    = 1.,
+        const number      prefix = 1.,
         const bool        transpose = false);
 
   /**

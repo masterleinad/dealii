@@ -36,7 +36,7 @@ main(int argc, char* argv[])
 
   TrilinosWrappers::SparseMatrix a;
 
-  auto op_a  = linear_operator<TrilinosWrappers::MPI::Vector>(a);
+  auto op_a = linear_operator<TrilinosWrappers::MPI::Vector>(a);
   auto op_a2 = linear_operator<TrilinosWrappers::MPI::Vector>(a);
 
   TrilinosWrappers::BlockSparseMatrix b;

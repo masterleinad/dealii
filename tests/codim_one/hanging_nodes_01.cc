@@ -36,7 +36,7 @@ main()
   initlog();
 
   const unsigned int spacedim = 3;
-  const unsigned int dim      = spacedim - 1;
+  const unsigned int dim = spacedim - 1;
 
   Triangulation<dim, spacedim> boundary_mesh;
 

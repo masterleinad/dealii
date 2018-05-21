@@ -111,7 +111,7 @@ main()
   SolverControl solver_control(100, 1.e-3);
 
   unsigned int size = 30;
-  unsigned int dim  = (size - 1) * (size - 1);
+  unsigned int dim = (size - 1) * (size - 1);
 
   // Make matrix
   FDMatrix        testproblem(size, size);

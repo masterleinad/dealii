@@ -42,7 +42,7 @@ main(int argc, char** argv)
         logfile << "Using PetscScalar:" << std::endl;
 
         const PetscScalar pi_1i = numbers::PI + 1. * PETSC_i;
-        const PetscScalar two   = 2.;
+        const PetscScalar two = 2.;
 
         logfile << "   pi+1i:           " << pi_1i << std::endl
                 << "   two:             " << two << std::endl

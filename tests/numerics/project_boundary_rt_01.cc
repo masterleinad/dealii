@@ -71,7 +71,7 @@ TestFunction<dim>::vector_value_list(const std::vector<Point<dim>>& points,
               for(unsigned int dd = 0; dd < dim; ++dd)
                 p(dd) -= d;
               const double r2 = p.square();
-              values[k](d)    = std::pow(r2, (int) degree / 2);
+              values[k](d) = std::pow(r2, (int) degree / 2);
             }
         }
     }

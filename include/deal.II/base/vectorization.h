@@ -704,8 +704,8 @@ public:
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
     const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
-    data                    = _mm512_i32gather_pd(index, base_ptr, 8);
+    const __m256i index = *((__m256i*) (&index_val));
+    data = _mm512_i32gather_pd(index, base_ptr, 8);
   }
 
   /**
@@ -734,7 +734,7 @@ public:
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
     const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
+    const __m256i index = *((__m256i*) (&index_val));
     _mm512_i32scatter_pd(base_ptr, index, data, 8);
   }
 
@@ -894,10 +894,10 @@ vectorized_transpose_and_store(const bool                     add_into,
             = *(const __m256d*) ((const double*) (&in[4 * i + 2].data) + outer);
           __m256d u3
             = *(const __m256d*) ((const double*) (&in[4 * i + 3].data) + outer);
-          __m256d t0   = _mm256_permute2f128_pd(u0, u2, 0x20);
-          __m256d t1   = _mm256_permute2f128_pd(u1, u3, 0x20);
-          __m256d t2   = _mm256_permute2f128_pd(u0, u2, 0x31);
-          __m256d t3   = _mm256_permute2f128_pd(u1, u3, 0x31);
+          __m256d t0 = _mm256_permute2f128_pd(u0, u2, 0x20);
+          __m256d t1 = _mm256_permute2f128_pd(u1, u3, 0x20);
+          __m256d t2 = _mm256_permute2f128_pd(u0, u2, 0x31);
+          __m256d t3 = _mm256_permute2f128_pd(u1, u3, 0x31);
           __m256d res0 = _mm256_unpacklo_pd(t0, t1);
           __m256d res1 = _mm256_unpackhi_pd(t0, t1);
           __m256d res2 = _mm256_unpacklo_pd(t2, t3);
@@ -1100,8 +1100,8 @@ public:
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
     const __m512  index_val = _mm512_loadu_ps((const float*) offsets);
-    const __m512i index     = *((__m512i*) (&index_val));
-    data                    = _mm512_i32gather_ps(index, base_ptr, 4);
+    const __m512i index = *((__m512i*) (&index_val));
+    data = _mm512_i32gather_ps(index, base_ptr, 4);
   }
 
   /**
@@ -1130,7 +1130,7 @@ public:
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
     const __m512  index_val = _mm512_loadu_ps((const float*) offsets);
-    const __m512i index     = *((__m512i*) (&index_val));
+    const __m512i index = *((__m512i*) (&index_val));
     _mm512_i32scatter_ps(base_ptr, index, data, 4);
   }
 
@@ -1242,14 +1242,14 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
           // To avoid warnings about uninitialized variables, need to initialize
           // one variable with zero before using it.
           __m256 t0, t1, t2, t3 = _mm256_set1_ps(0.F);
-          t0        = _mm256_insertf128_ps(t3, u0, 0);
-          t0        = _mm256_insertf128_ps(t0, u4, 1);
-          t1        = _mm256_insertf128_ps(t3, u1, 0);
-          t1        = _mm256_insertf128_ps(t1, u5, 1);
-          t2        = _mm256_insertf128_ps(t3, u2, 0);
-          t2        = _mm256_insertf128_ps(t2, u6, 1);
-          t3        = _mm256_insertf128_ps(t3, u3, 0);
-          t3        = _mm256_insertf128_ps(t3, u7, 1);
+          t0 = _mm256_insertf128_ps(t3, u0, 0);
+          t0 = _mm256_insertf128_ps(t0, u4, 1);
+          t1 = _mm256_insertf128_ps(t3, u1, 0);
+          t1 = _mm256_insertf128_ps(t1, u5, 1);
+          t2 = _mm256_insertf128_ps(t3, u2, 0);
+          t2 = _mm256_insertf128_ps(t2, u6, 1);
+          t3 = _mm256_insertf128_ps(t3, u3, 0);
+          t3 = _mm256_insertf128_ps(t3, u7, 1);
           __m256 v0 = _mm256_shuffle_ps(t0, t1, 0x44);
           __m256 v1 = _mm256_shuffle_ps(t0, t1, 0xee);
           __m256 v2 = _mm256_shuffle_ps(t2, t3, 0x44);
@@ -1293,14 +1293,14 @@ vectorized_transpose_and_store(const bool                    add_into,
             = *(const __m256*) ((const float*) (&in[4 * i + 2].data) + outer);
           __m256 u3
             = *(const __m256*) ((const float*) (&in[4 * i + 3].data) + outer);
-          __m256 t0   = _mm256_shuffle_ps(u0, u1, 0x44);
-          __m256 t1   = _mm256_shuffle_ps(u0, u1, 0xee);
-          __m256 t2   = _mm256_shuffle_ps(u2, u3, 0x44);
-          __m256 t3   = _mm256_shuffle_ps(u2, u3, 0xee);
-          u0          = _mm256_shuffle_ps(t0, t2, 0x88);
-          u1          = _mm256_shuffle_ps(t0, t2, 0xdd);
-          u2          = _mm256_shuffle_ps(t1, t3, 0x88);
-          u3          = _mm256_shuffle_ps(t1, t3, 0xdd);
+          __m256 t0 = _mm256_shuffle_ps(u0, u1, 0x44);
+          __m256 t1 = _mm256_shuffle_ps(u0, u1, 0xee);
+          __m256 t2 = _mm256_shuffle_ps(u2, u3, 0x44);
+          __m256 t3 = _mm256_shuffle_ps(u2, u3, 0xee);
+          u0 = _mm256_shuffle_ps(t0, t2, 0x88);
+          u1 = _mm256_shuffle_ps(t0, t2, 0xdd);
+          u2 = _mm256_shuffle_ps(t1, t3, 0x88);
+          u3 = _mm256_shuffle_ps(t1, t3, 0xdd);
           __m128 res0 = _mm256_extractf128_ps(u0, 0);
           __m128 res4 = _mm256_extractf128_ps(u0, 1);
           __m128 res1 = _mm256_extractf128_ps(u1, 0);
@@ -1530,8 +1530,8 @@ public:
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
     const __m128  index_val = _mm_loadu_ps((const float*) offsets);
-    const __m128i index     = *((__m128i*) (&index_val));
-    data                    = _mm256_i32gather_pd(base_ptr, index, 8);
+    const __m128i index = *((__m128i*) (&index_val));
+    data = _mm256_i32gather_pd(base_ptr, index, 8);
 #  else
     for(unsigned int i = 0; i < 4; ++i)
       *(reinterpret_cast<double*>(&data) + i) = base_ptr[offsets[i]];
@@ -1650,21 +1650,21 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
                               VectorizedArray<double>* out)
 {
   const unsigned int n_chunks = n_entries / 4;
-  const double*      in0      = in + offsets[0];
-  const double*      in1      = in + offsets[1];
-  const double*      in2      = in + offsets[2];
-  const double*      in3      = in + offsets[3];
+  const double*      in0 = in + offsets[0];
+  const double*      in1 = in + offsets[1];
+  const double*      in2 = in + offsets[2];
+  const double*      in3 = in + offsets[3];
 
   for(unsigned int i = 0; i < n_chunks; ++i)
     {
-      __m256d u0          = _mm256_loadu_pd(in0 + 4 * i);
-      __m256d u1          = _mm256_loadu_pd(in1 + 4 * i);
-      __m256d u2          = _mm256_loadu_pd(in2 + 4 * i);
-      __m256d u3          = _mm256_loadu_pd(in3 + 4 * i);
-      __m256d t0          = _mm256_permute2f128_pd(u0, u2, 0x20);
-      __m256d t1          = _mm256_permute2f128_pd(u1, u3, 0x20);
-      __m256d t2          = _mm256_permute2f128_pd(u0, u2, 0x31);
-      __m256d t3          = _mm256_permute2f128_pd(u1, u3, 0x31);
+      __m256d u0 = _mm256_loadu_pd(in0 + 4 * i);
+      __m256d u1 = _mm256_loadu_pd(in1 + 4 * i);
+      __m256d u2 = _mm256_loadu_pd(in2 + 4 * i);
+      __m256d u3 = _mm256_loadu_pd(in3 + 4 * i);
+      __m256d t0 = _mm256_permute2f128_pd(u0, u2, 0x20);
+      __m256d t1 = _mm256_permute2f128_pd(u1, u3, 0x20);
+      __m256d t2 = _mm256_permute2f128_pd(u0, u2, 0x31);
+      __m256d t3 = _mm256_permute2f128_pd(u1, u3, 0x31);
       out[4 * i + 0].data = _mm256_unpacklo_pd(t0, t1);
       out[4 * i + 1].data = _mm256_unpackhi_pd(t0, t1);
       out[4 * i + 2].data = _mm256_unpacklo_pd(t2, t3);
@@ -1687,20 +1687,20 @@ vectorized_transpose_and_store(const bool                     add_into,
                                double*                        out)
 {
   const unsigned int n_chunks = n_entries / 4;
-  double*            out0     = out + offsets[0];
-  double*            out1     = out + offsets[1];
-  double*            out2     = out + offsets[2];
-  double*            out3     = out + offsets[3];
+  double*            out0 = out + offsets[0];
+  double*            out1 = out + offsets[1];
+  double*            out2 = out + offsets[2];
+  double*            out3 = out + offsets[3];
   for(unsigned int i = 0; i < n_chunks; ++i)
     {
-      __m256d u0   = in[4 * i + 0].data;
-      __m256d u1   = in[4 * i + 1].data;
-      __m256d u2   = in[4 * i + 2].data;
-      __m256d u3   = in[4 * i + 3].data;
-      __m256d t0   = _mm256_permute2f128_pd(u0, u2, 0x20);
-      __m256d t1   = _mm256_permute2f128_pd(u1, u3, 0x20);
-      __m256d t2   = _mm256_permute2f128_pd(u0, u2, 0x31);
-      __m256d t3   = _mm256_permute2f128_pd(u1, u3, 0x31);
+      __m256d u0 = in[4 * i + 0].data;
+      __m256d u1 = in[4 * i + 1].data;
+      __m256d u2 = in[4 * i + 2].data;
+      __m256d u3 = in[4 * i + 3].data;
+      __m256d t0 = _mm256_permute2f128_pd(u0, u2, 0x20);
+      __m256d t1 = _mm256_permute2f128_pd(u1, u3, 0x20);
+      __m256d t2 = _mm256_permute2f128_pd(u0, u2, 0x31);
+      __m256d t3 = _mm256_permute2f128_pd(u1, u3, 0x31);
       __m256d res0 = _mm256_unpacklo_pd(t0, t1);
       __m256d res1 = _mm256_unpackhi_pd(t0, t1);
       __m256d res2 = _mm256_unpacklo_pd(t2, t3);
@@ -1903,8 +1903,8 @@ public:
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
     const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
-    data                    = _mm256_i32gather_ps(base_ptr, index, 4);
+    const __m256i index = *((__m256i*) (&index_val));
+    data = _mm256_i32gather_ps(base_ptr, index, 4);
 #  else
     for(unsigned int i = 0; i < 8; ++i)
       *(reinterpret_cast<float*>(&data) + i) = base_ptr[offsets[i]];
@@ -2036,18 +2036,18 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
       // To avoid warnings about uninitialized variables, need to initialize
       // one variable with zero before using it.
       __m256 t0, t1, t2, t3 = _mm256_set1_ps(0.F);
-      t0                  = _mm256_insertf128_ps(t3, u0, 0);
-      t0                  = _mm256_insertf128_ps(t0, u4, 1);
-      t1                  = _mm256_insertf128_ps(t3, u1, 0);
-      t1                  = _mm256_insertf128_ps(t1, u5, 1);
-      t2                  = _mm256_insertf128_ps(t3, u2, 0);
-      t2                  = _mm256_insertf128_ps(t2, u6, 1);
-      t3                  = _mm256_insertf128_ps(t3, u3, 0);
-      t3                  = _mm256_insertf128_ps(t3, u7, 1);
-      __m256 v0           = _mm256_shuffle_ps(t0, t1, 0x44);
-      __m256 v1           = _mm256_shuffle_ps(t0, t1, 0xee);
-      __m256 v2           = _mm256_shuffle_ps(t2, t3, 0x44);
-      __m256 v3           = _mm256_shuffle_ps(t2, t3, 0xee);
+      t0 = _mm256_insertf128_ps(t3, u0, 0);
+      t0 = _mm256_insertf128_ps(t0, u4, 1);
+      t1 = _mm256_insertf128_ps(t3, u1, 0);
+      t1 = _mm256_insertf128_ps(t1, u5, 1);
+      t2 = _mm256_insertf128_ps(t3, u2, 0);
+      t2 = _mm256_insertf128_ps(t2, u6, 1);
+      t3 = _mm256_insertf128_ps(t3, u3, 0);
+      t3 = _mm256_insertf128_ps(t3, u7, 1);
+      __m256 v0 = _mm256_shuffle_ps(t0, t1, 0x44);
+      __m256 v1 = _mm256_shuffle_ps(t0, t1, 0xee);
+      __m256 v2 = _mm256_shuffle_ps(t2, t3, 0x44);
+      __m256 v3 = _mm256_shuffle_ps(t2, t3, 0xee);
       out[4 * i + 0].data = _mm256_shuffle_ps(v0, v2, 0x88);
       out[4 * i + 1].data = _mm256_shuffle_ps(v0, v2, 0xdd);
       out[4 * i + 2].data = _mm256_shuffle_ps(v1, v3, 0x88);
@@ -2072,18 +2072,18 @@ vectorized_transpose_and_store(const bool                    add_into,
   const unsigned int n_chunks = n_entries / 4;
   for(unsigned int i = 0; i < n_chunks; ++i)
     {
-      __m256 u0   = in[4 * i + 0].data;
-      __m256 u1   = in[4 * i + 1].data;
-      __m256 u2   = in[4 * i + 2].data;
-      __m256 u3   = in[4 * i + 3].data;
-      __m256 t0   = _mm256_shuffle_ps(u0, u1, 0x44);
-      __m256 t1   = _mm256_shuffle_ps(u0, u1, 0xee);
-      __m256 t2   = _mm256_shuffle_ps(u2, u3, 0x44);
-      __m256 t3   = _mm256_shuffle_ps(u2, u3, 0xee);
-      u0          = _mm256_shuffle_ps(t0, t2, 0x88);
-      u1          = _mm256_shuffle_ps(t0, t2, 0xdd);
-      u2          = _mm256_shuffle_ps(t1, t3, 0x88);
-      u3          = _mm256_shuffle_ps(t1, t3, 0xdd);
+      __m256 u0 = in[4 * i + 0].data;
+      __m256 u1 = in[4 * i + 1].data;
+      __m256 u2 = in[4 * i + 2].data;
+      __m256 u3 = in[4 * i + 3].data;
+      __m256 t0 = _mm256_shuffle_ps(u0, u1, 0x44);
+      __m256 t1 = _mm256_shuffle_ps(u0, u1, 0xee);
+      __m256 t2 = _mm256_shuffle_ps(u2, u3, 0x44);
+      __m256 t3 = _mm256_shuffle_ps(u2, u3, 0xee);
+      u0 = _mm256_shuffle_ps(t0, t2, 0x88);
+      u1 = _mm256_shuffle_ps(t0, t2, 0xdd);
+      u2 = _mm256_shuffle_ps(t1, t3, 0x88);
+      u3 = _mm256_shuffle_ps(t1, t3, 0xdd);
       __m128 res0 = _mm256_extractf128_ps(u0, 0);
       __m128 res4 = _mm256_extractf128_ps(u0, 1);
       __m128 res1 = _mm256_extractf128_ps(u1, 0);
@@ -2416,8 +2416,8 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
   const unsigned int n_chunks = n_entries / 2;
   for(unsigned int i = 0; i < n_chunks; ++i)
     {
-      __m128d u0          = _mm_loadu_pd(in + 2 * i + offsets[0]);
-      __m128d u1          = _mm_loadu_pd(in + 2 * i + offsets[1]);
+      __m128d u0 = _mm_loadu_pd(in + 2 * i + offsets[0]);
+      __m128d u1 = _mm_loadu_pd(in + 2 * i + offsets[1]);
       out[2 * i + 0].data = _mm_unpacklo_pd(u0, u1);
       out[2 * i + 1].data = _mm_unpackhi_pd(u0, u1);
     }
@@ -2442,8 +2442,8 @@ vectorized_transpose_and_store(const bool                     add_into,
     {
       for(unsigned int i = 0; i < n_chunks; ++i)
         {
-          __m128d u0   = in[2 * i + 0].data;
-          __m128d u1   = in[2 * i + 1].data;
+          __m128d u0 = in[2 * i + 0].data;
+          __m128d u1 = in[2 * i + 1].data;
           __m128d res0 = _mm_unpacklo_pd(u0, u1);
           __m128d res1 = _mm_unpackhi_pd(u0, u1);
           _mm_storeu_pd(
@@ -2461,8 +2461,8 @@ vectorized_transpose_and_store(const bool                     add_into,
     {
       for(unsigned int i = 0; i < n_chunks; ++i)
         {
-          __m128d u0   = in[2 * i + 0].data;
-          __m128d u1   = in[2 * i + 1].data;
+          __m128d u0 = in[2 * i + 0].data;
+          __m128d u1 = in[2 * i + 1].data;
           __m128d res0 = _mm_unpacklo_pd(u0, u1);
           __m128d res1 = _mm_unpackhi_pd(u0, u1);
           _mm_storeu_pd(out + 2 * i + offsets[0], res0);
@@ -2748,14 +2748,14 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
   const unsigned int n_chunks = n_entries / 4;
   for(unsigned int i = 0; i < n_chunks; ++i)
     {
-      __m128 u0           = _mm_loadu_ps(in + 4 * i + offsets[0]);
-      __m128 u1           = _mm_loadu_ps(in + 4 * i + offsets[1]);
-      __m128 u2           = _mm_loadu_ps(in + 4 * i + offsets[2]);
-      __m128 u3           = _mm_loadu_ps(in + 4 * i + offsets[3]);
-      __m128 v0           = _mm_shuffle_ps(u0, u1, 0x44);
-      __m128 v1           = _mm_shuffle_ps(u0, u1, 0xee);
-      __m128 v2           = _mm_shuffle_ps(u2, u3, 0x44);
-      __m128 v3           = _mm_shuffle_ps(u2, u3, 0xee);
+      __m128 u0 = _mm_loadu_ps(in + 4 * i + offsets[0]);
+      __m128 u1 = _mm_loadu_ps(in + 4 * i + offsets[1]);
+      __m128 u2 = _mm_loadu_ps(in + 4 * i + offsets[2]);
+      __m128 u3 = _mm_loadu_ps(in + 4 * i + offsets[3]);
+      __m128 v0 = _mm_shuffle_ps(u0, u1, 0x44);
+      __m128 v1 = _mm_shuffle_ps(u0, u1, 0xee);
+      __m128 v2 = _mm_shuffle_ps(u2, u3, 0x44);
+      __m128 v3 = _mm_shuffle_ps(u2, u3, 0xee);
       out[4 * i + 0].data = _mm_shuffle_ps(v0, v2, 0x88);
       out[4 * i + 1].data = _mm_shuffle_ps(v0, v2, 0xdd);
       out[4 * i + 2].data = _mm_shuffle_ps(v1, v3, 0x88);
@@ -2788,10 +2788,10 @@ vectorized_transpose_and_store(const bool                    add_into,
       __m128 t1 = _mm_shuffle_ps(u0, u1, 0xee);
       __m128 t2 = _mm_shuffle_ps(u2, u3, 0x44);
       __m128 t3 = _mm_shuffle_ps(u2, u3, 0xee);
-      u0        = _mm_shuffle_ps(t0, t2, 0x88);
-      u1        = _mm_shuffle_ps(t0, t2, 0xdd);
-      u2        = _mm_shuffle_ps(t1, t3, 0x88);
-      u3        = _mm_shuffle_ps(t1, t3, 0xdd);
+      u0 = _mm_shuffle_ps(t0, t2, 0x88);
+      u1 = _mm_shuffle_ps(t0, t2, 0xdd);
+      u2 = _mm_shuffle_ps(t1, t3, 0x88);
+      u3 = _mm_shuffle_ps(t1, t3, 0xdd);
 
       // Cannot use the same store instructions in both paths of the 'if'
       // because the compiler cannot know that there is no aliasing between

@@ -327,9 +327,9 @@ namespace LinearAlgebra
      */
     virtual void
     print(std::ostream&      out,
-          const unsigned int precision  = 3,
+          const unsigned int precision = 3,
           const bool         scientific = true,
-          const bool         across     = true) const override;
+          const bool         across = true) const override;
 
     /**
      * Write the vector en bloc to a file. This is done in a binary mode, so

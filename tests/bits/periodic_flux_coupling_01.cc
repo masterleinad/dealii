@@ -63,8 +63,8 @@ MakeFlux<dim>::make_grid()
   typedef typename dealii::Triangulation<dim>::cell_iterator CellIteratorTria;
   std::vector<dealii::GridTools::PeriodicFacePair<CellIteratorTria>>
                      periodic_faces;
-  const unsigned int b_id1     = 2;
-  const unsigned int b_id2     = 3;
+  const unsigned int b_id1 = 2;
+  const unsigned int b_id2 = 3;
   const unsigned int direction = 1;
 
   dealii::GridTools::collect_periodic_faces(triangulation,

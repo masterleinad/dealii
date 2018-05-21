@@ -30,7 +30,7 @@ test(TrilinosWrappers::MPI::Vector& v)
   std::vector<bool> pattern(v.size(), false);
   for(unsigned int i = 0; i < v.size(); i += 1 + i)
     {
-      v(i)       = 2 * i;
+      v(i) = 2 * i;
       pattern[i] = true;
     }
   v.compress(VectorOperation::insert);

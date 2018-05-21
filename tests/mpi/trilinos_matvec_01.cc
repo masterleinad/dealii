@@ -96,8 +96,8 @@ test()
   for(unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
     {
       const unsigned int global_index = col_partitioning.nth_index_in_set(i);
-      dx(global_index)                = random_value<double>();
-      x(global_index)                 = dx(global_index);
+      dx(global_index) = random_value<double>();
+      x(global_index) = dx(global_index);
     }
   dy = 1.;
 
@@ -122,7 +122,7 @@ main(int argc, char** argv)
     argc, argv, testing_max_num_threads());
 
   const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

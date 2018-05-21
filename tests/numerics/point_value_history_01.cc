@@ -116,7 +116,7 @@ TestPointValueHistory<dim>::run()
         fe_values.reinit(cell); // need to get local_dof_indices
         cell->get_dof_indices(local_dof_indices);
         dof_locations = fe_values.get_quadrature_points();
-        cell_pole     = 0;
+        cell_pole = 0;
         for(unsigned int dof = 0; dof != finite_element.dofs_per_cell; dof++)
           {
             unsigned int dof_component

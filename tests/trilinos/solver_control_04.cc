@@ -39,7 +39,7 @@ main(int argc, char** argv)
 
   {
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -69,7 +69,7 @@ main(int argc, char** argv)
     SolverControl              solver_control(2000, 1.e-3);
     TrilinosWrappers::SolverCG solver(solver_control);
 
-    const auto lo_A     = linear_operator<TrilinosWrappers::MPI::Vector>(A);
+    const auto lo_A = linear_operator<TrilinosWrappers::MPI::Vector>(A);
     const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
 
     deallog.push("First use");

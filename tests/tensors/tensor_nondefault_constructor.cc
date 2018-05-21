@@ -27,7 +27,7 @@ main()
   deallog.attach(logfile);
 
   float a[3][3] = {{1, 2, 3}, {3, 4, 5}, {6, 7, 8}};
-  float b[3]    = {25, 31, 37};
+  float b[3] = {25, 31, 37};
 
   const unsigned int dim = 3;
 

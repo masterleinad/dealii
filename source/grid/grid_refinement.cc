@@ -114,7 +114,7 @@ GridRefinement::adjust_refine_and_coarsen_number_fraction(
   Assert(bottom_fraction <= 1, ExcInvalidParameterValue());
   Assert(top_fraction + bottom_fraction <= 1, ExcInvalidParameterValue());
 
-  double refine_cells  = current_n_cells * top_fraction;
+  double refine_cells = current_n_cells * top_fraction;
   double coarsen_cells = current_n_cells * bottom_fraction;
 
   const double cell_increase_on_refine
@@ -174,7 +174,7 @@ GridRefinement::adjust_refine_and_coarsen_number_fraction(
                            / (refine_cells * cell_increase_on_refine
                               - coarsen_cells * cell_decrease_on_coarsen);
 
-      adjusted_fractions.first  = alpha * top_fraction;
+      adjusted_fractions.first = alpha * top_fraction;
       adjusted_fractions.second = alpha * bottom_fraction;
     }
   return (adjusted_fractions);
@@ -298,7 +298,7 @@ GridRefinement::refine_and_coarsen_fixed_fraction(
   // isotropic refinement as guess for a mixed
   // refinemnt as well.
   {
-    const unsigned int refine_cells  = pp - tmp.begin(),
+    const unsigned int refine_cells = pp - tmp.begin(),
                        coarsen_cells = tmp.end() - qq;
 
     if(static_cast<unsigned int>(
@@ -385,13 +385,13 @@ GridRefinement::refine_and_coarsen_optimize(Triangulation<dim, spacedim>& tria,
             });
 
   double       expected_error_reduction = 0;
-  const double original_error           = criteria.l1_norm();
+  const double original_error = criteria.l1_norm();
 
   const std::size_t N = criteria.size();
 
   // minimize the cost functional discussed in the documentation
   double      min_cost = std::numeric_limits<double>::max();
-  std::size_t min_arg  = 0;
+  std::size_t min_arg = 0;
 
   for(std::size_t M = 0; M < criteria.size(); ++M)
     {

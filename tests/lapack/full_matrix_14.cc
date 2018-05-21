@@ -48,7 +48,7 @@ test(const bool is_singular)
     }
 
   Vector<double> v(n);
-  v        = 1.0;
+  v = 1.0;
   v(n - 1) = 0.0;
   // LU factorization can only be applied if state == lu!
   A.apply_lu_factorization(v, false);

@@ -354,7 +354,7 @@ namespace Rol
   VectorAdaptor<VectorType>::clone() const
   {
     Teuchos::RCP<VectorType> vec_ptr = Teuchos::rcp(new VectorType);
-    (*vec_ptr)                       = (*vector_ptr);
+    (*vec_ptr) = (*vector_ptr);
 
     return Teuchos::rcp(new VectorAdaptor(vec_ptr));
   }
@@ -407,7 +407,7 @@ namespace Rol
 
     const VectorType& given_rol_vector = *(vector_adaptor.getVector());
 
-    const typename VectorType::iterator       vend   = vector_ptr->end();
+    const typename VectorType::iterator       vend = vector_ptr->end();
     const typename VectorType::const_iterator rolend = given_rol_vector.end();
 
     typename VectorType::const_iterator r_iterator = given_rol_vector.begin();

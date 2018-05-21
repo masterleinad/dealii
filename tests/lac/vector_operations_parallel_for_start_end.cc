@@ -45,7 +45,7 @@ check()
       for(unsigned int i = 0; i <= n_chunks; ++i)
         {
           const unsigned int begin = i * chunk_size;
-          const unsigned int end   = std::min((i + 1) * chunk_size, size);
+          const unsigned int end = std::min((i + 1) * chunk_size, size);
           internal::VectorOperations::parallel_for(
             setter, begin, end, thread_loop_partitioner);
         }

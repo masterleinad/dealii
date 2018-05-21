@@ -71,7 +71,7 @@ namespace Polynomials
             else
               {
                 derivative_change_sign = -1.;
-                y                      = offset + step + step - x;
+                y = offset + step + step - x;
               }
           }
         else

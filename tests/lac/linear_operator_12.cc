@@ -213,7 +213,7 @@ Step4<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -290,7 +290,7 @@ Step4<dim>::solve()
     solver.solve(system_matrix, output, system_rhs, preconditioner);
     constraints.distribute(output);
     output -= temp_solution;
-    const double local_error  = output.l2_norm();
+    const double local_error = output.l2_norm();
     const double global_error = std::sqrt(
       Utilities::MPI::sum(local_error * local_error, MPI_COMM_WORLD));
     deallog << "Norm of error in standard solve: " << global_error << std::endl;
@@ -306,10 +306,10 @@ Step4<dim>::solve()
     preconditioner.initialize(system_matrix);
     const auto lo_A     = linear_operator<VectorType>(system_matrix);
     const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
-    output              = lo_A_inv * system_rhs;
+    output = lo_A_inv * system_rhs;
     constraints.distribute(output);
     output -= temp_solution;
-    const double local_error  = output.l2_norm();
+    const double local_error = output.l2_norm();
     const double global_error = std::sqrt(
       Utilities::MPI::sum(local_error * local_error, MPI_COMM_WORLD));
     deallog << "Norm of error in LinearOperator solve: " << global_error

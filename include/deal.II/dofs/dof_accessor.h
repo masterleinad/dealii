@@ -813,8 +813,8 @@ public:
    * anything useful here and so may not actually be called.
    */
   DoFAccessor(const Triangulation<1, spacedim>*,
-              const int                                      = 0,
-              const int                                      = 0,
+              const int = 0,
+              const int = 0,
               const DoFHandlerType<1, spacedim>* dof_handler = 0);
 
   /**
@@ -1245,9 +1245,9 @@ public:
    * semantic sense, and we generate an exception when such an object is
    * actually generated.
    */
-  DoFInvalidAccessor(const Triangulation<dim, spacedim>* parent     = 0,
-                     const int                           level      = -1,
-                     const int                           index      = -1,
+  DoFInvalidAccessor(const Triangulation<dim, spacedim>* parent = 0,
+                     const int                           level = -1,
+                     const int                           index = -1,
                      const AccessorData*                 local_data = 0);
 
   /**

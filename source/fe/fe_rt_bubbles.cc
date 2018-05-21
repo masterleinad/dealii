@@ -201,7 +201,7 @@ FE_RT_Bubbles<dim>::get_dpo_vector(const unsigned int deg)
 
   std::vector<unsigned int> dpo(dim + 1);
   dpo[dim - 1] = dofs_per_face;
-  dpo[dim]     = interior_dofs;
+  dpo[dim] = interior_dofs;
 
   return dpo;
 }
@@ -253,7 +253,7 @@ FE_RT_Bubbles<dim>::convert_generalized_support_point_values_to_dof_values(
   // First do interpolation on faces. There, the component
   // evaluated depends on the face direction and orientation.
   unsigned int fbase = 0;
-  unsigned int f     = 0;
+  unsigned int f = 0;
   for(; f < GeometryInfo<dim>::faces_per_cell;
       ++f, fbase += this->dofs_per_face)
     {

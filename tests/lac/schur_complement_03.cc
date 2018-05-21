@@ -207,14 +207,14 @@ namespace Step22
   StokesProblem<dim>::assemble_system()
   {
     system_matrix = 0;
-    system_rhs    = 0;
+    system_rhs = 0;
     QGauss<dim>        quadrature_formula(degree + 2);
     FEValues<dim>      fe_values(fe,
                             quadrature_formula,
                             update_values | update_quadrature_points
                               | update_JxW_values | update_gradients);
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     local_rhs(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -243,7 +243,7 @@ namespace Step22
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
                 div_phi_u[k] = fe_values[velocities].divergence(k, q);
-                phi_p[k]     = fe_values[pressure].value(k, q);
+                phi_p[k] = fe_values[pressure].value(k, q);
               }
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
               {
@@ -312,13 +312,13 @@ namespace Step22
     SolverCG<> solver_S(solver_control_S);
     const auto S_inv = inverse_operator(S, solver_S, M_inv);
 
-    Vector<double>&       x   = solution.block(0);
-    Vector<double>&       y   = solution.block(1);
-    const Vector<double>& f   = system_rhs.block(0);
-    const Vector<double>& g   = system_rhs.block(1);
+    Vector<double>&       x = solution.block(0);
+    Vector<double>&       y = solution.block(1);
+    const Vector<double>& f = system_rhs.block(0);
+    const Vector<double>& g = system_rhs.block(1);
     auto                  rhs = condense_schur_rhs(A_inv, C, f, g);
-    y                         = S_inv * rhs;
-    x                         = postprocess_schur_solution(A_inv, B, y, f);
+    y = S_inv * rhs;
+    x = postprocess_schur_solution(A_inv, B, y, f);
 
     constraints.distribute(solution);
     deallog << "  " << solver_control_S.last_step()

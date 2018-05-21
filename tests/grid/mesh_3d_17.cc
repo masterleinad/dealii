@@ -42,7 +42,7 @@ void check(Triangulation<3>& tria)
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  const unsigned int                       dim  = 3;
+  const unsigned int                       dim = 3;
   Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                            endc = tria.end();
 

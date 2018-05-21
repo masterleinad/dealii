@@ -63,7 +63,7 @@ main()
           {
             for(unsigned int j = 0; j < 6; ++j)
               {
-                double exact_integral  = exact_integral_one_over_r(index, i, j);
+                double exact_integral = exact_integral_one_over_r(index, i, j);
                 double approx_integral = 0;
                 double approx_integral_2 = 0;
 

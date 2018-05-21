@@ -323,7 +323,7 @@ void
 LaplaceProblem<dim>::assemble_reference()
 {
   test_matrix = 0;
-  test_rhs    = 0;
+  test_rhs = 0;
 
   Assembly::Copy::Data         copy_data;
   Assembly::Scratch::Data<dim> assembly_data(fe_collection,
@@ -351,7 +351,7 @@ void
 LaplaceProblem<dim>::assemble_test()
 {
   test_matrix = 0;
-  test_rhs    = 0;
+  test_rhs = 0;
 
   WorkStream::run(
     graph,

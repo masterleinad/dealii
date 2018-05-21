@@ -208,7 +208,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                     difference_before,
                                     QGauss<dim>(fe1.degree + 2),
                                     VectorTools::L2_norm);
-  const double local_error_before  = difference_before.l2_norm();
+  const double local_error_before = difference_before.l2_norm();
   const double global_error_before = std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_before, 2.), MPI_COMM_WORLD));
 
@@ -253,7 +253,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                     difference_after,
                                     QGauss<dim>(fe2.degree + 2),
                                     VectorTools::L2_norm);
-  const double local_error_after  = difference_after.l2_norm();
+  const double local_error_after = difference_after.l2_norm();
   const double global_error_after = std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_after, 2.), MPI_COMM_WORLD));
 
@@ -338,7 +338,7 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                     difference_before,
                                     QGauss<dim>(fe1.degree + 2),
                                     VectorTools::L2_norm);
-  const double local_error_before  = difference_before.l2_norm();
+  const double local_error_before = difference_before.l2_norm();
   const double global_error_before = std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_before, 2.), MPI_COMM_WORLD));
 #ifdef DEBUG_OUTPUT_VTK
@@ -381,7 +381,7 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                     difference_after,
                                     QGauss<dim>(fe2.degree + 2),
                                     VectorTools::L2_norm);
-  const double local_error_after  = difference_after.l2_norm();
+  const double local_error_after = difference_after.l2_norm();
   const double global_error_after = std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_after, 2.), MPI_COMM_WORLD));
 

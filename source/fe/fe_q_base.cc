@@ -173,7 +173,7 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
     if(q_deg > 1)
       {
-        const unsigned int n    = q_deg - 1;
+        const unsigned int n = q_deg - 1;
         const double       step = 1. / q_deg;
         // subface 0
         for(unsigned int i = 1; i <= n; ++i)
@@ -263,7 +263,7 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
     if(q_deg > 1)
       {
-        const unsigned int          n    = q_deg - 1;
+        const unsigned int          n = q_deg - 1;
         const double                step = 1. / q_deg;
         std::vector<Point<dim - 2>> line_support_points(n);
         for(unsigned int i = 0; i < n; ++i)
@@ -1071,7 +1071,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::face_to_cell_index(
       // DoFs on the lines, i.e., ignoring those on the vertices
       const unsigned int index = face_index - this->first_face_line_index;
 
-      const unsigned int face_line         = index / this->dofs_per_line;
+      const unsigned int face_line = index / this->dofs_per_line;
       const unsigned int dof_index_on_line = index % this->dofs_per_line;
 
       // we now also need to adjust the line index for the case of
@@ -1420,7 +1420,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
       for(unsigned int i = 0; i < q_dofs_per_cell; ++i)
         {
           unsigned int     mother_dof = index_map_inverse[i];
-          const Point<dim> p_cell     = this->unit_support_points[mother_dof];
+          const Point<dim> p_cell = this->unit_support_points[mother_dof];
 
           // check whether this interpolation point is inside this child cell
           const Point<dim> p_subcell
@@ -1437,7 +1437,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
                 for(unsigned int d = 0; d < dim; ++d)
                   {
                     Point<dim> point;
-                    point[0]            = p_subcell[d];
+                    point[0] = p_subcell[d];
                     evaluations1d[j][d] = this->poly_space.compute_value(
                       index_map_inverse[j], point);
                   }

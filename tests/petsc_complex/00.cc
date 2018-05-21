@@ -85,7 +85,7 @@ make_std_complex_from_petsc_complex()
 {
   deallog << "Check std initialised from PetscScalar" << std::endl;
   const PetscScalar          alpha = 1.0 + 2.0 * PETSC_i;
-  const std::complex<double> beta  = alpha;
+  const std::complex<double> beta = alpha;
 
   // These should be the same of course
   AssertThrow(alpha == beta, ExcInternalError());

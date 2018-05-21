@@ -607,7 +607,7 @@ VectorFunctionFromScalarFunctionObject<dim, RangeNumberType>::vector_value(
 
   // set everything to zero, and then the right component to its correct
   // value
-  values                     = 0;
+  values = 0;
   values(selected_component) = function_object(p);
 }
 

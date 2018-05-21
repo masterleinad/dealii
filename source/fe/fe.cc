@@ -554,7 +554,7 @@ FiniteElement<dim, spacedim>::face_to_cell_index(const unsigned int face_index,
       // DoFs on the lines, i.e., ignoring those on the vertices
       const unsigned int index = face_index - this->first_face_line_index;
 
-      const unsigned int face_line         = index / this->dofs_per_line;
+      const unsigned int face_line = index / this->dofs_per_line;
       const unsigned int dof_index_on_line = index % this->dofs_per_line;
 
       return (this->first_line_index

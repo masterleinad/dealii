@@ -33,7 +33,7 @@ test(Vector<std::complex<double>>& v)
   // then clear it again and make sure the
   // vector is really empty
   const unsigned int sz = v.size();
-  v                     = 0;
+  v = 0;
   Assert(v.size() == sz, ExcInternalError());
   Assert(v.l2_norm() == 0, ExcInternalError());
 

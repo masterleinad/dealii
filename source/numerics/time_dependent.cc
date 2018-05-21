@@ -130,7 +130,7 @@ TimeDependent::delete_timestep(const unsigned int position)
   // Remember time step object for
   // later deletion and unlock
   // SmartPointer
-  TimeStepBase* t     = timesteps[position];
+  TimeStepBase* t = timesteps[position];
   timesteps[position] = nullptr;
   // Now delete unsubscribed object
   delete t;
@@ -389,7 +389,7 @@ TimeStepBase_Tria<dim>::~TimeStepBase_Tria()
   if(!flags.delete_and_rebuild_tria)
     {
       Triangulation<dim>* t = tria;
-      tria                  = nullptr;
+      tria = nullptr;
       delete t;
     }
   else
@@ -420,7 +420,7 @@ TimeStepBase_Tria<dim>::sleep(const unsigned int sleep_level)
       if(flags.delete_and_rebuild_tria)
         {
           Triangulation<dim>* t = tria;
-          tria                  = nullptr;
+          tria = nullptr;
           delete t;
         }
     }
@@ -825,8 +825,8 @@ TimeStepBase_Tria<dim>::refine_grid(const RefinementData refinement_data)
         // now estimate the number of cells which
         // will result on this level
         double estimated_cells = n_active_cells;
-        cell                   = tria->begin_active();
-        endc                   = tria->end();
+        cell = tria->begin_active();
+        endc = tria->end();
         for(; cell != endc; ++cell)
           if(cell->refine_flag_set())
             estimated_cells += (GeometryInfo<dim>::max_children_per_cell - 1);
@@ -1033,7 +1033,7 @@ TimeStepBase_Tria<dim>::refine_grid(const RefinementData refinement_data)
           typename Triangulation<dim>::cell_iterator old_cell, new_cell, endc;
           old_cell = previous_tria->begin(0);
           new_cell = tria->begin(0);
-          endc     = tria->end(0);
+          endc = tria->end(0);
           for(; new_cell != endc; ++new_cell, ++old_cell)
             dealii::mirror_refinement_flags<dim>(new_cell, old_cell);
         };

@@ -87,7 +87,7 @@ public:
   hessian(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dir = p - origin;
-    const double   r   = dir.norm();
+    const double   r = dir.norm();
     Assert(r > 0.0, ExcMessage("r is not positive"));
     dir /= r;
     SymmetricTensor<2, dim> dir_x_dir;
@@ -246,8 +246,8 @@ test(const FiniteElement<dim>&  fe_base,
     std::vector<unsigned int> repetitions(dim);
     for(unsigned int d = 0; d < dim; d++)
       {
-        p1[d]          = -1.0;
-        p2[d]          = 2.0;
+        p1[d] = -1.0;
+        p2[d] = 2.0;
         repetitions[d] = 3;
       }
     GridGenerator::subdivided_hyper_rectangle(
@@ -291,8 +291,8 @@ test(const FiniteElement<dim>&  fe_base,
   typename DoFHandler<dim>::active_cell_iterator cell_enriched
     = dof_handler_enriched.begin_active(),
     endc_enriched = dof_handler_enriched.end(),
-    cell_system   = dof_handler_system.begin_active(),
-    endc_system   = dof_handler_system.end();
+    cell_system = dof_handler_system.begin_active(),
+    endc_system = dof_handler_system.end();
   for(; cell_enriched != endc_enriched; ++cell_enriched, ++cell_system)
     {
       fe_values_enriched.reinit(cell_enriched);

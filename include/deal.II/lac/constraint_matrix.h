@@ -1610,9 +1610,9 @@ ConstraintMatrix::add_line(const size_type line)
 
   // push a new line to the end of the list
   lines.emplace_back();
-  lines.back().index         = line;
+  lines.back().index = line;
   lines.back().inhomogeneity = 0.;
-  lines_cache[line_index]    = lines.size() - 1;
+  lines_cache[line_index] = lines.size() - 1;
 }
 
 inline void
@@ -1664,7 +1664,7 @@ ConstraintMatrix::set_inhomogeneity(const size_type line, const double value)
          ExcMessage("call add_line() before calling set_inhomogeneity()"));
   Assert(lines_cache[line_index] < lines.size(), ExcInternalError());
   ConstraintLine* line_ptr = &lines[lines_cache[line_index]];
-  line_ptr->inhomogeneity  = value;
+  line_ptr->inhomogeneity = value;
 }
 
 inline types::global_dof_index

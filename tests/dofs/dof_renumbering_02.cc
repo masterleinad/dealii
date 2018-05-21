@@ -101,7 +101,7 @@ void
 check_renumbering(DoFHandler<dim>& mgdof)
 {
   const FiniteElement<dim>& element = mgdof.get_fe();
-  DoFHandler<dim>&          dof     = mgdof;
+  DoFHandler<dim>&          dof = mgdof;
   deallog << element.get_name() << std::endl;
 
   // Prepare a reordering of

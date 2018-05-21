@@ -48,7 +48,7 @@ test();
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
-          typename Number   = double>
+          typename Number = double>
 class MatrixFreeTest
 {
 public:
@@ -142,7 +142,7 @@ public:
     for(unsigned int i = 0; i < 5; ++i)
       {
         errors[i] = 0;
-        total[i]  = 0;
+        total[i] = 0;
       }
     Vector<Number> dst_dummy;
     data.cell_loop(&MatrixFreeTest::operator(), this, dst_dummy, src);
@@ -243,7 +243,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.mapping_update_flags  = update_gradients | update_hessians;
+    data.mapping_update_flags = update_gradients | update_hessians;
     mf_data.reinit(dof, constraints, quad, data);
   }
 

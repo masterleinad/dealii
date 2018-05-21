@@ -24,11 +24,11 @@
 std::pair<double, double>
 test()
 {
-  const double mu    = 13;
+  const double mu = 13;
   const double sigma = 3;
 
-  unsigned int N          = 1000000;
-  double       sum        = 0;
+  unsigned int N = 1000000;
+  double       sum = 0;
   double       sum_square = 0;
   for(unsigned int i = 0; i < N; ++i)
     {
@@ -38,7 +38,7 @@ test()
       sum_square += x * x;
     }
 
-  const double mean   = sum / N;
+  const double mean = sum / N;
   const double stddev = std::sqrt(sum_square / N - sum / N * sum / N);
 
   return std::make_pair(mean, stddev);

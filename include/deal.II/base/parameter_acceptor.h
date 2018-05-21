@@ -385,7 +385,7 @@ public:
    * @param prm The ParameterHandler to use
    */
   static void
-  initialize(const std::string&                  filename        = "",
+  initialize(const std::string&                  filename = "",
              const std::string&                  output_filename = "",
              const ParameterHandler::OutputStyle output_style_for_prm_format
              = ParameterHandler::ShortText,
@@ -491,7 +491,7 @@ public:
   add_parameter(const std::string&           entry,
                 ParameterType&               parameter,
                 const std::string&           documentation = std::string(),
-                ParameterHandler&            prm_          = prm,
+                ParameterHandler&            prm_ = prm,
                 const Patterns::PatternBase& pattern
                 = *Patterns::Tools::Convert<ParameterType>::to_pattern());
 

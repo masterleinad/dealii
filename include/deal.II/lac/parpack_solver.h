@@ -329,7 +329,7 @@ public:
                    const WhichEigenvalues eigenvalue_of_interest
                    = largest_magnitude,
                    const bool symmetric = false,
-                   const int  mode      = 3);
+                   const int  mode = 3);
   };
 
   /**
@@ -723,7 +723,7 @@ PArpackSolver<VectorType>::internal_reinit(const IndexSet& locally_owned_dofs)
 
   // scalars
   nloc = locally_owned_dofs.n_elements();
-  ncv  = additional_data.number_of_arnoldi_vectors;
+  ncv = additional_data.number_of_arnoldi_vectors;
 
   Assert((int) local_indices.size() == nloc, ExcInternalError());
 

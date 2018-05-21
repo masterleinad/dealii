@@ -60,7 +60,7 @@ main()
 {
   deallog.attach(logfile);
 
-  int fe_degree      = 2;
+  int fe_degree = 2;
   int mapping_degree = 2;
 
   Triangulation<2, 3> tria;

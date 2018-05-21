@@ -105,13 +105,13 @@ main()
   deallog << "f_rad: " << f_rfad.val() << std::endl;
 
   // Extract value and derivatives
-  const double f_ad         = f_rfad.val().val(); // f
-  const double df_dx_ad     = x_ad.adj().val();   // df/dx
-  const double df_dy_ad     = y_ad.adj().val();   // df/dy
-  const double d2f_dx_dx_ad = x_ad.adj().dx(0);   // d^2f/dx^2
-  const double d2f_dy_dx_ad = x_ad.adj().dx(1);   // d^2f/dy_dx
-  const double d2f_dx_dy_ad = y_ad.adj().dx(0);   // d^2f/dx_dy
-  const double d2f_dy_dy_ad = y_ad.adj().dx(1);   // d^2f/dy^2
+  const double f_ad = f_rfad.val().val();       // f
+  const double df_dx_ad = x_ad.adj().val();     // df/dx
+  const double df_dy_ad = y_ad.adj().val();     // df/dy
+  const double d2f_dx_dx_ad = x_ad.adj().dx(0); // d^2f/dx^2
+  const double d2f_dy_dx_ad = x_ad.adj().dx(1); // d^2f/dy_dx
+  const double d2f_dx_dy_ad = y_ad.adj().dx(0); // d^2f/dx_dy
+  const double d2f_dy_dy_ad = y_ad.adj().dx(1); // d^2f/dy^2
 
   const double tol = 1.0e-14;
   Assert(std::fabs(f - f_ad) < tol, ExcMessage("Computation incorrect: Value"));

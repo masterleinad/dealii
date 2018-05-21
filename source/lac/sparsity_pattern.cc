@@ -258,7 +258,7 @@ SparsityPattern::reinit(
     {
       vec_len     = 1;
       max_vec_len = vec_len;
-      colnums     = std_cxx14::make_unique<size_type[]>(max_vec_len);
+      colnums = std_cxx14::make_unique<size_type[]>(max_vec_len);
     }
 
   max_row_length = (row_lengths.size() == 0 ?
@@ -278,7 +278,7 @@ SparsityPattern::reinit(
   // and try to delete the memory a second time.
   if(rows > max_dim)
     {
-      max_dim  = rows;
+      max_dim = rows;
       rowstart = std_cxx14::make_unique<std::size_t[]>(max_dim + 1);
     }
 
@@ -286,7 +286,7 @@ SparsityPattern::reinit(
   if(vec_len > max_vec_len)
     {
       max_vec_len = vec_len;
-      colnums     = std_cxx14::make_unique<size_type[]>(max_vec_len);
+      colnums = std_cxx14::make_unique<size_type[]>(max_vec_len);
     }
 
   // set the rowstart array
@@ -674,7 +674,7 @@ SparsityPattern::add_entries(const size_type row,
     {
       if(begin != end)
         {
-          ForwardIterator it                 = begin;
+          ForwardIterator it = begin;
           bool            has_larger_entries = false;
           // skip diagonal
           std::size_t k = rowstart[row] + store_diagonal_first_in_row;
@@ -928,7 +928,7 @@ SparsityPattern::block_read(std::istream& in)
 
   // reallocate space
   rowstart = std_cxx14::make_unique<std::size_t[]>(max_dim + 1);
-  colnums  = std_cxx14::make_unique<size_type[]>(max_vec_len);
+  colnums = std_cxx14::make_unique<size_type[]>(max_vec_len);
 
   // then read data
   in.read(reinterpret_cast<char*>(rowstart.get()),

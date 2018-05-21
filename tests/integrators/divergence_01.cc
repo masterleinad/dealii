@@ -60,7 +60,7 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
     {
       u    = 0.;
       u(i) = 1.;
-      w    = 0.;
+      w = 0.;
       fev.get_function_gradients(
         u,
         indices,
@@ -120,7 +120,7 @@ test_boundary(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
     {
       u    = 0.;
       u(i) = 1.;
-      w    = 0.;
+      w = 0.;
       fev.get_function_values(
         u, indices, VectorSlice<std::vector<std::vector<double>>>(uval), true);
       u_dot_n_residual(w, fev, fes, make_slice(uval));

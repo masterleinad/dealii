@@ -35,14 +35,14 @@ namespace internal
     {
       Assert(new_objects_in_pairs % 2 == 0, ExcInternalError());
 
-      next_free_single               = 0;
-      next_free_pair                 = 0;
+      next_free_single = 0;
+      next_free_pair = 0;
       reverse_order_next_free_single = false;
 
       // count the number of objects, of unused single objects and of
       // unused pairs of objects
-      unsigned int n_objects        = 0;
-      unsigned int n_unused_pairs   = 0;
+      unsigned int n_objects = 0;
+      unsigned int n_unused_pairs = 0;
       unsigned int n_unused_singles = 0;
       for(unsigned int i = 0; i < used.size(); ++i)
         {
@@ -124,7 +124,7 @@ namespace internal
 
       if(n_unused_singles == 0)
         {
-          next_free_single               = new_size - 1;
+          next_free_single = new_size - 1;
           reverse_order_next_free_single = true;
         }
     }
@@ -228,14 +228,14 @@ namespace internal
     {
       Assert(new_quads_in_pairs % 2 == 0, ExcInternalError());
 
-      next_free_single               = 0;
-      next_free_pair                 = 0;
+      next_free_single = 0;
+      next_free_pair = 0;
       reverse_order_next_free_single = false;
 
       // count the number of objects, of unused single objects and of
       // unused pairs of objects
-      unsigned int n_quads          = 0;
-      unsigned int n_unused_pairs   = 0;
+      unsigned int n_quads = 0;
+      unsigned int n_unused_pairs = 0;
       unsigned int n_unused_singles = 0;
       for(unsigned int i = 0; i < used.size(); ++i)
         {
@@ -287,7 +287,7 @@ namespace internal
 
       if(n_unused_singles == 0)
         {
-          next_free_single               = new_size - 1;
+          next_free_single = new_size - 1;
           reverse_order_next_free_single = true;
         }
     }

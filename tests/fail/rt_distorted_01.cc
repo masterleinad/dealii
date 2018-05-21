@@ -120,9 +120,9 @@ double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   Point<2> center;
-  center(0)    = 0.5;
-  center(1)    = 0.5;
-  double rad   = p.distance(center),
+  center(0) = 0.5;
+  center(1) = 0.5;
+  double rad = p.distance(center),
          phi_p = atan2(p(0) - center(0), p(1) - center(1));
 
   if(component == 0)
@@ -251,7 +251,7 @@ double EvaluateArea(Mapping<2>&     mapping,
     quad,
     UpdateFlags(update_values | update_quadrature_points | update_JxW_values));
 
-  const unsigned int n_q_points   = quad.size();
+  const unsigned int n_q_points = quad.size();
   const unsigned int n_components = dof_handler->get_fe().n_components();
 
   // Cell iterators

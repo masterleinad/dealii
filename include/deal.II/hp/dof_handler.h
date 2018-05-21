@@ -1098,7 +1098,7 @@ namespace hp
     // loading that this number is indeed correct; same with something that
     // identifies the policy
     const unsigned int n_cells = tria->n_cells();
-    std::string policy_name    = dealii::internal::policy_to_string(*policy);
+    std::string policy_name = dealii::internal::policy_to_string(*policy);
 
     ar& n_cells& policy_name;
   }

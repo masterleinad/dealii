@@ -72,7 +72,7 @@ test()
   PETScWrappers::MPI::Vector vec(locally_owned_dofs, MPI_COMM_WORLD);
   PETScWrappers::MPI::Vector vec_ghosted(
     locally_owned_dofs, locally_relevant_dofs, MPI_COMM_WORLD);
-  vec         = 1;
+  vec = 1;
   vec_ghosted = vec;
   vec         = -1;
 

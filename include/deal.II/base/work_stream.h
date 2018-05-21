@@ -320,7 +320,7 @@ namespace WorkStream
 
               item_buffer[element].work_items.resize(
                 chunk_size, remaining_iterator_range.second);
-              item_buffer[element].scratch_data        = &thread_local_scratch;
+              item_buffer[element].scratch_data = &thread_local_scratch;
               item_buffer[element].sample_scratch_data = &sample_scratch_data;
               item_buffer[element].copy_datas.resize(chunk_size,
                                                      sample_copy_data);
@@ -746,7 +746,7 @@ namespace WorkStream
           // now and expect it to still be valid after calling the worker,
           // but we at least do not have to lock the following section.
           ScratchData* scratch_data = nullptr;
-          CopyData*    copy_data    = nullptr;
+          CopyData*    copy_data = nullptr;
           {
             ScratchAndCopyDataList& scratch_and_copy_data_list = data.get();
 
@@ -758,8 +758,8 @@ namespace WorkStream
                 ++p)
               if(p->currently_in_use == false)
                 {
-                  scratch_data        = p->scratch_data.get();
-                  copy_data           = p->copy_data.get();
+                  scratch_data = p->scratch_data.get();
+                  copy_data = p->copy_data.get();
                   p->currently_in_use = true;
                   break;
                 }
@@ -769,7 +769,7 @@ namespace WorkStream
               {
                 Assert(copy_data == nullptr, ExcInternalError());
                 scratch_data = new ScratchData(sample_scratch_data);
-                copy_data    = new CopyData(sample_copy_data);
+                copy_data = new CopyData(sample_copy_data);
 
                 scratch_and_copy_data_list.emplace_back(
                   scratch_data, copy_data, true);
@@ -901,7 +901,7 @@ namespace WorkStream
       const ScratchData&                        sample_scratch_data,
       const CopyData&                           sample_copy_data,
       const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
-      const unsigned int chunk_size   = 8);
+      const unsigned int chunk_size = 8);
 
   /**
    * This is one of two main functions of the WorkStream concept, doing work
@@ -950,7 +950,7 @@ namespace WorkStream
       const ScratchData&                       sample_scratch_data,
       const CopyData&                          sample_copy_data,
       const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
-      const unsigned int chunk_size   = 8)
+      const unsigned int chunk_size = 8)
   {
     Assert(queue_length > 0,
            ExcMessage("The queue length must be at least one, and preferably "
@@ -972,7 +972,7 @@ namespace WorkStream
       {
         // need to copy the sample since it is marked const
         ScratchData scratch_data = sample_scratch_data;
-        CopyData    copy_data    = sample_copy_data; // NOLINT
+        CopyData    copy_data = sample_copy_data; // NOLINT
 
         for(Iterator i = begin; i != end; ++i)
           {
@@ -1079,7 +1079,7 @@ namespace WorkStream
       {
         // need to copy the sample since it is marked const
         ScratchData scratch_data = sample_scratch_data;
-        CopyData    copy_data    = sample_copy_data; // NOLINT
+        CopyData    copy_data = sample_copy_data; // NOLINT
 
         for(unsigned int color = 0; color < colored_iterators.size(); ++color)
           for(typename std::vector<Iterator>::const_iterator p
@@ -1168,7 +1168,7 @@ namespace WorkStream
       const ScratchData& sample_scratch_data,
       const CopyData&    sample_copy_data,
       const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
-      const unsigned int chunk_size   = 8)
+      const unsigned int chunk_size = 8)
   {
     // forward to the other function
     run(begin,

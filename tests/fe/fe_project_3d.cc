@@ -124,7 +124,7 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 {
   Assert(component < 3, ExcIndexRange(component, 0, 2));
 
-  const double PI  = numbers::PI;
+  const double PI = numbers::PI;
   double       val = 0.0;
   switch(component)
     {
@@ -233,7 +233,7 @@ test(const FiniteElement<dim>& fe,
   const FEValuesExtractors::Vector vec(0);
   const QGauss<dim>                quadrature(fe.degree + 1);
   const QGauss<dim - 1>            face_quadrature(fe.degree + 1);
-  const unsigned int               n_q_points      = quadrature.size();
+  const unsigned int               n_q_points = quadrature.size();
   const unsigned int               n_face_q_points = face_quadrature.size();
   //MappingQ<dim> mapping(2);
   MappingQGeneric<dim>                                        mapping(1);
@@ -270,7 +270,7 @@ test(const FiniteElement<dim>& fe,
       typename FEValuesViews::Vector<dim>::curl_type total_curl,
         boundary_tangentials;
       Tensor<1, dim> total_curl_curl, boundary_curl_curl_traces;
-      double         total_div     = 0;
+      double         total_div = 0;
       double         boundary_flux = 0;
       total_curl *= 0.;
       boundary_tangentials *= 0.;
@@ -406,8 +406,8 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  const static unsigned dim      = 3;
-  unsigned              order    = 1;
+  const static unsigned dim = 3;
+  unsigned              order = 1;
   unsigned              n_cycles = 2;
 
   deallog << "3d\nRectangular grid:\n";

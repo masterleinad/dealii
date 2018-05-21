@@ -183,7 +183,7 @@ namespace TrilinosWrappers
        */
       void
       reinit(const std::vector<IndexSet>& parallel_partitioning,
-             const MPI_Comm&              communicator         = MPI_COMM_WORLD,
+             const MPI_Comm&              communicator = MPI_COMM_WORLD,
              const bool                   omit_zeroing_entries = false);
 
       /**
@@ -206,7 +206,7 @@ namespace TrilinosWrappers
       void
       reinit(const std::vector<IndexSet>& partitioning,
              const std::vector<IndexSet>& ghost_values,
-             const MPI_Comm&              communicator    = MPI_COMM_WORLD,
+             const MPI_Comm&              communicator = MPI_COMM_WORLD,
              const bool                   vector_writable = false);
 
       /**
@@ -290,9 +290,9 @@ namespace TrilinosWrappers
        */
       void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
+            const unsigned int precision = 3,
             const bool         scientific = true,
-            const bool         across     = true) const;
+            const bool         across = true) const;
 
       /**
        * Exception

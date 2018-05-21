@@ -32,7 +32,7 @@ check()
     }
 
   // native:
-  gsl_interp_accel* acc    = gsl_interp_accel_alloc();
+  gsl_interp_accel* acc = gsl_interp_accel_alloc();
   gsl_spline*       spline = gsl_spline_alloc(gsl_interp_cspline, n_points);
 
   gsl_spline_init(spline, &x[0], &y[0], n_points);
@@ -42,12 +42,12 @@ check()
 
   for(double xi = x[0]; xi <= x.back(); xi += 0.01)
     {
-      const double f   = gsl_spline_eval(spline, xi, acc);
-      const double df  = gsl_spline_eval_deriv(spline, xi, acc);
+      const double f = gsl_spline_eval(spline, xi, acc);
+      const double df = gsl_spline_eval_deriv(spline, xi, acc);
       const double ddf = gsl_spline_eval_deriv2(spline, xi, acc);
 
-      const double         y   = cspline.value(Point<dim>(xi));
-      const Tensor<1, dim> dy  = cspline.gradient(Point<dim>(xi));
+      const double         y = cspline.value(Point<dim>(xi));
+      const Tensor<1, dim> dy = cspline.gradient(Point<dim>(xi));
       const double         ddy = cspline.laplacian(Point<dim>(xi));
 
       AssertThrow(std::fabs(f - y) <= std::fabs(f) * 1e-10, ExcInternalError());

@@ -45,7 +45,7 @@ test(const unsigned int n = 5, const unsigned int m = 3)
   tria.refine_global(1);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  cell                                                   = tria.begin_active();
+  cell = tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->is_locally_owned())
       if(cell->center().norm() < 0.2)
@@ -63,7 +63,7 @@ test(const unsigned int n = 5, const unsigned int m = 3)
   cell = tria.begin_active();
   for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
+      cell = tria.begin_active();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(cell->is_locally_owned())
@@ -92,7 +92,7 @@ test(const unsigned int n = 5, const unsigned int m = 3)
     const QGauss<1>                                  quad(fe_degree + 2);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.tasks_block_size      = 7;
+    data.tasks_block_size = 7;
     mf_data->reinit(dof, constraints, quad, data);
   }
 
@@ -110,7 +110,7 @@ test(const unsigned int n = 5, const unsigned int m = 3)
     {
       mf_data->initialize_dof_vector(left.block(b));
       mf_data->initialize_dof_vector(left2.block(b));
-      left.block(b)  = 0.;
+      left.block(b) = 0.;
       left2.block(b) = 0.;
       for(unsigned int i = 0; i < left.block(b).local_size(); ++i)
         {

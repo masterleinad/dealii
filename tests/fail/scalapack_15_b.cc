@@ -87,8 +87,8 @@ test(const unsigned int size,
     char jobz = 'V'; //'V': eigenpairs of A are computed
     char uplo
       = 'U'; //storage format of the matrix A; not so important as matrix is symmetric
-    char       range = 'I';  //the il-th through iu-th eigenvalues will be found
-    int        LDA   = size; //leading dimension of the matrix A
+    char       range = 'I'; //the il-th through iu-th eigenvalues will be found
+    int        LDA = size;  //leading dimension of the matrix A
     NumberType vl = 0, vu = 0;
     int        il = size - max_n_eigenvalues + 1, iu = size;
     char       sign = 'S';
@@ -205,7 +205,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes  = {{200, 400, 600}};
+  const std::vector<unsigned int> sizes = {{200, 400, 600}};
   const std::vector<unsigned int> blocks = {{32, 64}};
 
   const double tol = 1e-10;

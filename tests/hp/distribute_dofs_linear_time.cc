@@ -73,7 +73,7 @@ ladutenko_circle(Triangulation<dim>& triangulation,
   triangulation.set_all_manifold_ids(circular_manifold_id);
   triangulation.set_manifold(circular_manifold_id, *boundary);
 
-  const double core_radius  = 1.0 / 4.8 * radius;
+  const double core_radius = 1.0 / 4.8 * radius;
   const double inner_radius = 1.0 / 2.4 * radius;
 
   // Step 1: Shrink the inner cell
@@ -200,7 +200,7 @@ main(int argc, char** argv)
 {
   initlog();
 
-  static const int          dim      = 2;
+  static const int          dim = 2;
   static const unsigned int n_cycles = 6;
 
   unsigned int n_global_refines = 2;

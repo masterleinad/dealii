@@ -86,7 +86,7 @@ namespace internal
     template <typename DoFHandlerType, typename number>
     struct ParallelData
     {
-      static const unsigned int dim      = DoFHandlerType::dimension;
+      static const unsigned int dim = DoFHandlerType::dimension;
       static const unsigned int spacedim = DoFHandlerType::space_dimension;
 
       /**
@@ -702,7 +702,7 @@ namespace internal
       (void) dim;
 
       const typename DoFHandlerType::face_iterator face = cell->face(face_no);
-      const unsigned int n_solution_vectors             = solutions.size();
+      const unsigned int n_solution_vectors = solutions.size();
 
       // initialize data of the restriction
       // of this cell to the present face
@@ -800,7 +800,7 @@ namespace internal
       const typename DoFHandlerType::cell_iterator neighbor
         = cell->neighbor(face_no);
       (void) neighbor;
-      const unsigned int n_solution_vectors             = solutions.size();
+      const unsigned int n_solution_vectors = solutions.size();
       const typename DoFHandlerType::face_iterator face = cell->face(face_no);
 
       Assert(neighbor.state() == IteratorState::valid, ExcInternalError());
@@ -914,7 +914,7 @@ namespace internal
       const unsigned int n_solution_vectors = solutions.size();
 
       const types::subdomain_id subdomain_id = parallel_data.subdomain_id;
-      const unsigned int        material_id  = parallel_data.material_id;
+      const unsigned int        material_id = parallel_data.material_id;
 
       // empty our own copy of the local face integrals
       local_face_integrals.clear();

@@ -129,9 +129,9 @@ double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   Point<2> center;
-  center(0)    = 0.5;
-  center(1)    = 0.5;
-  double rad   = p.distance(center),
+  center(0) = 0.5;
+  center(1) = 0.5;
+  double rad = p.distance(center),
          phi_p = atan2(p(0) - center(0), p(1) - center(1));
 
   if(component == 0)
@@ -261,7 +261,7 @@ double EvaluateDiver(Mapping<2>&     mapping,
                                     | update_gradients | update_JxW_values
                                     | update_contravariant_transformation));
 
-  const unsigned int n_q_points   = quad.size();
+  const unsigned int n_q_points = quad.size();
   const unsigned int n_components = dof_handler.get_fe().n_components();
 
   // Cell iterators
@@ -284,7 +284,7 @@ double EvaluateDiver(Mapping<2>&     mapping,
 
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
-          double JxW  = fe_values.JxW(q_point);
+          double JxW = fe_values.JxW(q_point);
           double dudx = grads_here[q_point][0][0];
           double dvdy = grads_here[q_point][1][1];
           result += (dudx + dvdy) * JxW;

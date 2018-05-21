@@ -780,10 +780,10 @@ MappingQGeneric<dim, spacedim>::InternalData::initialize_face(
       shape_info.reinit(q.get_tensor_basis()[0], fe);
 
       const unsigned int n_shape_values = fe.n_dofs_per_cell();
-      const unsigned int n_q_points     = q.size();
-      const unsigned int max_size       = std::max(n_q_points, n_shape_values);
+      const unsigned int n_q_points = q.size();
+      const unsigned int max_size = std::max(n_q_points, n_shape_values);
       const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
-      const unsigned int n_comp     = 1 + (spacedim - 1) / vec_length;
+      const unsigned int n_comp = 1 + (spacedim - 1) / vec_length;
 
       scratch.resize((dim - 1) * max_size);
       values_dofs.resize(n_comp * n_shape_values);
@@ -955,7 +955,7 @@ namespace internal
         if(polynomial_degree == 1)
           return loqvs;
 
-        const unsigned int M          = polynomial_degree - 1;
+        const unsigned int M = polynomial_degree - 1;
         const unsigned int n_inner_2d = M * M;
         const unsigned int n_outer_2d = 4 + 4 * M;
 
@@ -971,8 +971,8 @@ namespace internal
               for(unsigned int v = 0; v < 4; ++v)
                 loqvs(index_table, v)
                   = -GeometryInfo<2>::d_linear_shape_function(p, v);
-              loqvs(index_table, 4 + i)         = 1. - p[0];
-              loqvs(index_table, 4 + i + M)     = p[0];
+              loqvs(index_table, 4 + i) = 1. - p[0];
+              loqvs(index_table, 4 + i + M) = p[0];
               loqvs(index_table, 4 + j + 2 * M) = 1. - p[1];
               loqvs(index_table, 4 + j + 3 * M) = p[1];
             }
@@ -1240,7 +1240,7 @@ namespace internal
         // in every iteration (A isn't fixed by depends on xk). However, if the
         // cell is not too deformed (it may be stretched, but not twisted) then
         // the mapping is almost linear and A is indeed constant or nearly so.
-        const double       eps                    = 1.e-11;
+        const double       eps = 1.e-11;
         const unsigned int newton_iteration_limit = 20;
 
         unsigned int newton_iteration = 0;
@@ -1256,7 +1256,7 @@ namespace internal
             for(unsigned int k = 0; k < mdata.n_shape_functions; ++k)
               {
                 const Tensor<1, dim>&  grad_transform = mdata.derivative(0, k);
-                const Point<spacedim>& point          = points[k];
+                const Point<spacedim>& point = points[k];
 
                 for(unsigned int i = 0; i < spacedim; ++i)
                   for(unsigned int j = 0; j < dim; ++j)
@@ -1380,8 +1380,8 @@ namespace internal
         for(unsigned int k = 0; k < mdata.n_shape_functions; ++k)
           {
             const Tensor<1, dim>&  grad_phi_k = mdata.derivative(0, k);
-            const Tensor<2, dim>&  hessian_k  = mdata.second_derivative(0, k);
-            const Point<spacedim>& point_k    = points[k];
+            const Tensor<2, dim>&  hessian_k = mdata.second_derivative(0, k);
+            const Point<spacedim>& point_k = points[k];
 
             for(unsigned int j = 0; j < dim; ++j)
               {
@@ -1404,7 +1404,7 @@ namespace internal
               df[j][l] = -DF[j] * DF[l] + D2F[j][l] * p_minus_F;
           }
 
-        const double       eps        = 1.e-12 * cell->diameter();
+        const double       eps = 1.e-12 * cell->diameter();
         const unsigned int loop_limit = 10;
 
         unsigned int loop = 0;
@@ -1430,7 +1430,7 @@ namespace internal
               {
                 const Tensor<1, dim>& grad_phi_k = mdata.derivative(0, k);
                 const Tensor<2, dim>& hessian_k = mdata.second_derivative(0, k);
-                const Point<spacedim>& point_k  = points[k];
+                const Point<spacedim>& point_k = points[k];
 
                 for(unsigned int j = 0; j < dim; ++j)
                   {
@@ -1481,10 +1481,10 @@ namespace internal
         const UpdateFlags update_flags = data.update_each;
 
         const unsigned int n_shape_values = data.n_shape_functions;
-        const unsigned int n_q_points     = data.shape_info.n_q_points;
+        const unsigned int n_q_points = data.shape_info.n_q_points;
         const unsigned int vec_length
           = VectorizedArray<double>::n_array_elements;
-        const unsigned int n_comp     = 1 + (spacedim - 1) / vec_length;
+        const unsigned int n_comp = 1 + (spacedim - 1) / vec_length;
         const unsigned int n_hessians = (dim * (dim + 1)) / 2;
 
         const bool evaluate_values = update_flags & update_quadrature_points;
@@ -1520,7 +1520,7 @@ namespace internal
             for(unsigned int i = 0; i < n_shape_values; ++i)
               for(unsigned int d = 0; d < spacedim; ++d)
                 {
-                  const unsigned int in_comp  = d % vec_length;
+                  const unsigned int in_comp = d % vec_length;
                   const unsigned int out_comp = d / vec_length;
                   data.values_dofs[out_comp * n_shape_values + i][in_comp]
                     = data.mapping_support_points[renumber_to_lexicographic[i]]
@@ -1568,7 +1568,7 @@ namespace internal
                       ++in_comp)
                     {
                       const unsigned int total_number = point * dim + j;
-                      const unsigned int new_comp  = total_number / n_q_points;
+                      const unsigned int new_comp = total_number / n_q_points;
                       const unsigned int new_point = total_number % n_q_points;
                       data.contravariant[new_point][out_comp * vec_length
                                                     + in_comp][new_comp]
@@ -2784,7 +2784,7 @@ MappingQGeneric<dim, spacedim>::fill_fe_values(
       output_data.jacobian_pushed_forward_3rd_derivatives);
 
   const UpdateFlags          update_flags = data.update_each;
-  const std::vector<double>& weights      = quadrature.get_weights();
+  const std::vector<double>& weights = quadrature.get_weights();
 
   // Multiply quadrature weights by absolute value of Jacobian determinants or
   // the area element g=sqrt(DX^t DX) in case of codim > 0
@@ -3830,11 +3830,11 @@ MappingQGeneric<3, 3>::add_quad_support_points(
       const Triangulation<3>::face_iterator face = cell->face(face_no);
 
 #ifdef DEBUG
-      const bool face_orientation          = cell->face_orientation(face_no),
-                 face_flip                 = cell->face_flip(face_no),
-                 face_rotation             = cell->face_rotation(face_no);
+      const bool face_orientation = cell->face_orientation(face_no),
+                 face_flip = cell->face_flip(face_no),
+                 face_rotation = cell->face_rotation(face_no);
       const unsigned int vertices_per_face = GeometryInfo<3>::vertices_per_face,
-                         lines_per_face    = GeometryInfo<3>::lines_per_face;
+                         lines_per_face = GeometryInfo<3>::lines_per_face;
 
       // some sanity checks up front
       for(unsigned int i = 0; i < vertices_per_face; ++i)

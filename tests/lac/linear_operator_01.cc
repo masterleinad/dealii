@@ -124,7 +124,7 @@ main()
     = [](RightVector& v, const LeftVector& u) { v.value = 2 * u.value; };
   multiply2.Tvmult_add
     = [](RightVector& v, const LeftVector& u) { v.value += 2 * u.value; };
-  multiply2.reinit_range_vector  = [](LeftVector&, bool) {};
+  multiply2.reinit_range_vector = [](LeftVector&, bool) {};
   multiply2.reinit_domain_vector = [](RightVector&, bool) {};
 
   auto multiply4 = multiply2;
@@ -208,7 +208,7 @@ main()
   // operator* and transpose
 
   auto        test2 = transpose_operator(multiply2) * multiply4;
-  RightVector w     = {0.};
+  RightVector w = {0.};
   test2.vmult(w, u);
   deallog << "(2 * 4) * " << u.value << " = " << w.value << std::endl;
 

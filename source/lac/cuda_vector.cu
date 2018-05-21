@@ -207,7 +207,7 @@ namespace LinearAlgebra
              const typename Vector<Number>::size_type N)
       {
         for(typename Vector<Number>::size_type s = block_size / 2; s > 32;
-            s                                    = s >> 1)
+            s = s >> 1)
           {
             if(local_idx < s)
               result_buffer[local_idx] = Operation::reduction_op(
@@ -1025,7 +1025,7 @@ namespace LinearAlgebra
                           const bool) const
     {
       AssertThrow(out, ExcIO());
-      std::ios::fmtflags old_flags     = out.flags();
+      std::ios::fmtflags old_flags = out.flags();
       unsigned int       old_precision = out.precision(precision);
 
       out.precision(precision);
@@ -1039,7 +1039,7 @@ namespace LinearAlgebra
       out << std::endl;
 
       // Copy the vector to the host
-      Number*     cpu_val    = new Number[n_elements];
+      Number*     cpu_val = new Number[n_elements];
       cudaError_t error_code = cudaMemcpy(
         cpu_val, val, n_elements * sizeof(Number), cudaMemcpyHostToDevice);
       AssertCuda(error_code);

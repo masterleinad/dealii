@@ -41,7 +41,7 @@ check_tensor_product(const std::vector<Quadrature<1>>& quadratures,
           deallog << "1D " << quadrature_names[i];
           const auto& q_basis = quadrature.get_tensor_basis();
           AssertThrow(q_basis.size() == 1, ExcInternalError());
-          const auto& q_points  = quadrature.get_points();
+          const auto& q_points = quadrature.get_points();
           const auto& q_weights = quadrature.get_weights();
           AssertThrow(q_basis[0].size() == q_points.size(), ExcInternalError());
           for(unsigned int q = 0; q < quadrature.size(); ++q)
@@ -74,7 +74,7 @@ check_tensor_product(const std::vector<Quadrature<2>>& quadratures,
           deallog << "2D " << quadrature_names[i];
           const auto& q_basis = quadrature.get_tensor_basis();
           AssertThrow(q_basis.size() == 2, ExcInternalError());
-          const auto& q_points  = quadrature.get_points();
+          const auto& q_points = quadrature.get_points();
           const auto& q_weights = quadrature.get_weights();
           AssertThrow(q_basis[0].size() * q_basis[1].size() == q_points.size(),
                       ExcInternalError());
@@ -115,7 +115,7 @@ check_tensor_product(const std::vector<Quadrature<3>>& quadratures,
           deallog << "3D " << quadrature_names[i];
           const auto& q_basis = quadrature.get_tensor_basis();
           AssertThrow(q_basis.size() == 3, ExcInternalError());
-          const auto& q_points  = quadrature.get_points();
+          const auto& q_points = quadrature.get_points();
           const auto& q_weights = quadrature.get_weights();
           AssertThrow(q_basis[0].size() * q_basis[1].size() * q_basis[2].size()
                         == q_points.size(),

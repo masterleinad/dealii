@@ -58,7 +58,7 @@ SolverControl::check(const unsigned int step, const double check_value)
   if(m_log_history && ((step % m_log_frequency) == 0))
     deallog << "Check " << step << "\t" << check_value << std::endl;
 
-  lstep  = step;
+  lstep = step;
   lvalue = check_value;
 
   if(step == 0)
@@ -250,7 +250,7 @@ ReductionControl::check(const unsigned int step, const double check_value)
       if(m_log_result)
         deallog << "Convergence step " << step << " value " << check_value
                 << std::endl;
-      lstep  = step;
+      lstep = step;
       lvalue = check_value;
       lcheck = success;
 
@@ -296,7 +296,7 @@ IterationNumberControl::check(const unsigned int step, const double check_value)
       if(m_log_result)
         deallog << "Convergence step " << step << " value " << check_value
                 << std::endl;
-      lstep  = step;
+      lstep = step;
       lvalue = check_value;
 
       lcheck = success;

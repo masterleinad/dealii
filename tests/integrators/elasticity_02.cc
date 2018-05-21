@@ -58,7 +58,7 @@ test_boundary(const FEValuesBase<dim>& fev)
       {
         u    = 0.;
         u(i) = 1.;
-        w    = 0.;
+        w = 0.;
         fev.get_function_values(
           u,
           indices,

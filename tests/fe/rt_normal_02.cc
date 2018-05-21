@@ -74,9 +74,9 @@ void EvaluateNormal2(DoFHandler<2>* dof_handler, Vector<double>& solution)
                      UpdateFlags(update_values | update_quadrature_points
                                  | update_gradients | update_JxW_values));
 
-  const unsigned int n_q_face      = quad.size();
-  const unsigned int n_q_proj      = qproject.size();
-  const unsigned int n_components  = dof_handler->get_fe().n_components();
+  const unsigned int n_q_face = quad.size();
+  const unsigned int n_q_proj = qproject.size();
+  const unsigned int n_components = dof_handler->get_fe().n_components();
   const unsigned int dofs_per_cell = dof_handler->get_fe().dofs_per_cell;
 
   deallog << "Quad Points Face " << n_q_face << ", Quad Points Proj. "
@@ -175,8 +175,8 @@ void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
     UpdateFlags(update_values | update_quadrature_points | update_gradients
                 | update_normal_vectors | update_JxW_values));
 
-  const unsigned int n_q_face      = quad.size();
-  const unsigned int n_components  = dof_handler->get_fe().n_components();
+  const unsigned int n_q_face = quad.size();
+  const unsigned int n_components = dof_handler->get_fe().n_components();
   const unsigned int dofs_per_cell = dof_handler->get_fe().dofs_per_cell;
 
   // Cell iterators

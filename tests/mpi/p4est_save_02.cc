@@ -81,7 +81,7 @@ test()
     for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); ++i)
       {
         unsigned int idx = locally_owned_dofs.nth_index_in_set(i);
-        x(idx)           = idx;
+        x(idx) = idx;
 
         //  std::cout << '[' << idx << ']' << ' ' << solution(idx) << std::endl;
       }

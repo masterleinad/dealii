@@ -339,7 +339,7 @@ namespace Step22
   StokesProblem<dim>::assemble_system()
   {
     system_matrix = 0.;
-    system_rhs    = 0.;
+    system_rhs = 0.;
 
     QGauss<dim> quadrature_formula(degree + 2);
 
@@ -381,7 +381,7 @@ namespace Step22
                   symgrad_phi_u[k]
                     = fe_values[velocities].symmetric_gradient(k, q);
                   div_phi_u[k] = fe_values[velocities].divergence(k, q);
-                  phi_p[k]     = fe_values[pressure].value(k, q);
+                  phi_p[k] = fe_values[pressure].value(k, q);
                 }
 
               for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -634,7 +634,7 @@ namespace Step22
           for(unsigned int c = 0; c < dim; ++c)
             {
               vector_point_1(c) = global_quad_points_first[i + c];
-              point_1(c)        = vector_point_1(c);
+              point_1(c) = vector_point_1(c);
             }
           Vector<double> vector_point_2(dim);
           rot_matrix.Tvmult(vector_point_2, vector_point_1);
@@ -686,7 +686,7 @@ namespace Step22
           for(unsigned int c = 0; c < dim; ++c)
             {
               vector_point_1(c) = global_quad_points_second[i + c];
-              point_1(c)        = vector_point_1(c);
+              point_1(c) = vector_point_1(c);
             }
           Vector<double> vector_point_2(dim);
           for(unsigned int c = 0; c < dim; ++c)

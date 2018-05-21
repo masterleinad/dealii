@@ -577,7 +577,7 @@ namespace LinearAlgebra
                                        const MPI_Comm& mpi_comm)
     {
       source_stored_elements = source_index_set;
-      epetra_comm_pattern    = std::make_shared<CommunicationPattern>(
+      epetra_comm_pattern = std::make_shared<CommunicationPattern>(
         locally_owned_elements(), source_index_set, mpi_comm);
     }
   } // namespace EpetraWrappers

@@ -65,7 +65,7 @@ MGTransferMatrixFree<dim, Number>::clear()
 {
   this->MGLevelGlobalTransfer<
     LinearAlgebra::distributed::Vector<Number>>::clear();
-  fe_degree             = 0;
+  fe_degree = 0;
   element_is_continuous = false;
   n_components          = 0;
   n_child_cell_dofs     = 0;
@@ -100,10 +100,10 @@ MGTransferMatrixFree<dim, Number>::build(const DoFHandler<dim, dim>& mg_dof)
     this->copy_indices_global_mine,
     this->ghosted_level_vector);
   // unpack element info data
-  fe_degree             = elem_info.fe_degree;
+  fe_degree = elem_info.fe_degree;
   element_is_continuous = elem_info.element_is_continuous;
-  n_components          = elem_info.n_components;
-  n_child_cell_dofs     = elem_info.n_child_cell_dofs;
+  n_components = elem_info.n_components;
+  n_child_cell_dofs = elem_info.n_child_cell_dofs;
 
   // duplicate and put into vectorized array
   prolongation_matrix_1d.resize(elem_info.prolongation_matrix_1d.size());
@@ -125,7 +125,7 @@ MGTransferMatrixFree<dim, Number>::build(const DoFHandler<dim, dim>& mg_dof)
       for(unsigned int c = 0; c < n_owned_level_cells[level - 1]; ++c)
         {
           const unsigned int comp = c / vec_size;
-          const unsigned int v    = c % vec_size;
+          const unsigned int v = c % vec_size;
           for(unsigned int i = 0; i < n_weights_per_cell; ++i)
             {
               weights_on_refined[level - 1][comp * n_weights_per_cell + i][v]

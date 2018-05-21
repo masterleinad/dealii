@@ -53,7 +53,7 @@ namespace Gmsh
      * Set all additional parameters to their default values.
      */
     AdditionalParameters(const double       characteristic_length = 1.0,
-                         const std::string& output_base_name      = "");
+                         const std::string& output_base_name = "");
 
     /**
      * Call prm.add_parameter for each member of the AdditionalParameters class.

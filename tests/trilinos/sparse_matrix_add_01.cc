@@ -60,7 +60,7 @@ test(TrilinosWrappers::SparseMatrix& m)
           if((i + 2 * j + 1) % 3 == 0)
             {
               col_indices[col_index] = j;
-              col_values[col_index]  = i * j * .5 + .5;
+              col_values[col_index] = i * j * .5 + .5;
               col_index++;
             }
 

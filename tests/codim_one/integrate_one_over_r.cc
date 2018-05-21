@@ -66,7 +66,7 @@ main()
                 {
                   double exact_integral
                     = exact_integral_one_over_r(index, i, j);
-                  double approx_integral   = 0;
+                  double approx_integral = 0;
                   double approx_integral_2 = 0;
 
                   for(unsigned int q = 0; q < quad.size(); ++q)

@@ -63,7 +63,7 @@ test_compute_pt_loc(unsigned int n_points)
   GridTools::Cache<dim, dim> cache(tria);
 
   auto   cell_qpoint_map = GridTools::compute_point_locations(cache, points);
-  size_t n_cells         = std::get<0>(cell_qpoint_map).size();
+  size_t n_cells = std::get<0>(cell_qpoint_map).size();
 
   deallog << "Points found in " << n_cells << " cells" << std::endl;
 
@@ -72,8 +72,8 @@ test_compute_pt_loc(unsigned int n_points)
   // are the same as std::get<2>(cell_qpoint_map)[i]
   for(unsigned int i = 0; i < std::get<0>(cell_qpoint_map).size(); ++i)
     {
-      auto& cell      = std::get<0>(cell_qpoint_map)[i];
-      auto& quad      = std::get<1>(cell_qpoint_map)[i];
+      auto& cell = std::get<0>(cell_qpoint_map)[i];
+      auto& quad = std::get<1>(cell_qpoint_map)[i];
       auto& local_map = std::get<2>(cell_qpoint_map)[i];
 
       // Given the std::get<1>(cell_qpoint_map) of the current cell, compute the real points

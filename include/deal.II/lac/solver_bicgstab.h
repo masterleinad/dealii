@@ -140,7 +140,7 @@ public:
      * parameter 1e-10.
      */
     explicit AdditionalData(const bool   exact_residual = true,
-                            const double breakdown      = 1.e-10)
+                            const double breakdown = 1.e-10)
       : exact_residual(exact_residual), breakdown(breakdown)
     {}
     /**
@@ -363,13 +363,13 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
   SolverControl::State state = SolverControl::iterate;
   alpha = omega = rho = 1.;
 
-  VectorType& r    = *Vr;
+  VectorType& r = *Vr;
   VectorType& rbar = *Vrbar;
-  VectorType& p    = *Vp;
-  VectorType& y    = *Vy;
-  VectorType& z    = *Vz;
-  VectorType& t    = *Vt;
-  VectorType& v    = *Vv;
+  VectorType& p = *Vp;
+  VectorType& y = *Vy;
+  VectorType& z = *Vz;
+  VectorType& t = *Vt;
+  VectorType& v = *Vv;
 
   rbar         = r;
   bool startup = true;
@@ -379,8 +379,8 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
       ++step;
 
       rhobar = r * rbar;
-      beta   = rhobar * alpha / (rho * omega);
-      rho    = rhobar;
+      beta = rhobar * alpha / (rho * omega);
+      rho = rhobar;
       if(startup == true)
         {
           p       = r;
@@ -421,7 +421,7 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
       preconditioner.vmult(z, r);
       A.vmult(t, z);
       rhobar = t * r;
-      omega  = rhobar / (t * t);
+      omega = rhobar / (t * t);
       Vx->add(alpha, y, omega, z);
 
       if(additional_data.exact_residual)
@@ -448,13 +448,13 @@ SolverBicgstab<VectorType>::solve(const MatrixType&         A,
                                   const PreconditionerType& preconditioner)
 {
   LogStream::Prefix prefix("Bicgstab");
-  Vr    = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vr = typename VectorMemory<VectorType>::Pointer(this->memory);
   Vrbar = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vp    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vy    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vz    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vt    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vv    = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vp = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vy = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vz = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vt = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vv = typename VectorMemory<VectorType>::Pointer(this->memory);
 
   Vr->reinit(x, true);
   Vrbar->reinit(x, true);

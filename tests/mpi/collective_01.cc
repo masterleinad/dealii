@@ -40,7 +40,7 @@ test()
   Utilities::MPI::MinMaxAvg result;
 
   double value = 0.0;
-  result       = Utilities::MPI::min_max_avg(value, MPI_COMM_WORLD);
+  result = Utilities::MPI::min_max_avg(value, MPI_COMM_WORLD);
   if(myid == 0)
     print_it(result);
   Assert(result.sum == 0.0, ExcInternalError());

@@ -134,12 +134,12 @@ periodicity_tests<dim>::periodicity_tests()
   Point<dim>            p1, p2, periodic_transfer;
   if(dim == 2)
     {
-      p2                = Point<dim>(16., 16.);
+      p2 = Point<dim>(16., 16.);
       periodic_transfer = Point<dim>(0.0, 16.);
     }
   if(dim == 3)
     {
-      p2                = Point<dim>(16., 16., 16.);
+      p2 = Point<dim>(16., 16., 16.);
       periodic_transfer = Point<dim>(0.0, 16., 0.0);
     }
   GridGenerator::subdivided_hyper_rectangle(the_grid, repeats, p1, p2, true);

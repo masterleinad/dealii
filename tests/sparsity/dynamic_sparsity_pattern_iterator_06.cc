@@ -22,7 +22,7 @@
 void
 test(bool have_set)
 {
-  const int size     = 100000000;
+  const int size = 100000000;
   const int my_start = size / 3;
 
   IndexSet empty_set;

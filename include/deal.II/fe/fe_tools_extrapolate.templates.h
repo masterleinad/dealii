@@ -1051,7 +1051,7 @@ namespace FETools
       // check if this quadrant is in the list
       CellData cell_data;
       cell_data.quadrant = p4est_cell;
-      int pos            = cell_data_search(cell_data, cells_to_compute);
+      int pos = cell_data_search(cell_data, cells_to_compute);
       if(pos != -1)
         {
           std::vector<CellData> tmp;
@@ -1157,7 +1157,7 @@ namespace FETools
           receive.resize(len);
 
           char* buf = receive.data();
-          ierr      = MPI_Recv(buf,
+          ierr = MPI_Recv(buf,
                           len,
                           MPI_BYTE,
                           status.MPI_SOURCE,
@@ -1201,7 +1201,7 @@ namespace FETools
       const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
       CellData cell_data(dofs_per_cell);
-      cell_data.quadrant   = p4est_cell;
+      cell_data.quadrant = p4est_cell;
       cell_data.tree_index = tree_index;
       cell_data.receiver
         = dealii::internal::p4est::functions<dim>::comm_find_owner(
@@ -1360,7 +1360,7 @@ namespace FETools
       compute_all_non_local_data(dof2, u2_relevant);
 
       // exclude dofs on more refined ghosted cells
-      const FiniteElement<dim, spacedim>& fe            = dof2.get_fe();
+      const FiniteElement<dim, spacedim>& fe = dof2.get_fe();
       const unsigned int                  dofs_per_face = fe.dofs_per_face;
       if(dofs_per_face > 0)
         {

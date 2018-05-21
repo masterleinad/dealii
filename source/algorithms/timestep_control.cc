@@ -66,7 +66,7 @@ TimestepControl::parse_parameters(ParameterHandler& param)
   max_step(param.get_double("Max step"));
   final(param.get_double("Final"));
   tolerance(param.get_double("Tolerance"));
-  print_step              = param.get_double("Print step");
+  print_step = param.get_double("Print step");
   const std::string strat = param.get("Strategy");
   if(strat == std::string("uniform"))
     strategy_val = uniform;
@@ -78,7 +78,7 @@ bool
 TimestepControl::advance()
 {
   bool   changed = false;
-  double s       = step_val;
+  double s = step_val;
 
   // Do time step control, but not in
   // first step.

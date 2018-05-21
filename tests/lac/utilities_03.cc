@@ -84,10 +84,10 @@ cheb2(const unsigned int d, const double x)
 void
 check(const int          degree,
       const bool         scale = false,
-      const double       a_L   = -0.1,
-      const double       a     = -0.01,
-      const double       b     = 0.01,
-      const unsigned int size  = 1000)
+      const double       a_L = -0.1,
+      const double       a = -0.01,
+      const double       b = 0.01,
+      const unsigned int size = 1000)
 {
   deallog << "Degree " << degree << std::endl;
   LinearAlgebra::distributed::Vector<double> ev(size), x(size), y(size),
@@ -131,7 +131,7 @@ check(const int          degree,
   deallog << " Exact norm: " << exact.l2_norm() << std::endl;
 
   const double g_ = (scale ? a_L : std::numeric_limits<double>::infinity());
-  y               = x;
+  y = x;
   Utilities::LinearAlgebra::chebyshev_filter(
     y, mat, degree, std::make_pair(a, b), g_, vector_memory);
   diff = y;

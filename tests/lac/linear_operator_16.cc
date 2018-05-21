@@ -36,7 +36,7 @@ main(int argc, char* argv[])
   // Need to get the linear operator to do some nonsense work to verify
   // that it can indeed be used as expected
   const unsigned int size = 32;
-  unsigned int       dim  = (size - 1) * (size - 1);
+  unsigned int       dim = (size - 1) * (size - 1);
 
   // Make matrix
   FDMatrix testproblem(size, size);
@@ -53,8 +53,8 @@ main(int argc, char* argv[])
     Vector<double> f(dim);
     Vector<double> u(dim);
 
-    const auto lo_A           = linear_operator<Vector<double>>(A);
-    const auto lo_null        = null_operator(lo_A);
+    const auto lo_A = linear_operator<Vector<double>>(A);
+    const auto lo_null = null_operator(lo_A);
     const auto lo_A_plus_null = lo_A + lo_null;
 
     u = lo_A_plus_null * f;

@@ -340,15 +340,15 @@ namespace SUNDIALS
        */
       AdditionalData(
         // Initial parameters
-        const double& initial_time      = 0.0,
-        const double& final_time        = 1.0,
+        const double& initial_time = 0.0,
+        const double& final_time = 1.0,
         const double& initial_step_size = 1e-2,
-        const double& output_period     = 1e-1,
+        const double& output_period = 1e-1,
         // Running parameters
-        const double&       minimum_step_size                     = 1e-6,
-        const unsigned int& maximum_order                         = 5,
-        const unsigned int& maximum_non_linear_iterations         = 10,
-        const bool          implicit_function_is_linear           = false,
+        const double&       minimum_step_size = 1e-6,
+        const unsigned int& maximum_order = 5,
+        const unsigned int& maximum_non_linear_iterations = 10,
+        const bool          implicit_function_is_linear = false,
         const bool          implicit_function_is_time_independent = false,
         // Error parameters
         const double& absolute_tolerance = 1e-6,
@@ -502,7 +502,7 @@ namespace SUNDIALS
      * @param data ARKode configuration data
      * @param mpi_comm MPI communicator
      */
-    ARKode(const AdditionalData& data     = AdditionalData(),
+    ARKode(const AdditionalData& data = AdditionalData(),
            const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
 
     /**

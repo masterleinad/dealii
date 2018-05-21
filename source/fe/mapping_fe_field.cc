@@ -304,7 +304,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
     typename MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       InternalData& data) const
 {
-  const auto         fe       = &euler_dof_handler->get_fe();
+  const auto         fe = &euler_dof_handler->get_fe();
   const unsigned int n_points = unit_points.size();
 
   for(unsigned int point = 0; point < n_points; ++point)
@@ -1520,7 +1520,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
       fe_to_real);
 
   const UpdateFlags          update_flags = data.update_each;
-  const std::vector<double>& weights      = quadrature.get_weights();
+  const std::vector<double>& weights = quadrature.get_weights();
 
   // Multiply quadrature weights by absolute value of Jacobian determinants or
   // the area element g=sqrt(DX^t DX) in case of codim > 0
@@ -2148,10 +2148,10 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   Point<dim> f;
   compute_shapes_virtual(std::vector<Point<dim>>(1, p_unit), mdata);
   Point<spacedim>     p_real(do_transform_unit_to_real_cell(mdata));
-  Tensor<1, spacedim> p_minus_F              = p - p_real;
-  const double        eps                    = 1.e-12 * cell->diameter();
+  Tensor<1, spacedim> p_minus_F = p - p_real;
+  const double        eps = 1.e-12 * cell->diameter();
   const unsigned int  newton_iteration_limit = 20;
-  unsigned int        newton_iteration       = 0;
+  unsigned int        newton_iteration = 0;
   while(p_minus_F.norm_square() > eps * eps)
     {
       // f'(x)

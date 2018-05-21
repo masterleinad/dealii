@@ -237,7 +237,7 @@ namespace polytest
         fe_values_test.reinit(cell);
         fe_values.reinit(cell);
         cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_rhs = 0;
 
         right_hand_side.rhs_value_list(fe_values.get_quadrature_points(),
                                        rhs_value_list);

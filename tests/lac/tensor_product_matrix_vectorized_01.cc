@@ -53,7 +53,7 @@ do_test(const unsigned int size)
           init_mass(i, i) *= make_vectorized_array<double>(4. / 3.);
           init_laplace(i, i) *= make_vectorized_array<double>(5. / 4.);
         }
-      mass[dir]    = init_mass;
+      mass[dir] = init_mass;
       laplace[dir] = init_laplace;
     }
   TensorProductMatrixSymmetricSum<dim, VectorizedArray<double>> mat;

@@ -32,7 +32,7 @@ test(Utilities::CUDA::Handle& cuda_handle)
 {
   // Build the sparse matrix on the host
   const unsigned int   problem_size = 10;
-  unsigned int         size         = (problem_size - 1) * (problem_size - 1);
+  unsigned int         size = (problem_size - 1) * (problem_size - 1);
   FDMatrix             testproblem(problem_size, problem_size);
   SparsityPattern      structure(size, size, 5);
   SparseMatrix<double> A;

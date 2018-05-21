@@ -348,9 +348,9 @@ namespace Step12
     // First, let us retrieve some of the objects used here from @p info. Note
     // that these objects can handle much more complex structures, thus the
     // access here looks more complicated than might seem necessary.
-    const FEValuesBase<dim>&   fe_values    = info.fe_values();
+    const FEValuesBase<dim>&   fe_values = info.fe_values();
     FullMatrix<double>&        local_matrix = dinfo.matrix(0).matrix;
-    const std::vector<double>& JxW          = fe_values.get_JxW_values();
+    const std::vector<double>& JxW = fe_values.get_JxW_values();
 
     // With these objects, we continue local integration like always. First,
     // we loop over the quadrature points and compute the advection vector in
@@ -378,8 +378,8 @@ namespace Step12
   AdvectionProblem<dim>::integrate_boundary_term(DoFInfo& dinfo, CellInfo& info)
   {
     const FEValuesBase<dim>& fe_face_values = info.fe_values();
-    FullMatrix<double>&      local_matrix   = dinfo.matrix(0).matrix;
-    Vector<double>&          local_vector   = dinfo.vector(0).block(0);
+    FullMatrix<double>&      local_matrix = dinfo.matrix(0).matrix;
+    Vector<double>&          local_vector = dinfo.vector(0).block(0);
 
     const std::vector<double>&         JxW = fe_face_values.get_JxW_values();
     const std::vector<Tensor<1, dim>>& normals

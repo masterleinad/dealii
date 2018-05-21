@@ -433,7 +433,7 @@ namespace DoFRenumbering
     void
     Cuthill_McKee(DoFHandlerType& dof_handler,
                   const bool      reversed_numbering = false,
-                  const bool      use_constraints    = false);
+                  const bool      use_constraints = false);
 
     /**
      * Compute the renumbering vector needed by the Cuthill_McKee() function.
@@ -445,7 +445,7 @@ namespace DoFRenumbering
     compute_Cuthill_McKee(std::vector<types::global_dof_index>& new_dof_indices,
                           const DoFHandlerType&,
                           const bool reversed_numbering = false,
-                          const bool use_constraints    = false);
+                          const bool use_constraints = false);
 
     /**
      * Renumber the degrees of freedom based on the BOOST implementation of
@@ -463,7 +463,7 @@ namespace DoFRenumbering
     void
     king_ordering(DoFHandlerType& dof_handler,
                   const bool      reversed_numbering = false,
-                  const bool      use_constraints    = false);
+                  const bool      use_constraints = false);
 
     /**
      * Compute the renumbering for the King algorithm but do not actually
@@ -474,7 +474,7 @@ namespace DoFRenumbering
     compute_king_ordering(std::vector<types::global_dof_index>& new_dof_indices,
                           const DoFHandlerType&,
                           const bool reversed_numbering = false,
-                          const bool use_constraints    = false);
+                          const bool use_constraints = false);
 
     /**
      * Renumber the degrees of freedom based on the BOOST implementation of
@@ -491,7 +491,7 @@ namespace DoFRenumbering
     void
     minimum_degree(DoFHandlerType& dof_handler,
                    const bool      reversed_numbering = false,
-                   const bool      use_constraints    = false);
+                   const bool      use_constraints = false);
 
     /**
      * Compute the renumbering for the minimum degree algorithm but do not
@@ -503,7 +503,7 @@ namespace DoFRenumbering
       std::vector<types::global_dof_index>& new_dof_indices,
       const DoFHandlerType&,
       const bool reversed_numbering = false,
-      const bool use_constraints    = false);
+      const bool use_constraints = false);
   } // namespace boost
 
   /**
@@ -574,7 +574,7 @@ namespace DoFRenumbering
   void
   Cuthill_McKee(DoFHandlerType& dof_handler,
                 const bool      reversed_numbering = false,
-                const bool      use_constraints    = false,
+                const bool      use_constraints = false,
                 const std::vector<types::global_dof_index>& starting_indices
                 = std::vector<types::global_dof_index>());
 
@@ -591,7 +591,7 @@ namespace DoFRenumbering
     std::vector<types::global_dof_index>& new_dof_indices,
     const DoFHandlerType&,
     const bool                                  reversed_numbering = false,
-    const bool                                  use_constraints    = false,
+    const bool                                  use_constraints = false,
     const std::vector<types::global_dof_index>& starting_indices
     = std::vector<types::global_dof_index>());
 

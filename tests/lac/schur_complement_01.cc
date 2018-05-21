@@ -77,8 +77,8 @@ main()
           B.diag_element(i) = 2.0 * (i + 1);
           C.diag_element(i) = 3.0 * (i + 1);
           D.diag_element(i) = 4.0 * (i + 1);
-          f(i)              = 5.0 * (i + 1);
-          g(i)              = 6.0 * (i + 1);
+          f(i) = 5.0 * (i + 1);
+          g(i) = 6.0 * (i + 1);
         }
 
       const auto lo_A = linear_operator(A);
@@ -145,7 +145,7 @@ main()
        */
 
       const unsigned int   blks = 2;
-      const unsigned int   rc   = 10;
+      const unsigned int   rc = 10;
       BlockSparsityPattern sparsity_pattern;
       {
         BlockDynamicSparsityPattern csp(blks, blks);

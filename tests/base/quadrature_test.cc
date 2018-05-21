@@ -50,16 +50,16 @@ check_cells(std::vector<Quadrature<dim>*>& quadratures)
   Quadrature<dim> quadrature;
   for(unsigned int n = 0; n < quadratures.size(); ++n)
     {
-      quadrature                             = *quadratures[n];
-      const std::vector<Point<dim>>& points  = quadrature.get_points();
+      quadrature = *quadratures[n];
+      const std::vector<Point<dim>>& points = quadrature.get_points();
       const std::vector<double>&     weights = quadrature.get_weights();
 
       deallog << "Quadrature no." << n;
 
-      unsigned int i              = 0;
+      unsigned int i = 0;
       double       quadrature_int = 0;
-      double       exact_int      = 0;
-      double       err            = 0;
+      double       exact_int = 0;
+      double       err = 0;
 
       do
         {
@@ -85,7 +85,7 @@ check_cells(std::vector<Quadrature<dim>*>& quadratures)
 
           // the exact integral is 1/(i+1)
           exact_int = 1. / std::pow(static_cast<double>(i + 1), dim);
-          err       = std::fabs(quadrature_int - exact_int);
+          err = std::fabs(quadrature_int - exact_int);
         }
       while(err < 1e-14);
       // Uncomment here for testing
@@ -125,15 +125,15 @@ check_faces(const std::vector<Quadrature<dim - 1>*>& quadratures,
         sub == false ?
           QProjector<dim>::project_to_all_faces(*quadratures[n]) :
           QProjector<dim>::project_to_all_subfaces(*quadratures[n]));
-      const std::vector<Point<dim>>& points  = quadrature.get_points();
+      const std::vector<Point<dim>>& points = quadrature.get_points();
       const std::vector<double>&     weights = quadrature.get_weights();
 
       deallog << "Quadrature no." << n;
 
-      unsigned int i              = 0;
+      unsigned int i = 0;
       long double  quadrature_int = 0;
-      double       exact_int      = 0;
-      double       err            = 0;
+      double       exact_int = 0;
+      double       err = 0;
 
       do
         {

@@ -34,7 +34,7 @@ test()
   if(fe_degree > 1)
     return;
 
-  const double       h  = 1;
+  const double       h = 1;
   const double       Lx = 30 * h;
   const double       Li = 10 * h;
   const double       Ly = 6 * h;
@@ -164,7 +164,7 @@ test()
   const QGauss<1>                                  quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
-  data.tasks_block_size      = 3;
+  data.tasks_block_size = 3;
   data.mapping_update_flags_inner_faces
     = (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces
@@ -195,7 +195,7 @@ test()
   Testing::srand(42);
   for(unsigned int i = 0; i < in_orig.local_size(); ++i)
     {
-      const double entry       = Testing::rand() / (double) RAND_MAX;
+      const double entry = Testing::rand() / (double) RAND_MAX;
       in_orig.local_element(i) = entry;
       in(renumbering[i])       = entry;
     }

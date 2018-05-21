@@ -60,7 +60,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
       // first entry is a duplicate before
       // actually doing something.
       ForwardIterator                  my_it = begin;
-      size_type                        col   = *my_it;
+      size_type                        col = *my_it;
       std::vector<size_type>::iterator it
         = Utilities::lower_bound(entries.begin(), entries.end(), col);
       while(*it == col)
@@ -270,9 +270,9 @@ DynamicSparsityPattern::reinit(const size_type m,
                                const IndexSet& rowset_)
 {
   have_entries = false;
-  rows         = m;
-  cols         = n;
-  rowset       = rowset_;
+  rows = m;
+  cols = n;
+  rowset = rowset_;
 
   Assert(
     rowset.size() == 0 || rowset.size() == m,
@@ -371,7 +371,7 @@ DynamicSparsityPattern::compute_mmult_pattern(
 
   this->reinit(left.n_rows(), right.n_cols());
 
-  typename SparsityPatternTypeLeft::iterator it_left  = left.begin(),
+  typename SparsityPatternTypeLeft::iterator it_left = left.begin(),
                                              end_left = left.end();
   for(; it_left != end_left; ++it_left)
     {
@@ -380,7 +380,7 @@ DynamicSparsityPattern::compute_mmult_pattern(
       // We are sitting on entry (i,j) of the left sparsity pattern. We then need
       // to add all entries (i,k) to the final sparsity pattern where (j,k) exists
       // in the right sparsity pattern -- i.e., we need to iterate over row j.
-      typename SparsityPatternTypeRight::iterator it_right  = right.begin(j),
+      typename SparsityPatternTypeRight::iterator it_right = right.begin(j),
                                                   end_right = right.end(j);
       for(; it_right != end_right; ++it_right)
         this->add(it_left->row(), it_right->column());

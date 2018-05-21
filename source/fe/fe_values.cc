@@ -3069,7 +3069,7 @@ namespace internal
     const std::vector<unsigned int>&       shape_function_to_row_table,
     ArrayView<VectorType>                  values,
     const bool                             quadrature_points_fastest = false,
-    const unsigned int                     component_multiple        = 1)
+    const unsigned int                     component_multiple = 1)
   {
     typedef typename VectorType::value_type Number;
     // initialize with zero
@@ -3147,7 +3147,7 @@ namespace internal
                   = shape_function_to_row_table[shape_func * n_components + c];
 
                 const double*      shape_value_ptr = &shape_values(row, 0);
-                const unsigned int comp            = c + mc * n_components;
+                const unsigned int comp = c + mc * n_components;
 
                 if(quadrature_points_fastest)
                   {
@@ -3215,7 +3215,7 @@ namespace internal
     const std::vector<unsigned int>& shape_function_to_row_table,
     ArrayView<std::vector<Tensor<order, spacedim, Number>>> derivatives,
     const bool         quadrature_points_fastest = false,
-    const unsigned int component_multiple        = 1)
+    const unsigned int component_multiple = 1)
   {
     // initialize with zero
     for(unsigned int i = 0; i < derivatives.size(); ++i)
@@ -3354,7 +3354,7 @@ namespace internal
     const std::vector<unsigned int>&             shape_function_to_row_table,
     std::vector<VectorType>&                     laplacians,
     const bool         quadrature_points_fastest = false,
-    const unsigned int component_multiple        = 1)
+    const unsigned int component_multiple = 1)
   {
     // initialize with zero
     for(unsigned int i = 0; i < laplacians.size(); ++i)

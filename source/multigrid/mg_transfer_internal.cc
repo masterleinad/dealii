@@ -276,7 +276,7 @@ namespace internal
                 receive_buffer.resize(count);
 
                 void* ptr = receive_buffer.data();
-                ierr      = MPI_Recv(ptr,
+                ierr = MPI_Recv(ptr,
                                 len,
                                 MPI_BYTE,
                                 status.MPI_SOURCE,
@@ -404,8 +404,8 @@ namespace internal
           tmp /= 2;
         }
       const unsigned int n_child_dofs_1d = fe_degree + 1 + fe_shift_1d;
-      unsigned int       factor          = 1;
-      unsigned int       shift           = fe_shift_1d * c_tensor_index[0];
+      unsigned int       factor = 1;
+      unsigned int       shift = fe_shift_1d * c_tensor_index[0];
       for(unsigned int d = 1; d < dim; ++d)
         {
           factor *= n_child_dofs_1d;

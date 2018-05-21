@@ -374,7 +374,7 @@ namespace PETScWrappers
   MatrixBase::operator/=(const PetscScalar a)
   {
     const PetscScalar    factor = 1. / a;
-    const PetscErrorCode ierr   = MatScale(matrix, factor);
+    const PetscErrorCode ierr = MatScale(matrix, factor);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     return *this;

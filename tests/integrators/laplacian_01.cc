@@ -53,7 +53,7 @@ test_cell(const FEValuesBase<dim>& fev)
       {
         u    = 0.;
         u(i) = 1.;
-        w    = 0.;
+        w = 0.;
         fev.get_function_gradients(
           u,
           indices,
@@ -105,7 +105,7 @@ test_boundary(const FEValuesBase<dim>& fev)
       {
         u    = 0.;
         u(i) = 1.;
-        w    = 0.;
+        w = 0.;
         fev.get_function_values(
           u,
           indices,
@@ -143,7 +143,7 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
 {
   const unsigned int n1 = fev1.dofs_per_cell;
   const unsigned int n2 = fev1.dofs_per_cell;
-  unsigned int       d  = fev1.get_fe().n_components();
+  unsigned int       d = fev1.get_fe().n_components();
   FullMatrix<double> M11(n1, n1);
   FullMatrix<double> M12(n1, n2);
   FullMatrix<double> M21(n2, n1);
@@ -191,8 +191,8 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
       {
         u1     = 0.;
         u1(i1) = 1.;
-        w1     = 0.;
-        w2     = 0.;
+        w1 = 0.;
+        w2 = 0.;
         fev1.get_function_values(
           u1,
           indices1,

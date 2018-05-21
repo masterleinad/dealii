@@ -241,7 +241,7 @@ namespace LinearAlgebra
        */
       void
       reinit(const size_type num_blocks,
-             const size_type block_size           = 0,
+             const size_type block_size = 0,
              const bool      omit_zeroing_entries = false);
 
       /**
@@ -669,9 +669,9 @@ namespace LinearAlgebra
        */
       virtual void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
+            const unsigned int precision = 3,
             const bool         scientific = true,
-            const bool         across     = true) const override;
+            const bool         across = true) const override;
 
       /**
        * Return the memory consumption of this class in bytes.

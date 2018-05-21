@@ -31,12 +31,12 @@ test()
 
   IndexSet  locally_owned(entries_per_process * n_proc);
   const int begin_index = my_id * entries_per_process;
-  const int end_index   = (my_id + 1) * entries_per_process;
+  const int end_index = (my_id + 1) * entries_per_process;
   locally_owned.add_range(begin_index, end_index);
 
   IndexSet  locally_relevant(entries_per_process * n_proc);
   const int local_begin = std::max(0, begin_index - entries_per_process / 2);
-  const int local_end   = entries_per_process * n_proc;
+  const int local_end = entries_per_process * n_proc;
   locally_relevant.add_range(local_begin, local_end);
 
   TrilinosWrappers::MPI::Vector ghosted, distributed;

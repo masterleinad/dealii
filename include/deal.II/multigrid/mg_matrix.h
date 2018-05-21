@@ -125,8 +125,8 @@ public:
    * Constructor. @p row and @p col are the coordinate of the selected block.
    * The other argument is handed over to the @p SmartPointer constructor.
    */
-  MGMatrixSelect(const unsigned int         row    = 0,
-                 const unsigned int         col    = 0,
+  MGMatrixSelect(const unsigned int         row = 0,
+                 const unsigned int         col = 0,
                  MGLevelObject<MatrixType>* matrix = 0);
 
   /**

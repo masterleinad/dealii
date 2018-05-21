@@ -210,10 +210,10 @@ check(const unsigned int orientation, bool reverse)
           const std::vector<std::pair<types::global_dof_index, double>>* entries
             = constraints.get_constraint_entries(line);
           Assert(entries->size() == 1, ExcInternalError());
-          const Point<dim> point1     = support_points[line];
-          const Point<dim> point2     = support_points[(*entries)[0].first];
+          const Point<dim> point1 = support_points[line];
+          const Point<dim> point2 = support_points[(*entries)[0].first];
           Tensor<1, dim>   difference = point1 - point2;
-          difference[dim - 1]         = 0.;
+          difference[dim - 1] = 0.;
           AssertThrow(difference.norm() < 1.e-9, ExcInternalError());
           if(locally_owned_dofs.is_element(line))
             ++n_local_constraints;
@@ -260,7 +260,7 @@ check(const unsigned int orientation, bool reverse)
       const unsigned int face_no_1 = it->first.second;
       const typename Triangulation<dim>::cell_iterator cell_2
         = it->second.first.first;
-      const unsigned int face_no_2     = it->second.first.second;
+      const unsigned int face_no_2 = it->second.first.second;
       const Point<dim>   face_center_1 = cell_1->face(face_no_1)->center();
       const Point<dim>   face_center_2 = cell_2->face(face_no_2)->center();
       Assert(std::min(std::abs(face_center_1(dim - 1) - 3.),

@@ -311,7 +311,7 @@ namespace internal
     constexpr int mm = contract_over_rows ? n_rows : n_columns,
                   nn = contract_over_rows ? n_columns : n_rows;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
+    constexpr int stride = Utilities::pow(n_columns, direction);
     constexpr int n_blocks1 = one_line ? 1 : stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
@@ -389,7 +389,7 @@ namespace internal
     constexpr int n_blocks2 = dim > 2 ? n_rows : 1;
 
     AssertIndexRange(face_direction, dim);
-    constexpr int stride     = Utilities::pow(n_rows, face_direction);
+    constexpr int stride = Utilities::pow(n_rows, face_direction);
     constexpr int out_stride = Utilities::pow(n_rows, dim - 1);
     const Number* DEAL_II_RESTRICT shape_values = this->shape_values;
 
@@ -937,12 +937,12 @@ namespace internal
   {
     Assert(shape_values != nullptr, ExcNotInitialized());
     AssertIndexRange(direction, dim);
-    constexpr int mm     = contract_over_rows ? n_rows : n_columns,
-                  nn     = contract_over_rows ? n_columns : n_rows;
+    constexpr int mm = contract_over_rows ? n_rows : n_columns,
+                  nn = contract_over_rows ? n_columns : n_rows;
     constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int mid = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
+    constexpr int stride = Utilities::pow(n_columns, direction);
     constexpr int n_blocks1 = stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
@@ -967,8 +967,8 @@ namespace internal
                   }
                 if(mid > 0)
                   {
-                    in0  = in[0];
-                    in1  = in[stride * (mm - 1)];
+                    in0 = in[0];
+                    in1 = in[stride * (mm - 1)];
                     res0 = val0 * in0;
                     res1 = val1 * in0;
                     res0 += val1 * in1;
@@ -1001,7 +1001,7 @@ namespace internal
                     if(mm % 2 == 1)
                       {
                         val0 = shape_values[mid * n_columns + col];
-                        in1  = val0 * in[stride * mid];
+                        in1 = val0 * in[stride * mid];
                         res0 += in1;
                         res1 += in1;
                       }
@@ -1011,14 +1011,14 @@ namespace internal
                     if(mm % 2 == 1 && nn % 2 == 0)
                       {
                         val0 = shape_values[col * n_columns + mid];
-                        in1  = val0 * in[stride * mid];
+                        in1 = val0 * in[stride * mid];
                         res0 += in1;
                         res1 += in1;
                       }
                   }
                 if(add == false)
                   {
-                    out[stride * col]            = res0;
+                    out[stride * col] = res0;
                     out[stride * (nn - 1 - col)] = res1;
                   }
                 else
@@ -1062,7 +1062,7 @@ namespace internal
                 if(mid > 0)
                   {
                     Number2 val0 = shape_values[n_cols * n_columns];
-                    res0         = val0 * (in[0] + in[stride * (mm - 1)]);
+                    res0 = val0 * (in[0] + in[stride * (mm - 1)]);
                     for(int ind = 1; ind < mid; ++ind)
                       {
                         val0 = shape_values[n_cols * n_columns + ind];
@@ -1126,12 +1126,12 @@ namespace internal
   {
     Assert(shape_gradients != nullptr, ExcNotInitialized());
     AssertIndexRange(direction, dim);
-    constexpr int mm     = contract_over_rows ? n_rows : n_columns,
-                  nn     = contract_over_rows ? n_columns : n_rows;
+    constexpr int mm = contract_over_rows ? n_rows : n_columns,
+                  nn = contract_over_rows ? n_columns : n_rows;
     constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int mid = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
+    constexpr int stride = Utilities::pow(n_columns, direction);
     constexpr int n_blocks1 = stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
@@ -1156,8 +1156,8 @@ namespace internal
                   }
                 if(mid > 0)
                   {
-                    in0  = in[0];
-                    in1  = in[stride * (mm - 1)];
+                    in0 = in[0];
+                    in1 = in[stride * (mm - 1)];
                     res0 = val0 * in0;
                     res1 = val1 * in0;
                     res0 -= val1 * in1;
@@ -1198,7 +1198,7 @@ namespace internal
                   }
                 if(add == false)
                   {
-                    out[stride * col]            = res0;
+                    out[stride * col] = res0;
                     out[stride * (nn - 1 - col)] = res1;
                   }
                 else
@@ -1260,12 +1260,12 @@ namespace internal
   {
     Assert(shape_hessians != nullptr, ExcNotInitialized());
     AssertIndexRange(direction, dim);
-    constexpr int mm     = contract_over_rows ? n_rows : n_columns;
-    constexpr int nn     = contract_over_rows ? n_columns : n_rows;
+    constexpr int mm = contract_over_rows ? n_rows : n_columns;
+    constexpr int nn = contract_over_rows ? n_columns : n_rows;
     constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int mid = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
+    constexpr int stride = Utilities::pow(n_columns, direction);
     constexpr int n_blocks1 = stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
@@ -1290,8 +1290,8 @@ namespace internal
                   }
                 if(mid > 0)
                   {
-                    in0  = in[0];
-                    in1  = in[stride * (mm - 1)];
+                    in0 = in[0];
+                    in1 = in[stride * (mm - 1)];
                     res0 = val0 * in0;
                     res1 = val1 * in0;
                     res0 += val1 * in1;
@@ -1332,7 +1332,7 @@ namespace internal
                   }
                 if(add == false)
                   {
-                    out[stride * col]            = res0;
+                    out[stride * col] = res0;
                     out[stride * (nn - 1 - col)] = res1;
                   }
                 else
@@ -1610,9 +1610,9 @@ namespace internal
     constexpr int nn     = contract_over_rows ? n_columns : n_rows;
     constexpr int mm     = contract_over_rows ? n_rows : n_columns;
     constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int mid = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
+    constexpr int stride = Utilities::pow(n_columns, direction);
     constexpr int n_blocks1 = one_line ? 1 : stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
@@ -1982,9 +1982,9 @@ namespace internal
     constexpr int nn     = contract_over_rows ? n_columns : n_rows;
     constexpr int mm     = contract_over_rows ? n_rows : n_columns;
     constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int mid = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
+    constexpr int stride = Utilities::pow(n_columns, direction);
     constexpr int n_blocks1 = one_line ? 1 : stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
@@ -2101,7 +2101,7 @@ namespace internal
                       }
                     if(add == false)
                       {
-                        out[stride * (2 * col)]     = r0;
+                        out[stride * (2 * col)] = r0;
                         out[stride * (2 * col + 1)] = r1;
                       }
                     else

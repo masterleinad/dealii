@@ -254,7 +254,7 @@ namespace TrilinosWrappers
         Assert(residual_vector->NumVectors() == 1,
                ExcMessage("Residual multivector holds more than one vector"));
         TrilinosScalar res_l2_norm = 0.0;
-        const int      ierr        = residual_vector->Norm2(&res_l2_norm);
+        const int      ierr = residual_vector->Norm2(&res_l2_norm);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         return res_l2_norm;
       }

@@ -42,7 +42,7 @@ test()
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
-        endc               = tria.end();
+        endc = tria.end();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)
@@ -63,7 +63,7 @@ test()
     const QGauss<1>                          quad(2);
     typename MatrixFree<dim>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
-    data.mapping_update_flags  = update_JxW_values;
+    data.mapping_update_flags = update_JxW_values;
     mf_data.reinit(dof, constraints, quad, data);
   }
 

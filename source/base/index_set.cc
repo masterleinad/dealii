@@ -135,7 +135,7 @@ IndexSet::do_compress() const
       ++next;
 
       size_type first_index = i->begin;
-      size_type last_index  = i->end;
+      size_type last_index = i->end;
 
       // see if we can merge any of the following ranges
       while(next != ranges.end() && (next->begin <= last_index))

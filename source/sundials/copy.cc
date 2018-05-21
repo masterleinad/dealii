@@ -32,7 +32,7 @@ namespace SUNDIALS
     inline std::size_t
     N_Vector_length(const N_Vector& vec)
     {
-      const N_Vector_ID id     = N_VGetVectorID(vec);
+      const N_Vector_ID id = N_VGetVectorID(vec);
       long int          length = -1;
       switch(id)
         {
@@ -64,7 +64,7 @@ namespace SUNDIALS
     copy(TrilinosWrappers::MPI::Vector& dst, const N_Vector& src)
     {
       const IndexSet is = dst.locally_owned_elements();
-      const size_t   N  = is.n_elements();
+      const size_t   N = is.n_elements();
       AssertDimension(N, N_Vector_length(src));
       for(size_t i = 0; i < N; ++i)
         {
@@ -77,7 +77,7 @@ namespace SUNDIALS
     copy(N_Vector& dst, const TrilinosWrappers::MPI::Vector& src)
     {
       const IndexSet is = src.locally_owned_elements();
-      const size_t   N  = is.n_elements();
+      const size_t   N = is.n_elements();
       AssertDimension(N, N_Vector_length(dst));
       for(size_t i = 0; i < N; ++i)
         {
@@ -89,7 +89,7 @@ namespace SUNDIALS
     copy(TrilinosWrappers::MPI::BlockVector& dst, const N_Vector& src)
     {
       const IndexSet is = dst.locally_owned_elements();
-      const size_t   N  = is.n_elements();
+      const size_t   N = is.n_elements();
       AssertDimension(N, N_Vector_length(src));
       for(size_t i = 0; i < N; ++i)
         {
@@ -102,7 +102,7 @@ namespace SUNDIALS
     copy(N_Vector& dst, const TrilinosWrappers::MPI::BlockVector& src)
     {
       IndexSet     is = src.locally_owned_elements();
-      const size_t N  = is.n_elements();
+      const size_t N = is.n_elements();
       AssertDimension(N, N_Vector_length(dst));
       for(size_t i = 0; i < N; ++i)
         {
@@ -119,7 +119,7 @@ namespace SUNDIALS
     copy(PETScWrappers::MPI::Vector& dst, const N_Vector& src)
     {
       const IndexSet is = dst.locally_owned_elements();
-      const size_t   N  = is.n_elements();
+      const size_t   N = is.n_elements();
       AssertDimension(N, N_Vector_length(src));
       for(size_t i = 0; i < N; ++i)
         {
@@ -132,7 +132,7 @@ namespace SUNDIALS
     copy(N_Vector& dst, const PETScWrappers::MPI::Vector& src)
     {
       const IndexSet is = src.locally_owned_elements();
-      const size_t   N  = is.n_elements();
+      const size_t   N = is.n_elements();
       AssertDimension(N, N_Vector_length(dst));
       for(size_t i = 0; i < N; ++i)
         {
@@ -144,7 +144,7 @@ namespace SUNDIALS
     copy(PETScWrappers::MPI::BlockVector& dst, const N_Vector& src)
     {
       const IndexSet is = dst.locally_owned_elements();
-      const size_t   N  = is.n_elements();
+      const size_t   N = is.n_elements();
       AssertDimension(N, N_Vector_length(src));
       for(size_t i = 0; i < N; ++i)
         {
@@ -157,7 +157,7 @@ namespace SUNDIALS
     copy(N_Vector& dst, const PETScWrappers::MPI::BlockVector& src)
     {
       const IndexSet is = src.locally_owned_elements();
-      const size_t   N  = is.n_elements();
+      const size_t   N = is.n_elements();
       AssertDimension(N, N_Vector_length(dst));
       for(size_t i = 0; i < N; ++i)
         {

@@ -100,9 +100,9 @@ namespace Particles
   void
   ParticleHandler<dim, spacedim>::update_cached_numbers()
   {
-    types::particle_index locally_highest_index        = 0;
+    types::particle_index locally_highest_index = 0;
     unsigned int          local_max_particles_per_cell = 0;
-    unsigned int          current_particles_per_cell   = 0;
+    unsigned int          current_particles_per_cell = 0;
     typename Triangulation<dim, spacedim>::active_cell_iterator current_cell
       = triangulation->begin_active();
 
@@ -299,9 +299,9 @@ namespace Particles
     GridTools::Cache<dim, spacedim> cache(*triangulation, *mapping);
     auto point_locations = GridTools::compute_point_locations(cache, positions);
 
-    auto& cells           = std::get<0>(point_locations);
+    auto& cells = std::get<0>(point_locations);
     auto& local_positions = std::get<1>(point_locations);
-    auto& index_map       = std::get<2>(point_locations);
+    auto& index_map = std::get<2>(point_locations);
 
     if(cells.size() == 0)
       return;
@@ -590,7 +590,7 @@ namespace Particles
                     current_cell_and_position
                     = GridTools::find_active_cell_around_point<>(
                       *mapping, *triangulation, (*it)->get_location());
-                  current_cell               = current_cell_and_position.first;
+                  current_cell = current_cell_and_position.first;
                   current_reference_position = current_cell_and_position.second;
                 }
               catch(GridTools::ExcPointNotFound<spacedim>&)
@@ -1092,8 +1092,8 @@ namespace Particles
           = std::distance(particle_range.begin(), particle_range.end());
 
         unsigned int* ndata = static_cast<unsigned int*>(data);
-        *ndata              = n_particles;
-        data                = static_cast<void*>(ndata + 1);
+        *ndata = n_particles;
+        data = static_cast<void*>(ndata + 1);
 
         for(particle_iterator particle = particle_range.begin();
             particle != particle_range.end();
@@ -1118,7 +1118,7 @@ namespace Particles
           }
 
         unsigned int* ndata = static_cast<unsigned int*>(data);
-        *ndata              = n_particles;
+        *ndata = n_particles;
 
         data = static_cast<void*>(ndata + 1);
 

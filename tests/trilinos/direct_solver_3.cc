@@ -178,7 +178,7 @@ Step4<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -195,8 +195,8 @@ Step4<dim>::assemble_system()
       if(cell->is_locally_owned())
         {
           fe_values.reinit(cell);
-          cell_matrix  = 0;
-          cell_rhs     = 0;
+          cell_matrix = 0;
+          cell_rhs = 0;
           cell_rhs_two = 0;
 
           for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)

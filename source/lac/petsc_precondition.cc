@@ -51,7 +51,7 @@ namespace PETScWrappers
     if(pc != nullptr)
       {
         PetscErrorCode ierr = PCDestroy(&pc);
-        pc                  = nullptr;
+        pc = nullptr;
         AssertThrow(ierr == 0, ExcPETScError(ierr));
       }
   }

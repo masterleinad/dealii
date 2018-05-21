@@ -234,7 +234,7 @@ namespace Step30
     FullMatrix<double>&      ui_vi_matrix,
     Vector<double>&          cell_vector) const
   {
-    const std::vector<double>&         JxW     = fe_v.get_JxW_values();
+    const std::vector<double>&         JxW = fe_v.get_JxW_values();
     const std::vector<Tensor<1, dim>>& normals = fe_v.get_normal_vectors();
 
     std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
@@ -268,7 +268,7 @@ namespace Step30
     FullMatrix<double>&          ui_ve_matrix,
     FullMatrix<double>&          ue_ve_matrix) const
   {
-    const std::vector<double>&         JxW     = fe_v.get_JxW_values();
+    const std::vector<double>&         JxW = fe_v.get_JxW_values();
     const std::vector<Tensor<1, dim>>& normals = fe_v.get_normal_vectors();
 
     std::vector<Point<dim>> beta(fe_v.n_quadrature_points);

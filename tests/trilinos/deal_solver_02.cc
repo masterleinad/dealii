@@ -45,7 +45,7 @@ main(int argc, char** argv)
     SolverControl control(200, 1.3e-10);
 
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 

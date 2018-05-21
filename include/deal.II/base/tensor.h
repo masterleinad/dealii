@@ -2075,9 +2075,9 @@ invert(const Tensor<2, 3, Number>& t)
 {
   Tensor<2, 3, Number> return_tensor;
 
-  const Number t4  = internal::NumberType<Number>::value(t[0][0] * t[1][1]),
-               t6  = internal::NumberType<Number>::value(t[0][0] * t[1][2]),
-               t8  = internal::NumberType<Number>::value(t[0][1] * t[1][0]),
+  const Number t4 = internal::NumberType<Number>::value(t[0][0] * t[1][1]),
+               t6 = internal::NumberType<Number>::value(t[0][0] * t[1][2]),
+               t8 = internal::NumberType<Number>::value(t[0][1] * t[1][0]),
                t00 = internal::NumberType<Number>::value(t[0][2] * t[1][0]),
                t01 = internal::NumberType<Number>::value(t[0][1] * t[2][0]),
                t04 = internal::NumberType<Number>::value(t[0][2] * t[2][0]),

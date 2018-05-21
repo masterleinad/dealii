@@ -81,7 +81,7 @@ namespace
     const std::vector<unsigned int>&                   target_comp,
     std::vector<std::vector<types::global_dof_index>>& ndofs)
   {
-    std::vector<bool>         selected         = sel;
+    std::vector<bool>         selected = sel;
     std::vector<unsigned int> target_component = target_comp;
     const unsigned int        ncomp = mg_dof.get_fe(0).n_components();
 
@@ -304,7 +304,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim>&,
     = *std::max_element(mg_target_component.begin(), mg_target_component.end())
       + 1;
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_levels      = mg_dof.get_triangulation().n_levels();
+  const unsigned int n_levels = mg_dof.get_triangulation().n_levels();
 
   Assert(mg_component_mask.represents_n_components(fe.n_components()),
          ExcMessage("Component mask has wrong size."));
@@ -326,7 +326,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim>&,
       for(unsigned int i = 0; i < mg_component_start[l].size(); ++i)
         {
           const types::global_dof_index t = mg_component_start[l][i];
-          mg_component_start[l][i]        = k;
+          mg_component_start[l][i] = k;
           k += t;
         }
     }
@@ -339,7 +339,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim>&,
   for(unsigned int i = 0; i < component_start.size(); ++i)
     {
       const types::global_dof_index t = component_start[i];
-      component_start[i]              = k;
+      component_start[i] = k;
       k += t;
     }
 
@@ -565,7 +565,7 @@ MGTransferSelect<number>::build_matrices(
   const std::vector<unsigned int>&                      mg_t_component,
   const std::vector<std::set<types::global_dof_index>>& bdry_indices)
 {
-  const FiniteElement<dim>& fe    = mg_dof.get_fe();
+  const FiniteElement<dim>& fe = mg_dof.get_fe();
   unsigned int              ncomp = mg_dof.get_fe(0).n_components();
 
   target_component    = t_component;

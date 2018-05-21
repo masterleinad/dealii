@@ -195,7 +195,7 @@ namespace Advection
     stage.reinit(dof_handler.n_dofs());
 
     solution = 0.0;
-    stage    = 0.0;
+    stage = 0.0;
   } //setup_system
 
   template <int dim>
@@ -236,7 +236,7 @@ namespace Advection
 
     MeshWorker::LoopControl lctrl;
     lctrl.cells_first = true;
-    lctrl.own_faces   = MeshWorker::LoopControl::one;
+    lctrl.own_faces = MeshWorker::LoopControl::one;
 
     MeshWorker::loop<dim,
                      dim,
@@ -276,7 +276,7 @@ namespace Advection
     Vector<double>& cell_rhs = dinfo.vector(0).block(0);
 
     const unsigned int dofs_per_cell = fe_v.dofs_per_cell;
-    const unsigned int n_q_points    = fe_v.n_quadrature_points;
+    const unsigned int n_q_points = fe_v.n_quadrature_points;
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     cell_matrix = 0.0;
@@ -322,7 +322,7 @@ namespace Advection
     Vector<double>& cell_rhs = dinfo.vector(0).block(0);
 
     const unsigned int dofs_per_cell = fe_v.dofs_per_cell;
-    const unsigned int n_q_points    = fe_v.n_quadrature_points;
+    const unsigned int n_q_points = fe_v.n_quadrature_points;
 
     double boundary_flux = -1.0;
 
@@ -353,7 +353,7 @@ namespace Advection
     Vector<double>& cell_vector_2 = dinfo2.vector(0).block(0);
 
     const unsigned int dofs_per_cell = fe_v_1.dofs_per_cell;
-    const unsigned int n_q_points    = fe_v_1.n_quadrature_points;
+    const unsigned int n_q_points = fe_v_1.n_quadrature_points;
 
     std::vector<double>& u_1 = info1.values[0][0];
     std::vector<double>& u_2 = info1.values[0][0];

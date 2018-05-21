@@ -35,7 +35,7 @@ main()
   for(unsigned int i = 0; i < 2; ++i)
     for(unsigned int j = 0; j < 2; ++j)
       {
-        t[i][j]  = 2. * a + i * j * b;
+        t[i][j] = 2. * a + i * j * b;
         st[i][j] = (1. + (i + 1) * (j * 2));
       }
 

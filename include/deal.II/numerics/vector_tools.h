@@ -2405,7 +2405,7 @@ namespace VectorTools
                        OutVector&                        difference,
                        const Quadrature<dim>&            q,
                        const NormType&                   norm,
-                       const Function<spacedim, double>* weight   = nullptr,
+                       const Function<spacedim, double>* weight = nullptr,
                        const double                      exponent = 2.);
 
   /**
@@ -2420,7 +2420,7 @@ namespace VectorTools
                        OutVector&                        difference,
                        const Quadrature<dim>&            q,
                        const NormType&                   norm,
-                       const Function<spacedim, double>* weight   = nullptr,
+                       const Function<spacedim, double>* weight = nullptr,
                        const double                      exponent = 2.);
 
   /**
@@ -2435,7 +2435,7 @@ namespace VectorTools
                        OutVector&                        difference,
                        const hp::QCollection<dim>&       q,
                        const NormType&                   norm,
-                       const Function<spacedim, double>* weight   = nullptr,
+                       const Function<spacedim, double>* weight = nullptr,
                        const double                      exponent = 2.);
 
   /**
@@ -2450,7 +2450,7 @@ namespace VectorTools
                        OutVector&                           difference,
                        const hp::QCollection<dim>&          q,
                        const NormType&                      norm,
-                       const Function<spacedim, double>*    weight   = nullptr,
+                       const Function<spacedim, double>*    weight = nullptr,
                        const double                         exponent = 2.);
 
   /**

@@ -222,7 +222,7 @@ namespace Step13
       // interest, and exit the loop.
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
-        endc                      = dof_handler.end();
+        endc = dof_handler.end();
       bool evaluation_point_found = false;
       for(; (cell != endc) && !evaluation_point_found; ++cell)
         for(unsigned int vertex = 0;
@@ -920,7 +920,7 @@ namespace Step13
       AssemblyCopyData&                                     copy_data) const
     {
       const unsigned int dofs_per_cell = fe->dofs_per_cell;
-      const unsigned int n_q_points    = quadrature->size();
+      const unsigned int n_q_points = quadrature->size();
 
       copy_data.cell_matrix.reinit(dofs_per_cell, dofs_per_cell);
 
@@ -1087,7 +1087,7 @@ namespace Step13
                                 | update_JxW_values);
 
       const unsigned int dofs_per_cell = this->fe->dofs_per_cell;
-      const unsigned int n_q_points    = this->quadrature->size();
+      const unsigned int n_q_points = this->quadrature->size();
 
       Vector<double>                       cell_rhs(dofs_per_cell);
       std::vector<double>                  rhs_values(n_q_points);
@@ -1288,7 +1288,7 @@ namespace Step13
     double q = p(0);
     for(unsigned int i = 1; i < dim; ++i)
       q += std::sin(10 * p(i) + 5 * p(0) * p(0));
-    const double u  = std::exp(q);
+    const double u = std::exp(q);
     double       t1 = 1, t2 = 0, t3 = 0;
     for(unsigned int i = 1; i < dim; ++i)
       {

@@ -349,7 +349,7 @@ private:
  * @author Guido Kanschat, Wolfgang Bangerth, 1999
  */
 template <typename MatrixType = SparseMatrix<double>,
-          class VectorType    = Vector<double>>
+          class VectorType = Vector<double>>
 class PreconditionUseMatrix : public Subscriptor
 {
 public:
@@ -929,8 +929,8 @@ private:
  * @author Martin Kronbichler, 2009, 2016; extension for full compatibility with
  * LinearOperator class: Jean-Paul Pelteret, 2015
  */
-template <typename MatrixType         = SparseMatrix<double>,
-          typename VectorType         = Vector<double>,
+template <typename MatrixType = SparseMatrix<double>,
+          typename VectorType = Vector<double>,
           typename PreconditionerType = DiagonalMatrix<VectorType>>
 class PreconditionChebyshev : public Subscriptor
 {
@@ -951,12 +951,12 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(const unsigned int degree              = 0,
-                   const double       smoothing_range     = 0.,
-                   const bool         nonzero_starting    = false,
+    AdditionalData(const unsigned int degree = 0,
+                   const double       smoothing_range = 0.,
+                   const bool         nonzero_starting = false,
                    const unsigned int eig_cg_n_iterations = 8,
-                   const double       eig_cg_residual     = 1e-2,
-                   const double       max_eigenvalue      = 1);
+                   const double       eig_cg_residual = 1e-2,
+                   const double       max_eigenvalue = 1);
 
     /**
      * This determines the degree of the Chebyshev polynomial. The degree of
@@ -1745,7 +1745,7 @@ namespace internal
               DEAL_II_OPENMP_SIMD_PRAGMA
             for(std::size_t i = begin; i < end; ++i)
               {
-                dst[i]     = factor2 * src[i] * matrix_diagonal_inverse[i];
+                dst[i] = factor2 * src[i] * matrix_diagonal_inverse[i];
                 update1[i] = -dst[i];
               }
             else DEAL_II_OPENMP_SIMD_PRAGMA for(std::size_t i = begin; i < end;
@@ -2002,7 +2002,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::initialize(
   const AdditionalData& additional_data)
 {
   matrix_ptr = &matrix;
-  data       = additional_data;
+  data = additional_data;
   internal::PreconditionChebyshevImplementation::initialize_preconditioner(
     matrix, data.preconditioner, data.matrix_diagonal_inverse);
   eigenvalues_are_initialized = false;
@@ -2104,7 +2104,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   if(data.degree == numbers::invalid_unsigned_int)
     {
       const double actual_range = max_eigenvalue / alpha;
-      const double sigma        = (1. - std::sqrt(1. / actual_range))
+      const double sigma = (1. - std::sqrt(1. / actual_range))
                            / (1. + std::sqrt(1. / actual_range));
       const double eps = data.smoothing_range;
       const_cast<
@@ -2158,7 +2158,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   for(unsigned int k = 0; k < data.degree; ++k)
     {
       matrix_ptr->vmult(update2, dst);
-      const double rhokp   = 1. / (2. * sigma - rhok);
+      const double rhokp = 1. / (2. * sigma - rhok);
       const double factor1 = rhokp * rhok, factor2 = 2. * rhokp / delta;
       rhok = rhokp;
       internal::PreconditionChebyshevImplementation::vector_updates(
@@ -2183,7 +2183,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   for(unsigned int k = 0; k < data.degree; ++k)
     {
       matrix_ptr->Tvmult(update2, dst);
-      const double rhokp   = 1. / (2. * sigma - rhok);
+      const double rhokp = 1. / (2. * sigma - rhok);
       const double factor1 = rhokp * rhok, factor2 = 2. * rhokp / delta;
       rhok = rhokp;
       internal::PreconditionChebyshevImplementation::vector_updates(

@@ -63,7 +63,7 @@ namespace Utilities
     n_mpi_processes(const MPI_Comm& mpi_communicator)
     {
       int       n_jobs = 1;
-      const int ierr   = MPI_Comm_size(mpi_communicator, &n_jobs);
+      const int ierr = MPI_Comm_size(mpi_communicator, &n_jobs);
       AssertThrowMPI(ierr);
 
       return n_jobs;
@@ -135,7 +135,7 @@ namespace Utilities
       for(int merge_sz = 1; merge_sz < grp_size; merge_sz *= 2)
         {
           const int gid = grp_rank / merge_sz;
-          comm_old      = *new_comm;
+          comm_old = *new_comm;
           if(gid % 2 == 0)
             {
               if((gid + 1) * merge_sz < grp_size)
@@ -237,7 +237,7 @@ namespace Utilities
       max_reduce(const void* in_lhs_, void* inout_rhs_, int* len, MPI_Datatype*)
       {
         (void) len;
-        const MinMaxAvg* in_lhs    = static_cast<const MinMaxAvg*>(in_lhs_);
+        const MinMaxAvg* in_lhs = static_cast<const MinMaxAvg*>(in_lhs_);
         MinMaxAvg*       inout_rhs = static_cast<MinMaxAvg*>(inout_rhs_);
 
         Assert(*len == 1, ExcInternalError());
@@ -310,9 +310,9 @@ namespace Utilities
       in.min_index = in.max_index = my_id;
 
       MPI_Datatype type;
-      int          lengths[]       = {3, 2};
+      int          lengths[] = {3, 2};
       MPI_Aint     displacements[] = {0, offsetof(MinMaxAvg, min_index)};
-      MPI_Datatype types[]         = {MPI_DOUBLE, MPI_INT};
+      MPI_Datatype types[] = {MPI_DOUBLE, MPI_INT};
 
       ierr = MPI_Type_struct(2, lengths, displacements, types, &type);
       AssertThrowMPI(ierr);
@@ -488,7 +488,7 @@ namespace Utilities
 
           // search how often our own hostname appears and the how-manyth
           // instance the current process represents
-          unsigned int n_local_processes   = 0;
+          unsigned int n_local_processes = 0;
           unsigned int nth_process_on_host = 0;
           for(unsigned int i = 0; i < MPI::n_mpi_processes(MPI_COMM_WORLD); ++i)
             if(std::string(all_hostnames.data() + i * max_hostname_size)
@@ -606,7 +606,7 @@ namespace Utilities
     {
 #ifdef DEAL_II_WITH_MPI
       int       MPI_has_been_started = 0;
-      const int ierr                 = MPI_Initialized(&MPI_has_been_started);
+      const int ierr = MPI_Initialized(&MPI_has_been_started);
       AssertThrowMPI(ierr);
 
       return (MPI_has_been_started > 0);

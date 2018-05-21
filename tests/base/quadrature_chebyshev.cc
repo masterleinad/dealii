@@ -35,16 +35,16 @@ main()
   // this stores the exact values of \int_0^1 x^i/sqrt(x(1-x)) dx
   static double exact_monomials[32];
 
-  exact_monomials[0]  = 3.141592653589793;
-  exact_monomials[1]  = 1.570796326794897;
-  exact_monomials[2]  = 1.178097245096172;
-  exact_monomials[3]  = 0.9817477042468104;
-  exact_monomials[4]  = 0.8590292412159591;
-  exact_monomials[5]  = 0.7731263170943632;
-  exact_monomials[6]  = 0.7086991240031662;
-  exact_monomials[7]  = 0.6580777580029401;
-  exact_monomials[8]  = 0.6169478981277563;
-  exact_monomials[9]  = 0.5826730148984365;
+  exact_monomials[0] = 3.141592653589793;
+  exact_monomials[1] = 1.570796326794897;
+  exact_monomials[2] = 1.178097245096172;
+  exact_monomials[3] = 0.9817477042468104;
+  exact_monomials[4] = 0.8590292412159591;
+  exact_monomials[5] = 0.7731263170943632;
+  exact_monomials[6] = 0.7086991240031662;
+  exact_monomials[7] = 0.6580777580029401;
+  exact_monomials[8] = 0.6169478981277563;
+  exact_monomials[9] = 0.5826730148984365;
   exact_monomials[10] = 0.5535393641535147;
   exact_monomials[11] = 0.5283784839647186;
   exact_monomials[12] = 0.5063627137995220;
@@ -93,13 +93,13 @@ check_quadrature(double* exact_monomials)
   for(unsigned int n = startn; n < 18; ++n)
     {
       quadrature_type              quadrature(n);
-      const std::vector<Point<1>>& points  = quadrature.get_points();
+      const std::vector<Point<1>>& points = quadrature.get_points();
       const std::vector<double>&   weights = quadrature.get_weights();
 
       for(unsigned int i = 0; i < 32; ++i)
         {
           long double quadrature_int = 0;
-          double      err            = 0;
+          double      err = 0;
 
           // Check the integral
           // x^i/sqrt(x(1-x))
@@ -127,13 +127,13 @@ check_GRC_right(double* exact_monomials)
   for(unsigned int n = 1; n < 18; ++n)
     {
       QGaussRadauChebyshev<1> quadrature(n, QGaussRadauChebyshev<1>::right);
-      const std::vector<Point<1>>& points  = quadrature.get_points();
+      const std::vector<Point<1>>& points = quadrature.get_points();
       const std::vector<double>&   weights = quadrature.get_weights();
 
       for(unsigned int i = 0; i < 32; ++i)
         {
           long double quadrature_int = 0;
-          double      err            = 0;
+          double      err = 0;
 
           // Check the integral
           // x^i/sqrt(x(1-x))

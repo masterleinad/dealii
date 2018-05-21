@@ -130,17 +130,17 @@ PolynomialsBDM<dim>::compute(
         monomials[0].value(unit_point(d), monovali[d]);
       if(values.size() != 0)
         {
-          values[start][0]     = monovali[0][0];
-          values[start][1]     = -unit_point(1) * monovali[0][1];
+          values[start][0] = monovali[0][0];
+          values[start][1] = -unit_point(1) * monovali[0][1];
           values[start + 1][0] = unit_point(0) * monovali[1][1];
           values[start + 1][1] = -monovali[1][0];
         }
       if(grads.size() != 0)
         {
-          grads[start][0][0]     = monovali[0][1];
-          grads[start][0][1]     = 0.;
-          grads[start][1][0]     = -unit_point(1) * monovali[0][2];
-          grads[start][1][1]     = -monovali[0][1];
+          grads[start][0][0] = monovali[0][1];
+          grads[start][0][1] = 0.;
+          grads[start][1][0] = -unit_point(1) * monovali[0][2];
+          grads[start][1][1] = -monovali[0][1];
           grads[start + 1][0][0] = monovali[1][1];
           grads[start + 1][0][1] = unit_point(0) * monovali[1][2];
           grads[start + 1][1][0] = 0.;
@@ -148,14 +148,14 @@ PolynomialsBDM<dim>::compute(
         }
       if(grad_grads.size() != 0)
         {
-          grad_grads[start][0][0][0]     = monovali[0][2];
-          grad_grads[start][0][0][1]     = 0.;
-          grad_grads[start][0][1][0]     = 0.;
-          grad_grads[start][0][1][1]     = 0.;
-          grad_grads[start][1][0][0]     = -unit_point(1) * monovali[0][3];
-          grad_grads[start][1][0][1]     = -monovali[0][2];
-          grad_grads[start][1][1][0]     = -monovali[0][2];
-          grad_grads[start][1][1][1]     = 0.;
+          grad_grads[start][0][0][0] = monovali[0][2];
+          grad_grads[start][0][0][1] = 0.;
+          grad_grads[start][0][1][0] = 0.;
+          grad_grads[start][0][1][1] = 0.;
+          grad_grads[start][1][0][0] = -unit_point(1) * monovali[0][3];
+          grad_grads[start][1][0][1] = -monovali[0][2];
+          grad_grads[start][1][1][0] = -monovali[0][2];
+          grad_grads[start][1][1][1] = 0.;
           grad_grads[start + 1][0][0][0] = 0;
           grad_grads[start + 1][0][0][1] = monovali[1][2];
           grad_grads[start + 1][0][1][0] = monovali[1][2];

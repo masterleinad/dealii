@@ -68,16 +68,16 @@ SquareRoot::residual(AnyData& out, const AnyData& in)
 {
   Vector<double>& v = *out.entry<Vector<double>*>(0);
   //residuum = 0
-  v(0)                    = 0.;
+  v(0) = 0.;
   const Vector<double>& x = *in.entry<const Vector<double>*>("Newton iterate");
-  v(0)                    = x * x - 2.;
+  v(0) = x * x - 2.;
 }
 
 void
 SquareRoot::solve(AnyData& out, const AnyData& in)
 {
-  Vector<double>& v       = *out.entry<Vector<double>*>(0);
-  v(0)                    = 0;
+  Vector<double>& v = *out.entry<Vector<double>*>(0);
+  v(0) = 0;
   const Vector<double>& x = *in.entry<const Vector<double>*>("Newton iterate");
   const Vector<double>& r = *in.entry<const Vector<double>*>("Newton residual");
 

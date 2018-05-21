@@ -54,8 +54,8 @@ IntegratedLegendreSZ::get_coefficients(const unsigned int k)
       coefficients[i] = b * coefficients_km1[i - 1] - c * coefficients_km2[i];
     }
 
-  coefficients[0]     = -c * coefficients_km2[0];
-  coefficients[k]     = b * coefficients_km1[k - 1];
+  coefficients[0] = -c * coefficients_km2[0];
+  coefficients[k] = b * coefficients_km1[k - 1];
   coefficients[k - 1] = b * coefficients_km1[k - 2];
 
   for(unsigned int i = 0; i < coefficients.size(); i++)

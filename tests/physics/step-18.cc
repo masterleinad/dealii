@@ -112,7 +112,7 @@ namespace Step18
   Tensor<2, 2>
   get_rotation_matrix(const std::vector<Tensor<1, 2>>& grad_u)
   {
-    const double curl  = (grad_u[1][0] - grad_u[0][1]);
+    const double curl = (grad_u[1][0] - grad_u[0][1]);
     const double angle = std::atan(curl);
     const double t[2][2]
       = {{cos(angle), sin(angle)}, {-sin(angle), cos(angle)}};
@@ -125,16 +125,16 @@ namespace Step18
                         grad_u[0][2] - grad_u[2][0],
                         grad_u[1][0] - grad_u[0][1]);
     const double   tan_angle = std::sqrt(curl * curl);
-    const double   angle     = std::atan(tan_angle);
+    const double   angle = std::atan(tan_angle);
     if(angle < 1e-9)
       {
         static const double rotation[3][3] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
         static const Tensor<2, 3> rot(rotation);
         return rot;
       }
-    const double   c    = std::cos(angle);
-    const double   s    = std::sin(angle);
-    const double   t    = 1 - c;
+    const double   c = std::cos(angle);
+    const double   s = std::sin(angle);
+    const double   t = 1 - c;
     const Point<3> axis = curl / tan_angle;
     // Rotation matrix fixed: See issue #468
     const double rotation[3][3] = {{t * axis[0] * axis[0] + c,
@@ -226,10 +226,10 @@ namespace Step18
                                Vector<double>& values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
-    const double g   = 9.81;
+    const double g = 9.81;
     const double rho = 7700;
-    values           = 0;
-    values(dim - 1)  = -rho * g;
+    values = 0;
+    values(dim - 1) = -rho * g;
   }
   template <int dim>
   void
@@ -275,7 +275,7 @@ namespace Step18
                                                Vector<double>& values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
-    values    = 0;
+    values = 0;
     values(2) = -present_timestep * velocity;
   }
   template <int dim>
@@ -320,8 +320,8 @@ namespace Step18
   {
     present_time     = 0;
     present_timestep = 1;
-    end_time         = 5;
-    timestep_no      = 0;
+    end_time = 5;
+    timestep_no = 0;
     do_initial_timestep();
     while(present_time < end_time)
       do_timestep();
@@ -398,7 +398,7 @@ namespace Step18
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -412,7 +412,7 @@ namespace Step18
       if(cell->is_locally_owned())
         {
           cell_matrix = 0;
-          cell_rhs    = 0;
+          cell_rhs = 0;
           fe_values.reinit(cell);
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)

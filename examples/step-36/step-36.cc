@@ -247,7 +247,7 @@ namespace Step36
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_stiffness_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
@@ -268,7 +268,7 @@ namespace Step36
       {
         fe_values.reinit(cell);
         cell_stiffness_matrix = 0;
-        cell_mass_matrix      = 0;
+        cell_mass_matrix = 0;
 
         potential.value_list(fe_values.get_quadrature_points(),
                              potential_values);
@@ -321,7 +321,7 @@ namespace Step36
     for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
       if(constraints.is_constrained(i))
         {
-          const double ev         = stiffness_matrix(i, i) / mass_matrix(i, i);
+          const double ev = stiffness_matrix(i, i) / mass_matrix(i, i);
           min_spurious_eigenvalue = std::min(min_spurious_eigenvalue, ev);
           max_spurious_eigenvalue = std::max(max_spurious_eigenvalue, ev);
         }

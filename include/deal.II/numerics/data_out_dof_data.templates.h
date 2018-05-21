@@ -1100,7 +1100,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
              ExcMessage("The DoF handler attached to the current output vector "
                         "does not have any degrees of freedom, so it is not "
                         "possible to output DoF data in this context."));
-      const std::string  name         = names[0];
+      const std::string  name = names[0];
       const unsigned int n_components = dof_handler->get_fe(0).n_components();
       deduced_names.resize(n_components);
       if(n_components > 1)

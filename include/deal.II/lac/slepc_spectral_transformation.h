@@ -250,7 +250,7 @@ namespace SLEPcWrappers
       /**
        * Constructor. Requires two shift parameters
        */
-      AdditionalData(const double shift_parameter     = 0,
+      AdditionalData(const double shift_parameter = 0,
                      const double antishift_parameter = 0);
 
       /**

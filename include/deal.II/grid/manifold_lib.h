@@ -379,7 +379,7 @@ public:
    * <tt>axis=2</tt> for a tube along the y- or z-axis, respectively. The
    * tolerance value is used to determine if a point is on the axis.
    */
-  CylindricalManifold(const unsigned int axis      = 0,
+  CylindricalManifold(const unsigned int axis = 0,
                       const double       tolerance = 1e-10);
 
   /**
@@ -515,7 +515,7 @@ public:
                    const std::string space_vars
                    = FunctionParser<spacedim>::default_variable_names(),
                    const double tolerance = 1e-10,
-                   const double h         = 1e-8);
+                   const double h = 1e-8);
 
   /**
    * If needed, we delete the pointers we own.

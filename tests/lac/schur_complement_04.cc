@@ -135,7 +135,7 @@ main(int argc, char** argv)
       preconditioner_A.initialize(A);
       const auto lo_A_inv = inverse_operator(lo_A, solver_A, preconditioner_A);
 
-      const auto lo_S   = schur_complement(lo_A_inv, lo_B, lo_C, lo_D);
+      const auto lo_S = schur_complement(lo_A_inv, lo_B, lo_C, lo_D);
       const auto lo_S_t = transpose_operator(lo_S);
 
       const VectorType g1 = lo_S * y;

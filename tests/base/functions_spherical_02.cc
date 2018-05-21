@@ -54,7 +54,7 @@ public:
   value(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = point - origin;
-    const double   r    = dist.norm();
+    const double   r = dist.norm();
     return r * dist[0];
   }
 
@@ -62,12 +62,12 @@ public:
   gradient(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = p - origin;
-    const double   r    = dist.norm();
+    const double   r = dist.norm();
     Assert(r > 0.0, ExcMessage("r is not positive"));
     Tensor<1, dim> res;
-    const double   x  = dist[0];
-    const double   y  = dist[1];
-    const double   z  = dist[2];
+    const double   x = dist[0];
+    const double   y = dist[1];
+    const double   z = dist[2];
     const double   x2 = x * x;
     const double   y2 = y * y;
     const double   z2 = z * z;
@@ -83,11 +83,11 @@ public:
   hessian(const Point<dim>& p, const unsigned int component = 0) const
   {
     const Tensor<1, dim> dist = p - origin;
-    const double         r    = dist.norm();
+    const double         r = dist.norm();
     Assert(r > 0.0, ExcMessage("r is not positive"));
-    const double x  = dist[0];
-    const double y  = dist[1];
-    const double z  = dist[2];
+    const double x = dist[0];
+    const double y = dist[1];
+    const double z = dist[2];
     const double z2 = z * z;
     const double y2 = y * y;
     const double x2 = x * x;
@@ -131,12 +131,12 @@ private:
   sgradient(const std::array<double, dim>& sp, const unsigned int) const
   {
     std::array<double, dim> res;
-    const double            r     = sp[0];
+    const double            r = sp[0];
     const double            theta = sp[1];
-    const double            phi   = sp[2];
-    res[0]                        = 2. * sin(phi) * r * cos(theta);
-    res[1]                        = -sin(phi) * r * r * sin(theta);
-    res[2]                        = cos(phi) * r * r * cos(theta);
+    const double            phi = sp[2];
+    res[0] = 2. * sin(phi) * r * cos(theta);
+    res[1] = -sin(phi) * r * r * sin(theta);
+    res[2] = cos(phi) * r * r * cos(theta);
     return res;
   }
 
@@ -144,16 +144,16 @@ private:
   shessian(const std::array<double, dim>& sp, const unsigned int) const
   {
     std::array<double, 6> res;
-    const double          r     = sp[0];
+    const double          r = sp[0];
     const double          theta = sp[1];
-    const double          phi   = sp[2];
-    const double          r2    = r * r;
-    res[0]                      = 2. * sin(phi) * cos(theta);
-    res[1]                      = -sin(phi) * r2 * cos(theta);
-    res[2]                      = -sin(phi) * r2 * cos(theta);
-    res[3]                      = -2. * sin(phi) * r * sin(theta);
-    res[4]                      = 2. * cos(phi) * r * cos(theta);
-    res[5]                      = -cos(phi) * r2 * sin(theta);
+    const double          phi = sp[2];
+    const double          r2 = r * r;
+    res[0] = 2. * sin(phi) * cos(theta);
+    res[1] = -sin(phi) * r2 * cos(theta);
+    res[2] = -sin(phi) * r2 * cos(theta);
+    res[3] = -2. * sin(phi) * r * sin(theta);
+    res[4] = 2. * cos(phi) * r * cos(theta);
+    res[5] = -cos(phi) * r2 * sin(theta);
     return res;
   }
 };

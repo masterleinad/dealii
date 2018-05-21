@@ -40,11 +40,11 @@ test(unsigned int ref = 1)
     {
       case 2:
         push_forward_expression = "x; x^2";
-        pull_back_expression    = "x";
+        pull_back_expression = "x";
         break;
       case 3:
         push_forward_expression = "x; x^2; 0";
-        pull_back_expression    = "x";
+        pull_back_expression = "x";
         break;
       default:
         Assert(false, ExcInternalError());

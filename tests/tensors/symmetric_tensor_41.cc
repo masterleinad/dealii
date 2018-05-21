@@ -62,7 +62,7 @@ check_vector(const int            index,
              const double         tol = 1e-12)
 {
   const bool orientation = check_orientation(expected, actual);
-  const bool unit_vec    = is_unit_vector(actual);
+  const bool unit_vec = is_unit_vector(actual);
   if(!(orientation & unit_vec))
     {
       deallog << "Incorrect eigenvector calculated: "
@@ -80,7 +80,7 @@ test_dim_1(const enum SymmetricTensorEigenvectorMethod method,
 {
   const unsigned int      dim = 1;
   SymmetricTensor<2, dim> T;
-  T[0][0]                  = e1;
+  T[0][0] = e1;
   const auto eig_vals_vecs = eigenvectors(T, method);
 
   check_value(dim, 0, e1, eig_vals_vecs[0].first, tol);

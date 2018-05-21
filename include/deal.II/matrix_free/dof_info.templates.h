@@ -186,7 +186,7 @@ namespace internal
       const unsigned int fe_index
         = dofs_per_cell.size() == 1 ? 0 : cell_active_fe_index[cell_number];
       const unsigned int dofs_this_cell = dofs_per_cell[fe_index];
-      const unsigned int n_components   = start_components.back();
+      const unsigned int n_components = start_components.back();
       for(unsigned int comp = 0; comp < n_components; ++comp)
         {
           std::pair<unsigned short, unsigned short> constraint_iterator(0, 0);
@@ -339,7 +339,7 @@ namespace internal
       Assert(boundary_cells.size() < row_starts.size(), ExcInternalError());
 
       // sort ghost dofs and compress out duplicates
-      const unsigned int n_owned  = (vector_partitioner->local_range().second
+      const unsigned int n_owned = (vector_partitioner->local_range().second
                                     - vector_partitioner->local_range().first);
       const std::size_t  n_ghosts = ghost_dofs.size();
 #ifdef DEBUG
@@ -368,7 +368,7 @@ namespace internal
           std::sort(ghost_origin.begin(), ghost_origin.end());
 
           types::global_dof_index last_contiguous_start = ghost_origin[0].first;
-          ghost_numbering[ghost_origin[0].second]       = 0;
+          ghost_numbering[ghost_origin[0].second] = 0;
           for(std::size_t i = 1; i < n_ghosts; i++)
             {
               if(ghost_origin[i].first > ghost_origin[i - 1].first + 1)
@@ -659,7 +659,7 @@ namespace internal
     DoFInfo::compute_cell_index_compression(
       const std::vector<unsigned char>& irregular_cells)
     {
-      const bool         have_hp      = dofs_per_cell.size() > 1;
+      const bool         have_hp = dofs_per_cell.size() > 1;
       const unsigned int n_components = start_components.back();
 
       Assert(vectorization_length == 1
@@ -836,7 +836,7 @@ namespace internal
         {
           auto face_computation = [&](const DoFAccessIndex face_index,
                                       const unsigned int*  cell_indices_face) {
-            bool is_contiguous      = false;
+            bool is_contiguous = false;
             bool needs_full_storage = false;
             for(unsigned int v = 0;
                 v < length
@@ -886,7 +886,7 @@ namespace internal
       // touched by a cell
       AssertDimension(length, vectorization_length);
       const unsigned int n_components = start_components.back();
-      const unsigned int n_dofs       = vector_partitioner->local_size()
+      const unsigned int n_dofs = vector_partitioner->local_size()
                                   + vector_partitioner->n_ghost_indices();
       std::vector<unsigned int> touched_by((n_dofs + chunk_size_zero_vector - 1)
                                              / chunk_size_zero_vector,
@@ -1206,7 +1206,7 @@ namespace internal
       renumbering.resize(0);
       renumbering.resize(local_size, numbers::invalid_dof_index);
 
-      types::global_dof_index counter      = 0;
+      types::global_dof_index counter = 0;
       const unsigned int      n_components = start_components.back();
       const unsigned int      n_macro_cells
         = n_vectorization_lanes_filled[dof_access_cell].size();

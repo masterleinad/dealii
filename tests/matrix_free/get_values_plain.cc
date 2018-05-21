@@ -42,7 +42,7 @@ std::ofstream logfile("output");
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
-          typename Number   = double>
+          typename Number = double>
 class MatrixFreeTest
 {
 public:
@@ -126,7 +126,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.store_plain_indices   = true;
+    data.store_plain_indices = true;
     mf_data.reinit(dof, constraints, quad, data);
   }
 
@@ -149,7 +149,7 @@ test()
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
-        endc               = tria.end();
+        endc = tria.end();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)

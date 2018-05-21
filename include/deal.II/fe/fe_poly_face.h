@@ -51,7 +51,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat, 2009
  */
 template <class PolynomialType,
-          int dim      = PolynomialType::dimension + 1,
+          int dim = PolynomialType::dimension + 1,
           int spacedim = dim>
 class FE_PolyFace : public FiniteElement<dim, spacedim>
 {

@@ -36,7 +36,7 @@ void
 test2d(const VectorTools::NormType norm)
 {
   const unsigned int dim = 2;
-  const unsigned int N   = 4;
+  const unsigned int N = 4;
   Table<dim, double> coefficients(4, 4);
   for(unsigned int i = 0; i < N; i++)
     for(unsigned int j = 0; j < N; j++)

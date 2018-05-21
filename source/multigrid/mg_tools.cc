@@ -318,7 +318,7 @@ namespace MGTools
     // smaller than dim-1.
     for(cell = dofs.begin_active(); cell != end; ++cell)
       {
-        const FiniteElement<dim>& fe       = cell->get_fe();
+        const FiniteElement<dim>& fe = cell->get_fe();
         const unsigned int        fe_index = cell->active_fe_index();
 
         Assert(couplings.n_rows() == fe.n_components(),
@@ -669,7 +669,7 @@ namespace MGTools
     Assert((level >= 1) && (level < dof.get_triangulation().n_global_levels()),
            ExcIndexRange(level, 1, dof.get_triangulation().n_global_levels()));
 
-    const types::global_dof_index fine_dofs   = dof.n_dofs(level);
+    const types::global_dof_index fine_dofs = dof.n_dofs(level);
     const types::global_dof_index coarse_dofs = dof.n_dofs(level - 1);
     (void) fine_dofs;
     (void) coarse_dofs;
@@ -737,7 +737,7 @@ namespace MGTools
                              const Table<2, DoFTools::Coupling>& int_mask,
                              const Table<2, DoFTools::Coupling>& flux_mask)
   {
-    const FiniteElement<dim>&     fe     = dof.get_fe();
+    const FiniteElement<dim>&     fe = dof.get_fe();
     const types::global_dof_index n_dofs = dof.n_dofs(level);
     const unsigned int            n_comp = fe.n_components();
     (void) n_dofs;
@@ -922,14 +922,14 @@ namespace MGTools
                                   const unsigned int                  level,
                                   const Table<2, DoFTools::Coupling>& flux_mask)
   {
-    const FiniteElement<dim>& fe     = dof.get_fe();
+    const FiniteElement<dim>& fe = dof.get_fe();
     const unsigned int        n_comp = fe.n_components();
     (void) n_comp;
 
     Assert((level >= 1) && (level < dof.get_triangulation().n_global_levels()),
            ExcIndexRange(level, 1, dof.get_triangulation().n_global_levels()));
 
-    const types::global_dof_index fine_dofs   = dof.n_dofs(level);
+    const types::global_dof_index fine_dofs = dof.n_dofs(level);
     const types::global_dof_index coarse_dofs = dof.n_dofs(level - 1);
     (void) fine_dofs;
     (void) coarse_dofs;
@@ -1046,7 +1046,7 @@ namespace MGTools
     bool                                               only_once,
     std::vector<unsigned int>                          target_component)
   {
-    const FiniteElement<dim>& fe           = dof_handler.get_fe();
+    const FiniteElement<dim>& fe = dof_handler.get_fe();
     const unsigned int        n_components = fe.n_components();
     const unsigned int        nlevels
       = dof_handler.get_triangulation().n_global_levels();
@@ -1302,7 +1302,7 @@ namespace MGTools
                && cell->level_subdomain_id()
                     == numbers::artificial_subdomain_id)
               continue;
-            const FiniteElement<dim>& fe    = cell->get_fe();
+            const FiniteElement<dim>& fe = cell->get_fe();
             const unsigned int        level = cell->level();
             local_dofs.resize(fe.dofs_per_face);
 
@@ -1343,7 +1343,7 @@ namespace MGTools
                 if(cell->at_boundary(face_no) == false)
                   continue;
 
-                const FiniteElement<dim>& fe    = cell->get_fe();
+                const FiniteElement<dim>& fe = cell->get_fe();
                 const unsigned int        level = cell->level();
 
                 typename DoFHandler<dim, spacedim>::face_iterator face

@@ -120,8 +120,8 @@ ExceptionBase::set_fields(const char* f,
   file     = f;
   line     = l;
   function = func;
-  cond     = c;
-  exc      = e;
+  cond = c;
+  exc = e;
 
   // If the system supports this, get a stacktrace how we got here:
   // Note that we defer the symbol lookup done by backtrace_symbols()
@@ -233,7 +233,7 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
       // mangled functionname out:
       std::string        stacktrace_entry(stacktrace[frame]);
       const unsigned int pos_start = stacktrace_entry.find('('),
-                         pos_end   = stacktrace_entry.find('+');
+                         pos_end = stacktrace_entry.find('+');
       std::string functionname
         = stacktrace_entry.substr(pos_start + 1, pos_end - pos_start - 1);
 
@@ -344,8 +344,8 @@ namespace StandardExceptions
       {
         // get the string name of the error code by first converting it to an
         // error class.
-        int error_class  = 0;
-        int ierr         = MPI_Error_class(error_code, &error_class);
+        int error_class = 0;
+        int ierr = MPI_Error_class(error_code, &error_class);
         error_name_known = (ierr == MPI_SUCCESS);
 
         // Check the output of the error printing functions. If either MPI

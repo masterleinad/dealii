@@ -44,7 +44,7 @@ extract(const AnyData& data)
   // From here on keep after deprecation
   int           i1 = data.entry<int>(" i  7");
   const int     i2 = data.entry<const int>(" i  7");
-  double        d  = data.entry<double>(" d  17.");
+  double        d = data.entry<double>(" d  17.");
   double*       p2 = data.entry<double*>(" d* 17.");
   const double* p3 = data.entry<const double*>("cd* 17.");
 

@@ -34,7 +34,7 @@ test()
   v1 = Utilities::fixed_power<dim>(v1);
   deallog << v1[0] << std::endl;
   VectorizedArray<float> v2 = make_vectorized_array<float>(-2.5);
-  v2                        = Utilities::fixed_power<dim>(v2);
+  v2 = Utilities::fixed_power<dim>(v2);
   deallog << (double) v2[0] << std::endl;
   deallog << std::endl;
 }

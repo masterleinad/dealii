@@ -283,7 +283,7 @@ namespace internal
                 comm = ptria->get_communicator();
 
               MPI_Status   status;
-              unsigned int mysize    = it->second.shared_faces.size();
+              unsigned int mysize = it->second.shared_faces.size();
               unsigned int othersize = numbers::invalid_unsigned_int;
               MPI_Sendrecv(&mysize,
                            1,
@@ -738,7 +738,7 @@ namespace internal
           ++partition)
         {
           unsigned int boundary_counter = 0;
-          unsigned int inner_counter    = 0;
+          unsigned int inner_counter = 0;
           for(unsigned int cell
               = task_info.cell_partition_data[partition] * vectorization_length;
               cell < task_info.cell_partition_data[partition + 1]
@@ -762,8 +762,8 @@ namespace internal
                         FaceToCellTopology<1> info;
                         info.cells_interior[0] = cell;
                         info.cells_exterior[0] = numbers::invalid_unsigned_int;
-                        info.interior_face_no  = f;
-                        info.exterior_face_no  = dcell->face(f)->boundary_id();
+                        info.interior_face_no = f;
+                        info.exterior_face_no = dcell->face(f)->boundary_id();
                         info.subface_index
                           = GeometryInfo<dim>::max_children_per_cell;
                         info.face_orientation = 0;
@@ -931,7 +931,7 @@ namespace internal
       FaceToCellTopology<1> info;
       info.cells_interior[0] = number_cell_interior;
       info.cells_exterior[0] = number_cell_exterior;
-      info.interior_face_no  = face_no;
+      info.interior_face_no = face_no;
       if(cell->has_periodic_neighbor(face_no))
         info.exterior_face_no = cell->periodic_neighbor_face_no(face_no);
       else
@@ -1056,7 +1056,7 @@ namespace internal
 
           // start with the end point for the last partition
           face_start = face_end;
-          face_end   = face_partition_data[partition + 1];
+          face_end = face_partition_data[partition + 1];
 
           // set the partitioner to the new vectorized lengths
           face_partition_data[partition + 1] = face_partition_data[partition];

@@ -38,7 +38,7 @@ test(const NumberType a, const NumberType b)
   rotation(1, 1) = csr[0];  //  c
   rotation(0, 1) = -csr[1]; // -s
   rotation(1, 0) = -csr[1]; // -s
-  y[0]           = csr[2];  //  r
+  y[0] = csr[2];            //  r
 
   rotation.residual(res, x, y);
 

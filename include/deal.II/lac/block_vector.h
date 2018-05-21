@@ -95,7 +95,7 @@ public:
    * Confer the other constructor further down if you intend to use blocks of
    * different sizes.
    */
-  explicit BlockVector(const unsigned int n_blocks   = 0,
+  explicit BlockVector(const unsigned int n_blocks = 0,
                        const size_type    block_size = 0);
 
   /**
@@ -237,7 +237,7 @@ public:
    */
   void
   reinit(const unsigned int n_blocks,
-         const size_type    block_size           = 0,
+         const size_type    block_size = 0,
          const bool         omit_zeroing_entries = false);
 
   /**
@@ -318,9 +318,9 @@ public:
    */
   void
   print(std::ostream&      out,
-        const unsigned int precision  = 3,
+        const unsigned int precision = 3,
         const bool         scientific = true,
-        const bool         across     = true) const;
+        const bool         across = true) const;
 
   /**
    * Write the vector en bloc to a stream. This is done in a binary mode, so

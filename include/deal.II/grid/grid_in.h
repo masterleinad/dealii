@@ -507,8 +507,8 @@ public:
   void
   read_assimp(const std::string& filename,
               const unsigned int mesh_index = numbers::invalid_unsigned_int,
-              const bool         remove_duplicates                = true,
-              const double       tol                              = 1e-12,
+              const bool         remove_duplicates = true,
+              const double       tol = 1e-12,
               const bool         ignore_unsupported_element_types = true);
 
   /**

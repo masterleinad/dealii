@@ -443,7 +443,7 @@ namespace GridTools
   laplace_transform(const std::map<unsigned int, Point<dim>>& new_points,
                     Triangulation<dim>&                       tria,
                     const Function<dim, double>* coefficient = nullptr,
-                    const bool solve_for_absolute_positions  = false);
+                    const bool solve_for_absolute_positions = false);
 
   /**
    * Return a std::map with all vertices of faces located in the boundary
@@ -520,7 +520,7 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   remove_hanging_nodes(Triangulation<dim, spacedim>& tria,
-                       const bool                    isotropic      = false,
+                       const bool                    isotropic = false,
                        const unsigned int            max_iterations = 100);
 
   /**
@@ -551,7 +551,7 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   remove_anisotropy(Triangulation<dim, spacedim>& tria,
-                    const double                  max_ratio      = 1.6180339887,
+                    const double                  max_ratio = 1.6180339887,
                     const unsigned int            max_iterations = 5);
 
   /**
@@ -1435,8 +1435,8 @@ namespace GridTools
     const std::function<bool(const typename MeshType::active_cell_iterator&)>&
                        predicate,
     const unsigned int refinement_level = 0,
-    const bool         allow_merge      = false,
-    const unsigned int max_boxes        = numbers::invalid_unsigned_int);
+    const bool         allow_merge = false,
+    const unsigned int max_boxes = numbers::invalid_unsigned_int);
 
   /**
    * Given an array of points, use the global bounding box description obtained using
@@ -2946,7 +2946,7 @@ namespace GridTools
                      "that is assumed to be dependent."));
 
         const Point<spacedim>     manifold_point = f(center);
-        const Tensor<1, spacedim> stencil_value  = cross_stencil<structdim>(
+        const Tensor<1, spacedim> stencil_value = cross_stencil<structdim>(
           {row_n, dependent_direction}, center, step, f);
         double entry = 0.0;
         for(unsigned int dim_n = 0; dim_n < spacedim; ++dim_n)
@@ -3426,7 +3426,7 @@ namespace GridTools
       false,
       ExcMessage("GridTools::exchange_cell_data_to_ghosts() requires MPI."));
 #    else
-    constexpr int dim      = MeshType::dimension;
+    constexpr int dim = MeshType::dimension;
     constexpr int spacedim = MeshType::space_dimension;
     auto tria = static_cast<const parallel::Triangulation<dim, spacedim>*>(
       &mesh.get_triangulation());
@@ -3500,7 +3500,7 @@ namespace GridTools
         }
 
     // 2. send our messages
-    std::set<dealii::types::subdomain_id> ghost_owners   = tria->ghost_owners();
+    std::set<dealii::types::subdomain_id> ghost_owners = tria->ghost_owners();
     const unsigned int                    n_ghost_owners = ghost_owners.size();
     std::vector<std::vector<char>>        sendbuffers(n_ghost_owners);
     std::vector<MPI_Request>              requests(n_ghost_owners);
@@ -3515,7 +3515,7 @@ namespace GridTools
         // keep data around till we can make sure that the packet has been
         // received
         sendbuffers[idx] = Utilities::pack(data);
-        const int ierr   = MPI_Isend(sendbuffers[idx].data(),
+        const int ierr = MPI_Isend(sendbuffers[idx].data(),
                                    sendbuffers[idx].size(),
                                    MPI_BYTE,
                                    *it,
@@ -3540,7 +3540,7 @@ namespace GridTools
         receive.resize(len);
 
         char* ptr = receive.data();
-        ierr      = MPI_Recv(ptr,
+        ierr = MPI_Recv(ptr,
                         len,
                         MPI_BYTE,
                         status.MPI_SOURCE,

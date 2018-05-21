@@ -32,7 +32,7 @@ test()
 {
   Triangulation<1, 3> tria;
 
-  const unsigned int    dim          = 1;
+  const unsigned int    dim = 1;
   static const Point<3> vertices_1[] = {
     Point<3>(0, 0, 0), Point<3>(1, 0, 0), Point<3>(1, 0, 0), Point<3>(1, 1, 0),
     Point<3>(1, 1, 0), Point<3>(0, 1, 0), Point<3>(0, 1, 0), Point<3>(0, 0, 0),

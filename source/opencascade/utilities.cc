@@ -239,7 +239,7 @@ namespace OpenCASCADE
     AssertThrow(stat == IFSelect_RetDone, ExcMessage("Error in reading file!"));
 
     Standard_Boolean    failsonly = Standard_False;
-    IFSelect_PrintCount mode      = IFSelect_ItemsByEntity;
+    IFSelect_PrintCount mode = IFSelect_ItemsByEntity;
     reader.PrintCheckLoad(failsonly, mode);
 
     Standard_Integer nRoots = reader.TransferRoots();
@@ -280,7 +280,7 @@ namespace OpenCASCADE
     AssertThrow(stat == IFSelect_RetDone, ExcMessage("Error in reading file!"));
 
     Standard_Boolean    failsonly = Standard_False;
-    IFSelect_PrintCount mode      = IFSelect_ItemsByEntity;
+    IFSelect_PrintCount mode = IFSelect_ItemsByEntity;
     reader.PrintCheckLoad(failsonly, mode);
 
     Standard_Integer nRoots = reader.TransferRoots();
@@ -369,7 +369,7 @@ namespace OpenCASCADE
     TopoDS_Edge                           edge;
     while(edgeExplorer.More())
       {
-        edge                     = TopoDS::Edge(edgeExplorer.Current());
+        edge = TopoDS::Edge(edgeExplorer.Current());
         Handle(Geom_Curve) curve = BRep_Tool::Curve(edge, L, First, Last);
         intersections.push_back(Handle(Geom_BoundedCurve)::DownCast(curve));
         edgeExplorer.Next();
@@ -458,7 +458,7 @@ namespace OpenCASCADE
         if(distance < minDistance)
           {
             minDistance = distance;
-            result      = point<dim>(Inters.Pnt(i + 1));
+            result = point<dim>(Inters.Pnt(i + 1));
           }
       }
 
@@ -523,16 +523,16 @@ namespace OpenCASCADE
         if(cell->face(f)->at_boundary())
           {
             // get global face and vertex indices
-            face_index                       = cell->face(f)->index();
-            const unsigned int v0            = cell->face(f)->vertex_index(0);
-            const unsigned int v1            = cell->face(f)->vertex_index(1);
-            face_to_verts[face_index].first  = v0;
+            face_index = cell->face(f)->index();
+            const unsigned int v0 = cell->face(f)->vertex_index(0);
+            const unsigned int v1 = cell->face(f)->vertex_index(1);
+            face_to_verts[face_index].first = v0;
             face_to_verts[face_index].second = v1;
             visited_faces[face_index]        = false;
 
             // extract mapped vertex locations
             std::array<Point<spacedim>, GeometryInfo<2>::vertices_per_cell>
-              verts           = mapping.get_vertices(cell);
+              verts = mapping.get_vertices(cell);
             vert_to_point[v0] = verts[GeometryInfo<2>::face_to_cell_vertices(
               f, 0, true, false, false)];
             vert_to_point[v1] = verts[GeometryInfo<2>::face_to_cell_vertices(
@@ -566,14 +566,14 @@ namespace OpenCASCADE
     while(finished == false)
       {
         const unsigned int start_point_index = face_to_verts[face_index].first;
-        unsigned int       point_index       = start_point_index;
+        unsigned int       point_index = start_point_index;
 
         // point_index and face_index always run together
         std::vector<Point<spacedim>> pointlist;
         do
           {
             visited_faces[face_index] = true;
-            auto current_point        = vert_to_point[point_index];
+            auto current_point = vert_to_point[point_index];
             pointlist.push_back(current_point);
 
             // Get next point
@@ -641,10 +641,10 @@ namespace OpenCASCADE
         if(distance < minDistance)
           {
             minDistance = distance;
-            Pproj       = tmp_proj;
-            out_shape   = face;
-            u           = proj_params.X();
-            v           = proj_params.Y();
+            Pproj = tmp_proj;
+            out_shape = face;
+            u = proj_params.X();
+            v = proj_params.Y();
             ++counter;
           }
         ++face_counter;
@@ -674,9 +674,9 @@ namespace OpenCASCADE
               if((num_proj_points > 0) && (Proj.LowerDistance() < minDistance))
                 {
                   minDistance = Proj.LowerDistance();
-                  Pproj       = Proj.NearestPoint();
-                  out_shape   = edge;
-                  u           = Proj.LowerDistanceParameter();
+                  Pproj = Proj.NearestPoint();
+                  out_shape = edge;
+                  u = Proj.LowerDistanceParameter();
                   ++counter;
                 }
             }
@@ -708,8 +708,8 @@ namespace OpenCASCADE
       = project_point_and_pull_back(in_shape, origin, tolerance);
 
     TopoDS_Shape& out_shape = std::get<1>(shape_and_params);
-    double&       u         = std::get<2>(shape_and_params);
-    double&       v         = std::get<3>(shape_and_params);
+    double&       u = std::get<2>(shape_and_params);
+    double&       v = std::get<3>(shape_and_params);
 
     // just a check here: the number of faces in out_shape must be 1, otherwise
     // something is wrong
@@ -769,7 +769,7 @@ namespace OpenCASCADE
            ExcMessage("Curvature is not well defined!"));
     Standard_Real Min_Curvature = props.MinCurvature();
     Standard_Real Max_Curvature = props.MaxCurvature();
-    Tensor<1, 3>  normal        = Point<3>(Normal.X(), Normal.Y(), Normal.Z());
+    Tensor<1, 3>  normal = Point<3>(Normal.X(), Normal.Y(), Normal.Z());
 
     // In the case your manifold changes from convex to concave or viceversa
     // the normal could jump from "inner" to "outer" normal.

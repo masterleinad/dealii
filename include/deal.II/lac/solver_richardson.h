@@ -68,7 +68,7 @@ public:
     /**
      * Constructor. By default, set the damping parameter to one.
      */
-    explicit AdditionalData(const double omega                       = 1,
+    explicit AdditionalData(const double omega = 1,
                             const bool   use_preconditioned_residual = false);
 
     /**
@@ -218,7 +218,7 @@ SolverRichardson<VectorType>::solve(const MatrixType&         A,
       // get the required norm of the (possibly preconditioned)
       // residual
       last_criterion = criterion(r, d);
-      conv           = this->iteration_status(iter, last_criterion, x);
+      conv = this->iteration_status(iter, last_criterion, x);
       if(conv != SolverControl::iterate)
         break;
 
@@ -242,7 +242,7 @@ SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
                                      const VectorType&         b,
                                      const PreconditionerType& preconditioner)
 {
-  SolverControl::State conv           = SolverControl::iterate;
+  SolverControl::State conv = SolverControl::iterate;
   double               last_criterion = -std::numeric_limits<double>::max();
 
   unsigned int iter = 0;
@@ -270,7 +270,7 @@ SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
       preconditioner.Tvmult(d, r);
 
       last_criterion = criterion(r, d);
-      conv           = this->iteration_status(iter, last_criterion, x);
+      conv = this->iteration_status(iter, last_criterion, x);
       if(conv != SolverControl::iterate)
         break;
 

@@ -42,7 +42,7 @@ InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
   clear();
 
   // next store pointers to grids
-  this->source_grid      = &source_grid;
+  this->source_grid = &source_grid;
   this->destination_grid = &destination_grid;
 
   // then set up the meshes from
@@ -59,8 +59,8 @@ InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
       // for this and we would like to
       // avoid such knowledge here
       unsigned int  n_cells = 0;
-      cell_iterator cell    = source_grid.begin(level),
-                    endc    = source_grid.end(level);
+      cell_iterator cell = source_grid.begin(level),
+                    endc = source_grid.end(level);
       for(; cell != endc; ++cell)
         if(static_cast<unsigned int>(cell->index()) > n_cells)
           n_cells = cell->index();
@@ -159,7 +159,7 @@ void
 InterGridMap<MeshType>::clear()
 {
   mapping.clear();
-  source_grid      = nullptr;
+  source_grid = nullptr;
   destination_grid = nullptr;
 }
 

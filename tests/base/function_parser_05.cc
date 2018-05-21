@@ -10,7 +10,7 @@ void
 test1()
 {
   // set up problem:
-  std::string                   variables  = "x,y";
+  std::string                   variables = "x,y";
   std::string                   expression = "cos(x)+sqrt(y)";
   std::map<std::string, double> constants;
 

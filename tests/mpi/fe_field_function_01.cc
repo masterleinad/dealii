@@ -85,7 +85,7 @@ test()
       bool point_found = false;
       try
         {
-          value       = field_function.value(p);
+          value = field_function.value(p);
           point_found = true;
 
           Assert(std::fabs(value - (p[0] + 2))

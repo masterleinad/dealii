@@ -380,7 +380,7 @@ namespace LinearAlgebra
                                + Utilities::to_string(err)));
 
         const double* new_values = target_vector.Values();
-        const int     size       = target_vector.MyLength();
+        const int     size = target_vector.MyLength();
         Assert(size == 0 || values != nullptr,
                ExcInternalError("Import failed."));
 
@@ -395,7 +395,7 @@ namespace LinearAlgebra
                                + Utilities::to_string(err)));
 
         const double* new_values = target_vector.Values();
-        const int     size       = target_vector.MyLength();
+        const int     size = target_vector.MyLength();
         Assert(size == 0 || values != nullptr,
                ExcInternalError("Import failed."));
 

@@ -99,14 +99,14 @@ test3()
 
   Vector<double> solution_fe(dof_handler.n_dofs()),
     solution_pou(dof_handler.n_dofs()), solution(dof_handler.n_dofs());
-  solution_fe  = 0;
+  solution_fe = 0;
   solution_pou = 0;
 
   // groups are one after another
   // thus set to 1.0 the same shape function in the underlying FE
   solution_fe[0]  = 2.0;
   solution_pou[1] = 2.0;
-  solution        = solution_fe;
+  solution = solution_fe;
   solution += solution_pou;
 
   const unsigned int n_q_points = quadrature.size();

@@ -72,9 +72,9 @@ main()
       Tensor<1, 3, float> e1;
       Tensor<1, 3, float> e2;
       Tensor<1, 3, float> e3;
-      e1[0]                      = 1.;
-      e2[1]                      = 1.;
-      e3[2]                      = 1.;
+      e1[0] = 1.;
+      e2[1] = 1.;
+      e3[2] = 1.;
       Tensor<1, 3, float> result = cross_product_3d(e1, e2);
       deallog << '\t' << static_cast<double>(result[0]) << '\t'
               << static_cast<double>(result[1]) << '\t'

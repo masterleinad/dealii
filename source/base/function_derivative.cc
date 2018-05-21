@@ -153,7 +153,7 @@ FunctionDerivative<dim>::value_list(const std::vector<Point<dim>>& points,
                                     std::vector<double>&           values,
                                     const unsigned int component) const
 {
-  const unsigned int n                  = points.size();
+  const unsigned int n = points.size();
   const bool         variable_direction = (incr.size() == 1) ? false : true;
   if(variable_direction)
     Assert(incr.size() == points.size(),

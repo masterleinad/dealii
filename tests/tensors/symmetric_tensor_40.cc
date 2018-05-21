@@ -57,7 +57,7 @@ test_dim_1(const double e1, const double tol = 1e-12)
 {
   const unsigned int      dim = 1;
   SymmetricTensor<2, dim> T;
-  T[0][0]                                = e1;
+  T[0][0] = e1;
   const std::array<double, dim> eig_vals = eigenvalues(T);
 
   check_value(dim, 0, e1, eig_vals[0], tol);

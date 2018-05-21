@@ -239,7 +239,7 @@ diffusionMechanics<dim>::run()
   //Initial conditions
   VectorTools::interpolate(dof_handler, InitialConditions<dim>(), Un);
   //  VectorTools::interpolate(dof_handler, Functions::ZeroFunction<dim>(fe_collection.n_components()), Un);
-  U  = Un;
+  U = Un;
   U0 = Un;
 
   deallog << Un.l2_norm() << std::endl;

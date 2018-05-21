@@ -124,7 +124,7 @@ check()
   SparseMatrix<double> A(A_pattern);
 
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-  const typename DoFHandler<dim>::cell_iterator  end  = dof.end();
+  const typename DoFHandler<dim>::cell_iterator  end = dof.end();
 
   for(; cell != end; ++cell)
     {
@@ -138,7 +138,7 @@ check()
 
           for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
             {
-              const double         v      = fe.shape_value(i, k);
+              const double         v = fe.shape_value(i, k);
               const Tensor<1, dim> grad_v = fe.shape_grad(i, k);
 
               double rhs = dx * v * (function[k]);
@@ -147,7 +147,7 @@ check()
               for(unsigned int j = 0; j < element.dofs_per_cell; ++j)
                 {
                   const Tensor<1, dim> grad_u = fe.shape_grad(j, k);
-                  double               el     = dx * (grad_u * grad_v);
+                  double               el = dx * (grad_u * grad_v);
                   A.add(global_dofs[i], global_dofs[j], el);
                 }
             }

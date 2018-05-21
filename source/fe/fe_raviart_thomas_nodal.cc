@@ -216,7 +216,7 @@ FE_RaviartThomasNodal<dim>::get_dpo_vector(const unsigned int deg)
 
   std::vector<unsigned int> dpo(dim + 1);
   dpo[dim - 1] = dofs_per_face;
-  dpo[dim]     = interior_dofs;
+  dpo[dim] = interior_dofs;
 
   return dpo;
 }
@@ -301,7 +301,7 @@ FE_RaviartThomasNodal<dim>::
   // evaluated depends on the face
   // direction and orientation.
   unsigned int fbase = 0;
-  unsigned int f     = 0;
+  unsigned int f = 0;
   for(; f < GeometryInfo<dim>::faces_per_cell;
       ++f, fbase += this->dofs_per_face)
     {

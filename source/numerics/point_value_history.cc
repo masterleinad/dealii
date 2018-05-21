@@ -215,7 +215,7 @@ PointValueHistory<dim>::add_point(const Point<dim>& location)
       // vectors
       unsigned int component
         = dof_handler->get_fe().system_to_component_index(support_point).first;
-      current_points[component]   = fe_values.quadrature_point(support_point);
+      current_points[component] = fe_values.quadrature_point(support_point);
       current_fe_index[component] = support_point;
     }
 
@@ -245,8 +245,8 @@ PointValueHistory<dim>::add_point(const Point<dim>& location)
              < location.distance(current_points[component]))
             {
               // save the data
-              current_points[component]   = test_point;
-              current_cell                = cell;
+              current_points[component] = test_point;
+              current_cell = cell;
               current_fe_index[component] = support_point;
             }
         }
@@ -360,7 +360,7 @@ PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
       // vectors
       unsigned int component
         = dof_handler->get_fe().system_to_component_index(support_point).first;
-      temp_points[component]   = fe_values.quadrature_point(support_point);
+      temp_points[component] = fe_values.quadrature_point(support_point);
       temp_fe_index[component] = support_point;
     }
   std::vector<std::vector<Point<dim>>> current_points(
@@ -654,7 +654,7 @@ PointValueHistory<dim>::evaluate_field(
       "The update of normal vectors may not be requested for evaluation of "
       "data on cells via DataPostprocessor."));
   FEValues<dim> fe_values(dof_handler->get_fe(), quadrature, update_flags);
-  unsigned int  n_components        = dof_handler->get_fe(0).n_components();
+  unsigned int  n_components = dof_handler->get_fe(0).n_components();
   unsigned int  n_quadrature_points = quadrature.size();
 
   unsigned int n_output_variables = data_postprocessor.get_names().size();
@@ -706,7 +706,7 @@ PointValueHistory<dim>::evaluate_field(
       // find the closest quadrature point
       std::vector<Point<dim>> quadrature_points
         = fe_values.get_quadrature_points();
-      double       distance       = cell->diameter();
+      double       distance = cell->diameter();
       unsigned int selected_point = 0;
       for(unsigned int q_point = 0; q_point < n_quadrature_points; q_point++)
         {
@@ -1262,8 +1262,8 @@ PointValueHistory<dim>::get_postprocessor_locations(
             .first;
       fe_values.reinit(cell);
 
-      evaluation_points           = fe_values.get_quadrature_points();
-      double       distance       = cell->diameter();
+      evaluation_points = fe_values.get_quadrature_points();
+      double       distance = cell->diameter();
       unsigned int selected_point = 0;
 
       for(unsigned int q_point = 0; q_point < n_quadrature_points; q_point++)

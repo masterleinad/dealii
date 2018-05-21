@@ -66,7 +66,7 @@
 #include <cmath>
 #include <sstream>
 
-unsigned int       minlevel        = 0;
+unsigned int       minlevel = 0;
 const unsigned int velocity_degree = 2;
 
 double pressure_scaling = 1.0;
@@ -273,7 +273,7 @@ namespace StokesClass
   } // namespace StokesSolver
 
   // Parameters for Sinker example
-  double beta  = 10.0;
+  double beta = 10.0;
   double delta = 200.0;
   double omega = 0.1;
 
@@ -518,7 +518,7 @@ namespace StokesClass
             SymmetricTensor<2, dim, vector_t> sym_grad_u
               = velocity.get_symmetric_gradient(q);
             vector_t pres = pressure.get_value(q);
-            vector_t div  = -trace(sym_grad_u);
+            vector_t div = -trace(sym_grad_u);
             pressure.submit_value(div, q);
 
             sym_grad_u *= viscosity_x_2(cell, q);
@@ -1229,7 +1229,7 @@ namespace StokesClass
   StokesProblem<dim>::solve()
   {
     const double       solver_tolerance = 1e-6 * system_rhs.l2_norm();
-    const unsigned int n_cheap_stokes_solver_steps     = 1000;
+    const unsigned int n_cheap_stokes_solver_steps = 1000;
     const double       linear_solver_A_block_tolerance = 1e-2;
     const double       linear_solver_S_block_tolerance = 1e-6;
 
@@ -1309,10 +1309,10 @@ namespace StokesClass
     typedef PreconditionChebyshev<MassMatrixType, vector_t> MassPrec;
     MassPrec                                                prec_S;
     typename MassPrec::AdditionalData                       prec_S_data;
-    prec_S_data.smoothing_range     = 1e-3;
-    prec_S_data.degree              = numbers::invalid_unsigned_int;
+    prec_S_data.smoothing_range = 1e-3;
+    prec_S_data.degree = numbers::invalid_unsigned_int;
     prec_S_data.eig_cg_n_iterations = mass_matrix.m();
-    prec_S_data.preconditioner      = mass_matrix.get_matrix_diagonal_inverse();
+    prec_S_data.preconditioner = mass_matrix.get_matrix_diagonal_inverse();
     prec_S.initialize(mass_matrix, prec_S_data);
 
     typedef PreconditionMG<dim, vector_t, Transfer> A_prec_type;

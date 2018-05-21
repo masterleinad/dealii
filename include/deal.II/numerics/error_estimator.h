@@ -335,12 +335,12 @@ public:
            const InputVector&        solution,
            Vector<float>&            error,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
+           const Function<spacedim>* coefficients = nullptr,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Call the @p estimate function, see above, with
@@ -356,12 +356,12 @@ public:
            const InputVector&        solution,
            Vector<float>&            error,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
+           const Function<spacedim>* coefficients = nullptr,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Same function as above, but accepts more than one solution vector and
@@ -387,12 +387,12 @@ public:
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Call the @p estimate function, see above, with
@@ -408,12 +408,12 @@ public:
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -430,12 +430,12 @@ public:
            const InputVector&        solution,
            Vector<float>&            error,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -451,12 +451,12 @@ public:
            const InputVector&        solution,
            Vector<float>&            error,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
+           const Function<spacedim>* coefficients = nullptr,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -473,12 +473,12 @@ public:
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -494,12 +494,12 @@ public:
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
+           const Function<spacedim>* coefficients = nullptr,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Exception
@@ -616,12 +616,12 @@ public:
            const InputVector&        solution,
            Vector<float>&            error,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficient    = nullptr,
+           const Function<spacedim>* coefficient = nullptr,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Call the @p estimate function, see above, with
@@ -637,12 +637,12 @@ public:
            const InputVector&        solution,
            Vector<float>&            error,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
+           const Function<spacedim>* coefficients = nullptr,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Same function as above, but accepts more than one solution vectors and
@@ -668,12 +668,12 @@ public:
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Call the @p estimate function, see above, with
@@ -689,12 +689,12 @@ public:
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -711,12 +711,12 @@ public:
            const InputVector&        solution,
            Vector<float>&            error,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -732,12 +732,12 @@ public:
            const InputVector&        solution,
            Vector<float>&            error,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -754,12 +754,12 @@ public:
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -775,12 +775,12 @@ public:
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
            const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
+           const Function<spacedim>* coefficients = 0,
            const unsigned int        n_threads = numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const Strategy           strategy = cell_diameter_over_24);
 
   /**
    * Exception

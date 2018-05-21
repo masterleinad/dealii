@@ -73,7 +73,7 @@ void
 filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
 {
   std::string       line;
-  bool              found   = false;
+  bool              found = false;
   const std::string opening = "<" + key;
   const std::string closing = "</" + key;
   while(std::getline(in, line))
@@ -86,7 +86,7 @@ filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
           const auto pos = line.find(closing);
           if(pos != std::string::npos)
             {
-              line  = line.substr(0, line.find(">", 0) + 1) + line.substr(pos);
+              line = line.substr(0, line.find(">", 0) + 1) + line.substr(pos);
               found = false;
             }
           else
@@ -179,7 +179,7 @@ namespace Testing
     if(!inited || reseed)
       {
         //srand treats a seed 0 as 1 for some reason
-        r[0]          = (seed == 0) ? 1 : seed;
+        r[0] = (seed == 0) ? 1 : seed;
         long int word = r[0];
 
         for(int i = 1; i < 31; i++)
@@ -189,7 +189,7 @@ namespace Testing
             // but avoids overflowing 31 bits.
             const long int hi = word / 127773;
             const long int lo = word % 127773;
-            word              = 16807 * lo - 2836 * hi;
+            word = 16807 * lo - 2836 * hi;
             if(word < 0)
               word += 2147483647;
             r[i] = word;
@@ -198,7 +198,7 @@ namespace Testing
         for(int i = 31; i < 34; i++)
           {
             r[k % 32] = r[(k + 32 - 31) % 32];
-            k         = (k + 1) % 32;
+            k = (k + 1) % 32;
           }
 
         for(int i = 34; i < 344; i++)
@@ -213,8 +213,8 @@ namespace Testing
       }
 
     r[k % 32] = nonoverflow_add(r[(k + 32 - 31) % 32], r[(k + 32 - 3) % 32]);
-    int ret   = r[k % 32];
-    k         = (k + 1) % 32;
+    int ret = r[k % 32];
+    k = (k + 1) % 32;
     return (unsigned int) ret >> 1;
   }
 
@@ -320,11 +320,11 @@ std::string
 unify_pretty_function(const std::string& text)
 {
   std::string t = text;
-  t             = Utilities::replace_in_string(t, " &", " & ");
-  t             = Utilities::replace_in_string(t, " & ,", "&,");
-  t             = Utilities::replace_in_string(t, " & )", "&)");
-  t             = Utilities::replace_in_string(t, " & ", "& ");
-  t             = Utilities::replace_in_string(t, "virtual ", "");
+  t = Utilities::replace_in_string(t, " &", " & ");
+  t = Utilities::replace_in_string(t, " & ,", "&,");
+  t = Utilities::replace_in_string(t, " & )", "&)");
+  t = Utilities::replace_in_string(t, " & ", "& ");
+  t = Utilities::replace_in_string(t, "virtual ", "");
   return t;
 }
 
@@ -522,7 +522,7 @@ struct MPILogInitAll
   ~MPILogInitAll()
   {
 #ifdef DEAL_II_WITH_MPI
-    const unsigned int myid  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+    const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
     const unsigned int nproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
     // pop the prefix for the MPI rank of the current process

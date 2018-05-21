@@ -76,7 +76,7 @@ test()
 
   typename std::vector<Point<dim>>::iterator point_iterator, points_end;
   point_iterator = points.begin();
-  points_end     = points.end();
+  points_end = points.end();
 
   Vector<double> value(1);
 

@@ -407,9 +407,9 @@ template <class StreamType>
 inline void
 BlockSparseMatrixEZ<number>::print_statistics(StreamType& out, bool full)
 {
-  size_type              used_total      = 0;
+  size_type              used_total = 0;
   size_type              allocated_total = 0;
-  size_type              reserved_total  = 0;
+  size_type              reserved_total = 0;
   std::vector<size_type> used_by_line_total;
 
   size_type              used;

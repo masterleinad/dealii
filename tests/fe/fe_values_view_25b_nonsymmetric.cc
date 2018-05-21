@@ -75,7 +75,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
         Assert(i_node < fe_scalar.dofs_per_cell, ExcInternalError());
         for(unsigned int q = 0; q < quadrature.size(); ++q)
           {
-            scalar_values[i_node][q]    = fe_values_scalar.shape_value(i, q);
+            scalar_values[i_node][q] = fe_values_scalar.shape_value(i, q);
             scalar_gradients[i_node][q] = fe_values_scalar.shape_grad(i, q);
           }
       }
@@ -115,7 +115,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
     {
       const double f_val = fe_function(local_dof_indices[i]);
-      const auto   val   = fe_values[extractor].value(i, 0);
+      const auto   val = fe_values[extractor].value(i, 0);
       // find out which component is non-zero
       TableIndices<2> nonzero_ind;
       for(unsigned int k = 0; k < Tensor<2, dim>::n_independent_components; ++k)
@@ -134,9 +134,9 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
       for(unsigned int q = 0; q < quadrature.size(); ++q)
         {
-          const auto val_q  = fe_values[extractor].value(i, q);
+          const auto val_q = fe_values[extractor].value(i, q);
           const auto grad_q = fe_values[extractor].gradient(i, q);
-          const auto div_q  = fe_values[extractor].divergence(i, q);
+          const auto div_q = fe_values[extractor].divergence(i, q);
           deallog << "  q_point=" << fe_values.quadrature_point(q) << std::endl
                   << "    value= " << val_q << std::endl
                   << "    grad= " << grad_q << std::endl

@@ -215,7 +215,7 @@ AdvectionProblem<dim>::assemble_reference()
 
   const RightHandSide<dim> rhs_function;
   const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int       n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -229,14 +229,14 @@ AdvectionProblem<dim>::assemble_reference()
   for(; cell != endc; ++cell)
     {
       cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_rhs = 0;
       fe_values.reinit(cell);
 
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
 
       Tensor<1, dim> advection_direction;
-      advection_direction[0]       = 1;
-      advection_direction[1]       = 1;
+      advection_direction[0] = 1;
+      advection_direction[1] = 1;
       advection_direction[dim - 1] = -1;
 
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
@@ -276,7 +276,7 @@ void
 AdvectionProblem<dim>::assemble_test_1()
 {
   test_matrix = 0;
-  test_rhs    = 0;
+  test_rhs = 0;
 
   QGauss<dim>   quadrature_formula(3);
   FEValues<dim> fe_values(fe,
@@ -286,7 +286,7 @@ AdvectionProblem<dim>::assemble_test_1()
 
   const RightHandSide<dim> rhs_function;
   const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int       n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -300,14 +300,14 @@ AdvectionProblem<dim>::assemble_test_1()
   for(; cell != endc; ++cell)
     {
       cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_rhs = 0;
       fe_values.reinit(cell);
 
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
 
       Tensor<1, dim> advection_direction;
-      advection_direction[0]       = 1;
-      advection_direction[1]       = 1;
+      advection_direction[0] = 1;
+      advection_direction[1] = 1;
       advection_direction[dim - 1] = -1;
 
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
@@ -351,7 +351,7 @@ AdvectionProblem<dim>::assemble_test_2()
 
   const RightHandSide<dim> rhs_function;
   const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int       n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -365,14 +365,14 @@ AdvectionProblem<dim>::assemble_test_2()
   for(; cell != endc; ++cell)
     {
       cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_rhs = 0;
       fe_values.reinit(cell);
 
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
 
       Tensor<1, dim> advection_direction;
-      advection_direction[0]       = 1;
-      advection_direction[1]       = 1;
+      advection_direction[0] = 1;
+      advection_direction[1] = 1;
       advection_direction[dim - 1] = -1;
 
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)

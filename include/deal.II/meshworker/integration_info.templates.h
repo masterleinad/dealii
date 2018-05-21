@@ -93,7 +93,7 @@ namespace MeshWorker
         for(unsigned int b = 0; b < info.block_info->local().size(); ++b)
           {
             const unsigned int fe_no = info.block_info->base_element(b);
-            const FEValuesBase<dim, sdim>& fe     = this->fe_values(fe_no);
+            const FEValuesBase<dim, sdim>& fe = this->fe_values(fe_no);
             const unsigned int             n_comp = fe.get_fe().n_components();
             const unsigned int             block_start
               = info.block_info->local().block_start(b);
@@ -126,7 +126,7 @@ namespace MeshWorker
       }
     else
       {
-        const FEValuesBase<dim, sdim>& fe     = this->fe_values(0);
+        const FEValuesBase<dim, sdim>& fe = this->fe_values(0);
         const unsigned int             n_comp = fe.get_fe().n_components();
         if(info.level_cell)
           this->global_data->mg_fill(values,

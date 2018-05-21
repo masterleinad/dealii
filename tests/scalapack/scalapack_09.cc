@@ -131,9 +131,9 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> blocks     = {{1, 2}};
+  const std::vector<unsigned int> blocks = {{1, 2}};
   const double                    tol_double = 1e-10;
-  const float                     tol_float  = 1e-5;
+  const float                     tol_float = 1e-5;
 
   for(const auto& b : blocks)
     test<double>(b, tol_double);

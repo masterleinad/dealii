@@ -29,7 +29,7 @@ test_laplacian(unsigned int n)
   TridiagonalMatrix<number> M(n - 1, true);
   for(unsigned int i = 0; i < n - 2; ++i)
     {
-      M(i, i)     = 2.;
+      M(i, i) = 2.;
       M(i, i + 1) = -1.;
     }
   M(n - 2, n - 2) = 2.;

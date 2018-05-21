@@ -257,7 +257,7 @@ namespace Step50
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -318,7 +318,7 @@ namespace Step50
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -461,7 +461,7 @@ namespace Step50
         check1.reinit(mg_dof_handler.locally_owned_dofs(), MPI_COMM_WORLD);
         check2 = check1;
         check3 = check1;
-        tmp    = check1;
+        tmp = check1;
 
         check1 = 1.0;
         constraints.set_zero(check1);

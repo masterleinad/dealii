@@ -143,7 +143,7 @@ EigenvalueProblem<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_stiffness_matrix(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
@@ -157,7 +157,7 @@ EigenvalueProblem<dim>::assemble_system()
     {
       fe_values.reinit(cell);
       cell_stiffness_matrix = 0;
-      cell_mass_matrix      = 0;
+      cell_mass_matrix = 0;
 
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
@@ -222,7 +222,7 @@ EigenvalueProblem<dim>::solve()
           eigenvectors[i + eigenvalues.size()] = arpack_vectors[i + 1];
           if(i + 1 < eigenvalues.size())
             {
-              eigenvectors[i + 1]                      = arpack_vectors[i];
+              eigenvectors[i + 1] = arpack_vectors[i];
               eigenvectors[i + 1 + eigenvalues.size()] = arpack_vectors[i + 1];
               eigenvectors[i + 1 + eigenvalues.size()] *= -1;
               ++i;

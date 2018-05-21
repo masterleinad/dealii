@@ -31,7 +31,7 @@ test(PETScWrappers::MPI::Vector& v)
   v.compress(VectorOperation::insert);
 
   const unsigned int sz = v.size();
-  v                     = 2;
+  v = 2;
   AssertThrow(v.size() == sz, ExcInternalError());
   AssertThrow(v.l2_norm() == std::sqrt(4. * sz), ExcInternalError());
 

@@ -33,7 +33,7 @@ main()
   LAPACKFullMatrix<double> A(n);
   FullMatrix<double>       C(m);
   // fill some entries:
-  C(0, 0)         = 1.0;
+  C(0, 0) = 1.0;
   C(m - 1, m - 1) = 1.0;
   // insert C into A's middle:
   A.fill(C, 3, 3, 0, 0);

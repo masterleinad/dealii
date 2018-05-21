@@ -29,9 +29,9 @@ test()
   double       double_sum;
   float        float_sum;
 
-  int_sum    = Utilities::MPI::max<int>(myid + 1, MPI_COMM_WORLD);
-  uint_sum   = Utilities::MPI::max<unsigned int>(myid + 1, MPI_COMM_WORLD);
-  float_sum  = Utilities::MPI::max<float>(myid + 1, MPI_COMM_WORLD);
+  int_sum = Utilities::MPI::max<int>(myid + 1, MPI_COMM_WORLD);
+  uint_sum = Utilities::MPI::max<unsigned int>(myid + 1, MPI_COMM_WORLD);
+  float_sum = Utilities::MPI::max<float>(myid + 1, MPI_COMM_WORLD);
   double_sum = Utilities::MPI::max<double>(myid + 1, MPI_COMM_WORLD);
 
   if(myid == 0)

@@ -95,7 +95,7 @@ Beta<dim>::value_list(const std::vector<Point<dim>>& points,
 
   for(unsigned int i = 0; i < points.size(); ++i)
     {
-      const Point<dim>& p    = points[i];
+      const Point<dim>& p = points[i];
       Point<dim>&       beta = values[i];
 
       beta(0) = -p(1);
@@ -195,7 +195,7 @@ DGTransportEquation<dim>::assemble_boundary_term(
   FullMatrix<double>&      ui_vi_matrix,
   Vector<double>&          cell_vector) const
 {
-  const std::vector<double>&         JxW     = fe_v.get_JxW_values();
+  const std::vector<double>&         JxW = fe_v.get_JxW_values();
   const std::vector<Tensor<1, dim>>& normals = fe_v.get_all_normal_vectors();
 
   std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
@@ -227,7 +227,7 @@ DGTransportEquation<dim>::assemble_face_term1(
   FullMatrix<double>&          ui_vi_matrix,
   FullMatrix<double>&          ue_vi_matrix) const
 {
-  const std::vector<double>&         JxW     = fe_v.get_JxW_values();
+  const std::vector<double>&         JxW = fe_v.get_JxW_values();
   const std::vector<Tensor<1, dim>>& normals = fe_v.get_all_normal_vectors();
 
   std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
@@ -259,7 +259,7 @@ DGTransportEquation<dim>::assemble_face_term2(
   FullMatrix<double>&          ui_ve_matrix,
   FullMatrix<double>&          ue_ve_matrix) const
 {
-  const std::vector<double>&         JxW     = fe_v.get_JxW_values();
+  const std::vector<double>&         JxW = fe_v.get_JxW_values();
   const std::vector<Tensor<1, dim>>& normals = fe_v.get_all_normal_vectors();
 
   std::vector<Point<dim>> beta(fe_v.n_quadrature_points);

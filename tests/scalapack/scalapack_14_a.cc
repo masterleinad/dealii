@@ -44,7 +44,7 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   std::cout << std::setprecision(10);
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));
 
-  const unsigned int proc_rows    = std::floor(std::sqrt(n_mpi_processes));
+  const unsigned int proc_rows = std::floor(std::sqrt(n_mpi_processes));
   const unsigned int proc_columns = std::floor(n_mpi_processes / proc_rows);
   //create 2d process grid
   const std::vector<unsigned int>              sizes = {{400, 500}};

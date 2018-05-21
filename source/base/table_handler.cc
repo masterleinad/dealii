@@ -374,7 +374,7 @@ TableHandler::write_text(std::ostream& out, const TextOutputFormat format) const
   std::vector<std::string> sel_columns;
   get_selected_columns(sel_columns);
 
-  const unsigned int nrows  = n_rows();
+  const unsigned int nrows = n_rows();
   const unsigned int n_cols = sel_columns.size();
 
   // cache the columns and compute the widths of each column for alignment
@@ -471,7 +471,7 @@ TableHandler::write_text(std::ostream& out, const TextOutputFormat format) const
           // over all the columns that belong to it.
           for(unsigned int j = 0; j < column_order.size(); ++j)
             {
-              const std::string& key   = column_order[j];
+              const std::string& key = column_order[j];
               unsigned int       width = 0;
               {
                 // compute the width of this column or supercolumn
@@ -729,7 +729,7 @@ TableHandler::n_rows() const
     return 0;
 
   std::map<std::string, Column>::const_iterator col_iter = columns.begin();
-  unsigned int n          = col_iter->second.entries.size();
+  unsigned int n = col_iter->second.entries.size();
   std::string  first_name = col_iter->first;
 
   for(++col_iter; col_iter != columns.end(); ++col_iter)

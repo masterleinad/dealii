@@ -177,7 +177,7 @@ namespace MatrixTools
     std::vector<std::map<dealii::types::global_dof_index, PetscScalar>>
       block_boundary_values(n_blocks);
     {
-      int                             block  = 0;
+      int                             block = 0;
       dealii::types::global_dof_index offset = 0;
       for(std::map<types::global_dof_index, PetscScalar>::const_iterator dof
           = boundary_values.begin();
@@ -366,7 +366,7 @@ namespace MatrixTools
         std::vector<std::map<types::global_dof_index, TrilinosScalar>>
           block_boundary_values(n_blocks);
         {
-          int                     block  = 0;
+          int                     block = 0;
           types::global_dof_index offset = 0;
           for(std::map<types::global_dof_index, TrilinosScalar>::const_iterator
                 dof

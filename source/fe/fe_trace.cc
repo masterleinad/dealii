@@ -146,7 +146,7 @@ FE_TraceQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   AssertThrow(deg > 0, ExcMessage("FE_TraceQ needs to be of degree > 0."));
   std::vector<unsigned int> dpo(dim + 1, 1U);
   dpo[dim] = 0;
-  dpo[0]   = 1;
+  dpo[0] = 1;
   for(unsigned int i = 1; i < dim; ++i)
     dpo[i] = dpo[i - 1] * (deg - 1);
   return dpo;

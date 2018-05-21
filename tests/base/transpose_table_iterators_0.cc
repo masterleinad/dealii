@@ -90,7 +90,7 @@ main()
            ExcMessage("The beginning and end iterators should be equal for an "
                       "empty table."));
     TransposeTable<double>::const_iterator begin = transpose_table.begin();
-    TransposeTable<double>::const_iterator end   = transpose_table.end();
+    TransposeTable<double>::const_iterator end = transpose_table.end();
     Assert(begin == end,
            ExcMessage("The beginning and end const iterators should"
                       " be equal for an empty table."));

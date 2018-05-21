@@ -447,12 +447,12 @@ namespace DerivativeApproximation
               // two roots are equal
               const double a = (XX > 0 ? -1. : 1.) * R / 2;
               EE[0] = EE[1] = am + a;
-              EE[2]         = am - 2. * a;
+              EE[2] = am - 2. * a;
             }
           else
             {
               const double theta = std::acos(XX) / 3.;
-              EE[0]              = am + R * std::cos(theta);
+              EE[0] = am + R * std::cos(theta);
               EE[1] = am + R * std::cos(theta + 2. / 3. * numbers::PI);
               EE[2] = am + R * std::cos(theta + 4. / 3. * numbers::PI);
             };
@@ -618,7 +618,7 @@ namespace DerivativeApproximation
                                 + d[j][k][i] + d[k][i][j] + d[k][j][i])
                                / 6;
               d[i][j][k] = d[i][k][j] = d[j][i][k] = d[j][k][i] = d[k][i][j]
-                = d[k][j][i]                                    = s;
+                = d[k][j][i] = s;
             }
       // now do the case, where two indices are
       // equal
@@ -821,7 +821,7 @@ namespace DerivativeApproximation
           // direction between
           // the centers of two
           // cells
-          Tensor<1, dim> y        = neighbor_center - this_center;
+          Tensor<1, dim> y = neighbor_center - this_center;
           const double   distance = y.norm();
           // normalize y
           y /= distance;

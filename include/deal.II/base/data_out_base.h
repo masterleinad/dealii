@@ -604,10 +604,10 @@ namespace DataOutBase
     /**
      * Constructor.
      */
-    DXFlags(const bool write_neighbors    = false,
-            const bool int_binary         = false,
+    DXFlags(const bool write_neighbors = false,
+            const bool int_binary = false,
             const bool coordinates_binary = false,
-            const bool data_binary        = false);
+            const bool data_binary = false);
 
     /**
      * Declare all flags with name and type as offered by this class, for use
@@ -750,7 +750,7 @@ namespace DataOutBase
     /**
      * Constructor.
      */
-    PovrayFlags(const bool smooth        = false,
+    PovrayFlags(const bool smooth = false,
                 const bool bicubic_patch = false,
                 const bool external_data = false);
 
@@ -977,17 +977,17 @@ namespace DataOutBase
     /**
      * Constructor.
      */
-    EpsFlags(const unsigned int  height_vector  = 0,
-             const unsigned int  color_vector   = 0,
-             const SizeType      size_type      = width,
-             const unsigned int  size           = 300,
-             const double        line_width     = 0.5,
-             const double        azimut_angle   = 60,
-             const double        turn_angle     = 30,
-             const double        z_scaling      = 1.0,
-             const bool          draw_mesh      = true,
-             const bool          draw_cells     = true,
-             const bool          shade_cells    = true,
+    EpsFlags(const unsigned int  height_vector = 0,
+             const unsigned int  color_vector = 0,
+             const SizeType      size_type = width,
+             const unsigned int  size = 300,
+             const double        line_width = 0.5,
+             const double        azimut_angle = 60,
+             const double        turn_angle = 30,
+             const double        z_scaling = 1.0,
+             const bool          draw_mesh = true,
+             const bool          draw_cells = true,
+             const bool          shade_cells = true,
              const ColorFunction color_function = &default_color_function);
 
     /**
@@ -1050,8 +1050,8 @@ namespace DataOutBase
      * Constructor.
      */
     TecplotFlags(const char*  tecplot_binary_file_name = nullptr,
-                 const char*  zone_name                = nullptr,
-                 const double solution_time            = -1.0);
+                 const char*  zone_name = nullptr,
+                 const double solution_time = -1.0);
 
     /**
      * Return an estimate for the memory consumption, in bytes, of this
@@ -1139,7 +1139,7 @@ namespace DataOutBase
              const unsigned int cycle
              = std::numeric_limits<unsigned int>::min(),
              const bool                 print_date_and_time = true,
-             const ZlibCompressionLevel compression_level   = best_compression);
+             const ZlibCompressionLevel compression_level = best_compression);
   };
 
   /**
@@ -1188,12 +1188,12 @@ namespace DataOutBase
     /**
      * Constructor.
      */
-    SvgFlags(const unsigned int height_vector  = 0,
-             const int          azimuth_angle  = 37,
-             const int          polar_angle    = 45,
+    SvgFlags(const unsigned int height_vector = 0,
+             const int          azimuth_angle = 37,
+             const int          polar_angle = 45,
              const unsigned int line_thickness = 1,
-             const bool         margin         = true,
-             const bool         draw_colorbar  = true);
+             const bool         margin = true,
+             const bool         draw_colorbar = true);
   };
 
   /**
@@ -1241,7 +1241,7 @@ namespace DataOutBase
      * Constructor.
      */
     DataOutFilterFlags(const bool filter_duplicate_vertices = false,
-                       const bool xdmf_hdf5_output          = false);
+                       const bool xdmf_hdf5_output = false);
 
     /**
      * Declare all flags with name and type as offered by this class, for use

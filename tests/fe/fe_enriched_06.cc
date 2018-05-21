@@ -112,7 +112,7 @@ test5()
   // output 11th:
   {
     const unsigned int    global_dof = 11;
-    const Vector<double>& solution   = shape_functions[global_dof];
+    const Vector<double>& solution = shape_functions[global_dof];
     QTrapez<dim>          quadrature;
     FEValues<dim>         fe_values(fe, quadrature, update_values);
 

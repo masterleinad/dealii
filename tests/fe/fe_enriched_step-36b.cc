@@ -98,7 +98,7 @@ public:
   value(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = point - origin;
-    const double   r    = dist.norm();
+    const double   r = dist.norm();
     return std::exp(-Z * r);
   }
 
@@ -115,7 +115,7 @@ public:
   gradient(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = p - origin;
-    const double   r    = dist.norm();
+    const double   r = dist.norm();
     dist /= r;
     return -Z * std::exp(-Z * r) * dist;
   }
@@ -448,7 +448,7 @@ namespace Step36
           const FEValues<dim>& fe_values = fe_values_hp.get_present_fe_values();
 
           const unsigned int& dofs_per_cell = cell->get_fe().dofs_per_cell;
-          const unsigned int& n_q_points    = fe_values.n_quadrature_points;
+          const unsigned int& n_q_points = fe_values.n_quadrature_points;
 
           potential_values.resize(n_q_points);
           enrichment_values.resize(n_q_points);
@@ -459,7 +459,7 @@ namespace Step36
           cell_mass_matrix.reinit(dofs_per_cell, dofs_per_cell);
 
           cell_stiffness_matrix = 0;
-          cell_mass_matrix      = 0;
+          cell_mass_matrix = 0;
 
           potential.value_list(fe_values.get_quadrature_points(),
                                potential_values);
@@ -635,7 +635,7 @@ namespace Step36
             for(unsigned int j = i; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(j, i) = cell_stiffness_matrix(i, j);
-                cell_mass_matrix(j, i)      = cell_mass_matrix(i, j);
+                cell_mass_matrix(j, i) = cell_mass_matrix(i, j);
               }
 
           cell->get_dof_indices(local_dof_indices);

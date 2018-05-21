@@ -52,7 +52,7 @@ DEAL_II_NAMESPACE_OPEN
  */
 template <typename MatrixType,
           typename InverseNumberType = typename MatrixType::value_type,
-          typename VectorType        = Vector<double>>
+          typename VectorType = Vector<double>>
 class RelaxationBlock : protected PreconditionBlockBase<InverseNumberType>
 {
 private:
@@ -84,13 +84,13 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(const double relaxation      = 1.,
+    AdditionalData(const double relaxation = 1.,
                    const bool   invert_diagonal = true,
-                   const bool   same_diagonal   = false,
+                   const bool   same_diagonal = false,
                    const typename PreconditionBlockBase<
                      InverseNumberType>::Inversion inversion
                    = PreconditionBlockBase<InverseNumberType>::gauss_jordan,
-                   const double threshold         = 0.,
+                   const double threshold = 0.,
                    VectorType*  temp_ghost_vector = nullptr);
 
     /**
@@ -283,7 +283,7 @@ private:
  */
 template <typename MatrixType,
           typename InverseNumberType = typename MatrixType::value_type,
-          typename VectorType        = Vector<double>>
+          typename VectorType = Vector<double>>
 class RelaxationBlockJacobi
   : public virtual Subscriptor,
     protected RelaxationBlock<MatrixType, InverseNumberType, VectorType>
@@ -380,7 +380,7 @@ public:
  */
 template <typename MatrixType,
           typename InverseNumberType = typename MatrixType::value_type,
-          typename VectorType        = Vector<double>>
+          typename VectorType = Vector<double>>
 class RelaxationBlockSOR
   : public virtual Subscriptor,
     protected RelaxationBlock<MatrixType, InverseNumberType, VectorType>
@@ -477,7 +477,7 @@ public:
  */
 template <typename MatrixType,
           typename InverseNumberType = typename MatrixType::value_type,
-          typename VectorType        = Vector<double>>
+          typename VectorType = Vector<double>>
 class RelaxationBlockSSOR
   : public virtual Subscriptor,
     protected RelaxationBlock<MatrixType, InverseNumberType, VectorType>

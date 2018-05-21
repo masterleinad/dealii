@@ -250,7 +250,7 @@ namespace Step50
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -311,7 +311,7 @@ namespace Step50
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -442,7 +442,7 @@ namespace Step50
       mg_dof_handler, mg, mg_transfer);
 
     const auto op_prec = linear_operator<vector_t>(preconditioner);
-    const auto op_I    = identity_operator(op_prec.reinit_range_vector);
+    const auto op_I = identity_operator(op_prec.reinit_range_vector);
     // just do some nonsense operator to make sure we use LinearOperator in full:
     const auto op = op_I + 2.0 * op_prec;
 

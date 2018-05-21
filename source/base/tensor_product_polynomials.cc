@@ -244,8 +244,8 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
 
   const bool update_values
     = (values.size() == n_tensor_pols),
-    update_grads           = (grads.size() == n_tensor_pols),
-    update_grad_grads      = (grad_grads.size() == n_tensor_pols),
+    update_grads = (grads.size() == n_tensor_pols),
+    update_grad_grads = (grad_grads.size() == n_tensor_pols),
     update_3rd_derivatives = (third_derivatives.size() == n_tensor_pols),
     update_4th_derivatives = (fourth_derivatives.size() == n_tensor_pols);
 
@@ -515,8 +515,8 @@ AnisotropicPolynomials<dim>::compute(
 
   const bool update_values
     = (values.size() == n_tensor_pols),
-    update_grads           = (grads.size() == n_tensor_pols),
-    update_grad_grads      = (grad_grads.size() == n_tensor_pols),
+    update_grads = (grads.size() == n_tensor_pols),
+    update_grad_grads = (grad_grads.size() == n_tensor_pols),
     update_3rd_derivatives = (third_derivatives.size() == n_tensor_pols),
     update_4th_derivatives = (fourth_derivatives.size() == n_tensor_pols);
 

@@ -123,8 +123,8 @@ MappingC1<2>::MappingC1Generic::add_line_support_points(
                                - face_vertex_normals[1][0] * std::sin(alpha)))
                            - 2 * c;
 
-          const double t1   = interior_gl_points[0];
-          const double t2   = interior_gl_points[1];
+          const double t1 = interior_gl_points[0];
+          const double t2 = interior_gl_points[1];
           const double s_t1 = (((-b - c) * t1 + b) * t1 + c) * t1;
           const double s_t2 = (((-b - c) * t2 + b) * t2 + c) * t2;
 

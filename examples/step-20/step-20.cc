@@ -175,7 +175,7 @@ namespace Step20
                                      const unsigned int /*component*/) const
   {
     const double alpha = 0.3;
-    const double beta  = 1;
+    const double beta = 1;
     return -(alpha * p[0] * p[1] * p[1] / 2 + beta * p[0]
              - alpha * p[0] * p[0] * p[0] / 6);
   }
@@ -431,8 +431,8 @@ namespace Step20
                                        | update_quadrature_points
                                        | update_JxW_values);
 
-    const unsigned int dofs_per_cell   = fe.dofs_per_cell;
-    const unsigned int n_q_points      = quadrature_formula.size();
+    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int n_q_points = quadrature_formula.size();
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
@@ -488,7 +488,7 @@ namespace Step20
             {
               const Tensor<1, dim> phi_i_u = fe_values[velocities].value(i, q);
               const double div_phi_i_u = fe_values[velocities].divergence(i, q);
-              const double phi_i_p     = fe_values[pressure].value(i, q);
+              const double phi_i_p = fe_values[pressure].value(i, q);
 
               for(unsigned int j = 0; j < dofs_per_cell; ++j)
                 {

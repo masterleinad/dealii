@@ -69,7 +69,7 @@ exact_second(Point<dim>& p, Tensor<2, dim>& sec)
   sec[0][0] = -a * a * sin(a * x) * cos(b * y);
   //  sec[0][1]=-a*b*cos(a*x)*sin(b*y);
   sec[1][0] = sec[0][1] = -a * b * cos(a * x) * sin(b * y);
-  sec[1][1]             = -b * b * sin(a * x) * cos(b * y);
+  sec[1][1] = -b * b * sin(a * x) * cos(b * y);
 }
 
 template <int dim>

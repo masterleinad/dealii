@@ -620,7 +620,7 @@ namespace Step34
           {
             local_matrix_row_i = 0;
 
-            bool         is_singular    = false;
+            bool         is_singular = false;
             unsigned int singular_index = numbers::invalid_unsigned_int;
 
             for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
@@ -784,9 +784,9 @@ namespace Step34
     Vector<double> difference_per_node(alpha);
     difference_per_node.add(-.5);
 
-    const double       alpha_error    = difference_per_node.linfty_norm();
+    const double       alpha_error = difference_per_node.linfty_norm();
     const unsigned int n_active_cells = tria.n_active_cells();
-    const unsigned int n_dofs         = dh.n_dofs();
+    const unsigned int n_dofs = dh.n_dofs();
 
     deallog << "Cycle " << cycle << ':' << std::endl
             << "   Number of active cells:       " << n_active_cells

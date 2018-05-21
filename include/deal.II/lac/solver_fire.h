@@ -96,8 +96,8 @@ public:
      * Euler integration step to 0.1, the maximum time step to 1 and the
      * maximum change allowed in any variable (per iteration) to 1.
      */
-    explicit AdditionalData(const double initial_timestep    = 0.1,
-                            const double maximum_timestep    = 1,
+    explicit AdditionalData(const double initial_timestep = 0.1,
+                            const double maximum_timestep = 1,
                             const double maximum_linfty_norm = 1);
 
     /**
@@ -230,11 +230,11 @@ SolverFIRE<VectorType>::solve(
   LogStream::Prefix prefix("FIRE");
 
   // FIRE algorithm constants
-  const double DELAYSTEP       = 5;
-  const double TIMESTEP_GROW   = 1.1;
+  const double DELAYSTEP = 5;
+  const double TIMESTEP_GROW = 1.1;
   const double TIMESTEP_SHRINK = 0.5;
-  const double ALPHA_0         = 0.1;
-  const double ALPHA_SHRINK    = 0.99;
+  const double ALPHA_0 = 0.1;
+  const double ALPHA_SHRINK = 0.99;
 
   using real_type = typename VectorType::real_type;
 
@@ -248,7 +248,7 @@ SolverFIRE<VectorType>::solve(
 
   // Refer to v and g with some readable names.
   VectorType& velocities = *v;
-  VectorType& gradients  = *g;
+  VectorType& gradients = *g;
 
   // Update gradients for the new x.
   compute(gradients, x);
@@ -262,7 +262,7 @@ SolverFIRE<VectorType>::solve(
 
   // Refer to additional data members with some readable names.
   const auto& maximum_timestep = additional_data.maximum_timestep;
-  double      timestep         = additional_data.initial_timestep;
+  double      timestep = additional_data.initial_timestep;
 
   // First scaling factor.
   double alpha = ALPHA_0;

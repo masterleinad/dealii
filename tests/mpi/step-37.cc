@@ -64,7 +64,7 @@ namespace Step37
   using namespace dealii;
 
   const unsigned int degree_finite_element = 2;
-  const unsigned int dimension             = 3;
+  const unsigned int dimension = 3;
 
   template <int dim>
   class LaplaceProblem

@@ -106,7 +106,7 @@ class DoFHandler;
  * @author Wolfgang Bangerth, 1999
  */
 template <int dim,
-          int spacedim            = dim,
+          int spacedim = dim,
           typename DoFHandlerType = DoFHandler<dim, spacedim>>
 class DataOutStack : public DataOutInterface<dim + 1>
 {

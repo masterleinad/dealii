@@ -86,12 +86,12 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
     {
       const unsigned int  block_row = info.matrix(k).row;
       const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      FullMatrix<double>& M1 = info.matrix(k).matrix;
       for(unsigned int i = 0; i < M1.m(); ++i)
         for(unsigned int j = 0; j < M1.n(); ++j)
           {
             double x = .1 * block_row + .001 * i;
-            x        = .1 * block_col + .001 * j + .001 * x;
+            x = .1 * block_col + .001 * j + .001 * x;
             M1(i, j) = cell + x;
           }
     }
@@ -119,7 +119,7 @@ test_simple(DoFHandler<dim>& mgdofs)
   Vector<double>       v;
 
   const DoFHandler<dim>&    dofs = mgdofs;
-  const FiniteElement<dim>& fe   = dofs.get_fe();
+  const FiniteElement<dim>& fe = dofs.get_fe();
   pattern.reinit(dofs.n_dofs(),
                  dofs.n_dofs(),
                  (GeometryInfo<dim>::faces_per_cell
@@ -150,7 +150,7 @@ test_simple(DoFHandler<dim>& mgdofs)
 
   MeshWorker::LoopControl lctrl;
   lctrl.cells_first = true;
-  lctrl.own_faces   = MeshWorker::LoopControl::one;
+  lctrl.own_faces = MeshWorker::LoopControl::one;
   MeshWorker::loop<dim,
                    dim,
                    MeshWorker::DoFInfo<dim>,

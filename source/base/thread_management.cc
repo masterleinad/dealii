@@ -216,9 +216,9 @@ namespace Threads
   {
     Assert(end >= begin, ExcInternalError());
 
-    const unsigned int n_elements              = end - begin;
+    const unsigned int n_elements = end - begin;
     const unsigned int n_elements_per_interval = n_elements / n_intervals;
-    const unsigned int residual                = n_elements % n_intervals;
+    const unsigned int residual = n_elements % n_intervals;
 
     std::vector<std::pair<unsigned int, unsigned int>> return_values(
       n_intervals);

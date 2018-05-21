@@ -34,7 +34,7 @@ template <int dim>
 SymmetricTensor<2, dim>
 get_S(const Tensor<2, dim>& F)
 {
-  const SymmetricTensor<2, dim> C  = symmetrize(transpose(F) * F);
+  const SymmetricTensor<2, dim> C = symmetrize(transpose(F) * F);
   const double                  I1 = first_invariant(C);
   return 2.0 * c10 * StandardTensors<dim>::I
          + 2.0 * c01 * (I1 * StandardTensors<dim>::I - C);
@@ -46,7 +46,7 @@ template <int dim>
 SymmetricTensor<2, dim>
 get_tau(const Tensor<2, dim>& F)
 {
-  const SymmetricTensor<2, dim> b  = symmetrize(F * transpose(F));
+  const SymmetricTensor<2, dim> b = symmetrize(F * transpose(F));
   const double                  I1 = first_invariant(b);
   const SymmetricTensor<2, dim> tmp
     = 2.0 * c10 * StandardTensors<dim>::I
@@ -104,8 +104,8 @@ test_standard_tensors()
 
   // Check referential deviatoric tensor Dev_P:
   Tensor<2, dim> F(unit_symmetric_tensor<dim>());
-  F[0][1]                    = 0.5;
-  F[1][0]                    = 0.25;
+  F[0][1] = 0.5;
+  F[1][0] = 0.25;
   const Tensor<2, dim> F_inv = invert(F);
 
   // Pull-back a fictitious stress tensor, project it onto a deviatoric space, and

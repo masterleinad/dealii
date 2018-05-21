@@ -56,9 +56,9 @@ namespace MeshWorker
      */
     void
     add(const std::string& name,
-        const bool         values    = true,
+        const bool         values = true,
         const bool         gradients = false,
-        const bool         hessians  = false);
+        const bool         hessians = false);
 
     /**
      * Does the same as the function above but it is possible to select a

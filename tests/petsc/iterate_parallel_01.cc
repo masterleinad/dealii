@@ -33,7 +33,7 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   deallog << numproc << std::endl;
@@ -68,7 +68,7 @@ test()
   /////This is a test for the local matrix iterator
   //////////////////////////////////////////////
   unsigned int start_row = mat.local_range().first;
-  unsigned int end_row   = mat.local_range().second;
+  unsigned int end_row = mat.local_range().second;
   for(auto r = start_row; r < end_row; ++r)
     {
       for(auto itr = mat.begin(r); itr != mat.end(r); ++itr)

@@ -315,9 +315,9 @@ namespace MeshWorker
     get_indices(c);
     level_cell = c->is_level_cell();
 
-    cell        = typename Triangulation<dim, spacedim>::cell_iterator(*c);
+    cell = typename Triangulation<dim, spacedim>::cell_iterator(*c);
     face_number = numbers::invalid_unsigned_int;
-    sub_number  = numbers::invalid_unsigned_int;
+    sub_number = numbers::invalid_unsigned_int;
     if(block_info)
       LocalResults<number>::reinit(block_info->local());
     else

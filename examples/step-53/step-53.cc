@@ -232,7 +232,7 @@ namespace Step53
     pull_back_topo(const Point<3>& phi_theta_d) const;
   };
 
-  const double AfricaGeometry::R           = 6378137;
+  const double AfricaGeometry::R = 6378137;
   const double AfricaGeometry::ellipticity = 8.1819190842622e-2;
 
   // The implementation, as well, is pretty straightforward if you have
@@ -277,9 +277,9 @@ namespace Step53
   Point<3>
   AfricaGeometry::push_forward_wgs84(const Point<3>& phi_theta_d) const
   {
-    const double phi   = phi_theta_d[0];
+    const double phi = phi_theta_d[0];
     const double theta = phi_theta_d[1];
-    const double d     = phi_theta_d[2];
+    const double d = phi_theta_d[2];
 
     const double R_bar = R
                          / std::sqrt(1
@@ -295,11 +295,11 @@ namespace Step53
   Point<3>
   AfricaGeometry::pull_back_wgs84(const Point<3>& x) const
   {
-    const double b     = std::sqrt(R * R * (1 - ellipticity * ellipticity));
-    const double ep    = std::sqrt((R * R - b * b) / (b * b));
-    const double p     = std::sqrt(x(0) * x(0) + x(1) * x(1));
-    const double th    = std::atan2(R * x(2), b * p);
-    const double phi   = std::atan2(x(1), x(0));
+    const double b = std::sqrt(R * R * (1 - ellipticity * ellipticity));
+    const double ep = std::sqrt((R * R - b * b) / (b * b));
+    const double p = std::sqrt(x(0) * x(0) + x(1) * x(1));
+    const double th = std::atan2(R * x(2), b * p);
+    const double phi = std::atan2(x(1), x(0));
     const double theta = std::atan2(
       x(2) + ep * ep * b * std::pow(std::sin(th), 3),
       (p - (ellipticity * ellipticity * R * std::pow(std::cos(th), 3))));
@@ -337,8 +337,8 @@ namespace Step53
   Point<3>
   AfricaGeometry::pull_back_topo(const Point<3>& phi_theta_d) const
   {
-    const double   d     = phi_theta_d[2];
-    const double   h     = topography.value(phi_theta_d[0], phi_theta_d[1]);
+    const double   d = phi_theta_d[2];
+    const double   h = topography.value(phi_theta_d[0], phi_theta_d[1]);
     const double   d_hat = 500000 * (d - h) / (500000 + h);
     const Point<3> phi_theta_d_hat(phi_theta_d[0], phi_theta_d[1], d_hat);
     return phi_theta_d_hat;

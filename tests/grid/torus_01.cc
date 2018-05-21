@@ -30,7 +30,7 @@ template <>
 void
 test<3, 3>()
 {
-  const int                    dim      = 3;
+  const int                    dim = 3;
   const int                    spacedim = 3;
   Triangulation<dim, spacedim> triangulation;
 
@@ -51,7 +51,7 @@ test<3, 3>()
         continue;
       Point<3> p = v->vertex(0);
       Point<3> x(numbers::PI / 2.5, numbers::PI / 3.5, 1.0);
-      x              = desc_torus.push_forward(x);
+      x = desc_torus.push_forward(x);
       Tensor<1, 3> t = desc_torus.get_tangent_vector(p, x);
 
       deallog.get_file_stream()

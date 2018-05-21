@@ -405,7 +405,7 @@ namespace Step57
                               | update_JxW_values | update_gradients);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     const FEValuesExtractors::Vector velocities(0);
     const FEValuesExtractors::Scalar pressure(dim);
@@ -437,7 +437,7 @@ namespace Step57
         fe_values.reinit(cell);
 
         local_matrix = 0;
-        local_rhs    = 0;
+        local_rhs = 0;
 
         fe_values[velocities].get_function_values(evaluation_point,
                                                   present_velocity_values);
@@ -459,10 +459,10 @@ namespace Step57
           {
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
-                div_phi_u[k]  = fe_values[velocities].divergence(k, q);
+                div_phi_u[k] = fe_values[velocities].divergence(k, q);
                 grad_phi_u[k] = fe_values[velocities].gradient(k, q);
-                phi_u[k]      = fe_values[velocities].value(k, q);
-                phi_p[k]      = fe_values[pressure].value(k, q);
+                phi_u[k] = fe_values[velocities].value(k, q);
+                phi_p[k] = fe_values[pressure].value(k, q);
               }
 
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -765,7 +765,7 @@ namespace Step57
     bool is_initial_step = true;
 
     for(double Re = 1000.0; Re < target_Re;
-        Re        = std::min(Re + step_size, target_Re))
+        Re = std::min(Re + step_size, target_Re))
       {
         viscosity = 1.0 / Re;
         std::cout << "*****************************************" << std::endl;

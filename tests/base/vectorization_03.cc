@@ -78,7 +78,7 @@ test()
   vector = 1.2;
 
   VectorizedArray<double> cur = current.get_value(0);
-  VectorizedArray<double> ol  = old.get_value(0);
+  VectorizedArray<double> ol = old.get_value(0);
   current.submit_value(2. * cur - ol - weight * std::sin(cur), 0);
 
   vector *= 2. * current.get_value(0)[0];

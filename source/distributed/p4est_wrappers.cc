@@ -107,7 +107,7 @@ namespace internal
             return;
           }
 
-        nsubs         = (int) subids->elem_count;
+        nsubs = (int) subids->elem_count;
         subdomain_ids = (dealii::types::subdomain_id*) (subids->array);
 
         for(i = 0; i < nsides; i++)
@@ -188,7 +188,7 @@ namespace internal
             return;
           }
 
-        nsubs         = (int) subids->elem_count;
+        nsubs = (int) subids->elem_count;
         subdomain_ids = (dealii::types::subdomain_id*) (subids->array);
 
         for(i = 0; i < nsides; i++)
@@ -275,7 +275,7 @@ namespace internal
             return;
           }
 
-        nsubs         = (int) subids->elem_count;
+        nsubs = (int) subids->elem_count;
         subdomain_ids = (dealii::types::subdomain_id*) (subids->array);
 
         for(i = 0; i < nsides; i++)
@@ -516,7 +516,7 @@ namespace internal
         vertices_with_ghost_neighbors;
 
       dealii::internal::p4est::FindGhosts<dim, spacedim> fg;
-      fg.subids        = sc_array_new(sizeof(dealii::types::subdomain_id));
+      fg.subids = sc_array_new(sizeof(dealii::types::subdomain_id));
       fg.triangulation = &tria;
       fg.vertices_with_ghost_neighbors = &vertices_with_ghost_neighbors;
 

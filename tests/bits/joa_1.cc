@@ -549,7 +549,7 @@ LaplaceProblem<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -1050,10 +1050,10 @@ LaplaceProblem<dim>::run()
   // points inside a radius of 0.9)
   for(int i = 0; i < 1000; i++)
     {
-      double   r   = sqrt(.9 * random_value<double>());
+      double   r = sqrt(.9 * random_value<double>());
       double   phi = 2 * 3.14 * (1.0 * Testing::rand() / RAND_MAX);
-      double   x   = r * cos(phi);
-      double   y   = r * sin(phi);
+      double   x = r * cos(phi);
+      double   y = r * sin(phi);
       Point<2> p(x, y);
       VectorTools::point_value(dof_handler, solution, p);
     }

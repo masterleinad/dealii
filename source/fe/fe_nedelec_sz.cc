@@ -663,16 +663,16 @@ FE_NedelecSZ<dim>::get_data(
               double x(p_list[q][0]);
               double y(p_list[q][1]);
               double z(p_list[q][2]);
-              data->edge_lambda_grads_3d[0][q]  = {z - 1.0, 0.0, x - 1.0};
-              data->edge_lambda_grads_3d[1][q]  = {1.0 - z, 0.0, -x};
-              data->edge_lambda_grads_3d[2][q]  = {0.0, z - 1.0, y - 1.0};
-              data->edge_lambda_grads_3d[3][q]  = {0.0, 1.0 - z, -y};
-              data->edge_lambda_grads_3d[4][q]  = {-z, 0.0, 1.0 - x};
-              data->edge_lambda_grads_3d[5][q]  = {z, 0.0, x};
-              data->edge_lambda_grads_3d[6][q]  = {0.0, -z, 1.0 - y};
-              data->edge_lambda_grads_3d[7][q]  = {0.0, z, y};
-              data->edge_lambda_grads_3d[8][q]  = {y - 1.0, x - 1.0, 0.0};
-              data->edge_lambda_grads_3d[9][q]  = {1.0 - y, -x, 0.0};
+              data->edge_lambda_grads_3d[0][q] = {z - 1.0, 0.0, x - 1.0};
+              data->edge_lambda_grads_3d[1][q] = {1.0 - z, 0.0, -x};
+              data->edge_lambda_grads_3d[2][q] = {0.0, z - 1.0, y - 1.0};
+              data->edge_lambda_grads_3d[3][q] = {0.0, 1.0 - z, -y};
+              data->edge_lambda_grads_3d[4][q] = {-z, 0.0, 1.0 - x};
+              data->edge_lambda_grads_3d[5][q] = {z, 0.0, x};
+              data->edge_lambda_grads_3d[6][q] = {0.0, -z, 1.0 - y};
+              data->edge_lambda_grads_3d[7][q] = {0.0, z, y};
+              data->edge_lambda_grads_3d[8][q] = {y - 1.0, x - 1.0, 0.0};
+              data->edge_lambda_grads_3d[9][q] = {1.0 - y, -x, 0.0};
               data->edge_lambda_grads_3d[10][q] = {-y, 1.0 - x, 0.0};
               data->edge_lambda_grads_3d[11][q] = {y, x, 0.0};
             }
@@ -1526,7 +1526,7 @@ FE_NedelecSZ<dim>::fill_face_values(
           for(unsigned int m = 0; m < faces_per_cell; ++m)
             {
               // Find the local vertex on this face with the highest global numbering. This is f^m_0.
-              unsigned int current_max  = 0;
+              unsigned int current_max = 0;
               unsigned int current_glob = cell->vertex_index(
                 GeometryInfo<dim>::face_to_cell_vertices(m, 0));
               for(unsigned int v = 1; v < vertices_per_face; ++v)
@@ -1535,7 +1535,7 @@ FE_NedelecSZ<dim>::fill_face_values(
                      < cell->vertex_index(
                          GeometryInfo<dim>::face_to_cell_vertices(m, v)))
                     {
-                      current_max  = v;
+                      current_max = v;
                       current_glob = cell->vertex_index(
                         GeometryInfo<dim>::face_to_cell_vertices(m, v));
                     }

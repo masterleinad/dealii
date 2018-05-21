@@ -140,7 +140,7 @@ main()
       q[i].shift((double) 1.);
       for(unsigned int j = 0; j < p.size(); ++j)
         {
-          double x    = (double) j / p.size();
+          double x = (double) j / p.size();
           double diff = std::fabs(q[i].value(2. * x - 1.) - p[i].value(x));
           if(diff > 1.e-13)
             deallog << "Polynomial " << i << ": Values q(" << 2. * x - 1.

@@ -28,7 +28,7 @@ template <int dim, class PolynomialType>
 void
 check_poly(const Point<dim>& x, const PolynomialType& p)
 {
-  const unsigned int          n   = p.n();
+  const unsigned int          n = p.n();
   const double                eps = 5.0e-15;
   std::vector<double>         values(n);
   std::vector<Tensor<1, dim>> gradients(n);
@@ -58,7 +58,7 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
 
       // Check if compute_grad_grad is ok
       Tensor<2, dim> grad2 = p.template compute_derivative<2>(k, x);
-      Tensor<2, dim> diff  = grad2 - second[k];
+      Tensor<2, dim> diff = grad2 - second[k];
 
       if(diff.norm_square() > eps * eps)
         deallog << 'P' << k << ": second derivatives differ " << grad2

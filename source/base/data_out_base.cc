@@ -118,9 +118,9 @@ namespace
                         char*               code_out,
                         base64_encodestate* state_in)
     {
-      const char*       plainchar    = plaintext_in;
+      const char*       plainchar = plaintext_in;
       const char* const plaintextend = plaintext_in + length_in;
-      char*             codechar     = code_out;
+      char*             codechar = code_out;
       char              result;
 
       result = state_in->result;
@@ -135,13 +135,13 @@ namespace
                   if(plainchar == plaintextend)
                     {
                       state_in->result = result;
-                      state_in->step   = step_A;
+                      state_in->step = step_A;
                       return codechar - code_out;
                     }
                   const char fragment = *plainchar++;
-                  result              = (fragment & 0x0fc) >> 2;
-                  *codechar++         = base64_encode_value(result);
-                  result              = (fragment & 0x003) << 4;
+                  result = (fragment & 0x0fc) >> 2;
+                  *codechar++ = base64_encode_value(result);
+                  result = (fragment & 0x003) << 4;
                   DEAL_II_FALLTHROUGH;
                 }
               case step_B:
@@ -149,13 +149,13 @@ namespace
                   if(plainchar == plaintextend)
                     {
                       state_in->result = result;
-                      state_in->step   = step_B;
+                      state_in->step = step_B;
                       return codechar - code_out;
                     }
                   const char fragment = *plainchar++;
                   result |= (fragment & 0x0f0) >> 4;
                   *codechar++ = base64_encode_value(result);
-                  result      = (fragment & 0x00f) << 2;
+                  result = (fragment & 0x00f) << 2;
                   DEAL_II_FALLTHROUGH;
                 }
               case step_C:
@@ -163,13 +163,13 @@ namespace
                   if(plainchar == plaintextend)
                     {
                       state_in->result = result;
-                      state_in->step   = step_C;
+                      state_in->step = step_C;
                       return codechar - code_out;
                     }
                   const char fragment = *plainchar++;
                   result |= (fragment & 0x0c0) >> 6;
                   *codechar++ = base64_encode_value(result);
-                  result      = (fragment & 0x03f) >> 0;
+                  result = (fragment & 0x03f) >> 0;
                   *codechar++ = base64_encode_value(result);
                 }
             }
@@ -267,7 +267,7 @@ namespace
         // allocate a buffer for compressing
         // data and do so
         uLongf compressed_data_length = compressBound(data.size() * sizeof(T));
-        char*  compressed_data        = new char[compressed_data_length];
+        char*  compressed_data = new char[compressed_data_length];
         int    err
           = compress2((Bytef*) compressed_data,
                       &compressed_data_length,
@@ -719,7 +719,7 @@ namespace
           {
             // perform a dim-linear interpolation
             const double stepsize = 1. / n_subdivisions,
-                         xfrac    = xstep * stepsize;
+                         xfrac = xstep * stepsize;
 
             node = (patch->vertices[1] * xfrac)
                    + (patch->vertices[0] * (1 - xfrac));
@@ -1762,7 +1762,7 @@ namespace DataOutBase
   DataOutFilterFlags::parse_parameters(const ParameterHandler& prm)
   {
     filter_duplicate_vertices = prm.get_bool("Filter duplicate vertices");
-    xdmf_hdf5_output          = prm.get_bool("XDMF HDF5 output");
+    xdmf_hdf5_output = prm.get_bool("XDMF HDF5 output");
   }
 
   DXFlags::DXFlags(const bool write_neighbors,
@@ -1869,7 +1869,7 @@ namespace DataOutBase
   void
   PovrayFlags::parse_parameters(const ParameterHandler& prm)
   {
-    smooth        = prm.get_bool("Use smooth triangles");
+    smooth = prm.get_bool("Use smooth triangles");
     bicubic_patch = prm.get_bool("Use bicubic patches");
     external_data = prm.get_bool("Include external file");
   }
@@ -1934,11 +1934,11 @@ namespace DataOutBase
     //     { 0                                (3) - (4)
     //     { ( 4*x-  xmin-3*xmax)/(xmax-xmin) (4) - (5)
 
-    double sum    = xmax + xmin;
-    double sum13  = xmin + 3 * xmax;
-    double sum22  = 2 * xmin + 2 * xmax;
-    double sum31  = 3 * xmin + xmax;
-    double dif    = xmax - xmin;
+    double sum = xmax + xmin;
+    double sum13 = xmin + 3 * xmax;
+    double sum22 = 2 * xmin + 2 * xmax;
+    double sum31 = 3 * xmin + xmax;
+    double dif = xmax - xmin;
     double rezdif = 1.0 / dif;
 
     int where;
@@ -1957,24 +1957,24 @@ namespace DataOutBase
         switch(where)
           {
             case 0:
-              rgb_values.red   = 0;
+              rgb_values.red = 0;
               rgb_values.green = 0;
-              rgb_values.blue  = (x - xmin) * 4. * rezdif;
+              rgb_values.blue = (x - xmin) * 4. * rezdif;
               break;
             case 1:
-              rgb_values.red   = 0;
+              rgb_values.red = 0;
               rgb_values.green = (4 * x - 3 * xmin - xmax) * rezdif;
-              rgb_values.blue  = (sum22 - 4. * x) * rezdif;
+              rgb_values.blue = (sum22 - 4. * x) * rezdif;
               break;
             case 2:
-              rgb_values.red   = (4 * x - 2 * sum) * rezdif;
+              rgb_values.red = (4 * x - 2 * sum) * rezdif;
               rgb_values.green = (xmin + 3 * xmax - 4 * x) * rezdif;
-              rgb_values.blue  = 0;
+              rgb_values.blue = 0;
               break;
             case 3:
-              rgb_values.red   = 1;
+              rgb_values.red = 1;
               rgb_values.green = (4 * x - xmin - 3 * xmax) * rezdif;
-              rgb_values.blue  = (4. * x - sum13) * rezdif;
+              rgb_values.blue = (4. * x - sum13) * rezdif;
               break;
             default:
               break;
@@ -2085,19 +2085,19 @@ namespace DataOutBase
   EpsFlags::parse_parameters(const ParameterHandler& prm)
   {
     height_vector = prm.get_integer("Index of vector for height");
-    color_vector  = prm.get_integer("Index of vector for color");
+    color_vector = prm.get_integer("Index of vector for color");
     if(prm.get("Scale to width or height") == "width")
       size_type = width;
     else
       size_type = height;
-    size         = prm.get_integer("Size (width or height) in eps units");
-    line_width   = prm.get_double("Line widths in eps units");
+    size = prm.get_integer("Size (width or height) in eps units");
+    line_width = prm.get_double("Line widths in eps units");
     azimut_angle = prm.get_double("Azimut angle");
-    turn_angle   = prm.get_double("Turn angle");
-    z_scaling    = prm.get_double("Scaling for z-axis");
-    draw_mesh    = prm.get_bool("Draw mesh lines");
-    draw_cells   = prm.get_bool("Fill interior of cells");
-    shade_cells  = prm.get_bool("Color shading of interior of cells");
+    turn_angle = prm.get_double("Turn angle");
+    z_scaling = prm.get_double("Scaling for z-axis");
+    draw_mesh = prm.get_bool("Draw mesh lines");
+    draw_cells = prm.get_bool("Fill interior of cells");
+    shade_cells = prm.get_bool("Color shading of interior of cells");
     if(prm.get("Color function") == "default")
       color_function = &default_color_function;
     else if(prm.get("Color function") == "grey scale")
@@ -2252,7 +2252,7 @@ namespace DataOutBase
         ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
-        const unsigned int n              = n_subdivisions + 1;
+        const unsigned int n = n_subdivisions + 1;
         // Length of loops in all
         // dimensions. If a dimension
         // is not used, a loop of
@@ -2277,7 +2277,7 @@ namespace DataOutBase
   write_cells(const std::vector<Patch<dim, spacedim>>& patches, StreamType& out)
   {
     Assert(dim <= 3, ExcNotImplemented());
-    unsigned int count                 = 0;
+    unsigned int count = 0;
     unsigned int first_vertex_of_patch = 0;
     // Array to hold all the node
     // numbers of a cell. 8 is
@@ -2288,7 +2288,7 @@ namespace DataOutBase
         ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
-        const unsigned int n              = n_subdivisions + 1;
+        const unsigned int n = n_subdivisions + 1;
         // Length of loops in all dimensons
         const unsigned int n1 = (dim > 0) ? n_subdivisions : 1;
         const unsigned int n2 = (dim > 1) ? n_subdivisions : 1;
@@ -2331,7 +2331,7 @@ namespace DataOutBase
         ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
-        const unsigned int n              = n_subdivisions + 1;
+        const unsigned int n = n_subdivisions + 1;
         // Length of loops in all dimensions
         Assert(
           (patch->data.n_rows() == n_data_sets && !patch->points_are_available)
@@ -2444,7 +2444,7 @@ namespace DataOutBase
               if(points[j][2] > points[j + 1][2])
                 {
                   Point<3> temp = points[j];
-                  points[j]     = points[j + 1];
+                  points[j] = points[j + 1];
                   points[j + 1] = temp;
                 }
             }
@@ -2859,14 +2859,14 @@ namespace DataOutBase
             patch != patches.end();
             ++patch)
           {
-            const unsigned int n               = patch->n_subdivisions;
-            const unsigned int n1              = (dim > 0) ? n : 1;
-            const unsigned int n2              = (dim > 1) ? n : 1;
-            const unsigned int n3              = (dim > 2) ? n : 1;
+            const unsigned int n = patch->n_subdivisions;
+            const unsigned int n1 = (dim > 0) ? n : 1;
+            const unsigned int n2 = (dim > 1) ? n : 1;
+            const unsigned int n3 = (dim > 2) ? n : 1;
             unsigned int       cells_per_patch = Utilities::fixed_power<dim>(n);
-            unsigned int       dx              = 1;
-            unsigned int       dy              = n;
-            unsigned int       dz              = n * n;
+            unsigned int       dx = 1;
+            unsigned int       dy = n;
+            unsigned int       dz = n * n;
 
             const unsigned int patch_start
               = patch->patch_index * cells_per_patch;
@@ -3111,7 +3111,7 @@ namespace DataOutBase
         ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
-        const unsigned int n              = n_subdivisions + 1;
+        const unsigned int n = n_subdivisions + 1;
         // Length of loops in all dimensions
         const unsigned int n1 = (dim > 0) ? n : 1;
         const unsigned int n2 = (dim > 1) ? n : 1;
@@ -3424,9 +3424,9 @@ namespace DataOutBase
         ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
-        const unsigned int n              = n_subdivisions + 1;
-        const unsigned int d1             = 1;
-        const unsigned int d2             = n;
+        const unsigned int n = n_subdivisions + 1;
+        const unsigned int d1 = 1;
+        const unsigned int d2 = n;
 
         Assert(
           (patch->data.n_rows() == n_data_sets && !patch->points_are_available)
@@ -3703,9 +3703,9 @@ namespace DataOutBase
         ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
-        const unsigned int n              = n_subdivisions + 1;
-        const unsigned int d1             = 1;
-        const unsigned int d2             = n;
+        const unsigned int n = n_subdivisions + 1;
+        const unsigned int d1 = 1;
+        const unsigned int d2 = n;
 
         for(unsigned int i2 = 0; i2 < n_subdivisions; ++i2)
           for(unsigned int i1 = 0; i1 < n_subdivisions; ++i1)
@@ -4480,7 +4480,7 @@ namespace DataOutBase
     compute_sizes<dim, spacedim>(patches, n_nodes, n_cells);
     // local variables only needed to write Tecplot
     // binary output files
-    const unsigned int vars_per_node  = (spacedim + n_data_sets),
+    const unsigned int vars_per_node = (spacedim + n_data_sets),
                        nodes_per_cell = GeometryInfo<dim>::vertices_per_cell;
 
     TecplotMacros tm(n_nodes, vars_per_node, n_cells, nodes_per_cell);
@@ -4625,7 +4625,7 @@ namespace DataOutBase
     // now for the cells. note that
     // vertices are counted from 1 onwards
     unsigned int first_vertex_of_patch = 0;
-    unsigned int elem                  = 0;
+    unsigned int elem = 0;
 
     for(typename std::vector<Patch<dim, spacedim>>::const_iterator patch
         = patches.begin();
@@ -4633,10 +4633,10 @@ namespace DataOutBase
         ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
-        const unsigned int n              = n_subdivisions + 1;
-        const unsigned int d1             = 1;
-        const unsigned int d2             = n;
-        const unsigned int d3             = n * n;
+        const unsigned int n = n_subdivisions + 1;
+        const unsigned int d1 = 1;
+        const unsigned int d2 = n;
+        const unsigned int d3 = n * n;
         // write out the cells making
         // up this patch
         switch(dim)
@@ -5704,9 +5704,9 @@ namespace DataOutBase
             const SvgFlags& flags,
             std::ostream&   out)
   {
-    const int          dim    = 2;
+    const int          dim = 2;
     const unsigned int height = flags.height;
-    unsigned int       width  = flags.width;
+    unsigned int       width = flags.width;
 
     // margin around the plotted area
     unsigned int margin_in_percent = 0;
@@ -5720,9 +5720,9 @@ namespace DataOutBase
       = patches.begin();
 
     unsigned int       n_subdivisions = patch->n_subdivisions;
-    unsigned int       n              = n_subdivisions + 1;
-    const unsigned int d1             = 1;
-    const unsigned int d2             = n;
+    unsigned int       n = n_subdivisions + 1;
+    const unsigned int d1 = 1;
+    const unsigned int d2 = n;
 
     Point<spacedim> projected_point;
     Point<spacedim> projected_points[4];
@@ -6506,7 +6506,7 @@ namespace DataOutBase
         for(unsigned int index = 0; index < 4; index++)
           {
             double start_h = .667 - ((index + 1) / 4.) * .667;
-            double stop_h  = .667 - (index / 4.) * .667;
+            double stop_h = .667 - (index / 4.) * .667;
 
             unsigned int start_r = 0;
             unsigned int start_g = 0;
@@ -7783,7 +7783,7 @@ void
 DataOutInterface<dim, spacedim>::parse_parameters(ParameterHandler& prm)
 {
   const std::string& output_name = prm.get("Output format");
-  default_fmt          = DataOutBase::parse_output_format(output_name);
+  default_fmt = DataOutBase::parse_output_format(output_name);
   default_subdivisions = prm.get_integer("Subdivisions");
 
   prm.enter_subsection("DX output parameters");
@@ -7857,8 +7857,8 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
     std::set<std::string> all_names;
 
     const std::vector<std::tuple<unsigned int, unsigned int, std::string>>
-                                   ranges      = this->get_vector_data_ranges();
-    const std::vector<std::string> data_names  = this->get_dataset_names();
+                                   ranges = this->get_vector_data_ranges();
+    const std::vector<std::string> data_names = this->get_dataset_names();
     const unsigned int             n_data_sets = data_names.size();
     std::vector<bool>              data_set_written(n_data_sets, false);
 

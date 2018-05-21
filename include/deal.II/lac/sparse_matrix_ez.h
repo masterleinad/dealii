@@ -325,7 +325,7 @@ public:
   explicit SparseMatrixEZ(const size_type    n_rows,
                           const size_type    n_columns,
                           const size_type    default_row_length = 0,
-                          const unsigned int default_increment  = 1);
+                          const unsigned int default_increment = 1);
 
   /**
    * Destructor. Free all memory.
@@ -360,8 +360,8 @@ public:
   reinit(const size_type n_rows,
          const size_type n_columns,
          size_type       default_row_length = 0,
-         unsigned int    default_increment  = 1,
-         size_type       reserve            = 0);
+         unsigned int    default_increment = 1,
+         size_type       reserve = 0);
 
   /**
    * Release all memory and return to a state just like after having called
@@ -536,7 +536,7 @@ public:
       const size_type  n_cols,
       const size_type* col_indices,
       const number2*   values,
-      const bool       elide_zero_values      = true,
+      const bool       elide_zero_values = true,
       const bool       col_indices_are_sorted = false);
 
   /**
@@ -769,9 +769,9 @@ public:
    */
   void
   print_formatted(std::ostream&      out,
-                  const unsigned int precision   = 3,
-                  const bool         scientific  = true,
-                  const unsigned int width       = 0,
+                  const unsigned int precision = 3,
+                  const bool         scientific = true,
+                  const unsigned int width = 0,
                   const char*        zero_string = " ",
                   const double       denominator = 1.) const;
 
@@ -1085,7 +1085,7 @@ SparseMatrixEZ<number>::locate(const size_type row, const size_type col)
   Assert(row < m(), ExcIndexRange(row, 0, m()));
   Assert(col < n(), ExcIndexRange(col, 0, n()));
 
-  const RowInfo&  r   = row_info[row];
+  const RowInfo&  r = row_info[row];
   const size_type end = r.start + r.length;
   for(size_type i = r.start; i < end; ++i)
     {
@@ -1113,7 +1113,7 @@ SparseMatrixEZ<number>::allocate(const size_type row, const size_type col)
   Assert(row < m(), ExcIndexRange(row, 0, m()));
   Assert(col < n(), ExcIndexRange(col, 0, n()));
 
-  RowInfo&        r   = row_info[row];
+  RowInfo&        r = row_info[row];
   const size_type end = r.start + r.length;
 
   size_type i = r.start;
@@ -1429,13 +1429,13 @@ SparseMatrixEZ<number>::conjugate_add(const MatrixTypeA& A,
   // corresponding rows of B only.
   // For the non-transpose case, we
   // must find a trick.
-  typename MatrixTypeB::const_iterator       b1      = B.begin();
+  typename MatrixTypeB::const_iterator       b1 = B.begin();
   const typename MatrixTypeB::const_iterator b_final = B.end();
   if(transpose)
     while(b1 != b_final)
       {
-        const size_type                      i  = b1->column();
-        const size_type                      k  = b1->row();
+        const size_type                      i = b1->column();
+        const size_type                      k = b1->row();
         typename MatrixTypeB::const_iterator b2 = B.begin();
         while(b2 != b_final)
           {

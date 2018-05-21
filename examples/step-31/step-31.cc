@@ -811,7 +811,7 @@ namespace Step31
         max_velocity = std::max(std::sqrt(u * u), max_velocity);
       }
 
-    const double c_R            = std::pow(2., (4. - 2 * alpha) / dim);
+    const double c_R = std::pow(2., (4. - 2 * alpha) / dim);
     const double global_scaling = c_R * global_u_infty * global_T_variation
                                   * std::pow(global_Omega_diameter, alpha - 2.);
 
@@ -1059,7 +1059,7 @@ namespace Step31
                                      | update_gradients);
 
     const unsigned int dofs_per_cell = stokes_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -1094,7 +1094,7 @@ namespace Step31
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 grad_phi_u[k] = stokes_fe_values[velocities].gradient(k, q);
-                phi_p[k]      = stokes_fe_values[pressure].value(k, q);
+                phi_p[k] = stokes_fe_values[pressure].value(k, q);
               }
 
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -1264,7 +1264,7 @@ namespace Step31
       temperature_fe, quadrature_formula, update_values);
 
     const unsigned int dofs_per_cell = stokes_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     local_rhs(dofs_per_cell);
@@ -1429,7 +1429,7 @@ namespace Step31
                                           | update_JxW_values);
 
     const unsigned int dofs_per_cell = temperature_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_mass_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> local_stiffness_matrix(dofs_per_cell, dofs_per_cell);
@@ -1462,7 +1462,7 @@ namespace Step31
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 grad_phi_T[k] = temperature_fe_values.shape_grad(k, q);
-                phi_T[k]      = temperature_fe_values.shape_value(k, q);
+                phi_T[k] = temperature_fe_values.shape_value(k, q);
               }
 
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -1537,7 +1537,7 @@ namespace Step31
       stokes_fe, quadrature_formula, update_values);
 
     const unsigned int dofs_per_cell = temperature_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     Vector<double> local_rhs(dofs_per_cell);
 
@@ -1651,7 +1651,7 @@ namespace Step31
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 grad_phi_T[k] = temperature_fe_values.shape_grad(k, q);
-                phi_T[k]      = temperature_fe_values.shape_value(k, q);
+                phi_T[k] = temperature_fe_values.shape_value(k, q);
               }
 
             const double T_term_for_rhs
@@ -1970,8 +1970,8 @@ namespace Step31
     // handlers. With this at place, we can prepare the triangulation and the
     // data vectors for refinement (in this order).
     std::vector<TrilinosWrappers::MPI::Vector> x_temperature(2);
-    x_temperature[0]                            = temperature_solution;
-    x_temperature[1]                            = old_temperature_solution;
+    x_temperature[0] = temperature_solution;
+    x_temperature[1] = old_temperature_solution;
     TrilinosWrappers::MPI::BlockVector x_stokes = stokes_solution;
 
     SolutionTransfer<dim, TrilinosWrappers::MPI::Vector> temperature_trans(
@@ -2018,8 +2018,8 @@ namespace Step31
 
     stokes_constraints.distribute(stokes_solution);
 
-    rebuild_stokes_matrix         = true;
-    rebuild_temperature_matrices  = true;
+    rebuild_stokes_matrix = true;
+    rebuild_temperature_matrices = true;
     rebuild_stokes_preconditioner = true;
   }
 
@@ -2108,9 +2108,9 @@ namespace Step31
         time += time_step;
         ++timestep_number;
 
-        old_stokes_solution          = stokes_solution;
+        old_stokes_solution = stokes_solution;
         old_old_temperature_solution = old_temperature_solution;
-        old_temperature_solution     = temperature_solution;
+        old_temperature_solution = temperature_solution;
       }
     // Do all the above until we arrive at time 100.
     while(time <= 100);

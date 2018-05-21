@@ -185,7 +185,7 @@ namespace Maxwell
   MaxwellProblem<dim>::MaxwellProblem(const unsigned int order)
     : mapping(1), dof_handler(triangulation), fe(order), exact_solution()
   {
-    p_order    = order;
+    p_order = order;
     quad_order = 2 * (p_order + 1);
   }
 
@@ -307,7 +307,7 @@ namespace Maxwell
     QGauss<dim>     quadrature_formula(quad_order);
     QGauss<dim - 1> face_quadrature_formula(quad_order);
 
-    const unsigned int n_q_points      = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;

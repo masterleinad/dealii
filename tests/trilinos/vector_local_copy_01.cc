@@ -35,7 +35,7 @@ main(int argc, char** argv)
 
   MPI_Comm           serial_communicator;
   const unsigned int colour = this_mpi_process;
-  const unsigned int key    = this_mpi_process;
+  const unsigned int key = this_mpi_process;
   if(n_mpi_processes > 1)
     MPI_Comm_split(mpi_communicator, colour, key, &serial_communicator);
   else

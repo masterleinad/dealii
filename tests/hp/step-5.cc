@@ -160,7 +160,7 @@ LaplaceProblem<dim>::assemble_system()
                                   | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe[0].dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula[0].size();
+  const unsigned int n_q_points = quadrature_formula[0].size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -249,7 +249,7 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   DataOutBase::EpsFlags eps_flags;
   eps_flags.z_scaling    = 4;
   eps_flags.azimut_angle = 40;
-  eps_flags.turn_angle   = 10;
+  eps_flags.turn_angle = 10;
   data_out.set_flags(eps_flags);
 
   data_out.write_eps(deallog.get_file_stream());

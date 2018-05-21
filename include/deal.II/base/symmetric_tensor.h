@@ -1314,7 +1314,7 @@ namespace internal
             // Pivot search: search that part of the line on and right of the
             // diagonal for the largest element.
             Number       max = std::fabs(tmp.data[j][j]);
-            unsigned int r   = j;
+            unsigned int r = j;
             for(unsigned int i = j + 1; i < N; ++i)
               if(std::fabs(tmp.data[i][j]) > max)
                 {
@@ -1337,7 +1337,7 @@ namespace internal
 
             // Transformation
             const Number hr = 1. / tmp.data[j][j];
-            tmp.data[j][j]  = hr;
+            tmp.data[j][j] = hr;
             for(unsigned int k = 0; k < N; ++k)
               {
                 if(k == j)

@@ -323,7 +323,7 @@ public:
    * Constructor.  The argument allows to preallocate a certain number of
    * vectors. The default is not to do this.
    */
-  GrowingVectorMemory(const size_type initial_size   = 0,
+  GrowingVectorMemory(const size_type initial_size = 0,
                       const bool      log_statistics = false);
 
   /**

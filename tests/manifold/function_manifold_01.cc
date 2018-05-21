@@ -40,11 +40,11 @@ test(unsigned int ref = 1)
     {
       case 2:
         push_forward_expression = "x; y";
-        pull_back_expression    = "x; y";
+        pull_back_expression = "x; y";
         break;
       case 3:
         push_forward_expression = "x; y; z";
-        pull_back_expression    = "x; y; z";
+        pull_back_expression = "x; y; z";
         break;
       default:
         Assert(false, ExcInternalError());

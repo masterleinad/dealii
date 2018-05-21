@@ -57,7 +57,7 @@ check()
   for(unsigned int i = 0; i < size; ++i)
     {
       mat(i, i) = i + 1;
-      in(i)     = 1. / mat(i, i);
+      in(i) = 1. / mat(i, i);
     }
 
   mat.vmult(out, in);
@@ -67,7 +67,7 @@ check()
   for(unsigned int i = 0; i < size; ++i)
     {
       mat.get_vector()(i) = 1. / (i + 1);
-      in(i)               = i + 1;
+      in(i) = i + 1;
     }
   mat.vmult(out, in);
   out -= exact;
@@ -78,7 +78,7 @@ check()
       const double mat_entry
         = const_cast<const DiagonalMatrix<Vector<double>>&>(mat)(i, i);
       mat(i, i) = in(i);
-      in(i)     = mat_entry;
+      in(i) = mat_entry;
     }
   mat.vmult(out, in);
   out -= exact;

@@ -93,7 +93,7 @@ namespace FETools
 #ifdef DEBUG
     const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
     const IndexSet& dof2_local_dofs = dof2.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
+    const IndexSet  u1_elements = u1.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
            ExcMessage("The provided vector and DoF handler should have the same"
                       " index sets."));
@@ -276,7 +276,7 @@ namespace FETools
 
 #ifdef DEBUG
     const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
+    const IndexSet  u1_elements = u1.locally_owned_elements();
     const IndexSet  u1_interpolated_elements
       = u1_interpolated.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
@@ -509,7 +509,7 @@ namespace FETools
 
 #ifdef DEBUG
     const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
+    const IndexSet  u1_elements = u1.locally_owned_elements();
     const IndexSet  u1_difference_elements
       = u1_difference.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,

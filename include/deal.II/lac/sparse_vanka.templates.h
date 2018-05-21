@@ -68,7 +68,7 @@ SparseVanka<number>::~SparseVanka()
   for(i = inverses.begin(); i != inverses.end(); ++i)
     {
       FullMatrix<float>* p = *i;
-      *i                   = nullptr;
+      *i = nullptr;
       if(p != nullptr)
         delete p;
     }
@@ -129,9 +129,9 @@ SparseVanka<number>::compute_inverses()
   // do not have to do something
   std::vector<std::pair<size_type, unsigned int>> blocking(n_threads);
 
-  unsigned int c      = 0;
+  unsigned int c = 0;
   unsigned int thread = 0;
-  blocking[0].first   = 0;
+  blocking[0].first = 0;
 
   for(size_type i = 0; (i < matrix->m()) && (thread + 1 < n_threads); ++i)
     {
@@ -139,7 +139,7 @@ SparseVanka<number>::compute_inverses()
         ++c;
       if(c == n_inverses_per_thread)
         {
-          blocking[thread].second    = i;
+          blocking[thread].second = i;
           blocking[thread + 1].first = i;
           ++thread;
 
@@ -454,7 +454,7 @@ SparseBlockVanka<number>::compute_dof_masks(
   // not have to do something
   if(true)
     {
-      unsigned int c     = 0;
+      unsigned int c = 0;
       unsigned int block = 0;
       intervals[0].first = 0;
 
@@ -464,7 +464,7 @@ SparseBlockVanka<number>::compute_dof_masks(
             ++c;
           if(c == n_inverses_per_block)
             {
-              intervals[block].second    = i;
+              intervals[block].second = i;
               intervals[block + 1].first = i;
               ++block;
 
@@ -562,12 +562,12 @@ SparseBlockVanka<number>::compute_dof_masks(
                 // find out which block
                 // accesses this dof
                 // the most often
-                size_type    max_accesses     = 0;
+                size_type    max_accesses = 0;
                 unsigned int max_access_block = 0;
                 for(unsigned int block = 0; block < n_blocks; ++block)
                   if(access_count[block][row] > max_accesses)
                     {
-                      max_accesses     = access_count[block][row];
+                      max_accesses = access_count[block][row];
                       max_access_block = block;
                     };
                 dof_masks[max_access_block][row] = true;

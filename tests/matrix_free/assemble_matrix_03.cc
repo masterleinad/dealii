@@ -79,9 +79,9 @@ assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator& cell,
                  unsigned int&)
 {
   const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
-  const unsigned int n_q_points    = data.fe_values.get_quadrature().size();
-  data.cell_matrix                 = 0;
-  data.test_matrix                 = 0;
+  const unsigned int n_q_points = data.fe_values.get_quadrature().size();
+  data.cell_matrix = 0;
+  data.test_matrix = 0;
   data.fe_values.reinit(cell);
 
   for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)

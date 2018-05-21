@@ -559,7 +559,7 @@ namespace Step7
     QGauss<dim>     quadrature_formula(3);
     QGauss<dim - 1> face_quadrature_formula(3);
 
-    const unsigned int n_q_points      = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     const unsigned int dofs_per_cell = fe->dofs_per_cell;
@@ -914,7 +914,7 @@ namespace Step7
     // add values, and columns will be introduced into the table in the order
     // values are added the first time.
     const unsigned int n_active_cells = triangulation.n_active_cells();
-    const unsigned int n_dofs         = dof_handler.n_dofs();
+    const unsigned int n_dofs = dof_handler.n_dofs();
 
     std::cout << "Cycle " << cycle << ':' << std::endl
               << "   Number of active cells:       " << n_active_cells

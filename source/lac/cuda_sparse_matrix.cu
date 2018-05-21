@@ -55,7 +55,7 @@ namespace CUDAWrappers
           float*                   y)
     {
       float               alpha = 1.;
-      float               beta  = add ? 1. : 0.;
+      float               beta = add ? 1. : 0.;
       cusparseOperation_t cusparse_operation
         = transpose ? CUSPARSE_OPERATION_TRANSPOSE :
                       CUSPARSE_OPERATION_NON_TRANSPOSE;
@@ -92,7 +92,7 @@ namespace CUDAWrappers
           double*                  y)
     {
       double              alpha = 1.;
-      double              beta  = add ? 1. : 0.;
+      double              beta = add ? 1. : 0.;
       cusparseOperation_t cusparse_operation
         = transpose ? CUSPARSE_OPERATION_TRANSPOSE :
                       CUSPARSE_OPERATION_NON_TRANSPOSE;
@@ -237,10 +237,10 @@ namespace CUDAWrappers
     Utilities::CUDA::Handle&              handle,
     const ::dealii::SparseMatrix<Number>& sparse_matrix_host)
   {
-    cusparse_handle                  = handle.cusparse_handle;
-    nnz                              = sparse_matrix_host.n_nonzero_elements();
-    n_rows                           = sparse_matrix_host.m();
-    n_cols                           = sparse_matrix_host.n();
+    cusparse_handle = handle.cusparse_handle;
+    nnz = sparse_matrix_host.n_nonzero_elements();
+    n_rows = sparse_matrix_host.m();
+    n_cols = sparse_matrix_host.n();
     unsigned int const  row_ptr_size = n_rows + 1;
     std::vector<Number> val;
     val.reserve(nnz);
@@ -252,7 +252,7 @@ namespace CUDAWrappers
     // reordering
     for(int row = 0; row < n_rows; ++row)
       {
-        auto         p_end   = sparse_matrix_host.end(row);
+        auto         p_end = sparse_matrix_host.end(row);
         unsigned int counter = 0;
         for(auto p = sparse_matrix_host.begin(row); p != p_end; ++p)
           {
@@ -263,10 +263,10 @@ namespace CUDAWrappers
         row_ptr[row + 1] = row_ptr[row] + counter;
 
         // Sort the elements in the row
-        unsigned int const offset     = row_ptr[row];
+        unsigned int const offset = row_ptr[row];
         int const          diag_index = column_index[offset];
-        Number             diag_elem  = sparse_matrix_host.diag_element(row);
-        unsigned int       pos        = 1;
+        Number             diag_elem = sparse_matrix_host.diag_element(row);
+        unsigned int       pos = 1;
         while((column_index[offset + pos] < row) && (pos < counter))
           {
             val[offset + pos - 1]          = val[offset + pos];

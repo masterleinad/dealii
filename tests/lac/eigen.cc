@@ -34,7 +34,7 @@ main()
   SolverControl         control(1000, 1.e-5);
 
   const unsigned int size = 10;
-  const unsigned int dim  = (size - 1) * (size - 1);
+  const unsigned int dim = (size - 1) * (size - 1);
 
   /*
    * Compute minimal and maximal
@@ -43,9 +43,9 @@ main()
    * (Hackbusch:Iterative Loesung...,
    * Satz 4.1.1)
    */
-  const double h          = 1. / size;
-  const double s          = std::sin(numbers::PI * h / 2.);
-  const double c          = std::cos(numbers::PI * h / 2.);
+  const double h = 1. / size;
+  const double s = std::sin(numbers::PI * h / 2.);
+  const double c = std::cos(numbers::PI * h / 2.);
   const double lambda_max = 8. * c * c;
   const double lambda_min = 8. * s * s;
 

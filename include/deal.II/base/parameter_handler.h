@@ -894,7 +894,7 @@ public:
    */
   virtual void
   parse_input(std::istream&      input,
-              const std::string& filename  = "input file",
+              const std::string& filename = "input file",
               const std::string& last_line = "");
 
   /**
@@ -1871,7 +1871,7 @@ public:
    */
   virtual void
   parse_input(std::istream&      input,
-              const std::string& filename  = "input file",
+              const std::string& filename = "input file",
               const std::string& last_line = "") override;
 
   /**

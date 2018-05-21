@@ -52,7 +52,7 @@ template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
           int n_components_ = 1,
-          typename Number   = double>
+          typename Number = double>
 class FEEvaluation;
 
 /**
@@ -88,7 +88,7 @@ public:
   typedef Tensor<1, n_components_, VectorizedArray<Number>> value_type;
   typedef Tensor<1, n_components_, Tensor<1, dim, VectorizedArray<Number>>>
                                 gradient_type;
-  static constexpr unsigned int dimension    = dim;
+  static constexpr unsigned int dimension = dim;
   static constexpr unsigned int n_components = n_components_;
 
   /**
@@ -1104,7 +1104,7 @@ public:
   typedef Tensor<1, n_components_, VectorizedArray<Number>> value_type;
   typedef Tensor<1, n_components_, Tensor<1, dim, VectorizedArray<Number>>>
                                 gradient_type;
-  static constexpr unsigned int dimension    = dim;
+  static constexpr unsigned int dimension = dim;
   static constexpr unsigned int n_components = n_components_;
   typedef FEEvaluationBase<dim, n_components_, Number, is_face> BaseClass;
 
@@ -1297,7 +1297,7 @@ public:
   typedef Number                                      number_type;
   typedef Tensor<1, dim, VectorizedArray<Number>>     value_type;
   typedef Tensor<2, dim, VectorizedArray<Number>>     gradient_type;
-  static constexpr unsigned int                       dimension    = dim;
+  static constexpr unsigned int                       dimension = dim;
   static constexpr unsigned int                       n_components = dim;
   typedef FEEvaluationBase<dim, dim, Number, is_face> BaseClass;
 
@@ -2226,8 +2226,8 @@ public:
    * <code>first_selected_component+n_components_</code>.
    */
   FEEvaluation(const MatrixFree<dim, Number>& matrix_free,
-               const unsigned int             dof_no                   = 0,
-               const unsigned int             quad_no                  = 0,
+               const unsigned int             dof_no = 0,
+               const unsigned int             quad_no = 0,
                const unsigned int             first_selected_component = 0);
 
   /**
@@ -2522,7 +2522,7 @@ template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
           int n_components_ = 1,
-          typename Number   = double>
+          typename Number = double>
 class FEFaceEvaluation
   : public FEEvaluationAccess<dim, n_components_, Number, true>
 {
@@ -2638,8 +2638,8 @@ public:
    */
   FEFaceEvaluation(const MatrixFree<dim, Number>& matrix_free,
                    const bool                     is_interior_face = true,
-                   const unsigned int             dof_no           = 0,
-                   const unsigned int             quad_no          = 0,
+                   const unsigned int             dof_no = 0,
+                   const unsigned int             quad_no = 0,
                    const unsigned int             first_selected_component = 0);
 
   /**
@@ -2999,8 +2999,8 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
   cell = 0;
 
   mapping_data = &mapped_geometry->get_data_storage();
-  jacobian     = mapped_geometry->get_data_storage().jacobians[0].begin();
-  J_value      = mapped_geometry->get_data_storage().JxW_values.begin();
+  jacobian = mapped_geometry->get_data_storage().jacobians[0].begin();
+  J_value = mapped_geometry->get_data_storage().JxW_values.begin();
 
   const unsigned int base_element_number
     = fe.component_to_base_index(first_selected_component).first;
@@ -3113,8 +3113,8 @@ operator=(const FEEvaluationBase<dim, n_components_, Number, is_face>& other)
     = (mapping_data != nullptr ? mapping_data->descriptor[active_quad_index]
                                    .quadrature_weights.begin() :
                                  nullptr);
-  cell             = numbers::invalid_unsigned_int;
-  cell_type        = internal::MatrixFreeFunctions::general;
+  cell = numbers::invalid_unsigned_int;
+  cell_type = internal::MatrixFreeFunctions::general;
   is_interior_face = other.is_interior_face;
   dof_access_index = other.dof_access_index;
 
@@ -3126,7 +3126,7 @@ operator=(const FEEvaluationBase<dim, n_components_, Number, is_face>& other)
           other.mapped_geometry->get_fe_values().get_mapping(),
           other.mapped_geometry->get_quadrature(),
           other.mapped_geometry->get_fe_values().get_update_flags()));
-      cell         = 0;
+      cell = 0;
       mapping_data = &mapped_geometry->get_data_storage();
       jacobian     = mapped_geometry->get_data_storage().jacobians[0].begin();
       J_value      = mapped_geometry->get_data_storage().JxW_values.begin();
@@ -4421,7 +4421,7 @@ FEEvaluationBase<dim, n_components, Number, is_face>::begin_values()
 {
 #  ifdef DEBUG
   values_quad_initialized = true;
-  values_quad_submitted   = true;
+  values_quad_submitted = true;
 #  endif
   return &values_quad[0][0];
 }
@@ -4440,7 +4440,7 @@ inline VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_gradients()
 {
 #  ifdef DEBUG
-  gradients_quad_submitted   = true;
+  gradients_quad_submitted = true;
   gradients_quad_initialized = true;
 #  endif
   return &gradients_quad[0][0][0];
@@ -6044,15 +6044,15 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 
       // check whether some other vector component has the correct number of
       // points
-      unsigned int proposed_dof_comp  = numbers::invalid_unsigned_int,
-                   proposed_fe_comp   = numbers::invalid_unsigned_int,
+      unsigned int proposed_dof_comp = numbers::invalid_unsigned_int,
+                   proposed_fe_comp = numbers::invalid_unsigned_int,
                    proposed_quad_comp = numbers::invalid_unsigned_int;
       if(dof_no != numbers::invalid_unsigned_int)
         {
           if(static_cast<unsigned int>(fe_degree) == this->data->fe_degree)
             {
               proposed_dof_comp = dof_no;
-              proposed_fe_comp  = first_selected_component;
+              proposed_fe_comp = first_selected_component;
             }
           else
             for(unsigned int no = 0; no < this->matrix_info->n_components();
@@ -6186,13 +6186,13 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
   const unsigned int offsets
     = this->mapping_data->data_index_offsets[cell_index];
   this->jacobian = &this->mapping_data->jacobians[0][offsets];
-  this->J_value  = &this->mapping_data->JxW_values[offsets];
+  this->J_value = &this->mapping_data->JxW_values[offsets];
 
 #  ifdef DEBUG
-  this->dof_values_initialized     = false;
-  this->values_quad_initialized    = false;
+  this->dof_values_initialized = false;
+  this->values_quad_initialized = false;
   this->gradients_quad_initialized = false;
-  this->hessians_quad_initialized  = false;
+  this->hessians_quad_initialized = false;
 #  endif
 }
 
@@ -6513,7 +6513,7 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
     Assert(this->is_interior_face,
            ExcMessage("Boundary faces do not have a neighbor"));
 
-  this->face_no       = (this->is_interior_face ? faces.interior_face_no :
+  this->face_no = (this->is_interior_face ? faces.interior_face_no :
                                             faces.exterior_face_no);
   this->subface_index = faces.subface_index;
   if(this->is_interior_face == true)
@@ -6537,7 +6537,7 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
   this->cell_type = this->matrix_info->get_mapping_info().face_type[face_index];
   const unsigned int offsets
     = this->mapping_data->data_index_offsets[face_index];
-  this->J_value        = &this->mapping_data->JxW_values[offsets];
+  this->J_value = &this->mapping_data->JxW_values[offsets];
   this->normal_vectors = &this->mapping_data->normal_vectors[offsets];
   this->jacobian
     = &this->mapping_data->jacobians[!this->is_interior_face][offsets];
@@ -6546,10 +6546,10 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
          ->normals_times_jacobians[!this->is_interior_face][offsets];
 
 #  ifdef DEBUG
-  this->dof_values_initialized     = false;
-  this->values_quad_initialized    = false;
+  this->dof_values_initialized = false;
+  this->values_quad_initialized = false;
   this->gradients_quad_initialized = false;
-  this->hessians_quad_initialized  = false;
+  this->hessians_quad_initialized = false;
 #  endif
 }
 
@@ -6585,8 +6585,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
   this->cell_type = this->matrix_info->get_mapping_info().cell_type[cell_index];
   this->cell      = cell_index;
   this->face_orientation = 0;
-  this->subface_index    = GeometryInfo<dim>::max_children_per_cell;
-  this->face_no          = face_number;
+  this->subface_index = GeometryInfo<dim>::max_children_per_cell;
+  this->face_no = face_number;
   this->dof_access_index
     = internal::MatrixFreeFunctions::DoFInfo::dof_access_cell;
 
@@ -6613,10 +6613,10 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
                                .normals_times_jacobians[0][offsets];
 
 #  ifdef DEBUG
-  this->dof_values_initialized     = false;
-  this->values_quad_initialized    = false;
+  this->dof_values_initialized = false;
+  this->values_quad_initialized = false;
   this->gradients_quad_initialized = false;
-  this->hessians_quad_initialized  = false;
+  this->hessians_quad_initialized = false;
 #  endif
 }
 

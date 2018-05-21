@@ -377,7 +377,7 @@ inline void
 MGTransferSelect<number>::select(const unsigned int component,
                                  const unsigned int mg_component)
 {
-  selected_component    = component;
+  selected_component = component;
   mg_selected_component = (mg_component == numbers::invalid_unsigned_int) ?
                             component :
                             mg_component;

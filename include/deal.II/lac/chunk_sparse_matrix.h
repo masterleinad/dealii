@@ -674,7 +674,7 @@ public:
       const size_type  n_cols,
       const size_type* col_indices,
       const number2*   values,
-      const bool       elide_zero_values      = true,
+      const bool       elide_zero_values = true,
       const bool       col_indices_are_sorted = false);
 
   /**
@@ -1270,9 +1270,9 @@ public:
    */
   void
   print_formatted(std::ostream&      out,
-                  const unsigned int precision   = 3,
-                  const bool         scientific  = true,
-                  const unsigned int width       = 0,
+                  const unsigned int precision = 3,
+                  const bool         scientific = true,
+                  const unsigned int width = 0,
                   const char*        zero_string = " ",
                   const double       denominator = 1.) const;
 

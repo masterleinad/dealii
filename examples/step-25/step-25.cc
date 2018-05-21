@@ -174,7 +174,7 @@ namespace Step25
       {
         case 1:
           {
-            const double m  = 0.5;
+            const double m = 0.5;
             const double c1 = 0.;
             const double c2 = 0.;
             return -4.
@@ -185,10 +185,10 @@ namespace Step25
 
         case 2:
           {
-            const double theta  = numbers::PI / 4.;
+            const double theta = numbers::PI / 4.;
             const double lambda = 1.;
-            const double a0     = 1.;
-            const double s      = 1.;
+            const double a0 = 1.;
+            const double s = 1.;
             const double arg
               = p[0] * std::cos(theta)
                 + std::sin(theta)
@@ -199,10 +199,10 @@ namespace Step25
         case 3:
           {
             const double theta = numbers::PI / 4;
-            const double phi   = numbers::PI / 4;
-            const double tau   = 1.;
-            const double c0    = 1.;
-            const double s     = 1.;
+            const double phi = numbers::PI / 4;
+            const double tau = 1.;
+            const double c0 = 1.;
+            const double s = 1.;
             const double arg
               = p[0] * std::cos(theta) + p[1] * std::sin(theta) * std::cos(phi)
                 + std::sin(theta) * std::sin(phi)
@@ -412,7 +412,7 @@ namespace Step25
                               | update_quadrature_points);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     Vector<double>                       local_nl_term(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -477,7 +477,7 @@ namespace Step25
                               | update_quadrature_points);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_nl_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -645,7 +645,7 @@ namespace Step25
         // linear solver iterations it took us. When the loop below is done,
         // we have (an approximation of) $U^n$.
         double initial_rhs_norm = 0.;
-        bool   first_iteration  = true;
+        bool   first_iteration = true;
         do
           {
             assemble_system();

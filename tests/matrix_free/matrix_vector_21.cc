@@ -107,7 +107,7 @@ test()
   tria.refine_global(1);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  cell                                                   = tria.begin_active();
+  cell = tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->is_locally_owned())
       if(cell->center().norm() < 0.2)
@@ -121,7 +121,7 @@ test()
   cell = tria.begin_active();
   for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
+      cell = tria.begin_active();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(cell->is_locally_owned())
@@ -196,7 +196,7 @@ test()
                               | update_JxW_values);
 
     const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);

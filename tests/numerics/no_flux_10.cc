@@ -49,7 +49,7 @@ void colorize_sixty_deg_hyper_shell(Triangulation<3>& tria,
   //      AssertThrow (false, ExcNotImplemented());
 
   double middle = (outer_radius - inner_radius) / 2e0 + inner_radius;
-  double eps    = 1e-3 * middle;
+  double eps = 1e-3 * middle;
   Triangulation<3>::cell_iterator cell = tria.begin();
 
   for(; cell != tria.end(); ++cell)

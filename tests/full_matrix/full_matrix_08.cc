@@ -20,7 +20,7 @@
 #include <deal.II/lac/full_matrix.h>
 
 const double entries_A[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-const double compare[9]   = {66, 78, 90, 78, 93, 108, 90, 108, 126};
+const double compare[9] = {66, 78, 90, 78, 93, 108, 90, 108, 126};
 
 int
 main()

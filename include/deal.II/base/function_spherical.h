@@ -53,7 +53,7 @@ namespace Functions
      * quantities -- not as the components of a vector that will be
      * re-interpreted in a different coordinate system.
      */
-    Spherical(const Point<dim>&  center       = Point<dim>(),
+    Spherical(const Point<dim>&  center = Point<dim>(),
               const unsigned int n_components = 1);
 
     /**

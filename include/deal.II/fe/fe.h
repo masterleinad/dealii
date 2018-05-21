@@ -1520,8 +1520,8 @@ public:
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
                      const bool         face_orientation = true,
-                     const bool         face_flip        = false,
-                     const bool         face_rotation    = false) const;
+                     const bool         face_flip = false,
+                     const bool         face_rotation = false) const;
 
   /**
    * For lines with non-standard line_orientation in 3D, the dofs on lines
@@ -2380,7 +2380,7 @@ protected:
    */
   void
   reinit_restriction_and_prolongation_matrices(
-    const bool isotropic_restriction_only  = false,
+    const bool isotropic_restriction_only = false,
     const bool isotropic_prolongation_only = false);
 
   /**

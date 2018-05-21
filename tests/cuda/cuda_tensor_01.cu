@@ -25,7 +25,7 @@ void
 test_cpu()
 {
   double             a[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-  const unsigned int dim     = 3;
+  const unsigned int dim = 3;
   Tensor<2, dim>     t;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)

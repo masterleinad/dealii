@@ -68,7 +68,7 @@ SwappableVector<number>::operator=(const SwappableVector<number>& v)
   Threads::Mutex::ScopedLock lock(this->lock);
 
   Vector<number>::operator=(v);
-  data_is_preloaded       = false;
+  data_is_preloaded = false;
 
   return *this;
 }

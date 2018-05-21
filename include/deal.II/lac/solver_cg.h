@@ -321,7 +321,7 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
   std::vector<double> diagonal;
   std::vector<double> offdiagonal;
 
-  int    it  = 0;
+  int    it = 0;
   double res = -std::numeric_limits<double>::max();
 
   double eigen_beta_alpha = 0;
@@ -389,14 +389,14 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
 
           beta = gh;
           Assert(beta != 0., ExcDivideByZero());
-          gh   = g * h;
+          gh = g * h;
           beta = gh / beta;
           d.sadd(beta, -1., h);
         }
       else
         {
           beta = gh;
-          gh   = res * res;
+          gh = res * res;
           beta = gh / beta;
           d.sadd(beta, -1., g);
         }

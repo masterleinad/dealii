@@ -572,7 +572,7 @@ namespace internal
         // respect non-standard faces by calling the
         // reordering function from GeometryInfo
 
-        const unsigned int quad_index     = lookup_table[i][0];
+        const unsigned int quad_index = lookup_table[i][0];
         const unsigned int std_line_index = lookup_table[i][1];
 
         const unsigned int line_index
@@ -776,7 +776,7 @@ namespace internal
              {0, 1},
              {1, 1}};
 
-        const unsigned int quad_index     = lookup_table[line][0];
+        const unsigned int quad_index = lookup_table[line][0];
         const unsigned int std_line_index = lookup_table[line][1];
 
         const unsigned int line_index
@@ -1866,15 +1866,15 @@ TriaAccessor<structdim, dim, spacedim>::enclosing_ball() const
           const Point<spacedim> p21(this->vertex(2) - this->vertex(1));
           if(p30.norm() > p21.norm())
             {
-              center                     = this->vertex(0) + 0.5 * p30;
-              radius                     = p30.norm() / 2.;
+              center = this->vertex(0) + 0.5 * p30;
+              radius = p30.norm() / 2.;
               is_initial_guess_vertex[3] = true;
               is_initial_guess_vertex[0] = true;
             }
           else
             {
-              center                     = this->vertex(1) + 0.5 * p21;
-              radius                     = p21.norm() / 2.;
+              center = this->vertex(1) + 0.5 * p21;
+              radius = p21.norm() / 2.;
               is_initial_guess_vertex[2] = true;
               is_initial_guess_vertex[1] = true;
             }
@@ -1892,25 +1892,25 @@ TriaAccessor<structdim, dim, spacedim>::enclosing_ball() const
             = std::max_element(diagonals.begin(), diagonals.end());
           if(it == diagonals.begin())
             {
-              center                     = this->vertex(0) + 0.5 * p70;
+              center = this->vertex(0) + 0.5 * p70;
               is_initial_guess_vertex[7] = true;
               is_initial_guess_vertex[0] = true;
             }
           else if(it == diagonals.begin() + 1)
             {
-              center                     = this->vertex(1) + 0.5 * p61;
+              center = this->vertex(1) + 0.5 * p61;
               is_initial_guess_vertex[6] = true;
               is_initial_guess_vertex[1] = true;
             }
           else if(it == diagonals.begin() + 2)
             {
-              center                     = this->vertex(5) + 0.5 * p25;
+              center = this->vertex(5) + 0.5 * p25;
               is_initial_guess_vertex[2] = true;
               is_initial_guess_vertex[5] = true;
             }
           else
             {
-              center                     = this->vertex(4) + 0.5 * p34;
+              center = this->vertex(4) + 0.5 * p34;
               is_initial_guess_vertex[3] = true;
               is_initial_guess_vertex[4] = true;
             }
@@ -2010,8 +2010,8 @@ TriaAccessor<structdim, dim, spacedim>::is_translation_of(
   // times the distance between the zeroth
   // vertices here.
   bool                      is_translation = true;
-  const Tensor<1, spacedim> dist           = o->vertex(0) - this->vertex(0);
-  const double              tol_square     = 1e-24 * dist.norm_square();
+  const Tensor<1, spacedim> dist = o->vertex(0) - this->vertex(0);
+  const double              tol_square = 1e-24 * dist.norm_square();
   for(unsigned int i = 1; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
     {
       const Tensor<1, spacedim> dist_new

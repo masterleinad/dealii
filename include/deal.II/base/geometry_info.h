@@ -936,16 +936,16 @@ namespace internal
      */
     enum Possibilities
     {
-      case_none  = 0,
-      case_x     = 1,
-      case_x1y   = 2,
-      case_x2y   = 3,
+      case_none = 0,
+      case_x = 1,
+      case_x1y = 2,
+      case_x2y = 3,
       case_x1y2y = 4,
-      case_y     = 5,
-      case_y1x   = 6,
-      case_y2x   = 7,
+      case_y = 5,
+      case_y1x = 6,
+      case_y2x = 7,
       case_y1x2x = 8,
-      case_xy    = 9,
+      case_xy = 9,
 
       case_isotropic = case_xy
     };
@@ -1826,8 +1826,8 @@ struct GeometryInfo
   face_refinement_case(const RefinementCase<dim>& cell_refinement_case,
                        const unsigned int         face_no,
                        const bool                 face_orientation = true,
-                       const bool                 face_flip        = false,
-                       const bool                 face_rotation    = false);
+                       const bool                 face_flip = false,
+                       const bool                 face_rotation = false);
 
   /**
    * Given the SubfaceCase @p face_refinement_case of the @p face_no th face,
@@ -1839,8 +1839,8 @@ struct GeometryInfo
     const RefinementCase<dim - 1>& face_refinement_case,
     const unsigned int             face_no,
     const bool                     face_orientation = true,
-    const bool                     face_flip        = false,
-    const bool                     face_rotation    = false);
+    const bool                     face_flip = false,
+    const bool                     face_rotation = false);
 
   /**
    * Given a cell refined with the RefinementCase @p cell_refinement_case
@@ -1908,8 +1908,8 @@ struct GeometryInfo
                      const unsigned int             face,
                      const unsigned int             subface,
                      const bool                     face_orientation = true,
-                     const bool                     face_flip        = false,
-                     const bool                     face_rotation    = false,
+                     const bool                     face_flip = false,
+                     const bool                     face_rotation = false,
                      const RefinementCase<dim - 1>& face_refinement_case
                      = RefinementCase<dim - 1>::isotropic_refinement);
 
@@ -1953,8 +1953,8 @@ struct GeometryInfo
   face_to_cell_vertices(const unsigned int face,
                         const unsigned int vertex,
                         const bool         face_orientation = true,
-                        const bool         face_flip        = false,
-                        const bool         face_rotation    = false);
+                        const bool         face_flip = false,
+                        const bool         face_rotation = false);
 
   /**
    * Map face line number to cell line number, i.e. give the cell line number
@@ -1971,8 +1971,8 @@ struct GeometryInfo
   face_to_cell_lines(const unsigned int face,
                      const unsigned int line,
                      const bool         face_orientation = true,
-                     const bool         face_flip        = false,
-                     const bool         face_rotation    = false);
+                     const bool         face_flip = false,
+                     const bool         face_rotation = false);
 
   /**
    * Map the vertex index @p vertex of a face in standard orientation to one
@@ -1986,8 +1986,8 @@ struct GeometryInfo
   static unsigned int
   standard_to_real_face_vertex(const unsigned int vertex,
                                const bool         face_orientation = true,
-                               const bool         face_flip        = false,
-                               const bool         face_rotation    = false);
+                               const bool         face_flip = false,
+                               const bool         face_rotation = false);
 
   /**
    * Map the vertex index @p vertex of a face with arbitrary @p
@@ -2001,8 +2001,8 @@ struct GeometryInfo
   static unsigned int
   real_to_standard_face_vertex(const unsigned int vertex,
                                const bool         face_orientation = true,
-                               const bool         face_flip        = false,
-                               const bool         face_rotation    = false);
+                               const bool         face_flip = false,
+                               const bool         face_rotation = false);
 
   /**
    * Map the line index @p line of a face in standard orientation to one of a
@@ -2016,8 +2016,8 @@ struct GeometryInfo
   static unsigned int
   standard_to_real_face_line(const unsigned int line,
                              const bool         face_orientation = true,
-                             const bool         face_flip        = false,
-                             const bool         face_rotation    = false);
+                             const bool         face_flip = false,
+                             const bool         face_rotation = false);
 
   /**
    * Map the line index @p line of a face with arbitrary @p face_orientation,
@@ -2031,8 +2031,8 @@ struct GeometryInfo
   static unsigned int
   real_to_standard_face_line(const unsigned int line,
                              const bool         face_orientation = true,
-                             const bool         face_flip        = false,
-                             const bool         face_rotation    = false);
+                             const bool         face_flip = false,
+                             const bool         face_rotation = false);
 
   /**
    * Return the position of the @p ith vertex on the unit cell. The order of

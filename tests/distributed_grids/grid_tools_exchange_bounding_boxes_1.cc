@@ -30,7 +30,7 @@ test_exchange_bbox()
 
   const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
   unsigned int    n_procs = Utilities::MPI::n_mpi_processes(mpi_communicator);
-  unsigned int    proc    = Utilities::MPI::this_mpi_process(mpi_communicator);
+  unsigned int    proc = Utilities::MPI::this_mpi_process(mpi_communicator);
 
   deallog << "Test for: dimension " << spacedim << std::endl;
   deallog << n_procs << "  mpi processes" << std::endl;

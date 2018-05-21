@@ -33,7 +33,7 @@ public:
   value(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = point - origin;
-    const double   r    = dist.norm();
+    const double   r = dist.norm();
     return std::exp(-Z * r);
   }
 
@@ -41,7 +41,7 @@ public:
   gradient(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = p - origin;
-    const double   r    = dist.norm();
+    const double   r = dist.norm();
     Assert(r > 0.0, ExcMessage("r is not positive"));
     dist /= r;
     return -Z * std::exp(-Z * r) * dist;
@@ -51,7 +51,7 @@ public:
   hessian(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dir = p - origin;
-    const double   r   = dir.norm();
+    const double   r = dir.norm();
     Assert(r > 0.0, ExcMessage("r is not positive"));
     dir /= r;
     SymmetricTensor<2, dim> dir_x_dir;
@@ -113,7 +113,7 @@ check()
 {
   Point<dim>   center;
   const double Z = 2.5;
-  center[1]      = 2.0;
+  center[1] = 2.0;
   if(dim > 2)
     center[2] = -1.5;
 

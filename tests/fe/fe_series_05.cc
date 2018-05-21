@@ -201,7 +201,7 @@ main()
   {
     const unsigned int dim      = 2;
     const unsigned int coeff_1d = 2;
-    const unsigned int p        = 1;
+    const unsigned int p = 1;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d);
     unsigned int       ind = 0;
     for(unsigned int i = 0; i < coeff_1d; i++)
@@ -215,7 +215,7 @@ main()
   {
     const unsigned int dim      = 2;
     const unsigned int coeff_1d = 3;
-    const unsigned int p        = 2;
+    const unsigned int p = 2;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d);
     unsigned int       ind = 0;
     for(unsigned int i = 0; i < coeff_1d; i++)
@@ -229,7 +229,7 @@ main()
   {
     const unsigned int dim      = 3;
     const unsigned int coeff_1d = 2;
-    const unsigned int p        = 1;
+    const unsigned int p = 1;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d, coeff_1d);
     unsigned int       ind = 0;
     for(unsigned int i = 0; i < coeff_1d; i++)
@@ -244,7 +244,7 @@ main()
   {
     const unsigned int dim      = 3;
     const unsigned int coeff_1d = 3;
-    const unsigned int p        = 2;
+    const unsigned int p = 2;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d, coeff_1d);
     unsigned int       ind = 0;
     for(unsigned int i = 0; i < coeff_1d; i++)

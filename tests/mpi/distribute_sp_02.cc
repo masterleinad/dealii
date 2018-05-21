@@ -35,7 +35,7 @@ test_mpi()
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
   unsigned int          num_local = 10;
-  unsigned int          n         = numprocs * num_local;
+  unsigned int          n = numprocs * num_local;
   std::vector<IndexSet> locally_owned_dofs_per_cpu(numprocs, IndexSet(n));
   for(unsigned int i = 0; i < numprocs; ++i)
     locally_owned_dofs_per_cpu[i].add_range((i) *num_local,
@@ -74,7 +74,7 @@ test_mpi()
   for(unsigned int r = 0; r < num_local; ++r)
     {
       unsigned int indx = r + myid * num_local;
-      unsigned int len  = csp.row_length(indx);
+      unsigned int len = csp.row_length(indx);
 
       //std::cout << "myid=" << myid << " idx=" << indx << " len=" << len <<std::endl;
 
@@ -123,7 +123,7 @@ test_mpi()
   for(unsigned int r = 0; r < num_local; ++r)
     {
       unsigned int indx = r + myid * num_local;
-      unsigned int len  = csp.row_length(indx);
+      unsigned int len = csp.row_length(indx);
 
       //std::cout << "myid=" << myid << " idx=" << indx << " len=" << len <<std::endl;
 

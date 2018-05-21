@@ -596,7 +596,7 @@ namespace MatrixFreeOperators
   template <int dim,
             int fe_degree,
             int n_components = 1,
-            typename Number  = double>
+            typename Number = double>
   class CellwiseInverseMassMatrix
   {
   public:
@@ -653,8 +653,8 @@ namespace MatrixFreeOperators
    */
   template <int dim,
             int fe_degree,
-            int n_q_points_1d   = fe_degree + 1,
-            int n_components    = 1,
+            int n_q_points_1d = fe_degree + 1,
+            int n_components = 1,
             typename VectorType = LinearAlgebra::distributed::Vector<double>>
   class MassOperator : public Base<dim, VectorType>
   {
@@ -713,8 +713,8 @@ namespace MatrixFreeOperators
    */
   template <int dim,
             int fe_degree,
-            int n_q_points_1d   = fe_degree + 1,
-            int n_components    = 1,
+            int n_q_points_1d = fe_degree + 1,
+            int n_components = 1,
             typename VectorType = LinearAlgebra::distributed::Vector<double>>
   class LaplaceOperator : public Base<dim, VectorType>
   {
@@ -934,7 +934,7 @@ namespace MatrixFreeOperators
     VectorizedArray<Number>        temp_data_field[dofs_per_cell];
     for(unsigned int d = 0; d < n_actual_components; ++d)
       {
-        const VectorizedArray<Number>* in  = in_array + d * dofs_per_cell;
+        const VectorizedArray<Number>* in = in_array + d * dofs_per_cell;
         VectorizedArray<Number>*       out = out_array + d * dofs_per_cell;
         // Need to select 'apply' method with hessian slot because values
         // assume symmetries that do not exist in the inverse shapes

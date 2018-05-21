@@ -59,7 +59,7 @@ void
 MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
                             MeshWorker::IntegrationInfo<dim>& info)
 {
-  const FiniteElement<dim>& fe           = info.fe_values().get_fe();
+  const FiniteElement<dim>& fe = info.fe_values().get_fe();
   FullMatrix<double>&       local_matrix = dinfo.matrix(0).matrix;
 
   for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
@@ -77,8 +77,8 @@ MatrixIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
                             MeshWorker::IntegrationInfo<dim>& info1,
                             MeshWorker::IntegrationInfo<dim>& info2)
 {
-  const FiniteElement<dim>& fe1         = info1.fe_values().get_fe();
-  const FiniteElement<dim>& fe2         = info2.fe_values().get_fe();
+  const FiniteElement<dim>& fe1 = info1.fe_values().get_fe();
+  const FiniteElement<dim>& fe2 = info2.fe_values().get_fe();
   FullMatrix<double>&       matrix_v1u2 = dinfo1.matrix(0, true).matrix;
   FullMatrix<double>&       matrix_v2u1 = dinfo2.matrix(0, true).matrix;
 
@@ -218,7 +218,7 @@ test_simple(DoFHandler<dim>& mgdofs)
   Vector<double>       v;
 
   const DoFHandler<dim>&    dofs = mgdofs;
-  const FiniteElement<dim>& fe   = dofs.get_fe();
+  const FiniteElement<dim>& fe = dofs.get_fe();
   pattern.reinit(dofs.n_dofs(),
                  dofs.n_dofs(),
                  (GeometryInfo<dim>::faces_per_cell

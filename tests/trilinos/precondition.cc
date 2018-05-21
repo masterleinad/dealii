@@ -151,7 +151,7 @@ Step4<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -249,7 +249,7 @@ Step4<dim>::solve(int cycle)
     TrilinosWrappers::PreconditionBlockJacobi                 preconditioner;
     TrilinosWrappers::PreconditionBlockJacobi::AdditionalData data;
     data.block_size = 16;
-    solution        = 0;
+    solution = 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -267,8 +267,8 @@ Step4<dim>::solve(int cycle)
     TrilinosWrappers::PreconditionBlockSSOR                 preconditioner;
     TrilinosWrappers::PreconditionBlockSSOR::AdditionalData data;
     data.block_size = 16;
-    data.omega      = 1.2;
-    solution        = 0;
+    data.omega = 1.2;
+    solution = 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -286,8 +286,8 @@ Step4<dim>::solve(int cycle)
     TrilinosWrappers::PreconditionBlockSOR                 preconditioner;
     TrilinosWrappers::PreconditionBlockSOR::AdditionalData data;
     data.block_size = 16;
-    data.omega      = 0.8;
-    solution        = 0;
+    data.omega = 0.8;
+    solution = 0;
     SolverControl    solver_control(1000, 1e-5);
     SolverBicgstab<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -338,7 +338,7 @@ Step4<dim>::solve(int cycle)
     TrilinosWrappers::PreconditionILUT::AdditionalData data;
     data.ilut_drop = 1e-6;
     data.ilut_fill = 3;
-    solution       = 0;
+    solution = 0;
     SolverControl    solver_control(1000, 1e-5);
     SolverBicgstab<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -356,8 +356,8 @@ Step4<dim>::solve(int cycle)
     TrilinosWrappers::PreconditionChebyshev                 preconditioner;
     TrilinosWrappers::PreconditionChebyshev::AdditionalData data;
     data.max_eigenvalue = 2.5;
-    data.degree         = 3;
-    solution            = 0;
+    data.degree = 3;
+    solution = 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix, data);

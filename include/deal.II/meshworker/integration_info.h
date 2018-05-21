@@ -395,9 +395,9 @@ namespace MeshWorker
      */
     void
     add_update_flags(const UpdateFlags flags,
-                     const bool        cell     = true,
+                     const bool        cell = true,
                      const bool        boundary = true,
-                     const bool        face     = true,
+                     const bool        face = true,
                      const bool        neighbor = true);
 
     /**
@@ -809,13 +809,13 @@ namespace MeshWorker
     cell_data = p;
     cell.initialize_data(p);
 
-    p  = std::make_shared<VectorData<VectorType, dim, sdim>>(boundary_selector);
+    p = std::make_shared<VectorData<VectorType, dim, sdim>>(boundary_selector);
     pp = &*p;
     pp->initialize(data);
     boundary_data = p;
     boundary.initialize_data(p);
 
-    p  = std::make_shared<VectorData<VectorType, dim, sdim>>(face_selector);
+    p = std::make_shared<VectorData<VectorType, dim, sdim>>(face_selector);
     pp = &*p;
     pp->initialize(data);
     face_data = p;
@@ -852,7 +852,7 @@ namespace MeshWorker
     boundary_data = p;
     boundary.initialize_data(p);
 
-    p  = std::make_shared<MGVectorData<VectorType, dim, sdim>>(face_selector);
+    p = std::make_shared<MGVectorData<VectorType, dim, sdim>>(face_selector);
     pp = &*p;
     pp->initialize(data);
     face_data = p;

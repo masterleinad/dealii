@@ -508,7 +508,7 @@ Vector<Number>::l2_norm() const
   else
     {
       real_type scale = 0.;
-      real_type sum   = 1.;
+      real_type sum = 1.;
       for(size_type i = 0; i < vec_size; ++i)
         {
           if(values[i] != Number())
@@ -517,7 +517,7 @@ Vector<Number>::l2_norm() const
                 = numbers::NumberTraits<Number>::abs(values[i]);
               if(scale < abs_x)
                 {
-                  sum   = 1. + sum * (scale / abs_x) * (scale / abs_x);
+                  sum = 1. + sum * (scale / abs_x) * (scale / abs_x);
                   scale = abs_x;
                 }
               else
@@ -550,7 +550,7 @@ Vector<Number>::lp_norm(const real_type p) const
   else
     {
       real_type scale = 0.;
-      real_type sum   = 1.;
+      real_type sum = 1.;
       for(size_type i = 0; i < vec_size; ++i)
         {
           if(values[i] != Number())
@@ -559,7 +559,7 @@ Vector<Number>::lp_norm(const real_type p) const
                 = numbers::NumberTraits<Number>::abs(values[i]);
               if(scale < abs_x)
                 {
-                  sum   = 1. + sum * std::pow(scale / abs_x, p);
+                  sum = 1. + sum * std::pow(scale / abs_x, p);
                   scale = abs_x;
                 }
               else
@@ -865,7 +865,7 @@ Vector<Number>::print(std::ostream&      out,
   Assert(vec_size != 0, ExcEmptyObject());
   AssertThrow(out, ExcIO());
 
-  std::ios::fmtflags old_flags     = out.flags();
+  std::ios::fmtflags old_flags = out.flags();
   unsigned int       old_precision = out.precision(precision);
 
   out.precision(precision);

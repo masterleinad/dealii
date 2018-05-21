@@ -958,7 +958,7 @@ namespace Utilities
               }
           }
 
-        const unsigned int half   = len >> 1;
+        const unsigned int half = len >> 1;
         const Iterator     middle = first + half;
 
         // if the value is larger than

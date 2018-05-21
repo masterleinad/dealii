@@ -217,8 +217,8 @@ namespace MatrixCreator
       const FEValues<dim, spacedim>& fe_values
         = data.x_fe_values.get_present_fe_values();
 
-      const unsigned int dofs_per_cell       = fe_values.dofs_per_cell,
-                         n_q_points          = fe_values.n_quadrature_points;
+      const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
+                         n_q_points = fe_values.n_quadrature_points;
       const FiniteElement<dim, spacedim>& fe = fe_values.get_fe();
       const unsigned int                  n_components = fe.n_components();
 
@@ -416,8 +416,8 @@ namespace MatrixCreator
       const FEValues<dim, spacedim>& fe_values
         = data.x_fe_values.get_present_fe_values();
 
-      const unsigned int dofs_per_cell       = fe_values.dofs_per_cell,
-                         n_q_points          = fe_values.n_quadrature_points;
+      const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
+                         n_q_points = fe_values.n_quadrature_points;
       const FiniteElement<dim, spacedim>& fe = fe_values.get_fe();
       const unsigned int                  n_components = fe.n_components();
 
@@ -514,7 +514,7 @@ namespace MatrixCreator
             if(use_rhs_function)
               {
                 const double* phi_i = &fe_values.shape_value(i, 0);
-                add_data            = 0;
+                add_data = 0;
                 if(data.rhs_function->n_components == 1)
                   for(unsigned int point = 0; point < n_q_points; ++point)
                     add_data
@@ -990,7 +990,7 @@ namespace MatrixCreator
       const unsigned int n_components = fe.n_components();
       const unsigned int n_function_components
         = boundary_functions.begin()->second->n_components;
-      const bool fe_is_system    = (n_components != 1);
+      const bool fe_is_system = (n_components != 1);
       const bool fe_is_primitive = fe.is_primitive();
 
       const unsigned int dofs_per_face = fe.dofs_per_face;
@@ -1342,7 +1342,7 @@ namespace MatrixCreator
         return;
       }
 
-    const FiniteElement<dim, spacedim>& fe           = dof.get_fe();
+    const FiniteElement<dim, spacedim>& fe = dof.get_fe();
     const unsigned int                  n_components = fe.n_components();
 
     Assert(matrix.n() == dof.n_boundary_dofs(boundary_functions),
@@ -1424,12 +1424,12 @@ namespace MatrixCreator
       const unsigned int n_components = fe_collection.n_components();
       const unsigned int n_function_components
         = boundary_functions.begin()->second->n_components;
-      const FiniteElement<dim, spacedim>& fe              = cell->get_fe();
-      const bool                          fe_is_system    = (n_components != 1);
+      const FiniteElement<dim, spacedim>& fe = cell->get_fe();
+      const bool                          fe_is_system = (n_components != 1);
       const bool                          fe_is_primitive = fe.is_primitive();
-      const unsigned int                  dofs_per_face   = fe.dofs_per_face;
+      const unsigned int                  dofs_per_face = fe.dofs_per_face;
 
-      copy_data.cell          = cell;
+      copy_data.cell = cell;
       copy_data.dofs_per_cell = fe.dofs_per_cell;
       copy_data.dofs.resize(copy_data.dofs_per_cell);
       cell->get_dof_indices(copy_data.dofs);

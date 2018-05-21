@@ -134,8 +134,8 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
   for(unsigned int c = 0; c < ncells; ++c)
     {
       DataOutBase::Patch<dim, spacedim>& p = patches[c];
-      p.patch_index                        = c;
-      p.n_subdivisions                     = nsub;
+      p.patch_index = c;
+      p.n_subdivisions = nsub;
 
       for(unsigned int i = 0; i < ncells; ++i)
         for(unsigned int j = 0; j < spacedim; ++j)

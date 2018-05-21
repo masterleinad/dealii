@@ -71,7 +71,7 @@ test()
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.mapping_update_flags  = update_quadrature_points;
+    data.mapping_update_flags = update_quadrature_points;
     mf_data.reinit(mapping, dof, constraints, quad, data);
   }
 

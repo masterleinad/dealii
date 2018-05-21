@@ -28,7 +28,7 @@ void
 test_2d()
 {
   const unsigned int    dim = 2;
-  const unsigned int    N   = 7;
+  const unsigned int    N = 7;
   hp::FECollection<dim> fe_collection;
   hp::QCollection<dim>  fourier_q_collection;
 

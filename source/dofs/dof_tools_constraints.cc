@@ -90,13 +90,13 @@ namespace DoFTools
             // pivot search: search that part of the line on and right of
             // the diagonal for the largest element
             double       max = std::fabs(tmp(j, j));
-            unsigned int r   = j;
+            unsigned int r = j;
             for(unsigned int i = j + 1; i < N; ++i)
               {
                 if(std::fabs(tmp(i, j)) > max)
                   {
                     max = std::fabs(tmp(i, j));
-                    r   = i;
+                    r = i;
                   }
               }
             // check whether the pivot is too small. if that is the case,
@@ -116,7 +116,7 @@ namespace DoFTools
 
             // transformation
             const double hr = 1. / tmp(j, j);
-            tmp(j, j)       = hr;
+            tmp(j, j) = hr;
             for(unsigned int k = 0; k < N; ++k)
               {
                 if(k == j)
@@ -206,7 +206,7 @@ namespace DoFTools
             ++v)
           {
             unsigned int dofs_added = 0;
-            unsigned int i          = 0;
+            unsigned int i = 0;
             while(dofs_added < fe2.dofs_per_vertex)
               {
                 // make sure that we were able to find a set of master dofs
@@ -239,7 +239,7 @@ namespace DoFTools
           {
             // same algorithm as above
             unsigned int dofs_added = 0;
-            unsigned int i          = 0;
+            unsigned int i = 0;
             while(dofs_added < fe2.dofs_per_line)
               {
                 Assert(i < fe1.dofs_per_line, ExcInternalError());
@@ -263,7 +263,7 @@ namespace DoFTools
           {
             // same algorithm as above
             unsigned int dofs_added = 0;
-            unsigned int i          = 0;
+            unsigned int i = 0;
             while(dofs_added < fe2.dofs_per_quad)
               {
                 Assert(i < fe1.dofs_per_quad, ExcInternalError());
@@ -377,7 +377,7 @@ namespace DoFTools
               std::pair<FullMatrix<double>, FullMatrix<double>>>();
 
             const unsigned int n_master_dofs = face_interpolation_matrix.n();
-            const unsigned int n_dofs        = face_interpolation_matrix.m();
+            const unsigned int n_dofs = face_interpolation_matrix.m();
 
             Assert(n_master_dofs <= n_dofs, ExcInternalError());
 
@@ -470,7 +470,7 @@ namespace DoFTools
                ExcDimensionMismatch(slave_dofs.size(), face_constraints.m()));
 
         const unsigned int n_master_dofs = master_dofs.size();
-        const unsigned int n_slave_dofs  = slave_dofs.size();
+        const unsigned int n_slave_dofs = slave_dofs.size();
 
         // check for a couple conditions that happened in parallel
         // distributed mode
@@ -872,7 +872,7 @@ namespace DoFTools
                   }
 
                 // ok, start up the work
-                const FiniteElement<dim>& fe       = cell->get_fe();
+                const FiniteElement<dim>& fe = cell->get_fe();
                 const unsigned int        fe_index = cell->active_fe_index();
 
                 const unsigned int n_dofs_on_mother = fe.dofs_per_face;
@@ -1810,7 +1810,7 @@ namespace DoFTools
       const bool                                   face_flip,
       const bool                                   face_rotation)
     {
-      static const int dim      = FaceIterator::AccessorType::dimension;
+      static const int dim = FaceIterator::AccessorType::dimension;
       static const int spacedim = FaceIterator::AccessorType::space_dimension;
 
       // we should be in the case where face_1 is active, i.e. has no children:
@@ -1951,7 +1951,7 @@ namespace DoFTools
                 //
                 // afterwards do the same for constraints of type dof1=-dof2
                 bool         is_identity_constrained = true;
-                const double eps                     = 1.e-13;
+                const double eps = 1.e-13;
                 for(unsigned int jj = 0; jj < dofs_per_face; ++jj)
                   if(std::abs(transformation(i, jj)) > eps
                      && std::abs(transformation(i, jj) - 1.) > eps)
@@ -2866,7 +2866,7 @@ namespace DoFTools
                                    Triangulation<dim, spacedim>&>(
                     coarse_to_fine_grid_map.get_destination_grid()
                       .get_triangulation());
-                communicator          = tria.get_communicator();
+                communicator = tria.get_communicator();
                 is_called_in_parallel = true;
               }
             catch(std::bad_cast&)
@@ -2936,11 +2936,11 @@ namespace DoFTools
       {
         // aliases to the finite elements used by the dof handlers:
         const FiniteElement<dim, spacedim>&coarse_fe = coarse_grid.get_fe(),
-                                 &fine_fe            = fine_grid.get_fe();
+                                 &fine_fe = fine_grid.get_fe();
 
         // global numbers of dofs
         const types::global_dof_index n_coarse_dofs = coarse_grid.n_dofs(),
-                                      n_fine_dofs   = fine_grid.n_dofs();
+                                      n_fine_dofs = fine_grid.n_dofs();
 
         // local numbers of dofs
         const unsigned int fine_dofs_per_cell = fine_fe.dofs_per_cell;
@@ -3192,7 +3192,7 @@ namespace DoFTools
 
     // global numbers of dofs
     const types::global_dof_index n_coarse_dofs = coarse_grid.n_dofs(),
-                                  n_fine_dofs   = fine_grid.n_dofs();
+                                  n_fine_dofs = fine_grid.n_dofs();
 
     // get an array in which we store which dof on the coarse grid is a
     // parameter and which is not

@@ -204,7 +204,7 @@ public:
    */
   FunctionParser(const unsigned int n_components = 1,
                  const double       initial_time = 0.0,
-                 const double       h            = 1e-8);
+                 const double       h = 1e-8);
 
   /**
    * Destructor. Explicitly delete the FunctionParser objects (there is one

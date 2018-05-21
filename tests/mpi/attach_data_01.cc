@@ -56,7 +56,7 @@ pack_function(
     }
 
   int* intdata = reinterpret_cast<int*>(data);
-  *intdata     = some_number;
+  *intdata = some_number;
 
   ++some_number;
 }
@@ -97,7 +97,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(true)

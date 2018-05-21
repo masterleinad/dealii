@@ -70,8 +70,8 @@ namespace
 
     const double local_min = min_element(criteria),
                  local_max = max_element(criteria);
-    double comp[2]         = {local_min, -local_max};
-    double result[2]       = {0, 0};
+    double comp[2] = {local_min, -local_max};
+    double result[2] = {0, 0};
 
     // compute the minimum on processor zero
     const int ierr
@@ -216,7 +216,7 @@ namespace
       adjust_interesting_range(interesting_range);
 
       const unsigned int master_mpi_rank = 0;
-      unsigned int       iteration       = 0;
+      unsigned int       iteration = 0;
 
       do
         {
@@ -305,7 +305,7 @@ namespace
       adjust_interesting_range(interesting_range);
 
       const unsigned int master_mpi_rank = 0;
-      unsigned int       iteration       = 0;
+      unsigned int       iteration = 0;
 
       do
         {

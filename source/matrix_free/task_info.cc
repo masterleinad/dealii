@@ -145,7 +145,7 @@ namespace internal
           tbb::empty_task* root
             = new(tbb::task::allocate_root()) tbb::empty_task;
           const unsigned int evens = task_info.partition_evens[partition];
-          const unsigned int odds  = task_info.partition_odds[partition];
+          const unsigned int odds = task_info.partition_odds[partition];
           const unsigned int n_blocked_workers
             = task_info.partition_n_blocked_workers[partition];
           const unsigned int n_workers
@@ -403,7 +403,7 @@ namespace internal
                   std::vector<color::PartitionWork*> blocked_worker(
                     n_blocked_workers);
                   unsigned int      worker_index = 0, slice_index = 0;
-                  unsigned int      spawn_index       = 0;
+                  unsigned int      spawn_index = 0;
                   int               spawn_index_child = -2;
                   MPICommunication* worker_compr
                     = new(root->allocate_child()) MPICommunication(funct, true);
@@ -1082,7 +1082,7 @@ namespace internal
       std::vector<unsigned char> irregular(n_macro_cells);
 
       unsigned int mcell_start = 0;
-      block_start[0]           = 0;
+      block_start[0] = 0;
       for(unsigned int block = 0; block < n_blocks; block++)
         {
           block_start[block + 1] = block_start[block];
@@ -1274,9 +1274,9 @@ namespace internal
           std::vector<unsigned int>  block_start(n_macro_cells + 1);
           std::vector<unsigned char> irregular(n_macro_cells);
 
-          unsigned int counter     = 0;
+          unsigned int counter = 0;
           unsigned int mcell_start = 0;
-          block_start[0]           = 0;
+          block_start[0] = 0;
           for(unsigned int block = 0; block < n_blocks; block++)
             {
               block_start[block + 1] = block_start[block];
@@ -1500,9 +1500,9 @@ namespace internal
           {
             neighbor_neighbor_list.resize(0);
             neighbor_list.resize(0);
-            bool         work              = true;
-            unsigned int partition_l2      = 0;
-            unsigned int start_up          = partition_size[part];
+            bool         work = true;
+            unsigned int partition_l2 = 0;
+            unsigned int start_up = partition_size[part];
             unsigned int partition_counter = 0;
             while(work)
               {
@@ -1782,7 +1782,7 @@ namespace internal
       for(unsigned int part = 0; part < partition; part++)
         {
           partition_row_index[part] = index_counter;
-          unsigned int max_color    = 0;
+          unsigned int max_color = 0;
           for(unsigned int k = partition_size[part];
               k < partition_size[part + 1];
               k++)
@@ -1864,7 +1864,7 @@ namespace internal
       // This vector points to the start of each partition.
       //std::vector<unsigned int> partition_size(2,0);
 
-      partition            = 0;
+      partition = 0;
       unsigned int counter = 0;
       unsigned int start_nonboundary
         = cell_partition_data.size() == 5 ?
@@ -1890,8 +1890,8 @@ namespace internal
       if(start_nonboundary > n_blocks)
         start_nonboundary = n_blocks;
 
-      unsigned int start_up  = 0;
-      bool         work      = true;
+      unsigned int start_up = 0;
+      bool         work = true;
       unsigned int remainder = cluster_size;
 
       // this performs a classical breath-first search in the connectivity
@@ -2002,9 +2002,9 @@ namespace internal
               remainder = cluster_size - (partition_counter % cluster_size);
               if(remainder == cluster_size)
                 remainder = 0;
-              int index_stop   = 0;
+              int index_stop = 0;
               int index_before = neighbor_neighbor_list.size(),
-                  index        = index_before;
+                  index = index_before;
               while(remainder > 0)
                 {
                   if(index == index_stop)
@@ -2050,7 +2050,7 @@ namespace internal
             if(cell_partition[j] == numbers::invalid_unsigned_int)
               {
                 start_up = j;
-                work     = true;
+                work = true;
                 if(remainder == 0)
                   remainder = cluster_size;
                 break;
@@ -2065,10 +2065,10 @@ namespace internal
     void
     TaskInfo::update_task_info(const unsigned int partition)
     {
-      evens             = (partition + 1) / 2;
-      odds              = partition / 2;
+      evens = (partition + 1) / 2;
+      odds = partition / 2;
       n_blocked_workers = odds - (odds + evens + 1) % 2;
-      n_workers         = evens + odds - n_blocked_workers;
+      n_workers = evens + odds - n_blocked_workers;
       // From here only used for partition partition option.
       partition_evens.resize(partition);
       partition_odds.resize(partition);

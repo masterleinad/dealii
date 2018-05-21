@@ -36,7 +36,7 @@ main(int argc, char* argv[])
   // Need to get the linear operator to do some nonsense work to verify
   // that it can indeed be used as expected
   const unsigned int size = 32;
-  unsigned int       dim  = (size - 1) * (size - 1);
+  unsigned int       dim = (size - 1) * (size - 1);
 
   // Make matrix
   FDMatrix testproblem(size, size);
@@ -78,7 +78,7 @@ main(int argc, char* argv[])
     f.compress(VectorOperation::insert);
     u.compress(VectorOperation::insert);
 
-    const auto lo_A    = linear_operator<TrilinosWrappers::MPI::Vector>(A);
+    const auto lo_A = linear_operator<TrilinosWrappers::MPI::Vector>(A);
     const auto lo_id_1 = identity_operator<TrilinosWrappers::MPI::Vector>(
       lo_A.reinit_range_vector);
     const auto lo_id_2 = identity_operator<TrilinosWrappers::MPI::Vector>(lo_A);

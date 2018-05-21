@@ -153,7 +153,7 @@ namespace Functions
    */
   template <int dim,
             typename DoFHandlerType = DoFHandler<dim>,
-            typename VectorType     = Vector<double>>
+            typename VectorType = Vector<double>>
   class FEFieldFunction : public Function<dim, typename VectorType::value_type>
   {
   public:

@@ -276,7 +276,7 @@ namespace CUDAWrappers
       if(update_flags & update_JxW_values)
         {
           std::vector<double> JxW_values_double = fe_values.get_JxW_values();
-          const unsigned int  offset            = cell_id * padding_length;
+          const unsigned int  offset = cell_id * padding_length;
           for(unsigned int i = 0; i < q_points_per_cell; ++i)
             JxW_host[i + offset] = static_cast<Number>(JxW_values_double[i]);
         }
@@ -460,7 +460,7 @@ namespace CUDAWrappers
 
     fe_degree = fe.degree;
     //TODO this should be a templated parameter
-    const unsigned int n_dofs_1d     = fe_degree + 1;
+    const unsigned int n_dofs_1d = fe_degree + 1;
     const unsigned int n_q_points_1d = quad.size();
 
     Assert(n_dofs_1d == n_q_points_1d,
@@ -560,7 +560,7 @@ namespace CUDAWrappers
           n_constrained_dofs);
 
         unsigned int       i_constraint = 0;
-        const unsigned int n_dofs       = dof_handler.n_dofs();
+        const unsigned int n_dofs = dof_handler.n_dofs();
         for(unsigned int i = 0; i < n_dofs; ++i)
           {
             if(constraints.is_constrained(i))

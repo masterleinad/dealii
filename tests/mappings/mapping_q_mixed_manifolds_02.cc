@@ -33,11 +33,11 @@
 #include <string>
 #include <vector>
 
-const double D   = 0.1;
-const double R   = D / 2.0;
+const double D = 0.1;
+const double R = D / 2.0;
 const double R_1 = 1.2 * R;
 const double R_2 = 1.7 * R;
-const double H   = 0.41;
+const double H = 0.41;
 const double X_0 = 0.0;
 const double X_1 = 0.3;
 const double X_C = 0.5; // center
@@ -61,7 +61,7 @@ void create_triangulation(Triangulation<2>& tria)
 
   // create middle part first as a hyper shell
   const double       outer_radius = (X_2 - X_1) / 2.0;
-  const unsigned int n_cells      = 4;
+  const unsigned int n_cells = 4;
   GridGenerator::hyper_shell(
     middle, Point<2>(X_C, Y_C), R_2, outer_radius, n_cells, true);
   middle.set_all_manifold_ids(MANIFOLD_ID);

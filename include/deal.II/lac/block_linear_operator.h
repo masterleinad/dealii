@@ -54,7 +54,7 @@ block_operator(const BlockMatrixType& matrix);
 
 template <size_t m,
           size_t n,
-          typename Range  = BlockVector<double>,
+          typename Range = BlockVector<double>,
           typename Domain = Range,
           typename BlockPayload
           = internal::BlockLinearOperatorImplementation::EmptyBlockPayload<>>
@@ -836,7 +836,7 @@ block_forward_substitution(
         for(unsigned int i = 1; i < m; ++i)
           {
             auto& dst = v.block(i);
-            dst       = u.block(i);
+            dst = u.block(i);
             dst *= -1.;
             for(unsigned int j = 0; j < i; ++j)
               block_operator.block(i, j).vmult_add(dst, v.block(j));
@@ -950,7 +950,7 @@ block_back_substitution(
     for(int i = m - 2; i >= 0; --i)
       {
         auto& dst = v.block(i);
-        dst       = u.block(i);
+        dst = u.block(i);
         dst *= -1.;
         for(unsigned int j = i + 1; j < m; ++j)
           block_operator.block(i, j).vmult_add(dst, v.block(j));

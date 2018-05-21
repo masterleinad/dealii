@@ -337,7 +337,7 @@ namespace TimeStepping
      * Newton solver.
      */
     ImplicitRungeKutta(const runge_kutta_method method,
-                       const unsigned int       max_it    = 100,
+                       const unsigned int       max_it = 100,
                        const double             tolerance = 1e-6);
 
     /**
@@ -482,11 +482,11 @@ namespace TimeStepping
      */
     EmbeddedExplicitRungeKutta(const runge_kutta_method method,
                                const double             coarsen_param = 1.2,
-                               const double             refine_param  = 0.8,
-                               const double             min_delta     = 1e-14,
-                               const double             max_delta     = 1e100,
-                               const double             refine_tol    = 1e-8,
-                               const double             coarsen_tol   = 1e-12);
+                               const double             refine_param = 0.8,
+                               const double             min_delta = 1e-14,
+                               const double             max_delta = 1e100,
+                               const double             refine_tol = 1e-8,
+                               const double             coarsen_tol = 1e-12);
 
     /**
      * Destructor.

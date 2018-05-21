@@ -101,7 +101,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
 
   deallog << "n_dofs=" << dof_handler.n_dofs() << std::endl;
 
-  const MPI_Comm& mpi_communicator   = triangulation.get_communicator();
+  const MPI_Comm& mpi_communicator = triangulation.get_communicator();
   const IndexSet  locally_owned_dofs = dof_handler.locally_owned_dofs();
   IndexSet        locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
@@ -137,7 +137,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
                                         QGauss<dim>(std::max(p, q) + 1),
                                         VectorTools::L2_norm);
       const double L2_error_local = error.l2_norm();
-      const double L2_error       = std::sqrt(
+      const double L2_error = std::sqrt(
         Utilities::MPI::sum(L2_error_local * L2_error_local, mpi_communicator));
       const double projection_l2_norm = projection.l2_norm();
       deallog << fe.get_name() << ", P_" << q

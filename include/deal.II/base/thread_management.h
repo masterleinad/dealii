@@ -198,7 +198,7 @@ namespace Threads
      */
     DummyBarrier(const unsigned int count,
                  const char*        name = nullptr,
-                 void*              arg  = nullptr);
+                 void*              arg = nullptr);
 
     /**
      * Wait for all threads to reach this point. Since there may only be one
@@ -424,7 +424,7 @@ namespace Threads
      */
     PosixThreadBarrier(const unsigned int count,
                        const char*        name = nullptr,
-                       void*              arg  = nullptr);
+                       void*              arg = nullptr);
 
     /**
      * Destructor. Release all resources.
@@ -652,9 +652,9 @@ namespace Threads
       return (std::vector<IteratorPair>(1, IteratorPair(begin, end)));
 
     // if more than one interval requested, do the full work
-    const unsigned int n_elements              = std::distance(begin, end);
+    const unsigned int n_elements = std::distance(begin, end);
     const unsigned int n_elements_per_interval = n_elements / n_intervals;
-    const unsigned int residual                = n_elements % n_intervals;
+    const unsigned int residual = n_elements % n_intervals;
 
     std::vector<IteratorPair> return_values(n_intervals);
 
@@ -885,8 +885,8 @@ namespace Threads
       start(const std::function<RT()>& function)
       {
         thread_is_active = true;
-        ret_val          = std::make_shared<return_value<RT>>();
-        thread           = std::thread(thread_entry_point, function, ret_val);
+        ret_val = std::make_shared<return_value<RT>>();
+        thread = std::thread(thread_entry_point, function, ret_val);
       }
 
       /**

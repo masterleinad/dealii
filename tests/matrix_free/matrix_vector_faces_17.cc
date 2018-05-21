@@ -41,7 +41,7 @@ test()
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active();
-    typename Triangulation<dim>::active_cell_iterator endc    = tria.end();
+    typename Triangulation<dim>::active_cell_iterator endc = tria.end();
     unsigned int                                      counter = 0;
     for(; cell != endc; ++cell, ++counter)
       if(cell->is_locally_owned() && counter % 3 == 0)
@@ -72,7 +72,7 @@ test()
   const QGauss<1>                                  quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
-  data.tasks_block_size      = 3;
+  data.tasks_block_size = 3;
   data.mapping_update_flags_inner_faces
     = (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces
@@ -103,7 +103,7 @@ test()
   Testing::srand(42);
   for(unsigned int i = 0; i < in_orig.local_size(); ++i)
     {
-      const double entry       = Testing::rand() / (double) RAND_MAX;
+      const double entry = Testing::rand() / (double) RAND_MAX;
       in_orig.local_element(i) = entry;
       in(renumbering[i])       = entry;
     }

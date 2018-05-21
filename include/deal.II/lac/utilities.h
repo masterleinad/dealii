@@ -282,18 +282,18 @@ namespace Utilities
       else if(std::abs(f) > std::abs(g))
         {
           const NumberType tau = g / f;
-          const NumberType u   = std::copysign(std::sqrt(1. + tau * tau), f);
-          res[0]               = 1. / u;       // c
-          res[1]               = res[0] * tau; // s
-          res[2]               = f * u;        // r
+          const NumberType u = std::copysign(std::sqrt(1. + tau * tau), f);
+          res[0] = 1. / u;       // c
+          res[1] = res[0] * tau; // s
+          res[2] = f * u;        // r
         }
       else
         {
           const NumberType tau = f / g;
-          const NumberType u   = std::copysign(std::sqrt(1. + tau * tau), g);
-          res[1]               = 1. / u;       // s
-          res[0]               = res[1] * tau; // c
-          res[2]               = g * u;        // r
+          const NumberType u = std::copysign(std::sqrt(1. + tau * tau), g);
+          res[1] = 1. / u;       // s
+          res[0] = res[1] * tau; // c
+          res[2] = g * u;        // r
         }
 
       return res;
@@ -342,7 +342,7 @@ namespace Utilities
           Assert(b != 0, ExcDivideByZero());
           // 5. v0 <- v; v <- f/b
           *v0 = *v;
-          *v  = *f;
+          *v = *f;
           (*v) *= 1. / b;
           // 6. f = Hv; f <- f - b v0;
           H.vmult(*f, *v);
@@ -420,7 +420,7 @@ namespace Utilities
       p_yn->reinit(x);
 
       // convenience to avoid pointers
-      VectorType& y  = *p_y;
+      VectorType& y = *p_y;
       VectorType& yn = *p_yn;
 
       // Below is an implementation of
@@ -435,15 +435,15 @@ namespace Utilities
       //   Yt =(H∗Y−c∗Y)∗(2∗σnew/e)−(σ∗σnew)∗X;
       //   X =Y; Y =Yt; σ =σnew;
 
-      const double e     = (b - a) / 2.;
-      const double c     = (a + b) / 2.;
+      const double e = (b - a) / 2.;
+      const double c = (a + b) / 2.;
       const double alpha = 1. / e;
-      const double beta  = -c / e;
+      const double beta = -c / e;
 
       const double sigma1
         = e / (a_L - c); // BUGFIX which is relevant for odd degrees
       double       sigma = scale ? sigma1 : 1.;
-      const double tau   = 2. / sigma;
+      const double tau = 2. / sigma;
       op.vmult(y, x);
       y.sadd(alpha * sigma, beta * sigma, x);
 

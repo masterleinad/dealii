@@ -56,7 +56,7 @@ pack_function(
     }
 
   int* intdata = reinterpret_cast<int*>(data);
-  *intdata     = some_number;
+  *intdata = some_number;
 
   ++some_number;
 }

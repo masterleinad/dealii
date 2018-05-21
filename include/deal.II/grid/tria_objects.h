@@ -781,8 +781,8 @@ namespace internal
           if(pos >= last)
             {
               reverse_order_next_free_single = true;
-              next_free_single               = used.size() - 1;
-              pos                            = used.size() - 1;
+              next_free_single = used.size() - 1;
+              pos = used.size() - 1;
             }
           else
             next_free_single = pos + 1;

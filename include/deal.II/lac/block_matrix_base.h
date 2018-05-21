@@ -582,7 +582,7 @@ public:
       const size_type  n_cols,
       const size_type* col_indices,
       const number*    values,
-      const bool       elide_zero_values      = true,
+      const bool       elide_zero_values = true,
       const bool       col_indices_are_sorted = false);
 
   /**
@@ -1499,7 +1499,7 @@ BlockMatrixBase<MatrixType>::clear()
   for(unsigned int r = 0; r < n_block_rows(); ++r)
     for(unsigned int c = 0; c < n_block_cols(); ++c)
       {
-        MatrixType* p           = this->sub_objects[r][c];
+        MatrixType* p = this->sub_objects[r][c];
         this->sub_objects[r][c] = nullptr;
         delete p;
       }

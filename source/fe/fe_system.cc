@@ -1175,7 +1175,7 @@ FESystem<dim, spacedim>::compute_fill(
         // dim_1==dim-1 and dim_1=dim. Hence the following workaround
         const Quadrature<dim>*     cell_quadrature = nullptr;
         const Quadrature<dim - 1>* face_quadrature = nullptr;
-        const unsigned int         n_q_points      = quadrature.size();
+        const unsigned int         n_q_points = quadrature.size();
 
         // static cast to the common base class of quadrature being either
         // Quadrature<dim> or Quadrature<dim-1>:
@@ -2328,9 +2328,9 @@ FESystem<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
       // We need access to the base_element, its multiplicity, the
       // number of generalized support points (n_base_points) and the
       // number of components we're dealing with.
-      const auto&        base_element      = this->base_element(base);
-      const unsigned int multiplicity      = this->element_multiplicity(base);
-      const unsigned int n_base_dofs       = base_element.dofs_per_cell;
+      const auto&        base_element = this->base_element(base);
+      const unsigned int multiplicity = this->element_multiplicity(base);
+      const unsigned int n_base_dofs = base_element.dofs_per_cell;
       const unsigned int n_base_components = base_element.n_components();
 
       // If the number of base degrees of freedom is zero, there is nothing

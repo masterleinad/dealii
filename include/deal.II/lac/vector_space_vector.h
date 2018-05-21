@@ -258,9 +258,9 @@ namespace LinearAlgebra
      */
     virtual void
     print(std::ostream&      out,
-          const unsigned int precision  = 3,
+          const unsigned int precision = 3,
           const bool         scientific = true,
-          const bool         across     = true) const = 0;
+          const bool         across = true) const = 0;
 
     /**
      * Return the memory consumption of this class in bytes.

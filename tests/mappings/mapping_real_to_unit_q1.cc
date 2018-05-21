@@ -75,7 +75,7 @@ test_real_to_unit_cell()
 
   //Move a vertex a little bit
   const unsigned int n_dx = 5;
-  const double       dx   = 0.4 / n_dx;
+  const double       dx = 0.4 / n_dx;
   Point<spacedim>    direction;
   for(unsigned int j = 0; j < spacedim; ++j)
     direction[j] = dx;

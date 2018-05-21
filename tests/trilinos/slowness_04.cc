@@ -51,7 +51,7 @@ test()
         // pick a random element among the
         // unused indices
         const unsigned int k = Testing::rand() % (N - i);
-        permutation[i]       = unused_indices[k];
+        permutation[i] = unused_indices[k];
 
         // then swap this used element to the
         // end where we won't consider it any

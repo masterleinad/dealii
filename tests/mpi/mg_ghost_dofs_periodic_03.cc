@@ -41,7 +41,7 @@ test()
       Point<dim>                p1, p2;
       for(unsigned int d = 0; d < dim; ++d)
         {
-          p2[d]           = dim - d;
+          p2[d] = dim - d;
           subdivisions[d] = 2 - d;
         }
       GridGenerator::subdivided_hyper_rectangle(tria, subdivisions, p1, p2);

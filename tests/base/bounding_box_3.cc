@@ -65,7 +65,7 @@ test_bounding_box()
   if(spacedim == 3)
     {
       std::pair<Point<spacedim>, Point<spacedim>> second_1;
-      second_1.first[0]  = 0.0;
+      second_1.first[0] = 0.0;
       second_1.second[0] = 1.0;
       for(int i = 1; i < spacedim; i++)
         {

@@ -41,7 +41,7 @@ std::ofstream logfile("output");
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
-          typename Number   = double>
+          typename Number = double>
 class MatrixFreeTest
 {
 public:
@@ -136,7 +136,7 @@ public:
     for(unsigned int i = 0; i < 3 * 2; ++i)
       {
         errors[i] = 0;
-        total[i]  = 0;
+        total[i] = 0;
       }
     VectorType dst_dummy;
     data.cell_loop(

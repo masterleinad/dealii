@@ -128,9 +128,9 @@ main()
   // related to the dependent function "f"
   Sacado::Rad::ADvar<double>::Outvar_Gradcomp(f_rad);
   // Extract value and derivatives
-  const double f_ad     = f_rad.val(); // f
-  const double df_dx_ad = x_ad.adj();  // df/dx
-  const double df_dy_ad = y_ad.adj();  // df/dy
+  const double f_ad = f_rad.val();    // f
+  const double df_dx_ad = x_ad.adj(); // df/dx
+  const double df_dy_ad = y_ad.adj(); // df/dy
 
   std::cout << "df_dx: " << df_dx << "  df_dx_ad: " << df_dx_ad << std::endl;
   std::cout << "df_dy: " << df_dy << "  df_dy_ad: " << df_dy_ad << std::endl;

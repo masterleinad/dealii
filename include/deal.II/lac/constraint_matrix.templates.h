@@ -996,7 +996,7 @@ namespace internals
   struct Distributing
   {
     Distributing(const size_type global_row = numbers::invalid_size_type,
-                 const size_type local_row  = numbers::invalid_size_type);
+                 const size_type local_row = numbers::invalid_size_type);
     Distributing(const Distributing& in);
     Distributing&
     operator=(const Distributing& in);
@@ -1070,7 +1070,7 @@ namespace internals
       individual_size.push_back(1);
       data.resize(individual_size.size() * row_length);
       data[index * row_length] = pair;
-      individual_size[index]   = 1;
+      individual_size[index] = 1;
       return index;
     }
 
@@ -1098,7 +1098,7 @@ namespace internals
           row_length *= 2;
         }
       data[index * row_length + my_length] = pair;
-      individual_size[index]               = my_length + 1;
+      individual_size[index] = my_length + 1;
     }
 
     size_type
@@ -1400,9 +1400,9 @@ namespace internals
         for(i = step; i < length; i++)
           {
             istep = step;
-            j     = i;
-            j2    = j - istep;
-            temp  = total_row_indices[i].global_row;
+            j = i;
+            j2 = j - istep;
+            temp = total_row_indices[i].global_row;
             templ = total_row_indices[i].local_row;
             if(total_row_indices[j2].global_row > temp)
               {
@@ -2113,7 +2113,7 @@ ConstraintMatrix::make_sorted_row_list(
     {
       if(is_constrained(local_dof_indices[i]) == false)
         {
-          global_rows.global_row(added_rows)  = local_dof_indices[i];
+          global_rows.global_row(added_rows) = local_dof_indices[i];
           global_rows.local_row(added_rows++) = i;
         }
       else
@@ -2147,7 +2147,7 @@ ConstraintMatrix::make_sorted_row_list(
   std::vector<size_type>&       active_dofs) const
 {
   const size_type n_local_dofs = local_dof_indices.size();
-  size_type       added_rows   = 0;
+  size_type       added_rows = 0;
   for(size_type i = 0; i < n_local_dofs; ++i)
     {
       if(is_constrained(local_dof_indices[i]) == false)
@@ -2420,7 +2420,7 @@ ConstraintMatrix::distribute_local_to_global(
     typename VectorType::value_type>::ScratchDataAccessor scratch_data;
 
   const size_type                 n_local_dofs = local_dof_indices.size();
-  internals::GlobalRowsFromLocal& global_rows  = scratch_data->global_rows;
+  internals::GlobalRowsFromLocal& global_rows = scratch_data->global_rows;
   global_rows.reinit(n_local_dofs);
 
   make_sorted_row_list(local_dof_indices, global_rows);
@@ -2435,7 +2435,7 @@ ConstraintMatrix::distribute_local_to_global(
     }
 
   // additional construct that also takes care of block indices.
-  const size_type         num_blocks   = global_matrix.n_block_rows();
+  const size_type         num_blocks = global_matrix.n_block_rows();
   std::vector<size_type>& block_starts = scratch_data->block_starts;
   block_starts.resize(num_blocks + 1);
   internals::make_block_starts(global_matrix, global_rows, block_starts);
@@ -2461,7 +2461,7 @@ ConstraintMatrix::distribute_local_to_global(
           for(size_type block_col = 0; block_col < num_blocks; ++block_col)
             {
               const size_type start_block = block_starts[block_col],
-                              end_block   = block_starts[block_col + 1];
+                              end_block = block_starts[block_col + 1];
               if(use_dealii_matrix == false)
                 {
                   size_type* col_ptr = &cols[0];
@@ -2597,7 +2597,7 @@ ConstraintMatrix::add_entries_local_to_global(
   Assert(sparsity_pattern.n_rows() == sparsity_pattern.n_cols(),
          ExcNotQuadratic());
 
-  const size_type n_local_dofs       = local_dof_indices.size();
+  const size_type n_local_dofs = local_dof_indices.size();
   bool            dof_mask_is_active = false;
   if(dof_mask.n_rows() == n_local_dofs)
     {
@@ -2663,7 +2663,7 @@ ConstraintMatrix::add_entries_local_to_global(
   for(size_type i = 0; i < n_actual_dofs; ++i)
     {
       std::vector<size_type>::iterator col_ptr = cols.begin();
-      const size_type                  row     = global_rows.global_row(i);
+      const size_type                  row = global_rows.global_row(i);
       internals::resolve_matrix_row(
         global_rows, i, 0, n_actual_dofs, dof_mask, col_ptr);
 
@@ -2688,8 +2688,8 @@ ConstraintMatrix::add_entries_local_to_global(
   const bool                    keep_constrained_entries,
   const Table<2, bool>&         dof_mask) const
 {
-  const size_type n_local_rows       = row_indices.size();
-  const size_type n_local_cols       = col_indices.size();
+  const size_type n_local_rows = row_indices.size();
+  const size_type n_local_cols = col_indices.size();
   bool            dof_mask_is_active = false;
   if(dof_mask.n_rows() == n_local_rows && dof_mask.n_cols() == n_local_cols)
     dof_mask_is_active = true;
@@ -2844,7 +2844,7 @@ ConstraintMatrix::add_entries_local_to_global(
           for(size_type block_col = 0; block_col < num_blocks; ++block_col)
             {
               const size_type begin_block = block_starts[block_col],
-                              end_block   = block_starts[block_col + 1];
+                              end_block = block_starts[block_col + 1];
               std::vector<size_type>::iterator col_ptr = cols.begin();
               internals::resolve_matrix_row(
                 global_rows, i, begin_block, end_block, dof_mask, col_ptr);

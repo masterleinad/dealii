@@ -127,7 +127,7 @@ namespace Step48
         for(unsigned int q = 0; q < current.n_q_points; ++q)
           {
             const VectorizedArray<double> current_value = current.get_value(q);
-            const VectorizedArray<double> old_value     = old.get_value(q);
+            const VectorizedArray<double> old_value = old.get_value(q);
 
             current.submit_value(2. * current_value - old_value
                                    - delta_t_sqr * std::sin(current_value),

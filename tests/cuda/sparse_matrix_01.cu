@@ -29,9 +29,9 @@ check_matrix(SparseMatrix<double> const&         A,
              CUDAWrappers::SparseMatrix<double>& A_dev)
 {
   cudaError_t cuda_error_code;
-  double*     val_dev          = nullptr;
+  double*     val_dev = nullptr;
   int*        column_index_dev = nullptr;
-  int*        row_ptr_dev      = nullptr;
+  int*        row_ptr_dev = nullptr;
   std::tie(val_dev, column_index_dev, row_ptr_dev, std::ignore)
     = A_dev.get_cusparse_matrix();
 
@@ -76,7 +76,7 @@ test(Utilities::CUDA::Handle& cuda_handle)
 {
   // Build the sparse matrix on the host
   const unsigned int   size = 10;
-  unsigned int         dim  = (size - 1) * (size - 1);
+  unsigned int         dim = (size - 1) * (size - 1);
   FDMatrix             testproblem(size, size);
   SparsityPattern      structure(dim, dim, 5);
   SparseMatrix<double> A;

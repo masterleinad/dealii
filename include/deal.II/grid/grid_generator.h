@@ -84,8 +84,8 @@ namespace GridGenerator
   template <int dim, int spacedim>
   void
   hyper_cube(Triangulation<dim, spacedim>& tria,
-             const double                  left     = 0.,
-             const double                  right    = 1.,
+             const double                  left = 0.,
+             const double                  right = 1.,
              const bool                    colorize = false);
 
   /**
@@ -134,7 +134,7 @@ namespace GridGenerator
   void
   subdivided_hyper_cube(Triangulation<dim, spacedim>& tria,
                         const unsigned int            repetitions,
-                        const double                  left  = 0.,
+                        const double                  left = 0.,
                         const double                  right = 1.);
 
   /**
@@ -440,10 +440,10 @@ namespace GridGenerator
   template <int dim>
   void
   enclosed_hyper_cube(Triangulation<dim>& tria,
-                      const double        left      = 0.,
-                      const double        right     = 1.,
+                      const double        left = 0.,
+                      const double        right = 1.,
                       const double        thickness = 1.,
-                      const bool          colorize  = false);
+                      const bool          colorize = false);
 
   /**
    * Initialize the given triangulation with several coarse mesh cells
@@ -576,7 +576,7 @@ namespace GridGenerator
   template <int dim>
   void
   cylinder(Triangulation<dim>& tria,
-           const double        radius      = 1.,
+           const double        radius = 1.,
            const double        half_length = 1.);
 
   /**
@@ -606,8 +606,8 @@ namespace GridGenerator
   template <int dim>
   void
   truncated_cone(Triangulation<dim>& tria,
-                 const double        radius_0    = 1.0,
-                 const double        radius_1    = 0.5,
+                 const double        radius_0 = 1.0,
+                 const double        radius_1 = 0.5,
                  const double        half_length = 1.0);
 
   /**
@@ -680,8 +680,8 @@ namespace GridGenerator
   template <int dim>
   void
   hyper_L(Triangulation<dim>& tria,
-          const double        left     = -1.,
-          const double        right    = 1.,
+          const double        left = -1.,
+          const double        right = 1.,
           const bool          colorize = false);
 
   /**
@@ -704,8 +704,8 @@ namespace GridGenerator
   template <int dim>
   void
   hyper_cube_slit(Triangulation<dim>& tria,
-                  const double        left     = 0.,
-                  const double        right    = 1.,
+                  const double        left = 0.,
+                  const double        right = 1.,
                   const bool          colorize = false);
 
   /**
@@ -751,7 +751,7 @@ namespace GridGenerator
               const Point<dim>&   center,
               const double        inner_radius,
               const double        outer_radius,
-              const unsigned int  n_cells  = 0,
+              const unsigned int  n_cells = 0,
               bool                colorize = false);
 
   /**
@@ -784,7 +784,7 @@ namespace GridGenerator
                    const Point<dim>&   center,
                    const double        inner_radius,
                    const double        outer_radius,
-                   const unsigned int  n_cells  = 0,
+                   const unsigned int  n_cells = 0,
                    const bool          colorize = false);
 
   /**
@@ -816,7 +816,7 @@ namespace GridGenerator
                       const Point<dim>&   center,
                       const double        inner_radius,
                       const double        outer_radius,
-                      const unsigned int  n_cells  = 0,
+                      const unsigned int  n_cells = 0,
                       const bool          colorize = false);
 
   /**
@@ -845,7 +845,7 @@ namespace GridGenerator
                  const double        inner_radius,
                  const double        outer_radius,
                  const unsigned int  n_radial_cells = 0,
-                 const unsigned int  n_axial_cells  = 0);
+                 const unsigned int  n_axial_cells = 0);
 
   /**
    * Produce the volume or surface mesh of a torus. The axis of the torus is
@@ -904,9 +904,9 @@ namespace GridGenerator
   hyper_cube_with_cylindrical_hole(Triangulation<dim>& triangulation,
                                    const double        inner_radius = .25,
                                    const double        outer_radius = .5,
-                                   const double        L            = .5,
-                                   const unsigned int  repetitions  = 1,
-                                   const bool          colorize     = false);
+                                   const double        L = .5,
+                                   const unsigned int  repetitions = 1,
+                                   const bool          colorize = false);
 
   /**
    * Produce a ring of cells in 3d that is cut open, twisted and glued

@@ -63,8 +63,8 @@ main()
         {
           for(unsigned int j = 0; j < 5; ++j)
             {
-              double exact_integral    = exact_integral_one_over_r_middle(i, j);
-              double approx_integral   = 0;
+              double exact_integral = exact_integral_one_over_r_middle(i, j);
+              double approx_integral = 0;
               double approx_integral_2 = 0;
 
               for(unsigned int q = 0; q < quad.size(); ++q)

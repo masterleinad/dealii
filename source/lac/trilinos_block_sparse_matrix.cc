@@ -93,7 +93,7 @@ namespace TrilinosWrappers
            block_sparsity_pattern.n_block_cols());
 
     // ... set the correct sizes, ...
-    this->row_block_indices    = block_sparsity_pattern.get_row_indices();
+    this->row_block_indices = block_sparsity_pattern.get_row_indices();
     this->column_block_indices = block_sparsity_pattern.get_column_indices();
 
     // ... and then assign the correct
@@ -149,7 +149,7 @@ namespace TrilinosWrappers
            block_sparsity_pattern.n_block_cols());
 
     // ... set the correct sizes, ...
-    this->row_block_indices    = block_sparsity_pattern.get_row_indices();
+    this->row_block_indices = block_sparsity_pattern.get_row_indices();
     this->column_block_indices = block_sparsity_pattern.get_column_indices();
 
     // ... and then assign the correct

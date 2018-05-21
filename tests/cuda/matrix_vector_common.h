@@ -73,7 +73,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
       if(constraints.is_constrained(i))
         continue;
       const double entry = Testing::rand() / (double) RAND_MAX;
-      in(i)              = entry;
+      in(i) = entry;
     }
 
   in_device.import(in, VectorOperation::insert);
@@ -99,7 +99,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
                               | update_JxW_values);
 
     const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -132,7 +132,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   sparse_matrix.vmult(out_host, in_host);
 
   Number out_dist_cpu_norm = 0.;
-  Number out_norm          = 0.;
+  Number out_norm = 0.;
   for(unsigned i = 0; i < n_dofs; ++i)
     {
       out_norm += std::pow(out[i] - out_host[i], 2);

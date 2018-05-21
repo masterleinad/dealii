@@ -201,9 +201,9 @@ namespace Step55
     const double R_x = p[0];
     const double R_y = p[1];
 
-    const double pi  = numbers::PI;
+    const double pi = numbers::PI;
     const double pi2 = pi * pi;
-    values[0]        = -1.0L / 2.0L * (-2 * sqrt(25.0 + 4 * pi2) + 10.0)
+    values[0] = -1.0L / 2.0L * (-2 * sqrt(25.0 + 4 * pi2) + 10.0)
                   * exp(R_x * (-2 * sqrt(25.0 + 4 * pi2) + 10.0))
                 - 0.4 * pi2 * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0))
                     * cos(2 * R_y * pi)
@@ -237,7 +237,7 @@ namespace Step55
     const double R_x = p[0];
     const double R_y = p[1];
 
-    const double pi  = numbers::PI;
+    const double pi = numbers::PI;
     const double pi2 = pi * pi;
     values[0]
       = -exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0)) * cos(2 * R_y * pi) + 1;
@@ -494,7 +494,7 @@ namespace Step55
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> cell_matrix2(dofs_per_cell, dofs_per_cell);
@@ -529,8 +529,8 @@ namespace Step55
               for(unsigned int k = 0; k < dofs_per_cell; ++k)
                 {
                   grad_phi_u[k] = fe_values[velocities].gradient(k, q);
-                  div_phi_u[k]  = fe_values[velocities].divergence(k, q);
-                  phi_p[k]      = fe_values[pressure].value(k, q);
+                  div_phi_u[k] = fe_values[velocities].divergence(k, q);
+                  phi_p[k] = fe_values[pressure].value(k, q);
                 }
 
               for(unsigned int i = 0; i < dofs_per_cell; ++i)

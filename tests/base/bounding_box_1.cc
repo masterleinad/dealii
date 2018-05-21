@@ -34,7 +34,7 @@ test_bounding_box()
 
   for(int i = 0; i < spacedim; i++)
     {
-      boundaries.first[i]  = 0.2 - i * 0.2;
+      boundaries.first[i] = 0.2 - i * 0.2;
       boundaries.second[i] = 0.8 + i * 0.8;
     }
 

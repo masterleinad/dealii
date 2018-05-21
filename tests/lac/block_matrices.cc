@@ -132,7 +132,7 @@ test()
 
   // Check the iterator
   deallog.push("Iterator");
-  BlockSparseMatrix<double>::const_iterator       iter     = bsm.begin();
+  BlockSparseMatrix<double>::const_iterator       iter = bsm.begin();
   const BlockSparseMatrix<double>::const_iterator end_iter = bsm.end();
   for(; iter != end_iter; ++iter)
     deallog << iter->row() << '\t' << iter->column() << '\t' << iter->value()

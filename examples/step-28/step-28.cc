@@ -187,9 +187,9 @@ namespace Step28
               {
                 diffusion[m][0] = 1.2;
                 diffusion[m][1] = 0.4;
-                chi[m][0]       = 1.0;
-                chi[m][1]       = 0.0;
-                sigma_r[m][0]   = 0.03;
+                chi[m][0] = 1.0;
+                chi[m][1] = 0.0;
+                sigma_r[m][0] = 0.03;
                 for(unsigned int group_1 = 0; group_1 < n_groups; ++group_1)
                   for(unsigned int group_2 = 0; group_2 < n_groups; ++group_2)
                     sigma_s[m][group_1][group_2] = 0.0;
@@ -660,7 +660,7 @@ namespace Step28
                               | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -1256,9 +1256,9 @@ namespace Step28
   NeutronDiffusionProblem<dim>::Parameters::get_parameters(
     ParameterHandler& prm)
   {
-    n_groups              = prm.get_integer("Number of energy groups");
-    n_refinement_cycles   = prm.get_integer("Refinement cycles");
-    fe_degree             = prm.get_integer("Finite element degree");
+    n_groups = prm.get_integer("Number of energy groups");
+    n_refinement_cycles = prm.get_integer("Refinement cycles");
+    fe_degree = prm.get_integer("Finite element degree");
     convergence_tolerance = prm.get_double("Power iteration tolerance");
   }
 
@@ -1437,12 +1437,12 @@ namespace Step28
         const Point<dim> cell_center = cell->center();
 
         const unsigned int tmp_x = int(cell_center[0] / pin_pitch_x);
-        const unsigned int ax    = tmp_x / rods_per_assembly_x;
-        const unsigned int cx    = tmp_x - ax * rods_per_assembly_x;
+        const unsigned int ax = tmp_x / rods_per_assembly_x;
+        const unsigned int cx = tmp_x - ax * rods_per_assembly_x;
 
         const unsigned     tmp_y = int(cell_center[1] / pin_pitch_y);
-        const unsigned int ay    = tmp_y / rods_per_assembly_y;
-        const unsigned int cy    = tmp_y - ay * rods_per_assembly_y;
+        const unsigned int ay = tmp_y / rods_per_assembly_y;
+        const unsigned int cy = tmp_y - ay * rods_per_assembly_y;
 
         const unsigned int az
           = (dim == 2 ? 0 : int(cell_center[dim - 1] / assembly_height));
@@ -1533,8 +1533,8 @@ namespace Step28
       threads.join_all();
     }
 
-    const float max_error         = group_error_indicators.linfty_norm();
-    const float refine_threshold  = 0.3 * max_error;
+    const float max_error = group_error_indicators.linfty_norm();
+    const float refine_threshold = 0.3 * max_error;
     const float coarsen_threshold = 0.01 * max_error;
 
     {

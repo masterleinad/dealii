@@ -98,7 +98,7 @@ test(const unsigned int size,
     {
       for(unsigned int j = 0; j < size; ++j)
         {
-          eigenvector[j]       = eigenvectors(j, size - 1 - i);
+          eigenvector[j] = eigenvectors(j, size - 1 - i);
           l_singular_vector[j] = l_singular_vectors(j, i);
           r_singular_vector[j] = r_singular_vectors(i, j);
         }
@@ -124,8 +124,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes      = {{200, 400, 600}};
-  const std::vector<unsigned int> blocks     = {{32, 64}};
+  const std::vector<unsigned int> sizes = {{200, 400, 600}};
+  const std::vector<unsigned int> blocks = {{32, 64}};
   const double                    tol_double = 1e-10;
 
   for(const auto& s : sizes)

@@ -72,9 +72,9 @@ test()
 {
   C* backup;
   {
-    C* p1  = new C();
-    C* p2  = new C(); // this is the pointer that will be overwritten
-    backup = p2;      // but save a pointer to the original object
+    C* p1 = new C();
+    C* p2 = new C(); // this is the pointer that will be overwritten
+    backup = p2;     // but save a pointer to the original object
 
     verify(p1, p2);
 

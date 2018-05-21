@@ -206,7 +206,7 @@ namespace internal
           if(fe_values.get_update_flags() & update_jacobians)
             {
               Tensor<2, dim> jac = fe_values.jacobian(q);
-              jac                = invert(transpose(jac));
+              jac = invert(transpose(jac));
               for(unsigned int d = 0; d < dim; ++d)
                 for(unsigned int e = 0; e < dim; ++e)
                   mapping_info_storage.jacobians[0][q][d][e] = jac[d][e];

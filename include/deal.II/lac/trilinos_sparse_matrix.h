@@ -672,8 +672,8 @@ namespace TrilinosWrappers
     template <typename number>
     void
     reinit(const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
-           const double                          drop_tolerance    = 1e-13,
-           const bool                            copy_values       = true,
+           const double                          drop_tolerance = 1e-13,
+           const bool                            copy_values = true,
            const ::dealii::SparsityPattern*      use_this_sparsity = nullptr);
 
     /**
@@ -838,8 +838,8 @@ namespace TrilinosWrappers
     DEAL_II_DEPRECATED void
     reinit(const Epetra_Map&                     parallel_partitioning,
            const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
-           const double                          drop_tolerance    = 1e-13,
-           const bool                            copy_values       = true,
+           const double                          drop_tolerance = 1e-13,
+           const bool                            copy_values = true,
            const ::dealii::SparsityPattern*      use_this_sparsity = nullptr);
 
     /**
@@ -862,8 +862,8 @@ namespace TrilinosWrappers
     reinit(const Epetra_Map&                     row_parallel_partitioning,
            const Epetra_Map&                     col_parallel_partitioning,
            const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
-           const double                          drop_tolerance    = 1e-13,
-           const bool                            copy_values       = true,
+           const double                          drop_tolerance = 1e-13,
+           const bool                            copy_values = true,
            const ::dealii::SparsityPattern*      use_this_sparsity = nullptr);
     //@}
     /**
@@ -883,7 +883,7 @@ namespace TrilinosWrappers
      * use (in the compress() step).
      */
     SparseMatrix(const IndexSet&    parallel_partitioning,
-                 const MPI_Comm&    communicator          = MPI_COMM_WORLD,
+                 const MPI_Comm&    communicator = MPI_COMM_WORLD,
                  const unsigned int n_max_entries_per_row = 0);
 
     /**
@@ -913,7 +913,7 @@ namespace TrilinosWrappers
      */
     SparseMatrix(const IndexSet& row_parallel_partitioning,
                  const IndexSet& col_parallel_partitioning,
-                 const MPI_Comm& communicator          = MPI_COMM_WORLD,
+                 const MPI_Comm& communicator = MPI_COMM_WORLD,
                  const size_type n_max_entries_per_row = 0);
 
     /**
@@ -959,7 +959,7 @@ namespace TrilinosWrappers
     void
     reinit(const IndexSet&            parallel_partitioning,
            const SparsityPatternType& sparsity_pattern,
-           const MPI_Comm&            communicator  = MPI_COMM_WORLD,
+           const MPI_Comm&            communicator = MPI_COMM_WORLD,
            const bool                 exchange_data = false);
 
     /**
@@ -979,7 +979,7 @@ namespace TrilinosWrappers
     reinit(const IndexSet&            row_parallel_partitioning,
            const IndexSet&            col_parallel_partitioning,
            const SparsityPatternType& sparsity_pattern,
-           const MPI_Comm&            communicator  = MPI_COMM_WORLD,
+           const MPI_Comm&            communicator = MPI_COMM_WORLD,
            const bool                 exchange_data = false);
 
     /**
@@ -1003,8 +1003,8 @@ namespace TrilinosWrappers
     reinit(const IndexSet&                       parallel_partitioning,
            const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
            const MPI_Comm&                       communicator = MPI_COMM_WORLD,
-           const double                          drop_tolerance    = 1e-13,
-           const bool                            copy_values       = true,
+           const double                          drop_tolerance = 1e-13,
+           const bool                            copy_values = true,
            const ::dealii::SparsityPattern*      use_this_sparsity = nullptr);
 
     /**
@@ -1026,8 +1026,8 @@ namespace TrilinosWrappers
            const IndexSet&                       col_parallel_partitioning,
            const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
            const MPI_Comm&                       communicator = MPI_COMM_WORLD,
-           const double                          drop_tolerance    = 1e-13,
-           const bool                            copy_values       = true,
+           const double                          drop_tolerance = 1e-13,
+           const bool                            copy_values = true,
            const ::dealii::SparsityPattern*      use_this_sparsity = nullptr);
     //@}
     /**
@@ -1392,7 +1392,7 @@ namespace TrilinosWrappers
         const size_type       n_cols,
         const size_type*      col_indices,
         const TrilinosScalar* values,
-        const bool            elide_zero_values      = true,
+        const bool            elide_zero_values = true,
         const bool            col_indices_are_sorted = false);
 
     /**
@@ -2911,10 +2911,10 @@ namespace TrilinosWrappers
     TrilinosWrappers::types::int_type begin, end;
 #      ifndef DEAL_II_WITH_64BIT_INDICES
     begin = matrix->RowMap().MinMyGID();
-    end   = matrix->RowMap().MaxMyGID() + 1;
+    end = matrix->RowMap().MaxMyGID() + 1;
 #      else
     begin = matrix->RowMap().MinMyGID64();
-    end   = matrix->RowMap().MaxMyGID64() + 1;
+    end = matrix->RowMap().MaxMyGID64() + 1;
 #      endif
 
     return ((index >= static_cast<size_type>(begin))
@@ -3028,10 +3028,10 @@ namespace TrilinosWrappers
     size_type begin, end;
 #      ifndef DEAL_II_WITH_64BIT_INDICES
     begin = matrix->RowMap().MinMyGID();
-    end   = matrix->RowMap().MaxMyGID() + 1;
+    end = matrix->RowMap().MaxMyGID() + 1;
 #      else
     begin = matrix->RowMap().MinMyGID64();
-    end   = matrix->RowMap().MaxMyGID64() + 1;
+    end = matrix->RowMap().MaxMyGID64() + 1;
 #      endif
 
     return std::make_pair(begin, end);

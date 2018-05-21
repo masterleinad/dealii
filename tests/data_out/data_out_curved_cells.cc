@@ -101,7 +101,7 @@ curved_grid(std::ofstream& out)
   for(unsigned int j = 0; j < n_r + 1; ++j)
     for(unsigned int i = 0; i < n_phi; ++i)
       {
-        const unsigned int p     = i + j * n_phi;
+        const unsigned int p = i + j * n_phi;
         const double       alpha = i * 2 * numbers::PI / n_phi;
         vertices[p] = Point<2>(r[j] * cos(alpha), r[j] * sin(alpha));
       }
@@ -110,11 +110,11 @@ curved_grid(std::ofstream& out)
   for(unsigned int j = 0; j < n_r; ++j)
     for(unsigned int i = 0; i < n_phi; ++i)
       {
-        const unsigned int index         = i + j * n_phi;
-        const unsigned int p             = i + j * n_phi;
-        const unsigned int p_iplus       = (i + 1) % n_phi + j * n_phi;
+        const unsigned int index = i + j * n_phi;
+        const unsigned int p = i + j * n_phi;
+        const unsigned int p_iplus = (i + 1) % n_phi + j * n_phi;
         const unsigned int p_iplus_jplus = (i + 1) % n_phi + (j + 1) * n_phi;
-        const unsigned int p_jplus       = i + (j + 1) * n_phi;
+        const unsigned int p_jplus = i + (j + 1) * n_phi;
 
         cells[index].vertices[0] = p_iplus;
         cells[index].vertices[1] = p;

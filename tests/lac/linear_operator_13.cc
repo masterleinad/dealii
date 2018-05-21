@@ -216,7 +216,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
       // operation on the deal.II vector itself.
       // For how the Epetra_MultiVector's are initialised, see
       // TrilinosWrappers::SparseMatrix::vmult
-      out_lo_pyld                  = 0.0;
+      out_lo_pyld = 0.0;
       const size_type o_local_size = out_lo_pyld.end() - out_lo_pyld.begin();
       AssertDimension(
         o_local_size,
@@ -286,7 +286,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
           "LinearOperator Tvmult operation does not match reference result"));
 
       // Lastly we test functionality added by the Payload
-      out_lo_pyld                  = 0.0;
+      out_lo_pyld = 0.0;
       const size_type o_local_size = out_lo_pyld.end() - out_lo_pyld.begin();
       AssertDimension(
         o_local_size,
@@ -363,7 +363,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
 
       // Lastly we test functionality added by the Payload
       const auto lo_A_T_x_lo_A = lo_A_T * lo_A; // Construct composite operator
-      out_lo_pyld              = 0.0;
+      out_lo_pyld = 0.0;
       const size_type o_local_size = out_lo_pyld.end() - out_lo_pyld.begin();
       AssertDimension(
         o_local_size,
@@ -442,7 +442,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
       // Lastly we test functionality added by the Payload
       const auto lo_A_x_lo_A_T
         = transpose_operator(lo_A * lo_A_T); // Construct composite operator
-      out_lo_pyld                  = 0.0;
+      out_lo_pyld = 0.0;
       const size_type o_local_size = out_lo_pyld.end() - out_lo_pyld.begin();
       AssertDimension(
         o_local_size,

@@ -45,7 +45,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::new_parameter_value(
   const double p,
   const double dp)
 {
-  parameter      = p;
+  parameter = p;
   parameter_step = dp;
 
   // check whether the user called finish_parameter_value() at the end of the previous

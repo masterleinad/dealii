@@ -473,7 +473,7 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::vmult(
          AlignedVector<Number>{},
          mass_matrix[0].n_rows(),
          mass_matrix[0].n_rows());
-  Number*       t   = tmp_array.begin();
+  Number*       t = tmp_array.begin();
   const Number* src = src_view.begin();
   Number*       dst = &(dst_view[0]);
 
@@ -538,7 +538,7 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::apply_inverse(
          AlignedVector<Number>(),
          mass_matrix[0].n_rows(),
          mass_matrix[0].n_rows());
-  Number*       t   = tmp_array.begin();
+  Number*       t = tmp_array.begin();
   const Number* src = src_view.data();
   Number*       dst = &(dst_view[0]);
 
@@ -626,10 +626,10 @@ TensorProductMatrixSymmetricSum<dim, Number, size>::reinit_impl(
   MatrixArray&& mass_matrices_,
   MatrixArray&& derivative_matrices_)
 {
-  auto&& mass_matrices       = std::forward<MatrixArray>(mass_matrices_);
+  auto&& mass_matrices = std::forward<MatrixArray>(mass_matrices_);
   auto&& derivative_matrices = std::forward<MatrixArray>(derivative_matrices_);
-  this->mass_matrix          = mass_matrices;
-  this->derivative_matrix    = derivative_matrices;
+  this->mass_matrix = mass_matrices;
+  this->derivative_matrix = derivative_matrices;
 
   for(int dir = 0; dir < dim; ++dir)
     {
@@ -731,10 +731,10 @@ inline void
 TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
   reinit_impl(MatrixArray&& mass_matrices_, MatrixArray&& derivative_matrices_)
 {
-  auto&& mass_matrix       = std::forward<MatrixArray>(mass_matrices_);
+  auto&& mass_matrix = std::forward<MatrixArray>(mass_matrices_);
   auto&& derivative_matrix = std::forward<MatrixArray>(derivative_matrices_);
-  this->mass_matrix        = mass_matrix;
-  this->derivative_matrix  = derivative_matrix;
+  this->mass_matrix = mass_matrix;
+  this->derivative_matrix = derivative_matrix;
 
   constexpr unsigned int macro_size = VectorizedArray<Number>::n_array_elements;
   std::size_t            n_rows_max = (size > 0) ? size : 0;
@@ -742,7 +742,7 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
     for(unsigned int d = 0; d < dim; ++d)
       n_rows_max = std::max(n_rows_max, mass_matrix[d].n_rows());
   const std::size_t nm_flat_size_max = n_rows_max * n_rows_max * macro_size;
-  const std::size_t n_flat_size_max  = n_rows_max * macro_size;
+  const std::size_t n_flat_size_max = n_rows_max * macro_size;
 
   std::vector<Number> mass_matrix_flat;
   std::vector<Number> deriv_matrix_flat;
@@ -769,7 +769,7 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
 
       const unsigned int n_rows = mass_matrix[dir].n_rows();
       const unsigned int n_cols = mass_matrix[dir].n_cols();
-      const unsigned int nm     = n_rows * n_cols;
+      const unsigned int nm = n_rows * n_cols;
       for(unsigned int vv = 0; vv < macro_size; ++vv)
         offsets_nm[vv] = nm * vv;
 
@@ -784,8 +784,8 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
                                      offsets_nm.cbegin(),
                                      deriv_matrix_flat.data());
 
-      const Number* mass_cbegin    = mass_matrix_flat.data();
-      const Number* deriv_cbegin   = deriv_matrix_flat.data();
+      const Number* mass_cbegin = mass_matrix_flat.data();
+      const Number* deriv_cbegin = deriv_matrix_flat.data();
       Number*       eigenvec_begin = eigenvectors_flat.data();
       Number*       eigenval_begin = eigenvalues_flat.data();
       for(unsigned int lane = 0; lane < macro_size; ++lane)

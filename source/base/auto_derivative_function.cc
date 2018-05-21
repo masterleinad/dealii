@@ -75,7 +75,7 @@ AutoDerivativeFunction<dim>::gradient(const Point<dim>&  p,
           Point<dim> q1;
           for(unsigned int i = 0; i < dim; ++i)
             {
-              q1      = p - ht[i];
+              q1 = p - ht[i];
               grad[i] = (this->value(p, comp) - this->value(q1, comp)) / h;
             }
           break;
@@ -97,10 +97,10 @@ AutoDerivativeFunction<dim>::gradient(const Point<dim>&  p,
           Point<dim> q1, q2, q3, q4;
           for(unsigned int i = 0; i < dim; ++i)
             {
-              q2      = p + ht[i];
-              q1      = q2 + ht[i];
-              q3      = p - ht[i];
-              q4      = q3 - ht[i];
+              q2 = p + ht[i];
+              q1 = q2 + ht[i];
+              q3 = p - ht[i];
+              q4 = q3 - ht[i];
               grad[i] = (-this->value(q1, comp) + 8 * this->value(q2, comp)
                          - 8 * this->value(q3, comp) + this->value(q4, comp))
                         / (12 * h);

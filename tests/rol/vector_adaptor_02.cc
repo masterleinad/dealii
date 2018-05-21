@@ -76,7 +76,7 @@ test(const double x, const double y)
   QuadraticObjective<RealT> quad_objective;
 
   Teuchos::RCP<std::ostream> outStream = Teuchos::rcp(&std::cout, false);
-  Teuchos::RCP<VectorType>   x_rcp     = Teuchos::rcp(new VectorType);
+  Teuchos::RCP<VectorType>   x_rcp = Teuchos::rcp(new VectorType);
 
   x_rcp->reinit(2);
 

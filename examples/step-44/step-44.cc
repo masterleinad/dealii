@@ -1374,7 +1374,7 @@ namespace Step44
     void
     reset()
     {
-      const unsigned int n_q_points      = Nx.size();
+      const unsigned int n_q_points = Nx.size();
       const unsigned int n_dofs_per_cell = Nx[0].size();
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
@@ -2238,9 +2238,9 @@ namespace Step44
     for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
         const Tensor<2, dim>          tau = lqph[q_point]->get_tau();
-        const SymmetricTensor<4, dim> Jc  = lqph[q_point]->get_Jc();
-        const double d2Psi_vol_dJ2        = lqph[q_point]->get_d2Psi_vol_dJ2();
-        const double det_F                = lqph[q_point]->get_det_F();
+        const SymmetricTensor<4, dim> Jc = lqph[q_point]->get_Jc();
+        const double d2Psi_vol_dJ2 = lqph[q_point]->get_d2Psi_vol_dJ2();
+        const double det_F = lqph[q_point]->get_det_F();
 
         // Next we define some aliases to make the assembly process easier to
         // follow
@@ -2394,8 +2394,8 @@ namespace Step44
 
     for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
-        const SymmetricTensor<2, dim> tau     = lqph[q_point]->get_tau();
-        const double                  det_F   = lqph[q_point]->get_det_F();
+        const SymmetricTensor<2, dim> tau = lqph[q_point]->get_tau();
+        const double                  det_F = lqph[q_point]->get_det_F();
         const double                  J_tilde = lqph[q_point]->get_J_tilde();
         const double                  p_tilde = lqph[q_point]->get_p_tilde();
         const double dPsi_vol_dJ = lqph[q_point]->get_dPsi_vol_dJ();
@@ -2455,8 +2455,8 @@ namespace Step44
               static const double p0
                 = -4.0 / (parameters.scale * parameters.scale);
               const double         time_ramp = (time.current() / time.end());
-              const double         pressure  = p0 * parameters.p_p0 * time_ramp;
-              const Tensor<1, dim> traction  = pressure * N;
+              const double         pressure = p0 * parameters.p_p0 * time_ramp;
+              const Tensor<1, dim> traction = pressure * N;
 
               for(unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
@@ -2927,7 +2927,7 @@ namespace Step44
   std::pair<unsigned int, double>
   Solid<dim>::solve_linear_system(BlockVector<double>& newton_update)
   {
-    unsigned int lin_it  = 0;
+    unsigned int lin_it = 0;
     double       lin_res = 0.0;
 
     if(parameters.use_static_condensation == true)
@@ -3313,10 +3313,10 @@ namespace Step44
             // for clarity and the purpose of demonstrating the similarities between the
             // formulation and implementation of the linear solution scheme, we will perform
             // these operations manually.
-            const auto K_pJ_inv     = transpose_operator(K_Jp_inv);
-            const auto K_pp_bar     = K_Jp_inv * K_JJ * K_pJ_inv;
+            const auto K_pJ_inv = transpose_operator(K_Jp_inv);
+            const auto K_pp_bar = K_Jp_inv * K_JJ * K_pJ_inv;
             const auto K_uu_bar_bar = K_up * K_pp_bar * K_pu;
-            const auto K_uu_con     = K_uu + K_uu_bar_bar;
+            const auto K_uu_con = K_uu + K_uu_bar_bar;
 
             // Lastly, we define an operator for inverse of augmented stiffness matrix,
             // namely $\mathsf{\mathbf{K}}_{\textrm{con}}^{-1}$.

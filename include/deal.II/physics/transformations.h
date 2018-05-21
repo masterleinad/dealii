@@ -921,9 +921,9 @@ Physics::Transformations::Rotations::rotation_matrix_3d(
 {
   Assert(std::abs(axis.norm() - 1.0) < 1e-9,
          ExcMessage("The supplied axial vector is not a unit vector."));
-  const Number c              = std::cos(angle);
-  const Number s              = std::sin(angle);
-  const Number t              = 1. - c;
+  const Number c = std::cos(angle);
+  const Number s = std::sin(angle);
+  const Number t = 1. - c;
   const double rotation[3][3] = {{t * axis[0] * axis[0] + c,
                                   t * axis[0] * axis[1] - s * axis[2],
                                   t * axis[0] * axis[2] + s * axis[1]},

@@ -52,7 +52,7 @@ check()
       for(unsigned int i = 0; i <= n_chunks; ++i)
         {
           const unsigned int begin = i * chunk_size;
-          const unsigned int end   = std::min((i + 1) * chunk_size, size);
+          const unsigned int end = std::min((i + 1) * chunk_size, size);
 
           Number sum_i = 0.;
           internal::VectorOperations::parallel_reduce(

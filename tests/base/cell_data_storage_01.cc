@@ -93,7 +93,7 @@ check_qph(Triangulation<dim>&          tr,
           = manager.get_data(cell);
         for(unsigned int q = 0; q < q_points.size(); q++)
           {
-            const double value  = func.value(q_points[q]);
+            const double value = func.value(q_points[q]);
             const double value2 = qpd[q]->value;
             AssertThrow(std::fabs(value - value2) < eps,
                         ExcWrongValue(value, value2, value - value2));

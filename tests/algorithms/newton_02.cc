@@ -76,7 +76,7 @@ public:
     const Vector<double>& in_vector
       = *in.entry<const Vector<double>*>("Newton residual");
     Vector<double>& out_vector = *out.entry<Vector<double>*>(0);
-    out_vector                 = in_vector;
+    out_vector = in_vector;
   }
 };
 

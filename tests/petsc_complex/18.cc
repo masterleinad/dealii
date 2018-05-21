@@ -28,7 +28,7 @@ test(PETScWrappers::MPI::Vector& v)
   for(unsigned int k = 0; k < v.size(); k += 1 + k)
     {
       PetscScalar el = PetscScalar(k, 2. * k);
-      v(k)           = el;
+      v(k) = el;
 
       // norm += el*PetscConj (el);
       norm += std::fabs(
