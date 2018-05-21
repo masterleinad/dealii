@@ -185,7 +185,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
   for(unsigned int i = 0; i < dim; ++i)
     return_value += 4.0 * std::pow(p(i), 4.0);
 
-  return 1.; //return_value;
+  return 1.; // return_value;
 }
 
 // As boundary values, we choose $x^2+y^2$ in 2D, and $x^2+y^2+z^2$ in 3D. This
@@ -405,9 +405,9 @@ Step4<dim>::assemble_system()
 
   // As the final step in this function, we wanted to have non-homogeneous
   // boundary values in this example, unlike the one before. This is a simple
-  // task, we only have to replace the Functions::ZeroFunction used there by an object of
-  // the class which describes the boundary values we would like to use
-  // (i.e. the <code>BoundaryValues</code> class declared above):
+  // task, we only have to replace the Functions::ZeroFunction used there by an
+  // object of the class which describes the boundary values we would like to
+  // use (i.e. the <code>BoundaryValues</code> class declared above):
   std::map<types::global_dof_index, double> boundary_values;
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, BoundaryValues<dim>(), boundary_values);

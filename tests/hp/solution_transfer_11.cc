@@ -13,7 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-//Test to check if the actual fe_index is used in SolutionTransfer
+// Test to check if the actual fe_index is used in SolutionTransfer
 
 #include "../tests.h"
 #include <deal.II/base/function.h>

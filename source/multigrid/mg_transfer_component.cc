@@ -491,7 +491,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim>&,
   // impose boundary conditions
   // but only in the column of
   // the prolongation matrix
-  //TODO: this way is not very efficient
+  // TODO: this way is not very efficient
 
   if(boundary_indices.size() != 0)
     {
@@ -526,7 +526,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim>&,
                           const types::global_dof_index column_number
                             = anfang->column();
 
-                          //convert global indices into local ones
+                          // convert global indices into local ones
                           const BlockIndices block_indices_coarse(
                             dofs_per_component[level]);
                           const types::global_dof_index global_j

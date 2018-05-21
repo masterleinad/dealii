@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// check VectorTools::create_boundary_right_hand_side, this time for non-primitive
-// elements
+// check VectorTools::create_boundary_right_hand_side, this time for
+// non-primitive elements
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>

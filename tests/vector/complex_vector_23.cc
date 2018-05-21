@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// check Vector<std::complex<double> >::operator*(Vector) on two vectors that are
-// not orthogonal
+// check Vector<std::complex<double> >::operator*(Vector) on two vectors that
+// are not orthogonal
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>

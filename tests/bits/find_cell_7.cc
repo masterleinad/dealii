@@ -80,7 +80,7 @@ check2()
   dof_handler.distribute_dofs(fes);
 
   GridTools::find_active_cell_around_point(
-    mappings, dof_handler, p2); //triggered exception
+    mappings, dof_handler, p2); // triggered exception
 }
 
 int

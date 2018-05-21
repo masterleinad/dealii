@@ -197,7 +197,8 @@ private:
   const char* const id;
 };
 
-/* --------------------------- inline Template functions ------------------------------*/
+/* --------------------------- inline Template functions
+ * ------------------------------*/
 
 template <typename T, typename P>
 inline SmartPointer<T, P>::SmartPointer() : t(nullptr), id(typeid(P).name())

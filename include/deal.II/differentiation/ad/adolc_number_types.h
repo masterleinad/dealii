@@ -91,7 +91,8 @@ DeclExceptionMsg(ExcADOLCAdvancedBranching,
                  "This function has not yet been implemented for taped Adol-C "
                  "numbers when the advanced branching feature is activated.");
 
-/* --------------------------- inline and template functions and specializations ------------------------- */
+/* --------------------------- inline and template functions and specializations
+ * ------------------------- */
 
 #  ifndef DOXYGEN
 
@@ -220,11 +221,11 @@ namespace Differentiation
       };
 
       /**
-      * A struct to help extract certain information associated with
-      * taped Adol-C auto-differentiable numbers.
-      *
-      * @author Jean-Paul Pelteret, 2017
-      */
+       * A struct to help extract certain information associated with
+       * taped Adol-C auto-differentiable numbers.
+       *
+       * @author Jean-Paul Pelteret, 2017
+       */
       template <>
       struct ExtractData<adouble>
       {
@@ -319,7 +320,8 @@ namespace Differentiation
      * This specialization is for the case where @p ADNumberType is an
      * taped Adol-C (real) double.
      *
-     * @note In this case the number traits are the same as those for a taped double.
+     * @note In this case the number traits are the same as those for a taped
+     * double.
      *
      * @author Jean-Paul Pelteret, 2017
      */
@@ -340,8 +342,8 @@ namespace Differentiation
      * This specialization is for the case where @p ADNumberType is an
      * taped Adol-C complex double.
      *
-     * @note In this case the number traits are the same as those for a taped complex
-     * double.
+     * @note In this case the number traits are the same as those for a taped
+     * complex double.
      *
      * @author Jean-Paul Pelteret, 2017
      */
@@ -363,7 +365,8 @@ namespace Differentiation
      * This specialization is for the case where @p ADNumberType is an
      * tapeless Adol-C (real) double.
      *
-     * @note In this case the number traits are the same as those for a tapeless double.
+     * @note In this case the number traits are the same as those for a tapeless
+     * double.
      *
      * @author Jean-Paul Pelteret, 2017
      */

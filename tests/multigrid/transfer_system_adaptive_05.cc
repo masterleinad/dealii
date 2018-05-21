@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// test like _03 but with a TransferSelect that selects only the first vector component
+// test like _03 but with a TransferSelect that selects only the first vector
+// component
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -95,7 +96,7 @@ refine_mesh(Triangulation<dim>& triangulation)
           cell_refined = true;
         }
     }
-  if(!cell_refined) //if no cell was selected for refinement, refine global
+  if(!cell_refined) // if no cell was selected for refinement, refine global
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
         cell != triangulation.end();
@@ -163,6 +164,6 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  //TODO: do in 1d
+  // TODO: do in 1d
   check(FESystem<2>(FE_Q<2>(1), 2));
 }

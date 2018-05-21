@@ -16,7 +16,7 @@
 #ifndef dealii_time_dependent_h
 #  define dealii_time_dependent_h
 
-/*----------------------------   time-dependent.h     ---------------------------*/
+/*----------------------------   time-dependent.h ---------------------------*/
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
@@ -251,10 +251,9 @@ class Triangulation;
  *   void
  *   TimeDependent::solve_primal_problem ()
  *   {
- *     do_loop (std::bind(&TimeStepBase::init_for_primal_problem, std::placeholders::_1),
- *              std::bind(&TimeStepBase::solve_primal_problem, std::placeholders::_1),
- *              timestepping_data_primal,
- *              forward);
+ *     do_loop (std::bind(&TimeStepBase::init_for_primal_problem,
+ * std::placeholders::_1), std::bind(&TimeStepBase::solve_primal_problem,
+ * std::placeholders::_1), timestepping_data_primal, forward);
  *   };
  * @endcode
  * The latter function shows rather clear how most of the loops are invoked
@@ -282,8 +281,8 @@ class Triangulation;
  *   compute the thresholds for refinement
  *   ...
  *
- *   do_loop (std::bind(&TimeStepBase_Tria<dim>::init_for_refinement, std::placeholders::_1),
- *            std::bind(&TimeStepBase_Wave<dim>::refine_grid,
+ *   do_loop (std::bind(&TimeStepBase_Tria<dim>::init_for_refinement,
+ * std::placeholders::_1), std::bind(&TimeStepBase_Wave<dim>::refine_grid,
  *                      std::placeholders::_1,
  *                      TimeStepBase_Tria<dim>::RefinementData (top_threshold,
  *                                                              bottom_threshold)),
@@ -317,8 +316,8 @@ class Triangulation;
  *
  *                                 // wake up the first few time levels
  *     for (int step=-timestepping_data.look_ahead; step<0; ++step)
- *       for (int look_ahead=0; look_ahead<=timestepping_data.look_ahead; ++look_ahead)
- *         timesteps[step+look_ahead]->wake_up(look_ahead);
+ *       for (int look_ahead=0; look_ahead<=timestepping_data.look_ahead;
+ * ++look_ahead) timesteps[step+look_ahead]->wake_up(look_ahead);
  *
  *
  *     for (unsigned int step=0; step<n_timesteps; ++step)
@@ -331,18 +330,19 @@ class Triangulation;
  *
  *
  *                                     // actually do the work
- *         loop_function (static_cast<typename LoopFunctionObject::argument_type>
- *                   (timesteps[step]));
+ *         loop_function (static_cast<typename
+ * LoopFunctionObject::argument_type> (timesteps[step]));
  *
  *                                     // let the timesteps behind sleep
- *         for (unsigned int look_back=0; look_back<=timestepping_data.look_back; ++look_back)
+ *         for (unsigned int look_back=0;
+ * look_back<=timestepping_data.look_back; ++look_back)
  *      timesteps[step-look_back]->sleep(look_back);
  *       };
  *
  *                                 // make the last few timesteps sleep
- *     for (int step=n_timesteps; n_timesteps+timestepping_data.look_back; ++step)
- *       for (int look_back=0; look_back<=timestepping_data.look_back; ++look_back)
- *         timesteps[step-look_back]->sleep(look_back);
+ *     for (int step=n_timesteps; n_timesteps+timestepping_data.look_back;
+ * ++step) for (int look_back=0; look_back<=timestepping_data.look_back;
+ * ++look_back) timesteps[step-look_back]->sleep(look_back);
  *   };
  * @endcode
  *
@@ -524,8 +524,8 @@ public:
    * To see how this function work, note that the function @p
    * solve_primal_problem only consists of a call to <tt>do_loop
    * (std::bind(&TimeStepBase::init_for_primal_problem, std::placeholders::_1),
-   * std::bind(&TimeStepBase::solve_primal_problem, std::placeholders::_1), timestepping_data_primal,
-   * forward);</tt>.
+   * std::bind(&TimeStepBase::solve_primal_problem, std::placeholders::_1),
+   * timestepping_data_primal, forward);</tt>.
    *
    * Note also, that the given class from which the two functions are taken
    * needs not necessarily be TimeStepBase, but it could also be a derived
@@ -536,7 +536,8 @@ public:
    * the TimeStepBase class.
    *
    * Instead of using the above form, you can equally well use
-   * <tt>std::bind(&X::unary_function, std::placeholders::_1, args...)</tt> which
+   * <tt>std::bind(&X::unary_function, std::placeholders::_1, args...)</tt>
+   * which
    * lets the @p do_loop function call the given function with the specified
    * parameters.
    */
@@ -1495,7 +1496,8 @@ private:
   restore_grid();
 };
 
-/*----------------------------- template functions ------------------------------*/
+/*----------------------------- template functions
+ * ------------------------------*/
 
 template <typename InitFunctionObject, typename LoopFunctionObject>
 void
@@ -1619,6 +1621,6 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
 
 DEAL_II_NAMESPACE_CLOSE
 
-/*----------------------------   time-dependent.h     ---------------------------*/
+/*----------------------------   time-dependent.h ---------------------------*/
 #endif
-/*----------------------------   time-dependent.h     ---------------------------*/
+/*----------------------------   time-dependent.h ---------------------------*/

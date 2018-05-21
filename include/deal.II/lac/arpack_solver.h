@@ -160,7 +160,8 @@ dseupd_(int*          rvec,
  * @ref step_36 "step-36"
  * for an example.
  *
- * @author Baerbel Janssen, Agnieszka Miedlar, 2010, Guido Kanschat 2015, Joscha Gedicke 2016
+ * @author Baerbel Janssen, Agnieszka Miedlar, 2010, Guido Kanschat 2015, Joscha
+ * Gedicke 2016
  */
 class ArpackSolver : public Subscriptor
 {
@@ -310,15 +311,15 @@ public:
    * eigenvalues are returned.
    *
    * @param eigenvectors is a <b>real</b> vector of eigenvectors, containing
-   * the real parts of all eigenvectors and the imaginary parts of the eigenvectors
-   * corresponding to complex conjugate eigenvalue pairs.
-   * Therefore, its length should be <i>n</i> in the symmetric case and <i>n+1</i>
-   * in the non-symmetric case. In the non-symmetric case the storage scheme
-   * leads for example to the following pattern. Suppose that the first two
-   * eigenvalues are real and the third and fourth are a complex conjugate
+   * the real parts of all eigenvectors and the imaginary parts of the
+   * eigenvectors corresponding to complex conjugate eigenvalue pairs.
+   * Therefore, its length should be <i>n</i> in the symmetric case and
+   * <i>n+1</i> in the non-symmetric case. In the non-symmetric case the storage
+   * scheme leads for example to the following pattern. Suppose that the first
+   * two eigenvalues are real and the third and fourth are a complex conjugate
    * pair. Asking for three eigenpairs results in <i>[real(v1),real(v2),
-   * real(v3),imag(v3)]</i>. Note that we get the same pattern if we ask for four
-   * eigenpairs in this example, since the fourth eigenvector is simply the
+   * real(v3),imag(v3)]</i>. Note that we get the same pattern if we ask for
+   * four eigenpairs in this example, since the fourth eigenvector is simply the
    * complex conjugate of the third one.
    *
    * @param n_eigenvalues The purpose of this parameter is not clear, but it
@@ -456,7 +457,7 @@ inline ArpackSolver::AdditionalData::AdditionalData(
     eigenvalue_of_interest(eigenvalue_of_interest),
     symmetric(symmetric)
 {
-  //Check for possible options for symmetric problems
+  // Check for possible options for symmetric problems
   if(symmetric)
     {
       Assert(
@@ -611,7 +612,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
   int                 ldv = n;
   std::vector<double> v(ldv * ncv, 0.0);
 
-  //information to the routines
+  // information to the routines
   std::vector<int> iparam(11, 0);
 
   iparam[0] = 1; // shift strategy
@@ -631,7 +632,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
     = additional_data.symmetric ? ncv * ncv + 8 * ncv : 3 * ncv * ncv + 6 * ncv;
   std::vector<double> workl(lworkl, 0.);
 
-  //information out of the iteration
+  // information out of the iteration
   int info = 1;
 
   while(ido != 99)

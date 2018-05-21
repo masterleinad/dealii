@@ -510,7 +510,8 @@ namespace internal
       std::vector<unsigned int> vector_zero_range_list;
     };
 
-    /*----------------------- Inline functions ----------------------------------*/
+    /*----------------------- Inline functions
+     * ----------------------------------*/
 
 #ifndef DOXYGEN
 

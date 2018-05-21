@@ -13,8 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-// check Tensor<1,dim,std::complex<double>>::operator*(Tensor<1,dim,std::complex<double> >)
-// These tests are simple enough to do by hand.
+// check
+// Tensor<1,dim,std::complex<double>>::operator*(Tensor<1,dim,std::complex<double>
+// >) These tests are simple enough to do by hand.
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>

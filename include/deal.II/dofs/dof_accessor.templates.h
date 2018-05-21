@@ -1259,7 +1259,7 @@ namespace internal
         const std::vector<types::global_dof_index>&,
         const unsigned int)
       {
-        AssertThrow(false, ExcNotImplemented()); //TODO[TH]: implement
+        AssertThrow(false, ExcNotImplemented()); // TODO[TH]: implement
       }
 
       template <typename DoFHandlerType, bool level_dof_access>
@@ -2100,7 +2100,8 @@ inline typename dealii::internal::DoFHandlerImplementation::
       this->dof_handler);
 }
 
-/*------------------------- Functions: DoFAccessor<0,1,spacedim> ---------------------------*/
+/*------------------------- Functions: DoFAccessor<0,1,spacedim>
+ * ---------------------------*/
 
 template <template <int, int> class DoFHandlerType,
           int  spacedim,
@@ -2605,7 +2606,8 @@ namespace internal
         const DoFCellAccessor<dealii::hp::DoFHandler<dim, spacedim>,
                               level_dof_access>& accessor)
       {
-        // caches are only for cells with DoFs, i.e., for active ones and not FE_Nothing
+        // caches are only for cells with DoFs, i.e., for active ones and not
+        // FE_Nothing
         if(accessor.has_children())
           return;
         const unsigned int dofs_per_cell = accessor.get_fe().dofs_per_cell;
@@ -2626,9 +2628,10 @@ namespace internal
                       ->cell_dof_indices_cache.size(),
                ExcInternalError());
 
-        // call the get_dof_indices() function of DoFAccessor, which goes through all the
-        // parts of the cell to get the indices by hand. the corresponding function
-        // of DoFCellAccessor can then later use the cache
+        // call the get_dof_indices() function of DoFAccessor, which goes
+        // through all the parts of the cell to get the indices by hand. the
+        // corresponding function of DoFCellAccessor can then later use the
+        // cache
         std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
         static_cast<
           const dealii::DoFAccessor<dim,
@@ -2851,7 +2854,11 @@ namespace internal
 
         const unsigned int n_dofs = local_source_end - local_source_begin;
 
-        //TODO[WB/MK]: This function could me made more efficient because it allocates memory, which could be avoided by passing in another argument as a scratch array. This should be fixed eventually. another option would be to let the surrounding class have a (static, mutable) scratch array that is thread-local
+        // TODO[WB/MK]: This function could me made more efficient because it
+        // allocates memory, which could be avoided by passing in another
+        // argument as a scratch array. This should be fixed eventually. another
+        // option would be to let the surrounding class have a (static, mutable)
+        // scratch array that is thread-local
 
         // get indices of dofs
         std::vector<types::global_dof_index> dofs(n_dofs);
@@ -2926,7 +2933,9 @@ namespace internal
 
         const unsigned int n_dofs = local_source_end - local_source_begin;
 
-        //TODO[WB/MK]: This function could me made more efficient because it allocates memory, which could be avoided by passing in another argument as a scratch array. This should be fixed eventually
+        // TODO[WB/MK]: This function could me made more efficient because it
+        // allocates memory, which could be avoided by passing in another
+        // argument as a scratch array. This should be fixed eventually
 
         // get indices of dofs
         std::vector<types::global_dof_index> dofs(n_dofs);
@@ -3010,7 +3019,9 @@ namespace internal
 
         const unsigned int n_dofs = local_source.size();
 
-        //TODO[WB/MK]: This function could me made more efficient because it allocates memory, which could be avoided by passing in another argument as a scratch array.
+        // TODO[WB/MK]: This function could me made more efficient because it
+        // allocates memory, which could be avoided by passing in another
+        // argument as a scratch array.
 
         // get indices of dofs
         std::vector<types::global_dof_index> dofs(n_dofs);
@@ -3111,10 +3122,10 @@ namespace internal
 
         const unsigned int n_dofs = local_matrix.size();
 
-        //TODO[WB/MK]: This function could me made more efficient because it
-        //allocates memory, which could be avoided by passing in another
-        //argument as a scratch array. Comment(GK) Do not bother and leave this
-        //to ConstraintMatrix or MeshWorker::Assembler
+        // TODO[WB/MK]: This function could me made more efficient because it
+        // allocates memory, which could be avoided by passing in another
+        // argument as a scratch array. Comment(GK) Do not bother and leave this
+        // to ConstraintMatrix or MeshWorker::Assembler
 
         // get indices of dofs
         std::vector<types::global_dof_index> dofs(n_dofs);

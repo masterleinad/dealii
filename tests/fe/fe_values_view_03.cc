@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// test the FEValues views and extractor classes. these tests use a non-primitive
-// finite element and scalar extractors
+// test the FEValues views and extractor classes. these tests use a
+// non-primitive finite element and scalar extractors
 
 #include "../tests.h"
 #include <deal.II/base/function.h>

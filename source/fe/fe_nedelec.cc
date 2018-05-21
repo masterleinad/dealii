@@ -33,9 +33,9 @@
 #include <iostream>
 #include <sstream>
 
-//TODO: implement the adjust_quad_dof_index_for_face_orientation_table and
-//adjust_line_dof_index_for_line_orientation_table fields, and write tests
-//similar to bits/face_orientation_and_fe_q_*
+// TODO: implement the adjust_quad_dof_index_for_face_orientation_table and
+// adjust_line_dof_index_for_line_orientation_table fields, and write tests
+// similar to bits/face_orientation_and_fe_q_*
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -2419,8 +2419,9 @@ FE_Nedelec<dim>::compare_for_face_domination(
         }
       else
         {
-          // the FE_Nothing has no degrees of freedom and it is typically used in
-          // a context where we don't require any continuity along the interface
+          // the FE_Nothing has no degrees of freedom and it is typically used
+          // in a context where we don't require any continuity along the
+          // interface
           return FiniteElementDomination::no_requirements;
         }
     }

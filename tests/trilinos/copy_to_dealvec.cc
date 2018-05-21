@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Test LinearAlgebra::distributed::Vector::operator=(TrilinosWrappers::MPI::Vector&)
+// Test
+// LinearAlgebra::distributed::Vector::operator=(TrilinosWrappers::MPI::Vector&)
 
 #include "../tests.h"
 #include <deal.II/base/index_set.h>
@@ -52,7 +53,7 @@ test()
   vb.compress(VectorOperation::insert);
   vb *= 2.0;
   v = vb;
-  //v.update_ghost_values();
+  // v.update_ghost_values();
 
   Assert(!vb.has_ghost_elements(), ExcInternalError());
   Assert(v.has_ghost_elements(), ExcInternalError());

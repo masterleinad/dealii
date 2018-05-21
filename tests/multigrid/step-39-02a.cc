@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Add edge matrices and MGConstraints to make sure they are empty and do not mess things up
+// Add edge matrices and MGConstraints to make sure they are empty and do not
+// mess things up
 
 #include "../tests.h"
 #include <deal.II/lac/block_vector.h>
@@ -762,7 +763,7 @@ namespace Step39
         solve();
         error();
         deallog << "Estimate " << estimate() << std::endl;
-        //output_results(s);
+        // output_results(s);
       }
   }
 } // namespace Step39

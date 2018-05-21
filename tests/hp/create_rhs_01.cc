@@ -36,12 +36,12 @@
 void
 test()
 {
-  //make grid
+  // make grid
   Triangulation<2> triangulation;
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 
-  //define DoFhandler and FEs
+  // define DoFhandler and FEs
   FE_Q<2> u(2), u2(QIterated<1>(QTrapez<1>(), 3));
 
   hp::FECollection<2> fe_collection;
@@ -54,7 +54,7 @@ test()
   hp::DoFHandler<2> hp_dof_handler(triangulation);
   hp::DoFHandler<2> hp_dof_handler2(triangulation);
 
-  //set different fe for testing
+  // set different fe for testing
   hp::DoFHandler<2>::active_cell_iterator cell = hp_dof_handler.begin_active(),
                                           endc = hp_dof_handler.end();
 
@@ -62,7 +62,7 @@ test()
     cell->set_active_fe_index(1);
   hp_dof_handler.begin_active()->set_active_fe_index(0);
 
-  //distribute dofs
+  // distribute dofs
   hp_dof_handler.distribute_dofs(fe_collection);
   hp_dof_handler2.distribute_dofs(fe_collection2);
 

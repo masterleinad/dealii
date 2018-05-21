@@ -86,8 +86,9 @@ namespace PETScWrappers
    * @verbatim
    *   [1]PETSC ERROR: PCSetVector() line 1173 in src/ksp/pc/interface/precon.c
    *   [1]PETSC ERROR:   Arguments must have same communicators!
-   *   [1]PETSC ERROR:   Different communicators in the two objects: Argument # 1 and 2!
-   *   [1]PETSC ERROR: KSPSetUp() line 195 in src/ksp/ksp/interface/itfunc.c
+   *   [1]PETSC ERROR:   Different communicators in the two objects: Argument #
+   * 1 and 2! [1]PETSC ERROR: KSPSetUp() line 195 in
+   * src/ksp/ksp/interface/itfunc.c
    * @endverbatim
    *
    * This error, on which one can spend a very long time figuring out what
@@ -986,7 +987,7 @@ DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_PETSC
 
-/*----------------------------   petsc_solver.h     ---------------------------*/
+/*----------------------------   petsc_solver.h ---------------------------*/
 
 #endif
-/*----------------------------   petsc_solver.h     ---------------------------*/
+/*----------------------------   petsc_solver.h ---------------------------*/

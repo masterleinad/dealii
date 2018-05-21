@@ -29,7 +29,8 @@
 
 // useful examples:
 // https://stackoverflow.com/questions/14147705/cholesky-decomposition-scalapack-error/14203864
-// http://icl.cs.utk.edu/lapack-forum/viewtopic.php?t=139   // second post by Julien Langou
+// http://icl.cs.utk.edu/lapack-forum/viewtopic.php?t=139   // second post by
+// Julien Langou
 // https://andyspiros.wordpress.com/2011/07/08/an-example-of-blacs-with-c/
 // http://qboxcode.org/trac/browser/qb/tags/rel1_63_4/src/Matrix.C
 // https://gitlab.phys.ethz.ch/lwossnig/lecture/blob/a534f562dfb2ad5c564abe5c2356d5d956fb7218/examples/mpi/scalapack.cpp
@@ -92,7 +93,8 @@ extern "C"
                   int* grid_col);
 
   /**
-   * Given the system process number, return the row and column coordinates in the BLACS' process grid.
+   * Given the system process number, return the row and column coordinates in
+   * the BLACS' process grid.
    */
   void
   Cblacs_pcoord(int ictxt, int pnum, int* prow, int* pcol);
@@ -144,7 +146,8 @@ extern "C"
   Csys2blacs_handle(MPI_Comm comm);
 
   /**
-   * Compute how many rows and columns each process owns (NUMber of Rows Or Columns).
+   * Compute how many rows and columns each process owns (NUMber of Rows Or
+   * Columns).
    *
    * https://www.ibm.com/support/knowledgecenter/SSNR5K_4.2.0/com.ibm.cluster.pessl.v4r2.pssl100.doc/am6gr_dnumy.htm
    */
@@ -369,10 +372,14 @@ extern "C"
    * @p iproc.
    *
    * @param indxloc The local index of the distributed matrix entry.
-   * @param nb Block size, size of the blocks the distributed matrix is split into.
-   * @param iproc The coordinate of the process whose local array row or column is to be determined
-   * @param isrcproc  The coordinate of the process that possesses the first row/column of the distributed matrix
-   * @param nprocs The total number processes over which the distributed matrix is distributed
+   * @param nb Block size, size of the blocks the distributed matrix is split
+   * into.
+   * @param iproc The coordinate of the process whose local array row or column
+   * is to be determined
+   * @param isrcproc  The coordinate of the process that possesses the first
+   * row/column of the distributed matrix
+   * @param nprocs The total number processes over which the distributed matrix
+   * is distributed
    */
   int
   indxl2g_(const int* indxloc,
@@ -460,8 +467,8 @@ extern "C"
           const int*   DESCC);
 
   /**
-   * Return the value of the one norm, or the Frobenius norm, or the infinity norm,
-   * or the element of largest absolute value of a distributed matrix
+   * Return the value of the one norm, or the Frobenius norm, or the infinity
+   * norm, or the element of largest absolute value of a distributed matrix
    */
   double
   pdlange_(char const*   norm,
@@ -494,10 +501,12 @@ extern "C"
            const int* nprocs);
 
   /**
-   * Compute all eigenvalues and, optionally, eigenvectors of a real symmetric matrix A
-   * by calling the recommended sequence of ScaLAPACK routines. In its present form, the routine assumes a homogeneous system
-   * and makes no checks for consistency of the eigenvalues or eigenvectors across the different processes.
-   * Because of this, it is possible that a heterogeneous system may return incorrect results without any error messages.
+   * Compute all eigenvalues and, optionally, eigenvectors of a real symmetric
+   * matrix A by calling the recommended sequence of ScaLAPACK routines. In its
+   * present form, the routine assumes a homogeneous system and makes no checks
+   * for consistency of the eigenvalues or eigenvectors across the different
+   * processes. Because of this, it is possible that a heterogeneous system may
+   * return incorrect results without any error messages.
    *
    * http://www.netlib.org/scalapack/explore-html/d0/d1a/pdsyev_8f.html
    * https://www.ibm.com/support/knowledgecenter/SSNR5K_4.2.0/com.ibm.cluster.pessl.v4r2.pssl100.doc/am6gr_lsyev.htm#lsyev
@@ -568,8 +577,9 @@ extern "C"
 
   /**
    * Copies the content of a general rectangular distributed matrix @p A to another distributed matrix @p B
-   * It is not required that the matrices A and B have the same process grid or block size, e.g. copying a
-   * matrix from a one-dimensional to a two-dimensional process grid
+   * It is not required that the matrices A and B have the same process grid or
+   * block size, e.g. copying a matrix from a one-dimensional to a
+   * two-dimensional process grid
    * @p ictxt is a context which is at least a union of all processes in context A and B
    */
   void
@@ -825,9 +835,9 @@ extern "C"
 
   /**
    *  psyevr computes selected eigenvalues and, optionally, eigenvectors
-   *  of a real symmetric matrix A using a parallel implementation of the MRR algorithm.
-   *  Eigenvalues/vectors can be selected by specifying a range of values
-   *  or a range of indices for the desired eigenvalues.
+   *  of a real symmetric matrix A using a parallel implementation of the MRR
+   * algorithm. Eigenvalues/vectors can be selected by specifying a range of
+   * values or a range of indices for the desired eigenvalues.
    */
   void
   pdsyevr_(const char*   jobz,
@@ -2076,9 +2086,10 @@ psyevr(const char*   jobz,
        int*          info)
 {
   /*
-   * Netlib ScaLAPACK performs floating point tests (e.g. divide-by-zero) within the call to pdsyevr
-   * causing floating point exceptions to be thrown (at least in debug mode). Therefore, we wrap the calls
-   * to pdsyevr into the following code to suppress the exception.
+   * Netlib ScaLAPACK performs floating point tests (e.g. divide-by-zero) within
+   * the call to pdsyevr causing floating point exceptions to be thrown (at
+   * least in debug mode). Therefore, we wrap the calls to pdsyevr into the
+   * following code to suppress the exception.
    */
 #  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fenv_t fp_exceptions;
@@ -2142,9 +2153,10 @@ psyevr(const char*  jobz,
        int*         info)
 {
   /*
-   * Netlib ScaLAPACK performs floating point tests (e.g. divide-by-zero) within the call to pssyevr
-   * causing floating point exceptions to be thrown (at least in debug mode). Therefore, we wrap the calls
-   * to pssyevr into the following code to suppress the exception.
+   * Netlib ScaLAPACK performs floating point tests (e.g. divide-by-zero) within
+   * the call to pssyevr causing floating point exceptions to be thrown (at
+   * least in debug mode). Therefore, we wrap the calls to pssyevr into the
+   * following code to suppress the exception.
    */
 #  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fenv_t fp_exceptions;

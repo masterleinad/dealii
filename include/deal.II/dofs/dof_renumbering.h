@@ -817,9 +817,9 @@ namespace DoFRenumbering
    * degrees of freedom on this cell <i>earlier</i> indices than
    * all of the indices owned by processor 1.
    *
-   * @note This function generates an ordering that is independent of the previous
-   * numbering of degrees of freedom. In other words, any information that may
-   * have been produced by a previous call to a renumbering function is
+   * @note This function generates an ordering that is independent of the
+   * previous numbering of degrees of freedom. In other words, any information
+   * that may have been produced by a previous call to a renumbering function is
    * ignored.
    */
   template <int dim>
@@ -933,11 +933,12 @@ namespace DoFRenumbering
    * numbering is performed cell-wise, otherwise it is performed based on the
    * location of the support points.
    *
-   * The cells are sorted such that the centers of cells numbered higher are further
+   * The cells are sorted such that the centers of cells numbered higher are
+   * further
    * downstream with respect to the constant vector @p direction than the
-   * centers of cells numbered lower. Even if this yields a downstream numbering with
-   * respect to the flux on the edges for fairly general grids, this might not
-   * be guaranteed for all meshes.
+   * centers of cells numbered lower. Even if this yields a downstream numbering
+   * with respect to the flux on the edges for fairly general grids, this might
+   * not be guaranteed for all meshes.
    *
    * If the @p dof_wise_renumbering argument is set to @p false, this function
    * produces a downstream ordering of the mesh cells and calls cell_wise().
@@ -960,7 +961,8 @@ namespace DoFRenumbering
 
   /**
    * Cell-wise downstream numbering with respect to a constant flow direction
-   * on one level of a multigrid hierarchy. See the other function with the same name.
+   * on one level of a multigrid hierarchy. See the other function with the same
+   * name.
    */
   template <typename DoFHandlerType>
   void
@@ -970,8 +972,8 @@ namespace DoFRenumbering
              const bool dof_wise_renumbering = false);
 
   /**
-   * Compute the set of renumbering indices needed by the downstream() function. Does
-   * not perform the renumbering on the DoFHandler dofs but returns the
+   * Compute the set of renumbering indices needed by the downstream() function.
+   * Does not perform the renumbering on the DoFHandler dofs but returns the
    * renumbering vector.
    */
   template <typename DoFHandlerType>
@@ -984,8 +986,8 @@ namespace DoFRenumbering
     const bool                                        dof_wise_renumbering);
 
   /**
-   * Compute the set of renumbering indices needed by the downstream() function. Does
-   * not perform the renumbering on the DoFHandler dofs but returns the
+   * Compute the set of renumbering indices needed by the downstream() function.
+   * Does not perform the renumbering on the DoFHandler dofs but returns the
    * renumbering vector.
    */
   template <typename DoFHandlerType>

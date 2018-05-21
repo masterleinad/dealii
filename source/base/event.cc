@@ -17,7 +17,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-//TODO: Thread safety
+// TODO: Thread safety
 
 namespace Algorithms
 {

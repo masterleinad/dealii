@@ -104,15 +104,15 @@ namespace
     // first index: subface_no
     // second index: subsubface_no
     // third index: does the first subface have children? -> no and yes
-    static const unsigned int translated_subface_no[2][2][2] = {
-      {{e,
-        0}, // first  subface, first  subsubface, first_child_has_children==no and yes
-       {e,
-        1}}, // first  subface, second subsubface, first_child_has_children==no and yes
-      {{1,
-        2}, // second subface, first  subsubface, first_child_has_children==no and yes
-       {2,
-        3}}}; // second subface, second subsubface, first_child_has_children==no and yes
+    static const unsigned int translated_subface_no[2][2][2]
+      = {{{e, 0},   // first  subface, first  subsubface,
+                    // first_child_has_children==no and yes
+          {e, 1}},  // first  subface, second subsubface,
+                    // first_child_has_children==no and yes
+         {{1, 2},   // second subface, first  subsubface,
+                    // first_child_has_children==no and yes
+          {2, 3}}}; // second subface, second subsubface,
+                    // first_child_has_children==no and yes
 
     Assert(
       translated_subface_no[subface_no][subsubface_no][first_child_has_children]
@@ -159,13 +159,14 @@ namespace
       tphi[3] :=     xi*eta:
       x_real := sum(x[s]*tphi[s], s=0..3):
       y_real := sum(y[s]*tphi[s], s=0..3):
-      detJ := diff(x_real,xi)*diff(y_real,eta) - diff(x_real,eta)*diff(y_real,xi):
+      detJ := diff(x_real,xi)*diff(y_real,eta) -
+      diff(x_real,eta)*diff(y_real,xi):
 
       measure := simplify ( int ( int (detJ, xi=0..1), eta=0..1)):
 
-      xs := simplify (1/measure * int ( int (x_real * detJ, xi=0..1), eta=0..1)):
-      ys := simplify (1/measure * int ( int (y_real * detJ, xi=0..1), eta=0..1)):
-      readlib(C):
+      xs := simplify (1/measure * int ( int (x_real * detJ, xi=0..1),
+      eta=0..1)): ys := simplify (1/measure * int ( int (y_real * detJ,
+      xi=0..1), eta=0..1)): readlib(C):
 
       C(array(1..2, [xs, ys]), optimized);
     */
@@ -227,10 +228,8 @@ namespace
       by exchanging two consecutive lines and two neighboring columns have
       the same determinant.
 
-      # x, y and z are arrays holding the x-, y- and z-values of the four vertices
-      # of this cell in real space.
-      x := array(0..7):
-      y := array(0..7):
+      # x, y and z are arrays holding the x-, y- and z-values of the four
+      vertices # of this cell in real space. x := array(0..7): y := array(0..7):
       z := array(0..7):
       tphi[0] := (1-xi)*(1-eta)*(1-zeta):
       tphi[1] := xi*(1-eta)*(1-zeta):
@@ -244,16 +243,19 @@ namespace
       y_real := sum(y[s]*tphi[s], s=0..7):
       z_real := sum(z[s]*tphi[s], s=0..7):
       with (linalg):
-      J := matrix(3,3, [[diff(x_real, xi), diff(x_real, eta), diff(x_real, zeta)],
-      [diff(y_real, xi), diff(y_real, eta), diff(y_real, zeta)],
+      J := matrix(3,3, [[diff(x_real, xi), diff(x_real, eta), diff(x_real,
+      zeta)], [diff(y_real, xi), diff(y_real, eta), diff(y_real, zeta)],
       [diff(z_real, xi), diff(z_real, eta), diff(z_real, zeta)]]):
       detJ := det (J):
 
-      measure := simplify ( int ( int ( int (detJ, xi=0..1), eta=0..1), zeta=0..1)):
+      measure := simplify ( int ( int ( int (detJ, xi=0..1), eta=0..1),
+      zeta=0..1)):
 
-      xs := simplify (1/measure * int ( int ( int (x_real * detJ, xi=0..1), eta=0..1), zeta=0..1)):
-      ys := simplify (1/measure * int ( int ( int (y_real * detJ, xi=0..1), eta=0..1), zeta=0..1)):
-      zs := simplify (1/measure * int ( int ( int (z_real * detJ, xi=0..1), eta=0..1), zeta=0..1)):
+      xs := simplify (1/measure * int ( int ( int (x_real * detJ, xi=0..1),
+      eta=0..1), zeta=0..1)): ys := simplify (1/measure * int ( int ( int
+      (y_real * detJ, xi=0..1), eta=0..1), zeta=0..1)): zs := simplify
+      (1/measure * int ( int ( int (z_real * detJ, xi=0..1), eta=0..1),
+      zeta=0..1)):
 
       readlib(C):
 
@@ -1266,7 +1268,8 @@ namespace
       tphi[3] :=     xi*eta:
       x_real := sum(x[s]*tphi[s], s=0..3):
       y_real := sum(y[s]*tphi[s], s=0..3):
-      detJ := diff(x_real,xi)*diff(y_real,eta) - diff(x_real,eta)*diff(y_real,xi):
+      detJ := diff(x_real,xi)*diff(y_real,eta) -
+      diff(x_real,eta)*diff(y_real,xi):
 
       measure := simplify ( int ( int (detJ, xi=0..1), eta=0..1)):
       readlib(C):
@@ -1396,7 +1399,8 @@ namespace
   }
 } // namespace
 
-/*------------------------ Static variables: TriaAccessorBase ---------------------------*/
+/*------------------------ Static variables: TriaAccessorBase
+ * ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
 const unsigned int TriaAccessorBase<structdim, dim, spacedim>::dimension;
@@ -1832,7 +1836,8 @@ CellAccessor<3>::point_inside(const Point<3>& p) const
     }
 }
 
-/*------------------------ Functions: CellAccessor<dim,spacedim> -----------------------*/
+/*------------------------ Functions: CellAccessor<dim,spacedim>
+ * -----------------------*/
 
 // For codim>0 we proceed as follows:
 // 1) project point onto manifold and
@@ -1993,8 +1998,8 @@ void
 CellAccessor<dim, spacedim>::set_active_cell_index(
   const unsigned int active_cell_index)
 {
-  // set the active cell index. allow setting it also for non-active (and unused)
-  // cells to allow resetting the index after refinement
+  // set the active cell index. allow setting it also for non-active (and
+  // unused) cells to allow resetting the index after refinement
   this->tria->levels[this->present_level]
     ->active_cell_indices[this->present_index]
     = active_cell_index;
@@ -2393,20 +2398,21 @@ CellAccessor<dim, spacedim>::has_periodic_neighbor(
   const unsigned int i_face) const
 {
   /*
-   * Implementation note: In all of the functions corresponding to periodic faces
-   * we mainly use the Triangulation::periodic_face_map to find the
+   * Implementation note: In all of the functions corresponding to periodic
+   * faces we mainly use the Triangulation::periodic_face_map to find the
    * information about periodically connected faces. So, we actually search in
    * this std::map and return the cell_face on the other side of the periodic
    * boundary. For this search process, we have two options:
    *
-   * 1- Using the [] operator of std::map: This option results in a more readalbe
-   *    code, but requires an extra iteration in the map. Because when we call [] on
-   *    std::map, with a key which does not exist in the std::map, that key will be
-   *    created and the default value will be returned by []. This is not desirable.
-   *    So, one has to first check if the key exists in the std::map and if it exists,
-   *    then use the [] operator. The existence check is possible using std::map::find()
-   *    or std::map::count(). Using this option will result in two iteration cycles
-   *    through the map. First, existence check, then returning the value.
+   * 1- Using the [] operator of std::map: This option results in a more
+   * readalbe code, but requires an extra iteration in the map. Because when we
+   * call [] on std::map, with a key which does not exist in the std::map, that
+   * key will be created and the default value will be returned by []. This is
+   * not desirable. So, one has to first check if the key exists in the std::map
+   * and if it exists, then use the [] operator. The existence check is possible
+   * using std::map::find() or std::map::count(). Using this option will result
+   * in two iteration cycles through the map. First, existence check, then
+   * returning the value.
    *
    * 2- Using std::map::find(): This option is less readble, but theoretically
    *    faster, because it results in one iteration through std::map object.
@@ -2433,8 +2439,8 @@ CellAccessor<dim, spacedim>::periodic_neighbor(const unsigned int i_face) const
    * to the implementation note in has_periodic_neighbor() function.
    *
    * my_it        : the iterator to the current cell.
-   * my_face_pair : the pair reported by periodic_face_map as its first pair being
-   *                the current cell_face.
+   * my_face_pair : the pair reported by periodic_face_map as its first pair
+   * being the current cell_face.
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
@@ -2478,11 +2484,10 @@ CellAccessor<dim, spacedim>::periodic_neighbor_child_on_subface(
    * to the implementation note in has_periodic_neighbor() function.
    *
    * my_it            : the iterator to the current cell.
-   * my_face_pair     : the pair reported by periodic_face_map as its first pair being
-   *                    the current cell_face.
-   * nb_it            : the iterator to the neighbor of current cell at i_face.
-   * face_num_of_nb   : the face number of the periodically neighboring face in the
-   *                    relevant element.
+   * my_face_pair     : the pair reported by periodic_face_map as its first pair
+   * being the current cell_face. nb_it            : the iterator to the
+   * neighbor of current cell at i_face. face_num_of_nb   : the face number of
+   * the periodically neighboring face in the relevant element.
    * nb_parent_face_it: the iterator to the parent face of the periodically
    *                    neighboring face.
    */
@@ -2496,8 +2501,8 @@ CellAccessor<dim, spacedim>::periodic_neighbor_child_on_subface(
     = this->tria->periodic_face_map.find(
       std::pair<cell_iterator, unsigned int>(my_it, i_face));
   /*
-   * There should be an assertion, which tells the user that this function should not be
-   * used for a cell which is not located at a periodic boundary.
+   * There should be an assertion, which tells the user that this function
+   * should not be used for a cell which is not located at a periodic boundary.
    */
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
@@ -2506,8 +2511,8 @@ CellAccessor<dim, spacedim>::periodic_neighbor_child_on_subface(
   TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> nb_parent_face_it
     = parent_nb_it->face(nb_face_num);
   /*
-   * We should check if the parent face of the neighbor has at least the same number of
-   * children as i_subface.
+   * We should check if the parent face of the neighbor has at least the same
+   * number of children as i_subface.
    */
   AssertIndexRange(i_subface, nb_parent_face_it->n_children());
   unsigned int sub_neighbor_num = GeometryInfo<dim>::child_cell_on_face(
@@ -2531,13 +2536,12 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
    * to the implementation note in has_periodic_neighbor() function.
    *
    * my_it        : the iterator to the current cell.
-   * my_face_pair : the pair reported by periodic_face_map as its first pair being
-   *                the current cell_face.
-   * nb_it        : the iterator to the periodic neighbor.
-   * nb_face_pair : the pair reported by periodic_face_map as its first pair being
-   *                the periodic neighbor cell_face.
-   * p_nb_of_p_nb : the iterator of the periodic neighbor of the periodic neighbor
-   *                of the current cell.
+   * my_face_pair : the pair reported by periodic_face_map as its first pair
+   * being the current cell_face. nb_it        : the iterator to the periodic
+   * neighbor. nb_face_pair : the pair reported by periodic_face_map as its
+   * first pair being the periodic neighbor cell_face. p_nb_of_p_nb : the
+   * iterator of the periodic neighbor of the periodic neighbor of the current
+   * cell.
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
@@ -2550,8 +2554,8 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
     = this->tria->periodic_face_map.find(
       std::pair<cell_iterator, unsigned int>(my_it, i_face));
   /*
-   * There should be an assertion, which tells the user that this function should not be
-   * used for a cell which is not located at a periodic boundary.
+   * There should be an assertion, which tells the user that this function
+   * should not be used for a cell which is not located at a periodic boundary.
    */
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
@@ -2564,8 +2568,9 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
     = this->tria->periodic_face_map.find(
       std::pair<cell_iterator, unsigned int>(nb_it, face_num_of_nb));
   /*
-   * Since, we store periodic neighbors for every cell (either active or artificial or inactive)
-   * the nb_face_pair should also be mapped to some cell_face pair. We assert this here.
+   * Since, we store periodic neighbors for every cell (either active or
+   * artificial or inactive) the nb_face_pair should also be mapped to some
+   * cell_face pair. We assert this here.
    */
   Assert(nb_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
@@ -2577,9 +2582,9 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
     if(parent_face_it->child_index(i_subface) == my_face_index)
       return (std::pair<unsigned int, unsigned int>(face_num_of_nb, i_subface));
   /*
-   * Obviously, if the execution reaches to this point, some of our assumptions should have
-   * been false. The most important one is, the user has called this function on a face
-   * which does not have a coarser periodic neighbor.
+   * Obviously, if the execution reaches to this point, some of our assumptions
+   * should have been false. The most important one is, the user has called this
+   * function on a face which does not have a coarser periodic neighbor.
    */
   Assert(false, TriaAccessorExceptions::ExcNeighborIsNotCoarser());
   return std::pair<unsigned int, unsigned int>(numbers::invalid_unsigned_int,
@@ -2620,8 +2625,8 @@ CellAccessor<dim, spacedim>::periodic_neighbor_face_no(
    * to the implementation note in has_periodic_neighbor() function.
    *
    * my_it        : the iterator to the current cell.
-   * my_face_pair : the pair reported by periodic_face_map as its first pair being
-   *                the current cell_face.
+   * my_face_pair : the pair reported by periodic_face_map as its first pair
+   * being the current cell_face.
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
@@ -2633,8 +2638,9 @@ CellAccessor<dim, spacedim>::periodic_neighbor_face_no(
     = this->tria->periodic_face_map.find(
       std::pair<cell_iterator, unsigned int>(my_it, i_face));
   /*
-   * There should be an assertion, which tells the user that this function should not be
-   * called for a cell which is not located at a periodic boundary !
+   * There should be an assertion, which tells the user that this function
+   * should not be called for a cell which is not located at a periodic boundary
+   * !
    */
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
@@ -2650,18 +2656,18 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser(
    * To know, why we are using std::map::find() instead of [] operator, refer
    * to the implementation note in has_periodic_neighbor() function.
    *
-   * Implementation note: Let p_nb_of_p_nb be the periodic neighbor of the periodic
-   * neighbor of the current cell. Also, let p_face_of_p_nb_of_p_nb be the periodic
-   * face of the p_nb_of_p_nb. If p_face_of_p_nb_of_p_nb has children , then the
-   * periodic neighbor of the current cell is coarser than itself. Although not tested,
-   * this implementation should work for anisotropic refinement as well.
+   * Implementation note: Let p_nb_of_p_nb be the periodic neighbor of the
+   * periodic neighbor of the current cell. Also, let p_face_of_p_nb_of_p_nb be
+   * the periodic face of the p_nb_of_p_nb. If p_face_of_p_nb_of_p_nb has
+   * children , then the periodic neighbor of the current cell is coarser than
+   * itself. Although not tested, this implementation should work for
+   * anisotropic refinement as well.
    *
    * my_it        : the iterator to the current cell.
-   * my_face_pair : the pair reported by periodic_face_map as its first pair being
-   *                the current cell_face.
-   * nb_it        : the iterator to the periodic neighbor.
-   * nb_face_pair : the pair reported by periodic_face_map as its first pair being
-   *                the periodic neighbor cell_face.
+   * my_face_pair : the pair reported by periodic_face_map as its first pair
+   * being the current cell_face. nb_it        : the iterator to the periodic
+   * neighbor. nb_face_pair : the pair reported by periodic_face_map as its
+   * first pair being the periodic neighbor cell_face.
    */
   AssertIndexRange(i_face, GeometryInfo<dim>::faces_per_cell);
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
@@ -2673,8 +2679,8 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser(
     = this->tria->periodic_face_map.find(
       std::pair<cell_iterator, unsigned int>(my_it, i_face));
   /*
-   * There should be an assertion, which tells the user that this function should not be
-   * used for a cell which is not located at a periodic boundary.
+   * There should be an assertion, which tells the user that this function
+   * should not be used for a cell which is not located at a periodic boundary.
    */
   Assert(my_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
@@ -2687,8 +2693,9 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser(
     = this->tria->periodic_face_map.find(
       std::pair<cell_iterator, unsigned int>(nb_it, face_num_of_nb));
   /*
-   * Since, we store periodic neighbors for every cell (either active or artificial or inactive)
-   * the nb_face_pair should also be mapped to some cell_face pair. We assert this here.
+   * Since, we store periodic neighbors for every cell (either active or
+   * artificial or inactive) the nb_face_pair should also be mapped to some
+   * cell_face pair. We assert this here.
    */
   Assert(nb_face_pair != this->tria->periodic_face_map.end(),
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
@@ -2957,7 +2964,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
                     neighbor->face_flip(neighbor_neighbor),
                     neighbor->face_rotation(neighbor_neighbor));
                 }
-              else //neighbor is not coarser
+              else // neighbor is not coarser
                 {
                   neighbor_neighbor    = neighbor_of_neighbor(face);
                   neighbor_child_index = GeometryInfo<dim>::child_cell_on_face(

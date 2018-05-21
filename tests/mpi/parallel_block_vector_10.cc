@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// same as _07 but use identity matrix as a metric so the result should be the same
-// as operator*
+// same as _07 but use identity matrix as a metric so the result should be the
+// same as operator*
 
 #include "../tests.h"
 

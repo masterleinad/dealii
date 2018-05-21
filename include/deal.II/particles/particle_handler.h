@@ -196,8 +196,8 @@ namespace Particles
     /**
      * Insert a particle into the collection of particles. Return an iterator
      * to the new position of the particle. This function involves a copy of
-     * the particle and its properties. Note that this function is of $O(N \log N)$
-     * complexity for $N$ particles.
+     * the particle and its properties. Note that this function is of $O(N \log
+     * N)$ complexity for $N$ particles.
      */
     particle_iterator
     insert_particle(
@@ -207,7 +207,8 @@ namespace Particles
     /**
      * Insert a number of particles into the collection of particles.
      * This function involves a copy of the particles and their properties.
-     * Note that this function is of O(n_existing_particles + n_particles) complexity.
+     * Note that this function is of O(n_existing_particles + n_particles)
+     * complexity.
      */
     void
     insert_particles(
@@ -220,8 +221,8 @@ namespace Particles
      * This function takes a list of positions and creates a set of particles
      * at these positions, which are then added to the local particle
      * collection. Note that this function currently uses
-     * GridTools::compute_point_locations, which assumes all positions are within
-     * the local part of the triangulation. If one of them is not in the
+     * GridTools::compute_point_locations, which assumes all positions are
+     * within the local part of the triangulation. If one of them is not in the
      * local domain this function will throw an exception.
      */
     void
@@ -380,8 +381,8 @@ namespace Particles
     std::multimap<internal::LevelInd, Particle<dim, spacedim>> particles;
 
     /**
-     * Set of particles that currently live in the ghost cells of the local domain,
-     * organized by the level/index of the cell they are in. These
+     * Set of particles that currently live in the ghost cells of the local
+     * domain, organized by the level/index of the cell they are in. These
      * particles are equivalent to the ghost entries in distributed vectors.
      */
     std::multimap<internal::LevelInd, Particle<dim, spacedim>> ghost_particles;
@@ -521,7 +522,8 @@ namespace Particles
       const void*                                                 data);
   };
 
-  /* -------------------------- inline and template functions ---------------------- */
+  /* -------------------------- inline and template functions
+   * ---------------------- */
 
   template <int dim, int spacedim>
   template <class Archive>

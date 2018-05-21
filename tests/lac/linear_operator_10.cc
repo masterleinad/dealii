@@ -53,8 +53,9 @@ test_preconditioner(const MATRIX&          A,
   const auto lo_A = linear_operator<VECTOR>(A);
   // Note: The above should be equivalent to the following:
   //
-  //  typedef dealii::TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload PAYLOAD;
-  //  const auto lo_A = linear_operator<VECTOR,VECTOR,PAYLOAD>(A);
+  //  typedef
+  //  dealii::TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload
+  //  PAYLOAD; const auto lo_A = linear_operator<VECTOR,VECTOR,PAYLOAD>(A);
 
   PRECONDITIONER preconditioner;
   preconditioner.initialize(A, data);
@@ -98,8 +99,10 @@ test_preconditioner(const MATRIX&          A,
       = linear_operator<VECTOR, VECTOR>(A, preconditioner);
     // Note: The above should be equivalent to the following:
     //
-    //    typedef dealii::TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload PAYLOAD;
-    //    const auto lo_A_inv_approx = linear_operator<VECTOR,VECTOR,PAYLOAD>(A, preconditioner);
+    //    typedef
+    //    dealii::TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload
+    //    PAYLOAD; const auto lo_A_inv_approx =
+    //    linear_operator<VECTOR,VECTOR,PAYLOAD>(A, preconditioner);
 
     // Singular operation
     {
@@ -155,8 +158,9 @@ test_solver(const MATRIX& A, const VECTOR& b)
   const auto lo_A = linear_operator<VECTOR>(A);
   // Note: The above should be equivalent to the following:
   //
-  //  typedef dealii::TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload PAYLOAD;
-  //  const auto lo_A = linear_operator<VECTOR,VECTOR,PAYLOAD>(A);
+  //  typedef
+  //  dealii::TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload
+  //  PAYLOAD; const auto lo_A = linear_operator<VECTOR,VECTOR,PAYLOAD>(A);
 
   SolverControl solver_control(100, 1.0e-10);
   SOLVER        solver(solver_control);
@@ -370,18 +374,24 @@ main(int argc, char* argv[])
     //   // test_solver<SLVR> (A, b);
     //
     //   typedef dealii::TrilinosWrappers::MPI::Vector VectorType;
-    //   typedef dealii::TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload PayloadType;
-    //   // TODO: Full template expansion required for composite operator. Can one prevent this?
-    //   //       i.e. is 'const auto lo_A = linear_operator<VectorType>(A);' possible?
-    //   const auto lo_A = linear_operator<VectorType,VectorType,PayloadType>(A);
+    //   typedef
+    //   dealii::TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload
+    //   PayloadType;
+    //   // TODO: Full template expansion required for composite operator. Can
+    //   one prevent this?
+    //   //       i.e. is 'const auto lo_A = linear_operator<VectorType>(A);'
+    //   possible? const auto lo_A =
+    //   linear_operator<VectorType,VectorType,PayloadType>(A);
     //
     //   SolverControl solver_control (100, 1.0e-10);
     //   SLVR solver (solver_control);
     //   solver.initialize(A);
     //
-    //   // TODO: Full template expansion required for composite operator. Can one prevent this?
-    //   //       i.e. is 'const auto lo_A_inv = linear_operator<VectorType>(solver);' possible?
-    //   const auto lo_A_inv = linear_operator<VectorType,VectorType,PayloadType>(solver);
+    //   // TODO: Full template expansion required for composite operator. Can
+    //   one prevent this?
+    //   //       i.e. is 'const auto lo_A_inv =
+    //   linear_operator<VectorType>(solver);' possible? const auto lo_A_inv =
+    //   linear_operator<VectorType,VectorType,PayloadType>(solver);
     //
     //   // Singular operation
     //   {
@@ -394,9 +404,8 @@ main(int argc, char* argv[])
     //   // Composite operation
     //   {
     //     deallog.push("C_Op");
-    //     const TrilinosWrappers::MPI::Vector x_approx = (lo_A_inv*lo_A*lo_A_inv)*b;
-    //     print(x_approx);
-    //     deallog.pop();
+    //     const TrilinosWrappers::MPI::Vector x_approx =
+    //     (lo_A_inv*lo_A*lo_A_inv)*b; print(x_approx); deallog.pop();
     //   }
     //
     //   deallog.pop();

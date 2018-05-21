@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-/* Compare the kelly estimator for the same square but in codimension 0 and the other in codimension 1,
-   Both should return the same estimator */
+/* Compare the kelly estimator for the same square but in codimension 0 and the
+   other in codimension 1, Both should return the same estimator */
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>

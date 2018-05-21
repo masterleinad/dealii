@@ -121,7 +121,8 @@ namespace internal
 
               for(unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
-                  // we need to ignore if the DoF is on a refinement edge (hanging node)
+                  // we need to ignore if the DoF is on a refinement edge
+                  // (hanging node)
                   if(skip_interface_dofs && mg_constrained_dofs != nullptr
                      && mg_constrained_dofs->at_refinement_edge(
                           level, level_dof_indices[i]))
@@ -129,7 +130,8 @@ namespace internal
 
                   types::global_dof_index global_idx
                     = globally_relevant.index_within_set(global_dof_indices[i]);
-                  //skip if we did this global dof already (on this or a coarser level)
+                  // skip if we did this global dof already (on this or a
+                  // coarser level)
                   if(dof_touched[global_idx])
                     continue;
                   bool global_mine = mg_dof.locally_owned_dofs().is_element(
@@ -148,7 +150,7 @@ namespace internal
                       copy_indices_global_mine[level].emplace_back(
                         global_dof_indices[i], level_dof_indices[i]);
 
-                      //send this to the owner of the level_dof:
+                      // send this to the owner of the level_dof:
                       send_data_temp.emplace_back(
                         level, global_dof_indices[i], level_dof_indices[i]);
                     }
@@ -182,7 +184,8 @@ namespace internal
             = tria->level_ghost_owners();
           std::map<int, std::vector<DoFPair>> send_data;
 
-          // * find owners of the level dofs and insert into send_data accordingly
+          // * find owners of the level dofs and insert into send_data
+          // accordingly
           for(typename std::vector<DoFPair>::iterator dofpair
               = send_data_temp.begin();
               dofpair != send_data_temp.end();
@@ -515,8 +518,9 @@ namespace internal
     namespace
     {
       /**
-       * Helper function for setup_transfer. Checks for identity constrained dofs
-       * and replace with the indices of the dofs to which they are constrained
+       * Helper function for setup_transfer. Checks for identity constrained
+       * dofs and replace with the indices of the dofs to which they are
+       * constrained
        */
       void
       replace(const MGConstrainedDoFs*              mg_constrained_dofs,
@@ -575,9 +579,9 @@ namespace internal
 
       const dealii::Triangulation<dim>& tria = mg_dof.get_triangulation();
 
-      // ---------------------------- 1. Extract 1D info about the finite element
-      // step 1.1: create a 1D copy of the finite element from FETools where we
-      // substitute the template argument
+      // ---------------------------- 1. Extract 1D info about the finite
+      // element step 1.1: create a 1D copy of the finite element from FETools
+      // where we substitute the template argument
       AssertDimension(mg_dof.get_fe().n_base_elements(), 1);
       std::string fe_name = mg_dof.get_fe().base_element(0).get_name();
       {
@@ -592,7 +596,8 @@ namespace internal
 
       setup_element_info(elem_info, *fe, mg_dof);
 
-      // -------------- 2. Extract and match dof indices between child and parent
+      // -------------- 2. Extract and match dof indices between child and
+      // parent
       const unsigned int n_levels = tria.n_global_levels();
       level_dof_indices.resize(n_levels);
       parent_child_connect.resize(n_levels - 1);

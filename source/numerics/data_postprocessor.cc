@@ -47,7 +47,8 @@ DataPostprocessor<dim>::get_data_component_interpretation() const
     get_names().size(), DataComponentInterpretation::component_is_scalar);
 }
 
-// -------------------------- DataPostprocessorScalar ---------------------------
+// -------------------------- DataPostprocessorScalar
+// ---------------------------
 
 template <int dim>
 DataPostprocessorScalar<dim>::DataPostprocessorScalar(
@@ -78,7 +79,8 @@ DataPostprocessorScalar<dim>::get_needed_update_flags() const
   return update_flags;
 }
 
-// -------------------------- DataPostprocessorVector ---------------------------
+// -------------------------- DataPostprocessorVector
+// ---------------------------
 
 template <int dim>
 DataPostprocessorVector<dim>::DataPostprocessorVector(
@@ -109,7 +111,8 @@ DataPostprocessorVector<dim>::get_needed_update_flags() const
   return update_flags;
 }
 
-// -------------------------- DataPostprocessorTensor ---------------------------
+// -------------------------- DataPostprocessorTensor
+// ---------------------------
 
 template <int dim>
 DataPostprocessorTensor<dim>::DataPostprocessorTensor(

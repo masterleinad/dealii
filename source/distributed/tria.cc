@@ -182,17 +182,17 @@ namespace
                   case 3:
                     {
                       /*
-                   * The values for tree_to_face are in 0..23 where ttf % 6
-                   * gives the face number and ttf / 4 the face orientation
-                   * code.  The orientation is determined as follows.  Let
-                   * my_face and other_face be the two face numbers of the
-                   * connecting trees in 0..5.  Then the first face vertex of
-                   * the lower of my_face and other_face connects to a face
-                   * vertex numbered 0..3 in the higher of my_face and
-                   * other_face.  The face orientation is defined as this
-                   * number.  If my_face == other_face, treating either of
-                   * both faces as the lower one leads to the same result.
-                   */
+                       * The values for tree_to_face are in 0..23 where ttf % 6
+                       * gives the face number and ttf / 4 the face orientation
+                       * code.  The orientation is determined as follows.  Let
+                       * my_face and other_face be the two face numbers of the
+                       * connecting trees in 0..5.  Then the first face vertex
+                       * of the lower of my_face and other_face connects to a
+                       * face vertex numbered 0..3 in the higher of my_face and
+                       * other_face.  The face orientation is defined as this
+                       * number.  If my_face == other_face, treating either of
+                       * both faces as the lower one leads to the same result.
+                       */
 
                       connectivity->tree_to_face[index * 6 + f]
                         = cell->neighbor_of_neighbor(f);
@@ -208,8 +208,8 @@ namespace
                         smaller_idx = 1;
 
                       unsigned int larger_idx = (smaller_idx + 1) % 2;
-                      //smaller = *_list[smaller_idx]
-                      //larger = *_list[larger_idx]
+                      // smaller = *_list[smaller_idx]
+                      // larger = *_list[larger_idx]
 
                       unsigned int v = 0;
 
@@ -337,7 +337,7 @@ namespace
   {
     if(dealii_cell->level_subdomain_id() == numbers::artificial_subdomain_id)
       {
-        //important: only assign the level_subdomain_id if it is a ghost cell
+        // important: only assign the level_subdomain_id if it is a ghost cell
         // even though we could fill in all.
         bool used = false;
         for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
@@ -585,13 +585,13 @@ namespace
              const_cast<typename internal::p4est::types<dim>::tree*>(&tree),
              &p4est_cell)
            == false))
-      return; //this quadrant and none of its children belongs to us.
+      return; // this quadrant and none of its children belongs to us.
 
     bool p4est_has_children = (idx == -1);
 
     if(p4est_has_children && dealii_cell->has_children())
       {
-        //recurse further
+        // recurse further
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
         for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
@@ -637,7 +637,7 @@ namespace
         for(const auto& it : pack_callbacks)
           {
             void* ptr
-              = static_cast<char*>(q->p.user_data) + it.first; //add offset
+              = static_cast<char*>(q->p.user_data) + it.first; // add offset
             (it.second)(
               dealii_cell,
               parallel::distributed::Triangulation<dim, spacedim>::CELL_PERSIST,
@@ -722,8 +722,8 @@ namespace
       }
     else
       {
-        // its children got coarsened into this cell in p4est, but the dealii_cell
-        // still has its children
+        // its children got coarsened into this cell in p4est, but the
+        // dealii_cell still has its children
         typename internal::p4est::types<dim>::quadrant* q;
         q = static_cast<typename internal::p4est::types<dim>::quadrant*>(
           sc_array_index(const_cast<sc_array_t*>(&tree.quadrants), idx));
@@ -745,7 +745,7 @@ namespace
         for(const auto& it : pack_callbacks)
           {
             void* ptr
-              = static_cast<char*>(q->p.user_data) + it.first; //add offset
+              = static_cast<char*>(q->p.user_data) + it.first; // add offset
             (it.second)(
               dealii_cell,
               parallel::distributed::Triangulation<dim, spacedim>::CELL_COARSEN,
@@ -779,7 +779,7 @@ namespace
 
     if(p4est_has_children && dealii_cell->has_children())
       {
-        //recurse further
+        // recurse further
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
         for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
@@ -870,7 +870,7 @@ namespace
       {
         Assert(dealii_cell->has_children(), ExcInternalError());
 
-        //recurse further
+        // recurse further
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
         for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
@@ -1025,7 +1025,7 @@ namespace
         cell != triangulation.end();
         ++cell)
       {
-        //skip cells that are not local
+        // skip cells that are not local
         if(cell->subdomain_id() != my_subdomain)
           continue;
 
@@ -1307,7 +1307,8 @@ namespace parallel
 {
   namespace distributed
   {
-    /* ---------------------- class Triangulation<dim,spacedim> ------------------------------ */
+    /* ---------------------- class Triangulation<dim,spacedim>
+     * ------------------------------ */
 
     template <int dim, int spacedim>
     Triangulation<dim, spacedim>::Triangulation(
@@ -1406,16 +1407,18 @@ namespace parallel
       namespace
       {
         /**
-          * A list of tree+quadrant and their vertex indices.
-          * The bool vector describes which vertices are of interest
-          * and should be set on the receiving processes.
-          */
+         * A list of tree+quadrant and their vertex indices.
+         * The bool vector describes which vertices are of interest
+         * and should be set on the receiving processes.
+         */
         template <int dim, int spacedim>
         struct CellInfo
         {
-          // store all the tree_indices we send/receive consecutively (n_cells entries)
+          // store all the tree_indices we send/receive consecutively (n_cells
+          // entries)
           std::vector<unsigned int> tree_index;
-          // store all the quadrants we send/receive consecutively (n_cells entries)
+          // store all the quadrants we send/receive consecutively (n_cells
+          // entries)
           std::vector<typename dealii::internal::p4est::types<dim>::quadrant>
             quadrants;
           // store for each cell the number of vertices we send/receive
@@ -1649,7 +1652,8 @@ namespace parallel
                         const dealii::types::subdomain_id subdomain = *it;
 
                         // get an iterator to what needs to be sent to that
-                        // subdomain (if already exists), or create such an object
+                        // subdomain (if already exists), or create such an
+                        // object
                         const typename std::map<
                           dealii::types::subdomain_id,
                           CellInfo<dim, spacedim>>::iterator p
@@ -1779,8 +1783,8 @@ namespace parallel
       if(this->n_global_levels() <= 1)
         return false; // can not have hanging nodes without refined cells
 
-      // if there are any active cells with level less than n_global_levels()-1, then
-      // there is obviously also one with level n_global_levels()-1, and
+      // if there are any active cells with level less than n_global_levels()-1,
+      // then there is obviously also one with level n_global_levels()-1, and
       // consequently there must be a hanging node somewhere.
       //
       // The problem is that we cannot just ask for the first active cell, but
@@ -1924,7 +1928,7 @@ namespace parallel
         std::ifstream f(fname.c_str());
         AssertThrow(f, ExcIO());
         std::string firstline;
-        getline(f, firstline); //skip first line
+        getline(f, firstline); // skip first line
         f >> version >> numcpus >> attached_size >> attached_count
           >> n_coarse_cells;
       }
@@ -2349,8 +2353,8 @@ namespace parallel
                     v < GeometryInfo<dim - 1>::vertices_per_cell;
                     ++v)
                   {
-                    // take possible non-standard orientation of face on cell[0] into
-                    // account
+                    // take possible non-standard orientation of face on cell[0]
+                    // into account
                     const unsigned int vface0
                       = GeometryInfo<dim>::standard_to_real_face_vertex(
                         v,
@@ -2567,7 +2571,8 @@ namespace parallel
       // For geometric multigrid it turns out that
       // we will miss level cells at shared vertices if we ignore this.
       // See tests/mpi/mg_06. In particular, the flag is still necessary
-      // even though we force it for the original smooth_grid in the constructor.
+      // even though we force it for the original smooth_grid in the
+      // constructor.
       if(settings & construct_multigrid_hierarchy)
         this->smooth_grid
           = dealii::Triangulation<dim,
@@ -2754,8 +2759,9 @@ namespace parallel
 #  endif
 
       // fill level_subdomain_ids for geometric multigrid
-      // the level ownership of a cell is defined as the owner if the cell is active or as the owner of child(0)
-      // we need this information for all our ancestors and the same-level neighbors of our own cells (=level ghosts)
+      // the level ownership of a cell is defined as the owner if the cell is
+      // active or as the owner of child(0) we need this information for all our
+      // ancestors and the same-level neighbors of our own cells (=level ghosts)
       if(settings & construct_multigrid_hierarchy)
         {
           // step 1: We set our own ids all the way down and all the others to
@@ -2779,15 +2785,15 @@ namespace parallel
                       this->locally_owned_subdomain());
                   else
                     {
-                      //not our cell
+                      // not our cell
                       cell->set_level_subdomain_id(
                         numbers::artificial_subdomain_id);
                     }
                 }
             }
 
-          //step 2: make sure all the neighbors to our level_cells exist. Need
-          //to look up in p4est...
+          // step 2: make sure all the neighbors to our level_cells exist. Need
+          // to look up in p4est...
           std::vector<std::vector<bool>> marked_vertices(this->n_levels());
           for(unsigned int lvl = 0; lvl < this->n_levels(); ++lvl)
             marked_vertices[lvl] = mark_locally_active_vertices_on_level(lvl);
@@ -2817,7 +2823,7 @@ namespace parallel
                 marked_vertices);
             }
 
-          //step 3: make sure we have the parent of our level cells
+          // step 3: make sure we have the parent of our level cells
           for(unsigned int lvl = this->n_levels(); lvl > 0;)
             {
               --lvl;
@@ -2833,13 +2839,13 @@ namespace parallel
                         if(cell->child(c)->level_subdomain_id()
                            == this->locally_owned_subdomain())
                           {
-                            //at least one of the children belongs to us, so
-                            //make sure we set the level subdomain id
+                            // at least one of the children belongs to us, so
+                            // make sure we set the level subdomain id
                             const types::subdomain_id mark
                               = cell->child(0)->level_subdomain_id();
-                            Assert(
-                              mark != numbers::artificial_subdomain_id,
-                              ExcInternalError()); //we should know the child(0)
+                            Assert(mark != numbers::artificial_subdomain_id,
+                                   ExcInternalError()); // we should know the
+                                                        // child(0)
                             cell->set_level_subdomain_id(mark);
                             break;
                           }
@@ -3003,8 +3009,8 @@ namespace parallel
 
               PartitionWeights<dim, spacedim> partition_weights(cell_weights);
 
-              // attach (temporarily) a pointer to the cell weights through p4est's
-              // user_pointer object
+              // attach (temporarily) a pointer to the cell weights through
+              // p4est's user_pointer object
               Assert(parallel_forest->user_pointer == this, ExcInternalError());
               parallel_forest->user_pointer = &partition_weights;
 
@@ -3336,7 +3342,7 @@ namespace parallel
           AssertThrowMPI(ierr);
         }
 
-      //check all msgs got sent and received
+      // check all msgs got sent and received
       Assert(
         Utilities::MPI::sum(needs_to_get_cells.size(), this->get_communicator())
           == Utilities::MPI::sum(senders.size(), this->get_communicator()),
@@ -3534,7 +3540,8 @@ namespace parallel
                     v < GeometryInfo<dim - 1>::vertices_per_cell;
                     ++v)
                   {
-                    // take possible non-standard orientation of faces into account
+                    // take possible non-standard orientation of faces into
+                    // account
                     const unsigned int vface0
                       = GeometryInfo<dim>::standard_to_real_face_vertex(
                         v,
@@ -3582,7 +3589,7 @@ namespace parallel
           const unsigned int  face_left   = it->face_idx[0];
           const unsigned int  face_right  = it->face_idx[1];
 
-          //respective cells of the matching faces in p4est
+          // respective cells of the matching faces in p4est
           const unsigned int tree_left
             = coarse_cell_to_p4est_tree_permutation[std::distance(this->begin(),
                                                                   first_cell)];
@@ -3616,7 +3623,8 @@ namespace parallel
                   lower_idx  = 1;
                 }
 
-              // get the cell index of the first index on the face with the lower id
+              // get the cell index of the first index on the face with the
+              // lower id
               unsigned int first_p4est_idx_on_cell
                 = p8est_face_corners[face_idx_list[lower_idx]][0];
               unsigned int first_dealii_idx_on_face
@@ -3672,7 +3680,7 @@ namespace parallel
                   cell_list[higher_idx]->face_flip(face_idx_list[higher_idx]),
                   cell_list[higher_idx]->face_rotation(
                     face_idx_list[higher_idx]));
-              //map back to p4est
+              // map back to p4est
               const unsigned int second_p4est_idx_on_face
                 = p8est_corner_face_corners[second_dealii_idx_on_cell]
                                            [face_idx_list[higher_idx]];
@@ -3716,7 +3724,7 @@ namespace parallel
           Assert(false, ExcInternalError());
         }
 
-      //finally call the base class for storing the periodicity information
+      // finally call the base class for storing the periodicity information
       dealii::Triangulation<dim, spacedim>::add_periodicity(periodicity_vector);
 
       // The range of ghost_owners might have changed so update that information
@@ -3740,7 +3748,8 @@ namespace parallel
               cell_attached_data.cumulative_fixed_data_size)
           + MemoryConsumption::memory_consumption(
               cell_attached_data.n_attached_datas)
-          //      + MemoryConsumption::memory_consumption(pack_callbacks) //TODO[TH]: how?
+          //      + MemoryConsumption::memory_consumption(pack_callbacks)
+          //      //TODO[TH]: how?
           + MemoryConsumption::memory_consumption(
               coarse_cell_to_p4est_tree_permutation)
           + MemoryConsumption::memory_consumption(
@@ -3855,7 +3864,7 @@ namespace parallel
           cell != this->end(0);
           ++cell)
         {
-          //skip coarse cells, that are not ours
+          // skip coarse cells, that are not ours
           if(tree_exists_locally<dim, spacedim>(
                parallel_forest,
                coarse_cell_to_p4est_tree_permutation[cell->index()])

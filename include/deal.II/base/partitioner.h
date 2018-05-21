@@ -47,18 +47,19 @@ namespace Utilities
      * processor needs to have access to, but are owned by another process)
      * through an IndexSet. In addition, it also stores the other processors'
      * ghost indices belonging to the current processor (see import_targets()),
-     * which are the indices where other processors might require information from.
-     * In a sense, these import indices form the dual of the ghost indices. This
-     * information is gathered once when constructing the partitioner, which
-     * obviates subsequent global communication steps when exchanging data.
+     * which are the indices where other processors might require information
+     * from. In a sense, these import indices form the dual of the ghost
+     * indices. This information is gathered once when constructing the
+     * partitioner, which obviates subsequent global communication steps when
+     * exchanging data.
      *
-     * The figure below gives an example of index space $[0,74)$ being split into
-     * four processes.
+     * The figure below gives an example of index space $[0,74)$ being split
+     * into four processes.
      * @image html partitioner.png
-     * Here process 0 will import 5 DoFs from process 1 (first pair of import targets),
-     * which corresponds to the first 3 elements of its import indices. Whereas
-     * process 2 will import 3 DoFs from process 0, which corresponds to the first
-     * two elements of its import indices.
+     * Here process 0 will import 5 DoFs from process 1 (first pair of import
+     * targets), which corresponds to the first 3 elements of its import
+     * indices. Whereas process 2 will import 3 DoFs from process 0, which
+     * corresponds to the first two elements of its import indices.
      *
      * The partitioner includes a mechanism for converting global to local and
      * local to global indices. Internally, this class stores vector elements
@@ -281,21 +282,20 @@ namespace Utilities
       ghost_indices_within_larger_ghost_set() const;
 
       /**
-       * Return a list of processors (first entry) and the number of ghost degrees
-       * of freedom owned by that processor (second entry). The sum of the
-       * latter over all processors equals n_ghost_indices().
+       * Return a list of processors (first entry) and the number of ghost
+       * degrees of freedom owned by that processor (second entry). The sum of
+       * the latter over all processors equals n_ghost_indices().
        */
       const std::vector<std::pair<unsigned int, unsigned int>>&
       ghost_targets() const;
 
       /**
        * Return a vector of ranges of local indices that we are importing during
-       * compress(), i.e., others' ghosts that belong to the local range. Similar
-       * structure as in an IndexSet, but tailored to be iterated over, and
-       * some indices may be duplicated.
-       * The returned pairs consists of the index of
-       * the first element and the index of the element one past the last
-       * one in a range.
+       * compress(), i.e., others' ghosts that belong to the local range.
+       * Similar structure as in an IndexSet, but tailored to be iterated over,
+       * and some indices may be duplicated. The returned pairs consists of the
+       * index of the first element and the index of the element one past the
+       * last one in a range.
        */
       const std::vector<std::pair<unsigned int, unsigned int>>&
       import_indices() const;
@@ -591,14 +591,14 @@ namespace Utilities
       IndexSet ghost_indices_data;
 
       /**
-       * A variable caching the number of ghost indices. It would be expensive to use @p
-       * ghost_indices.n_elements() to compute this.
+       * A variable caching the number of ghost indices. It would be expensive
+       * to use @p ghost_indices.n_elements() to compute this.
        */
       unsigned int n_ghost_indices_data;
 
       /**
-       * An array that contains information which processors my ghost indices belong to and
-       * how many those indices are
+       * An array that contains information which processors my ghost indices
+       * belong to and how many those indices are
        */
       std::vector<std::pair<unsigned int, unsigned int>> ghost_targets_data;
 
@@ -611,8 +611,8 @@ namespace Utilities
       std::vector<std::pair<unsigned int, unsigned int>> import_indices_data;
 
       /**
-       * A variable caching the number of ghost indices. It would be expensive to compute
-       * it by iterating over the import indices and accumulate them.
+       * A variable caching the number of ghost indices. It would be expensive
+       * to compute it by iterating over the import indices and accumulate them.
        */
       unsigned int n_import_indices_data;
 
@@ -623,20 +623,20 @@ namespace Utilities
       std::vector<std::pair<unsigned int, unsigned int>> import_targets_data;
 
       /**
-       * An array that caches the number of chunks in the import indices per MPI rank. The
-       * length is import_indices_data.size()+1.
+       * An array that caches the number of chunks in the import indices per MPI
+       * rank. The length is import_indices_data.size()+1.
        */
       std::vector<unsigned int> import_indices_chunks_by_rank_data;
 
       /**
-       * A variable caching the number of ghost indices in a larger set of indices given by
-       * the optional argument to set_ghost_indices().
+       * A variable caching the number of ghost indices in a larger set of
+       * indices given by the optional argument to set_ghost_indices().
        */
       unsigned int n_ghost_indices_in_larger_set;
 
       /**
-       * An array that caches the number of chunks in the import indices per MPI rank. The
-       * length is ghost_indices_subset_data.size()+1.
+       * An array that caches the number of chunks in the import indices per MPI
+       * rank. The length is ghost_indices_subset_data.size()+1.
        */
       std::vector<unsigned int> ghost_indices_subset_chunks_by_rank_data;
 
@@ -669,7 +669,8 @@ namespace Utilities
       bool have_ghost_indices;
     };
 
-    /*----------------------- Inline functions ----------------------------------*/
+    /*----------------------- Inline functions
+     * ----------------------------------*/
 
 #ifndef DOXYGEN
 

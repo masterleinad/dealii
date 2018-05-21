@@ -42,8 +42,8 @@
 
 #include <sstream>
 
-const double R0 = 0.5; //6371000.-2890000.;
-const double R1 = 1.0; //6371000.-  35000.;
+const double R0 = 0.5; // 6371000.-2890000.;
+const double R1 = 1.0; // 6371000.-  35000.;
 const double T0 = 1.0;
 const double T1 = 2.0;
 
@@ -103,7 +103,7 @@ double
 TemperatureInitialValues<dim>::value(const Point<dim>& p,
                                      const unsigned int) const
 {
-  return p(0) * T1 + p(1) * (T0 - T1); //simple
+  return p(0) * T1 + p(1) * (T0 - T1); // simple
 }
 
 template <int dim>
@@ -128,7 +128,7 @@ test()
 
   //  static SphericalManifold<dim> boundary;
   //  tr.set_manifold (0, boundary);
-  //tr.set_manifold (1, boundary);
+  // tr.set_manifold (1, boundary);
 
   tr.refine_global(1);
   if(1)

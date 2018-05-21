@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// test different elements for hanging_node constraints. This extends crash_05.cc
-// to make sure stuff is working.
+// test different elements for hanging_node constraints. This extends
+// crash_05.cc to make sure stuff is working.
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>

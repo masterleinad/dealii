@@ -45,8 +45,8 @@ test()
   subdivisions[1] = 1;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, subdivisions, Point<2>(), Point<2>(1, 1));
-  // initialize the refinement indicators with a set of particular values from the original
-  // testcase
+  // initialize the refinement indicators with a set of particular values from
+  // the original testcase
   const double values[]
     = {1.48589e-08, 3.31859e-06, 3.31859e-06, 0.0025918,   3.31859e-06,
        0.0025918,   0.0025918,   3.31859e-06, 1.48589e-08, 0.0025918,

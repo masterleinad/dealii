@@ -96,7 +96,7 @@ void EvaluateDerivative(DoFHandler<2>* dof_handler, Vector<double>& solution)
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
           //    double u0 = this_value[q_point](0);
-          //double v0 = this_value[q_point](1);
+          // double v0 = this_value[q_point](1);
 
           double u0 = 0;
           double v0 = 0;
@@ -236,8 +236,8 @@ create_mass_matrix(const Mapping<dim>&        mapping,
           /* This code should now be in fe_poly_tensor.cc
           for (unsigned int f = 2; f < 4; ++f)
             {
-              typename DoFHandler<dim>::active_face_iterator face = cell->face (f);
-              if (!face->at_boundary ())
+              typename DoFHandler<dim>::active_face_iterator face = cell->face
+          (f); if (!face->at_boundary ())
           {
             unsigned int nn = cell->neighbor_of_neighbor (f);
             printf ("Face %i  NeigNeig %i\n", f, nn);
@@ -484,16 +484,16 @@ project(const Mapping<dim>&     mapping,
     // boundary projection required
     {
       /*
-                   // set up a list of boundary functions for
-                   // the different boundary parts. We want the
-                   // @p{function} to hold on all parts of the
-                   // boundary
-          typename FunctionMap<dim>::type boundary_functions;
-          for (types::boundary_id c=0; c<255; ++c)
-            boundary_functions[c] = &function;
-          project_boundary_values (dof, boundary_functions, q_boundary,
-                 boundary_values);
-        */
+                 // set up a list of boundary functions for
+                 // the different boundary parts. We want the
+                 // @p{function} to hold on all parts of the
+                 // boundary
+        typename FunctionMap<dim>::type boundary_functions;
+        for (types::boundary_id c=0; c<255; ++c)
+          boundary_functions[c] = &function;
+        project_boundary_values (dof, boundary_functions, q_boundary,
+               boundary_values);
+      */
     }
 
   // set up mass matrix and right hand side
@@ -507,8 +507,8 @@ project(const Mapping<dim>&     mapping,
   Vector<double>       tmp(mass_matrix.n());
 
   create_mass_matrix(mapping, dof, quadrature, mass_matrix, function, tmp);
-  //create_right_hand_side (mapping, dof, quadrature, function, tmp);
-  //printf ("RHS created\n");
+  // create_right_hand_side (mapping, dof, quadrature, function, tmp);
+  // printf ("RHS created\n");
 
   constraints.condense(mass_matrix);
   constraints.condense(tmp);
@@ -542,7 +542,7 @@ int create_alternate_unitsquare(Triangulation<2>& tria)
   points.push_back(Point<2>(0.5, 1.0));
   points.push_back(Point<2>(0.0, 1.0));
 
-  //points.push_back (Point<2> (0.0, 0.001));
+  // points.push_back (Point<2> (0.0, 0.001));
 
   // Prepare cell data
   std::vector<CellData<2>> cells(3);
@@ -559,7 +559,7 @@ int create_alternate_unitsquare(Triangulation<2>& tria)
   cells[1].material_id = 0;
 
   cells[2].vertices[0] = 0;
-  //cells[2].vertices[0] = 7;
+  // cells[2].vertices[0] = 7;
   cells[2].vertices[1] = 4;
   cells[2].vertices[2] = 6;
   cells[2].vertices[3] = 5;

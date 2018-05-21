@@ -565,9 +565,8 @@ PointValueHistory<dim>::evaluate_field(const std::string& vector_name,
   AssertThrow(have_dof_handler, ExcDoFHandlerRequired());
   AssertThrow(!triangulation_changed, ExcDoFHandlerChanged());
 
-  if(
-    n_indep
-    != 0) // hopefully this will get optimized, can't test independent_values[0] unless n_indep > 0
+  if(n_indep != 0) // hopefully this will get optimized, can't test
+                   // independent_values[0] unless n_indep > 0
     {
       Assert(
         std::abs((int) dataset_key.size() - (int) independent_values[0].size())
@@ -635,9 +634,8 @@ PointValueHistory<dim>::evaluate_field(
   Assert(closed, ExcInvalidState());
   Assert(!cleared, ExcInvalidState());
   AssertThrow(have_dof_handler, ExcDoFHandlerRequired());
-  if(
-    n_indep
-    != 0) // hopefully this will get optimized, can't test independent_values[0] unless n_indep > 0
+  if(n_indep != 0) // hopefully this will get optimized, can't test
+                   // independent_values[0] unless n_indep > 0
     {
       Assert(
         std::abs((int) dataset_key.size() - (int) independent_values[0].size())
@@ -872,9 +870,8 @@ PointValueHistory<dim>::evaluate_field_at_requested_location(
   Assert(!cleared, ExcInvalidState());
   AssertThrow(have_dof_handler, ExcDoFHandlerRequired());
 
-  if(
-    n_indep
-    != 0) // hopefully this will get optimized, can't test independent_values[0] unless n_indep > 0
+  if(n_indep != 0) // hopefully this will get optimized, can't test
+                   // independent_values[0] unless n_indep > 0
     {
       Assert(
         std::abs((int) dataset_key.size() - (int) independent_values[0].size())
@@ -1035,7 +1032,7 @@ PointValueHistory<dim>::write_gnuplot(
       // method. Note that the support point
       // information is not meaningful if
       // the number of dofs has changed.
-      //AssertThrow (!triangulation_changed, ExcDoFHandlerChanged ());
+      // AssertThrow (!triangulation_changed, ExcDoFHandlerChanged ());
 
       typename std::vector<internal::PointValueHistoryImplementation::
                              PointGeometryData<dim>>::iterator point

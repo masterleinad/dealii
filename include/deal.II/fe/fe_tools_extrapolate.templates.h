@@ -498,7 +498,8 @@ namespace FETools
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // if neither this cell nor one of it's children belongs to us, don't do anything
+      // if neither this cell nor one of it's children belongs to us, don't do
+      // anything
       if(idx == -1
          && (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
                const_cast<typename dealii::internal::p4est::types<dim>::tree*>(
@@ -716,7 +717,8 @@ namespace FETools
               dealii_cell->get_dof_indices(indices);
               for(unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
-                  // don't set this dof if there is a more refined ghosted neighbor setting this dof.
+                  // don't set this dof if there is a more refined ghosted
+                  // neighbor setting this dof.
                   const bool on_refined_neighbor
                     = (dofs_on_refined_neighbors.find(indices[j])
                        != dofs_on_refined_neighbors.end());
@@ -830,7 +832,8 @@ namespace FETools
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // if neither this cell nor one of it's children belongs to us, don't do anything
+      // if neither this cell nor one of it's children belongs to us, don't do
+      // anything
       if(idx == -1
          && (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
                const_cast<typename dealii::internal::p4est::types<dim>::tree*>(
@@ -1037,7 +1040,8 @@ namespace FETools
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // if neither this cell nor one of it's children belongs to us, don't do anything
+      // if neither this cell nor one of it's children belongs to us, don't do
+      // anything
       if(idx == -1
          && (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
                const_cast<typename dealii::internal::p4est::types<dim>::tree*>(
@@ -1479,7 +1483,7 @@ namespace FETools
 
       u2.compress(VectorOperation::insert);
     }
-#endif //DEAL_II_WITH_P4EST
+#endif // DEAL_II_WITH_P4EST
 
     namespace
     {
@@ -1522,7 +1526,7 @@ namespace FETools
         const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
-#endif //DEAL_II_WITH_PETSC
+#endif // DEAL_II_WITH_PETSC
 
 #ifdef DEAL_II_WITH_TRILINOS
       template <int dim, int spacedim>
@@ -1556,7 +1560,7 @@ namespace FETools
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
 #  endif
-#endif //DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_WITH_TRILINOS
 
       template <int dim, int spacedim, typename Number>
       void
@@ -1598,7 +1602,7 @@ namespace FETools
                       locally_relevant_dofs,
                       parallel_tria->get_communicator());
       }
-#endif //DEAL_II_WITH_PETSC
+#endif // DEAL_II_WITH_PETSC
 
 #ifdef DEAL_II_WITH_TRILINOS
       template <int dim, int spacedim>
@@ -1618,7 +1622,7 @@ namespace FETools
                       locally_relevant_dofs,
                       parallel_tria->get_communicator());
       }
-#endif //DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_WITH_TRILINOS
 
       template <int dim, int spacedim, typename Number>
       void
@@ -1719,8 +1723,8 @@ namespace FETools
     Assert(u2.size() == dof2.n_dofs(),
            ExcDimensionMismatch(u2.size(), dof2.n_dofs()));
 
-    // make sure that each cell on the coarsest level is at least once refined, otherwise, these cells
-    // can't be treated and would generate a bogus result
+    // make sure that each cell on the coarsest level is at least once refined,
+    // otherwise, these cells can't be treated and would generate a bogus result
     {
       typename DoFHandler<dim, spacedim>::cell_iterator cell = dof2.begin(0),
                                                         endc = dof2.end(0);
@@ -1758,6 +1762,7 @@ namespace FETools
 
 DEAL_II_NAMESPACE_CLOSE
 
-/*----------------------------   fe_tools_extrapolate_templates.h     ---------------------------*/
+/*----------------------------   fe_tools_extrapolate_templates.h
+ * ---------------------------*/
 /* end of #ifndef dealii_fe_tools_extrapolate_templates_H */
 #endif

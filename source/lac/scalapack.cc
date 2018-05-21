@@ -37,7 +37,7 @@ inline hid_t
 hdf5_type_id(const number*)
 {
   Assert(false, dealii::ExcNotImplemented());
-  //don't know what to put here; it does not matter
+  // don't know what to put here; it does not matter
   return -1;
 }
 
@@ -152,7 +152,8 @@ ScaLAPACKMatrix<NumberType>::reinit(
                                 &first_process_column,
                                 &(grid->n_process_columns));
 
-      // LLD_A = MAX(1,NUMROC(M_A, MB_A, MYROW, RSRC_A, NPROW)), different between processes
+      // LLD_A = MAX(1,NUMROC(M_A, MB_A, MYROW, RSRC_A, NPROW)), different
+      // between processes
       int lda = std::max(1, n_local_rows);
 
       int info = 0;
@@ -323,25 +324,26 @@ ScaLAPACKMatrix<NumberType>::copy_to(
   const std::pair<unsigned int, unsigned int>& offset_B,
   const std::pair<unsigned int, unsigned int>& submatrix_size) const
 {
-  //submatrix is empty
+  // submatrix is empty
   if(submatrix_size.first == 0 || submatrix_size.second == 0)
     return;
 
-  //range checking for matrix A
+  // range checking for matrix A
   Assert(offset_A.first < (unsigned int) (n_rows - submatrix_size.first + 1),
          ExcIndexRange(offset_A.first, 0, n_rows - submatrix_size.first + 1));
   Assert(
     offset_A.second < (unsigned int) (n_columns - submatrix_size.second + 1),
     ExcIndexRange(offset_A.second, 0, n_columns - submatrix_size.second + 1));
 
-  //range checking for matrix B
+  // range checking for matrix B
   Assert(offset_B.first < (unsigned int) (B.n_rows - submatrix_size.first + 1),
          ExcIndexRange(offset_B.first, 0, B.n_rows - submatrix_size.first + 1));
   Assert(
     offset_B.second < (unsigned int) (B.n_columns - submatrix_size.second + 1),
     ExcIndexRange(offset_B.second, 0, B.n_columns - submatrix_size.second + 1));
 
-  //Currently, copying of matrices will only be supported if A and B share the same MPI communicator
+  // Currently, copying of matrices will only be supported if A and B share the
+  // same MPI communicator
   int ierr, comparison;
   ierr = MPI_Comm_compare(
     grid->mpi_communicator, B.grid->mpi_communicator, &comparison);
@@ -350,10 +352,10 @@ ScaLAPACKMatrix<NumberType>::copy_to(
          ExcMessage("Matrix A and B must have a common MPI Communicator"));
 
   /*
-   * The routine pgemr2d requires a BLACS context resembling at least the union of process grids
-   * described by the BLACS contexts held by the ProcessGrids of matrix A and B.
-   * As A and B share the same MPI communicator, there is no need to create a union MPI
-   * communicator to initialise the BLACS context
+   * The routine pgemr2d requires a BLACS context resembling at least the union
+   * of process grids described by the BLACS contexts held by the ProcessGrids
+   * of matrix A and B. As A and B share the same MPI communicator, there is no
+   * need to create a union MPI communicator to initialise the BLACS context
    */
   int union_blacs_context = Csys2blacs_handle(this->grid->mpi_communicator);
   const char* order       = "Col";
@@ -370,7 +372,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
                   &my_row_A,
                   &my_column_A);
 
-  //check whether process is in the BLACS context of matrix A
+  // check whether process is in the BLACS context of matrix A
   const bool in_context_A
     = (my_row_A >= 0 && my_row_A < n_grid_rows_A)
       && (my_column_A >= 0 && my_column_A < n_grid_columns_A);
@@ -382,7 +384,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
                   &my_row_B,
                   &my_column_B);
 
-  //check whether process is in the BLACS context of matrix B
+  // check whether process is in the BLACS context of matrix B
   const bool in_context_B
     = (my_row_B >= 0 && my_row_B < n_grid_rows_B)
       && (my_column_B >= 0 && my_column_B < n_grid_columns_B);
@@ -399,11 +401,11 @@ ScaLAPACKMatrix<NumberType>::copy_to(
   const NumberType* loc_vals_A = nullptr;
   NumberType*       loc_vals_B = nullptr;
 
-  // Note: the function pgemr2d has to be called for all processes in the union BLACS context
-  // If the calling process is not part of the BLACS context of A, desc_A[1] has to be -1
-  // and all other parameters do not have to be set
-  // If the calling process is not part of the BLACS context of B, desc_B[1] has to be -1
-  // and all other parameters do not have to be set
+  // Note: the function pgemr2d has to be called for all processes in the union
+  // BLACS context If the calling process is not part of the BLACS context of A,
+  // desc_A[1] has to be -1 and all other parameters do not have to be set If
+  // the calling process is not part of the BLACS context of B, desc_B[1] has to
+  // be -1 and all other parameters do not have to be set
   if(in_context_A)
     {
       if(this->values.size() != 0)
@@ -440,7 +442,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
 
   B.state = LAPACKSupport::matrix;
 
-  //releasing the union BLACS context
+  // releasing the union BLACS context
   Cblacs_gridexit(union_blacs_context);
 }
 
@@ -466,13 +468,15 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
   /*
    * just in case of different process grids or block-cyclic distributions
    * inter-process communication is necessary
-   * if distributed matrices have the same process grid and block sizes, local copying is enough
+   * if distributed matrices have the same process grid and block sizes, local
+   * copying is enough
    */
   if((this->grid != dest.grid) || (row_block_size != dest.row_block_size)
      || (column_block_size != dest.column_block_size))
     {
       /*
-       * get the MPI communicator, which is the union of the source and destination MPI communicator
+       * get the MPI communicator, which is the union of the source and
+       * destination MPI communicator
        */
       int       ierr = 0;
       MPI_Group group_source, group_dest, group_union;
@@ -500,8 +504,9 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
       AssertThrowMPI(ierr);
 
       /*
-       * The routine pgemr2d requires a BLACS context resembling at least the union of process grids
-       * described by the BLACS contexts of matrix A and B
+       * The routine pgemr2d requires a BLACS context resembling at least the
+       * union of process grids described by the BLACS contexts of matrix A and
+       * B
        */
       int union_blacs_context = Csys2blacs_handle(mpi_communicator_union);
       const char* order       = "Col";
@@ -558,7 +563,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
       AssertThrowMPI(ierr);
     }
   else
-    //process is active in the process grid
+    // process is active in the process grid
     if(this->grid->mpi_process_is_active)
     dest.values = this->values;
 
@@ -822,7 +827,7 @@ ScaLAPACKMatrix<NumberType>::compute_cholesky_factorization()
     {
       int         info  = 0;
       NumberType* A_loc = &this->values[0];
-      //pdpotrf_(&uplo,&n_columns,A_loc,&submatrix_row,&submatrix_column,descriptor,&info);
+      // pdpotrf_(&uplo,&n_columns,A_loc,&submatrix_row,&submatrix_column,descriptor,&info);
       ppotrf(&uplo,
              &n_columns,
              A_loc,
@@ -1024,7 +1029,8 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
     ExcMessage(
       "Prescribing both the index and value range for the eigenvalues is ambiguous"));
 
-  // if computation of eigenvectors is not required use a sufficiently small distributed matrix
+  // if computation of eigenvectors is not required use a sufficiently small
+  // distributed matrix
   std::unique_ptr<ScaLAPACKMatrix<NumberType>> eigenvectors
     = compute_eigenvectors ?
         std_cxx14::make_unique<ScaLAPACKMatrix<NumberType>>(
@@ -1033,8 +1039,9 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
           grid->n_process_rows, grid->n_process_columns, grid, 1, 1);
 
   eigenvectors->property = property;
-  // number of eigenvalues to be returned from psyevx; upon successful exit ev contains the m seclected eigenvalues in ascending order
-  // set to all eigenvaleus in case we will be using psyev.
+  // number of eigenvalues to be returned from psyevx; upon successful exit ev
+  // contains the m seclected eigenvalues in ascending order set to all
+  // eigenvaleus in case we will be using psyev.
   int                     m = n_rows;
   std::vector<NumberType> ev(n_rows);
 
@@ -1042,7 +1049,8 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
     {
       int info = 0;
       /*
-       * for jobz==N only eigenvalues are computed, for jobz='V' also the eigenvectors of the matrix are computed
+       * for jobz==N only eigenvalues are computed, for jobz='V' also the
+       * eigenvectors of the matrix are computed
        */
       char jobz  = compute_eigenvectors ? 'V' : 'N';
       char range = 'A';
@@ -1051,30 +1059,38 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
       NumberType vl = NumberType(), vu = NumberType();
       int        il = 1, iu = 1;
       // number of eigenvectors to be returned;
-      // upon successful exit the first m=nz columns contain the selected eigenvectors (only if jobz=='V')
+      // upon successful exit the first m=nz columns contain the selected
+      // eigenvectors (only if jobz=='V')
       int        nz     = 0;
       NumberType abstol = NumberType();
 
       // orfac decides which eigenvectors should be reorthogonalized
-      // see http://www.netlib.org/scalapack/explore-html/df/d1a/pdsyevx_8f_source.html for explanation
-      // to keeps simple no reorthogonalized will be done by setting orfac to 0
+      // see
+      // http://www.netlib.org/scalapack/explore-html/df/d1a/pdsyevx_8f_source.html
+      // for explanation to keeps simple no reorthogonalized will be done by
+      // setting orfac to 0
       NumberType orfac = 0;
-      //contains the indices of eigenvectors that failed to converge
+      // contains the indices of eigenvectors that failed to converge
       std::vector<int> ifail;
       // This array contains indices of eigenvectors corresponding to
       // a cluster of eigenvalues that could not be reorthogonalized
       // due to insufficient workspace
-      // see http://www.netlib.org/scalapack/explore-html/df/d1a/pdsyevx_8f_source.html for explanation
+      // see
+      // http://www.netlib.org/scalapack/explore-html/df/d1a/pdsyevx_8f_source.html
+      // for explanation
       std::vector<int> iclustr;
       // This array contains the gap between eigenvalues whose
       // eigenvectors could not be reorthogonalized.
-      // see http://www.netlib.org/scalapack/explore-html/df/d1a/pdsyevx_8f_source.html for explanation
+      // see
+      // http://www.netlib.org/scalapack/explore-html/df/d1a/pdsyevx_8f_source.html
+      // for explanation
       std::vector<NumberType> gap(n_local_rows * n_local_columns);
 
       // index range for eigenvalues is not specified
       if(!use_indices)
         {
-          // interval for eigenvalues is not specified and consequently all eigenvalues/eigenpairs will be computed
+          // interval for eigenvalues is not specified and consequently all
+          // eigenvalues/eigenpairs will be computed
           if(!use_values)
             {
               range          = 'A';
@@ -1092,13 +1108,15 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
         {
           range          = 'I';
           all_eigenpairs = false;
-          //as Fortran starts counting/indexing from 1 unlike C/C++, where it starts from 0
+          // as Fortran starts counting/indexing from 1 unlike C/C++, where it
+          // starts from 0
           il = std::min(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
           iu = std::max(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
         }
       NumberType* A_loc = &this->values[0];
       /*
-       * by setting lwork to -1 a workspace query for optimal length of work is performed
+       * by setting lwork to -1 a workspace query for optimal length of work is
+       * performed
        */
       int         lwork  = -1;
       int         liwork = -1;
@@ -1233,7 +1251,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
       if(compute_eigenvectors)
         this->values.swap(eigenvectors->values);
 
-      //adapt the size of ev to fit m upon return
+      // adapt the size of ev to fit m upon return
       while((int) ev.size() > m)
         ev.pop_back();
     }
@@ -1254,7 +1272,8 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
 
   /*
    * if only eigenvalues are queried the content of the matrix will be destroyed
-   * if the eigenpairs are queried matrix A on exit stores the eigenvectors in the columns
+   * if the eigenpairs are queried matrix A on exit stores the eigenvectors in
+   * the columns
    */
   if(compute_eigenvectors)
     {
@@ -1333,7 +1352,8 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
     ExcMessage(
       "Prescribing both the index and value range for the eigenvalues is ambiguous"));
 
-  // If computation of eigenvectors is not required, use a sufficiently small distributed matrix.
+  // If computation of eigenvectors is not required, use a sufficiently small
+  // distributed matrix.
   std::unique_ptr<ScaLAPACKMatrix<NumberType>> eigenvectors
     = compute_eigenvectors ?
         std_cxx14::make_unique<ScaLAPACKMatrix<NumberType>>(
@@ -1342,22 +1362,26 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
           grid->n_process_rows, grid->n_process_columns, grid, 1, 1);
 
   eigenvectors->property = property;
-  // Number of eigenvalues to be returned from psyevr; upon successful exit ev contains the m seclected eigenvalues in ascending order.
+  // Number of eigenvalues to be returned from psyevr; upon successful exit ev
+  // contains the m seclected eigenvalues in ascending order.
   int                     m = n_rows;
   std::vector<NumberType> ev(n_rows);
 
   // Number of eigenvectors to be returned;
-  // Upon successful exit the first m=nz columns contain the selected eigenvectors (only if jobz=='V').
+  // Upon successful exit the first m=nz columns contain the selected
+  // eigenvectors (only if jobz=='V').
   int nz = 0;
 
   if(grid->mpi_process_is_active)
     {
       int info = 0;
       /*
-       * For jobz==N only eigenvalues are computed, for jobz='V' also the eigenvectors of the matrix are computed.
+       * For jobz==N only eigenvalues are computed, for jobz='V' also the
+       * eigenvectors of the matrix are computed.
        */
       char jobz = compute_eigenvectors ? 'V' : 'N';
-      // Default value is to compute all eigenvalues and optionally eigenvectors.
+      // Default value is to compute all eigenvalues and optionally
+      // eigenvectors.
       char       range = 'A';
       NumberType vl = NumberType(), vu = NumberType();
       int        il = 1, iu = 1;
@@ -1365,7 +1389,8 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
       // Index range for eigenvalues is not specified.
       if(!use_indices)
         {
-          // Interval for eigenvalues is not specified and consequently all eigenvalues/eigenpairs will be computed.
+          // Interval for eigenvalues is not specified and consequently all
+          // eigenvalues/eigenpairs will be computed.
           if(!use_values)
             {
               range = 'A';
@@ -1380,14 +1405,16 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
       else
         {
           range = 'I';
-          // As Fortran starts counting/indexing from 1 unlike C/C++, where it starts from 0.
+          // As Fortran starts counting/indexing from 1 unlike C/C++, where it
+          // starts from 0.
           il = std::min(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
           iu = std::max(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
         }
       NumberType* A_loc = &this->values[0];
 
       /*
-       * By setting lwork to -1 a workspace query for optimal length of work is performed.
+       * By setting lwork to -1 a workspace query for optimal length of work is
+       * performed.
        */
       int         lwork  = -1;
       int         liwork = -1;
@@ -1487,8 +1514,9 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
   grid->send_to_inactive(ev.data(), ev.size());
 
   /*
-   * If only eigenvalues are queried, the content of the matrix will be destroyed.
-   * If the eigenpairs are queried, matrix A on exit stores the eigenvectors in the columns.
+   * If only eigenvalues are queried, the content of the matrix will be
+   * destroyed. If the eigenpairs are queried, matrix A on exit stores the
+   * eigenvectors in the columns.
    */
   if(compute_eigenvectors)
     {
@@ -1554,7 +1582,8 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
       NumberType* VT_loc = right_singluar_vectors ? &(VT->values[0]) : nullptr;
       int         info   = 0;
       /*
-       * by setting lwork to -1 a workspace query for optimal length of work is performed
+       * by setting lwork to -1 a workspace query for optimal length of work is
+       * performed
        */
       int lwork = -1;
       work.resize(1);
@@ -1641,7 +1670,8 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
       Assert(n_rows == B.n_rows, ExcDimensionMismatch(n_rows, B.n_rows));
     }
 
-  //see https://www.ibm.com/support/knowledgecenter/en/SSNR5K_4.2.0/com.ibm.cluster.pessl.v4r2.pssl100.doc/am6gr_lgels.htm
+  // see
+  // https://www.ibm.com/support/knowledgecenter/en/SSNR5K_4.2.0/com.ibm.cluster.pessl.v4r2.pssl100.doc/am6gr_lgels.htm
   Assert(
     row_block_size == column_block_size,
     ExcMessage("Use identical block sizes for rows and columns of matrix A"));
@@ -1661,7 +1691,8 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
       NumberType* B_loc = &B.values[0];
       int         info  = 0;
       /*
-       * by setting lwork to -1 a workspace query for optimal length of work is performed
+       * by setting lwork to -1 a workspace query for optimal length of work is
+       * performed
        */
       int lwork = -1;
       work.resize(1);
@@ -1737,10 +1768,10 @@ ScaLAPACKMatrix<NumberType>::pseudoinverse(const NumberType ratio)
   AssertThrow(sv[0] > std::numeric_limits<NumberType>::min(),
               ExcMessage("Matrix has rank 0"));
 
-  // Get number of singular values fulfilling the following: sv[i] > sv[0] * ratio
-  // Obviously, 0-th element already satisfies sv[0] > sv[0] * ratio
-  // The singular values in sv are ordered by descending value so we break out of the loop
-  // if a singular value is smaller than sv[0] * ratio.
+  // Get number of singular values fulfilling the following: sv[i] > sv[0] *
+  // ratio Obviously, 0-th element already satisfies sv[0] > sv[0] * ratio The
+  // singular values in sv are ordered by descending value so we break out of
+  // the loop if a singular value is smaller than sv[0] * ratio.
   unsigned int            n_sv = 1;
   std::vector<NumberType> inv_sigma;
   inv_sigma.push_back(1 / sv[0]);
@@ -1754,9 +1785,10 @@ ScaLAPACKMatrix<NumberType>::pseudoinverse(const NumberType ratio)
     else
       break;
 
-  // For the matrix multiplication we use only the columns of U and rows of VT which are associated
-  // with singular values larger than the limit.
-  // That saves computational time for matrices with rank significantly smaller than min(n_rows,n_columns)
+  // For the matrix multiplication we use only the columns of U and rows of VT
+  // which are associated with singular values larger than the limit. That saves
+  // computational time for matrices with rank significantly smaller than
+  // min(n_rows,n_columns)
   ScaLAPACKMatrix<NumberType> U_R(n_rows,
                                   n_sv,
                                   grid,
@@ -1809,7 +1841,8 @@ ScaLAPACKMatrix<NumberType>::reciprocal_condition_number(
       int               info  = 0;
       const NumberType* A_loc = &this->values[0];
 
-      // by setting lwork to -1 a workspace query for optimal length of work is performed
+      // by setting lwork to -1 a workspace query for optimal length of work is
+      // performed
       int lwork = -1;
       work.resize(1);
       ppocon(&uplo,
@@ -1956,8 +1989,8 @@ ScaLAPACKMatrix<NumberType>::norm_symmetric(const char type) const
 
   if(grid->mpi_process_is_active)
     {
-      //int IROFFA = MOD( IA-1, MB_A )
-      //int ICOFFA = MOD( JA-1, NB_A )
+      // int IROFFA = MOD( IA-1, MB_A )
+      // int ICOFFA = MOD( JA-1, NB_A )
       const int lcm
         = ilcm_(&(grid->n_process_rows), &(grid->n_process_columns));
       const int v2 = lcm / (grid->n_process_rows);
@@ -2102,11 +2135,11 @@ ScaLAPACKMatrix<NumberType>::save(
          ExcIndexRange(chunks_size_.second, 1, n_columns + 1));
 
 #    ifdef H5_HAVE_PARALLEL
-  //implementation for configurations equipped with a parallel file system
+  // implementation for configurations equipped with a parallel file system
   save_parallel(filename, chunks_size_);
 
 #    else
-  //implementation for configurations with no parallel file system
+  // implementation for configurations with no parallel file system
   save_serial(filename, chunks_size_);
 
 #    endif
@@ -2126,11 +2159,13 @@ ScaLAPACKMatrix<NumberType>::save_serial(
 #  else
 
   /*
-   * The content of the distributed matrix is copied to a matrix using a 1x1 process grid.
-   * Therefore, one process has all the data and can write it to a file.
+   * The content of the distributed matrix is copied to a matrix using a 1x1
+   * process grid. Therefore, one process has all the data and can write it to a
+   * file.
    *
    * Create a 1x1 column grid which will be used to initialize
-   * an effectively serial ScaLAPACK matrix to gather the contents from the current object
+   * an effectively serial ScaLAPACK matrix to gather the contents from the
+   * current object
    */
   const auto column_grid = std::make_shared<Utilities::MPI::ProcessGrid>(
     this->grid->mpi_communicator, 1, 1);
@@ -2151,7 +2186,8 @@ ScaLAPACKMatrix<NumberType>::save_serial(
 
       // modify dataset creation properties, i.e. enable chunking
       hsize_t chunk_dims[2];
-      //revert order of rows and columns as ScaLAPACK uses column-major ordering
+      // revert order of rows and columns as ScaLAPACK uses column-major
+      // ordering
       chunk_dims[0]       = chunk_size.second;
       chunk_dims[1]       = chunk_size.first;
       hid_t data_property = H5Pcreate(H5P_DATASET_CREATE);
@@ -2160,7 +2196,8 @@ ScaLAPACKMatrix<NumberType>::save_serial(
 
       // create the data space for the dataset
       hsize_t dims[2];
-      //change order of rows and columns as ScaLAPACKMatrix uses column major ordering
+      // change order of rows and columns as ScaLAPACKMatrix uses column major
+      // ordering
       dims[0]            = n_columns;
       dims[1]            = n_rows;
       hid_t dataspace_id = H5Screate_simple(2, dims, nullptr);
@@ -2180,7 +2217,8 @@ ScaLAPACKMatrix<NumberType>::save_serial(
         dataset_id, type_id, H5S_ALL, H5S_ALL, H5P_DEFAULT, &tmp.values[0]);
       AssertThrow(status >= 0, ExcIO());
 
-      // create HDF5 enum type for LAPACKSupport::State and LAPACKSupport::Property
+      // create HDF5 enum type for LAPACKSupport::State and
+      // LAPACKSupport::Property
       hid_t state_enum_id, property_enum_id;
       internal::create_HDF5_state_enum_id(state_enum_id);
       internal::create_HDF5_property_enum_id(property_enum_id);
@@ -2277,11 +2315,12 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
     Utilities::MPI::n_mpi_processes(this->grid->mpi_communicator));
   MPI_Info info = MPI_INFO_NULL;
   /*
-   * The content of the distributed matrix is copied to a matrix using a 1xn_processes process grid.
-   * Therefore, the processes hold contiguous chunks of the matrix, which they can write to the file
+   * The content of the distributed matrix is copied to a matrix using a
+   * 1xn_processes process grid. Therefore, the processes hold contiguous chunks
+   * of the matrix, which they can write to the file
    *
    * Create a 1xn_processes column grid
-  */
+   */
   const auto column_grid = std::make_shared<Utilities::MPI::ProcessGrid>(
     this->grid->mpi_communicator, 1, n_mpi_processes);
 
@@ -2306,10 +2345,9 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
   status        = H5Pclose(plist_id);
   AssertThrow(status >= 0, ExcIO());
 
-  // As ScaLAPACK, and therefore the class ScaLAPACKMatrix, uses column-major ordering
-  // but HDF5 row-major ordering, we have to reverse entries related
-  // to columns and rows in the following.
-  // create the dataspace for the dataset
+  // As ScaLAPACK, and therefore the class ScaLAPACKMatrix, uses column-major
+  // ordering but HDF5 row-major ordering, we have to reverse entries related to
+  // columns and rows in the following. create the dataspace for the dataset
   dims[0] = tmp.n_columns;
   dims[1] = tmp.n_rows;
 
@@ -2317,7 +2355,7 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
 
   // create the chunked dataset with default properties and close filespace
   hsize_t chunk_dims[2];
-  //revert order of rows and columns as ScaLAPACK uses column-major ordering
+  // revert order of rows and columns as ScaLAPACK uses column-major ordering
   chunk_dims[0] = chunk_size.second;
   chunk_dims[1] = chunk_size.first;
   plist_id      = H5Pcreate(H5P_DATASET_CREATE);
@@ -2356,7 +2394,8 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
     Utilities::MPI::this_mpi_process(tmp.grid->mpi_communicator));
 
   // hyperslab selection parameters
-  // each process defines dataset in memory and writes it to the hyperslab in the file
+  // each process defines dataset in memory and writes it to the hyperslab in
+  // the file
   hsize_t count[2];
   count[0]       = tmp.n_local_columns;
   count[1]       = tmp.n_rows;
@@ -2406,7 +2445,8 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
       // open file using default properties
       hid_t file_id_reopen = H5Fopen(filename, H5F_ACC_RDWR, H5P_DEFAULT);
 
-      // create HDF5 enum type for LAPACKSupport::State and LAPACKSupport::Property
+      // create HDF5 enum type for LAPACKSupport::State and
+      // LAPACKSupport::Property
       hid_t state_enum_id, property_enum_id;
       internal::create_HDF5_state_enum_id(state_enum_id);
       internal::create_HDF5_property_enum_id(property_enum_id);
@@ -2482,11 +2522,11 @@ ScaLAPACKMatrix<NumberType>::load(const char* filename)
   AssertThrow(false, ExcMessage("HDF5 support is disabled."));
 #  else
 #    ifdef H5_HAVE_PARALLEL
-  //implementation for configurations equipped with a parallel file system
+  // implementation for configurations equipped with a parallel file system
   load_parallel(filename);
 
 #    else
-  //implementation for configurations with no parallel file system
+  // implementation for configurations with no parallel file system
   load_serial(filename);
 #    endif
 #  endif
@@ -2502,10 +2542,11 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
 #  else
 
   /*
-   * The content of the distributed matrix is copied to a matrix using a 1x1 process grid.
-   * Therefore, one process has all the data and can write it to a file
+   * The content of the distributed matrix is copied to a matrix using a 1x1
+   * process grid. Therefore, one process has all the data and can write it to a
+   * file
    */
-  //create a 1xP column grid with P being the number of MPI processes
+  // create a 1xP column grid with P being the number of MPI processes
   const auto one_grid = std::make_shared<Utilities::MPI::ProcessGrid>(
     this->grid->mpi_communicator, 1, 1);
 
@@ -2529,7 +2570,8 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
 
       // check the datatype of the data in the file
       // datatype of source and destination must have the same class
-      // see HDF User's Guide: 6.10. Data Transfer: Datatype Conversion and Selection
+      // see HDF User's Guide: 6.10. Data Transfer: Datatype Conversion and
+      // Selection
       hid_t       datatype   = H5Dget_type(dataset_id);
       H5T_class_t t_class_in = H5Tget_class(datatype);
       H5T_class_t t_class    = H5Tget_class(hdf5_type_id(&tmp.values[0]));
@@ -2564,7 +2606,8 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
                        &tmp.values[0]);
       AssertThrow(status >= 0, ExcIO());
 
-      // create HDF5 enum type for LAPACKSupport::State and LAPACKSupport::Property
+      // create HDF5 enum type for LAPACKSupport::State and
+      // LAPACKSupport::Property
       hid_t state_enum_id, property_enum_id;
       internal::create_HDF5_state_enum_id(state_enum_id);
       internal::create_HDF5_property_enum_id(property_enum_id);
@@ -2651,7 +2694,8 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
     }
   // so far only the root process has the correct state integer --> broadcasting
   tmp.grid->send_to_inactive(&state_int, 1);
-  // so far only the root process has the correct property integer --> broadcasting
+  // so far only the root process has the correct property integer -->
+  // broadcasting
   tmp.grid->send_to_inactive(&property_int, 1);
 
   tmp.state    = static_cast<LAPACKSupport::State>(state_int);
@@ -2678,10 +2722,11 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
     Utilities::MPI::n_mpi_processes(this->grid->mpi_communicator));
   MPI_Info info = MPI_INFO_NULL;
   /*
-   * The content of the distributed matrix is copied to a matrix using a 1xn_processes process grid.
-   * Therefore, the processes hold contiguous chunks of the matrix, which they can write to the file
+   * The content of the distributed matrix is copied to a matrix using a
+   * 1xn_processes process grid. Therefore, the processes hold contiguous chunks
+   * of the matrix, which they can write to the file
    */
-  //create a 1xP column grid with P being the number of MPI processes
+  // create a 1xP column grid with P being the number of MPI processes
   const auto column_grid = std::make_shared<Utilities::MPI::ProcessGrid>(
     this->grid->mpi_communicator, 1, n_mpi_processes);
 
@@ -2698,7 +2743,8 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
   status         = H5Pset_fapl_mpio(plist_id, tmp.grid->mpi_communicator, info);
   AssertThrow(status >= 0, ExcIO());
 
-  // open file collectively in read-only mode and release property list identifier
+  // open file collectively in read-only mode and release property list
+  // identifier
   hid_t file_id = H5Fopen(filename, H5F_ACC_RDONLY, plist_id);
   status        = H5Pclose(plist_id);
   AssertThrow(status >= 0, ExcIO());
@@ -2708,7 +2754,8 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
 
   // check the datatype of the dataset in the file
   // if the classes of type of the dataset and the matrix do not match abort
-  // see HDF User's Guide: 6.10. Data Transfer: Datatype Conversion and Selection
+  // see HDF User's Guide: 6.10. Data Transfer: Datatype Conversion and
+  // Selection
   hid_t       datatype     = hdf5_type_id(data);
   hid_t       datatype_inp = H5Dget_type(dataset_id);
   H5T_class_t t_class_inp  = H5Tget_class(datatype_inp);
@@ -2761,7 +2808,8 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
     Utilities::MPI::this_mpi_process(tmp.grid->mpi_communicator));
 
   // hyperslab selection parameters
-  // each process defines dataset in memory and writes it to the hyperslab in the file
+  // each process defines dataset in memory and writes it to the hyperslab in
+  // the file
   hsize_t count[2];
   count[0] = tmp.n_local_columns;
   count[1] = tmp.n_local_rows;
@@ -2843,8 +2891,8 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
   AssertThrow(status >= 0, ExcIO());
   status = H5Sclose(dataspace_property);
   AssertThrow(status >= 0, ExcIO());
-  //status = H5Tclose(datatype);
-  //AssertThrow(status >= 0, ExcIO());
+  // status = H5Tclose(datatype);
+  // AssertThrow(status >= 0, ExcIO());
   status = H5Tclose(state_enum_id);
   AssertThrow(status >= 0, ExcIO());
   status = H5Tclose(property_enum_id);

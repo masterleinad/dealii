@@ -13,9 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-// this test used to check for TrilinosWrappers::MPI::Vector::clear(). However, this
-// function has since been removed, so we test for v=0 instead, although that
-// may be covered by one of the other tests
+// this test used to check for TrilinosWrappers::MPI::Vector::clear(). However,
+// this function has since been removed, so we test for v=0 instead, although
+// that may be covered by one of the other tests
 
 #include "../tests.h"
 #include <deal.II/base/utilities.h>

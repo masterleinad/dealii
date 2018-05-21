@@ -154,12 +154,12 @@ namespace GraphColoring
                     = indices_to_iterators[conflict_indices[i]];
                   for(unsigned int j = 0; j < conflicting_elements.size(); ++j)
                     {
-                      // check that the iterator conflicting with the current one is not
-                      // associated to a zone yet and if so, assign it to the current
-                      // zone. mark it as used
+                      // check that the iterator conflicting with the current
+                      // one is not associated to a zone yet and if so, assign
+                      // it to the current zone. mark it as used
                       //
-                      // we can shortcut this test if the conflicting iterator is the
-                      // current iterator
+                      // we can shortcut this test if the conflicting iterator
+                      // is the current iterator
                       if((conflicting_elements[j] != *previous_zone_it)
                          && (used_it.count(conflicting_elements[j]) == 0))
                         {
@@ -170,10 +170,11 @@ namespace GraphColoring
                 }
             }
 
-          // If there are iterators in the new zone, then the zone is added to the
-          // partition. Otherwise, the graph is disconnected and we need to find
-          // an iterator on the other part of the graph. start the whole process again
-          // with the first iterator that hasn't been assigned to a zone yet
+          // If there are iterators in the new zone, then the zone is added to
+          // the partition. Otherwise, the graph is disconnected and we need to
+          // find an iterator on the other part of the graph. start the whole
+          // process again with the first iterator that hasn't been assigned to
+          // a zone yet
           if(new_zone.size() != 0)
             zones.push_back(new_zone);
           else
@@ -226,8 +227,9 @@ namespace GraphColoring
         partition_size);
       std::vector<std::vector<unsigned int>> graph(partition_size);
 
-      // Get the conflict indices associated to each iterator. The conflict_indices have to
-      // be sorted so we can more easily find conflicts later on
+      // Get the conflict indices associated to each iterator. The
+      // conflict_indices have to be sorted so we can more easily find conflicts
+      // later on
       for(unsigned int i = 0; i < partition_size; ++i)
         {
           conflict_indices[i] = get_conflict_indices(partition[i]);
@@ -238,8 +240,8 @@ namespace GraphColoring
       // intersection of the conflict indices.
       for(unsigned int i = 0; i < partition_size; ++i)
         for(unsigned int j = i + 1; j < partition_size; ++j)
-          // If the two iterators share indices then we increase the degree of the
-          // vertices and create an ''edge'' in the graph.
+          // If the two iterators share indices then we increase the degree of
+          // the vertices and create an ''edge'' in the graph.
           if(have_nonempty_intersection(conflict_indices[i],
                                         conflict_indices[j]))
             {
@@ -266,14 +268,14 @@ namespace GraphColoring
         {
           const unsigned int current_vertex(sorted_vertices[i]);
           bool               new_color(true);
-          // Try to use an existing color, i.e., try to find a color which is not
-          // associated to one of the vertices linked to current_vertex.
+          // Try to use an existing color, i.e., try to find a color which is
+          // not associated to one of the vertices linked to current_vertex.
           // Loop over the color.
           for(unsigned int j = 0; j < partition_coloring.size(); ++j)
             {
-              // Loop on the vertices linked to current_vertex. If one vertex linked
-              // to current_vertex is already using the color j, this color cannot
-              // be used anymore.
+              // Loop on the vertices linked to current_vertex. If one vertex
+              // linked to current_vertex is already using the color j, this
+              // color cannot be used anymore.
               bool unused_color(true);
               for(unsigned int k = 0; k < graph[current_vertex].size(); ++k)
                 if(colors_used[j].count(graph[current_vertex][k]) == 1)
@@ -328,7 +330,8 @@ namespace GraphColoring
             colors_counter[i][j] = partition_coloring[i][j].size();
         }
 
-      // Find the partition with the largest number of colors for the even partition.
+      // Find the partition with the largest number of colors for the even
+      // partition.
       unsigned int       i_color(0);
       unsigned int       max_even_n_colors(0);
       const unsigned int colors_size(colors_counter.size());
@@ -351,15 +354,15 @@ namespace GraphColoring
               boost::unordered_set<unsigned int> used_k;
               for(unsigned int j = 0; j < colors_counter[i].size(); ++j)
                 {
-                  // Find the color in the current partition with the largest number of
-                  // iterators.
+                  // Find the color in the current partition with the largest
+                  // number of iterators.
                   std::vector<unsigned int>::iterator it;
                   it = std::max_element(colors_counter[i].begin(),
                                         colors_counter[i].end());
                   unsigned int min_iterators(static_cast<unsigned int>(-1));
                   unsigned int pos(0);
-                  // Find the color of coloring with the least number of colors among
-                  // the colors that have not been used yet.
+                  // Find the color of coloring with the least number of colors
+                  // among the colors that have not been used yet.
                   for(unsigned int k = 0; k < max_even_n_colors; ++k)
                     if(used_k.count(k) == 0)
                       if(colors_counter[i_color][k] < min_iterators)
@@ -382,8 +385,8 @@ namespace GraphColoring
             }
         }
 
-      // If there is more than one partition, do the same thing that we did for the even partitions
-      // to the odd partitions
+      // If there is more than one partition, do the same thing that we did for
+      // the even partitions to the odd partitions
       if(partition_size > 1)
         {
           unsigned int max_odd_n_colors(0);
@@ -406,15 +409,15 @@ namespace GraphColoring
                   boost::unordered_set<unsigned int> used_k;
                   for(unsigned int j = 0; j < colors_counter[i].size(); ++j)
                     {
-                      // Find the color in the current partition with the largest number of
-                      // iterators.
+                      // Find the color in the current partition with the
+                      // largest number of iterators.
                       std::vector<unsigned int>::iterator it;
                       it = std::max_element(colors_counter[i].begin(),
                                             colors_counter[i].end());
                       unsigned int min_iterators(static_cast<unsigned int>(-1));
                       unsigned int pos(0);
-                      // Find the color of coloring with the least number of colors among
-                      // the colors that have not been used yet.
+                      // Find the color of coloring with the least number of
+                      // colors among the colors that have not been used yet.
                       for(unsigned int k = 0; k < max_odd_n_colors; ++k)
                         if(used_k.count(k) == 0)
                           if(colors_counter[i_color][k] < min_iterators)
@@ -423,7 +426,8 @@ namespace GraphColoring
                               pos           = k;
                             }
                       colors_counter[i_color][pos] += *it;
-                      // Concatenate the current color with the existing coloring.
+                      // Concatenate the current color with the existing
+                      // coloring.
                       coloring[max_even_n_colors + pos].insert(
                         coloring[max_even_n_colors + pos].end(),
                         partition_coloring[i][it - colors_counter[i].begin()]
@@ -431,7 +435,8 @@ namespace GraphColoring
                         partition_coloring[i][it - colors_counter[i].begin()]
                           .end());
                       used_k.insert(pos);
-                      // Put the number of iterators to the current color to zero.
+                      // Put the number of iterators to the current color to
+                      // zero.
                       *it = 0;
                     }
                 }
@@ -569,7 +574,7 @@ namespace GraphColoring
 
 DEAL_II_NAMESPACE_CLOSE
 
-//----------------------------   graph_coloring.h     ---------------------------
+//----------------------------   graph_coloring.h ---------------------------
 // end of #ifndef dealii_graph_coloring_h
 #endif
-//----------------------------   graph_coloring.h     ---------------------------
+//----------------------------   graph_coloring.h ---------------------------

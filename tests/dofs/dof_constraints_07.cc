@@ -14,7 +14,8 @@
 // ---------------------------------------------------------------------
 
 // simply check what happens when calling DoFConstraints::set_zero on
-// block vectors. This test was written when I changed a few things in the algorithm
+// block vectors. This test was written when I changed a few things in the
+// algorithm
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>

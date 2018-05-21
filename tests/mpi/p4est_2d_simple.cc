@@ -39,7 +39,7 @@ test()
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
       GridGenerator::hyper_cube(tr);
-      //tr.refine_global(1);
+      // tr.refine_global(1);
 
       Assert(tr.n_active_cells() == 1, ExcInternalError());
 

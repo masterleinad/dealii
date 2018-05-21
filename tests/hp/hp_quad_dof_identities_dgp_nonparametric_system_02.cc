@@ -13,8 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-// check FESystem(FE_DGPNonparametric)::hp_quad_dof_identities, but with a different
-// arrangement of base elements and multiplicities than in the _01 test
+// check FESystem(FE_DGPNonparametric)::hp_quad_dof_identities, but with a
+// different arrangement of base elements and multiplicities than in the _01
+// test
 
 #include "../tests.h"
 #include <deal.II/fe/fe_dgp_nonparametric.h>

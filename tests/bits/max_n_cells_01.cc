@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// test the max_n_cells argument to GridRefinement::refine_and_coarsen_fixed_number
+// test the max_n_cells argument to
+// GridRefinement::refine_and_coarsen_fixed_number
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>

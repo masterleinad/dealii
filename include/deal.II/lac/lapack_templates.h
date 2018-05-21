@@ -548,9 +548,10 @@ extern "C"
           dealii::types::blas_int*       iwork,
           dealii::types::blas_int*       ifail,
           dealii::types::blas_int*       info);
-  // Same functionality as dsyev_ but using MRRR algorithm and with more options:
-  // E.g. compute only eigenvalues in a specific dealii::types::blas_interval,
-  // Compute only eigenvalues with a specific index.
+  // Same functionality as dsyev_ but using MRRR algorithm and with more
+  // options: E.g. compute only eigenvalues in a specific
+  // dealii::types::blas_interval, Compute only eigenvalues with a specific
+  // index.
   void
   dsyevr_(const char*                    jobz,
           const char*                    range,
@@ -2852,9 +2853,10 @@ syevr(const char*            jobz,
       types::blas_int*       info)
 {
   /*
-   * Netlib and Atlas Lapack perform floating point tests (e.g. divide-by-zero) within the call to dsyevr
-   * causing floating point exceptions to be thrown (at least in debug mode). Therefore, we wrap the calls
-   * to dsyevr into the following code to suppress the exception.
+   * Netlib and Atlas Lapack perform floating point tests (e.g. divide-by-zero)
+   * within the call to dsyevr causing floating point exceptions to be thrown
+   * (at least in debug mode). Therefore, we wrap the calls to dsyevr into the
+   * following code to suppress the exception.
    */
 #  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fenv_t fp_exceptions;
@@ -2912,9 +2914,10 @@ syevr(const char*            jobz,
       types::blas_int*       info)
 {
   /*
-   * Netlib and Atlas Lapack perform floating point tests (e.g. divide-by-zero) within the call to ssyevr
-   * causing floating point exceptions to be thrown (at least in debug mode). Therefore, we wrap the calls
-   * to ssyevr into the following code to suppress the exception.
+   * Netlib and Atlas Lapack perform floating point tests (e.g. divide-by-zero)
+   * within the call to ssyevr causing floating point exceptions to be thrown
+   * (at least in debug mode). Therefore, we wrap the calls to ssyevr into the
+   * following code to suppress the exception.
    */
 #  ifdef DEAL_II_HAVE_FP_EXCEPTIONS
   fenv_t fp_exceptions;

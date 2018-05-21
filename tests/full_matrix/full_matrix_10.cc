@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-//check method mTmult of FullMatrix on larger size than full_matrix_02 where
-//we interface to the external BLAS
+// check method mTmult of FullMatrix on larger size than full_matrix_02 where
+// we interface to the external BLAS
 
 #include "../tests.h"
 

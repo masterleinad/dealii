@@ -341,8 +341,9 @@ public:
 
 protected:
   /*
-   * NOTE: The following functions have their definitions inlined into the class declaration
-   * because we otherwise run into a compiler error with MS Visual Studio.
+   * NOTE: The following functions have their definitions inlined into the class
+   * declaration because we otherwise run into a compiler error with MS Visual
+   * Studio.
    */
 
   virtual std::unique_ptr<typename FiniteElement<1, spacedim>::InternalDataBase>

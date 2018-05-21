@@ -293,8 +293,8 @@ namespace
 
     const unsigned int& pred_value  = pred_pair.second;
     const T&            coeff_value = coefficients(ind);
-    // If pred_value is not in the pred_to_values map, the element will be created.
-    // Otherwise a reference to the existing element is returned.
+    // If pred_value is not in the pred_to_values map, the element will be
+    // created. Otherwise a reference to the existing element is returned.
     pred_to_values[pred_value].push_back(coeff_value);
   }
 
@@ -377,9 +377,9 @@ FESeries::process_coefficients(
   std::vector<unsigned int> predicate_values;
   std::vector<double>       norm_values;
 
-  // first, parse all table elements into a map of predicate values and coefficients.
-  // We could have stored (predicate values ->TableIndicies) map, but its
-  // processing would have been much harder later on.
+  // first, parse all table elements into a map of predicate values and
+  // coefficients. We could have stored (predicate values ->TableIndicies) map,
+  // but its processing would have been much harder later on.
   std::map<unsigned int, std::vector<T>> pred_to_values;
   fill_map(coefficients, predicate, pred_to_values);
 

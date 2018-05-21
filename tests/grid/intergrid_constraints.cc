@@ -15,7 +15,8 @@
 
 // Purpose: check some things with the intergrid map
 
-// Note: really old and out of date test, but currently the only one for compute_intergrid_constraints
+// Note: really old and out of date test, but currently the only one for
+// compute_intergrid_constraints
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>

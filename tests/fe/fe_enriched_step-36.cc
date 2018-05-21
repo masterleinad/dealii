@@ -212,8 +212,8 @@ namespace Step36
       number_of_eigenvalues(1),
       enrichment(Point<dim>(),
                  /*Z*/ 1.0,
-                 /*radius*/
-                 2.5), // radius is set such that 8 cells are marked as enriched
+                 /*radius*/ 2.5), // radius is set such that 8 cells are marked
+                                  // as enriched
       fe_extractor(/*dofs start at...*/ 0),
       fe_fe_index(0),
       fe_material_id(0),
@@ -320,7 +320,7 @@ namespace Step36
     for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
       {
         eigenfunctions[i].reinit(locally_owned_dofs,
-                                 mpi_communicator); //without ghost dofs
+                                 mpi_communicator); // without ghost dofs
         eigenfunctions_locally_relevant[i].reinit(
           locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
 
@@ -559,7 +559,7 @@ namespace Step36
       }
 
     // scalar data for plotting
-    //output scalar data (eigenvalues, energies, ndofs, etc)
+    // output scalar data (eigenvalues, energies, ndofs, etc)
     if(this_mpi_process == 0)
       {
         const std::string scalar_fname = "scalar-data.txt";
@@ -580,7 +580,7 @@ namespace Step36
 
         output << std::endl;
         output.close();
-      } //end scope
+      } // end scope
   }
 
   template <int dim>

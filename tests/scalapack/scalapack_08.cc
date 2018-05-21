@@ -59,7 +59,7 @@ test(const unsigned int size,
   FullMatrix<NumberType> full_A(size);
   create_spd(full_A);
 
-  //compute eigenpairs of s.p.d matrix
+  // compute eigenpairs of s.p.d matrix
   ScaLAPACKMatrix<NumberType> scalapack_A_ev(size, grid_2d, block_size);
   scalapack_A_ev.set_property(LAPACKSupport::Property::symmetric);
   scalapack_A_ev = full_A;
@@ -69,7 +69,7 @@ test(const unsigned int size,
   FullMatrix<NumberType> eigenvectors(size, size);
   scalapack_A_ev.copy_to(eigenvectors);
 
-  //compute SVD of s.p.d matrix A = U * SIGMA * VT
+  // compute SVD of s.p.d matrix A = U * SIGMA * VT
   ScaLAPACKMatrix<NumberType> scalapack_A_sv(size, grid_2d, block_size);
   ScaLAPACKMatrix<NumberType> scalapack_U(size, grid_2d, block_size);
   ScaLAPACKMatrix<NumberType> scalapack_VT(size, grid_2d, block_size);
@@ -104,7 +104,7 @@ test(const unsigned int size,
         }
       NumberType product_1 = eigenvector * l_singular_vector;
       NumberType product_2 = eigenvector * r_singular_vector;
-      //the tolerance is reduced for the singular vectors
+      // the tolerance is reduced for the singular vectors
       AssertThrow(
         (std::abs(product_1) - 1) < tol * 10,
         ExcMessage("left singular vectors and eigenvectors do not coincide"));

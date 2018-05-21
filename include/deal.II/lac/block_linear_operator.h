@@ -166,8 +166,8 @@ block_back_substitution(
  *
  * auto top_left_op = linear_operator(top_left);
  * auto bottom_right_op = linear_operator(bottom_right);
- * std::array<decltype(top_left_op), 2> operators {{top_left_op, bottom_right_op}};
- * auto block_op = block_diagonal_operator (operators);
+ * std::array<decltype(top_left_op), 2> operators {{top_left_op,
+ * bottom_right_op}}; auto block_op = block_diagonal_operator (operators);
  *
  * std::vector<BlockVector<double>::size_type> block_sizes {2, 4};
  * BlockVector<double> src(block_sizes);
@@ -608,8 +608,9 @@ block_operator(
   typedef typename BlockLinearOperator<Range, Domain, BlockPayload>::BlockType
     BlockType;
 
-  BlockLinearOperator<Range, Domain, BlockPayload> return_op((
-    BlockPayload())); // TODO: Create block payload so that this can be initialized correctly
+  BlockLinearOperator<Range, Domain, BlockPayload> return_op(
+    (BlockPayload())); // TODO: Create block payload so that this can be
+                       // initialized correctly
 
   return_op.n_block_rows = []() -> unsigned int { return m; };
 

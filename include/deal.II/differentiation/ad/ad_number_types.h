@@ -53,9 +53,11 @@ namespace Differentiation
       sacado_dfad,
 
       /**
-       * Tapeless nested dynamic forward-mode Sacado number type (twice differentiable).
+       * Tapeless nested dynamic forward-mode Sacado number type (twice
+       * differentiable).
        *
-       * Both the first and second derivatives will be computed using forward mode.
+       * Both the first and second derivatives will be computed using forward
+       * mode.
        */
       sacado_dfad_dfad,
 
@@ -65,10 +67,11 @@ namespace Differentiation
       sacado_rad,
 
       /**
-       * Tapeless nested reverse-mode and dynamic forward-mode Sacado number type (twice differentiable).
+       * Tapeless nested reverse-mode and dynamic forward-mode Sacado number
+       * type (twice differentiable).
        *
-       * First derivatives will be computed using reverse mode, while the second derivatives
-       * will be computed using forward mode.
+       * First derivatives will be computed using reverse mode, while the second
+       * derivatives will be computed using forward mode.
        */
       sacado_rad_dfad
     };

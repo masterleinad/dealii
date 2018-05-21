@@ -922,8 +922,8 @@ namespace internal
     }
 
     /**
-    * Computes the weights of the quadrature formula.
-    */
+     * Computes the weights of the quadrature formula.
+     */
     std::vector<double>
     get_quadrature_weights(const unsigned int n)
     {

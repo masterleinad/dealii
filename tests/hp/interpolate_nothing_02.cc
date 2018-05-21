@@ -51,7 +51,7 @@ public:
   void
   run();
 
-  //Input lengths of rectangular prism
+  // Input lengths of rectangular prism
   double alen, blen, clen;
 
 private:
@@ -89,7 +89,7 @@ private:
 
   Vector<double> system_rhs, U, Un, dU, U0;
 
-  //solution variables
+  // solution variables
   std::vector<std::string> nodal_solution_names;
 };
 
@@ -105,14 +105,14 @@ diffusionMechanics<dim>::diffusionMechanics(const unsigned int mech_degree,
     quadrature_formula(3),
     face_quadrature_formula(2)
 {
-  //Nodal Solution names
+  // Nodal Solution names
   for(unsigned int i = 0; i < dim; ++i)
     {
       nodal_solution_names.push_back("u");
     }
   nodal_solution_names.push_back("c");
 
-  //FE object
+  // FE object
   fe_collection.push_back(omega1_fe);
   fe_collection.push_back(omega2_fe);
   alen = 10.0, blen = 10.0, clen = 4.0;
@@ -123,7 +123,8 @@ diffusionMechanics<dim>::~diffusionMechanics()
   dof_handler.clear();
 }
 
-//Initial conditions - use only if FE_Nothing not used. Else an error occurs with VectorTools::interpolate
+// Initial conditions - use only if FE_Nothing not used. Else an error occurs
+// with VectorTools::interpolate
 template <int dim>
 class InitialConditions : public Function<dim>
 {
@@ -187,7 +188,7 @@ diffusionMechanics<dim>::setup_dofs()
 
 //====================done====================================
 
-//Setup
+// Setup
 template <int dim>
 void
 diffusionMechanics<dim>::setup_system()
@@ -209,12 +210,12 @@ diffusionMechanics<dim>::setup_system()
           << std::endl;
 }
 
-//Run
+// Run
 template <int dim>
 void
 diffusionMechanics<dim>::run()
 {
-  //subdivided_hyper
+  // subdivided_hyper
   std::vector<unsigned int> repetitions(3);
   repetitions[0] = 2;
   repetitions[1] = 2;
@@ -224,7 +225,7 @@ diffusionMechanics<dim>::run()
                                             Point<3>(0.0, 0.0, 0.0),
                                             Point<3>(alen, blen, clen));
 
-  //Mark cells by sub-domain
+  // Mark cells by sub-domain
   for(typename Triangulation<dim>::active_cell_iterator cell
       = dof_handler.begin_active();
       cell != dof_handler.end();
@@ -236,9 +237,10 @@ diffusionMechanics<dim>::run()
   setup_dofs();
   setup_system();
 
-  //Initial conditions
+  // Initial conditions
   VectorTools::interpolate(dof_handler, InitialConditions<dim>(), Un);
-  //  VectorTools::interpolate(dof_handler, Functions::ZeroFunction<dim>(fe_collection.n_components()), Un);
+  //  VectorTools::interpolate(dof_handler,
+  //  Functions::ZeroFunction<dim>(fe_collection.n_components()), Un);
   U  = Un;
   U0 = Un;
 

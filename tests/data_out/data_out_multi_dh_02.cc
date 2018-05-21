@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// tests DataOut with multiple DoFHandler objects (two times the same element / dh)
+// tests DataOut with multiple DoFHandler objects (two times the same element /
+// dh)
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>

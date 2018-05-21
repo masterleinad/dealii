@@ -13,8 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-// this BlockVector<Number>::multivector_inner_product_with_metric(symmetric=true).
-// Triangulation and Mass operator are the same as in matrix_free/mass_operator_01.cc
+// this
+// BlockVector<Number>::multivector_inner_product_with_metric(symmetric=true).
+// Triangulation and Mass operator are the same as in
+// matrix_free/mass_operator_01.cc
 
 #include "../tests.h"
 

@@ -124,12 +124,12 @@ namespace Step16
   // contains objects that can be filled in this local integrator. How
   // many objects is determined inside the MeshWorker framework by the
   // assembler class. Here, we test for instance that one matrix is
-  // required (MeshWorker::LocalResults::n_matrices()). The matrices are accessed
-  // through MeshWorker::LocalResults::matrix(), which takes the number of the
-  // matrix as its first argument. The second argument is only used
-  // for integrals over faces, where there are two matrices for each
-  // test function set. In such a case, a second matrix with indicator
-  // 'true' would exist with the same index.
+  // required (MeshWorker::LocalResults::n_matrices()). The matrices are
+  // accessed through MeshWorker::LocalResults::matrix(), which takes the number
+  // of the matrix as its first argument. The second argument is only used for
+  // integrals over faces, where there are two matrices for each test function
+  // set. In such a case, a second matrix with indicator 'true' would exist with
+  // the same index.
 
   // MeshWorker::IntegrationInfo provides one or several FEValues
   // objects, which below are used by

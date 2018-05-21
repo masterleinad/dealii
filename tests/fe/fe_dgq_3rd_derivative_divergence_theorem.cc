@@ -13,9 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-// check the correctness of fe_values.shape_3rd_derivative for FE_DGQ by comparing
-// the integral of all shape third derivative components with the flux of the
-// hessian over the boundary by the divergence theorem
+// check the correctness of fe_values.shape_3rd_derivative for FE_DGQ by
+// comparing the integral of all shape third derivative components with the flux
+// of the hessian over the boundary by the divergence theorem
 
 #include "../tests.h"
 #include <deal.II/base/function.h>

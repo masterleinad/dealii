@@ -4,7 +4,8 @@
 #include <deal.II/lac/vector.h>
 #include <map>
 
-// simple function parser example (this is the basis for the example code in the documentation)
+// simple function parser example (this is the basis for the example code in the
+// documentation)
 
 void
 test1()

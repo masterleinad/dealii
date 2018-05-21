@@ -523,12 +523,12 @@ namespace Step35
     //
     // To do this in practice, we declare a "synchronous" iterator -- an
     // object that internally consists of several (in our case two) iterators,
-    // and each time the synchronous iteration is moved forward one step, each of
-    // the iterators stored internally is moved forward one step as well, thereby
-    // always staying in sync. As it so happens, there is a deal.II class that
-    // facilitates this sort of thing. (What is important here is to know that
-    // two DoFHandler objects built on the same triangulation will walk over
-    // the cells of the triangulation in the same order.)
+    // and each time the synchronous iteration is moved forward one step, each
+    // of the iterators stored internally is moved forward one step as well,
+    // thereby always staying in sync. As it so happens, there is a deal.II
+    // class that facilitates this sort of thing. (What is important here is to
+    // know that two DoFHandler objects built on the same triangulation will
+    // walk over the cells of the triangulation in the same order.)
     typedef std::tuple<typename DoFHandler<dim>::active_cell_iterator,
                        typename DoFHandler<dim>::active_cell_iterator>
       IteratorTuple;
@@ -700,7 +700,8 @@ namespace Step35
     initialize();
   }
 
-  // @sect4{ <code>NavierStokesProjection::create_triangulation_and_dofs</code> }
+  // @sect4{ <code>NavierStokesProjection::create_triangulation_and_dofs</code>
+  // }
 
   // The method that creates the triangulation and refines it the needed
   // number of times.  After creating the triangulation, it creates the mesh
@@ -788,7 +789,8 @@ namespace Step35
       }
   }
 
-  // @sect4{ The <code>NavierStokesProjection::initialize_*_matrices</code> methods }
+  // @sect4{ The <code>NavierStokesProjection::initialize_*_matrices</code>
+  // methods }
 
   // In this set of methods we initialize the sparsity patterns, the
   // constraints (if any) and assemble the matrices that do not depend on the
@@ -1099,7 +1101,8 @@ namespace Step35
     gmres.solve(vel_it_matrix[d], u_n[d], force[d], prec_velocity[d]);
   }
 
-  // @sect4{ The <code>NavierStokesProjection::assemble_advection_term</code> method and related}
+  // @sect4{ The <code>NavierStokesProjection::assemble_advection_term</code>
+  // method and related}
 
   // The following few functions deal with assembling the advection terms,
   // which is the part of the system matrix for the diffusion step that

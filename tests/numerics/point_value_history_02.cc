@@ -151,12 +151,13 @@ TestPointValueHistory<dim>::run()
   triangulation.refine_global(2); // refine 2 times to make 5 nodes per side
 
   // make a DOF handler, a model solution filled with ones and a flow vector
-  //    FESystem<dim> finite_element(FE_Q<dim > (1 + 1), dim, FE_Q<dim > (1), 1);
-  //    DoFHandler <dim > dof_handler(triangulation);
+  //    FESystem<dim> finite_element(FE_Q<dim > (1 + 1), dim, FE_Q<dim > (1),
+  //    1); DoFHandler <dim > dof_handler(triangulation);
   dof_handler.distribute_dofs(finite_element);
   DoFRenumbering::Cuthill_McKee(dof_handler);
 
-  // renumber for components so that same dof indices are used for BlockVectors and normal Vectors
+  // renumber for components so that same dof indices are used for BlockVectors
+  // and normal Vectors
   std::vector<unsigned int> block_component(dim + 1, 0);
   block_component[dim] = 1; // component dim = pressure component!
   DoFRenumbering::component_wise(dof_handler, block_component);
@@ -169,8 +170,8 @@ TestPointValueHistory<dim>::run()
 
   //            // BlockVector
   //        std::vector<unsigned int> dofs_per_block(2);
-  //        DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, block_component);
-  //        const unsigned int n_u = dofs_per_block[0],
+  //        DoFTools::count_dofs_per_block(dof_handler, dofs_per_block,
+  //        block_component); const unsigned int n_u = dofs_per_block[0],
   //                n_p = dofs_per_block[1];
   //        BlockVector<double> solution;
   //        solution.reinit(2);
@@ -191,18 +192,19 @@ TestPointValueHistory<dim>::run()
 
   // set up a simple linear discrete time system so that time plots vary
   // over the mesh but can be easily checked. The basic idea is to have each
-  // component of the fe_system to depend on a specific dimension (i.e component 0
-  // depends on dim 0, etc. % dim handles the case where there are more components
-  // than dimensions. The code breaks down at the edges of the mesh and this is
-  // not corrected for. The code used in this test simplified from point_value_history_01.
+  // component of the fe_system to depend on a specific dimension (i.e component
+  // 0 depends on dim 0, etc. % dim handles the case where there are more
+  // components than dimensions. The code breaks down at the edges of the mesh
+  // and this is not corrected for. The code used in this test simplified from
+  // point_value_history_01.
   {
     Quadrature<dim> quadrature_formula(
       finite_element.get_unit_support_points());
     FEValues<dim> fe_values(
       finite_element,
       quadrature_formula,
-      update_values
-        | update_quadrature_points); // just need local_dof_indices and quadrature_points
+      update_values | update_quadrature_points); // just need local_dof_indices
+                                                 // and quadrature_points
 
     std::vector<types::global_dof_index> local_dof_indices(
       finite_element.dofs_per_cell);
@@ -227,7 +229,8 @@ TestPointValueHistory<dim>::run()
 
             if(dof_component == dim) // components start numbering at 0
               poles(local_dof_indices[dof])
-                = -0.1; // dim+1th component is not handled well by the code above
+                = -0.1; // dim+1th component is not handled well by the code
+                        // above
 
             solution(local_dof_indices[dof]) = 1; // start all solutions at 1
           }
@@ -252,7 +255,8 @@ TestPointValueHistory<dim>::run()
   test_copy.mark_support_locations();
   test_copy.close();
   test_copy.start_new_dataset(0.1);
-  //    triangulation.refine_global(1); // should mark the triangulation as changed
+  //    triangulation.refine_global(1); // should mark the triangulation as
+  //    changed
   test_copy.evaluate_field("Solution", solution);
   std::vector<double> input_value(n_inputs, 1);
   test_copy.push_back_independent(input_value);
@@ -300,8 +304,8 @@ TestPointValueHistory<dim>::run()
     node_monitor.add_points(point_vector);
     node_monitor.add_point(Point<2>(1, 0.2)); // add a single point
 
-    // MonitorNode requires that the instance is 'closed' before any data is added
-    // this ensures that points are not added once time starts.
+    // MonitorNode requires that the instance is 'closed' before any data is
+    // added this ensures that points are not added once time starts.
     node_monitor.close();
     no_dof_handler.close(); // closing still required!
 

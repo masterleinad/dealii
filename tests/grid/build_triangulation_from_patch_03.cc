@@ -13,9 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-// Test GridTools::build_triangulation_from_patch () with a distorted triangulation
-// to make sure the vertices are captured properly when the patch triangulation
-// does not come from the standard deal.II refinement strategy.
+// Test GridTools::build_triangulation_from_patch () with a distorted
+// triangulation to make sure the vertices are captured properly when the patch
+// triangulation does not come from the standard deal.II refinement strategy.
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>

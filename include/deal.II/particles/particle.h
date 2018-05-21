@@ -192,11 +192,11 @@ namespace Particles
     write_data(void*& data) const;
 
     /**
-      * Set the location of this particle. Note that this does not check
-      * whether this is a valid location in the simulation domain.
-      *
-      * @param [in] new_location The new location for this particle.
-      */
+     * Set the location of this particle. Note that this does not check
+     * whether this is a valid location in the simulation domain.
+     *
+     * @param [in] new_location The new location for this particle.
+     */
     void
     set_location(const Point<spacedim>& new_location);
 
@@ -240,9 +240,9 @@ namespace Particles
     set_property_pool(PropertyPool& property_pool);
 
     /**
-      * Return whether this particle has a valid property pool and a valid
-      * handle to properties.
-      */
+     * Return whether this particle has a valid property pool and a valid
+     * handle to properties.
+     */
     bool
     has_properties() const;
 
@@ -325,7 +325,8 @@ namespace Particles
     PropertyPool::Handle properties;
   };
 
-  /* -------------------------- inline and template functions ---------------------- */
+  /* -------------------------- inline and template functions
+   * ---------------------- */
 
   template <int dim, int spacedim>
   template <class Archive>

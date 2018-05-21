@@ -101,9 +101,8 @@ class MultipleParameterLoop;
  *         prm.declare_entry ("Solver",
  *                            "CG",
  *                            Patterns::Selection("CG|GMRES|GaussElim"),
- *                            "Name of a linear solver for the inner iteration");
- *         prm.declare_entry ("Maximum number of iterations",
- *                            "20",
+ *                            "Name of a linear solver for the inner
+ * iteration"); prm.declare_entry ("Maximum number of iterations", "20",
  *                            ParameterHandler::RegularExpressions::Integer());
  *         ...
  *       }
@@ -342,7 +341,8 @@ class MultipleParameterLoop;
  *     prm.declare_entry ("Number of iterations",  // name of parameter
  *                        "10",                    // default value
  *                        Patterns::Integer(1,100),// allowed values: 1...100
- *                        "The number of ...");    // some documentation, to be completed
+ *                        "The number of ...");    // some documentation, to be
+ * completed
  *
  *     // next read the parameter from an input file...
  *     prm.parse_input ("my_algorithm.prm");
@@ -369,8 +369,8 @@ class MultipleParameterLoop;
  *     prm.declare_entry ("Number of iterations",  // name of parameter
  *                        "10",                    // default value
  *                        Patterns::Integer(1,100),// allowed values: 1...100
- *                        "The number of ...");    // some documentation, to be completed
- *     prm.add_action ("Number of iterations",
+ *                        "The number of ...");    // some documentation, to be
+ * completed prm.add_action ("Number of iterations",
  *                     [&](const std::string &value) {
  *                       this->n_iterations = Utilities::string_to_int(value);
  *                     });
@@ -496,10 +496,8 @@ class MultipleParameterLoop;
  *     prm.declare_entry ("Output file",
  *                        "out",
  *                        Patterns::Anything(),
- *                        "Name of the output file, either relative to the present "
- *                        "path or absolute");
- *     prm.declare_entry ("Equation 1",
- *                        "Laplace",
+ *                        "Name of the output file, either relative to the
+ * present " "path or absolute"); prm.declare_entry ("Equation 1", "Laplace",
  *                        Patterns::Anything(),
  *                        "String identifying the equation we want to solve");
  *     prm.declare_entry ("Equation 2",
@@ -554,7 +552,8 @@ class MultipleParameterLoop;
  *     }
  *     prm.leave_subsection ();
  *     std::cout << "  Problem: outfile=" << outfile << '\n'
- *               << "           eq1="     << equation1 << ", eq2=" << equation2 << '\n'
+ *               << "           eq1="     << equation1 << ", eq2=" << equation2
+ * << '\n'
  *               << "           matrix1=" << matrix1 << ", matrix2=" << matrix2
  *               << std::endl;
  *   }
@@ -695,13 +694,10 @@ class MultipleParameterLoop;
  *       prm.declare_entry ("Kind",
  *                          "SSOR",
  *                          Patterns::Selection ("SSOR|Jacobi"),
- *                          "A string that describes the kind of preconditioner "
- *                          "to use.");
- *       prm.declare_entry ("Relaxation factor",
- *                          "1.0",
- *                          Patterns::Double (0, 1),
- *                          "The numerical value (between zero and one) for the "
- *                          "relaxation factor to use in the preconditioner.");
+ *                          "A string that describes the kind of preconditioner
+ * " "to use."); prm.declare_entry ("Relaxation factor", "1.0", Patterns::Double
+ * (0, 1), "The numerical value (between zero and one) for the " "relaxation
+ * factor to use in the preconditioner.");
  *     }
  *     prm.leave_subsection ();
  *   @endcode
@@ -753,23 +749,26 @@ class MultipleParameterLoop;
  *     <Maximal_20number_20of_20iterations>
  *       <value>10</value>
  *       <default_value>10</default_value>
- *       <documentation>A parameter that describes the maximal number of iterations the CG method is to take before giving up on a matrix.</documentation>
- *       <pattern>0</pattern>
- *       <pattern_description>[Integer range 1...1000 (inclusive)]</pattern_description>
+ *       <documentation>A parameter that describes the maximal number of
+ * iterations the CG method is to take before giving up on a
+ * matrix.</documentation> <pattern>0</pattern> <pattern_description>[Integer
+ * range 1...1000 (inclusive)]</pattern_description>
  *     </Maximal_20number_20of_20iterations>
  *     <Preconditioner>
  *       <Kind><value>SSOR</value>
  *         <default_value>SSOR</default_value>
- *         <documentation>A string that describes the kind of preconditioner to use.</documentation>
- *         <pattern>1</pattern>
+ *         <documentation>A string that describes the kind of preconditioner to
+ * use.</documentation> <pattern>1</pattern>
  *         <pattern_description>SSOR|Jacobi</pattern_description>
  *       </Kind>
  *       <Relaxation_20factor>
  *         <value>1.0</value>
  *         <default_value>1.0</default_value>
- *         <documentation>The numerical value (between zero and one) for the relaxation factor to use in the preconditioner.</documentation>
+ *         <documentation>The numerical value (between zero and one) for the
+ * relaxation factor to use in the preconditioner.</documentation>
  *         <pattern>2</pattern>
- *         <pattern_description>[Floating point range 0...1 (inclusive)]</pattern_description>
+ *         <pattern_description>[Floating point range 0...1
+ * (inclusive)]</pattern_description>
  *       </Relaxation_20factor>
  *     </Preconditioner>
  *   <ParameterHandler>
@@ -791,7 +790,8 @@ class MultipleParameterLoop;
  *
  *
  * @ingroup input
- * @author Wolfgang Bangerth, October 1997, revised February 1998, 2010, 2011, 2017
+ * @author Wolfgang Bangerth, October 1997, revised February 1998, 2010, 2011,
+ * 2017
  * @author Alberto Sartori, 2015
  * @author David Wells, 2016
  */
@@ -812,7 +812,8 @@ private:
 
 public:
   /**
-   * List of possible output formats used for ParameterHandler::print_parameters().
+   * List of possible output formats used for
+   * ParameterHandler::print_parameters().
    */
   enum OutputStyle
   {
@@ -1008,8 +1009,9 @@ public:
   /**
    * Attach an action to the parameter with name @p entry in the current
    * section. The action needs to be a function-like object that takes the
-   * value of the parameter as a (string) argument. See the general documentation
-   * of this class for a longer description of actions, as well as examples.
+   * value of the parameter as a (string) argument. See the general
+   * documentation of this class for a longer description of actions, as well as
+   * examples.
    *
    * The action is executed in three different circumstances:
    * - With the default value of the parameter with name @p name, at
@@ -1273,7 +1275,8 @@ public:
    * @code
    * \usepackage{imakeidx}
    * \makeindex[name=prmindex, title=Index of run-time parameter entries]
-   * \makeindex[name=prmindexfull, title=Index of run-time parameters with section names]
+   * \makeindex[name=prmindexfull, title=Index of run-time parameters with
+   * section names]
    * @endcode
    * and at the end of the file this:
    * @code

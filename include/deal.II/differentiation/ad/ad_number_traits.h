@@ -176,14 +176,14 @@ namespace Differentiation
       struct ExtractData;
 
       /**
-       * A struct that checks that the data expected to be stored in a specialization
-       * of the ADNumberInfoFromEnum struct has been supplied. By default it is
-       * assumed that the input type does not satisfy the necessary conditions to
-       * construct this class.
+       * A struct that checks that the data expected to be stored in a
+       * specialization of the ADNumberInfoFromEnum struct has been supplied. By
+       * default it is assumed that the input type does not satisfy the
+       * necessary conditions to construct this class.
        *
-       * @tparam ADNumberTrait A class that examined whether it contains the necessary
-       *         information to satisfy the requirements for being an internally
-       *         supported auto-differentiable number.
+       * @tparam ADNumberTrait A class that examined whether it contains the
+       * necessary information to satisfy the requirements for being an
+       * internally supported auto-differentiable number.
        * @tparam T An arbitrary type resulting from the application of
        *         the SFINAE idiom to selectively specialize this class.
        *
@@ -280,7 +280,8 @@ namespace Differentiation
   } // namespace AD
 } // namespace Differentiation
 
-/* --------------------------- inline and template functions and specializations ------------------------- */
+/* --------------------------- inline and template functions and specializations
+ * ------------------------- */
 
 #ifndef DOXYGEN
 
@@ -449,7 +450,8 @@ namespace Differentiation
 
     /**
      * Specialization of the struct for the case when the input template
-     * parameter is a (taped or tapeless) real-valued auto-differentiable number.
+     * parameter is a (taped or tapeless) real-valued auto-differentiable
+     * number.
      */
     template <typename NumberType>
     struct is_real_valued_ad_number<
@@ -461,7 +463,8 @@ namespace Differentiation
 
     /**
      * Specialization of the struct for the case when the input template
-     * parameter is a (taped or tapeless) complex-valued auto-differentiable number.
+     * parameter is a (taped or tapeless) complex-valued auto-differentiable
+     * number.
      */
     template <typename NumberType>
     struct is_complex_valued_ad_number<
@@ -690,8 +693,8 @@ namespace Differentiation
      * the following basic information determine all of the required information
      * and type traits for our helper classes:
      *   - A typedef called @p scalar_type, which defines the scalar or
-     *     floating-point valued counterpart to the auto-differentiable number type.
-     *     This can be real or complex valued.
+     *     floating-point valued counterpart to the auto-differentiable number
+     * type. This can be real or complex valued.
      *   - A typedef called @p derivative_type, which defines the
      *     number type for directional derivatives.
      *   - A boolean called @p is_taped, which defines whether the auto-differentiable
@@ -849,8 +852,8 @@ namespace Differentiation
       }
 
       /**
-     * Extract the derivative value of an auto-differentiable number
-     */
+       * Extract the derivative value of an auto-differentiable number
+       */
       static derivative_type get_directional_derivative(
         const ad_type& x, const unsigned int direction)
       {
@@ -859,9 +862,9 @@ namespace Differentiation
       }
 
       /**
-     * Extract the number of directional derivatives value tracked by
-     * an auto-differentiable number
-     */
+       * Extract the number of directional derivatives value tracked by
+       * an auto-differentiable number
+       */
       static unsigned int n_directional_derivatives(const ad_type& x)
       {
         return internal::ExtractData<ad_type>::n_directional_derivatives(x);
@@ -951,14 +954,16 @@ namespace Differentiation
      * deal with the tricky case of higher-order derivative extraction from
      * AD numbers.
      *
-     * Sacado nests the directional derivatives within Sacado numbers, while Adol-C
-     * does not. So, starting off from a scalar function f(x), the number type resulting
-     * from the computation of a directional derivative f'(x) of that function is a floating
-     * point number for Adol-C number types and Sacado::FAD<double>, but that of a
-     * Sacado::FAD<Sacado::FAD<double>> is a Sacado::FAD<double>.
+     * Sacado nests the directional derivatives within Sacado numbers, while
+     * Adol-C does not. So, starting off from a scalar function f(x), the number
+     * type resulting from the computation of a directional derivative f'(x) of
+     * that function is a floating point number for Adol-C number types and
+     * Sacado::FAD<double>, but that of a Sacado::FAD<Sacado::FAD<double>> is a
+     * Sacado::FAD<double>.
      *
-     * For this reason, when trying to extract higher-order derivatives of a number that
-     * does not support them the input value to this function may be a scalar type.
+     * For this reason, when trying to extract higher-order derivatives of a
+     * number that does not support them the input value to this function may be
+     * a scalar type.
      */
     template <typename ScalarType>
     struct ADNumberTraits<
@@ -975,10 +980,11 @@ namespace Differentiation
       get_directional_derivative(const ScalarType& /*x*/,
                                  const unsigned int /*direction*/)
       {
-        // If the AD drivers are correctly implemented then we should not get here.
-        // This is essentially a dummy for when the ADNumberTypeCode for the original
-        // AD number (from which one is getting a derivative >= 2) is one that specified
-        // Adol-C taped and tapeless numbers, or a non-nested Sacado number.
+        // If the AD drivers are correctly implemented then we should not get
+        // here. This is essentially a dummy for when the ADNumberTypeCode for
+        // the original AD number (from which one is getting a derivative >= 2)
+        // is one that specified Adol-C taped and tapeless numbers, or a
+        // non-nested Sacado number.
         AssertThrow(
           false,
           ExcMessage(

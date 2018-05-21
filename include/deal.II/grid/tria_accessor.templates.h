@@ -37,7 +37,8 @@ namespace parallel
   class Triangulation;
 }
 
-/*------------------------ Functions: TriaAccessorBase ---------------------------*/
+/*------------------------ Functions: TriaAccessorBase
+ * ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
 inline TriaAccessorBase<structdim, dim, spacedim>::TriaAccessorBase(
@@ -357,7 +358,8 @@ TriaAccessorBase<structdim, dim, spacedim>::objects() const
       std::integral_constant<int, structdim>());
 }
 
-/*------------------------ Functions: InvalidAccessor ---------------------------*/
+/*------------------------ Functions: InvalidAccessor
+ * ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
 InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
@@ -738,7 +740,8 @@ namespace internal
       {
         // quads as part of 3d hexes can have non-standard orientation
 
-        //TODO: why is this face_orientation, not line_orientation as in the setter function?
+        // TODO: why is this face_orientation, not line_orientation as in the
+        // setter function?
         return accessor.tria->faces->quads.face_orientation(
           accessor.present_index, line);
       }
@@ -809,19 +812,19 @@ namespace internal
         // forth index: face_rotation: 0: standard,
         // 1: face rotated by 90 degrees
 
-        static const bool bool_table[2][2][2][2] = {
-          {{{true,
-             false}, // lines 0/1, face_orientation=false, face_flip=false, face_rotation=false and true
-            {false,
-             true}}, // lines 0/1, face_orientation=false, face_flip=true, face_rotation=false and true
-           {{true,
-             true}, // lines 0/1, face_orientation=true, face_flip=false, face_rotation=false and true
-            {false,
-             false}}}, // lines 0/1, face_orientation=true, face_flip=true, face_rotation=false and true
+        static const bool bool_table[2][2][2][2]
+          = {{{{true, false},  // lines 0/1, face_orientation=false,
+                               // face_flip=false, face_rotation=false and true
+               {false, true}}, // lines 0/1, face_orientation=false,
+                               // face_flip=true, face_rotation=false and true
+              {{true, true},   // lines 0/1, face_orientation=true,
+                               // face_flip=false, face_rotation=false and true
+               {false, false}}}, // lines 0/1, face_orientation=true,
+                                 // face_flip=true, face_rotation=false and true
 
-          {{{true, true}, // lines 2/3 ...
-            {false, false}},
-           {{true, false}, {false, true}}}};
+             {{{true, true}, // lines 2/3 ...
+               {false, false}},
+              {{true, false}, {false, true}}}};
 
         return (accessor.quad(quad_index)->line_orientation(line_index)
                 == bool_table[std_line_index / 2][accessor.face_orientation(
@@ -1850,7 +1853,7 @@ TriaAccessor<structdim, dim, spacedim>::enclosing_ball() const
   std::array<bool, GeometryInfo<structdim>::vertices_per_cell>
     is_initial_guess_vertex;
 
-  //First let all the vertices be outside
+  // First let all the vertices be outside
   std::fill(
     is_initial_guess_vertex.begin(), is_initial_guess_vertex.end(), false);
 
@@ -2025,7 +2028,8 @@ TriaAccessor<structdim, dim, spacedim>::is_translation_of(
   return is_translation;
 }
 
-/*------------------------ Functions: TriaAccessor<0,dim,spacedim> -----------------------*/
+/*------------------------ Functions: TriaAccessor<0,dim,spacedim>
+ * -----------------------*/
 
 template <int dim, int spacedim>
 inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
@@ -2307,7 +2311,8 @@ TriaAccessor<0, dim, spacedim>::used() const
   return tria->vertex_used(global_vertex_index);
 }
 
-/*------------------------ Functions: TriaAccessor<0,1,spacedim> -----------------------*/
+/*------------------------ Functions: TriaAccessor<0,1,spacedim>
+ * -----------------------*/
 
 template <int spacedim>
 inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
@@ -2329,10 +2334,11 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
 {
   // in general, calling this constructor should yield an error -- users should
   // instead call the one immediately above. however, if you create something
-  // like Triangulation<1>::face_iterator() then this calls the default constructor
-  // of the iterator which calls the accessor with argument list (0,-2,-2,0), so
-  // in this particular case accept this call and create an object that corresponds
-  // to the default constructed (invalid) vertex accessor
+  // like Triangulation<1>::face_iterator() then this calls the default
+  // constructor of the iterator which calls the accessor with argument list
+  // (0,-2,-2,0), so in this particular case accept this call and create an
+  // object that corresponds to the default constructed (invalid) vertex
+  // accessor
   (void) level;
   (void) index;
   Assert((level == -2) && (index == -2), ExcInternalError());
@@ -2662,7 +2668,8 @@ TriaAccessor<0, 1, spacedim>::used() const
   return tria->vertex_used(global_vertex_index);
 }
 
-/*------------------------ Functions: CellAccessor<dim,spacedim> -----------------------*/
+/*------------------------ Functions: CellAccessor<dim,spacedim>
+ * -----------------------*/
 
 template <int dim, int spacedim>
 inline CellAccessor<dim, spacedim>::CellAccessor(

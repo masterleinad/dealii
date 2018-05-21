@@ -177,7 +177,8 @@ namespace Threads
 #  endif
   };
 
-  // ----------------- inline and template functions ----------------------------
+  // ----------------- inline and template functions
+  // ----------------------------
 
   template <typename T>
   inline ThreadLocalStorage<T>::ThreadLocalStorage(const T& t) : data(t)

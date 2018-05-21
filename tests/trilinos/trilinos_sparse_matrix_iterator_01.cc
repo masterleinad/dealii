@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// TrilinosWrappers::SparseMatrix::const_iterator::operator++(int) was declared but not defined
-// for some time, leading to a linker error
+// TrilinosWrappers::SparseMatrix::const_iterator::operator++(int) was declared
+// but not defined for some time, leading to a linker error
 
 #include "../tests.h"
 #include <deal.II/lac/trilinos_sparse_matrix.h>

@@ -13,7 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-//TODO: [GK] Produce some useful output!
+// TODO: [GK] Produce some useful output!
 
 #include "../testmatrix.h"
 #include "../tests.h"

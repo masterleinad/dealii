@@ -1136,7 +1136,8 @@ namespace BlockMatrixIterators
 
   //   template <class BlockMatrixType>
   //   inline
-  //   Accessor<BlockMatrixType, true>::Accessor (const Accessor<BlockMatrixType, true>& other)
+  //   Accessor<BlockMatrixType, true>::Accessor (const
+  //   Accessor<BlockMatrixType, true>& other)
   //                :
   //                matrix(other.matrix),
   //                base_iterator(other.base_iterator)

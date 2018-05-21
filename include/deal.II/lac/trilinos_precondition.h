@@ -1601,8 +1601,8 @@ namespace TrilinosWrappers
    * except for the higher_order_elements parameter which does not exist in
    * PreconditionerAMGMueLu.
    *
-   * @note This class requires Trilinos 11.14 or higher. At the moment 64bit-indices
-   * are not supported.
+   * @note This class requires Trilinos 11.14 or higher. At the moment
+   * 64bit-indices are not supported.
    *
    * @warning This interface should not be considered as stable.
    *
@@ -1908,7 +1908,8 @@ namespace TrilinosWrappers
       const override;
   };
 
-  // -------------------------- inline and template functions ----------------------
+  // -------------------------- inline and template functions
+  // ----------------------
 
 #    ifndef DOXYGEN
 
@@ -2063,7 +2064,9 @@ DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_TRILINOS
 
-/*----------------------------   trilinos_precondition.h     ---------------------------*/
+/*----------------------------   trilinos_precondition.h
+ * ---------------------------*/
 
 #endif
-/*----------------------------   trilinos_precondition.h     ---------------------------*/
+/*----------------------------   trilinos_precondition.h
+ * ---------------------------*/

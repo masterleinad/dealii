@@ -38,9 +38,9 @@ Mapping<dim, spacedim>::project_real_point_to_unit_point_on_face(
   const unsigned int&                                         face_no,
   const Point<spacedim>&                                      p) const
 {
-  //The function doesn't make physical sense for dim=1
+  // The function doesn't make physical sense for dim=1
   Assert(dim > 1, ExcNotImplemented());
-  //Not implemented for higher dimensions
+  // Not implemented for higher dimensions
   Assert(dim <= 3, ExcNotImplemented());
 
   Point<dim> unit_cell_pt = transform_real_to_unit_cell(cell, p);
@@ -67,7 +67,8 @@ Mapping<dim, spacedim>::project_real_point_to_unit_point_on_face(
   return unit_face_pt;
 }
 
-/*------------------------------ InternalDataBase ------------------------------*/
+/*------------------------------ InternalDataBase
+ * ------------------------------*/
 
 template <int dim, int spacedim>
 Mapping<dim, spacedim>::InternalDataBase::InternalDataBase()

@@ -13,7 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-//check method FullMatrix::triple_product
+// check method FullMatrix::triple_product
 
 #include "../tests.h"
 

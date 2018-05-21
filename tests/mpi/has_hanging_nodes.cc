@@ -84,9 +84,9 @@ test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
     Triangulation<dim> triangulation1;
     Triangulation<dim> triangulation2;
     GridGenerator::hyper_cube(
-      triangulation1, -1, 0); //create a square [-1,0]^d domain
+      triangulation1, -1, 0); // create a square [-1,0]^d domain
     GridGenerator::hyper_cube(
-      triangulation2, -1, 0); //create a square [-1,0]^d domain
+      triangulation2, -1, 0); // create a square [-1,0]^d domain
     Point<dim> shift_vector;
     shift_vector[0] = 1.0;
     GridTools::shift(shift_vector, triangulation2);

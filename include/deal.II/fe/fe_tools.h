@@ -292,7 +292,8 @@ namespace FETools
    *   that returns a scalar.
    * - That the finite element has exactly @p dim vector components.
    * - That the function $f_j$ is given by whatever the element implements
-   *   through the FiniteElement::convert_generalized_support_point_values_to_dof_values()
+   *   through the
+   * FiniteElement::convert_generalized_support_point_values_to_dof_values()
    *   function.
    *
    * @param fe The finite element for which the operations above are to be
@@ -799,8 +800,9 @@ namespace FETools
    * on these patches, but it is easy to see that on patches that are children
    * of previously treated patches, the operation is now the identity operation
    * (since it interpolates from the children of the current patch a function
-   * that had previously been interpolated to these children from an even coarser
-   * patch). Consequently, this does not alter the solution vector any more.
+   * that had previously been interpolated to these children from an even
+   * coarser patch). Consequently, this does not alter the solution vector any
+   * more.
    *
    * The name of the function originates from the fact that it can be used to
    * construct a representation of a function of higher polynomial degree on a
@@ -1016,8 +1018,8 @@ namespace FETools
 
     /**
      * Same as above for an arbitrary number of parameters of type
-     * <code>std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int></code>
-     * and <code>do_tensor_product = true</code>.
+     * <code>std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned
+     * int></code> and <code>do_tensor_product = true</code>.
      */
     template <int dim, int spacedim>
     FiniteElementData<dim>
@@ -1062,7 +1064,8 @@ namespace FETools
 
     /**
      * Same as above for an arbitrary number of parameters of type
-     * <code>std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int></code>.
+     * <code>std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned
+     * int></code>.
      */
     template <int dim, int spacedim>
     std::vector<bool>
@@ -1124,8 +1127,8 @@ namespace FETools
 
     /**
      * Same as above for an arbitrary number of parameters of type
-     * <code>std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int></code>
-     * and <code>do_tensor_product = true</code>.
+     * <code>std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned
+     * int></code> and <code>do_tensor_product = true</code>.
      */
     template <int dim, int spacedim>
     std::vector<ComponentMask>

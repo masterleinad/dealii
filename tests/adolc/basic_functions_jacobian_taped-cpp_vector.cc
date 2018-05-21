@@ -19,7 +19,8 @@
 //  - Update to using C++ data structures where possible
 //  - Test that the tracing of active dependent/independent variables still
 //    works with these structures
-// Adapted from https://github.com/Homebrew/homebrew-science/blob/master/adol-c.rb
+// Adapted from
+// https://github.com/Homebrew/homebrew-science/blob/master/adol-c.rb
 
 #include "../tests.h"
 #include <adolc/adouble.h>

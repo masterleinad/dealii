@@ -145,7 +145,7 @@ namespace Step40
                       dof_handler.n_locally_owned_dofs());
     system_rhs = 0;
 
-    //Periodic Conditions
+    // Periodic Conditions
     constraints.clear();
     constraints.reinit(locally_relevant_dofs);
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
@@ -340,7 +340,8 @@ namespace Step40
     for(unsigned int i = 0; i < cycle; i++)
       n_points *= 2;
 
-    //don't test exactly at the support points, since point_value is not stable there
+    // don't test exactly at the support points, since point_value is not stable
+    // there
     const double eps = 1. / (16. * n_points);
 
     for(unsigned int i = 1; i < n_points; i++)
@@ -385,7 +386,8 @@ namespace Step40
     for(unsigned int i = 0; i < cycle; i++)
       n_points *= 2;
 
-    //don't test exactly at the support points, since point_value is not stable there
+    // don't test exactly at the support points, since point_value is not stable
+    // there
     const double eps = 1. / (16. * n_points);
 
     for(unsigned int i = 1; i < n_points; i++)
@@ -443,7 +445,7 @@ namespace Step40
         }
   }
 
-  //only needed for graphical output
+  // only needed for graphical output
   template <int dim>
   void
   LaplaceProblem<dim>::output_results(const unsigned int cycle) const
@@ -530,7 +532,7 @@ namespace Step40
         setup_system();
         assemble_system();
         solve();
-        //output_results (cycle);
+        // output_results (cycle);
         deallog.push(Utilities::int_to_string(dof_handler.n_dofs(), 5));
         check_periodicity(cycle);
         deallog.pop();

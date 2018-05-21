@@ -122,8 +122,9 @@ FE_Q_iso_Q1<dim, spacedim>::compare_for_face_domination(
         }
       else
         {
-          // the FE_Nothing has no degrees of freedom and it is typically used in
-          // a context where we don't require any continuity along the interface
+          // the FE_Nothing has no degrees of freedom and it is typically used
+          // in a context where we don't require any continuity along the
+          // interface
           return FiniteElementDomination::no_requirements;
         }
     }

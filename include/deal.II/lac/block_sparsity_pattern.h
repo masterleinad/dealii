@@ -744,7 +744,8 @@ namespace TrilinosWrappers
 
 #endif
 
-/*---------------------- Template functions -----------------------------------*/
+/*---------------------- Template functions
+ * -----------------------------------*/
 
 template <typename SparsityPatternType>
 inline SparsityPatternType&
@@ -939,7 +940,7 @@ BlockDynamicSparsityPattern::column_number(const size_type    row,
   Assert(index < row_length(row), ExcIndexRange(index, 0, row_length(row)));
 
   size_type c             = 0;
-  size_type block_columns = 0; //sum of n_cols for all blocks to the left
+  size_type block_columns = 0; // sum of n_cols for all blocks to the left
   for(unsigned int b = 0; b < columns; ++b)
     {
       unsigned int rowlen

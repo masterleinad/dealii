@@ -13,7 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-// Test LinearAlgebra::distributed::Vector::operator=(TrilinosWrappers::MPI::BlockVector&)
+// Test
+// LinearAlgebra::distributed::Vector::operator=(TrilinosWrappers::MPI::BlockVector&)
 
 #include "../tests.h"
 #include <deal.II/base/index_set.h>

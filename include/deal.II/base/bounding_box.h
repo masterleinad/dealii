@@ -35,12 +35,14 @@ enum class NeighborType
   not_neighbors = 0,
 
   /**
-   * simple neighbors: the boxes intersect with an intersection of dimension at most spacedim - 2
+   * simple neighbors: the boxes intersect with an intersection of dimension at
+   * most spacedim - 2
    */
   simple_neighbors = 1,
 
   /**
-   * attached neighbors: neighbors with an intersection of dimension > spacedim - 2
+   * attached neighbors: neighbors with an intersection of dimension > spacedim
+   * - 2
    */
   attached_neighbors = 2,
 
@@ -153,7 +155,8 @@ private:
   std::pair<Point<spacedim, Number>, Point<spacedim, Number>> boundary_points;
 };
 
-/*------------------------------- Inline functions: BoundingBox ---------------------------*/
+/*------------------------------- Inline functions: BoundingBox
+ * ---------------------------*/
 
 #ifndef DOXYGEN
 
@@ -162,7 +165,7 @@ inline BoundingBox<spacedim, Number>::BoundingBox(
   const std::pair<Point<spacedim, Number>, Point<spacedim, Number>>&
     boundary_points)
 {
-  //We check the Bounding Box is not degenerate
+  // We check the Bounding Box is not degenerate
   for(unsigned int i = 0; i < spacedim; ++i)
     Assert(
       boundary_points.first[i] <= boundary_points.second[i],

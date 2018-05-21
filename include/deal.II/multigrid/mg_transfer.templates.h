@@ -368,7 +368,8 @@ MGLevelGlobalTransfer<VectorType>::set_component_to_block_map(
   component_to_block_map = map;
 }
 
-/* --------- MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector> ------- */
+/* --------- MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector> -------
+ */
 
 template <typename Number>
 template <int dim, typename Number2, int spacedim>

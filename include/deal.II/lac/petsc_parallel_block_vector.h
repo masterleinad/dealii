@@ -284,7 +284,8 @@ namespace PETScWrappers
 
     /*@}*/
 
-    /*----------------------- Inline functions ----------------------------------*/
+    /*----------------------- Inline functions
+     * ----------------------------------*/
 
     inline BlockVector::BlockVector(const unsigned int n_blocks,
                                     const MPI_Comm&    communicator,

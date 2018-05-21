@@ -136,7 +136,7 @@ namespace FEValuesViews
     Assert(component < fe.n_components(),
            ExcIndexRange(component, 0, fe.n_components()));
 
-    //TODO: we'd like to use the fields with the same name as these
+    // TODO: we'd like to use the fields with the same name as these
     // variables from FEValuesBase, but they aren't initialized yet
     // at the time we get here, so re-create it all
     const std::vector<unsigned int> shape_function_to_row_table
@@ -187,7 +187,7 @@ namespace FEValuesViews
            ExcIndexRange(
              first_vector_component + spacedim - 1, 0, fe.n_components()));
 
-    //TODO: we'd like to use the fields with the same name as these
+    // TODO: we'd like to use the fields with the same name as these
     // variables from FEValuesBase, but they aren't initialized yet
     // at the time we get here, so re-create it all
     const std::vector<unsigned int> shape_function_to_row_table
@@ -276,7 +276,7 @@ namespace FEValuesViews
                + dealii::SymmetricTensor<2, dim>::n_independent_components - 1,
              0,
              fe.n_components()));
-    //TODO: we'd like to use the fields with the same name as these
+    // TODO: we'd like to use the fields with the same name as these
     // variables from FEValuesBase, but they aren't initialized yet
     // at the time we get here, so re-create it all
     const std::vector<unsigned int> shape_function_to_row_table
@@ -367,7 +367,7 @@ namespace FEValuesViews
     Assert(first_tensor_component + dim * dim - 1 < fe.n_components(),
            ExcIndexRange(
              first_tensor_component + dim * dim - 1, 0, fe.n_components()));
-    //TODO: we'd like to use the fields with the same name as these
+    // TODO: we'd like to use the fields with the same name as these
     // variables from FEValuesBase, but they aren't initialized yet
     // at the time we get here, so re-create it all
     const std::vector<unsigned int> shape_function_to_row_table
@@ -470,8 +470,8 @@ namespace FEValuesViews
              .is_nonzero_shape_function_component)
           {
             const Number& value = dof_values[shape_function];
-            // For auto-differentiable numbers, the fact that a DoF value is zero
-            // does not imply that its derivatives are zero as well. So we
+            // For auto-differentiable numbers, the fact that a DoF value is
+            // zero does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
             if(dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
@@ -513,8 +513,8 @@ namespace FEValuesViews
              .is_nonzero_shape_function_component)
           {
             const Number& value = dof_values[shape_function];
-            // For auto-differentiable numbers, the fact that a DoF value is zero
-            // does not imply that its derivatives are zero as well. So we
+            // For auto-differentiable numbers, the fact that a DoF value is
+            // zero does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
             if(dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
@@ -554,8 +554,8 @@ namespace FEValuesViews
              .is_nonzero_shape_function_component)
           {
             const Number& value = dof_values[shape_function];
-            // For auto-differentiable numbers, the fact that a DoF value is zero
-            // does not imply that its derivatives are zero as well. So we
+            // For auto-differentiable numbers, the fact that a DoF value is
+            // zero does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
             if(dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
@@ -878,9 +878,9 @@ namespace FEValuesViews
                     continue;
 
                   const Number& value = dof_values[shape_function];
-                  // For auto-differentiable numbers, the fact that a DoF value is zero
-                  // does not imply that its derivatives are zero as well. So we
-                  // can't filter by value for these number types.
+                  // For auto-differentiable numbers, the fact that a DoF value
+                  // is zero does not imply that its derivatives are zero as
+                  // well. So we can't filter by value for these number types.
                   if(dealii::internal::CheckForZero<Number>::value(value)
                      == true)
                     continue;
@@ -911,9 +911,10 @@ namespace FEValuesViews
                             += value * (*shape_gradient_ptr++)[0];
                     }
                   else
-                    // we have multiple non-zero components in the shape functions. not
-                    // all of them must necessarily be within the 2-component window
-                    // this FEValuesViews::Vector object considers, however.
+                    // we have multiple non-zero components in the shape
+                    // functions. not all of them must necessarily be within the
+                    // 2-component window this FEValuesViews::Vector object
+                    // considers, however.
                     {
                       if(shape_function_data[shape_function]
                            .is_nonzero_shape_function_component[0])
@@ -963,9 +964,9 @@ namespace FEValuesViews
                     continue;
 
                   const Number& value = dof_values[shape_function];
-                  // For auto-differentiable numbers, the fact that a DoF value is zero
-                  // does not imply that its derivatives are zero as well. So we
-                  // can't filter by value for these number types.
+                  // For auto-differentiable numbers, the fact that a DoF value
+                  // is zero does not imply that its derivatives are zero as
+                  // well. So we can't filter by value for these number types.
                   if(dealii::internal::CheckForZero<Number>::value(value)
                      == true)
                     continue;
@@ -1028,9 +1029,10 @@ namespace FEValuesViews
                     }
 
                   else
-                    // we have multiple non-zero components in the shape functions. not
-                    // all of them must necessarily be within the 3-component window
-                    // this FEValuesViews::Vector object considers, however.
+                    // we have multiple non-zero components in the shape
+                    // functions. not all of them must necessarily be within the
+                    // 3-component window this FEValuesViews::Vector object
+                    // considers, however.
                     {
                       if(shape_function_data[shape_function]
                            .is_nonzero_shape_function_component[0])
@@ -1566,7 +1568,8 @@ namespace FEValuesViews
     AssertDimension(fe_function.size(),
                     fe_values->present_cell->n_dofs_for_dof_handler());
 
-    // get function values of dofs on this cell and call internal worker function
+    // get function values of dofs on this cell and call internal worker
+    // function
     dealii::Vector<typename InputVector::value_type> dof_values(
       fe_values->dofs_per_cell);
     fe_values->present_cell->get_interpolated_dof_values(fe_function,
@@ -2521,9 +2524,9 @@ namespace internal
             dealii::FEValuesViews::Scalar<dim, spacedim>(fe_values, component);
         }
 
-      // compute number of vectors that we can fit into this finite element. note
-      // that this is based on the dimensionality 'dim' of the
-      // manifold, not 'spacedim' of the output vector
+      // compute number of vectors that we can fit into this finite element.
+      // note that this is based on the dimensionality 'dim' of the manifold,
+      // not 'spacedim' of the output vector
       const unsigned int n_vectors
         = (fe.n_components() >= spacedim ? fe.n_components() - spacedim + 1 :
                                            0);
@@ -2618,7 +2621,8 @@ public:
                               Vector<IndexSet::value_type>& out) const = 0;
 };
 
-/* ---------------- classes derived from FEValuesBase<dim,spacedim>::CellIteratorBase --------- */
+/* ---------------- classes derived from
+ * FEValuesBase<dim,spacedim>::CellIteratorBase --------- */
 
 /**
  * Implementation of derived classes of the CellIteratorBase
@@ -2675,17 +2679,18 @@ private:
  * interface. See there for a description of the use of
  * these classes.
  *
- * This class is basically a specialization of the general template for iterators into
- * Triangulation objects (but since C++ does not allow something like this for nested
- * classes, it runs under a separate name). Since these do not implement the interface
- * that we would like to call, the functions of this class cannot be implemented
- * meaningfully. However, most functions of the FEValues class do not make any use of
- * degrees of freedom at all, so it should be possible to call FEValues::reinit() with a tria
- * iterator only; this class makes this possible, but whenever one of the functions
- * of FEValues tries to call any of the functions of this class, an exception will be
- * raised reminding the user that if she wants to use these features, then the
- * FEValues object has to be reinitialized with a cell iterator that allows to
- * extract degree of freedom information.
+ * This class is basically a specialization of the general template for
+ * iterators into Triangulation objects (but since C++ does not allow something
+ * like this for nested classes, it runs under a separate name). Since these do
+ * not implement the interface that we would like to call, the functions of this
+ * class cannot be implemented meaningfully. However, most functions of the
+ * FEValues class do not make any use of degrees of freedom at all, so it should
+ * be possible to call FEValues::reinit() with a tria iterator only; this class
+ * makes this possible, but whenever one of the functions of FEValues tries to
+ * call any of the functions of this class, an exception will be raised
+ * reminding the user that if she wants to use these features, then the FEValues
+ * object has to be reinitialized with a cell iterator that allows to extract
+ * degree of freedom information.
  *
  * @author Wolfgang Bangerth, 2003
  */
@@ -2735,8 +2740,8 @@ private:
 
   /**
    * String to be displayed whenever one of the functions of this class is
-   * called. Make it a static member variable, since we show the same message for
-   * all member functions.
+   * called. Make it a static member variable, since we show the same message
+   * for all member functions.
    */
   static const char* const message_string;
 };
@@ -4614,7 +4619,8 @@ FEFaceValues<dim, spacedim>::do_reinit(const unsigned int face_no)
                                      this->finite_element_output);
 }
 
-/*------------------------------- FESubFaceValues -------------------------------*/
+/*------------------------------- FESubFaceValues
+ * -------------------------------*/
 
 template <int dim, int spacedim>
 const unsigned int FESubfaceValues<dim, spacedim>::dimension;

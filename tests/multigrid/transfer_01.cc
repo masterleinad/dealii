@@ -13,7 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-//TODO:[GK] Add checks for RT again!
+// TODO:[GK] Add checks for RT again!
 
 #include "../tests.h"
 #include <deal.II/base/mg_level_object.h>

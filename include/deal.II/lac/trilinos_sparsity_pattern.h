@@ -1225,7 +1225,8 @@ namespace TrilinosWrappers
     friend class SparsityPatternIterators::Iterator;
   };
 
-  // -------------------------- inline and template functions ----------------------
+  // -------------------------- inline and template functions
+  // ----------------------
 
 #    ifndef DOXYGEN
 
