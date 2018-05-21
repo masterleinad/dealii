@@ -39,18 +39,18 @@ check_parallelepiped(std::ofstream& logfile)
   switch(dim)
     {
       case 1:
-        edges[0][0] = -0.5;
+        edges[0][0]= -0.5;
         break;
 
       case 2:
-        edges[0][1] = 0.5;
-        edges[1][0] = 0.5;
+        edges[0][1]= 0.5;
+        edges[1][0]= 0.5;
         break;
 
       case 3:
-        edges[0][0] = 1.0;
-        edges[1][1] = 1.0;
-        edges[2][2] = -1.0;
+        edges[0][0]= 1.0;
+        edges[1][1]= 1.0;
+        edges[2][2]= -1.0;
         break;
 
       default:

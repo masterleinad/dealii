@@ -22,10 +22,10 @@
 void
 test()
 {
-  unsigned int          degree1 = 3;
+  unsigned int          degree1= 3;
   Polynomials::Legendre p1(degree1);
 
-  unsigned int          degree2 = 5;
+  unsigned int          degree2= 5;
   Polynomials::Legendre p2(degree2);
 
   verify(p1, p2);

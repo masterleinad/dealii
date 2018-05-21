@@ -91,7 +91,7 @@ namespace Step12
     virtual void
     value_list(const std::vector<Point<dim>>& points,
                std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               const unsigned int             component= 0) const override;
   };
 
   // Given the flow direction, the inflow boundary of the unit square
@@ -108,12 +108,12 @@ namespace Step12
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < values.size(); ++i)
+    for(unsigned int i= 0; i < values.size(); ++i)
       {
         if(points[i](0) < 0.5)
-          values[i] = 1.;
+          values[i]= 1.;
         else
-          values[i] = 0.;
+          values[i]= 0.;
       }
   }
 
@@ -129,9 +129,9 @@ namespace Step12
     Assert(dim >= 2, ExcNotImplemented());
 
     Point<dim> wind_field;
-    wind_field(0) = -p(1);
-    wind_field(1) = p(0);
-    wind_field /= wind_field.norm();
+    wind_field(0)= -p(1);
+    wind_field(1)= p(0);
+    wind_field/= wind_field.norm();
 
     return wind_field;
   }
@@ -282,7 +282,7 @@ namespace Step12
     // formula with number of points one higher than the polynomial degree
     // used. Since the quadratures for cells, boundary and interior faces can
     // be selected independently, we have to hand over this value three times.
-    const unsigned int n_gauss_points = dof_handler.get_fe().degree + 1;
+    const unsigned int n_gauss_points= dof_handler.get_fe().degree + 1;
     info_box.initialize_gauss_quadrature(
       n_gauss_points, n_gauss_points, n_gauss_points);
 
@@ -348,25 +348,25 @@ namespace Step12
     // First, let us retrieve some of the objects used here from @p info. Note
     // that these objects can handle much more complex structures, thus the
     // access here looks more complicated than might seem necessary.
-    const FEValuesBase<dim>&   fe_values    = info.fe_values();
-    FullMatrix<double>&        local_matrix = dinfo.matrix(0).matrix;
-    const std::vector<double>& JxW          = fe_values.get_JxW_values();
+    const FEValuesBase<dim>&   fe_values   = info.fe_values();
+    FullMatrix<double>&        local_matrix= dinfo.matrix(0).matrix;
+    const std::vector<double>& JxW         = fe_values.get_JxW_values();
 
     // With these objects, we continue local integration like always. First,
     // we loop over the quadrature points and compute the advection vector in
     // the current point.
-    for(unsigned int point = 0; point < fe_values.n_quadrature_points; ++point)
+    for(unsigned int point= 0; point < fe_values.n_quadrature_points; ++point)
       {
         const Tensor<1, dim> beta_at_q_point
           = beta(fe_values.quadrature_point(point));
 
         // We solve a homogeneous equation, thus no right hand side shows up
         // in the cell term.  What's left is integrating the matrix entries.
-        for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < fe_values.dofs_per_cell; ++j)
-            local_matrix(i, j)
-              += -beta_at_q_point * fe_values.shape_grad(i, point)
-                 * fe_values.shape_value(j, point) * JxW[point];
+        for(unsigned int i= 0; i < fe_values.dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < fe_values.dofs_per_cell; ++j)
+            local_matrix(i, j)+= -beta_at_q_point
+                                 * fe_values.shape_grad(i, point)
+                                 * fe_values.shape_value(j, point) * JxW[point];
       }
   }
 
@@ -377,11 +377,11 @@ namespace Step12
   void
   AdvectionProblem<dim>::integrate_boundary_term(DoFInfo& dinfo, CellInfo& info)
   {
-    const FEValuesBase<dim>& fe_face_values = info.fe_values();
-    FullMatrix<double>&      local_matrix   = dinfo.matrix(0).matrix;
-    Vector<double>&          local_vector   = dinfo.vector(0).block(0);
+    const FEValuesBase<dim>& fe_face_values= info.fe_values();
+    FullMatrix<double>&      local_matrix  = dinfo.matrix(0).matrix;
+    Vector<double>&          local_vector  = dinfo.vector(0).block(0);
 
-    const std::vector<double>&         JxW = fe_face_values.get_JxW_values();
+    const std::vector<double>&         JxW= fe_face_values.get_JxW_values();
     const std::vector<Tensor<1, dim>>& normals
       = fe_face_values.get_normal_vectors();
 
@@ -390,22 +390,22 @@ namespace Step12
     static BoundaryValues<dim> boundary_function;
     boundary_function.value_list(fe_face_values.get_quadrature_points(), g);
 
-    for(unsigned int point = 0; point < fe_face_values.n_quadrature_points;
+    for(unsigned int point= 0; point < fe_face_values.n_quadrature_points;
         ++point)
       {
         const double beta_dot_n
           = beta(fe_face_values.quadrature_point(point)) * normals[point];
         if(beta_dot_n > 0)
-          for(unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
+          for(unsigned int i= 0; i < fe_face_values.dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < fe_face_values.dofs_per_cell; ++j)
               local_matrix(i, j)
                 += beta_dot_n * fe_face_values.shape_value(j, point)
                    * fe_face_values.shape_value(i, point) * JxW[point];
         else
-          for(unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
-            local_vector(i) += -beta_dot_n * g[point]
-                               * fe_face_values.shape_value(i, point)
-                               * JxW[point];
+          for(unsigned int i= 0; i < fe_face_values.dofs_per_cell; ++i)
+            local_vector(i)+= -beta_dot_n * g[point]
+                              * fe_face_values.shape_value(i, point)
+                              * JxW[point];
       }
   }
 
@@ -421,11 +421,11 @@ namespace Step12
   {
     // For quadrature points, weights, etc., we use the FEValuesBase object of
     // the first argument.
-    const FEValuesBase<dim>& fe_face_values = info1.fe_values();
+    const FEValuesBase<dim>& fe_face_values= info1.fe_values();
 
     // For additional shape functions, we have to ask the neighbors
     // FEValuesBase.
-    const FEValuesBase<dim>& fe_face_values_neighbor = info2.fe_values();
+    const FEValuesBase<dim>& fe_face_values_neighbor= info2.fe_values();
 
     // Then we get references to the four local matrices. The letters u and v
     // refer to trial and test functions, respectively. The %numbers indicate
@@ -433,20 +433,20 @@ namespace Step12
     // in each info object refer to the test functions on the respective
     // cell. The first matrix contains the interior couplings of that cell,
     // while the second contains the couplings between cells.
-    FullMatrix<double>& u1_v1_matrix = dinfo1.matrix(0, false).matrix;
-    FullMatrix<double>& u2_v1_matrix = dinfo1.matrix(0, true).matrix;
-    FullMatrix<double>& u1_v2_matrix = dinfo2.matrix(0, true).matrix;
-    FullMatrix<double>& u2_v2_matrix = dinfo2.matrix(0, false).matrix;
+    FullMatrix<double>& u1_v1_matrix= dinfo1.matrix(0, false).matrix;
+    FullMatrix<double>& u2_v1_matrix= dinfo1.matrix(0, true).matrix;
+    FullMatrix<double>& u1_v2_matrix= dinfo2.matrix(0, true).matrix;
+    FullMatrix<double>& u2_v2_matrix= dinfo2.matrix(0, false).matrix;
 
     // Here, following the previous functions, we would have the local right
     // hand side vectors. Fortunately, the interface terms only involve the
     // solution and the right hand side does not receive any contributions.
 
-    const std::vector<double>&         JxW = fe_face_values.get_JxW_values();
+    const std::vector<double>&         JxW= fe_face_values.get_JxW_values();
     const std::vector<Tensor<1, dim>>& normals
       = fe_face_values.get_normal_vectors();
 
-    for(unsigned int point = 0; point < fe_face_values.n_quadrature_points;
+    for(unsigned int point= 0; point < fe_face_values.n_quadrature_points;
         ++point)
       {
         const double beta_dot_n
@@ -454,17 +454,17 @@ namespace Step12
         if(beta_dot_n > 0)
           {
             // This term we've already seen:
-            for(unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
+            for(unsigned int i= 0; i < fe_face_values.dofs_per_cell; ++i)
+              for(unsigned int j= 0; j < fe_face_values.dofs_per_cell; ++j)
                 u1_v1_matrix(i, j)
                   += beta_dot_n * fe_face_values.shape_value(j, point)
                      * fe_face_values.shape_value(i, point) * JxW[point];
 
             // We additionally assemble the term $(\beta\cdot n u,\hat
             // v)_{\partial \kappa_+}$,
-            for(unsigned int k = 0; k < fe_face_values_neighbor.dofs_per_cell;
+            for(unsigned int k= 0; k < fe_face_values_neighbor.dofs_per_cell;
                 ++k)
-              for(unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
+              for(unsigned int j= 0; j < fe_face_values.dofs_per_cell; ++j)
                 u1_v2_matrix(k, j)
                   += -beta_dot_n * fe_face_values.shape_value(j, point)
                      * fe_face_values_neighbor.shape_value(k, point)
@@ -473,8 +473,8 @@ namespace Step12
         else
           {
             // This one we've already seen, too:
-            for(unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
-              for(unsigned int l = 0; l < fe_face_values_neighbor.dofs_per_cell;
+            for(unsigned int i= 0; i < fe_face_values.dofs_per_cell; ++i)
+              for(unsigned int l= 0; l < fe_face_values_neighbor.dofs_per_cell;
                   ++l)
                 u2_v1_matrix(i, l)
                   += beta_dot_n * fe_face_values_neighbor.shape_value(l, point)
@@ -482,9 +482,9 @@ namespace Step12
 
             // And this is another new one: $(\beta\cdot n \hat u,\hat
             // v)_{\partial \kappa_-}$:
-            for(unsigned int k = 0; k < fe_face_values_neighbor.dofs_per_cell;
+            for(unsigned int k= 0; k < fe_face_values_neighbor.dofs_per_cell;
                 ++k)
-              for(unsigned int l = 0; l < fe_face_values_neighbor.dofs_per_cell;
+              for(unsigned int l= 0; l < fe_face_values_neighbor.dofs_per_cell;
                   ++l)
                 u2_v2_matrix(k, l)
                   += -beta_dot_n * fe_face_values_neighbor.shape_value(l, point)
@@ -559,8 +559,8 @@ namespace Step12
     // and they are cell-wise scaled by the factor $h^{1+d/2}$
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
-    for(unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+      endc= dof_handler.end();
+    for(unsigned int cell_no= 0; cell != endc; ++cell, ++cell_no)
       gradient_indicator(cell_no)
         *= std::pow(cell->diameter(), 1 + 1.0 * dim / 2);
 
@@ -579,7 +579,7 @@ namespace Step12
   {
     // First write the grid in eps format.
     {
-      const std::string filename = "grid-" + std::to_string(cycle) + ".eps";
+      const std::string filename= "grid-" + std::to_string(cycle) + ".eps";
       deallog << "Writing grid to <" << filename << ">" << std::endl;
       std::ofstream eps_output(filename);
 
@@ -589,7 +589,7 @@ namespace Step12
 
     // Then output the solution in gnuplot format.
     {
-      const std::string filename = "sol-" + std::to_string(cycle) + ".gnuplot";
+      const std::string filename= "sol-" + std::to_string(cycle) + ".gnuplot";
       deallog << "Writing solution to <" << filename << ">" << std::endl;
       std::ofstream gnuplot_output(filename);
 
@@ -608,7 +608,7 @@ namespace Step12
   void
   AdvectionProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 6; ++cycle)
+    for(unsigned int cycle= 0; cycle < 6; ++cycle)
       {
         deallog << "Cycle " << cycle << std::endl;
 

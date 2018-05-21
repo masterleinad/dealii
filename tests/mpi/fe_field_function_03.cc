@@ -77,7 +77,7 @@ test()
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
   TrilinosWrappers::MPI::Vector x_rel(relevant_set, MPI_COMM_WORLD);
-  x_rel = interpolated;
+  x_rel= interpolated;
 
   typename Functions::
     FEFieldFunction<dim, DoFHandler<dim>, TrilinosWrappers::MPI::Vector>
@@ -87,7 +87,7 @@ test()
   std::vector<Point<2>> points;
   points.push_back(p);
 
-  for(int i = 0;; ++i)
+  for(int i= 0;; ++i)
     {
       try
         {
@@ -101,7 +101,7 @@ test()
           else if(i == 1)
             {
               deallog << "value:" << std::endl;
-              double out = field_func.value(p);
+              double out= field_func.value(p);
               deallog << "  OK: " << out << std::endl;
             }
           else if(i == 2)
@@ -128,7 +128,7 @@ test()
           else if(i == 5)
             {
               deallog << "gradient:" << std::endl;
-              Tensor<1, 2> out = field_func.gradient(p);
+              Tensor<1, 2> out= field_func.gradient(p);
               deallog << "  OK: " << out[0] << std::endl;
             }
           else if(i == 6)
@@ -149,7 +149,7 @@ test()
           else if(i == 8)
             {
               deallog << "laplacian:" << std::endl;
-              double out = field_func.laplacian(p);
+              double out= field_func.laplacian(p);
               deallog << "  OK: " << out << std::endl;
             }
           else if(i == 9)

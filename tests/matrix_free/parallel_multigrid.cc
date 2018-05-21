@@ -45,8 +45,8 @@ std::ofstream logfile("output");
 
 template <int dim,
           int fe_degree,
-          int n_q_points_1d = fe_degree + 1,
-          typename number   = double>
+          int n_q_points_1d= fe_degree + 1,
+          typename number  = double>
 class LaplaceOperator : public Subscriptor
 {
 public:
@@ -56,13 +56,13 @@ public:
   initialize(const Mapping<dim>&                 mapping,
              const DoFHandler<dim>&              dof_handler,
              const std::set<types::boundary_id>& dirichlet_boundaries,
-             const unsigned int level = numbers::invalid_unsigned_int)
+             const unsigned int level= numbers::invalid_unsigned_int)
   {
     const QGauss<1>                                  quad(n_q_points_1d);
     typename MatrixFree<dim, number>::AdditionalData addit_data;
     addit_data.tasks_parallel_scheme
       = MatrixFree<dim, number>::AdditionalData::none;
-    addit_data.level_mg_handler = level;
+    addit_data.level_mg_handler= level;
 
     // extract the constraints due to Dirichlet boundary conditions
     ConstraintMatrix                constraints;
@@ -72,15 +72,15 @@ public:
         = dirichlet_boundaries.begin();
         it != dirichlet_boundaries.end();
         ++it)
-      functions[*it] = &zero;
+      functions[*it]= &zero;
     if(level == numbers::invalid_unsigned_int)
       VectorTools::interpolate_boundary_values(
         dof_handler, functions, constraints);
     else
       {
         std::vector<types::global_dof_index>    local_dofs;
-        typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(level),
-                                                endc = dof_handler.end(level);
+        typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin(level),
+                                                endc= dof_handler.end(level);
         for(; cell != endc; ++cell)
           {
             if(dof_handler.get_triangulation().locally_owned_subdomain()
@@ -88,21 +88,21 @@ public:
                && cell->level_subdomain_id()
                     == numbers::artificial_subdomain_id)
               continue;
-            const FiniteElement<dim>& fe = cell->get_fe();
+            const FiniteElement<dim>& fe= cell->get_fe();
             local_dofs.resize(fe.dofs_per_face);
 
-            for(unsigned int face_no = 0;
+            for(unsigned int face_no= 0;
                 face_no < GeometryInfo<dim>::faces_per_cell;
                 ++face_no)
               if(cell->at_boundary(face_no) == true)
                 {
                   const typename DoFHandler<dim>::face_iterator face
                     = cell->face(face_no);
-                  const types::boundary_id bi = face->boundary_id();
+                  const types::boundary_id bi= face->boundary_id();
                   if(functions.find(bi) != functions.end())
                     {
                       face->get_mg_dof_indices(level, local_dofs);
-                      for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+                      for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                         constraints.add_line(local_dofs[i]);
                     }
                 }
@@ -119,7 +119,7 @@ public:
   vmult(LinearAlgebra::distributed::Vector<number>&       dst,
         const LinearAlgebra::distributed::Vector<number>& src) const
   {
-    dst = 0;
+    dst= 0;
     vmult_add(dst, src);
   }
 
@@ -127,7 +127,7 @@ public:
   Tvmult(LinearAlgebra::distributed::Vector<number>&       dst,
          const LinearAlgebra::distributed::Vector<number>& src) const
   {
-    dst = 0;
+    dst= 0;
     vmult_add(dst, src);
   }
 
@@ -146,7 +146,7 @@ public:
 
     const std::vector<unsigned int>& constrained_dofs
       = data.get_constrained_dofs();
-    for(unsigned int i = 0; i < constrained_dofs.size(); ++i)
+    for(unsigned int i= 0; i < constrained_dofs.size(); ++i)
       dst.local_element(constrained_dofs[i])
         += src.local_element(constrained_dofs[i]);
   }
@@ -199,12 +199,12 @@ private:
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values(src);
         phi.evaluate(false, true, false);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for(unsigned int q= 0; q < phi.n_q_points; ++q)
           phi.submit_gradient(phi.get_gradient(q), q);
         phi.integrate(false, true);
         phi.distribute_local_to_global(dst);
@@ -221,12 +221,12 @@ private:
                    inverse_diagonal_entries,
                    dummy);
 
-    for(unsigned int i = 0; i < inverse_diagonal_entries.local_size(); ++i)
+    for(unsigned int i= 0; i < inverse_diagonal_entries.local_size(); ++i)
       if(std::abs(inverse_diagonal_entries.local_element(i)) > 1e-10)
         inverse_diagonal_entries.local_element(i)
           = 1. / inverse_diagonal_entries.local_element(i);
       else
-        inverse_diagonal_entries.local_element(i) = 1.;
+        inverse_diagonal_entries.local_element(i)= 1.;
   }
 
   void
@@ -238,24 +238,24 @@ private:
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
 
         VectorizedArray<number> local_diagonal_vector[phi.tensor_dofs_per_cell];
-        for(unsigned int i = 0; i < phi.dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < phi.dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < phi.dofs_per_cell; ++j)
-              phi.begin_dof_values()[j] = VectorizedArray<number>();
-            phi.begin_dof_values()[i] = 1.;
+            for(unsigned int j= 0; j < phi.dofs_per_cell; ++j)
+              phi.begin_dof_values()[j]= VectorizedArray<number>();
+            phi.begin_dof_values()[i]= 1.;
             phi.evaluate(false, true, false);
-            for(unsigned int q = 0; q < phi.n_q_points; ++q)
+            for(unsigned int q= 0; q < phi.n_q_points; ++q)
               phi.submit_gradient(phi.get_gradient(q), q);
             phi.integrate(false, true);
-            local_diagonal_vector[i] = phi.begin_dof_values()[i];
+            local_diagonal_vector[i]= phi.begin_dof_values()[i];
           }
-        for(unsigned int i = 0; i < phi.tensor_dofs_per_cell; ++i)
-          phi.begin_dof_values()[i] = local_diagonal_vector[i];
+        for(unsigned int i= 0; i < phi.tensor_dofs_per_cell; ++i)
+          phi.begin_dof_values()[i]= local_diagonal_vector[i];
         phi.distribute_local_to_global(dst);
       }
   }
@@ -282,7 +282,7 @@ public:
              MGLevelObject<LinearAlgebra::distributed::Vector<double>>& dst,
              const InVector& src) const
   {
-    for(unsigned int level = dst.min_level(); level <= dst.max_level(); ++level)
+    for(unsigned int level= dst.min_level(); level <= dst.max_level(); ++level)
       laplace_operator[level].initialize_dof_vector(dst[level]);
     MGTransferPrebuilt<LinearAlgebra::distributed::Vector<double>>::copy_to_mg(
       mg_dof, dst, src);
@@ -303,7 +303,7 @@ public:
   void
   initialize(const MatrixType& matrix)
   {
-    coarse_matrix = &matrix;
+    coarse_matrix= &matrix;
   }
 
   virtual void
@@ -346,7 +346,7 @@ do_test(const DoFHandler<dim>& dof)
   fine_matrix.initialize_dof_vector(sol);
 
   // set constant rhs vector
-  in = 1.;
+  in= 1.;
 
   // set up multigrid in analogy to step-37
   typedef LaplaceOperator<dim, fe_degree, n_q_points_1d, number>
@@ -354,7 +354,7 @@ do_test(const DoFHandler<dim>& dof)
 
   MGLevelObject<LevelMatrixType> mg_matrices;
   mg_matrices.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
+  for(unsigned int level= 0; level < dof.get_triangulation().n_global_levels();
       ++level)
     {
       mg_matrices[level].initialize(mapping, dof, dirichlet_boundaries, level);
@@ -376,12 +376,12 @@ do_test(const DoFHandler<dim>& dof)
 
   MGLevelObject<typename SMOOTHER::AdditionalData> smoother_data;
   smoother_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
+  for(unsigned int level= 0; level < dof.get_triangulation().n_global_levels();
       ++level)
     {
-      smoother_data[level].smoothing_range     = 15.;
-      smoother_data[level].degree              = 5;
-      smoother_data[level].eig_cg_n_iterations = 15;
+      smoother_data[level].smoothing_range    = 15.;
+      smoother_data[level].degree             = 5;
+      smoother_data[level].eig_cg_n_iterations= 15;
       smoother_data[level].preconditioner.reset(
         new DiagonalMatrix<LinearAlgebra::distributed::Vector<number>>());
       smoother_data[level].preconditioner->get_vector()
@@ -412,7 +412,7 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  for(unsigned int i = 5; i < 8; ++i)
+  for(unsigned int i= 5; i < 8; ++i)
     {
       parallel::distributed::Triangulation<dim> tria(
         MPI_COMM_WORLD,

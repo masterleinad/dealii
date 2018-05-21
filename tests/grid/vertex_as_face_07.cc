@@ -37,7 +37,7 @@ print_dofs(const typename hp::DoFHandler<1, spacedim>::face_iterator& i,
 {
   std::vector<types::global_dof_index> dof_indices(n);
   i->get_dof_indices(dof_indices, fe_index);
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     deallog << dof_indices[i] << ' ';
   deallog << std::endl;
 }
@@ -49,7 +49,7 @@ print_dofs(const typename hp::DoFHandler<1, spacedim>::cell_iterator& i,
 {
   std::vector<types::global_dof_index> dof_indices(n);
   i->get_dof_indices(dof_indices);
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     deallog << dof_indices[i] << ' ';
   deallog << std::endl;
 }
@@ -79,11 +79,11 @@ test()
 
   tria.refine_global(2);
   {
-    unsigned int index = 0;
+    unsigned int index= 0;
     for(typename hp::DoFHandler<1, spacedim>::active_cell_iterator cell
         = dof_handler.begin_active();
         cell != dof_handler.end();
-        ++cell, index = (index + 1) % fe_collection.size())
+        ++cell, index= (index + 1) % fe_collection.size())
       cell->set_active_fe_index(index);
   }
   dof_handler.distribute_dofs(fe_collection);

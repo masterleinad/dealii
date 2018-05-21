@@ -33,7 +33,7 @@ test(const unsigned int size)
 
   // Lapack:
   LAPACKFullMatrix<NumberType> M(size);
-  M = F;
+  M= F;
 
   deallog << "trace difference: " << (F.trace() - M.trace()) << std::endl;
 }
@@ -41,12 +41,12 @@ test(const unsigned int size)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{17, 391}};
+  const std::vector<unsigned int> sizes= {{17, 391}};
   for(const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;

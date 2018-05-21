@@ -74,14 +74,14 @@ check()
         &get_conflict_indices_cfem<dim>)));
 
   // Check that a color does not contain a conflict index twice
-  for(unsigned int color = 0; color < coloring.size(); ++color)
+  for(unsigned int color= 0; color < coloring.size(); ++color)
     {
       std::set<types::global_dof_index> color_set;
-      for(unsigned int i = 0; i < coloring[color].size(); ++i)
+      for(unsigned int i= 0; i < coloring[color].size(); ++i)
         {
           std::vector<types::global_dof_index> dofs
             = get_conflict_indices_cfem<dim>(coloring[color][i]);
-          for(unsigned int j = 0; j < dofs.size(); ++j)
+          for(unsigned int j= 0; j < dofs.size(); ++j)
             {
               if(color_set.count(dofs[j]) != 0)
                 deallog << "Error in color: " << color << std::endl;

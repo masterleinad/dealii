@@ -27,7 +27,7 @@
 void
 test()
 {
-  const int dim = 2;
+  const int dim= 2;
 
   Triangulation<dim> triangulation;
   GridIn<dim>        gi;

@@ -32,11 +32,11 @@ test(const FE_Q<dim>& fe_q)
 {
   deallog << fe_q.get_name() << std::endl;
 
-  const FullMatrix<double>& constraints = fe_q.constraints();
+  const FullMatrix<double>& constraints= fe_q.constraints();
 
-  for(unsigned int i = 0; i < constraints.m(); ++i)
+  for(unsigned int i= 0; i < constraints.m(); ++i)
     {
-      for(unsigned int j = 0; j < constraints.n(); ++j)
+      for(unsigned int j= 0; j < constraints.n(); ++j)
         deallog << 100 * constraints(i, j) << ' ';
       deallog << std::endl;
     }
@@ -54,13 +54,13 @@ main()
 
   // no constraints in 1d, but we had the matrices precomputed up to Q4 for 2d
   // and Q2 for 3d
-  for(unsigned int degree = 1; degree <= 4; ++degree)
+  for(unsigned int degree= 1; degree <= 4; ++degree)
     test<2>(FE_Q<2>(QIterated<1>(QTrapez<1>(), degree)));
 
   // test the standard version (non-equidistant) as well
   test<2>(FE_Q<2>(4));
 
-  for(unsigned int degree = 1; degree <= 2; ++degree)
+  for(unsigned int degree= 1; degree <= 2; ++degree)
     test<3>(FE_Q<3>(degree));
 
   test<3>(FE_Q<3>(4));

@@ -24,12 +24,12 @@
 void
 dim_2(std::ostream& os)
 {
-  const unsigned int d = 2;
+  const unsigned int d= 2;
   Triangulation<d>   tr;
 
   std::vector<unsigned int> holes(d);
-  holes[0] = 3;
-  holes[1] = 2;
+  holes[0]= 3;
+  holes[1]= 2;
   GridGenerator::cheese(tr, holes);
 
   GridOut gout;
@@ -39,13 +39,13 @@ dim_2(std::ostream& os)
 void
 dim_3(std::ostream& os)
 {
-  const unsigned int d = 3;
+  const unsigned int d= 3;
   Triangulation<d>   tr;
 
   std::vector<unsigned int> holes(d);
-  holes[0] = 3;
-  holes[1] = 2;
-  holes[2] = 4;
+  holes[0]= 3;
+  holes[1]= 2;
+  holes[2]= 4;
   GridGenerator::cheese(tr, holes);
 
   GridOut gout;
@@ -56,7 +56,7 @@ int
 main()
 {
   initlog(true);
-  std::ostream& logfile = deallog.get_file_stream();
+  std::ostream& logfile= deallog.get_file_stream();
   dim_2(logfile);
   dim_3(logfile);
 }

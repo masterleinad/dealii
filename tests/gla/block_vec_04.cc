@@ -28,8 +28,8 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -48,7 +48,7 @@ test()
   typename LA::MPI::BlockVector v_1(partitioning, MPI_COMM_WORLD);
   partitioning.push_back(block2);
 
-  std::vector<IndexSet> relevant = partitioning;
+  std::vector<IndexSet> relevant= partitioning;
   relevant[0].add_index(0);
   relevant[1].add_range(0, numproc);
 
@@ -56,18 +56,18 @@ test()
 
   {
     typename LA::MPI::BlockVector x(partitioning, MPI_COMM_WORLD);
-    x = v_2;
+    x= v_2;
   }
   {
     typename LA::MPI::BlockVector x;
-    x = v_2;
+    x= v_2;
   }
   {
     deal_II_exceptions::disable_abort_on_exception();
     try
       {
-        typename LA::MPI::BlockVector x = v_1;
-        x                               = v_2; // error
+        typename LA::MPI::BlockVector x= v_1;
+        x                              = v_2; // error
       }
     catch(const ExceptionBase& e)
       {

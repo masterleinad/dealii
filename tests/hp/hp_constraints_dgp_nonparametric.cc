@@ -16,7 +16,7 @@
 // check that computation of hp constraints works for DGPNonparametric elements
 // correctly on a uniformly refined mesh for functions of degree q
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "hp_constraints_common.h"
 
@@ -27,7 +27,7 @@ test()
   deallog << "Test for dim = " << dim << std::endl << std::endl;
   hp::FECollection<dim>     fe;
   std::vector<unsigned int> degrees;
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     {
       fe.push_back(FE_DGPNonparametric<dim>(i));
       degrees.push_back(i);

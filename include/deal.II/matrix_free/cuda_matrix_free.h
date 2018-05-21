@@ -67,7 +67,7 @@ namespace CUDAWrappers
    *
    * @ingroup CUDAWrappers
    */
-  template <int dim, typename Number = double>
+  template <int dim, typename Number= double>
   class MatrixFree : public Subscriptor
   {
   public:
@@ -77,7 +77,7 @@ namespace CUDAWrappers
 
     // Use Number2 so we don't hide the template parameter Number
     template <typename Number2>
-    using CUDAVector = ::dealii::LinearAlgebra::CUDAWrappers::Vector<Number2>;
+    using CUDAVector= ::dealii::LinearAlgebra::CUDAWrappers::Vector<Number2>;
 
     /**
      * Parallelization scheme used: parallel_in_elem (parallelism at the level
@@ -157,7 +157,7 @@ namespace CUDAWrappers
            const DoFHandler<dim>&  dof_handler,
            const ConstraintMatrix& constraints,
            const Quadrature<1>&    quad,
-           const AdditionalData    additional_data = AdditionalData());
+           const AdditionalData    additional_data= AdditionalData());
 
     /**
      * Initializes the data structures. Same as above but using a Q1 mapping.
@@ -166,7 +166,7 @@ namespace CUDAWrappers
     reinit(const DoFHandler<dim>&  dof_handler,
            const ConstraintMatrix& constraints,
            const Quadrature<1>&    quad,
-           const AdditionalData    AdditionalData = AdditionalData());
+           const AdditionalData    AdditionalData= AdditionalData());
 
     /**
      * Return the Data structure associated with @p color.
@@ -288,8 +288,8 @@ namespace CUDAWrappers
     SharedData(Number* vd, Number* gq[dim])
       : values(vd)
     {
-      for(int d = 0; d < dim; ++d)
-        gradients[d] = gq[d];
+      for(int d= 0; d < dim; ++d)
+        gradients[d]= gq[d];
     }
 
     Number* values;

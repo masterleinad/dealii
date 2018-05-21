@@ -25,8 +25,8 @@ test()
   TrilinosWrappers::SparsityPattern sp;
 
   sp.reinit(5, 7, 3);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 7; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 7; ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           deallog << "Creating sparsity pattern entry " << i << ' ' << j
@@ -35,7 +35,7 @@ test()
         }
   sp.compress();
 
-  for(TrilinosWrappers::SparsityPattern::const_iterator p = sp.begin();
+  for(TrilinosWrappers::SparsityPattern::const_iterator p= sp.begin();
       p != sp.end();
       ++p)
     {
@@ -46,7 +46,7 @@ test()
       Assert(p == q, ExcInternalError());
 
       // also check copy operation
-      q = p;
+      q= p;
       Assert(p == q, ExcInternalError());
     }
 }

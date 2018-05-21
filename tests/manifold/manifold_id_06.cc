@@ -29,15 +29,15 @@
 // Helper function
 template <int dim, int spacedim>
 void
-test(unsigned int ref = 1)
+test(unsigned int ref= 1)
 {
   deallog << "Testing dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
   Point<spacedim> center;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    center[i] = .25;
+  for(unsigned int i= 0; i < spacedim; ++i)
+    center[i]= .25;
 
-  double radius = center.norm();
+  double radius= center.norm();
 
   SphericalManifold<dim, spacedim> boundary(center);
   Triangulation<dim, spacedim>     tria;
@@ -46,11 +46,11 @@ test(unsigned int ref = 1)
 
   tria.refine_global(1);
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for(cell= tria.begin_active(); cell != tria.end(); ++cell)
     if(dim < spacedim && cell->center().distance(center) < radius)
       cell->set_all_manifold_ids(1);
     else
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->face(f)->center().distance(center) < radius)
           cell->face(f)->set_all_manifold_ids(1);
 

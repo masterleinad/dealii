@@ -45,7 +45,7 @@ output(const parallel::shared::Triangulation<dim>& tr,
 
   // copy the .pvtu and .vtu files
   // into the logstream
-  int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(myid == 0)
     {
       cat_file((std::string(filename) + ".pvtu").c_str());
@@ -61,7 +61,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(myid == 0)
     deallog << "hyper_cube" << std::endl;
 
@@ -72,8 +72,8 @@ test()
     parallel::shared::Triangulation<dim>::partition_metis);
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
-  typename Triangulation<dim>::active_cell_iterator cell = tr.begin_active(),
-                                                    endc = tr.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active(),
+                                                    endc= tr.end();
   for(; cell != endc; ++cell)
     {
       if(cell->index() < 2)

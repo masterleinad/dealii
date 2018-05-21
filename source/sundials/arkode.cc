@@ -38,7 +38,7 @@
 #  include <iostream>
 
 // Make sure we know how to call sundials own ARKode() function
-const auto& SundialsARKode = ARKode;
+const auto& SundialsARKode= ARKode;
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -55,7 +55,7 @@ namespace SUNDIALS
                                N_Vector yp,
                                void*    user_data)
     {
-      ARKode<VectorType>& solver = *static_cast<ARKode<VectorType>*>(user_data);
+      ARKode<VectorType>& solver= *static_cast<ARKode<VectorType>*>(user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_yy(mem);
@@ -66,7 +66,7 @@ namespace SUNDIALS
 
       copy(*src_yy, yy);
 
-      int err = solver.explicit_function(tt, *src_yy, *dst_yp);
+      int err= solver.explicit_function(tt, *src_yy, *dst_yp);
 
       copy(yp, *dst_yp);
 
@@ -80,7 +80,7 @@ namespace SUNDIALS
                                N_Vector yp,
                                void*    user_data)
     {
-      ARKode<VectorType>& solver = *static_cast<ARKode<VectorType>*>(user_data);
+      ARKode<VectorType>& solver= *static_cast<ARKode<VectorType>*>(user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_yy(mem);
@@ -91,7 +91,7 @@ namespace SUNDIALS
 
       copy(*src_yy, yy);
 
-      int err = solver.implicit_function(tt, *src_yy, *dst_yp);
+      int err= solver.implicit_function(tt, *src_yy, *dst_yp);
 
       copy(yp, *dst_yp);
 
@@ -122,12 +122,12 @@ namespace SUNDIALS
       copy(*src_ypred, ypred);
       copy(*src_fpred, fpred);
 
-      int err = solver.setup_jacobian(convfail,
-                                      arkode_mem->ark_tn,
-                                      arkode_mem->ark_gamma,
-                                      *src_ypred,
-                                      *src_fpred,
-                                      (bool&) *jcurPtr);
+      int err= solver.setup_jacobian(convfail,
+                                     arkode_mem->ark_tn,
+                                     arkode_mem->ark_gamma,
+                                     *src_ypred,
+                                     *src_fpred,
+                                     (bool&) *jcurPtr);
 
       return err;
     }
@@ -162,12 +162,12 @@ namespace SUNDIALS
       copy(*src_ycur, ycur);
       copy(*src_fcur, fcur);
 
-      int err = solver.solve_jacobian_system(arkode_mem->ark_tn,
-                                             arkode_mem->ark_gamma,
-                                             *src_ycur,
-                                             *src_fcur,
-                                             *src,
-                                             *dst);
+      int err= solver.solve_jacobian_system(arkode_mem->ark_tn,
+                                            arkode_mem->ark_gamma,
+                                            *src_ycur,
+                                            *src_fcur,
+                                            *src,
+                                            *dst);
       copy(b, *dst);
 
       return err;
@@ -179,7 +179,7 @@ namespace SUNDIALS
     {
       ARKode<VectorType>& solver
         = *static_cast<ARKode<VectorType>*>(arkode_mem->ark_user_data);
-      int err = solver.setup_mass(arkode_mem->ark_tn);
+      int err= solver.setup_mass(arkode_mem->ark_tn);
       return err;
     }
 
@@ -206,7 +206,7 @@ namespace SUNDIALS
 
       copy(*src, b);
 
-      int err = solver.solve_mass_system(*src, *dst);
+      int err= solver.solve_mass_system(*src, *dst);
       copy(b, *dst);
 
       return err;
@@ -235,7 +235,7 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const int ierr = MPI_Comm_free(&communicator);
+        const int ierr= MPI_Comm_free(&communicator);
         (void) ierr;
         AssertNothrow(ierr == MPI_SUCCESS, ExcMPI(ierr));
       }
@@ -246,11 +246,11 @@ namespace SUNDIALS
   unsigned int
   ARKode<VectorType>::solve_ode(VectorType& solution)
   {
-    unsigned int system_size = solution.size();
+    unsigned int system_size= solution.size();
 
-    double       t           = data.initial_time;
-    double       h           = data.initial_step_size;
-    unsigned int step_number = 0;
+    double       t          = data.initial_time;
+    double       h          = data.initial_step_size;
+    unsigned int step_number= 0;
 
     int status;
     (void) status;
@@ -261,10 +261,10 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is                = solution.locally_owned_elements();
-        const size_t   local_system_size = is.n_elements();
+        const IndexSet is               = solution.locally_owned_elements();
+        const size_t   local_system_size= is.n_elements();
 
-        yy = N_VNew_Parallel(communicator, local_system_size, system_size);
+        yy= N_VNew_Parallel(communicator, local_system_size, system_size);
 
         abs_tolls
           = N_VNew_Parallel(communicator, local_system_size, system_size);
@@ -275,24 +275,24 @@ namespace SUNDIALS
         Assert(is_serial_vector<VectorType>::value,
                ExcInternalError(
                  "Trying to use a serial code with a parallel vector."));
-        yy        = N_VNew_Serial(system_size);
-        abs_tolls = N_VNew_Serial(system_size);
+        yy       = N_VNew_Serial(system_size);
+        abs_tolls= N_VNew_Serial(system_size);
       }
     reset(data.initial_time, data.initial_step_size, solution);
 
-    double next_time = data.initial_time;
+    double next_time= data.initial_time;
 
     output_step(0, solution, 0);
 
     while(t < data.final_time)
       {
-        next_time += data.output_period;
+        next_time+= data.output_period;
 
-        status = SundialsARKode(arkode_mem, next_time, yy, &t, ARK_NORMAL);
+        status= SundialsARKode(arkode_mem, next_time, yy, &t, ARK_NORMAL);
 
         AssertARKode(status);
 
-        status = ARKodeGetLastStep(arkode_mem, &h);
+        status= ARKodeGetLastStep(arkode_mem, &h);
         AssertARKode(status);
 
         copy(solution, yy);
@@ -334,7 +334,7 @@ namespace SUNDIALS
     if(arkode_mem)
       ARKodeFree(&arkode_mem);
 
-    arkode_mem = ARKodeCreate();
+    arkode_mem= ARKodeCreate();
 
     // Free the vectors which are no longer used.
     if(yy)
@@ -355,14 +355,14 @@ namespace SUNDIALS
 
     int status;
     (void) status;
-    system_size = solution.size();
+    system_size= solution.size();
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is                = solution.locally_owned_elements();
-        const size_t   local_system_size = is.n_elements();
+        const IndexSet is               = solution.locally_owned_elements();
+        const size_t   local_system_size= is.n_elements();
 
-        yy = N_VNew_Parallel(communicator, local_system_size, system_size);
+        yy= N_VNew_Parallel(communicator, local_system_size, system_size);
 
         abs_tolls
           = N_VNew_Parallel(communicator, local_system_size, system_size);
@@ -370,8 +370,8 @@ namespace SUNDIALS
     else
 #  endif
       {
-        yy        = N_VNew_Serial(system_size);
-        abs_tolls = N_VNew_Serial(system_size);
+        yy       = N_VNew_Serial(system_size);
+        abs_tolls= N_VNew_Serial(system_size);
       }
 
     copy(yy, solution);
@@ -379,7 +379,7 @@ namespace SUNDIALS
     Assert(explicit_function || implicit_function,
            ExcFunctionNotProvided("explicit_function || implicit_function"));
 
-    status = ARKodeInit(
+    status= ARKodeInit(
       arkode_mem,
       explicit_function ? &t_arkode_explicit_function<VectorType> : nullptr,
       implicit_function ? &t_arkode_implicit_function<VectorType> : nullptr,
@@ -396,18 +396,18 @@ namespace SUNDIALS
       }
     else
       {
-        status = ARKodeSStolerances(
+        status= ARKodeSStolerances(
           arkode_mem, data.relative_tolerance, data.absolute_tolerance);
         AssertARKode(status);
       }
 
-    status = ARKodeSetInitStep(arkode_mem, current_time_step);
+    status= ARKodeSetInitStep(arkode_mem, current_time_step);
     AssertARKode(status);
 
-    status = ARKodeSetUserData(arkode_mem, (void*) this);
+    status= ARKodeSetUserData(arkode_mem, (void*) this);
     AssertARKode(status);
 
-    status = ARKodeSetStopTime(arkode_mem, data.final_time);
+    status= ARKodeSetStopTime(arkode_mem, data.final_time);
     AssertARKode(status);
 
     status
@@ -415,25 +415,25 @@ namespace SUNDIALS
     AssertARKode(status);
 
     // Initialize solver
-    ARKodeMem ARKode_mem = (ARKodeMem) arkode_mem;
+    ARKodeMem ARKode_mem= (ARKodeMem) arkode_mem;
 
     if(solve_jacobian_system)
       {
-        status = ARKodeSetNewton(arkode_mem);
+        status= ARKodeSetNewton(arkode_mem);
         AssertARKode(status);
         if(data.implicit_function_is_linear)
           {
-            status = ARKodeSetLinear(
+            status= ARKodeSetLinear(
               arkode_mem, data.implicit_function_is_time_independent ? 0 : 1);
             AssertARKode(status);
           }
 
-        ARKode_mem->ark_lsolve = t_arkode_solve_jacobian<VectorType>;
+        ARKode_mem->ark_lsolve= t_arkode_solve_jacobian<VectorType>;
         if(setup_jacobian)
           {
-            ARKode_mem->ark_lsetup = t_arkode_setup_jacobian<VectorType>;
+            ARKode_mem->ark_lsetup= t_arkode_setup_jacobian<VectorType>;
 #  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
-            ARKode_mem->ark_setupNonNull = true;
+            ARKode_mem->ark_setupNonNull= true;
 #  endif
           }
       }
@@ -446,18 +446,18 @@ namespace SUNDIALS
 
     if(solve_mass_system)
       {
-        ARKode_mem->ark_msolve = t_arkode_solve_mass<VectorType>;
+        ARKode_mem->ark_msolve= t_arkode_solve_mass<VectorType>;
 
         if(setup_mass)
           {
-            ARKode_mem->ark_msetup = t_arkode_setup_mass<VectorType>;
+            ARKode_mem->ark_msetup= t_arkode_setup_mass<VectorType>;
 #  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
-            ARKode_mem->ark_MassSetupNonNull = true;
+            ARKode_mem->ark_MassSetupNonNull= true;
 #  endif
           }
       }
 
-    status = ARKodeSetOrder(arkode_mem, data.maximum_order);
+    status= ARKodeSetOrder(arkode_mem, data.maximum_order);
     AssertARKode(status);
   }
 
@@ -465,7 +465,7 @@ namespace SUNDIALS
   void
   ARKode<VectorType>::set_functions_to_trigger_an_assert()
   {
-    reinit_vector = [](VectorType&) {
+    reinit_vector= [](VectorType&) {
       AssertThrow(false, ExcFunctionNotProvided("reinit_vector"));
     };
 

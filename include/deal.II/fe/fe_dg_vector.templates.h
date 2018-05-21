@@ -39,11 +39,11 @@ FE_DGVector<PolynomialType, dim, spacedim>::FE_DGVector(const unsigned int deg,
       std::vector<ComponentMask>(PolynomialType::compute_n_pols(deg),
                                  ComponentMask(dim, true)))
 {
-  this->mapping_type                   = map;
-  const unsigned int polynomial_degree = this->tensor_degree();
+  this->mapping_type                  = map;
+  const unsigned int polynomial_degree= this->tensor_degree();
 
   QGauss<dim> quadrature(polynomial_degree + 1);
-  this->generalized_support_points = quadrature.get_points();
+  this->generalized_support_points= quadrature.get_points();
 
   this->reinit_restriction_and_prolongation_matrices(true, true);
   FETools::compute_projection_matrices(*this, this->restriction, true);
@@ -74,7 +74,7 @@ FE_DGVector<PolynomialType, dim, spacedim>::get_dpo_vector(
   const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1);
-  dpo[dim] = PolynomialType::compute_n_pols(deg);
+  dpo[dim]= PolynomialType::compute_n_pols(deg);
 
   return dpo;
 }

@@ -45,7 +45,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     fe, quadrature, update_values | update_gradients | update_hessians);
   fe_values.reinit(dof.begin_active());
 
-  for(unsigned int c = 0; c < fe.n_components(); ++c)
+  for(unsigned int c= 0; c < fe.n_components(); ++c)
     // use a vector extractor if there
     // are sufficiently many components
     // left after the current component
@@ -54,27 +54,27 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
       {
         FEValuesExtractors::Vector vec_components(c);
 
-        for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
-          for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+        for(unsigned int i= 0; i < fe_values.dofs_per_cell; ++i)
+          for(unsigned int q= 0; q < fe_values.n_quadrature_points; ++q)
             {
               deallog << "i=" << i << ", q=" << q << std::endl;
               deallog << "   " << fe_values[vec_components].value(i, q) << ' ';
-              for(unsigned int k = 0; k < dim; ++k)
+              for(unsigned int k= 0; k < dim; ++k)
                 deallog << fe_values[vec_components].gradient(i, q)[k] << ' ';
               deallog << fe_values[vec_components].divergence(i, q) << ' ';
-              for(unsigned int k = 0; k < dim; ++k)
-                for(unsigned int l = 0; l < dim; ++l)
+              for(unsigned int k= 0; k < dim; ++k)
+                for(unsigned int l= 0; l < dim; ++l)
                   deallog << fe_values[vec_components].symmetric_gradient(
                                i, q)[k][l]
                           << ' ';
               deallog << std::endl;
-              for(unsigned int k = 0; k < dim; ++k)
-                for(unsigned int l = 0; l < dim; ++l)
-                  for(unsigned int m = 0; m < dim; ++m)
+              for(unsigned int k= 0; k < dim; ++k)
+                for(unsigned int l= 0; l < dim; ++l)
+                  for(unsigned int m= 0; m < dim; ++m)
                     deallog << fe_values[vec_components].hessian(i, q)[k][l][m]
                             << std::endl;
 
-              for(unsigned int d = 0; d < dim; ++d)
+              for(unsigned int d= 0; d < dim; ++d)
                 {
                   AssertThrow(fe_values[vec_components].value(i, q)[d]
                                 == fe_values.shape_value_component(i, q, c + d),

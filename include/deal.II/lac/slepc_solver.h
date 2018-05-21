@@ -172,7 +172,7 @@ namespace SLEPcWrappers
     solve(const PETScWrappers::MatrixBase& A,
           std::vector<PetscScalar>&        eigenvalues,
           std::vector<OutputVector>&       eigenvectors,
-          const unsigned int               n_eigenpairs = 1);
+          const unsigned int               n_eigenpairs= 1);
 
     /**
      * Same as above, but here a composite method for solving the system $A
@@ -185,7 +185,7 @@ namespace SLEPcWrappers
           const PETScWrappers::MatrixBase& B,
           std::vector<PetscScalar>&        eigenvalues,
           std::vector<OutputVector>&       eigenvectors,
-          const unsigned int               n_eigenpairs = 1);
+          const unsigned int               n_eigenpairs= 1);
 
     /**
      * Same as above, but here a composite method for solving the system $A
@@ -200,7 +200,7 @@ namespace SLEPcWrappers
           std::vector<double>&             imag_eigenvalues,
           std::vector<OutputVector>&       real_eigenvectors,
           std::vector<OutputVector>&       imag_eigenvectors,
-          const unsigned int               n_eigenpairs = 1);
+          const unsigned int               n_eigenpairs= 1);
 
     /**
      * Set the initial vector for the solver.
@@ -397,8 +397,8 @@ namespace SLEPcWrappers
      * behaviour as the PETScWrappers, but you can change that.
      */
     SolverKrylovSchur(SolverControl&        cn,
-                      const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                      const AdditionalData& data = AdditionalData());
+                      const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                      const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -428,7 +428,7 @@ namespace SLEPcWrappers
        * Constructor. By default, set the option of delayed
        * reorthogonalization to false, i.e. don't do it.
        */
-      AdditionalData(const bool delayed_reorthogonalization = false);
+      AdditionalData(const bool delayed_reorthogonalization= false);
 
       /**
        * Flag for delayed reorthogonalization.
@@ -442,8 +442,8 @@ namespace SLEPcWrappers
      * behaviour as the PETScWrappers, but you can change that.
      */
     SolverArnoldi(SolverControl&        cn,
-                  const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                  const AdditionalData& data             = AdditionalData());
+                  const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                  const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -478,8 +478,7 @@ namespace SLEPcWrappers
        * Constructor. By default sets the type of reorthogonalization used
        * during the Lanczos iteration to full.
        */
-      AdditionalData(const EPSLanczosReorthogType r
-                     = EPS_LANCZOS_REORTHOG_FULL);
+      AdditionalData(const EPSLanczosReorthogType r= EPS_LANCZOS_REORTHOG_FULL);
     };
 
     /**
@@ -488,8 +487,8 @@ namespace SLEPcWrappers
      * behaviour as the PETScWrappers, but you can change that.
      */
     SolverLanczos(SolverControl&        cn,
-                  const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                  const AdditionalData& data             = AdditionalData());
+                  const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                  const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -522,8 +521,8 @@ namespace SLEPcWrappers
      * behaviour as the PETScWrappers, but you can change that.
      */
     SolverPower(SolverControl&        cn,
-                const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                const AdditionalData& data             = AdditionalData());
+                const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -557,7 +556,7 @@ namespace SLEPcWrappers
       /**
        * Constructor. By default set double_expansion to false.
        */
-      AdditionalData(bool double_expansion = false);
+      AdditionalData(bool double_expansion= false);
     };
 
     /**
@@ -566,9 +565,8 @@ namespace SLEPcWrappers
      * behaviour as the PETScWrappers, but you can change that.
      */
     SolverGeneralizedDavidson(SolverControl&  cn,
-                              const MPI_Comm& mpi_communicator
-                              = PETSC_COMM_SELF,
-                              const AdditionalData& data = AdditionalData());
+                              const MPI_Comm& mpi_communicator= PETSC_COMM_SELF,
+                              const AdditionalData& data= AdditionalData());
 
   protected:
     /**
@@ -601,8 +599,8 @@ namespace SLEPcWrappers
      * behaviour as the PETScWrappers, but you can change that.
      */
     SolverJacobiDavidson(SolverControl&  cn,
-                         const MPI_Comm& mpi_communicator = PETSC_COMM_SELF,
-                         const AdditionalData& data       = AdditionalData());
+                         const MPI_Comm& mpi_communicator= PETSC_COMM_SELF,
+                         const AdditionalData& data      = AdditionalData());
 
   protected:
     /**
@@ -635,8 +633,8 @@ namespace SLEPcWrappers
      * behaviour as the PETScWrappers, but you can change that.
      */
     SolverLAPACK(SolverControl&        cn,
-                 const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                 const AdditionalData& data             = AdditionalData());
+                 const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                 const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -667,11 +665,11 @@ namespace SLEPcWrappers
     set_matrices(A);
 
     // and solve
-    unsigned int n_converged = 0;
+    unsigned int n_converged= 0;
     solve(n_eigenpairs, &n_converged);
 
     if(n_converged > n_eigenpairs)
-      n_converged = n_eigenpairs;
+      n_converged= n_eigenpairs;
     AssertThrow(
       n_converged == n_eigenpairs,
       ExcSLEPcEigenvectorConvergenceMismatchError(n_converged, n_eigenpairs));
@@ -680,7 +678,7 @@ namespace SLEPcWrappers
     eigenvectors.resize(n_converged, eigenvectors.front());
     eigenvalues.resize(n_converged);
 
-    for(unsigned int index = 0; index < n_converged; ++index)
+    for(unsigned int index= 0; index < n_converged; ++index)
       get_eigenpair(index, eigenvalues[index], eigenvectors[index]);
   }
 
@@ -704,11 +702,11 @@ namespace SLEPcWrappers
     set_matrices(A, B);
 
     // and solve
-    unsigned int n_converged = 0;
+    unsigned int n_converged= 0;
     solve(n_eigenpairs, &n_converged);
 
     if(n_converged >= n_eigenpairs)
-      n_converged = n_eigenpairs;
+      n_converged= n_eigenpairs;
 
     AssertThrow(
       n_converged == n_eigenpairs,
@@ -718,7 +716,7 @@ namespace SLEPcWrappers
     eigenvectors.resize(n_converged, eigenvectors.front());
     eigenvalues.resize(n_converged);
 
-    for(unsigned int index = 0; index < n_converged; ++index)
+    for(unsigned int index= 0; index < n_converged; ++index)
       get_eigenpair(index, eigenvalues[index], eigenvectors[index]);
   }
 
@@ -752,11 +750,11 @@ namespace SLEPcWrappers
     set_matrices(A, B);
 
     // and solve
-    unsigned int n_converged = 0;
+    unsigned int n_converged= 0;
     solve(n_eigenpairs, &n_converged);
 
     if(n_converged >= n_eigenpairs)
-      n_converged = n_eigenpairs;
+      n_converged= n_eigenpairs;
 
     AssertThrow(
       n_converged == n_eigenpairs,
@@ -770,7 +768,7 @@ namespace SLEPcWrappers
     real_eigenvalues.resize(n_converged);
     imag_eigenvalues.resize(n_converged);
 
-    for(unsigned int index = 0; index < n_converged; ++index)
+    for(unsigned int index= 0; index < n_converged; ++index)
       get_eigenpair(index,
                     real_eigenvalues[index],
                     imag_eigenvalues[index],
@@ -784,11 +782,11 @@ namespace SLEPcWrappers
   {
     std::vector<Vec> vecs(this_initial_space.size());
 
-    for(unsigned int i = 0; i < this_initial_space.size(); i++)
+    for(unsigned int i= 0; i < this_initial_space.size(); i++)
       {
         Assert(this_initial_space[i].l2_norm() > 0.0,
                ExcMessage("Initial vectors should be nonzero."));
-        vecs[i] = this_initial_space[i];
+        vecs[i]= this_initial_space[i];
       }
 
     // if the eigensolver supports only a single initial vector, but several

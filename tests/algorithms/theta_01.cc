@@ -55,15 +55,15 @@ private:
 int
 main()
 {
-  std::string   logname = "output";
+  std::string   logname= "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
   FullMatrix<double> matrix(2);
-  matrix(0, 0) = 0.;
-  matrix(1, 1) = 0.;
-  matrix(0, 1) = numbers::PI;
-  matrix(1, 0) = -numbers::PI;
+  matrix(0, 0)= 0.;
+  matrix(1, 1)= 0.;
+  matrix(0, 1)= numbers::PI;
+  matrix(1, 0)= -numbers::PI;
 
   OutputOperator<Vector<double>> out;
   out.initialize_stream(logfile);
@@ -75,10 +75,10 @@ main()
   //solver.set_output(out);
 
   Vector<double> value(2);
-  value(0) = 1.;
+  value(0)= 1.;
   AnyData         indata;
   AnyData         outdata;
-  Vector<double>* p = &value;
+  Vector<double>* p= &value;
   outdata.add(p, "value");
   deallog << "Initial: " << value(0) << ' ' << value(1) << std::endl;
   solver.notify(Events::initial);
@@ -95,17 +95,17 @@ Explicit::Explicit(const FullMatrix<double>& M) : matrix(&M)
 void
 Explicit::operator()(AnyData& out, const AnyData& in)
 {
-  const double* step = in.read_ptr<double>("Timestep");
+  const double* step= in.read_ptr<double>("Timestep");
 
   if(this->notifications.test(Events::initial)
      || this->notifications.test(Events::new_timestep_size))
     {
       m.equ(-*step, *matrix);
-      for(unsigned int i = 0; i < m.m(); ++i)
-        m(i, i) += 1.;
+      for(unsigned int i= 0; i < m.m(); ++i)
+        m(i, i)+= 1.;
     }
   this->notifications.clear();
-  unsigned int i = in.find("Previous iterate");
+  unsigned int i= in.find("Previous iterate");
   m.vmult(*out.entry<Vector<double>*>(0), *in.read_ptr<Vector<double>>(i));
 }
 
@@ -117,18 +117,18 @@ Implicit::Implicit(const FullMatrix<double>& M) : matrix(&M)
 void
 Implicit::operator()(AnyData& out, const AnyData& in)
 {
-  const double* step = in.read_ptr<double>("Timestep");
+  const double* step= in.read_ptr<double>("Timestep");
 
   if(this->notifications.test(Events::initial)
      || this->notifications.test(Events::new_timestep_size))
     {
       m.equ(*step, *matrix);
-      for(unsigned int i = 0; i < m.m(); ++i)
-        m(i, i) += 1.;
+      for(unsigned int i= 0; i < m.m(); ++i)
+        m(i, i)+= 1.;
       m.gauss_jordan();
     }
   this->notifications.clear();
 
-  unsigned int i = in.find("Previous time");
+  unsigned int i= in.find("Previous time");
   m.vmult(*out.entry<Vector<double>*>(0), *in.read_ptr<Vector<double>>(i));
 }

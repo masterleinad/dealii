@@ -26,7 +26,7 @@ public:
   {
     deallog << "Default construct." << std::endl;
   }
-  T(const T&) = delete;
+  T(const T&)= delete;
   T(T&&)
   {
     deallog << "Move construct." << std::endl;
@@ -50,7 +50,7 @@ main()
   dealii::Table<2, T> table(2, 2);
 
   dealii::Table<2, T> table2;
-  table2 = std::move(table); // should not create new objects
+  table2= std::move(table); // should not create new objects
 
   deallog << "OK" << std::endl;
 }

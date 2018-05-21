@@ -48,12 +48,12 @@ check(const unsigned int                                myid,
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   Assert(numproc == 2, ExcNotImplemented());
 
-  const unsigned int size = 20;
+  const unsigned int size= 20;
   IndexSet           local_owned(size);
   IndexSet           local_nonzero(size);
   IndexSet           local_relevant(size);
@@ -61,7 +61,7 @@ test()
     {
       local_owned.add_range(0, 10);
       local_nonzero.add_range(5, 10);
-      local_relevant = local_owned;
+      local_relevant= local_owned;
       local_relevant.add_range(10, 13);
       local_relevant.add_range(14, 15);
     }
@@ -70,25 +70,25 @@ test()
       local_owned.add_range(10, size);
       local_nonzero.add_range(10, 11);
       local_nonzero.add_range(13, 15);
-      local_relevant = local_owned;
+      local_relevant= local_owned;
       local_relevant.add_range(4, 7);
     }
 
   LinearAlgebra::distributed::Vector<double> v(
     local_owned, local_relevant, MPI_COMM_WORLD);
-  v = 0.;
+  v= 0.;
 
   // set local values
-  for(unsigned int i = 0; i < local_nonzero.n_elements(); i++)
-    v(local_nonzero.nth_index_in_set(i)) = local_nonzero.nth_index_in_set(i);
+  for(unsigned int i= 0; i < local_nonzero.n_elements(); i++)
+    v(local_nonzero.nth_index_in_set(i))= local_nonzero.nth_index_in_set(i);
 
   // set value from processor which does not own it:
-  v(5) = 55.;
+  v(5)= 55.;
   v.compress(VectorOperation::insert);
 
   // add to value from processor which has it as a ghost
   if(myid == 1)
-    v(6) = 60;
+    v(6)= 60;
   v.compress(VectorOperation::add); // 60 + 6
   // compress(insert) used to leave ghosts un-touched which resulted in
   // the wrong 55+55 for this compress(add) operation.
@@ -107,7 +107,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

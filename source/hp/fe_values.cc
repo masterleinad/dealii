@@ -137,27 +137,27 @@ namespace hp
   {
     // determine which indices we
     // should actually use
-    unsigned int real_q_index = q_index, real_mapping_index = mapping_index,
-                 real_fe_index = fe_index;
+    unsigned int real_q_index= q_index, real_mapping_index= mapping_index,
+                 real_fe_index= fe_index;
 
     if(real_q_index == numbers::invalid_unsigned_int)
       {
         if(this->q_collection.size() > 1)
-          real_q_index = cell->active_fe_index();
+          real_q_index= cell->active_fe_index();
         else
-          real_q_index = 0;
+          real_q_index= 0;
       }
 
     if(real_mapping_index == numbers::invalid_unsigned_int)
       {
         if(this->mapping_collection->size() > 1)
-          real_mapping_index = cell->active_fe_index();
+          real_mapping_index= cell->active_fe_index();
         else
-          real_mapping_index = 0;
+          real_mapping_index= 0;
       }
 
     if(real_fe_index == numbers::invalid_unsigned_int)
-      real_fe_index = cell->active_fe_index();
+      real_fe_index= cell->active_fe_index();
 
     // some checks
     Assert(real_q_index < this->q_collection.size(),
@@ -185,17 +185,17 @@ namespace hp
   {
     // determine which indices we
     // should actually use
-    unsigned int real_q_index = q_index, real_mapping_index = mapping_index,
-                 real_fe_index = fe_index;
+    unsigned int real_q_index= q_index, real_mapping_index= mapping_index,
+                 real_fe_index= fe_index;
 
     if(real_q_index == numbers::invalid_unsigned_int)
-      real_q_index = 0;
+      real_q_index= 0;
 
     if(real_mapping_index == numbers::invalid_unsigned_int)
-      real_mapping_index = 0;
+      real_mapping_index= 0;
 
     if(real_fe_index == numbers::invalid_unsigned_int)
-      real_fe_index = 0;
+      real_fe_index= 0;
 
     // some checks
     Assert(real_q_index < this->q_collection.size(),
@@ -253,27 +253,27 @@ namespace hp
   {
     // determine which indices we
     // should actually use
-    unsigned int real_q_index = q_index, real_mapping_index = mapping_index,
-                 real_fe_index = fe_index;
+    unsigned int real_q_index= q_index, real_mapping_index= mapping_index,
+                 real_fe_index= fe_index;
 
     if(real_q_index == numbers::invalid_unsigned_int)
       {
         if(this->q_collection.size() > 1)
-          real_q_index = cell->active_fe_index();
+          real_q_index= cell->active_fe_index();
         else
-          real_q_index = 0;
+          real_q_index= 0;
       }
 
     if(real_mapping_index == numbers::invalid_unsigned_int)
       {
         if(this->mapping_collection->size() > 1)
-          real_mapping_index = cell->active_fe_index();
+          real_mapping_index= cell->active_fe_index();
         else
-          real_mapping_index = 0;
+          real_mapping_index= 0;
       }
 
     if(real_fe_index == numbers::invalid_unsigned_int)
-      real_fe_index = cell->active_fe_index();
+      real_fe_index= cell->active_fe_index();
 
     // some checks
     Assert(real_q_index < this->q_collection.size(),
@@ -302,17 +302,17 @@ namespace hp
   {
     // determine which indices we
     // should actually use
-    unsigned int real_q_index = q_index, real_mapping_index = mapping_index,
-                 real_fe_index = fe_index;
+    unsigned int real_q_index= q_index, real_mapping_index= mapping_index,
+                 real_fe_index= fe_index;
 
     if(real_q_index == numbers::invalid_unsigned_int)
-      real_q_index = 0;
+      real_q_index= 0;
 
     if(real_mapping_index == numbers::invalid_unsigned_int)
-      real_mapping_index = 0;
+      real_mapping_index= 0;
 
     if(real_fe_index == numbers::invalid_unsigned_int)
-      real_fe_index = 0;
+      real_fe_index= 0;
 
     // some checks
     Assert(real_q_index < this->q_collection.size(),
@@ -371,27 +371,27 @@ namespace hp
   {
     // determine which indices we
     // should actually use
-    unsigned int real_q_index = q_index, real_mapping_index = mapping_index,
-                 real_fe_index = fe_index;
+    unsigned int real_q_index= q_index, real_mapping_index= mapping_index,
+                 real_fe_index= fe_index;
 
     if(real_q_index == numbers::invalid_unsigned_int)
       {
         if(this->q_collection.size() > 1)
-          real_q_index = cell->active_fe_index();
+          real_q_index= cell->active_fe_index();
         else
-          real_q_index = 0;
+          real_q_index= 0;
       }
 
     if(real_mapping_index == numbers::invalid_unsigned_int)
       {
         if(this->mapping_collection->size() > 1)
-          real_mapping_index = cell->active_fe_index();
+          real_mapping_index= cell->active_fe_index();
         else
-          real_mapping_index = 0;
+          real_mapping_index= 0;
       }
 
     if(real_fe_index == numbers::invalid_unsigned_int)
-      real_fe_index = cell->active_fe_index();
+      real_fe_index= cell->active_fe_index();
 
     // some checks
     Assert(real_q_index < this->q_collection.size(),
@@ -421,17 +421,17 @@ namespace hp
   {
     // determine which indices we
     // should actually use
-    unsigned int real_q_index = q_index, real_mapping_index = mapping_index,
-                 real_fe_index = fe_index;
+    unsigned int real_q_index= q_index, real_mapping_index= mapping_index,
+                 real_fe_index= fe_index;
 
     if(real_q_index == numbers::invalid_unsigned_int)
-      real_q_index = 0;
+      real_q_index= 0;
 
     if(real_mapping_index == numbers::invalid_unsigned_int)
-      real_mapping_index = 0;
+      real_mapping_index= 0;
 
     if(real_fe_index == numbers::invalid_unsigned_int)
-      real_fe_index = 0;
+      real_fe_index= 0;
 
     // some checks
     Assert(real_q_index < this->q_collection.size(),

@@ -26,16 +26,16 @@ main()
   deallog << std::setprecision(0);
   deallog.attach(logfile);
 
-  const unsigned int N = 20;
+  const unsigned int N= 20;
   FullMatrix<double> m(N, N);
 
-  double tr = 0;
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  double tr= 0;
+  for(unsigned int i= 0; i < N; ++i)
+    for(unsigned int j= 0; j < N; ++j)
       {
-        m(i, j) = i + j;
+        m(i, j)= i + j;
         if(i == j)
-          tr += i + j;
+          tr+= i + j;
       }
 
   deallog << "Trace=" << m.trace() << std::endl;

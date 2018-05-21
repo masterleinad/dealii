@@ -26,11 +26,11 @@
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int my_id   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  const unsigned int n_rows = 2;
-  const unsigned int n_cols = 2;
+  const unsigned int n_rows= 2;
+  const unsigned int n_cols= 2;
 
   IndexSet row_partitioning(n_rows);
   IndexSet col_partitioning(n_cols);
@@ -61,14 +61,14 @@ test()
      0     1
      0     1
   */
-  const unsigned int n_entries              = 2;
-  const unsigned int line[n_entries]        = {0, 1};
-  const unsigned int local_index[n_entries] = {1, 1};
-  const double       local_value[n_entries] = {1.0, 1.0};
+  const unsigned int n_entries             = 2;
+  const unsigned int line[n_entries]       = {0, 1};
+  const unsigned int local_index[n_entries]= {1, 1};
+  const double       local_value[n_entries]= {1.0, 1.0};
 
   TrilinosWrappers::SparsityPattern sp(
     row_partitioning, col_partitioning, MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < n_entries; ++i)
+  for(unsigned int i= 0; i < n_entries; ++i)
     if(row_partitioning.is_element(line[i]))
       sp.add(line[i], local_index[i]);
   sp.compress();
@@ -76,7 +76,7 @@ test()
   TrilinosWrappers::SparseMatrix A;
   A.clear();
   A.reinit(sp);
-  for(unsigned int i = 0; i < n_entries; ++i)
+  for(unsigned int i= 0; i < n_entries; ++i)
     if(row_partitioning.is_element(line[i]))
       A.add(line[i], local_index[i], local_value[i]);
   A.compress(VectorOperation::add);
@@ -148,7 +148,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   try

@@ -46,10 +46,10 @@ main()
   pts2.push_back(Point<3>(.5, 1, 1));
   pts2.push_back(Point<3>(1, 1, 0));
 
-  TopoDS_Edge edge1 = interpolation_curve(pts1);
-  TopoDS_Edge edge2 = interpolation_curve(pts2);
+  TopoDS_Edge edge1= interpolation_curve(pts1);
+  TopoDS_Edge edge2= interpolation_curve(pts2);
 
-  TopoDS_Face face = BRepFill::Face(edge1, edge2);
+  TopoDS_Face face= BRepFill::Face(edge1, edge2);
 
   DirectionalProjectionBoundary<2, 3> manifold(face, Point<3>(0, 0, 1));
 

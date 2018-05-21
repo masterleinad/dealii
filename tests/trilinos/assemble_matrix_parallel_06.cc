@@ -169,9 +169,9 @@ double
 BoundaryValues<dim>::value(const Point<dim>& p,
                            const unsigned int /*component*/) const
 {
-  double sum = 0;
-  for(unsigned int d = 0; d < dim; ++d)
-    sum += std::sin(numbers::PI * p[d]);
+  double sum= 0;
+  for(unsigned int d= 0; d < dim; ++d)
+    sum+= std::sin(numbers::PI * p[d]);
   return sum;
 }
 
@@ -191,9 +191,9 @@ double
 RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
-  double product = 1;
-  for(unsigned int d = 0; d < dim; ++d)
-    product *= (p[d] + 1);
+  double product= 1;
+  for(unsigned int d= 0; d < dim; ++d)
+    product*= (p[d] + 1);
   return product;
 }
 
@@ -233,7 +233,7 @@ LaplaceProblem<dim>::setup_system()
   test_matrix.clear();
   dof_handler.distribute_dofs(fe);
   std::vector<unsigned int> blocks(2, 0);
-  blocks[1] = 1;
+  blocks[1]= 1;
   DoFRenumbering::component_wise(dof_handler, blocks);
 
   constraints.clear();
@@ -253,7 +253,7 @@ LaplaceProblem<dim>::setup_system()
   CellFilter begin(IteratorFilters::LocallyOwnedCell(),
                    dof_handler.begin_active());
   CellFilter end(IteratorFilters::LocallyOwnedCell(), dof_handler.end());
-  graph = GraphColoring::make_graph_coloring(
+  graph= GraphColoring::make_graph_coloring(
     begin,
     end,
     static_cast<std::function<std::vector<types::global_dof_index>(
@@ -265,16 +265,16 @@ LaplaceProblem<dim>::setup_system()
 
   TrilinosWrappers::BlockSparsityPattern csp(2, 2);
   std::vector<IndexSet>                  locally_owned(2), relevant_set(2);
-  IndexSet locally_owned_total = dof_handler.locally_owned_dofs(),
+  IndexSet locally_owned_total= dof_handler.locally_owned_dofs(),
            relevant_total;
   DoFTools::extract_locally_relevant_dofs(dof_handler, relevant_total);
 
   std::vector<types::global_dof_index> dofs_per_block(2);
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, blocks);
-  locally_owned[0] = locally_owned_total.get_view(0, dofs_per_block[0]);
+  locally_owned[0]= locally_owned_total.get_view(0, dofs_per_block[0]);
   locally_owned[1]
     = locally_owned_total.get_view(dofs_per_block[0], dof_handler.n_dofs());
-  relevant_set[0] = relevant_total.get_view(0, dofs_per_block[0]);
+  relevant_set[0]= relevant_total.get_view(0, dofs_per_block[0]);
   relevant_set[1]
     = relevant_total.get_view(dofs_per_block[0], dof_handler.n_dofs());
 
@@ -300,36 +300,36 @@ LaplaceProblem<dim>::local_assemble(
   Assembly::Scratch::Data<dim>& scratch,
   Assembly::Copy::Data&         data)
 {
-  const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
+  const unsigned int dofs_per_cell= cell->get_fe().dofs_per_cell;
 
   data.local_matrix.reinit(dofs_per_cell, dofs_per_cell);
-  data.local_matrix = 0;
+  data.local_matrix= 0;
 
   data.local_rhs.reinit(dofs_per_cell);
-  data.local_rhs = 0;
+  data.local_rhs= 0;
 
   scratch.fe_values.reinit(cell);
 
-  const FEValues<dim>& fe_values = scratch.fe_values;
+  const FEValues<dim>& fe_values= scratch.fe_values;
 
   const RightHandSide<dim> rhs_function;
 
   // this does not make a lot of sense physically but it serves the purpose of
   // the test well
-  for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+  for(unsigned int q_point= 0; q_point < fe_values.n_quadrature_points;
       ++q_point)
     {
       const double rhs_value
         = rhs_function.value(fe_values.quadrature_point(q_point), 0);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             data.local_matrix(i, j)
               += (fe_values.shape_grad(i, q_point)
                   * fe_values.shape_grad(j, q_point) * fe_values.JxW(q_point));
 
-          data.local_rhs(i) += (fe_values.shape_value(i, q_point) * rhs_value
-                                * fe_values.JxW(q_point));
+          data.local_rhs(i)+= (fe_values.shape_value(i, q_point) * rhs_value
+                               * fe_values.JxW(q_point));
         }
     }
 
@@ -359,13 +359,13 @@ template <int dim>
 void
 LaplaceProblem<dim>::assemble_reference()
 {
-  reference_matrix = 0;
-  reference_rhs    = 0;
+  reference_matrix= 0;
+  reference_rhs   = 0;
 
   Assembly::Copy::Data         copy_data(true);
   Assembly::Scratch::Data<dim> assembly_data(fe, quadrature);
 
-  for(unsigned int color = 0; color < graph.size(); ++color)
+  for(unsigned int color= 0; color < graph.size(); ++color)
     for(typename std::vector<FilteredIterator<
           typename DoFHandler<dim>::active_cell_iterator>>::const_iterator p
         = graph[color].begin();
@@ -383,8 +383,8 @@ template <int dim>
 void
 LaplaceProblem<dim>::assemble_test()
 {
-  test_matrix = 0;
-  test_rhs    = 0;
+  test_matrix= 0;
+  test_rhs   = 0;
 
   WorkStream::run(graph,
                   std::bind(&LaplaceProblem<dim>::local_assemble,
@@ -405,10 +405,10 @@ LaplaceProblem<dim>::assemble_test()
   test_matrix.add(-1, reference_matrix);
 
   // there should not even be roundoff difference between matrices
-  double frobenius_norm = 0;
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
-      frobenius_norm += numbers::NumberTraits<double>::abs_square(
+  double frobenius_norm= 0;
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
+      frobenius_norm+= numbers::NumberTraits<double>::abs_square(
         test_matrix.block(i, j).frobenius_norm());
   deallog << "error in matrix: " << std::sqrt(frobenius_norm) << std::endl;
   test_rhs.add(-1., reference_rhs);
@@ -420,8 +420,8 @@ void
 LaplaceProblem<dim>::postprocess()
 {
   Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
-  for(unsigned int i = 0; i < estimated_error_per_cell.size(); ++i)
-    estimated_error_per_cell(i) = i;
+  for(unsigned int i= 0; i < estimated_error_per_cell.size(); ++i)
+    estimated_error_per_cell(i)= i;
 
   GridRefinement::refine_and_coarsen_fixed_number(
     triangulation, estimated_error_per_cell, 0.3, 0.03);
@@ -432,7 +432,7 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for(unsigned int cycle= 0; cycle < 3; ++cycle)
     {
       if(cycle == 0)
         {

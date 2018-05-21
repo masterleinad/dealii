@@ -25,7 +25,7 @@ test()
   std::vector<int> v(10);
 
   ArrayView<int> a(&v[4], 3); // writable view
-  a[2] = 42;
+  a[2]= 42;
 
   Assert(a[2] == 42, ExcInternalError());
   Assert(v[6] == 42, ExcInternalError());

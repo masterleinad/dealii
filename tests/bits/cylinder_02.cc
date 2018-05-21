@@ -65,7 +65,7 @@ check()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       deallog << cell->vertex(i) << std::endl;
 }
 

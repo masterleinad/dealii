@@ -30,10 +30,10 @@ check_at_one(const std::vector<Polynomial<double>>& p)
   // for degree > 1, it is only added to maintain the recursive relation.
 
   deallog << "Function value of polynomial at right end point: ";
-  for(unsigned int i = 2; i < p.size(); ++i)
+  for(unsigned int i= 2; i < p.size(); ++i)
     {
       deallog << '.';
-      const double y = p[i].value(1.);
+      const double y= p[i].value(1.);
       if(std::fabs(y) > 1e-13)
         deallog << "Error1  lg y=" << std::log10(std::fabs(y)) << std::endl;
     }
@@ -47,10 +47,10 @@ check_at_half(const std::vector<Polynomial<double>>& p)
   // for degree > 1, it is only added to maintain the recursive relation.
 
   deallog << "Function value of polynomial at -0.5 | 0.5:" << std::endl;
-  for(unsigned int i = 2; i < p.size(); ++i)
+  for(unsigned int i= 2; i < p.size(); ++i)
     {
-      const double y = p[i].value(0.5);
-      const double z = p[i].value(-0.5);
+      const double y= p[i].value(0.5);
+      const double z= p[i].value(-0.5);
       deallog << y << " | " << z << std::endl;
     }
   deallog << std::endl;

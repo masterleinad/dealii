@@ -87,7 +87,7 @@ main()
 {
   initlog();
 
-  for(unsigned int d = 1; d < 4; ++d)
+  for(unsigned int d= 1; d < 4; ++d)
     {
       test<2, 2>(d);
       test<2, 3>(d);

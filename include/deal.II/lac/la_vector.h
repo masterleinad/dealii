@@ -68,7 +68,7 @@ namespace LinearAlgebra
     /**
      * Constructor. Create a vector of dimension zero.
      */
-    Vector() = default;
+    Vector()= default;
 
     /**
      * Copy constructor. Sets the dimension to that of the given vector and
@@ -105,7 +105,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const size_type size,
-           const bool      omit_zeroing_entries = false) override;
+           const bool      omit_zeroing_entries= false) override;
 
     /**
      * Uses the same IndexSet as the one of the input vector @p in_vector and
@@ -118,7 +118,7 @@ namespace LinearAlgebra
     template <typename Number2>
     void
     reinit(const ReadWriteVector<Number2>& in_vector,
-           const bool                      omit_zeroing_entries = false);
+           const bool                      omit_zeroing_entries= false);
 
     /**
      * Initializes the vector. The indices are specified by @p
@@ -131,7 +131,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const IndexSet& locally_stored_indices,
-           const bool      omit_zeroing_entries = false) override;
+           const bool      omit_zeroing_entries= false) override;
 
     /**
      * Change the dimension to that of the vector V. The elements of V are not
@@ -139,7 +139,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const VectorSpaceVector<Number>& V,
-           const bool omit_zeroing_entries = false) override;
+           const bool omit_zeroing_entries= false) override;
 
     /**
      * Copies the data of the input vector @p in_vector.
@@ -327,9 +327,9 @@ namespace LinearAlgebra
      */
     virtual void
     print(std::ostream&      out,
-          const unsigned int precision  = 3,
-          const bool         scientific = true,
-          const bool         across     = true) const override;
+          const unsigned int precision = 3,
+          const bool         scientific= true,
+          const bool         across    = true) const override;
 
     /**
      * Write the vector en bloc to a file. This is done in a binary mode, so
@@ -435,7 +435,7 @@ namespace LinearAlgebra
   inline void
   Vector<Number>::serialize(Archive& ar, const unsigned int)
   {
-    size_type current_size = this->size();
+    size_type current_size= this->size();
     ar& static_cast<Subscriptor&>(*this);
     ar & this->stored_elements;
     // If necessary, resize the vector during a read operation

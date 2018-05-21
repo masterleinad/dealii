@@ -93,7 +93,7 @@ SortUsingDeclarations: true
 
 SpaceAfterCStyleCast: true
 SpaceAfterTemplateKeyword: true
-SpaceBeforeAssignmentOperators: true
+SpaceBeforeAssignmentOperators: false
 SpaceBeforeParens: Never
 SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 1

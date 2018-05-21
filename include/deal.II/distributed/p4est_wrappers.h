@@ -256,7 +256,7 @@ namespace internal
                 dealii::internal::p4est::types<2>::ghost*  parallel_ghost,
                 void*                                      user_data);
 
-      static const unsigned int max_level = P4EST_MAXLEVEL;
+      static const unsigned int max_level= P4EST_MAXLEVEL;
     };
 
     template <>
@@ -405,7 +405,7 @@ namespace internal
 
       static size_t (&connectivity_memory_used)(types<3>::connectivity* p4est);
 
-      static const unsigned int max_level = P8EST_MAXLEVEL;
+      static const unsigned int max_level= P8EST_MAXLEVEL;
     };
 
     /**

@@ -18,7 +18,7 @@
 
 #define PRINTME(name, var)                              \
   deallog << "Block vector: " name << ":" << std::endl; \
-  for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
+  for(unsigned int i= 0; i < var.n_blocks(); ++i)       \
     deallog << "[block " << i << " ]  " << var.block(i);
 
 int
@@ -36,25 +36,25 @@ main()
 
   {
     BlockVector<double> u(5, 2);
-    for(unsigned int i = 0; i < 5; ++i)
-      for(unsigned int j = 0; j < 2; ++j)
-        u.block(i)[j] = (double) (10 * i + j);
+    for(unsigned int i= 0; i < 5; ++i)
+      for(unsigned int j= 0; j < 2; ++j)
+        u.block(i)[j]= (double) (10 * i + j);
 
     PRINTME("BlockVector", u);
 
     BlockVector<double> v;
-    v = u;
+    v= u;
     PRINTME("copy assignment", v);
     PRINTME("old object", u);
 
-    v = 0.;
-    v = std::move(u);
+    v= 0.;
+    v= std::move(u);
     PRINTME("move assignment", v);
     deallog << "old object size: " << u.n_blocks() << std::endl;
 
     // and swap again with different sizes
     BlockVector<double> w;
-    w = std::move(v);
+    w= std::move(v);
     PRINTME("move assignment", w);
     deallog << "old object size: " << v.n_blocks() << std::endl;
   }

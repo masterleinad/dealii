@@ -40,8 +40,8 @@ std::ofstream logfile("output");
 
 template <int dim,
           int fe_degree,
-          int n_q_points_1d = fe_degree + 1,
-          typename Number   = double>
+          int n_q_points_1d= fe_degree + 1,
+          typename Number  = double>
 class MatrixFreeTest
 {
 public:
@@ -71,7 +71,7 @@ public:
     std::vector<double>         reference_values1(fe_eval1.n_q_points);
     std::vector<Tensor<1, dim>> reference_grads1(fe_eval1.n_q_points);
     std::vector<Tensor<2, dim>> reference_hess1(fe_eval1.n_q_points);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval0.reinit(cell);
         fe_eval0.read_dof_values(src[0]);
@@ -83,7 +83,7 @@ public:
 
         // compare values with the ones the FEValues
         // gives us. Those are seen as reference
-        for(unsigned int j = 0; j < data.n_components_filled(cell); ++j)
+        for(unsigned int j= 0; j < data.n_components_filled(cell); ++j)
           {
             // FE 0
             fe_val0.reinit(data.get_cell_iterator(cell, j, 0));
@@ -91,19 +91,19 @@ public:
             fe_val0.get_function_gradients(src[0], reference_grads0);
             fe_val0.get_function_hessians(src[0], reference_hess0);
 
-            for(int q = 0; q < (int) fe_eval0.n_q_points; q++)
+            for(int q= 0; q < (int) fe_eval0.n_q_points; q++)
               {
                 errors[0]
                   += std::fabs(fe_eval0.get_value(q)[j] - reference_values0[q]);
-                for(unsigned int d = 0; d < dim; ++d)
-                  errors[1] += std::fabs(fe_eval0.get_gradient(q)[d][j]
-                                         - reference_grads0[q][d]);
-                errors[2] += std::fabs(fe_eval0.get_laplacian(q)[j]
-                                       - trace(reference_hess0[q]));
-                total[0] += std::fabs(reference_values0[q]);
-                for(unsigned int d = 0; d < dim; ++d)
-                  total[1] += std::fabs(reference_grads0[q][d]);
-                total[2] += std::fabs(fe_eval0.get_laplacian(q)[j]);
+                for(unsigned int d= 0; d < dim; ++d)
+                  errors[1]+= std::fabs(fe_eval0.get_gradient(q)[d][j]
+                                        - reference_grads0[q][d]);
+                errors[2]+= std::fabs(fe_eval0.get_laplacian(q)[j]
+                                      - trace(reference_hess0[q]));
+                total[0]+= std::fabs(reference_values0[q]);
+                for(unsigned int d= 0; d < dim; ++d)
+                  total[1]+= std::fabs(reference_grads0[q][d]);
+                total[2]+= std::fabs(fe_eval0.get_laplacian(q)[j]);
               }
 
             // FE 1
@@ -112,19 +112,19 @@ public:
             fe_val1.get_function_gradients(src[1], reference_grads1);
             fe_val1.get_function_hessians(src[1], reference_hess1);
 
-            for(int q = 0; q < (int) fe_eval1.n_q_points; q++)
+            for(int q= 0; q < (int) fe_eval1.n_q_points; q++)
               {
                 errors[3]
                   += std::fabs(fe_eval1.get_value(q)[j] - reference_values1[q]);
-                for(unsigned int d = 0; d < dim; ++d)
-                  errors[4] += std::fabs(fe_eval1.get_gradient(q)[d][j]
-                                         - reference_grads1[q][d]);
-                errors[5] += std::fabs(fe_eval1.get_laplacian(q)[j]
-                                       - trace(reference_hess1[q]));
-                total[3] += std::fabs(reference_values1[q]);
-                for(unsigned int d = 0; d < dim; ++d)
-                  total[4] += std::fabs(reference_grads1[q][d]);
-                total[5] += std::fabs(fe_eval1.get_laplacian(q)[j]);
+                for(unsigned int d= 0; d < dim; ++d)
+                  errors[4]+= std::fabs(fe_eval1.get_gradient(q)[d][j]
+                                        - reference_grads1[q][d]);
+                errors[5]+= std::fabs(fe_eval1.get_laplacian(q)[j]
+                                      - trace(reference_hess1[q]));
+                total[3]+= std::fabs(reference_values1[q]);
+                for(unsigned int d= 0; d < dim; ++d)
+                  total[4]+= std::fabs(reference_grads1[q][d]);
+                total[5]+= std::fabs(fe_eval1.get_laplacian(q)[j]);
               }
           }
       }
@@ -133,10 +133,10 @@ public:
   void
   test_functions(const VectorType& src) const
   {
-    for(unsigned int i = 0; i < 3 * 2; ++i)
+    for(unsigned int i= 0; i < 3 * 2; ++i)
       {
-        errors[i] = 0;
-        total[i]  = 0;
+        errors[i]= 0;
+        total[i] = 0;
       }
     VectorType dst_dummy;
     data.cell_loop(
@@ -147,7 +147,7 @@ public:
 
     // for doubles, use a stricter condition then
     // for floats for the relative error size
-    for(unsigned int i = 0; i < 2; ++i)
+    for(unsigned int i= 0; i < 2; ++i)
       {
         if(std::is_same<Number, double>::value == true)
           {
@@ -164,9 +164,9 @@ public:
             // some elements, it might also be zero
             // (linear elements on quadrilaterals), so
             // need to check for division by 0, too.
-            const double output2 = total[i * 3 + 2] == 0 ?
-                                     0. :
-                                     errors[i * 3 + 2] / total[i * 3 + 2];
+            const double output2= total[i * 3 + 2] == 0 ?
+                                    0. :
+                                    errors[i * 3 + 2] / total[i * 3 + 2];
             deallog << "Error function Laplacians FE " << i << ": " << output2
                     << std::endl;
           }
@@ -176,9 +176,9 @@ public:
                     << errors[i * 3 + 0] / total[i * 3 + 0] << std::endl;
             deallog << "Error function gradients FE " << i << ": "
                     << errors[i * 3 + 1] / total[i * 3 + 1] << std::endl;
-            const double output2 = total[i * 3 + 2] == 0 ?
-                                     0. :
-                                     errors[i * 3 + 2] / total[i * 3 + 2];
+            const double output2= total[i * 3 + 2] == 0 ?
+                                    0. :
+                                    errors[i * 3 + 2] / total[i * 3 + 2];
             deallog << "Error function Laplacians FE " << i << ": " << output2
                     << std::endl;
           }
@@ -219,26 +219,26 @@ test()
   dof1.distribute_dofs(fe1);
 
   std::vector<const DoFHandler<dim>*> dof(2);
-  dof[0] = &dof0;
-  dof[1] = &dof1;
+  dof[0]= &dof0;
+  dof[1]= &dof1;
 
   deallog << "Testing " << fe0.get_name() << " and " << fe1.get_name()
           << std::endl;
   //std::cout << "Number of cells: " << tria.n_active_cells() << std::endl;
 
   std::vector<Vector<double>> src(dof.size());
-  for(unsigned int no = 0; no < dof.size(); ++no)
+  for(unsigned int no= 0; no < dof.size(); ++no)
     src[no].reinit(dof[no]->n_dofs());
 
   std::vector<const ConstraintMatrix*> constraints(2);
   ConstraintMatrix                     constraint0;
   DoFTools::make_hanging_node_constraints(*dof[0], constraint0);
   constraint0.close();
-  constraints[0] = &constraint0;
+  constraints[0]= &constraint0;
   ConstraintMatrix constraint1;
   DoFTools::make_hanging_node_constraints(*dof[1], constraint1);
   constraint1.close();
-  constraints[1] = &constraint1;
+  constraints[1]= &constraint1;
 
   //std::cout << "Number of degrees of freedom FE 0: " << dof[0]->n_dofs() << std::endl;
   //std::cout << "Number of constraints FE 0: " << constraints[0]->n_constraints() << std::endl;
@@ -246,13 +246,13 @@ test()
   //std::cout << "Number of constraints FE 1: " << constraints[1]->n_constraints() << std::endl;
 
   // create vector with random entries
-  for(unsigned int no = 0; no < 2; ++no)
-    for(unsigned int i = 0; i < dof[no]->n_dofs(); ++i)
+  for(unsigned int no= 0; no < 2; ++no)
+    for(unsigned int i= 0; i < dof[no]->n_dofs(); ++i)
       {
         if(constraints[no]->is_constrained(i))
           continue;
-        const double entry = random_value<double>();
-        src[no](i)         = entry;
+        const double entry= random_value<double>();
+        src[no](i)        = entry;
       }
 
   constraints[0]->distribute(src[0]);
@@ -260,7 +260,7 @@ test()
   MatrixFree<dim, number> mf_data;
   {
     std::vector<Quadrature<1>> quad;
-    for(unsigned int no = 0; no < 2; ++no)
+    for(unsigned int no= 0; no < 2; ++no)
       quad.push_back(QGauss<1>(fe_degree + 1 + no));
     mf_data.reinit(dof,
                    constraints,

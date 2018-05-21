@@ -41,7 +41,7 @@ main()
 {
   deallog.attach(logfile);
 
-  const unsigned int dim = 1;
+  const unsigned int dim= 1;
 
   Triangulation<dim, dim + 1> triangulation;
   FESystem<dim, dim + 1>      fe(FE_Q<dim, dim + 1>(1), dim + 1);
@@ -56,14 +56,14 @@ main()
 
   dof_handler.distribute_dofs(fe);
   soln.reinit(dof_handler.n_dofs());
-  soln = 1;
+  soln= 1;
 
   std::vector<Tensor<1, dim + 1>>                local_velocity_values(1);
   const FEValuesExtractors::Vector               velocities(0);
   QGauss<dim>                                    quadrature_formula(1);
   DoFHandler<dim, dim + 1>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   FEValues<dim, dim + 1> fe_v(fe, quadrature_formula, update_values);
 
   for(; cell != endc; ++cell)

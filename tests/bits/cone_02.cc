@@ -40,11 +40,11 @@ template <>
 void
 check<2>()
 {
-  constexpr int dim = 2;
+  constexpr int dim= 2;
   deallog << "dim=" << dim << std::endl;
 
   Triangulation<dim> triangulation;
-  const double       r1 = 0.5, r2 = 1.0, halfl = 0.25;
+  const double       r1= 0.5, r2= 1.0, halfl= 0.25;
   GridGenerator::truncated_cone(triangulation, r1, r2, halfl);
 
   triangulation.refine_global(2);
@@ -56,11 +56,11 @@ template <>
 void
 check<3>()
 {
-  constexpr int dim = 3;
+  constexpr int dim= 3;
   deallog << "dim=" << dim << std::endl;
 
   Triangulation<dim> triangulation;
-  const double       r1 = 0.5, r2 = 1.0, halfl = 0.25;
+  const double       r1= 0.5, r2= 1.0, halfl= 0.25;
   GridGenerator::truncated_cone(triangulation, r1, r2, halfl);
   static const CylindricalManifold<dim> boundary;
   triangulation.set_manifold(0, boundary);

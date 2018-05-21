@@ -26,20 +26,20 @@ void
 test(std::ostream& out)
 {
   Point<dim> p1;
-  p1[0] = 2.;
+  p1[0]= 2.;
   if(dim > 1)
-    p1[1] = -1.;
+    p1[1]= -1.;
   Point<dim> p2;
-  p2[0] = 3.;
+  p2[0]= 3.;
   if(dim > 1)
-    p2[1] = 2.;
+    p2[1]= 2.;
   Point<dim> p3;
-  p3[0] = 2.;
+  p3[0]= 2.;
   if(dim > 1)
-    p3[1] = 1.;
+    p3[1]= 1.;
 
   GridOut               go;
-  GridOut::OutputFormat format = GridOut::msh;
+  GridOut::OutputFormat format= GridOut::msh;
 
   if(true)
     {
@@ -70,11 +70,11 @@ test(std::ostream& out)
       deallog << "subdivided_hyper_rectangle" << std::endl;
       Triangulation<dim, spacedim> tr;
       std::vector<unsigned int>    sub(dim);
-      sub[0] = 2;
+      sub[0]= 2;
       if(dim > 1)
-        sub[1] = 3;
+        sub[1]= 3;
       if(dim > 2)
-        sub[2] = 4;
+        sub[2]= 4;
       GridGenerator::subdivided_hyper_rectangle(tr, sub, p1, p2, true);
       if(tr.n_cells() > 0)
         go.write(tr, out, format);

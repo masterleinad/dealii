@@ -37,13 +37,13 @@ print_dofs(const DoFHandler<dim>& dof)
 {
   std::vector<types::global_dof_index> v(dof.get_fe().dofs_per_cell);
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active();
       cell != dof.end();
       ++cell)
     {
       cell->get_dof_indices(v);
       deallog << "cell=" << cell << std::endl;
-      for(unsigned int i = 0; i < v.size(); ++i)
+      for(unsigned int i= 0; i < v.size(); ++i)
         deallog << v[i] << std::endl;
     }
 }
@@ -62,7 +62,7 @@ check()
   std::vector<types::global_dof_index> new_dofs(dof.n_dofs());
   DoFRenumbering::boost::compute_Cuthill_McKee(new_dofs, dof);
 
-  for(unsigned int i = 0; i < new_dofs.size(); ++i)
+  for(unsigned int i= 0; i < new_dofs.size(); ++i)
     deallog << new_dofs[i] << std::endl;
 }
 

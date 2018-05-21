@@ -29,7 +29,7 @@ main()
 {
   initlog();
 
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
 
@@ -41,8 +41,8 @@ main()
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                           endc = tria.end();
+  Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                           endc= tria.end();
   for(; cell != endc; ++cell)
     cell->set_coarsen_flag();
   tria.execute_coarsening_and_refinement();

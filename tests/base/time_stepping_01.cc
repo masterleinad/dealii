@@ -22,8 +22,8 @@ Vector<double>
 f1(double const t, Vector<double> const& y)
 {
   Vector<double> values(y);
-  for(unsigned int i = 0; i < values.size(); ++i)
-    values[i] = 1.0;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    values[i]= 1.0;
 
   return values;
 }
@@ -32,8 +32,8 @@ Vector<double>
 f2(double const t, Vector<double> const& y)
 {
   Vector<double> values(y);
-  for(unsigned int i = 0; i < values.size(); ++i)
-    values[i] = 2.0 * t;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    values[i]= 2.0 * t;
 
   return values;
 }
@@ -42,8 +42,8 @@ Vector<double>
 f3(double const t, Vector<double> const& y)
 {
   Vector<double> values(y);
-  for(unsigned int i = 0; i < values.size(); ++i)
-    values[i] = 3.0 * t * t;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    values[i]= 3.0 * t * t;
 
   return values;
 }
@@ -52,8 +52,8 @@ Vector<double>
 f4(double const t, Vector<double> const& y)
 {
   Vector<double> values(y);
-  for(unsigned int i = 0; i < values.size(); ++i)
-    values[i] = 4.0 * t * t * t;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    values[i]= 4.0 * t * t * t;
 
   return values;
 }
@@ -62,8 +62,8 @@ Vector<double>
 f5(double const t, Vector<double> const& y)
 {
   Vector<double> values(y);
-  for(unsigned int i = 0; i < values.size(); ++i)
-    values[i] = 5.0 * t * t * t * t;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    values[i]= 5.0 * t * t * t * t;
 
   return values;
 }
@@ -136,27 +136,27 @@ test(TimeStepping::RungeKutta<Vector<double>>&                          solver,
                                   Vector<double> const&)> id_minus_tau_J_inv,
      std::function<double(double const)>                  my)
 {
-  unsigned int n_time_steps = 1;
-  unsigned int size         = 1;
-  double       initial_time = 0.0, final_time = 1.0;
+  unsigned int n_time_steps= 1;
+  unsigned int size        = 1;
+  double       initial_time= 0.0, final_time= 1.0;
   double       time_step
     = (final_time - initial_time) / static_cast<double>(n_time_steps);
-  double         time = initial_time;
+  double         time= initial_time;
   Vector<double> solution(size);
   Vector<double> exact_solution(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     {
-      solution[i]       = my(initial_time);
-      exact_solution[i] = my(final_time);
+      solution[i]      = my(initial_time);
+      exact_solution[i]= my(final_time);
     }
 
-  for(unsigned int i = 0; i < n_time_steps; ++i)
-    time = solver.evolve_one_time_step(
+  for(unsigned int i= 0; i < n_time_steps; ++i)
+    time= solver.evolve_one_time_step(
       f, id_minus_tau_J_inv, time, time_step, solution);
 
   Vector<double> error(exact_solution);
   error.sadd(1.0, -1.0, solution);
-  double error_norm = error.l2_norm();
+  double error_norm= error.l2_norm();
   deallog << error_norm << std::endl;
 }
 
@@ -168,31 +168,31 @@ test2(TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>&          solver,
                                    Vector<double> const&)> id_minus_tau_J_inv,
       std::function<double(double const)>                  my)
 {
-  double         initial_time = 0.0, final_time = 1.0;
-  double         time_step    = 1.0;
-  unsigned int   size         = 1;
-  unsigned int   n_time_steps = 0;
-  double         time         = initial_time;
+  double         initial_time= 0.0, final_time= 1.0;
+  double         time_step   = 1.0;
+  unsigned int   size        = 1;
+  unsigned int   n_time_steps= 0;
+  double         time        = initial_time;
   Vector<double> solution(size);
   Vector<double> exact_solution(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     {
-      solution[i]       = my(initial_time);
-      exact_solution[i] = my(final_time);
+      solution[i]      = my(initial_time);
+      exact_solution[i]= my(final_time);
     }
 
   while(time < final_time)
     {
       if(time + time_step > final_time)
-        time_step = final_time - time;
-      time = solver.evolve_one_time_step(
+        time_step= final_time - time;
+      time= solver.evolve_one_time_step(
         f, id_minus_tau_J_inv, time, time_step, solution);
-      time_step = solver.get_status().delta_t_guess;
+      time_step= solver.get_status().delta_t_guess;
     }
 
   Vector<double> error(exact_solution);
   error.sadd(1.0, -1.0, solution);
-  double error_norm = error.l2_norm();
+  double error_norm= error.l2_norm();
   deallog << error_norm << std::endl;
 }
 

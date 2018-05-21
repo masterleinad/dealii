@@ -30,8 +30,8 @@ PolynomialsRT_Bubbles<dim>::PolynomialsRT_Bubbles(const unsigned int k)
 {
   Assert(dim >= 2, ExcImpossibleInDim(dim));
 
-  for(unsigned int i = 0; i < monomials.size(); ++i)
-    monomials[i] = Polynomials::Monomial<double>(i);
+  for(unsigned int i= 0; i < monomials.size(); ++i)
+    monomials[i]= Polynomials::Monomial<double>(i);
 }
 
 template <int dim>
@@ -61,7 +61,7 @@ PolynomialsRT_Bubbles<dim>::compute(
   (void) fourth_derivatives;
   Assert(fourth_derivatives.size() == 0, ExcNotImplemented());
 
-  const unsigned int n_sub = raviart_thomas_space.n();
+  const unsigned int n_sub= raviart_thomas_space.n();
 
   // Guard access to the scratch arrays in the following block
   // using a mutex to make sure they are not used by multiple threads
@@ -87,17 +87,17 @@ PolynomialsRT_Bubbles<dim>::compute(
                                  p_grad_grads,
                                  p_third_derivatives,
                                  p_fourth_derivatives);
-    for(unsigned int i = 0; i < p_values.size(); ++i)
-      values[i] = p_values[i];
-    for(unsigned int i = 0; i < p_grads.size(); ++i)
-      grads[i] = p_grads[i];
-    for(unsigned int i = 0; i < p_grad_grads.size(); ++i)
-      grad_grads[i] = p_grad_grads[i];
+    for(unsigned int i= 0; i < p_values.size(); ++i)
+      values[i]= p_values[i];
+    for(unsigned int i= 0; i < p_grads.size(); ++i)
+      grads[i]= p_grads[i];
+    for(unsigned int i= 0; i < p_grad_grads.size(); ++i)
+      grad_grads[i]= p_grad_grads[i];
   }
 
   // Next we compute the polynomials and derivatives
   // of the curl part of the space
-  const unsigned int n_derivatives = 3;
+  const unsigned int n_derivatives= 3;
   double             monoval_plus[dim][n_derivatives + 1];
   double             monoval[dim][n_derivatives + 1];
 
@@ -105,7 +105,7 @@ PolynomialsRT_Bubbles<dim>::compute(
   double monoval_j[dim][n_derivatives + 1];
   double monoval_jplus[dim][n_derivatives + 1];
 
-  unsigned int start = n_sub;
+  unsigned int start= n_sub;
 
   if(dim == 2)
     {
@@ -117,19 +117,19 @@ PolynomialsRT_Bubbles<dim>::compute(
       // rotation of the coordinates.
       //  monoval_i = x^i,
       //  monoval_plus = x^(k+1)
-      for(unsigned int d = 0; d < dim; ++d)
+      for(unsigned int d= 0; d < dim; ++d)
         monomials[my_degree + 1].value(
           unit_point(d), n_derivatives, monoval_plus[d]);
 
-      for(unsigned int i = 0; i <= my_degree; ++i, ++start)
+      for(unsigned int i= 0; i <= my_degree; ++i, ++start)
         {
-          for(unsigned int d = 0; d < dim; ++d)
+          for(unsigned int d= 0; d < dim; ++d)
             monomials[i].value(unit_point(d), n_derivatives, monoval_i[d]);
 
           if(values.size() != 0)
             {
-              values[start][0] = monoval_i[0][0] * monoval_plus[1][1];
-              values[start][1] = -monoval_i[0][1] * monoval_plus[1][0];
+              values[start][0]= monoval_i[0][0] * monoval_plus[1][1];
+              values[start][1]= -monoval_i[0][1] * monoval_plus[1][0];
 
               values[start + my_degree + 1][0]
                 = -monoval_plus[0][0] * monoval_i[1][1];
@@ -139,10 +139,10 @@ PolynomialsRT_Bubbles<dim>::compute(
 
           if(grads.size() != 0)
             {
-              grads[start][0][0] = monoval_i[0][1] * monoval_plus[1][1];
-              grads[start][0][1] = monoval_i[0][0] * monoval_plus[1][2];
-              grads[start][1][0] = -monoval_i[0][2] * monoval_plus[1][0];
-              grads[start][1][1] = -monoval_i[0][1] * monoval_plus[1][1];
+              grads[start][0][0]= monoval_i[0][1] * monoval_plus[1][1];
+              grads[start][0][1]= monoval_i[0][0] * monoval_plus[1][2];
+              grads[start][1][0]= -monoval_i[0][2] * monoval_plus[1][0];
+              grads[start][1][1]= -monoval_i[0][1] * monoval_plus[1][1];
 
               grads[start + my_degree + 1][0][0]
                 = -monoval_plus[0][1] * monoval_i[1][1];
@@ -156,18 +156,14 @@ PolynomialsRT_Bubbles<dim>::compute(
 
           if(grad_grads.size() != 0)
             {
-              grad_grads[start][0][0][0] = monoval_i[0][2] * monoval_plus[1][1];
-              grad_grads[start][0][0][1] = monoval_i[0][1] * monoval_plus[1][2];
-              grad_grads[start][0][1][0] = monoval_i[0][1] * monoval_plus[1][2];
-              grad_grads[start][0][1][1] = monoval_i[0][0] * monoval_plus[1][3];
-              grad_grads[start][1][0][0]
-                = -monoval_i[0][3] * monoval_plus[1][0];
-              grad_grads[start][1][0][1]
-                = -monoval_i[0][2] * monoval_plus[1][1];
-              grad_grads[start][1][1][0]
-                = -monoval_i[0][2] * monoval_plus[1][1];
-              grad_grads[start][1][1][1]
-                = -monoval_i[0][1] * monoval_plus[1][2];
+              grad_grads[start][0][0][0]= monoval_i[0][2] * monoval_plus[1][1];
+              grad_grads[start][0][0][1]= monoval_i[0][1] * monoval_plus[1][2];
+              grad_grads[start][0][1][0]= monoval_i[0][1] * monoval_plus[1][2];
+              grad_grads[start][0][1][1]= monoval_i[0][0] * monoval_plus[1][3];
+              grad_grads[start][1][0][0]= -monoval_i[0][3] * monoval_plus[1][0];
+              grad_grads[start][1][0][1]= -monoval_i[0][2] * monoval_plus[1][1];
+              grad_grads[start][1][1][0]= -monoval_i[0][2] * monoval_plus[1][1];
+              grad_grads[start][1][1][1]= -monoval_i[0][1] * monoval_plus[1][2];
 
               grad_grads[start + my_degree + 1][0][0][0]
                 = -monoval_plus[0][2] * monoval_i[1][1];
@@ -201,23 +197,23 @@ PolynomialsRT_Bubbles<dim>::compute(
       // of the coordinates.
       //  monoval = x^k,   monoval_plus = x^(k+1)
       //  monoval_* = x^*, monoval_jplus = x^(j+1)
-      for(unsigned int d = 0; d < dim; ++d)
+      for(unsigned int d= 0; d < dim; ++d)
         {
           monomials[my_degree + 1].value(
             unit_point(d), n_derivatives, monoval_plus[d]);
           monomials[my_degree].value(unit_point(d), n_derivatives, monoval[d]);
         }
 
-      const unsigned int n_curls = (my_degree + 1) * (2 * my_degree + 1);
+      const unsigned int n_curls= (my_degree + 1) * (2 * my_degree + 1);
       // Span of $\tilde{B}$
-      for(unsigned int i = 0; i <= my_degree; ++i)
+      for(unsigned int i= 0; i <= my_degree; ++i)
         {
-          for(unsigned int d = 0; d < dim; ++d)
+          for(unsigned int d= 0; d < dim; ++d)
             monomials[i].value(unit_point(d), n_derivatives, monoval_i[d]);
 
-          for(unsigned int j = 0; j <= my_degree; ++j)
+          for(unsigned int j= 0; j <= my_degree; ++j)
             {
-              for(unsigned int d = 0; d < dim; ++d)
+              for(unsigned int d= 0; d < dim; ++d)
                 {
                   monomials[j].value(
                     unit_point(d), n_derivatives, monoval_j[d]);
@@ -227,9 +223,9 @@ PolynomialsRT_Bubbles<dim>::compute(
 
               if(values.size() != 0)
                 {
-                  values[start][0] = monoval_i[0][0] * monoval_j[1][0]
-                                     * monoval[2][0]
-                                     * static_cast<double>(j + my_degree + 2);
+                  values[start][0]= monoval_i[0][0] * monoval_j[1][0]
+                                    * monoval[2][0]
+                                    * static_cast<double>(j + my_degree + 2);
                   values[start][1]
                     = -monoval_i[0][1] * monoval_jplus[1][0] * monoval[2][0];
                   values[start][2]
@@ -258,28 +254,28 @@ PolynomialsRT_Bubbles<dim>::compute(
                       values[start + 1][0]
                         = monoval_i[0][0] * monoval[1][0] * monoval_j[2][0]
                           * static_cast<double>(j + my_degree + 2);
-                      values[start + 1][1] = -monoval_i[0][1]
-                                             * monoval_plus[1][0]
-                                             * monoval_j[2][0];
-                      values[start + 1][2] = -monoval_i[0][1] * monoval[1][0]
-                                             * monoval_jplus[2][0];
+                      values[start + 1][1]= -monoval_i[0][1]
+                                            * monoval_plus[1][0]
+                                            * monoval_j[2][0];
+                      values[start + 1][2]= -monoval_i[0][1] * monoval[1][0]
+                                            * monoval_jplus[2][0];
 
-                      values[start + n_curls + 1][0] = -monoval_plus[0][0]
-                                                       * monoval_i[1][1]
-                                                       * monoval_j[2][0];
+                      values[start + n_curls + 1][0]= -monoval_plus[0][0]
+                                                      * monoval_i[1][1]
+                                                      * monoval_j[2][0];
                       values[start + n_curls + 1][1]
                         = monoval[0][0] * monoval_i[1][0] * monoval_j[2][0]
                           * static_cast<double>(j + my_degree + 2);
-                      values[start + n_curls + 1][2] = -monoval[0][0]
-                                                       * monoval_i[1][1]
-                                                       * monoval_jplus[2][0];
+                      values[start + n_curls + 1][2]= -monoval[0][0]
+                                                      * monoval_i[1][1]
+                                                      * monoval_jplus[2][0];
 
-                      values[start + 2 * n_curls + 1][0] = -monoval_plus[0][0]
-                                                           * monoval_j[1][0]
-                                                           * monoval_i[2][1];
-                      values[start + 2 * n_curls + 1][1] = -monoval[0][0]
-                                                           * monoval_jplus[1][0]
-                                                           * monoval_i[2][1];
+                      values[start + 2 * n_curls + 1][0]= -monoval_plus[0][0]
+                                                          * monoval_j[1][0]
+                                                          * monoval_i[2][1];
+                      values[start + 2 * n_curls + 1][1]= -monoval[0][0]
+                                                          * monoval_jplus[1][0]
+                                                          * monoval_i[2][1];
                       values[start + 2 * n_curls + 1][2]
                         = monoval[0][0] * monoval_j[1][0] * monoval_i[2][0]
                           * static_cast<double>(j + my_degree + 2);
@@ -288,15 +284,15 @@ PolynomialsRT_Bubbles<dim>::compute(
 
               if(grads.size() != 0)
                 {
-                  grads[start][0][0] = monoval_i[0][1] * monoval_j[1][0]
-                                       * monoval[2][0]
-                                       * static_cast<double>(j + my_degree + 2);
-                  grads[start][0][1] = monoval_i[0][0] * monoval_j[1][1]
-                                       * monoval[2][0]
-                                       * static_cast<double>(j + my_degree + 2);
-                  grads[start][0][2] = monoval_i[0][0] * monoval_j[1][0]
-                                       * monoval[2][1]
-                                       * static_cast<double>(j + my_degree + 2);
+                  grads[start][0][0]= monoval_i[0][1] * monoval_j[1][0]
+                                      * monoval[2][0]
+                                      * static_cast<double>(j + my_degree + 2);
+                  grads[start][0][1]= monoval_i[0][0] * monoval_j[1][1]
+                                      * monoval[2][0]
+                                      * static_cast<double>(j + my_degree + 2);
+                  grads[start][0][2]= monoval_i[0][0] * monoval_j[1][0]
+                                      * monoval[2][1]
+                                      * static_cast<double>(j + my_degree + 2);
                   grads[start][1][0]
                     = -monoval_i[0][2] * monoval_jplus[1][0] * monoval[2][0];
                   grads[start][1][1]
@@ -365,31 +361,31 @@ PolynomialsRT_Bubbles<dim>::compute(
                       grads[start + 1][0][2]
                         = monoval_i[0][0] * monoval[1][0] * monoval_j[2][1]
                           * static_cast<double>(j + my_degree + 2);
-                      grads[start + 1][1][0] = -monoval_i[0][2]
-                                               * monoval_plus[1][0]
-                                               * monoval_j[2][0];
-                      grads[start + 1][1][1] = -monoval_i[0][1]
-                                               * monoval_plus[1][1]
-                                               * monoval_j[2][0];
-                      grads[start + 1][1][2] = -monoval_i[0][1]
-                                               * monoval_plus[1][0]
-                                               * monoval_j[2][1];
-                      grads[start + 1][2][0] = -monoval_i[0][2] * monoval[1][0]
-                                               * monoval_jplus[2][0];
-                      grads[start + 1][2][1] = -monoval_i[0][1] * monoval[1][1]
-                                               * monoval_jplus[2][0];
-                      grads[start + 1][2][2] = -monoval_i[0][1] * monoval[1][0]
-                                               * monoval_jplus[2][1];
+                      grads[start + 1][1][0]= -monoval_i[0][2]
+                                              * monoval_plus[1][0]
+                                              * monoval_j[2][0];
+                      grads[start + 1][1][1]= -monoval_i[0][1]
+                                              * monoval_plus[1][1]
+                                              * monoval_j[2][0];
+                      grads[start + 1][1][2]= -monoval_i[0][1]
+                                              * monoval_plus[1][0]
+                                              * monoval_j[2][1];
+                      grads[start + 1][2][0]= -monoval_i[0][2] * monoval[1][0]
+                                              * monoval_jplus[2][0];
+                      grads[start + 1][2][1]= -monoval_i[0][1] * monoval[1][1]
+                                              * monoval_jplus[2][0];
+                      grads[start + 1][2][2]= -monoval_i[0][1] * monoval[1][0]
+                                              * monoval_jplus[2][1];
 
-                      grads[start + n_curls + 1][0][0] = -monoval_plus[0][1]
-                                                         * monoval_i[1][1]
-                                                         * monoval_j[2][0];
-                      grads[start + n_curls + 1][0][1] = -monoval_plus[0][0]
-                                                         * monoval_i[1][2]
-                                                         * monoval_j[2][0];
-                      grads[start + n_curls + 1][0][2] = -monoval_plus[0][0]
-                                                         * monoval_i[1][1]
-                                                         * monoval_j[2][1];
+                      grads[start + n_curls + 1][0][0]= -monoval_plus[0][1]
+                                                        * monoval_i[1][1]
+                                                        * monoval_j[2][0];
+                      grads[start + n_curls + 1][0][1]= -monoval_plus[0][0]
+                                                        * monoval_i[1][2]
+                                                        * monoval_j[2][0];
+                      grads[start + n_curls + 1][0][2]= -monoval_plus[0][0]
+                                                        * monoval_i[1][1]
+                                                        * monoval_j[2][1];
                       grads[start + n_curls + 1][1][0]
                         = monoval[0][1] * monoval_i[1][0] * monoval_j[2][0]
                           * static_cast<double>(j + my_degree + 2);
@@ -399,25 +395,25 @@ PolynomialsRT_Bubbles<dim>::compute(
                       grads[start + n_curls + 1][1][2]
                         = monoval[0][0] * monoval_i[1][0] * monoval_j[2][1]
                           * static_cast<double>(j + my_degree + 2);
-                      grads[start + n_curls + 1][2][0] = -monoval[0][1]
-                                                         * monoval_i[1][1]
-                                                         * monoval_jplus[2][0];
-                      grads[start + n_curls + 1][2][1] = -monoval[0][0]
-                                                         * monoval_i[1][2]
-                                                         * monoval_jplus[2][0];
-                      grads[start + n_curls + 1][2][2] = -monoval[0][0]
-                                                         * monoval_i[1][1]
-                                                         * monoval_jplus[2][1];
+                      grads[start + n_curls + 1][2][0]= -monoval[0][1]
+                                                        * monoval_i[1][1]
+                                                        * monoval_jplus[2][0];
+                      grads[start + n_curls + 1][2][1]= -monoval[0][0]
+                                                        * monoval_i[1][2]
+                                                        * monoval_jplus[2][0];
+                      grads[start + n_curls + 1][2][2]= -monoval[0][0]
+                                                        * monoval_i[1][1]
+                                                        * monoval_jplus[2][1];
 
-                      grads[start + 2 * n_curls + 1][0][0] = -monoval_plus[0][1]
-                                                             * monoval_j[1][0]
-                                                             * monoval_i[2][1];
-                      grads[start + 2 * n_curls + 1][0][1] = -monoval_plus[0][0]
-                                                             * monoval_j[1][1]
-                                                             * monoval_i[2][1];
-                      grads[start + 2 * n_curls + 1][0][2] = -monoval_plus[0][0]
-                                                             * monoval_j[1][0]
-                                                             * monoval_i[2][2];
+                      grads[start + 2 * n_curls + 1][0][0]= -monoval_plus[0][1]
+                                                            * monoval_j[1][0]
+                                                            * monoval_i[2][1];
+                      grads[start + 2 * n_curls + 1][0][1]= -monoval_plus[0][0]
+                                                            * monoval_j[1][1]
+                                                            * monoval_i[2][1];
+                      grads[start + 2 * n_curls + 1][0][2]= -monoval_plus[0][0]
+                                                            * monoval_j[1][0]
+                                                            * monoval_i[2][2];
                       grads[start + 2 * n_curls + 1][1][0]
                         = -monoval[0][1] * monoval_jplus[1][0]
                           * monoval_i[2][1];
@@ -662,60 +658,60 @@ PolynomialsRT_Bubbles<dim>::compute(
                       grad_grads[start + 1][0][2][2]
                         = monoval_i[0][0] * monoval[1][0] * monoval_j[2][2]
                           * static_cast<double>(j + my_degree + 2);
-                      grad_grads[start + 1][1][0][0] = -monoval_i[0][3]
-                                                       * monoval_plus[1][0]
-                                                       * monoval_j[2][0];
-                      grad_grads[start + 1][1][0][1] = -monoval_i[0][2]
-                                                       * monoval_plus[1][1]
-                                                       * monoval_j[2][0];
-                      grad_grads[start + 1][1][0][2] = -monoval_i[0][2]
-                                                       * monoval_plus[1][0]
-                                                       * monoval_j[2][1];
-                      grad_grads[start + 1][1][1][0] = -monoval_i[0][2]
-                                                       * monoval_plus[1][1]
-                                                       * monoval_j[2][0];
-                      grad_grads[start + 1][1][1][1] = -monoval_i[0][1]
-                                                       * monoval_plus[1][2]
-                                                       * monoval_j[2][0];
-                      grad_grads[start + 1][1][1][2] = -monoval_i[0][1]
-                                                       * monoval_plus[1][1]
-                                                       * monoval_j[2][1];
-                      grad_grads[start + 1][1][2][0] = -monoval_i[0][2]
-                                                       * monoval_plus[1][0]
-                                                       * monoval_j[2][1];
-                      grad_grads[start + 1][1][2][1] = -monoval_i[0][1]
-                                                       * monoval_plus[1][1]
-                                                       * monoval_j[2][1];
-                      grad_grads[start + 1][1][2][2] = -monoval_i[0][1]
-                                                       * monoval_plus[1][0]
-                                                       * monoval_j[2][2];
-                      grad_grads[start + 1][2][0][0] = -monoval_i[0][3]
-                                                       * monoval[1][0]
-                                                       * monoval_jplus[2][0];
-                      grad_grads[start + 1][2][0][1] = -monoval_i[0][2]
-                                                       * monoval[1][1]
-                                                       * monoval_jplus[2][0];
-                      grad_grads[start + 1][2][0][2] = -monoval_i[0][2]
-                                                       * monoval[1][0]
-                                                       * monoval_jplus[2][1];
-                      grad_grads[start + 1][2][1][0] = -monoval_i[0][2]
-                                                       * monoval[1][1]
-                                                       * monoval_jplus[2][0];
-                      grad_grads[start + 1][2][1][1] = -monoval_i[0][1]
-                                                       * monoval[1][2]
-                                                       * monoval_jplus[2][0];
-                      grad_grads[start + 1][2][1][2] = -monoval_i[0][1]
-                                                       * monoval[1][1]
-                                                       * monoval_jplus[2][1];
-                      grad_grads[start + 1][2][2][0] = -monoval_i[0][2]
-                                                       * monoval[1][0]
-                                                       * monoval_jplus[2][1];
-                      grad_grads[start + 1][2][2][1] = -monoval_i[0][1]
-                                                       * monoval[1][1]
-                                                       * monoval_jplus[2][1];
-                      grad_grads[start + 1][2][2][2] = -monoval_i[0][1]
-                                                       * monoval[1][0]
-                                                       * monoval_jplus[2][2];
+                      grad_grads[start + 1][1][0][0]= -monoval_i[0][3]
+                                                      * monoval_plus[1][0]
+                                                      * monoval_j[2][0];
+                      grad_grads[start + 1][1][0][1]= -monoval_i[0][2]
+                                                      * monoval_plus[1][1]
+                                                      * monoval_j[2][0];
+                      grad_grads[start + 1][1][0][2]= -monoval_i[0][2]
+                                                      * monoval_plus[1][0]
+                                                      * monoval_j[2][1];
+                      grad_grads[start + 1][1][1][0]= -monoval_i[0][2]
+                                                      * monoval_plus[1][1]
+                                                      * monoval_j[2][0];
+                      grad_grads[start + 1][1][1][1]= -monoval_i[0][1]
+                                                      * monoval_plus[1][2]
+                                                      * monoval_j[2][0];
+                      grad_grads[start + 1][1][1][2]= -monoval_i[0][1]
+                                                      * monoval_plus[1][1]
+                                                      * monoval_j[2][1];
+                      grad_grads[start + 1][1][2][0]= -monoval_i[0][2]
+                                                      * monoval_plus[1][0]
+                                                      * monoval_j[2][1];
+                      grad_grads[start + 1][1][2][1]= -monoval_i[0][1]
+                                                      * monoval_plus[1][1]
+                                                      * monoval_j[2][1];
+                      grad_grads[start + 1][1][2][2]= -monoval_i[0][1]
+                                                      * monoval_plus[1][0]
+                                                      * monoval_j[2][2];
+                      grad_grads[start + 1][2][0][0]= -monoval_i[0][3]
+                                                      * monoval[1][0]
+                                                      * monoval_jplus[2][0];
+                      grad_grads[start + 1][2][0][1]= -monoval_i[0][2]
+                                                      * monoval[1][1]
+                                                      * monoval_jplus[2][0];
+                      grad_grads[start + 1][2][0][2]= -monoval_i[0][2]
+                                                      * monoval[1][0]
+                                                      * monoval_jplus[2][1];
+                      grad_grads[start + 1][2][1][0]= -monoval_i[0][2]
+                                                      * monoval[1][1]
+                                                      * monoval_jplus[2][0];
+                      grad_grads[start + 1][2][1][1]= -monoval_i[0][1]
+                                                      * monoval[1][2]
+                                                      * monoval_jplus[2][0];
+                      grad_grads[start + 1][2][1][2]= -monoval_i[0][1]
+                                                      * monoval[1][1]
+                                                      * monoval_jplus[2][1];
+                      grad_grads[start + 1][2][2][0]= -monoval_i[0][2]
+                                                      * monoval[1][0]
+                                                      * monoval_jplus[2][1];
+                      grad_grads[start + 1][2][2][1]= -monoval_i[0][1]
+                                                      * monoval[1][1]
+                                                      * monoval_jplus[2][1];
+                      grad_grads[start + 1][2][2][2]= -monoval_i[0][1]
+                                                      * monoval[1][0]
+                                                      * monoval_jplus[2][2];
 
                       grad_grads[start + n_curls + 1][0][0][0]
                         = -monoval_plus[0][2] * monoval_i[1][1]
@@ -884,9 +880,9 @@ PolynomialsRT_Bubbles<dim>::compute(
                 }
 
               if(j == my_degree)
-                start += 1;
+                start+= 1;
               else
-                start += 2;
+                start+= 2;
             }
         }
       Assert(start == n_pols - 2 * n_curls, ExcInternalError());

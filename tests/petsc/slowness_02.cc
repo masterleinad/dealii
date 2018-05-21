@@ -29,14 +29,14 @@
 void
 test()
 {
-  const unsigned int N = 200;
+  const unsigned int N= 200;
 
   // build the sparse matrix
   PETScWrappers::SparseMatrix matrix(N * N, N * N, 5);
-  for(unsigned int i = 0; i < N; i++)
-    for(unsigned int j = 0; j < N; j++)
+  for(unsigned int i= 0; i < N; i++)
+    for(unsigned int j= 0; j < N; j++)
       {
-        const unsigned int global = i * N + j;
+        const unsigned int global= i * N + j;
         matrix.add(global, global, 4);
         if(j > 0)
           {
@@ -68,8 +68,8 @@ test()
   indices.add_range(0, N * N);
   PETScWrappers::MPI::Vector v1(indices, MPI_COMM_WORLD),
     v2(indices, MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < N * N; ++i)
-    v1(i) = i;
+  for(unsigned int i= 0; i < N * N; ++i)
+    v1(i)= i;
   matrix.vmult(v2, v1);
 
   deallog << v1 * v2 << std::endl;

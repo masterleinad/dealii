@@ -39,17 +39,17 @@ main()
   {
     using namespace dealii::GridTools::internal::ProjectToObject;
 
-    constexpr int structdim = 2;
-    auto          objective =
+    constexpr int structdim= 2;
+    auto          objective=
       [](const Tensor<1, GeometryInfo<structdim>::vertices_per_cell>& weights) {
         return std::sin(2.0 * weights[0]) * std::cos(3.0 * weights[1])
                + std::cos(weights[2]);
       };
     Tensor<1, GeometryInfo<structdim>::vertices_per_cell> c0;
-    for(unsigned int row_n = 0;
+    for(unsigned int row_n= 0;
         row_n < GeometryInfo<structdim>::vertices_per_cell;
         ++row_n)
-      c0[row_n] = 1.0;
+      c0[row_n]= 1.0;
 
     const std::array<double, 3> exact{
       {2.0 * std::cos(3.0) * std::cos(2.0)
@@ -60,7 +60,7 @@ main()
     const std::array<CrossDerivative, 3> cross_derivatives{
       {{0, 1}, {1, 0}, {1, 2}}};
 
-    for(unsigned int cross_derivative_n = 0;
+    for(unsigned int cross_derivative_n= 0;
         cross_derivative_n < cross_derivatives.size();
         ++cross_derivative_n)
       {
@@ -68,9 +68,9 @@ main()
                 << std::endl;
         std::vector<double> steps;
         std::vector<double> errors;
-        for(unsigned int step_n = 5; step_n < 10; ++step_n)
+        for(unsigned int step_n= 5; step_n < 10; ++step_n)
           {
-            const double current_step = std::pow(0.5, double(step_n));
+            const double current_step= std::pow(0.5, double(step_n));
             steps.push_back(std::log(current_step));
             errors.push_back(std::log(std::abs(
               cross_stencil<structdim>(cross_derivatives[cross_derivative_n],
@@ -85,12 +85,12 @@ main()
         const double mean_error
           = std::accumulate(errors.begin(), errors.end(), 0.0) / errors.size();
 
-        double numerator   = 0.0;
-        double denominator = 0.0;
-        for(std::size_t i = 0; i < steps.size(); ++i)
+        double numerator  = 0.0;
+        double denominator= 0.0;
+        for(std::size_t i= 0; i < steps.size(); ++i)
           {
-            numerator += (steps[i] - mean_step) * (errors[i] - mean_error);
-            denominator += Utilities::fixed_power<2>(steps[i] - mean_step);
+            numerator+= (steps[i] - mean_step) * (errors[i] - mean_error);
+            denominator+= Utilities::fixed_power<2>(steps[i] - mean_step);
           }
         deallog << "slope is nearly 3: "
                 << (std::abs(numerator / denominator - 3.0) < 0.05)
@@ -102,25 +102,25 @@ main()
   {
     PolarManifold<2>             polar_manifold;
     Triangulation<2>             triangulation;
-    constexpr types::manifold_id polar_id = 42;
+    constexpr types::manifold_id polar_id= 42;
     GridGenerator::hyper_shell(triangulation, Point<2>(), 1.0, 2.0);
     triangulation.set_manifold(polar_id, polar_manifold);
     triangulation.set_all_manifold_ids(42);
 
     triangulation.refine_global(2);
 
-    auto cell = triangulation.begin_active();
+    auto cell= triangulation.begin_active();
     while(!cell->at_boundary())
       ++cell;
-    unsigned int face_n = 0;
+    unsigned int face_n= 0;
     while(!cell->face(face_n)->at_boundary())
       ++face_n;
-    const auto face = cell->face(face_n);
+    const auto face= cell->face(face_n);
 
     // easy test: project the arithmetic mean of the vertices onto the
     // geodesic
     {
-      const Point<2> trial_point = 0.9 * face->center();
+      const Point<2> trial_point= 0.9 * face->center();
       const Point<2> projected_point
         = GridTools::project_to_object(face, trial_point);
 
@@ -129,7 +129,7 @@ main()
       const std::array<double, 2> weights{{0.5, 0.5}};
       const auto                  vertices_view
         = make_array_view(vertices.begin(), vertices.end());
-      const auto weights_view = make_array_view(weights.begin(), weights.end());
+      const auto weights_view= make_array_view(weights.begin(), weights.end());
 
       deallog << std::endl
               << "Project the arithmetic mean of two vertices on a circular"
@@ -157,7 +157,7 @@ main()
       const std::array<double, 2> weights{{0.125, 0.875}};
       const auto                  vertices_view
         = make_array_view(vertices.begin(), vertices.end());
-      const auto weights_view = make_array_view(weights.begin(), weights.end());
+      const auto weights_view= make_array_view(weights.begin(), weights.end());
 
       const Point<2> trial_point
         = face->get_manifold().get_new_point(vertices_view, weights_view);
@@ -186,7 +186,7 @@ main()
 
     // harder test: project a vertex onto the geodesic
     {
-      const Point<2> trial_point = face->vertex(0);
+      const Point<2> trial_point= face->vertex(0);
       const Point<2> projected_point
         = GridTools::project_to_object(cell->face(face_n), trial_point);
 
@@ -210,7 +210,7 @@ main()
     Triangulation<2, 3> triangulation;
     GridGenerator::torus(triangulation, 2.0, 1.0);
 
-    constexpr types::manifold_id torus_id = 42;
+    constexpr types::manifold_id torus_id= 42;
     triangulation.set_manifold(torus_id, torus_manifold);
     triangulation.set_all_manifold_ids(torus_id);
 
@@ -247,7 +247,7 @@ main()
 
   // refine in 3D a few times so that we can observe that the projection error
   // drops proportionally as the grid is refined
-  for(unsigned int n_refinements = 4; n_refinements < 7; ++n_refinements)
+  for(unsigned int n_refinements= 4; n_refinements < 7; ++n_refinements)
     {
       deallog << "====================================================="
               << std::endl
@@ -257,24 +257,24 @@ main()
 
       SphericalManifold<3>         spherical_manifold;
       Triangulation<3>             triangulation;
-      constexpr types::manifold_id spherical_id = 42;
+      constexpr types::manifold_id spherical_id= 42;
       GridGenerator::hyper_shell(triangulation, Point<3>(), 1.0, 2.0);
       triangulation.set_manifold(spherical_id, spherical_manifold);
       triangulation.set_all_manifold_ids(42);
 
       triangulation.refine_global(n_refinements);
 
-      auto cell = triangulation.begin_active();
+      auto cell= triangulation.begin_active();
       while(!cell->at_boundary())
         ++cell;
-      unsigned int face_n = 0;
+      unsigned int face_n= 0;
       while(!cell->face(face_n)->at_boundary())
         ++face_n;
-      const auto face = cell->face(face_n);
+      const auto face= cell->face(face_n);
 
       // easy test: project the arithmetic mean of the vertices onto the face
       {
-        const Point<3> trial_point = 1.1 * face->center();
+        const Point<3> trial_point= 1.1 * face->center();
         const Point<3> projected_point
           = GridTools::project_to_object(face, trial_point);
 
@@ -322,7 +322,7 @@ main()
 
       // project a vertex onto the surface
       {
-        const Point<3> trial_point = face->vertex(0);
+        const Point<3> trial_point= face->vertex(0);
         const Point<3> projected_point
           = GridTools::project_to_object(face, trial_point);
 
@@ -412,8 +412,8 @@ main()
 
         Point<3> trial_point
           = face->get_manifold().get_new_point(vertices_view, weights_view);
-        Tensor<1, 3> normal_vector = 0.1 * (trial_point - Point<3>());
-        trial_point += normal_vector;
+        Tensor<1, 3> normal_vector= 0.1 * (trial_point - Point<3>());
+        trial_point+= normal_vector;
         const Point<3> projected_point
           = GridTools::project_to_object(face, trial_point);
 
@@ -433,7 +433,7 @@ main()
 
       // test that we can recover a point that is on a line in 3D
       {
-        const auto                    line = face->line(0);
+        const auto                    line= face->line(0);
         const std::array<Point<3>, 2> vertices{
           {line->vertex(0), line->vertex(1)}};
         const std::array<double, 2> weights{{0.125, 1.0 - 0.125}};

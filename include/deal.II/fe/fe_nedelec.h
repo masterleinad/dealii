@@ -291,7 +291,7 @@ private:
    * edges.
    */
   static std::vector<unsigned int>
-  get_dpo_vector(const unsigned int degree, bool dg = false);
+  get_dpo_vector(const unsigned int degree, bool dg= false);
 
   /**
    * Initialize the @p generalized_support_points field of the FiniteElement

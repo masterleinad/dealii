@@ -52,11 +52,11 @@ test()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; cell++)
     {
-      Point<dim> center = cell->center();
+      Point<dim> center= cell->center();
       if(std::sqrt(center.square()) < 0.25)
         cell->set_active_fe_index(1);
       else
@@ -82,7 +82,7 @@ test()
                                    | update_quadrature_points
                                    | update_JxW_values);
 
-  cell = dof_handler.begin_active();
+  cell= dof_handler.begin_active();
 
   for(; cell != endc; cell++)
     {
@@ -96,13 +96,13 @@ test()
       // attempt to reinit hp_fe_values object
       hp_fe_values.reinit(cell);
 
-      const unsigned int   dofs_per_cell = cell->get_fe().dofs_per_cell;
-      const FEValues<dim>& fe_values     = hp_fe_values.get_present_fe_values();
+      const unsigned int   dofs_per_cell= cell->get_fe().dofs_per_cell;
+      const FEValues<dim>& fe_values    = hp_fe_values.get_present_fe_values();
 
-      for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+      for(unsigned int q_point= 0; q_point < fe_values.n_quadrature_points;
           ++q_point)
         {
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
               deallog << fe_values.shape_value(i, q_point) << std::endl;
               deallog << fe_values.shape_grad(i, q_point) << std::endl;

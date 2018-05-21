@@ -49,11 +49,11 @@ test()
   tr.refine_global(2);
 
   hp::FECollection<dim> fe;
-  for(unsigned int i = 1; i < 5; ++i)
+  for(unsigned int i= 1; i < 5; ++i)
     fe.push_back(FE_Q<dim>(QIterated<1>(QTrapez<1>(), i)));
 
   hp::DoFHandler<dim> dof_handler(tr);
-  for(typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+  for(typename hp::DoFHandler<dim>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
     if(cell->has_children() == false)
@@ -65,10 +65,10 @@ test()
 
   // do the test where we set data on the coarsest cell with an
   // explicit Q1 space
-  typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin(0);
+  typename hp::DoFHandler<dim>::cell_iterator cell= dof_handler.begin(0);
   Vector<double>                              local(fe[0].dofs_per_cell);
-  for(unsigned int i = 0; i < local.size(); ++i)
-    local(i) = i;
+  for(unsigned int i= 0; i < local.size(); ++i)
+    local(i)= i;
   cell->set_dof_values_by_interpolation(local, solution, 0);
 
   // for comparison purposes, also output the values of DoFs on all cells
@@ -80,7 +80,7 @@ test()
       Vector<double> x(cell->get_fe().dofs_per_cell);
       cell->get_dof_values(solution, x);
       deallog << "cell =" << cell << ":  ";
-      for(unsigned int i = 0; i < x.size(); ++i)
+      for(unsigned int i= 0; i < x.size(); ++i)
         deallog << x[i] << ' ';
       deallog << std::endl;
     }

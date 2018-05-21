@@ -108,7 +108,7 @@ LogStream::~LogStream()
 LogStream&
 LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
 {
-  std::ostringstream& stream = get_stream();
+  std::ostringstream& stream= get_stream();
 
   // Print to the internal stringstream:
   stream << p;
@@ -152,13 +152,13 @@ LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
     int_type
     overflow(int_type ch) override
     {
-      newline_written_ = true;
+      newline_written_= true;
       return ch;
     }
     int
     sync() override
     {
-      flushed_ = true;
+      flushed_= true;
       return 0;
     }
     bool flushed_;
@@ -179,7 +179,7 @@ LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
       if(at_newline)
         print_line_head();
 
-      at_newline = query_streambuf.newline_written();
+      at_newline= query_streambuf.newline_written();
 
       if(get_prefixes().size() <= std_depth)
         *std_out << stream.str();
@@ -198,7 +198,7 @@ void
 LogStream::attach(std::ostream& o, const bool print_job_id)
 {
   Threads::Mutex::ScopedLock lock(log_lock);
-  file = &o;
+  file= &o;
   o.setf(std::ios::showpoint | std::ios::left);
   if(print_job_id)
     o << dealjobid();
@@ -208,7 +208,7 @@ void
 LogStream::detach()
 {
   Threads::Mutex::ScopedLock lock(log_lock);
-  file = nullptr;
+  file= nullptr;
 }
 
 std::ostream&
@@ -230,7 +230,7 @@ LogStream::get_stream()
   // there can only be one access at a time
   if(outstreams.get().get() == nullptr)
     {
-      outstreams.get() = std::make_shared<std::ostringstream>();
+      outstreams.get()= std::make_shared<std::ostringstream>();
       outstreams.get()->setf(std::ios::showpoint | std::ios::left);
     }
 
@@ -269,10 +269,10 @@ LogStream::push(const std::string& text)
 {
   std::string pre;
   if(get_prefixes().size() > 0)
-    pre = get_prefixes().top();
+    pre= get_prefixes().top();
 
-  pre += text;
-  pre += std::string(":");
+  pre+= text;
+  pre+= std::string(":");
   get_prefixes().push(pre);
 }
 
@@ -305,8 +305,8 @@ unsigned int
 LogStream::depth_console(const unsigned int n)
 {
   Threads::Mutex::ScopedLock lock(log_lock);
-  const unsigned int         h = std_depth;
-  std_depth                    = n;
+  const unsigned int         h= std_depth;
+  std_depth                   = n;
   return h;
 }
 
@@ -314,8 +314,8 @@ unsigned int
 LogStream::depth_file(const unsigned int n)
 {
   Threads::Mutex::ScopedLock lock(log_lock);
-  const unsigned int         h = file_depth;
-  file_depth                   = n;
+  const unsigned int         h= file_depth;
+  file_depth                  = n;
   return h;
 }
 
@@ -323,8 +323,8 @@ bool
 LogStream::log_thread_id(const bool flag)
 {
   Threads::Mutex::ScopedLock lock(log_lock);
-  const bool                 h = print_thread_id;
-  print_thread_id              = flag;
+  const bool                 h= print_thread_id;
+  print_thread_id             = flag;
   return h;
 }
 
@@ -332,8 +332,8 @@ std::stack<std::string>&
 LogStream::get_prefixes() const
 {
 #ifdef DEAL_II_WITH_THREADS
-  bool                     exists         = false;
-  std::stack<std::string>& local_prefixes = prefixes.get(exists);
+  bool                     exists        = false;
+  std::stack<std::string>& local_prefixes= prefixes.get(exists);
 
   // If this is a new locally stored stack, copy the "blessed" prefixes
   // from the initial thread that created logstream.
@@ -350,7 +350,7 @@ LogStream::get_prefixes() const
 
       if(first_elem != impl.end())
         {
-          local_prefixes = *first_elem;
+          local_prefixes= *first_elem;
         }
     }
 
@@ -364,8 +364,8 @@ LogStream::get_prefixes() const
 void
 LogStream::print_line_head()
 {
-  const std::string& head   = get_prefix();
-  const unsigned int thread = Threads::this_thread_id();
+  const std::string& head  = get_prefix();
+  const unsigned int thread= Threads::this_thread_id();
 
   if(get_prefixes().size() <= std_depth)
     {

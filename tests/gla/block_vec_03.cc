@@ -28,8 +28,8 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -47,7 +47,7 @@ test()
   partitioning.push_back(block1);
   partitioning.push_back(block2);
 
-  std::vector<IndexSet> relevant = partitioning;
+  std::vector<IndexSet> relevant= partitioning;
   relevant[0].add_index(0);
   relevant[1].add_range(0, numproc);
 
@@ -68,13 +68,13 @@ test()
   v.reinit(partitioning, MPI_COMM_WORLD);
   Assert(!v.has_ghost_elements(), ExcInternalError());
 
-  typename LA::MPI::BlockVector v3 = v2;
+  typename LA::MPI::BlockVector v3= v2;
   Assert(v3.has_ghost_elements(), ExcInternalError());
 
-  v3 = v; // just copy data, keep ghosts
+  v3= v; // just copy data, keep ghosts
   Assert(v3.has_ghost_elements(), ExcInternalError());
 
-  typename LA::MPI::Vector x = v2.block(0);
+  typename LA::MPI::Vector x= v2.block(0);
   Assert(x.has_ghost_elements(), ExcInternalError());
 
   // done

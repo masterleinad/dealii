@@ -83,7 +83,7 @@ namespace LinearAlgebra
       void
       reinit(const IndexSet& parallel_partitioner,
              const MPI_Comm& communicator,
-             const bool      omit_zeroing_entries = false);
+             const bool      omit_zeroing_entries= false);
 
       /**
        * Change the dimension to that of the vector V. The elements of V are not
@@ -91,7 +91,7 @@ namespace LinearAlgebra
        */
       virtual void
       reinit(const VectorSpaceVector<double>& V,
-             const bool omit_zeroing_entries = false) override;
+             const bool omit_zeroing_entries= false) override;
 
       /**
        * Copy function. This function takes a Vector and copies all the
@@ -311,9 +311,9 @@ namespace LinearAlgebra
        */
       virtual void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const override;
+            const unsigned int precision = 3,
+            const bool         scientific= true,
+            const bool         across    = true) const override;
 
       /**
        * Return the memory consumption of this class in bytes.

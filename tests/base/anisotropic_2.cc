@@ -26,18 +26,18 @@ typedef std::vector<Polynomial<double>> PolVector;
 void
 print_2d(const AnisotropicPolynomials<2>& aniso)
 {
-  const unsigned int N = 10, M = 13;
-  for(unsigned int i = 0; i <= N; ++i)
+  const unsigned int N= 10, M= 13;
+  for(unsigned int i= 0; i <= N; ++i)
     {
       deallog << std::endl;
-      for(unsigned int j = 0; j <= M; ++j)
+      for(unsigned int j= 0; j <= M; ++j)
         {
           deallog << 1. * i / N << " " << 1. * j / M << " ";
-          for(unsigned int k = 0; k < aniso.n(); ++k)
+          for(unsigned int k= 0; k < aniso.n(); ++k)
             deallog << aniso.compute_value(k, Point<2>(1. * i / N, 1. * j / M))
                     << " ";
           deallog << std::endl;
-          for(unsigned int k = 0; k < aniso.n(); ++k)
+          for(unsigned int k= 0; k < aniso.n(); ++k)
             deallog << aniso.compute_grad(k, Point<2>(1. * i / N, 1. * j / M))
                     << " ";
           deallog << std::endl;
@@ -71,22 +71,22 @@ check_2d()
 void
 print_3d(const AnisotropicPolynomials<3>& aniso)
 {
-  const unsigned int N = 4, M = 3, P = 5;
-  for(unsigned int i = 0; i <= N; ++i)
+  const unsigned int N= 4, M= 3, P= 5;
+  for(unsigned int i= 0; i <= N; ++i)
     {
       deallog << std::endl;
-      for(unsigned int j = 0; j <= M; ++j)
+      for(unsigned int j= 0; j <= M; ++j)
         {
           deallog << std::endl;
-          for(unsigned int k = 0; k <= P; ++k)
+          for(unsigned int k= 0; k <= P; ++k)
             {
               deallog << 1. * i / N << " " << 1. * j / M << " " << 1. * k / P;
-              for(unsigned int k = 0; k < aniso.n(); ++k)
+              for(unsigned int k= 0; k < aniso.n(); ++k)
                 deallog << aniso.compute_value(
                              k, Point<3>(1. * i / N, 1. * j / M, 1. * k / P))
                         << " ";
               deallog << std::endl;
-              for(unsigned int k = 0; k < aniso.n(); ++k)
+              for(unsigned int k= 0; k < aniso.n(); ++k)
                 deallog << aniso.compute_grad(
                              k, Point<3>(1. * i / N, 1. * j / M, 1. * k / P))
                         << " ";
@@ -103,25 +103,25 @@ check_3d()
   // three checks with higher degree
   // in x, y or z direction
   {
-    PolVector                 pols[3] = {Pol::generate_complete_basis(3),
-                         Pol::generate_complete_basis(1),
-                         Pol::generate_complete_basis(1)};
+    PolVector                 pols[3]= {Pol::generate_complete_basis(3),
+                        Pol::generate_complete_basis(1),
+                        Pol::generate_complete_basis(1)};
     std::vector<PolVector>    p(&pols[0], &pols[3]);
     AnisotropicPolynomials<3> aniso(p);
     print_3d(aniso);
   }
   {
-    PolVector                 pols[3] = {Pol::generate_complete_basis(1),
-                         Pol::generate_complete_basis(3),
-                         Pol::generate_complete_basis(1)};
+    PolVector                 pols[3]= {Pol::generate_complete_basis(1),
+                        Pol::generate_complete_basis(3),
+                        Pol::generate_complete_basis(1)};
     std::vector<PolVector>    p(&pols[0], &pols[3]);
     AnisotropicPolynomials<3> aniso(p);
     print_3d(aniso);
   }
   {
-    PolVector                 pols[3] = {Pol::generate_complete_basis(1),
-                         Pol::generate_complete_basis(2),
-                         Pol::generate_complete_basis(3)};
+    PolVector                 pols[3]= {Pol::generate_complete_basis(1),
+                        Pol::generate_complete_basis(2),
+                        Pol::generate_complete_basis(3)};
     std::vector<PolVector>    p(&pols[0], &pols[3]);
     AnisotropicPolynomials<3> aniso(p);
     print_3d(aniso);

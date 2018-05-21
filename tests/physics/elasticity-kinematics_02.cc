@@ -33,7 +33,7 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  const int dim = 3;
+  const int dim= 3;
 
   Tensor<2, dim, VectorizedArray<double>> grad_u;
 
@@ -41,33 +41,33 @@ main()
   // which is a random s.p.d. matrix -> F will be s.p.d
   // -> det(F) > 0 which has to be satisfied for
   // F to make any sense (no negative volume).
-  grad_u[0][0] = 2.0;
-  grad_u[0][1] = -1.0;
-  grad_u[0][2] = 0.0;
-  grad_u[1][0] = -1.0;
-  grad_u[1][1] = 2.0;
-  grad_u[1][2] = -1.0;
-  grad_u[2][0] = 0.0;
-  grad_u[2][1] = -1.0;
-  grad_u[2][2] = 2.0;
+  grad_u[0][0]= 2.0;
+  grad_u[0][1]= -1.0;
+  grad_u[0][2]= 0.0;
+  grad_u[1][0]= -1.0;
+  grad_u[1][1]= 2.0;
+  grad_u[1][2]= -1.0;
+  grad_u[2][0]= 0.0;
+  grad_u[2][1]= -1.0;
+  grad_u[2][2]= 2.0;
 
   // Scale the gradients along the vectorization-index so that each grad_u[v] is unique.
-  for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; v++)
-    for(unsigned int i = 0; i < dim; i++)
-      for(unsigned int j = 0; j < dim; j++)
-        grad_u[i][j][v] *= (v + 1);
+  for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements; v++)
+    for(unsigned int i= 0; i < dim; i++)
+      for(unsigned int j= 0; j < dim; j++)
+        grad_u[i][j][v]*= (v + 1);
 
   Tensor<2, dim, VectorizedArray<double>> F_solution;
-  F_solution = grad_u;
-  for(unsigned int i = 0; i < dim; i++)
-    F_solution[i][i] = F_solution[i][i] + 1.0;
+  F_solution= grad_u;
+  for(unsigned int i= 0; i < dim; i++)
+    F_solution[i][i]= F_solution[i][i] + 1.0;
 
-  Tensor<2, dim, VectorizedArray<double>> F_test = Kinematics::F(grad_u);
+  Tensor<2, dim, VectorizedArray<double>> F_test= Kinematics::F(grad_u);
 
   // You can't use .norm() on some difference-tensor of the two so we compare element-wise!
-  for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; v++)
-    for(unsigned int i = 0; i < dim; i++)
-      for(unsigned int j = 0; j < dim; j++)
+  for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements; v++)
+    for(unsigned int i= 0; i < dim; i++)
+      for(unsigned int j= 0; j < dim; j++)
         if(F_solution[i][j][v] - F_test[i][j][v] != 0.0)
           deallog << "Not OK" << std::endl;
 
@@ -81,21 +81,21 @@ main()
   SymmetricTensor<2, dim, VectorizedArray<double>> E_test
     = Kinematics::E(F_test);
 
-  for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; v++)
-    for(unsigned int i = 0; i < dim; i++)
-      for(unsigned int j = 0; j < dim; j++)
+  for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements; v++)
+    for(unsigned int i= 0; i < dim; i++)
+      for(unsigned int j= 0; j < dim; j++)
         if(E_test[i][j][v] - E_solution[i][j][v] != 0.0)
           deallog << "Not OK" << std::endl;
 
   Tensor<2, dim, VectorizedArray<double>> F_iso_solution;
-  F_iso_solution = std::pow(determinant(F_solution), -1.0 / dim) * F_solution;
+  F_iso_solution= std::pow(determinant(F_solution), -1.0 / dim) * F_solution;
 
   Tensor<2, dim, VectorizedArray<double>> F_iso_test;
-  F_iso_test = Kinematics::F_iso(F_test);
+  F_iso_test= Kinematics::F_iso(F_test);
 
-  for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; v++)
-    for(unsigned int i = 0; i < dim; i++)
-      for(unsigned int j = 0; j < dim; j++)
+  for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements; v++)
+    for(unsigned int i= 0; i < dim; i++)
+      for(unsigned int j= 0; j < dim; j++)
         if(F_iso_test[i][j][v] - F_iso_solution[i][j][v] != 0.0)
           deallog << "Not OK" << std::endl;
 

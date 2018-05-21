@@ -68,34 +68,34 @@ template <typename NumberType>
 void
 test()
 {
-  const unsigned int           size = 4;
+  const unsigned int           size= 4;
   LAPACKFullMatrix<NumberType> A(size);
   A.set_property(LAPACKSupport::symmetric);
   Vector<NumberType> v(size);
 
-  A(0, 0) = 1;
-  A(0, 1) = 1;
-  A(0, 2) = 1;
-  A(0, 3) = 1;
-  A(1, 0) = 1;
-  A(1, 1) = 2;
-  A(1, 2) = 3;
-  A(1, 3) = 4;
-  A(2, 0) = 1;
-  A(2, 1) = 3;
-  A(2, 2) = 6;
-  A(2, 3) = 10;
-  A(3, 0) = 1;
-  A(3, 1) = 4;
-  A(3, 2) = 10;
-  A(3, 3) = 20;
+  A(0, 0)= 1;
+  A(0, 1)= 1;
+  A(0, 2)= 1;
+  A(0, 3)= 1;
+  A(1, 0)= 1;
+  A(1, 1)= 2;
+  A(1, 2)= 3;
+  A(1, 3)= 4;
+  A(2, 0)= 1;
+  A(2, 1)= 3;
+  A(2, 2)= 6;
+  A(2, 3)= 10;
+  A(3, 0)= 1;
+  A(3, 1)= 4;
+  A(3, 2)= 10;
+  A(3, 3)= 20;
 
-  v(0) = 3;
-  v(1) = 2;
-  v(2) = 1;
-  v(3) = 5;
+  v(0)= 3;
+  v(1)= 2;
+  v(2)= 1;
+  v(3)= 5;
 
-  const NumberType a = 1.;
+  const NumberType a= 1.;
 
   A.compute_cholesky_factorization();
   deallog << "Cholesky:" << std::endl;
@@ -106,7 +106,7 @@ test()
   deallog << "Cholesky updated:" << std::endl;
   A.print_formatted(deallog.get_file_stream(), 5);
 
-  v /= 2.;
+  v/= 2.;
 
   A.rank1_update(-1., v);
 
@@ -117,7 +117,7 @@ test()
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(5);
   deallog.attach(logfile);

@@ -25,8 +25,8 @@ void
 test()
 {
   BlockSparsityPattern bsp(2, 2);
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
       bsp.block(i, j).reinit(1, 1, 1);
   bsp.collect_sizes();
   bsp.compress();
@@ -34,12 +34,12 @@ test()
   BlockSparseMatrix<double> m(bsp);
 
   // advance it to the end of the matrix
-  BlockSparseMatrix<double>::const_iterator it = m.begin();
-  for(unsigned int i = 0; i < 4; ++i)
+  BlockSparseMatrix<double>::const_iterator it= m.begin();
+  for(unsigned int i= 0; i < 4; ++i)
     ++it;
 
   // now also get an end iterator
-  BlockSparseMatrix<double>::const_iterator it2 = m.end();
+  BlockSparseMatrix<double>::const_iterator it2= m.end();
 
   // make sure that the two of them match
   AssertThrow(it == it2, ExcInternalError());

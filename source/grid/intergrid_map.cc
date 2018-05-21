@@ -42,14 +42,14 @@ InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
   clear();
 
   // next store pointers to grids
-  this->source_grid      = &source_grid;
-  this->destination_grid = &destination_grid;
+  this->source_grid     = &source_grid;
+  this->destination_grid= &destination_grid;
 
   // then set up the meshes from
   // scratch and fill them with end-iterators
-  const unsigned int n_levels = source_grid.get_triangulation().n_levels();
+  const unsigned int n_levels= source_grid.get_triangulation().n_levels();
   mapping.resize(n_levels);
-  for(unsigned int level = 0; level < n_levels; ++level)
+  for(unsigned int level= 0; level < n_levels; ++level)
     {
       // first find out about the highest
       // index used on this level. We could
@@ -58,12 +58,12 @@ InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
       // know the underlying data structure
       // for this and we would like to
       // avoid such knowledge here
-      unsigned int  n_cells = 0;
-      cell_iterator cell    = source_grid.begin(level),
-                    endc    = source_grid.end(level);
+      unsigned int  n_cells= 0;
+      cell_iterator cell   = source_grid.begin(level),
+                    endc   = source_grid.end(level);
       for(; cell != endc; ++cell)
         if(static_cast<unsigned int>(cell->index()) > n_cells)
-          n_cells = cell->index();
+          n_cells= cell->index();
 
       // note: n_cells is now the largest
       // zero-based index, but we need the
@@ -77,8 +77,8 @@ InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
   // the two arrays. note that the function
   // takes a *reference* to the int and
   // this may change it
-  cell_iterator src_cell = source_grid.begin(0),
-                dst_cell = destination_grid.begin(0), endc = source_grid.end(0);
+  cell_iterator src_cell= source_grid.begin(0),
+                dst_cell= destination_grid.begin(0), endc= source_grid.end(0);
   for(; src_cell != endc; ++src_cell, ++dst_cell)
     set_mapping(src_cell, dst_cell);
 
@@ -93,7 +93,7 @@ InterGridMap<MeshType>::set_mapping(const cell_iterator& src_cell,
                                     const cell_iterator& dst_cell)
 {
   // first set the map for this cell
-  mapping[src_cell->level()][src_cell->index()] = dst_cell;
+  mapping[src_cell->level()][src_cell->index()]= dst_cell;
 
   // if both cells have children, we may
   // recurse further into the hierarchy
@@ -107,7 +107,7 @@ InterGridMap<MeshType>::set_mapping(const cell_iterator& src_cell,
              ExcNotImplemented());
       Assert(src_cell->refinement_case() == dst_cell->refinement_case(),
              ExcNotImplemented());
-      for(unsigned int c = 0;
+      for(unsigned int c= 0;
           c < GeometryInfo<MeshType::dimension>::max_children_per_cell;
           ++c)
         set_mapping(src_cell->child(c), dst_cell->child(c));
@@ -117,7 +117,7 @@ InterGridMap<MeshType>::set_mapping(const cell_iterator& src_cell,
     // set entries for all children
     // of this cell to the one
     // dst_cell
-    for(unsigned int c = 0; c < src_cell->n_children(); ++c)
+    for(unsigned int c= 0; c < src_cell->n_children(); ++c)
       set_entries_to_cell(src_cell->child(c), dst_cell);
   // else (no cell is refined or
   // dst_cell is refined): no pointers
@@ -130,12 +130,12 @@ InterGridMap<MeshType>::set_entries_to_cell(const cell_iterator& src_cell,
                                             const cell_iterator& dst_cell)
 {
   // first set the map for this cell
-  mapping[src_cell->level()][src_cell->index()] = dst_cell;
+  mapping[src_cell->level()][src_cell->index()]= dst_cell;
 
   // then do so for the children as well
   // if there are any
   if(src_cell->has_children())
-    for(unsigned int c = 0; c < src_cell->n_children(); ++c)
+    for(unsigned int c= 0; c < src_cell->n_children(); ++c)
       set_entries_to_cell(src_cell->child(c), dst_cell);
 }
 
@@ -159,8 +159,8 @@ void
 InterGridMap<MeshType>::clear()
 {
   mapping.clear();
-  source_grid      = nullptr;
-  destination_grid = nullptr;
+  source_grid     = nullptr;
+  destination_grid= nullptr;
 }
 
 template <class MeshType>

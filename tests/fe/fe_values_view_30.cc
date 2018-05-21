@@ -51,15 +51,15 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 {
   Assert(component < 2, ExcIndexRange(component, 0, 1));
 
-  const double PI  = numbers::PI;
-  double       val = 0.0;
+  const double PI = numbers::PI;
+  double       val= 0.0;
   switch(component)
     {
       case 0:
-        val = pow(p(0), 3);
+        val= pow(p(0), 3);
         break;
       case 1:
-        val = pow(p(1), 2) * p(0);
+        val= pow(p(1), 2) * p(0);
         break;
     }
   return val;
@@ -71,18 +71,18 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 {
   Assert(component < 3, ExcIndexRange(component, 0, 2));
 
-  const double PI  = numbers::PI;
-  double       val = 0.0;
+  const double PI = numbers::PI;
+  double       val= 0.0;
   switch(component)
     {
       case 0:
-        val = pow(p(0), 3);
+        val= pow(p(0), 3);
         break;
       case 1:
-        val = pow(p(1), 2) * p(0);
+        val= pow(p(1), 2) * p(0);
         break;
       case 2:
-        val = p(2) * p(1) * p(0);
+        val= p(2) * p(1) * p(0);
         break;
     }
   return val;
@@ -93,8 +93,8 @@ void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
                                   Vector<double>&   values) const
 {
-  for(int i = 0; i < dim; ++i)
-    values(i) = value(p, i);
+  for(int i= 0; i < dim; ++i)
+    values(i)= value(p, i);
 }
 
 template <int dim>
@@ -133,7 +133,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   fe_values.get_function_third_derivatives(function_vals, vector_values);
 
-  for(unsigned int c = 0; c < fe.n_components(); ++c)
+  for(unsigned int c= 0; c < fe.n_components(); ++c)
     // use a vector extractor if there
     // are sufficiently many components
     // left after the current component
@@ -145,12 +145,12 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
           function_vals, selected_vector_values);
         deallog << "component=" << c << std::endl;
 
-        for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
-          for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int q= 0; q < fe_values.n_quadrature_points; ++q)
+          for(unsigned int d= 0; d < dim; ++d)
             {
-              for(unsigned int e = 0; e < dim; ++e)
-                for(unsigned int f = 0; f < dim; ++f)
-                  for(unsigned int g = 0; g < dim; ++g)
+              for(unsigned int e= 0; e < dim; ++e)
+                for(unsigned int f= 0; f < dim; ++f)
+                  for(unsigned int g= 0; g < dim; ++g)
                     deallog
                       << selected_vector_values[q][d][e][f][g]
                       << (e < dim - 1 && f < dim - 1 && g < dim - 1 ? ", " :
@@ -174,7 +174,7 @@ test_hyper_sphere()
   static const SphericalManifold<dim> boundary;
   tr.set_manifold(0, boundary);
 
-  const unsigned int order = 3;
+  const unsigned int order= 3;
 
   test(tr, FESystem<dim>(FE_Q<dim>(QIterated<1>(QTrapez<1>(), order)), dim));
 }

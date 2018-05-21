@@ -42,7 +42,7 @@ test()
     triangulation.execute_coarsening_and_refinement();
   }
 
-  for(unsigned int procs = 1; procs < 20; ++procs)
+  for(unsigned int procs= 1; procs < 20; ++procs)
     {
       deallog << " procs = " << procs << std::endl;
       GridTools::partition_triangulation(procs, triangulation);

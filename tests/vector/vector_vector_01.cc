@@ -24,8 +24,8 @@
 void
 test(Vector<double>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = i + 1.;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= i + 1.;
   Vector<float> w(v);
 
   AssertThrow(w == v, ExcInternalError());

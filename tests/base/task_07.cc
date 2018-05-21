@@ -35,8 +35,8 @@ main()
   deallog.attach(logfile);
 
   Threads::TaskGroup<> tg;
-  tg += Threads::new_task(test, 1);
-  tg += Threads::new_task(test, 2);
+  tg+= Threads::new_task(test, 1);
+  tg+= Threads::new_task(test, 2);
 
   tg.join_all();
 

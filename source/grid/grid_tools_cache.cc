@@ -42,7 +42,7 @@ namespace GridTools
   void
   Cache<dim, spacedim>::mark_for_update(const CacheUpdateFlags& flags)
   {
-    update_flags |= flags;
+    update_flags|= flags;
   }
 
   template <int dim, int spacedim>
@@ -52,8 +52,8 @@ namespace GridTools
   {
     if(update_flags & update_vertex_to_cell_map)
       {
-        vertex_to_cells = GridTools::vertex_to_cell_map(*tria);
-        update_flags    = update_flags & ~update_vertex_to_cell_map;
+        vertex_to_cells= GridTools::vertex_to_cell_map(*tria);
+        update_flags   = update_flags & ~update_vertex_to_cell_map;
       }
     return vertex_to_cells;
   }
@@ -64,9 +64,9 @@ namespace GridTools
   {
     if(update_flags & update_vertex_to_cell_centers_directions)
       {
-        vertex_to_cell_centers = GridTools::vertex_to_cell_centers_directions(
+        vertex_to_cell_centers= GridTools::vertex_to_cell_centers_directions(
           *tria, get_vertex_to_cell_map());
-        update_flags = update_flags & ~update_vertex_to_cell_centers_directions;
+        update_flags= update_flags & ~update_vertex_to_cell_centers_directions;
       }
     return vertex_to_cell_centers;
   }
@@ -77,8 +77,8 @@ namespace GridTools
   {
     if(update_flags & update_used_vertices)
       {
-        used_vertices = GridTools::extract_used_vertices(*tria, *mapping);
-        update_flags  = update_flags & ~update_used_vertices;
+        used_vertices= GridTools::extract_used_vertices(*tria, *mapping);
+        update_flags = update_flags & ~update_used_vertices;
       }
     return used_vertices;
   }
@@ -91,7 +91,7 @@ namespace GridTools
     if(update_flags & update_vertex_kdtree)
       {
         vertex_kdtree.set_points(tria->get_vertices());
-        update_flags = update_flags & ~update_vertex_kdtree;
+        update_flags= update_flags & ~update_vertex_kdtree;
       }
     return vertex_kdtree;
   }

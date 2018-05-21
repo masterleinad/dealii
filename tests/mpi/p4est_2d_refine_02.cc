@@ -29,7 +29,7 @@ template <class TRIA>
 void
 check(TRIA& tr)
 {
-  typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
+  typename TRIA::cell_iterator cell= tr.begin(), endc= tr.end();
 
   for(; cell != endc; ++cell)
     {
@@ -46,7 +46,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -66,7 +66,7 @@ test()
           deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
         }
 
-      const unsigned int checksum = tr.get_checksum();
+      const unsigned int checksum= tr.get_checksum();
       deallog << "Checksum: " << checksum << std::endl;
 
       check(tr);

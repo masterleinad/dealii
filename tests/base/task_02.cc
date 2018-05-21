@@ -32,7 +32,7 @@ main()
 {
   initlog();
 
-  Threads::Task<int> t = Threads::new_task(test);
+  Threads::Task<int> t= Threads::new_task(test);
   AssertThrow(t.return_value() == 42, ExcInternalError());
 
   deallog << "OK" << std::endl;

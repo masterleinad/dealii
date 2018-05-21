@@ -49,7 +49,7 @@ namespace Utilities
       /**
        * Copy constructor is deleted.
        */
-      Handle(Handle const&) = delete;
+      Handle(Handle const&)= delete;
 
       /**
        * Destructor. Destroy the handles and free all the memory allocated by
@@ -74,8 +74,7 @@ namespace Utilities
     inline void
     malloc(T*& pointer, const unsigned int n_elements)
     {
-      cudaError_t cuda_error_code
-        = cudaMalloc(&pointer, n_elements * sizeof(T));
+      cudaError_t cuda_error_code= cudaMalloc(&pointer, n_elements * sizeof(T));
       AssertCuda(cuda_error_code);
     }
 
@@ -86,9 +85,9 @@ namespace Utilities
     inline void
     free(T*& pointer)
     {
-      cudaError_t cuda_error_code = cudaFree(pointer);
+      cudaError_t cuda_error_code= cudaFree(pointer);
       AssertCuda(cuda_error_code);
-      pointer = nullptr;
+      pointer= nullptr;
     }
 
     /**
@@ -98,10 +97,10 @@ namespace Utilities
     inline void
     copy_to_host(const T* pointer_dev, std::vector<T>& vector_host)
     {
-      cudaError_t cuda_error_code = cudaMemcpy(vector_host.data(),
-                                               pointer_dev,
-                                               vector_host.size() * sizeof(T),
-                                               cudaMemcpyDeviceToHost);
+      cudaError_t cuda_error_code= cudaMemcpy(vector_host.data(),
+                                              pointer_dev,
+                                              vector_host.size() * sizeof(T),
+                                              cudaMemcpyDeviceToHost);
       AssertCuda(cuda_error_code);
     }
 
@@ -113,10 +112,10 @@ namespace Utilities
     inline void
     copy_to_dev(const std::vector<T>& vector_host, T* pointer_dev)
     {
-      cudaError_t cuda_error_code = cudaMemcpy(pointer_dev,
-                                               vector_host.data(),
-                                               vector_host.size() * sizeof(T),
-                                               cudaMemcpyHostToDevice);
+      cudaError_t cuda_error_code= cudaMemcpy(pointer_dev,
+                                              vector_host.data(),
+                                              vector_host.size() * sizeof(T),
+                                              cudaMemcpyHostToDevice);
       AssertCuda(cuda_error_code);
     }
   } // namespace CUDA

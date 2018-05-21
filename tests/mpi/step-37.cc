@@ -63,8 +63,8 @@ namespace Step37
 {
   using namespace dealii;
 
-  const unsigned int degree_finite_element = 2;
-  const unsigned int dimension             = 3;
+  const unsigned int degree_finite_element= 2;
+  const unsigned int dimension            = 3;
 
   template <int dim>
   class LaplaceProblem
@@ -192,7 +192,7 @@ namespace Step37
 
     euler_positions.update_ghost_values();
 
-    mapping = std::make_shared<
+    mapping= std::make_shared<
       MappingFEField<dim, dim, LinearAlgebra::distributed::Vector<double>>>(
       dof_euler, euler_positions);
 
@@ -229,7 +229,7 @@ namespace Step37
     system_matrix.initialize_dof_vector(solution);
     system_matrix.initialize_dof_vector(system_rhs);
 
-    const unsigned int nlevels = triangulation.n_global_levels();
+    const unsigned int nlevels= triangulation.n_global_levels();
     mg_matrices.resize(0, nlevels - 1);
 
     std::set<types::boundary_id> dirichlet_boundary;
@@ -238,7 +238,7 @@ namespace Step37
     mg_constrained_dofs.make_zero_boundary_constraints(dof_handler,
                                                        dirichlet_boundary);
 
-    for(unsigned int level = 0; level < nlevels; ++level)
+    for(unsigned int level= 0; level < nlevels; ++level)
       {
         IndexSet relevant_dofs;
         DoFTools::extract_locally_relevant_level_dofs(
@@ -254,7 +254,7 @@ namespace Step37
           = MatrixFree<dim, float>::AdditionalData::none;
         additional_data.mapping_update_flags
           = (update_gradients | update_JxW_values | update_quadrature_points);
-        additional_data.level_mg_handler = level;
+        additional_data.level_mg_handler= level;
         std::shared_ptr<MatrixFree<dim, float>> mg_mf_storage_level(
           new MatrixFree<dim, float>());
         mg_mf_storage_level->reinit(dof_handler,
@@ -278,12 +278,12 @@ namespace Step37
         x0(std::abs(charge) < 1e-10 ? Point<dim>() : dipole / charge)
     {}
 
-    virtual ~PotentialBCFunction() = default;
+    virtual ~PotentialBCFunction()= default;
 
     virtual double
     value(const Point<dim>& p, const unsigned int) const
     {
-      const double r = p.distance(x0);
+      const double r= p.distance(x0);
       Assert(r > 0, ExcDivideByZero());
       return charge / r;
     }
@@ -311,7 +311,7 @@ namespace Step37
       typename FunctionMap<dim>::type dirichlet_boundary_functions;
       PotentialBCFunction<dim>        bc_func(240, Point<dim>());
       dirichlet_boundary_ids.insert(0);
-      dirichlet_boundary_functions[0] = &bc_func;
+      dirichlet_boundary_functions[0]= &bc_func;
       VectorTools::interpolate_boundary_values(*mapping.get(),
                                                dof_handler,
                                                dirichlet_boundary_functions,
@@ -323,20 +323,20 @@ namespace Step37
       non_homogeneous_constraints.close();
     }
 
-    solution = 0;
+    solution= 0;
     non_homogeneous_constraints.distribute(solution);
-    system_rhs = 0;
+    system_rhs= 0;
     solution.update_ghost_values();
     FEEvaluation<dim, degree_finite_element> phi(
       *system_matrix.get_matrix_free());
-    for(unsigned int cell = 0;
+    for(unsigned int cell= 0;
         cell < system_matrix.get_matrix_free()->n_macro_cells();
         ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values_plain(solution);
         phi.evaluate(false, true);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for(unsigned int q= 0; q < phi.n_q_points; ++q)
           {
             phi.submit_gradient(-phi.get_gradient(q), q);
             // phi.submit_value(make_vectorized_array<double>(1.0), q);
@@ -363,20 +363,19 @@ namespace Step37
                                                          mg_smoother;
     MGLevelObject<typename SmootherType::AdditionalData> smoother_data;
     smoother_data.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for(unsigned int level= 0; level < triangulation.n_global_levels(); ++level)
       {
         if(level > 0)
           {
-            smoother_data[level].smoothing_range     = 15.;
-            smoother_data[level].degree              = 4;
-            smoother_data[level].eig_cg_n_iterations = 10;
+            smoother_data[level].smoothing_range    = 15.;
+            smoother_data[level].degree             = 4;
+            smoother_data[level].eig_cg_n_iterations= 10;
           }
         else
           {
-            smoother_data[0].smoothing_range = 1e-3;
-            smoother_data[0].degree          = numbers::invalid_unsigned_int;
-            smoother_data[0].eig_cg_n_iterations = mg_matrices[0].m();
+            smoother_data[0].smoothing_range    = 1e-3;
+            smoother_data[0].degree             = numbers::invalid_unsigned_int;
+            smoother_data[0].eig_cg_n_iterations= mg_matrices[0].m();
           }
         mg_matrices[level].compute_diagonal();
         smoother_data[level].preconditioner
@@ -394,8 +393,7 @@ namespace Step37
     MGLevelObject<MatrixFreeOperators::MGInterfaceOperator<LevelMatrixType>>
       mg_interface_matrices;
     mg_interface_matrices.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for(unsigned int level= 0; level < triangulation.n_global_levels(); ++level)
       mg_interface_matrices[level].initialize(mg_matrices[level]);
     mg::Matrix<LinearAlgebra::distributed::Vector<float>> mg_interface(
       mg_interface_matrices);
@@ -448,7 +446,7 @@ namespace Step37
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
+        for(unsigned int i= 0;
             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
             ++i)
           filenames.emplace_back("solution-" + std::to_string(cycle) + "."
@@ -470,7 +468,7 @@ namespace Step37
         const std::string base_filename
           = "grid" + dealii::Utilities::int_to_string(dim) + "_"
             + dealii::Utilities::int_to_string(cycle);
-        const std::string filename = base_filename + ".gp";
+        const std::string filename= base_filename + ".gp";
         std::ofstream     f(filename.c_str());
 
         f << "set terminal png size 400,410 enhanced font \"Helvetica,8\""
@@ -495,7 +493,7 @@ namespace Step37
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 2; ++cycle)
+    for(unsigned int cycle= 0; cycle < 2; ++cycle)
       {
         pcout << "Cycle " << cycle << std::endl;
 
@@ -504,7 +502,7 @@ namespace Step37
             Point<dim> center;
             GridGenerator::hyper_ball(triangulation, center, 12);
 
-            const types::manifold_id            sphere_id = 0;
+            const types::manifold_id            sphere_id= 0;
             static const SphericalManifold<dim> boundary_ball(center);
             triangulation.set_all_manifold_ids_on_boundary(sphere_id);
             triangulation.set_manifold(sphere_id, boundary_ball);

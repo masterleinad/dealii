@@ -48,7 +48,7 @@ check_select(const FiniteElement<dim>& fe,
   tr.refine_global(2);
 
   DoFHandler<dim>  mgdof(tr);
-  DoFHandler<dim>& dof = mgdof;
+  DoFHandler<dim>& dof= mgdof;
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
   DoFRenumbering::component_wise(static_cast<DoFHandler<dim>&>(mgdof),
@@ -57,7 +57,7 @@ check_select(const FiniteElement<dim>& fe,
     *std::max_element(target_component.begin(), target_component.end()) + 1);
   DoFTools::count_dofs_per_component(dof, ndofs, true, target_component);
 
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     DoFRenumbering::component_wise(mgdof, l, mg_target_component);
 
   std::vector<std::vector<types::global_dof_index>> mg_ndofs(
@@ -65,13 +65,13 @@ check_select(const FiniteElement<dim>& fe,
   MGTools::count_dofs_per_component(mgdof, mg_ndofs, true, mg_target_component);
 
   deallog << "Global  dofs:";
-  for(unsigned int i = 0; i < ndofs.size(); ++i)
+  for(unsigned int i= 0; i < ndofs.size(); ++i)
     deallog << ' ' << ndofs[i];
   deallog << std::endl;
-  for(unsigned int l = 0; l < mg_ndofs.size(); ++l)
+  for(unsigned int l= 0; l < mg_ndofs.size(); ++l)
     {
       deallog << "Level " << l << " dofs:";
-      for(unsigned int i = 0; i < mg_ndofs[l].size(); ++i)
+      for(unsigned int i= 0; i < mg_ndofs[l].size(); ++i)
         deallog << ' ' << mg_ndofs[l][i];
       deallog << std::endl;
     }
@@ -84,15 +84,15 @@ check_select(const FiniteElement<dim>& fe,
   Vector<double> u1(mg_ndofs[1][mg_selected]);
   Vector<double> u0(mg_ndofs[0][mg_selected]);
 
-  u0 = 1;
+  u0= 1;
   transfer.prolongate(1, u1, u0);
   transfer.prolongate(2, u2, u1);
   deallog << "u0\t" << (int) (u0 * u0 + .5) << std::endl
           << "u1\t" << (int) (u1 * u1 + .5) << std::endl
           << "u2\t" << (int) (u2 * u2 + .5) << std::endl;
   // Now restrict the same vectors.
-  u1 = 0.;
-  u0 = 0.;
+  u1= 0.;
+  u0= 0.;
   transfer.restrict_and_add(2, u1, u2);
   transfer.restrict_and_add(1, u0, u1);
   deallog << "u1\t" << (int) (u1 * u1 + .5) << std::endl
@@ -100,15 +100,15 @@ check_select(const FiniteElement<dim>& fe,
   // Check copy to mg and back
   BlockVector<double> u;
   u.reinit(ndofs);
-  for(unsigned int i = 0; i < u.size(); ++i)
-    u(i) = i;
+  for(unsigned int i= 0; i < u.size(); ++i)
+    u(i)= i;
 
   MGLevelObject<Vector<double>> v(0, tr.n_levels() - 1);
-  for(unsigned int l = 0; l < tr.n_levels() - 1; ++l)
+  for(unsigned int l= 0; l < tr.n_levels() - 1; ++l)
     v[l].reinit(mg_ndofs[l][mg_target_component[mg_selected]]);
 
   transfer.copy_to_mg(mgdof, v, u);
-  for(unsigned int i = 0; i < v[2].size(); ++i)
+  for(unsigned int i= 0; i < v[2].size(); ++i)
     deallog << ' ' << (int) v[2](i);
   deallog << std::endl;
 }
@@ -123,16 +123,16 @@ main()
   std::vector<unsigned int> v1(4);
   std::vector<unsigned int> v2(4);
   std::vector<unsigned int> v3(4);
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     {
-      v1[i] = i;
-      v2[i] = 0;
-      v3[i] = i;
+      v1[i]= i;
+      v2[i]= 0;
+      v3[i]= i;
     }
-  v3[0] = 0;
-  v3[1] = 1;
-  v3[2] = 1;
-  v3[3] = 2;
+  v3[0]= 0;
+  v3[1]= 1;
+  v3[2]= 1;
+  v3[3]= 2;
 
   FESystem<2> fe1(FE_DGQ<2>(1), 4);
 

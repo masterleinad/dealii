@@ -28,10 +28,10 @@ test(PETScWrappers::MPI::Vector& v)
   // set only certain elements of the
   // vector.
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) += i;
-      pattern[i] = true;
+      v(i)+= i;
+      pattern[i]= true;
     }
 
   v.compress(VectorOperation::add);
@@ -42,7 +42,7 @@ test(PETScWrappers::MPI::Vector& v)
   PETScWrappers::MPI::Vector w1(MPI_COMM_WORLD, w, w.size());
   PETScWrappers::MPI::Vector x1(MPI_COMM_WORLD, x, w.size());
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w1(i) == w(i), ExcInternalError());
       AssertThrow(x1(i) == x(i), ExcInternalError());

@@ -50,7 +50,7 @@ test()
 
   dof_handler.distribute_dofs(fe);
 
-  const unsigned int N = dof_handler.n_boundary_dofs();
+  const unsigned int N= dof_handler.n_boundary_dofs();
   deallog << N << std::endl;
 }
 

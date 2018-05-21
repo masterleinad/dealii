@@ -34,7 +34,7 @@ test(std::ostream& /*out*/)
 
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
-  for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
+  for(unsigned int c= 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
     tr.begin(1)->child(c)->set_coarsen_flag();
   tr.execute_coarsening_and_refinement();
 

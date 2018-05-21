@@ -44,7 +44,7 @@ main()
   fe_collection.push_back(FE_Q<1>(4));
   fe_collection.push_back(FE_Q<1>(6));
 
-  const unsigned int n_fe_indices = 3;
+  const unsigned int n_fe_indices= 3;
   {
     typename hp::DoFHandler<1>::active_cell_iterator cell
       = dof_handler.begin_active();
@@ -63,7 +63,7 @@ main()
 
   typename hp::DoFHandler<1>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       deallog << "===================================" << std::endl;
@@ -72,7 +72,7 @@ main()
       dof_indices.resize(fe_collection[cell->active_fe_index()].dofs_per_cell);
       cell->get_dof_indices(dof_indices);
       deallog << "cell dofs: ";
-      for(unsigned int dof_n = 0; dof_n < dof_indices.size(); ++dof_n)
+      for(unsigned int dof_n= 0; dof_n < dof_indices.size(); ++dof_n)
         {
           deallog << dof_indices[dof_n];
           if(dof_n != dof_indices.size() - 1)
@@ -88,8 +88,8 @@ main()
         = cell->neighbor(1);
       if(neighbor != dof_handler.end())
         {
-          const unsigned int current_index  = cell->active_fe_index();
-          const unsigned int neighbor_index = neighbor->active_fe_index();
+          const unsigned int current_index = cell->active_fe_index();
+          const unsigned int neighbor_index= neighbor->active_fe_index();
           deallog << "dof index (current cell, current index): "
                   << cell->face(1)->dof_index(0, current_index)
                   << " (neighbor cell, current index): "
@@ -101,13 +101,13 @@ main()
                   << std::endl;
         }
 
-      for(unsigned int fe_index = 0; fe_index < n_fe_indices; ++fe_index)
+      for(unsigned int fe_index= 0; fe_index < n_fe_indices; ++fe_index)
         {
-          const bool index_is_active = cell->fe_index_is_active(fe_index);
+          const bool index_is_active= cell->fe_index_is_active(fe_index);
           deallog << "cell uses fe index " << fe_index << ": "
                   << index_is_active << std::endl;
 
-          for(unsigned int face_n = 0; face_n < GeometryInfo<1>::faces_per_cell;
+          for(unsigned int face_n= 0; face_n < GeometryInfo<1>::faces_per_cell;
               ++face_n)
             {
               AssertThrow(&cell->face(face_n)->get_fe(fe_index)

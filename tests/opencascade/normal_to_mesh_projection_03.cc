@@ -51,12 +51,12 @@ main()
   pts.push_back(Point<3>(1, 0, -1));
   pts.push_back(Point<3>(0, 0, -1));
 
-  TopoDS_Edge edge1 = interpolation_curve(pts);
-  for(unsigned int i = 0; i < pts.size(); ++i)
-    pts[i] += Point<3>(0, 1, 0);
-  TopoDS_Edge edge2 = interpolation_curve(pts);
+  TopoDS_Edge edge1= interpolation_curve(pts);
+  for(unsigned int i= 0; i < pts.size(); ++i)
+    pts[i]+= Point<3>(0, 1, 0);
+  TopoDS_Edge edge2= interpolation_curve(pts);
 
-  TopoDS_Face face = BRepFill::Face(edge1, edge2);
+  TopoDS_Face face= BRepFill::Face(edge1, edge2);
 
   NormalToMeshProjectionBoundary<2, 3> manifold(face);
 
@@ -69,7 +69,7 @@ main()
   tria.refine_global(1);
 
   Tensor<1, 3> direction({.1, .01, .001});
-  double       tolerance = 1e-10;
+  double       tolerance= 1e-10;
 
   {
     FE_Q<2, 3>       fe(2);

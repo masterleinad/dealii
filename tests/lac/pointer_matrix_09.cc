@@ -31,8 +31,8 @@ checkClear(FullMatrix<number>& A)
 
   deallog << "Multiplying with all ones vector" << std::endl;
   Vector<number> V(A.n());
-  for(unsigned int i = 0; i < V.size(); ++i)
-    V(i) = 1;
+  for(unsigned int i= 0; i < V.size(); ++i)
+    V(i)= 1;
 
   Vector<number> O(A.m());
   P.vmult(O, V);
@@ -48,7 +48,7 @@ checkClear(FullMatrix<number>& A)
   Assert(O == O_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for(unsigned int i= 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 
@@ -66,7 +66,7 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const double Adata[] = {2, 3, 4, 5};
+  const double Adata[]= {2, 3, 4, 5};
 
   FullMatrix<double> A(2, 2);
   A.fill(Adata);

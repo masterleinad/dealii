@@ -133,7 +133,7 @@ namespace Step20
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -144,7 +144,7 @@ namespace Step20
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -174,8 +174,8 @@ namespace Step20
   PressureBoundaryValues<dim>::value(const Point<dim>& p,
                                      const unsigned int /*component*/) const
   {
-    const double alpha = 0.3;
-    const double beta  = 1;
+    const double alpha= 0.3;
+    const double beta = 1;
     return -(alpha * p[0] * p[1] * p[1] / 2 + beta * p[0]
              - alpha * p[0] * p[0] * p[0] / 6);
   }
@@ -188,13 +188,13 @@ namespace Step20
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
 
-    const double alpha = 0.3;
-    const double beta  = 1;
+    const double alpha= 0.3;
+    const double beta = 1;
 
-    values(0) = alpha * p[1] * p[1] / 2 + beta - alpha * p[0] * p[0] / 2;
-    values(1) = alpha * p[0] * p[1];
-    values(2) = -(alpha * p[0] * p[1] * p[1] / 2 + beta * p[0]
-                  - alpha * p[0] * p[0] * p[0] / 6);
+    values(0)= alpha * p[1] * p[1] / 2 + beta - alpha * p[0] * p[0] / 2;
+    values(1)= alpha * p[0] * p[1];
+    values(2)= -(alpha * p[0] * p[1] * p[1] / 2 + beta * p[0]
+                 - alpha * p[0] * p[0] * p[0] / 6);
   }
 
   // @sect3{The inverse permeability tensor}
@@ -249,12 +249,12 @@ namespace Step20
     Assert(points.size() == values.size(),
            ExcDimensionMismatch(points.size(), values.size()));
 
-    for(unsigned int p = 0; p < points.size(); ++p)
+    for(unsigned int p= 0; p < points.size(); ++p)
       {
         values[p].clear();
 
-        for(unsigned int d = 0; d < dim; ++d)
-          values[p][d][d] = 1.;
+        for(unsigned int d= 0; d < dim; ++d)
+          values[p][d][d]= 1.;
       }
   }
 
@@ -357,8 +357,7 @@ namespace Step20
     // in the glossary.
     std::vector<types::global_dof_index> dofs_per_component(dim + 1);
     DoFTools::count_dofs_per_component(dof_handler, dofs_per_component);
-    const unsigned int n_u = dofs_per_component[0],
-                       n_p = dofs_per_component[dim];
+    const unsigned int n_u= dofs_per_component[0], n_p= dofs_per_component[dim];
 
     std::cout << "Number of active cells: " << triangulation.n_active_cells()
               << std::endl
@@ -431,9 +430,9 @@ namespace Step20
                                        | update_quadrature_points
                                        | update_JxW_values);
 
-    const unsigned int dofs_per_cell   = fe.dofs_per_cell;
-    const unsigned int n_q_points      = quadrature_formula.size();
-    const unsigned int n_face_q_points = face_quadrature_formula.size();
+    const unsigned int dofs_per_cell  = fe.dofs_per_cell;
+    const unsigned int n_q_points     = quadrature_formula.size();
+    const unsigned int n_face_q_points= face_quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     local_rhs(dofs_per_cell);
@@ -471,32 +470,32 @@ namespace Step20
     // be commented any further here:
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        local_matrix = 0;
-        local_rhs    = 0;
+        local_matrix= 0;
+        local_rhs   = 0;
 
         right_hand_side.value_list(fe_values.get_quadrature_points(),
                                    rhs_values);
         k_inverse.value_list(fe_values.get_quadrature_points(),
                              k_inverse_values);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int q= 0; q < n_q_points; ++q)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
-              const Tensor<1, dim> phi_i_u = fe_values[velocities].value(i, q);
-              const double div_phi_i_u = fe_values[velocities].divergence(i, q);
-              const double phi_i_p     = fe_values[pressure].value(i, q);
+              const Tensor<1, dim> phi_i_u= fe_values[velocities].value(i, q);
+              const double div_phi_i_u= fe_values[velocities].divergence(i, q);
+              const double phi_i_p    = fe_values[pressure].value(i, q);
 
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
                 {
                   const Tensor<1, dim> phi_j_u
                     = fe_values[velocities].value(j, q);
                   const double div_phi_j_u
                     = fe_values[velocities].divergence(j, q);
-                  const double phi_j_p = fe_values[pressure].value(j, q);
+                  const double phi_j_p= fe_values[pressure].value(j, q);
 
                   local_matrix(i, j)
                     += (phi_i_u * k_inverse_values[q] * phi_j_u
@@ -504,10 +503,10 @@ namespace Step20
                        * fe_values.JxW(q);
                 }
 
-              local_rhs(i) += -phi_i_p * rhs_values[q] * fe_values.JxW(q);
+              local_rhs(i)+= -phi_i_p * rhs_values[q] * fe_values.JxW(q);
             }
 
-        for(unsigned int face_n = 0; face_n < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face_n= 0; face_n < GeometryInfo<dim>::faces_per_cell;
             ++face_n)
           if(cell->at_boundary(face_n))
             {
@@ -516,8 +515,8 @@ namespace Step20
               pressure_boundary_values.value_list(
                 fe_face_values.get_quadrature_points(), boundary_values);
 
-              for(unsigned int q = 0; q < n_face_q_points; ++q)
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for(unsigned int q= 0; q < n_face_q_points; ++q)
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
                   local_rhs(i)
                     += -(fe_face_values[velocities].value(i, q)
                          * fe_face_values.normal_vector(q) * boundary_values[q]
@@ -532,12 +531,12 @@ namespace Step20
         // objects have the same interface as matrices and vectors, but they
         // additionally allow to access individual blocks.
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          system_rhs(local_dof_indices[i]) += local_rhs(i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          system_rhs(local_dof_indices[i])+= local_rhs(i);
       }
   }
 
@@ -591,7 +590,7 @@ namespace Step20
                                  1e-8 * src.l2_norm());
     SolverCG<>    cg(solver_control);
 
-    dst = 0;
+    dst= 0;
 
     cg.solve(*matrix, dst, src, PreconditionIdentity());
   }
@@ -705,7 +704,7 @@ namespace Step20
       Vector<double>  schur_rhs(solution.block(1).size());
       inverse_mass.vmult(tmp, system_rhs.block(0));
       system_matrix.block(1, 0).vmult(schur_rhs, tmp);
-      schur_rhs -= system_rhs.block(1);
+      schur_rhs-= system_rhs.block(1);
 
       // Now that we have the right hand side we can go ahead and solve for the
       // pressure, using our approximation of the inverse as a preconditioner:
@@ -730,8 +729,8 @@ namespace Step20
     // inverse of the mass matrix:
     {
       system_matrix.block(0, 1).vmult(tmp, solution.block(1));
-      tmp *= -1;
-      tmp += system_rhs.block(0);
+      tmp*= -1;
+      tmp+= system_rhs.block(0);
 
       inverse_mass.vmult(solution.block(0), tmp);
     }
@@ -810,7 +809,7 @@ namespace Step20
                                       quadrature,
                                       VectorTools::L2_norm,
                                       &pressure_mask);
-    const double p_l2_error = VectorTools::compute_global_error(
+    const double p_l2_error= VectorTools::compute_global_error(
       triangulation, cellwise_errors, VectorTools::L2_norm);
 
     VectorTools::integrate_difference(dof_handler,
@@ -820,7 +819,7 @@ namespace Step20
                                       quadrature,
                                       VectorTools::L2_norm,
                                       &velocity_mask);
-    const double u_l2_error = VectorTools::compute_global_error(
+    const double u_l2_error= VectorTools::compute_global_error(
       triangulation, cellwise_errors, VectorTools::L2_norm);
 
     std::cout << "Errors: ||e_p||_L2 = " << p_l2_error

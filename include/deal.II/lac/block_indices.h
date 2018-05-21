@@ -82,13 +82,13 @@ public:
   /**
    * Copy constructor.
    */
-  BlockIndices(const BlockIndices&) = default;
+  BlockIndices(const BlockIndices&)= default;
 
   /**
    * Specialized constructor for a structure with blocks of equal size.
    */
   explicit BlockIndices(const unsigned int n_blocks,
-                        const size_type    block_size = 0);
+                        const size_type    block_size= 0);
 
   /**
    * Reinitialize the number of blocks and assign each block the same number
@@ -235,13 +235,13 @@ private:
 inline LogStream&
 operator<<(LogStream& s, const BlockIndices& bi)
 {
-  const unsigned int n = bi.size();
+  const unsigned int n= bi.size();
   s << n << ":[";
   // Write first size without leading space
   if(n > 0)
     s << bi.block_size(0);
   // Write all other sizes
-  for(unsigned int i = 1; i < n; ++i)
+  for(unsigned int i= 1; i < n; ++i)
     s << ' ' << bi.block_size(i);
   s << "]->" << bi.total_size();
   return s;
@@ -252,10 +252,10 @@ operator<<(LogStream& s, const BlockIndices& bi)
 inline void
 BlockIndices::reinit(const unsigned int nb, const size_type block_size)
 {
-  n_blocks = nb;
+  n_blocks= nb;
   start_indices.resize(n_blocks + 1);
-  for(size_type i = 0; i <= n_blocks; ++i)
-    start_indices[i] = i * block_size;
+  for(size_type i= 0; i <= n_blocks; ++i)
+    start_indices[i]= i * block_size;
 }
 
 inline void
@@ -263,12 +263,12 @@ BlockIndices::reinit(const std::vector<size_type>& block_sizes)
 {
   if(start_indices.size() != block_sizes.size() + 1)
     {
-      n_blocks = static_cast<unsigned int>(block_sizes.size());
+      n_blocks= static_cast<unsigned int>(block_sizes.size());
       start_indices.resize(n_blocks + 1);
     }
-  start_indices[0] = 0;
-  for(size_type i = 1; i <= n_blocks; ++i)
-    start_indices[i] = start_indices[i - 1] + block_sizes[i - 1];
+  start_indices[0]= 0;
+  for(size_type i= 1; i <= n_blocks; ++i)
+    start_indices[i]= start_indices[i - 1] + block_sizes[i - 1];
 }
 
 inline BlockIndices::BlockIndices() : n_blocks(0), start_indices(1, 0)
@@ -278,8 +278,8 @@ inline BlockIndices::BlockIndices(const unsigned int n_blocks,
                                   const size_type    block_size)
   : n_blocks(n_blocks), start_indices(n_blocks + 1)
 {
-  for(size_type i = 0; i <= n_blocks; ++i)
-    start_indices[i] = i * block_size;
+  for(size_type i= 0; i <= n_blocks; ++i)
+    start_indices[i]= i * block_size;
 }
 
 inline BlockIndices::BlockIndices(const std::vector<size_type>& block_sizes)
@@ -292,8 +292,8 @@ inline BlockIndices::BlockIndices(const std::vector<size_type>& block_sizes)
 inline BlockIndices::BlockIndices(BlockIndices&& b) noexcept
   : n_blocks(b.n_blocks), start_indices(std::move(b.start_indices))
 {
-  b.n_blocks      = 0;
-  b.start_indices = std::vector<size_type>(1, 0);
+  b.n_blocks     = 0;
+  b.start_indices= std::vector<size_type>(1, 0);
 }
 
 inline void
@@ -310,7 +310,7 @@ BlockIndices::global_to_local(const size_type i) const
   Assert(i < total_size(), ExcIndexRangeType<size_type>(i, 0, total_size()));
   Assert(n_blocks > 0, ExcLowerRangeType<size_type>(i, size_type(1)));
 
-  unsigned int block = n_blocks - 1;
+  unsigned int block= n_blocks - 1;
   while(i < start_indices[block])
     --block;
 
@@ -353,14 +353,14 @@ BlockIndices::block_size(const unsigned int block) const
 inline std::string
 BlockIndices::to_string() const
 {
-  std::string result = "[" + Utilities::int_to_string(n_blocks) + "->";
-  for(unsigned int i = 0; i < n_blocks; ++i)
+  std::string result= "[" + Utilities::int_to_string(n_blocks) + "->";
+  for(unsigned int i= 0; i < n_blocks; ++i)
     {
       if(i > 0)
-        result += ',';
-      result += Utilities::to_string(block_size(i));
+        result+= ',';
+      result+= Utilities::to_string(block_size(i));
     }
-  result += "|" + Utilities::to_string(total_size()) + ']';
+  result+= "|" + Utilities::to_string(total_size()) + ']';
   return result;
 }
 
@@ -374,19 +374,19 @@ BlockIndices::block_start(const unsigned int block) const
 inline BlockIndices&
 BlockIndices::operator=(const BlockIndices& b)
 {
-  start_indices = b.start_indices;
-  n_blocks      = b.n_blocks;
+  start_indices= b.start_indices;
+  n_blocks     = b.n_blocks;
   return *this;
 }
 
 inline BlockIndices&
 BlockIndices::operator=(BlockIndices&& b) noexcept
 {
-  start_indices = std::move(b.start_indices);
-  n_blocks      = b.n_blocks;
+  start_indices= std::move(b.start_indices);
+  n_blocks     = b.n_blocks;
 
-  b.start_indices = std::vector<size_type>(1, 0);
-  b.n_blocks      = 0;
+  b.start_indices= std::vector<size_type>(1, 0);
+  b.n_blocks     = 0;
 
   return *this;
 }
@@ -397,7 +397,7 @@ BlockIndices::operator==(const BlockIndices& b) const
   if(n_blocks != b.n_blocks)
     return false;
 
-  for(size_type i = 0; i <= n_blocks; ++i)
+  for(size_type i= 0; i <= n_blocks; ++i)
     if(start_indices[i] != b.start_indices[i])
       return false;
 

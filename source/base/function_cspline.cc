@@ -36,14 +36,14 @@ namespace Functions
                                   interpolation_values.size()));
 
     // check that input vector @p interpolation_points is provided in ascending order:
-    for(unsigned int i = 0; i < interpolation_points.size() - 1; i++)
+    for(unsigned int i= 0; i < interpolation_points.size() - 1; i++)
       AssertThrow(interpolation_points[i] < interpolation_points[i + 1],
                   ExcCSplineOrder(
                     i, interpolation_points[i], interpolation_points[i + 1]));
 
-    acc                  = gsl_interp_accel_alloc();
-    const unsigned int n = interpolation_points.size();
-    cspline              = gsl_spline_alloc(gsl_interp_cspline, n);
+    acc                 = gsl_interp_accel_alloc();
+    const unsigned int n= interpolation_points.size();
+    cspline             = gsl_spline_alloc(gsl_interp_cspline, n);
     // gsl_spline_init returns something but it seems nobody knows what
     gsl_spline_init(
       cspline, interpolation_points.data(), interpolation_values.data(), n);
@@ -54,8 +54,8 @@ namespace Functions
   {
     gsl_interp_accel_free(acc);
     gsl_spline_free(cspline);
-    acc     = nullptr;
-    cspline = nullptr;
+    acc    = nullptr;
+    cspline= nullptr;
   }
 
   template <int dim>
@@ -67,7 +67,7 @@ namespace Functions
     // structures via a mutex.
     Threads::Mutex::ScopedLock lock(acc_mutex);
 
-    const double& x = p[0];
+    const double& x= p[0];
     Assert(x >= interpolation_points.front()
              && x <= interpolation_points.back(),
            ExcCSplineRange(
@@ -85,15 +85,15 @@ namespace Functions
     // structures via a mutex.
     Threads::Mutex::ScopedLock lock(acc_mutex);
 
-    const double& x = p[0];
+    const double& x= p[0];
     Assert(x >= interpolation_points.front()
              && x <= interpolation_points.back(),
            ExcCSplineRange(
              x, interpolation_points.front(), interpolation_points.back()));
 
-    const double   deriv = gsl_spline_eval_deriv(cspline, x, acc);
+    const double   deriv= gsl_spline_eval_deriv(cspline, x, acc);
     Tensor<1, dim> res;
-    res[0] = deriv;
+    res[0]= deriv;
     return res;
   }
 
@@ -106,7 +106,7 @@ namespace Functions
     // structures via a mutex.
     Threads::Mutex::ScopedLock lock(acc_mutex);
 
-    const double& x = p[0];
+    const double& x= p[0];
     Assert(x >= interpolation_points.front()
              && x <= interpolation_points.back(),
            ExcCSplineRange(
@@ -120,7 +120,7 @@ namespace Functions
   CSpline<dim>::hessian(const Point<dim>& p, const unsigned int) const
   {
     SymmetricTensor<2, dim> res;
-    res[0][0] = laplacian(p);
+    res[0][0]= laplacian(p);
     return res;
   }
 

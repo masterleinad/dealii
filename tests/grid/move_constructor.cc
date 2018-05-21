@@ -45,11 +45,11 @@ test_hyper_cube()
 
   print_tria_info(tria);
 
-  Triangulation<dim> new_tria = std::move(tria);
+  Triangulation<dim> new_tria= std::move(tria);
   print_tria_info(new_tria);
   print_tria_info(tria);
 
-  tria = std::move(new_tria);
+  tria= std::move(new_tria);
   print_tria_info(new_tria);
   print_tria_info(tria);
 }
@@ -71,11 +71,11 @@ test_hyper_shell()
   tria.refine_global(3);
   print_tria_info(tria);
 
-  Triangulation<dim> new_tria = std::move(tria);
+  Triangulation<dim> new_tria= std::move(tria);
   print_tria_info(new_tria);
   print_tria_info(tria);
 
-  tria = std::move(new_tria);
+  tria= std::move(new_tria);
   print_tria_info(new_tria);
   print_tria_info(tria);
 }
@@ -99,11 +99,11 @@ test_periodic_cube()
 
   print_tria_info(tria);
 
-  Triangulation<dim> new_tria = std::move(tria);
+  Triangulation<dim> new_tria= std::move(tria);
   print_tria_info(new_tria);
   print_tria_info(tria);
 
-  tria = std::move(new_tria);
+  tria= std::move(new_tria);
   print_tria_info(new_tria);
   print_tria_info(tria);
 }

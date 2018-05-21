@@ -99,7 +99,7 @@ plot_shape_functions(const unsigned int degree)
   // check the following with a
   // number of transformed
   // triangulations
-  for(unsigned int transform = 0; transform < 4; ++transform)
+  for(unsigned int transform= 0; transform < 4; ++transform)
     {
       std::ostringstream ost;
       ost << "Nedelec" << degree << "-Transform" << transform;
@@ -108,11 +108,11 @@ plot_shape_functions(const unsigned int degree)
       transform_grid(tr, transform);
 
       DoFHandler<dim>                         dof(tr);
-      typename DoFHandler<dim>::cell_iterator c = dof.begin();
+      typename DoFHandler<dim>::cell_iterator c= dof.begin();
       dof.distribute_dofs(element);
 
       QTrapez<1>         q_trapez;
-      const unsigned int div = 2;
+      const unsigned int div= 2;
       QIterated<dim>     q(q_trapez, div);
       FEValues<dim>      fe(element,
                        q,
@@ -120,7 +120,7 @@ plot_shape_functions(const unsigned int degree)
                          | update_quadrature_points);
       fe.reinit(c);
 
-      for(unsigned int q_point = 0; q_point < q.size(); ++q_point)
+      for(unsigned int q_point= 0; q_point < q.size(); ++q_point)
         {
           // Output function in
           // gnuplot readable format,
@@ -128,9 +128,9 @@ plot_shape_functions(const unsigned int degree)
           deallog << "value    " << q_point << '\t'
                   << fe.quadrature_point(q_point);
 
-          for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < element.dofs_per_cell; ++i)
             {
-              for(unsigned int c = 0; c < dim; ++c)
+              for(unsigned int c= 0; c < dim; ++c)
                 deallog << '\t' << fe.shape_value_component(i, q_point, c);
             }
 
@@ -140,11 +140,11 @@ plot_shape_functions(const unsigned int degree)
                   << "gradient " << q_point << '\t'
                   << fe.quadrature_point(q_point);
 
-          for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < element.dofs_per_cell; ++i)
             {
-              for(unsigned int c = 0; c < dim; ++c)
+              for(unsigned int c= 0; c < dim; ++c)
                 {
-                  for(unsigned int d = 0; d < dim; ++d)
+                  for(unsigned int d= 0; d < dim; ++d)
                     deallog << '\t'
                             << fe.shape_grad_component(i, q_point, c)[d];
                 }

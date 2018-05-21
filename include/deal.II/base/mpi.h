@@ -609,7 +609,7 @@ namespace Utilities
     std::vector<T>
     gather(const MPI_Comm&    comm,
            const T&           object_to_send,
-           const unsigned int root_process = 0);
+           const unsigned int root_process= 0);
 
 #ifndef DOXYGEN
     // declaration for an internal function that lives in mpi.templates.h
@@ -671,9 +671,9 @@ namespace Utilities
 
       std::vector<unsigned int> send_to(objects_to_send.size());
       {
-        unsigned int i = 0;
+        unsigned int i= 0;
         for(const auto& m : objects_to_send)
-          send_to[i++] = m.first;
+          send_to[i++]= m.first;
       }
       AssertDimension(send_to.size(), objects_to_send.size());
 
@@ -685,18 +685,18 @@ namespace Utilities
       std::vector<std::vector<char>> buffers_to_send(send_to.size());
       std::vector<MPI_Request>       buffer_send_requests(send_to.size());
       {
-        unsigned int i = 0;
+        unsigned int i= 0;
         for(const auto& rank_obj : objects_to_send)
           {
-            const auto& rank   = rank_obj.first;
-            buffers_to_send[i] = Utilities::pack(rank_obj.second);
-            const int ierr     = MPI_Isend(buffers_to_send[i].data(),
-                                       buffers_to_send[i].size(),
-                                       MPI_CHAR,
-                                       rank,
-                                       21,
-                                       comm,
-                                       &buffer_send_requests[i]);
+            const auto& rank  = rank_obj.first;
+            buffers_to_send[i]= Utilities::pack(rank_obj.second);
+            const int ierr    = MPI_Isend(buffers_to_send[i].data(),
+                                      buffers_to_send[i].size(),
+                                      MPI_CHAR,
+                                      rank,
+                                      21,
+                                      comm,
+                                      &buffer_send_requests[i]);
             AssertThrowMPI(ierr);
             ++i;
           }
@@ -707,30 +707,30 @@ namespace Utilities
       {
         std::vector<char> buffer;
         // We do this on a first come/first served basis
-        for(unsigned int i = 0; i < receive_from.size(); ++i)
+        for(unsigned int i= 0; i < receive_from.size(); ++i)
           {
             // Probe what's going on. Take data from the first available sender
             MPI_Status status;
-            int        ierr = MPI_Probe(MPI_ANY_SOURCE, 21, comm, &status);
+            int        ierr= MPI_Probe(MPI_ANY_SOURCE, 21, comm, &status);
             AssertThrowMPI(ierr);
 
             // Length of the message
             int len;
-            ierr = MPI_Get_count(&status, MPI_CHAR, &len);
+            ierr= MPI_Get_count(&status, MPI_CHAR, &len);
             AssertThrowMPI(ierr);
             buffer.resize(len);
 
             // Source rank
-            const unsigned int rank = status.MPI_SOURCE;
+            const unsigned int rank= status.MPI_SOURCE;
 
             // Actually receive the message
-            ierr = MPI_Recv(
+            ierr= MPI_Recv(
               buffer.data(), len, MPI_CHAR, rank, 21, comm, MPI_STATUS_IGNORE);
             AssertThrowMPI(ierr);
             Assert(
               received_objects.find(rank) == received_objects.end(),
               ExcInternalError("I should not receive again from this rank"));
-            received_objects[rank] = Utilities::unpack<T>(buffer);
+            received_objects[rank]= Utilities::unpack<T>(buffer);
           }
       }
 
@@ -751,11 +751,11 @@ namespace Utilities
       std::vector<T> v(1, object);
       return v;
 #  else
-      const auto n_procs = dealii::Utilities::MPI::n_mpi_processes(comm);
+      const auto n_procs= dealii::Utilities::MPI::n_mpi_processes(comm);
 
-      std::vector<char> buffer = Utilities::pack(object);
+      std::vector<char> buffer= Utilities::pack(object);
 
-      int n_local_data = buffer.size();
+      int n_local_data= buffer.size();
 
       // Vector to store the size of loc_data_array for every process
       std::vector<int> size_all_data(n_procs, 0);
@@ -767,9 +767,9 @@ namespace Utilities
       // Now computing the displacement, relative to recvbuf,
       // at which to store the incoming buffer
       std::vector<int> rdispls(n_procs);
-      rdispls[0] = 0;
-      for(unsigned int i = 1; i < n_procs; ++i)
-        rdispls[i] = rdispls[i - 1] + size_all_data[i - 1];
+      rdispls[0]= 0;
+      for(unsigned int i= 1; i < n_procs; ++i)
+        rdispls[i]= rdispls[i - 1] + size_all_data[i - 1];
 
       // Step 3: exchange the buffer:
       std::vector<char> received_unrolled_buffer(rdispls.back()
@@ -785,12 +785,12 @@ namespace Utilities
                      comm);
 
       std::vector<T> received_objects(n_procs);
-      for(unsigned int i = 0; i < n_procs; ++i)
+      for(unsigned int i= 0; i < n_procs; ++i)
         {
           std::vector<char> local_buffer(
             received_unrolled_buffer.begin() + rdispls[i],
             received_unrolled_buffer.begin() + rdispls[i] + size_all_data[i]);
-          received_objects[i] = Utilities::unpack<T>(local_buffer);
+          received_objects[i]= Utilities::unpack<T>(local_buffer);
         }
 
       return received_objects;
@@ -809,13 +809,13 @@ namespace Utilities
       std::vector<T> v(1, object_to_send);
       return v;
 #  else
-      const auto n_procs = dealii::Utilities::MPI::n_mpi_processes(comm);
-      const auto my_rank = dealii::Utilities::MPI::this_mpi_process(comm);
+      const auto n_procs= dealii::Utilities::MPI::n_mpi_processes(comm);
+      const auto my_rank= dealii::Utilities::MPI::this_mpi_process(comm);
 
       Assert(root_process < n_procs, ExcIndexRange(root_process, 0, n_procs));
 
-      std::vector<char> buffer       = Utilities::pack(object_to_send);
-      int               n_local_data = buffer.size();
+      std::vector<char> buffer      = Utilities::pack(object_to_send);
+      int               n_local_data= buffer.size();
 
       // Vector to store the size of loc_data_array for every process
       // only the root process needs to allocate memory for that purpose
@@ -824,14 +824,14 @@ namespace Utilities
         size_all_data.resize(n_procs, 0);
 
       // Exchanging the size of each buffer
-      int ierr = MPI_Gather(&n_local_data,
-                            1,
-                            MPI_INT,
-                            size_all_data.data(),
-                            1,
-                            MPI_INT,
-                            root_process,
-                            comm);
+      int ierr= MPI_Gather(&n_local_data,
+                           1,
+                           MPI_INT,
+                           size_all_data.data(),
+                           1,
+                           MPI_INT,
+                           root_process,
+                           comm);
       AssertThrowMPI(ierr);
 
       // Now computing the displacement, relative to recvbuf,
@@ -840,23 +840,23 @@ namespace Utilities
       if(my_rank == root_process)
         {
           rdispls.resize(n_procs, 0);
-          for(unsigned int i = 1; i < n_procs; ++i)
-            rdispls[i] = rdispls[i - 1] + size_all_data[i - 1];
+          for(unsigned int i= 1; i < n_procs; ++i)
+            rdispls[i]= rdispls[i - 1] + size_all_data[i - 1];
         }
       // exchange the buffer:
       std::vector<char> received_unrolled_buffer;
       if(my_rank == root_process)
         received_unrolled_buffer.resize(rdispls.back() + size_all_data.back());
 
-      ierr = MPI_Gatherv(buffer.data(),
-                         n_local_data,
-                         MPI_CHAR,
-                         received_unrolled_buffer.data(),
-                         size_all_data.data(),
-                         rdispls.data(),
-                         MPI_CHAR,
-                         root_process,
-                         comm);
+      ierr= MPI_Gatherv(buffer.data(),
+                        n_local_data,
+                        MPI_CHAR,
+                        received_unrolled_buffer.data(),
+                        size_all_data.data(),
+                        rdispls.data(),
+                        MPI_CHAR,
+                        root_process,
+                        comm);
       AssertThrowMPI(ierr);
 
       std::vector<T> received_objects;
@@ -865,13 +865,13 @@ namespace Utilities
         {
           received_objects.resize(n_procs);
 
-          for(unsigned int i = 0; i < n_procs; ++i)
+          for(unsigned int i= 0; i < n_procs; ++i)
             {
               const std::vector<char> local_buffer(
                 received_unrolled_buffer.begin() + rdispls[i],
                 received_unrolled_buffer.begin() + rdispls[i]
                   + size_all_data[i]);
-              received_objects[i] = Utilities::unpack<T>(local_buffer);
+              received_objects[i]= Utilities::unpack<T>(local_buffer);
             }
         }
       return received_objects;

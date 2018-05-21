@@ -270,7 +270,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~FE_P1NC() override = default;
+  virtual ~FE_P1NC() override= default;
 
 private:
   /**

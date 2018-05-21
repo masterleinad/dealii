@@ -23,24 +23,24 @@
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const unsigned int size = 50;
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int size= 50;
 
   FDMatrix     testproblem(size, size);
-  unsigned int dim = (size - 1) * (size - 1);
+  unsigned int dim= (size - 1) * (size - 1);
 
   SparsityPattern sparsity(dim, dim, size);
   testproblem.five_point_structure(sparsity);
   sparsity.compress();
 
   SparseMatrix<double> matrix(sparsity);
-  const double         val = std::pow(10, myid);
-  for(SparsityPattern::const_iterator it = sparsity.begin();
+  const double         val= std::pow(10, myid);
+  for(SparsityPattern::const_iterator it= sparsity.begin();
       it != sparsity.end();
       ++it)
     {
-      const auto i = (*it).row();
-      const auto j = (*it).column();
+      const auto i= (*it).row();
+      const auto j= (*it).column();
       matrix.add(i, j, -val);
       matrix.add(i, i, val);
     }
@@ -57,12 +57,12 @@ test()
 
   Utilities::MPI::sum(full, MPI_COMM_WORLD, full);
 
-  for(SparsityPattern::const_iterator it = sparsity.begin();
+  for(SparsityPattern::const_iterator it= sparsity.begin();
       it != sparsity.end();
       ++it)
     {
-      const auto i = (*it).row();
-      const auto j = (*it).column();
+      const auto i= (*it).row();
+      const auto j= (*it).column();
       AssertThrow(matrix(i, j) == full(i, j),
                   ExcMessage(std::to_string(matrix(i, j))
                              + " != " + std::to_string(full(i, j)) + " for i="

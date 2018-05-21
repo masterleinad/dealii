@@ -24,7 +24,7 @@ template <typename number>
 void
 checkVmult_add(FullMatrix<number>& A,
                Vector<number>&     V,
-               char*               name = "Test Matrix")
+               char*               name= "Test Matrix")
 {
   deallog << "vmult_add" << std::endl;
 
@@ -33,8 +33,8 @@ checkVmult_add(FullMatrix<number>& A,
   deallog << "Result vector set to all ones and to be added with result"
           << std::endl;
   Vector<number> O(V.size());
-  for(unsigned int i = 0; i < O.size(); ++i)
-    O(i) = 1;
+  for(unsigned int i= 0; i < O.size(); ++i)
+    O(i)= 1;
 
   P.vmult_add(O, V);
 
@@ -44,15 +44,15 @@ checkVmult_add(FullMatrix<number>& A,
 
   // Verifying results with Method 2: O=O+A*V
   Vector<number> O_(V.size());
-  for(unsigned int i = 0; i < O_.size(); ++i)
-    O_(i) = 1;
+  for(unsigned int i= 0; i < O_.size(); ++i)
+    O_(i)= 1;
 
   A.vmult_add(O_, V);
 
   Assert(O == O_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for(unsigned int i= 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 }
@@ -65,14 +65,14 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const double Adata[] = {2, 3, 4, 5};
+  const double Adata[]= {2, 3, 4, 5};
 
   FullMatrix<double> A(2, 2);
   A.fill(Adata);
 
   Vector<double> V(2);
-  V(0) = 1;
-  V(1) = 2;
+  V(0)= 1;
+  V(1)= 2;
 
   checkVmult_add<double>(A, V);
 }

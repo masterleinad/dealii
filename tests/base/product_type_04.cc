@@ -31,9 +31,9 @@ main()
   // try it for a rank-1 tensor
   {
     Tensor<1, 3> t;
-    t[0] = 1.23456;
-    t[1] = 2.46802;
-    t[2] = 3.69258;
+    t[0]= 1.23456;
+    t[1]= 2.46802;
+    t[2]= 3.69258;
     AssertThrow(7 * t == 7.0 * t, ExcInternalError());
     AssertThrow(t * 7 == t * 7.0, ExcInternalError());
     AssertThrow(t * 7 == 7 * t, ExcInternalError());
@@ -45,10 +45,10 @@ main()
   // composed of lower-rank tensors)
   {
     Tensor<2, 2> t;
-    t[0][0] = 1.23456;
-    t[0][1] = 7.87965;
-    t[1][0] = 2.64686;
-    t[1][1] = 3.35792;
+    t[0][0]= 1.23456;
+    t[0][1]= 7.87965;
+    t[1][0]= 2.64686;
+    t[1][1]= 3.35792;
     AssertThrow(7 * t == 7.0 * t, ExcInternalError());
     AssertThrow(t * 7 == t * 7.0, ExcInternalError());
     AssertThrow(t * 7 == 7 * t, ExcInternalError());

@@ -34,8 +34,8 @@ main(int argc, char** argv)
         IndexSet indices(5);
         indices.add_range(0, 5);
         PETScWrappers::MPI::Vector v(indices, MPI_COMM_WORLD);
-        for(unsigned int i = 0; i < v.size(); ++i)
-          v(i) = i * 1.2345678901234567;
+        for(unsigned int i= 0; i < v.size(); ++i)
+          v(i)= i * 1.2345678901234567;
 
         // print with old precision
         deallog << numbers::PI << std::endl;

@@ -152,8 +152,8 @@ namespace Functions
    * @author Luca Heltai, 2006, Markus Buerg, 2012, Wolfgang Bangerth, 2013
    */
   template <int dim,
-            typename DoFHandlerType = DoFHandler<dim>,
-            typename VectorType     = Vector<double>>
+            typename DoFHandlerType= DoFHandler<dim>,
+            typename VectorType    = Vector<double>>
   class FEFieldFunction : public Function<dim, typename VectorType::value_type>
   {
   public:
@@ -167,8 +167,7 @@ namespace Functions
      */
     FEFieldFunction(const DoFHandlerType& dh,
                     const VectorType&     data_vector,
-                    const Mapping<dim>&   mapping
-                    = StaticMappingQ1<dim>::mapping);
+                    const Mapping<dim>& mapping= StaticMappingQ1<dim>::mapping);
 
     /**
      * Set the current cell. If you know in advance where your points lie, you
@@ -217,7 +216,7 @@ namespace Functions
      * information.
      */
     virtual typename VectorType::value_type
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     /**
      * Set @p values to the point values of the specified component of the
@@ -237,7 +236,7 @@ namespace Functions
     virtual void
     value_list(const std::vector<Point<dim>>&                points,
                std::vector<typename VectorType::value_type>& values,
-               const unsigned int component = 0) const override;
+               const unsigned int component= 0) const override;
 
     /**
      * Set @p values to the point values of the function at the @p points. It
@@ -297,7 +296,7 @@ namespace Functions
      */
     virtual Tensor<1, dim, typename VectorType::value_type>
     gradient(const Point<dim>&  p,
-             const unsigned int component = 0) const override;
+             const unsigned int component= 0) const override;
 
     /**
      * Return the gradient of all components of the function at all the given
@@ -335,7 +334,7 @@ namespace Functions
     gradient_list(
       const std::vector<Point<dim>>&                                p,
       std::vector<Tensor<1, dim, typename VectorType::value_type>>& gradients,
-      const unsigned int component = 0) const override;
+      const unsigned int component= 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
@@ -350,7 +349,7 @@ namespace Functions
      */
     virtual typename VectorType::value_type
     laplacian(const Point<dim>&  p,
-              const unsigned int component = 0) const override;
+              const unsigned int component= 0) const override;
 
     /**
      * Compute the Laplacian of all components at point <tt>p</tt> and store
@@ -383,7 +382,7 @@ namespace Functions
     virtual void
     laplacian_list(const std::vector<Point<dim>>&                points,
                    std::vector<typename VectorType::value_type>& values,
-                   const unsigned int component = 0) const override;
+                   const unsigned int component= 0) const override;
 
     /**
      * Compute the Laplacians of all components at a set of points.

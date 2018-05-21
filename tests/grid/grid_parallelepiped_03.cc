@@ -41,18 +41,18 @@ check_subdivided_parallelepiped(bool colorize, bool log)
   switch(dim)
     {
       case 1:
-        corners[0] = Point<dim>(0.5);
+        corners[0]= Point<dim>(0.5);
         break;
 
       case 2:
-        corners[0] = Point<dim>(0.50, 0.25);
-        corners[1] = Point<dim>(0.25, 0.50);
+        corners[0]= Point<dim>(0.50, 0.25);
+        corners[1]= Point<dim>(0.25, 0.50);
         break;
 
       case 3:
-        corners[0] = Point<dim>(0.25, 0.50, 0.50);
-        corners[1] = Point<dim>(0.50, 0.25, 0.50);
-        corners[2] = Point<dim>(0.50, 0.50, 0.25);
+        corners[0]= Point<dim>(0.25, 0.50, 0.50);
+        corners[1]= Point<dim>(0.50, 0.25, 0.50);
+        corners[2]= Point<dim>(0.50, 0.50, 0.25);
         break;
 
       default:
@@ -60,7 +60,7 @@ check_subdivided_parallelepiped(bool colorize, bool log)
     }
 
   // The number of subdivisions can be anything reasonable:
-  const unsigned int n_subdivisions = (2 * dim + 1);
+  const unsigned int n_subdivisions= (2 * dim + 1);
 
   Triangulation<dim> triangulation;
   GridGenerator::subdivided_parallelepiped(

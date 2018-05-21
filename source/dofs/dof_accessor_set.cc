@@ -100,7 +100,7 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
 
       const FiniteElement<dim, spacedim>& fe
         = this->get_dof_handler().get_fe(fe_index);
-      const unsigned int dofs_per_cell = fe.dofs_per_cell;
+      const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
       Assert(this->dof_handler != nullptr,
              typename BaseClass::ExcInvalidObject());
@@ -111,7 +111,7 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
 
       Vector<number> tmp(dofs_per_cell);
 
-      for(unsigned int child = 0; child < this->n_children(); ++child)
+      for(unsigned int child= 0; child < this->n_children(); ++child)
         {
           if(tmp.size() > 0)
             fe.get_prolongation_matrix(child, this->refinement_case())

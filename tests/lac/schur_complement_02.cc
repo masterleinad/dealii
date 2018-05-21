@@ -74,7 +74,7 @@ main()
 
        */
 
-      const unsigned int rc = 1;
+      const unsigned int rc= 1;
       SparsityPattern    sparsity_pattern(rc, rc, 0);
       sparsity_pattern.compress();
 
@@ -84,34 +84,34 @@ main()
       SparseMatrix<double> D(sparsity_pattern);
       Vector<double>       y(rc);
       Vector<double>       g(rc);
-      for(unsigned int i = 0; i < rc; ++i)
+      for(unsigned int i= 0; i < rc; ++i)
         {
-          A.diag_element(i) = 1.0 * (i + 1);
-          B.diag_element(i) = 2.0 * (i + 1);
-          C.diag_element(i) = 3.0 * (i + 1);
-          D.diag_element(i) = 4.0 * (i + 1);
-          y(i)              = 6.0 * (i + 1);
-          g(i)              = 2.0 * (i + 1);
+          A.diag_element(i)= 1.0 * (i + 1);
+          B.diag_element(i)= 2.0 * (i + 1);
+          C.diag_element(i)= 3.0 * (i + 1);
+          D.diag_element(i)= 4.0 * (i + 1);
+          y(i)             = 6.0 * (i + 1);
+          g(i)             = 2.0 * (i + 1);
         }
 
-      const auto lo_A = linear_operator(A);
-      const auto lo_B = linear_operator(B);
-      const auto lo_C = linear_operator(C);
-      const auto lo_D = linear_operator(D);
+      const auto lo_A= linear_operator(A);
+      const auto lo_B= linear_operator(B);
+      const auto lo_C= linear_operator(C);
+      const auto lo_D= linear_operator(D);
 
       SolverControl                            solver_control_A(100, 1.0e-10);
       SolverCG<Vector<double>>                 solver_A(solver_control_A);
       PreconditionJacobi<SparseMatrix<double>> preconditioner_A;
       preconditioner_A.initialize(A);
-      const auto lo_A_inv = inverse_operator(lo_A, solver_A, preconditioner_A);
+      const auto lo_A_inv= inverse_operator(lo_A, solver_A, preconditioner_A);
 
-      const auto lo_S   = schur_complement(lo_A_inv, lo_B, lo_C, lo_D);
-      const auto lo_S_t = transpose_operator(lo_S);
+      const auto lo_S  = schur_complement(lo_A_inv, lo_B, lo_C, lo_D);
+      const auto lo_S_t= transpose_operator(lo_S);
 
-      const Vector<double> g1 = lo_S * y;
-      const Vector<double> g2 = lo_S_t * y;
-      const Vector<double> g3 = lo_S * y + g;
-      const Vector<double> g4 = lo_S_t * y + g;
+      const Vector<double> g1= lo_S * y;
+      const Vector<double> g2= lo_S_t * y;
+      const Vector<double> g3= lo_S * y + g;
+      const Vector<double> g4= lo_S_t * y + g;
 
       PRINTME("g1", g1);
       PRINTME("g2", g2);

@@ -23,18 +23,18 @@
 void
 test()
 {
-  unsigned long long int i = std::pow(2, 33);
+  unsigned long long int i= std::pow(2, 33);
   Assert(Utilities::to_string(i) == "8589934592", ExcInternalError());
   Assert(Utilities::to_string(i, 11) == "08589934592", ExcInternalError());
 
-  unsigned long long j = std::pow(2, 31);
+  unsigned long long j= std::pow(2, 31);
   Assert(Utilities::to_string(j) == "2147483648", ExcInternalError());
 
-  int k = -std::pow(2, 30);
+  int k= -std::pow(2, 30);
   Assert(Utilities::to_string(k) == "-1073741824", ExcInternalError());
   Assert(Utilities::to_string(k, 12) == "-01073741824", ExcInternalError());
 
-  long long int l = -std::pow(2, 35);
+  long long int l= -std::pow(2, 35);
   Assert(Utilities::to_string(l) == "-34359738368", ExcInternalError());
   Assert(Utilities::to_string(l, 13) == "-034359738368", ExcInternalError());
 

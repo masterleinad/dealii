@@ -79,8 +79,8 @@ check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
   // the product should be the identity
   // matrix now. make sure that this is
   // indeed the case
-  for(unsigned int i = 0; i < product.m(); ++i)
-    product(i, i) -= 1;
+  for(unsigned int i= 0; i < product.m(); ++i)
+    product(i, i)-= 1;
 
   output_matrix(product);
   AssertThrow(product.frobenius_norm() < 1e-10, ExcInternalError());

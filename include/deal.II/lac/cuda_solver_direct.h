@@ -47,7 +47,7 @@ namespace CUDAWrappers
       /**
        * Set the additional data field to the desired solver.
        */
-      explicit AdditionalData(const std::string& solver_type = "LU_dense");
+      explicit AdditionalData(const std::string& solver_type= "LU_dense");
 
       /**
        * Set the solver type. Possibilities are:
@@ -66,12 +66,12 @@ namespace CUDAWrappers
      */
     SolverDirect(const Utilities::CUDA::Handle& handle,
                  SolverControl&                 cn,
-                 const AdditionalData&          data = AdditionalData());
+                 const AdditionalData&          data= AdditionalData());
 
     /**
      * Destructor.
      */
-    virtual ~SolverDirect() = default;
+    virtual ~SolverDirect()= default;
 
     /**
      * Solve the linear system <tt>Ax=b</tt>.

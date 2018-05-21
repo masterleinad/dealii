@@ -95,8 +95,8 @@ namespace Step44
     {
       prm.enter_subsection("Finite element system");
       {
-        poly_degree = prm.get_integer("Polynomial degree");
-        quad_order  = prm.get_integer("Quadrature order");
+        poly_degree= prm.get_integer("Polynomial degree");
+        quad_order = prm.get_integer("Quadrature order");
       }
       prm.leave_subsection();
     }
@@ -135,9 +135,9 @@ namespace Step44
     {
       prm.enter_subsection("Geometry");
       {
-        global_refinement = prm.get_integer("Global refinement");
-        scale             = prm.get_double("Grid scale");
-        p_p0              = prm.get_double("Pressure ratio p/p0");
+        global_refinement= prm.get_integer("Global refinement");
+        scale            = prm.get_double("Grid scale");
+        p_p0             = prm.get_double("Pressure ratio p/p0");
       }
       prm.leave_subsection();
     }
@@ -169,8 +169,8 @@ namespace Step44
     {
       prm.enter_subsection("Material properties");
       {
-        nu = prm.get_double("Poisson's ratio");
-        mu = prm.get_double("Shear modulus");
+        nu= prm.get_double("Poisson's ratio");
+        mu= prm.get_double("Shear modulus");
       }
       prm.leave_subsection();
     }
@@ -225,12 +225,12 @@ namespace Step44
     {
       prm.enter_subsection("Linear solver");
       {
-        type_lin                  = prm.get("Solver type");
-        tol_lin                   = prm.get_double("Residual");
-        max_iterations_lin        = prm.get_double("Max iteration multiplier");
-        use_static_condensation   = prm.get_bool("Use static condensation");
-        preconditioner_type       = prm.get("Preconditioner type");
-        preconditioner_relaxation = prm.get_double("Preconditioner relaxation");
+        type_lin                 = prm.get("Solver type");
+        tol_lin                  = prm.get_double("Residual");
+        max_iterations_lin       = prm.get_double("Max iteration multiplier");
+        use_static_condensation  = prm.get_bool("Use static condensation");
+        preconditioner_type      = prm.get("Preconditioner type");
+        preconditioner_relaxation= prm.get_double("Preconditioner relaxation");
       }
       prm.leave_subsection();
     }
@@ -269,9 +269,9 @@ namespace Step44
     {
       prm.enter_subsection("Nonlinear solver");
       {
-        max_iterations_NR = prm.get_integer("Max iterations Newton-Raphson");
-        tol_f             = prm.get_double("Tolerance force");
-        tol_u             = prm.get_double("Tolerance displacement");
+        max_iterations_NR= prm.get_integer("Max iterations Newton-Raphson");
+        tol_f            = prm.get_double("Tolerance force");
+        tol_u            = prm.get_double("Tolerance displacement");
       }
       prm.leave_subsection();
     }
@@ -300,8 +300,8 @@ namespace Step44
     {
       prm.enter_subsection("Time");
       {
-        end_time = prm.get_double("End time");
-        delta_t  = prm.get_double("Time step size");
+        end_time= prm.get_double("End time");
+        delta_t = prm.get_double("Time step size");
       }
       prm.leave_subsection();
     }
@@ -377,7 +377,7 @@ namespace Step44
     void
     increment()
     {
-      time_current += delta_t;
+      time_current+= delta_t;
       ++timestep;
     }
 
@@ -408,11 +408,11 @@ namespace Step44
                          const double          p_tilde_in,
                          const double          J_tilde_in)
     {
-      det_F                      = determinant(F);
-      const Tensor<2, dim> F_iso = Physics::Elasticity::Kinematics::F_iso(F);
-      b_bar                      = Physics::Elasticity::Kinematics::b(F_iso);
-      p_tilde                    = p_tilde_in;
-      J_tilde                    = J_tilde_in;
+      det_F                     = determinant(F);
+      const Tensor<2, dim> F_iso= Physics::Elasticity::Kinematics::F_iso(F);
+      b_bar                     = Physics::Elasticity::Kinematics::b(F_iso);
+      p_tilde                   = p_tilde_in;
+      J_tilde                   = J_tilde_in;
       Assert(det_F > 0, ExcInternalError());
     }
     SymmetricTensor<2, dim>
@@ -483,13 +483,13 @@ namespace Step44
     SymmetricTensor<4, dim>
     get_Jc_iso() const
     {
-      const SymmetricTensor<2, dim> tau_bar = get_tau_bar();
-      const SymmetricTensor<2, dim> tau_iso = get_tau_iso();
+      const SymmetricTensor<2, dim> tau_bar= get_tau_bar();
+      const SymmetricTensor<2, dim> tau_iso= get_tau_iso();
       const SymmetricTensor<4, dim> tau_iso_x_I
         = outer_product(tau_iso, Physics::Elasticity::StandardTensors<dim>::I);
       const SymmetricTensor<4, dim> I_x_tau_iso
         = outer_product(Physics::Elasticity::StandardTensors<dim>::I, tau_iso);
-      const SymmetricTensor<4, dim> c_bar = get_c_bar();
+      const SymmetricTensor<4, dim> c_bar= get_c_bar();
       return (2.0 / dim) * trace(tau_bar)
                * Physics::Elasticity::StandardTensors<dim>::dev_P
              - (2.0 / dim) * (tau_iso_x_I + I_x_tau_iso)
@@ -527,13 +527,13 @@ namespace Step44
                   const double          p_tilde,
                   const double          J_tilde)
     {
-      const Tensor<2, dim> F = Physics::Elasticity::Kinematics::F(Grad_u_n);
+      const Tensor<2, dim> F= Physics::Elasticity::Kinematics::F(Grad_u_n);
       material->update_material_data(F, p_tilde, J_tilde);
-      F_inv         = invert(F);
-      tau           = material->get_tau();
-      Jc            = material->get_Jc();
-      dPsi_vol_dJ   = material->get_dPsi_vol_dJ();
-      d2Psi_vol_dJ2 = material->get_d2Psi_vol_dJ2();
+      F_inv        = invert(F);
+      tau          = material->get_tau();
+      Jc           = material->get_Jc();
+      dPsi_vol_dJ  = material->get_dPsi_vol_dJ();
+      d2Psi_vol_dJ2= material->get_d2Psi_vol_dJ2();
     }
     double
     get_J_tilde() const
@@ -672,16 +672,16 @@ namespace Step44
     const FEValuesExtractors::Vector u_fe;
     const FEValuesExtractors::Scalar p_fe;
     const FEValuesExtractors::Scalar J_fe;
-    static const unsigned int        n_blocks          = 3;
-    static const unsigned int        n_components      = dim + 2;
-    static const unsigned int        first_u_component = 0;
-    static const unsigned int        p_component       = dim;
-    static const unsigned int        J_component       = dim + 1;
+    static const unsigned int        n_blocks         = 3;
+    static const unsigned int        n_components     = dim + 2;
+    static const unsigned int        first_u_component= 0;
+    static const unsigned int        p_component      = dim;
+    static const unsigned int        J_component      = dim + 1;
     enum
     {
-      u_dof = 0,
-      p_dof = 1,
-      J_dof = 2
+      u_dof= 0,
+      p_dof= 1,
+      J_dof= 2
     };
     std::vector<types::global_dof_index> dofs_per_block;
     std::vector<types::global_dof_index> element_indices_u;
@@ -704,22 +704,22 @@ namespace Step44
       void
       reset()
       {
-        norm = 1.0;
-        u    = 1.0;
-        p    = 1.0;
-        J    = 1.0;
+        norm= 1.0;
+        u   = 1.0;
+        p   = 1.0;
+        J   = 1.0;
       }
       void
       normalise(const Errors& rhs)
       {
         if(rhs.norm != 0.0)
-          norm /= rhs.norm;
+          norm/= rhs.norm;
         if(rhs.u != 0.0)
-          u /= rhs.u;
+          u/= rhs.u;
         if(rhs.p != 0.0)
-          p /= rhs.p;
+          p/= rhs.p;
         if(rhs.J != 0.0)
-          J /= rhs.J;
+          J/= rhs.J;
       }
       double norm, u, p, J;
     };
@@ -794,9 +794,9 @@ namespace Step44
     BlockVector<double> solution_delta(dofs_per_block);
     while(time.current() < time.end())
       {
-        solution_delta = 0.0;
+        solution_delta= 0.0;
         solve_nonlinear_timestep(solution_delta);
-        solution_n += solution_delta;
+        solution_n+= solution_delta;
         // output_results();
         // Output displacement at centre of traction surface
         {
@@ -805,15 +805,15 @@ namespace Step44
                        Point<dim>(0.0, 1.0) * parameters.scale);
           typename DoFHandler<dim>::active_cell_iterator cell
             = dof_handler_ref.begin_active(),
-            endc = dof_handler_ref.end();
+            endc= dof_handler_ref.end();
           for(; cell != endc; ++cell)
-            for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+            for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell;
                 ++v)
               if(cell->vertex(v).distance(soln_pt) < 1e-6 * parameters.scale)
                 {
                   Tensor<1, dim> soln;
-                  for(unsigned int d = 0; d < dim; ++d)
-                    soln[d] = solution_n(cell->vertex_dof_index(v, u_dof + d));
+                  for(unsigned int d= 0; d < dim; ++d)
+                    soln[d]= solution_n(cell->vertex_dof_index(v, u_dof + d));
                   deallog << "Timestep " << time.get_timestep() << ": " << soln
                           << std::endl;
                 }
@@ -833,7 +833,7 @@ namespace Step44
     void
     reset()
     {
-      cell_matrix = 0.0;
+      cell_matrix= 0.0;
     }
   };
   template <int dim>
@@ -865,20 +865,20 @@ namespace Step44
     void
     reset()
     {
-      const unsigned int n_q_points      = Nx.size();
-      const unsigned int n_dofs_per_cell = Nx[0].size();
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      const unsigned int n_q_points     = Nx.size();
+      const unsigned int n_dofs_per_cell= Nx[0].size();
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
           Assert(Nx[q_point].size() == n_dofs_per_cell, ExcInternalError());
           Assert(grad_Nx[q_point].size() == n_dofs_per_cell,
                  ExcInternalError());
           Assert(symm_grad_Nx[q_point].size() == n_dofs_per_cell,
                  ExcInternalError());
-          for(unsigned int k = 0; k < n_dofs_per_cell; ++k)
+          for(unsigned int k= 0; k < n_dofs_per_cell; ++k)
             {
-              Nx[q_point][k]           = 0.0;
-              grad_Nx[q_point][k]      = 0.0;
-              symm_grad_Nx[q_point][k] = 0.0;
+              Nx[q_point][k]          = 0.0;
+              grad_Nx[q_point][k]     = 0.0;
+              symm_grad_Nx[q_point][k]= 0.0;
             }
         }
     }
@@ -894,7 +894,7 @@ namespace Step44
     void
     reset()
     {
-      cell_rhs = 0.0;
+      cell_rhs= 0.0;
     }
   };
   template <int dim>
@@ -929,17 +929,17 @@ namespace Step44
     void
     reset()
     {
-      const unsigned int n_q_points      = Nx.size();
-      const unsigned int n_dofs_per_cell = Nx[0].size();
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      const unsigned int n_q_points     = Nx.size();
+      const unsigned int n_dofs_per_cell= Nx[0].size();
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
           Assert(Nx[q_point].size() == n_dofs_per_cell, ExcInternalError());
           Assert(symm_grad_Nx[q_point].size() == n_dofs_per_cell,
                  ExcInternalError());
-          for(unsigned int k = 0; k < n_dofs_per_cell; ++k)
+          for(unsigned int k= 0; k < n_dofs_per_cell; ++k)
             {
-              Nx[q_point][k]           = 0.0;
-              symm_grad_Nx[q_point][k] = 0.0;
+              Nx[q_point][k]          = 0.0;
+              symm_grad_Nx[q_point][k]= 0.0;
             }
         }
     }
@@ -1022,12 +1022,12 @@ namespace Step44
     void
     reset()
     {
-      const unsigned int n_q_points = solution_grads_u_total.size();
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      const unsigned int n_q_points= solution_grads_u_total.size();
+      for(unsigned int q= 0; q < n_q_points; ++q)
         {
-          solution_grads_u_total[q]  = 0.0;
-          solution_values_p_total[q] = 0.0;
-          solution_values_J_total[q] = 0.0;
+          solution_grads_u_total[q] = 0.0;
+          solution_values_p_total[q]= 0.0;
+          solution_values_J_total[q]= 0.0;
         }
     }
   };
@@ -1042,13 +1042,13 @@ namespace Step44
       true);
     GridTools::scale(parameters.scale, triangulation);
     triangulation.refine_global(std::max(1U, parameters.global_refinement));
-    vol_reference = GridTools::volume(triangulation);
+    vol_reference= GridTools::volume(triangulation);
     pcout << "Grid:\n\t Reference volume: " << vol_reference << std::endl;
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
-      endc = triangulation.end();
+      endc= triangulation.end();
     for(; cell != endc; ++cell)
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         {
           if(cell->face(face)->at_boundary() == true
@@ -1075,8 +1075,8 @@ namespace Step44
     timer.enter_subsection("Setup system");
     std::vector<unsigned int> block_component(n_components,
                                               u_dof); // Displacement
-    block_component[p_component] = p_dof;             // Pressure
-    block_component[J_component] = J_dof;             // Dilatation
+    block_component[p_component]= p_dof;              // Pressure
+    block_component[J_component]= J_dof;              // Dilatation
     dof_handler_ref.distribute_dofs(fe);
     DoFRenumbering::Cuthill_McKee(dof_handler_ref);
     DoFRenumbering::component_wise(dof_handler_ref, block_component);
@@ -1088,9 +1088,9 @@ namespace Step44
           << std::endl;
     tangent_matrix.clear();
     {
-      const types::global_dof_index n_dofs_u = dofs_per_block[u_dof];
-      const types::global_dof_index n_dofs_p = dofs_per_block[p_dof];
-      const types::global_dof_index n_dofs_J = dofs_per_block[J_dof];
+      const types::global_dof_index n_dofs_u= dofs_per_block[u_dof];
+      const types::global_dof_index n_dofs_p= dofs_per_block[p_dof];
+      const types::global_dof_index n_dofs_J= dofs_per_block[J_dof];
       BlockDynamicSparsityPattern   dsp(n_blocks, n_blocks);
       dsp.block(u_dof, u_dof).reinit(n_dofs_u, n_dofs_u);
       dsp.block(u_dof, p_dof).reinit(n_dofs_u, n_dofs_p);
@@ -1103,14 +1103,14 @@ namespace Step44
       dsp.block(J_dof, J_dof).reinit(n_dofs_J, n_dofs_J);
       dsp.collect_sizes();
       Table<2, DoFTools::Coupling> coupling(n_components, n_components);
-      for(unsigned int ii = 0; ii < n_components; ++ii)
-        for(unsigned int jj = 0; jj < n_components; ++jj)
+      for(unsigned int ii= 0; ii < n_components; ++ii)
+        for(unsigned int jj= 0; jj < n_components; ++jj)
           if(((ii < p_component) && (jj == J_component))
              || ((ii == J_component) && (jj < p_component))
              || ((ii == p_component) && (jj == p_component)))
-            coupling[ii][jj] = DoFTools::none;
+            coupling[ii][jj]= DoFTools::none;
           else
-            coupling[ii][jj] = DoFTools::always;
+            coupling[ii][jj]= DoFTools::always;
       DoFTools::make_sparsity_pattern(
         dof_handler_ref, coupling, dsp, constraints, false);
       sparsity_pattern.copy_from(dsp);
@@ -1130,9 +1130,9 @@ namespace Step44
     element_indices_u.clear();
     element_indices_p.clear();
     element_indices_J.clear();
-    for(unsigned int k = 0; k < fe.dofs_per_cell; ++k)
+    for(unsigned int k= 0; k < fe.dofs_per_cell; ++k)
       {
-        const unsigned int k_group = fe.system_to_base_index(k).first.first;
+        const unsigned int k_group= fe.system_to_base_index(k).first.first;
         if(k_group == u_dof)
           element_indices_u.push_back(k);
         else if(k_group == p_dof)
@@ -1160,7 +1160,7 @@ namespace Step44
         const std::vector<std::shared_ptr<PointHistory<dim>>> lqph
           = quadrature_point_history.get_data(cell);
         Assert(lqph.size() == n_q_points, ExcInternalError());
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           lqph[q_point]->setup_lqp(parameters);
       }
   }
@@ -1208,7 +1208,7 @@ namespace Step44
       scratch.solution_total, scratch.solution_values_p_total);
     scratch.fe_values_ref[J_fe].get_function_values(
       scratch.solution_total, scratch.solution_values_J_total);
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+    for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
       lqph[q_point]->update_values(scratch.solution_grads_u_total[q_point],
                                    scratch.solution_values_p_total[q_point],
                                    scratch.solution_values_J_total[q_point]);
@@ -1228,17 +1228,17 @@ namespace Step44
     error_update_0.reset();
     error_update_norm.reset();
     print_conv_header();
-    unsigned int newton_iteration = 0;
+    unsigned int newton_iteration= 0;
     for(; newton_iteration < parameters.max_iterations_NR; ++newton_iteration)
       {
         pcout << " " << std::setw(2) << newton_iteration << " " << std::flush;
-        tangent_matrix = 0.0;
-        system_rhs     = 0.0;
+        tangent_matrix= 0.0;
+        system_rhs    = 0.0;
         assemble_system_rhs();
         get_error_residual(error_residual);
         if(newton_iteration == 0)
-          error_residual_0 = error_residual;
-        error_residual_norm = error_residual;
+          error_residual_0= error_residual;
+        error_residual_norm= error_residual;
         error_residual_norm.normalise(error_residual_0);
         if(newton_iteration > 0 && error_update_norm.u <= parameters.tol_u
            && error_residual_norm.u <= parameters.tol_f)
@@ -1254,10 +1254,10 @@ namespace Step44
           = solve_linear_system(newton_update);
         get_error_update(newton_update, error_update);
         if(newton_iteration == 0)
-          error_update_0 = error_update;
-        error_update_norm = error_update;
+          error_update_0= error_update;
+        error_update_norm= error_update;
         error_update_norm.normalise(error_update_0);
-        solution_delta += newton_update;
+        solution_delta+= newton_update;
         update_qph_incremental(solution_delta);
         pcout << " | " << std::fixed << std::setprecision(3) << std::setw(7)
               << std::scientific << lin_solver_output.first << "  "
@@ -1274,15 +1274,15 @@ namespace Step44
   void
   Solid<dim>::print_conv_header()
   {
-    static const unsigned int l_width = 155;
-    for(unsigned int i = 0; i < l_width; ++i)
+    static const unsigned int l_width= 155;
+    for(unsigned int i= 0; i < l_width; ++i)
       pcout << "_";
     pcout << std::endl;
     pcout << "                 SOLVER STEP                  "
           << " |  LIN_IT   LIN_RES    RES_NORM    "
           << " RES_U     RES_P      RES_J     NU_NORM     "
           << " NU_U       NU_P       NU_J " << std::endl;
-    for(unsigned int i = 0; i < l_width; ++i)
+    for(unsigned int i= 0; i < l_width; ++i)
       pcout << "_";
     pcout << std::endl;
   }
@@ -1290,11 +1290,11 @@ namespace Step44
   void
   Solid<dim>::print_conv_footer()
   {
-    static const unsigned int l_width = 155;
-    for(unsigned int i = 0; i < l_width; ++i)
+    static const unsigned int l_width= 155;
+    for(unsigned int i= 0; i < l_width; ++i)
       pcout << "_";
     pcout << std::endl;
-    const std::pair<double, double> error_dil = get_error_dilation();
+    const std::pair<double, double> error_dil= get_error_dilation();
     pcout << "Relative errors:" << std::endl
           << "Displacement:\t" << error_update.u / error_update_0.u << std::endl
           << "Force: \t\t" << error_residual.u / error_residual_0.u << std::endl
@@ -1306,7 +1306,7 @@ namespace Step44
   double
   Solid<dim>::compute_vol_current() const
   {
-    double        vol_current = 0.0;
+    double        vol_current= 0.0;
     FEValues<dim> fe_values_ref(fe, qf_cell, update_JxW_values);
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
@@ -1317,11 +1317,11 @@ namespace Step44
         const std::vector<std::shared_ptr<const PointHistory<dim>>> lqph
           = quadrature_point_history.get_data(cell);
         Assert(lqph.size() == n_q_points, ExcInternalError());
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           {
-            const double det_F_qp = lqph[q_point]->get_det_F();
-            const double JxW      = fe_values_ref.JxW(q_point);
-            vol_current += det_F_qp * JxW;
+            const double det_F_qp= lqph[q_point]->get_det_F();
+            const double JxW     = fe_values_ref.JxW(q_point);
+            vol_current+= det_F_qp * JxW;
           }
       }
     Assert(vol_current > 0.0, ExcInternalError());
@@ -1331,7 +1331,7 @@ namespace Step44
   std::pair<double, double>
   Solid<dim>::get_error_dilation() const
   {
-    double        dil_L2_error = 0.0;
+    double        dil_L2_error= 0.0;
     FEValues<dim> fe_values_ref(fe, qf_cell, update_JxW_values);
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
@@ -1342,14 +1342,14 @@ namespace Step44
         const std::vector<std::shared_ptr<const PointHistory<dim>>> lqph
           = quadrature_point_history.get_data(cell);
         Assert(lqph.size() == n_q_points, ExcInternalError());
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           {
-            const double det_F_qp   = lqph[q_point]->get_det_F();
-            const double J_tilde_qp = lqph[q_point]->get_J_tilde();
+            const double det_F_qp  = lqph[q_point]->get_det_F();
+            const double J_tilde_qp= lqph[q_point]->get_J_tilde();
             const double the_error_qp_squared
               = std::pow((det_F_qp - J_tilde_qp), 2);
-            const double JxW = fe_values_ref.JxW(q_point);
-            dil_L2_error += the_error_qp_squared * JxW;
+            const double JxW= fe_values_ref.JxW(q_point);
+            dil_L2_error+= the_error_qp_squared * JxW;
           }
       }
     return std::make_pair(std::sqrt(dil_L2_error),
@@ -1360,13 +1360,13 @@ namespace Step44
   Solid<dim>::get_error_residual(Errors& error_residual)
   {
     BlockVector<double> error_res(dofs_per_block);
-    for(unsigned int i = 0; i < dof_handler_ref.n_dofs(); ++i)
+    for(unsigned int i= 0; i < dof_handler_ref.n_dofs(); ++i)
       if(!constraints.is_constrained(i))
-        error_res(i) = system_rhs(i);
-    error_residual.norm = error_res.l2_norm();
-    error_residual.u    = error_res.block(u_dof).l2_norm();
-    error_residual.p    = error_res.block(p_dof).l2_norm();
-    error_residual.J    = error_res.block(J_dof).l2_norm();
+        error_res(i)= system_rhs(i);
+    error_residual.norm= error_res.l2_norm();
+    error_residual.u   = error_res.block(u_dof).l2_norm();
+    error_residual.p   = error_res.block(p_dof).l2_norm();
+    error_residual.J   = error_res.block(J_dof).l2_norm();
   }
   template <int dim>
   void
@@ -1374,13 +1374,13 @@ namespace Step44
                                Errors&                    error_update)
   {
     BlockVector<double> error_ud(dofs_per_block);
-    for(unsigned int i = 0; i < dof_handler_ref.n_dofs(); ++i)
+    for(unsigned int i= 0; i < dof_handler_ref.n_dofs(); ++i)
       if(!constraints.is_constrained(i))
-        error_ud(i) = newton_update(i);
-    error_update.norm = error_ud.l2_norm();
-    error_update.u    = error_ud.block(u_dof).l2_norm();
-    error_update.p    = error_ud.block(p_dof).l2_norm();
-    error_update.J    = error_ud.block(J_dof).l2_norm();
+        error_ud(i)= newton_update(i);
+    error_update.norm= error_ud.l2_norm();
+    error_update.u   = error_ud.block(u_dof).l2_norm();
+    error_update.p   = error_ud.block(p_dof).l2_norm();
+    error_update.J   = error_ud.block(J_dof).l2_norm();
   }
   template <int dim>
   BlockVector<double>
@@ -1388,7 +1388,7 @@ namespace Step44
     const BlockVector<double>& solution_delta) const
   {
     BlockVector<double> solution_total(solution_n);
-    solution_total += solution_delta;
+    solution_total+= solution_delta;
     return solution_total;
   }
   template <int dim>
@@ -1397,7 +1397,7 @@ namespace Step44
   {
     timer.enter_subsection("Assemble tangent matrix");
     pcout << " ASM_K " << std::flush;
-    tangent_matrix = 0.0;
+    tangent_matrix= 0.0;
     const UpdateFlags uf_cell(update_values | update_gradients
                               | update_JxW_values);
     PerTaskData_K     per_task_data(dofs_per_cell);
@@ -1420,8 +1420,8 @@ namespace Step44
   void
   Solid<dim>::copy_local_to_global_K(const PerTaskData_K& data)
   {
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-      for(unsigned int j = 0; j < dofs_per_cell; ++j)
+    for(unsigned int i= 0; i < dofs_per_cell; ++i)
+      for(unsigned int j= 0; j < dofs_per_cell; ++j)
         tangent_matrix.add(data.local_dof_indices[i],
                            data.local_dof_indices[j],
                            data.cell_matrix(i, j));
@@ -1440,12 +1440,12 @@ namespace Step44
     const std::vector<std::shared_ptr<const PointHistory<dim>>> lqph
       = quadrature_point_history.get_data(cell);
     Assert(lqph.size() == n_q_points, ExcInternalError());
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+    for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
       {
-        const Tensor<2, dim> F_inv = lqph[q_point]->get_F_inv();
-        for(unsigned int k = 0; k < dofs_per_cell; ++k)
+        const Tensor<2, dim> F_inv= lqph[q_point]->get_F_inv();
+        for(unsigned int k= 0; k < dofs_per_cell; ++k)
           {
-            const unsigned int k_group = fe.system_to_base_index(k).first.first;
+            const unsigned int k_group= fe.system_to_base_index(k).first.first;
             if(k_group == u_dof)
               {
                 scratch.grad_Nx[q_point][k]
@@ -1463,23 +1463,23 @@ namespace Step44
               Assert(k_group <= J_dof, ExcInternalError());
           }
       }
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+    for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
       {
-        const Tensor<2, dim>          tau = lqph[q_point]->get_tau();
-        const SymmetricTensor<4, dim> Jc  = lqph[q_point]->get_Jc();
-        const double d2Psi_vol_dJ2        = lqph[q_point]->get_d2Psi_vol_dJ2();
-        const double det_F                = lqph[q_point]->get_det_F();
-        const std::vector<double>&                  N = scratch.Nx[q_point];
+        const Tensor<2, dim>          tau= lqph[q_point]->get_tau();
+        const SymmetricTensor<4, dim> Jc = lqph[q_point]->get_Jc();
+        const double d2Psi_vol_dJ2       = lqph[q_point]->get_d2Psi_vol_dJ2();
+        const double det_F               = lqph[q_point]->get_det_F();
+        const std::vector<double>&                  N= scratch.Nx[q_point];
         const std::vector<SymmetricTensor<2, dim>>& symm_grad_Nx
           = scratch.symm_grad_Nx[q_point];
-        const std::vector<Tensor<2, dim>>& grad_Nx = scratch.grad_Nx[q_point];
-        const double JxW = scratch.fe_values_ref.JxW(q_point);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        const std::vector<Tensor<2, dim>>& grad_Nx= scratch.grad_Nx[q_point];
+        const double JxW= scratch.fe_values_ref.JxW(q_point);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
-            const unsigned int i_group = fe.system_to_base_index(i).first.first;
-            for(unsigned int j = 0; j <= i; ++j)
+            const unsigned int i_group= fe.system_to_base_index(i).first.first;
+            for(unsigned int j= 0; j <= i; ++j)
               {
                 const unsigned int component_j
                   = fe.system_to_component_index(j).first;
@@ -1487,13 +1487,13 @@ namespace Step44
                   = fe.system_to_base_index(j).first.first;
                 if((i_group == j_group) && (i_group == u_dof))
                   {
-                    data.cell_matrix(i, j) += symm_grad_Nx[i]
-                                              * Jc // The material contribution:
-                                              * symm_grad_Nx[j] * JxW;
+                    data.cell_matrix(i, j)+= symm_grad_Nx[i]
+                                             * Jc // The material contribution:
+                                             * symm_grad_Nx[j] * JxW;
                     if(component_i
                        == component_j) // geometrical stress contribution
-                      data.cell_matrix(i, j) += grad_Nx[i][component_i] * tau
-                                                * grad_Nx[j][component_j] * JxW;
+                      data.cell_matrix(i, j)+= grad_Nx[i][component_i] * tau
+                                               * grad_Nx[j][component_j] * JxW;
                   }
                 else if((i_group == p_dof) && (j_group == u_dof))
                   {
@@ -1504,18 +1504,18 @@ namespace Step44
                          * JxW;
                   }
                 else if((i_group == J_dof) && (j_group == p_dof))
-                  data.cell_matrix(i, j) -= N[i] * N[j] * JxW;
+                  data.cell_matrix(i, j)-= N[i] * N[j] * JxW;
                 else if((i_group == j_group) && (i_group == J_dof))
-                  data.cell_matrix(i, j) += N[i] * d2Psi_vol_dJ2 * N[j] * JxW;
+                  data.cell_matrix(i, j)+= N[i] * d2Psi_vol_dJ2 * N[j] * JxW;
                 else
                   Assert((i_group <= J_dof) && (j_group <= J_dof),
                          ExcInternalError());
               }
           }
       }
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-      for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
-        data.cell_matrix(i, j) = data.cell_matrix(j, i);
+    for(unsigned int i= 0; i < dofs_per_cell; ++i)
+      for(unsigned int j= i + 1; j < dofs_per_cell; ++j)
+        data.cell_matrix(i, j)= data.cell_matrix(j, i);
   }
   template <int dim>
   void
@@ -1523,7 +1523,7 @@ namespace Step44
   {
     timer.enter_subsection("Assemble system right-hand side");
     pcout << " ASM_R " << std::flush;
-    system_rhs = 0.0;
+    system_rhs= 0.0;
     const UpdateFlags uf_cell(update_values | update_gradients
                               | update_JxW_values);
     const UpdateFlags uf_face(update_values | update_normal_vectors
@@ -1548,8 +1548,8 @@ namespace Step44
   void
   Solid<dim>::copy_local_to_global_rhs(const PerTaskData_RHS& data)
   {
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-      system_rhs(data.local_dof_indices[i]) += data.cell_rhs(i);
+    for(unsigned int i= 0; i < dofs_per_cell; ++i)
+      system_rhs(data.local_dof_indices[i])+= data.cell_rhs(i);
   }
   template <int dim>
   void
@@ -1565,14 +1565,14 @@ namespace Step44
     const std::vector<std::shared_ptr<const PointHistory<dim>>> lqph
       = quadrature_point_history.get_data(cell);
     Assert(lqph.size() == n_q_points, ExcInternalError());
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+    for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
       {
-        const Tensor<2, dim> F_inv = lqph[q_point]->get_F_inv();
-        for(unsigned int k = 0; k < dofs_per_cell; ++k)
+        const Tensor<2, dim> F_inv= lqph[q_point]->get_F_inv();
+        for(unsigned int k= 0; k < dofs_per_cell; ++k)
           {
-            const unsigned int k_group = fe.system_to_base_index(k).first.first;
+            const unsigned int k_group= fe.system_to_base_index(k).first.first;
             if(k_group == u_dof)
-              scratch.symm_grad_Nx[q_point][k] = symmetrize(
+              scratch.symm_grad_Nx[q_point][k]= symmetrize(
                 scratch.fe_values_ref[u_fe].gradient(k, q_point) * F_inv);
             else if(k_group == p_dof)
               scratch.Nx[q_point][k]
@@ -1584,45 +1584,45 @@ namespace Step44
               Assert(k_group <= J_dof, ExcInternalError());
           }
       }
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+    for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
       {
-        const SymmetricTensor<2, dim> tau     = lqph[q_point]->get_tau();
-        const double                  det_F   = lqph[q_point]->get_det_F();
-        const double                  J_tilde = lqph[q_point]->get_J_tilde();
-        const double                  p_tilde = lqph[q_point]->get_p_tilde();
-        const double dPsi_vol_dJ = lqph[q_point]->get_dPsi_vol_dJ();
-        const std::vector<double>&                  N = scratch.Nx[q_point];
+        const SymmetricTensor<2, dim> tau    = lqph[q_point]->get_tau();
+        const double                  det_F  = lqph[q_point]->get_det_F();
+        const double                  J_tilde= lqph[q_point]->get_J_tilde();
+        const double                  p_tilde= lqph[q_point]->get_p_tilde();
+        const double dPsi_vol_dJ             = lqph[q_point]->get_dPsi_vol_dJ();
+        const std::vector<double>&                  N= scratch.Nx[q_point];
         const std::vector<SymmetricTensor<2, dim>>& symm_grad_Nx
           = scratch.symm_grad_Nx[q_point];
-        const double JxW = scratch.fe_values_ref.JxW(q_point);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        const double JxW= scratch.fe_values_ref.JxW(q_point);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            const unsigned int i_group = fe.system_to_base_index(i).first.first;
+            const unsigned int i_group= fe.system_to_base_index(i).first.first;
             if(i_group == u_dof)
-              data.cell_rhs(i) -= (symm_grad_Nx[i] * tau) * JxW;
+              data.cell_rhs(i)-= (symm_grad_Nx[i] * tau) * JxW;
             else if(i_group == p_dof)
-              data.cell_rhs(i) -= N[i] * (det_F - J_tilde) * JxW;
+              data.cell_rhs(i)-= N[i] * (det_F - J_tilde) * JxW;
             else if(i_group == J_dof)
-              data.cell_rhs(i) -= N[i] * (dPsi_vol_dJ - p_tilde) * JxW;
+              data.cell_rhs(i)-= N[i] * (dPsi_vol_dJ - p_tilde) * JxW;
             else
               Assert(i_group <= J_dof, ExcInternalError());
           }
       }
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
       if(cell->face(face)->at_boundary() == true
          && cell->face(face)->boundary_id() == 6)
         {
           scratch.fe_face_values_ref.reinit(cell, face);
-          for(unsigned int f_q_point = 0; f_q_point < n_q_points_f; ++f_q_point)
+          for(unsigned int f_q_point= 0; f_q_point < n_q_points_f; ++f_q_point)
             {
               const Tensor<1, dim>& N
                 = scratch.fe_face_values_ref.normal_vector(f_q_point);
               static const double p0
                 = -4.0 / (parameters.scale * parameters.scale);
-              const double         time_ramp = (time.current() / time.end());
-              const double         pressure  = p0 * parameters.p_p0 * time_ramp;
-              const Tensor<1, dim> traction  = pressure * N;
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              const double         time_ramp= (time.current() / time.end());
+              const double         pressure = p0 * parameters.p_p0 * time_ramp;
+              const Tensor<1, dim> traction = pressure * N;
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
                 {
                   const unsigned int i_group
                     = fe.system_to_base_index(i).first.first;
@@ -1634,7 +1634,7 @@ namespace Step44
                         = scratch.fe_face_values_ref.shape_value(i, f_q_point);
                       const double JxW
                         = scratch.fe_face_values_ref.JxW(f_q_point);
-                      data.cell_rhs(i) += (Ni * traction[component_i]) * JxW;
+                      data.cell_rhs(i)+= (Ni * traction[component_i]) * JxW;
                     }
                 }
             }
@@ -1648,11 +1648,11 @@ namespace Step44
     if(it_nr > 1)
       return;
     constraints.clear();
-    const bool                       apply_dirichlet_bc = (it_nr == 0);
+    const bool                       apply_dirichlet_bc= (it_nr == 0);
     const FEValuesExtractors::Scalar x_displacement(0);
     const FEValuesExtractors::Scalar y_displacement(1);
     {
-      const int boundary_id = 0;
+      const int boundary_id= 0;
       if(apply_dirichlet_bc == true)
         VectorTools::interpolate_boundary_values(
           dof_handler_ref,
@@ -1669,7 +1669,7 @@ namespace Step44
           fe.component_mask(x_displacement));
     }
     {
-      const int boundary_id = 2;
+      const int boundary_id= 2;
       if(apply_dirichlet_bc == true)
         VectorTools::interpolate_boundary_values(
           dof_handler_ref,
@@ -1689,7 +1689,7 @@ namespace Step44
       {
         const FEValuesExtractors::Scalar z_displacement(2);
         {
-          const int boundary_id = 3;
+          const int boundary_id= 3;
           if(apply_dirichlet_bc == true)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
@@ -1708,7 +1708,7 @@ namespace Step44
                | fe.component_mask(z_displacement)));
         }
         {
-          const int boundary_id = 4;
+          const int boundary_id= 4;
           if(apply_dirichlet_bc == true)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
@@ -1725,7 +1725,7 @@ namespace Step44
               fe.component_mask(z_displacement));
         }
         {
-          const int boundary_id = 6;
+          const int boundary_id= 6;
           if(apply_dirichlet_bc == true)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
@@ -1747,7 +1747,7 @@ namespace Step44
     else
       {
         {
-          const int boundary_id = 3;
+          const int boundary_id= 3;
           if(apply_dirichlet_bc == true)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
@@ -1764,7 +1764,7 @@ namespace Step44
               (fe.component_mask(x_displacement)));
         }
         {
-          const int boundary_id = 6;
+          const int boundary_id= 6;
           if(apply_dirichlet_bc == true)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
@@ -1807,8 +1807,8 @@ namespace Step44
   void
   Solid<dim>::copy_local_to_global_sc(const PerTaskData_SC& data)
   {
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-      for(unsigned int j = 0; j < dofs_per_cell; ++j)
+    for(unsigned int i= 0; i < dofs_per_cell; ++i)
+      for(unsigned int j= 0; j < dofs_per_cell; ++j)
         tangent_matrix.add(data.local_dof_indices[i],
                            data.local_dof_indices[j],
                            data.cell_matrix(i, j));
@@ -1846,8 +1846,8 @@ namespace Step44
   std::pair<unsigned int, double>
   Solid<dim>::solve_linear_system(BlockVector<double>& newton_update)
   {
-    unsigned int lin_it  = 0;
-    double       lin_res = 0.0;
+    unsigned int lin_it = 0;
+    double       lin_res= 0.0;
     if(parameters.use_static_condensation == true)
       {
         BlockVector<double> A(dofs_per_block);
@@ -1858,19 +1858,19 @@ namespace Step44
             .vmult(A.block(J_dof), system_rhs.block(p_dof));
           tangent_matrix.block(J_dof, J_dof)
             .vmult(B.block(J_dof), A.block(J_dof));
-          A.block(J_dof) = system_rhs.block(J_dof);
-          A.block(J_dof) -= B.block(J_dof);
+          A.block(J_dof)= system_rhs.block(J_dof);
+          A.block(J_dof)-= B.block(J_dof);
           tangent_matrix.block(p_dof, J_dof)
             .Tvmult(A.block(p_dof), A.block(J_dof));
           tangent_matrix.block(u_dof, p_dof)
             .vmult(A.block(u_dof), A.block(p_dof));
-          system_rhs.block(u_dof) -= A.block(u_dof);
+          system_rhs.block(u_dof)-= A.block(u_dof);
           timer.enter_subsection("Linear solver");
           pcout << " SLV " << std::flush;
           if(parameters.type_lin == "CG")
             {
-              const int solver_its = tangent_matrix.block(u_dof, u_dof).m()
-                                     * parameters.max_iterations_lin;
+              const int solver_its= tangent_matrix.block(u_dof, u_dof).m()
+                                    * parameters.max_iterations_lin;
               const double tol_sol
                 = parameters.tol_lin * system_rhs.block(u_dof).l2_norm();
               SolverControl solver_control(solver_its, tol_sol, false, false);
@@ -1884,8 +1884,8 @@ namespace Step44
                               newton_update.block(u_dof),
                               system_rhs.block(u_dof),
                               preconditioner);
-              lin_it  = solver_control.last_step();
-              lin_res = solver_control.last_value();
+              lin_it = solver_control.last_step();
+              lin_res= solver_control.last_value();
             }
           else if(parameters.type_lin == "Direct")
             {
@@ -1893,8 +1893,8 @@ namespace Step44
               A_direct.initialize(tangent_matrix.block(u_dof, u_dof));
               A_direct.vmult(newton_update.block(u_dof),
                              system_rhs.block(u_dof));
-              lin_it  = 1;
-              lin_res = 0.0;
+              lin_it = 1;
+              lin_res= 0.0;
             }
           else
             Assert(false, ExcMessage("Linear solver type not implemented"));
@@ -1906,8 +1906,8 @@ namespace Step44
         {
           tangent_matrix.block(p_dof, u_dof)
             .vmult(A.block(p_dof), newton_update.block(u_dof));
-          A.block(p_dof) *= -1.0;
-          A.block(p_dof) += system_rhs.block(p_dof);
+          A.block(p_dof)*= -1.0;
+          A.block(p_dof)+= system_rhs.block(p_dof);
           tangent_matrix.block(p_dof, J_dof)
             .vmult(newton_update.block(J_dof), A.block(p_dof));
         }
@@ -1915,8 +1915,8 @@ namespace Step44
         {
           tangent_matrix.block(J_dof, J_dof)
             .vmult(A.block(J_dof), newton_update.block(J_dof));
-          A.block(J_dof) *= -1.0;
-          A.block(J_dof) += system_rhs.block(J_dof);
+          A.block(J_dof)*= -1.0;
+          A.block(J_dof)+= system_rhs.block(J_dof);
           tangent_matrix.block(p_dof, J_dof)
             .Tvmult(newton_update.block(p_dof), A.block(J_dof));
         }
@@ -1930,12 +1930,12 @@ namespace Step44
         pcout << " SLV " << std::flush;
         if(parameters.type_lin == "CG")
           {
-            const Vector<double>& f_u = system_rhs.block(u_dof);
-            const Vector<double>& f_p = system_rhs.block(p_dof);
-            const Vector<double>& f_J = system_rhs.block(J_dof);
-            Vector<double>&       d_u = newton_update.block(u_dof);
-            Vector<double>&       d_p = newton_update.block(p_dof);
-            Vector<double>&       d_J = newton_update.block(J_dof);
+            const Vector<double>& f_u= system_rhs.block(u_dof);
+            const Vector<double>& f_p= system_rhs.block(p_dof);
+            const Vector<double>& f_J= system_rhs.block(J_dof);
+            Vector<double>&       d_u= newton_update.block(u_dof);
+            Vector<double>&       d_p= newton_update.block(p_dof);
+            Vector<double>&       d_J= newton_update.block(J_dof);
             const auto            K_uu
               = linear_operator(tangent_matrix.block(u_dof, u_dof));
             const auto K_up
@@ -1958,12 +1958,12 @@ namespace Step44
             SolverSelector<Vector<double>> solver_K_Jp_inv;
             solver_K_Jp_inv.select("cg");
             solver_K_Jp_inv.set_control(solver_control_K_Jp_inv);
-            const auto K_Jp_inv = inverse_operator(
+            const auto K_Jp_inv= inverse_operator(
               K_Jp, solver_K_Jp_inv, preconditioner_K_Jp_inv);
-            const auto K_pJ_inv     = transpose_operator(K_Jp_inv);
-            const auto K_pp_bar     = K_Jp_inv * K_JJ * K_pJ_inv;
-            const auto K_uu_bar_bar = K_up * K_pp_bar * K_pu;
-            const auto K_uu_con     = K_uu + K_uu_bar_bar;
+            const auto K_pJ_inv    = transpose_operator(K_Jp_inv);
+            const auto K_pp_bar    = K_Jp_inv * K_JJ * K_pJ_inv;
+            const auto K_uu_bar_bar= K_up * K_pp_bar * K_pu;
+            const auto K_uu_con    = K_uu + K_uu_bar_bar;
             PreconditionSelector<SparseMatrix<double>, Vector<double>>
               preconditioner_K_con_inv(parameters.preconditioner_type,
                                        parameters.preconditioner_relaxation);
@@ -1977,25 +1977,25 @@ namespace Step44
             SolverSelector<Vector<double>> solver_K_con_inv;
             solver_K_con_inv.select("cg");
             solver_K_con_inv.set_control(solver_control_K_con_inv);
-            const auto K_uu_con_inv = inverse_operator(
+            const auto K_uu_con_inv= inverse_operator(
               K_uu_con, solver_K_con_inv, preconditioner_K_con_inv);
             d_u
               = K_uu_con_inv * (f_u - K_up * (K_Jp_inv * f_J - K_pp_bar * f_p));
             timer.leave_subsection();
             timer.enter_subsection("Linear solver postprocessing");
             pcout << " PP " << std::flush;
-            d_J     = K_pJ_inv * (f_p - K_pu * d_u);
-            d_p     = K_Jp_inv * (f_J - K_JJ * d_J);
-            lin_it  = solver_control_K_con_inv.last_step();
-            lin_res = solver_control_K_con_inv.last_value();
+            d_J    = K_pJ_inv * (f_p - K_pu * d_u);
+            d_p    = K_Jp_inv * (f_J - K_JJ * d_J);
+            lin_it = solver_control_K_con_inv.last_step();
+            lin_res= solver_control_K_con_inv.last_value();
           }
         else if(parameters.type_lin == "Direct")
           {
             SparseDirectUMFPACK A_direct;
             A_direct.initialize(tangent_matrix);
             A_direct.vmult(newton_update, system_rhs);
-            lin_it  = 1;
-            lin_res = 0.0;
+            lin_it = 1;
+            lin_res= 0.0;
             pcout << " -- " << std::flush;
           }
         else
@@ -2026,8 +2026,8 @@ namespace Step44
                              DataOut<dim>::type_dof_data,
                              data_component_interpretation);
     Vector<double> soln(solution_n.size());
-    for(unsigned int i = 0; i < soln.size(); ++i)
-      soln(i) = solution_n(i);
+    for(unsigned int i= 0; i < soln.size(); ++i)
+      soln(i)= solution_n(i);
     MappingQEulerian<dim> q_mapping(degree, dof_handler_ref, soln);
     data_out.build_patches(q_mapping, degree);
     std::ostringstream filename;
@@ -2049,7 +2049,7 @@ main(int argc, char** argv)
   using namespace Step44;
   try
     {
-      const unsigned int dim = 3;
+      const unsigned int dim= 3;
       Solid<dim>         solid(SOURCE_DIR "/prm/parameters-step-44.prm");
       solid.run();
     }

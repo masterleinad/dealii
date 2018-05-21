@@ -25,12 +25,12 @@ void
 test(PETScWrappers::VectorBase& v, PETScWrappers::MPI::Vector& w)
 {
   // set the first vector
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = i;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= i;
 
   // copy elements by reference
-  for(unsigned int i = 0; i < v.size(); ++i)
-    w(i) = v(i);
+  for(unsigned int i= 0; i < v.size(); ++i)
+    w(i)= v(i);
 
   // check that they're equal
   Assert(v == w, ExcInternalError());
@@ -47,7 +47,7 @@ main(int argc, char** argv)
     {
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       Vec                              vpetsc;
-      int ierr = VecCreateSeq(PETSC_COMM_SELF, 100, &vpetsc);
+      int ierr= VecCreateSeq(PETSC_COMM_SELF, 100, &vpetsc);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
       {
         PETScWrappers::VectorBase  v(vpetsc);
@@ -56,9 +56,9 @@ main(int argc, char** argv)
       }
 
 #if DEAL_II_PETSC_VERSION_LT(3, 2, 0)
-      ierr = VecDestroy(vpetsc);
+      ierr= VecDestroy(vpetsc);
 #else
-      ierr = VecDestroy(&vpetsc);
+      ierr= VecDestroy(&vpetsc);
 #endif
 
       AssertThrow(ierr == 0, ExcPETScError(ierr));

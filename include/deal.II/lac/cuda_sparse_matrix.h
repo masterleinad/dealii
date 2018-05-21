@@ -91,7 +91,7 @@ namespace CUDAWrappers
     /**
      * Copy constructor is deleted.
      */
-    SparseMatrix(const CUDAWrappers::SparseMatrix<Number>&) = delete;
+    SparseMatrix(const CUDAWrappers::SparseMatrix<Number>&)= delete;
 
     /**
      * Destructor. Free all memory.

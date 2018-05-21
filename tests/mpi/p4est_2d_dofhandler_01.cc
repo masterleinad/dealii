@@ -33,7 +33,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
@@ -55,9 +55,9 @@ test()
               << std::endl;
     }
 
-  typename DoFHandler<dim>::active_cell_iterator cell = dofh.begin_active();
+  typename DoFHandler<dim>::active_cell_iterator cell= dofh.begin_active();
 
-  const unsigned int dofs_per_cell = dofh.get_fe().dofs_per_cell;
+  const unsigned int dofs_per_cell= dofh.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   if(myid == 0)
@@ -66,7 +66,7 @@ test()
         {
           cell->get_dof_indices(local_dof_indices);
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             deallog << local_dof_indices[i] << " ";
 
           deallog << std::endl;
@@ -78,7 +78,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

@@ -23,11 +23,11 @@ void
 test(Vector<std::complex<double>>& v)
 {
   // set some elements of the vector
-  double norm = 0;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  double norm= 0;
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) = std::complex<double>(i + 1., i + 2.);
-      norm = std::max(norm, std::abs(std::complex<double>(i + 1., i + 2.)));
+      v(i)= std::complex<double>(i + 1., i + 2.);
+      norm= std::max(norm, std::abs(std::complex<double>(i + 1., i + 2.)));
     }
   v.compress();
 

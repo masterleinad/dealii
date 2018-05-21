@@ -29,10 +29,10 @@ main()
 {
   initlog();
 
-  for(int alpha = 0; alpha < 4; ++alpha)
-    for(unsigned int degree = 1; degree < 40; degree += 3)
+  for(int alpha= 0; alpha < 4; ++alpha)
+    for(unsigned int degree= 1; degree < 40; degree+= 3)
       {
-        const int beta = alpha;
+        const int beta= alpha;
         deallog << "Jacobi_" << degree << "^(" << alpha << "," << beta << ")"
                 << std::endl;
 
@@ -41,13 +41,13 @@ main()
         AssertDimension(roots.size(), degree);
         Vector<double>           roots_reference(degree);
         LAPACKFullMatrix<double> eigenvalue_mat(degree, degree);
-        for(unsigned int k = 1; k < degree; k++)
+        for(unsigned int k= 1; k < degree; k++)
           {
-            eigenvalue_mat(k - 1, k) = std::sqrt(
+            eigenvalue_mat(k - 1, k)= std::sqrt(
               4. * k * (k + alpha) * (k + beta) * (k + alpha + beta)
               / ((2. * k - 1 + alpha + beta) * (2. * k + alpha + beta)
                  * (2. * k + alpha + beta) * (2. * k + 1 + alpha + beta)));
-            eigenvalue_mat(k, k - 1) = eigenvalue_mat(k - 1, k);
+            eigenvalue_mat(k, k - 1)= eigenvalue_mat(k - 1, k);
             // diagonal entry is zero for alpha=beta
           }
         FullMatrix<double> eigenvectors(roots_reference.size(),
@@ -55,7 +55,7 @@ main()
         eigenvalue_mat.compute_eigenvalues_symmetric(
           -1., 1., 1.e-20, roots_reference, eigenvectors);
         deallog << "Roots (implemented vs reference)" << std::endl;
-        for(unsigned int i = 0; i < degree; ++i)
+        for(unsigned int i= 0; i < degree; ++i)
           deallog << std::setw(22) << std::setprecision(16) << roots[i]
                   << " (fval = " << std::setw(9) << std::setprecision(3)
                   << jacobi_polynomial_value(degree, alpha, beta, roots[i])

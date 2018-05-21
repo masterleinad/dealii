@@ -51,7 +51,7 @@ namespace internal
      *
      * @author Martin Kronbichler, 2014
      */
-    template <int dim, typename Number = double>
+    template <int dim, typename Number= double>
     class MappingDataOnTheFly
     {
     public:
@@ -197,27 +197,27 @@ namespace internal
     {
       if(present_cell == cell)
         return;
-      present_cell = cell;
+      present_cell= cell;
       fe_values.reinit(present_cell);
-      for(unsigned int q = 0; q < fe_values.get_quadrature().size(); ++q)
+      for(unsigned int q= 0; q < fe_values.get_quadrature().size(); ++q)
         {
           if(fe_values.get_update_flags() & update_JxW_values)
-            mapping_info_storage.JxW_values[q] = fe_values.JxW(q);
+            mapping_info_storage.JxW_values[q]= fe_values.JxW(q);
           if(fe_values.get_update_flags() & update_jacobians)
             {
-              Tensor<2, dim> jac = fe_values.jacobian(q);
-              jac                = invert(transpose(jac));
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
-                  mapping_info_storage.jacobians[0][q][d][e] = jac[d][e];
+              Tensor<2, dim> jac= fe_values.jacobian(q);
+              jac               = invert(transpose(jac));
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
+                  mapping_info_storage.jacobians[0][q][d][e]= jac[d][e];
             }
           if(fe_values.get_update_flags() & update_quadrature_points)
-            for(unsigned int d = 0; d < dim; ++d)
+            for(unsigned int d= 0; d < dim; ++d)
               mapping_info_storage.quadrature_points[q][d]
                 = fe_values.quadrature_point(q)[d];
           if(fe_values.get_update_flags() & update_normal_vectors)
             {
-              for(unsigned int d = 0; d < dim; ++d)
+              for(unsigned int d= 0; d < dim; ++d)
                 mapping_info_storage.normal_vectors[q][d]
                   = fe_values.normal_vector(q)[d];
               mapping_info_storage.normals_times_jacobians[0][q]

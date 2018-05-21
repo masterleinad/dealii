@@ -27,10 +27,10 @@ template <typename number>
 void
 hilbert(LAPACKFullMatrix<number>& M, const bool nonsymmetric)
 {
-  const unsigned int n = M.n_rows();
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
-      M(i, j) = 1. / (i + j + 1.) * (nonsymmetric ? ((i < j) ? -1. : 1.) : 1.);
+  const unsigned int n= M.n_rows();
+  for(unsigned int i= 0; i < n; ++i)
+    for(unsigned int j= 0; j < n; ++j)
+      M(i, j)= 1. / (i + j + 1.) * (nonsymmetric ? ((i < j) ? -1. : 1.) : 1.);
 }
 
 // Multiply some vectors with the matrix and its transpose, then
@@ -48,10 +48,10 @@ test(const unsigned int size, const bool nonsymmetric)
   Vector<double> x(size);
   Vector<double> y(size);
 
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     {
-      u(i) = i + 2.;
-      x(i) = i + 2.;
+      u(i)= i + 2.;
+      x(i)= i + 2.;
     }
   M.vmult(v, u);
   M.Tvmult(y, x);
@@ -59,8 +59,8 @@ test(const unsigned int size, const bool nonsymmetric)
   M.apply_lu_factorization(v, false);
   M.apply_lu_factorization(y, true);
 
-  v -= u;
-  y -= x;
+  v-= u;
+  y-= x;
 
   deallog << v.l2_norm() << std::endl;
   deallog << y.l2_norm() << std::endl;
@@ -69,7 +69,7 @@ test(const unsigned int size, const bool nonsymmetric)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);

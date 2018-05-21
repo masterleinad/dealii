@@ -80,7 +80,7 @@ namespace internal
     value(const T& t)
     {
       VectorizedArray<T> tmp;
-      tmp = t;
+      tmp= t;
       return tmp;
     }
   };
@@ -152,7 +152,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 1;
+  static const unsigned int n_array_elements= 1;
 
   // POD means that there should be no user-defined constructors, destructors
   // and copy functions (the standard is somewhat relaxed in C++2011, though).
@@ -164,7 +164,7 @@ public:
   VectorizedArray&
   operator=(const Number scalar)
   {
-    data = scalar;
+    data= scalar;
     return *this;
   }
 
@@ -197,7 +197,7 @@ public:
   VectorizedArray&
   operator+=(const VectorizedArray<Number>& vec)
   {
-    data += vec.data;
+    data+= vec.data;
     return *this;
   }
 
@@ -208,7 +208,7 @@ public:
   VectorizedArray&
   operator-=(const VectorizedArray<Number>& vec)
   {
-    data -= vec.data;
+    data-= vec.data;
     return *this;
   }
 
@@ -219,7 +219,7 @@ public:
   VectorizedArray&
   operator*=(const VectorizedArray<Number>& vec)
   {
-    data *= vec.data;
+    data*= vec.data;
     return *this;
   }
 
@@ -230,7 +230,7 @@ public:
   VectorizedArray&
   operator/=(const VectorizedArray<Number>& vec)
   {
-    data /= vec.data;
+    data/= vec.data;
     return *this;
   }
 
@@ -244,7 +244,7 @@ public:
   void
   load(const Number* ptr)
   {
-    data = *ptr;
+    data= *ptr;
   }
 
   /**
@@ -257,7 +257,7 @@ public:
   void
   store(Number* ptr) const
   {
-    *ptr = data;
+    *ptr= data;
   }
 
   /**
@@ -308,7 +308,7 @@ public:
   void
   streaming_store(Number* ptr) const
   {
-    *ptr = data;
+    *ptr= data;
   }
 
   /**
@@ -327,7 +327,7 @@ public:
   void
   gather(const Number* base_ptr, const unsigned int* offsets)
   {
-    data = base_ptr[offsets[0]];
+    data= base_ptr[offsets[0]];
   }
 
   /**
@@ -346,7 +346,7 @@ public:
   void
   scatter(const unsigned int* offsets, Number* base_ptr) const
   {
-    base_ptr[offsets[0]] = data;
+    base_ptr[offsets[0]]= data;
   }
 
   /**
@@ -365,7 +365,7 @@ private:
   get_sqrt() const
   {
     VectorizedArray res;
-    res.data = std::sqrt(data);
+    res.data= std::sqrt(data);
     return res;
   }
 
@@ -378,7 +378,7 @@ private:
   get_abs() const
   {
     VectorizedArray res;
-    res.data = std::fabs(data);
+    res.data= std::fabs(data);
     return res;
   }
 
@@ -391,7 +391,7 @@ private:
   get_max(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = std::max(data, other.data);
+    res.data= std::max(data, other.data);
     return res;
   }
 
@@ -404,7 +404,7 @@ private:
   get_min(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = std::min(data, other.data);
+    res.data= std::min(data, other.data);
     return res;
   }
 
@@ -436,7 +436,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              make_vectorized_array(const Number& u)
 {
   VectorizedArray<Number> result;
-  result = u;
+  result= u;
   return result;
 }
 
@@ -472,9 +472,9 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
                               const unsigned int*      offsets,
                               VectorizedArray<Number>* out)
 {
-  for(unsigned int i = 0; i < n_entries; ++i)
-    for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements; ++v)
-      out[i][v] = in[offsets[v] + i];
+  for(unsigned int i= 0; i < n_entries; ++i)
+    for(unsigned int v= 0; v < VectorizedArray<Number>::n_array_elements; ++v)
+      out[i][v]= in[offsets[v] + i];
 }
 
 /**
@@ -524,15 +524,13 @@ vectorized_transpose_and_store(const bool                     add_into,
                                Number*                        out)
 {
   if(add_into)
-    for(unsigned int i = 0; i < n_entries; ++i)
-      for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements;
-          ++v)
-        out[offsets[v] + i] += in[i][v];
+    for(unsigned int i= 0; i < n_entries; ++i)
+      for(unsigned int v= 0; v < VectorizedArray<Number>::n_array_elements; ++v)
+        out[offsets[v] + i]+= in[i][v];
   else
-    for(unsigned int i = 0; i < n_entries; ++i)
-      for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements;
-          ++v)
-        out[offsets[v] + i] = in[i][v];
+    for(unsigned int i= 0; i < n_entries; ++i)
+      for(unsigned int v= 0; v < VectorizedArray<Number>::n_array_elements; ++v)
+        out[offsets[v] + i]= in[i][v];
 }
 
 // for safety, also check that __AVX512F__ is defined in case the user manually
@@ -550,7 +548,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 8;
+  static const unsigned int n_array_elements= 8;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -559,7 +557,7 @@ public:
   VectorizedArray&
   operator=(const double x)
   {
-    data = _mm512_set1_pd(x);
+    data= _mm512_set1_pd(x);
     return *this;
   }
 
@@ -596,9 +594,9 @@ public:
     // instructions are available. Otherwise, we need to use the built-in
     // intrinsic command for __m512d
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data += vec.data;
+    data+= vec.data;
 #  else
-    data = _mm512_add_pd(data, vec.data);
+    data= _mm512_add_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -611,9 +609,9 @@ public:
   operator-=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data -= vec.data;
+    data-= vec.data;
 #  else
-    data = _mm512_sub_pd(data, vec.data);
+    data= _mm512_sub_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -625,9 +623,9 @@ public:
   operator*=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data *= vec.data;
+    data*= vec.data;
 #  else
-    data = _mm512_mul_pd(data, vec.data);
+    data= _mm512_mul_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -640,9 +638,9 @@ public:
   operator/=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data /= vec.data;
+    data/= vec.data;
 #  else
-    data = _mm512_div_pd(data, vec.data);
+    data= _mm512_div_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -656,7 +654,7 @@ public:
   void
   load(const double* ptr)
   {
-    data = _mm512_loadu_pd(ptr);
+    data= _mm512_loadu_pd(ptr);
   }
 
   /**
@@ -703,9 +701,9 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
-    data                    = _mm512_i32gather_pd(index, base_ptr, 8);
+    const __m256  index_val= _mm256_loadu_ps((const float*) offsets);
+    const __m256i index    = *((__m256i*) (&index_val));
+    data                   = _mm512_i32gather_pd(index, base_ptr, 8);
   }
 
   /**
@@ -724,8 +722,8 @@ public:
   void
   scatter(const unsigned int* offsets, double* base_ptr) const
   {
-    for(unsigned int i = 0; i < 8; ++i)
-      for(unsigned int j = i + 1; j < 8; ++j)
+    for(unsigned int i= 0; i < 8; ++i)
+      for(unsigned int j= i + 1; j < 8; ++j)
         Assert(offsets[i] != offsets[j],
                ExcMessage("Result of scatter undefined if two offset elements"
                           " point to the same position"));
@@ -733,8 +731,8 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
+    const __m256  index_val= _mm256_loadu_ps((const float*) offsets);
+    const __m256i index    = *((__m256i*) (&index_val));
     _mm512_i32scatter_pd(base_ptr, index, data, 8);
   }
 
@@ -754,7 +752,7 @@ private:
   get_sqrt() const
   {
     VectorizedArray res;
-    res.data = _mm512_sqrt_pd(data);
+    res.data= _mm512_sqrt_pd(data);
     return res;
   }
 
@@ -771,9 +769,9 @@ private:
     // value to +. Since there is no andnot for AVX512, we interpret the data
     // as 64 bit integers and do the andnot on those types (note that andnot
     // is a bitwise operation so the data type does not matter)
-    __m512d         mask = _mm512_set1_pd(-0.);
+    __m512d         mask= _mm512_set1_pd(-0.);
     VectorizedArray res;
-    res.data = (__m512d) _mm512_andnot_epi64((__m512i) mask, (__m512i) data);
+    res.data= (__m512d) _mm512_andnot_epi64((__m512i) mask, (__m512i) data);
     return res;
   }
 
@@ -786,7 +784,7 @@ private:
   get_max(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm512_max_pd(data, other.data);
+    res.data= _mm512_max_pd(data, other.data);
     return res;
   }
 
@@ -799,7 +797,7 @@ private:
   get_min(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm512_min_pd(data, other.data);
+    res.data= _mm512_min_pd(data, other.data);
     return res;
   }
 
@@ -830,24 +828,24 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
                               const unsigned int*      offsets,
                               VectorizedArray<double>* out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  for(unsigned int outer = 0; outer < 8; outer += 4)
+  const unsigned int n_chunks= n_entries / 4;
+  for(unsigned int outer= 0; outer < 8; outer+= 4)
     {
-      const double* in0 = in + offsets[0 + outer];
-      const double* in1 = in + offsets[1 + outer];
-      const double* in2 = in + offsets[2 + outer];
-      const double* in3 = in + offsets[3 + outer];
+      const double* in0= in + offsets[0 + outer];
+      const double* in1= in + offsets[1 + outer];
+      const double* in2= in + offsets[2 + outer];
+      const double* in3= in + offsets[3 + outer];
 
-      for(unsigned int i = 0; i < n_chunks; ++i)
+      for(unsigned int i= 0; i < n_chunks; ++i)
         {
-          __m256d u0 = _mm256_loadu_pd(in0 + 4 * i);
-          __m256d u1 = _mm256_loadu_pd(in1 + 4 * i);
-          __m256d u2 = _mm256_loadu_pd(in2 + 4 * i);
-          __m256d u3 = _mm256_loadu_pd(in3 + 4 * i);
-          __m256d t0 = _mm256_permute2f128_pd(u0, u2, 0x20);
-          __m256d t1 = _mm256_permute2f128_pd(u1, u3, 0x20);
-          __m256d t2 = _mm256_permute2f128_pd(u0, u2, 0x31);
-          __m256d t3 = _mm256_permute2f128_pd(u1, u3, 0x31);
+          __m256d u0= _mm256_loadu_pd(in0 + 4 * i);
+          __m256d u1= _mm256_loadu_pd(in1 + 4 * i);
+          __m256d u2= _mm256_loadu_pd(in2 + 4 * i);
+          __m256d u3= _mm256_loadu_pd(in3 + 4 * i);
+          __m256d t0= _mm256_permute2f128_pd(u0, u2, 0x20);
+          __m256d t1= _mm256_permute2f128_pd(u1, u3, 0x20);
+          __m256d t2= _mm256_permute2f128_pd(u0, u2, 0x31);
+          __m256d t3= _mm256_permute2f128_pd(u1, u3, 0x31);
           *(__m256d*) ((double*) (&out[4 * i + 0].data) + outer)
             = _mm256_unpacklo_pd(t0, t1);
           *(__m256d*) ((double*) (&out[4 * i + 1].data) + outer)
@@ -857,9 +855,9 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
           *(__m256d*) ((double*) (&out[4 * i + 3].data) + outer)
             = _mm256_unpackhi_pd(t2, t3);
         }
-      for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-        for(unsigned int v = 0; v < 4; ++v)
-          out[i][outer + v] = in[offsets[v + outer] + i];
+      for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+        for(unsigned int v= 0; v < 4; ++v)
+          out[i][outer + v]= in[offsets[v + outer] + i];
     }
 }
 
@@ -874,17 +872,17 @@ vectorized_transpose_and_store(const bool                     add_into,
                                const unsigned int*            offsets,
                                double*                        out)
 {
-  const unsigned int n_chunks = n_entries / 4;
+  const unsigned int n_chunks= n_entries / 4;
   // do not do full transpose because the code is too long and will most
   // likely not pay off. rather do the transposition on the vectorized array
   // on size smaller, mm256d
-  for(unsigned int outer = 0; outer < 8; outer += 4)
+  for(unsigned int outer= 0; outer < 8; outer+= 4)
     {
-      double* out0 = out + offsets[0 + outer];
-      double* out1 = out + offsets[1 + outer];
-      double* out2 = out + offsets[2 + outer];
-      double* out3 = out + offsets[3 + outer];
-      for(unsigned int i = 0; i < n_chunks; ++i)
+      double* out0= out + offsets[0 + outer];
+      double* out1= out + offsets[1 + outer];
+      double* out2= out + offsets[2 + outer];
+      double* out3= out + offsets[3 + outer];
+      for(unsigned int i= 0; i < n_chunks; ++i)
         {
           __m256d u0
             = *(const __m256d*) ((const double*) (&in[4 * i + 0].data) + outer);
@@ -894,27 +892,27 @@ vectorized_transpose_and_store(const bool                     add_into,
             = *(const __m256d*) ((const double*) (&in[4 * i + 2].data) + outer);
           __m256d u3
             = *(const __m256d*) ((const double*) (&in[4 * i + 3].data) + outer);
-          __m256d t0   = _mm256_permute2f128_pd(u0, u2, 0x20);
-          __m256d t1   = _mm256_permute2f128_pd(u1, u3, 0x20);
-          __m256d t2   = _mm256_permute2f128_pd(u0, u2, 0x31);
-          __m256d t3   = _mm256_permute2f128_pd(u1, u3, 0x31);
-          __m256d res0 = _mm256_unpacklo_pd(t0, t1);
-          __m256d res1 = _mm256_unpackhi_pd(t0, t1);
-          __m256d res2 = _mm256_unpacklo_pd(t2, t3);
-          __m256d res3 = _mm256_unpackhi_pd(t2, t3);
+          __m256d t0  = _mm256_permute2f128_pd(u0, u2, 0x20);
+          __m256d t1  = _mm256_permute2f128_pd(u1, u3, 0x20);
+          __m256d t2  = _mm256_permute2f128_pd(u0, u2, 0x31);
+          __m256d t3  = _mm256_permute2f128_pd(u1, u3, 0x31);
+          __m256d res0= _mm256_unpacklo_pd(t0, t1);
+          __m256d res1= _mm256_unpackhi_pd(t0, t1);
+          __m256d res2= _mm256_unpacklo_pd(t2, t3);
+          __m256d res3= _mm256_unpackhi_pd(t2, t3);
 
           // Cannot use the same store instructions in both paths of the 'if'
           // because the compiler cannot know that there is no aliasing between
           // pointers
           if(add_into)
             {
-              res0 = _mm256_add_pd(_mm256_loadu_pd(out0 + 4 * i), res0);
+              res0= _mm256_add_pd(_mm256_loadu_pd(out0 + 4 * i), res0);
               _mm256_storeu_pd(out0 + 4 * i, res0);
-              res1 = _mm256_add_pd(_mm256_loadu_pd(out1 + 4 * i), res1);
+              res1= _mm256_add_pd(_mm256_loadu_pd(out1 + 4 * i), res1);
               _mm256_storeu_pd(out1 + 4 * i, res1);
-              res2 = _mm256_add_pd(_mm256_loadu_pd(out2 + 4 * i), res2);
+              res2= _mm256_add_pd(_mm256_loadu_pd(out2 + 4 * i), res2);
               _mm256_storeu_pd(out2 + 4 * i, res2);
-              res3 = _mm256_add_pd(_mm256_loadu_pd(out3 + 4 * i), res3);
+              res3= _mm256_add_pd(_mm256_loadu_pd(out3 + 4 * i), res3);
               _mm256_storeu_pd(out3 + 4 * i, res3);
             }
           else
@@ -926,13 +924,13 @@ vectorized_transpose_and_store(const bool                     add_into,
             }
         }
       if(add_into)
-        for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-          for(unsigned int v = 0; v < 4; ++v)
-            out[offsets[v + outer] + i] += in[i][v + outer];
+        for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+          for(unsigned int v= 0; v < 4; ++v)
+            out[offsets[v + outer] + i]+= in[i][v + outer];
       else
-        for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-          for(unsigned int v = 0; v < 4; ++v)
-            out[offsets[v + outer] + i] = in[i][v + outer];
+        for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+          for(unsigned int v= 0; v < 4; ++v)
+            out[offsets[v + outer] + i]= in[i][v + outer];
     }
 }
 
@@ -946,7 +944,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 16;
+  static const unsigned int n_array_elements= 16;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -955,7 +953,7 @@ public:
   VectorizedArray&
   operator=(const float x)
   {
-    data = _mm512_set1_ps(x);
+    data= _mm512_set1_ps(x);
     return *this;
   }
 
@@ -992,9 +990,9 @@ public:
     // instructions are available. Otherwise, we need to use the built-in
     // intrinsic command for __m512d
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data += vec.data;
+    data+= vec.data;
 #  else
-    data = _mm512_add_ps(data, vec.data);
+    data= _mm512_add_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -1007,9 +1005,9 @@ public:
   operator-=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data -= vec.data;
+    data-= vec.data;
 #  else
-    data = _mm512_sub_ps(data, vec.data);
+    data= _mm512_sub_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -1021,9 +1019,9 @@ public:
   operator*=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data *= vec.data;
+    data*= vec.data;
 #  else
-    data = _mm512_mul_ps(data, vec.data);
+    data= _mm512_mul_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -1036,9 +1034,9 @@ public:
   operator/=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data /= vec.data;
+    data/= vec.data;
 #  else
-    data = _mm512_div_ps(data, vec.data);
+    data= _mm512_div_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -1052,7 +1050,7 @@ public:
   void
   load(const float* ptr)
   {
-    data = _mm512_loadu_ps(ptr);
+    data= _mm512_loadu_ps(ptr);
   }
 
   /**
@@ -1099,9 +1097,9 @@ public:
     // unfortunately, there does not appear to be a 512 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m512  index_val = _mm512_loadu_ps((const float*) offsets);
-    const __m512i index     = *((__m512i*) (&index_val));
-    data                    = _mm512_i32gather_ps(index, base_ptr, 4);
+    const __m512  index_val= _mm512_loadu_ps((const float*) offsets);
+    const __m512i index    = *((__m512i*) (&index_val));
+    data                   = _mm512_i32gather_ps(index, base_ptr, 4);
   }
 
   /**
@@ -1120,8 +1118,8 @@ public:
   void
   scatter(const unsigned int* offsets, float* base_ptr) const
   {
-    for(unsigned int i = 0; i < 16; ++i)
-      for(unsigned int j = i + 1; j < 16; ++j)
+    for(unsigned int i= 0; i < 16; ++i)
+      for(unsigned int j= i + 1; j < 16; ++j)
         Assert(offsets[i] != offsets[j],
                ExcMessage("Result of scatter undefined if two offset elements"
                           " point to the same position"));
@@ -1129,8 +1127,8 @@ public:
     // unfortunately, there does not appear to be a 512 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m512  index_val = _mm512_loadu_ps((const float*) offsets);
-    const __m512i index     = *((__m512i*) (&index_val));
+    const __m512  index_val= _mm512_loadu_ps((const float*) offsets);
+    const __m512i index    = *((__m512i*) (&index_val));
     _mm512_i32scatter_ps(base_ptr, index, data, 4);
   }
 
@@ -1150,7 +1148,7 @@ private:
   get_sqrt() const
   {
     VectorizedArray res;
-    res.data = _mm512_sqrt_ps(data);
+    res.data= _mm512_sqrt_ps(data);
     return res;
   }
 
@@ -1167,9 +1165,9 @@ private:
     // value to +. Since there is no andnot for AVX512, we interpret the data
     // as 32 bit integers and do the andnot on those types (note that andnot
     // is a bitwise operation so the data type does not matter)
-    __m512          mask = _mm512_set1_ps(-0.f);
+    __m512          mask= _mm512_set1_ps(-0.f);
     VectorizedArray res;
-    res.data = (__m512) _mm512_andnot_epi32((__m512i) mask, (__m512i) data);
+    res.data= (__m512) _mm512_andnot_epi32((__m512i) mask, (__m512i) data);
     return res;
   }
 
@@ -1182,7 +1180,7 @@ private:
   get_max(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm512_max_ps(data, other.data);
+    res.data= _mm512_max_ps(data, other.data);
     return res;
   }
 
@@ -1195,7 +1193,7 @@ private:
   get_min(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm512_min_ps(data, other.data);
+    res.data= _mm512_min_ps(data, other.data);
     return res;
   }
 
@@ -1226,34 +1224,34 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
                               const unsigned int*     offsets,
                               VectorizedArray<float>* out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  for(unsigned int outer = 0; outer < 16; outer += 8)
+  const unsigned int n_chunks= n_entries / 4;
+  for(unsigned int outer= 0; outer < 16; outer+= 8)
     {
-      for(unsigned int i = 0; i < n_chunks; ++i)
+      for(unsigned int i= 0; i < n_chunks; ++i)
         {
-          __m128 u0 = _mm_loadu_ps(in + 4 * i + offsets[0 + outer]);
-          __m128 u1 = _mm_loadu_ps(in + 4 * i + offsets[1 + outer]);
-          __m128 u2 = _mm_loadu_ps(in + 4 * i + offsets[2 + outer]);
-          __m128 u3 = _mm_loadu_ps(in + 4 * i + offsets[3 + outer]);
-          __m128 u4 = _mm_loadu_ps(in + 4 * i + offsets[4 + outer]);
-          __m128 u5 = _mm_loadu_ps(in + 4 * i + offsets[5 + outer]);
-          __m128 u6 = _mm_loadu_ps(in + 4 * i + offsets[6 + outer]);
-          __m128 u7 = _mm_loadu_ps(in + 4 * i + offsets[7 + outer]);
+          __m128 u0= _mm_loadu_ps(in + 4 * i + offsets[0 + outer]);
+          __m128 u1= _mm_loadu_ps(in + 4 * i + offsets[1 + outer]);
+          __m128 u2= _mm_loadu_ps(in + 4 * i + offsets[2 + outer]);
+          __m128 u3= _mm_loadu_ps(in + 4 * i + offsets[3 + outer]);
+          __m128 u4= _mm_loadu_ps(in + 4 * i + offsets[4 + outer]);
+          __m128 u5= _mm_loadu_ps(in + 4 * i + offsets[5 + outer]);
+          __m128 u6= _mm_loadu_ps(in + 4 * i + offsets[6 + outer]);
+          __m128 u7= _mm_loadu_ps(in + 4 * i + offsets[7 + outer]);
           // To avoid warnings about uninitialized variables, need to initialize
           // one variable with zero before using it.
-          __m256 t0, t1, t2, t3 = _mm256_set1_ps(0.F);
-          t0        = _mm256_insertf128_ps(t3, u0, 0);
-          t0        = _mm256_insertf128_ps(t0, u4, 1);
-          t1        = _mm256_insertf128_ps(t3, u1, 0);
-          t1        = _mm256_insertf128_ps(t1, u5, 1);
-          t2        = _mm256_insertf128_ps(t3, u2, 0);
-          t2        = _mm256_insertf128_ps(t2, u6, 1);
-          t3        = _mm256_insertf128_ps(t3, u3, 0);
-          t3        = _mm256_insertf128_ps(t3, u7, 1);
-          __m256 v0 = _mm256_shuffle_ps(t0, t1, 0x44);
-          __m256 v1 = _mm256_shuffle_ps(t0, t1, 0xee);
-          __m256 v2 = _mm256_shuffle_ps(t2, t3, 0x44);
-          __m256 v3 = _mm256_shuffle_ps(t2, t3, 0xee);
+          __m256 t0, t1, t2, t3= _mm256_set1_ps(0.F);
+          t0       = _mm256_insertf128_ps(t3, u0, 0);
+          t0       = _mm256_insertf128_ps(t0, u4, 1);
+          t1       = _mm256_insertf128_ps(t3, u1, 0);
+          t1       = _mm256_insertf128_ps(t1, u5, 1);
+          t2       = _mm256_insertf128_ps(t3, u2, 0);
+          t2       = _mm256_insertf128_ps(t2, u6, 1);
+          t3       = _mm256_insertf128_ps(t3, u3, 0);
+          t3       = _mm256_insertf128_ps(t3, u7, 1);
+          __m256 v0= _mm256_shuffle_ps(t0, t1, 0x44);
+          __m256 v1= _mm256_shuffle_ps(t0, t1, 0xee);
+          __m256 v2= _mm256_shuffle_ps(t2, t3, 0x44);
+          __m256 v3= _mm256_shuffle_ps(t2, t3, 0xee);
           *(__m256*) ((float*) (&out[4 * i + 0].data) + outer)
             = _mm256_shuffle_ps(v0, v2, 0x88);
           *(__m256*) ((float*) (&out[4 * i + 1].data) + outer)
@@ -1263,9 +1261,9 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
           *(__m256*) ((float*) (&out[4 * i + 3].data) + outer)
             = _mm256_shuffle_ps(v1, v3, 0xdd);
         }
-      for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-        for(unsigned int v = 0; v < 8; ++v)
-          out[i][v + outer] = in[offsets[v + outer] + i];
+      for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+        for(unsigned int v= 0; v < 8; ++v)
+          out[i][v + outer]= in[offsets[v + outer] + i];
     }
 }
 
@@ -1280,10 +1278,10 @@ vectorized_transpose_and_store(const bool                    add_into,
                                const unsigned int*           offsets,
                                float*                        out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  for(unsigned int outer = 0; outer < 16; outer += 8)
+  const unsigned int n_chunks= n_entries / 4;
+  for(unsigned int outer= 0; outer < 16; outer+= 8)
     {
-      for(unsigned int i = 0; i < n_chunks; ++i)
+      for(unsigned int i= 0; i < n_chunks; ++i)
         {
           __m256 u0
             = *(const __m256*) ((const float*) (&in[4 * i + 0].data) + outer);
@@ -1293,51 +1291,51 @@ vectorized_transpose_and_store(const bool                    add_into,
             = *(const __m256*) ((const float*) (&in[4 * i + 2].data) + outer);
           __m256 u3
             = *(const __m256*) ((const float*) (&in[4 * i + 3].data) + outer);
-          __m256 t0   = _mm256_shuffle_ps(u0, u1, 0x44);
-          __m256 t1   = _mm256_shuffle_ps(u0, u1, 0xee);
-          __m256 t2   = _mm256_shuffle_ps(u2, u3, 0x44);
-          __m256 t3   = _mm256_shuffle_ps(u2, u3, 0xee);
-          u0          = _mm256_shuffle_ps(t0, t2, 0x88);
-          u1          = _mm256_shuffle_ps(t0, t2, 0xdd);
-          u2          = _mm256_shuffle_ps(t1, t3, 0x88);
-          u3          = _mm256_shuffle_ps(t1, t3, 0xdd);
-          __m128 res0 = _mm256_extractf128_ps(u0, 0);
-          __m128 res4 = _mm256_extractf128_ps(u0, 1);
-          __m128 res1 = _mm256_extractf128_ps(u1, 0);
-          __m128 res5 = _mm256_extractf128_ps(u1, 1);
-          __m128 res2 = _mm256_extractf128_ps(u2, 0);
-          __m128 res6 = _mm256_extractf128_ps(u2, 1);
-          __m128 res3 = _mm256_extractf128_ps(u3, 0);
-          __m128 res7 = _mm256_extractf128_ps(u3, 1);
+          __m256 t0  = _mm256_shuffle_ps(u0, u1, 0x44);
+          __m256 t1  = _mm256_shuffle_ps(u0, u1, 0xee);
+          __m256 t2  = _mm256_shuffle_ps(u2, u3, 0x44);
+          __m256 t3  = _mm256_shuffle_ps(u2, u3, 0xee);
+          u0         = _mm256_shuffle_ps(t0, t2, 0x88);
+          u1         = _mm256_shuffle_ps(t0, t2, 0xdd);
+          u2         = _mm256_shuffle_ps(t1, t3, 0x88);
+          u3         = _mm256_shuffle_ps(t1, t3, 0xdd);
+          __m128 res0= _mm256_extractf128_ps(u0, 0);
+          __m128 res4= _mm256_extractf128_ps(u0, 1);
+          __m128 res1= _mm256_extractf128_ps(u1, 0);
+          __m128 res5= _mm256_extractf128_ps(u1, 1);
+          __m128 res2= _mm256_extractf128_ps(u2, 0);
+          __m128 res6= _mm256_extractf128_ps(u2, 1);
+          __m128 res3= _mm256_extractf128_ps(u3, 0);
+          __m128 res7= _mm256_extractf128_ps(u3, 1);
 
           // Cannot use the same store instructions in both paths of the 'if'
           // because the compiler cannot know that there is no aliasing between
           // pointers
           if(add_into)
             {
-              res0 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[0 + outer]),
-                                res0);
+              res0= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[0 + outer]),
+                               res0);
               _mm_storeu_ps(out + 4 * i + offsets[0 + outer], res0);
-              res1 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[1 + outer]),
-                                res1);
+              res1= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[1 + outer]),
+                               res1);
               _mm_storeu_ps(out + 4 * i + offsets[1 + outer], res1);
-              res2 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[2 + outer]),
-                                res2);
+              res2= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[2 + outer]),
+                               res2);
               _mm_storeu_ps(out + 4 * i + offsets[2 + outer], res2);
-              res3 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[3 + outer]),
-                                res3);
+              res3= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[3 + outer]),
+                               res3);
               _mm_storeu_ps(out + 4 * i + offsets[3 + outer], res3);
-              res4 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[4 + outer]),
-                                res4);
+              res4= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[4 + outer]),
+                               res4);
               _mm_storeu_ps(out + 4 * i + offsets[4 + outer], res4);
-              res5 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[5 + outer]),
-                                res5);
+              res5= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[5 + outer]),
+                               res5);
               _mm_storeu_ps(out + 4 * i + offsets[5 + outer], res5);
-              res6 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[6 + outer]),
-                                res6);
+              res6= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[6 + outer]),
+                               res6);
               _mm_storeu_ps(out + 4 * i + offsets[6 + outer], res6);
-              res7 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[7 + outer]),
-                                res7);
+              res7= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[7 + outer]),
+                               res7);
               _mm_storeu_ps(out + 4 * i + offsets[7 + outer], res7);
             }
           else
@@ -1353,13 +1351,13 @@ vectorized_transpose_and_store(const bool                    add_into,
             }
         }
       if(add_into)
-        for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-          for(unsigned int v = 0; v < 8; ++v)
-            out[offsets[v + outer] + i] += in[i][v + outer];
+        for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+          for(unsigned int v= 0; v < 8; ++v)
+            out[offsets[v + outer] + i]+= in[i][v + outer];
       else
-        for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-          for(unsigned int v = 0; v < 8; ++v)
-            out[offsets[v + outer] + i] = in[i][v + outer];
+        for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+          for(unsigned int v= 0; v < 8; ++v)
+            out[offsets[v + outer] + i]= in[i][v + outer];
     }
 }
 
@@ -1375,7 +1373,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 4;
+  static const unsigned int n_array_elements= 4;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -1384,7 +1382,7 @@ public:
   VectorizedArray&
   operator=(const double x)
   {
-    data = _mm256_set1_pd(x);
+    data= _mm256_set1_pd(x);
     return *this;
   }
 
@@ -1421,9 +1419,9 @@ public:
     // instructions are available. Otherwise, we need to use the built-in
     // intrinsic command for __m256d
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data += vec.data;
+    data+= vec.data;
 #  else
-    data = _mm256_add_pd(data, vec.data);
+    data= _mm256_add_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -1436,9 +1434,9 @@ public:
   operator-=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data -= vec.data;
+    data-= vec.data;
 #  else
-    data = _mm256_sub_pd(data, vec.data);
+    data= _mm256_sub_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -1450,9 +1448,9 @@ public:
   operator*=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data *= vec.data;
+    data*= vec.data;
 #  else
-    data = _mm256_mul_pd(data, vec.data);
+    data= _mm256_mul_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -1465,9 +1463,9 @@ public:
   operator/=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data /= vec.data;
+    data/= vec.data;
 #  else
-    data = _mm256_div_pd(data, vec.data);
+    data= _mm256_div_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -1481,7 +1479,7 @@ public:
   void
   load(const double* ptr)
   {
-    data = _mm256_loadu_pd(ptr);
+    data= _mm256_loadu_pd(ptr);
   }
 
   /**
@@ -1529,12 +1527,12 @@ public:
     // unfortunately, there does not appear to be a 128 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m128  index_val = _mm_loadu_ps((const float*) offsets);
-    const __m128i index     = *((__m128i*) (&index_val));
-    data                    = _mm256_i32gather_pd(base_ptr, index, 8);
+    const __m128  index_val= _mm_loadu_ps((const float*) offsets);
+    const __m128i index    = *((__m128i*) (&index_val));
+    data                   = _mm256_i32gather_pd(base_ptr, index, 8);
 #  else
-    for(unsigned int i = 0; i < 4; ++i)
-      *(reinterpret_cast<double*>(&data) + i) = base_ptr[offsets[i]];
+    for(unsigned int i= 0; i < 4; ++i)
+      *(reinterpret_cast<double*>(&data) + i)= base_ptr[offsets[i]];
 #  endif
   }
 
@@ -1555,8 +1553,8 @@ public:
   scatter(const unsigned int* offsets, double* base_ptr) const
   {
     // no scatter operation in AVX/AVX2
-    for(unsigned int i = 0; i < 4; ++i)
-      base_ptr[offsets[i]] = *(reinterpret_cast<const double*>(&data) + i);
+    for(unsigned int i= 0; i < 4; ++i)
+      base_ptr[offsets[i]]= *(reinterpret_cast<const double*>(&data) + i);
   }
 
   /**
@@ -1575,7 +1573,7 @@ private:
   get_sqrt() const
   {
     VectorizedArray res;
-    res.data = _mm256_sqrt_pd(data);
+    res.data= _mm256_sqrt_pd(data);
     return res;
   }
 
@@ -1590,9 +1588,9 @@ private:
     // to compute the absolute value, perform bitwise andnot with -0. This
     // will leave all value and exponent bits unchanged but force the sign
     // value to +.
-    __m256d         mask = _mm256_set1_pd(-0.);
+    __m256d         mask= _mm256_set1_pd(-0.);
     VectorizedArray res;
-    res.data = _mm256_andnot_pd(mask, data);
+    res.data= _mm256_andnot_pd(mask, data);
     return res;
   }
 
@@ -1605,7 +1603,7 @@ private:
   get_max(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm256_max_pd(data, other.data);
+    res.data= _mm256_max_pd(data, other.data);
     return res;
   }
 
@@ -1618,7 +1616,7 @@ private:
   get_min(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm256_min_pd(data, other.data);
+    res.data= _mm256_min_pd(data, other.data);
     return res;
   }
 
@@ -1649,30 +1647,30 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
                               const unsigned int*      offsets,
                               VectorizedArray<double>* out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  const double*      in0      = in + offsets[0];
-  const double*      in1      = in + offsets[1];
-  const double*      in2      = in + offsets[2];
-  const double*      in3      = in + offsets[3];
+  const unsigned int n_chunks= n_entries / 4;
+  const double*      in0     = in + offsets[0];
+  const double*      in1     = in + offsets[1];
+  const double*      in2     = in + offsets[2];
+  const double*      in3     = in + offsets[3];
 
-  for(unsigned int i = 0; i < n_chunks; ++i)
+  for(unsigned int i= 0; i < n_chunks; ++i)
     {
-      __m256d u0          = _mm256_loadu_pd(in0 + 4 * i);
-      __m256d u1          = _mm256_loadu_pd(in1 + 4 * i);
-      __m256d u2          = _mm256_loadu_pd(in2 + 4 * i);
-      __m256d u3          = _mm256_loadu_pd(in3 + 4 * i);
-      __m256d t0          = _mm256_permute2f128_pd(u0, u2, 0x20);
-      __m256d t1          = _mm256_permute2f128_pd(u1, u3, 0x20);
-      __m256d t2          = _mm256_permute2f128_pd(u0, u2, 0x31);
-      __m256d t3          = _mm256_permute2f128_pd(u1, u3, 0x31);
-      out[4 * i + 0].data = _mm256_unpacklo_pd(t0, t1);
-      out[4 * i + 1].data = _mm256_unpackhi_pd(t0, t1);
-      out[4 * i + 2].data = _mm256_unpacklo_pd(t2, t3);
-      out[4 * i + 3].data = _mm256_unpackhi_pd(t2, t3);
+      __m256d u0         = _mm256_loadu_pd(in0 + 4 * i);
+      __m256d u1         = _mm256_loadu_pd(in1 + 4 * i);
+      __m256d u2         = _mm256_loadu_pd(in2 + 4 * i);
+      __m256d u3         = _mm256_loadu_pd(in3 + 4 * i);
+      __m256d t0         = _mm256_permute2f128_pd(u0, u2, 0x20);
+      __m256d t1         = _mm256_permute2f128_pd(u1, u3, 0x20);
+      __m256d t2         = _mm256_permute2f128_pd(u0, u2, 0x31);
+      __m256d t3         = _mm256_permute2f128_pd(u1, u3, 0x31);
+      out[4 * i + 0].data= _mm256_unpacklo_pd(t0, t1);
+      out[4 * i + 1].data= _mm256_unpackhi_pd(t0, t1);
+      out[4 * i + 2].data= _mm256_unpacklo_pd(t2, t3);
+      out[4 * i + 3].data= _mm256_unpackhi_pd(t2, t3);
     }
-  for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-    for(unsigned int v = 0; v < 4; ++v)
-      out[i][v] = in[offsets[v] + i];
+  for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+    for(unsigned int v= 0; v < 4; ++v)
+      out[i][v]= in[offsets[v] + i];
 }
 
 /**
@@ -1686,38 +1684,38 @@ vectorized_transpose_and_store(const bool                     add_into,
                                const unsigned int*            offsets,
                                double*                        out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  double*            out0     = out + offsets[0];
-  double*            out1     = out + offsets[1];
-  double*            out2     = out + offsets[2];
-  double*            out3     = out + offsets[3];
-  for(unsigned int i = 0; i < n_chunks; ++i)
+  const unsigned int n_chunks= n_entries / 4;
+  double*            out0    = out + offsets[0];
+  double*            out1    = out + offsets[1];
+  double*            out2    = out + offsets[2];
+  double*            out3    = out + offsets[3];
+  for(unsigned int i= 0; i < n_chunks; ++i)
     {
-      __m256d u0   = in[4 * i + 0].data;
-      __m256d u1   = in[4 * i + 1].data;
-      __m256d u2   = in[4 * i + 2].data;
-      __m256d u3   = in[4 * i + 3].data;
-      __m256d t0   = _mm256_permute2f128_pd(u0, u2, 0x20);
-      __m256d t1   = _mm256_permute2f128_pd(u1, u3, 0x20);
-      __m256d t2   = _mm256_permute2f128_pd(u0, u2, 0x31);
-      __m256d t3   = _mm256_permute2f128_pd(u1, u3, 0x31);
-      __m256d res0 = _mm256_unpacklo_pd(t0, t1);
-      __m256d res1 = _mm256_unpackhi_pd(t0, t1);
-      __m256d res2 = _mm256_unpacklo_pd(t2, t3);
-      __m256d res3 = _mm256_unpackhi_pd(t2, t3);
+      __m256d u0  = in[4 * i + 0].data;
+      __m256d u1  = in[4 * i + 1].data;
+      __m256d u2  = in[4 * i + 2].data;
+      __m256d u3  = in[4 * i + 3].data;
+      __m256d t0  = _mm256_permute2f128_pd(u0, u2, 0x20);
+      __m256d t1  = _mm256_permute2f128_pd(u1, u3, 0x20);
+      __m256d t2  = _mm256_permute2f128_pd(u0, u2, 0x31);
+      __m256d t3  = _mm256_permute2f128_pd(u1, u3, 0x31);
+      __m256d res0= _mm256_unpacklo_pd(t0, t1);
+      __m256d res1= _mm256_unpackhi_pd(t0, t1);
+      __m256d res2= _mm256_unpacklo_pd(t2, t3);
+      __m256d res3= _mm256_unpackhi_pd(t2, t3);
 
       // Cannot use the same store instructions in both paths of the 'if'
       // because the compiler cannot know that there is no aliasing between
       // pointers
       if(add_into)
         {
-          res0 = _mm256_add_pd(_mm256_loadu_pd(out0 + 4 * i), res0);
+          res0= _mm256_add_pd(_mm256_loadu_pd(out0 + 4 * i), res0);
           _mm256_storeu_pd(out0 + 4 * i, res0);
-          res1 = _mm256_add_pd(_mm256_loadu_pd(out1 + 4 * i), res1);
+          res1= _mm256_add_pd(_mm256_loadu_pd(out1 + 4 * i), res1);
           _mm256_storeu_pd(out1 + 4 * i, res1);
-          res2 = _mm256_add_pd(_mm256_loadu_pd(out2 + 4 * i), res2);
+          res2= _mm256_add_pd(_mm256_loadu_pd(out2 + 4 * i), res2);
           _mm256_storeu_pd(out2 + 4 * i, res2);
-          res3 = _mm256_add_pd(_mm256_loadu_pd(out3 + 4 * i), res3);
+          res3= _mm256_add_pd(_mm256_loadu_pd(out3 + 4 * i), res3);
           _mm256_storeu_pd(out3 + 4 * i, res3);
         }
       else
@@ -1729,13 +1727,13 @@ vectorized_transpose_and_store(const bool                     add_into,
         }
     }
   if(add_into)
-    for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-      for(unsigned int v = 0; v < 4; ++v)
-        out[offsets[v] + i] += in[i][v];
+    for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+      for(unsigned int v= 0; v < 4; ++v)
+        out[offsets[v] + i]+= in[i][v];
   else
-    for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-      for(unsigned int v = 0; v < 4; ++v)
-        out[offsets[v] + i] = in[i][v];
+    for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+      for(unsigned int v= 0; v < 4; ++v)
+        out[offsets[v] + i]= in[i][v];
 }
 
 /**
@@ -1748,7 +1746,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 8;
+  static const unsigned int n_array_elements= 8;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -1757,7 +1755,7 @@ public:
   VectorizedArray&
   operator=(const float x)
   {
-    data = _mm256_set1_ps(x);
+    data= _mm256_set1_ps(x);
     return *this;
   }
 
@@ -1794,9 +1792,9 @@ public:
     // instructions are available. Otherwise, we need to use the built-in
     // intrinsic command for __m256d
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data += vec.data;
+    data+= vec.data;
 #  else
-    data = _mm256_add_ps(data, vec.data);
+    data= _mm256_add_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -1809,9 +1807,9 @@ public:
   operator-=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data -= vec.data;
+    data-= vec.data;
 #  else
-    data = _mm256_sub_ps(data, vec.data);
+    data= _mm256_sub_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -1823,9 +1821,9 @@ public:
   operator*=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data *= vec.data;
+    data*= vec.data;
 #  else
-    data = _mm256_mul_ps(data, vec.data);
+    data= _mm256_mul_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -1838,9 +1836,9 @@ public:
   operator/=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data /= vec.data;
+    data/= vec.data;
 #  else
-    data = _mm256_div_ps(data, vec.data);
+    data= _mm256_div_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -1854,7 +1852,7 @@ public:
   void
   load(const float* ptr)
   {
-    data = _mm256_loadu_ps(ptr);
+    data= _mm256_loadu_ps(ptr);
   }
 
   /**
@@ -1902,12 +1900,12 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
-    data                    = _mm256_i32gather_ps(base_ptr, index, 4);
+    const __m256  index_val= _mm256_loadu_ps((const float*) offsets);
+    const __m256i index    = *((__m256i*) (&index_val));
+    data                   = _mm256_i32gather_ps(base_ptr, index, 4);
 #  else
-    for(unsigned int i = 0; i < 8; ++i)
-      *(reinterpret_cast<float*>(&data) + i) = base_ptr[offsets[i]];
+    for(unsigned int i= 0; i < 8; ++i)
+      *(reinterpret_cast<float*>(&data) + i)= base_ptr[offsets[i]];
 #  endif
   }
 
@@ -1928,8 +1926,8 @@ public:
   scatter(const unsigned int* offsets, float* base_ptr) const
   {
     // no scatter operation in AVX/AVX2
-    for(unsigned int i = 0; i < 8; ++i)
-      base_ptr[offsets[i]] = *(reinterpret_cast<const float*>(&data) + i);
+    for(unsigned int i= 0; i < 8; ++i)
+      base_ptr[offsets[i]]= *(reinterpret_cast<const float*>(&data) + i);
   }
 
   /**
@@ -1948,7 +1946,7 @@ private:
   get_sqrt() const
   {
     VectorizedArray res;
-    res.data = _mm256_sqrt_ps(data);
+    res.data= _mm256_sqrt_ps(data);
     return res;
   }
 
@@ -1963,9 +1961,9 @@ private:
     // to compute the absolute value, perform bitwise andnot with -0. This
     // will leave all value and exponent bits unchanged but force the sign
     // value to +.
-    __m256          mask = _mm256_set1_ps(-0.f);
+    __m256          mask= _mm256_set1_ps(-0.f);
     VectorizedArray res;
-    res.data = _mm256_andnot_ps(mask, data);
+    res.data= _mm256_andnot_ps(mask, data);
     return res;
   }
 
@@ -1978,7 +1976,7 @@ private:
   get_max(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm256_max_ps(data, other.data);
+    res.data= _mm256_max_ps(data, other.data);
     return res;
   }
 
@@ -1991,7 +1989,7 @@ private:
   get_min(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm256_min_ps(data, other.data);
+    res.data= _mm256_min_ps(data, other.data);
     return res;
   }
 
@@ -2022,40 +2020,40 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
                               const unsigned int*     offsets,
                               VectorizedArray<float>* out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  for(unsigned int i = 0; i < n_chunks; ++i)
+  const unsigned int n_chunks= n_entries / 4;
+  for(unsigned int i= 0; i < n_chunks; ++i)
     {
-      __m128 u0 = _mm_loadu_ps(in + 4 * i + offsets[0]);
-      __m128 u1 = _mm_loadu_ps(in + 4 * i + offsets[1]);
-      __m128 u2 = _mm_loadu_ps(in + 4 * i + offsets[2]);
-      __m128 u3 = _mm_loadu_ps(in + 4 * i + offsets[3]);
-      __m128 u4 = _mm_loadu_ps(in + 4 * i + offsets[4]);
-      __m128 u5 = _mm_loadu_ps(in + 4 * i + offsets[5]);
-      __m128 u6 = _mm_loadu_ps(in + 4 * i + offsets[6]);
-      __m128 u7 = _mm_loadu_ps(in + 4 * i + offsets[7]);
+      __m128 u0= _mm_loadu_ps(in + 4 * i + offsets[0]);
+      __m128 u1= _mm_loadu_ps(in + 4 * i + offsets[1]);
+      __m128 u2= _mm_loadu_ps(in + 4 * i + offsets[2]);
+      __m128 u3= _mm_loadu_ps(in + 4 * i + offsets[3]);
+      __m128 u4= _mm_loadu_ps(in + 4 * i + offsets[4]);
+      __m128 u5= _mm_loadu_ps(in + 4 * i + offsets[5]);
+      __m128 u6= _mm_loadu_ps(in + 4 * i + offsets[6]);
+      __m128 u7= _mm_loadu_ps(in + 4 * i + offsets[7]);
       // To avoid warnings about uninitialized variables, need to initialize
       // one variable with zero before using it.
-      __m256 t0, t1, t2, t3 = _mm256_set1_ps(0.F);
-      t0                  = _mm256_insertf128_ps(t3, u0, 0);
-      t0                  = _mm256_insertf128_ps(t0, u4, 1);
-      t1                  = _mm256_insertf128_ps(t3, u1, 0);
-      t1                  = _mm256_insertf128_ps(t1, u5, 1);
-      t2                  = _mm256_insertf128_ps(t3, u2, 0);
-      t2                  = _mm256_insertf128_ps(t2, u6, 1);
-      t3                  = _mm256_insertf128_ps(t3, u3, 0);
-      t3                  = _mm256_insertf128_ps(t3, u7, 1);
-      __m256 v0           = _mm256_shuffle_ps(t0, t1, 0x44);
-      __m256 v1           = _mm256_shuffle_ps(t0, t1, 0xee);
-      __m256 v2           = _mm256_shuffle_ps(t2, t3, 0x44);
-      __m256 v3           = _mm256_shuffle_ps(t2, t3, 0xee);
-      out[4 * i + 0].data = _mm256_shuffle_ps(v0, v2, 0x88);
-      out[4 * i + 1].data = _mm256_shuffle_ps(v0, v2, 0xdd);
-      out[4 * i + 2].data = _mm256_shuffle_ps(v1, v3, 0x88);
-      out[4 * i + 3].data = _mm256_shuffle_ps(v1, v3, 0xdd);
+      __m256 t0, t1, t2, t3= _mm256_set1_ps(0.F);
+      t0                 = _mm256_insertf128_ps(t3, u0, 0);
+      t0                 = _mm256_insertf128_ps(t0, u4, 1);
+      t1                 = _mm256_insertf128_ps(t3, u1, 0);
+      t1                 = _mm256_insertf128_ps(t1, u5, 1);
+      t2                 = _mm256_insertf128_ps(t3, u2, 0);
+      t2                 = _mm256_insertf128_ps(t2, u6, 1);
+      t3                 = _mm256_insertf128_ps(t3, u3, 0);
+      t3                 = _mm256_insertf128_ps(t3, u7, 1);
+      __m256 v0          = _mm256_shuffle_ps(t0, t1, 0x44);
+      __m256 v1          = _mm256_shuffle_ps(t0, t1, 0xee);
+      __m256 v2          = _mm256_shuffle_ps(t2, t3, 0x44);
+      __m256 v3          = _mm256_shuffle_ps(t2, t3, 0xee);
+      out[4 * i + 0].data= _mm256_shuffle_ps(v0, v2, 0x88);
+      out[4 * i + 1].data= _mm256_shuffle_ps(v0, v2, 0xdd);
+      out[4 * i + 2].data= _mm256_shuffle_ps(v1, v3, 0x88);
+      out[4 * i + 3].data= _mm256_shuffle_ps(v1, v3, 0xdd);
     }
-  for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-    for(unsigned int v = 0; v < 8; ++v)
-      out[i][v] = in[offsets[v] + i];
+  for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+    for(unsigned int v= 0; v < 8; ++v)
+      out[i][v]= in[offsets[v] + i];
 }
 
 /**
@@ -2069,50 +2067,50 @@ vectorized_transpose_and_store(const bool                    add_into,
                                const unsigned int*           offsets,
                                float*                        out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  for(unsigned int i = 0; i < n_chunks; ++i)
+  const unsigned int n_chunks= n_entries / 4;
+  for(unsigned int i= 0; i < n_chunks; ++i)
     {
-      __m256 u0   = in[4 * i + 0].data;
-      __m256 u1   = in[4 * i + 1].data;
-      __m256 u2   = in[4 * i + 2].data;
-      __m256 u3   = in[4 * i + 3].data;
-      __m256 t0   = _mm256_shuffle_ps(u0, u1, 0x44);
-      __m256 t1   = _mm256_shuffle_ps(u0, u1, 0xee);
-      __m256 t2   = _mm256_shuffle_ps(u2, u3, 0x44);
-      __m256 t3   = _mm256_shuffle_ps(u2, u3, 0xee);
-      u0          = _mm256_shuffle_ps(t0, t2, 0x88);
-      u1          = _mm256_shuffle_ps(t0, t2, 0xdd);
-      u2          = _mm256_shuffle_ps(t1, t3, 0x88);
-      u3          = _mm256_shuffle_ps(t1, t3, 0xdd);
-      __m128 res0 = _mm256_extractf128_ps(u0, 0);
-      __m128 res4 = _mm256_extractf128_ps(u0, 1);
-      __m128 res1 = _mm256_extractf128_ps(u1, 0);
-      __m128 res5 = _mm256_extractf128_ps(u1, 1);
-      __m128 res2 = _mm256_extractf128_ps(u2, 0);
-      __m128 res6 = _mm256_extractf128_ps(u2, 1);
-      __m128 res3 = _mm256_extractf128_ps(u3, 0);
-      __m128 res7 = _mm256_extractf128_ps(u3, 1);
+      __m256 u0  = in[4 * i + 0].data;
+      __m256 u1  = in[4 * i + 1].data;
+      __m256 u2  = in[4 * i + 2].data;
+      __m256 u3  = in[4 * i + 3].data;
+      __m256 t0  = _mm256_shuffle_ps(u0, u1, 0x44);
+      __m256 t1  = _mm256_shuffle_ps(u0, u1, 0xee);
+      __m256 t2  = _mm256_shuffle_ps(u2, u3, 0x44);
+      __m256 t3  = _mm256_shuffle_ps(u2, u3, 0xee);
+      u0         = _mm256_shuffle_ps(t0, t2, 0x88);
+      u1         = _mm256_shuffle_ps(t0, t2, 0xdd);
+      u2         = _mm256_shuffle_ps(t1, t3, 0x88);
+      u3         = _mm256_shuffle_ps(t1, t3, 0xdd);
+      __m128 res0= _mm256_extractf128_ps(u0, 0);
+      __m128 res4= _mm256_extractf128_ps(u0, 1);
+      __m128 res1= _mm256_extractf128_ps(u1, 0);
+      __m128 res5= _mm256_extractf128_ps(u1, 1);
+      __m128 res2= _mm256_extractf128_ps(u2, 0);
+      __m128 res6= _mm256_extractf128_ps(u2, 1);
+      __m128 res3= _mm256_extractf128_ps(u3, 0);
+      __m128 res7= _mm256_extractf128_ps(u3, 1);
 
       // Cannot use the same store instructions in both paths of the 'if'
       // because the compiler cannot know that there is no aliasing between
       // pointers
       if(add_into)
         {
-          res0 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[0]), res0);
+          res0= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[0]), res0);
           _mm_storeu_ps(out + 4 * i + offsets[0], res0);
-          res1 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[1]), res1);
+          res1= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[1]), res1);
           _mm_storeu_ps(out + 4 * i + offsets[1], res1);
-          res2 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[2]), res2);
+          res2= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[2]), res2);
           _mm_storeu_ps(out + 4 * i + offsets[2], res2);
-          res3 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[3]), res3);
+          res3= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[3]), res3);
           _mm_storeu_ps(out + 4 * i + offsets[3], res3);
-          res4 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[4]), res4);
+          res4= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[4]), res4);
           _mm_storeu_ps(out + 4 * i + offsets[4], res4);
-          res5 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[5]), res5);
+          res5= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[5]), res5);
           _mm_storeu_ps(out + 4 * i + offsets[5], res5);
-          res6 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[6]), res6);
+          res6= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[6]), res6);
           _mm_storeu_ps(out + 4 * i + offsets[6], res6);
-          res7 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[7]), res7);
+          res7= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[7]), res7);
           _mm_storeu_ps(out + 4 * i + offsets[7], res7);
         }
       else
@@ -2128,13 +2126,13 @@ vectorized_transpose_and_store(const bool                    add_into,
         }
     }
   if(add_into)
-    for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-      for(unsigned int v = 0; v < 8; ++v)
-        out[offsets[v] + i] += in[i][v];
+    for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+      for(unsigned int v= 0; v < 8; ++v)
+        out[offsets[v] + i]+= in[i][v];
   else
-    for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-      for(unsigned int v = 0; v < 8; ++v)
-        out[offsets[v] + i] = in[i][v];
+    for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+      for(unsigned int v= 0; v < 8; ++v)
+        out[offsets[v] + i]= in[i][v];
 }
 
 // for safety, also check that __SSE2__ is defined in case the user manually
@@ -2152,7 +2150,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 2;
+  static const unsigned int n_array_elements= 2;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -2161,7 +2159,7 @@ public:
   VectorizedArray&
   operator=(const double x)
   {
-    data = _mm_set1_pd(x);
+    data= _mm_set1_pd(x);
     return *this;
   }
 
@@ -2193,9 +2191,9 @@ public:
   operator+=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data += vec.data;
+    data+= vec.data;
 #  else
-    data = _mm_add_pd(data, vec.data);
+    data= _mm_add_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -2208,9 +2206,9 @@ public:
   operator-=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data -= vec.data;
+    data-= vec.data;
 #  else
-    data = _mm_sub_pd(data, vec.data);
+    data= _mm_sub_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -2223,9 +2221,9 @@ public:
   operator*=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data *= vec.data;
+    data*= vec.data;
 #  else
-    data = _mm_mul_pd(data, vec.data);
+    data= _mm_mul_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -2238,9 +2236,9 @@ public:
   operator/=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data /= vec.data;
+    data/= vec.data;
 #  else
-    data = _mm_div_pd(data, vec.data);
+    data= _mm_div_pd(data, vec.data);
 #  endif
     return *this;
   }
@@ -2254,7 +2252,7 @@ public:
   void
   load(const double* ptr)
   {
-    data = _mm_loadu_pd(ptr);
+    data= _mm_loadu_pd(ptr);
   }
 
   /**
@@ -2298,8 +2296,8 @@ public:
   void
   gather(const double* base_ptr, const unsigned int* offsets)
   {
-    for(unsigned int i = 0; i < 2; ++i)
-      *(reinterpret_cast<double*>(&data) + i) = base_ptr[offsets[i]];
+    for(unsigned int i= 0; i < 2; ++i)
+      *(reinterpret_cast<double*>(&data) + i)= base_ptr[offsets[i]];
   }
 
   /**
@@ -2318,8 +2316,8 @@ public:
   void
   scatter(const unsigned int* offsets, double* base_ptr) const
   {
-    for(unsigned int i = 0; i < 2; ++i)
-      base_ptr[offsets[i]] = *(reinterpret_cast<const double*>(&data) + i);
+    for(unsigned int i= 0; i < 2; ++i)
+      base_ptr[offsets[i]]= *(reinterpret_cast<const double*>(&data) + i);
   }
 
   /**
@@ -2338,7 +2336,7 @@ private:
   get_sqrt() const
   {
     VectorizedArray res;
-    res.data = _mm_sqrt_pd(data);
+    res.data= _mm_sqrt_pd(data);
     return res;
   }
 
@@ -2354,9 +2352,9 @@ private:
     // bitwise andnot with -0. This will leave all
     // value and exponent bits unchanged but force
     // the sign value to +.
-    __m128d         mask = _mm_set1_pd(-0.);
+    __m128d         mask= _mm_set1_pd(-0.);
     VectorizedArray res;
-    res.data = _mm_andnot_pd(mask, data);
+    res.data= _mm_andnot_pd(mask, data);
     return res;
   }
 
@@ -2369,7 +2367,7 @@ private:
   get_max(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm_max_pd(data, other.data);
+    res.data= _mm_max_pd(data, other.data);
     return res;
   }
 
@@ -2382,7 +2380,7 @@ private:
   get_min(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm_min_pd(data, other.data);
+    res.data= _mm_min_pd(data, other.data);
     return res;
   }
 
@@ -2413,17 +2411,17 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
                               const unsigned int*      offsets,
                               VectorizedArray<double>* out)
 {
-  const unsigned int n_chunks = n_entries / 2;
-  for(unsigned int i = 0; i < n_chunks; ++i)
+  const unsigned int n_chunks= n_entries / 2;
+  for(unsigned int i= 0; i < n_chunks; ++i)
     {
-      __m128d u0          = _mm_loadu_pd(in + 2 * i + offsets[0]);
-      __m128d u1          = _mm_loadu_pd(in + 2 * i + offsets[1]);
-      out[2 * i + 0].data = _mm_unpacklo_pd(u0, u1);
-      out[2 * i + 1].data = _mm_unpackhi_pd(u0, u1);
+      __m128d u0         = _mm_loadu_pd(in + 2 * i + offsets[0]);
+      __m128d u1         = _mm_loadu_pd(in + 2 * i + offsets[1]);
+      out[2 * i + 0].data= _mm_unpacklo_pd(u0, u1);
+      out[2 * i + 1].data= _mm_unpackhi_pd(u0, u1);
     }
-  for(unsigned int i = 2 * n_chunks; i < n_entries; ++i)
-    for(unsigned int v = 0; v < 2; ++v)
-      out[i][v] = in[offsets[v] + i];
+  for(unsigned int i= 2 * n_chunks; i < n_entries; ++i)
+    for(unsigned int v= 0; v < 2; ++v)
+      out[i][v]= in[offsets[v] + i];
 }
 
 /**
@@ -2437,15 +2435,15 @@ vectorized_transpose_and_store(const bool                     add_into,
                                const unsigned int*            offsets,
                                double*                        out)
 {
-  const unsigned int n_chunks = n_entries / 2;
+  const unsigned int n_chunks= n_entries / 2;
   if(add_into)
     {
-      for(unsigned int i = 0; i < n_chunks; ++i)
+      for(unsigned int i= 0; i < n_chunks; ++i)
         {
-          __m128d u0   = in[2 * i + 0].data;
-          __m128d u1   = in[2 * i + 1].data;
-          __m128d res0 = _mm_unpacklo_pd(u0, u1);
-          __m128d res1 = _mm_unpackhi_pd(u0, u1);
+          __m128d u0  = in[2 * i + 0].data;
+          __m128d u1  = in[2 * i + 1].data;
+          __m128d res0= _mm_unpacklo_pd(u0, u1);
+          __m128d res1= _mm_unpackhi_pd(u0, u1);
           _mm_storeu_pd(
             out + 2 * i + offsets[0],
             _mm_add_pd(_mm_loadu_pd(out + 2 * i + offsets[0]), res0));
@@ -2453,24 +2451,24 @@ vectorized_transpose_and_store(const bool                     add_into,
             out + 2 * i + offsets[1],
             _mm_add_pd(_mm_loadu_pd(out + 2 * i + offsets[1]), res1));
         }
-      for(unsigned int i = 2 * n_chunks; i < n_entries; ++i)
-        for(unsigned int v = 0; v < 2; ++v)
-          out[offsets[v] + i] += in[i][v];
+      for(unsigned int i= 2 * n_chunks; i < n_entries; ++i)
+        for(unsigned int v= 0; v < 2; ++v)
+          out[offsets[v] + i]+= in[i][v];
     }
   else
     {
-      for(unsigned int i = 0; i < n_chunks; ++i)
+      for(unsigned int i= 0; i < n_chunks; ++i)
         {
-          __m128d u0   = in[2 * i + 0].data;
-          __m128d u1   = in[2 * i + 1].data;
-          __m128d res0 = _mm_unpacklo_pd(u0, u1);
-          __m128d res1 = _mm_unpackhi_pd(u0, u1);
+          __m128d u0  = in[2 * i + 0].data;
+          __m128d u1  = in[2 * i + 1].data;
+          __m128d res0= _mm_unpacklo_pd(u0, u1);
+          __m128d res1= _mm_unpackhi_pd(u0, u1);
           _mm_storeu_pd(out + 2 * i + offsets[0], res0);
           _mm_storeu_pd(out + 2 * i + offsets[1], res1);
         }
-      for(unsigned int i = 2 * n_chunks; i < n_entries; ++i)
-        for(unsigned int v = 0; v < 2; ++v)
-          out[offsets[v] + i] = in[i][v];
+      for(unsigned int i= 2 * n_chunks; i < n_entries; ++i)
+        for(unsigned int v= 0; v < 2; ++v)
+          out[offsets[v] + i]= in[i][v];
     }
 }
 
@@ -2484,7 +2482,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 4;
+  static const unsigned int n_array_elements= 4;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -2494,7 +2492,7 @@ public:
   VectorizedArray&
   operator=(const float x)
   {
-    data = _mm_set1_ps(x);
+    data= _mm_set1_ps(x);
     return *this;
   }
 
@@ -2526,9 +2524,9 @@ public:
   operator+=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data += vec.data;
+    data+= vec.data;
 #  else
-    data = _mm_add_ps(data, vec.data);
+    data= _mm_add_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -2541,9 +2539,9 @@ public:
   operator-=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data -= vec.data;
+    data-= vec.data;
 #  else
-    data = _mm_sub_ps(data, vec.data);
+    data= _mm_sub_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -2556,9 +2554,9 @@ public:
   operator*=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data *= vec.data;
+    data*= vec.data;
 #  else
-    data = _mm_mul_ps(data, vec.data);
+    data= _mm_mul_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -2571,9 +2569,9 @@ public:
   operator/=(const VectorizedArray& vec)
   {
 #  ifdef DEAL_II_COMPILER_USE_VECTOR_ARITHMETICS
-    data /= vec.data;
+    data/= vec.data;
 #  else
-    data = _mm_div_ps(data, vec.data);
+    data= _mm_div_ps(data, vec.data);
 #  endif
     return *this;
   }
@@ -2587,7 +2585,7 @@ public:
   void
   load(const float* ptr)
   {
-    data = _mm_loadu_ps(ptr);
+    data= _mm_loadu_ps(ptr);
   }
 
   /**
@@ -2631,8 +2629,8 @@ public:
   void
   gather(const float* base_ptr, const unsigned int* offsets)
   {
-    for(unsigned int i = 0; i < 4; ++i)
-      *(reinterpret_cast<float*>(&data) + i) = base_ptr[offsets[i]];
+    for(unsigned int i= 0; i < 4; ++i)
+      *(reinterpret_cast<float*>(&data) + i)= base_ptr[offsets[i]];
   }
 
   /**
@@ -2651,8 +2649,8 @@ public:
   void
   scatter(const unsigned int* offsets, float* base_ptr) const
   {
-    for(unsigned int i = 0; i < 4; ++i)
-      base_ptr[offsets[i]] = *(reinterpret_cast<const float*>(&data) + i);
+    for(unsigned int i= 0; i < 4; ++i)
+      base_ptr[offsets[i]]= *(reinterpret_cast<const float*>(&data) + i);
   }
 
   /**
@@ -2671,7 +2669,7 @@ private:
   get_sqrt() const
   {
     VectorizedArray res;
-    res.data = _mm_sqrt_ps(data);
+    res.data= _mm_sqrt_ps(data);
     return res;
   }
 
@@ -2686,9 +2684,9 @@ private:
     // to compute the absolute value, perform bitwise andnot with -0. This
     // will leave all value and exponent bits unchanged but force the sign
     // value to +.
-    __m128          mask = _mm_set1_ps(-0.f);
+    __m128          mask= _mm_set1_ps(-0.f);
     VectorizedArray res;
-    res.data = _mm_andnot_ps(mask, data);
+    res.data= _mm_andnot_ps(mask, data);
     return res;
   }
 
@@ -2701,7 +2699,7 @@ private:
   get_max(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm_max_ps(data, other.data);
+    res.data= _mm_max_ps(data, other.data);
     return res;
   }
 
@@ -2714,7 +2712,7 @@ private:
   get_min(const VectorizedArray& other) const
   {
     VectorizedArray res;
-    res.data = _mm_min_ps(data, other.data);
+    res.data= _mm_min_ps(data, other.data);
     return res;
   }
 
@@ -2745,25 +2743,25 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
                               const unsigned int*     offsets,
                               VectorizedArray<float>* out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  for(unsigned int i = 0; i < n_chunks; ++i)
+  const unsigned int n_chunks= n_entries / 4;
+  for(unsigned int i= 0; i < n_chunks; ++i)
     {
-      __m128 u0           = _mm_loadu_ps(in + 4 * i + offsets[0]);
-      __m128 u1           = _mm_loadu_ps(in + 4 * i + offsets[1]);
-      __m128 u2           = _mm_loadu_ps(in + 4 * i + offsets[2]);
-      __m128 u3           = _mm_loadu_ps(in + 4 * i + offsets[3]);
-      __m128 v0           = _mm_shuffle_ps(u0, u1, 0x44);
-      __m128 v1           = _mm_shuffle_ps(u0, u1, 0xee);
-      __m128 v2           = _mm_shuffle_ps(u2, u3, 0x44);
-      __m128 v3           = _mm_shuffle_ps(u2, u3, 0xee);
-      out[4 * i + 0].data = _mm_shuffle_ps(v0, v2, 0x88);
-      out[4 * i + 1].data = _mm_shuffle_ps(v0, v2, 0xdd);
-      out[4 * i + 2].data = _mm_shuffle_ps(v1, v3, 0x88);
-      out[4 * i + 3].data = _mm_shuffle_ps(v1, v3, 0xdd);
+      __m128 u0          = _mm_loadu_ps(in + 4 * i + offsets[0]);
+      __m128 u1          = _mm_loadu_ps(in + 4 * i + offsets[1]);
+      __m128 u2          = _mm_loadu_ps(in + 4 * i + offsets[2]);
+      __m128 u3          = _mm_loadu_ps(in + 4 * i + offsets[3]);
+      __m128 v0          = _mm_shuffle_ps(u0, u1, 0x44);
+      __m128 v1          = _mm_shuffle_ps(u0, u1, 0xee);
+      __m128 v2          = _mm_shuffle_ps(u2, u3, 0x44);
+      __m128 v3          = _mm_shuffle_ps(u2, u3, 0xee);
+      out[4 * i + 0].data= _mm_shuffle_ps(v0, v2, 0x88);
+      out[4 * i + 1].data= _mm_shuffle_ps(v0, v2, 0xdd);
+      out[4 * i + 2].data= _mm_shuffle_ps(v1, v3, 0x88);
+      out[4 * i + 3].data= _mm_shuffle_ps(v1, v3, 0xdd);
     }
-  for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-    for(unsigned int v = 0; v < 4; ++v)
-      out[i][v] = in[offsets[v] + i];
+  for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+    for(unsigned int v= 0; v < 4; ++v)
+      out[i][v]= in[offsets[v] + i];
 }
 
 /**
@@ -2777,34 +2775,34 @@ vectorized_transpose_and_store(const bool                    add_into,
                                const unsigned int*           offsets,
                                float*                        out)
 {
-  const unsigned int n_chunks = n_entries / 4;
-  for(unsigned int i = 0; i < n_chunks; ++i)
+  const unsigned int n_chunks= n_entries / 4;
+  for(unsigned int i= 0; i < n_chunks; ++i)
     {
-      __m128 u0 = in[4 * i + 0].data;
-      __m128 u1 = in[4 * i + 1].data;
-      __m128 u2 = in[4 * i + 2].data;
-      __m128 u3 = in[4 * i + 3].data;
-      __m128 t0 = _mm_shuffle_ps(u0, u1, 0x44);
-      __m128 t1 = _mm_shuffle_ps(u0, u1, 0xee);
-      __m128 t2 = _mm_shuffle_ps(u2, u3, 0x44);
-      __m128 t3 = _mm_shuffle_ps(u2, u3, 0xee);
-      u0        = _mm_shuffle_ps(t0, t2, 0x88);
-      u1        = _mm_shuffle_ps(t0, t2, 0xdd);
-      u2        = _mm_shuffle_ps(t1, t3, 0x88);
-      u3        = _mm_shuffle_ps(t1, t3, 0xdd);
+      __m128 u0= in[4 * i + 0].data;
+      __m128 u1= in[4 * i + 1].data;
+      __m128 u2= in[4 * i + 2].data;
+      __m128 u3= in[4 * i + 3].data;
+      __m128 t0= _mm_shuffle_ps(u0, u1, 0x44);
+      __m128 t1= _mm_shuffle_ps(u0, u1, 0xee);
+      __m128 t2= _mm_shuffle_ps(u2, u3, 0x44);
+      __m128 t3= _mm_shuffle_ps(u2, u3, 0xee);
+      u0       = _mm_shuffle_ps(t0, t2, 0x88);
+      u1       = _mm_shuffle_ps(t0, t2, 0xdd);
+      u2       = _mm_shuffle_ps(t1, t3, 0x88);
+      u3       = _mm_shuffle_ps(t1, t3, 0xdd);
 
       // Cannot use the same store instructions in both paths of the 'if'
       // because the compiler cannot know that there is no aliasing between
       // pointers
       if(add_into)
         {
-          u0 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[0]), u0);
+          u0= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[0]), u0);
           _mm_storeu_ps(out + 4 * i + offsets[0], u0);
-          u1 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[1]), u1);
+          u1= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[1]), u1);
           _mm_storeu_ps(out + 4 * i + offsets[1], u1);
-          u2 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[2]), u2);
+          u2= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[2]), u2);
           _mm_storeu_ps(out + 4 * i + offsets[2], u2);
-          u3 = _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[3]), u3);
+          u3= _mm_add_ps(_mm_loadu_ps(out + 4 * i + offsets[3]), u3);
           _mm_storeu_ps(out + 4 * i + offsets[3], u3);
         }
       else
@@ -2816,13 +2814,13 @@ vectorized_transpose_and_store(const bool                    add_into,
         }
     }
   if(add_into)
-    for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-      for(unsigned int v = 0; v < 4; ++v)
-        out[offsets[v] + i] += in[i][v];
+    for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+      for(unsigned int v= 0; v < 4; ++v)
+        out[offsets[v] + i]+= in[i][v];
   else
-    for(unsigned int i = 4 * n_chunks; i < n_entries; ++i)
-      for(unsigned int v = 0; v < 4; ++v)
-        out[offsets[v] + i] = in[i][v];
+    for(unsigned int i= 4 * n_chunks; i < n_entries; ++i)
+      for(unsigned int v= 0; v < 4; ++v)
+        out[offsets[v] + i]= in[i][v];
 }
 
 #endif // if DEAL_II_COMPILER_VECTORIZATION_LEVEL > 0
@@ -2837,7 +2835,7 @@ inline DEAL_II_ALWAYS_INLINE bool
 operator==(const VectorizedArray<Number>& lhs,
            const VectorizedArray<Number>& rhs)
 {
-  for(unsigned int i = 0; i < VectorizedArray<Number>::n_array_elements; ++i)
+  for(unsigned int i= 0; i < VectorizedArray<Number>::n_array_elements; ++i)
     if(lhs[i] != rhs[i])
       return false;
 
@@ -2853,8 +2851,8 @@ template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator+(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
 {
-  VectorizedArray<Number> tmp = u;
-  return tmp += v;
+  VectorizedArray<Number> tmp= u;
+  return tmp+= v;
 }
 
 /**
@@ -2866,8 +2864,8 @@ template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator-(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
 {
-  VectorizedArray<Number> tmp = u;
-  return tmp -= v;
+  VectorizedArray<Number> tmp= u;
+  return tmp-= v;
 }
 
 /**
@@ -2879,8 +2877,8 @@ template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator*(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
 {
-  VectorizedArray<Number> tmp = u;
-  return tmp *= v;
+  VectorizedArray<Number> tmp= u;
+  return tmp*= v;
 }
 
 /**
@@ -2892,8 +2890,8 @@ template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator/(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
 {
-  VectorizedArray<Number> tmp = u;
-  return tmp /= v;
+  VectorizedArray<Number> tmp= u;
+  return tmp/= v;
 }
 
 /**
@@ -2907,8 +2905,8 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator+(const Number& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp;
-  tmp = u;
-  return tmp += v;
+  tmp= u;
+  return tmp+= v;
 }
 
 /**
@@ -2923,8 +2921,8 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
                              operator+(const double& u, const VectorizedArray<float>& v)
 {
   VectorizedArray<float> tmp;
-  tmp = u;
-  return tmp += v;
+  tmp= u;
+  return tmp+= v;
 }
 
 /**
@@ -2965,8 +2963,8 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator-(const Number& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp;
-  tmp = u;
-  return tmp -= v;
+  tmp= u;
+  return tmp-= v;
 }
 
 /**
@@ -2981,8 +2979,8 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
                              operator-(const double& u, const VectorizedArray<float>& v)
 {
   VectorizedArray<float> tmp;
-  tmp = float(u);
-  return tmp -= v;
+  tmp= float(u);
+  return tmp-= v;
 }
 
 /**
@@ -2996,7 +2994,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator-(const VectorizedArray<Number>& v, const Number& u)
 {
   VectorizedArray<Number> tmp;
-  tmp = u;
+  tmp= u;
   return v - tmp;
 }
 
@@ -3012,7 +3010,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
                              operator-(const VectorizedArray<float>& v, const double& u)
 {
   VectorizedArray<float> tmp;
-  tmp = float(u);
+  tmp= float(u);
   return v - tmp;
 }
 
@@ -3027,8 +3025,8 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator*(const Number& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp;
-  tmp = u;
-  return tmp *= v;
+  tmp= u;
+  return tmp*= v;
 }
 
 /**
@@ -3043,8 +3041,8 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
                              operator*(const double& u, const VectorizedArray<float>& v)
 {
   VectorizedArray<float> tmp;
-  tmp = float(u);
-  return tmp *= v;
+  tmp= float(u);
+  return tmp*= v;
 }
 
 /**
@@ -3085,8 +3083,8 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator/(const Number& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp;
-  tmp = u;
-  return tmp /= v;
+  tmp= u;
+  return tmp/= v;
 }
 
 /**
@@ -3101,8 +3099,8 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
                              operator/(const double& u, const VectorizedArray<float>& v)
 {
   VectorizedArray<float> tmp;
-  tmp = float(u);
-  return tmp /= v;
+  tmp= float(u);
+  return tmp/= v;
 }
 
 /**
@@ -3116,7 +3114,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              operator/(const VectorizedArray<Number>& v, const Number& u)
 {
   VectorizedArray<Number> tmp;
-  tmp = u;
+  tmp= u;
   return v / tmp;
 }
 
@@ -3132,7 +3130,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
                              operator/(const VectorizedArray<float>& v, const double& u)
 {
   VectorizedArray<float> tmp;
-  tmp = float(u);
+  tmp= float(u);
   return v / tmp;
 }
 
@@ -3189,10 +3187,10 @@ namespace std
     // optimization bug in gcc-4.6 with SSE2 (see also deal.II developers list
     // from April 2014, topic "matrix_free/step-48 Test").
     Number values[::dealii::VectorizedArray<Number>::n_array_elements];
-    for(unsigned int i = 0;
+    for(unsigned int i= 0;
         i < dealii::VectorizedArray<Number>::n_array_elements;
         ++i)
-      values[i] = std::sin(x[i]);
+      values[i]= std::sin(x[i]);
     ::dealii::VectorizedArray<Number> out;
     out.load(&values[0]);
     return out;
@@ -3210,10 +3208,10 @@ namespace std
   cos(const ::dealii::VectorizedArray<Number>& x)
   {
     Number values[::dealii::VectorizedArray<Number>::n_array_elements];
-    for(unsigned int i = 0;
+    for(unsigned int i= 0;
         i < dealii::VectorizedArray<Number>::n_array_elements;
         ++i)
-      values[i] = std::cos(x[i]);
+      values[i]= std::cos(x[i]);
     ::dealii::VectorizedArray<Number> out;
     out.load(&values[0]);
     return out;
@@ -3231,10 +3229,10 @@ namespace std
   tan(const ::dealii::VectorizedArray<Number>& x)
   {
     Number values[::dealii::VectorizedArray<Number>::n_array_elements];
-    for(unsigned int i = 0;
+    for(unsigned int i= 0;
         i < dealii::VectorizedArray<Number>::n_array_elements;
         ++i)
-      values[i] = std::tan(x[i]);
+      values[i]= std::tan(x[i]);
     ::dealii::VectorizedArray<Number> out;
     out.load(&values[0]);
     return out;
@@ -3252,10 +3250,10 @@ namespace std
   exp(const ::dealii::VectorizedArray<Number>& x)
   {
     Number values[::dealii::VectorizedArray<Number>::n_array_elements];
-    for(unsigned int i = 0;
+    for(unsigned int i= 0;
         i < dealii::VectorizedArray<Number>::n_array_elements;
         ++i)
-      values[i] = std::exp(x[i]);
+      values[i]= std::exp(x[i]);
     ::dealii::VectorizedArray<Number> out;
     out.load(&values[0]);
     return out;
@@ -3273,10 +3271,10 @@ namespace std
   log(const ::dealii::VectorizedArray<Number>& x)
   {
     Number values[::dealii::VectorizedArray<Number>::n_array_elements];
-    for(unsigned int i = 0;
+    for(unsigned int i= 0;
         i < dealii::VectorizedArray<Number>::n_array_elements;
         ++i)
-      values[i] = std::log(x[i]);
+      values[i]= std::log(x[i]);
     ::dealii::VectorizedArray<Number> out;
     out.load(&values[0]);
     return out;
@@ -3308,10 +3306,10 @@ namespace std
   pow(const ::dealii::VectorizedArray<Number>& x, const Number p)
   {
     Number values[::dealii::VectorizedArray<Number>::n_array_elements];
-    for(unsigned int i = 0;
+    for(unsigned int i= 0;
         i < dealii::VectorizedArray<Number>::n_array_elements;
         ++i)
-      values[i] = std::pow(x[i], p);
+      values[i]= std::pow(x[i], p);
     ::dealii::VectorizedArray<Number> out;
     out.load(&values[0]);
     return out;

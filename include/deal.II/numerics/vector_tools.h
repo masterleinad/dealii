@@ -603,7 +603,7 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim>&                       dof,
     const Function<spacedim, typename VectorType::value_type>& function,
     VectorType&                                                vec,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask& component_mask= ComponentMask());
 
   /**
    * Call the @p interpolate() function above with
@@ -618,7 +618,7 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim>&                       dof,
     const Function<spacedim, typename VectorType::value_type>& function,
     VectorType&                                                vec,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask& component_mask= ComponentMask());
 
   /**
    * Interpolate different finite element spaces. The interpolation of vector
@@ -702,7 +702,7 @@ namespace VectorTools
                    const Function<spacedim, typename VectorType::value_type>*>&
                          function_map,
     VectorType&          dst,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask& component_mask= ComponentMask());
 
   /**
    * Compute the interpolation of a @p dof1-function @p u1 to a @p dof2-function
@@ -839,10 +839,10 @@ namespace VectorTools
           const Quadrature<dim>&           quadrature,
           const Function<spacedim, typename VectorType::value_type>& function,
           VectorType&                                                vec,
-          const bool                 enforce_zero_boundary = false,
+          const bool                 enforce_zero_boundary= false,
           const Quadrature<dim - 1>& q_boundary
           = (dim > 1 ? QGauss<dim - 1>(2) : Quadrature<dim - 1>(0)),
-          const bool project_to_boundary_first = false);
+          const bool project_to_boundary_first= false);
 
   /**
    * Call the project() function above, with
@@ -855,10 +855,10 @@ namespace VectorTools
           const Quadrature<dim>&           quadrature,
           const Function<spacedim, typename VectorType::value_type>& function,
           VectorType&                                                vec,
-          const bool                 enforce_zero_boundary = false,
+          const bool                 enforce_zero_boundary= false,
           const Quadrature<dim - 1>& q_boundary
           = (dim > 1 ? QGauss<dim - 1>(2) : Quadrature<dim - 1>(0)),
-          const bool project_to_boundary_first = false);
+          const bool project_to_boundary_first= false);
 
   /**
    * Same as above, but for arguments of type hp::DoFHandler, hp::QCollection, and
@@ -872,11 +872,11 @@ namespace VectorTools
           const hp::QCollection<dim>&                 quadrature,
           const Function<spacedim, typename VectorType::value_type>& function,
           VectorType&                                                vec,
-          const bool                      enforce_zero_boundary = false,
+          const bool                      enforce_zero_boundary= false,
           const hp::QCollection<dim - 1>& q_boundary
           = hp::QCollection<dim - 1>(dim > 1 ? QGauss<dim - 1>(2) :
                                                Quadrature<dim - 1>(0)),
-          const bool project_to_boundary_first = false);
+          const bool project_to_boundary_first= false);
 
   /**
    * Call the project() function above, with a collection of $Q_1$ mapping
@@ -889,11 +889,11 @@ namespace VectorTools
           const hp::QCollection<dim>&          quadrature,
           const Function<spacedim, typename VectorType::value_type>& function,
           VectorType&                                                vec,
-          const bool                      enforce_zero_boundary = false,
+          const bool                      enforce_zero_boundary= false,
           const hp::QCollection<dim - 1>& q_boundary
           = hp::QCollection<dim - 1>(dim > 1 ? QGauss<dim - 1>(2) :
                                                Quadrature<dim - 1>(0)),
-          const bool project_to_boundary_first = false);
+          const bool project_to_boundary_first= false);
 
   /**
    * The same as above for projection of scalar-valued quadrature data.
@@ -961,7 +961,7 @@ namespace VectorTools
             const unsigned int,
             const unsigned int)>& func,
           VectorType&             vec_result,
-          const unsigned int      fe_component = 0);
+          const unsigned int      fe_component= 0);
 
   /**
    * Same as above but for <code>n_q_points_1d = matrix_free.get_dof_handler().get_fe().degree+1</code>.
@@ -975,7 +975,7 @@ namespace VectorTools
             const unsigned int,
             const unsigned int)>&                                   func,
           VectorType&                                               vec_result,
-          const unsigned int fe_component = 0);
+          const unsigned int fe_component= 0);
 
   /**
    * Compute Dirichlet boundary conditions.  This function makes up a map of
@@ -1039,7 +1039,7 @@ namespace VectorTools
     const std::map<types::boundary_id, const Function<spacedim, number>*>&
                                                function_map,
     std::map<types::global_dof_index, number>& boundary_values,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask&                       component_mask= ComponentMask());
 
   /**
    * Like the previous function, but take a mapping collection to go with the
@@ -1053,7 +1053,7 @@ namespace VectorTools
     const std::map<types::boundary_id, const Function<spacedim, number>*>&
                                                function_map,
     std::map<types::global_dof_index, number>& boundary_values,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask&                       component_mask= ComponentMask());
 
   /**
    * Same function as above, but taking only one pair of boundary indicator
@@ -1075,7 +1075,7 @@ namespace VectorTools
     const types::boundary_id                   boundary_component,
     const Function<spacedim, number>&          boundary_function,
     std::map<types::global_dof_index, number>& boundary_values,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask&                       component_mask= ComponentMask());
 
   /**
    * Call the other interpolate_boundary_values() function, see above, with
@@ -1096,7 +1096,7 @@ namespace VectorTools
     const types::boundary_id                   boundary_component,
     const Function<spacedim, number>&          boundary_function,
     std::map<types::global_dof_index, number>& boundary_values,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask&                       component_mask= ComponentMask());
 
   /**
    * Call the other interpolate_boundary_values() function, see above, with
@@ -1114,7 +1114,7 @@ namespace VectorTools
     const std::map<types::boundary_id, const Function<spacedim, number>*>&
                                                function_map,
     std::map<types::global_dof_index, number>& boundary_values,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask&                       component_mask= ComponentMask());
 
   /**
    * Insert the (algebraic) constraints due to Dirichlet boundary conditions
@@ -1188,7 +1188,7 @@ namespace VectorTools
     const std::map<types::boundary_id, const Function<spacedim, number>*>&
                          function_map,
     ConstraintMatrix&    constraints,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask& component_mask= ComponentMask());
 
   /**
    * Same function as above, but taking only one pair of boundary indicator
@@ -1212,7 +1212,7 @@ namespace VectorTools
     const types::boundary_id             boundary_component,
     const Function<spacedim, number>&    boundary_function,
     ConstraintMatrix&                    constraints,
-    const ComponentMask&                 component_mask = ComponentMask());
+    const ComponentMask&                 component_mask= ComponentMask());
 
   /**
    * Call the other interpolate_boundary_values() function, see above, with
@@ -1235,7 +1235,7 @@ namespace VectorTools
     const types::boundary_id             boundary_component,
     const Function<spacedim, number>&    boundary_function,
     ConstraintMatrix&                    constraints,
-    const ComponentMask&                 component_mask = ComponentMask());
+    const ComponentMask&                 component_mask= ComponentMask());
 
   /**
    * Call the other interpolate_boundary_values() function, see above, with
@@ -1255,7 +1255,7 @@ namespace VectorTools
     const std::map<types::boundary_id, const Function<spacedim, number>*>&
                          function_map,
     ConstraintMatrix&    constraints,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask& component_mask= ComponentMask());
 
   /**
    * Project a function or a set of functions to the boundary of the domain.
@@ -1330,7 +1330,7 @@ namespace VectorTools
                                                boundary_functions,
     const Quadrature<dim - 1>&                 q,
     std::map<types::global_dof_index, number>& boundary_values,
-    std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int> component_mapping= std::vector<unsigned int>());
 
   /**
    * Call the project_boundary_values() function, see above, with
@@ -1344,7 +1344,7 @@ namespace VectorTools
                                                boundary_function,
     const Quadrature<dim - 1>&                 q,
     std::map<types::global_dof_index, number>& boundary_values,
-    std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int> component_mapping= std::vector<unsigned int>());
 
   /**
    * Same as above, but for objects of type hp::DoFHandler
@@ -1358,7 +1358,7 @@ namespace VectorTools
                                                boundary_functions,
     const hp::QCollection<dim - 1>&            q,
     std::map<types::global_dof_index, number>& boundary_values,
-    std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int> component_mapping= std::vector<unsigned int>());
 
   /**
    * Call the project_boundary_values() function, see above, with
@@ -1372,7 +1372,7 @@ namespace VectorTools
                                                boundary_function,
     const hp::QCollection<dim - 1>&            q,
     std::map<types::global_dof_index, number>& boundary_values,
-    std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int> component_mapping= std::vector<unsigned int>());
 
   /**
    * Project a function to the boundary of the domain, using the given
@@ -1421,7 +1421,7 @@ namespace VectorTools
                                boundary_functions,
     const Quadrature<dim - 1>& q,
     ConstraintMatrix&          constraints,
-    std::vector<unsigned int>  component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int>  component_mapping= std::vector<unsigned int>());
 
   /**
    * Call the project_boundary_values() function, see above, with
@@ -1437,7 +1437,7 @@ namespace VectorTools
                                boundary_function,
     const Quadrature<dim - 1>& q,
     ConstraintMatrix&          constraints,
-    std::vector<unsigned int>  component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int>  component_mapping= std::vector<unsigned int>());
 
   /**
    * Compute constraints that correspond to boundary conditions of the form
@@ -1501,7 +1501,7 @@ namespace VectorTools
     const Function<dim, double>& boundary_function,
     const types::boundary_id     boundary_component,
     ConstraintMatrix&            constraints,
-    const Mapping<dim>&          mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim>&          mapping= StaticMappingQ1<dim>::mapping);
 
   /**
    * Same as above for the hp-namespace.
@@ -1625,7 +1625,7 @@ namespace VectorTools
     const Function<dim, double>& boundary_function,
     const types::boundary_id     boundary_component,
     ConstraintMatrix&            constraints,
-    const Mapping<dim>&          mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim>&          mapping= StaticMappingQ1<dim>::mapping);
 
   /**
    * hp-namespace version of project_boundary_values_curl_conforming_l2
@@ -1698,7 +1698,7 @@ namespace VectorTools
     const Function<dim, double>& boundary_function,
     const types::boundary_id     boundary_component,
     ConstraintMatrix&            constraints,
-    const Mapping<dim>&          mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim>&          mapping= StaticMappingQ1<dim>::mapping);
 
   /**
    * Same as above for the hp-namespace.
@@ -1953,7 +1953,7 @@ namespace VectorTools
     const std::set<types::boundary_id>&   boundary_ids,
     typename FunctionMap<spacedim>::type& function_map,
     ConstraintMatrix&                     constraints,
-    const Mapping<dim, spacedim>& mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim, spacedim>& mapping= StaticMappingQ1<dim>::mapping);
 
   /**
    * This function does the same as the compute_nonzero_normal_flux_constraints()
@@ -1973,7 +1973,7 @@ namespace VectorTools
     const unsigned int                   first_vector_component,
     const std::set<types::boundary_id>&  boundary_ids,
     ConstraintMatrix&                    constraints,
-    const Mapping<dim, spacedim>& mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim, spacedim>& mapping= StaticMappingQ1<dim>::mapping);
 
   /**
    * Compute the constraints that correspond to boundary conditions of the
@@ -1999,7 +1999,7 @@ namespace VectorTools
     const std::set<types::boundary_id>&   boundary_ids,
     typename FunctionMap<spacedim>::type& function_map,
     ConstraintMatrix&                     constraints,
-    const Mapping<dim, spacedim>& mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim, spacedim>& mapping= StaticMappingQ1<dim>::mapping);
 
   /**
    * Same as above for homogeneous tangential-flux constraints.
@@ -2016,7 +2016,7 @@ namespace VectorTools
     const unsigned int                   first_vector_component,
     const std::set<types::boundary_id>&  boundary_ids,
     ConstraintMatrix&                    constraints,
-    const Mapping<dim, spacedim>& mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim, spacedim>& mapping= StaticMappingQ1<dim>::mapping);
 
   //@}
   /**
@@ -2038,7 +2038,7 @@ namespace VectorTools
     const Quadrature<dim>&                                     q,
     const Function<spacedim, typename VectorType::value_type>& rhs,
     VectorType&                                                rhs_vector,
-    const ConstraintMatrix& constraints = ConstraintMatrix());
+    const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Call the create_right_hand_side() function, see above, with
@@ -2051,7 +2051,7 @@ namespace VectorTools
     const Quadrature<dim>&                                     q,
     const Function<spacedim, typename VectorType::value_type>& rhs,
     VectorType&                                                rhs_vector,
-    const ConstraintMatrix& constraints = ConstraintMatrix());
+    const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Like the previous set of functions, but for hp objects.
@@ -2064,7 +2064,7 @@ namespace VectorTools
     const hp::QCollection<dim>&                                q,
     const Function<spacedim, typename VectorType::value_type>& rhs,
     VectorType&                                                rhs_vector,
-    const ConstraintMatrix& constraints = ConstraintMatrix());
+    const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Like the previous set of functions, but for hp objects.
@@ -2076,7 +2076,7 @@ namespace VectorTools
     const hp::QCollection<dim>&                                q,
     const Function<spacedim, typename VectorType::value_type>& rhs,
     VectorType&                                                rhs_vector,
-    const ConstraintMatrix& constraints = ConstraintMatrix());
+    const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Create a right hand side vector for a point source at point @p p. In
@@ -2405,8 +2405,8 @@ namespace VectorTools
                        OutVector&                        difference,
                        const Quadrature<dim>&            q,
                        const NormType&                   norm,
-                       const Function<spacedim, double>* weight   = nullptr,
-                       const double                      exponent = 2.);
+                       const Function<spacedim, double>* weight  = nullptr,
+                       const double                      exponent= 2.);
 
   /**
    * Call the integrate_difference() function, see above, with
@@ -2420,8 +2420,8 @@ namespace VectorTools
                        OutVector&                        difference,
                        const Quadrature<dim>&            q,
                        const NormType&                   norm,
-                       const Function<spacedim, double>* weight   = nullptr,
-                       const double                      exponent = 2.);
+                       const Function<spacedim, double>* weight  = nullptr,
+                       const double                      exponent= 2.);
 
   /**
    * Same as above for hp.
@@ -2435,8 +2435,8 @@ namespace VectorTools
                        OutVector&                        difference,
                        const hp::QCollection<dim>&       q,
                        const NormType&                   norm,
-                       const Function<spacedim, double>* weight   = nullptr,
-                       const double                      exponent = 2.);
+                       const Function<spacedim, double>* weight  = nullptr,
+                       const double                      exponent= 2.);
 
   /**
    * Call the integrate_difference() function, see above, with
@@ -2450,8 +2450,8 @@ namespace VectorTools
                        OutVector&                           difference,
                        const hp::QCollection<dim>&          q,
                        const NormType&                      norm,
-                       const Function<spacedim, double>*    weight   = nullptr,
-                       const double                         exponent = 2.);
+                       const Function<spacedim, double>*    weight  = nullptr,
+                       const double                         exponent= 2.);
 
   /**
    * Take a Vector @p cellwise_error of errors on each cell with
@@ -2483,7 +2483,7 @@ namespace VectorTools
   compute_global_error(const Triangulation<dim, spacedim>& tria,
                        const InVector&                     cellwise_error,
                        const NormType&                     norm,
-                       const double                        exponent = 2.);
+                       const double                        exponent= 2.);
 
   /**
    * Point error evaluation. Find the first cell containing the given point
@@ -3010,7 +3010,7 @@ namespace VectorTools
   template <typename VectorType>
   void
   subtract_mean_value(VectorType&              v,
-                      const std::vector<bool>& p_select = std::vector<bool>());
+                      const std::vector<bool>& p_select= std::vector<bool>());
 
   /**
    * Compute the mean value of one component of the solution.
@@ -3091,7 +3091,7 @@ namespace VectorTools
   void
   get_position_vector(const DoFHandlerType<dim, spacedim>& dh,
                       VectorType&                          vector,
-                      const ComponentMask& mask = ComponentMask());
+                      const ComponentMask& mask= ComponentMask());
 
   //@}
 

@@ -24,13 +24,13 @@
 void
 eval(const std::string& exp, const Point<2>& p, double expected)
 {
-  std::string                   variables = "x,y";
+  std::string                   variables= "x,y";
   std::map<std::string, double> constants;
 
   FunctionParser<2> fp(1);
   fp.initialize(variables, exp, constants);
 
-  double result = fp.value(p);
+  double result= fp.value(p);
   deallog << "'" << exp << "' @ " << p << " is " << result << " ( expected "
           << expected << " )" << std::endl;
   if(fabs(result - expected) > 1e-10)
@@ -52,11 +52,11 @@ test()
   eval("if(x<1.0 & y<1.0,0,y)", Point<2>(1.5, -2.0), -2.0);
 
   double x, y;
-  x = 1.0;
-  y = -3.1;
+  x= 1.0;
+  y= -3.1;
   eval("atan2(x,y)", Point<2>(x, y), atan2(x, y));
-  x = -1.0;
-  y = 3.1;
+  x= -1.0;
+  y= 3.1;
   eval("atan2(x,y)", Point<2>(x, y), atan2(x, y));
 
   eval("if(x==1.0,0,y)", Point<2>(1.0, -2.0), 0.0);

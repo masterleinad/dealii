@@ -53,18 +53,18 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component= 0) const
   {
-    Tensor<1, dim> res = point;
+    Tensor<1, dim> res= point;
     Assert(point.norm() > 0,
            dealii::ExcMessage("gradient is not defined at zero"));
-    res *= -value(point) / point.norm();
+    res*= -value(point) / point.norm();
     return res;
   }
 };

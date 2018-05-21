@@ -202,7 +202,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Denis Davydov, 2016.
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_Enriched : public FiniteElement<dim, spacedim>
 {
 public:

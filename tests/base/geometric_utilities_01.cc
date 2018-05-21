@@ -27,11 +27,11 @@ void
 print(T point1, T point2)
 {
   deallog << std::endl << "Point 1: ";
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     deallog << point1[i] << " ";
 
   deallog << std::endl << "Point 2: ";
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     deallog << point2[i] << " ";
 
   deallog << std::endl;
@@ -46,18 +46,18 @@ test()
   const Point<dim> origin;
 
   std::array<double, dim> sorigin;
-  for(unsigned int d = 0; d < dim; d++)
-    sorigin[d] = 0.;
+  for(unsigned int d= 0; d < dim; d++)
+    sorigin[d]= 0.;
 
   Point<dim> one;
-  for(unsigned int d = 0; d < dim; d++)
-    one[d] = 1.;
+  for(unsigned int d= 0; d < dim; d++)
+    one[d]= 1.;
 
   std::array<double, dim> sone;
-  sone[0] = std::sqrt(1. * dim);
-  sone[1] = numbers::PI / 4;
+  sone[0]= std::sqrt(1. * dim);
+  sone[1]= numbers::PI / 4;
   if(dim == 3)
-    sone[2] = std::acos(1 / std::sqrt(3.));
+    sone[2]= std::acos(1 / std::sqrt(3.));
 
   print<dim>(to_spherical(origin), sorigin);
   print<dim>(origin, from_spherical(sorigin));
@@ -74,17 +74,17 @@ test3d()
   const dealii::Point<3> z(0, 0, 1);
 
   std::array<double, 3> sx;
-  sx[0] = 1.;
-  sx[1] = 0;
-  sx[2] = numbers::PI / 2;
+  sx[0]= 1.;
+  sx[1]= 0;
+  sx[2]= numbers::PI / 2;
   std::array<double, 3> sy;
-  sy[0] = 1;
-  sy[1] = numbers::PI / 2;
-  sy[2] = numbers::PI / 2;
+  sy[0]= 1;
+  sy[1]= numbers::PI / 2;
+  sy[2]= numbers::PI / 2;
   std::array<double, 3> sz;
-  sz[0] = 1.;
-  sz[1] = 0.;
-  sz[2] = 0.;
+  sz[0]= 1.;
+  sz[1]= 0.;
+  sz[2]= 0.;
 
   print<3>(x, from_spherical(sx));
   print<3>(y, from_spherical(sy));
@@ -96,9 +96,9 @@ test3d()
 
   const Point<3>        dateline(0, -1, 0);
   std::array<double, 3> sdateline;
-  sdateline[0] = 1.;
-  sdateline[1] = 3 * numbers::PI / 2;
-  sdateline[2] = numbers::PI / 2;
+  sdateline[0]= 1.;
+  sdateline[1]= 3 * numbers::PI / 2;
+  sdateline[2]= numbers::PI / 2;
 
   print<3>(dateline, from_spherical(sdateline));
   print<3>(to_spherical(dateline), sdateline);

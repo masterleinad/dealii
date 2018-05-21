@@ -341,7 +341,7 @@ public:
    */
   DynamicSparsityPattern(const size_type m,
                          const size_type n,
-                         const IndexSet& rowset = IndexSet());
+                         const IndexSet& rowset= IndexSet());
 
   /**
    * Create a square SparsityPattern using the given index set. The total size
@@ -372,7 +372,7 @@ public:
   void
   reinit(const size_type m,
          const size_type n,
-         const IndexSet& rowset = IndexSet());
+         const IndexSet& rowset= IndexSet());
 
   /**
    * Since this object is kept compressed at all times anyway, this function
@@ -411,7 +411,7 @@ public:
   add_entries(const size_type row,
               ForwardIterator begin,
               ForwardIterator end,
-              const bool      indices_are_unique_and_sorted = false);
+              const bool      indices_are_unique_and_sorted= false);
 
   /**
    * Check if a value at a certain position may be non-zero.
@@ -792,9 +792,9 @@ namespace DynamicSparsityPatternIterators
     if(current_entry == end_of_row)
       {
         if(current_row + 1 < sparsity_pattern->n_rows())
-          *this = *sparsity_pattern->begin(current_row + 1);
+          *this= *sparsity_pattern->begin(current_row + 1);
         else
-          *this = Accessor(sparsity_pattern); // invalid object
+          *this= Accessor(sparsity_pattern); // invalid object
       }
   }
 
@@ -818,7 +818,7 @@ namespace DynamicSparsityPatternIterators
   inline Iterator
   Iterator::operator++(int)
   {
-    const Iterator iter = *this;
+    const Iterator iter= *this;
     accessor.advance();
     return iter;
   }
@@ -907,10 +907,9 @@ DynamicSparsityPattern::add(const size_type i, const size_type j)
   if(rowset.size() > 0 && !rowset.is_element(i))
     return;
 
-  have_entries = true;
+  have_entries= true;
 
-  const size_type rowindex
-    = rowset.size() == 0 ? i : rowset.index_within_set(i);
+  const size_type rowindex= rowset.size() == 0 ? i : rowset.index_within_set(i);
   lines[rowindex].add(j);
 }
 
@@ -927,7 +926,7 @@ DynamicSparsityPattern::add_entries(const size_type row,
     return;
 
   if(!have_entries && begin < end)
-    have_entries = true;
+    have_entries= true;
 
   const size_type rowindex
     = rowset.size() == 0 ? row : rowset.index_within_set(row);
@@ -957,8 +956,7 @@ DynamicSparsityPattern::column_number(const size_type row,
   Assert(row < n_rows(), ExcIndexRangeType<size_type>(row, 0, n_rows()));
   Assert(rowset.size() == 0 || rowset.is_element(row), ExcInternalError());
 
-  const size_type local_row
-    = rowset.size() ? rowset.index_within_set(row) : row;
+  const size_type local_row= rowset.size() ? rowset.index_within_set(row) : row;
   Assert(
     index < lines[local_row].entries.size(),
     ExcIndexRangeType<size_type>(index, 0, lines[local_row].entries.size()));
@@ -995,7 +993,7 @@ DynamicSparsityPattern::begin(const size_type r) const
       // we find a non-empty row. By iterating over the IndexSet instead
       // of incrementing the row index, we potentially skip over entries
       // not in the rowset.
-      IndexSet::ElementIterator it = rowset.at(r);
+      IndexSet::ElementIterator it= rowset.at(r);
       if(it == rowset.end())
         return end(); // we don't own any row between r and the end
 
@@ -1003,7 +1001,7 @@ DynamicSparsityPattern::begin(const size_type r) const
       // which involves an expensive index_within_set() call, we
       // look at the lines vector directly. This works, because we are
       // walking over this vector entry by entry anyways.
-      size_type rowindex = rowset.index_within_set(*it);
+      size_type rowindex= rowset.index_within_set(*it);
 
       while(it != rowset.end() && lines[rowindex].entries.size() == 0)
         {
@@ -1020,7 +1018,7 @@ DynamicSparsityPattern::begin(const size_type r) const
   // Without an index set we have to do a linear search starting at
   // row r until we find a non-empty one. We will check the lines vector
   // directly instead of going through the slower row_length() function
-  size_type row = r;
+  size_type row= r;
 
   while(row < n_rows() && lines[row].entries.size() == 0)
     {
@@ -1038,7 +1036,7 @@ DynamicSparsityPattern::end(const size_type r) const
 {
   Assert(r < n_rows(), ExcIndexRangeType<size_type>(r, 0, n_rows()));
 
-  unsigned int row = r + 1;
+  unsigned int row= r + 1;
   if(row == n_rows())
     return iterator(this);
   else

@@ -35,7 +35,7 @@ void do_refine(Triangulation<1>& tria)
 
 void do_refine(Triangulation<2>& tria)
 {
-  const int dim = 2;
+  const int dim= 2;
 
   tria.refine_global(2);
   tria.begin_active()->set_refine_flag();
@@ -48,7 +48,7 @@ void do_refine(Triangulation<2>& tria)
 
 void do_refine(Triangulation<3>& tria)
 {
-  const int dim = 3;
+  const int dim= 3;
 
   tria.refine_global(2);
   tria.begin_active()->set_refine_flag();
@@ -81,10 +81,10 @@ check()
 
   DoFHandler<dim> dof_handler(tria);
 
-  for(typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+  for(typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
-    for(unsigned int child = 0; child < cell->n_children(); ++child)
+    for(unsigned int child= 0; child < cell->n_children(); ++child)
       AssertThrow(cell->child(child)->parent() == cell, ExcInternalError());
 
   // coarsen the mesh globally and
@@ -98,10 +98,10 @@ check()
 
   tria.execute_coarsening_and_refinement();
 
-  for(typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+  for(typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
-    for(unsigned int child = 0; child < cell->n_children(); ++child)
+    for(unsigned int child= 0; child < cell->n_children(); ++child)
       AssertThrow(cell->child(child)->parent() == cell, ExcInternalError());
 
   deallog << "OK for " << dim << "d" << std::endl;

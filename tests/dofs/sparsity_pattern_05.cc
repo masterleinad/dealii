@@ -40,8 +40,8 @@ operator==(const BlockSparsityPattern& sp1, const BlockSparsityPattern& sp2)
   if(sp1.n_block_cols() != sp2.n_block_cols())
     return false;
 
-  for(unsigned int i = 0; i < sp1.n_block_rows(); ++i)
-    for(unsigned int j = 0; j < sp1.n_block_cols(); ++j)
+  for(unsigned int i= 0; i < sp1.n_block_rows(); ++i)
+    for(unsigned int j= 0; j < sp1.n_block_cols(); ++j)
       if(!(sp1.block(i, j) == sp2.block(i, j)))
         {
           Assert(false, ExcInternalError());
@@ -103,9 +103,9 @@ check()
 
   //--------------- Block sparsity pattern checks -----------------
 
-  const unsigned int n  = dof.n_dofs();
-  const unsigned int n1 = n / 3;
-  const unsigned int n2 = n - n1;
+  const unsigned int n = dof.n_dofs();
+  const unsigned int n1= n / 3;
+  const unsigned int n2= n - n1;
 
   BlockSparsityPattern sparsity_3(2, 2);
   sparsity_3.block(0, 0).reinit(n1, n1, n);

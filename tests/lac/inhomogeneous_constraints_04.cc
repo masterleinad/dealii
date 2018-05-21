@@ -56,7 +56,7 @@ void
 test(bool use_constraint_matrix)
 {
   DynamicSparsityPattern csp(8, 8);
-  for(unsigned int i = 0; i < 8; ++i)
+  for(unsigned int i= 0; i < 8; ++i)
     csp.add(i, i);
 
   SparsityPattern sp;
@@ -68,20 +68,20 @@ test(bool use_constraint_matrix)
   // "assemble":
 
   std::vector<types::global_dof_index> local_dofs1;
-  for(unsigned int i = 0; i < 5; ++i)
+  for(unsigned int i= 0; i < 5; ++i)
     local_dofs1.push_back(i);
 
   std::vector<types::global_dof_index> local_dofs2;
   local_dofs2.push_back(1);
-  for(unsigned int i = 1; i < 5; ++i)
+  for(unsigned int i= 1; i < 5; ++i)
     local_dofs2.push_back(3 + i);
 
   FullMatrix<double> local_mat(5, 5);
   Vector<double>     local_vec(5);
-  for(unsigned int i = 0; i < 5; ++i)
-    local_mat(i, i) = 2.0;
+  for(unsigned int i= 0; i < 5; ++i)
+    local_mat(i, i)= 2.0;
 
-  local_vec = 1;
+  local_vec= 1;
 
   if(use_constraint_matrix == true)
     {
@@ -104,16 +104,16 @@ test(bool use_constraint_matrix)
     }
   else
     {
-      for(unsigned int i = 0; i < 5; i++)
+      for(unsigned int i= 0; i < 5; i++)
         {
           mat.add(local_dofs1[i], local_dofs1[i], local_mat(i, i));
-          rhs(local_dofs1[i]) += local_vec(i);
+          rhs(local_dofs1[i])+= local_vec(i);
         }
 
-      for(unsigned int i = 0; i < 5; i++)
+      for(unsigned int i= 0; i < 5; i++)
         {
           mat.add(local_dofs2[i], local_dofs2[i], local_mat(i, i));
-          rhs(local_dofs2[i]) += local_vec(i);
+          rhs(local_dofs2[i])+= local_vec(i);
         }
 
       std::map<types::global_dof_index, double> boundary_values;
@@ -129,9 +129,9 @@ test(bool use_constraint_matrix)
   mat.print(logfile);
   rhs.print(logfile);
 
-  for(unsigned int i = 0; i < 8; ++i)
+  for(unsigned int i= 0; i < 8; ++i)
     {
-      solution(i) = rhs(i) / mat(i, i);
+      solution(i)= rhs(i) / mat(i, i);
     }
 
   solution.print(logfile);

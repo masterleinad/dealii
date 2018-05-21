@@ -64,7 +64,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Thomas Richter, 2000, Luca Heltai, 2006
  */
-template <class VectorType = Vector<double>>
+template <class VectorType= Vector<double>>
 class SolverMinRes : public Solver<VectorType>
 {
 public:
@@ -80,19 +80,18 @@ public:
    */
   SolverMinRes(SolverControl&            cn,
                VectorMemory<VectorType>& mem,
-               const AdditionalData&     data = AdditionalData());
+               const AdditionalData&     data= AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverMinRes(SolverControl&        cn,
-               const AdditionalData& data = AdditionalData());
+  SolverMinRes(SolverControl& cn, const AdditionalData& data= AdditionalData());
 
   /**
    * Virtual destructor.
    */
-  virtual ~SolverMinRes() override = default;
+  virtual ~SolverMinRes() override= default;
 
   /**
    * Solve the linear system $Ax=b$ for x.
@@ -197,9 +196,9 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
 
   // define some aliases for simpler access
   typedef VectorType* vecptr;
-  vecptr              u[3] = {Vu0.get(), Vu1.get(), Vu2.get()};
-  vecptr              m[3] = {Vm0.get(), Vm1.get(), Vm2.get()};
-  VectorType&         v    = *Vv;
+  vecptr              u[3]= {Vu0.get(), Vu1.get(), Vu2.get()};
+  vecptr              m[3]= {Vm0.get(), Vm1.get(), Vm2.get()};
+  VectorType&         v   = *Vv;
 
   // resize the vectors, but do not set the values since they'd be overwritten
   // soon anyway.
@@ -212,24 +211,24 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
   v.reinit(b, true);
 
   // some values needed
-  double delta[3] = {0, 0, 0};
-  double f[2]     = {0, 0};
-  double e[2]     = {0, 0};
+  double delta[3]= {0, 0, 0};
+  double f[2]    = {0, 0};
+  double e[2]    = {0, 0};
 
-  double r_l2 = 0;
-  double r0   = 0;
-  double tau  = 0;
-  double c    = 0;
-  double s    = 0;
-  double d_   = 0;
+  double r_l2= 0;
+  double r0  = 0;
+  double tau = 0;
+  double c   = 0;
+  double s   = 0;
+  double d_  = 0;
 
   // The iteration step.
-  unsigned int j = 1;
+  unsigned int j= 1;
 
   // Start of the solution process
   A.vmult(*m[0], x);
-  *u[1] = b;
-  *u[1] -= *m[0];
+  *u[1]= b;
+  *u[1]-= *m[0];
   // Precondition is applied.
   // The preconditioner has to be
   // positive definite and symmetric
@@ -237,76 +236,76 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
   // M v = u[1]
   preconditioner.vmult(v, *u[1]);
 
-  delta[1] = v * (*u[1]);
+  delta[1]= v * (*u[1]);
   // Preconditioner positive
   Assert(delta[1] >= 0, ExcPreconditionerNotDefinite());
 
-  r0   = std::sqrt(delta[1]);
-  r_l2 = r0;
+  r0  = std::sqrt(delta[1]);
+  r_l2= r0;
 
   u[0]->reinit(b);
-  delta[0] = 1.;
+  delta[0]= 1.;
   m[0]->reinit(b);
   m[1]->reinit(b);
   m[2]->reinit(b);
 
-  SolverControl::State conv = this->iteration_status(0, r_l2, x);
+  SolverControl::State conv= this->iteration_status(0, r_l2, x);
   while(conv == SolverControl::iterate)
     {
       if(delta[1] != 0)
-        v *= 1. / std::sqrt(delta[1]);
+        v*= 1. / std::sqrt(delta[1]);
       else
         v.reinit(b);
 
       A.vmult(*u[2], v);
       u[2]->add(-std::sqrt(delta[1] / delta[0]), *u[0]);
 
-      const double gamma = *u[2] * v;
+      const double gamma= *u[2] * v;
       u[2]->add(-gamma / std::sqrt(delta[1]), *u[1]);
-      *m[0] = v;
+      *m[0]= v;
 
       // precondition: solve M v = u[2]
       // Preconditioner has to be positive
       // definite and symmetric.
       preconditioner.vmult(v, *u[2]);
 
-      delta[2] = v * (*u[2]);
+      delta[2]= v * (*u[2]);
 
       Assert(delta[2] >= 0, ExcPreconditionerNotDefinite());
 
       if(j == 1)
         {
-          d_   = gamma;
-          e[1] = std::sqrt(delta[2]);
+          d_  = gamma;
+          e[1]= std::sqrt(delta[2]);
         }
       if(j > 1)
         {
-          d_   = s * e[0] - c * gamma;
-          e[0] = c * e[0] + s * gamma;
-          f[1] = s * std::sqrt(delta[2]);
-          e[1] = -c * std::sqrt(delta[2]);
+          d_  = s * e[0] - c * gamma;
+          e[0]= c * e[0] + s * gamma;
+          f[1]= s * std::sqrt(delta[2]);
+          e[1]= -c * std::sqrt(delta[2]);
         }
 
-      const double d = std::sqrt(d_ * d_ + delta[2]);
+      const double d= std::sqrt(d_ * d_ + delta[2]);
 
       if(j > 1)
-        tau *= s / c;
-      c = d_ / d;
-      tau *= c;
+        tau*= s / c;
+      c= d_ / d;
+      tau*= c;
 
-      s = std::sqrt(delta[2]) / d;
+      s= std::sqrt(delta[2]) / d;
 
       if(j == 1)
-        tau = r0 * c;
+        tau= r0 * c;
 
       m[0]->add(-e[0], *m[1]);
       if(j > 1)
         m[0]->add(-f[0], *m[2]);
-      *m[0] *= 1. / d;
+      *m[0]*= 1. / d;
       x.add(tau, *m[0]);
-      r_l2 *= std::fabs(s);
+      r_l2*= std::fabs(s);
 
-      conv = this->iteration_status(j, r_l2, x);
+      conv= this->iteration_status(j, r_l2, x);
 
       // next iteration step
       ++j;
@@ -331,10 +330,10 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
 
       // these are scalars, so need
       // to bother
-      f[0]     = f[1];
-      e[0]     = e[1];
-      delta[0] = delta[1];
-      delta[1] = delta[2];
+      f[0]    = f[1];
+      e[0]    = e[1];
+      delta[0]= delta[1];
+      delta[1]= delta[2];
     }
 
   // in case of failure: throw exception

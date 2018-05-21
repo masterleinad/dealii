@@ -91,10 +91,10 @@ test(std::string filename)
   //  Functions::CosineFunction<spacedim> cosine;
 
   Tensor<1, spacedim> exp;
-  exp[0] = 1;
-  exp[1] = 0;
+  exp[0]= 1;
+  exp[1]= 0;
   if(spacedim == 3)
-    exp[2] = 0;
+    exp[2]= 0;
   Functions::Monomial<spacedim> monomial(exp);
 
   const QGauss<dim> quad(5);
@@ -104,7 +104,7 @@ test(std::string filename)
 
   // calculate its gradient
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -117,13 +117,13 @@ test(std::string filename)
 
   typename DoFHandler<dim, spacedim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
       cell->get_dof_indices(local_dof_indices);
-      cell_normals = fe_values.get_all_normal_vectors();
+      cell_normals= fe_values.get_all_normal_vectors();
 
       // The cell tangential is calculated
       // in the midpoint of the cell. For
@@ -138,9 +138,9 @@ test(std::string filename)
         = -cell_normals[0][0]
           / sqrt(pow(cell_normals[0][0], 2) + pow(cell_normals[0][1], 2));
       if(spacedim == 3)
-        cell_tangentials[0][2] = 0.;
+        cell_tangentials[0][2]= 0.;
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
           shape_directional_derivative[i]
             = fe_values.shape_grad(i, 0) * cell_tangentials[0];

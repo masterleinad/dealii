@@ -128,9 +128,9 @@ public:
                const std::size_t index3,
                const std::size_t index4,
                const std::size_t index5,
-               const std::size_t index6 = numbers::invalid_unsigned_int,
-               const std::size_t index7 = numbers::invalid_unsigned_int,
-               const std::size_t index8 = numbers::invalid_unsigned_int);
+               const std::size_t index6= numbers::invalid_unsigned_int,
+               const std::size_t index7= numbers::invalid_unsigned_int,
+               const std::size_t index8= numbers::invalid_unsigned_int);
 
   /**
    * Read-only access the value of the <tt>i</tt>th index.
@@ -181,8 +181,8 @@ protected:
 template <int N>
 TableIndices<N>::TableIndices()
 {
-  for(unsigned int i = 0; i < N; ++i)
-    indices[i] = 0;
+  for(unsigned int i= 0; i < N; ++i)
+    indices[i]= 0;
 }
 
 template <int N>
@@ -190,7 +190,7 @@ TableIndices<N>::TableIndices(const std::size_t index0)
 {
   static_assert(
     N == 1, "This constructor is only available for TableIndices<1> objects.");
-  indices[0] = index0;
+  indices[0]= index0;
 }
 
 template <int N>
@@ -199,8 +199,8 @@ TableIndices<N>::TableIndices(const std::size_t index0,
 {
   static_assert(
     N == 2, "This constructor is only available for TableIndices<2> objects.");
-  indices[0] = index0;
-  indices[1] = index1;
+  indices[0]= index0;
+  indices[1]= index1;
 }
 
 template <int N>
@@ -210,9 +210,9 @@ TableIndices<N>::TableIndices(const std::size_t index0,
 {
   static_assert(
     N == 3, "This constructor is only available for TableIndices<3> objects.");
-  indices[0] = index0;
-  indices[1] = index1;
-  indices[2] = index2;
+  indices[0]= index0;
+  indices[1]= index1;
+  indices[2]= index2;
 }
 
 template <int N>
@@ -223,10 +223,10 @@ TableIndices<N>::TableIndices(const std::size_t index0,
 {
   static_assert(
     N == 4, "This constructor is only available for TableIndices<4> objects.");
-  indices[0] = index0;
-  indices[1] = index1;
-  indices[2] = index2;
-  indices[3] = index3;
+  indices[0]= index0;
+  indices[1]= index1;
+  indices[2]= index2;
+  indices[3]= index3;
 }
 
 template <int N>
@@ -238,11 +238,11 @@ TableIndices<N>::TableIndices(const std::size_t index0,
 {
   static_assert(
     N == 5, "This constructor is only available for TableIndices<5> objects.");
-  indices[0] = index0;
-  indices[1] = index1;
-  indices[2] = index2;
-  indices[3] = index3;
-  indices[4] = index4;
+  indices[0]= index0;
+  indices[1]= index1;
+  indices[2]= index2;
+  indices[3]= index3;
+  indices[4]= index4;
 }
 
 template <int N>
@@ -300,35 +300,35 @@ TableIndices<N>::TableIndices(const std::size_t index0,
       default:
         // For TableIndices of size 10 or larger als default initialize the
         // remaining indices to numbers::invalid_unsigned_int:
-        for(unsigned int i = 0; i < N; ++i)
-          indices[i] = numbers::invalid_unsigned_int;
+        for(unsigned int i= 0; i < N; ++i)
+          indices[i]= numbers::invalid_unsigned_int;
         DEAL_II_FALLTHROUGH;
       case 9:
-        indices[8 % N] = index8;
+        indices[8 % N]= index8;
         DEAL_II_FALLTHROUGH;
       case 8:
-        indices[7 % N] = index7;
+        indices[7 % N]= index7;
         DEAL_II_FALLTHROUGH;
       case 7:
-        indices[6 % N] = index6;
+        indices[6 % N]= index6;
         DEAL_II_FALLTHROUGH;
       case 6:
-        indices[5 % N] = index5;
+        indices[5 % N]= index5;
         DEAL_II_FALLTHROUGH;
       case 5:
-        indices[4 % N] = index4;
+        indices[4 % N]= index4;
         DEAL_II_FALLTHROUGH;
       case 4:
-        indices[3 % N] = index3;
+        indices[3 % N]= index3;
         DEAL_II_FALLTHROUGH;
       case 3:
-        indices[2 % N] = index2;
+        indices[2 % N]= index2;
         DEAL_II_FALLTHROUGH;
       case 2:
-        indices[1 % N] = index1;
+        indices[1 % N]= index1;
         DEAL_II_FALLTHROUGH;
       case 1:
-        indices[0 % N] = index0;
+        indices[0 % N]= index0;
     }
 }
 
@@ -350,7 +350,7 @@ template <int N>
 inline bool
 TableIndices<N>::operator==(const TableIndices<N>& other) const
 {
-  for(unsigned int i = 0; i < N; ++i)
+  for(unsigned int i= 0; i < N; ++i)
     if(indices[i] != other.indices[i])
       return false;
   return true;
@@ -389,7 +389,7 @@ std::ostream&
 operator<<(std::ostream& out, const TableIndices<N>& indices)
 {
   out << '[';
-  for(unsigned int i = 0; i < N; ++i)
+  for(unsigned int i= 0; i < N; ++i)
     {
       out << indices[i];
       if(i + 1 != N)

@@ -28,8 +28,8 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -45,23 +45,23 @@ test()
   typename LA::MPI::Vector vb(local_active, MPI_COMM_WORLD);
   typename LA::MPI::Vector v(local_active, local_relevant, MPI_COMM_WORLD);
 
-  vb = 1.0;
+  vb= 1.0;
 
   // set local values
-  vb(myid * 2)     = myid * 2.0;
-  vb(myid * 2 + 1) = myid * 2.0 + 1.0;
+  vb(myid * 2)    = myid * 2.0;
+  vb(myid * 2 + 1)= myid * 2.0 + 1.0;
 
   vb.compress(VectorOperation::insert);
-  vb *= 2.0;
-  v = vb;
+  vb*= 2.0;
+  v= vb;
   Assert(v.has_ghost_elements(), ExcInternalError());
 
   deallog << "ghosted value: " << get_real_assert_zero_imag(v(1))
           << " (should be 2.0)" << std::endl;
-  v = 0;
+  v= 0;
   deallog << "ghosted value: " << get_real_assert_zero_imag(v(1))
           << " (should be 0.0)" << std::endl;
-  v = 42.1;
+  v= 42.1;
   deallog << "ghosted value: " << get_real_assert_zero_imag(v(1))
           << " (should be 42.1)" << std::endl;
 

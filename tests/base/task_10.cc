@@ -35,7 +35,7 @@ main()
   Threads::Task<> t;
   AssertThrow(t.joinable() == false, ExcInternalError());
 
-  t = Threads::new_task(test);
+  t= Threads::new_task(test);
   AssertThrow(t.joinable() == true, ExcInternalError());
   t.join();
 }

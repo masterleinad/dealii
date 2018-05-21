@@ -98,7 +98,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Guido Kanschat, 1998-2003; Wolfgang Bangerth, 2017.
  */
-template <typename VectorType = dealii::Vector<double>>
+template <typename VectorType= dealii::Vector<double>>
 class VectorMemory : public Subscriptor
 {
 public:
@@ -107,7 +107,7 @@ public:
    * destroying objects of derived type through pointers to this base
    * class.
    */
-  virtual ~VectorMemory() override = default;
+  virtual ~VectorMemory() override= default;
 
   /**
    * Return a pointer to a new vector. The number of elements or their
@@ -197,13 +197,13 @@ public:
      * it will steal the vector owned by the other object
      * (as @p std::unique_ptr does).
      */
-    Pointer() = default;
+    Pointer()= default;
 
     /**
      * Move constructor: this creates a new Pointer by stealing the internal
      * data owned by @p p.
      */
-    Pointer(Pointer&& p) noexcept = default;
+    Pointer(Pointer&& p) noexcept= default;
 
     /**
      * Move operator: this releases the vector owned by the current Pointer
@@ -222,7 +222,7 @@ public:
     /**
      * Destructor, automatically releasing the vector from the memory #pool.
      */
-    ~Pointer() = default;
+    ~Pointer()= default;
   };
 };
 
@@ -233,7 +233,7 @@ public:
  * This class allocates and deletes vectors as needed from the global heap,
  * i.e. performs no specially adapted actions for memory management.
  */
-template <typename VectorType = dealii::Vector<double>>
+template <typename VectorType= dealii::Vector<double>>
 class PrimitiveVectorMemory : public VectorMemory<VectorType>
 {
 public:
@@ -310,7 +310,7 @@ public:
  *
  * @author Guido Kanschat, 1999, 2007; Wolfgang Bangerth, 2017.
  */
-template <typename VectorType = dealii::Vector<double>>
+template <typename VectorType= dealii::Vector<double>>
 class GrowingVectorMemory : public VectorMemory<VectorType>
 {
 public:
@@ -323,8 +323,8 @@ public:
    * Constructor.  The argument allows to preallocate a certain number of
    * vectors. The default is not to do this.
    */
-  GrowingVectorMemory(const size_type initial_size   = 0,
-                      const bool      log_statistics = false);
+  GrowingVectorMemory(const size_type initial_size  = 0,
+                      const bool      log_statistics= false);
 
   /**
    * Destructor. The destructor also checks that all vectors that have been

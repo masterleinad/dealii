@@ -157,7 +157,7 @@ namespace Step11
     // <code>std::find</code> returns an iterator to this element), and
     // computing its distance to the overall first element in the array to get
     // its index:
-    const unsigned int first_boundary_dof = std::distance(
+    const unsigned int first_boundary_dof= std::distance(
       boundary_dofs.begin(),
       std::find(boundary_dofs.begin(), boundary_dofs.end(), true));
 
@@ -170,7 +170,7 @@ namespace Step11
     // of what is to come later:
     mean_value_constraints.clear();
     mean_value_constraints.add_line(first_boundary_dof);
-    for(unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
+    for(unsigned int i= first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
       if(boundary_dofs[i] == true)
         mean_value_constraints.add_entry(first_boundary_dof, i, -1);
     mean_value_constraints.close();
@@ -260,7 +260,7 @@ namespace Step11
     // side function.
     //
     // Let us look at the way the matrix and body forces are integrated:
-    const unsigned int gauss_degree = std::max(
+    const unsigned int gauss_degree= std::max(
       static_cast<unsigned int>(std::ceil(1. * (mapping.get_degree() + 1) / 2)),
       2U);
     MatrixTools::create_laplace_matrix(
@@ -309,7 +309,7 @@ namespace Step11
       tmp);
     // Then add the contributions from the boundary to those from the interior
     // of the domain:
-    system_rhs += tmp;
+    system_rhs+= tmp;
     // For assembling the right hand side, we had to use two different vector
     // objects, and later add them together. The reason we had to do so is
     // that the <code>VectorTools::create_right_hand_side</code> and
@@ -360,7 +360,7 @@ namespace Step11
     // Then, the function just called returns its results as a vector of
     // values each of which denotes the norm on one cell. To get the global
     // norm, we do the following:
-    const double norm = VectorTools::compute_global_error(
+    const double norm= VectorTools::compute_global_error(
       triangulation, norm_per_cell, VectorTools::H1_seminorm);
 
     // Last task -- generate output:
@@ -404,7 +404,7 @@ namespace Step11
   {
     GridGenerator::hyper_ball(triangulation);
 
-    for(unsigned int cycle = 0; cycle < 6;
+    for(unsigned int cycle= 0; cycle < 6;
         ++cycle, triangulation.refine_global(1))
       {
         setup_system();
@@ -435,8 +435,7 @@ main()
       // but create an unnamed such object and call the <code>run</code>
       // function of it, subsequent to which it is immediately destroyed
       // again.
-      for(unsigned int mapping_degree = 1; mapping_degree <= 3;
-          ++mapping_degree)
+      for(unsigned int mapping_degree= 1; mapping_degree <= 3; ++mapping_degree)
         Step11::LaplaceProblem<2>(mapping_degree).run();
     }
   catch(std::exception& exc)

@@ -39,7 +39,7 @@ namespace internal
 {
   namespace DoFHandlerImplementation
   {
-    template <typename DoFHandlerType, bool lda = false>
+    template <typename DoFHandlerType, bool lda= false>
     struct Iterators;
 
     /**

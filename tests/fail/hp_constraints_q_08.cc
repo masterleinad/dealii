@@ -15,7 +15,7 @@
 
 // check that computation of hp constraints works for Q elements correctly
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../hp/hp_constraints_common.h"
 
@@ -24,7 +24,7 @@ void
 test()
 {
   hp::FECollection<dim> fe;
-  for(unsigned int i = 1; i < 4; ++i)
+  for(unsigned int i= 1; i < 4; ++i)
     fe.push_back(FE_Q<dim>(i));
   test_with_hanging_nodes_random_aniso(fe);
 }

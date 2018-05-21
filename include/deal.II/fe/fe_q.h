@@ -547,7 +547,7 @@ DEAL_II_NAMESPACE_OPEN
  * 2001, 2004, 2005; Oliver Kayser-Herold, 2004; Katharina Kormann, 2008;
  * Martin Kronbichler, 2008
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_Q : public FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>
 {
 public:

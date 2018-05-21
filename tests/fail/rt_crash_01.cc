@@ -64,7 +64,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   // all values of the projected solution
   // should be close around 1 (the value of
   // the original function)
-  for(unsigned int i = 0; i < solution.size(); ++i)
+  for(unsigned int i= 0; i < solution.size(); ++i)
     Assert(std::fabs(solution(i) - 1) < 1e-6, ExcInternalError());
 
   // Evaluate error
@@ -76,7 +76,7 @@ check_this(const DoFHandler<dim>& dof_handler)
                                     cellwise_errors,
                                     quadrature,
                                     VectorTools::L2_norm);
-  const double p_l2_error = cellwise_errors.l2_norm();
+  const double p_l2_error= cellwise_errors.l2_norm();
 
   deallog << "L2_Error : " << p_l2_error << std::endl;
 

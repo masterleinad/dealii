@@ -43,8 +43,8 @@ test()
   GridGenerator::hyper_cube(tria, -1, 1);
   tria.begin_active()->set_subdomain_id(42);
   tria.refine_global(2);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
     AssertThrow(cell->subdomain_id() == 42, ExcInternalError());
   deallog << "OK" << std::endl;

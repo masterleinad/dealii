@@ -32,11 +32,11 @@ logvec(const std::vector<types::global_dof_index>& v,
        const std::vector<types::global_dof_index>& w)
 {
   deallog << '[';
-  for(unsigned int i = 0; i < w.size(); ++i)
+  for(unsigned int i= 0; i < w.size(); ++i)
     deallog << ' ' << w[i];
   deallog << " ]" << std::endl << '[';
   ;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << ' ' << v[i];
   deallog << " ]" << std::endl;
 }

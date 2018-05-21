@@ -255,9 +255,9 @@ namespace Step9
   AdvectionField<dim>::value(const Point<dim>& p) const
   {
     Point<dim> value;
-    value[0] = 2;
-    for(unsigned int i = 1; i < dim; ++i)
-      value[i] = 1 + 0.8 * std::sin(8 * numbers::PI * p[0]);
+    value[0]= 2;
+    for(unsigned int i= 1; i < dim; ++i)
+      value[i]= 1 + 0.8 * std::sin(8 * numbers::PI * p[0]);
 
     return value;
   }
@@ -270,8 +270,8 @@ namespace Step9
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
-      values[i] = AdvectionField<dim>::value(points[i]);
+    for(unsigned int i= 0; i < points.size(); ++i)
+      values[i]= AdvectionField<dim>::value(points[i]);
   }
 
   // Besides the advection field, we need two functions describing the source
@@ -292,25 +292,25 @@ namespace Step9
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
                std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               const unsigned int             component= 0) const override;
 
   private:
     static const Point<dim> center_point;
   };
 
   template <>
-  const Point<1> RightHandSide<1>::center_point = Point<1>(-0.75);
+  const Point<1> RightHandSide<1>::center_point= Point<1>(-0.75);
 
   template <>
-  const Point<2> RightHandSide<2>::center_point = Point<2>(-0.75, -0.75);
+  const Point<2> RightHandSide<2>::center_point= Point<2>(-0.75, -0.75);
 
   template <>
-  const Point<3> RightHandSide<3>::center_point = Point<3>(-0.75, -0.75, -0.75);
+  const Point<3> RightHandSide<3>::center_point= Point<3>(-0.75, -0.75, -0.75);
 
   // The only new thing here is that we check for the value of the
   // <code>component</code> parameter. As this is a scalar function, it is
@@ -329,7 +329,7 @@ namespace Step9
   {
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
-    const double diameter = 0.1;
+    const double diameter= 0.1;
     return ((p - center_point).norm_square() < diameter * diameter ?
               .1 / std::pow(diameter, dim) :
               0);
@@ -344,8 +344,8 @@ namespace Step9
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
-      values[i] = RightHandSide<dim>::value(points[i], component);
+    for(unsigned int i= 0; i < points.size(); ++i)
+      values[i]= RightHandSide<dim>::value(points[i], component);
   }
 
   // Finally for the boundary values, which is just another class derived from
@@ -358,12 +358,12 @@ namespace Step9
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
                std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               const unsigned int             component= 0) const override;
   };
 
   template <int dim>
@@ -376,7 +376,7 @@ namespace Step9
 
     const double sine_term
       = std::sin(16 * numbers::PI * std::sqrt(p.norm_square()));
-    const double weight = std::exp(-5 * p.norm_square()) / std::exp(-5.);
+    const double weight= std::exp(-5 * p.norm_square()) / std::exp(-5.);
     return sine_term * weight;
   }
 
@@ -389,8 +389,8 @@ namespace Step9
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
-      values[i] = BoundaryValues<dim>::value(points[i], component);
+    for(unsigned int i= 0; i < points.size(); ++i)
+      values[i]= BoundaryValues<dim>::value(points[i], component);
   }
 
   // @sect3{GradientEstimation class declaration}
@@ -666,7 +666,7 @@ namespace Step9
     const BoundaryValues<dim> boundary_values;
 
     // Then we define some abbreviations to avoid unnecessarily long lines:
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
     const unsigned int n_q_points
       = scratch_data.fe_values.get_quadrature().size();
     const unsigned int n_face_q_points
@@ -700,14 +700,14 @@ namespace Step9
 
     // ... set the value of the streamline diffusion parameter as
     // described in the introduction...
-    const double delta = 0.1 * cell->diameter();
+    const double delta= 0.1 * cell->diameter();
 
     // ... and assemble the local contributions to the system matrix and
     // right hand side as also discussed above:
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+    for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             copy_data.cell_matrix(i, j)
               += ((advection_directions[q_point]
                    * scratch_data.fe_values.shape_grad(j, q_point)
@@ -737,7 +737,7 @@ namespace Step9
     // the direction of flow at this point; we obtain this information
     // using the FEFaceValues object and only decide within the main loop
     // whether a quadrature point is on the inflow boundary.
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
       if(cell->face(face)->at_boundary())
         {
           // Ok, this face of the present cell is on the boundary of the
@@ -763,7 +763,7 @@ namespace Step9
           // the boundary, the normal vector points outward of the domain,
           // so if the advection direction points into the domain, its
           // scalar product with the normal vector must be negative):
-          for(unsigned int q_point = 0; q_point < n_face_q_points; ++q_point)
+          for(unsigned int q_point= 0; q_point < n_face_q_points; ++q_point)
             if(scratch_data.fe_face_values.normal_vector(q_point)
                  * face_advection_directions[q_point]
                < 0)
@@ -772,9 +772,9 @@ namespace Step9
               // hand side, using the values obtained from the
               // FEFaceValues object and the formulae discussed in the
               // introduction:
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                  for(unsigned int j= 0; j < dofs_per_cell; ++j)
                     copy_data.cell_matrix(i, j)
                       -= (face_advection_directions[q_point]
                           * scratch_data.fe_face_values.normal_vector(q_point)
@@ -807,14 +807,14 @@ namespace Step9
   void
   AdvectionProblem<dim>::copy_local_to_global(const AssemblyCopyData& copy_data)
   {
-    for(unsigned int i = 0; i < copy_data.local_dof_indices.size(); ++i)
+    for(unsigned int i= 0; i < copy_data.local_dof_indices.size(); ++i)
       {
-        for(unsigned int j = 0; j < copy_data.local_dof_indices.size(); ++j)
+        for(unsigned int j= 0; j < copy_data.local_dof_indices.size(); ++j)
           system_matrix.add(copy_data.local_dof_indices[i],
                             copy_data.local_dof_indices[j],
                             copy_data.cell_matrix(i, j));
 
-        system_rhs(copy_data.local_dof_indices[i]) += copy_data.cell_rhs(i);
+        system_rhs(copy_data.local_dof_indices[i])+= copy_data.cell_rhs(i);
       }
   }
 
@@ -886,7 +886,7 @@ namespace Step9
   void
   AdvectionProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 6; ++cycle)
+    for(unsigned int cycle= 0; cycle < 6; ++cycle)
       {
         std::cout << "Cycle " << cycle << ':' << std::endl;
 
@@ -1070,7 +1070,7 @@ namespace Step9
     // have to clear the array storing the iterators to the active
     // neighbors, of course.
     active_neighbors.clear();
-    for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+    for(unsigned int face_no= 0; face_no < GeometryInfo<dim>::faces_per_cell;
         ++face_no)
       if(!cell->at_boundary(face_no))
         {
@@ -1099,8 +1099,7 @@ namespace Step9
                   typename DoFHandler<dim>::cell_iterator neighbor_child
                     = neighbor;
                   while(neighbor_child->has_children())
-                    neighbor_child
-                      = neighbor_child->child(face_no == 0 ? 1 : 0);
+                    neighbor_child= neighbor_child->child(face_no == 0 ? 1 : 0);
 
                   // As this used some non-trivial geometrical intuition,
                   // we might want to check whether we did it right,
@@ -1132,8 +1131,7 @@ namespace Step9
               else
                 // If we are not in 1d, we collect all neighbor children
                 // `behind' the subfaces of the current face
-                for(unsigned int subface_no = 0;
-                    subface_no < face->n_children();
+                for(unsigned int subface_no= 0; subface_no < face->n_children();
                     ++subface_no)
                   active_neighbors.push_back(
                     cell->neighbor_child_on_subface(face_no, subface_no));
@@ -1187,14 +1185,14 @@ namespace Step9
         // two cells. Note that as opposed to the introduction, we denote
         // by <code>y</code> the normalized difference vector, as this is
         // the quantity used everywhere in the computations.
-        Tensor<1, dim> y        = neighbor_center - this_center;
-        const double   distance = y.norm();
-        y /= distance;
+        Tensor<1, dim> y       = neighbor_center - this_center;
+        const double   distance= y.norm();
+        y/= distance;
 
         // Then add up the contribution of this cell to the Y matrix...
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = 0; j < dim; ++j)
-            Y[i][j] += y[i] * y[j];
+        for(unsigned int i= 0; i < dim; ++i)
+          for(unsigned int j= 0; j < dim; ++j)
+            Y[i][j]+= y[i] * y[j];
 
         // ... and update the sum of difference quotients:
         projected_gradient
@@ -1229,9 +1227,9 @@ namespace Step9
     // If, on the other hand the matrix is invertible, then invert it,
     // multiply the other quantity with it and compute the estimated error
     // using this quantity and the right powers of the mesh width:
-    const Tensor<2, dim> Y_inverse = invert(Y);
+    const Tensor<2, dim> Y_inverse= invert(Y);
 
-    Tensor<1, dim> gradient = Y_inverse * projected_gradient;
+    Tensor<1, dim> gradient= Y_inverse * projected_gradient;
 
     // The last part of this function is the one where we write into
     // the element of the output vector what we have just

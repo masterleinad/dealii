@@ -30,9 +30,9 @@ main()
 
   {
     SymmetricTensor<2, 2> t;
-    t[0][0] = 1.23456;
-    t[0][1] = 7.87965;
-    t[1][1] = 3.35792;
+    t[0][0]= 1.23456;
+    t[0][1]= 7.87965;
+    t[1][1]= 3.35792;
     AssertThrow(7 * t == 7.0 * t, ExcInternalError());
     AssertThrow(t * 7 == t * 7.0, ExcInternalError());
     AssertThrow(t * 7 == 7 * t, ExcInternalError());

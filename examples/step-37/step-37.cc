@@ -70,8 +70,8 @@ namespace Step37
   // that are likely (say, between 1 and 6) and selecting the appropriate
   // kernel at run time. Here, we simply choose second order $Q_2$ elements
   // and choose dimension 3 as standard.
-  const unsigned int degree_finite_element = 2;
-  const unsigned int dimension             = 3;
+  const unsigned int degree_finite_element= 2;
+  const unsigned int dimension            = 3;
 
   // @sect3{Equation data}
 
@@ -90,16 +90,16 @@ namespace Step37
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     template <typename number>
     number
-    value(const Point<dim, number>& p, const unsigned int component = 0) const;
+    value(const Point<dim, number>& p, const unsigned int component= 0) const;
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
                std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               const unsigned int             component= 0) const override;
   };
 
   // This is the new function mentioned above: Evaluate the coefficient for
@@ -150,9 +150,9 @@ namespace Step37
            ExcDimensionMismatch(values.size(), points.size()));
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    const unsigned int n_points = points.size();
-    for(unsigned int i = 0; i < n_points; ++i)
-      values[i] = value<double>(points[i], component);
+    const unsigned int n_points= points.size();
+    for(unsigned int i= 0; i < n_points; ++i)
+      values[i]= value<double>(points[i], component);
   }
 
   // @sect3{Matrix-free implementation}
@@ -303,14 +303,14 @@ namespace Step37
   LaplaceOperator<dim, fe_degree, number>::evaluate_coefficient(
     const Coefficient<dim>& coefficient_function)
   {
-    const unsigned int n_cells = this->data->n_macro_cells();
+    const unsigned int n_cells= this->data->n_macro_cells();
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(*this->data);
 
     coefficient.reinit(n_cells, phi.n_q_points);
-    for(unsigned int cell = 0; cell < n_cells; ++cell)
+    for(unsigned int cell= 0; cell < n_cells; ++cell)
       {
         phi.reinit(cell);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for(unsigned int q= 0; q < phi.n_q_points; ++q)
           coefficient(cell, q)
             = coefficient_function.value(phi.quadrature_point(q));
       }
@@ -417,7 +417,7 @@ namespace Step37
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         AssertDimension(coefficient.size(0), data.n_macro_cells());
         AssertDimension(coefficient.size(1), phi.n_q_points);
@@ -425,7 +425,7 @@ namespace Step37
         phi.reinit(cell);
         phi.read_dof_values(src);
         phi.evaluate(false, true);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for(unsigned int q= 0; q < phi.n_q_points; ++q)
           phi.submit_gradient(coefficient(cell, q) * phi.get_gradient(q), q);
         phi.integrate(false, true);
         phi.distribute_local_to_global(dst);
@@ -559,13 +559,13 @@ namespace Step37
     LinearAlgebra::distributed::Vector<number>& inverse_diagonal
       = this->inverse_diagonal_entries->get_vector();
     this->data->initialize_dof_vector(inverse_diagonal);
-    unsigned int dummy = 0;
+    unsigned int dummy= 0;
     this->data->cell_loop(
       &LaplaceOperator::local_compute_diagonal, this, inverse_diagonal, dummy);
 
     this->set_constrained_entries_to_one(inverse_diagonal);
 
-    for(unsigned int i = 0; i < inverse_diagonal.local_size(); ++i)
+    for(unsigned int i= 0; i < inverse_diagonal.local_size(); ++i)
       {
         Assert(inverse_diagonal.local_element(i) > 0.,
                ExcMessage("No diagonal entry in a positive definite operator "
@@ -633,26 +633,26 @@ namespace Step37
 
     AlignedVector<VectorizedArray<number>> diagonal(phi.dofs_per_cell);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         AssertDimension(coefficient.size(0), data.n_macro_cells());
         AssertDimension(coefficient.size(1), phi.n_q_points);
 
         phi.reinit(cell);
-        for(unsigned int i = 0; i < phi.dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < phi.dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < phi.dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < phi.dofs_per_cell; ++j)
               phi.submit_dof_value(VectorizedArray<number>(), j);
             phi.submit_dof_value(make_vectorized_array<number>(1.), i);
 
             phi.evaluate(false, true);
-            for(unsigned int q = 0; q < phi.n_q_points; ++q)
+            for(unsigned int q= 0; q < phi.n_q_points; ++q)
               phi.submit_gradient(coefficient(cell, q) * phi.get_gradient(q),
                                   q);
             phi.integrate(false, true);
-            diagonal[i] = phi.get_dof_value(i);
+            diagonal[i]= phi.get_dof_value(i);
           }
-        for(unsigned int i = 0; i < phi.dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < phi.dofs_per_cell; ++i)
           phi.submit_dof_value(diagonal[i], i);
         phi.distribute_local_to_global(dst);
       }
@@ -792,7 +792,7 @@ namespace Step37
   LaplaceProblem<dim>::setup_system()
   {
     Timer time;
-    setup_time = 0;
+    setup_time= 0;
 
     system_matrix.clear();
     mg_matrices.clear_elements();
@@ -812,7 +812,7 @@ namespace Step37
     VectorTools::interpolate_boundary_values(
       dof_handler, 0, Functions::ZeroFunction<dim>(), constraints);
     constraints.close();
-    setup_time += time.wall_time();
+    setup_time+= time.wall_time();
     time_details << "Distribute DoFs & B.C.     (CPU/wall) " << time.cpu_time()
                  << "s/" << time.wall_time() << "s" << std::endl;
     time.restart();
@@ -835,7 +835,7 @@ namespace Step37
     system_matrix.initialize_dof_vector(solution);
     system_matrix.initialize_dof_vector(system_rhs);
 
-    setup_time += time.wall_time();
+    setup_time+= time.wall_time();
     time_details << "Setup matrix-free system   (CPU/wall) " << time.cpu_time()
                  << "s/" << time.wall_time() << "s" << std::endl;
     time.restart();
@@ -849,7 +849,7 @@ namespace Step37
     // closely the construction of the system matrix on the original mesh,
     // except the slight difference in naming when accessing information on
     // the levels rather than the active cells.
-    const unsigned int nlevels = triangulation.n_global_levels();
+    const unsigned int nlevels= triangulation.n_global_levels();
     mg_matrices.resize(0, nlevels - 1);
 
     std::set<types::boundary_id> dirichlet_boundary;
@@ -858,7 +858,7 @@ namespace Step37
     mg_constrained_dofs.make_zero_boundary_constraints(dof_handler,
                                                        dirichlet_boundary);
 
-    for(unsigned int level = 0; level < nlevels; ++level)
+    for(unsigned int level= 0; level < nlevels; ++level)
       {
         IndexSet relevant_dofs;
         DoFTools::extract_locally_relevant_level_dofs(
@@ -874,7 +874,7 @@ namespace Step37
           = MatrixFree<dim, float>::AdditionalData::none;
         additional_data.mapping_update_flags
           = (update_gradients | update_JxW_values | update_quadrature_points);
-        additional_data.level_mg_handler = level;
+        additional_data.level_mg_handler= level;
         std::shared_ptr<MatrixFree<dim, float>> mg_mf_storage_level(
           new MatrixFree<dim, float>());
         mg_mf_storage_level->reinit(dof_handler,
@@ -886,7 +886,7 @@ namespace Step37
           mg_mf_storage_level, mg_constrained_dofs, level);
         mg_matrices[level].evaluate_coefficient(Coefficient<dim>());
       }
-    setup_time += time.wall_time();
+    setup_time+= time.wall_time();
     time_details << "Setup matrix-free levels   (CPU/wall) " << time.cpu_time()
                  << "s/" << time.wall_time() << "s" << std::endl;
   }
@@ -907,22 +907,22 @@ namespace Step37
   {
     Timer time;
 
-    system_rhs = 0;
+    system_rhs= 0;
     FEEvaluation<dim, degree_finite_element> phi(
       *system_matrix.get_matrix_free());
-    for(unsigned int cell = 0;
+    for(unsigned int cell= 0;
         cell < system_matrix.get_matrix_free()->n_macro_cells();
         ++cell)
       {
         phi.reinit(cell);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for(unsigned int q= 0; q < phi.n_q_points; ++q)
           phi.submit_value(make_vectorized_array<double>(1.0), q);
         phi.integrate(true, false);
         phi.distribute_local_to_global(system_rhs);
       }
     system_rhs.compress(VectorOperation::add);
 
-    setup_time += time.wall_time();
+    setup_time+= time.wall_time();
     time_details << "Assemble right hand side   (CPU/wall) " << time.cpu_time()
                  << "s/" << time.wall_time() << "s" << std::endl;
   }
@@ -941,7 +941,7 @@ namespace Step37
     Timer                            time;
     MGTransferMatrixFree<dim, float> mg_transfer(mg_constrained_dofs);
     mg_transfer.build(dof_handler);
-    setup_time += time.wall_time();
+    setup_time+= time.wall_time();
     time_details << "MG build transfer time     (CPU/wall) " << time.cpu_time()
                  << "s/" << time.wall_time() << "s\n";
     time.restart();
@@ -997,20 +997,19 @@ namespace Step37
                                                          mg_smoother;
     MGLevelObject<typename SmootherType::AdditionalData> smoother_data;
     smoother_data.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for(unsigned int level= 0; level < triangulation.n_global_levels(); ++level)
       {
         if(level > 0)
           {
-            smoother_data[level].smoothing_range     = 15.;
-            smoother_data[level].degree              = 4;
-            smoother_data[level].eig_cg_n_iterations = 10;
+            smoother_data[level].smoothing_range    = 15.;
+            smoother_data[level].degree             = 4;
+            smoother_data[level].eig_cg_n_iterations= 10;
           }
         else
           {
-            smoother_data[0].smoothing_range = 1e-3;
-            smoother_data[0].degree          = numbers::invalid_unsigned_int;
-            smoother_data[0].eig_cg_n_iterations = mg_matrices[0].m();
+            smoother_data[0].smoothing_range    = 1e-3;
+            smoother_data[0].degree             = numbers::invalid_unsigned_int;
+            smoother_data[0].eig_cg_n_iterations= mg_matrices[0].m();
           }
         mg_matrices[level].compute_diagonal();
         smoother_data[level].preconditioner
@@ -1058,8 +1057,7 @@ namespace Step37
     MGLevelObject<MatrixFreeOperators::MGInterfaceOperator<LevelMatrixType>>
       mg_interface_matrices;
     mg_interface_matrices.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for(unsigned int level= 0; level < triangulation.n_global_levels(); ++level)
       mg_interface_matrices[level].initialize(mg_matrices[level]);
     mg::Matrix<LinearAlgebra::distributed::Vector<float>> mg_interface(
       mg_interface_matrices);
@@ -1083,7 +1081,7 @@ namespace Step37
 
     SolverControl solver_control(100, 1e-12 * system_rhs.l2_norm());
     SolverCG<LinearAlgebra::distributed::Vector<double>> cg(solver_control);
-    setup_time += time.wall_time();
+    setup_time+= time.wall_time();
     time_details << "MG build smoother time     (CPU/wall) " << time.cpu_time()
                  << "s/" << time.wall_time() << "s\n";
     pcout << "Total setup time               (wall) " << setup_time << "s\n";
@@ -1131,7 +1129,7 @@ namespace Step37
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
+        for(unsigned int i= 0;
             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
             ++i)
           filenames.emplace_back("solution-" + std::to_string(cycle) + "."
@@ -1159,7 +1157,7 @@ namespace Step37
     {
       const unsigned int n_vect_doubles
         = VectorizedArray<double>::n_array_elements;
-      const unsigned int n_vect_bits = 8 * sizeof(double) * n_vect_doubles;
+      const unsigned int n_vect_bits= 8 * sizeof(double) * n_vect_doubles;
 
       pcout << "Vectorization over " << n_vect_doubles
             << " doubles = " << n_vect_bits << " bits ("
@@ -1168,7 +1166,7 @@ namespace Step37
             << std::endl;
     }
 
-    for(unsigned int cycle = 0; cycle < 9 - dim; ++cycle)
+    for(unsigned int cycle= 0; cycle < 9 - dim; ++cycle)
       {
         pcout << "Cycle " << cycle << std::endl;
 

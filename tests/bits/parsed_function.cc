@@ -39,24 +39,24 @@ Test()
   tria.refine_global(3);
 
   // Vertices
-  const std::vector<Point<dim>>& vertices = tria.get_vertices();
+  const std::vector<Point<dim>>& vertices= tria.get_vertices();
 
   // Test vector declaration
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      std::string id = "Function " + Utilities::int_to_string(dim) + " - "
-                       + Utilities::int_to_string(i);
+      std::string id= "Function " + Utilities::int_to_string(dim) + " - "
+                      + Utilities::int_to_string(i);
       prm.enter_subsection(id);
 
       Functions::ParsedFunction<dim>::declare_parameters(prm, i + 1);
       prm.set("Function constants", "f=" + Utilities::int_to_string(i + 1));
 
       // It is cos(pi f x_i) *t^i, numbering from zero
-      std::string expr = "cos(pi*f*x)*t";
+      std::string expr= "cos(pi*f*x)*t";
       if(i > 0)
-        expr += "; cos(pi*f*y)*t";
+        expr+= "; cos(pi*f*y)*t";
       if(i > 1)
-        expr += "; cos(pi*f*z)*t";
+        expr+= "; cos(pi*f*z)*t";
 
       prm.set("Function expression", expr);
 
@@ -66,17 +66,17 @@ Test()
       prm.leave_subsection();
 
       // Now test the difference from t=0 to t=1
-      for(double t = 0.; t < 1; t += .1)
+      for(double t= 0.; t < 1; t+= .1)
         {
           function.set_time(t);
           Point<dim>                  p;
           std::vector<Vector<double>> values(vertices.size(),
                                              Vector<double>(i + 1));
           function.vector_value_list(vertices, values);
-          for(unsigned int j = 0; j < vertices.size(); ++j)
+          for(unsigned int j= 0; j < vertices.size(); ++j)
             {
-              double delta = 0.;
-              for(unsigned int di = 0; di < i; ++di)
+              double delta= 0.;
+              for(unsigned int di= 0; di < i; ++di)
                 {
                   delta
                     = values[j](di)

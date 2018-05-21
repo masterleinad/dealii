@@ -60,7 +60,7 @@ private:
   count_on_refine(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
-    n_active_cells += cell->n_children();
+    n_active_cells+= cell->n_children();
     --n_active_cells;
 
     return;
@@ -71,7 +71,7 @@ private:
     const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
     ++n_active_cells;
-    n_active_cells -= cell->n_children();
+    n_active_cells-= cell->n_children();
 
     return;
   }
@@ -87,8 +87,8 @@ test()
   typedef parallel::distributed::Triangulation<dim, spacedim> TriaType;
 
   {
-    const std::string prefix = Utilities::int_to_string(dim, 1) + "d-"
-                               + Utilities::int_to_string(spacedim, 1) + "d";
+    const std::string prefix= Utilities::int_to_string(dim, 1) + "d-"
+                              + Utilities::int_to_string(spacedim, 1) + "d";
     deallog.push(prefix.c_str());
   }
 
@@ -99,26 +99,26 @@ test()
     Point<dim>                p1;
     Point<dim>                p2;
 
-    for(unsigned int d = 0; d < dim; ++d)
+    for(unsigned int d= 0; d < dim; ++d)
       {
         repetitions.push_back(2);
-        p1[d] = 0.0;
-        p2[d] = 1.0;
+        p1[d]= 0.0;
+        p2[d]= 1.0;
       }
     GridGenerator::subdivided_hyper_rectangle(tria, repetitions, p1, p2);
   }
 
   SignalListener<dim, spacedim> count_cell_via_signal(tria);
 
-  for(unsigned int n_loop = 1; n_loop < 5; ++n_loop)
+  for(unsigned int n_loop= 1; n_loop < 5; ++n_loop)
     {
       {
         Point<dim> p;
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           {
-            p[d] = 0.5 - std::pow(0.5, 1.0 + n_loop);
+            p[d]= 0.5 - std::pow(0.5, 1.0 + n_loop);
           }
-        typename TriaType::active_cell_iterator cell = tria.begin_active();
+        typename TriaType::active_cell_iterator cell= tria.begin_active();
         for(; cell != tria.end(); ++cell)
           if(cell->is_locally_owned() && ((cell->center()).distance(p) < 1e-4))
             {
@@ -146,8 +146,8 @@ main(int argc, char* argv[])
 
   // parallel::distributed::Triangulation<1, spacedim> is not valid.
   {
-    const int dim      = 2;
-    const int spacedim = 2;
+    const int dim     = 2;
+    const int spacedim= 2;
     test<dim, spacedim>();
   }
 
@@ -155,8 +155,8 @@ main(int argc, char* argv[])
   // parallel::distributed::Triangulation<2, 3>.
 
   {
-    const int dim      = 3;
-    const int spacedim = 3;
+    const int dim     = 3;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 

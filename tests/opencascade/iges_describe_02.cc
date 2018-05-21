@@ -31,7 +31,7 @@ main()
   std::ofstream logfile("output");
   deallog.attach(logfile);
 
-  TopoDS_Shape sh = read_IGES(SOURCE_DIR "/iges_files/goteborg.iges");
+  TopoDS_Shape sh= read_IGES(SOURCE_DIR "/iges_files/goteborg.iges");
   std::vector<TopoDS_Compound>  compounds;
   std::vector<TopoDS_CompSolid> compsolids;
   std::vector<TopoDS_Solid>     solids;

@@ -19,7 +19,7 @@
 // these tests check that we can deal with FESystem(FE_Q(p),FE_DGQ(q)) for
 // different p,q
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../hp/hp_constraints_common.h"
 
@@ -28,8 +28,8 @@ void
 test()
 {
   hp::FECollection<dim> fe;
-  for(unsigned int i = 1; i < 4; ++i)
-    for(unsigned int j = 0; j < 4; ++j)
+  for(unsigned int i= 1; i < 4; ++i)
+    for(unsigned int j= 0; j < 4; ++j)
       fe.push_back(FESystem<dim>(FE_Q<dim>(i), 1, FE_DGQ<dim>(j), 1));
 
   test_with_hanging_nodes_random_aniso(fe);

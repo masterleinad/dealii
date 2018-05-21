@@ -50,9 +50,9 @@ FE_BDM<dim>::FE_BDM(const unsigned int deg)
     ExcMessage(
       "Lowest order BDM element are degree 1, but you asked for degree 0"));
 
-  const unsigned int n_dofs = this->dofs_per_cell;
+  const unsigned int n_dofs= this->dofs_per_cell;
 
-  this->mapping_type = mapping_bdm;
+  this->mapping_type= mapping_bdm;
   // These must be done first, since
   // they change the evaluation of
   // basis functions
@@ -64,7 +64,7 @@ FE_BDM<dim>::FE_BDM(const unsigned int deg)
   // Now compute the inverse node matrix, generating the correct
   // basis functions from the raw ones. For a discussion of what
   // exactly happens here, see FETools::compute_node_matrix.
-  const FullMatrix<double> M = FETools::compute_node_matrix(*this);
+  const FullMatrix<double> M= FETools::compute_node_matrix(*this);
   this->inverse_node_matrix.reinit(n_dofs, n_dofs);
   this->inverse_node_matrix.invert(M);
   // From now on, the shape functions provided by FiniteElement::shape_value
@@ -77,17 +77,17 @@ FE_BDM<dim>::FE_BDM(const unsigned int deg)
   FETools::compute_embedding_matrices(*this, this->prolongation, true, 1.);
 
   FullMatrix<double> face_embeddings[GeometryInfo<dim>::max_children_per_face];
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
     face_embeddings[i].reinit(this->dofs_per_face, this->dofs_per_face);
   FETools::compute_face_embedding_matrices(*this, face_embeddings, 0, 0, 1.);
   this->interface_constraints.reinit((1 << (dim - 1)) * this->dofs_per_face,
                                      this->dofs_per_face);
-  unsigned int target_row = 0;
-  for(unsigned int d = 0; d < GeometryInfo<dim>::max_children_per_face; ++d)
-    for(unsigned int i = 0; i < face_embeddings[d].m(); ++i)
+  unsigned int target_row= 0;
+  for(unsigned int d= 0; d < GeometryInfo<dim>::max_children_per_face; ++d)
+    for(unsigned int i= 0; i < face_embeddings[d].m(); ++i)
       {
-        for(unsigned int j = 0; j < face_embeddings[d].n(); ++j)
-          this->interface_constraints(target_row, j) = face_embeddings[d](i, j);
+        for(unsigned int j= 0; j < face_embeddings[d].n(); ++j)
+          this->interface_constraints(target_row, j)= face_embeddings[d](i, j);
         ++target_row;
       }
 }
@@ -137,34 +137,34 @@ FE_BDM<dim>::convert_generalized_support_point_values_to_dof_values(
   // depends on the face direction and orientation.
 
   // The index of the first dof on this face or the cell
-  unsigned int dbase = 0;
+  unsigned int dbase= 0;
   // The index of the first generalized support point on this face or the cell
-  unsigned int pbase = 0;
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  unsigned int pbase= 0;
+  for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     {
       // Old version with no moments in 2D. See comment below in
       // initialize_support_points()
       if(test_values_face.size() == 0)
         {
-          for(unsigned int i = 0; i < this->dofs_per_face; ++i)
-            nodal_values[dbase + i] = support_point_values
+          for(unsigned int i= 0; i < this->dofs_per_face; ++i)
+            nodal_values[dbase + i]= support_point_values
               [pbase + i][GeometryInfo<dim>::unit_normal_direction[f]];
-          pbase += this->dofs_per_face;
+          pbase+= this->dofs_per_face;
         }
       else
         {
-          for(unsigned int i = 0; i < this->dofs_per_face; ++i)
+          for(unsigned int i= 0; i < this->dofs_per_face; ++i)
             {
-              double s = 0.;
-              for(unsigned int k = 0; k < test_values_face.size(); ++k)
-                s += support_point_values
-                       [pbase + k][GeometryInfo<dim>::unit_normal_direction[f]]
-                     * test_values_face[k][i];
-              nodal_values[dbase + i] = s;
+              double s= 0.;
+              for(unsigned int k= 0; k < test_values_face.size(); ++k)
+                s+= support_point_values
+                      [pbase + k][GeometryInfo<dim>::unit_normal_direction[f]]
+                    * test_values_face[k][i];
+              nodal_values[dbase + i]= s;
             }
-          pbase += test_values_face.size();
+          pbase+= test_values_face.size();
         }
-      dbase += this->dofs_per_face;
+      dbase+= this->dofs_per_face;
     }
 
   AssertDimension(dbase,
@@ -182,14 +182,14 @@ FE_BDM<dim>::convert_generalized_support_point_values_to_dof_values(
   // the solution.
   Assert((this->dofs_per_cell - dbase) % dim == 0, ExcInternalError());
 
-  for(unsigned int d = 0; d < dim; ++d, dbase += test_values_cell[0].size())
+  for(unsigned int d= 0; d < dim; ++d, dbase+= test_values_cell[0].size())
     {
-      for(unsigned int i = 0; i < test_values_cell[0].size(); ++i)
+      for(unsigned int i= 0; i < test_values_cell[0].size(); ++i)
         {
-          double s = 0.;
-          for(unsigned int k = 0; k < test_values_cell.size(); ++k)
-            s += support_point_values[pbase + k][d] * test_values_cell[k][i];
-          nodal_values[dbase + i] = s;
+          double s= 0.;
+          for(unsigned int k= 0; k < test_values_cell.size(); ++k)
+            s+= support_point_values[pbase + k][d] * test_values_cell[k][i];
+          nodal_values[dbase + i]= s;
         }
     }
 
@@ -213,7 +213,7 @@ FE_BDM<dim>::get_dpo_vector(const unsigned int deg)
   std::vector<unsigned int> dpo(dim + 1, 0u);
   dpo[dim]
     = (deg > 1 ? dim * PolynomialSpace<dim>::compute_n_pols(deg - 1) : 0u);
-  dpo[dim - 1] = PolynomialSpace<dim - 1>::compute_n_pols(deg + 1);
+  dpo[dim - 1]= PolynomialSpace<dim - 1>::compute_n_pols(deg + 1);
 
   return dpo;
 }
@@ -228,7 +228,7 @@ FE_BDM<dim>::get_ria_vector(const unsigned int deg)
       return std::vector<bool>();
     }
 
-  const unsigned int dofs_per_cell = PolynomialsBDM<dim>::compute_n_pols(deg);
+  const unsigned int dofs_per_cell= PolynomialsBDM<dim>::compute_n_pols(deg);
   const unsigned int dofs_per_face
     = PolynomialSpace<dim - 1>::compute_n_pols(deg + 1);
 
@@ -241,10 +241,10 @@ FE_BDM<dim>::get_ria_vector(const unsigned int deg)
   // however, the interior dofs are
   // made additive
   std::vector<bool> ret_val(dofs_per_cell, false);
-  for(unsigned int i = GeometryInfo<dim>::faces_per_cell * dofs_per_face;
+  for(unsigned int i= GeometryInfo<dim>::faces_per_cell * dofs_per_face;
       i < dofs_per_cell;
       ++i)
-    ret_val[i] = true;
+    ret_val[i]= true;
 
   return ret_val;
 }
@@ -274,7 +274,7 @@ namespace internal
 
         test_values.resize(quadrature.size());
 
-        for(unsigned int k = 0; k < quadrature.size(); ++k)
+        for(unsigned int k= 0; k < quadrature.size(); ++k)
           {
             test_values[k].resize(poly.n());
             poly.compute(quadrature.point(k),
@@ -283,9 +283,9 @@ namespace internal
                          dummy2,
                          dummy3,
                          dummy4);
-            for(unsigned int i = 0; i < poly.n(); ++i)
+            for(unsigned int i= 0; i < poly.n(); ++i)
               {
-                test_values[k][i] *= quadrature.weight(k);
+                test_values[k][i]*= quadrature.weight(k);
               }
           }
       }
@@ -316,8 +316,8 @@ FE_BDM<dim>::initialize_support_points(const unsigned int deg)
 
   // Copy the quadrature formula to the face points.
   this->generalized_face_support_points.resize(face_points.size());
-  for(unsigned int k = 0; k < face_points.size(); ++k)
-    this->generalized_face_support_points[k] = face_points.point(k);
+  for(unsigned int k= 0; k < face_points.size(); ++k)
+    this->generalized_face_support_points[k]= face_points.point(k);
 
   // In the interior, we only test with polynomials of degree up to
   // deg-2, thus we use deg points. Note that deg>=1 and the lowest
@@ -332,8 +332,8 @@ FE_BDM<dim>::initialize_support_points(const unsigned int deg)
 
   this->generalized_support_points.resize(npoints);
 
-  Quadrature<dim> faces = QProjector<dim>::project_to_all_faces(face_points);
-  for(unsigned int k = 0;
+  Quadrature<dim> faces= QProjector<dim>::project_to_all_faces(face_points);
+  for(unsigned int k= 0;
       k < face_points.size() * GeometryInfo<dim>::faces_per_cell;
       ++k)
     this->generalized_support_points[k]
@@ -354,9 +354,9 @@ FE_BDM<dim>::initialize_support_points(const unsigned int deg)
   // Remember where interior points start
   const unsigned int ibase
     = face_points.size() * GeometryInfo<dim>::faces_per_cell;
-  for(unsigned int k = 0; k < cell_points.size(); ++k)
+  for(unsigned int k= 0; k < cell_points.size(); ++k)
     {
-      this->generalized_support_points[ibase + k] = cell_points.point(k);
+      this->generalized_support_points[ibase + k]= cell_points.point(k);
     }
   // Finally, compute the values of
   // the test functions in the

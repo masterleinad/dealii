@@ -31,17 +31,17 @@ template <int dim, int spacedim>
 void
 test()
 {
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream& out= deallog.get_file_stream();
 
   out << "# dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
   Triangulation<dim, spacedim> triangulation;
 
   Point<spacedim> center;
-  center[0] = 1.5;
-  center[1] = 2.5;
+  center[0]= 1.5;
+  center[1]= 2.5;
 
-  double radius = 1.0;
+  double radius= 1.0;
 
   static const PolarManifold<dim, spacedim> manifold(center);
   GridGenerator::hyper_ball(triangulation, center, radius);
@@ -64,11 +64,11 @@ test()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
-        const double xc = cell->face(f)->center()[0] - 1.5;
-        const double yc = cell->face(f)->center()[1] - 2.5;
-        const double rc = xc * xc + yc * yc;
+        const double xc= cell->face(f)->center()[0] - 1.5;
+        const double yc= cell->face(f)->center()[1] - 2.5;
+        const double rc= xc * xc + yc * yc;
 
         if(cell->face(f)->at_boundary() && rc > 0.1)
           {
@@ -77,7 +77,7 @@ test()
               = fe_v.get_quadrature_points();
             const std::vector<Tensor<1, spacedim>>& nps
               = fe_v.get_normal_vectors();
-            for(unsigned int i = 0; i < qps.size(); ++i)
+            for(unsigned int i= 0; i < qps.size(); ++i)
               {
                 out << qps[i] << std::endl;
                 if(std::abs(qps[i].distance(center) - radius) > 1e-10)
@@ -98,11 +98,11 @@ test()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
-        const double xc = cell->face(f)->center()[0] - 1.5;
-        const double yc = cell->face(f)->center()[1] - 2.5;
-        const double rc = xc * xc + yc * yc;
+        const double xc= cell->face(f)->center()[0] - 1.5;
+        const double yc= cell->face(f)->center()[1] - 2.5;
+        const double rc= xc * xc + yc * yc;
 
         if(cell->face(f)->at_boundary() && rc > 0.1)
           {
@@ -111,7 +111,7 @@ test()
               = fe_v.get_quadrature_points();
             const std::vector<Tensor<1, spacedim>>& nps
               = fe_v.get_normal_vectors();
-            for(unsigned int i = 0; i < qps.size(); ++i)
+            for(unsigned int i= 0; i < qps.size(); ++i)
               {
                 out << qps[i] << " " << nps[i] << std::endl;
                 if(std::abs((center + nps[i] - qps[i]).norm()) > 1e-10)

@@ -34,7 +34,7 @@ test()
   // attach a sparse matrix to it
   TrilinosWrappers::SparseMatrix A(sparsity);
 
-  TrilinosWrappers::SparseMatrix::iterator k = A.begin(), j = ++A.begin();
+  TrilinosWrappers::SparseMatrix::iterator k= A.begin(), j= ++A.begin();
 
   AssertThrow(k < j, ExcInternalError());
   AssertThrow(j > k, ExcInternalError());

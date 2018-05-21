@@ -43,15 +43,15 @@ main()
   initlog();
 
   {
-    FESystem<2> fe = {FE_Q<2>(1) ^ 2, FE_Q<2>(1) ^ 1};
+    FESystem<2> fe= {FE_Q<2>(1) ^ 2, FE_Q<2>(1) ^ 1};
     check<2>(fe);
   }
   {
-    FESystem<2> fe = {FE_Q<2>(1) ^ 2, FE_DGQ<2>(2) ^ 0, FE_Q<2>(1) ^ 1};
+    FESystem<2> fe= {FE_Q<2>(1) ^ 2, FE_DGQ<2>(2) ^ 0, FE_Q<2>(1) ^ 1};
     check<2>(fe);
   }
   {
-    FESystem<2> fe = {FESystem<2>(FE_Q<2>(1) ^ 2) ^ 1, FE_Q<2>(1) ^ 1};
+    FESystem<2> fe= {FESystem<2>(FE_Q<2>(1) ^ 2) ^ 1, FE_Q<2>(1) ^ 1};
     check<2>(fe);
   }
   {

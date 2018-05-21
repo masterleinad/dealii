@@ -46,12 +46,12 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
-  const double R0 = 6371000. - 2890000.;
-  const double R1 = 6371000. - 35000.;
+  const double R0= 6371000. - 2890000.;
+  const double R1= 6371000. - 35000.;
 
   GridGenerator::hyper_shell(tr, Point<dim>(), R0, R1, 12, true);
   GridTools::copy_boundary_to_manifold_id(tr);
@@ -61,11 +61,10 @@ test()
   tr.set_manifold(1, boundary);
 
   tr.refine_global(1);
-  for(unsigned int step = 0; step < 20; ++step)
+  for(unsigned int step= 0; step < 20; ++step)
     {
-      typename Triangulation<dim>::active_cell_iterator cell
-        = tr.begin_active(),
-        endc = tr.end();
+      typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active(),
+                                                        endc= tr.end();
 
       for(; cell != endc; ++cell)
         if(Testing::rand() % 42 == 1)
@@ -80,7 +79,7 @@ test()
 
   dofh.distribute_dofs(fe);
 
-  IndexSet owned_set = dofh.locally_owned_dofs();
+  IndexSet owned_set= dofh.locally_owned_dofs();
 
   IndexSet dof_set;
   DoFTools::extract_locally_active_dofs(dofh, dof_set);
@@ -90,7 +89,7 @@ test()
 
   TrilinosWrappers::MPI::Vector x;
   x.reinit(owned_set, MPI_COMM_WORLD);
-  x = 2.0;
+  x= 2.0;
 
   TrilinosWrappers::MPI::Vector x_rel;
   x_rel.reinit(relevant_set, MPI_COMM_WORLD);
@@ -99,7 +98,7 @@ test()
   DoFTools::make_hanging_node_constraints(dofh, cm);
   std::vector<bool> velocity_mask(dim + 1, true);
 
-  velocity_mask[dim] = false;
+  velocity_mask[dim]= false;
 
   VectorTools::interpolate_boundary_values(
     dofh, 0, Functions::ZeroFunction<dim>(dim + 1), cm, velocity_mask);
@@ -113,7 +112,7 @@ test()
   cm.close();
 
   cm.distribute(x);
-  x_rel = x;
+  x_rel= x;
 
   TrilinosWrappers::MPI::Vector x_dub;
   x_dub.reinit(complete_index_set(dof_set.size()));

@@ -39,21 +39,21 @@ plot_derivatives(Mapping<dim>&       mapping,
   Triangulation<dim> tr;
   DoFHandler<dim>    dof(tr);
   GridGenerator::hyper_cube(tr);
-  typename DoFHandler<dim>::cell_iterator c = dof.begin();
+  typename DoFHandler<dim>::cell_iterator c= dof.begin();
   dof.distribute_dofs(finel);
 
   QGauss<dim - 1> q(1);
   //  QIterated<dim> q(q_trapez, div);
   FEFaceValues<dim> fe(
     mapping, finel, q, UpdateFlags(update_gradients | update_hessians));
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
     {
       fe.reinit(c, face);
 
-      for(unsigned int k = 0; k < q.size(); ++k)
+      for(unsigned int k= 0; k < q.size(); ++k)
         {
           deallog << "Face " << face << " Point " << q.point(k) << std::endl;
-          for(unsigned int i = 0; i < finel.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < finel.dofs_per_cell; ++i)
             {
               deallog << "\tGrad " << fe.shape_grad(i, k);
               deallog << "\t2nd " << fe.shape_hessian(i, k);

@@ -294,7 +294,7 @@ public:
     vmult(VectorType& dst, const VectorType& src) const
     {
       B.vmult(dst, src);
-      dst *= (-sigma);
+      dst*= (-sigma);
       A.vmult_add(dst, src);
     }
 
@@ -305,7 +305,7 @@ public:
     Tvmult(VectorType& dst, const VectorType& src) const
     {
       B.Tvmult(dst, src);
-      dst *= (-sigma);
+      dst*= (-sigma);
       A.Tvmult_add(dst, src);
     }
 
@@ -325,11 +325,11 @@ public:
     const WhichEigenvalues eigenvalue_of_interest;
     const bool             symmetric;
     const int              mode;
-    AdditionalData(const unsigned int     number_of_arnoldi_vectors = 15,
+    AdditionalData(const unsigned int     number_of_arnoldi_vectors= 15,
                    const WhichEigenvalues eigenvalue_of_interest
                    = largest_magnitude,
-                   const bool symmetric = false,
-                   const int  mode      = 3);
+                   const bool symmetric= false,
+                   const int  mode     = 3);
   };
 
   /**
@@ -343,7 +343,7 @@ public:
    */
   PArpackSolver(SolverControl&        control,
                 const MPI_Comm&       mpi_communicator,
-                const AdditionalData& data = AdditionalData());
+                const AdditionalData& data= AdditionalData());
 
   /**
    * Initialize internal variables.
@@ -699,15 +699,15 @@ template <typename VectorType>
 void
 PArpackSolver<VectorType>::set_shift(const std::complex<double> sigma)
 {
-  sigmar = sigma.real();
-  sigmai = sigma.imag();
+  sigmar= sigma.real();
+  sigmai= sigma.imag();
 }
 
 template <typename VectorType>
 void
 PArpackSolver<VectorType>::set_initial_vector(const VectorType& vec)
 {
-  initial_vector_provided = true;
+  initial_vector_provided= true;
   Assert(resid.size() == local_indices.size(),
          ExcDimensionMismatch(resid.size(), local_indices.size()));
   vec.extract_subvector_to(
@@ -722,13 +722,13 @@ PArpackSolver<VectorType>::internal_reinit(const IndexSet& locally_owned_dofs)
   locally_owned_dofs.fill_index_vector(local_indices);
 
   // scalars
-  nloc = locally_owned_dofs.n_elements();
-  ncv  = additional_data.number_of_arnoldi_vectors;
+  nloc= locally_owned_dofs.n_elements();
+  ncv = additional_data.number_of_arnoldi_vectors;
 
   Assert((int) local_indices.size() == nloc, ExcInternalError());
 
   // vectors
-  ldv = nloc;
+  ldv= nloc;
   v.resize(ldv * ncv, 0.0);
 
   resid.resize(nloc, 1.0);
@@ -740,13 +740,13 @@ PArpackSolver<VectorType>::internal_reinit(const IndexSet& locally_owned_dofs)
     = additional_data.symmetric ? ncv * ncv + 8 * ncv : 3 * ncv * ncv + 6 * ncv;
   workl.resize(lworkl, 0.);
 
-  ldz = nloc;
+  ldz= nloc;
   z.resize(ldz * ncv, 0.); // TODO we actually need only ldz*nev
 
   // WORKEV  Double precision  work array of dimension 3*NCV.
-  lworkev = additional_data.symmetric ? 0 /*not used in symmetric case*/
-                                        :
-                                        3 * ncv;
+  lworkev= additional_data.symmetric ? 0 /*not used in symmetric case*/
+                                       :
+                                       3 * ncv;
   workev.resize(lworkev, 0.);
 
   select.resize(ncv, 0);
@@ -800,8 +800,8 @@ PArpackSolver<VectorType>::solve(const MatrixType1&                 A,
                                  const unsigned int       n_eigenvalues)
 {
   std::vector<VectorType*> eigenvectors_ptr(eigenvectors.size());
-  for(unsigned int i = 0; i < eigenvectors.size(); ++i)
-    eigenvectors_ptr[i] = &eigenvectors[i];
+  for(unsigned int i= 0; i < eigenvectors.size(); ++i)
+    eigenvectors_ptr[i]= &eigenvectors[i];
   solve(A, B, inverse, eigenvalues, eigenvectors_ptr, n_eigenvalues);
 }
 
@@ -843,17 +843,17 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
          PArpackExcSmallNumberofArnoldiVectors(
            additional_data.number_of_arnoldi_vectors, n_eigenvalues));
 
-  int mode = additional_data.mode;
+  int mode= additional_data.mode;
 
   // reverse communication parameter
   // must be zero on the first call to pdnaupd
-  int ido = 0;
+  int ido= 0;
 
   // 'G' generalized eigenvalue problem
   // 'I' standard eigenvalue problem
   char bmat[2];
-  bmat[0] = (mode == 1) ? 'I' : 'G';
-  bmat[1] = '\0';
+  bmat[0]= (mode == 1) ? 'I' : 'G';
+  bmat[1]= '\0';
 
   // Specify the eigenvalues of interest, possible parameters:
   // "LA" algebraically largest
@@ -898,19 +898,19 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
     }
 
   // tolerance for ARPACK
-  double tol = control().tolerance();
+  double tol= control().tolerance();
 
   //information to the routines
   std::vector<int> iparam(11, 0);
 
-  iparam[0] = 1;
+  iparam[0]= 1;
   // shift strategy: exact shifts with respect to the current Hessenberg matrix H.
 
   // maximum number of iterations
-  iparam[2] = control().max_steps();
+  iparam[2]= control().max_steps();
 
   // Parpack currently works only for NB = 1
-  iparam[3] = 1;
+  iparam[3]= 1;
 
   // Sets the mode of dsaupd:
   // 1 is A*x=lambda*x, OP = A, B = I
@@ -919,7 +919,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
   // 4 is buckling mode,
   // 5 is Cayley mode.
 
-  iparam[6] = mode;
+  iparam[6]= mode;
   std::vector<int> ipntr(14, 0);
 
   //information out of the iteration
@@ -928,11 +928,11 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
   //  possibly from a previous run.
   // Typical choices in this situation might be to use the final value
   // of the starting vector from the previous eigenvalue calculation
-  int info = initial_vector_provided ? 1 : 0;
+  int info= initial_vector_provided ? 1 : 0;
 
   // Number of eigenvalues of OP to be computed. 0 < NEV < N.
-  int nev             = n_eigenvalues;
-  int n_inside_arpack = nloc;
+  int nev            = n_eigenvalues;
+  int n_inside_arpack= nloc;
 
   // IDO = 99: done
   while(ido != 99)
@@ -983,14 +983,14 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
 
       // IPNTR(1) is the pointer into WORKD for X,
       // IPNTR(2) is the pointer into WORKD for Y.
-      const int shift_x = ipntr[0] - 1;
-      const int shift_y = ipntr[1] - 1;
+      const int shift_x= ipntr[0] - 1;
+      const int shift_y= ipntr[1] - 1;
       Assert(shift_x >= 0, dealii::ExcInternalError());
       Assert(shift_x + nloc <= (int) workd.size(), dealii::ExcInternalError());
       Assert(shift_y >= 0, dealii::ExcInternalError());
       Assert(shift_y + nloc <= (int) workd.size(), dealii::ExcInternalError());
 
-      src = 0.;
+      src= 0.;
 
       // switch based on both ido and mode
       if((ido == -1) || (ido == 1 && mode < 3))
@@ -1026,7 +1026,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
         // compute  Y = OP * X for mode 3, 4 and 5, where
         // the vector B * X is already available in WORKD(ipntr(3)).
         {
-          const int shift_b_x = ipntr[2] - 1;
+          const int shift_b_x= ipntr[2] - 1;
           Assert(shift_b_x >= 0, dealii::ExcInternalError());
           Assert(shift_b_x + nloc <= (int) workd.size(),
                  dealii::ExcInternalError());
@@ -1048,7 +1048,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
           // Multiplication with mass matrix M
           if(mode == 1)
             {
-              dst = src;
+              dst= src;
             }
           else
             // mode 2,3 and 5 have B=M
@@ -1068,10 +1068,10 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
 
   // 1 - compute eigenvectors,
   // 0 - only eigenvalues
-  int rvec = 1;
+  int rvec= 1;
 
   // which eigenvectors
-  char howmany[4] = "All";
+  char howmany[4]= "All";
 
   std::vector<double> eigenvalues_real(n_eigenvalues + 1, 0.);
   std::vector<double> eigenvalues_im(n_eigenvalues + 1, 0.);
@@ -1142,16 +1142,16 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
       AssertThrow(false, PArpackExcInfoPdneupd(info));
     }
 
-  for(int i = 0; i < nev; ++i)
+  for(int i= 0; i < nev; ++i)
     {
-      (*eigenvectors[i]) = 0.0;
+      (*eigenvectors[i])= 0.0;
       Assert(i * nloc + nloc <= (int) v.size(), dealii::ExcInternalError());
 
       eigenvectors[i]->add(nloc, local_indices.data(), &v[i * nloc]);
       eigenvectors[i]->compress(VectorOperation::add);
     }
 
-  for(size_type i = 0; i < n_eigenvalues; ++i)
+  for(size_type i= 0; i < n_eigenvalues; ++i)
     eigenvalues[i]
       = std::complex<double>(eigenvalues_real[i], eigenvalues_im[i]);
 
@@ -1164,7 +1164,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
 
   // resid likely contains residual with respect to M-norm.
   {
-    tmp = 0.0;
+    tmp= 0.0;
     tmp.add(nloc, local_indices.data(), resid.data());
     solver_control.check(iparam[2], tmp.l2_norm());
   }

@@ -54,7 +54,7 @@ public:
   void
   initialize(const MatrixType& matrix)
   {
-    coarse_matrix = &matrix;
+    coarse_matrix= &matrix;
   }
 
   virtual void
@@ -94,7 +94,7 @@ do_test(const DoFHandler<dim>& dof)
   // Dirichlet BC
   Functions::ZeroFunction<dim>    zero_function;
   typename FunctionMap<dim>::type dirichlet_boundary;
-  dirichlet_boundary[0] = &zero_function;
+  dirichlet_boundary[0]= &zero_function;
 
   // fine-level constraints
   ConstraintMatrix constraints;
@@ -136,7 +136,7 @@ do_test(const DoFHandler<dim>& dof)
   fine_matrix.initialize_dof_vector(sol);
 
   // set constant rhs vector
-  in = 1.;
+  in= 1.;
 
   // set up multigrid in analogy to step-37
   typedef LaplaceOperator<dim,
@@ -150,13 +150,13 @@ do_test(const DoFHandler<dim>& dof)
   MGLevelObject<MatrixFree<dim, number>> mg_level_data;
   mg_matrices.resize(0, dof.get_triangulation().n_global_levels() - 1);
   mg_level_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
+  for(unsigned int level= 0; level < dof.get_triangulation().n_global_levels();
       ++level)
     {
       typename MatrixFree<dim, number>::AdditionalData mg_additional_data;
       mg_additional_data.tasks_parallel_scheme
         = MatrixFree<dim, number>::AdditionalData::none;
-      mg_additional_data.level_mg_handler = level;
+      mg_additional_data.level_mg_handler= level;
 
       ConstraintMatrix level_constraints;
       IndexSet         relevant_dofs;
@@ -194,12 +194,12 @@ do_test(const DoFHandler<dim>& dof)
 
   MGLevelObject<typename SMOOTHER::AdditionalData> smoother_data;
   smoother_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
+  for(unsigned int level= 0; level < dof.get_triangulation().n_global_levels();
       ++level)
     {
-      smoother_data[level].smoothing_range     = 15.;
-      smoother_data[level].degree              = 5;
-      smoother_data[level].eig_cg_n_iterations = 15;
+      smoother_data[level].smoothing_range    = 15.;
+      smoother_data[level].degree             = 5;
+      smoother_data[level].eig_cg_n_iterations= 15;
       smoother_data[level].preconditioner
         = mg_matrices[level].get_matrix_diagonal_inverse();
     }
@@ -224,7 +224,7 @@ do_test(const DoFHandler<dim>& dof)
     deallog.pop();
 
   fine_matrix.clear();
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
+  for(unsigned int level= 0; level < dof.get_triangulation().n_global_levels();
       ++level)
     mg_matrices[level].clear();
 }
@@ -233,7 +233,7 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  for(unsigned int i = 5; i < 7; ++i)
+  for(unsigned int i= 5; i < 7; ++i)
     {
       parallel::distributed::Triangulation<dim> tria(
         MPI_COMM_WORLD,

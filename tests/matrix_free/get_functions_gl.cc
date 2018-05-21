@@ -33,10 +33,10 @@ test()
   const SphericalManifold<dim> manifold;
   Triangulation<dim>           tria;
   GridGenerator::hyper_ball(tria);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
@@ -64,12 +64,12 @@ test()
   Vector<number> solution(dof.n_dofs());
 
   // create vector with random entries
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     {
       if(constraints.is_constrained(i))
         continue;
-      const double entry = random_value<double>();
-      solution(i)        = entry;
+      const double entry= random_value<double>();
+      solution(i)       = entry;
     }
   constraints.distribute(solution);
 
@@ -78,8 +78,8 @@ test()
   const QGaussLobatto<1>                           quad(fe_degree + 1);
   MappingQ<dim>                                    mapping(2);
   typename MatrixFree<dim, number>::AdditionalData data;
-  data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-  data.mapping_update_flags  = update_gradients | update_hessians;
+  data.tasks_parallel_scheme= MatrixFree<dim, number>::AdditionalData::none;
+  data.mapping_update_flags = update_gradients | update_hessians;
   mf_data.reinit(mapping, dof, constraints, quad, data);
   MatrixFreeTest<dim, fe_degree, fe_degree + 1, number> mf(mf_data, mapping);
   mf.test_functions(solution);

@@ -41,21 +41,21 @@ namespace GeometricUtilities
       std::array<double, dim> scoord;
 
       // radius
-      scoord[0] = position.norm();
+      scoord[0]= position.norm();
       // azimuth angle \theta:
-      scoord[1] = std::atan2(position(1), position(0));
+      scoord[1]= std::atan2(position(1), position(0));
       // correct to [0,2*pi)
       if(scoord[1] < 0.0)
-        scoord[1] += 2.0 * numbers::PI;
+        scoord[1]+= 2.0 * numbers::PI;
 
       // polar angle \phi:
       if(dim == 3)
         {
           // acos returns the angle in the range [0,\pi]
           if(scoord[0] > std::numeric_limits<double>::min())
-            scoord[2] = std::acos(position(2) / scoord[0]);
+            scoord[2]= std::acos(position(2) / scoord[0]);
           else
-            scoord[2] = 0.0;
+            scoord[2]= 0.0;
         }
       return scoord;
     }
@@ -75,8 +75,8 @@ namespace GeometricUtilities
         {
           case 2:
             {
-              ccoord[0] = scoord[0] * std::cos(scoord[1]);
-              ccoord[1] = scoord[0] * std::sin(scoord[1]);
+              ccoord[0]= scoord[0] * std::cos(scoord[1]);
+              ccoord[1]= scoord[0] * std::sin(scoord[1]);
               break;
             }
           case 3:
@@ -84,9 +84,9 @@ namespace GeometricUtilities
               Assert(scoord[2] >= 0. && scoord[2] <= numbers::PI,
                      SphericalPolar(scoord[2]));
 
-              ccoord[0] = scoord[0] * std::sin(scoord[2]) * std::cos(scoord[1]);
-              ccoord[1] = scoord[0] * std::sin(scoord[2]) * std::sin(scoord[1]);
-              ccoord[2] = scoord[0] * std::cos(scoord[2]);
+              ccoord[0]= scoord[0] * std::sin(scoord[2]) * std::cos(scoord[1]);
+              ccoord[1]= scoord[0] * std::sin(scoord[2]) * std::sin(scoord[1]);
+              ccoord[2]= scoord[0] * std::cos(scoord[2]);
               break;
             }
           default:

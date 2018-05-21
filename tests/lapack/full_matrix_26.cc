@@ -24,27 +24,27 @@ void
 test(const unsigned int size)
 {
   AssertThrow(size > 2, ExcInternalError());
-  const unsigned int smaller = size - 2;
-  const unsigned int larger  = size + 3;
+  const unsigned int smaller= size - 2;
+  const unsigned int larger = size + 3;
 
   // initialise a first matrix with the standard constructor and fill
   // it with some numbers
   LAPACKFullMatrix<double> M(size, size);
 
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
-      M(i, j) = i + 2. * j;
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= 0; j < size; ++j)
+      M(i, j)= i + 2. * j;
 
   LAPACKFullMatrix<double> M1(M), M2(M);
 
   M1.grow_or_shrink(smaller);
-  for(unsigned int i = 0; i < smaller; ++i)
-    for(unsigned int j = 0; j < smaller; ++j)
+  for(unsigned int i= 0; i < smaller; ++i)
+    for(unsigned int j= 0; j < smaller; ++j)
       AssertThrow(M1(i, j) == M(i, j), ExcInternalError());
 
   M2.grow_or_shrink(larger);
-  for(unsigned int i = 0; i < larger; ++i)
-    for(unsigned int j = 0; j < larger; ++j)
+  for(unsigned int i= 0; i < larger; ++i)
+    for(unsigned int j= 0; j < larger; ++j)
       {
         if(i < size && j < size)
           {
@@ -62,7 +62,7 @@ test(const unsigned int size)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
 
   logfile.precision(3);

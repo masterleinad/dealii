@@ -46,12 +46,12 @@ run()
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
-      endc = triangulation.end();
+      endc= triangulation.end();
     for(; cell != endc; ++cell)
       {
         if(cell->is_locally_owned())
           {
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+            for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
                 ++face)
               {
                 if(cell->face(face)->at_boundary())

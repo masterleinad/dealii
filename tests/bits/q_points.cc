@@ -32,28 +32,28 @@
 
 void create_two_cubes(Triangulation<3>& coarse_grid)
 {
-  const Point<3>        points[6] = {Point<3>(0, 0, 0),
-                              Point<3>(1, 0, 0),
-                              Point<3>(1, 1, 0),
-                              Point<3>(0, 1, 0),
-                              Point<3>(2, 0, 0),
-                              Point<3>(2, 1, 0)};
+  const Point<3>        points[6]= {Point<3>(0, 0, 0),
+                             Point<3>(1, 0, 0),
+                             Point<3>(1, 1, 0),
+                             Point<3>(0, 1, 0),
+                             Point<3>(2, 0, 0),
+                             Point<3>(2, 1, 0)};
   std::vector<Point<3>> vertices;
-  for(unsigned int i = 0; i < 6; ++i)
+  for(unsigned int i= 0; i < 6; ++i)
     vertices.push_back(points[i]);
-  for(unsigned int i = 0; i < 6; ++i)
+  for(unsigned int i= 0; i < 6; ++i)
     vertices.push_back(points[i] + Point<3>(0, 0, -1));
 
   std::vector<CellData<3>> cells;
 
-  const unsigned int connectivity[2][4] = {{0, 1, 2, 3}, {1, 4, 5, 2}};
-  for(unsigned int i = 0; i < 2; ++i)
+  const unsigned int connectivity[2][4]= {{0, 1, 2, 3}, {1, 4, 5, 2}};
+  for(unsigned int i= 0; i < 2; ++i)
     {
       CellData<3> cell;
-      for(unsigned int j = 0; j < 4; ++j)
+      for(unsigned int j= 0; j < 4; ++j)
         {
-          cell.vertices[j]     = connectivity[i][j];
-          cell.vertices[j + 4] = connectivity[i][j] + 6;
+          cell.vertices[j]    = connectivity[i][j];
+          cell.vertices[j + 4]= connectivity[i][j] + 6;
         }
       cells.push_back(cell);
     }
@@ -77,13 +77,13 @@ void check(Triangulation<3>& tria)
   DoFHandler<3> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
-  for(DoFHandler<3>::cell_iterator cell = dof_handler.begin();
+  for(DoFHandler<3>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<3>::faces_per_cell; ++f)
       if(!cell->at_boundary(f))
         {
-          const unsigned int nn = cell->neighbor_of_neighbor(f);
+          const unsigned int nn= cell->neighbor_of_neighbor(f);
 
           // this test is about
           // properly oriented
@@ -98,7 +98,7 @@ void check(Triangulation<3>& tria)
 
           deallog << "Cell " << cell << ", face " << f << std::endl;
 
-          for(unsigned int q = 0; q < quadrature.size(); ++q)
+          for(unsigned int q= 0; q < quadrature.size(); ++q)
             {
               deallog << "  " << fe_face_values1.quadrature_point(q)
                       << std::endl;

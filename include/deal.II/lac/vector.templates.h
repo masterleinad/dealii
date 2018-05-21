@@ -50,7 +50,7 @@ Vector<Number>::Vector(const Vector<Number>& v)
   if(vec_size != 0)
     {
       allocate();
-      *this = v;
+      *this= v;
     }
 }
 
@@ -62,9 +62,9 @@ Vector<Number>::Vector(Vector<Number>&& v) noexcept
     values(std::move(v.values)),
     thread_loop_partitioner(std::move(v.thread_loop_partitioner))
 {
-  v.vec_size     = 0;
-  v.max_vec_size = 0;
-  v.values       = nullptr;
+  v.vec_size    = 0;
+  v.max_vec_size= 0;
+  v.values      = nullptr;
 }
 
 template <typename Number>
@@ -78,7 +78,7 @@ Vector<Number>::Vector(const Vector<OtherNumber>& v)
   if(vec_size != 0)
     {
       allocate();
-      *this = v;
+      *this= v;
     }
 }
 
@@ -99,29 +99,29 @@ namespace internal
       = VecScatterCreateToAll(v, &scatter_context, &sequential_vector);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = VecScatterBegin(
+    ierr= VecScatterBegin(
       scatter_context, v, sequential_vector, INSERT_VALUES, SCATTER_FORWARD);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
-    ierr = VecScatterEnd(
+    ierr= VecScatterEnd(
       scatter_context, v, sequential_vector, INSERT_VALUES, SCATTER_FORWARD);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     PetscScalar* start_ptr;
-    ierr = VecGetArray(sequential_vector, &start_ptr);
+    ierr= VecGetArray(sequential_vector, &start_ptr);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    const PETScWrappers::VectorBase::size_type v_size = v.size();
+    const PETScWrappers::VectorBase::size_type v_size= v.size();
     if(out.size() != v_size)
       out.reinit(v_size, true);
 
     internal::VectorOperations::copy(
       start_ptr, start_ptr + out.size(), out.begin());
-    ierr = VecRestoreArray(sequential_vector, &start_ptr);
+    ierr= VecRestoreArray(sequential_vector, &start_ptr);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = VecScatterDestroy(&scatter_context);
+    ierr= VecScatterDestroy(&scatter_context);
     AssertNothrow(ierr == 0, ExcPETScError(ierr));
-    ierr = VecDestroy(&sequential_vector);
+    ierr= VecDestroy(&sequential_vector);
     AssertNothrow(ierr == 0, ExcPETScError(ierr));
   }
 } // namespace internal
@@ -169,7 +169,7 @@ Vector<Number>::Vector(const TrilinosWrappers::MPI::Vector& v)
       // and copy it
       TrilinosScalar** start_ptr;
 
-      int ierr = localized_vector.trilinos_vector().ExtractView(&start_ptr);
+      int ierr= localized_vector.trilinos_vector().ExtractView(&start_ptr);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       std::copy(start_ptr[0], start_ptr[0] + vec_size, begin());
@@ -185,7 +185,7 @@ Vector<Number>::operator=(const Vector<Number>& v)
   if(PointerComparison::equal(this, &v))
     return *this;
 
-  thread_loop_partitioner = v.thread_loop_partitioner;
+  thread_loop_partitioner= v.thread_loop_partitioner;
   if(vec_size != v.vec_size)
     reinit(v, true);
 
@@ -206,13 +206,13 @@ Vector<Number>::operator=(Vector<Number>&& v) noexcept
 {
   Subscriptor::operator=(std::move(v));
 
-  vec_size                = v.vec_size;
-  max_vec_size            = v.max_vec_size;
-  values                  = std::move(v.values);
-  thread_loop_partitioner = std::move(v.thread_loop_partitioner);
+  vec_size               = v.vec_size;
+  max_vec_size           = v.max_vec_size;
+  values                 = std::move(v.values);
+  thread_loop_partitioner= std::move(v.thread_loop_partitioner);
 
-  v.vec_size     = 0;
-  v.max_vec_size = 0;
+  v.vec_size    = 0;
+  v.max_vec_size= 0;
 
   return *this;
 }
@@ -222,7 +222,7 @@ template <typename Number2>
 inline Vector<Number>&
 Vector<Number>::operator=(const Vector<Number2>& v)
 {
-  thread_loop_partitioner = v.thread_loop_partitioner;
+  thread_loop_partitioner= v.thread_loop_partitioner;
   if(vec_size != v.vec_size)
     reinit(v, true);
 
@@ -241,7 +241,7 @@ Vector<Number>::reinit(const size_type n, const bool omit_zeroing_entries)
   if(n == 0)
     {
       values.reset();
-      max_vec_size = vec_size = 0;
+      max_vec_size= vec_size= 0;
       thread_loop_partitioner
         = std::make_shared<parallel::internal::TBBPartitioner>();
       return;
@@ -249,13 +249,13 @@ Vector<Number>::reinit(const size_type n, const bool omit_zeroing_entries)
 
   if(n > max_vec_size)
     {
-      max_vec_size = n;
+      max_vec_size= n;
       allocate();
     }
 
   if(vec_size != n)
     {
-      vec_size = n;
+      vec_size= n;
 
       // only reset the partitioner if we actually expect a significant vector
       // size
@@ -266,7 +266,7 @@ Vector<Number>::reinit(const size_type n, const bool omit_zeroing_entries)
     }
 
   if(omit_zeroing_entries == false)
-    *this = Number();
+    *this= Number();
 }
 
 template <typename Number>
@@ -276,22 +276,22 @@ Vector<Number>::grow_or_shrink(const size_type n)
   if(n == 0)
     {
       values.reset();
-      max_vec_size = vec_size = 0;
+      max_vec_size= vec_size= 0;
       thread_loop_partitioner
         = std::make_shared<parallel::internal::TBBPartitioner>();
       return;
     }
 
-  const size_type s = std::min(vec_size, n);
+  const size_type s= std::min(vec_size, n);
   if(n > max_vec_size)
     {
-      max_vec_size = n;
+      max_vec_size= n;
       allocate(s);
     }
 
   if(vec_size != n)
     {
-      vec_size = n;
+      vec_size= n;
 
       // only reset the partitioner if we actually expect a significant vector
       // size
@@ -302,8 +302,8 @@ Vector<Number>::grow_or_shrink(const size_type n)
     }
 
   // pad with zeroes
-  for(size_type i = s; i < vec_size; ++i)
-    values[i] = Number();
+  for(size_type i= s; i < vec_size; ++i)
+    values[i]= Number();
 }
 
 template <typename Number>
@@ -312,23 +312,23 @@ void
 Vector<Number>::reinit(const Vector<Number2>& v,
                        const bool             omit_zeroing_entries)
 {
-  thread_loop_partitioner = v.thread_loop_partitioner;
+  thread_loop_partitioner= v.thread_loop_partitioner;
 
   if(v.vec_size == 0)
     {
       values.reset();
-      max_vec_size = vec_size = 0;
+      max_vec_size= vec_size= 0;
       return;
     }
 
   if(v.vec_size > max_vec_size)
     {
-      max_vec_size = v.vec_size;
+      max_vec_size= v.vec_size;
       allocate();
     }
-  vec_size = v.vec_size;
+  vec_size= v.vec_size;
   if(omit_zeroing_entries == false)
-    *this = Number();
+    *this= Number();
 }
 
 template <typename Number>
@@ -337,7 +337,7 @@ Vector<Number>::all_zero() const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
-  for(size_type i = 0; i < vec_size; ++i)
+  for(size_type i= 0; i < vec_size; ++i)
     if(values[i] != Number())
       return false;
   return true;
@@ -349,7 +349,7 @@ Vector<Number>::is_non_negative() const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
-  for(size_type i = 0; i < vec_size; ++i)
+  for(size_type i= 0; i < vec_size; ++i)
     if(!internal::VectorOperations::is_non_negative(values[i]))
       return false;
 
@@ -507,9 +507,9 @@ Vector<Number>::l2_norm() const
     return std::sqrt(norm_square);
   else
     {
-      real_type scale = 0.;
-      real_type sum   = 1.;
-      for(size_type i = 0; i < vec_size; ++i)
+      real_type scale= 0.;
+      real_type sum  = 1.;
+      for(size_type i= 0; i < vec_size; ++i)
         {
           if(values[i] != Number())
             {
@@ -517,11 +517,11 @@ Vector<Number>::l2_norm() const
                 = numbers::NumberTraits<Number>::abs(values[i]);
               if(scale < abs_x)
                 {
-                  sum   = 1. + sum * (scale / abs_x) * (scale / abs_x);
-                  scale = abs_x;
+                  sum  = 1. + sum * (scale / abs_x) * (scale / abs_x);
+                  scale= abs_x;
                 }
               else
-                sum += (abs_x / scale) * (abs_x / scale);
+                sum+= (abs_x / scale) * (abs_x / scale);
             }
         }
       AssertIsFinite(scale * std::sqrt(sum));
@@ -549,9 +549,9 @@ Vector<Number>::lp_norm(const real_type p) const
     return std::pow(sum, static_cast<real_type>(1. / p));
   else
     {
-      real_type scale = 0.;
-      real_type sum   = 1.;
-      for(size_type i = 0; i < vec_size; ++i)
+      real_type scale= 0.;
+      real_type sum  = 1.;
+      for(size_type i= 0; i < vec_size; ++i)
         {
           if(values[i] != Number())
             {
@@ -559,11 +559,11 @@ Vector<Number>::lp_norm(const real_type p) const
                 = numbers::NumberTraits<Number>::abs(values[i]);
               if(scale < abs_x)
                 {
-                  sum   = 1. + sum * std::pow(scale / abs_x, p);
-                  scale = abs_x;
+                  sum  = 1. + sum * std::pow(scale / abs_x, p);
+                  scale= abs_x;
                 }
               else
-                sum += std::pow(abs_x / scale, p);
+                sum+= std::pow(abs_x / scale, p);
             }
         }
       return scale * std::pow(sum, static_cast<real_type>(1. / p));
@@ -576,10 +576,10 @@ Vector<Number>::linfty_norm() const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
-  real_type max = 0.;
+  real_type max= 0.;
 
-  for(size_type i = 0; i < vec_size; ++i)
-    max = std::max(numbers::NumberTraits<Number>::abs(values[i]), max);
+  for(size_type i= 0; i < vec_size; ++i)
+    max= std::max(numbers::NumberTraits<Number>::abs(values[i]), max);
 
   return max;
 }
@@ -701,8 +701,8 @@ Vector<Number>::scale(const Vector<Number2>& s)
   Assert(vec_size != 0, ExcEmptyObject());
   Assert(vec_size == s.vec_size, ExcDimensionMismatch(vec_size, s.vec_size));
 
-  for(size_type i = 0; i < vec_size; ++i)
-    values[i] *= Number(s.values[i]);
+  for(size_type i= 0; i < vec_size; ++i)
+    values[i]*= Number(s.values[i]);
 }
 
 template <typename Number>
@@ -736,8 +736,8 @@ Vector<Number>::equ(const Number a, const Vector<Number2>& u)
   // because
   // operator*(complex<float>,complex<double>)
   // is not defined by default
-  for(size_type i = 0; i < vec_size; ++i)
-    values[i] = a * Number(u.values[i]);
+  for(size_type i= 0; i < vec_size; ++i)
+    values[i]= a * Number(u.values[i]);
 }
 
 template <typename Number>
@@ -765,10 +765,10 @@ Vector<Number>::operator=(const BlockVector<Number>& v)
   if(v.size() != vec_size)
     reinit(v.size(), true);
 
-  size_type this_index = 0;
-  for(size_type b = 0; b < v.n_blocks(); ++b)
-    for(size_type i = 0; i < v.block(b).size(); ++i, ++this_index)
-      values[this_index] = v.block(b)(i);
+  size_type this_index= 0;
+  for(size_type b= 0; b < v.n_blocks(); ++b)
+    for(size_type i= 0; i < v.block(b).size(); ++i, ++this_index)
+      values[this_index]= v.block(b)(i);
 
   return *this;
 }
@@ -812,7 +812,7 @@ Vector<Number>::operator=(const TrilinosWrappers::MPI::Vector& v)
       // and copy it
       TrilinosScalar** start_ptr;
 
-      int ierr = localized_vector.trilinos_vector().ExtractView(&start_ptr);
+      int ierr= localized_vector.trilinos_vector().ExtractView(&start_ptr);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       std::copy(start_ptr[0], start_ptr[0] + vec_size, begin());
@@ -837,7 +837,7 @@ Vector<Number>::operator==(const Vector<Number2>& v) const
   // because
   // operator==(complex<float>,complex<double>)
   // is not defined by default
-  for(size_type i = 0; i < vec_size; ++i)
+  for(size_type i= 0; i < vec_size; ++i)
     if(values[i] != Number(v.values[i]))
       return false;
 
@@ -850,7 +850,7 @@ Vector<Number>::print(const char* format) const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
-  for(size_type j = 0; j < size(); ++j)
+  for(size_type j= 0; j < size(); ++j)
     internal::VectorOperations::print(values[j], format);
   std::printf("\n");
 }
@@ -865,8 +865,8 @@ Vector<Number>::print(std::ostream&      out,
   Assert(vec_size != 0, ExcEmptyObject());
   AssertThrow(out, ExcIO());
 
-  std::ios::fmtflags old_flags     = out.flags();
-  unsigned int       old_precision = out.precision(precision);
+  std::ios::fmtflags old_flags    = out.flags();
+  unsigned int       old_precision= out.precision(precision);
 
   out.precision(precision);
   if(scientific)
@@ -875,10 +875,10 @@ Vector<Number>::print(std::ostream&      out,
     out.setf(std::ios::fixed, std::ios::floatfield);
 
   if(across)
-    for(size_type i = 0; i < size(); ++i)
+    for(size_type i= 0; i < size(); ++i)
       out << values[i] << ' ';
   else
-    for(size_type i = 0; i < size(); ++i)
+    for(size_type i= 0; i < size(); ++i)
       out << values[i] << std::endl;
   out << std::endl;
 
@@ -897,10 +897,10 @@ Vector<Number>::print(LogStream&         out,
   Assert(vec_size != 0, ExcEmptyObject());
 
   if(across)
-    for(size_type i = 0; i < size(); ++i)
+    for(size_type i= 0; i < size(); ++i)
       out << std::setw(width) << values[i] << ' ';
   else
-    for(size_type i = 0; i < size(); ++i)
+    for(size_type i= 0; i < size(); ++i)
       out << values[i] << std::endl;
   out << std::endl;
 }
@@ -917,7 +917,7 @@ Vector<Number>::block_write(std::ostream& out) const
   // some resources that lead to
   // problems in a multithreaded
   // environment
-  const size_type sz = size();
+  const size_type sz= size();
   char            buf[16];
 
 #ifdef DEAL_II_WITH_64BIT_INDICES
@@ -933,7 +933,7 @@ Vector<Number>::block_write(std::ostream& out) const
               - reinterpret_cast<const char*>(begin()));
 
   // out << ']';
-  const char outro = ']';
+  const char outro= ']';
   out.write(&outro, 1);
 
   AssertThrow(out, ExcIO());
@@ -950,7 +950,7 @@ Vector<Number>::block_read(std::istream& in)
   char buf[16];
 
   in.getline(buf, 16, '\n');
-  sz = std::atoi(buf);
+  sz= std::atoi(buf);
 
   // fast initialization, since the
   // data elements are overwritten anyway
@@ -993,8 +993,8 @@ Vector<Number>::allocate(const size_type copy_n_el)
   Utilities::System::posix_memalign(
     (void**) &new_values, 64, sizeof(Number) * max_vec_size);
   // copy:
-  for(size_type i = 0; i < copy_n_el; ++i)
-    new_values[i] = values[i];
+  for(size_type i= 0; i < copy_n_el; ++i)
+    new_values[i]= values[i];
   values.reset(new_values);
 }
 

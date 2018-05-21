@@ -26,7 +26,7 @@ void
 test()
 {
   hp::FECollection<dim> fe_collection;
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     {
       // add the system three times, with
       // different numbers of base elements
@@ -38,8 +38,8 @@ test()
         FESystem<dim>(FE_DGPMonomial<dim>(i), 1, FE_DGPMonomial<dim>(i), 2));
     }
 
-  for(unsigned int i = 0; i < fe_collection.size(); ++i)
-    for(unsigned int j = 0; j < fe_collection.size(); ++j)
+  for(unsigned int i= 0; i < fe_collection.size(); ++i)
+    for(unsigned int j= 0; j < fe_collection.size(); ++j)
       {
         const std::vector<std::pair<unsigned int, unsigned int>> identities
           = fe_collection[i].hp_quad_dof_identities(fe_collection[j]);
@@ -48,7 +48,7 @@ test()
                 << fe_collection[j].get_name() << ": " << identities.size()
                 << std::endl;
 
-        for(unsigned int k = 0; k < identities.size(); ++k)
+        for(unsigned int k= 0; k < identities.size(); ++k)
           {
             Assert(identities[k].first < fe_collection[i].dofs_per_quad,
                    ExcInternalError());

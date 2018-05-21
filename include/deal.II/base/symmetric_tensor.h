@@ -27,7 +27,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-template <int rank, int dim, typename Number = double>
+template <int rank, int dim, typename Number= double>
 class SymmetricTensor;
 
 template <int dim, typename Number>
@@ -155,7 +155,7 @@ namespace internal
               int rank2,
               int dim,
               typename Number,
-              typename OtherNumber = Number>
+              typename OtherNumber= Number>
     struct double_contraction_result
     {
       typedef typename ProductType<Number, OtherNumber>::type value_type;
@@ -202,8 +202,7 @@ namespace internal
        * Number of independent components of a symmetric tensor of rank 2. We
        * store only the upper right half of it.
        */
-      static const unsigned int n_independent_components
-        = (dim * dim + dim) / 2;
+      static const unsigned int n_independent_components= (dim * dim + dim) / 2;
 
       /**
        * Declare the type in which we actually store the data.
@@ -222,7 +221,7 @@ namespace internal
        * Since rank-4 tensors are mappings between such objects, we need this
        * information.
        */
-      static const unsigned int n_rank2_components = (dim * dim + dim) / 2;
+      static const unsigned int n_rank2_components= (dim * dim + dim) / 2;
 
       /**
        * Number of independent components of a symmetric tensor of rank 4.
@@ -345,7 +344,7 @@ namespace internal
       /**
        * Copy constructor.
        */
-      Accessor(const Accessor&) = default;
+      Accessor(const Accessor&)= default;
 
     public:
       /**
@@ -429,12 +428,12 @@ namespace internal
       /**
        * Default constructor. Not needed, so deleted.
        */
-      Accessor() = delete;
+      Accessor()= delete;
 
       /**
        * Copy constructor.
        */
-      Accessor(const Accessor&) = default;
+      Accessor(const Accessor&)= default;
 
     public:
       /**
@@ -548,12 +547,12 @@ public:
    * of an inlined function; the compiler may therefore produce more efficient
    * code and you may use this value to declare other data types.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Publish the rank of this tensor to the outside world.
    */
-  static const unsigned int rank = rank_;
+  static const unsigned int rank= rank_;
 
   /**
    * An integer denoting the number of independent components that fully
@@ -983,8 +982,8 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor()
 {
   // Some auto-differentiable numbers need explicit
   // zero initialization.
-  for(unsigned int i = 0; i < base_tensor_type::dimension; ++i)
-    data[i] = internal::NumberType<Number>::value(0.0);
+  for(unsigned int i= 0; i < base_tensor_type::dimension; ++i)
+    data[i]= internal::NumberType<Number>::value(0.0);
 }
 
 template <int rank_, int dim, typename Number>
@@ -998,9 +997,9 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
       case 2:
         Assert(t[0][1] == t[1][0], ExcInternalError());
 
-        data[0] = t[0][0];
-        data[1] = t[1][1];
-        data[2] = t[0][1];
+        data[0]= t[0][0];
+        data[1]= t[1][1];
+        data[2]= t[0][1];
 
         break;
       case 3:
@@ -1008,25 +1007,25 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
         Assert(t[0][2] == t[2][0], ExcInternalError());
         Assert(t[1][2] == t[2][1], ExcInternalError());
 
-        data[0] = t[0][0];
-        data[1] = t[1][1];
-        data[2] = t[2][2];
-        data[3] = t[0][1];
-        data[4] = t[0][2];
-        data[5] = t[1][2];
+        data[0]= t[0][0];
+        data[1]= t[1][1];
+        data[2]= t[2][2];
+        data[3]= t[0][1];
+        data[4]= t[0][2];
+        data[5]= t[1][2];
 
         break;
       default:
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int e = 0; e < d; ++e)
+        for(unsigned int d= 0; d < dim; ++d)
+          for(unsigned int e= 0; e < d; ++e)
             Assert(t[d][e] == t[e][d], ExcInternalError());
 
-        for(unsigned int d = 0; d < dim; ++d)
-          data[d] = t[d][d];
+        for(unsigned int d= 0; d < dim; ++d)
+          data[d]= t[d][d];
 
-        for(unsigned int d = 0, c = 0; d < dim; ++d)
-          for(unsigned int e = d + 1; e < dim; ++e, ++c)
-            data[dim + c] = t[d][e];
+        for(unsigned int d= 0, c= 0; d < dim; ++d)
+          for(unsigned int e= d + 1; e < dim; ++e, ++c)
+            data[dim + c]= t[d][e];
     }
 }
 
@@ -1035,10 +1034,9 @@ template <typename OtherNumber>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
   const SymmetricTensor<rank_, dim, OtherNumber>& initializer)
 {
-  for(unsigned int i = 0; i < base_tensor_type::dimension; ++i)
-    data[i]
-      = internal::NumberType<typename base_tensor_type::value_type>::value(
-        initializer.data[i]);
+  for(unsigned int i= 0; i < base_tensor_type::dimension; ++i)
+    data[i]= internal::NumberType<typename base_tensor_type::value_type>::value(
+      initializer.data[i]);
 }
 
 template <int rank_, int dim, typename Number>
@@ -1057,8 +1055,8 @@ inline SymmetricTensor<rank_, dim, Number>&
 SymmetricTensor<rank_, dim, Number>::
 operator=(const SymmetricTensor<rank_, dim, OtherNumber>& t)
 {
-  for(unsigned int i = 0; i < base_tensor_type::dimension; ++i)
-    data[i] = t.data[i];
+  for(unsigned int i= 0; i < base_tensor_type::dimension; ++i)
+    data[i]= t.data[i];
   return *this;
 }
 
@@ -1070,7 +1068,7 @@ SymmetricTensor<rank_, dim, Number>::operator=(const Number& d)
          ExcMessage("Only assignment with zero is allowed"));
   (void) d;
 
-  data = internal::NumberType<Number>::value(0.0);
+  data= internal::NumberType<Number>::value(0.0);
 
   return *this;
 }
@@ -1086,15 +1084,15 @@ namespace internal
       dealii::Tensor<2, dim, Number> t;
 
       // diagonal entries are stored first
-      for(unsigned int d = 0; d < dim; ++d)
-        t[d][d] = s.access_raw_entry(d);
+      for(unsigned int d= 0; d < dim; ++d)
+        t[d][d]= s.access_raw_entry(d);
 
       // off-diagonal entries come next, row by row
-      for(unsigned int d = 0, c = 0; d < dim; ++d)
-        for(unsigned int e = d + 1; e < dim; ++e, ++c)
+      for(unsigned int d= 0, c= 0; d < dim; ++d)
+        for(unsigned int e= d + 1; e < dim; ++e, ++c)
           {
-            t[d][e] = s.access_raw_entry(dim + c);
-            t[e][d] = s.access_raw_entry(dim + c);
+            t[d][e]= s.access_raw_entry(dim + c);
+            t[e][d]= s.access_raw_entry(dim + c);
           }
       return t;
     }
@@ -1108,13 +1106,12 @@ namespace internal
       // independent elements of the input tensor more than once
       dealii::Tensor<4, dim, Number> t;
 
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = i; j < dim; ++j)
-          for(unsigned int k = 0; k < dim; ++k)
-            for(unsigned int l = k; l < dim; ++l)
-              t[TableIndices<4>(i, j, k, l)] = t[TableIndices<4>(i, j, l, k)]
-                = t[TableIndices<4>(j, i, k, l)]
-                = t[TableIndices<4>(j, i, l, k)]
+      for(unsigned int i= 0; i < dim; ++i)
+        for(unsigned int j= i; j < dim; ++j)
+          for(unsigned int k= 0; k < dim; ++k)
+            for(unsigned int l= k; l < dim; ++l)
+              t[TableIndices<4>(i, j, k, l)]    = t[TableIndices<4>(i, j, l, k)]
+                = t[TableIndices<4>(j, i, k, l)]= t[TableIndices<4>(j, i, l, k)]
                 = st[TableIndices<4>(i, j, k, l)];
 
       return t;
@@ -1128,7 +1125,7 @@ namespace internal
       {
         dealii::SymmetricTensor<2, 1, Number> tmp;
 
-        tmp[0][0] = 1.0 / t[0][0];
+        tmp[0][0]= 1.0 / t[0][0];
 
         return tmp;
       }
@@ -1150,10 +1147,10 @@ namespace internal
         const TableIndices<2> idx_11(1, 1);
         const Number          inv_det_t
           = 1.0 / (t[idx_00] * t[idx_11] - t[idx_01] * t[idx_01]);
-        tmp[idx_00] = t[idx_11];
-        tmp[idx_01] = -t[idx_01];
-        tmp[idx_11] = t[idx_00];
-        tmp *= inv_det_t;
+        tmp[idx_00]= t[idx_11];
+        tmp[idx_01]= -t[idx_01];
+        tmp[idx_11]= t[idx_00];
+        tmp*= inv_det_t;
 
         return tmp;
       }
@@ -1183,19 +1180,19 @@ namespace internal
         const TableIndices<2> idx_11(1, 1);
         const TableIndices<2> idx_12(1, 2);
         const TableIndices<2> idx_22(2, 2);
-        const Number          inv_det_t = 1.0
-                                 / (t[idx_00] * t[idx_11] * t[idx_22]
-                                    - t[idx_00] * t[idx_12] * t[idx_12]
-                                    - t[idx_01] * t[idx_01] * t[idx_22]
-                                    + 2.0 * t[idx_01] * t[idx_02] * t[idx_12]
-                                    - t[idx_02] * t[idx_02] * t[idx_11]);
-        tmp[idx_00] = t[idx_11] * t[idx_22] - t[idx_12] * t[idx_12];
-        tmp[idx_01] = -t[idx_01] * t[idx_22] + t[idx_02] * t[idx_12];
-        tmp[idx_02] = t[idx_01] * t[idx_12] - t[idx_02] * t[idx_11];
-        tmp[idx_11] = t[idx_00] * t[idx_22] - t[idx_02] * t[idx_02];
-        tmp[idx_12] = -t[idx_00] * t[idx_12] + t[idx_01] * t[idx_02];
-        tmp[idx_22] = t[idx_00] * t[idx_11] - t[idx_01] * t[idx_01];
-        tmp *= inv_det_t;
+        const Number          inv_det_t= 1.0
+                                / (t[idx_00] * t[idx_11] * t[idx_22]
+                                   - t[idx_00] * t[idx_12] * t[idx_12]
+                                   - t[idx_01] * t[idx_01] * t[idx_22]
+                                   + 2.0 * t[idx_01] * t[idx_02] * t[idx_12]
+                                   - t[idx_02] * t[idx_02] * t[idx_11]);
+        tmp[idx_00]= t[idx_11] * t[idx_22] - t[idx_12] * t[idx_12];
+        tmp[idx_01]= -t[idx_01] * t[idx_22] + t[idx_02] * t[idx_12];
+        tmp[idx_02]= t[idx_01] * t[idx_12] - t[idx_02] * t[idx_11];
+        tmp[idx_11]= t[idx_00] * t[idx_22] - t[idx_02] * t[idx_02];
+        tmp[idx_12]= -t[idx_00] * t[idx_12] + t[idx_01] * t[idx_02];
+        tmp[idx_22]= t[idx_00] * t[idx_11] - t[idx_01] * t[idx_01];
+        tmp*= inv_det_t;
 
         return tmp;
       }
@@ -1208,7 +1205,7 @@ namespace internal
       value(const dealii::SymmetricTensor<4, 1, Number>& t)
       {
         dealii::SymmetricTensor<4, 1, Number> tmp;
-        tmp.data[0][0] = 1.0 / t.data[0][0];
+        tmp.data[0][0]= 1.0 / t.data[0][0];
         return tmp;
       }
     };
@@ -1245,9 +1242,9 @@ namespace internal
         // and right multiplication with mult^-1.
         const Number t4
           = t.data[0][0] * t.data[1][1],
-          t6 = t.data[0][0] * t.data[1][2], t8 = t.data[0][1] * t.data[1][0],
-          t00 = t.data[0][2] * t.data[1][0], t01 = t.data[0][1] * t.data[2][0],
-          t04 = t.data[0][2] * t.data[2][0],
+          t6= t.data[0][0] * t.data[1][2], t8= t.data[0][1] * t.data[1][0],
+          t00= t.data[0][2] * t.data[1][0], t01= t.data[0][1] * t.data[2][0],
+          t04= t.data[0][2] * t.data[2][0],
           t07
           = 1.0
             / (t4 * t.data[2][2] - t6 * t.data[2][1] - t8 * t.data[2][2]
@@ -1260,20 +1257,20 @@ namespace internal
           = -(-t.data[0][1] * t.data[1][2] + t.data[0][2] * t.data[1][1]) * t07;
         tmp.data[1][0]
           = -(t.data[1][0] * t.data[2][2] - t.data[1][2] * t.data[2][0]) * t07;
-        tmp.data[1][1] = (t.data[0][0] * t.data[2][2] - t04) * t07;
-        tmp.data[1][2] = -(t6 - t00) * t07;
+        tmp.data[1][1]= (t.data[0][0] * t.data[2][2] - t04) * t07;
+        tmp.data[1][2]= -(t6 - t00) * t07;
         tmp.data[2][0]
           = -(-t.data[1][0] * t.data[2][1] + t.data[1][1] * t.data[2][0]) * t07;
-        tmp.data[2][1] = -(t.data[0][0] * t.data[2][1] - t01) * t07;
-        tmp.data[2][2] = (t4 - t8) * t07;
+        tmp.data[2][1]= -(t.data[0][0] * t.data[2][1] - t01) * t07;
+        tmp.data[2][2]= (t4 - t8) * t07;
 
         // scale last row and column as mentioned
         // above
-        tmp.data[2][0] /= 2;
-        tmp.data[2][1] /= 2;
-        tmp.data[0][2] /= 2;
-        tmp.data[1][2] /= 2;
-        tmp.data[2][2] /= 4;
+        tmp.data[2][0]/= 2;
+        tmp.data[2][1]/= 2;
+        tmp.data[0][2]/= 2;
+        tmp.data[1][2]/= 2;
+        tmp.data[2][2]/= 4;
 
         return tmp;
       }
@@ -1285,7 +1282,7 @@ namespace internal
       static dealii::SymmetricTensor<4, 3, Number>
       value(const dealii::SymmetricTensor<4, 3, Number>& t)
       {
-        dealii::SymmetricTensor<4, 3, Number> tmp = t;
+        dealii::SymmetricTensor<4, 3, Number> tmp= t;
 
         // This function follows the exact same scheme as the 2d case, except
         // that hardcoding the inverse of a 6x6 matrix is pretty wasteful.
@@ -1293,33 +1290,33 @@ namespace internal
         // FullMatrix. For historical reasons the following code is copied from
         // there, with the tangential benefit that we do not need to copy the
         // tensor entries to and from the FullMatrix.
-        const unsigned int N = 6;
+        const unsigned int N= 6;
 
         // First get an estimate of the size of the elements of this matrix,
         // for later checks whether the pivot element is large enough, or
         // whether we have to fear that the matrix is not regular.
-        Number diagonal_sum = internal::NumberType<Number>::value(0.0);
-        for(unsigned int i = 0; i < N; ++i)
-          diagonal_sum += std::fabs(tmp.data[i][i]);
+        Number diagonal_sum= internal::NumberType<Number>::value(0.0);
+        for(unsigned int i= 0; i < N; ++i)
+          diagonal_sum+= std::fabs(tmp.data[i][i]);
         const Number typical_diagonal_element
           = diagonal_sum / static_cast<double>(N);
         (void) typical_diagonal_element;
 
         unsigned int p[N];
-        for(unsigned int i = 0; i < N; ++i)
-          p[i] = i;
+        for(unsigned int i= 0; i < N; ++i)
+          p[i]= i;
 
-        for(unsigned int j = 0; j < N; ++j)
+        for(unsigned int j= 0; j < N; ++j)
           {
             // Pivot search: search that part of the line on and right of the
             // diagonal for the largest element.
-            Number       max = std::fabs(tmp.data[j][j]);
-            unsigned int r   = j;
-            for(unsigned int i = j + 1; i < N; ++i)
+            Number       max= std::fabs(tmp.data[j][j]);
+            unsigned int r  = j;
+            for(unsigned int i= j + 1; i < N; ++i)
               if(std::fabs(tmp.data[i][j]) > max)
                 {
-                  max = std::fabs(tmp.data[i][j]);
-                  r   = i;
+                  max= std::fabs(tmp.data[i][j]);
+                  r  = i;
                 }
 
             // Check whether the pivot is too small
@@ -1329,57 +1326,57 @@ namespace internal
             // Row interchange
             if(r > j)
               {
-                for(unsigned int k = 0; k < N; ++k)
+                for(unsigned int k= 0; k < N; ++k)
                   std::swap(tmp.data[j][k], tmp.data[r][k]);
 
                 std::swap(p[j], p[r]);
               }
 
             // Transformation
-            const Number hr = 1. / tmp.data[j][j];
-            tmp.data[j][j]  = hr;
-            for(unsigned int k = 0; k < N; ++k)
+            const Number hr= 1. / tmp.data[j][j];
+            tmp.data[j][j] = hr;
+            for(unsigned int k= 0; k < N; ++k)
               {
                 if(k == j)
                   continue;
-                for(unsigned int i = 0; i < N; ++i)
+                for(unsigned int i= 0; i < N; ++i)
                   {
                     if(i == j)
                       continue;
-                    tmp.data[i][k] -= tmp.data[i][j] * tmp.data[j][k] * hr;
+                    tmp.data[i][k]-= tmp.data[i][j] * tmp.data[j][k] * hr;
                   }
               }
-            for(unsigned int i = 0; i < N; ++i)
+            for(unsigned int i= 0; i < N; ++i)
               {
-                tmp.data[i][j] *= hr;
-                tmp.data[j][i] *= -hr;
+                tmp.data[i][j]*= hr;
+                tmp.data[j][i]*= -hr;
               }
-            tmp.data[j][j] = hr;
+            tmp.data[j][j]= hr;
           }
 
         // Column interchange
         Number hv[N];
-        for(unsigned int i = 0; i < N; ++i)
+        for(unsigned int i= 0; i < N; ++i)
           {
-            for(unsigned int k = 0; k < N; ++k)
-              hv[p[k]] = tmp.data[i][k];
-            for(unsigned int k = 0; k < N; ++k)
-              tmp.data[i][k] = hv[k];
+            for(unsigned int k= 0; k < N; ++k)
+              hv[p[k]]= tmp.data[i][k];
+            for(unsigned int k= 0; k < N; ++k)
+              tmp.data[i][k]= hv[k];
           }
 
         // Scale rows and columns. The mult matrix
         // here is diag[1, 1, 1, 1/2, 1/2, 1/2].
-        for(unsigned int i = 3; i < 6; ++i)
-          for(unsigned int j = 0; j < 3; ++j)
-            tmp.data[i][j] /= 2;
+        for(unsigned int i= 3; i < 6; ++i)
+          for(unsigned int j= 0; j < 3; ++j)
+            tmp.data[i][j]/= 2;
 
-        for(unsigned int i = 0; i < 3; ++i)
-          for(unsigned int j = 3; j < 6; ++j)
-            tmp.data[i][j] /= 2;
+        for(unsigned int i= 0; i < 3; ++i)
+          for(unsigned int j= 3; j < 6; ++j)
+            tmp.data[i][j]/= 2;
 
-        for(unsigned int i = 3; i < 6; ++i)
-          for(unsigned int j = 3; j < 6; ++j)
-            tmp.data[i][j] /= 4;
+        for(unsigned int i= 3; i < 6; ++i)
+          for(unsigned int j= 3; j < 6; ++j)
+            tmp.data[i][j]/= 4;
 
         return tmp;
       }
@@ -1417,7 +1414,7 @@ inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>&
                              SymmetricTensor<rank_, dim, Number>::
                              operator+=(const SymmetricTensor<rank_, dim, OtherNumber>& t)
 {
-  data += t.data;
+  data+= t.data;
   return *this;
 }
 
@@ -1427,7 +1424,7 @@ inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>&
                              SymmetricTensor<rank_, dim, Number>::
                              operator-=(const SymmetricTensor<rank_, dim, OtherNumber>& t)
 {
-  data -= t.data;
+  data-= t.data;
   return *this;
 }
 
@@ -1436,7 +1433,7 @@ template <typename OtherNumber>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>&
 SymmetricTensor<rank_, dim, Number>::operator*=(const OtherNumber& d)
 {
-  data *= d;
+  data*= d;
   return *this;
 }
 
@@ -1445,7 +1442,7 @@ template <typename OtherNumber>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>&
 SymmetricTensor<rank_, dim, Number>::operator/=(const OtherNumber& d)
 {
-  data /= d;
+  data/= d;
   return *this;
 }
 
@@ -1453,8 +1450,8 @@ template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>
 SymmetricTensor<rank_, dim, Number>::operator-() const
 {
-  SymmetricTensor tmp = *this;
-  tmp.data            = -tmp.data;
+  SymmetricTensor tmp= *this;
+  tmp.data           = -tmp.data;
   return tmp;
 }
 
@@ -1476,7 +1473,7 @@ SymmetricTensor<rank_, dim, Number>::memory_consumption()
 
 namespace internal
 {
-  template <int dim, typename Number, typename OtherNumber = Number>
+  template <int dim, typename Number, typename OtherNumber= Number>
   inline DEAL_II_ALWAYS_INLINE typename SymmetricTensorAccessors::
     double_contraction_result<2, 2, dim, Number, OtherNumber>::type
     perform_double_contraction(
@@ -1497,19 +1494,19 @@ namespace internal
           // Start with the non-diagonal part to avoid some multiplications by
           // 2.
 
-          result_type sum = data[dim] * sdata[dim];
-          for(unsigned int d = dim + 1; d < (dim * (dim + 1) / 2); ++d)
-            sum += data[d] * sdata[d];
-          sum += sum; // sum = sum * 2.;
+          result_type sum= data[dim] * sdata[dim];
+          for(unsigned int d= dim + 1; d < (dim * (dim + 1) / 2); ++d)
+            sum+= data[d] * sdata[d];
+          sum+= sum; // sum = sum * 2.;
 
           // Now add the contributions from the diagonal
-          for(unsigned int d = 0; d < dim; ++d)
-            sum += data[d] * sdata[d];
+          for(unsigned int d= 0; d < dim; ++d)
+            sum+= data[d] * sdata[d];
           return sum;
       }
   }
 
-  template <int dim, typename Number, typename OtherNumber = Number>
+  template <int dim, typename Number, typename OtherNumber= Number>
   inline typename SymmetricTensorAccessors::
     double_contraction_result<4, 2, dim, Number, OtherNumber>::type
     perform_double_contraction(
@@ -1525,16 +1522,16 @@ namespace internal
       double_contraction_result<4, 2, dim, Number, OtherNumber>::value_type
         value_type;
 
-    const unsigned int data_dim = SymmetricTensorAccessors::
+    const unsigned int data_dim= SymmetricTensorAccessors::
       StorageType<2, dim, value_type>::n_independent_components;
     value_type tmp[data_dim];
-    for(unsigned int i = 0; i < data_dim; ++i)
+    for(unsigned int i= 0; i < data_dim; ++i)
       tmp[i]
         = perform_double_contraction<dim, Number, OtherNumber>(data[i], sdata);
     return result_type(tmp);
   }
 
-  template <int dim, typename Number, typename OtherNumber = Number>
+  template <int dim, typename Number, typename OtherNumber= Number>
   inline typename SymmetricTensorAccessors::StorageType<
     2,
     dim,
@@ -1554,23 +1551,23 @@ namespace internal
       base_tensor_type base_tensor_type;
 
     base_tensor_type tmp;
-    for(unsigned int i = 0; i < tmp.dimension; ++i)
+    for(unsigned int i= 0; i < tmp.dimension; ++i)
       {
         // Start with the non-diagonal part
-        value_type sum = data[dim] * sdata[dim][i];
-        for(unsigned int d = dim + 1; d < (dim * (dim + 1) / 2); ++d)
-          sum += data[d] * sdata[d][i];
-        sum += sum; // sum = sum * 2.;
+        value_type sum= data[dim] * sdata[dim][i];
+        for(unsigned int d= dim + 1; d < (dim * (dim + 1) / 2); ++d)
+          sum+= data[d] * sdata[d][i];
+        sum+= sum; // sum = sum * 2.;
 
         // Now add the contributions from the diagonal
-        for(unsigned int d = 0; d < dim; ++d)
-          sum += data[d] * sdata[d][i];
-        tmp[i] = sum;
+        for(unsigned int d= 0; d < dim; ++d)
+          sum+= data[d] * sdata[d][i];
+        tmp[i]= sum;
       }
     return tmp;
   }
 
-  template <int dim, typename Number, typename OtherNumber = Number>
+  template <int dim, typename Number, typename OtherNumber= Number>
   inline typename SymmetricTensorAccessors::StorageType<
     4,
     dim,
@@ -1589,20 +1586,20 @@ namespace internal
     typedef typename SymmetricTensorAccessors::StorageType<4, dim, value_type>::
       base_tensor_type base_tensor_type;
 
-    const unsigned int data_dim = SymmetricTensorAccessors::
+    const unsigned int data_dim= SymmetricTensorAccessors::
       StorageType<2, dim, value_type>::n_independent_components;
     base_tensor_type tmp;
-    for(unsigned int i = 0; i < data_dim; ++i)
-      for(unsigned int j = 0; j < data_dim; ++j)
+    for(unsigned int i= 0; i < data_dim; ++i)
+      for(unsigned int j= 0; j < data_dim; ++j)
         {
           // Start with the non-diagonal part
-          for(unsigned int d = dim; d < (dim * (dim + 1) / 2); ++d)
-            tmp[i][j] += data[i][d] * sdata[d][j];
-          tmp[i][j] += tmp[i][j]; // tmp[i][j] = tmp[i][j] * 2;
+          for(unsigned int d= dim; d < (dim * (dim + 1) / 2); ++d)
+            tmp[i][j]+= data[i][d] * sdata[d][j];
+          tmp[i][j]+= tmp[i][j]; // tmp[i][j] = tmp[i][j] * 2;
 
           // Now add the contributions from the diagonal
-          for(unsigned int d = 0; d < dim; ++d)
-            tmp[i][j] += data[i][d] * sdata[d][j];
+          for(unsigned int d= 0; d < dim; ++d)
+            tmp[i][j]+= data[i][d] * sdata[d][j];
         }
     return tmp;
   }
@@ -1633,7 +1630,7 @@ inline typename internal::SymmetricTensorAccessors::
 {
   typename internal::SymmetricTensorAccessors::
     double_contraction_result<rank_, 4, dim, Number, OtherNumber>::type tmp;
-  tmp.data = internal::perform_double_contraction<dim, Number, OtherNumber>(
+  tmp.data= internal::perform_double_contraction<dim, Number, OtherNumber>(
     data, s.data);
   return tmp;
 }
@@ -1679,15 +1676,15 @@ namespace internal
             TableIndices<2> sorted_indices(indices);
             sorted_indices.sort();
 
-            for(unsigned int d = 0, c = 0; d < dim; ++d)
-              for(unsigned int e = d + 1; e < dim; ++e, ++c)
+            for(unsigned int d= 0, c= 0; d < dim; ++d)
+              for(unsigned int e= d + 1; e < dim; ++e, ++c)
                 if((sorted_indices[0] == d) && (sorted_indices[1] == e))
                   return data[dim + c];
             Assert(false, ExcInternalError());
           }
       }
 
-    static Number dummy_but_referenceable = Number();
+    static Number dummy_but_referenceable= Number();
     return dummy_but_referenceable;
   }
 
@@ -1722,15 +1719,15 @@ namespace internal
             TableIndices<2> sorted_indices(indices);
             sorted_indices.sort();
 
-            for(unsigned int d = 0, c = 0; d < dim; ++d)
-              for(unsigned int e = d + 1; e < dim; ++e, ++c)
+            for(unsigned int d= 0, c= 0; d < dim; ++d)
+              for(unsigned int e= d + 1; e < dim; ++e, ++c)
                 if((sorted_indices[0] == d) && (sorted_indices[1] == e))
                   return data[dim + c];
             Assert(false, ExcInternalError());
           }
       }
 
-    static Number dummy_but_referenceable = Number();
+    static Number dummy_but_referenceable= Number();
     return dummy_but_referenceable;
   }
 
@@ -1758,18 +1755,18 @@ namespace internal
           {
             unsigned int base_index[2];
             if((indices[0] == 0) && (indices[1] == 0))
-              base_index[0] = 0;
+              base_index[0]= 0;
             else if((indices[0] == 1) && (indices[1] == 1))
-              base_index[0] = 1;
+              base_index[0]= 1;
             else
-              base_index[0] = 2;
+              base_index[0]= 2;
 
             if((indices[2] == 0) && (indices[3] == 0))
-              base_index[1] = 0;
+              base_index[1]= 0;
             else if((indices[2] == 1) && (indices[3] == 1))
-              base_index[1] = 1;
+              base_index[1]= 1;
             else
-              base_index[1] = 2;
+              base_index[1]= 2;
 
             return data[base_index[0]][base_index[1]];
           }
@@ -1787,43 +1784,43 @@ namespace internal
           {
             unsigned int base_index[2];
             if((indices[0] == 0) && (indices[1] == 0))
-              base_index[0] = 0;
+              base_index[0]= 0;
             else if((indices[0] == 1) && (indices[1] == 1))
-              base_index[0] = 1;
+              base_index[0]= 1;
             else if((indices[0] == 2) && (indices[1] == 2))
-              base_index[0] = 2;
+              base_index[0]= 2;
             else if(((indices[0] == 0) && (indices[1] == 1))
                     || ((indices[0] == 1) && (indices[1] == 0)))
-              base_index[0] = 3;
+              base_index[0]= 3;
             else if(((indices[0] == 0) && (indices[1] == 2))
                     || ((indices[0] == 2) && (indices[1] == 0)))
-              base_index[0] = 4;
+              base_index[0]= 4;
             else
               {
                 Assert(((indices[0] == 1) && (indices[1] == 2))
                          || ((indices[0] == 2) && (indices[1] == 1)),
                        ExcInternalError());
-                base_index[0] = 5;
+                base_index[0]= 5;
               }
 
             if((indices[2] == 0) && (indices[3] == 0))
-              base_index[1] = 0;
+              base_index[1]= 0;
             else if((indices[2] == 1) && (indices[3] == 1))
-              base_index[1] = 1;
+              base_index[1]= 1;
             else if((indices[2] == 2) && (indices[3] == 2))
-              base_index[1] = 2;
+              base_index[1]= 2;
             else if(((indices[2] == 0) && (indices[3] == 1))
                     || ((indices[2] == 1) && (indices[3] == 0)))
-              base_index[1] = 3;
+              base_index[1]= 3;
             else if(((indices[2] == 0) && (indices[3] == 2))
                     || ((indices[2] == 2) && (indices[3] == 0)))
-              base_index[1] = 4;
+              base_index[1]= 4;
             else
               {
                 Assert(((indices[2] == 1) && (indices[3] == 2))
                          || ((indices[2] == 2) && (indices[3] == 1)),
                        ExcInternalError());
-                base_index[1] = 5;
+                base_index[1]= 5;
               }
 
             return data[base_index[0]][base_index[1]];
@@ -1861,18 +1858,18 @@ namespace internal
           {
             unsigned int base_index[2];
             if((indices[0] == 0) && (indices[1] == 0))
-              base_index[0] = 0;
+              base_index[0]= 0;
             else if((indices[0] == 1) && (indices[1] == 1))
-              base_index[0] = 1;
+              base_index[0]= 1;
             else
-              base_index[0] = 2;
+              base_index[0]= 2;
 
             if((indices[2] == 0) && (indices[3] == 0))
-              base_index[1] = 0;
+              base_index[1]= 0;
             else if((indices[2] == 1) && (indices[3] == 1))
-              base_index[1] = 1;
+              base_index[1]= 1;
             else
-              base_index[1] = 2;
+              base_index[1]= 2;
 
             return data[base_index[0]][base_index[1]];
           }
@@ -1890,43 +1887,43 @@ namespace internal
           {
             unsigned int base_index[2];
             if((indices[0] == 0) && (indices[1] == 0))
-              base_index[0] = 0;
+              base_index[0]= 0;
             else if((indices[0] == 1) && (indices[1] == 1))
-              base_index[0] = 1;
+              base_index[0]= 1;
             else if((indices[0] == 2) && (indices[1] == 2))
-              base_index[0] = 2;
+              base_index[0]= 2;
             else if(((indices[0] == 0) && (indices[1] == 1))
                     || ((indices[0] == 1) && (indices[1] == 0)))
-              base_index[0] = 3;
+              base_index[0]= 3;
             else if(((indices[0] == 0) && (indices[1] == 2))
                     || ((indices[0] == 2) && (indices[1] == 0)))
-              base_index[0] = 4;
+              base_index[0]= 4;
             else
               {
                 Assert(((indices[0] == 1) && (indices[1] == 2))
                          || ((indices[0] == 2) && (indices[1] == 1)),
                        ExcInternalError());
-                base_index[0] = 5;
+                base_index[0]= 5;
               }
 
             if((indices[2] == 0) && (indices[3] == 0))
-              base_index[1] = 0;
+              base_index[1]= 0;
             else if((indices[2] == 1) && (indices[3] == 1))
-              base_index[1] = 1;
+              base_index[1]= 1;
             else if((indices[2] == 2) && (indices[3] == 2))
-              base_index[1] = 2;
+              base_index[1]= 2;
             else if(((indices[2] == 0) && (indices[3] == 1))
                     || ((indices[2] == 1) && (indices[3] == 0)))
-              base_index[1] = 3;
+              base_index[1]= 3;
             else if(((indices[2] == 0) && (indices[3] == 2))
                     || ((indices[2] == 2) && (indices[3] == 0)))
-              base_index[1] = 4;
+              base_index[1]= 4;
             else
               {
                 Assert(((indices[2] == 1) && (indices[3] == 2))
                          || ((indices[2] == 2) && (indices[3] == 1)),
                        ExcInternalError());
-                base_index[1] = 5;
+                base_index[1]= 5;
               }
 
             return data[base_index[0]][base_index[1]];
@@ -1947,7 +1944,7 @@ inline Number&
 SymmetricTensor<rank_, dim, Number>::
 operator()(const TableIndices<rank_>& indices)
 {
-  for(unsigned int r = 0; r < rank; ++r)
+  for(unsigned int r= 0; r < rank; ++r)
     Assert(indices[r] < dimension, ExcIndexRange(indices[r], 0, dimension));
   return internal::symmetric_tensor_access<dim, Number>(indices, data);
 }
@@ -1957,7 +1954,7 @@ inline const Number&
 SymmetricTensor<rank_, dim, Number>::
 operator()(const TableIndices<rank_>& indices) const
 {
-  for(unsigned int r = 0; r < rank; ++r)
+  for(unsigned int r= 0; r < rank; ++r)
     Assert(indices[r] < dimension, ExcIndexRange(indices[r], 0, dimension));
   return internal::symmetric_tensor_access<dim, Number>(indices, data);
 }
@@ -2126,13 +2123,12 @@ namespace internal
 
         default:
           {
-            typename numbers::NumberTraits<Number>::real_type return_value =
+            typename numbers::NumberTraits<Number>::real_type return_value=
               typename numbers::NumberTraits<Number>::real_type();
 
-            for(unsigned int d = 0; d < dim; ++d)
-              return_value
-                += numbers::NumberTraits<Number>::abs_square(data[d]);
-            for(unsigned int d = dim; d < (dim * dim + dim) / 2; ++d)
+            for(unsigned int d= 0; d < dim; ++d)
+              return_value+= numbers::NumberTraits<Number>::abs_square(data[d]);
+            for(unsigned int d= dim; d < (dim * dim + dim) / 2; ++d)
               return_value
                 += 2. * numbers::NumberTraits<Number>::abs_square(data[d]);
 
@@ -2153,25 +2149,25 @@ namespace internal
 
         default:
           {
-            typename numbers::NumberTraits<Number>::real_type return_value =
+            typename numbers::NumberTraits<Number>::real_type return_value=
               typename numbers::NumberTraits<Number>::real_type();
 
-            const unsigned int n_independent_components = data.dimension;
+            const unsigned int n_independent_components= data.dimension;
 
-            for(unsigned int i = 0; i < dim; ++i)
-              for(unsigned int j = 0; j < dim; ++j)
+            for(unsigned int i= 0; i < dim; ++i)
+              for(unsigned int j= 0; j < dim; ++j)
                 return_value
                   += numbers::NumberTraits<Number>::abs_square(data[i][j]);
-            for(unsigned int i = 0; i < dim; ++i)
-              for(unsigned int j = dim; j < n_independent_components; ++j)
+            for(unsigned int i= 0; i < dim; ++i)
+              for(unsigned int j= dim; j < n_independent_components; ++j)
                 return_value
                   += 2. * numbers::NumberTraits<Number>::abs_square(data[i][j]);
-            for(unsigned int i = dim; i < n_independent_components; ++i)
-              for(unsigned int j = 0; j < dim; ++j)
+            for(unsigned int i= dim; i < n_independent_components; ++i)
+              for(unsigned int j= 0; j < dim; ++j)
                 return_value
                   += 2. * numbers::NumberTraits<Number>::abs_square(data[i][j]);
-            for(unsigned int i = dim; i < n_independent_components; ++i)
-              for(unsigned int j = dim; j < n_independent_components; ++j)
+            for(unsigned int i= dim; i < n_independent_components; ++i)
+              for(unsigned int j= dim; j < n_independent_components; ++j)
                 return_value
                   += 4. * numbers::NumberTraits<Number>::abs_square(data[i][j]);
 
@@ -2216,7 +2212,7 @@ namespace internal
 
             case 2:
               {
-                static const unsigned int table[2][2] = {{0, 2}, {2, 1}};
+                static const unsigned int table[2][2]= {{0, 2}, {2, 1}};
                 return table[indices[0]][indices[1]];
               }
 
@@ -2243,8 +2239,8 @@ namespace internal
                 TableIndices<2> sorted_indices(indices);
                 sorted_indices.sort();
 
-                for(unsigned int d = 0, c = 0; d < dim; ++d)
-                  for(unsigned int e = d + 1; e < dim; ++e, ++c)
+                for(unsigned int d= 0, c= 0; d < dim; ++d)
+                  for(unsigned int e= d + 1; e < dim; ++e, ++c)
                     if((sorted_indices[0] == d) && (sorted_indices[1] == e))
                       return dim + c;
 
@@ -2316,20 +2312,20 @@ namespace internal
 
             case 2:
               {
-                const TableIndices<2> table[3] = {TableIndices<2>(0, 0),
-                                                  TableIndices<2>(1, 1),
-                                                  TableIndices<2>(0, 1)};
+                const TableIndices<2> table[3]= {TableIndices<2>(0, 0),
+                                                 TableIndices<2>(1, 1),
+                                                 TableIndices<2>(0, 1)};
                 return table[i];
               }
 
             case 3:
               {
-                const TableIndices<2> table[6] = {TableIndices<2>(0, 0),
-                                                  TableIndices<2>(1, 1),
-                                                  TableIndices<2>(2, 2),
-                                                  TableIndices<2>(0, 1),
-                                                  TableIndices<2>(0, 2),
-                                                  TableIndices<2>(1, 2)};
+                const TableIndices<2> table[6]= {TableIndices<2>(0, 0),
+                                                 TableIndices<2>(1, 1),
+                                                 TableIndices<2>(2, 2),
+                                                 TableIndices<2>(0, 1),
+                                                 TableIndices<2>(0, 2),
+                                                 TableIndices<2>(1, 2)};
                 return table[i];
               }
 
@@ -2337,8 +2333,8 @@ namespace internal
               if(i < dim)
                 return TableIndices<2>(i, i);
 
-              for(unsigned int d = 0, c = 0; d < dim; ++d)
-                for(unsigned int e = d + 1; e < dim; ++e, ++c)
+              for(unsigned int d= 0, c= 0; d < dim; ++d)
+                for(unsigned int e= d + 1; e < dim; ++e, ++c)
                   if(c == i)
                     return TableIndices<2>(d, e);
 
@@ -2417,8 +2413,8 @@ operator+(const SymmetricTensor<rank_, dim, Number>&      left,
           const SymmetricTensor<rank_, dim, OtherNumber>& right)
 {
   SymmetricTensor<rank_, dim, typename ProductType<Number, OtherNumber>::type>
-    tmp = left;
-  tmp += right;
+    tmp= left;
+  tmp+= right;
   return tmp;
 }
 
@@ -2442,8 +2438,8 @@ operator-(const SymmetricTensor<rank_, dim, Number>&      left,
           const SymmetricTensor<rank_, dim, OtherNumber>& right)
 {
   SymmetricTensor<rank_, dim, typename ProductType<Number, OtherNumber>::type>
-    tmp = left;
-  tmp -= right;
+    tmp= left;
+  tmp-= right;
   return tmp;
 }
 
@@ -2535,7 +2531,7 @@ determinant(const SymmetricTensor<2, dim, Number>& t)
           // in analogy to general tensors, but
           // there's something to be simplified for
           // the present case
-          const Number tmp = t.data[3] * t.data[4] * t.data[5];
+          const Number tmp= t.data[3] * t.data[4] * t.data[5];
           return (tmp + tmp + t.data[0] * t.data[1] * t.data[2]
                   - t.data[0] * t.data[5] * t.data[5]
                   - t.data[1] * t.data[4] * t.data[4]
@@ -2574,9 +2570,9 @@ template <int dim, typename Number>
 Number
 trace(const SymmetricTensor<2, dim, Number>& d)
 {
-  Number t = d.data[0];
-  for(unsigned int i = 1; i < dim; ++i)
-    t += d.data[i];
+  Number t= d.data[0];
+  for(unsigned int i= 1; i < dim; ++i)
+    t+= d.data[i];
   return t;
 }
 
@@ -3052,12 +3048,12 @@ template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
 deviator(const SymmetricTensor<2, dim, Number>& t)
 {
-  SymmetricTensor<2, dim, Number> tmp = t;
+  SymmetricTensor<2, dim, Number> tmp= t;
 
   // subtract scaled trace from the diagonal
-  const Number tr = trace(t) / dim;
-  for(unsigned int i = 0; i < dim; ++i)
-    tmp.data[i] -= tr;
+  const Number tr= trace(t) / dim;
+  for(unsigned int i= 0; i < dim; ++i)
+    tmp.data[i]-= tr;
 
   return tmp;
 }
@@ -3079,17 +3075,17 @@ unit_symmetric_tensor()
   switch(dim)
     {
       case 1:
-        tmp.data[0] = 1;
+        tmp.data[0]= 1;
         break;
       case 2:
-        tmp.data[0] = tmp.data[1] = 1;
+        tmp.data[0]= tmp.data[1]= 1;
         break;
       case 3:
-        tmp.data[0] = tmp.data[1] = tmp.data[2] = 1;
+        tmp.data[0]= tmp.data[1]= tmp.data[2]= 1;
         break;
       default:
-        for(unsigned int d = 0; d < dim; ++d)
-          tmp.data[d] = 1;
+        for(unsigned int d= 0; d < dim; ++d)
+          tmp.data[d]= 1;
     }
   return tmp;
 }
@@ -3130,20 +3126,20 @@ deviator_tensor()
   SymmetricTensor<4, dim, Number> tmp;
 
   // fill the elements treating the diagonal
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      tmp.data[i][j] = (i == j ? 1 : 0) - 1. / dim;
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      tmp.data[i][j]= (i == j ? 1 : 0) - 1. / dim;
 
   // then fill the ones that copy over the
   // non-diagonal elements. note that during
   // the double-contraction, we handle the
   // off-diagonal elements twice, so simply
   // copying requires a weight of 1/2
-  for(unsigned int i = dim;
+  for(unsigned int i= dim;
       i < internal::SymmetricTensorAccessors::StorageType<4, dim, Number>::
             n_rank2_components;
       ++i)
-    tmp.data[i][i] = 0.5;
+    tmp.data[i][i]= 0.5;
 
   return tmp;
 }
@@ -3198,19 +3194,19 @@ identity_tensor()
   SymmetricTensor<4, dim, Number> tmp;
 
   // fill the elements treating the diagonal
-  for(unsigned int i = 0; i < dim; ++i)
-    tmp.data[i][i] = 1;
+  for(unsigned int i= 0; i < dim; ++i)
+    tmp.data[i][i]= 1;
 
   // then fill the ones that copy over the
   // non-diagonal elements. note that during
   // the double-contraction, we handle the
   // off-diagonal elements twice, so simply
   // copying requires a weight of 1/2
-  for(unsigned int i = dim;
+  for(unsigned int i= dim;
       i < internal::SymmetricTensorAccessors::StorageType<4, dim, Number>::
             n_rank2_components;
       ++i)
-    tmp.data[i][i] = 0.5;
+    tmp.data[i][i]= 0.5;
 
   return tmp;
 }
@@ -3302,11 +3298,11 @@ outer_product(const SymmetricTensor<2, dim, Number>& t1,
   SymmetricTensor<4, dim, Number> tmp;
 
   // fill only the elements really needed
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = k; l < dim; ++l)
-          tmp[i][j][k][l] = t1[i][j] * t2[k][l];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= k; l < dim; ++l)
+          tmp[i][j][k][l]= t1[i][j] * t2[k][l];
 
   return tmp;
 }
@@ -3324,11 +3320,11 @@ inline SymmetricTensor<2, dim, Number>
 symmetrize(const Tensor<2, dim, Number>& t)
 {
   Number array[(dim * dim + dim) / 2];
-  for(unsigned int d = 0; d < dim; ++d)
-    array[d] = t[d][d];
-  for(unsigned int d = 0, c = 0; d < dim; ++d)
-    for(unsigned int e = d + 1; e < dim; ++e, ++c)
-      array[dim + c] = (t[d][e] + t[e][d]) * 0.5;
+  for(unsigned int d= 0; d < dim; ++d)
+    array[d]= t[d][d];
+  for(unsigned int d= 0, c= 0; d < dim; ++d)
+    for(unsigned int e= d + 1; e < dim; ++e, ++c)
+      array[dim + c]= (t[d][e] + t[e][d]) * 0.5;
   return SymmetricTensor<2, dim, Number>(array);
 }
 
@@ -3343,8 +3339,8 @@ template <int rank_, int dim, typename Number>
 inline SymmetricTensor<rank_, dim, Number>
 operator*(const SymmetricTensor<rank_, dim, Number>& t, const Number& factor)
 {
-  SymmetricTensor<rank_, dim, Number> tt = t;
-  tt *= factor;
+  SymmetricTensor<rank_, dim, Number> tt= t;
+  tt*= factor;
   return tt;
 }
 
@@ -3412,8 +3408,8 @@ operator*(const SymmetricTensor<rank_, dim, Number>& t,
   // copy-assignment operator 'product_type::operator=(const OtherNumber)'
   // which we assume to be defined.
   product_type new_factor;
-  new_factor = factor;
-  tt *= new_factor;
+  new_factor= factor;
+  tt*= new_factor;
   return tt;
 }
 
@@ -3453,8 +3449,8 @@ operator/(const SymmetricTensor<rank_, dim, Number>& t,
           const OtherNumber&                         factor)
 {
   SymmetricTensor<rank_, dim, typename ProductType<Number, OtherNumber>::type>
-    tt = t;
-  tt /= factor;
+    tt= t;
+  tt/= factor;
   return tt;
 }
 
@@ -3468,8 +3464,8 @@ template <int rank_, int dim>
 inline SymmetricTensor<rank_, dim>
 operator*(const SymmetricTensor<rank_, dim>& t, const double factor)
 {
-  SymmetricTensor<rank_, dim> tt = t;
-  tt *= factor;
+  SymmetricTensor<rank_, dim> tt= t;
+  tt*= factor;
   return tt;
 }
 
@@ -3483,8 +3479,8 @@ template <int rank_, int dim>
 inline SymmetricTensor<rank_, dim>
 operator*(const double factor, const SymmetricTensor<rank_, dim>& t)
 {
-  SymmetricTensor<rank_, dim> tt = t;
-  tt *= factor;
+  SymmetricTensor<rank_, dim> tt= t;
+  tt*= factor;
   return tt;
 }
 
@@ -3497,8 +3493,8 @@ template <int rank_, int dim>
 inline SymmetricTensor<rank_, dim>
 operator/(const SymmetricTensor<rank_, dim>& t, const double factor)
 {
-  SymmetricTensor<rank_, dim> tt = t;
-  tt /= factor;
+  SymmetricTensor<rank_, dim> tt= t;
+  tt/= factor;
   return tt;
 }
 
@@ -3533,11 +3529,11 @@ inline typename ProductType<Number, OtherNumber>::type
 scalar_product(const SymmetricTensor<2, dim, Number>& t1,
                const Tensor<2, dim, OtherNumber>&     t2)
 {
-  typename ProductType<Number, OtherNumber>::type s = internal::NumberType<
+  typename ProductType<Number, OtherNumber>::type s= internal::NumberType<
     typename ProductType<Number, OtherNumber>::type>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      s += t1[i][j] * t2[i][j];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      s+= t1[i][j] * t2[i][j];
   return s;
 }
 
@@ -3579,7 +3575,7 @@ inline void double_contract(
   const SymmetricTensor<4, 1, Number>&                                    t,
   const SymmetricTensor<2, 1, OtherNumber>&                               s)
 {
-  tmp[0][0] = t[0][0][0][0] * s[0][0];
+  tmp[0][0]= t[0][0][0][0] * s[0][0];
 }
 
 /**
@@ -3603,7 +3599,7 @@ inline void double_contract(
   const SymmetricTensor<2, 1, Number>&                                    s,
   const SymmetricTensor<4, 1, OtherNumber>&                               t)
 {
-  tmp[0][0] = t[0][0][0][0] * s[0][0];
+  tmp[0][0]= t[0][0][0][0] * s[0][0];
 }
 
 /**
@@ -3626,12 +3622,12 @@ inline void double_contract(
   const SymmetricTensor<4, 2, Number>&                                    t,
   const SymmetricTensor<2, 2, OtherNumber>&                               s)
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      tmp[i][j] = t[i][j][0][0] * s[0][0] + t[i][j][1][1] * s[1][1]
-                  + 2 * t[i][j][0][1] * s[0][1];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      tmp[i][j]= t[i][j][0][0] * s[0][0] + t[i][j][1][1] * s[1][1]
+                 + 2 * t[i][j][0][1] * s[0][1];
 }
 
 /**
@@ -3655,12 +3651,12 @@ inline void double_contract(
   const SymmetricTensor<2, 2, Number>&                                    s,
   const SymmetricTensor<4, 2, OtherNumber>&                               t)
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      tmp[i][j] = s[0][0] * t[0][0][i][j] * +s[1][1] * t[1][1][i][j]
-                  + 2 * s[0][1] * t[0][1][i][j];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      tmp[i][j]= s[0][0] * t[0][0][i][j] * +s[1][1] * t[1][1][i][j]
+                 + 2 * s[0][1] * t[0][1][i][j];
 }
 
 /**
@@ -3684,13 +3680,13 @@ inline void double_contract(
   const SymmetricTensor<4, 3, Number>&                                    t,
   const SymmetricTensor<2, 3, OtherNumber>&                               s)
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      tmp[i][j] = t[i][j][0][0] * s[0][0] + t[i][j][1][1] * s[1][1]
-                  + t[i][j][2][2] * s[2][2] + 2 * t[i][j][0][1] * s[0][1]
-                  + 2 * t[i][j][0][2] * s[0][2] + 2 * t[i][j][1][2] * s[1][2];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      tmp[i][j]= t[i][j][0][0] * s[0][0] + t[i][j][1][1] * s[1][1]
+                 + t[i][j][2][2] * s[2][2] + 2 * t[i][j][0][1] * s[0][1]
+                 + 2 * t[i][j][0][2] * s[0][2] + 2 * t[i][j][1][2] * s[1][2];
 }
 
 /**
@@ -3714,13 +3710,13 @@ inline void double_contract(
   const SymmetricTensor<2, 3, Number>&                                    s,
   const SymmetricTensor<4, 3, OtherNumber>&                               t)
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      tmp[i][j] = s[0][0] * t[0][0][i][j] + s[1][1] * t[1][1][i][j]
-                  + s[2][2] * t[2][2][i][j] + 2 * s[0][1] * t[0][1][i][j]
-                  + 2 * s[0][2] * t[0][2][i][j] + 2 * s[1][2] * t[1][2][i][j];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      tmp[i][j]= s[0][0] * t[0][0][i][j] + s[1][1] * t[1][1][i][j]
+                 + s[2][2] * t[2][2][i][j] + 2 * s[0][1] * t[0][1][i][j]
+                 + 2 * s[0][2] * t[0][2][i][j] + 2 * s[1][2] * t[1][2][i][j];
 }
 
 /**
@@ -3736,9 +3732,9 @@ operator*(const SymmetricTensor<2, dim, Number>& src1,
           const Tensor<1, dim, OtherNumber>&     src2)
 {
   Tensor<1, dim, typename ProductType<Number, OtherNumber>::type> dest;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      dest[i] += src1[i][j] * src2[j];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      dest[i]+= src1[i][j] * src2[j];
   return dest;
 }
 
@@ -3856,9 +3852,9 @@ operator<<(std::ostream& out, const SymmetricTensor<2, dim, Number>& t)
   //general Tensor class
   Tensor<2, dim, Number> tt;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      tt[i][j] = t[i][j];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      tt[i][j]= t[i][j];
 
   return out << tt;
 }
@@ -3881,11 +3877,11 @@ operator<<(std::ostream& out, const SymmetricTensor<4, dim, Number>& t)
   //general Tensor class
   Tensor<4, dim, Number> tt;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
-          tt[i][j][k][l] = t[i][j][k][l];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= 0; l < dim; ++l)
+          tt[i][j][k][l]= t[i][j][k][l];
 
   return out << tt;
 }

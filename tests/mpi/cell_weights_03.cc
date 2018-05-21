@@ -43,8 +43,8 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(
     MPI_COMM_WORLD,
@@ -61,15 +61,14 @@ test()
   tr.repartition();
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-    for(unsigned int p = 0; p < numproc; ++p)
+    for(unsigned int p= 0; p < numproc; ++p)
       deallog << "processor " << p << ": "
               << tr.n_locally_owned_active_cells_per_processor()[p]
               << " locally owned active cells" << std::endl;
 
   // let each processor sum up its weights
   std::vector<double> integrated_weights(numproc, 0.0);
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
+  for(typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
       cell != tr.end();
       ++cell)
     if(cell->is_locally_owned())
@@ -80,7 +79,7 @@ test()
 
   Utilities::MPI::sum(integrated_weights, MPI_COMM_WORLD, integrated_weights);
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-    for(unsigned int p = 0; p < numproc; ++p)
+    for(unsigned int p= 0; p < numproc; ++p)
       deallog << "processor " << p << ": " << integrated_weights[p] << " weight"
               << std::endl;
 }
@@ -90,7 +89,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(myid == 0)
     {

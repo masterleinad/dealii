@@ -79,7 +79,7 @@ run(bool random_p, unsigned int* indx)
   // different cells.
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   if(random_p)
     {
       for(; cell != endc; ++cell)
@@ -89,7 +89,7 @@ run(bool random_p, unsigned int* indx)
     }
   else
     {
-      unsigned int cell_no = 0;
+      unsigned int cell_no= 0;
       for(; cell != endc; ++cell)
         {
           if(cell_no >= triangulation.n_active_cells() / 2)
@@ -131,7 +131,7 @@ main()
 
   deallog.attach(logfile);
 
-  unsigned int index[] = {1, 2, 3, 4, 5, 6, 7};
+  unsigned int index[]= {1, 2, 3, 4, 5, 6, 7};
 
   deallog << "Testing Order 1" << std::endl;
   run_test<2>(&(index[0]));

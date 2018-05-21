@@ -59,8 +59,8 @@ main()
   hp::DoFHandler<2> dof_handler(triangulation);
 
   // Assign FE
-  hp::DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active();
-  hp::DoFHandler<2>::active_cell_iterator endc = dof_handler.end();
+  hp::DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active();
+  hp::DoFHandler<2>::active_cell_iterator endc= dof_handler.end();
 
   /*
    * -----------
@@ -82,16 +82,16 @@ main()
 
   // Init solution
   Vector<double> solution(dof_handler.n_dofs());
-  solution = 1.0;
+  solution= 1.0;
 
   // Vector to visualize the FE of each cell
   Vector<double> FE_Type(triangulation.n_active_cells());
   unsigned int   cnt_cells(0);
-  cell = dof_handler.begin_active(), endc = dof_handler.end();
+  cell= dof_handler.begin_active(), endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      unsigned int fe_index = cell->active_fe_index();
-      FE_Type[cnt_cells]    = fe_index;
+      unsigned int fe_index= cell->active_fe_index();
+      FE_Type[cnt_cells]   = fe_index;
       ++cnt_cells;
     }
 
@@ -111,7 +111,7 @@ main()
    * -----------
    */
 
-  cell = dof_handler.begin_active();
+  cell= dof_handler.begin_active();
   cell->set_refine_flag();
   cell++;
   cell++;
@@ -133,12 +133,12 @@ main()
   solution_trans.interpolate(solution, new_solution);
 
   FE_Type.reinit(triangulation.n_active_cells());
-  cnt_cells = 0;
-  cell = dof_handler.begin_active(), endc = dof_handler.end();
+  cnt_cells= 0;
+  cell= dof_handler.begin_active(), endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      unsigned int fe_index = cell->active_fe_index();
-      FE_Type[cnt_cells]    = fe_index;
+      unsigned int fe_index= cell->active_fe_index();
+      FE_Type[cnt_cells]   = fe_index;
       ++cnt_cells;
     }
 
@@ -154,7 +154,7 @@ main()
 
   dof_handler.distribute_dofs(fe_collection);
   solution.reinit(dof_handler.n_dofs());
-  solution = 1.0;
+  solution= 1.0;
 
   /* Set coarsen flags:
    * -----------
@@ -164,8 +164,8 @@ main()
    * -----------
    */
 
-  endc = dof_handler.end();
-  for(cell = dof_handler.begin_active(); cell != endc; cell++)
+  endc= dof_handler.end();
+  for(cell= dof_handler.begin_active(); cell != endc; cell++)
     if(cell->level() > 1)
       cell->set_coarsen_flag();
 
@@ -184,12 +184,12 @@ main()
   solution_trans2.interpolate(solution, new_solution2);
 
   FE_Type.reinit(triangulation.n_active_cells());
-  cnt_cells = 0;
-  cell = dof_handler.begin_active(), endc = dof_handler.end();
+  cnt_cells= 0;
+  cell= dof_handler.begin_active(), endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      unsigned int fe_index = cell->active_fe_index();
-      FE_Type[cnt_cells]    = fe_index;
+      unsigned int fe_index= cell->active_fe_index();
+      FE_Type[cnt_cells]   = fe_index;
       ++cnt_cells;
     }
 

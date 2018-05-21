@@ -56,7 +56,7 @@ test()
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
 
-  for(unsigned int i = 0; i < dofh.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dofh.n_dofs(); ++i)
     {
       if(relevant_set.is_element(i))
         {
@@ -74,7 +74,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

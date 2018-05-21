@@ -19,7 +19,7 @@ DEAL_II_NAMESPACE_OPEN
 
 namespace Particles
 {
-  const PropertyPool::Handle PropertyPool::invalid_handle = nullptr;
+  const PropertyPool::Handle PropertyPool::invalid_handle= nullptr;
 
   PropertyPool::PropertyPool(const unsigned int n_properties_per_slot)
     : n_properties(n_properties_per_slot)
@@ -28,9 +28,9 @@ namespace Particles
   PropertyPool::Handle
   PropertyPool::allocate_properties_array()
   {
-    PropertyPool::Handle handle = PropertyPool::invalid_handle;
+    PropertyPool::Handle handle= PropertyPool::invalid_handle;
     if(n_properties > 0)
-      handle = new double[n_properties];
+      handle= new double[n_properties];
 
     return handle;
   }

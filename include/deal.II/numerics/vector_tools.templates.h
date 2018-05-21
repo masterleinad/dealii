@@ -129,7 +129,7 @@ namespace VectorTools
             // For given mapping F_K: \hat K \to K, we have to transform
             //  \hat u = (dF_K)^T u\circ F_K
 
-            for(unsigned int i = 0; i < function_values.size(); ++i)
+            for(unsigned int i= 0; i < function_values.size(); ++i)
               {
                 const auto& jacobians
                   = fe_values_jacobians.get_present_fe_values().get_jacobians();
@@ -148,8 +148,8 @@ namespace VectorTools
                   destination, jacobians[i].transpose(), source);
 
                 // now copy things back into the input=output vector
-                for(unsigned int d = 0; d < dim; ++d)
-                  source[d] = destination[d];
+                for(unsigned int d= 0; d < dim; ++d)
+                  source[d]= destination[d];
               }
             break;
 
@@ -159,7 +159,7 @@ namespace VectorTools
             // For given mapping F_K: \hat K \to K, we have to transform
             //  \hat w = det(dF_K) (dF_K)^{-1} w\circ F_K
 
-            for(unsigned int i = 0; i < function_values.size(); ++i)
+            for(unsigned int i= 0; i < function_values.size(); ++i)
               {
                 const auto& jacobians
                   = fe_values_jacobians.get_present_fe_values().get_jacobians();
@@ -179,11 +179,11 @@ namespace VectorTools
                 // value[m] <- sum inverse_jacobians[m][n] * old_value[n]:
                 TensorAccessors::contract<1, 2, 1, dim>(
                   destination, inverse_jacobians[i], source);
-                destination *= jacobians[i].determinant();
+                destination*= jacobians[i].determinant();
 
                 // now copy things back into the input=output vector
-                for(unsigned int d = 0; d < dim; ++d)
-                  source[d] = destination[d];
+                for(unsigned int d= 0; d < dim; ++d)
+                  source[d]= destination[d];
               }
             break;
 
@@ -221,23 +221,23 @@ namespace VectorTools
                     const FEValuesType&                 fe_values_jacobians,
                     T3&                                 function_values)
     {
-      if(const auto* system = dynamic_cast<const FESystem<dim, spacedim>*>(&fe))
+      if(const auto* system= dynamic_cast<const FESystem<dim, spacedim>*>(&fe))
         {
           // In case of an FESystem transform every (vector) component
           // separately:
-          unsigned current_offset = offset;
-          for(unsigned int i = 0; i < system->n_base_elements(); ++i)
+          unsigned current_offset= offset;
+          for(unsigned int i= 0; i < system->n_base_elements(); ++i)
             {
-              const auto& base_fe      = system->base_element(i);
-              const auto  multiplicity = system->element_multiplicity(i);
-              for(unsigned int m = 0; m < multiplicity; ++m)
+              const auto& base_fe     = system->base_element(i);
+              const auto  multiplicity= system->element_multiplicity(i);
+              for(unsigned int m= 0; m < multiplicity; ++m)
                 {
                   // recursively call apply_transform to make sure to
                   // correctly handle nested fe systems.
-                  current_offset = apply_transform(base_fe,
-                                                   current_offset,
-                                                   fe_values_jacobians,
-                                                   function_values);
+                  current_offset= apply_transform(base_fe,
+                                                  current_offset,
+                                                  fe_values_jacobians,
+                                                  function_values);
                 }
             }
           return current_offset;
@@ -341,7 +341,7 @@ namespace VectorTools
 
       // Store locally owned dofs, so that we can skip all non-local dofs,
       // if they do not need to be interpolated.
-      const IndexSet locally_owned_dofs = vec.locally_owned_elements();
+      const IndexSet locally_owned_dofs= vec.locally_owned_elements();
 
       // We use an FEValues object to transform all generalized support
       // points from the unit cell to the real cell coordinates. Thus,
@@ -349,9 +349,9 @@ namespace VectorTools
       // create an FEValues object with it.
 
       hp::QCollection<dim> support_quadrature;
-      for(unsigned int fe_index = 0; fe_index < fe.size(); ++fe_index)
+      for(unsigned int fe_index= 0; fe_index < fe.size(); ++fe_index)
         {
-          const auto& points = fe[fe_index].get_generalized_support_points();
+          const auto& points= fe[fe_index].get_generalized_support_points();
           support_quadrature.push_back(Quadrature<dim>(points));
         }
 
@@ -377,7 +377,7 @@ namespace VectorTools
           if(!cell->is_locally_owned())
             continue;
 
-          const unsigned int fe_index = cell->active_fe_index();
+          const unsigned int fe_index= cell->active_fe_index();
 
           // Do nothing if there are no local degrees of freedom.
           if(fe[fe_index].dofs_per_cell == 0)
@@ -395,15 +395,15 @@ namespace VectorTools
             = fe_values.get_present_fe_values().get_quadrature_points();
 
           // Get indices of the dofs on this cell
-          const auto n_dofs = fe[fe_index].dofs_per_cell;
+          const auto n_dofs= fe[fe_index].dofs_per_cell;
           dofs_on_cell.resize(n_dofs);
           cell->get_dof_indices(dofs_on_cell);
 
           // Prepare temporary storage
-          auto& function_values = fe_function_values[fe_index];
-          auto& dof_values      = fe_dof_values[fe_index];
+          auto& function_values= fe_function_values[fe_index];
+          auto& dof_values     = fe_dof_values[fe_index];
 
-          const auto n_components = fe[fe_index].n_components();
+          const auto n_components= fe[fe_index].n_components();
           function_values.resize(generalized_support_points.size(),
                                  Vector<number>(n_components));
           dof_values.resize(n_dofs);
@@ -434,7 +434,7 @@ namespace VectorTools
           FETools::convert_generalized_support_point_values_to_dof_values(
             fe[fe_index], function_values, dof_values);
 
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for(unsigned int i= 0; i < n_dofs; ++i)
             {
               const auto& nonzero_components
                 = fe[fe_index].get_nonzero_components(i);
@@ -442,8 +442,8 @@ namespace VectorTools
               // Figure out whether the component mask applies. We assume
               // that we are allowed to set degrees of freedom if at least
               // one of the components (of the dof) is selected.
-              bool selected = false;
-              for(unsigned int c = 0; c < nonzero_components.size(); ++c)
+              bool selected= false;
+              for(unsigned int c= 0; c < nonzero_components.size(); ++c)
                 selected
                   = selected || (nonzero_components[c] && component_mask[c]);
 
@@ -499,7 +499,7 @@ namespace VectorTools
 
       for(const auto i : interpolation.locally_owned_elements())
         {
-          const auto value = ::dealii::internal::ElementAccess<VectorType>::get(
+          const auto value= ::dealii::internal::ElementAccess<VectorType>::get(
             interpolation, i);
           const auto weight
             = ::dealii::internal::ElementAccess<VectorType>::get(weights, i);
@@ -529,7 +529,7 @@ namespace VectorTools
 
     // Create a small lambda capture wrapping function and call the
     // internal implementation
-    const auto function_map = [&function](
+    const auto function_map= [&function](
       const typename DoFHandlerType<dim, spacedim>::active_cell_iterator&)
       -> const Function<spacedim, typename VectorType::value_type>*
     {
@@ -578,7 +578,7 @@ namespace VectorTools
       = dof_1.begin_active();
     typename DoFHandler<dim, spacedim>::active_cell_iterator l
       = dof_2.begin_active();
-    const typename DoFHandler<dim, spacedim>::cell_iterator endh = dof_1.end();
+    const typename DoFHandler<dim, spacedim>::cell_iterator endh= dof_1.end();
 
     for(; h != endh; ++h, ++l)
       {
@@ -588,7 +588,7 @@ namespace VectorTools
         l->get_dof_indices(local_dof_indices);
 
         // distribute cell vector
-        for(unsigned int j = 0; j < dof_2.get_fe().dofs_per_cell; ++j)
+        for(unsigned int j= 0; j < dof_2.get_fe().dofs_per_cell; ++j)
           {
             ::dealii::internal::ElementAccess<OutVector>::add(
               cell_data_2(j), local_dof_indices[j], data_2);
@@ -606,7 +606,7 @@ namespace VectorTools
     // compute the mean value of the
     // sum which we have placed in each
     // entry of the output vector
-    for(unsigned int i = 0; i < dof_2.n_dofs(); ++i)
+    for(unsigned int i= 0; i < dof_2.n_dofs(); ++i)
       {
         Assert(touch_count[i] != 0, ExcInternalError());
         typedef typename OutVector::value_type value_type;
@@ -634,11 +634,11 @@ namespace VectorTools
   {
     // Create a small lambda capture wrapping the function map and call the
     // internal implementation
-    const auto function_map = [&functions](
+    const auto function_map= [&functions](
       const typename DoFHandlerType<dim, spacedim>::active_cell_iterator& cell)
       -> const Function<spacedim, typename VectorType::value_type>*
     {
-      const auto function = functions.find(cell->material_id());
+      const auto function= functions.find(cell->material_id());
       if(function != functions.end())
         return function->second;
       else
@@ -687,23 +687,23 @@ namespace VectorTools
       // one line or one vertex
       typename DoFHandlerType<dim, spacedim>::active_cell_iterator cell
         = dof_handler.begin_active(),
-        endc = dof_handler.end();
+        endc= dof_handler.end();
       std::vector<types::global_dof_index> face_dof_indices;
       for(; cell != endc; ++cell)
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
           if(cell->at_boundary(f))
             {
               face_dof_indices.resize(cell->get_fe().dofs_per_face);
               cell->face(f)->get_dof_indices(face_dof_indices,
                                              cell->active_fe_index());
-              for(unsigned int i = 0; i < cell->get_fe().dofs_per_face; ++i)
+              for(unsigned int i= 0; i < cell->get_fe().dofs_per_face; ++i)
                 // enter zero boundary values
                 // for all boundary nodes
                 //
                 // we need not care about
                 // vector valued elements here,
                 // since we set all components
-                boundary_values[face_dof_indices[i]] = 0.;
+                boundary_values[face_dof_indices[i]]= 0.;
             }
     }
   } // namespace internal
@@ -764,7 +764,7 @@ namespace VectorTools
       if(cell->active())
         return cell->is_locally_owned();
 
-      for(unsigned int c = 0; c < cell->n_children(); ++c)
+      for(unsigned int c= 0; c < cell->n_children(); ++c)
         if(!is_locally_owned(cell->child(c)))
           return false;
 
@@ -783,7 +783,7 @@ namespace VectorTools
     const ConstraintMatrix&                            constraints,
     VectorType&                                        u2)
   {
-    const DoFHandlerType<dim, spacedim>& dof1 = intergridmap.get_source_grid();
+    const DoFHandlerType<dim, spacedim>& dof1= intergridmap.get_source_grid();
     const DoFHandlerType<dim, spacedim>& dof2
       = intergridmap.get_destination_grid();
     (void) dof2;
@@ -804,7 +804,7 @@ namespace VectorTools
     // Therefore, loop over all cells
     // (active and inactive) of the source
     // grid ..
-    typename DoFHandlerType<dim, spacedim>::cell_iterator cell1 = dof1.begin();
+    typename DoFHandlerType<dim, spacedim>::cell_iterator cell1= dof1.begin();
     const typename DoFHandlerType<dim, spacedim>::cell_iterator endc1
       = dof1.end();
 
@@ -896,8 +896,8 @@ namespace VectorTools
 
           std::map<types::boundary_id, const Function<spacedim, number>*>
             boundary_functions;
-          for(unsigned int i = 0; i < used_boundary_ids.size(); ++i)
-            boundary_functions[used_boundary_ids[i]] = &function;
+          for(unsigned int i= 0; i < used_boundary_ids.size(); ++i)
+            boundary_functions[used_boundary_ids[i]]= &function;
           project_boundary_values(
             mapping, dof, boundary_functions, q_boundary, boundary_values);
         }
@@ -1017,7 +1017,7 @@ namespace VectorTools
       // interpolate the boundary values and then condense the matrix and vector
       if(constraints_are_compatible)
         {
-          const Function<spacedim, number>* dummy = nullptr;
+          const Function<spacedim, number>* dummy= nullptr;
           MatrixCreator::create_mass_matrix(mapping,
                                             dof,
                                             quadrature,
@@ -1046,7 +1046,7 @@ namespace VectorTools
       // copy vec into vec_result. we can't use vec_result itself above, since
       // it may be of another type than Vector<double> and that wouldn't
       // necessarily go together with the matrix and other functions
-      for(unsigned int i = 0; i < vec.size(); ++i)
+      for(unsigned int i= 0; i < vec.size(); ++i)
         ::dealii::internal::ElementAccess<VectorType>::set(
           vec(i), i, vec_result);
     }
@@ -1092,8 +1092,7 @@ namespace VectorTools
       typename MatrixFree<dim, Number>::AdditionalData additional_data;
       additional_data.tasks_parallel_scheme
         = MatrixFree<dim, Number>::AdditionalData::partition_color;
-      additional_data.mapping_update_flags
-        = (update_values | update_JxW_values);
+      additional_data.mapping_update_flags= (update_values | update_JxW_values);
       std::shared_ptr<MatrixFree<dim, Number>> matrix_free(
         new MatrixFree<dim, Number>());
       matrix_free->reinit(mapping,
@@ -1117,7 +1116,7 @@ namespace VectorTools
       matrix_free->initialize_dof_vector(rhs);
       matrix_free->initialize_dof_vector(inhomogeneities);
       constraints.distribute(inhomogeneities);
-      inhomogeneities *= -1.;
+      inhomogeneities*= -1.;
 
       {
         create_right_hand_side(
@@ -1127,12 +1126,12 @@ namespace VectorTools
         inhomogeneities.update_ghost_values();
         FEEvaluation<dim, fe_degree, fe_degree + 2, components, Number> phi(
           *matrix_free);
-        for(unsigned int cell = 0; cell < matrix_free->n_macro_cells(); ++cell)
+        for(unsigned int cell= 0; cell < matrix_free->n_macro_cells(); ++cell)
           {
             phi.reinit(cell);
             phi.read_dof_values_plain(inhomogeneities);
             phi.evaluate(true, false);
-            for(unsigned int q = 0; q < phi.n_q_points; ++q)
+            for(unsigned int q= 0; q < phi.n_q_points; ++q)
               phi.submit_value(phi.get_value(q), q);
 
             phi.integrate(true, false);
@@ -1151,7 +1150,7 @@ namespace VectorTools
       PreconditionJacobi<MatrixType>                       preconditioner;
       preconditioner.initialize(mass_matrix, 1.);
       cg.solve(mass_matrix, work_result, rhs, preconditioner);
-      work_result += inhomogeneities;
+      work_result+= inhomogeneities;
 
       constraints.distribute(work_result);
     }
@@ -1335,8 +1334,8 @@ namespace VectorTools
                                     q_boundary,
                                     project_to_boundary_first);
 
-      const IndexSet&           locally_owned_dofs = dof.locally_owned_dofs();
-      IndexSet::ElementIterator it                 = locally_owned_dofs.begin();
+      const IndexSet&           locally_owned_dofs= dof.locally_owned_dofs();
+      IndexSet::ElementIterator it                = locally_owned_dofs.begin();
       for(; it != locally_owned_dofs.end(); ++it)
         ::dealii::internal::ElementAccess<VectorType>::set(
           work_result(*it), *it, vec_result);
@@ -1371,7 +1370,7 @@ namespace VectorTools
       // the number of components is not too high.
       if(enforce_zero_boundary || project_to_boundary_first
          || dof.get_fe(0).n_components() > 4)
-        use_matrix_free = false;
+        use_matrix_free= false;
 
       if(use_matrix_free)
         project_matrix_free_copy_vector(mapping,
@@ -1426,8 +1425,7 @@ namespace VectorTools
       typename MatrixFree<dim, Number>::AdditionalData additional_data;
       additional_data.tasks_parallel_scheme
         = MatrixFree<dim, Number>::AdditionalData::partition_color;
-      additional_data.mapping_update_flags
-        = (update_values | update_JxW_values);
+      additional_data.mapping_update_flags= (update_values | update_JxW_values);
       std::shared_ptr<MatrixFree<dim, Number>> matrix_free(
         new MatrixFree<dim, Number>());
       matrix_free->reinit(mapping,
@@ -1452,31 +1450,31 @@ namespace VectorTools
       matrix_free->initialize_dof_vector(rhs);
       matrix_free->initialize_dof_vector(inhomogeneities);
       constraints.distribute(inhomogeneities);
-      inhomogeneities *= -1.;
+      inhomogeneities*= -1.;
 
       // assemble right hand side:
       {
         FEValues<dim> fe_values(
           mapping, dof.get_fe(), quadrature, update_values | update_JxW_values);
 
-        const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-        const unsigned int n_q_points    = quadrature.size();
+        const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
+        const unsigned int n_q_points   = quadrature.size();
         Vector<Number>     cell_rhs(dofs_per_cell);
         std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
         typename DoFHandler<dim, spacedim>::active_cell_iterator cell
           = dof.begin_active(),
-          endc = dof.end();
+          endc= dof.end();
         for(; cell != endc; ++cell)
           if(cell->is_locally_owned())
             {
-              cell_rhs = 0;
+              cell_rhs= 0;
               fe_values.reinit(cell);
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+              for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
                 {
-                  const double val_q = func(cell, q_point);
-                  for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                    cell_rhs(i) += (fe_values.shape_value(i, q_point) * val_q
-                                    * fe_values.JxW(q_point));
+                  const double val_q= func(cell, q_point);
+                  for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                    cell_rhs(i)+= (fe_values.shape_value(i, q_point) * val_q
+                                   * fe_values.JxW(q_point));
                 }
 
               cell->get_dof_indices(local_dof_indices);
@@ -1499,12 +1497,12 @@ namespace VectorTools
       PreconditionJacobi<MatrixType>                          preconditioner;
       preconditioner.initialize(mass_matrix, data);
       cg.solve(mass_matrix, vec, rhs, preconditioner);
-      vec += inhomogeneities;
+      vec+= inhomogeneities;
 
       constraints.distribute(vec);
 
-      const IndexSet&           locally_owned_dofs = dof.locally_owned_dofs();
-      IndexSet::ElementIterator it                 = locally_owned_dofs.begin();
+      const IndexSet&           locally_owned_dofs= dof.locally_owned_dofs();
+      IndexSet::ElementIterator it                = locally_owned_dofs.begin();
       for(; it != locally_owned_dofs.end(); ++it)
         ::dealii::internal::ElementAccess<VectorType>::set(
           vec(*it), *it, vec_result);
@@ -1556,19 +1554,19 @@ namespace VectorTools
       matrix_free->initialize_dof_vector(rhs, fe_component);
       matrix_free->initialize_dof_vector(inhomogeneities, fe_component);
       constraints.distribute(inhomogeneities);
-      inhomogeneities *= -1.;
+      inhomogeneities*= -1.;
 
       // assemble right hand side:
       {
         FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(
           *matrix_free, fe_component);
-        const unsigned int n_cells    = matrix_free->n_macro_cells();
-        const unsigned int n_q_points = fe_eval.n_q_points;
+        const unsigned int n_cells   = matrix_free->n_macro_cells();
+        const unsigned int n_q_points= fe_eval.n_q_points;
 
-        for(unsigned int cell = 0; cell < n_cells; ++cell)
+        for(unsigned int cell= 0; cell < n_cells; ++cell)
           {
             fe_eval.reinit(cell);
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               fe_eval.submit_value(func(cell, q), q);
 
             fe_eval.integrate(true, false);
@@ -1590,12 +1588,12 @@ namespace VectorTools
       PreconditionJacobi<MatrixType>                          preconditioner;
       preconditioner.initialize(mass_matrix, data);
       cg.solve(mass_matrix, vec, rhs, preconditioner);
-      vec += inhomogeneities;
+      vec+= inhomogeneities;
 
       constraints.distribute(vec);
 
-      const IndexSet&           locally_owned_dofs = dof.locally_owned_dofs();
-      IndexSet::ElementIterator it                 = locally_owned_dofs.begin();
+      const IndexSet&           locally_owned_dofs= dof.locally_owned_dofs();
+      IndexSet::ElementIterator it                = locally_owned_dofs.begin();
       for(; it != locally_owned_dofs.end(); ++it)
         ::dealii::internal::ElementAccess<VectorType>::set(
           vec(*it), *it, vec_result);
@@ -1833,27 +1831,27 @@ namespace VectorTools
   {
     typedef typename VectorType::value_type Number;
 
-    const FiniteElement<dim, spacedim>& fe = dof_handler.get_fe();
+    const FiniteElement<dim, spacedim>& fe= dof_handler.get_fe();
     Assert(fe.n_components() == rhs_function.n_components,
            ExcDimensionMismatch(fe.n_components(), rhs_function.n_components));
     Assert(rhs_vector.size() == dof_handler.n_dofs(),
            ExcDimensionMismatch(rhs_vector.size(), dof_handler.n_dofs()));
-    rhs_vector = typename VectorType::value_type(0.);
+    rhs_vector= typename VectorType::value_type(0.);
 
-    UpdateFlags update_flags = UpdateFlags(
+    UpdateFlags update_flags= UpdateFlags(
       update_values | update_quadrature_points | update_JxW_values);
     FEValues<dim, spacedim> fe_values(mapping, fe, quadrature, update_flags);
 
-    const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                       n_q_points    = fe_values.n_quadrature_points,
-                       n_components  = fe.n_components();
+    const unsigned int dofs_per_cell= fe_values.dofs_per_cell,
+                       n_q_points   = fe_values.n_quadrature_points,
+                       n_components = fe.n_components();
 
     std::vector<types::global_dof_index> dofs(dofs_per_cell);
     Vector<Number>                       cell_vector(dofs_per_cell);
 
     typename DoFHandler<dim, spacedim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     if(n_components == 1)
       {
@@ -1864,16 +1862,16 @@ namespace VectorTools
             {
               fe_values.reinit(cell);
 
-              const std::vector<double>& weights = fe_values.get_JxW_values();
+              const std::vector<double>& weights= fe_values.get_JxW_values();
               rhs_function.value_list(fe_values.get_quadrature_points(),
                                       rhs_values);
 
-              cell_vector = 0;
-              for(unsigned int point = 0; point < n_q_points; ++point)
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  cell_vector(i) += rhs_values[point]
-                                    * fe_values.shape_value(i, point)
-                                    * weights[point];
+              cell_vector= 0;
+              for(unsigned int point= 0; point < n_q_points; ++point)
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                  cell_vector(i)+= rhs_values[point]
+                                   * fe_values.shape_value(i, point)
+                                   * weights[point];
 
               cell->get_dof_indices(dofs);
 
@@ -1891,24 +1889,24 @@ namespace VectorTools
             {
               fe_values.reinit(cell);
 
-              const std::vector<double>& weights = fe_values.get_JxW_values();
+              const std::vector<double>& weights= fe_values.get_JxW_values();
               rhs_function.vector_value_list(fe_values.get_quadrature_points(),
                                              rhs_values);
 
-              cell_vector = 0;
+              cell_vector= 0;
               // Use the faster code if the
               // FiniteElement is primitive
               if(fe.is_primitive())
                 {
-                  for(unsigned int point = 0; point < n_q_points; ++point)
-                    for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                  for(unsigned int point= 0; point < n_q_points; ++point)
+                    for(unsigned int i= 0; i < dofs_per_cell; ++i)
                       {
                         const unsigned int component
                           = fe.system_to_component_index(i).first;
 
-                        cell_vector(i) += rhs_values[point](component)
-                                          * fe_values.shape_value(i, point)
-                                          * weights[point];
+                        cell_vector(i)+= rhs_values[point](component)
+                                         * fe_values.shape_value(i, point)
+                                         * weights[point];
                       }
                 }
               else
@@ -1916,16 +1914,16 @@ namespace VectorTools
                   // Otherwise do it the way
                   // proposed for vector valued
                   // elements
-                  for(unsigned int point = 0; point < n_q_points; ++point)
-                    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                      for(unsigned int comp_i = 0; comp_i < n_components;
+                  for(unsigned int point= 0; point < n_q_points; ++point)
+                    for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                      for(unsigned int comp_i= 0; comp_i < n_components;
                           ++comp_i)
                         if(fe.get_nonzero_components(i)[comp_i])
                           {
-                            cell_vector(i) += rhs_values[point](comp_i)
-                                              * fe_values.shape_value_component(
-                                                  i, point, comp_i)
-                                              * weights[point];
+                            cell_vector(i)+= rhs_values[point](comp_i)
+                                             * fe_values.shape_value_component(
+                                                 i, point, comp_i)
+                                             * weights[point];
                           }
                 }
               cell->get_dof_indices(dofs);
@@ -1965,26 +1963,26 @@ namespace VectorTools
   {
     typedef typename VectorType::value_type Number;
 
-    const hp::FECollection<dim, spacedim>& fe = dof_handler.get_fe_collection();
+    const hp::FECollection<dim, spacedim>& fe= dof_handler.get_fe_collection();
     Assert(fe.n_components() == rhs_function.n_components,
            ExcDimensionMismatch(fe.n_components(), rhs_function.n_components));
     Assert(rhs_vector.size() == dof_handler.n_dofs(),
            ExcDimensionMismatch(rhs_vector.size(), dof_handler.n_dofs()));
-    rhs_vector = 0;
+    rhs_vector= 0;
 
-    UpdateFlags update_flags = UpdateFlags(
+    UpdateFlags update_flags= UpdateFlags(
       update_values | update_quadrature_points | update_JxW_values);
     hp::FEValues<dim, spacedim> x_fe_values(
       mapping, fe, quadrature, update_flags);
 
-    const unsigned int n_components = fe.n_components();
+    const unsigned int n_components= fe.n_components();
 
     std::vector<types::global_dof_index> dofs(fe.max_dofs_per_cell());
     Vector<Number>                       cell_vector(fe.max_dofs_per_cell());
 
     typename hp::DoFHandler<dim, spacedim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     if(n_components == 1)
       {
@@ -1998,22 +1996,22 @@ namespace VectorTools
               const FEValues<dim, spacedim>& fe_values
                 = x_fe_values.get_present_fe_values();
 
-              const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                                 n_q_points    = fe_values.n_quadrature_points;
+              const unsigned int dofs_per_cell= fe_values.dofs_per_cell,
+                                 n_q_points   = fe_values.n_quadrature_points;
               rhs_values.resize(n_q_points);
               dofs.resize(dofs_per_cell);
               cell_vector.reinit(dofs_per_cell);
 
-              const std::vector<Number>& weights = fe_values.get_JxW_values();
+              const std::vector<Number>& weights= fe_values.get_JxW_values();
               rhs_function.value_list(fe_values.get_quadrature_points(),
                                       rhs_values);
 
-              cell_vector = 0;
-              for(unsigned int point = 0; point < n_q_points; ++point)
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  cell_vector(i) += rhs_values[point]
-                                    * fe_values.shape_value(i, point)
-                                    * weights[point];
+              cell_vector= 0;
+              for(unsigned int point= 0; point < n_q_points; ++point)
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                  cell_vector(i)+= rhs_values[point]
+                                   * fe_values.shape_value(i, point)
+                                   * weights[point];
 
               cell->get_dof_indices(dofs);
 
@@ -2033,47 +2031,47 @@ namespace VectorTools
               const FEValues<dim, spacedim>& fe_values
                 = x_fe_values.get_present_fe_values();
 
-              const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                                 n_q_points    = fe_values.n_quadrature_points;
+              const unsigned int dofs_per_cell= fe_values.dofs_per_cell,
+                                 n_q_points   = fe_values.n_quadrature_points;
               rhs_values.resize(n_q_points, Vector<Number>(n_components));
               dofs.resize(dofs_per_cell);
               cell_vector.reinit(dofs_per_cell);
 
-              const std::vector<Number>& weights = fe_values.get_JxW_values();
+              const std::vector<Number>& weights= fe_values.get_JxW_values();
               rhs_function.vector_value_list(fe_values.get_quadrature_points(),
                                              rhs_values);
 
-              cell_vector = 0;
+              cell_vector= 0;
 
               // Use the faster code if the
               // FiniteElement is primitive
               if(cell->get_fe().is_primitive())
                 {
-                  for(unsigned int point = 0; point < n_q_points; ++point)
-                    for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                  for(unsigned int point= 0; point < n_q_points; ++point)
+                    for(unsigned int i= 0; i < dofs_per_cell; ++i)
                       {
                         const unsigned int component
                           = cell->get_fe().system_to_component_index(i).first;
 
-                        cell_vector(i) += rhs_values[point](component)
-                                          * fe_values.shape_value(i, point)
-                                          * weights[point];
+                        cell_vector(i)+= rhs_values[point](component)
+                                         * fe_values.shape_value(i, point)
+                                         * weights[point];
                       }
                 }
               else
                 {
                   // Otherwise do it the way proposed
                   // for vector valued elements
-                  for(unsigned int point = 0; point < n_q_points; ++point)
-                    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                      for(unsigned int comp_i = 0; comp_i < n_components;
+                  for(unsigned int point= 0; point < n_q_points; ++point)
+                    for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                      for(unsigned int comp_i= 0; comp_i < n_components;
                           ++comp_i)
                         if(cell->get_fe().get_nonzero_components(i)[comp_i])
                           {
-                            cell_vector(i) += rhs_values[point](comp_i)
-                                              * fe_values.shape_value_component(
-                                                  i, point, comp_i)
-                                              * weights[point];
+                            cell_vector(i)+= rhs_values[point](comp_i)
+                                             * fe_values.shape_value_component(
+                                                 i, point, comp_i)
+                                             * weights[point];
                           }
                 }
 
@@ -2115,7 +2113,7 @@ namespace VectorTools
     Assert(dof_handler.get_fe(0).n_components() == 1,
            ExcMessage("This function only works for scalar finite elements"));
 
-    rhs_vector = 0;
+    rhs_vector= 0;
 
     std::pair<typename DoFHandler<dim, spacedim>::active_cell_iterator,
               Point<spacedim>>
@@ -2129,13 +2127,13 @@ namespace VectorTools
       mapping, dof_handler.get_fe(), q, UpdateFlags(update_values));
     fe_values.reinit(cell_point.first);
 
-    const unsigned int dofs_per_cell = dof_handler.get_fe().dofs_per_cell;
+    const unsigned int dofs_per_cell= dof_handler.get_fe().dofs_per_cell;
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     cell_point.first->get_dof_indices(local_dof_indices);
 
-    for(unsigned int i = 0; i < dofs_per_cell; i++)
-      rhs_vector(local_dof_indices[i]) = fe_values.shape_value(i, 0);
+    for(unsigned int i= 0; i < dofs_per_cell; i++)
+      rhs_vector(local_dof_indices[i])= fe_values.shape_value(i, 0);
   }
 
   template <int dim, int spacedim>
@@ -2161,7 +2159,7 @@ namespace VectorTools
     Assert(dof_handler.get_fe(0).n_components() == 1,
            ExcMessage("This function only works for scalar finite elements"));
 
-    rhs_vector = 0;
+    rhs_vector= 0;
 
     std::pair<typename hp::DoFHandler<dim, spacedim>::active_cell_iterator,
               Point<spacedim>>
@@ -2177,13 +2175,13 @@ namespace VectorTools
                             UpdateFlags(update_values));
     fe_values.reinit(cell_point.first);
 
-    const unsigned int dofs_per_cell = cell_point.first->get_fe().dofs_per_cell;
+    const unsigned int dofs_per_cell= cell_point.first->get_fe().dofs_per_cell;
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     cell_point.first->get_dof_indices(local_dof_indices);
 
-    for(unsigned int i = 0; i < dofs_per_cell; i++)
-      rhs_vector(local_dof_indices[i]) = fe_values.shape_value(i, 0);
+    for(unsigned int i= 0; i < dofs_per_cell; i++)
+      rhs_vector(local_dof_indices[i])= fe_values.shape_value(i, 0);
   }
 
   template <int dim, int spacedim>
@@ -2210,7 +2208,7 @@ namespace VectorTools
            ExcMessage(
              "This function only works for vector-valued finite elements."));
 
-    rhs_vector = 0;
+    rhs_vector= 0;
 
     const std::pair<typename DoFHandler<dim, spacedim>::active_cell_iterator,
                     Point<spacedim>>
@@ -2225,12 +2223,12 @@ namespace VectorTools
       mapping, dof_handler.get_fe(), q, UpdateFlags(update_values));
     fe_values.reinit(cell_point.first);
 
-    const unsigned int dofs_per_cell = dof_handler.get_fe().dofs_per_cell;
+    const unsigned int dofs_per_cell= dof_handler.get_fe().dofs_per_cell;
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     cell_point.first->get_dof_indices(local_dof_indices);
 
-    for(unsigned int i = 0; i < dofs_per_cell; i++)
+    for(unsigned int i= 0; i < dofs_per_cell; i++)
       rhs_vector(local_dof_indices[i])
         = orientation * fe_values[vec].value(i, 0);
   }
@@ -2264,7 +2262,7 @@ namespace VectorTools
            ExcMessage(
              "This function only works for vector-valued finite elements."));
 
-    rhs_vector = 0;
+    rhs_vector= 0;
 
     std::pair<typename hp::DoFHandler<dim, spacedim>::active_cell_iterator,
               Point<spacedim>>
@@ -2281,12 +2279,12 @@ namespace VectorTools
                             UpdateFlags(update_values));
     fe_values.reinit(cell_point.first);
 
-    const unsigned int dofs_per_cell = cell_point.first->get_fe().dofs_per_cell;
+    const unsigned int dofs_per_cell= cell_point.first->get_fe().dofs_per_cell;
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     cell_point.first->get_dof_indices(local_dof_indices);
 
-    for(unsigned int i = 0; i < dofs_per_cell; i++)
+    for(unsigned int i= 0; i < dofs_per_cell; i++)
       rhs_vector(local_dof_indices[i])
         = orientation * fe_values[vec].value(i, 0);
   }
@@ -2315,35 +2313,35 @@ namespace VectorTools
     VectorType&                                                rhs_vector,
     const std::set<types::boundary_id>&                        boundary_ids)
   {
-    const FiniteElement<dim>& fe = dof_handler.get_fe();
+    const FiniteElement<dim>& fe= dof_handler.get_fe();
     Assert(fe.n_components() == rhs_function.n_components,
            ExcDimensionMismatch(fe.n_components(), rhs_function.n_components));
     Assert(rhs_vector.size() == dof_handler.n_dofs(),
            ExcDimensionMismatch(rhs_vector.size(), dof_handler.n_dofs()));
 
-    rhs_vector = 0;
+    rhs_vector= 0;
 
-    UpdateFlags update_flags = UpdateFlags(
+    UpdateFlags update_flags= UpdateFlags(
       update_values | update_quadrature_points | update_JxW_values);
     FEFaceValues<dim> fe_values(mapping, fe, quadrature, update_flags);
 
-    const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                       n_q_points    = fe_values.n_quadrature_points,
-                       n_components  = fe.n_components();
+    const unsigned int dofs_per_cell= fe_values.dofs_per_cell,
+                       n_q_points   = fe_values.n_quadrature_points,
+                       n_components = fe.n_components();
 
     std::vector<types::global_dof_index> dofs(dofs_per_cell);
     Vector<double>                       cell_vector(dofs_per_cell);
 
     typename DoFHandler<dim, spacedim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     if(n_components == 1)
       {
         std::vector<double> rhs_values(n_q_points);
 
         for(; cell != endc; ++cell)
-          for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+          for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
               ++face)
             if(cell->face(face)->at_boundary()
                && (boundary_ids.empty()
@@ -2352,21 +2350,21 @@ namespace VectorTools
               {
                 fe_values.reinit(cell, face);
 
-                const std::vector<double>& weights = fe_values.get_JxW_values();
+                const std::vector<double>& weights= fe_values.get_JxW_values();
                 rhs_function.value_list(fe_values.get_quadrature_points(),
                                         rhs_values);
 
-                cell_vector = 0;
-                for(unsigned int point = 0; point < n_q_points; ++point)
-                  for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                    cell_vector(i) += rhs_values[point]
-                                      * fe_values.shape_value(i, point)
-                                      * weights[point];
+                cell_vector= 0;
+                for(unsigned int point= 0; point < n_q_points; ++point)
+                  for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                    cell_vector(i)+= rhs_values[point]
+                                     * fe_values.shape_value(i, point)
+                                     * weights[point];
 
                 cell->get_dof_indices(dofs);
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  rhs_vector(dofs[i]) += cell_vector(i);
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                  rhs_vector(dofs[i])+= cell_vector(i);
               }
       }
     else
@@ -2375,7 +2373,7 @@ namespace VectorTools
                                                Vector<double>(n_components));
 
         for(; cell != endc; ++cell)
-          for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+          for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
               ++face)
             if(cell->face(face)->at_boundary()
                && (boundary_ids.empty()
@@ -2384,25 +2382,25 @@ namespace VectorTools
               {
                 fe_values.reinit(cell, face);
 
-                const std::vector<double>& weights = fe_values.get_JxW_values();
+                const std::vector<double>& weights= fe_values.get_JxW_values();
                 rhs_function.vector_value_list(
                   fe_values.get_quadrature_points(), rhs_values);
 
-                cell_vector = 0;
+                cell_vector= 0;
 
                 // Use the faster code if the
                 // FiniteElement is primitive
                 if(fe.is_primitive())
                   {
-                    for(unsigned int point = 0; point < n_q_points; ++point)
-                      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                    for(unsigned int point= 0; point < n_q_points; ++point)
+                      for(unsigned int i= 0; i < dofs_per_cell; ++i)
                         {
                           const unsigned int component
                             = fe.system_to_component_index(i).first;
 
-                          cell_vector(i) += rhs_values[point](component)
-                                            * fe_values.shape_value(i, point)
-                                            * weights[point];
+                          cell_vector(i)+= rhs_values[point](component)
+                                           * fe_values.shape_value(i, point)
+                                           * weights[point];
                         }
                   }
                 else
@@ -2410,9 +2408,9 @@ namespace VectorTools
                     // And the full featured
                     // code, if vector valued
                     // FEs are used
-                    for(unsigned int point = 0; point < n_q_points; ++point)
-                      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                        for(unsigned int comp_i = 0; comp_i < n_components;
+                    for(unsigned int point= 0; point < n_q_points; ++point)
+                      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                        for(unsigned int comp_i= 0; comp_i < n_components;
                             ++comp_i)
                           if(fe.get_nonzero_components(i)[comp_i])
                             {
@@ -2426,8 +2424,8 @@ namespace VectorTools
 
                 cell->get_dof_indices(dofs);
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  rhs_vector(dofs[i]) += cell_vector(i);
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                  rhs_vector(dofs[i])+= cell_vector(i);
               }
       }
   }
@@ -2459,33 +2457,33 @@ namespace VectorTools
     VectorType&                                                rhs_vector,
     const std::set<types::boundary_id>&                        boundary_ids)
   {
-    const hp::FECollection<dim>& fe = dof_handler.get_fe_collection();
+    const hp::FECollection<dim>& fe= dof_handler.get_fe_collection();
     Assert(fe.n_components() == rhs_function.n_components,
            ExcDimensionMismatch(fe.n_components(), rhs_function.n_components));
     Assert(rhs_vector.size() == dof_handler.n_dofs(),
            ExcDimensionMismatch(rhs_vector.size(), dof_handler.n_dofs()));
 
-    rhs_vector = 0;
+    rhs_vector= 0;
 
-    UpdateFlags update_flags = UpdateFlags(
+    UpdateFlags update_flags= UpdateFlags(
       update_values | update_quadrature_points | update_JxW_values);
     hp::FEFaceValues<dim> x_fe_values(mapping, fe, quadrature, update_flags);
 
-    const unsigned int n_components = fe.n_components();
+    const unsigned int n_components= fe.n_components();
 
     std::vector<types::global_dof_index> dofs(fe.max_dofs_per_cell());
     Vector<double>                       cell_vector(fe.max_dofs_per_cell());
 
     typename hp::DoFHandler<dim, spacedim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     if(n_components == 1)
       {
         std::vector<double> rhs_values;
 
         for(; cell != endc; ++cell)
-          for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+          for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
               ++face)
             if(cell->face(face)->at_boundary()
                && (boundary_ids.empty()
@@ -2497,26 +2495,26 @@ namespace VectorTools
                 const FEFaceValues<dim>& fe_values
                   = x_fe_values.get_present_fe_values();
 
-                const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                                   n_q_points = fe_values.n_quadrature_points;
+                const unsigned int dofs_per_cell= fe_values.dofs_per_cell,
+                                   n_q_points   = fe_values.n_quadrature_points;
                 rhs_values.resize(n_q_points);
 
-                const std::vector<double>& weights = fe_values.get_JxW_values();
+                const std::vector<double>& weights= fe_values.get_JxW_values();
                 rhs_function.value_list(fe_values.get_quadrature_points(),
                                         rhs_values);
 
-                cell_vector = 0;
-                for(unsigned int point = 0; point < n_q_points; ++point)
-                  for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                    cell_vector(i) += rhs_values[point]
-                                      * fe_values.shape_value(i, point)
-                                      * weights[point];
+                cell_vector= 0;
+                for(unsigned int point= 0; point < n_q_points; ++point)
+                  for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                    cell_vector(i)+= rhs_values[point]
+                                     * fe_values.shape_value(i, point)
+                                     * weights[point];
 
                 dofs.resize(dofs_per_cell);
                 cell->get_dof_indices(dofs);
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  rhs_vector(dofs[i]) += cell_vector(i);
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                  rhs_vector(dofs[i])+= cell_vector(i);
               }
       }
     else
@@ -2524,7 +2522,7 @@ namespace VectorTools
         std::vector<Vector<double>> rhs_values;
 
         for(; cell != endc; ++cell)
-          for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+          for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
               ++face)
             if(cell->face(face)->at_boundary()
                && (boundary_ids.empty()
@@ -2536,29 +2534,29 @@ namespace VectorTools
                 const FEFaceValues<dim>& fe_values
                   = x_fe_values.get_present_fe_values();
 
-                const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                                   n_q_points = fe_values.n_quadrature_points;
+                const unsigned int dofs_per_cell= fe_values.dofs_per_cell,
+                                   n_q_points   = fe_values.n_quadrature_points;
                 rhs_values.resize(n_q_points, Vector<double>(n_components));
 
-                const std::vector<double>& weights = fe_values.get_JxW_values();
+                const std::vector<double>& weights= fe_values.get_JxW_values();
                 rhs_function.vector_value_list(
                   fe_values.get_quadrature_points(), rhs_values);
 
-                cell_vector = 0;
+                cell_vector= 0;
 
                 // Use the faster code if the
                 // FiniteElement is primitive
                 if(cell->get_fe().is_primitive())
                   {
-                    for(unsigned int point = 0; point < n_q_points; ++point)
-                      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                    for(unsigned int point= 0; point < n_q_points; ++point)
+                      for(unsigned int i= 0; i < dofs_per_cell; ++i)
                         {
                           const unsigned int component
                             = cell->get_fe().system_to_component_index(i).first;
 
-                          cell_vector(i) += rhs_values[point](component)
-                                            * fe_values.shape_value(i, point)
-                                            * weights[point];
+                          cell_vector(i)+= rhs_values[point](component)
+                                           * fe_values.shape_value(i, point)
+                                           * weights[point];
                         }
                   }
                 else
@@ -2566,9 +2564,9 @@ namespace VectorTools
                     // And the full featured
                     // code, if vector valued
                     // FEs are used
-                    for(unsigned int point = 0; point < n_q_points; ++point)
-                      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                        for(unsigned int comp_i = 0; comp_i < n_components;
+                    for(unsigned int point= 0; point < n_q_points; ++point)
+                      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                        for(unsigned int comp_i= 0; comp_i < n_components;
                             ++comp_i)
                           if(cell->get_fe().get_nonzero_components(i)[comp_i])
                             {
@@ -2582,8 +2580,8 @@ namespace VectorTools
                 dofs.resize(dofs_per_cell);
                 cell->get_dof_indices(dofs);
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  rhs_vector(dofs[i]) += cell_vector(i);
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                  rhs_vector(dofs[i])+= cell_vector(i);
               }
       }
   }
@@ -2640,7 +2638,7 @@ namespace VectorTools
              ExcMessage("You cannot specify the special boundary indicator "
                         "for interior faces in your function map."));
 
-      const unsigned int n_components = DoFTools::n_components(dof);
+      const unsigned int n_components= DoFTools::n_components(dof);
       for(typename std::map<types::boundary_id,
                             const Function<spacedim, number>*>::const_iterator i
           = function_map.begin();
@@ -2659,7 +2657,7 @@ namespace VectorTools
               = dof.begin_active();
               cell != dof.end();
               ++cell)
-            for(unsigned int direction = 0;
+            for(unsigned int direction= 0;
                 direction < GeometryInfo<dim>::faces_per_cell;
                 ++direction)
               if(cell->at_boundary(direction)
@@ -2671,7 +2669,7 @@ namespace VectorTools
                          ->second;
 
                   // get the FE corresponding to this cell
-                  const FiniteElement<dim, spacedim>& fe = cell->get_fe();
+                  const FiniteElement<dim, spacedim>& fe= cell->get_fe();
                   Assert(fe.n_components() == boundary_function.n_components,
                          ExcDimensionMismatch(fe.n_components(),
                                               boundary_function.n_components));
@@ -2695,7 +2693,7 @@ namespace VectorTools
                     boundary_function.vector_value(cell->vertex(direction),
                                                    function_values);
 
-                  for(unsigned int i = 0; i < fe.dofs_per_vertex; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_vertex; ++i)
                     if(component_mask[fe.face_system_to_component_index(i)
                                         .first])
                       boundary_values[cell->vertex_dof_index(
@@ -2706,7 +2704,7 @@ namespace VectorTools
         }
       else // dim > 1
         {
-          const bool fe_is_system = (n_components != 1);
+          const bool fe_is_system= (n_components != 1);
 
           // field to store the indices
           std::vector<types::global_dof_index> face_dofs;
@@ -2729,9 +2727,9 @@ namespace VectorTools
           const dealii::hp::FECollection<dim, spacedim>& finite_elements
             = dof.get_fe_collection();
           dealii::hp::QCollection<dim - 1> q_collection;
-          for(unsigned int f = 0; f < finite_elements.size(); ++f)
+          for(unsigned int f= 0; f < finite_elements.size(); ++f)
             {
-              const FiniteElement<dim, spacedim>& fe = finite_elements[f];
+              const FiniteElement<dim, spacedim>& fe= finite_elements[f];
 
               // generate a quadrature rule on the face from the unit support
               // points. this will be used to obtain the quadrature points on the
@@ -2762,12 +2760,12 @@ namespace VectorTools
                   std::vector<Point<dim - 1>> unit_support_points(
                     fe.dofs_per_face);
 
-                  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                     if(fe.is_primitive(fe.face_to_cell_index(i, 0)))
                       if(component_mask[fe.face_system_to_component_index(i)
                                           .first]
                          == true)
-                        unit_support_points[i] = fe.unit_face_support_point(i);
+                        unit_support_points[i]= fe.unit_face_support_point(i);
 
                   q_collection.push_back(
                     Quadrature<dim - 1>(unit_support_points));
@@ -2786,14 +2784,14 @@ namespace VectorTools
 
           typename DoFHandlerType<dim, spacedim>::active_cell_iterator cell
             = dof.begin_active(),
-            endc = dof.end();
+            endc= dof.end();
           for(; cell != endc; ++cell)
             if(!cell->is_artificial())
-              for(unsigned int face_no = 0;
+              for(unsigned int face_no= 0;
                   face_no < GeometryInfo<dim>::faces_per_cell;
                   ++face_no)
                 {
-                  const FiniteElement<dim, spacedim>& fe = cell->get_fe();
+                  const FiniteElement<dim, spacedim>& fe= cell->get_fe();
 
                   // we can presently deal only with primitive elements for
                   // boundary values. this does not preclude us using
@@ -2801,11 +2799,11 @@ namespace VectorTools
                   // interested in, however. make sure that all shape functions
                   // that are non-zero for the components we are interested in,
                   // are in fact primitive
-                  for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
+                  for(unsigned int i= 0; i < cell->get_fe().dofs_per_cell; ++i)
                     {
                       const ComponentMask& nonzero_component_array
                         = cell->get_fe().get_nonzero_components(i);
-                      for(unsigned int c = 0; c < n_components; ++c)
+                      for(unsigned int c= 0; c < n_components; ++c)
                         if((nonzero_component_array[c] == true)
                            && (component_mask[c] == true))
                           Assert(
@@ -2860,7 +2858,7 @@ namespace VectorTools
                           // component signature. avoid the usual complication
                           // that we can't just use *_system_to_component_index
                           // for non-primitive FEs
-                          for(unsigned int i = 0; i < face_dofs.size(); ++i)
+                          for(unsigned int i= 0; i < face_dofs.size(); ++i)
                             {
                               unsigned int component;
                               if(fe.is_primitive())
@@ -2895,7 +2893,7 @@ namespace VectorTools
                                   // shape function, then all the corresponding
                                   // components in the mask are not set
                                   if(!fe.is_primitive(cell_i))
-                                    for(unsigned int c = 0; c < n_components;
+                                    for(unsigned int c= 0; c < n_components;
                                         ++c)
                                       if(fe.get_nonzero_components(cell_i)[c])
                                         Assert(component_mask[c] == false,
@@ -2906,8 +2904,8 @@ namespace VectorTools
                                   // non-primitive, then we will ignore the result
                                   // in the following anyway, otherwise there's
                                   // only one non-zero component which we will use
-                                  component = fe.get_nonzero_components(cell_i)
-                                                .first_selected_component();
+                                  component= fe.get_nonzero_components(cell_i)
+                                               .first_selected_component();
                                 }
 
                               if(component_mask[component] == true)
@@ -2926,9 +2924,8 @@ namespace VectorTools
 
                           // enter into list
 
-                          for(unsigned int i = 0; i < face_dofs.size(); ++i)
-                            boundary_values[face_dofs[i]]
-                              = dof_values_scalar[i];
+                          for(unsigned int i= 0; i < face_dofs.size(); ++i)
+                            boundary_values[face_dofs[i]]= dof_values_scalar[i];
                         }
                     }
                 }
@@ -2968,7 +2965,7 @@ namespace VectorTools
   {
     std::map<types::boundary_id, const Function<spacedim, number>*>
       function_map;
-    function_map[boundary_component] = &boundary_function;
+    function_map[boundary_component]= &boundary_function;
     interpolate_boundary_values(
       mapping, dof, function_map, boundary_values, component_mask);
   }
@@ -3074,7 +3071,7 @@ namespace VectorTools
   {
     std::map<types::boundary_id, const Function<spacedim, number>*>
       function_map;
-    function_map[boundary_component] = &boundary_function;
+    function_map[boundary_component]= &boundary_function;
     interpolate_boundary_values(
       mapping, dof, function_map, constraints, component_mask);
   }
@@ -3213,11 +3210,11 @@ namespace VectorTools
       const Vector<std::complex<number>>&   rhs,
       Vector<std::complex<number>>&         boundary_projection)
     {
-      auto solve_for_one_component = [&](const bool real_part) {
+      auto solve_for_one_component= [&](const bool real_part) {
         // copy the real or imaginary part out of the rhs vector
         Vector<number> rhs_part(rhs.size());
-        for(unsigned int i = 0; i < rhs.size(); ++i)
-          rhs_part(i) = (real_part ? rhs(i).real() : rhs(i).imag());
+        for(unsigned int i= 0; i < rhs.size(); ++i)
+          rhs_part(i)= (real_part ? rhs(i).real() : rhs(i).imag());
 
         // then solve the linear system for this part
         Vector<number> boundary_projection_part(boundary_projection.size());
@@ -3229,7 +3226,7 @@ namespace VectorTools
 
         // finally copy the real or imaginary part of the
         // solution back into the global solution vector
-        for(unsigned int i = 0; i < boundary_projection.size(); ++i)
+        for(unsigned int i= 0; i < boundary_projection.size(); ++i)
           if(real_part == true)
             boundary_projection(i).real(boundary_projection_part(i));
           else
@@ -3280,8 +3277,8 @@ namespace VectorTools
           // should create another copy
           // here
           component_mapping.resize(dof.get_fe(0).n_components());
-          for(unsigned int i = 0; i < component_mapping.size(); ++i)
-            component_mapping[i] = i;
+          for(unsigned int i= 0; i < component_mapping.size(); ++i)
+            component_mapping[i]= i;
         }
       else
         AssertDimension(dof.get_fe(0).n_components(), component_mapping.size());
@@ -3328,17 +3325,17 @@ namespace VectorTools
         {
 #ifdef DEBUG
           // Assert that there are no hanging nodes at the boundary
-          int level = -1;
+          int level= -1;
           for(typename DoFHandlerType<dim, spacedim>::active_cell_iterator cell
               = dof.begin_active();
               cell != dof.end();
               ++cell)
-            for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+            for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
               {
                 if(cell->at_boundary(f))
                   {
                     if(level == -1)
-                      level = cell->level();
+                      level= cell->level();
                     else
                       {
                         Assert(
@@ -3397,19 +3394,19 @@ namespace VectorTools
       // with positive elements on diagonal.
       // Thus in order to extend this filtering to complex-algebra simply take
       // the real-part of element.
-      number max_element = 0.;
-      for(unsigned int i = 0; i < mass_matrix.m(); ++i)
+      number max_element= 0.;
+      for(unsigned int i= 0; i < mass_matrix.m(); ++i)
         if(real_part_bigger_than(mass_matrix.diag_element(i), max_element))
-          max_element = mass_matrix.diag_element(i);
+          max_element= mass_matrix.diag_element(i);
 
-      for(unsigned int i = 0; i < mass_matrix.m(); ++i)
+      for(unsigned int i= 0; i < mass_matrix.m(); ++i)
         if(real_part_bigger_than(1.e-8 * max_element,
                                  mass_matrix.diag_element(i)))
           {
             filtered_mass_matrix.add_constraint(i, 0.);
             filtered_precondition.add_constraint(i, 0.);
-            mass_matrix.diag_element(i) = 1.;
-            excluded_dofs[i]            = true;
+            mass_matrix.diag_element(i)= 1.;
+            excluded_dofs[i]           = true;
           }
 
       Vector<number> boundary_projection(rhs.size());
@@ -3417,7 +3414,7 @@ namespace VectorTools
       // cannot reduce residual in a useful way if we are close to the square
       // root of the minimal double value
       if(rhs.norm_sqr() < 1e28 * min_number(number()))
-        boundary_projection = 0;
+        boundary_projection= 0;
       else
         {
           invert_mass_matrix(mass_matrix,
@@ -3427,7 +3424,7 @@ namespace VectorTools
                              boundary_projection);
         }
       // fill in boundary values
-      for(unsigned int i = 0; i < dof_to_boundary_mapping.size(); ++i)
+      for(unsigned int i= 0; i < dof_to_boundary_mapping.size(); ++i)
         if(dof_to_boundary_mapping[i] != numbers::invalid_dof_index
            && !excluded_dofs[dof_to_boundary_mapping[i]])
           {
@@ -3440,8 +3437,7 @@ namespace VectorTools
             // number, dof_to_boundary_mapping[i]
             // is the number on the boundary and
             // thus in the solution vector
-            boundary_values[i]
-              = boundary_projection(dof_to_boundary_mapping[i]);
+            boundary_values[i]= boundary_projection(dof_to_boundary_mapping[i]);
           }
     }
   } // namespace
@@ -3574,14 +3570,14 @@ namespace VectorTools
 
       VectorDoFTuple()
       {
-        for(unsigned int i = 0; i < dim; ++i)
-          dof_indices[i] = numbers::invalid_dof_index;
+        for(unsigned int i= 0; i < dim; ++i)
+          dof_indices[i]= numbers::invalid_dof_index;
       }
 
       bool
       operator<(const VectorDoFTuple<dim>& other) const
       {
-        for(unsigned int i = 0; i < dim; ++i)
+        for(unsigned int i= 0; i < dim; ++i)
           if(dof_indices[i] < other.dof_indices[i])
             return true;
           else if(dof_indices[i] > other.dof_indices[i])
@@ -3592,7 +3588,7 @@ namespace VectorTools
       bool
       operator==(const VectorDoFTuple<dim>& other) const
       {
-        for(unsigned int i = 0; i < dim; ++i)
+        for(unsigned int i= 0; i < dim; ++i)
           if(dof_indices[i] != other.dof_indices[i])
             return false;
 
@@ -3610,7 +3606,7 @@ namespace VectorTools
     std::ostream&
     operator<<(std::ostream& out, const VectorDoFTuple<dim>& vdt)
     {
-      for(unsigned int d = 0; d < dim; ++d)
+      for(unsigned int d= 0; d < dim; ++d)
         out << vdt.dof_indices[d] << (d < dim - 1 ? " " : "");
       return out;
     }
@@ -3630,7 +3626,7 @@ namespace VectorTools
     add_constraint(const VectorDoFTuple<dim>& dof_indices,
                    const Tensor<1, dim>&      constraining_vector,
                    ConstraintMatrix&          constraints,
-                   const double               inhomogeneity = 0)
+                   const double               inhomogeneity= 0)
     {
       // choose the DoF that has the
       // largest component in the
@@ -3881,16 +3877,16 @@ namespace VectorTools
       // vector t is largest by
       // magnitude, then
       // x1=(b[1]*t[0]-b[0]*t[1])/t[0]+t[1]/t[0]*x_0, etc.
-      unsigned int largest_component = 0;
-      for(unsigned int d = 1; d < dim; ++d)
+      unsigned int largest_component= 0;
+      for(unsigned int d= 1; d < dim; ++d)
         if(std::fabs(tangent_vector[d])
            > std::fabs(tangent_vector[largest_component]) + 1e-10)
-          largest_component = d;
+          largest_component= d;
 
       // then constrain all of the
       // other degrees of freedom in
       // terms of the one just found
-      for(unsigned int d = 0; d < dim; ++d)
+      for(unsigned int d= 0; d < dim; ++d)
         if(d != largest_component)
           if(!constraints.is_constrained(dof_indices.dof_indices[d])
              && constraints.can_store_line(dof_indices.dof_indices[d]))
@@ -3957,7 +3953,7 @@ namespace VectorTools
               // not be collinear
               // with the average
               // tangent
-              Tensor<1, dim> tmp = vector;
+              Tensor<1, dim> tmp= vector;
               if((std::fabs(tmp[0]) > std::fabs(tmp[1]))
                  && (std::fabs(tmp[0]) > std::fabs(tmp[2])))
                 {
@@ -3969,7 +3965,7 @@ namespace VectorTools
                   else
                     std::swap(tmp[0], tmp[2]);
 
-                  tmp[0] *= -1;
+                  tmp[0]*= -1;
                 }
               else if((std::fabs(tmp[1]) > std::fabs(tmp[0]))
                       && (std::fabs(tmp[1]) > std::fabs(tmp[2])))
@@ -3982,7 +3978,7 @@ namespace VectorTools
                   else
                     std::swap(tmp[1], tmp[2]);
 
-                  tmp[1] *= -1;
+                  tmp[1]*= -1;
                 }
               else
                 {
@@ -3994,7 +3990,7 @@ namespace VectorTools
                   else
                     std::swap(tmp[2], tmp[1]);
 
-                  tmp[2] *= -1;
+                  tmp[2]*= -1;
                 }
 
               // make sure the two vectors
@@ -4005,8 +4001,8 @@ namespace VectorTools
 
               // now compute the
               // two normals
-              orthonormals[0] = cross_product_3d(vector, tmp);
-              orthonormals[1] = cross_product_3d(vector, orthonormals[0]);
+              orthonormals[0]= cross_product_3d(vector, tmp);
+              orthonormals[1]= cross_product_3d(vector, orthonormals[0]);
 
               break;
             }
@@ -4033,10 +4029,10 @@ namespace VectorTools
                             std::vector<double>& dof_values,
                             std::vector<bool>&   dofs_processed)
     {
-      const double tol = 0.5 * cell->face(face)->line(line)->diameter()
-                         / cell->get_fe().degree;
-      const unsigned int dim      = 3;
-      const unsigned int spacedim = 3;
+      const double tol= 0.5 * cell->face(face)->line(line)->diameter()
+                        / cell->get_fe().degree;
+      const unsigned int dim     = 3;
+      const unsigned int spacedim= 3;
 
       hp_fe_values.reinit(
         cell,
@@ -4046,8 +4042,8 @@ namespace VectorTools
 
       // Initialize the required
       // objects.
-      const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
-      const FiniteElement<dim>&                            fe = cell->get_fe();
+      const FEValues<dim>&      fe_values= hp_fe_values.get_present_fe_values();
+      const FiniteElement<dim>& fe       = cell->get_fe();
       const std::vector<DerivativeForm<1, dim, spacedim>>& jacobians
         = fe_values.get_jacobians();
       const std::vector<Point<dim>>& quadrature_points
@@ -4067,23 +4063,23 @@ namespace VectorTools
 
       if(dynamic_cast<const FESystem<dim>*>(&cell->get_fe()) != nullptr)
         {
-          unsigned int fe_index     = 0;
-          unsigned int fe_index_old = 0;
-          unsigned int i            = 0;
+          unsigned int fe_index    = 0;
+          unsigned int fe_index_old= 0;
+          unsigned int i           = 0;
 
           for(; i < fe.n_base_elements(); ++i)
             {
-              fe_index_old = fe_index;
-              fe_index += fe.element_multiplicity(i)
-                          * fe.base_element(i).n_components();
+              fe_index_old= fe_index;
+              fe_index+= fe.element_multiplicity(i)
+                         * fe.base_element(i).n_components();
 
               if(fe_index > first_vector_component)
                 break;
             }
 
-          base_indices.first  = i;
-          base_indices.second = (first_vector_component - fe_index_old)
-                                / fe.base_element(i).n_components();
+          base_indices.first = i;
+          base_indices.second= (first_vector_component - fe_index_old)
+                               / fe.base_element(i).n_components();
         }
 
       // coordinate directions of
@@ -4105,7 +4101,7 @@ namespace VectorTools
       // value of the tangential
       // components of the boundary
       // function on the edge.
-      for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+      for(unsigned int q_point= 0; q_point < fe_values.n_quadrature_points;
           ++q_point)
         {
           // Therefore compute the
@@ -4127,11 +4123,11 @@ namespace VectorTools
                   - fe_values.get_mapping().transform_unit_to_real_cell(
                       cell, shifted_reference_point_2))
                / tol);
-          tangentials[q_point] /= tangentials[q_point].norm();
+          tangentials[q_point]/= tangentials[q_point].norm();
 
           // Compute the degrees of
           // freedom.
-          for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+          for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
             if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
                 && (fe.system_to_base_index(fe.face_to_cell_index(i, face))
                       .first
@@ -4175,7 +4171,7 @@ namespace VectorTools
                                                                    [line]]));
 
                 if(q_point == 0)
-                  dofs_processed[i] = true;
+                  dofs_processed[i]= true;
               }
         }
     }
@@ -4212,40 +4208,40 @@ namespace VectorTools
       std::vector<double>& dof_values,
       std::vector<bool>&   dofs_processed)
     {
-      const unsigned int spacedim = dim;
+      const unsigned int spacedim= dim;
       hp_fe_values.reinit(
         cell,
         cell->active_fe_index() * GeometryInfo<dim>::faces_per_cell + face);
       // Initialize the required
       // objects.
-      const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
-      const FiniteElement<dim>&                            fe = cell->get_fe();
+      const FEValues<dim>&      fe_values= hp_fe_values.get_present_fe_values();
+      const FiniteElement<dim>& fe       = cell->get_fe();
       const std::vector<DerivativeForm<1, dim, spacedim>>& jacobians
         = fe_values.get_jacobians();
       const std::vector<Point<dim>>& quadrature_points
         = fe_values.get_quadrature_points();
-      const unsigned int                    degree = fe.degree - 1;
+      const unsigned int                    degree= fe.degree - 1;
       std::pair<unsigned int, unsigned int> base_indices(0, 0);
 
       if(dynamic_cast<const FESystem<dim>*>(&cell->get_fe()) != nullptr)
         {
-          unsigned int fe_index     = 0;
-          unsigned int fe_index_old = 0;
-          unsigned int i            = 0;
+          unsigned int fe_index    = 0;
+          unsigned int fe_index_old= 0;
+          unsigned int i           = 0;
 
           for(; i < fe.n_base_elements(); ++i)
             {
-              fe_index_old = fe_index;
-              fe_index += fe.element_multiplicity(i)
-                          * fe.base_element(i).n_components();
+              fe_index_old= fe_index;
+              fe_index+= fe.element_multiplicity(i)
+                         * fe.base_element(i).n_components();
 
               if(fe_index > first_vector_component)
                 break;
             }
 
-          base_indices.first  = i;
-          base_indices.second = (first_vector_component - fe_index_old)
-                                / fe.base_element(i).n_components();
+          base_indices.first = i;
+          base_indices.second= (first_vector_component - fe_index_old)
+                               / fe.base_element(i).n_components();
         }
 
       std::vector<Vector<double>> values(fe_values.n_quadrature_points,
@@ -4282,7 +4278,7 @@ namespace VectorTools
               // tangential  components
               // of the boundary function
               // on the edge.
-              for(unsigned int q_point = 0;
+              for(unsigned int q_point= 0;
                   q_point < fe_values.n_quadrature_points;
                   ++q_point)
                 {
@@ -4305,11 +4301,11 @@ namespace VectorTools
                        - fe_values.get_mapping().transform_unit_to_real_cell(
                            cell, shifted_reference_point_2))
                       / tol;
-                  tangentials[q_point] /= tangentials[q_point].norm();
+                  tangentials[q_point]/= tangentials[q_point].norm();
 
                   // Compute the degrees
                   // of freedom.
-                  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                     if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
                         && (fe.system_to_base_index(
                                 fe.face_to_cell_index(i, face))
@@ -4329,7 +4325,7 @@ namespace VectorTools
                                 * tangentials[q_point]);
 
                         if(q_point == 0)
-                          dofs_processed[i] = true;
+                          dofs_processed[i]= true;
                       }
                 }
 
@@ -4361,7 +4357,7 @@ namespace VectorTools
               // functions.  We begin with the horizontal shape functions and set
               // up a linear system of equations to get the values for degrees of
               // freedom associated with the interior of the face.
-              for(unsigned int q_point = 0;
+              for(unsigned int q_point= 0;
                   q_point < fe_values.n_quadrature_points;
                   ++q_point)
                 {
@@ -4376,10 +4372,10 @@ namespace VectorTools
                   // on the edges.
                   Tensor<1, dim> tmp;
 
-                  for(unsigned int d = 0; d < dim; ++d)
-                    tmp[d] = values[q_point](first_vector_component + d);
+                  for(unsigned int d= 0; d < dim; ++d)
+                    tmp[d]= values[q_point](first_vector_component + d);
 
-                  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                     if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
                         && (fe.system_to_base_index(
                                 fe.face_to_cell_index(i, face))
@@ -4398,11 +4394,11 @@ namespace VectorTools
                        || ((dynamic_cast<const FE_Nedelec<dim>*>(&fe)
                             != nullptr)
                            && (2 * fe.degree <= i) && (i < 4 * fe.degree)))
-                      tmp -= dof_values[i]
-                             * fe_values[vec].value(
-                                 fe.face_to_cell_index(i, face), q_point);
+                      tmp-= dof_values[i]
+                            * fe_values[vec].value(
+                                fe.face_to_cell_index(i, face), q_point);
 
-                  const double JxW = std::sqrt(
+                  const double JxW= std::sqrt(
                     fe_values.JxW(q_point)
                     / ((jacobians[q_point][0]
                                  [global_face_coordinate_directions[face][0]]
@@ -4446,12 +4442,12 @@ namespace VectorTools
                   // defined in the
                   // interior of
                   // the face.
-                  for(unsigned int d = 0; d < dim; ++d)
-                    assembling_vector(dim * q_point + d) = JxW * tmp[d];
+                  for(unsigned int d= 0; d < dim; ++d)
+                    assembling_vector(dim * q_point + d)= JxW * tmp[d];
 
-                  unsigned int index = 0;
+                  unsigned int index= 0;
 
-                  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                     if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
                         && (fe.system_to_base_index(
                                 fe.face_to_cell_index(i, face))
@@ -4484,7 +4480,7 @@ namespace VectorTools
                              * fe_values[vec].value(
                                  fe.face_to_cell_index(i, face), q_point));
 
-                        for(unsigned int d = 0; d < dim; ++d)
+                        for(unsigned int d= 0; d < dim; ++d)
                           assembling_matrix(index, dim * q_point + d)
                             = shape_value[d];
 
@@ -4504,9 +4500,9 @@ namespace VectorTools
               // Store the computed
               // values.
               {
-                unsigned int index = 0;
+                unsigned int index= 0;
 
-                for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+                for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                   if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
                       && (fe.system_to_base_index(
                               fe.face_to_cell_index(i, face))
@@ -4532,24 +4528,24 @@ namespace VectorTools
                          && (i < (degree + GeometryInfo<dim>::lines_per_face)
                                    * fe.degree)))
                     {
-                      dof_values[i]     = solution(index);
-                      dofs_processed[i] = true;
+                      dof_values[i]    = solution(index);
+                      dofs_processed[i]= true;
                       ++index;
                     }
               }
 
               // Now we do the same as above with the vertical shape functions
               // instead of the horizontal ones.
-              for(unsigned int q_point = 0;
+              for(unsigned int q_point= 0;
                   q_point < fe_values.n_quadrature_points;
                   ++q_point)
                 {
                   Tensor<1, dim> tmp;
 
-                  for(unsigned int d = 0; d < dim; ++d)
-                    tmp[d] = values[q_point](first_vector_component + d);
+                  for(unsigned int d= 0; d < dim; ++d)
+                    tmp[d]= values[q_point](first_vector_component + d);
 
-                  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                     if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
                         && (fe.system_to_base_index(
                                 fe.face_to_cell_index(i, face))
@@ -4568,11 +4564,11 @@ namespace VectorTools
                        || ((dynamic_cast<const FE_Nedelec<dim>*>(&fe)
                             != nullptr)
                            && (i < 2 * fe.degree)))
-                      tmp -= dof_values[i]
-                             * fe_values[vec].value(
-                                 fe.face_to_cell_index(i, face), q_point);
+                      tmp-= dof_values[i]
+                            * fe_values[vec].value(
+                                fe.face_to_cell_index(i, face), q_point);
 
-                  const double JxW = std::sqrt(
+                  const double JxW= std::sqrt(
                     fe_values.JxW(q_point)
                     / ((jacobians[q_point][0]
                                  [global_face_coordinate_directions[face][0]]
@@ -4607,12 +4603,12 @@ namespace VectorTools
                                          [global_face_coordinate_directions
                                             [face][1]])));
 
-                  for(unsigned int d = 0; d < dim; ++d)
-                    assembling_vector(dim * q_point + d) = JxW * tmp[d];
+                  for(unsigned int d= 0; d < dim; ++d)
+                    assembling_vector(dim * q_point + d)= JxW * tmp[d];
 
-                  unsigned int index = 0;
+                  unsigned int index= 0;
 
-                  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                     if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
                         && (fe.system_to_base_index(
                                 fe.face_to_cell_index(i, face))
@@ -4637,7 +4633,7 @@ namespace VectorTools
                             * fe_values[vec].value(
                                 fe.face_to_cell_index(i, face), q_point);
 
-                        for(unsigned int d = 0; d < dim; ++d)
+                        for(unsigned int d= 0; d < dim; ++d)
                           assembling_matrix(index, dim * q_point + d)
                             = shape_value[d];
 
@@ -4650,9 +4646,9 @@ namespace VectorTools
               assembling_matrix.vmult(cell_rhs, assembling_vector);
               cell_matrix_inv.vmult(solution, cell_rhs);
 
-              unsigned int index = 0;
+              unsigned int index= 0;
 
-              for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+              for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                 if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
                     && (fe.system_to_base_index(fe.face_to_cell_index(i, face))
                           .first
@@ -4670,8 +4666,8 @@ namespace VectorTools
                              * fe.degree
                            <= i)))
                   {
-                    dof_values[i]     = solution(index);
-                    dofs_processed[i] = true;
+                    dof_values[i]    = solution(index);
+                    dofs_processed[i]= true;
                     ++index;
                   }
 
@@ -4707,14 +4703,14 @@ namespace VectorTools
     // ones. Thus we have to solve two linear systems of equations of size
     // <tt>degree * (degree + 1)<tt> to obtain the values for the
     // corresponding degrees of freedom.
-    const unsigned int    superdegree = dof_handler.get_fe().degree;
+    const unsigned int    superdegree= dof_handler.get_fe().degree;
     const QGauss<dim - 1> reference_face_quadrature(2 * superdegree);
-    const unsigned int    dofs_per_face = dof_handler.get_fe().dofs_per_face;
+    const unsigned int    dofs_per_face= dof_handler.get_fe().dofs_per_face;
     const hp::FECollection<dim>& fe_collection(dof_handler.get_fe_collection());
     const hp::MappingCollection<dim> mapping_collection(mapping);
     hp::QCollection<dim>             face_quadrature_collection;
 
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
       face_quadrature_collection.push_back(
         QProjector<dim>::project_to_face(reference_face_quadrature, face));
 
@@ -4737,7 +4733,7 @@ namespace VectorTools
           {
             for(; cell != dof_handler.end(); ++cell)
               if(cell->at_boundary() && cell->is_locally_owned())
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
                   if(cell->face(face)->boundary_id() == boundary_component)
@@ -4767,10 +4763,10 @@ namespace VectorTools
                               dim>::ExcInterpolationNotImplemented()));
                         }
 
-                      for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
+                      for(unsigned int dof= 0; dof < dofs_per_face; ++dof)
                         {
-                          dof_values[dof]     = 0.0;
-                          dofs_processed[dof] = false;
+                          dof_values[dof]    = 0.0;
+                          dofs_processed[dof]= false;
                         }
 
                       // Compute the
@@ -4794,7 +4790,7 @@ namespace VectorTools
                       // if the degree of
                       // freedom is not
                       // already constrained.
-                      for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
+                      for(unsigned int dof= 0; dof < dofs_per_face; ++dof)
                         if(dofs_processed[dof]
                            && constraints.can_store_line(face_dof_indices[dof])
                            && !(constraints.is_constrained(
@@ -4814,12 +4810,12 @@ namespace VectorTools
         case 3:
           {
             const QGauss<dim - 2> reference_edge_quadrature(2 * superdegree);
-            const unsigned int    degree = superdegree - 1;
+            const unsigned int    degree= superdegree - 1;
             hp::QCollection<dim>  edge_quadrature_collection;
 
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+            for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
                 ++face)
-              for(unsigned int line = 0;
+              for(unsigned int line= 0;
                   line < GeometryInfo<dim>::lines_per_face;
                   ++line)
                 edge_quadrature_collection.push_back(
@@ -4837,7 +4833,7 @@ namespace VectorTools
 
             for(; cell != dof_handler.end(); ++cell)
               if(cell->at_boundary() && cell->is_locally_owned())
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
                   if(cell->face(face)->boundary_id() == boundary_component)
@@ -4866,16 +4862,16 @@ namespace VectorTools
                                         dim>::ExcInterpolationNotImplemented());
                         }
 
-                      for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
+                      for(unsigned int dof= 0; dof < dofs_per_face; ++dof)
                         {
-                          dof_values[dof]     = 0.0;
-                          dofs_processed[dof] = false;
+                          dof_values[dof]    = 0.0;
+                          dofs_processed[dof]= false;
                         }
 
                       // First we compute the
                       // projection on the
                       // edges.
-                      for(unsigned int line = 0;
+                      for(unsigned int line= 0;
                           line < GeometryInfo<3>::lines_per_face;
                           ++line)
                         internals ::compute_edge_projection(
@@ -4909,7 +4905,7 @@ namespace VectorTools
                       cell->face(face)->get_dof_indices(
                         face_dof_indices, cell->active_fe_index());
 
-                      for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
+                      for(unsigned int dof= 0; dof < dofs_per_face; ++dof)
                         if(dofs_processed[dof]
                            && constraints.can_store_line(face_dof_indices[dof])
                            && !(constraints.is_constrained(
@@ -4945,12 +4941,12 @@ namespace VectorTools
     const hp::FECollection<dim>& fe_collection(dof_handler.get_fe_collection());
     hp::QCollection<dim>         face_quadrature_collection;
 
-    for(unsigned int i = 0; i < fe_collection.size(); ++i)
+    for(unsigned int i= 0; i < fe_collection.size(); ++i)
       {
         const QGauss<dim - 1> reference_face_quadrature(
           2 * fe_collection[i].degree);
 
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
             ++face)
           face_quadrature_collection.push_back(
             QProjector<dim>::project_to_face(reference_face_quadrature, face));
@@ -4974,7 +4970,7 @@ namespace VectorTools
           {
             for(; cell != dof_handler.end(); ++cell)
               if(cell->at_boundary() && cell->is_locally_owned())
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
                   if(cell->face(face)->boundary_id() == boundary_component)
@@ -5002,10 +4998,10 @@ namespace VectorTools
                       dofs_processed.resize(dofs_per_face);
                       dof_values.resize(dofs_per_face);
 
-                      for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
+                      for(unsigned int dof= 0; dof < dofs_per_face; ++dof)
                         {
-                          dof_values[dof]     = 0.0;
-                          dofs_processed[dof] = false;
+                          dof_values[dof]    = 0.0;
+                          dofs_processed[dof]= false;
                         }
 
                       internals ::compute_face_projection_curl_conforming(
@@ -5020,7 +5016,7 @@ namespace VectorTools
                       cell->face(face)->get_dof_indices(
                         face_dof_indices, cell->active_fe_index());
 
-                      for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
+                      for(unsigned int dof= 0; dof < dofs_per_face; ++dof)
                         if(dofs_processed[dof]
                            && constraints.can_store_line(face_dof_indices[dof])
                            && !(constraints.is_constrained(
@@ -5041,15 +5037,15 @@ namespace VectorTools
           {
             hp::QCollection<dim> edge_quadrature_collection;
 
-            for(unsigned int i = 0; i < fe_collection.size(); ++i)
+            for(unsigned int i= 0; i < fe_collection.size(); ++i)
               {
                 const QGauss<dim - 2> reference_edge_quadrature(
                   2 * fe_collection[i].degree);
 
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
-                  for(unsigned int line = 0;
+                  for(unsigned int line= 0;
                       line < GeometryInfo<dim>::lines_per_face;
                       ++line)
                     edge_quadrature_collection.push_back(
@@ -5068,7 +5064,7 @@ namespace VectorTools
 
             for(; cell != dof_handler.end(); ++cell)
               if(cell->at_boundary() && cell->is_locally_owned())
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
                   if(cell->face(face)->boundary_id() == boundary_component)
@@ -5090,21 +5086,21 @@ namespace VectorTools
                                         dim>::ExcInterpolationNotImplemented());
                         }
 
-                      const unsigned int superdegree = cell->get_fe().degree;
-                      const unsigned int degree      = superdegree - 1;
+                      const unsigned int superdegree= cell->get_fe().degree;
+                      const unsigned int degree     = superdegree - 1;
                       const unsigned int dofs_per_face
                         = cell->get_fe().dofs_per_face;
 
                       dofs_processed.resize(dofs_per_face);
                       dof_values.resize(dofs_per_face);
 
-                      for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
+                      for(unsigned int dof= 0; dof < dofs_per_face; ++dof)
                         {
-                          dof_values[dof]     = 0.0;
-                          dofs_processed[dof] = false;
+                          dof_values[dof]    = 0.0;
+                          dofs_processed[dof]= false;
                         }
 
-                      for(unsigned int line = 0;
+                      for(unsigned int line= 0;
                           line < GeometryInfo<dim>::lines_per_face;
                           ++line)
                         internals ::compute_edge_projection(
@@ -5133,7 +5129,7 @@ namespace VectorTools
                       cell->face(face)->get_dof_indices(
                         face_dof_indices, cell->active_fe_index());
 
-                      for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
+                      for(unsigned int dof= 0; dof < dofs_per_face; ++dof)
                         if(dofs_processed[dof]
                            && constraints.can_store_line(face_dof_indices[dof])
                            && !(constraints.is_constrained(
@@ -5175,8 +5171,8 @@ namespace VectorTools
       // In the context of this function, by associated DoFs we mean:
       // the DoFs corresponding to the group of components making up the vector
       // with first component first_vector_component (length dim).
-      const unsigned int        dim = 3;
-      const FiniteElement<dim>& fe  = cell->get_fe();
+      const unsigned int        dim= 3;
+      const FiniteElement<dim>& fe = cell->get_fe();
 
       // reinit for this cell, face and line.
       hp_fe_values.reinit(
@@ -5186,10 +5182,10 @@ namespace VectorTools
           + line);
 
       // Initialize the required objects.
-      const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
+      const FEValues<dim>& fe_values= hp_fe_values.get_present_fe_values();
       // Store degree as fe.degree-1
       // For nedelec elements FE_Nedelec<dim> (0) returns fe.degree = 1.
-      const unsigned int degree = fe.degree - 1;
+      const unsigned int degree= fe.degree - 1;
 
       const std::vector<Point<dim>>& quadrature_points
         = fe_values.get_quadrature_points();
@@ -5208,9 +5204,9 @@ namespace VectorTools
       std::pair<unsigned int, unsigned int> base_indices(0, 0);
       if(dynamic_cast<const FESystem<dim>*>(&cell->get_fe()) != nullptr)
         {
-          unsigned int fe_index     = 0;
-          unsigned int fe_index_old = 0;
-          unsigned int i            = 0;
+          unsigned int fe_index    = 0;
+          unsigned int fe_index_old= 0;
+          unsigned int i           = 0;
 
           // Find base element:
           // base_indices.first
@@ -5221,17 +5217,17 @@ namespace VectorTools
           // base_index.second
           for(; i < fe.n_base_elements(); ++i)
             {
-              fe_index_old = fe_index;
-              fe_index += fe.element_multiplicity(i)
-                          * fe.base_element(i).n_components();
+              fe_index_old= fe_index;
+              fe_index+= fe.element_multiplicity(i)
+                         * fe.base_element(i).n_components();
 
               if(fe_index > first_vector_component)
                 break;
             }
 
-          base_indices.first  = i;
-          base_indices.second = (first_vector_component - fe_index_old)
-                                / fe.base_element(i).n_components();
+          base_indices.first = i;
+          base_indices.second= (first_vector_component - fe_index_old)
+                               / fe.base_element(i).n_components();
         }
 
       // Find DoFs we want to constrain:
@@ -5261,17 +5257,17 @@ namespace VectorTools
         = fe.base_element(base_indices.first)
             .face_to_cell_index((line + 1) * (degree + 1) - 1, face);
 
-      unsigned int associated_edge_dof_index = 0;
+      unsigned int associated_edge_dof_index= 0;
       //       for (unsigned int face_idx = 0; face_idx < fe.dofs_per_face; ++face_idx)
-      for(unsigned int line_idx = 0; line_idx < fe.dofs_per_line; ++line_idx)
+      for(unsigned int line_idx= 0; line_idx < fe.dofs_per_line; ++line_idx)
         {
           // Assuming DoFs on a face are numbered in order by lines then faces.
           // i.e. line 0 has degree+1 dofs numbered 0,..,degree
           //      line 1 has degree+1 dofs numbered (degree+1),..,2*(degree+1) and so on.
-          const unsigned int face_idx = line * fe.dofs_per_line + line_idx;
+          const unsigned int face_idx= line * fe.dofs_per_line + line_idx;
           // Note, assuming that the edge orientations are "standard"
           //       i.e. cell->line_orientation(line) = true.
-          const unsigned int cell_idx = fe.face_to_cell_index(face_idx, face);
+          const unsigned int cell_idx= fe.face_to_cell_index(face_idx, face);
 
           // Check this cell_idx belongs to the correct base_element, component and line:
           if(((dynamic_cast<const FESystem<dim>*>(&fe) != nullptr)
@@ -5289,7 +5285,7 @@ namespace VectorTools
             }
         }
       // Sanity check:
-      const unsigned int associated_edge_dofs = associated_edge_dof_index;
+      const unsigned int associated_edge_dofs= associated_edge_dof_index;
       Assert(associated_edge_dofs == degree + 1,
              ExcMessage("Error: Unexpected number of 3D edge DoFs"));
 
@@ -5322,7 +5318,7 @@ namespace VectorTools
       // Project the boundary function onto the shape functions for this edge
       // and set up a linear system of equations to get the values for the DoFs
       // associated with this edge.
-      for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+      for(unsigned int q_point= 0; q_point < fe_values.n_quadrature_points;
           ++q_point)
         {
           // Compute the tangential
@@ -5344,7 +5340,7 @@ namespace VectorTools
                   - fe_values.get_mapping().transform_unit_to_real_cell(
                       cell, shifted_reference_point_2))
                / tol);
-          tangential /= tangential.norm();
+          tangential/= tangential.norm();
 
           // Compute the entires of the linear system
           // Note the system is symmetric so we could only compute the lower/upper triangle.
@@ -5354,13 +5350,12 @@ namespace VectorTools
           //
           // The RHS entries are:
           // \int_{edge} (tangential*boundary_value)*(tangential*edge_shape_function_i) dS.
-          for(unsigned int j = 0; j < associated_edge_dofs; ++j)
+          for(unsigned int j= 0; j < associated_edge_dofs; ++j)
             {
-              const unsigned int j_face_idx
-                = associated_edge_dof_to_face_dof[j];
+              const unsigned int j_face_idx= associated_edge_dof_to_face_dof[j];
               const unsigned int j_cell_idx
                 = fe.face_to_cell_index(j_face_idx, face);
-              for(unsigned int i = 0; i < associated_edge_dofs; ++i)
+              for(unsigned int i= 0; i < associated_edge_dofs; ++i)
                 {
                   const unsigned int i_face_idx
                     = associated_edge_dof_to_face_dof[i];
@@ -5391,10 +5386,10 @@ namespace VectorTools
       edge_matrix_inv.vmult(edge_solution, edge_rhs);
 
       // Store computed DoFs
-      for(unsigned int i = 0; i < associated_edge_dofs; ++i)
+      for(unsigned int i= 0; i < associated_edge_dofs; ++i)
         {
-          dof_values[associated_edge_dof_to_face_dof[i]]     = edge_solution(i);
-          dofs_processed[associated_edge_dof_to_face_dof[i]] = true;
+          dof_values[associated_edge_dof_to_face_dof[i]]    = edge_solution(i);
+          dofs_processed[associated_edge_dof_to_face_dof[i]]= true;
         }
     }
 
@@ -5440,10 +5435,10 @@ namespace VectorTools
         = hp_fe_face_values.get_present_fe_values();
 
       // Initialize the required objects.
-      const FiniteElement<dim>&      fe = cell->get_fe();
+      const FiniteElement<dim>&      fe= cell->get_fe();
       const std::vector<Point<dim>>& quadrature_points
         = fe_face_values.get_quadrature_points();
-      const unsigned int degree = fe.degree - 1;
+      const unsigned int degree= fe.degree - 1;
 
       std::vector<Vector<double>> values(fe_face_values.n_quadrature_points,
                                          Vector<double>(fe.n_components()));
@@ -5459,9 +5454,9 @@ namespace VectorTools
       std::pair<unsigned int, unsigned int> base_indices(0, 0);
       if(dynamic_cast<const FESystem<dim>*>(&cell->get_fe()) != nullptr)
         {
-          unsigned int fe_index     = 0;
-          unsigned int fe_index_old = 0;
-          unsigned int i            = 0;
+          unsigned int fe_index    = 0;
+          unsigned int fe_index_old= 0;
+          unsigned int i           = 0;
 
           // Find base element:
           // base_indices.first
@@ -5472,16 +5467,16 @@ namespace VectorTools
           // base_index.second
           for(; i < fe.n_base_elements(); ++i)
             {
-              fe_index_old = fe_index;
-              fe_index += fe.element_multiplicity(i)
-                          * fe.base_element(i).n_components();
+              fe_index_old= fe_index;
+              fe_index+= fe.element_multiplicity(i)
+                         * fe.base_element(i).n_components();
 
               if(fe_index > first_vector_component)
                 break;
             }
-          base_indices.first  = i;
-          base_indices.second = (first_vector_component - fe_index_old)
-                                / fe.base_element(i).n_components();
+          base_indices.first = i;
+          base_indices.second= (first_vector_component - fe_index_old)
+                               / fe.base_element(i).n_components();
         }
 
       switch(dim)
@@ -5502,8 +5497,8 @@ namespace VectorTools
               std::vector<unsigned int> associated_edge_dof_to_face_dof(degree
                                                                         + 1);
 
-              unsigned int associated_edge_dof_index = 0;
-              for(unsigned int face_idx = 0; face_idx < fe.dofs_per_face;
+              unsigned int associated_edge_dof_index= 0;
+              for(unsigned int face_idx= 0; face_idx < fe.dofs_per_face;
                   ++face_idx)
                 {
                   const unsigned int cell_idx
@@ -5538,7 +5533,7 @@ namespace VectorTools
               // Project the boundary function onto the shape functions for this edge
               // and set up a linear system of equations to get the values for the DoFs
               // associated with this edge.
-              for(unsigned int q_point = 0;
+              for(unsigned int q_point= 0;
                   q_point < fe_face_values.n_quadrature_points;
                   ++q_point)
                 {
@@ -5559,7 +5554,7 @@ namespace VectorTools
                   // Store the normal at this quad point:
                   Tensor<1, dim> normal_at_q_point
                     = fe_face_values.normal_vector(q_point);
-                  for(unsigned int j = 0; j < associated_edge_dofs; ++j)
+                  for(unsigned int j= 0; j < associated_edge_dofs; ++j)
                     {
                       const unsigned int j_face_idx
                         = associated_edge_dof_to_face_dof[j];
@@ -5568,7 +5563,7 @@ namespace VectorTools
 
                       Tensor<1, dim> phi_j
                         = fe_face_values[vec].value(j_cell_idx, q_point);
-                      for(unsigned int i = 0; i < associated_edge_dofs; ++i)
+                      for(unsigned int i= 0; i < associated_edge_dofs; ++i)
                         {
                           const unsigned int i_face_idx
                             = associated_edge_dof_to_face_dof[i];
@@ -5603,7 +5598,7 @@ namespace VectorTools
               edge_matrix_inv.vmult(edge_solution, edge_rhs);
 
               // Store computed DoFs
-              for(unsigned int associated_edge_dof_index = 0;
+              for(unsigned int associated_edge_dof_index= 0;
                   associated_edge_dof_index < associated_edge_dofs;
                   ++associated_edge_dof_index)
                 {
@@ -5633,7 +5628,7 @@ namespace VectorTools
                 lines_per_face, std::vector<unsigned int>(degree + 1));
               std::vector<unsigned int> associated_edge_dofs(lines_per_face);
 
-              for(unsigned int line = 0; line < lines_per_face; ++line)
+              for(unsigned int line= 0; line < lines_per_face; ++line)
                 {
                   // Lowest DoF in the base element allowed for this edge:
                   const unsigned int lower_bound
@@ -5644,8 +5639,8 @@ namespace VectorTools
                     = fe.base_element(base_indices.first)
                         .face_to_cell_index((line + 1) * (degree + 1) - 1,
                                             face);
-                  unsigned int associated_edge_dof_index = 0;
-                  for(unsigned int line_idx = 0; line_idx < fe.dofs_per_line;
+                  unsigned int associated_edge_dof_index= 0;
+                  for(unsigned int line_idx= 0; line_idx < fe.dofs_per_line;
                       ++line_idx)
                     {
                       const unsigned int face_idx
@@ -5674,7 +5669,7 @@ namespace VectorTools
                         }
                     }
                   // Sanity check:
-                  associated_edge_dofs[line] = associated_edge_dof_index;
+                  associated_edge_dofs[line]= associated_edge_dof_index;
                   Assert(
                     associated_edge_dofs[line] == degree + 1,
                     ExcMessage("Error: Unexpected number of 3D edge DoFs"));
@@ -5697,8 +5692,8 @@ namespace VectorTools
                 2 * degree * (degree + 1));
 
               // Skip the edge DoFs, so we start at lines_per_face*(fe.dofs_per_line).
-              unsigned int associated_face_dof_index = 0;
-              for(unsigned int face_idx = lines_per_face * (fe.dofs_per_line);
+              unsigned int associated_face_dof_index= 0;
+              for(unsigned int face_idx= lines_per_face * (fe.dofs_per_line);
                   face_idx < fe.dofs_per_face;
                   ++face_idx)
                 {
@@ -5740,7 +5735,7 @@ namespace VectorTools
               Tensor<1, dim> cross_product_rhs;
 
               // Loop to construct face linear system.
-              for(unsigned int q_point = 0;
+              for(unsigned int q_point= 0;
                   q_point < fe_face_values.n_quadrature_points;
                   ++q_point)
                 {
@@ -5752,13 +5747,13 @@ namespace VectorTools
                   //            \sum_(edges on face)
                   //                 \sum_(DoFs on edge) edge_dof_value*edge_shape_function
                   //                   )
-                  for(unsigned int d = 0; d < dim; ++d)
+                  for(unsigned int d= 0; d < dim; ++d)
                     {
-                      tmp[d] = 0.0;
+                      tmp[d]= 0.0;
                     }
-                  for(unsigned int line = 0; line < lines_per_face; ++line)
+                  for(unsigned int line= 0; line < lines_per_face; ++line)
                     {
-                      for(unsigned int associated_edge_dof = 0;
+                      for(unsigned int associated_edge_dof= 0;
                           associated_edge_dof < associated_edge_dofs[line];
                           ++associated_edge_dof)
                         {
@@ -5767,14 +5762,14 @@ namespace VectorTools
                               [line][associated_edge_dof];
                           const unsigned int cell_idx
                             = fe.face_to_cell_index(face_idx, face);
-                          tmp -= dof_values[face_idx]
-                                 * fe_face_values[vec].value(cell_idx, q_point);
+                          tmp-= dof_values[face_idx]
+                                * fe_face_values[vec].value(cell_idx, q_point);
                         }
                     }
 
-                  for(unsigned int d = 0; d < dim; ++d)
+                  for(unsigned int d= 0; d < dim; ++d)
                     {
-                      tmp[d] += values[q_point](first_vector_component + d);
+                      tmp[d]+= values[q_point](first_vector_component + d);
                     }
 
                   // Tensor of normal vector on the face at q_point;
@@ -5789,35 +5784,35 @@ namespace VectorTools
                   // The RHS entries are:
                   // \int_{face} (n x (Edge_residual) \cdot (n x face_shape_function_i) dS
 
-                  for(unsigned int j = 0; j < associated_face_dofs; ++j)
+                  for(unsigned int j= 0; j < associated_face_dofs; ++j)
                     {
                       const unsigned int j_face_idx
                         = associated_face_dof_to_face_dof[j];
                       const unsigned int cell_j
                         = fe.face_to_cell_index(j_face_idx, face);
 
-                      cross_product_j = cross_product_3d(
+                      cross_product_j= cross_product_3d(
                         normal_vector,
                         fe_face_values[vec].value(cell_j, q_point));
 
-                      for(unsigned int i = 0; i < associated_face_dofs; ++i)
+                      for(unsigned int i= 0; i < associated_face_dofs; ++i)
                         {
                           const unsigned int i_face_idx
                             = associated_face_dof_to_face_dof[i];
                           const unsigned int cell_i
                             = fe.face_to_cell_index(i_face_idx, face);
-                          cross_product_i = cross_product_3d(
+                          cross_product_i= cross_product_3d(
                             normal_vector,
                             fe_face_values[vec].value(cell_i, q_point));
 
-                          face_matrix(i, j) += fe_face_values.JxW(q_point)
-                                               * cross_product_i
-                                               * cross_product_j;
+                          face_matrix(i, j)+= fe_face_values.JxW(q_point)
+                                              * cross_product_i
+                                              * cross_product_j;
                         }
                       // compute rhs
-                      cross_product_rhs = cross_product_3d(normal_vector, tmp);
-                      face_rhs(j) += fe_face_values.JxW(q_point)
-                                     * cross_product_rhs * cross_product_j;
+                      cross_product_rhs= cross_product_3d(normal_vector, tmp);
+                      face_rhs(j)+= fe_face_values.JxW(q_point)
+                                    * cross_product_rhs * cross_product_j;
                     }
                 }
 
@@ -5826,7 +5821,7 @@ namespace VectorTools
               face_matrix_inv.vmult(face_solution, face_rhs);
 
               // Store computed DoFs:
-              for(unsigned int associated_face_dof = 0;
+              for(unsigned int associated_face_dof= 0;
                   associated_face_dof < associated_face_dofs;
                   ++associated_face_dof)
                 {
@@ -5884,7 +5879,7 @@ namespace VectorTools
 
       // Create face quadrature collection
       hp::QCollection<dim - 1> face_quadrature_collection;
-      for(unsigned int i = 0; i < fe_collection.size(); ++i)
+      for(unsigned int i= 0; i < fe_collection.size(); ++i)
         {
           const QGauss<dim - 1> reference_face_quadrature(
             2 * fe_collection[i].degree + 1);
@@ -5913,7 +5908,7 @@ namespace VectorTools
                 {
                   if(cell->at_boundary() && cell->is_locally_owned())
                     {
-                      for(unsigned int face = 0;
+                      for(unsigned int face= 0;
                           face < GeometryInfo<dim>::faces_per_cell;
                           ++face)
                         {
@@ -5952,11 +5947,11 @@ namespace VectorTools
                               dofs_processed.resize(dofs_per_face);
                               dof_values.resize(dofs_per_face);
 
-                              for(unsigned int dof = 0; dof < dofs_per_face;
+                              for(unsigned int dof= 0; dof < dofs_per_face;
                                   ++dof)
                                 {
-                                  dof_values[dof]     = 0.0;
-                                  dofs_processed[dof] = false;
+                                  dof_values[dof]    = 0.0;
+                                  dofs_processed[dof]= false;
                                 }
 
                               // Compute the projection of the boundary function on the edge.
@@ -5977,7 +5972,7 @@ namespace VectorTools
 
                               // Add the computed constraints to the constraint matrix,
                               // assuming the degree of freedom is not already constrained.
-                              for(unsigned int dof = 0; dof < dofs_per_face;
+                              for(unsigned int dof= 0; dof < dofs_per_face;
                                   ++dof)
                                 {
                                   if(dofs_processed[dof]
@@ -6008,15 +6003,15 @@ namespace VectorTools
               hp::QCollection<dim> edge_quadrature_collection;
 
               // Create equivalent of FEEdgeValues:
-              for(unsigned int i = 0; i < fe_collection.size(); ++i)
+              for(unsigned int i= 0; i < fe_collection.size(); ++i)
                 {
                   const QGauss<dim - 2> reference_edge_quadrature(
                     2 * fe_collection[i].degree + 1);
-                  for(unsigned int face = 0;
+                  for(unsigned int face= 0;
                       face < GeometryInfo<dim>::faces_per_cell;
                       ++face)
                     {
-                      for(unsigned int line = 0;
+                      for(unsigned int line= 0;
                           line < GeometryInfo<dim>::lines_per_face;
                           ++line)
                         {
@@ -6040,7 +6035,7 @@ namespace VectorTools
                 {
                   if(cell->at_boundary() && cell->is_locally_owned())
                     {
-                      for(unsigned int face = 0;
+                      for(unsigned int face= 0;
                           face < GeometryInfo<dim>::faces_per_cell;
                           ++face)
                         {
@@ -6075,21 +6070,21 @@ namespace VectorTools
 
                               const unsigned int superdegree
                                 = cell->get_fe().degree;
-                              const unsigned int degree = superdegree - 1;
+                              const unsigned int degree= superdegree - 1;
                               const unsigned int dofs_per_face
                                 = cell->get_fe().dofs_per_face;
 
                               dofs_processed.resize(dofs_per_face);
                               dof_values.resize(dofs_per_face);
-                              for(unsigned int dof = 0; dof < dofs_per_face;
+                              for(unsigned int dof= 0; dof < dofs_per_face;
                                   ++dof)
                                 {
-                                  dof_values[dof]     = 0.0;
-                                  dofs_processed[dof] = false;
+                                  dof_values[dof]    = 0.0;
+                                  dofs_processed[dof]= false;
                                 }
 
                               // First compute the projection on the edges.
-                              for(unsigned int line = 0;
+                              for(unsigned int line= 0;
                                   line < GeometryInfo<3>::lines_per_face;
                                   ++line)
                                 {
@@ -6123,7 +6118,7 @@ namespace VectorTools
                               cell->face(face)->get_dof_indices(
                                 face_dof_indices, cell->active_fe_index());
 
-                              for(unsigned int dof = 0; dof < dofs_per_face;
+                              for(unsigned int dof= 0; dof < dofs_per_face;
                                   ++dof)
                                 {
                                   if(dofs_processed[dof]
@@ -6220,7 +6215,7 @@ namespace VectorTools
       // the boundary function times the normal components of the shape
       // functions supported on the boundary.
       const FEValuesExtractors::Vector vec(first_vector_component);
-      const FiniteElement<2>&          fe = cell->get_fe();
+      const FiniteElement<2>&          fe= cell->get_fe();
       const std::vector<Tensor<1, 2>>& normals
         = fe_values.get_all_normal_vectors();
       const unsigned int
@@ -6238,27 +6233,27 @@ namespace VectorTools
         boundary_function.vector_value_list(quadrature_points, values);
       }
 
-      for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+      for(unsigned int q_point= 0; q_point < fe_values.n_quadrature_points;
           ++q_point)
         {
-          double tmp = 0.0;
+          double tmp= 0.0;
 
-          for(unsigned int d = 0; d < 2; ++d)
-            tmp += normals[q_point][d] * values[q_point](d);
+          for(unsigned int d= 0; d < 2; ++d)
+            tmp+= normals[q_point][d] * values[q_point](d);
 
-          tmp *= fe_values.JxW(q_point)
-                 * std::sqrt(
-                     jacobians[q_point][0][face_coordinate_direction[face]]
-                       * jacobians[q_point][0][face_coordinate_direction[face]]
-                     + jacobians[q_point][1][face_coordinate_direction[face]]
-                         * jacobians[q_point][1]
-                                    [face_coordinate_direction[face]]);
+          tmp*= fe_values.JxW(q_point)
+                * std::sqrt(
+                    jacobians[q_point][0][face_coordinate_direction[face]]
+                      * jacobians[q_point][0][face_coordinate_direction[face]]
+                    + jacobians[q_point][1][face_coordinate_direction[face]]
+                        * jacobians[q_point][1]
+                                   [face_coordinate_direction[face]]);
 
-          for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
-            dof_values(i) += tmp
-                             * (normals[q_point]
-                                * fe_values[vec].value(
-                                    fe.face_to_cell_index(i, face), q_point));
+          for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
+            dof_values(i)+= tmp
+                            * (normals[q_point]
+                               * fe_values[vec].value(
+                                   fe.face_to_cell_index(i, face), q_point));
         }
 
       std::vector<types::global_dof_index> face_dof_indices(fe.dofs_per_face);
@@ -6268,7 +6263,7 @@ namespace VectorTools
 
       // Copy the computed values in the ConstraintMatrix only, if the degree
       // of freedom is not already constrained.
-      for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
         if(!(constraints.is_constrained(face_dof_indices[i])))
           {
             constraints.add_line(face_dof_indices[i]);
@@ -6311,7 +6306,7 @@ namespace VectorTools
       // the boundary function times the normal components of the shape
       // functions supported on the boundary.
       const FEValuesExtractors::Vector vec(first_vector_component);
-      const FiniteElement<3>&          fe = cell->get_fe();
+      const FiniteElement<3>&          fe= cell->get_fe();
       const std::vector<Tensor<1, 3>>& normals
         = fe_values.get_all_normal_vectors();
       const unsigned int
@@ -6328,13 +6323,13 @@ namespace VectorTools
         boundary_function.vector_value_list(quadrature_points, values);
       }
 
-      for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+      for(unsigned int q_point= 0; q_point < fe_values.n_quadrature_points;
           ++q_point)
         {
-          double tmp = 0.0;
+          double tmp= 0.0;
 
-          for(unsigned int d = 0; d < 3; ++d)
-            tmp += normals[q_point][d] * values[q_point](d);
+          for(unsigned int d= 0; d < 3; ++d)
+            tmp+= normals[q_point][d] * values[q_point](d);
 
           tmp
             *= fe_values.JxW(q_point)
@@ -6360,7 +6355,7 @@ namespace VectorTools
                           * jacobians[q_point][2]
                                      [face_coordinate_directions[face][1]]));
 
-          for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+          for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
             dof_values_local(i)
               += tmp
                  * (normals[q_point]
@@ -6373,11 +6368,11 @@ namespace VectorTools
       cell->face(face)->get_dof_indices(face_dof_indices,
                                         cell->active_fe_index());
 
-      for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
         if(projected_dofs[face_dof_indices[i]] < fe.degree)
           {
-            dof_values[face_dof_indices[i]]     = dof_values_local(i);
-            projected_dofs[face_dof_indices[i]] = fe.degree;
+            dof_values[face_dof_indices[i]]    = dof_values_local(i);
+            projected_dofs[face_dof_indices[i]]= fe.degree;
           }
     }
 
@@ -6410,7 +6405,7 @@ namespace VectorTools
     ConstraintMatrix&        constraints,
     const Mapping<dim>&      mapping)
   {
-    const unsigned int spacedim = dim;
+    const unsigned int spacedim= dim;
     // Interpolate the normal components
     // of the boundary functions. Since
     // the Raviart-Thomas elements are
@@ -6422,7 +6417,7 @@ namespace VectorTools
     // normal components of the shape
     // functions supported on the
     // boundary.
-    const FiniteElement<dim>&        fe = dof_handler.get_fe();
+    const FiniteElement<dim>&        fe= dof_handler.get_fe();
     QGauss<dim - 1>                  face_quadrature(fe.degree + 1);
     FEFaceValues<dim>                fe_face_values(mapping,
                                      fe,
@@ -6434,7 +6429,7 @@ namespace VectorTools
     const hp::MappingCollection<dim> mapping_collection(mapping);
     hp::QCollection<dim>             quadrature_collection;
 
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
       quadrature_collection.push_back(
         QProjector<dim>::project_to_face(face_quadrature, face));
 
@@ -6452,7 +6447,7 @@ namespace VectorTools
                 cell != dof_handler.end();
                 ++cell)
               if(cell->at_boundary())
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
                   if(cell->face(face)->boundary_id() == boundary_component)
@@ -6525,19 +6520,19 @@ namespace VectorTools
             // same order, we just keep the
             // first value and do not
             // compute a second one.
-            const unsigned int&                  n_dofs = dof_handler.n_dofs();
+            const unsigned int&                  n_dofs= dof_handler.n_dofs();
             std::vector<double>                  dof_values(n_dofs);
             std::vector<types::global_dof_index> projected_dofs(n_dofs);
 
-            for(unsigned int dof = 0; dof < n_dofs; ++dof)
-              projected_dofs[dof] = 0;
+            for(unsigned int dof= 0; dof < n_dofs; ++dof)
+              projected_dofs[dof]= 0;
 
             for(typename DoFHandler<dim>::active_cell_iterator cell
                 = dof_handler.begin_active();
                 cell != dof_handler.end();
                 ++cell)
               if(cell->at_boundary())
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
                   if(cell->face(face)->boundary_id() == boundary_component)
@@ -6581,7 +6576,7 @@ namespace VectorTools
                         projected_dofs);
                     }
 
-            for(unsigned int dof = 0; dof < n_dofs; ++dof)
+            for(unsigned int dof= 0; dof < n_dofs; ++dof)
               if((projected_dofs[dof] != 0)
                  && !(constraints.is_constrained(dof)))
                 {
@@ -6609,19 +6604,18 @@ namespace VectorTools
     ConstraintMatrix&                      constraints,
     const hp::MappingCollection<dim, dim>& mapping_collection)
   {
-    const unsigned int           spacedim = dim;
-    const hp::FECollection<dim>& fe_collection
-      = dof_handler.get_fe_collection();
-    hp::QCollection<dim - 1> face_quadrature_collection;
-    hp::QCollection<dim>     quadrature_collection;
+    const unsigned int           spacedim     = dim;
+    const hp::FECollection<dim>& fe_collection= dof_handler.get_fe_collection();
+    hp::QCollection<dim - 1>     face_quadrature_collection;
+    hp::QCollection<dim>         quadrature_collection;
 
-    for(unsigned int i = 0; i < fe_collection.size(); ++i)
+    for(unsigned int i= 0; i < fe_collection.size(); ++i)
       {
         const QGauss<dim - 1> quadrature(fe_collection[i].degree + 1);
 
         face_quadrature_collection.push_back(quadrature);
 
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
             ++face)
           quadrature_collection.push_back(
             QProjector<dim>::project_to_face(quadrature, face));
@@ -6647,7 +6641,7 @@ namespace VectorTools
                 cell != dof_handler.end();
                 ++cell)
               if(cell->at_boundary())
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
                   if(cell->face(face)->boundary_id() == boundary_component)
@@ -6695,19 +6689,19 @@ namespace VectorTools
 
         case 3:
           {
-            const unsigned int&                  n_dofs = dof_handler.n_dofs();
+            const unsigned int&                  n_dofs= dof_handler.n_dofs();
             std::vector<double>                  dof_values(n_dofs);
             std::vector<types::global_dof_index> projected_dofs(n_dofs);
 
-            for(unsigned int dof = 0; dof < n_dofs; ++dof)
-              projected_dofs[dof] = 0;
+            for(unsigned int dof= 0; dof < n_dofs; ++dof)
+              projected_dofs[dof]= 0;
 
             for(typename hp::DoFHandler<dim>::active_cell_iterator cell
                 = dof_handler.begin_active();
                 cell != dof_handler.end();
                 ++cell)
               if(cell->at_boundary())
-                for(unsigned int face = 0;
+                for(unsigned int face= 0;
                     face < GeometryInfo<dim>::faces_per_cell;
                     ++face)
                   if(cell->face(face)->boundary_id() == boundary_component)
@@ -6751,7 +6745,7 @@ namespace VectorTools
                         projected_dofs);
                     }
 
-            for(unsigned int dof = 0; dof < n_dofs; ++dof)
+            for(unsigned int dof= 0; dof < n_dofs; ++dof)
               if((projected_dofs[dof] != 0)
                  && !(constraints.is_constrained(dof)))
                 {
@@ -6780,9 +6774,9 @@ namespace VectorTools
   {
     ZeroFunction<dim>                            zero_function(dim);
     typename FunctionMap<spacedim>::type         function_map;
-    std::set<types::boundary_id>::const_iterator it = boundary_ids.begin();
+    std::set<types::boundary_id>::const_iterator it= boundary_ids.begin();
     for(; it != boundary_ids.end(); ++it)
-      function_map[*it] = &zero_function;
+      function_map[*it]= &zero_function;
     compute_nonzero_normal_flux_constraints(dof_handler,
                                             first_vector_component,
                                             boundary_ids,
@@ -6813,14 +6807,14 @@ namespace VectorTools
     const hp::FECollection<dim, spacedim>& fe_collection
       = dof_handler.get_fe_collection();
     hp::MappingCollection<dim, spacedim> mapping_collection;
-    for(unsigned int i = 0; i < fe_collection.size(); ++i)
+    for(unsigned int i= 0; i < fe_collection.size(); ++i)
       mapping_collection.push_back(mapping);
 
     // now also create a quadrature collection for the faces of a cell. fill
     // it with a quadrature formula with the support points on faces for each
     // FE
     hp::QCollection<dim - 1> face_quadrature_collection;
-    for(unsigned int i = 0; i < fe_collection.size(); ++i)
+    for(unsigned int i= 0; i < fe_collection.size(); ++i)
       {
         const std::vector<Point<dim - 1>>& unit_support_points
           = fe_collection[i].get_unit_face_support_points();
@@ -6863,17 +6857,17 @@ namespace VectorTools
     // now loop over all cells and all faces
     typename DoFHandlerType<dim, spacedim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     std::set<types::boundary_id>::iterator b_id;
     for(; cell != endc; ++cell)
       if(!cell->is_artificial())
-        for(unsigned int face_no = 0;
+        for(unsigned int face_no= 0;
             face_no < GeometryInfo<dim>::faces_per_cell;
             ++face_no)
-          if((b_id = boundary_ids.find(cell->face(face_no)->boundary_id()))
+          if((b_id= boundary_ids.find(cell->face(face_no)->boundary_id()))
              != boundary_ids.end())
             {
-              const FiniteElement<dim>& fe = cell->get_fe();
+              const FiniteElement<dim>& fe= cell->get_fe();
               typename DoFHandlerType<dim, spacedim>::face_iterator face
                 = cell->face(face_no);
 
@@ -6887,13 +6881,13 @@ namespace VectorTools
 
               // then identify which of them correspond to the selected set of
               // vector components
-              for(unsigned int i = 0; i < face_dofs.size(); ++i)
+              for(unsigned int i= 0; i < face_dofs.size(); ++i)
                 if(fe.face_system_to_component_index(i).first
                    == first_vector_component)
                   {
                     // find corresponding other components of vector
                     internal::VectorDoFTuple<dim> vector_dofs;
-                    vector_dofs.dof_indices[0] = face_dofs[i];
+                    vector_dofs.dof_indices[0]= face_dofs[i];
 
                     Assert(
                       first_vector_component + dim <= fe.n_components(),
@@ -6901,7 +6895,7 @@ namespace VectorTools
                         "Error: the finite element does not have enough components "
                         "to define a normal direction."));
 
-                    for(unsigned int k = 0; k < fe.dofs_per_face; ++k)
+                    for(unsigned int k= 0; k < fe.dofs_per_face; ++k)
                       if((k != i)
                          && (face_quadrature_collection[cell->active_fe_index()]
                                .point(k)
@@ -6917,7 +6911,7 @@ namespace VectorTools
                            - first_vector_component]
                           = face_dofs[k];
 
-                    for(unsigned int d = 0; d < dim; ++d)
+                    for(unsigned int d= 0; d < dim; ++d)
                       Assert(vector_dofs.dof_indices[d] < dof_handler.n_dofs(),
                              ExcInternalError());
 
@@ -6971,15 +6965,15 @@ namespace VectorTools
                       = (cell->face(face_no)->get_manifold().normal_vector(
                         cell->face(face_no), fe_values.quadrature_point(i)));
                     if(normal_vector * fe_values.normal_vector(i) < 0)
-                      normal_vector *= -1;
+                      normal_vector*= -1;
                     Assert(std::fabs(normal_vector.norm() - 1) < 1e-14,
                            ExcInternalError());
-                    for(unsigned int d = 0; d < dim; ++d)
+                    for(unsigned int d= 0; d < dim; ++d)
                       if(std::fabs(normal_vector[d]) < 1e-13)
-                        normal_vector[d] = 0;
-                    normal_vector /= normal_vector.norm();
+                        normal_vector[d]= 0;
+                    normal_vector/= normal_vector.norm();
 
-                    const Point<dim> point = fe_values.quadrature_point(i);
+                    const Point<dim> point= fe_values.quadrature_point(i);
                     Vector<double>   b_values(dim);
                     function_map[*b_id]->vector_value(point, b_values);
 
@@ -7005,27 +6999,27 @@ namespace VectorTools
     // entries belong to the same set of dofs and then do as described in the
     // documentation, i.e. either average the normal vector or don't for this
     // particular set of dofs
-    typename DoFToNormalsMap::const_iterator p = dof_to_normals_map.begin();
+    typename DoFToNormalsMap::const_iterator p= dof_to_normals_map.begin();
 
     while(p != dof_to_normals_map.end())
       {
         // first find the range of entries in the multimap that corresponds to
         // the same vector-dof tuple. as usual, we define the range
         // half-open. the first entry of course is 'p'
-        typename DoFToNormalsMap::const_iterator same_dof_range[2] = {p};
+        typename DoFToNormalsMap::const_iterator same_dof_range[2]= {p};
         for(++p; p != dof_to_normals_map.end(); ++p)
           if(p->first != same_dof_range[0]->first)
             {
-              same_dof_range[1] = p;
+              same_dof_range[1]= p;
               break;
             }
         if(p == dof_to_normals_map.end())
-          same_dof_range[1] = dof_to_normals_map.end();
+          same_dof_range[1]= dof_to_normals_map.end();
 
 #ifdef DEBUG_NO_NORMAL_FLUX
         std::cout << "For dof indices <" << p->first
                   << ">, found the following normals" << std::endl;
-        for(typename DoFToNormalsMap::const_iterator q = same_dof_range[0];
+        for(typename DoFToNormalsMap::const_iterator q= same_dof_range[0];
             q != same_dof_range[1];
             ++q)
           std::cout << "   " << q->second.first << " from cell "
@@ -7042,7 +7036,7 @@ namespace VectorTools
           CellToNormalsMap;
 
         CellToNormalsMap cell_to_normals_map;
-        for(typename DoFToNormalsMap::const_iterator q = same_dof_range[0];
+        for(typename DoFToNormalsMap::const_iterator q= same_dof_range[0];
             q != same_dof_range[1];
             ++q)
           if(cell_to_normals_map.find(q->second.second)
@@ -7060,7 +7054,7 @@ namespace VectorTools
 
               // in the same entry, store again the now averaged normal vector
               // and the new count
-              cell_to_normals_map[q->second.second] = std::make_pair(
+              cell_to_normals_map[q->second.second]= std::make_pair(
                 (old_normal * old_count + q->second.first) / (old_count + 1),
                 old_count + 1);
             }
@@ -7077,7 +7071,7 @@ namespace VectorTools
 #endif
 
         // count the maximum number of contributions from each cell
-        unsigned int max_n_contributions_per_cell = 1;
+        unsigned int max_n_contributions_per_cell= 1;
         for(typename CellToNormalsMap::const_iterator x
             = cell_to_normals_map.begin();
             x != cell_to_normals_map.end();
@@ -7114,23 +7108,23 @@ namespace VectorTools
                     = cell_to_normals_map.begin();
                     x != cell_to_normals_map.end();
                     ++x)
-                  normal += x->second.first;
-                normal /= normal.norm();
+                  normal+= x->second.first;
+                normal/= normal.norm();
 
                 // normalize again
-                for(unsigned int d = 0; d < dim; ++d)
+                for(unsigned int d= 0; d < dim; ++d)
                   if(std::fabs(normal[d]) < 1e-13)
-                    normal[d] = 0;
-                normal /= normal.norm();
+                    normal[d]= 0;
+                normal/= normal.norm();
 
                 // then construct constraints from this:
                 const internal::VectorDoFTuple<dim>& dof_indices
                   = same_dof_range[0]->first;
-                double               normal_value = 0.;
+                double               normal_value= 0.;
                 const Vector<double> b_values
                   = dof_vector_to_b_values[dof_indices];
-                for(unsigned int i = 0; i < dim; ++i)
-                  normal_value += b_values[i] * normal[i];
+                for(unsigned int i= 0; i < dim; ++i)
+                  normal_value+= b_values[i] * normal[i];
                 internal::add_constraint(
                   dof_indices, normal, constraints, normal_value);
 
@@ -7160,11 +7154,10 @@ namespace VectorTools
                 {
                   Tensor<2, dim> t;
 
-                  typename DoFToNormalsMap::const_iterator x
-                    = same_dof_range[0];
-                  for(unsigned int i = 0; i < dim; ++i, ++x)
-                    for(unsigned int j = 0; j < dim; ++j)
-                      t[i][j] = x->second.first[j];
+                  typename DoFToNormalsMap::const_iterator x= same_dof_range[0];
+                  for(unsigned int i= 0; i < dim; ++i, ++x)
+                    for(unsigned int j= 0; j < dim; ++j)
+                      t[i][j]= x->second.first[j];
 
                   Assert(
                     std::fabs(determinant(t)) > 1e-3,
@@ -7180,7 +7173,7 @@ namespace VectorTools
                   = same_dof_range[0]->first;
                 const Vector<double> b_values
                   = dof_vector_to_b_values[dof_indices];
-                for(unsigned int i = 0; i < dim; ++i)
+                for(unsigned int i= 0; i < dim; ++i)
                   if(!constraints.is_constrained(
                        same_dof_range[0]->first.dof_indices[i])
                      && constraints.can_store_line(
@@ -7274,12 +7267,12 @@ namespace VectorTools
 
                     Tensor<1, dim> normals[dim - 1];
                     {
-                      unsigned int index = 0;
+                      unsigned int index= 0;
                       for(typename std::list<Tensor<1, dim>>::const_iterator t
                           = contribution->second.begin();
                           t != contribution->second.end();
                           ++t, ++index)
-                        normals[index] = *t;
+                        normals[index]= *t;
                       Assert(index == dim - 1, ExcInternalError());
                     }
 
@@ -7313,7 +7306,7 @@ namespace VectorTools
                       ExcMessage(
                         "Two normal vectors from adjacent faces are almost "
                         "parallel."));
-                    tangent /= tangent.norm();
+                    tangent/= tangent.norm();
 
                     tangential_vectors.push_back(tangent);
                   }
@@ -7330,7 +7323,7 @@ namespace VectorTools
                   ++t;
                   for(; t != tangential_vectors.end(); ++t)
                     if(*t * first_tangent < 0)
-                      *t *= -1;
+                      *t*= -1;
                 }
 
                 // now compute the average tangent and normalize it
@@ -7339,8 +7332,8 @@ namespace VectorTools
                     = tangential_vectors.begin();
                     t != tangential_vectors.end();
                     ++t)
-                  average_tangent += *t;
-                average_tangent /= average_tangent.norm();
+                  average_tangent+= *t;
+                average_tangent/= average_tangent.norm();
 
                 // now all that is left is that we add the constraints that the
                 // vector is parallel to the tangent
@@ -7364,7 +7357,7 @@ namespace VectorTools
       operator()(const std::array<types::global_dof_index, dim>& p1,
                  const std::array<types::global_dof_index, dim>& p2) const
       {
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           if(p1[d] < p2[d])
             return true;
         return false;
@@ -7383,9 +7376,9 @@ namespace VectorTools
   {
     ZeroFunction<dim>                            zero_function(dim);
     typename FunctionMap<spacedim>::type         function_map;
-    std::set<types::boundary_id>::const_iterator it = boundary_ids.begin();
+    std::set<types::boundary_id>::const_iterator it= boundary_ids.begin();
     for(; it != boundary_ids.end(); ++it)
-      function_map[*it] = &zero_function;
+      function_map[*it]= &zero_function;
     compute_nonzero_tangential_flux_constraints(dof_handler,
                                                 first_vector_component,
                                                 boundary_ids,
@@ -7415,14 +7408,14 @@ namespace VectorTools
     const hp::FECollection<dim, spacedim>& fe_collection
       = dof_handler.get_fe_collection();
     hp::MappingCollection<dim, spacedim> mapping_collection;
-    for(unsigned int i = 0; i < fe_collection.size(); ++i)
+    for(unsigned int i= 0; i < fe_collection.size(); ++i)
       mapping_collection.push_back(mapping);
 
     // now also create a quadrature collection for the faces of a cell. fill
     // it with a quadrature formula with the support points on faces for each
     // FE
     hp::QCollection<dim - 1> face_quadrature_collection;
-    for(unsigned int i = 0; i < fe_collection.size(); ++i)
+    for(unsigned int i= 0; i < fe_collection.size(); ++i)
       {
         const std::vector<Point<dim - 1>>& unit_support_points
           = fe_collection[i].get_unit_face_support_points();
@@ -7458,13 +7451,13 @@ namespace VectorTools
         cell != dof_handler.end();
         ++cell)
       if(!cell->is_artificial())
-        for(unsigned int face_no = 0;
+        for(unsigned int face_no= 0;
             face_no < GeometryInfo<dim>::faces_per_cell;
             ++face_no)
-          if((b_id = boundary_ids.find(cell->face(face_no)->boundary_id()))
+          if((b_id= boundary_ids.find(cell->face(face_no)->boundary_id()))
              != boundary_ids.end())
             {
-              const FiniteElement<dim>& fe = cell->get_fe();
+              const FiniteElement<dim>& fe= cell->get_fe();
               typename DoFHandlerType<dim, spacedim>::face_iterator face
                 = cell->face(face_no);
 
@@ -7478,9 +7471,9 @@ namespace VectorTools
 
               std::map<types::global_dof_index, double> dof_to_b_value;
 
-              unsigned int n_scalar_indices = 0;
+              unsigned int n_scalar_indices= 0;
               cell_vector_dofs.resize(fe.dofs_per_face);
-              for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+              for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
                 {
                   if(fe.face_system_to_component_index(i).first
                        >= first_vector_component
@@ -7490,14 +7483,14 @@ namespace VectorTools
                       const unsigned int component
                         = fe.face_system_to_component_index(i).first
                           - first_vector_component;
-                      n_scalar_indices = std::max(
+                      n_scalar_indices= std::max(
                         n_scalar_indices,
                         fe.face_system_to_component_index(i).second + 1);
                       cell_vector_dofs[fe.face_system_to_component_index(i)
                                          .second][component]
                         = face_dofs[i];
 
-                      const Point<dim> point = fe_values.quadrature_point(i);
+                      const Point<dim> point= fe_values.quadrature_point(i);
                       const double     b_value
                         = function_map[*b_id]->value(point, component);
                       dof_to_b_value.insert(
@@ -7508,12 +7501,12 @@ namespace VectorTools
               // now we identified the vector indices on the cell, so next
               // insert them into the set (it would be expensive to directly
               // insert incomplete points into the set)
-              for(unsigned int i = 0; i < n_scalar_indices; ++i)
+              for(unsigned int i= 0; i < n_scalar_indices; ++i)
                 {
                   vector_dofs.insert(cell_vector_dofs[i]);
                   Vector<double> b_values(dim);
-                  for(unsigned int j = 0; j < dim; ++j)
-                    b_values[j] = dof_to_b_value[cell_vector_dofs[i][j]];
+                  for(unsigned int j= 0; j < dim; ++j)
+                    b_values[j]= dof_to_b_value[cell_vector_dofs[i][j]];
                   dof_vector_to_b_values.insert(
                     std::make_pair(cell_vector_dofs[i], b_values));
                 }
@@ -7521,24 +7514,24 @@ namespace VectorTools
 
     // iterate over the list of all vector components we found and see if we
     // can find constrained ones
-    unsigned int n_total_constraints_found = 0;
+    unsigned int n_total_constraints_found= 0;
     for(typename std::set<std::array<types::global_dof_index, dim>,
                           PointComparator<dim>>::const_iterator it
         = vector_dofs.begin();
         it != vector_dofs.end();
         ++it)
       {
-        unsigned int n_constraints = 0;
+        unsigned int n_constraints= 0;
         bool         is_constrained[dim];
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           if(no_normal_flux_constraints.is_constrained((*it)[d]))
             {
-              is_constrained[d] = true;
+              is_constrained[d]= true;
               ++n_constraints;
               ++n_total_constraints_found;
             }
           else
-            is_constrained[d] = false;
+            is_constrained[d]= false;
         if(n_constraints > 0)
           {
             // if more than one no-flux constraint is present, we need to
@@ -7547,8 +7540,8 @@ namespace VectorTools
             // need to set all conditions corresponding to the boundary function.).
             if(n_constraints > 1)
               {
-                const Vector<double> b_value = dof_vector_to_b_values[*it];
-                for(unsigned int d = 0; d < dim; ++d)
+                const Vector<double> b_value= dof_vector_to_b_values[*it];
+                for(unsigned int d= 0; d < dim; ++d)
                   {
                     constraints.add_line((*it)[d]);
                     constraints.set_inhomogeneity((*it)[d], b_value(d));
@@ -7561,12 +7554,12 @@ namespace VectorTools
             // constraint indices will get the normal that contain the other
             // indices.
             Tensor<1, dim> normal;
-            unsigned       constrained_index = -1;
-            for(unsigned int d = 0; d < dim; ++d)
+            unsigned       constrained_index= -1;
+            for(unsigned int d= 0; d < dim; ++d)
               if(is_constrained[d])
                 {
-                  constrained_index = d;
-                  normal[d]         = 1.;
+                  constrained_index= d;
+                  normal[d]        = 1.;
                 }
             AssertIndexRange(constrained_index, dim);
             const std::vector<std::pair<types::global_dof_index, double>>*
@@ -7576,21 +7569,21 @@ namespace VectorTools
             // find components to which this index is constrained to
             Assert(constrained != nullptr, ExcInternalError());
             Assert(constrained->size() < dim, ExcInternalError());
-            for(unsigned int c = 0; c < constrained->size(); ++c)
+            for(unsigned int c= 0; c < constrained->size(); ++c)
               {
-                int index = -1;
-                for(unsigned int d = 0; d < dim; ++d)
+                int index= -1;
+                for(unsigned int d= 0; d < dim; ++d)
                   if((*constrained)[c].first == (*it)[d])
-                    index = d;
+                    index= d;
                 Assert(index != -1, ExcInternalError());
-                normal[index] = (*constrained)[c].second;
+                normal[index]= (*constrained)[c].second;
               }
-            Vector<double> boundary_value = dof_vector_to_b_values[*it];
-            for(unsigned int d = 0; d < dim; ++d)
+            Vector<double> boundary_value= dof_vector_to_b_values[*it];
+            for(unsigned int d= 0; d < dim; ++d)
               {
                 if(is_constrained[d])
                   continue;
-                const unsigned int new_index = (*it)[d];
+                const unsigned int new_index= (*it)[d];
                 if(!constraints.is_constrained(new_index))
                   {
                     constraints.add_line(new_index);
@@ -7719,10 +7712,10 @@ namespace VectorTools
                                const unsigned int        n_components,
                                IDScratchData<dim, spacedim, Number>& data)
     {
-      const bool                             fe_is_system = (n_components != 1);
+      const bool                             fe_is_system= (n_components != 1);
       const dealii::FEValues<dim, spacedim>& fe_values
         = data.x_fe_values.get_present_fe_values();
-      const unsigned int n_q_points = fe_values.n_quadrature_points;
+      const unsigned int n_q_points= fe_values.n_quadrature_points;
 
       if(weight != nullptr)
         {
@@ -7733,14 +7726,14 @@ namespace VectorTools
             {
               weight->value_list(fe_values.get_quadrature_points(),
                                  data.weight_values);
-              for(unsigned int k = 0; k < n_q_points; ++k)
-                data.weight_vectors[k] = data.weight_values[k];
+              for(unsigned int k= 0; k < n_q_points; ++k)
+                data.weight_vectors[k]= data.weight_values[k];
             }
         }
       else
         {
-          for(unsigned int k = 0; k < n_q_points; ++k)
-            data.weight_vectors[k] = 1.;
+          for(unsigned int k= 0; k < n_q_points; ++k)
+            data.weight_vectors[k]= 1.;
         }
 
       if(update_flags & update_values)
@@ -7759,21 +7752,21 @@ namespace VectorTools
             {
               exact_solution.vector_value_list(
                 fe_values.get_quadrature_points(), data.tmp_vector_values);
-              for(unsigned int i = 0; i < n_q_points; ++i)
-                data.psi_values[i] = data.tmp_vector_values[i];
+              for(unsigned int i= 0; i < n_q_points; ++i)
+                data.psi_values[i]= data.tmp_vector_values[i];
             }
           else
             {
               exact_solution.value_list(fe_values.get_quadrature_points(),
                                         data.tmp_values);
-              for(unsigned int i = 0; i < n_q_points; ++i)
-                data.psi_values[i](0) = data.tmp_values[i];
+              for(unsigned int i= 0; i < n_q_points; ++i)
+                data.psi_values[i](0)= data.tmp_values[i];
             }
 
           // then subtract finite element fe_function
-          for(unsigned int q = 0; q < n_q_points; ++q)
-            for(unsigned int i = 0; i < data.psi_values[q].size(); ++i)
-              data.psi_values[q][i] -= data.function_values[q][i];
+          for(unsigned int q= 0; q < n_q_points; ++q)
+            for(unsigned int i= 0; i < data.psi_values[q].size(); ++i)
+              data.psi_values[q][i]-= data.function_values[q][i];
         }
 
       // Do the same for gradients, if required
@@ -7786,17 +7779,17 @@ namespace VectorTools
             {
               exact_solution.vector_gradient_list(
                 fe_values.get_quadrature_points(), data.tmp_vector_gradients);
-              for(unsigned int i = 0; i < n_q_points; ++i)
-                for(unsigned int comp = 0; comp < data.psi_grads[i].size();
+              for(unsigned int i= 0; i < n_q_points; ++i)
+                for(unsigned int comp= 0; comp < data.psi_grads[i].size();
                     ++comp)
-                  data.psi_grads[i][comp] = data.tmp_vector_gradients[i][comp];
+                  data.psi_grads[i][comp]= data.tmp_vector_gradients[i][comp];
             }
           else
             {
               exact_solution.gradient_list(fe_values.get_quadrature_points(),
                                            data.tmp_gradients);
-              for(unsigned int i = 0; i < n_q_points; ++i)
-                data.psi_grads[i][0] = data.tmp_gradients[i];
+              for(unsigned int i= 0; i < n_q_points; ++i)
+                data.psi_grads[i][0]= data.tmp_gradients[i];
             }
 
           // then subtract finite element function_grads. We need to be
@@ -7805,8 +7798,8 @@ namespace VectorTools
           // gradient. This is taken care of, by subtracting the normal
           // component of the gradient from the exact function.
           if(update_flags & update_normal_vectors)
-            for(unsigned int k = 0; k < n_components; ++k)
-              for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int k= 0; k < n_components; ++k)
+              for(unsigned int q= 0; q < n_q_points; ++q)
                 {
                   // compute (f.n) n
                   const typename ProductType<Number, double>::type f_dot_n
@@ -7818,27 +7811,27 @@ namespace VectorTools
                     -= (data.function_grads[q][k] + f_dot_n_times_n);
                 }
           else
-            for(unsigned int k = 0; k < n_components; ++k)
-              for(unsigned int q = 0; q < n_q_points; ++q)
-                for(unsigned int d = 0; d < spacedim; ++d)
-                  data.psi_grads[q][k][d] -= data.function_grads[q][k][d];
+            for(unsigned int k= 0; k < n_components; ++k)
+              for(unsigned int q= 0; q < n_q_points; ++q)
+                for(unsigned int d= 0; d < spacedim; ++d)
+                  data.psi_grads[q][k][d]-= data.function_grads[q][k][d];
         }
 
-      double diff      = 0;
-      Number diff_mean = 0;
+      double diff     = 0;
+      Number diff_mean= 0;
 
       // First work on function values:
       switch(norm)
         {
           case mean:
             // Compute values in quadrature points and integrate
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               {
-                Number sum = 0;
-                for(unsigned int k = 0; k < n_components; ++k)
+                Number sum= 0;
+                for(unsigned int k= 0; k < n_components; ++k)
                   if(data.weight_vectors[q](k) != 0)
-                    sum += data.psi_values[q](k) * data.weight_vectors[q](k);
-                diff_mean += sum * fe_values.JxW(q);
+                    sum+= data.psi_values[q](k) * data.weight_vectors[q](k);
+                diff_mean+= sum * fe_values.JxW(q);
               }
             break;
 
@@ -7846,51 +7839,50 @@ namespace VectorTools
           case L1_norm:
           case W1p_norm:
             // Compute values in quadrature points and integrate
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               {
-                double sum = 0;
-                for(unsigned int k = 0; k < n_components; ++k)
+                double sum= 0;
+                for(unsigned int k= 0; k < n_components; ++k)
                   if(data.weight_vectors[q](k) != 0)
-                    sum += std::pow(static_cast<double>(
-                                      numbers::NumberTraits<Number>::abs_square(
-                                        data.psi_values[q](k))),
-                                    exponent / 2.)
-                           * data.weight_vectors[q](k);
-                diff += sum * fe_values.JxW(q);
+                    sum+= std::pow(static_cast<double>(
+                                     numbers::NumberTraits<Number>::abs_square(
+                                       data.psi_values[q](k))),
+                                   exponent / 2.)
+                          * data.weight_vectors[q](k);
+                diff+= sum * fe_values.JxW(q);
               }
 
             // Compute the root only if no derivative values are added later
             if(!(update_flags & update_gradients))
-              diff = std::pow(diff, 1. / exponent);
+              diff= std::pow(diff, 1. / exponent);
             break;
 
           case L2_norm:
           case H1_norm:
             // Compute values in quadrature points and integrate
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               {
-                double sum = 0;
-                for(unsigned int k = 0; k < n_components; ++k)
+                double sum= 0;
+                for(unsigned int k= 0; k < n_components; ++k)
                   if(data.weight_vectors[q](k) != 0)
-                    sum += numbers::NumberTraits<Number>::abs_square(
-                             data.psi_values[q](k))
-                           * data.weight_vectors[q](k);
-                diff += sum * fe_values.JxW(q);
+                    sum+= numbers::NumberTraits<Number>::abs_square(
+                            data.psi_values[q](k))
+                          * data.weight_vectors[q](k);
+                diff+= sum * fe_values.JxW(q);
               }
             // Compute the root only, if no derivative values are added later
             if(norm == L2_norm)
-              diff = std::sqrt(diff);
+              diff= std::sqrt(diff);
             break;
 
           case Linfty_norm:
           case W1infty_norm:
-            for(unsigned int q = 0; q < n_q_points; ++q)
-              for(unsigned int k = 0; k < n_components; ++k)
+            for(unsigned int q= 0; q < n_q_points; ++q)
+              for(unsigned int k= 0; k < n_components; ++k)
                 if(data.weight_vectors[q](k) != 0)
-                  diff
-                    = std::max(diff,
-                               double(std::abs(data.psi_values[q](k)
-                                               * data.weight_vectors[q](k))));
+                  diff= std::max(diff,
+                                 double(std::abs(data.psi_values[q](k)
+                                                 * data.weight_vectors[q](k))));
             break;
 
           case H1_seminorm:
@@ -7910,37 +7902,37 @@ namespace VectorTools
         {
           case W1p_seminorm:
           case W1p_norm:
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               {
-                double sum = 0;
-                for(unsigned int k = 0; k < n_components; ++k)
+                double sum= 0;
+                for(unsigned int k= 0; k < n_components; ++k)
                   if(data.weight_vectors[q](k) != 0)
-                    sum += std::pow(data.psi_grads[q][k].norm_square(),
-                                    exponent / 2.)
-                           * data.weight_vectors[q](k);
-                diff += sum * fe_values.JxW(q);
+                    sum+= std::pow(data.psi_grads[q][k].norm_square(),
+                                   exponent / 2.)
+                          * data.weight_vectors[q](k);
+                diff+= sum * fe_values.JxW(q);
               }
-            diff = std::pow(diff, 1. / exponent);
+            diff= std::pow(diff, 1. / exponent);
             break;
 
           case H1_seminorm:
           case H1_norm:
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               {
-                double sum = 0;
-                for(unsigned int k = 0; k < n_components; ++k)
+                double sum= 0;
+                for(unsigned int k= 0; k < n_components; ++k)
                   if(data.weight_vectors[q](k) != 0)
-                    sum += data.psi_grads[q][k].norm_square()
-                           * data.weight_vectors[q](k);
-                diff += sum * fe_values.JxW(q);
+                    sum+= data.psi_grads[q][k].norm_square()
+                          * data.weight_vectors[q](k);
+                diff+= sum * fe_values.JxW(q);
               }
-            diff = std::sqrt(diff);
+            diff= std::sqrt(diff);
             break;
 
           case Hdiv_seminorm:
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               {
-                unsigned int idx = 0;
+                unsigned int idx= 0;
                 if(weight != nullptr)
                   for(; idx < n_components; ++idx)
                     if(data.weight_vectors[0](idx) > 0)
@@ -7954,32 +7946,32 @@ namespace VectorTools
                     "will find the index of the first non-zero weight and take "
                     "the divergence of the 'dim' components that follow it."));
 
-                Number sum = 0;
+                Number sum= 0;
                 // take the trace of the derivatives scaled by the weight and square it
-                for(unsigned int k = idx; k < idx + dim; ++k)
+                for(unsigned int k= idx; k < idx + dim; ++k)
                   if(data.weight_vectors[q](k) != 0)
-                    sum += data.psi_grads[q][k][k - idx]
-                           * std::sqrt(data.weight_vectors[q](k));
-                diff += numbers::NumberTraits<Number>::abs_square(sum)
-                        * fe_values.JxW(q);
+                    sum+= data.psi_grads[q][k][k - idx]
+                          * std::sqrt(data.weight_vectors[q](k));
+                diff+= numbers::NumberTraits<Number>::abs_square(sum)
+                       * fe_values.JxW(q);
               }
-            diff = std::sqrt(diff);
+            diff= std::sqrt(diff);
             break;
 
           case W1infty_seminorm:
           case W1infty_norm:
             {
-              double t = 0;
-              for(unsigned int q = 0; q < n_q_points; ++q)
-                for(unsigned int k = 0; k < n_components; ++k)
+              double t= 0;
+              for(unsigned int q= 0; q < n_q_points; ++q)
+                for(unsigned int k= 0; k < n_components; ++k)
                   if(data.weight_vectors[q](k) != 0)
-                    for(unsigned int d = 0; d < dim; ++d)
-                      t = std::max(t,
-                                   double(std::abs(data.psi_grads[q][k][d])
-                                          * data.weight_vectors[q](k)));
+                    for(unsigned int d= 0; d < dim; ++d)
+                      t= std::max(t,
+                                  double(std::abs(data.psi_grads[q][k][d])
+                                         * data.weight_vectors[q](k)));
 
               // then add seminorm to norm if that had previously been computed
-              diff += t;
+              diff+= t;
             }
             break;
           default:
@@ -7987,7 +7979,7 @@ namespace VectorTools
         }
 
       if(norm == mean)
-        diff = mean_to_double(diff_mean);
+        diff= mean_to_double(diff_mean);
 
       // append result of this cell to the end of the vector
       AssertIsFinite(diff);
@@ -8015,9 +8007,9 @@ namespace VectorTools
       // we mark the "exponent" parameter to this function "const" since it is
       // strictly incoming, but we need to set it to something different later
       // on, if necessary, so have a read-write version of it:
-      double exponent = exponent_1;
+      double exponent= exponent_1;
 
-      const unsigned int n_components = dof.get_fe(0).n_components();
+      const unsigned int n_components= dof.get_fe(0).n_components();
 
       Assert(exact_solution.n_components == n_components,
              ExcDimensionMismatch(exact_solution.n_components, n_components));
@@ -8037,11 +8029,11 @@ namespace VectorTools
           case H1_seminorm:
           case H1_norm:
           case Hdiv_seminorm:
-            exponent = 2.;
+            exponent= 2.;
             break;
 
           case L1_norm:
-            exponent = 1.;
+            exponent= 1.;
             break;
 
           default:
@@ -8056,22 +8048,22 @@ namespace VectorTools
           case Hdiv_seminorm:
           case W1p_seminorm:
           case W1infty_seminorm:
-            update_flags |= UpdateFlags(update_gradients);
+            update_flags|= UpdateFlags(update_gradients);
             if(spacedim == dim + 1)
-              update_flags |= UpdateFlags(update_normal_vectors);
+              update_flags|= UpdateFlags(update_normal_vectors);
 
             break;
 
           case H1_norm:
           case W1p_norm:
           case W1infty_norm:
-            update_flags |= UpdateFlags(update_gradients);
+            update_flags|= UpdateFlags(update_gradients);
             if(spacedim == dim + 1)
-              update_flags |= UpdateFlags(update_normal_vectors);
+              update_flags|= UpdateFlags(update_normal_vectors);
             DEAL_II_FALLTHROUGH;
 
           default:
-            update_flags |= UpdateFlags(update_values);
+            update_flags|= UpdateFlags(update_values);
             break;
         }
 
@@ -8092,7 +8084,7 @@ namespace VectorTools
 
             const dealii::FEValues<dim, spacedim>& fe_values
               = data.x_fe_values.get_present_fe_values();
-            const unsigned int n_q_points = fe_values.n_quadrature_points;
+            const unsigned int n_q_points= fe_values.n_quadrature_points;
             data.resize_vectors(n_q_points, n_components);
 
             if(update_flags & update_values)
@@ -8114,7 +8106,7 @@ namespace VectorTools
         else
           // the cell is a ghost cell or is artificial. write a zero into the
           // corresponding value of the returned vector
-          difference(cell->active_cell_index()) = 0;
+          difference(cell->active_cell_index())= 0;
     }
 
   } // namespace internal
@@ -8227,7 +8219,7 @@ namespace VectorTools
     {
       // check that off-processor entries are zero. Otherwise we will compute
       // wrong results below!
-      typename InVector::size_type                                i = 0;
+      typename InVector::size_type                                i= 0;
       typename Triangulation<dim, spacedim>::active_cell_iterator it
         = tria.begin_active();
       for(; i < cellwise_error.size(); ++i, ++it)
@@ -8239,11 +8231,11 @@ namespace VectorTools
     }
 #endif
 
-    MPI_Comm comm = MPI_COMM_SELF;
+    MPI_Comm comm= MPI_COMM_SELF;
 #ifdef DEAL_II_WITH_MPI
     if(const parallel::Triangulation<dim, spacedim>* ptria
        = dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(&tria))
-      comm = ptria->get_communicator();
+      comm= ptria->get_communicator();
 #endif
 
     switch(norm)
@@ -8253,20 +8245,20 @@ namespace VectorTools
         case H1_norm:
         case Hdiv_seminorm:
           {
-            const double local = cellwise_error.l2_norm();
+            const double local= cellwise_error.l2_norm();
             return std::sqrt(Utilities::MPI::sum(local * local, comm));
           }
 
         case L1_norm:
           {
-            const double local = cellwise_error.l1_norm();
+            const double local= cellwise_error.l1_norm();
             return Utilities::MPI::sum(local, comm);
           }
 
         case Linfty_norm:
         case W1infty_seminorm:
           {
-            const double local = cellwise_error.linfty_norm();
+            const double local= cellwise_error.linfty_norm();
             return Utilities::MPI::max(local, comm);
           }
 
@@ -8294,13 +8286,13 @@ namespace VectorTools
         case W1p_norm:
         case W1p_seminorm:
           {
-            double                       local = 0;
+            double                       local= 0;
             typename InVector::size_type i;
             typename Triangulation<dim, spacedim>::active_cell_iterator it
               = tria.begin_active();
-            for(i = 0; i < cellwise_error.size(); ++i, ++it)
+            for(i= 0; i < cellwise_error.size(); ++i, ++it)
               if(it->is_locally_owned())
-                local += std::pow(cellwise_error[i], exponent);
+                local+= std::pow(cellwise_error[i], exponent);
 
             return std::pow(Utilities::MPI::sum(local, comm), 1. / exponent);
           }
@@ -8340,7 +8332,7 @@ namespace VectorTools
     const Point<spacedim>&                                     point)
   {
     typedef typename VectorType::value_type Number;
-    const FiniteElement<dim>&               fe = dof.get_fe();
+    const FiniteElement<dim>&               fe= dof.get_fe();
 
     Assert(difference.size() == fe.n_components(),
            ExcDimensionMismatch(difference.size(), fe.n_components()));
@@ -8350,8 +8342,7 @@ namespace VectorTools
     // it, and then a FEValues object
     const std::pair<typename DoFHandler<dim, spacedim>::active_cell_iterator,
                     Point<spacedim>>
-      cell_point
-      = GridTools::find_active_cell_around_point(mapping, dof, point);
+      cell_point= GridTools::find_active_cell_around_point(mapping, dof, point);
 
     AssertThrow(cell_point.first->is_locally_owned(),
                 ExcPointNotAvailableHere());
@@ -8369,12 +8360,12 @@ namespace VectorTools
     fe_values.get_function_values(fe_function, u_value);
 
     if(fe.n_components() == 1)
-      difference(0) = exact_function.value(point);
+      difference(0)= exact_function.value(point);
     else
       exact_function.vector_value(point, difference);
 
-    for(unsigned int i = 0; i < difference.size(); ++i)
-      difference(i) -= u_value[0](i);
+    for(unsigned int i= 0; i < difference.size(); ++i)
+      difference(i)-= u_value[0](i);
   }
 
   template <int dim, typename VectorType, int spacedim>
@@ -8433,7 +8424,7 @@ namespace VectorTools
               Vector<typename VectorType::value_type>& value)
   {
     typedef typename VectorType::value_type Number;
-    const FiniteElement<dim>&               fe = dof.get_fe();
+    const FiniteElement<dim>&               fe= dof.get_fe();
 
     Assert(value.size() == fe.n_components(),
            ExcDimensionMismatch(value.size(), fe.n_components()));
@@ -8443,8 +8434,7 @@ namespace VectorTools
     // it, and then a FEValues object
     const std::pair<typename DoFHandler<dim, spacedim>::active_cell_iterator,
                     Point<spacedim>>
-      cell_point
-      = GridTools::find_active_cell_around_point(mapping, dof, point);
+      cell_point= GridTools::find_active_cell_around_point(mapping, dof, point);
 
     AssertThrow(cell_point.first->is_locally_owned(),
                 ExcPointNotAvailableHere());
@@ -8462,7 +8452,7 @@ namespace VectorTools
     std::vector<Vector<Number>> u_value(1, Vector<Number>(fe.n_components()));
     fe_values.get_function_values(fe_function, u_value);
 
-    value = u_value[0];
+    value= u_value[0];
   }
 
   template <int dim, typename VectorType, int spacedim>
@@ -8474,7 +8464,7 @@ namespace VectorTools
               Vector<typename VectorType::value_type>&    value)
   {
     typedef typename VectorType::value_type Number;
-    const hp::FECollection<dim, spacedim>&  fe = dof.get_fe_collection();
+    const hp::FECollection<dim, spacedim>&  fe= dof.get_fe_collection();
 
     Assert(value.size() == fe.n_components(),
            ExcDimensionMismatch(value.size(), fe.n_components()));
@@ -8485,8 +8475,7 @@ namespace VectorTools
     const std::pair<
       typename hp::DoFHandler<dim, spacedim>::active_cell_iterator,
       Point<spacedim>>
-      cell_point
-      = GridTools::find_active_cell_around_point(mapping, dof, point);
+      cell_point= GridTools::find_active_cell_around_point(mapping, dof, point);
 
     AssertThrow(cell_point.first->is_locally_owned(),
                 ExcPointNotAvailableHere());
@@ -8506,7 +8495,7 @@ namespace VectorTools
     std::vector<Vector<Number>> u_value(1, Vector<Number>(fe.n_components()));
     fe_values.get_function_values(fe_function, u_value);
 
-    value = u_value[0];
+    value= u_value[0];
   }
 
   template <int dim, typename VectorType, int spacedim>
@@ -8607,7 +8596,7 @@ namespace VectorTools
     const Point<spacedim>&           point,
     std::vector<Tensor<1, spacedim, typename VectorType::value_type>>& gradient)
   {
-    const FiniteElement<dim>& fe = dof.get_fe();
+    const FiniteElement<dim>& fe= dof.get_fe();
 
     Assert(gradient.size() == fe.n_components(),
            ExcDimensionMismatch(gradient.size(), fe.n_components()));
@@ -8617,8 +8606,7 @@ namespace VectorTools
     // it, and then a FEValues object
     const std::pair<typename DoFHandler<dim, spacedim>::active_cell_iterator,
                     Point<spacedim>>
-      cell_point
-      = GridTools::find_active_cell_around_point(mapping, dof, point);
+      cell_point= GridTools::find_active_cell_around_point(mapping, dof, point);
 
     AssertThrow(cell_point.first->is_locally_owned(),
                 ExcPointNotAvailableHere());
@@ -8638,7 +8626,7 @@ namespace VectorTools
       1, std::vector<Tensor<1, dim, Number>>(fe.n_components()));
     fe_values.get_function_gradients(fe_function, u_gradient);
 
-    gradient = u_gradient[0];
+    gradient= u_gradient[0];
   }
 
   template <int dim, typename VectorType, int spacedim>
@@ -8651,7 +8639,7 @@ namespace VectorTools
     std::vector<Tensor<1, spacedim, typename VectorType::value_type>>& gradient)
   {
     typedef typename VectorType::value_type Number;
-    const hp::FECollection<dim, spacedim>&  fe = dof.get_fe_collection();
+    const hp::FECollection<dim, spacedim>&  fe= dof.get_fe_collection();
 
     Assert(gradient.size() == fe.n_components(),
            ExcDimensionMismatch(gradient.size(), fe.n_components()));
@@ -8662,8 +8650,7 @@ namespace VectorTools
     const std::pair<
       typename hp::DoFHandler<dim, spacedim>::active_cell_iterator,
       Point<spacedim>>
-      cell_point
-      = GridTools::find_active_cell_around_point(mapping, dof, point);
+      cell_point= GridTools::find_active_cell_around_point(mapping, dof, point);
 
     AssertThrow(cell_point.first->is_locally_owned(),
                 ExcPointNotAvailableHere());
@@ -8682,7 +8669,7 @@ namespace VectorTools
       1, std::vector<Tensor<1, dim, Number>>(fe.n_components()));
     fe_values.get_function_gradients(fe_function, u_gradient);
 
-    gradient = u_gradient[0];
+    gradient= u_gradient[0];
   }
 
   template <int dim, typename VectorType, int spacedim>
@@ -8734,18 +8721,18 @@ namespace VectorTools
         }
       else
         {
-          const unsigned int n = v.size();
+          const unsigned int n= v.size();
 
           Assert(p_select.size() == n,
                  ExcDimensionMismatch(p_select.size(), n));
 
-          typename VectorType::value_type s       = 0.;
-          unsigned int                    counter = 0;
-          for(unsigned int i = 0; i < n; ++i)
+          typename VectorType::value_type s      = 0.;
+          unsigned int                    counter= 0;
+          for(unsigned int i= 0; i < n; ++i)
             if(p_select[i])
               {
-                typename VectorType::value_type vi = v(i);
-                s += vi;
+                typename VectorType::value_type vi= v(i);
+                s+= vi;
                 ++counter;
               }
           // Error out if we have not constrained anything. Note that in this
@@ -8753,11 +8740,11 @@ namespace VectorTools
           Assert(n == 0 || counter > 0,
                  ComponentMask::ExcNoComponentSelected());
 
-          s /= counter;
+          s/= counter;
 
-          for(unsigned int i = 0; i < n; ++i)
+          for(unsigned int i= 0; i < n; ++i)
             if(p_select[i])
-              v(i) -= s;
+              v(i)-= s;
         }
     }
 
@@ -8787,7 +8774,7 @@ namespace VectorTools
     void
     set_possibly_complex_number(const double& r, const double&, Number& n)
     {
-      n = r;
+      n= r;
     }
 
     template <typename Type>
@@ -8796,7 +8783,7 @@ namespace VectorTools
                                 const double&       i,
                                 std::complex<Type>& n)
     {
-      n = std::complex<Type>(r, i);
+      n= std::complex<Type>(r, i);
     }
   } // namespace
 
@@ -8823,18 +8810,18 @@ namespace VectorTools
     std::vector<Vector<Number>>                              values(
       quadrature.size(), Vector<Number>(dof.get_fe(0).n_components()));
 
-    Number                                            mean = Number();
-    typename numbers::NumberTraits<Number>::real_type area = 0.;
+    Number                                            mean= Number();
+    typename numbers::NumberTraits<Number>::real_type area= 0.;
     // Compute mean value
-    for(cell = dof.begin_active(); cell != dof.end(); ++cell)
+    for(cell= dof.begin_active(); cell != dof.end(); ++cell)
       if(cell->is_locally_owned())
         {
           fe.reinit(cell);
           fe.get_function_values(v, values);
-          for(unsigned int k = 0; k < quadrature.size(); ++k)
+          for(unsigned int k= 0; k < quadrature.size(); ++k)
             {
-              mean += fe.JxW(k) * values[k](component);
-              area += fe.JxW(k);
+              mean+= fe.JxW(k) * values[k](component);
+              area+= fe.JxW(k);
             }
         }
 
@@ -8850,20 +8837,20 @@ namespace VectorTools
         // and imaginary types so that we don't have to distinguish, and to this
         // end just copy everything into a complex number and, later, back into
         // the original data type.
-        std::complex<double> mean_double = mean;
-        double my_values[3] = {mean_double.real(), mean_double.imag(), area};
+        std::complex<double> mean_double= mean;
+        double my_values[3]= {mean_double.real(), mean_double.imag(), area};
         double global_values[3];
 
-        const int ierr = MPI_Allreduce(my_values,
-                                       global_values,
-                                       3,
-                                       MPI_DOUBLE,
-                                       MPI_SUM,
-                                       p_triangulation->get_communicator());
+        const int ierr= MPI_Allreduce(my_values,
+                                      global_values,
+                                      3,
+                                      MPI_DOUBLE,
+                                      MPI_SUM,
+                                      p_triangulation->get_communicator());
         AssertThrowMPI(ierr);
 
         set_possibly_complex_number(global_values[0], global_values[1], mean);
-        area = global_values[2];
+        area= global_values[2];
       }
 #endif
 
@@ -8891,7 +8878,7 @@ namespace VectorTools
                       const ComponentMask&                 mask)
   {
     AssertDimension(vector.size(), dh.n_dofs());
-    const FiniteElement<dim, spacedim>& fe = dh.get_fe();
+    const FiniteElement<dim, spacedim>& fe= dh.get_fe();
 
     // Construct default fe_mask;
     const ComponentMask fe_mask(
@@ -8902,11 +8889,11 @@ namespace VectorTools
 
     std::vector<unsigned int> fe_to_real(fe_mask.size(),
                                          numbers::invalid_unsigned_int);
-    unsigned int              size = 0;
-    for(unsigned int i = 0; i < fe_mask.size(); ++i)
+    unsigned int              size= 0;
+    for(unsigned int i= 0; i < fe_mask.size(); ++i)
       {
         if(fe_mask[i])
-          fe_to_real[i] = size++;
+          fe_to_real[i]= size++;
       }
     Assert(
       size == spacedim,
@@ -8932,7 +8919,7 @@ namespace VectorTools
               cell->get_dof_indices(dofs);
               const std::vector<Point<spacedim>>& points
                 = fe_v.get_quadrature_points();
-              for(unsigned int q = 0; q < points.size(); ++q)
+              for(unsigned int q= 0; q < points.size(); ++q)
                 {
                   const unsigned int comp
                     = fe.system_to_component_index(q).first;
@@ -8953,10 +8940,10 @@ namespace VectorTools
         const FESystem<dim, spacedim>* fe_system
           = dynamic_cast<const FESystem<dim, spacedim>*>(&fe);
         Assert(fe_system, ExcNotImplemented());
-        unsigned int degree = numbers::invalid_unsigned_int;
+        unsigned int degree= numbers::invalid_unsigned_int;
 
         // Get information about the blocks
-        for(unsigned int i = 0; i < fe_mask.size(); ++i)
+        for(unsigned int i= 0; i < fe_mask.size(); ++i)
           if(fe_mask[i])
             {
               const unsigned int base_i
@@ -8966,7 +8953,7 @@ namespace VectorTools
                      ExcNotImplemented());
               Assert(fe_system->base_element(base_i).is_primitive(),
                      ExcNotImplemented());
-              degree = fe_system->base_element(base_i).degree;
+              degree= fe_system->base_element(base_i).degree;
             }
 
         // We create an intermediate FE_Q vector space, and then
@@ -8982,7 +8969,7 @@ namespace VectorTools
 
         FullMatrix<double> transfer(fe.dofs_per_cell, feq.dofs_per_cell);
         FullMatrix<double> local_transfer(feq.dofs_per_cell);
-        const std::vector<Point<dim>>& points = feq.get_unit_support_points();
+        const std::vector<Point<dim>>& points= feq.get_unit_support_points();
 
         // Here we construct the interpolation matrix from
         // FE_Q^spacedim to the FiniteElement used by
@@ -9018,20 +9005,20 @@ namespace VectorTools
 
         std::vector<unsigned int> fe_to_feq(fe.dofs_per_cell,
                                             numbers::invalid_unsigned_int);
-        unsigned int              index = 0;
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        unsigned int              index= 0;
+        for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
           if(fe_mask[fe.system_to_component_index(i).first])
-            fe_to_feq[i] = index++;
+            fe_to_feq[i]= index++;
 
         // If index is not the same as feq.dofs_per_cell, we won't
         // know how to invert the resulting matrix. Bail out.
         Assert(index == feq.dofs_per_cell, ExcNotImplemented());
 
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           {
-            const unsigned int comp_j = fe.system_to_component_index(j).first;
+            const unsigned int comp_j= fe.system_to_component_index(j).first;
             if(fe_mask[comp_j])
-              for(unsigned int i = 0; i < points.size(); ++i)
+              for(unsigned int i= 0; i < points.size(); ++i)
                 {
                   if(fe_to_real[comp_j]
                      == feq.system_to_component_index(i).first)
@@ -9044,10 +9031,10 @@ namespace VectorTools
         // one is filled only with the information from the components
         // of the displacement. The rest is set to zero.
         local_transfer.invert(local_transfer);
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
           if(fe_to_feq[i] != numbers::invalid_unsigned_int)
-            for(unsigned int j = 0; j < feq.dofs_per_cell; ++j)
-              transfer(i, j) = local_transfer(fe_to_feq[i], j);
+            for(unsigned int j= 0; j < feq.dofs_per_cell; ++j)
+              transfer(i, j)= local_transfer(fe_to_feq[i], j);
 
         // The interpolation matrix is then passed to the
         // VectorTools::interpolate() function to generate the correct

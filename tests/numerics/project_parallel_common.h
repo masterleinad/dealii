@@ -66,22 +66,22 @@ public:
   value(const Point<dim>& p, const unsigned int component) const
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
-    double val = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
-        val += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
+    double val= 0;
+    for(unsigned int d= 0; d < dim; ++d)
+      for(unsigned int i= 0; i <= q; ++i)
+        val+= (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return val;
   }
 
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    for(unsigned int c = 0; c < v.size(); ++c)
+    for(unsigned int c= 0; c < v.size(); ++c)
       {
-        v(c) = 0;
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int i = 0; i <= q; ++i)
-            v(c) += (d + 1) * (i + 1) * std::pow(p[d], 1. * i) + c;
+        v(c)= 0;
+        for(unsigned int d= 0; d < dim; ++d)
+          for(unsigned int i= 0; i <= q; ++i)
+            v(c)+= (d + 1) * (i + 1) * std::pow(p[d], 1. * i) + c;
       }
   }
 
@@ -95,14 +95,14 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
            const FiniteElement<dim>&                        fe,
            const unsigned int                               order_difference)
 {
-  const unsigned int p = fe_degree;
+  const unsigned int p= fe_degree;
   DoFHandler<dim>    dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
   deallog << "n_dofs=" << dof_handler.n_dofs() << std::endl;
 
-  const MPI_Comm& mpi_communicator   = triangulation.get_communicator();
-  const IndexSet  locally_owned_dofs = dof_handler.locally_owned_dofs();
+  const MPI_Comm& mpi_communicator  = triangulation.get_communicator();
+  const IndexSet  locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet        locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -114,7 +114,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
   LinearAlgebra::distributed::Vector<double> projection(
     locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
   Vector<float> error(triangulation.n_active_cells());
-  for(unsigned int q = 0; q <= p + 2 - order_difference; ++q)
+  for(unsigned int q= 0; q <= p + 2 - order_difference; ++q)
     {
       // project the function
       projection.zero_out_ghosts();
@@ -136,10 +136,10 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
                                         error,
                                         QGauss<dim>(std::max(p, q) + 1),
                                         VectorTools::L2_norm);
-      const double L2_error_local = error.l2_norm();
-      const double L2_error       = std::sqrt(
+      const double L2_error_local= error.l2_norm();
+      const double L2_error      = std::sqrt(
         Utilities::MPI::sum(L2_error_local * L2_error_local, mpi_communicator));
-      const double projection_l2_norm = projection.l2_norm();
+      const double projection_l2_norm= projection.l2_norm();
       deallog << fe.get_name() << ", P_" << q
               << ", rel. error=" << L2_error / projection_l2_norm << std::endl;
 
@@ -157,7 +157,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
 template <int dim, int components, int fe_degree>
 void
 test_no_hanging_nodes(const FiniteElement<dim>& fe,
-                      const unsigned int        order_difference = 0)
+                      const unsigned int        order_difference= 0)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);
@@ -170,7 +170,7 @@ test_no_hanging_nodes(const FiniteElement<dim>& fe,
 template <int dim, int components, int fe_degree>
 void
 test_with_hanging_nodes(const FiniteElement<dim>& fe,
-                        const unsigned int        order_difference = 0)
+                        const unsigned int        order_difference= 0)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);
@@ -195,12 +195,12 @@ test_with_hanging_nodes(const FiniteElement<dim>& fe,
 template <int dim, int components, int fe_degree>
 void
 test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
-                                 const unsigned int        order_difference = 0)
+                                 const unsigned int        order_difference= 0)
 {
   if(dim != 3)
     return;
 
-  for(unsigned int i = 0; i < 7; ++i)
+  for(unsigned int i= 0; i < 7; ++i)
     {
       parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
       GridGenerator::hyper_ball(triangulation);
@@ -223,7 +223,7 @@ test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
 template <int dim, int components, int fe_degree>
 void
 test_with_2d_deformed_mesh(const FiniteElement<dim>& fe,
-                           const unsigned int        order_difference = 0)
+                           const unsigned int        order_difference= 0)
 {
   if(dim != 2)
     return;
@@ -242,23 +242,23 @@ test_with_2d_deformed_mesh(const FiniteElement<dim>& fe,
   // Prepare cell data
   std::vector<CellData<dim>> cells(3);
 
-  cells[0].vertices[0] = 0;
-  cells[0].vertices[1] = 1;
-  cells[0].vertices[2] = 4;
-  cells[0].vertices[3] = 2;
-  cells[0].material_id = 0;
+  cells[0].vertices[0]= 0;
+  cells[0].vertices[1]= 1;
+  cells[0].vertices[2]= 4;
+  cells[0].vertices[3]= 2;
+  cells[0].material_id= 0;
 
-  cells[1].vertices[0] = 4;
-  cells[1].vertices[1] = 2;
-  cells[1].vertices[2] = 5;
-  cells[1].vertices[3] = 3;
-  cells[1].material_id = 0;
+  cells[1].vertices[0]= 4;
+  cells[1].vertices[1]= 2;
+  cells[1].vertices[2]= 5;
+  cells[1].vertices[3]= 3;
+  cells[1].material_id= 0;
 
-  cells[2].vertices[0] = 0;
-  cells[2].vertices[1] = 4;
-  cells[2].vertices[2] = 6;
-  cells[2].vertices[3] = 5;
-  cells[2].material_id = 0;
+  cells[2].vertices[0]= 0;
+  cells[2].vertices[1]= 4;
+  cells[2].vertices[2]= 6;
+  cells[2].vertices[3]= 5;
+  cells[2].material_id= 0;
 
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   triangulation.create_triangulation(points_glob, cells, SubCellData());
@@ -271,12 +271,12 @@ test_with_2d_deformed_mesh(const FiniteElement<dim>& fe,
 template <int dim, int components, int fe_degree>
 void
 test_with_2d_deformed_refined_mesh(const FiniteElement<dim>& fe,
-                                   const unsigned int order_difference = 0)
+                                   const unsigned int order_difference= 0)
 {
   if(dim != 2)
     return;
 
-  for(unsigned int i = 0; i < 3; ++i)
+  for(unsigned int i= 0; i < 3; ++i)
     {
       std::vector<Point<dim>> points_glob;
       std::vector<Point<dim>> points;
@@ -292,23 +292,23 @@ test_with_2d_deformed_refined_mesh(const FiniteElement<dim>& fe,
       // Prepare cell data
       std::vector<CellData<dim>> cells(3);
 
-      cells[0].vertices[0] = 0;
-      cells[0].vertices[1] = 1;
-      cells[0].vertices[2] = 4;
-      cells[0].vertices[3] = 2;
-      cells[0].material_id = 0;
+      cells[0].vertices[0]= 0;
+      cells[0].vertices[1]= 1;
+      cells[0].vertices[2]= 4;
+      cells[0].vertices[3]= 2;
+      cells[0].material_id= 0;
 
-      cells[1].vertices[0] = 4;
-      cells[1].vertices[1] = 2;
-      cells[1].vertices[2] = 5;
-      cells[1].vertices[3] = 3;
-      cells[1].material_id = 0;
+      cells[1].vertices[0]= 4;
+      cells[1].vertices[1]= 2;
+      cells[1].vertices[2]= 5;
+      cells[1].vertices[3]= 3;
+      cells[1].material_id= 0;
 
-      cells[2].vertices[0] = 0;
-      cells[2].vertices[1] = 4;
-      cells[2].vertices[2] = 6;
-      cells[2].vertices[3] = 5;
-      cells[2].material_id = 0;
+      cells[2].vertices[0]= 0;
+      cells[2].vertices[1]= 4;
+      cells[2].vertices[2]= 6;
+      cells[2].vertices[3]= 5;
+      cells[2].material_id= 0;
 
       parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
       triangulation.create_triangulation(points_glob, cells, SubCellData());

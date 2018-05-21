@@ -28,7 +28,7 @@ template <class T>
 void
 test(T t, std::string s)
 {
-  auto p = Convert<T>::to_pattern();
+  auto p= Convert<T>::to_pattern();
   deallog << "Pattern  : " << p->description() << std::endl;
   deallog << "String   : " << s << std::endl;
   deallog << "To string: " << Convert<T>::to_string(t) << std::endl;
@@ -85,19 +85,19 @@ main()
 
   deallog << "=============================" << std::endl;
 
-  l0 = Convert<decltype(l0)>::to_value("1,2,3");
-  l1 = Convert<decltype(l1)>::to_value("3,4,5");
-  l2 = Convert<decltype(l2)>::to_value("5,6,7");
-  l3 = Convert<decltype(l3)>::to_value("8,9,8.5");
-  l4 = Convert<decltype(l4)>::to_value("8,9,8.5");
-  l5 = Convert<decltype(l5)>::to_value("2.0,9.0");
+  l0= Convert<decltype(l0)>::to_value("1,2,3");
+  l1= Convert<decltype(l1)>::to_value("3,4,5");
+  l2= Convert<decltype(l2)>::to_value("5,6,7");
+  l3= Convert<decltype(l3)>::to_value("8,9,8.5");
+  l4= Convert<decltype(l4)>::to_value("8,9,8.5");
+  l5= Convert<decltype(l5)>::to_value("2.0,9.0");
 
-  vl0 = Convert<decltype(vl0)>::to_value("1,2,3  ; 1,2,3  ");
-  vl1 = Convert<decltype(vl1)>::to_value("3,4,5  ; 3,4,5  ");
-  vl2 = Convert<decltype(vl2)>::to_value("5,6,7  ; 5,6,7  ");
-  vl3 = Convert<decltype(vl3)>::to_value("8,9,8.5; 8,9,8.5");
-  vl4 = Convert<decltype(vl4)>::to_value("8,9,8.5; 8,9,8.5");
-  vl5 = Convert<decltype(vl5)>::to_value("1.0,2.0; 6.0,7.0");
+  vl0= Convert<decltype(vl0)>::to_value("1,2,3  ; 1,2,3  ");
+  vl1= Convert<decltype(vl1)>::to_value("3,4,5  ; 3,4,5  ");
+  vl2= Convert<decltype(vl2)>::to_value("5,6,7  ; 5,6,7  ");
+  vl3= Convert<decltype(vl3)>::to_value("8,9,8.5; 8,9,8.5");
+  vl4= Convert<decltype(vl4)>::to_value("8,9,8.5; 8,9,8.5");
+  vl5= Convert<decltype(vl5)>::to_value("1.0,2.0; 6.0,7.0");
 
   deallog << "List of int         : " << Convert<decltype(l0)>::to_string(l0)
           << std::endl;

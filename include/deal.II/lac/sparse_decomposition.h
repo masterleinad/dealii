@@ -128,7 +128,7 @@ public:
    * Destruction. Mark the destructor pure to ensure that this class isn't
    * used directly, but only its derived classes.
    */
-  virtual ~SparseLUDecomposition() override = 0;
+  virtual ~SparseLUDecomposition() override= 0;
 
   /**
    * Deletes all member variables. Leaves the class in the state that it had
@@ -146,10 +146,10 @@ public:
     /**
      * Constructor. For the parameters' description, see below.
      */
-    AdditionalData(const double           strengthen_diagonal   = 0,
-                   const unsigned int     extra_off_diagonals   = 0,
-                   const bool             use_previous_sparsity = false,
-                   const SparsityPattern* use_this_sparsity     = nullptr);
+    AdditionalData(const double           strengthen_diagonal  = 0,
+                   const unsigned int     extra_off_diagonals  = 0,
+                   const bool             use_previous_sparsity= false,
+                   const SparsityPattern* use_this_sparsity    = nullptr);
 
     /**
      * <code>strengthen_diag</code> times the sum of absolute row entries is
@@ -388,7 +388,7 @@ SparseLUDecomposition<number>::vmult_add(OutVector&      dst,
   OutVector tmp;
   tmp.reinit(dst);
   this->vmult(tmp, src);
-  dst += tmp;
+  dst+= tmp;
 }
 
 // Note: This function is required for full compatibility with
@@ -404,7 +404,7 @@ SparseLUDecomposition<number>::Tvmult_add(OutVector&      dst,
   OutVector tmp;
   tmp.reinit(dst);
   this->Tvmult(tmp, src);
-  dst += tmp;
+  dst+= tmp;
 }
 
 //---------------------------------------------------------------------------

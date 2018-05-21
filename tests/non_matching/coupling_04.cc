@@ -105,7 +105,7 @@ test()
   coupling.Tvmult(projected_squares, space_square);
   mass_matrix_inv.solve(projected_squares);
 
-  projected_squares -= squares;
+  projected_squares-= squares;
 
   deallog << "Error on squares: " << projected_squares.l2_norm() << std::endl;
 }

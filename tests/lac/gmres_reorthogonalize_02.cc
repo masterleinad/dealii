@@ -26,24 +26,24 @@ template <typename number>
 void
 test()
 {
-  const unsigned int n = 200;
+  const unsigned int n= 200;
   Vector<number>     rhs(n), sol(n);
-  rhs = 1.;
+  rhs= 1.;
 
   // only add diagonal entries
   SparsityPattern sp(n, n);
   sp.compress();
   SparseMatrix<number> matrix(sp);
 
-  for(unsigned int i = 0; i < n; ++i)
-    matrix.diag_element(i) = (i + 1);
+  for(unsigned int i= 0; i < n; ++i)
+    matrix.diag_element(i)= (i + 1);
 
   SolverControl control(1000, 1e3 * std::numeric_limits<number>::epsilon());
   typename SolverGMRES<Vector<number>>::AdditionalData data;
-  data.max_n_tmp_vectors = 202;
+  data.max_n_tmp_vectors= 202;
 
   SolverGMRES<Vector<number>> solver(control, data);
-  auto print_re_orthogonalization = [](int accumulated_iterations) {
+  auto print_re_orthogonalization= [](int accumulated_iterations) {
     deallog.get_file_stream() << "Re-orthogonalization enabled at step "
                               << accumulated_iterations << std::endl;
   };

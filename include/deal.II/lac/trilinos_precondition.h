@@ -104,7 +104,7 @@ namespace TrilinosWrappers
     /**
      * Destructor.
      */
-    ~PreconditionBase() override = default;
+    ~PreconditionBase() override= default;
 
     /**
      * Destroys the preconditioner, leaving an object like just after having
@@ -286,9 +286,9 @@ namespace TrilinosWrappers
        * Constructor. By default, set the damping parameter to one, and do not
        * modify the diagonal.
        */
-      AdditionalData(const double       omega        = 1,
-                     const double       min_diagonal = 0,
-                     const unsigned int n_sweeps     = 1);
+      AdditionalData(const double       omega       = 1,
+                     const double       min_diagonal= 0,
+                     const unsigned int n_sweeps    = 1);
 
       /**
        * This specifies the relaxation parameter in the Jacobi preconditioner.
@@ -317,7 +317,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -370,10 +370,10 @@ namespace TrilinosWrappers
        * run a BlockJacobi preconditioner, where each block is inverted
        * approximately by an SSOR).
        */
-      AdditionalData(const double       omega        = 1,
-                     const double       min_diagonal = 0,
-                     const unsigned int overlap      = 0,
-                     const unsigned int n_sweeps     = 1);
+      AdditionalData(const double       omega       = 1,
+                     const double       min_diagonal= 0,
+                     const unsigned int overlap     = 0,
+                     const unsigned int n_sweeps    = 1);
 
       /**
        * This specifies the (over-) relaxation parameter in the SSOR
@@ -410,7 +410,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -463,10 +463,10 @@ namespace TrilinosWrappers
        * run a BlockJacobi preconditioner, where each block is inverted
        * approximately by an SOR.
        */
-      AdditionalData(const double       omega        = 1,
-                     const double       min_diagonal = 0,
-                     const unsigned int overlap      = 0,
-                     const unsigned int n_sweeps     = 1);
+      AdditionalData(const double       omega       = 1,
+                     const double       min_diagonal= 0,
+                     const unsigned int overlap     = 0,
+                     const unsigned int n_sweeps    = 1);
 
       /**
        * This specifies the (over-) relaxation parameter in the SOR
@@ -503,7 +503,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -550,11 +550,11 @@ namespace TrilinosWrappers
        * subdivision of the rows, set the damping parameter to one, and do not
        * modify the diagonal.
        */
-      AdditionalData(const unsigned int block_size          = 1,
-                     const std::string& block_creation_type = "linear",
-                     const double       omega               = 1,
-                     const double       min_diagonal        = 0,
-                     const unsigned int n_sweeps            = 1);
+      AdditionalData(const unsigned int block_size         = 1,
+                     const std::string& block_creation_type= "linear",
+                     const double       omega              = 1,
+                     const double       min_diagonal       = 0,
+                     const unsigned int n_sweeps           = 1);
 
       /**
        * This specifies the size of blocks.
@@ -598,7 +598,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -652,12 +652,12 @@ namespace TrilinosWrappers
        * run a BlockJacobi preconditioner, where each block is inverted
        * approximately by a block SOR).
        */
-      AdditionalData(const unsigned int block_size          = 1,
-                     const std::string& block_creation_type = "linear",
-                     const double       omega               = 1,
-                     const double       min_diagonal        = 0,
-                     const unsigned int overlap             = 0,
-                     const unsigned int n_sweeps            = 1);
+      AdditionalData(const unsigned int block_size         = 1,
+                     const std::string& block_creation_type= "linear",
+                     const double       omega              = 1,
+                     const double       min_diagonal       = 0,
+                     const unsigned int overlap            = 0,
+                     const unsigned int n_sweeps           = 1);
 
       /**
        * This specifies the size of blocks.
@@ -708,7 +708,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -762,12 +762,12 @@ namespace TrilinosWrappers
        * run a BlockJacobi preconditioner, where each block is inverted
        * approximately by a block SOR).
        */
-      AdditionalData(const unsigned int block_size          = 1,
-                     const std::string& block_creation_type = "linear",
-                     const double       omega               = 1,
-                     const double       min_diagonal        = 0,
-                     const unsigned int overlap             = 0,
-                     const unsigned int n_sweeps            = 1);
+      AdditionalData(const unsigned int block_size         = 1,
+                     const std::string& block_creation_type= "linear",
+                     const double       omega              = 1,
+                     const double       min_diagonal       = 0,
+                     const unsigned int overlap            = 0,
+                     const unsigned int n_sweeps           = 1);
 
       /**
        * This specifies the size of blocks.
@@ -818,7 +818,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -886,10 +886,10 @@ namespace TrilinosWrappers
        * case makes the preconditioner a so-called additive Schwarz
        * preconditioner.
        */
-      AdditionalData(const unsigned int ic_fill = 0,
-                     const double       ic_atol = 0.,
-                     const double       ic_rtol = 1.,
-                     const unsigned int overlap = 0);
+      AdditionalData(const unsigned int ic_fill= 0,
+                     const double       ic_atol= 0.,
+                     const double       ic_rtol= 1.,
+                     const unsigned int overlap= 0);
 
       /**
        * This specifies the amount of additional fill-in elements besides the
@@ -927,7 +927,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -1004,10 +1004,10 @@ namespace TrilinosWrappers
       /**
        * Constructor with default values for all parameters.
        */
-      AdditionalData(const unsigned int ilu_fill = 0,
-                     const double       ilu_atol = 0.,
-                     const double       ilu_rtol = 1.,
-                     const unsigned int overlap  = 0);
+      AdditionalData(const unsigned int ilu_fill= 0,
+                     const double       ilu_atol= 0.,
+                     const double       ilu_rtol= 1.,
+                     const unsigned int overlap = 0);
 
       /**
        * Additional fill-in, see class documentation above.
@@ -1038,7 +1038,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -1108,11 +1108,11 @@ namespace TrilinosWrappers
        * case makes the preconditioner a so-called additive Schwarz
        * preconditioner.
        */
-      AdditionalData(const double       ilut_drop = 0.,
-                     const unsigned int ilut_fill = 0,
-                     const double       ilut_atol = 0.,
-                     const double       ilut_rtol = 1.,
-                     const unsigned int overlap   = 0);
+      AdditionalData(const double       ilut_drop= 0.,
+                     const unsigned int ilut_fill= 0,
+                     const double       ilut_atol= 0.,
+                     const double       ilut_rtol= 1.,
+                     const unsigned int overlap  = 0);
 
       /**
        * This specifies the relative size of elements which should be dropped
@@ -1156,7 +1156,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -1189,7 +1189,7 @@ namespace TrilinosWrappers
       /**
        * Constructor.
        */
-      AdditionalData(const unsigned int overlap = 0);
+      AdditionalData(const unsigned int overlap= 0);
 
       /**
        * This determines how large the overlap of the local matrix portions on
@@ -1204,7 +1204,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -1228,12 +1228,12 @@ namespace TrilinosWrappers
       /**
        * Constructor.
        */
-      AdditionalData(const unsigned int degree           = 1,
-                     const double       max_eigenvalue   = 10.,
-                     const double       eigenvalue_ratio = 30.,
-                     const double       min_eigenvalue   = 1.,
-                     const double       min_diagonal     = 1e-12,
-                     const bool         nonzero_starting = false);
+      AdditionalData(const unsigned int degree          = 1,
+                     const double       max_eigenvalue  = 10.,
+                     const double       eigenvalue_ratio= 30.,
+                     const double       min_eigenvalue  = 1.,
+                     const double       min_diagonal    = 1e-12,
+                     const bool         nonzero_starting= false);
 
       /**
        * This determines the degree of the Chebyshev polynomial. The degree of
@@ -1284,7 +1284,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
   };
 
   /**
@@ -1344,18 +1344,18 @@ namespace TrilinosWrappers
        * Constructor. By default, we pretend to work on elliptic problems with
        * linear finite elements on a scalar equation.
        */
-      AdditionalData(const bool         elliptic              = true,
-                     const bool         higher_order_elements = false,
-                     const unsigned int n_cycles              = 1,
-                     const bool         w_cyle                = false,
-                     const double       aggregation_threshold = 1e-4,
+      AdditionalData(const bool         elliptic             = true,
+                     const bool         higher_order_elements= false,
+                     const unsigned int n_cycles             = 1,
+                     const bool         w_cyle               = false,
+                     const double       aggregation_threshold= 1e-4,
                      const std::vector<std::vector<bool>>& constant_modes
                      = std::vector<std::vector<bool>>(0),
-                     const unsigned int smoother_sweeps  = 2,
-                     const unsigned int smoother_overlap = 0,
-                     const bool         output_details   = false,
-                     const char*        smoother_type    = "Chebyshev",
-                     const char*        coarse_type      = "Amesos-KLU");
+                     const unsigned int smoother_sweeps = 2,
+                     const unsigned int smoother_overlap= 0,
+                     const bool         output_details  = false,
+                     const char*        smoother_type   = "Chebyshev",
+                     const char*        coarse_type     = "Amesos-KLU");
 
       /**
        * Determines whether the AMG preconditioner should be optimized for
@@ -1493,7 +1493,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Let Trilinos compute a multilevel hierarchy for the solution of a
@@ -1515,7 +1515,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const Epetra_RowMatrix& matrix,
-               const AdditionalData&   additional_data = AdditionalData());
+               const AdditionalData&   additional_data= AdditionalData());
 
     /**
      * Let Trilinos compute a multilevel hierarchy for the solution of a
@@ -1553,9 +1553,9 @@ namespace TrilinosWrappers
     template <typename number>
     void
     initialize(const ::dealii::SparseMatrix<number>& deal_ii_sparse_matrix,
-               const AdditionalData& additional_data = AdditionalData(),
-               const double          drop_tolerance  = 1e-13,
-               const ::dealii::SparsityPattern* use_this_sparsity = nullptr);
+               const AdditionalData& additional_data= AdditionalData(),
+               const double          drop_tolerance = 1e-13,
+               const ::dealii::SparsityPattern* use_this_sparsity= nullptr);
 
     /**
      * This function can be used for a faster recalculation of the
@@ -1625,17 +1625,17 @@ namespace TrilinosWrappers
        * Constructor. By default, we pretend to work on elliptic problems with
        * linear finite elements on a scalar equation.
        */
-      AdditionalData(const bool         elliptic              = true,
-                     const unsigned int n_cycles              = 1,
-                     const bool         w_cyle                = false,
-                     const double       aggregation_threshold = 1e-4,
+      AdditionalData(const bool         elliptic             = true,
+                     const unsigned int n_cycles             = 1,
+                     const bool         w_cyle               = false,
+                     const double       aggregation_threshold= 1e-4,
                      const std::vector<std::vector<bool>>& constant_modes
                      = std::vector<std::vector<bool>>(0),
-                     const unsigned int smoother_sweeps  = 2,
-                     const unsigned int smoother_overlap = 0,
-                     const bool         output_details   = false,
-                     const char*        smoother_type    = "Chebyshev",
-                     const char*        coarse_type      = "Amesos-KLU");
+                     const unsigned int smoother_sweeps = 2,
+                     const unsigned int smoother_overlap= 0,
+                     const bool         output_details  = false,
+                     const char*        smoother_type   = "Chebyshev",
+                     const char*        coarse_type     = "Amesos-KLU");
 
       /**
        * Determines whether the AMG preconditioner should be optimized for
@@ -1762,7 +1762,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Let Trilinos compute a multilevel hierarchy for the solution of a
@@ -1772,7 +1772,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const Epetra_CrsMatrix& matrix,
-               const AdditionalData&   additional_data = AdditionalData());
+               const AdditionalData&   additional_data= AdditionalData());
 
     /**
      * Let Trilinos compute a multilevel hierarchy for the solution of a
@@ -1807,9 +1807,9 @@ namespace TrilinosWrappers
     template <typename number>
     void
     initialize(const ::dealii::SparseMatrix<number>& deal_ii_sparse_matrix,
-               const AdditionalData& additional_data = AdditionalData(),
-               const double          drop_tolerance  = 1e-13,
-               const ::dealii::SparsityPattern* use_this_sparsity = nullptr);
+               const AdditionalData& additional_data= AdditionalData(),
+               const double          drop_tolerance = 1e-13,
+               const ::dealii::SparsityPattern* use_this_sparsity= nullptr);
 
     /**
      * Destroys the preconditioner, leaving an object like just after having
@@ -1858,7 +1858,7 @@ namespace TrilinosWrappers
      */
     void
     initialize(const SparseMatrix&   matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Apply the preconditioner, i.e., dst = src.
@@ -1924,12 +1924,12 @@ namespace TrilinosWrappers
 
     if(!preconditioner->UseTranspose())
       {
-        ierr = preconditioner->SetUseTranspose(true);
+        ierr= preconditioner->SetUseTranspose(true);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
       }
     else
       {
-        ierr = preconditioner->SetUseTranspose(false);
+        ierr= preconditioner->SetUseTranspose(false);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
       }
   }
@@ -1942,8 +1942,8 @@ namespace TrilinosWrappers
     Assert(src.vector_partitioner().SameAs(preconditioner->OperatorDomainMap()),
            ExcNonMatchingMaps("src"));
 
-    const int ierr = preconditioner->ApplyInverse(src.trilinos_vector(),
-                                                  dst.trilinos_vector());
+    const int ierr= preconditioner->ApplyInverse(src.trilinos_vector(),
+                                                 dst.trilinos_vector());
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -1956,8 +1956,8 @@ namespace TrilinosWrappers
            ExcNonMatchingMaps("src"));
 
     preconditioner->SetUseTranspose(true);
-    const int ierr = preconditioner->ApplyInverse(src.trilinos_vector(),
-                                                  dst.trilinos_vector());
+    const int ierr= preconditioner->ApplyInverse(src.trilinos_vector(),
+                                                 dst.trilinos_vector());
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     preconditioner->SetUseTranspose(false);
   }
@@ -1985,7 +1985,7 @@ namespace TrilinosWrappers
                            preconditioner->OperatorRangeMap(),
                            const_cast<double*>(src.begin()));
 
-    const int ierr = preconditioner->ApplyInverse(tril_src, tril_dst);
+    const int ierr= preconditioner->ApplyInverse(tril_src, tril_dst);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -2004,7 +2004,7 @@ namespace TrilinosWrappers
                            const_cast<double*>(src.begin()));
 
     preconditioner->SetUseTranspose(true);
-    const int ierr = preconditioner->ApplyInverse(tril_src, tril_dst);
+    const int ierr= preconditioner->ApplyInverse(tril_src, tril_dst);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     preconditioner->SetUseTranspose(false);
   }
@@ -2026,7 +2026,7 @@ namespace TrilinosWrappers
                            preconditioner->OperatorRangeMap(),
                            const_cast<double*>(src.begin()));
 
-    const int ierr = preconditioner->ApplyInverse(tril_src, tril_dst);
+    const int ierr= preconditioner->ApplyInverse(tril_src, tril_dst);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -2048,7 +2048,7 @@ namespace TrilinosWrappers
                            const_cast<double*>(src.begin()));
 
     preconditioner->SetUseTranspose(true);
-    const int ierr = preconditioner->ApplyInverse(tril_src, tril_dst);
+    const int ierr= preconditioner->ApplyInverse(tril_src, tril_dst);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     preconditioner->SetUseTranspose(false);
   }

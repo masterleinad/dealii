@@ -52,12 +52,12 @@ void
 MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
                             MeshWorker::IntegrationInfo<dim>& info)
 {
-  const FEValuesBase<dim>& fe           = info.fe_values();
-  FullMatrix<double>&      local_matrix = dinfo.matrix(0).matrix;
+  const FEValuesBase<dim>& fe          = info.fe_values();
+  FullMatrix<double>&      local_matrix= dinfo.matrix(0).matrix;
 
-  for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-      for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+  for(unsigned int k= 0; k < fe.n_quadrature_points; ++k)
+    for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
         local_matrix(i, j)
           += (fe.shape_grad(i, k) * fe.shape_grad(j, k)) * fe.JxW(k);
 }
@@ -67,16 +67,16 @@ void
 MatrixIntegrator<dim>::bdry(MeshWorker::DoFInfo<dim>&         dinfo,
                             MeshWorker::IntegrationInfo<dim>& info)
 {
-  const FEValuesBase<dim>& fe           = info.fe_values();
-  FullMatrix<double>&      local_matrix = dinfo.matrix(0).matrix;
+  const FEValuesBase<dim>& fe          = info.fe_values();
+  FullMatrix<double>&      local_matrix= dinfo.matrix(0).matrix;
 
-  const unsigned int deg = fe.get_fe().tensor_degree();
+  const unsigned int deg= fe.get_fe().tensor_degree();
   const double       penalty
     = 2. * deg * (deg + 1) * dinfo.face->measure() / dinfo.cell->measure();
 
-  for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-      for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+  for(unsigned k= 0; k < fe.n_quadrature_points; ++k)
+    for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
         local_matrix(i, j)
           += (fe.shape_value(i, k) * penalty * fe.shape_value(j, k)
               - (fe.normal_vector(k) * fe.shape_grad(i, k))
@@ -93,23 +93,23 @@ MatrixIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
                             MeshWorker::IntegrationInfo<dim>& info1,
                             MeshWorker::IntegrationInfo<dim>& info2)
 {
-  const FEValuesBase<dim>& fe1         = info1.fe_values();
-  const FEValuesBase<dim>& fe2         = info2.fe_values();
-  FullMatrix<double>&      matrix_v1u1 = dinfo1.matrix(0, false).matrix;
-  FullMatrix<double>&      matrix_v1u2 = dinfo1.matrix(0, true).matrix;
-  FullMatrix<double>&      matrix_v2u1 = dinfo2.matrix(0, true).matrix;
-  FullMatrix<double>&      matrix_v2u2 = dinfo2.matrix(0, false).matrix;
+  const FEValuesBase<dim>& fe1        = info1.fe_values();
+  const FEValuesBase<dim>& fe2        = info2.fe_values();
+  FullMatrix<double>&      matrix_v1u1= dinfo1.matrix(0, false).matrix;
+  FullMatrix<double>&      matrix_v1u2= dinfo1.matrix(0, true).matrix;
+  FullMatrix<double>&      matrix_v2u1= dinfo2.matrix(0, true).matrix;
+  FullMatrix<double>&      matrix_v2u2= dinfo2.matrix(0, false).matrix;
 
-  const unsigned int deg = fe1.get_fe().tensor_degree();
+  const unsigned int deg= fe1.get_fe().tensor_degree();
   const double       penalty1
     = deg * (deg + 1) * dinfo1.face->measure() / dinfo1.cell->measure();
   const double penalty2
     = deg * (deg + 1) * dinfo2.face->measure() / dinfo2.cell->measure();
-  const double penalty = penalty1 + penalty2;
+  const double penalty= penalty1 + penalty2;
 
-  for(unsigned k = 0; k < fe1.n_quadrature_points; ++k)
-    for(unsigned int i = 0; i < fe1.dofs_per_cell; ++i)
-      for(unsigned int j = 0; j < fe1.dofs_per_cell; ++j)
+  for(unsigned k= 0; k < fe1.n_quadrature_points; ++k)
+    for(unsigned int i= 0; i < fe1.dofs_per_cell; ++i)
+      for(unsigned int j= 0; j < fe1.dofs_per_cell; ++j)
         {
           matrix_v1u1(i, j)
             += (fe1.shape_value(i, k) * penalty * fe1.shape_value(j, k)
@@ -146,15 +146,15 @@ template <int dim>
 void
 assemble(const DoFHandler<dim>& dof_handler, SparseMatrix<double>& matrix)
 {
-  const FiniteElement<dim>& fe = dof_handler.get_fe();
+  const FiniteElement<dim>& fe= dof_handler.get_fe();
   MappingQGeneric<dim>      mapping(1);
 
   MeshWorker::IntegrationInfoBox<dim> info_box;
-  const unsigned int n_gauss_points = dof_handler.get_fe().tensor_degree() + 1;
+  const unsigned int n_gauss_points= dof_handler.get_fe().tensor_degree() + 1;
   info_box.initialize_gauss_quadrature(
     n_gauss_points, n_gauss_points, n_gauss_points);
   info_box.initialize_update_flags();
-  UpdateFlags update_flags = update_values | update_gradients;
+  UpdateFlags update_flags= update_values | update_gradients;
   info_box.add_update_flags(update_flags, true, true, true, true);
   info_box.initialize(fe, mapping);
 
@@ -184,15 +184,15 @@ assemble(const DoFHandler<dim>&              dof_handler,
          MGLevelObject<SparseMatrix<double>> dg_up,
          MGLevelObject<SparseMatrix<double>> dg_down)
 {
-  const FiniteElement<dim>& fe = dof_handler.get_fe();
+  const FiniteElement<dim>& fe= dof_handler.get_fe();
   MappingQGeneric<dim>      mapping(1);
 
   MeshWorker::IntegrationInfoBox<dim> info_box;
-  const unsigned int n_gauss_points = dof_handler.get_fe().tensor_degree() + 1;
+  const unsigned int n_gauss_points= dof_handler.get_fe().tensor_degree() + 1;
   info_box.initialize_gauss_quadrature(
     n_gauss_points, n_gauss_points, n_gauss_points);
   info_box.initialize_update_flags();
-  UpdateFlags update_flags = update_values | update_gradients;
+  UpdateFlags update_flags= update_values | update_gradients;
   info_box.add_update_flags(update_flags, true, true, true, true);
   info_box.initialize(fe, mapping);
 
@@ -221,8 +221,8 @@ test_simple(DoFHandler<dim>& mgdofs)
   SparseMatrix<double> matrix;
   Vector<double>       v;
 
-  const DoFHandler<dim>&    dofs = mgdofs;
-  const FiniteElement<dim>& fe   = dofs.get_fe();
+  const DoFHandler<dim>&    dofs= mgdofs;
+  const FiniteElement<dim>& fe  = dofs.get_fe();
   pattern.reinit(dofs.n_dofs(),
                  dofs.n_dofs(),
                  (GeometryInfo<dim>::faces_per_cell
@@ -243,7 +243,7 @@ test_simple(DoFHandler<dim>& mgdofs)
   MGLevelObject<SparseMatrix<double>> mg_matrix_dg_up;
   MGLevelObject<SparseMatrix<double>> mg_matrix_dg_down;
 
-  const unsigned int n_levels = mgdofs.get_triangulation().n_levels();
+  const unsigned int n_levels= mgdofs.get_triangulation().n_levels();
 
   mg_sparsity.resize(0, n_levels - 1);
   mg_sparsity_dg_interface.resize(0, n_levels - 1);
@@ -251,7 +251,7 @@ test_simple(DoFHandler<dim>& mgdofs)
   mg_matrix_dg_up.resize(0, n_levels - 1);
   mg_matrix_dg_down.resize(0, n_levels - 1);
 
-  for(unsigned int level = mg_sparsity.min_level();
+  for(unsigned int level= mg_sparsity.min_level();
       level <= mg_sparsity.max_level();
       ++level)
     {
@@ -287,12 +287,12 @@ test(const FiniteElement<dim>& fe)
   //  tr.execute_coarsening_and_refinement();
   //  tr.refine_global(1);
   deallog << "Triangulation levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << tr.n_cells(l);
   deallog << std::endl;
 
-  unsigned int cn = 0;
-  for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
+  unsigned int cn= 0;
+  for(typename Triangulation<dim>::cell_iterator cell= tr.begin();
       cell != tr.end();
       ++cell, ++cn)
     cell->set_user_index(cn);
@@ -301,7 +301,7 @@ test(const FiniteElement<dim>& fe)
   dofs.distribute_dofs(fe);
   dofs.distribute_mg_dofs(fe);
   deallog << "DoFHandler " << dofs.n_dofs() << " levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << dofs.n_dofs(l);
   deallog << std::endl;
 
@@ -311,7 +311,7 @@ test(const FiniteElement<dim>& fe)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 
@@ -319,6 +319,6 @@ main()
   fe2.push_back(std::shared_ptr<FiniteElement<2>>(new FE_DGP<2>(1)));
   //  fe2.push_back(std::shared_ptr<FiniteElement<2> >(new  FE_Q<2>(1)));
 
-  for(unsigned int i = 0; i < fe2.size(); ++i)
+  for(unsigned int i= 0; i < fe2.size(); ++i)
     test(*fe2[i]);
 }

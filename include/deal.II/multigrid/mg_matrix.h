@@ -39,14 +39,14 @@ namespace mg
    * @author Guido Kanschat
    * @date 2002, 2010
    */
-  template <typename VectorType = Vector<double>>
+  template <typename VectorType= Vector<double>>
   class Matrix : public MGMatrixBase<VectorType>
   {
   public:
     /**
      * Default constructor for an empty object.
      */
-    Matrix() = default;
+    Matrix()= default;
 
     /**
      * Constructor setting up pointers to the matrices in <tt>M</tt> by
@@ -125,9 +125,9 @@ public:
    * Constructor. @p row and @p col are the coordinate of the selected block.
    * The other argument is handed over to the @p SmartPointer constructor.
    */
-  MGMatrixSelect(const unsigned int         row    = 0,
-                 const unsigned int         col    = 0,
-                 MGLevelObject<MatrixType>* matrix = 0);
+  MGMatrixSelect(const unsigned int         row   = 0,
+                 const unsigned int         col   = 0,
+                 MGLevelObject<MatrixType>* matrix= 0);
 
   /**
    * Set the matrix object to be used. The matrix object must exist longer as
@@ -202,7 +202,7 @@ namespace mg
   Matrix<VectorType>::initialize(const MGLevelObject<MatrixType>& p)
   {
     matrices.resize(p.min_level(), p.max_level());
-    for(unsigned int level = p.min_level(); level <= p.max_level(); ++level)
+    for(unsigned int level= p.min_level(); level <= p.max_level(); ++level)
       {
         // Workaround: Unfortunately, not every "p[level]" object has a
         // rich enough interface to populate reinit_(domain|range)_vector.
@@ -304,7 +304,7 @@ template <typename MatrixType, typename number>
 void
 MGMatrixSelect<MatrixType, number>::set_matrix(MGLevelObject<MatrixType>* p)
 {
-  matrix = p;
+  matrix= p;
 }
 
 template <typename MatrixType, typename number>
@@ -312,8 +312,8 @@ void
 MGMatrixSelect<MatrixType, number>::select_block(const unsigned int brow,
                                                  const unsigned int bcol)
 {
-  row = brow;
-  col = bcol;
+  row= brow;
+  col= bcol;
 }
 
 template <typename MatrixType, typename number>
@@ -324,7 +324,7 @@ MGMatrixSelect<MatrixType, number>::vmult(const unsigned int    level,
 {
   Assert(matrix != 0, ExcNotInitialized());
 
-  const MGLevelObject<MatrixType>& m = *matrix;
+  const MGLevelObject<MatrixType>& m= *matrix;
   m[level].block(row, col).vmult(dst, src);
 }
 
@@ -336,7 +336,7 @@ MGMatrixSelect<MatrixType, number>::vmult_add(const unsigned int    level,
 {
   Assert(matrix != 0, ExcNotInitialized());
 
-  const MGLevelObject<MatrixType>& m = *matrix;
+  const MGLevelObject<MatrixType>& m= *matrix;
   m[level].block(row, col).vmult_add(dst, src);
 }
 
@@ -348,7 +348,7 @@ MGMatrixSelect<MatrixType, number>::Tvmult(const unsigned int    level,
 {
   Assert(matrix != 0, ExcNotInitialized());
 
-  const MGLevelObject<MatrixType>& m = *matrix;
+  const MGLevelObject<MatrixType>& m= *matrix;
   m[level].block(row, col).Tvmult(dst, src);
 }
 
@@ -360,7 +360,7 @@ MGMatrixSelect<MatrixType, number>::Tvmult_add(const unsigned int    level,
 {
   Assert(matrix != 0, ExcNotInitialized());
 
-  const MGLevelObject<MatrixType>& m = *matrix;
+  const MGLevelObject<MatrixType>& m= *matrix;
   m[level].block(row, col).Tvmult_add(dst, src);
 }
 

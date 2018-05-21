@@ -107,8 +107,8 @@ namespace TrilinosWrappers
        * it is quite inelegant to set a specific option of one solver in the
        * base class for all solvers.
        */
-      explicit AdditionalData(const bool         output_solver_details = false,
-                              const unsigned int gmres_restart_parameter = 30);
+      explicit AdditionalData(const bool         output_solver_details  = false,
+                              const unsigned int gmres_restart_parameter= 30);
 
       /**
        * Enables/disables the output of solver details (residual in each
@@ -125,8 +125,7 @@ namespace TrilinosWrappers
     /**
      * Constructor. Takes the solver control object and creates the solver.
      */
-    SolverBase(SolverControl&        cn,
-               const AdditionalData& data = AdditionalData());
+    SolverBase(SolverControl& cn, const AdditionalData& data= AdditionalData());
 
     /**
      * Second constructor. This constructor takes an enum object that
@@ -134,12 +133,12 @@ namespace TrilinosWrappers
      */
     SolverBase(const enum SolverName solver_name,
                SolverControl&        cn,
-               const AdditionalData& data = AdditionalData());
+               const AdditionalData& data= AdditionalData());
 
     /**
      * Destructor.
      */
-    virtual ~SolverBase() = default;
+    virtual ~SolverBase()= default;
 
     /**
      * Solve the linear system <tt>Ax=b</tt>. Depending on the information
@@ -362,7 +361,7 @@ namespace TrilinosWrappers
       /**
        * Set the additional data field to the desired output format.
        */
-      explicit AdditionalData(const bool output_solver_details = false);
+      explicit AdditionalData(const bool output_solver_details= false);
     };
 
     /**
@@ -372,7 +371,7 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverCG(SolverControl& cn, const AdditionalData& data = AdditionalData());
+    SolverCG(SolverControl& cn, const AdditionalData& data= AdditionalData());
 
   protected:
     /**
@@ -398,7 +397,7 @@ namespace TrilinosWrappers
       /**
        * Set the additional data field to the desired output format.
        */
-      explicit AdditionalData(const bool output_solver_details = false);
+      explicit AdditionalData(const bool output_solver_details= false);
     };
 
     /**
@@ -408,7 +407,7 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverCGS(SolverControl& cn, const AdditionalData& data = AdditionalData());
+    SolverCGS(SolverControl& cn, const AdditionalData& data= AdditionalData());
 
   protected:
     /**
@@ -435,8 +434,8 @@ namespace TrilinosWrappers
        * Constructor. By default, set the number of temporary vectors to 30,
        * i.e. do a restart every 30 iterations.
        */
-      explicit AdditionalData(const bool         output_solver_details = false,
-                              const unsigned int restart_parameter     = 30);
+      explicit AdditionalData(const bool         output_solver_details= false,
+                              const unsigned int restart_parameter    = 30);
     };
 
     /**
@@ -447,7 +446,7 @@ namespace TrilinosWrappers
      * flags for tuning.
      */
     SolverGMRES(SolverControl&        cn,
-                const AdditionalData& data = AdditionalData());
+                const AdditionalData& data= AdditionalData());
 
   protected:
     /**
@@ -474,7 +473,7 @@ namespace TrilinosWrappers
       /**
        * Set the additional data field to the desired output format.
        */
-      explicit AdditionalData(const bool output_solver_details = false);
+      explicit AdditionalData(const bool output_solver_details= false);
     };
 
     /**
@@ -485,7 +484,7 @@ namespace TrilinosWrappers
      * flags for tuning.
      */
     SolverBicgstab(SolverControl&        cn,
-                   const AdditionalData& data = AdditionalData());
+                   const AdditionalData& data= AdditionalData());
 
   protected:
     /**
@@ -512,7 +511,7 @@ namespace TrilinosWrappers
       /**
        * Set the additional data field to the desired output format.
        */
-      explicit AdditionalData(const bool output_solver_details = false);
+      explicit AdditionalData(const bool output_solver_details= false);
     };
 
     /**
@@ -523,7 +522,7 @@ namespace TrilinosWrappers
      * flags for tuning.
      */
     SolverTFQMR(SolverControl&        cn,
-                const AdditionalData& data = AdditionalData());
+                const AdditionalData& data= AdditionalData());
 
   protected:
     /**
@@ -557,8 +556,8 @@ namespace TrilinosWrappers
       /**
        * Set the additional data field to the desired output format.
        */
-      explicit AdditionalData(const bool         output_solver_details = false,
-                              const std::string& solver_type = "Amesos_Klu");
+      explicit AdditionalData(const bool         output_solver_details= false,
+                              const std::string& solver_type= "Amesos_Klu");
 
       /**
        * Enables/disables the output of solver details (residual in each
@@ -591,12 +590,12 @@ namespace TrilinosWrappers
      * Constructor. Takes the solver control object and creates the solver.
      */
     SolverDirect(SolverControl&        cn,
-                 const AdditionalData& data = AdditionalData());
+                 const AdditionalData& data= AdditionalData());
 
     /**
      * Destructor.
      */
-    virtual ~SolverDirect() = default;
+    virtual ~SolverDirect()= default;
 
     /**
      * Initializes the direct solver for the matrix <tt>A</tt> and creates a

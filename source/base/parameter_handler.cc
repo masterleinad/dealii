@@ -53,12 +53,12 @@ namespace
     u.reserve(s.size());
 
     // see if the name is special and if so mangle the whole thing
-    const bool mangle_whole_string = (s == "value");
+    const bool mangle_whole_string= (s == "value");
 
     // for all parts of the string, see
     // if it is an allowed character or
     // not
-    for(unsigned int i = 0; i < s.size(); ++i)
+    for(unsigned int i= 0; i < s.size(); ++i)
       {
         static const std::string allowed_characters(
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
@@ -69,22 +69,22 @@ namespace
         else
           {
             u.push_back('_');
-            static const char hex[16] = {'0',
-                                         '1',
-                                         '2',
-                                         '3',
-                                         '4',
-                                         '5',
-                                         '6',
-                                         '7',
-                                         '8',
-                                         '9',
-                                         'a',
-                                         'b',
-                                         'c',
-                                         'd',
-                                         'e',
-                                         'f'};
+            static const char hex[16]= {'0',
+                                        '1',
+                                        '2',
+                                        '3',
+                                        '4',
+                                        '5',
+                                        '6',
+                                        '7',
+                                        '8',
+                                        '9',
+                                        'a',
+                                        'b',
+                                        'c',
+                                        'd',
+                                        'e',
+                                        'f'};
             u.push_back(hex[static_cast<unsigned char>(s[i]) / 16]);
             u.push_back(hex[static_cast<unsigned char>(s[i]) % 16]);
           }
@@ -99,7 +99,7 @@ namespace
     std::string u;
     u.reserve(s.size());
 
-    for(unsigned int i = 0; i < s.size(); ++i)
+    for(unsigned int i= 0; i < s.size(); ++i)
       if(s[i] != '_')
         u.push_back(s[i]);
       else
@@ -107,56 +107,56 @@ namespace
           Assert(i + 2 < s.size(),
                  ExcMessage("Trying to demangle an invalid string."));
 
-          unsigned char c = 0;
+          unsigned char c= 0;
           switch(s[i + 1])
             {
               case '0':
-                c = 0 * 16;
+                c= 0 * 16;
                 break;
               case '1':
-                c = 1 * 16;
+                c= 1 * 16;
                 break;
               case '2':
-                c = 2 * 16;
+                c= 2 * 16;
                 break;
               case '3':
-                c = 3 * 16;
+                c= 3 * 16;
                 break;
               case '4':
-                c = 4 * 16;
+                c= 4 * 16;
                 break;
               case '5':
-                c = 5 * 16;
+                c= 5 * 16;
                 break;
               case '6':
-                c = 6 * 16;
+                c= 6 * 16;
                 break;
               case '7':
-                c = 7 * 16;
+                c= 7 * 16;
                 break;
               case '8':
-                c = 8 * 16;
+                c= 8 * 16;
                 break;
               case '9':
-                c = 9 * 16;
+                c= 9 * 16;
                 break;
               case 'a':
-                c = 10 * 16;
+                c= 10 * 16;
                 break;
               case 'b':
-                c = 11 * 16;
+                c= 11 * 16;
                 break;
               case 'c':
-                c = 12 * 16;
+                c= 12 * 16;
                 break;
               case 'd':
-                c = 13 * 16;
+                c= 13 * 16;
                 break;
               case 'e':
-                c = 14 * 16;
+                c= 14 * 16;
                 break;
               case 'f':
-                c = 15 * 16;
+                c= 15 * 16;
                 break;
               default:
                 Assert(false, ExcInternalError());
@@ -164,52 +164,52 @@ namespace
           switch(s[i + 2])
             {
               case '0':
-                c += 0;
+                c+= 0;
                 break;
               case '1':
-                c += 1;
+                c+= 1;
                 break;
               case '2':
-                c += 2;
+                c+= 2;
                 break;
               case '3':
-                c += 3;
+                c+= 3;
                 break;
               case '4':
-                c += 4;
+                c+= 4;
                 break;
               case '5':
-                c += 5;
+                c+= 5;
                 break;
               case '6':
-                c += 6;
+                c+= 6;
                 break;
               case '7':
-                c += 7;
+                c+= 7;
                 break;
               case '8':
-                c += 8;
+                c+= 8;
                 break;
               case '9':
-                c += 9;
+                c+= 9;
                 break;
               case 'a':
-                c += 10;
+                c+= 10;
                 break;
               case 'b':
-                c += 11;
+                c+= 11;
                 break;
               case 'c':
-                c += 12;
+                c+= 12;
                 break;
               case 'd':
-                c += 13;
+                c+= 13;
                 break;
               case 'e':
-                c += 14;
+                c+= 14;
                 break;
               case 'f':
-                c += 15;
+                c+= 15;
                 break;
               default:
                 Assert(false, ExcInternalError());
@@ -218,7 +218,7 @@ namespace
           u.push_back(static_cast<char>(c));
 
           // skip the two characters
-          i += 2;
+          i+= 2;
         }
 
     return u;
@@ -251,11 +251,11 @@ ParameterHandler::collate_path_string(
 {
   if(subsection_path.size() > 0)
     {
-      std::string p = mangle(subsection_path[0]);
-      for(unsigned int i = 1; i < subsection_path.size(); ++i)
+      std::string p= mangle(subsection_path[0]);
+      for(unsigned int i= 1; i < subsection_path.size(); ++i)
         {
-          p += path_separator;
-          p += mangle(subsection_path[i]);
+          p+= path_separator;
+          p+= mangle(subsection_path[i]);
         }
       return p;
     }
@@ -272,11 +272,11 @@ ParameterHandler::get_current_path() const
 std::string
 ParameterHandler::get_current_full_path(const std::string& name) const
 {
-  std::string path = get_current_path();
+  std::string path= get_current_path();
   if(path.empty() == false)
-    path += path_separator;
+    path+= path_separator;
 
-  path += mangle(name);
+  path+= mangle(name);
 
   return path;
 }
@@ -289,16 +289,16 @@ ParameterHandler::parse_input(std::istream&      input,
   AssertThrow(input, ExcIO());
 
   // store subsections we are currently in
-  const std::vector<std::string> saved_path = subsection_path;
+  const std::vector<std::string> saved_path= subsection_path;
 
   std::string input_line;
   std::string fully_concatenated_line;
-  bool        is_concatenated = false;
+  bool        is_concatenated= false;
   // Maintain both the current line number and the current logical line
   // number, where the latter refers to the line number where (possibly) the
   // current line continuation started.
-  unsigned int current_line_n         = 0;
-  unsigned int current_logical_line_n = 0;
+  unsigned int current_line_n        = 0;
+  unsigned int current_logical_line_n= 0;
 
   // define an action that tries to scan a line.
   //
@@ -312,10 +312,10 @@ ParameterHandler::parse_input(std::istream&      input,
   // unknown state.
   //
   // after unwinding the subsection stack, just re-throw the exception
-  auto scan_line_or_cleanup = [this,
-                               &saved_path](const std::string& line,
-                                            const std::string& filename,
-                                            const unsigned int line_number) {
+  auto scan_line_or_cleanup= [this,
+                              &saved_path](const std::string& line,
+                                           const std::string& filename,
+                                           const unsigned int line_number) {
     try
       {
         scan_line(line, filename, line_number);
@@ -333,10 +333,10 @@ ParameterHandler::parse_input(std::istream&      input,
     {
       ++current_line_n;
       if(!is_concatenated)
-        current_logical_line_n = current_line_n;
+        current_logical_line_n= current_line_n;
       // Trim the whitespace at the ends of the line here instead of in
       // scan_line. This makes the continuation line logic a lot simpler.
-      input_line = Utilities::trim(input_line);
+      input_line= Utilities::trim(input_line);
 
       // If we see the line which is the same as @p last_line ,
       // terminate the parsing.
@@ -349,22 +349,22 @@ ParameterHandler::parse_input(std::istream&      input,
          && input_line.find_last_of('\\') == input_line.length() - 1)
         {
           input_line.erase(input_line.length() - 1); // remove the last '\'
-          is_concatenated = true;
+          is_concatenated= true;
 
-          fully_concatenated_line += input_line;
+          fully_concatenated_line+= input_line;
         }
       // If the previous line ended in a '\' but the current did not, then we
       // should proceed to scan_line.
       else if(is_concatenated)
         {
-          fully_concatenated_line += input_line;
-          is_concatenated = false;
+          fully_concatenated_line+= input_line;
+          is_concatenated= false;
         }
       // Finally, if neither the previous nor current lines are continuations,
       // then the current input line is entirely concatenated.
       else
         {
-          fully_concatenated_line = input_line;
+          fully_concatenated_line= input_line;
         }
 
       if(!is_concatenated)
@@ -388,13 +388,13 @@ ParameterHandler::parse_input(std::istream&      input,
       if(saved_path.size() > 0)
         {
           paths_message << "Path before loading input:\n";
-          for(unsigned int i = 0; i < subsection_path.size(); ++i)
+          for(unsigned int i= 0; i < subsection_path.size(); ++i)
             {
               paths_message << std::setw(i * 2 + 4) << " "
                             << "subsection " << saved_path[i] << '\n';
             }
           paths_message << "Current path:\n";
-          for(unsigned int i = 0; i < subsection_path.size(); ++i)
+          for(unsigned int i= 0; i < subsection_path.size(); ++i)
             {
               paths_message << std::setw(i * 2 + 4) << " "
                             << "subsection " << subsection_path[i]
@@ -402,7 +402,7 @@ ParameterHandler::parse_input(std::istream&      input,
             }
         }
       // restore subsection we started with before throwing the exception:
-      subsection_path = saved_path;
+      subsection_path= saved_path;
       AssertThrow(false,
                   ExcUnbalancedSubsections(filename, paths_message.str()));
     }
@@ -414,7 +414,7 @@ ParameterHandler::parse_input(const std::string& filename,
 {
   PathSearch search("PARAMETERS");
 
-  std::string   openname = search.find(filename);
+  std::string   openname= search.find(filename);
   std::ifstream file_stream(openname.c_str());
   parse_input(file_stream, filename, last_line);
 }
@@ -442,7 +442,7 @@ namespace
     const std::vector<std::unique_ptr<const Patterns::PatternBase>>& patterns,
     boost::property_tree::ptree& destination)
   {
-    for(boost::property_tree::ptree::const_iterator p = source.begin();
+    for(boost::property_tree::ptree::const_iterator p= source.begin();
         p != source.end();
         ++p)
       {
@@ -455,7 +455,7 @@ namespace
               = (current_path == "" ? p->first :
                                       current_path + path_separator + p->first);
 
-            const std::string new_value = p->second.get<std::string>("value");
+            const std::string new_value= p->second.get<std::string>("value");
             AssertThrow(destination.get_optional<std::string>(full_path)
                           && destination.get_optional<std::string>(
                                full_path + path_separator + "value"),
@@ -463,7 +463,7 @@ namespace
 
             // first make sure that the new entry actually satisfies its
             // constraints
-            const unsigned int pattern_index = destination.get<unsigned int>(
+            const unsigned int pattern_index= destination.get<unsigned int>(
               full_path + path_separator + "pattern");
             AssertThrow(patterns[pattern_index]->match(new_value),
                         ParameterHandler::ExcInvalidEntryForPatternXML
@@ -533,8 +533,8 @@ ParameterHandler::parse_input_from_xml(std::istream& in)
                         << " exactly one top level element.\n"
                         << "    The top level elements are:\n";
 
-      unsigned int entry_n = 0;
-      for(boost::property_tree::ptree::iterator it = single_node_tree.begin();
+      unsigned int entry_n= 0;
+      for(boost::property_tree::ptree::iterator it= single_node_tree.begin();
           it != single_node_tree.end();
           ++it, ++entry_n)
         {
@@ -573,7 +573,7 @@ ParameterHandler::parse_input_from_json(std::istream& in)
 void
 ParameterHandler::clear()
 {
-  entries = std_cxx14::make_unique<boost::property_tree::ptree>();
+  entries= std_cxx14::make_unique<boost::property_tree::ptree>();
 }
 
 void
@@ -640,7 +640,7 @@ ParameterHandler::add_action(
                  Utilities::int_to_string(actions.size() - 1));
 
   // as documented, run the action on the default value at the very end
-  const std::string default_value = entries->get<std::string>(
+  const std::string default_value= entries->get<std::string>(
     get_current_full_path(entry) + path_separator + "default_value");
   action(default_value);
 }
@@ -731,7 +731,7 @@ ParameterHandler::get(const std::string& entry_string) const
 {
   // assert that the entry is indeed
   // declared
-  if(boost::optional<std::string> value = entries->get_optional<std::string>(
+  if(boost::optional<std::string> value= entries->get_optional<std::string>(
        get_current_full_path(entry_string) + path_separator + "value"))
     return value.get();
   else
@@ -779,7 +779,7 @@ ParameterHandler::get_double(const std::string& entry_string) const
 bool
 ParameterHandler::get_bool(const std::string& entry_string) const
 {
-  const std::string s = get(entry_string);
+  const std::string s= get(entry_string);
 
   AssertThrow((s == "true") || (s == "false") || (s == "yes") || (s == "no"),
               ExcMessage("Can't convert the parameter value <"
@@ -796,9 +796,9 @@ ParameterHandler::set(const std::string& entry_string,
                       const std::string& new_value)
 {
   // resolve aliases before looking up the correct entry
-  std::string path = get_current_full_path(entry_string);
+  std::string path= get_current_full_path(entry_string);
   if(entries->get_optional<std::string>(path + path_separator + "alias"))
-    path = get_current_full_path(
+    path= get_current_full_path(
       entries->get<std::string>(path + path_separator + "alias"));
 
   // get the node for the entry. if it doesn't exist, then we end up
@@ -821,7 +821,7 @@ ParameterHandler::set(const std::string& entry_string,
         = entries->get_optional<std::string>(path + path_separator + "actions");
       if(action_indices_as_string)
         {
-          std::vector<int> action_indices = Utilities::string_to_int(
+          std::vector<int> action_indices= Utilities::string_to_int(
             Utilities::split_string_list(action_indices_as_string.get()));
           for(unsigned int index : action_indices)
             if(actions.size() >= index + 1)
@@ -965,7 +965,7 @@ ParameterHandler::recursively_print_parameters(
   const boost::property_tree::ptree& current_section
     = entries->get_child(collate_path_string(target_subsection_path));
 
-  unsigned int overall_indent_level = indent_level;
+  unsigned int overall_indent_level= indent_level;
 
   switch(style)
     {
@@ -979,8 +979,8 @@ ParameterHandler::recursively_print_parameters(
           //
           // likewise find the longest actual value string to make sure we
           // can align the default and documentation strings
-          std::size_t longest_name  = 0;
-          std::size_t longest_value = 0;
+          std::size_t longest_name = 0;
+          std::size_t longest_value= 0;
           for(boost::property_tree::ptree::const_iterator p
               = current_section.begin();
               p != current_section.end();
@@ -989,20 +989,20 @@ ParameterHandler::recursively_print_parameters(
               {
                 longest_name
                   = std::max(longest_name, demangle(p->first).length());
-                longest_value = std::max(
+                longest_value= std::max(
                   longest_value, p->second.get<std::string>("value").length());
               }
 
           // print entries one by one. make sure they are sorted by using
           // the appropriate iterators
-          bool first_entry = true;
+          bool first_entry= true;
           for(boost::property_tree::ptree::const_assoc_iterator p
               = current_section.ordered_begin();
               p != current_section.not_found();
               ++p)
             if(is_parameter_node(p->second) == true)
               {
-                const std::string value = p->second.get<std::string>("value");
+                const std::string value= p->second.get<std::string>("value");
 
                 // if there is documentation, then add an empty line
                 // (unless this is the first entry in a subsection), print
@@ -1015,14 +1015,14 @@ ParameterHandler::recursively_print_parameters(
                     if(first_entry == false)
                       out << '\n';
                     else
-                      first_entry = false;
+                      first_entry= false;
 
                     const std::vector<std::string> doc_lines
                       = Utilities::break_text_into_lines(
                         p->second.get<std::string>("documentation"),
                         78 - overall_indent_level * 2 - 2);
 
-                    for(unsigned int i = 0; i < doc_lines.size(); ++i)
+                    for(unsigned int i= 0; i < doc_lines.size(); ++i)
                       out << std::setw(overall_indent_level * 2) << ""
                           << "# " << doc_lines[i] << '\n';
                   }
@@ -1053,14 +1053,14 @@ ParameterHandler::recursively_print_parameters(
 
       case LaTeX:
         {
-          auto escape = [](const std::string& input) {
+          auto escape= [](const std::string& input) {
             return Patterns::internal::escape(input,
                                               Patterns::PatternBase::LaTeX);
           };
 
           // if there are any parameters in this section then print them
           // as an itemized list
-          bool parameters_exist_here = false;
+          bool parameters_exist_here= false;
           for(boost::property_tree::ptree::const_assoc_iterator p
               = current_section.ordered_begin();
               p != current_section.not_found();
@@ -1068,7 +1068,7 @@ ParameterHandler::recursively_print_parameters(
             if((is_parameter_node(p->second) == true)
                || (is_alias_node(p->second) == true))
               {
-                parameters_exist_here = true;
+                parameters_exist_here= true;
                 break;
               }
 
@@ -1093,8 +1093,8 @@ ParameterHandler::recursively_print_parameters(
                         << "\\phantomsection";
                     {
                       // create label: labels are not to be escaped but mangled
-                      std::string label = "parameters:";
-                      for(unsigned int i = 0; i < target_subsection_path.size();
+                      std::string label= "parameters:";
+                      for(unsigned int i= 0; i < target_subsection_path.size();
                           ++i)
                         {
                           label.append(mangle(target_subsection_path[i]));
@@ -1114,7 +1114,7 @@ ParameterHandler::recursively_print_parameters(
                     out << "\\index[prmindex]{" << escape(demangle(p->first))
                         << "}\n";
                     out << "\\index[prmindexfull]{";
-                    for(unsigned int i = 0; i < target_subsection_path.size();
+                    for(unsigned int i= 0; i < target_subsection_path.size();
                         ++i)
                       out << escape(target_subsection_path[i]) << "!";
                     out << escape(demangle(p->first)) << "}\n";
@@ -1155,8 +1155,8 @@ ParameterHandler::recursively_print_parameters(
                         << "\\phantomsection";
                     {
                       // create label: labels are not to be escaped but mangled
-                      std::string label = "parameters:";
-                      for(unsigned int i = 0; i < target_subsection_path.size();
+                      std::string label= "parameters:";
+                      for(unsigned int i= 0; i < target_subsection_path.size();
                           ++i)
                         {
                           label.append(mangle(target_subsection_path[i]));
@@ -1176,7 +1176,7 @@ ParameterHandler::recursively_print_parameters(
                     out << "\\index[prmindex]{" << escape(demangle(p->first))
                         << "}\n";
                     out << "\\index[prmindexfull]{";
-                    for(unsigned int i = 0; i < target_subsection_path.size();
+                    for(unsigned int i= 0; i < target_subsection_path.size();
                         ++i)
                       out << escape(target_subsection_path[i]) << "!";
                     out << escape(demangle(p->first)) << "}\n";
@@ -1202,14 +1202,13 @@ ParameterHandler::recursively_print_parameters(
         {
           // first find out the longest entry name to be able to align the
           // equal signs
-          std::size_t longest_name = 0;
+          std::size_t longest_name= 0;
           for(boost::property_tree::ptree::const_iterator p
               = current_section.begin();
               p != current_section.end();
               ++p)
             if(is_parameter_node(p->second) == true)
-              longest_name
-                = std::max(longest_name, demangle(p->first).length());
+              longest_name= std::max(longest_name, demangle(p->first).length());
 
           // print entries one by one. make sure they are sorted by using
           // the appropriate iterators
@@ -1238,7 +1237,7 @@ ParameterHandler::recursively_print_parameters(
                 if(description_str.size() > 1)
                   {
                     out << '\n';
-                    for(unsigned int i = 0; i < description_str.size(); ++i)
+                    for(unsigned int i= 0; i < description_str.size(); ++i)
                       out << std::setw(overall_indent_level * 2 + 6) << ""
                           << description_str[i] << '\n';
                   }
@@ -1265,9 +1264,9 @@ ParameterHandler::recursively_print_parameters(
   // if there was text before and there are sections to come, put two
   // newlines between the last entry and the first subsection
   {
-    unsigned int n_parameters = 0;
-    unsigned int n_sections   = 0;
-    for(boost::property_tree::ptree::const_iterator p = current_section.begin();
+    unsigned int n_parameters= 0;
+    unsigned int n_sections  = 0;
+    for(boost::property_tree::ptree::const_iterator p= current_section.begin();
         p != current_section.end();
         ++p)
       if(is_parameter_node(p->second) == true)
@@ -1300,7 +1299,7 @@ ParameterHandler::recursively_print_parameters(
 
             case LaTeX:
               {
-                auto escape = [](const std::string& input) {
+                auto escape= [](const std::string& input) {
                   return Patterns::internal::escape(
                     input, Patterns::PatternBase::LaTeX);
                 };
@@ -1309,13 +1308,13 @@ ParameterHandler::recursively_print_parameters(
 
                 // find the path to the current section so that we can
                 // print it in the \subsection{...} heading
-                for(unsigned int i = 0; i < target_subsection_path.size(); ++i)
+                for(unsigned int i= 0; i < target_subsection_path.size(); ++i)
                   out << escape(target_subsection_path[i]) << "/";
                 out << escape(demangle(p->first));
 
                 out << "}" << '\n';
                 out << "\\label{parameters:";
-                for(unsigned int i = 0; i < target_subsection_path.size(); ++i)
+                for(unsigned int i= 0; i < target_subsection_path.size(); ++i)
                   out << mangle(target_subsection_path[i]) << "/";
                 out << p->first << "}";
                 out << '\n';
@@ -1329,8 +1328,8 @@ ParameterHandler::recursively_print_parameters(
           }
 
         // then the contents of the subsection
-        const std::string        subsection     = demangle(p->first);
-        std::vector<std::string> directory_path = target_subsection_path;
+        const std::string        subsection    = demangle(p->first);
+        std::vector<std::string> directory_path= target_subsection_path;
         directory_path.emplace_back(subsection);
 
         recursively_print_parameters(
@@ -1387,7 +1386,7 @@ ParameterHandler::print_parameters_section(
   const boost::property_tree::ptree& current_section
     = entries->get_child(get_current_path());
 
-  unsigned int overall_indent_level = indent_level;
+  unsigned int overall_indent_level= indent_level;
 
   switch(style)
     {
@@ -1419,7 +1418,7 @@ ParameterHandler::print_parameters_section(
                   single_node_tree.add_child(path,
                                              boost::property_tree::ptree());
 
-                  path += path_separator + get_current_path();
+                  path+= path_separator + get_current_path();
                   single_node_tree.add_child(path, current_section);
                 }
 
@@ -1435,48 +1434,47 @@ ParameterHandler::print_parameters_section(
         {
           // if there are top level elements to print, do it
           if(include_top_level_elements && (subsection_path.size() > 0))
-            for(unsigned int i = 0; i < subsection_path.size(); ++i)
+            for(unsigned int i= 0; i < subsection_path.size(); ++i)
               {
                 out << std::setw(overall_indent_level * 2) << ""
                     << "subsection " << demangle(subsection_path[i])
                     << std::endl;
-                overall_indent_level += 1;
+                overall_indent_level+= 1;
               }
 
           // first find out the longest entry name to be able to align the
           // equal signs to do this loop over all nodes of the current
           // tree, select the parameter nodes (and discard sub-tree nodes)
           // and take the maximum of their lengths
-          std::size_t longest_name = 0;
+          std::size_t longest_name= 0;
           for(boost::property_tree::ptree::const_iterator p
               = current_section.begin();
               p != current_section.end();
               ++p)
             if(is_parameter_node(p->second) == true)
-              longest_name
-                = std::max(longest_name, demangle(p->first).length());
+              longest_name= std::max(longest_name, demangle(p->first).length());
 
           // likewise find the longest actual value string to make sure we
           // can align the default and documentation strings
-          std::size_t longest_value = 0;
+          std::size_t longest_value= 0;
           for(boost::property_tree::ptree::const_iterator p
               = current_section.begin();
               p != current_section.end();
               ++p)
             if(is_parameter_node(p->second) == true)
-              longest_value = std::max(
+              longest_value= std::max(
                 longest_value, p->second.get<std::string>("value").length());
 
           // print entries one by one. make sure they are sorted by using
           // the appropriate iterators
-          bool first_entry = true;
+          bool first_entry= true;
           for(boost::property_tree::ptree::const_assoc_iterator p
               = current_section.ordered_begin();
               p != current_section.not_found();
               ++p)
             if(is_parameter_node(p->second) == true)
               {
-                const std::string value = p->second.get<std::string>("value");
+                const std::string value= p->second.get<std::string>("value");
 
                 // if there is documentation, then add an empty line
                 // (unless this is the first entry in a subsection), print
@@ -1489,14 +1487,14 @@ ParameterHandler::print_parameters_section(
                     if(first_entry == false)
                       out << std::endl;
                     else
-                      first_entry = false;
+                      first_entry= false;
 
                     const std::vector<std::string> doc_lines
                       = Utilities::break_text_into_lines(
                         p->second.get<std::string>("documentation"),
                         78 - overall_indent_level * 2 - 2);
 
-                    for(unsigned int i = 0; i < doc_lines.size(); ++i)
+                    for(unsigned int i= 0; i < doc_lines.size(); ++i)
                       out << std::setw(overall_indent_level * 2) << ""
                           << "# " << doc_lines[i] << std::endl;
                   }
@@ -1527,14 +1525,14 @@ ParameterHandler::print_parameters_section(
 
       case LaTeX:
         {
-          auto escape = [](const std::string& input) {
+          auto escape= [](const std::string& input) {
             return Patterns::internal::escape(input,
                                               Patterns::PatternBase::LaTeX);
           };
 
           // if there are any parameters in this section then print them
           // as an itemized list
-          bool parameters_exist_here = false;
+          bool parameters_exist_here= false;
           for(boost::property_tree::ptree::const_assoc_iterator p
               = current_section.ordered_begin();
               p != current_section.not_found();
@@ -1542,7 +1540,7 @@ ParameterHandler::print_parameters_section(
             if((is_parameter_node(p->second) == true)
                || (is_alias_node(p->second) == true))
               {
-                parameters_exist_here = true;
+                parameters_exist_here= true;
                 break;
               }
 
@@ -1565,7 +1563,7 @@ ParameterHandler::print_parameters_section(
                     out << "\\item {\\it Parameter name:} {\\tt "
                         << escape(demangle(p->first)) << "}\n"
                         << "\\phantomsection\\label{parameters:";
-                    for(unsigned int i = 0; i < subsection_path.size(); ++i)
+                    for(unsigned int i= 0; i < subsection_path.size(); ++i)
                       out << mangle(subsection_path[i]) << "/";
                     out << p->first;
                     out << "}\n\n" << std::endl;
@@ -1573,7 +1571,7 @@ ParameterHandler::print_parameters_section(
                     out << "\\index[prmindex]{" << escape(demangle(p->first))
                         << "}\n";
                     out << "\\index[prmindexfull]{";
-                    for(unsigned int i = 0; i < subsection_path.size(); ++i)
+                    for(unsigned int i= 0; i < subsection_path.size(); ++i)
                       out << escape(subsection_path[i]) << "!";
                     out << escape(demangle(p->first)) << "}\n";
 
@@ -1609,7 +1607,7 @@ ParameterHandler::print_parameters_section(
                     out << "\\item {\\it Parameter name:} {\\tt "
                         << escape(demangle(p->first)) << "}\n"
                         << "\\phantomsection\\label{parameters:";
-                    for(unsigned int i = 0; i < subsection_path.size(); ++i)
+                    for(unsigned int i= 0; i < subsection_path.size(); ++i)
                       out << mangle(subsection_path[i]) << "/";
                     out << p->first;
                     out << "}\n\n" << std::endl;
@@ -1617,7 +1615,7 @@ ParameterHandler::print_parameters_section(
                     out << "\\index[prmindex]{" << escape(demangle(p->first))
                         << "}\n";
                     out << "\\index[prmindexfull]{";
-                    for(unsigned int i = 0; i < subsection_path.size(); ++i)
+                    for(unsigned int i= 0; i < subsection_path.size(); ++i)
                       out << escape(subsection_path[i]) << "!";
                     out << escape(demangle(p->first)) << "}\n";
 
@@ -1642,24 +1640,23 @@ ParameterHandler::print_parameters_section(
         {
           // if there are top level elements to print, do it
           if(include_top_level_elements && (subsection_path.size() > 0))
-            for(unsigned int i = 0; i < subsection_path.size(); ++i)
+            for(unsigned int i= 0; i < subsection_path.size(); ++i)
               {
                 out << std::setw(overall_indent_level * 2) << ""
                     << "subsection " << demangle(subsection_path[i])
                     << std::endl;
-                overall_indent_level += 1;
+                overall_indent_level+= 1;
               };
 
           // first find out the longest entry name to be able to align the
           // equal signs
-          std::size_t longest_name = 0;
+          std::size_t longest_name= 0;
           for(boost::property_tree::ptree::const_iterator p
               = current_section.begin();
               p != current_section.end();
               ++p)
             if(is_parameter_node(p->second) == true)
-              longest_name
-                = std::max(longest_name, demangle(p->first).length());
+              longest_name= std::max(longest_name, demangle(p->first).length());
 
           // print entries one by one. make sure they are sorted by using
           // the appropriate iterators
@@ -1688,7 +1685,7 @@ ParameterHandler::print_parameters_section(
                 if(description_str.size() > 1)
                   {
                     out << std::endl;
-                    for(unsigned int i = 0; i < description_str.size(); ++i)
+                    for(unsigned int i= 0; i < description_str.size(); ++i)
                       out << std::setw(overall_indent_level * 2 + 6) << ""
                           << description_str[i] << std::endl;
                   }
@@ -1716,8 +1713,8 @@ ParameterHandler::print_parameters_section(
   // newlines between the last entry and the first subsection
   if(style != XML)
     {
-      unsigned int n_parameters = 0;
-      unsigned int n_sections   = 0;
+      unsigned int n_parameters= 0;
+      unsigned int n_sections  = 0;
       for(boost::property_tree::ptree::const_iterator p
           = current_section.begin();
           p != current_section.end();
@@ -1750,7 +1747,7 @@ ParameterHandler::print_parameters_section(
                   break;
                 case LaTeX:
                   {
-                    auto escape = [](const std::string& input) {
+                    auto escape= [](const std::string& input) {
                       return Patterns::internal::escape(
                         input, Patterns::PatternBase::LaTeX);
                     };
@@ -1760,13 +1757,13 @@ ParameterHandler::print_parameters_section(
 
                     // find the path to the current section so that we can
                     // print it in the \subsection{...} heading
-                    for(unsigned int i = 0; i < subsection_path.size(); ++i)
+                    for(unsigned int i= 0; i < subsection_path.size(); ++i)
                       out << escape(subsection_path[i]) << "/";
                     out << escape(demangle(p->first));
 
                     out << "}" << std::endl;
                     out << "\\label{parameters:";
-                    for(unsigned int i = 0; i < subsection_path.size(); ++i)
+                    for(unsigned int i= 0; i < subsection_path.size(); ++i)
                       out << mangle(subsection_path[i]) << "/";
                     out << p->first << "}";
                     out << std::endl;
@@ -1824,9 +1821,9 @@ ParameterHandler::print_parameters_section(
       case ShortText:
         {
           if(include_top_level_elements && (subsection_path.size() > 0))
-            for(unsigned int i = 0; i < subsection_path.size(); ++i)
+            for(unsigned int i= 0; i < subsection_path.size(); ++i)
               {
-                overall_indent_level -= 1;
+                overall_indent_level-= 1;
                 out << std::setw(overall_indent_level * 2) << ""
                     << "end" << std::endl;
               };
@@ -1890,7 +1887,7 @@ ParameterHandler::scan_line(std::string        line,
                             const unsigned int current_line_n)
 {
   // save a copy for some error messages
-  const std::string original_line = line;
+  const std::string original_line= line;
 
   // if there is a comment, delete it
   if(line.find('#') != std::string::npos)
@@ -1901,7 +1898,7 @@ ParameterHandler::scan_line(std::string        line,
     line.replace(line.find('\t'), 1, " ");
 
   //trim start and end:
-  line = Utilities::trim(line);
+  line= Utilities::trim(line);
 
   // if line is now empty: leave
   if(line.length() == 0)
@@ -1915,7 +1912,7 @@ ParameterHandler::scan_line(std::string        line,
       // delete this prefix
       line.erase(0, std::string("subsection").length() + 1);
 
-      const std::string subsection = Utilities::trim(line);
+      const std::string subsection= Utilities::trim(line);
 
       // check whether subsection exists
       AssertThrow(
@@ -1953,7 +1950,7 @@ ParameterHandler::scan_line(std::string        line,
       // erase "set" statement
       line.erase(0, 4);
 
-      std::string::size_type pos = line.find('=');
+      std::string::size_type pos= line.find('=');
       AssertThrow(
         pos != std::string::npos,
         ExcCannotParseLine(current_line_n,
@@ -1961,13 +1958,13 @@ ParameterHandler::scan_line(std::string        line,
                            "Invalid format of 'set' or 'SET' statement."));
 
       // extract entry name and value and trim
-      std::string entry_name = Utilities::trim(std::string(line, 0, pos));
+      std::string entry_name= Utilities::trim(std::string(line, 0, pos));
       std::string entry_value
         = Utilities::trim(std::string(line, pos + 1, std::string::npos));
 
       // resolve aliases before we look up the entry. if necessary, print
       // a warning that the alias is deprecated
-      std::string path = get_current_full_path(entry_name);
+      std::string path= get_current_full_path(entry_name);
       if(entries->get_optional<std::string>(path + path_separator + "alias"))
         {
           if(entries->get<std::string>(path + path_separator
@@ -1982,7 +1979,7 @@ ParameterHandler::scan_line(std::string        line,
                                                      + "alias")
                         << ">." << std::endl;
             }
-          path = get_current_full_path(
+          path= get_current_full_path(
             entries->get<std::string>(path + path_separator + "alias"));
         }
 
@@ -2092,7 +2089,7 @@ ParameterHandler::operator==(const ParameterHandler& prm2) const
   if(patterns.size() != prm2.patterns.size())
     return false;
 
-  for(unsigned int j = 0; j < patterns.size(); ++j)
+  for(unsigned int j= 0; j < patterns.size(); ++j)
     if(patterns[j]->description() != prm2.patterns[j]->description())
       return false;
 
@@ -2129,7 +2126,7 @@ MultipleParameterLoop::parse_input(std::istream&      input,
 void
 MultipleParameterLoop::loop(MultipleParameterLoop::UserClass& uc)
 {
-  for(unsigned int run_no = 0; run_no < n_branches; ++run_no)
+  for(unsigned int run_no= 0; run_no < n_branches; ++run_no)
     {
       // give create_new one-based numbers
       uc.create_new(run_no + 1);
@@ -2145,18 +2142,18 @@ MultipleParameterLoop::init_branches()
   init_branches_current_section();
 
   // split up different values
-  for(unsigned int i = 0; i < multiple_choices.size(); ++i)
+  for(unsigned int i= 0; i < multiple_choices.size(); ++i)
     multiple_choices[i].split_different_values();
 
   // finally calculate number of branches
-  n_branches = 1;
-  for(unsigned int i = 0; i < multiple_choices.size(); ++i)
+  n_branches= 1;
+  for(unsigned int i= 0; i < multiple_choices.size(); ++i)
     if(multiple_choices[i].type == Entry::variant)
-      n_branches *= multiple_choices[i].different_values.size();
+      n_branches*= multiple_choices[i].different_values.size();
 
   // check whether array entries have the correct
   // number of entries
-  for(unsigned int i = 0; i < multiple_choices.size(); ++i)
+  for(unsigned int i= 0; i < multiple_choices.size(); ++i)
     if(multiple_choices[i].type == Entry::array)
       if(multiple_choices[i].different_values.size() != n_branches)
         std::cerr << "    The entry value" << std::endl
@@ -2172,7 +2169,7 @@ MultipleParameterLoop::init_branches()
   // check for the conformance with the regexp
   // (later on, this will be lost in the whole
   // other output)
-  for(unsigned int i = 0; i < n_branches; ++i)
+  for(unsigned int i= 0; i < n_branches; ++i)
     fill_entry_values(i);
 }
 
@@ -2196,14 +2193,14 @@ MultipleParameterLoop::init_branches_current_section()
       ++p)
     if(is_parameter_node(p->second) == true)
       {
-        const std::string value = p->second.get<std::string>("value");
+        const std::string value= p->second.get<std::string>("value");
         if(value.find('{') != std::string::npos)
           multiple_choices.emplace_back(
             subsection_path, demangle(p->first), value);
       }
 
   // then loop over all subsections
-  for(boost::property_tree::ptree::const_iterator p = current_section.begin();
+  for(boost::property_tree::ptree::const_iterator p= current_section.begin();
       p != current_section.end();
       ++p)
     if(is_parameter_node(p->second) == false)
@@ -2217,17 +2214,17 @@ MultipleParameterLoop::init_branches_current_section()
 void
 MultipleParameterLoop::fill_entry_values(const unsigned int run_no)
 {
-  unsigned int possibilities = 1;
+  unsigned int possibilities= 1;
 
   std::vector<Entry>::iterator choice;
-  for(choice = multiple_choices.begin(); choice != multiple_choices.end();
+  for(choice= multiple_choices.begin(); choice != multiple_choices.end();
       ++choice)
     {
       const unsigned int selection
         = (run_no / possibilities) % choice->different_values.size();
       std::string entry_value;
       if(choice->type == Entry::variant)
-        entry_value = choice->different_values[selection];
+        entry_value= choice->different_values[selection];
       else
         {
           if(run_no >= choice->different_values.size())
@@ -2236,10 +2233,10 @@ MultipleParameterLoop::fill_entry_values(const unsigned int run_no)
                 << "The given array for entry <" << choice->entry_name
                 << "> does not contain enough elements! Taking empty string instead."
                 << std::endl;
-              entry_value = "";
+              entry_value= "";
             }
           else
-            entry_value = choice->different_values[run_no];
+            entry_value= choice->different_values[run_no];
         }
 
       // temporarily enter the
@@ -2256,16 +2253,16 @@ MultipleParameterLoop::fill_entry_values(const unsigned int run_no)
 
       // move ahead if it was a variant entry
       if(choice->type == Entry::variant)
-        possibilities *= choice->different_values.size();
+        possibilities*= choice->different_values.size();
     }
 }
 
 std::size_t
 MultipleParameterLoop::memory_consumption() const
 {
-  std::size_t mem = ParameterHandler::memory_consumption();
-  for(unsigned int i = 0; i < multiple_choices.size(); ++i)
-    mem += multiple_choices[i].memory_consumption();
+  std::size_t mem= ParameterHandler::memory_consumption();
+  for(unsigned int i= 0; i < multiple_choices.size(); ++i)
+    mem+= multiple_choices[i].memory_consumption();
 
   return mem;
 }
@@ -2324,9 +2321,9 @@ MultipleParameterLoop::Entry::split_different_values()
   // entry ({...}) or an array ({{...}})
   if((entry_value.find("{{") != std::string::npos)
      && (entry_value.find("}}") != std::string::npos))
-    type = Entry::array;
+    type= Entry::array;
   else
-    type = Entry::variant;
+    type= Entry::variant;
 }
 
 std::size_t

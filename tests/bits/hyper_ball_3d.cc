@@ -44,8 +44,8 @@ main()
   // generated more than that, with
   // some of them internal to the
   // ball
-  unsigned int external_faces = 0;
-  for(Triangulation<3>::face_iterator face = tria.begin_face();
+  unsigned int external_faces= 0;
+  for(Triangulation<3>::face_iterator face= tria.begin_face();
       face != tria.end_face();
       ++face)
     {

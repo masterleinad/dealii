@@ -182,7 +182,7 @@ namespace internal
        */
       void
       reserve_space(const unsigned int new_objs_in_pairs,
-                    const unsigned int new_objs_single = 0);
+                    const unsigned int new_objs_single= 0);
 
       /**
        * Return an iterator to the next free slot for a single object. This
@@ -367,7 +367,7 @@ namespace internal
          */
         UserData()
         {
-          p = nullptr;
+          p= nullptr;
         }
 
         /**
@@ -532,7 +532,7 @@ namespace internal
        */
       void
       reserve_space(const unsigned int new_quads_in_pairs,
-                    const unsigned int new_quads_single = 0);
+                    const unsigned int new_quads_single= 0);
 
       /**
        * Clear all the data contained in this object.
@@ -569,7 +569,7 @@ namespace internal
     template <typename G>
     inline TriaObjects<G>::BoundaryOrMaterialId::BoundaryOrMaterialId()
     {
-      material_id = numbers::invalid_material_id;
+      material_id= numbers::invalid_material_id;
     }
 
     template <typename G>
@@ -614,7 +614,7 @@ namespace internal
     {
       Assert(user_data_type == data_unknown || user_data_type == data_pointer,
              ExcPointerIndexClash());
-      user_data_type = data_pointer;
+      user_data_type= data_pointer;
 
       Assert(i < user_data.size(), ExcIndexRange(i, 0, user_data.size()));
       return user_data[i].p;
@@ -626,7 +626,7 @@ namespace internal
     {
       Assert(user_data_type == data_unknown || user_data_type == data_pointer,
              ExcPointerIndexClash());
-      user_data_type = data_pointer;
+      user_data_type= data_pointer;
 
       Assert(i < user_data.size(), ExcIndexRange(i, 0, user_data.size()));
       return user_data[i].p;
@@ -638,7 +638,7 @@ namespace internal
     {
       Assert(user_data_type == data_unknown || user_data_type == data_index,
              ExcPointerIndexClash());
-      user_data_type = data_index;
+      user_data_type= data_index;
 
       Assert(i < user_data.size(), ExcIndexRange(i, 0, user_data.size()));
       return user_data[i].i;
@@ -649,7 +649,7 @@ namespace internal
     TriaObjects<G>::clear_user_data(const unsigned int i)
     {
       Assert(i < user_data.size(), ExcIndexRange(i, 0, user_data.size()));
-      user_data[i].i = 0;
+      user_data[i].i= 0;
     }
 
     template <typename G>
@@ -666,7 +666,7 @@ namespace internal
     {
       Assert(user_data_type == data_unknown || user_data_type == data_index,
              ExcPointerIndexClash());
-      user_data_type = data_index;
+      user_data_type= data_index;
 
       Assert(i < user_data.size(), ExcIndexRange(i, 0, user_data.size()));
       return user_data[i].i;
@@ -676,9 +676,9 @@ namespace internal
     inline void
     TriaObjects<G>::clear_user_data()
     {
-      user_data_type = data_unknown;
-      for(unsigned int i = 0; i < user_data.size(); ++i)
-        user_data[i].p = nullptr;
+      user_data_type= data_unknown;
+      for(unsigned int i= 0; i < user_data.size(); ++i)
+        user_data[i].p= nullptr;
     }
 
     template <typename G>
@@ -765,7 +765,7 @@ namespace internal
     {
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 
-      int pos = next_free_single, last = used.size() - 1;
+      int pos= next_free_single, last= used.size() - 1;
       if(!reverse_order_next_free_single)
         {
           // first sweep forward, only use really single slots, do not use
@@ -775,17 +775,17 @@ namespace internal
               if(used[++pos])
                 {
                   // this was a single slot
-                  pos -= 1;
+                  pos-= 1;
                   break;
                 }
           if(pos >= last)
             {
-              reverse_order_next_free_single = true;
-              next_free_single               = used.size() - 1;
-              pos                            = used.size() - 1;
+              reverse_order_next_free_single= true;
+              next_free_single              = used.size() - 1;
+              pos                           = used.size() - 1;
             }
           else
-            next_free_single = pos + 1;
+            next_free_single= pos + 1;
         }
 
       if(reverse_order_next_free_single)
@@ -796,7 +796,7 @@ namespace internal
             if(!used[pos])
               break;
           if(pos > 0)
-            next_free_single = pos - 1;
+            next_free_single= pos - 1;
           else
             // no valid single object anymore
             return dealii::TriaRawIterator<
@@ -815,13 +815,13 @@ namespace internal
     {
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 
-      int pos = next_free_pair, last = used.size() - 1;
+      int pos= next_free_pair, last= used.size() - 1;
       for(; pos < last; ++pos)
         if(!used[pos])
           if(!used[++pos])
             {
               // this was a pair slot
-              pos -= 1;
+              pos-= 1;
               break;
             }
       if(pos >= last)
@@ -829,7 +829,7 @@ namespace internal
         return dealii::TriaRawIterator<
           dealii::TriaAccessor<G::dimension, dim, spacedim>>(&tria, -1, -1);
       else
-        next_free_pair = pos + 2;
+        next_free_pair= pos + 2;
 
       return dealii::TriaRawIterator<
         dealii::TriaAccessor<G::dimension, dim, spacedim>>(&tria, 0, pos);

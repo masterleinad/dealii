@@ -49,7 +49,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat
  * @date 2010
  */
-template <class PolynomialType, int dim, int spacedim = dim>
+template <class PolynomialType, int dim, int spacedim= dim>
 class FE_DGVector : public FE_PolyTensor<PolynomialType, dim, spacedim>
 {
 public:
@@ -135,7 +135,7 @@ private:
  * @author Guido Kanschat
  * @date 2011
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_DGNedelec : public FE_DGVector<PolynomialsNedelec<dim>, dim, spacedim>
 {
 public:
@@ -162,7 +162,7 @@ public:
  * @author Guido Kanschat
  * @date 2011
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_DGRaviartThomas
   : public FE_DGVector<PolynomialsRaviartThomas<dim>, dim, spacedim>
 {
@@ -188,7 +188,7 @@ public:
  * @author Guido Kanschat
  * @date 2011
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_DGBDM : public FE_DGVector<PolynomialsBDM<dim>, dim, spacedim>
 {
 public:

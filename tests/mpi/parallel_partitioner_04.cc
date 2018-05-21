@@ -26,22 +26,22 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
-  const unsigned int set = 200;
+  const unsigned int set= 200;
   AssertIndexRange(numproc, set - 2);
-  const unsigned int local_size  = set - myid;
-  unsigned int       global_size = 0;
-  unsigned int       my_start    = 0;
-  for(unsigned int i = 0; i < numproc; ++i)
+  const unsigned int local_size = set - myid;
+  unsigned int       global_size= 0;
+  unsigned int       my_start   = 0;
+  for(unsigned int i= 0; i < numproc; ++i)
     {
-      global_size += set - i;
+      global_size+= set - i;
       if(i < myid)
-        my_start += set - i;
+        my_start+= set - i;
     }
   // each processor owns some indices and all
   // are ghosting elements from three
@@ -51,30 +51,30 @@ test()
   IndexSet local_owned(global_size);
   local_owned.add_range(my_start, my_start + local_size);
   IndexSet local_relevant(global_size);
-  local_relevant                 = local_owned;
-  unsigned int ghost_indices[10] = {1,
-                                    2,
-                                    13,
-                                    set - 2,
-                                    set - 1,
-                                    set,
-                                    set + 1,
-                                    2 * set,
-                                    2 * set + 1,
-                                    2 * set + 3};
+  local_relevant                = local_owned;
+  unsigned int ghost_indices[10]= {1,
+                                   2,
+                                   13,
+                                   set - 2,
+                                   set - 1,
+                                   set,
+                                   set + 1,
+                                   2 * set,
+                                   2 * set + 1,
+                                   2 * set + 3};
   local_relevant.add_indices(&ghost_indices[0], &ghost_indices[0] + 10);
 
   Utilities::MPI::Partitioner v(local_owned, local_relevant, MPI_COMM_WORLD);
 
   // check locally owned range
-  for(unsigned int i = my_start; i < my_start + local_size; ++i)
+  for(unsigned int i= my_start; i < my_start + local_size; ++i)
     {
       AssertDimension(v.global_to_local(i), i - my_start);
       AssertDimension(v.local_to_global(i - my_start), i);
     }
 
   // check ghost indices
-  for(unsigned int i = 0, count = 0; i < 10; ++i)
+  for(unsigned int i= 0, count= 0; i < 10; ++i)
     if(ghost_indices[i] < my_start || ghost_indices[i] >= my_start + local_size)
       {
         AssertDimension(local_size + count,
@@ -86,7 +86,7 @@ test()
 
   // check that loc->glob and glob->loc form an
   // identity operation
-  for(unsigned int i = 0; i < local_size + v.n_ghost_indices(); ++i)
+  for(unsigned int i= 0; i < local_size + v.n_ghost_indices(); ++i)
     AssertDimension(i, v.global_to_local(v.local_to_global(i)));
 
   if(myid == 0)
@@ -99,7 +99,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

@@ -56,7 +56,7 @@ test()
 {
   deallog << "dim: " << dim << ", spacedim: " << spacedim << std::endl;
 
-  const auto& comm = MPI_COMM_WORLD;
+  const auto& comm= MPI_COMM_WORLD;
 
   parallel::shared::Triangulation<dim, spacedim>           tria(comm);
   parallel::distributed::Triangulation<spacedim, spacedim> space_tria(comm);
@@ -79,8 +79,8 @@ test()
   dh.distribute_dofs(fe);
   space_dh.distribute_dofs(space_fe);
 
-  auto space_locally_owned_dofs = space_dh.locally_owned_dofs();
-  auto locally_owned_dofs       = dh.locally_owned_dofs();
+  auto space_locally_owned_dofs= space_dh.locally_owned_dofs();
+  auto locally_owned_dofs      = dh.locally_owned_dofs();
 
   deallog << "Dofs      : " << dh.n_dofs() << std::endl
           << "Space dofs: " << space_dh.n_dofs() << std::endl;
@@ -116,12 +116,12 @@ test()
     for(auto cell : dh.active_cell_iterators())
       if(cell->is_locally_owned())
         {
-          cell_matrix = 0;
+          cell_matrix= 0;
           fev.reinit(cell);
           cell->get_dof_indices(dofs);
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-              for(unsigned int q = 0; q < quad.size(); ++q)
+          for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
+              for(unsigned int q= 0; q < quad.size(); ++q)
                 cell_matrix(i, j)
                   += fev.shape_value(i, q) * fev.shape_value(j, q) * fev.JxW(q);
           constraints.distribute_local_to_global(
@@ -152,7 +152,7 @@ test()
 
   deallog << "Squares norm    : " << projected_squares.l2_norm() << std::endl;
 
-  projected_squares -= squares;
+  projected_squares-= squares;
 
   deallog << "Error on squares: " << projected_squares.l2_norm() << std::endl;
 }
@@ -160,7 +160,7 @@ test()
 int
 main(int argc, char** argv)
 {
-  auto          init = Utilities::MPI::MPI_InitFinalize(argc, argv, 1);
+  auto          init= Utilities::MPI::MPI_InitFinalize(argc, argv, 1);
   MPILogInitAll log(true);
   test<1, 2>();
   test<2, 2>();

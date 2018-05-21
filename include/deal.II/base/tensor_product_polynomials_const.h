@@ -49,7 +49,7 @@ public:
    * Access to the dimension of this object, for checking and automatic
    * setting of dimension in other classes.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Constructor. <tt>pols</tt> is a vector of objects that should be derived
@@ -188,7 +188,7 @@ TensorProductPolynomialsConst<dim>::compute_derivative(
   const unsigned int i,
   const Point<dim>&  p) const
 {
-  const unsigned int max_indices = this->n_tensor_pols;
+  const unsigned int max_indices= this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
 
   // treat the regular basis functions

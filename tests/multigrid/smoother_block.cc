@@ -33,7 +33,7 @@ public:
    * constructing the identity
    * matrix.
    */
-  ScalingMatrix(number scaling_factor = 1.);
+  ScalingMatrix(number scaling_factor= 1.);
   /**
   * Apply preconditioner.
   */
@@ -123,25 +123,25 @@ check_smoother(const MGLevelObject<MatrixType>& m,
 
   smoother.initialize(m, r);
 
-  for(unsigned int l = m.min_level(); l <= m.max_level(); ++l)
+  for(unsigned int l= m.min_level(); l <= m.max_level(); ++l)
     {
       deallog << "Level " << l << std::endl;
 
-      BlockVector<double>& u = *mem.alloc();
-      BlockVector<double>& f = *mem.alloc();
+      BlockVector<double>& u= *mem.alloc();
+      BlockVector<double>& f= *mem.alloc();
       u.reinit(m[l].n_block_rows(), 3);
       f.reinit(u);
-      for(unsigned int b = 0; b < f.n_blocks(); ++b)
-        for(unsigned int i = 0; i < f.block(b).size(); ++i)
-          f.block(b)(i) = (b + 1) * (i + l);
+      for(unsigned int b= 0; b < f.n_blocks(); ++b)
+        for(unsigned int i= 0; i < f.block(b).size(); ++i)
+          f.block(b)(i)= (b + 1) * (i + l);
 
       deallog << "First step" << std::endl;
       smoother.set_steps(1);
       smoother.smooth(l, u, f);
 
-      for(unsigned int b = 0; b < u.n_blocks(); ++b)
+      for(unsigned int b= 0; b < u.n_blocks(); ++b)
         {
-          for(unsigned int i = 0; i < u.block(b).size(); ++i)
+          for(unsigned int i= 0; i < u.block(b).size(); ++i)
             deallog << '\t' << (int) (u.block(b)(i) + .5);
           deallog << std::endl;
         }
@@ -149,21 +149,21 @@ check_smoother(const MGLevelObject<MatrixType>& m,
       deallog << "Second step" << std::endl;
       smoother.smooth(l, u, f);
 
-      for(unsigned int b = 0; b < u.n_blocks(); ++b)
+      for(unsigned int b= 0; b < u.n_blocks(); ++b)
         {
-          for(unsigned int i = 0; i < u.block(b).size(); ++i)
+          for(unsigned int i= 0; i < u.block(b).size(); ++i)
             deallog << '\t' << (int) (u.block(b)(i) + .5);
           deallog << std::endl;
         }
 
       deallog << "Two steps" << std::endl;
-      u = 0.;
+      u= 0.;
       smoother.set_steps(2);
       smoother.smooth(l, u, f);
 
-      for(unsigned int b = 0; b < u.n_blocks(); ++b)
+      for(unsigned int b= 0; b < u.n_blocks(); ++b)
         {
-          for(unsigned int i = 0; i < u.block(b).size(); ++i)
+          for(unsigned int i= 0; i < u.block(b).size(); ++i)
             deallog << '\t' << (int) (u.block(b)(i) + .5);
           deallog << std::endl;
         }
@@ -184,15 +184,15 @@ check()
   MGLevelObject<BlockMatrixArray<double>>          A(2, 4);
   MGLevelObject<BlockTrianglePrecondition<double>> P(2, 4);
 
-  for(unsigned int l = A.min_level(); l <= A.max_level(); ++l)
+  for(unsigned int l= A.min_level(); l <= A.max_level(); ++l)
     {
       A[l].initialize(3, 3);
       P[l].reinit(3);
-      for(unsigned int b = 0; b < A[l].n_block_rows(); ++b)
+      for(unsigned int b= 0; b < A[l].n_block_rows(); ++b)
         {
           P[l].enter(s2, b, b, A[l].n_block_rows() - b);
           A[l].enter(s8, b, b, 1);
-          for(unsigned int b2 = 0; b2 < A[l].n_block_rows(); ++b2)
+          for(unsigned int b2= 0; b2 < A[l].n_block_rows(); ++b2)
             A[l].enter(s1, b, b2, 1.);
         }
     }

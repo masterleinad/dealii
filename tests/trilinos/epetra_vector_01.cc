@@ -27,7 +27,7 @@ test()
 {
   IndexSet     parallel_partitioner_1(10);
   IndexSet     parallel_partitioner_2(10);
-  unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int rank= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(rank == 0)
     {
       parallel_partitioner_1.add_range(0, 5);
@@ -69,18 +69,18 @@ test()
   LinearAlgebra::ReadWriteVector<double> read_write_3(read_write_index_set);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         {
-          read_write_1[i] = i;
-          read_write_2[i] = 5. + i;
+          read_write_1[i]= i;
+          read_write_2[i]= 5. + i;
         }
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         {
-          read_write_1[i] = i;
-          read_write_2[i] = 5. + i;
+          read_write_1[i]= i;
+          read_write_2[i]= 5. + i;
         }
     }
 
@@ -91,7 +91,7 @@ test()
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         {
           AssertThrow(read_write_2[i] == read_write_3[i],
                       ExcMessage("Vector a has been modified."));
@@ -99,7 +99,7 @@ test()
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(read_write_2[i] == read_write_3[i],
                     ExcMessage("Vector a has been modified."));
     }
@@ -107,13 +107,13 @@ test()
   read_write_3.import(b, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(read_write_1[i] == read_write_3[i],
                     ExcMessage("Vector b has been modified."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(read_write_1[i] == read_write_3[i],
                     ExcMessage("Vector b has been modified."));
     }
@@ -121,80 +121,80 @@ test()
   read_write_3.import(c, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(read_write_2[i] == read_write_3[i],
                     ExcMessage("Vector c has been modified."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(read_write_2[i] == read_write_3[i],
                     ExcMessage("Vector c has been modified."));
     }
 
-  a *= 2;
+  a*= 2;
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(2. * read_write_2[i] == read_write_3[i],
                     ExcMessage("Problem in operator *=."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(2. * read_write_2[i] == read_write_3[i],
                     ExcMessage("Problem in operator *=."));
     }
 
-  c /= 2.;
+  c/= 2.;
   read_write_3.import(c, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(0.5 * read_write_2[i] == read_write_3[i],
                     ExcMessage("Problem in operator /=."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(0.5 * read_write_2[i] == read_write_3[i],
                     ExcMessage("Problem in operator /=."));
     }
 
-  b += a;
+  b+= a;
   read_write_3.import(b, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(2. * read_write_2[i] + read_write_1[i] == read_write_3[i],
                     ExcMessage("Problem in operator +=."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(2. * read_write_2[i] + read_write_1[i] == read_write_3[i],
                     ExcMessage("Problem in operator +=."));
     }
 
-  b -= c;
+  b-= c;
   read_write_3.import(b, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(1.5 * read_write_2[i] + read_write_1[i] == read_write_3[i],
                     ExcMessage("Problem in operator -=."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(1.5 * read_write_2[i] + read_write_1[i] == read_write_3[i],
                     ExcMessage("Problem in operator -=."));
     }
 
   b.import(read_write_1, VectorOperation::insert);
   c.import(read_write_1, VectorOperation::insert);
-  const double val = b * c;
+  const double val= b * c;
   AssertThrow(val == 285., ExcMessage("Problem in operator *."));
 }
 

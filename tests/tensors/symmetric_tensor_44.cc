@@ -25,9 +25,9 @@ template <int rank, int dim, typename NumberType>
 void
 fill_tensor(SymmetricTensor<rank, dim, NumberType>& t)
 {
-  for(unsigned int i = 0; i != t.n_independent_components; ++i)
+  for(unsigned int i= 0; i != t.n_independent_components; ++i)
     {
-      t.access_raw_entry(i) = i + 1;
+      t.access_raw_entry(i)= i + 1;
     }
 }
 
@@ -35,9 +35,9 @@ template <int rank, int dim, typename NumberType>
 void
 fill_tensor(Tensor<rank, dim, NumberType>& t)
 {
-  for(unsigned int i = 0; i != t.n_independent_components; ++i)
+  for(unsigned int i= 0; i != t.n_independent_components; ++i)
     {
-      t[t.unrolled_to_component_indices(i)] = i + 1;
+      t[t.unrolled_to_component_indices(i)]= i + 1;
     }
 }
 
@@ -87,7 +87,7 @@ template <template <int, int, typename> class TensorType1,
 void
 test_one()
 {
-  const unsigned int               dim = 2;
+  const unsigned int               dim= 2;
   TensorType1<2, dim, NumberType1> t2_1;
   TensorType2<2, dim, NumberType2> t2_2;
   TensorType1<4, dim, NumberType1> t4_1;
@@ -101,10 +101,10 @@ test_one()
   print(t2_1, t2_2, t4_1, t4_2);
 
   deallog << "Product / Division" << std::endl;
-  t2_1 *= 2.0;
-  t2_2 /= 2.0;
-  t4_1 *= 2.0;
-  t4_2 /= 2.0;
+  t2_1*= 2.0;
+  t2_2/= 2.0;
+  t4_1*= 2.0;
+  t4_2/= 2.0;
   print(t2_1, t2_2, t4_1, t4_2);
 
   deallog << "Operator * (single / double contraction)" << std::endl;
@@ -122,7 +122,7 @@ template <template <int, int, typename> class TensorType1,
 typename std::enable_if<AreSame<TensorType1, TensorType2>::value>::type
 test_two()
 {
-  const unsigned int               dim = 2;
+  const unsigned int               dim= 2;
   TensorType1<2, dim, NumberType1> t2_1;
   TensorType1<2, dim, NumberType2> t2_2;
   TensorType1<4, dim, NumberType1> t4_1;
@@ -134,33 +134,33 @@ test_two()
   print(t2_1, t2_2, t4_1, t4_2);
 
   deallog << "Equals" << std::endl;
-  t2_2 = t2_1;
-  t4_2 = t4_1;
+  t2_2= t2_1;
+  t4_2= t4_1;
   deallog << t2_2 << std::endl;
   deallog << t4_2 << std::endl;
 
   deallog << "Zero" << std::endl;
-  t2_1 = 0;
-  t4_1 = 0;
+  t2_1= 0;
+  t4_1= 0;
   deallog << t2_1 << std::endl;
   deallog << t4_1 << std::endl;
 
   deallog << "Cast" << std::endl;
-  t2_2 = static_cast<decltype(t2_2)>(t2_1);
-  t4_2 = static_cast<decltype(t4_2)>(t4_1);
+  t2_2= static_cast<decltype(t2_2)>(t2_1);
+  t4_2= static_cast<decltype(t4_2)>(t4_1);
   deallog << t2_2 << std::endl;
   deallog << t4_2 << std::endl;
 
   deallog << "In place addition" << std::endl;
-  t2_1 += t2_2;
-  t4_1 += t4_2;
+  t2_1+= t2_2;
+  t4_1+= t4_2;
   deallog << t2_1 << std::endl;
   deallog << t4_1 << std::endl;
   print(t2_1, t4_1);
 
   deallog << "In place subtraction" << std::endl;
-  t2_1 -= t2_2;
-  t4_1 -= t4_2;
+  t2_1-= t2_2;
+  t4_1-= t4_2;
   print(t2_1, t4_1);
 
   deallog << "Operator * (double contraction)" << std::endl;
@@ -184,7 +184,7 @@ typename std::enable_if<(AreSame<TensorType1, SymmetricTensor>::value
                          && AreSame<TensorType2, SymmetricTensor>::value)>::type
 test_three()
 {
-  const unsigned int               dim = 2;
+  const unsigned int               dim= 2;
   TensorType1<2, dim, NumberType1> t2_1;
   TensorType1<4, dim, NumberType2> t4_2;
 

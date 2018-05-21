@@ -29,8 +29,8 @@ test()
   sp.reinit(5, 7, 3);
   deallog << "SP::is_compressed(): " << sp.is_compressed() << std::endl;
 
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 7; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 7; ++j)
       if((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
 

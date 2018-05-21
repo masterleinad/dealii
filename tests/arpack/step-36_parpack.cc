@@ -55,9 +55,9 @@
 
 // test Parpack on Step-36 with PETSc algebra
 
-const unsigned int dim = 2; //run in 2d to save time
+const unsigned int dim= 2; //run in 2d to save time
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 template <typename DoFHandlerType>
 std::vector<dealii::IndexSet>
@@ -78,10 +78,10 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
 
   // loop over subdomain_association and populate IndexSet when a
   // change in subdomain ID is found
-  dealii::types::global_dof_index i_min          = 0;
-  dealii::types::global_dof_index this_subdomain = subdomain_association[0];
+  dealii::types::global_dof_index i_min         = 0;
+  dealii::types::global_dof_index this_subdomain= subdomain_association[0];
 
-  for(dealii::types::global_dof_index index = 1;
+  for(dealii::types::global_dof_index index= 1;
       index < subdomain_association.size();
       ++index)
     {
@@ -89,8 +89,8 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
       if(subdomain_association[index] != this_subdomain)
         {
           index_sets[this_subdomain].add_range(i_min, index);
-          i_min          = index;
-          this_subdomain = subdomain_association[index];
+          i_min         = index;
+          this_subdomain= subdomain_association[index];
         }
     }
 
@@ -106,7 +106,7 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
       index_sets[this_subdomain].add_range(i_min, subdomain_association.size());
     }
 
-  for(unsigned int i = 0; i < n_subdomains; i++)
+  for(unsigned int i= 0; i < n_subdomains; i++)
     index_sets[i].compress();
 
   return index_sets;
@@ -117,7 +117,7 @@ class PETScInverse
 public:
   PETScInverse(const dealii::PETScWrappers::MatrixBase& A,
                dealii::SolverControl&                   cn,
-               const MPI_Comm& mpi_communicator = PETSC_COMM_SELF)
+               const MPI_Comm& mpi_communicator= PETSC_COMM_SELF)
     : solver(cn, mpi_communicator), matrix(A), preconditioner(matrix)
   {}
 
@@ -138,10 +138,10 @@ private:
 void
 test()
 {
-  const unsigned int global_mesh_refinement_steps = 5;
-  const unsigned int number_of_eigenvalues        = 5;
+  const unsigned int global_mesh_refinement_steps= 5;
+  const unsigned int number_of_eigenvalues       = 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm           mpi_communicator= MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
@@ -164,19 +164,19 @@ test()
   // we do not use metis but rather partition by hand below.
   //dealii::GridTools::partition_triangulation (n_mpi_processes, triangulation);
   {
-    const double x0 = -1.0;
-    const double x1 = 1.0;
-    const double dL = (x1 - x0) / n_mpi_processes;
+    const double x0= -1.0;
+    const double x1= 1.0;
+    const double dL= (x1 - x0) / n_mpi_processes;
 
     dealii::Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
-      endc = triangulation.end();
+      endc= triangulation.end();
     for(; cell != endc; ++cell)
       {
-        const dealii::Point<dim>& center = cell->center();
-        const double              x      = center[0];
+        const dealii::Point<dim>& center= cell->center();
+        const double              x     = center[0];
 
-        const unsigned int id = std::floor((x - x0) / dL);
+        const unsigned int id= std::floor((x - x0) / dL);
         cell->set_subdomain_id(id);
       }
   }
@@ -185,7 +185,7 @@ test()
   dealii::DoFRenumbering::subdomain_wise(dof_handler);
   std::vector<dealii::IndexSet> locally_owned_dofs_per_processor
     = locally_owned_dofs_per_subdomain(dof_handler);
-  locally_owned_dofs = locally_owned_dofs_per_processor[this_mpi_process];
+  locally_owned_dofs= locally_owned_dofs_per_processor[this_mpi_process];
   locally_relevant_dofs.clear();
   dealii::DoFTools::extract_locally_relevant_dofs(dof_handler,
                                                   locally_relevant_dofs);
@@ -205,8 +205,8 @@ test()
                                           /* keep constrained dofs */ true);
   std::vector<dealii::types::global_dof_index> n_locally_owned_dofs(
     n_mpi_processes);
-  for(unsigned int i = 0; i < n_mpi_processes; i++)
-    n_locally_owned_dofs[i] = locally_owned_dofs_per_processor[i].n_elements();
+  for(unsigned int i= 0; i < n_mpi_processes; i++)
+    n_locally_owned_dofs[i]= locally_owned_dofs_per_processor[i].n_elements();
 
   dealii::SparsityTools::distribute_sparsity_pattern(
     csp, n_locally_owned_dofs, mpi_communicator, locally_relevant_dofs);
@@ -219,15 +219,15 @@ test()
     locally_owned_dofs, locally_owned_dofs, csp, mpi_communicator);
 
   eigenfunctions.resize(5);
-  for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+  for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
     eigenfunctions[i].reinit(locally_owned_dofs,
                              mpi_communicator); //without ghost dofs
 
   eigenvalues.resize(eigenfunctions.size());
 
   // ready for assembly
-  stiffness_matrix = 0;
-  mass_matrix      = 0;
+  stiffness_matrix= 0;
+  mass_matrix     = 0;
 
   dealii::QGauss<dim>   quadrature_formula(2);
   dealii::FEValues<dim> fe_values(
@@ -236,8 +236,8 @@ test()
     dealii::update_values | dealii::update_gradients
       | dealii::update_quadrature_points | dealii::update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   dealii::FullMatrix<double> cell_stiffness_matrix(dofs_per_cell,
                                                    dofs_per_cell);
@@ -247,26 +247,26 @@ test()
 
   typename dealii::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     if(cell->subdomain_id() == this_mpi_process)
       {
         fe_values.reinit(cell);
-        cell_stiffness_matrix = 0;
-        cell_mass_matrix      = 0;
+        cell_stiffness_matrix= 0;
+        cell_mass_matrix     = 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(i, j)
                   += (fe_values.shape_grad(i, q_point)
                       * fe_values.shape_grad(j, q_point))
                      * fe_values.JxW(q_point);
 
-                cell_mass_matrix(i, j) += (fe_values.shape_value(i, q_point)
-                                           * fe_values.shape_value(j, q_point))
-                                          * fe_values.JxW(q_point);
+                cell_mass_matrix(i, j)+= (fe_values.shape_value(i, q_point)
+                                          * fe_values.shape_value(j, q_point))
+                                         * fe_values.JxW(q_point);
               }
 
         cell->get_dof_indices(local_dof_indices);
@@ -284,13 +284,13 @@ test()
   {
     std::vector<std::complex<double>> lambda(eigenfunctions.size());
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
-      eigenfunctions[i] = PetscScalar();
+    for(unsigned int i= 0; i < eigenvalues.size(); i++)
+      eigenfunctions[i]= PetscScalar();
 
     dealii::SolverControl solver_control(
       dof_handler.n_dofs(), 1e-9, /*log_history*/ false, /*log_results*/ false);
     PETScInverse inverse(stiffness_matrix, solver_control, mpi_communicator);
-    const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 2;
+    const unsigned int num_arnoldi_vectors= 2 * eigenvalues.size() + 2;
 
     dealii::PArpackSolver<dealii::PETScWrappers::MPI::Vector>::AdditionalData
       additional_data(num_arnoldi_vectors,
@@ -301,7 +301,7 @@ test()
     dealii::PArpackSolver<dealii::PETScWrappers::MPI::Vector> eigensolver(
       solver_control, mpi_communicator, additional_data);
     eigensolver.reinit(locally_owned_dofs);
-    eigenfunctions[0] = 1.;
+    eigenfunctions[0]= 1.;
     eigensolver.set_initial_vector(eigenfunctions[0]);
     eigensolver.solve(stiffness_matrix,
                       mass_matrix,
@@ -310,23 +310,23 @@ test()
                       eigenfunctions,
                       eigenvalues.size());
 
-    for(unsigned int i = 0; i < lambda.size(); i++)
-      eigenvalues[i] = lambda[i].real();
+    for(unsigned int i= 0; i < lambda.size(); i++)
+      eigenvalues[i]= lambda[i].real();
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for(unsigned int i= 0; i < eigenvalues.size(); i++)
       dealii::deallog << eigenvalues[i] << std::endl;
 
     // make sure that we have eigenvectors and they are mass-orthonormal:
     // a) (A*x_i-\lambda*B*x_i).L2() == 0
     // b) x_j*B*x_i=\delta_{ij}
     {
-      const double               precision = 1e-7;
+      const double               precision= 1e-7;
       PETScWrappers::MPI::Vector Ax(eigenfunctions[0]), Bx(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
         {
           mass_matrix.vmult(Bx, eigenfunctions[i]);
 
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for(unsigned int j= 0; j < eigenfunctions.size(); j++)
             Assert(std::abs(eigenfunctions[j] * Bx - (i == j)) < precision,
                    ExcMessage("Eigenvectors " + Utilities::int_to_string(i)
                               + " and " + Utilities::int_to_string(j)

@@ -101,13 +101,13 @@ test()
   Vector<double> space_ones(space_dh.n_dofs());
   Vector<double> ones(dh.n_dofs());
 
-  space_ones = 1.0;
+  space_ones= 1.0;
   coupling.Tvmult(ones, space_ones);
   mass_matrix_inv.solve(ones);
 
   Vector<double> real_ones(dh.n_dofs());
-  real_ones = 1.0;
-  ones -= real_ones;
+  real_ones= 1.0;
+  ones-= real_ones;
 
   deallog << "Error on constants: " << ones.l2_norm() << std::endl;
 }

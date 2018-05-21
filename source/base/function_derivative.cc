@@ -42,8 +42,8 @@ FunctionDerivative<dim>::FunctionDerivative(const Function<dim>&           f,
     h(h),
     incr(dir.size())
 {
-  for(unsigned int i = 0; i < incr.size(); ++i)
-    incr[i] = h * dir[i];
+  for(unsigned int i= 0; i < incr.size(); ++i)
+    incr[i]= h * dir[i];
   set_formula();
 }
 
@@ -66,16 +66,16 @@ FunctionDerivative<dim>::set_formula(
                           "match any known difference formula."));
     }
 
-  formula = form;
+  formula= form;
 }
 
 template <int dim>
 void
 FunctionDerivative<dim>::set_h(const double new_h)
 {
-  for(unsigned int i = 0; i < incr.size(); ++i)
-    incr[i] *= new_h / h;
-  h = new_h;
+  for(unsigned int i= 0; i < incr.size(); ++i)
+    incr[i]*= new_h / h;
+  h= new_h;
 }
 
 template <int dim>
@@ -140,7 +140,7 @@ FunctionDerivative<dim>::vector_value(const Point<dim>& p,
         result.add(-8., aux);
         f.vector_value(p + incr[0], aux);
         result.add(8., aux);
-        result /= (12. * h);
+        result/= (12. * h);
         return;
       default:
         Assert(false, ExcNotImplemented());
@@ -153,8 +153,8 @@ FunctionDerivative<dim>::value_list(const std::vector<Point<dim>>& points,
                                     std::vector<double>&           values,
                                     const unsigned int component) const
 {
-  const unsigned int n                  = points.size();
-  const bool         variable_direction = (incr.size() == 1) ? false : true;
+  const unsigned int n                 = points.size();
+  const bool         variable_direction= (incr.size() == 1) ? false : true;
   if(variable_direction)
     Assert(incr.size() == points.size(),
            ExcDimensionMismatch(incr.size(), points.size()));
@@ -169,42 +169,42 @@ FunctionDerivative<dim>::value_list(const std::vector<Point<dim>>& points,
   switch(formula)
     {
       case AutoDerivativeFunction<dim>::Euler:
-        for(unsigned int i = 0; i < n; ++i)
-          paux[i] = points[i] + incr[(variable_direction) ? i : 0U];
+        for(unsigned int i= 0; i < n; ++i)
+          paux[i]= points[i] + incr[(variable_direction) ? i : 0U];
         f.value_list(paux, values, component);
-        for(unsigned int i = 0; i < n; ++i)
-          paux[i] = points[i] - incr[(variable_direction) ? i : 0U];
+        for(unsigned int i= 0; i < n; ++i)
+          paux[i]= points[i] - incr[(variable_direction) ? i : 0U];
         f.value_list(paux, aux, component);
-        for(unsigned int i = 0; i < n; ++i)
-          values[i] = (values[i] - aux[i]) / (2 * h);
+        for(unsigned int i= 0; i < n; ++i)
+          values[i]= (values[i] - aux[i]) / (2 * h);
         return;
       case AutoDerivativeFunction<dim>::UpwindEuler:
         f.value_list(points, values, component);
-        for(unsigned int i = 0; i < n; ++i)
-          paux[i] = points[i] - incr[(variable_direction) ? i : 0U];
+        for(unsigned int i= 0; i < n; ++i)
+          paux[i]= points[i] - incr[(variable_direction) ? i : 0U];
         f.value_list(paux, aux, component);
-        for(unsigned int i = 0; i < n; ++i)
-          values[i] = (values[i] - aux[i]) / h;
+        for(unsigned int i= 0; i < n; ++i)
+          values[i]= (values[i] - aux[i]) / h;
         return;
       case AutoDerivativeFunction<dim>::FourthOrder:
-        for(unsigned int i = 0; i < n; ++i)
-          paux[i] = points[i] - 2 * incr[(variable_direction) ? i : 0U];
+        for(unsigned int i= 0; i < n; ++i)
+          paux[i]= points[i] - 2 * incr[(variable_direction) ? i : 0U];
         f.value_list(paux, values, component);
-        for(unsigned int i = 0; i < n; ++i)
-          paux[i] = points[i] + 2 * incr[(variable_direction) ? i : 0U];
+        for(unsigned int i= 0; i < n; ++i)
+          paux[i]= points[i] + 2 * incr[(variable_direction) ? i : 0U];
         f.value_list(paux, aux, component);
-        for(unsigned int i = 0; i < n; ++i)
-          values[i] -= aux[i];
-        for(unsigned int i = 0; i < n; ++i)
-          paux[i] = points[i] + incr[(variable_direction) ? i : 0U];
+        for(unsigned int i= 0; i < n; ++i)
+          values[i]-= aux[i];
+        for(unsigned int i= 0; i < n; ++i)
+          paux[i]= points[i] + incr[(variable_direction) ? i : 0U];
         f.value_list(paux, aux, component);
-        for(unsigned int i = 0; i < n; ++i)
-          values[i] += 8. * aux[i];
-        for(unsigned int i = 0; i < n; ++i)
-          paux[i] = points[i] - incr[(variable_direction) ? i : 0U];
+        for(unsigned int i= 0; i < n; ++i)
+          values[i]+= 8. * aux[i];
+        for(unsigned int i= 0; i < n; ++i)
+          paux[i]= points[i] - incr[(variable_direction) ? i : 0U];
         f.value_list(paux, aux, component);
-        for(unsigned int i = 0; i < n; ++i)
-          values[i] = (values[i] - 8. * aux[i]) / (12 * h);
+        for(unsigned int i= 0; i < n; ++i)
+          values[i]= (values[i] - 8. * aux[i]) / (12 * h);
         return;
       default:
         Assert(false, ExcNotImplemented());

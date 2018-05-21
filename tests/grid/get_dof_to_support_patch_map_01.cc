@@ -84,22 +84,22 @@ test()
     else
       Assert(false, ExcNotImplemented());
 
-    unsigned int index = 0;
+    unsigned int index= 0;
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
         cell != triangulation.end();
         ++cell, ++index)
 
       {
-        Point<dim> cell_bary = cell->barycenter();
+        Point<dim> cell_bary= cell->barycenter();
 
         // refine cells
-        for(unsigned int i = 0; i < refine_centers.size(); ++i)
+        for(unsigned int i= 0; i < refine_centers.size(); ++i)
           {
-            double diff = 0;
-            for(unsigned int d = 0; d < dim; ++d)
-              diff += pow(cell_bary[d] - refine_centers[i][d], 2.);
-            diff = std::sqrt(diff);
+            double diff= 0;
+            for(unsigned int d= 0; d < dim; ++d)
+              diff+= pow(cell_bary[d] - refine_centers[i][d], 2.);
+            diff= std::sqrt(diff);
 
             if(diff < 1e-14)
               {
@@ -108,12 +108,12 @@ test()
               }
           }
         // coarsen cells
-        for(unsigned int i = 0; i < coarsen_centers.size(); ++i)
+        for(unsigned int i= 0; i < coarsen_centers.size(); ++i)
           {
-            double diff = 0;
-            for(unsigned int d = 0; d < dim; ++d)
-              diff += pow(cell_bary[d] - coarsen_centers[i][d], 2.);
-            diff = std::sqrt(diff);
+            double diff= 0;
+            for(unsigned int d= 0; d < dim; ++d)
+              diff+= pow(cell_bary[d] - coarsen_centers[i][d], 2.);
+            diff= std::sqrt(diff);
 
             if(diff < 1e-14)
               {
@@ -126,15 +126,15 @@ test()
   }
 
   DoFHandler<dim> dof_handler(triangulation);
-  unsigned int    iFEDeg = 2;
+  unsigned int    iFEDeg= 2;
   FE_Q<dim>       finite_element(iFEDeg);
   dof_handler.distribute_dofs(finite_element);
 
   std::map<types::global_dof_index,
            std::vector<typename dealii::DoFHandler<dim>::active_cell_iterator>>
-    dof_to_cell_map = GridTools::get_dof_to_support_patch_map(dof_handler);
+    dof_to_cell_map= GridTools::get_dof_to_support_patch_map(dof_handler);
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     {
       // loop through and print out barycenter of cells in patch of certain dofs
       // in system
@@ -145,14 +145,14 @@ test()
             typename dealii::DoFHandler<dim>::active_cell_iterator>::iterator
             patch_iter
             = dof_to_cell_map[i].begin(),
-            patch_iter_end = dof_to_cell_map[i].end();
+            patch_iter_end= dof_to_cell_map[i].end();
           for(; patch_iter != patch_iter_end; ++patch_iter)
             {
               typename dealii::DoFHandler<dim>::active_cell_iterator patch_cell
                 = *(patch_iter);
-              Point<dim> cell_bary = patch_cell->barycenter();
+              Point<dim> cell_bary= patch_cell->barycenter();
               deallog << "(";
-              for(unsigned int d = 0; d < dim - 1; ++d)
+              for(unsigned int d= 0; d < dim - 1; ++d)
                 deallog << cell_bary[d] << ", ";
               deallog << cell_bary[dim - 1] << ") ";
             }

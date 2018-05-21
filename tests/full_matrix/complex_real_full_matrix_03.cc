@@ -27,7 +27,7 @@ check()
   FullMatrix<std::complex<number>> m;
   make_matrix(m);
 
-  for(typename FullMatrix<std::complex<number>>::const_iterator p = m.begin(1);
+  for(typename FullMatrix<std::complex<number>>::const_iterator p= m.begin(1);
       p != m.end(1);
       ++p)
     deallog << p->row() << ' ' << p->column() << ' ' << p->value() << std::endl;

@@ -78,8 +78,8 @@ check()
   // not couple, so use pattern
   SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
   Table<2, DoFTools::Coupling> mask(2, 2);
-  mask(0, 0) = mask(1, 1) = DoFTools::always;
-  mask(0, 1) = mask(1, 0) = DoFTools::none;
+  mask(0, 0)= mask(1, 1)= DoFTools::always;
+  mask(0, 1)= mask(1, 0)= DoFTools::none;
   DoFTools::make_sparsity_pattern(dof, mask, sparsity);
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);
@@ -103,8 +103,7 @@ check()
   // multiply matrix by 100 to
   // make test more sensitive
   deallog << "Matrix: " << std::endl;
-  for(SparseMatrix<double>::const_iterator p = matrix.begin();
-      p != matrix.end();
+  for(SparseMatrix<double>::const_iterator p= matrix.begin(); p != matrix.end();
       ++p)
     deallog << p->value() * 100 << std::endl;
 }

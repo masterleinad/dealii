@@ -38,7 +38,7 @@ std::ofstream logfile("output");
 template <int dim,
           int fe_degree,
           typename Number,
-          typename VectorType = Vector<Number>>
+          typename VectorType= Vector<Number>>
 class MatrixFreeTest
 {
 public:
@@ -52,19 +52,19 @@ public:
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 3, Number> fe_eval(data);
-    const unsigned int n_q_points = fe_eval.n_q_points;
+    const unsigned int n_q_points= fe_eval.n_q_points;
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(src);
         fe_eval.evaluate(true, false);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            Tensor<1, 3, VectorizedArray<double>> val = fe_eval.get_value(q);
-            val[0] *= make_vectorized_array(0.8314159);
-            val[1] *= make_vectorized_array(2.3);
-            val[2] *= make_vectorized_array(1.98);
+            Tensor<1, 3, VectorizedArray<double>> val= fe_eval.get_value(q);
+            val[0]*= make_vectorized_array(0.8314159);
+            val[1]*= make_vectorized_array(2.3);
+            val[2]*= make_vectorized_array(1.98);
             fe_eval.submit_value(val, q);
           }
         fe_eval.integrate(true, false);
@@ -82,16 +82,16 @@ public:
     FEEvaluation<dim, fe_degree, fe_degree + 1, 3, Number> fe_eval(data);
     MatrixFreeOperators::CellwiseInverseMassMatrix<dim, fe_degree, 3, Number>
                                            mass_inv(fe_eval);
-    const unsigned int                     n_q_points = fe_eval.n_q_points;
+    const unsigned int                     n_q_points= fe_eval.n_q_points;
     AlignedVector<VectorizedArray<Number>> inverse_coefficients(3 * n_q_points);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         mass_inv.fill_inverse_JxW_values(inverse_coefficients);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            inverse_coefficients[q] *= make_vectorized_array(1. / 0.8314159);
+            inverse_coefficients[q]*= make_vectorized_array(1. / 0.8314159);
             inverse_coefficients[n_q_points + q]
               *= make_vectorized_array(1. / 2.3);
             inverse_coefficients[2 * n_q_points + q]
@@ -109,7 +109,7 @@ public:
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
-    dst = 0;
+    dst= 0;
     data.cell_loop(
       &MatrixFreeTest<dim, fe_degree, Number, VectorType>::local_mass_operator,
       this,
@@ -120,7 +120,7 @@ public:
   void
   apply_inverse(VectorType& dst, const VectorType& src) const
   {
-    dst = 0;
+    dst= 0;
     data.cell_loop(&MatrixFreeTest<dim, fe_degree, Number, VectorType>::
                      local_inverse_mass_operator,
                    this,
@@ -145,7 +145,7 @@ do_test(const DoFHandler<dim>& dof)
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, number>::AdditionalData::partition_color;
-    data.tasks_block_size = 3;
+    data.tasks_block_size= 3;
     ConstraintMatrix constraints;
 
     mf_data.reinit(mapping, dof, constraints, quad, data);
@@ -155,10 +155,10 @@ do_test(const DoFHandler<dim>& dof)
   Vector<number> in(dof.n_dofs()), inverse(dof.n_dofs()),
     reference(dof.n_dofs());
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     {
-      const double entry = random_value<double>();
-      in(i)              = entry;
+      const double entry= random_value<double>();
+      in(i)             = entry;
     }
 
   mf.apply_inverse(inverse, in);
@@ -170,8 +170,8 @@ do_test(const DoFHandler<dim>& dof)
   solver.solve(mf, reference, in, PreconditionIdentity());
   deallog.attach(logfile);
 
-  inverse -= reference;
-  const double diff_norm = inverse.linfty_norm() / reference.linfty_norm();
+  inverse-= reference;
+  const double diff_norm= inverse.linfty_norm() / reference.linfty_norm();
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
@@ -183,10 +183,10 @@ test()
   const SphericalManifold<dim> manifold;
   Triangulation<dim>           tria;
   GridGenerator::hyper_ball(tria);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
@@ -196,13 +196,13 @@ test()
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
+  cell= tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  const unsigned int degree = fe_degree;
+  const unsigned int degree= fe_degree;
   FESystem<dim>      fe(FE_DGQ<dim>(degree), 3);
   DoFHandler<dim>    dof(tria);
   dof.distribute_dofs(fe);

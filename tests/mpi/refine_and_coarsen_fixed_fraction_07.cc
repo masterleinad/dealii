@@ -35,14 +35,14 @@
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // create a mesh with 120 cells (because that's what Andrea's
   // original testcase had)
   parallel::distributed::Triangulation<2> triangulation(MPI_COMM_WORLD);
   std::vector<unsigned int>               subdivisions(2);
-  subdivisions[0] = 120;
-  subdivisions[1] = 1;
+  subdivisions[0]= 120;
+  subdivisions[1]= 1;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, subdivisions, Point<2>(), Point<2>(1, 1));
   // initialize the refinement indicators with a set of particular values from the original
@@ -91,7 +91,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

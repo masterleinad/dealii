@@ -21,27 +21,27 @@
 void
 test(const BlockIndices& idx)
 {
-  const unsigned int n = idx.size();
+  const unsigned int n= idx.size();
   deallog << "sizes: " << idx << std::endl;
   deallog << "start:   ";
-  for(unsigned i = 0; i < n; ++i)
+  for(unsigned i= 0; i < n; ++i)
     deallog << ' ' << idx.block_start(i);
 
   deallog << std::endl << "string: " << idx.to_string() << std::endl;
 
-  for(unsigned int i = 0; i < idx.total_size(); ++i)
+  for(unsigned int i= 0; i < idx.total_size(); ++i)
     {
-      const unsigned int b = idx.global_to_local(i).first;
-      const unsigned int j = idx.global_to_local(i).second;
+      const unsigned int b= idx.global_to_local(i).first;
+      const unsigned int j= idx.global_to_local(i).second;
       deallog << ' ' << i << ':' << b << ':' << j;
     }
 
   deallog << std::endl;
 
-  for(unsigned int b = 0; b < n; ++b)
-    for(unsigned int j = 0; j < idx.block_size(b); ++j)
+  for(unsigned int b= 0; b < n; ++b)
+    for(unsigned int j= 0; j < idx.block_size(b); ++j)
       {
-        const unsigned int i = idx.local_to_global(b, j);
+        const unsigned int i= idx.local_to_global(b, j);
         deallog << ' ' << i << ':' << b << ':' << j;
       }
 
@@ -74,13 +74,13 @@ main()
   test(bi1);
 
   std::vector<types::global_dof_index> v(4);
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v[i] = 4 - i;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v[i]= 4 - i;
 
   BlockIndices bi2(v);
   test(bi2);
 
-  BlockIndices bi3 = std::move(bi2);
+  BlockIndices bi3= std::move(bi2);
   test(bi3);
   deallog << "empty: " << bi2 << std::endl;
 }

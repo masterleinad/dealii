@@ -36,27 +36,27 @@ template <int dim, class stream>
 void
 print_dofs(const DoFHandler<dim>& dof, stream& out)
 {
-  const FiniteElement<dim>&            fe = dof.get_fe();
+  const FiniteElement<dim>&            fe= dof.get_fe();
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
   std::shared_ptr<FEValues<dim>>       fevalues;
 
   if(fe.has_support_points())
     {
       Quadrature<dim> quad(fe.get_unit_support_points());
-      fevalues = std::shared_ptr<FEValues<dim>>(
+      fevalues= std::shared_ptr<FEValues<dim>>(
         new FEValues<dim>(fe, quad, update_quadrature_points));
     }
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active();
       cell != dof.end();
       ++cell)
     {
-      Point<dim> p = cell->center();
+      Point<dim> p= cell->center();
       if(fevalues.get() != nullptr)
         fevalues->reinit(cell);
 
       cell->get_dof_indices(v);
-      for(unsigned int i = 0; i < v.size(); ++i)
+      for(unsigned int i= 0; i < v.size(); ++i)
         if(fevalues.get() != nullptr)
           out << fevalues->quadrature_point(i) << '\t' << v[i] << std::endl;
         else

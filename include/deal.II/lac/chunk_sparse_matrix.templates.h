@@ -62,16 +62,16 @@ namespace internal
                     const SrcIterator    src,
                     DstIterator          dst)
     {
-      MatrixIterator matrix_row = matrix;
+      MatrixIterator matrix_row= matrix;
 
-      for(size_type i = 0; i < chunk_size; ++i, matrix_row += chunk_size)
+      for(size_type i= 0; i < chunk_size; ++i, matrix_row+= chunk_size)
         {
-          typename std::iterator_traits<DstIterator>::value_type sum = 0;
+          typename std::iterator_traits<DstIterator>::value_type sum= 0;
 
-          for(size_type j = 0; j < chunk_size; ++j)
-            sum += matrix_row[j] * src[j];
+          for(size_type j= 0; j < chunk_size; ++j)
+            sum+= matrix_row[j] * src[j];
 
-          dst[i] += sum;
+          dst[i]+= sum;
         }
     }
 
@@ -88,16 +88,16 @@ namespace internal
                          const SrcIterator    src,
                          DstIterator          dst)
     {
-      MatrixIterator matrix_row = matrix;
+      MatrixIterator matrix_row= matrix;
 
-      for(size_type i = 0; i < chunk_size; ++i, matrix_row += chunk_size)
+      for(size_type i= 0; i < chunk_size; ++i, matrix_row+= chunk_size)
         {
-          typename std::iterator_traits<DstIterator>::value_type sum = 0;
+          typename std::iterator_traits<DstIterator>::value_type sum= 0;
 
-          for(size_type j = 0; j < chunk_size; ++j)
-            sum += matrix_row[j] * src[j];
+          for(size_type j= 0; j < chunk_size; ++j)
+            sum+= matrix_row[j] * src[j];
 
-          dst[i] -= sum;
+          dst[i]-= sum;
         }
     }
 
@@ -115,14 +115,14 @@ namespace internal
                      const SrcIterator    src,
                      DstIterator          dst)
     {
-      for(size_type i = 0; i < chunk_size; ++i)
+      for(size_type i= 0; i < chunk_size; ++i)
         {
-          typename std::iterator_traits<DstIterator>::value_type sum = 0;
+          typename std::iterator_traits<DstIterator>::value_type sum= 0;
 
-          for(size_type j = 0; j < chunk_size; ++j)
-            sum += matrix[j * chunk_size + i] * src[j];
+          for(size_type j= 0; j < chunk_size; ++j)
+            sum+= matrix[j * chunk_size + i] * src[j];
 
-          dst[i] += sum;
+          dst[i]+= sum;
         }
     }
 
@@ -140,18 +140,18 @@ namespace internal
                                 const SrcIterator1   u,
                                 const SrcIterator2   v)
     {
-      result_type result = 0;
+      result_type result= 0;
 
-      MatrixIterator matrix_row = matrix;
+      MatrixIterator matrix_row= matrix;
 
-      for(size_type i = 0; i < chunk_size; ++i, matrix_row += chunk_size)
+      for(size_type i= 0; i < chunk_size; ++i, matrix_row+= chunk_size)
         {
-          typename std::iterator_traits<SrcIterator2>::value_type sum = 0;
+          typename std::iterator_traits<SrcIterator2>::value_type sum= 0;
 
-          for(size_type j = 0; j < chunk_size; ++j)
-            sum += matrix_row[j] * v[j];
+          for(size_type j= 0; j < chunk_size; ++j)
+            sum+= matrix_row[j] * v[j];
 
-          result += u[i] * sum;
+          result+= u[i] * sum;
         }
 
       return result;
@@ -176,27 +176,27 @@ namespace internal
                           const InVector&             src,
                           OutVector&                  dst)
     {
-      const size_type m          = cols.n_rows();
-      const size_type n          = cols.n_cols();
-      const size_type chunk_size = cols.get_chunk_size();
+      const size_type m         = cols.n_rows();
+      const size_type n         = cols.n_cols();
+      const size_type chunk_size= cols.get_chunk_size();
 
       // loop over all chunks. note that we need to treat the last chunk row
       // and column differently if they have padding elements
-      const size_type n_filled_last_rows = m % chunk_size;
-      const size_type n_filled_last_cols = n % chunk_size;
+      const size_type n_filled_last_rows= m % chunk_size;
+      const size_type n_filled_last_cols= n % chunk_size;
 
       const size_type last_regular_row
         = n_filled_last_rows > 0 ?
             std::min(m / chunk_size, static_cast<size_type>(end_row)) :
             end_row;
-      const size_type irregular_col = n / chunk_size;
+      const size_type irregular_col= n / chunk_size;
 
       typename OutVector::iterator dst_ptr
         = dst.begin() + chunk_size * begin_row;
       const number* val_ptr
         = &values[rowstart[begin_row] * chunk_size * chunk_size];
-      const size_type* colnum_ptr = &colnums[rowstart[begin_row]];
-      for(unsigned int chunk_row = begin_row; chunk_row < last_regular_row;
+      const size_type* colnum_ptr= &colnums[rowstart[begin_row]];
+      for(unsigned int chunk_row= begin_row; chunk_row < last_regular_row;
           ++chunk_row)
         {
           const number* const val_end_of_row
@@ -210,22 +210,22 @@ namespace internal
                                 dst_ptr);
               else
                 // we're at a chunk column that has padding
-                for(size_type r = 0; r < chunk_size; ++r)
-                  for(size_type c = 0; c < n_filled_last_cols; ++c)
-                    dst_ptr[r] += (val_ptr[r * chunk_size + c]
-                                   * src(*colnum_ptr * chunk_size + c));
+                for(size_type r= 0; r < chunk_size; ++r)
+                  for(size_type c= 0; c < n_filled_last_cols; ++c)
+                    dst_ptr[r]+= (val_ptr[r * chunk_size + c]
+                                  * src(*colnum_ptr * chunk_size + c));
 
               ++colnum_ptr;
-              val_ptr += chunk_size * chunk_size;
+              val_ptr+= chunk_size * chunk_size;
             }
 
-          dst_ptr += chunk_size;
+          dst_ptr+= chunk_size;
         }
 
       // now deal with last chunk row if necessary
       if(n_filled_last_rows > 0 && end_row == (m / chunk_size + 1))
         {
-          const size_type chunk_row = last_regular_row;
+          const size_type chunk_row= last_regular_row;
 
           const number* const val_end_of_row
             = &values[rowstart[chunk_row + 1] * chunk_size * chunk_size];
@@ -234,20 +234,20 @@ namespace internal
               if(*colnum_ptr != irregular_col)
                 {
                   // we're at a chunk row but not column that has padding
-                  for(size_type r = 0; r < n_filled_last_rows; ++r)
-                    for(size_type c = 0; c < chunk_size; ++c)
-                      dst_ptr[r] += (val_ptr[r * chunk_size + c]
-                                     * src(*colnum_ptr * chunk_size + c));
+                  for(size_type r= 0; r < n_filled_last_rows; ++r)
+                    for(size_type c= 0; c < chunk_size; ++c)
+                      dst_ptr[r]+= (val_ptr[r * chunk_size + c]
+                                    * src(*colnum_ptr * chunk_size + c));
                 }
               else
                 // we're at a chunk row and column that has padding
-                for(size_type r = 0; r < n_filled_last_rows; ++r)
-                  for(size_type c = 0; c < n_filled_last_cols; ++c)
-                    dst_ptr[r] += (val_ptr[r * chunk_size + c]
-                                   * src(*colnum_ptr * chunk_size + c));
+                for(size_type r= 0; r < n_filled_last_rows; ++r)
+                  for(size_type c= 0; c < n_filled_last_cols; ++c)
+                    dst_ptr[r]+= (val_ptr[r * chunk_size + c]
+                                  * src(*colnum_ptr * chunk_size + c));
 
               ++colnum_ptr;
-              val_ptr += chunk_size * chunk_size;
+              val_ptr+= chunk_size * chunk_size;
             }
         }
       Assert(std::size_t(colnum_ptr - colnums) == rowstart[end_row],
@@ -314,14 +314,14 @@ ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c,
   // override in a derived class
   // for clarity be explicit on which function is called
   ChunkSparseMatrix<number>::reinit(c);
-  for(size_type i = 0; i < n(); ++i)
+  for(size_type i= 0; i < n(); ++i)
     this->set(i, i, 1.);
 }
 
 template <typename number>
 ChunkSparseMatrix<number>::~ChunkSparseMatrix()
 {
-  cols = nullptr;
+  cols= nullptr;
 }
 
 namespace internal
@@ -355,8 +355,8 @@ ChunkSparseMatrix<number>::operator=(const double d)
   // operator=. The grain size is chosen to reflect the number of rows in
   // minimum_parallel_grain_size, weighted by the number of nonzero entries
   // per row on average.
-  const unsigned int matrix_size = cols->sparsity_pattern.n_nonzero_elements()
-                                   * cols->chunk_size * cols->chunk_size;
+  const unsigned int matrix_size= cols->sparsity_pattern.n_nonzero_elements()
+                                  * cols->chunk_size * cols->chunk_size;
   const unsigned int grain_size
     = internal::SparseMatrixImplementation::minimum_parallel_grain_size
       * (matrix_size + m()) / m();
@@ -387,8 +387,8 @@ ChunkSparseMatrix<number>::operator=(const IdentityMatrix& id)
   Assert(cols->n_cols() == id.n(),
          ExcDimensionMismatch(cols->n_cols(), id.n()));
 
-  *this = 0;
-  for(size_type i = 0; i < n(); ++i)
+  *this= 0;
+  for(size_type i= 0; i < n(); ++i)
     this->set(i, i, 1.);
 
   return *this;
@@ -398,24 +398,24 @@ template <typename number>
 void
 ChunkSparseMatrix<number>::reinit(const ChunkSparsityPattern& sparsity)
 {
-  cols = &sparsity;
+  cols= &sparsity;
 
   if(cols->empty())
     {
       val.reset();
-      max_len = 0;
+      max_len= 0;
       return;
     }
 
   // allocate not just m() * n() elements but enough so that we can store full
   // chunks. this entails some padding elements
-  const size_type chunk_size = cols->get_chunk_size();
+  const size_type chunk_size= cols->get_chunk_size();
   const size_type N
     = cols->sparsity_pattern.n_nonzero_elements() * chunk_size * chunk_size;
   if(N > max_len || max_len == 0)
     {
-      val     = std_cxx14::make_unique<number[]>(N);
-      max_len = N;
+      val    = std_cxx14::make_unique<number[]>(N);
+      max_len= N;
     }
 
   // fill with zeros. do not just fill N elements but all that we allocated to
@@ -428,9 +428,9 @@ template <typename number>
 void
 ChunkSparseMatrix<number>::clear()
 {
-  cols = nullptr;
+  cols= nullptr;
   val.reset();
-  max_len = 0;
+  max_len= 0;
 }
 
 template <typename number>
@@ -460,7 +460,7 @@ ChunkSparseMatrix<number>::n_actually_nonzero_elements() const
   // count those elements that are nonzero, even if they lie in the padding
   // around the matrix. since we have the invariant that padding elements are
   // zero, nothing bad can happen here
-  const size_type chunk_size = cols->get_chunk_size();
+  const size_type chunk_size= cols->get_chunk_size();
   return std::count_if(
     val.get(),
     val.get()
@@ -489,7 +489,7 @@ ChunkSparseMatrix<number>::copy_from(
   Assert(cols == matrix.cols, ExcDifferentChunkSparsityPatterns());
 
   // copy everything, including padding elements
-  const size_type chunk_size = cols->get_chunk_size();
+  const size_type chunk_size= cols->get_chunk_size();
   std::copy(matrix.val.get(),
             matrix.val.get()
               + cols->sparsity_pattern.n_nonzero_elements() * chunk_size
@@ -505,11 +505,11 @@ void
 ChunkSparseMatrix<number>::copy_from(const FullMatrix<somenumber>& matrix)
 {
   // first delete previous content
-  *this = 0;
+  *this= 0;
 
   // then copy old matrix
-  for(size_type row = 0; row < matrix.m(); ++row)
-    for(size_type col = 0; col < matrix.n(); ++col)
+  for(size_type row= 0; row < matrix.m(); ++row)
+    for(size_type col= 0; col < matrix.n(); ++col)
       if(matrix(row, col) != 0)
         set(row, col, matrix(row, col));
 }
@@ -525,15 +525,15 @@ ChunkSparseMatrix<number>::add(const number                         factor,
   Assert(cols == matrix.cols, ExcDifferentChunkSparsityPatterns());
 
   // add everything, including padding elements
-  const size_type     chunk_size = cols->get_chunk_size();
-  number*             val_ptr    = val.get();
-  const somenumber*   matrix_ptr = &matrix.val[0];
+  const size_type     chunk_size= cols->get_chunk_size();
+  number*             val_ptr   = val.get();
+  const somenumber*   matrix_ptr= &matrix.val[0];
   const number* const end_ptr
     = val.get()
       + cols->sparsity_pattern.n_nonzero_elements() * chunk_size * chunk_size;
 
   while(val_ptr != end_ptr)
-    *val_ptr++ += factor * *matrix_ptr++;
+    *val_ptr+++= factor * *matrix_ptr++;
 }
 
 template <typename number>
@@ -547,11 +547,11 @@ ChunkSparseMatrix<number>::extract_row_copy(const size_type row,
   (void) array_length;
   AssertIndexRange(cols->row_length(row), array_length + 1);
   AssertIndexRange(row, m());
-  const unsigned int chunk_size  = cols->get_chunk_size();
-  const size_type    reduced_row = row / chunk_size;
+  const unsigned int chunk_size = cols->get_chunk_size();
+  const size_type    reduced_row= row / chunk_size;
 
-  SparsityPattern::iterator it    = cols->sparsity_pattern.begin(reduced_row),
-                            itend = cols->sparsity_pattern.end(reduced_row);
+  SparsityPattern::iterator it   = cols->sparsity_pattern.begin(reduced_row),
+                            itend= cols->sparsity_pattern.end(reduced_row);
   const number* val_ptr
     = &val[(it - cols->sparsity_pattern.begin(0)) * chunk_size * chunk_size
            + (row % chunk_size) * chunk_size];
@@ -561,32 +561,31 @@ ChunkSparseMatrix<number>::extract_row_copy(const size_type row,
     {
       for(; it < itend; ++it)
         {
-          for(unsigned int c = 0; c < chunk_size; ++c)
+          for(unsigned int c= 0; c < chunk_size; ++c)
             {
-              *values++         = val_ptr[c];
-              *column_indices++ = it->column() * chunk_size + c;
+              *values++        = val_ptr[c];
+              *column_indices++= it->column() * chunk_size + c;
             }
-          val_ptr += chunk_size * chunk_size;
+          val_ptr+= chunk_size * chunk_size;
         }
-      row_length
-        = chunk_size * (cols->sparsity_pattern.row_length(reduced_row));
+      row_length= chunk_size * (cols->sparsity_pattern.row_length(reduced_row));
     }
   else
     {
-      const unsigned int last_chunk_size = cols->n_cols() % chunk_size;
-      row_length                         = 0;
+      const unsigned int last_chunk_size= cols->n_cols() % chunk_size;
+      row_length                        = 0;
       for(; it < itend; ++it)
         {
           const unsigned int next_chunk_size
             = (it->column() == cols->sparsity_pattern.n_cols() - 1) ?
                 last_chunk_size :
                 chunk_size;
-          for(unsigned int c = 0; c < next_chunk_size; ++c, ++row_length)
+          for(unsigned int c= 0; c < next_chunk_size; ++c, ++row_length)
             {
-              *values++         = val_ptr[c];
-              *column_indices++ = it->column() * chunk_size + c;
+              *values++        = val_ptr[c];
+              *column_indices++= it->column() * chunk_size + c;
             }
-          val_ptr += chunk_size * chunk_size;
+          val_ptr+= chunk_size * chunk_size;
         }
     }
 }
@@ -605,7 +604,7 @@ ChunkSparseMatrix<number>::vmult(OutVector& dst, const InVector& src) const
 
   // set the output vector to zero and then add to it the contributions of
   // vmults from individual chunks. this is what vmult_add does
-  dst = 0;
+  dst= 0;
   vmult_add(dst, src);
 }
 
@@ -630,7 +629,7 @@ ChunkSparseMatrix<number>::Tvmult(OutVector& dst, const InVector& src) const
 
   // set the output vector to zero and then add to it the contributions of
   // vmults from individual chunks. this is what vmult_add does
-  dst = 0;
+  dst= 0;
   Tvmult_add(dst, src);
 }
 
@@ -675,22 +674,22 @@ ChunkSparseMatrix<number>::Tvmult_add(OutVector& dst, const InVector& src) const
 
   Assert(!PointerComparison::equal(&src, &dst), ExcSourceEqualsDestination());
 
-  const size_type n_chunk_rows = cols->sparsity_pattern.n_rows();
+  const size_type n_chunk_rows= cols->sparsity_pattern.n_rows();
 
   // loop over all chunks. note that we need to treat the last chunk row and
   // column differently if they have padding elements
-  const bool rows_have_padding = (m() % cols->chunk_size != 0),
-             cols_have_padding = (n() % cols->chunk_size != 0);
+  const bool rows_have_padding= (m() % cols->chunk_size != 0),
+             cols_have_padding= (n() % cols->chunk_size != 0);
 
   const size_type n_regular_chunk_rows
     = (rows_have_padding ? n_chunk_rows - 1 : n_chunk_rows);
 
   // like in vmult_add, but don't keep an iterator into dst around since we're
   // not traversing it sequentially this time
-  const number*    val_ptr    = val.get();
-  const size_type* colnum_ptr = cols->sparsity_pattern.colnums.get();
+  const number*    val_ptr   = val.get();
+  const size_type* colnum_ptr= cols->sparsity_pattern.colnums.get();
 
-  for(size_type chunk_row = 0; chunk_row < n_regular_chunk_rows; ++chunk_row)
+  for(size_type chunk_row= 0; chunk_row < n_regular_chunk_rows; ++chunk_row)
     {
       const number* const val_end_of_row
         = &val[cols->sparsity_pattern.rowstart[chunk_row + 1] * cols->chunk_size
@@ -706,21 +705,21 @@ ChunkSparseMatrix<number>::Tvmult_add(OutVector& dst, const InVector& src) const
               dst.begin() + *colnum_ptr * cols->chunk_size);
           else
             // we're at a chunk column that has padding
-            for(size_type r = 0; r < cols->chunk_size; ++r)
-              for(size_type c = 0; c < n() % cols->chunk_size; ++c)
+            for(size_type r= 0; r < cols->chunk_size; ++r)
+              for(size_type c= 0; c < n() % cols->chunk_size; ++c)
                 dst(*colnum_ptr * cols->chunk_size + c)
                   += (val_ptr[r * cols->chunk_size + c]
                       * src(chunk_row * cols->chunk_size + r));
 
           ++colnum_ptr;
-          val_ptr += cols->chunk_size * cols->chunk_size;
+          val_ptr+= cols->chunk_size * cols->chunk_size;
         }
     }
 
   // now deal with last chunk row if necessary
   if(rows_have_padding)
     {
-      const size_type chunk_row = n_chunk_rows - 1;
+      const size_type chunk_row= n_chunk_rows - 1;
 
       const number* const val_end_of_row
         = &val[cols->sparsity_pattern.rowstart[chunk_row + 1] * cols->chunk_size
@@ -731,22 +730,22 @@ ChunkSparseMatrix<number>::Tvmult_add(OutVector& dst, const InVector& src) const
              || (*colnum_ptr != cols->sparsity_pattern.n_cols() - 1))
             {
               // we're at a chunk row but not column that has padding
-              for(size_type r = 0; r < m() % cols->chunk_size; ++r)
-                for(size_type c = 0; c < cols->chunk_size; ++c)
+              for(size_type r= 0; r < m() % cols->chunk_size; ++r)
+                for(size_type c= 0; c < cols->chunk_size; ++c)
                   dst(*colnum_ptr * cols->chunk_size + c)
                     += (val_ptr[r * cols->chunk_size + c]
                         * src(chunk_row * cols->chunk_size + r));
             }
           else
             // we're at a chunk row and column that has padding
-            for(size_type r = 0; r < m() % cols->chunk_size; ++r)
-              for(size_type c = 0; c < n() % cols->chunk_size; ++c)
+            for(size_type r= 0; r < m() % cols->chunk_size; ++r)
+              for(size_type c= 0; c < n() % cols->chunk_size; ++c)
                 dst(*colnum_ptr * cols->chunk_size + c)
                   += (val_ptr[r * cols->chunk_size + c]
                       * src(chunk_row * cols->chunk_size + r));
 
           ++colnum_ptr;
-          val_ptr += cols->chunk_size * cols->chunk_size;
+          val_ptr+= cols->chunk_size * cols->chunk_size;
         }
     }
 }
@@ -761,26 +760,26 @@ ChunkSparseMatrix<number>::matrix_norm_square(const Vector<somenumber>& v) const
   Assert(m() == v.size(), ExcDimensionMismatch(m(), v.size()));
   Assert(n() == v.size(), ExcDimensionMismatch(n(), v.size()));
 
-  somenumber result = 0;
+  somenumber result= 0;
 
   ////////////////
   // like matrix_scalar_product, except that the two vectors are now the same
 
-  const size_type n_chunk_rows = cols->sparsity_pattern.n_rows();
+  const size_type n_chunk_rows= cols->sparsity_pattern.n_rows();
 
   // loop over all chunks. note that we need to treat the last chunk row and
   // column differently if they have padding elements
-  const bool rows_have_padding = (m() % cols->chunk_size != 0),
-             cols_have_padding = (n() % cols->chunk_size != 0);
+  const bool rows_have_padding= (m() % cols->chunk_size != 0),
+             cols_have_padding= (n() % cols->chunk_size != 0);
 
   const size_type n_regular_chunk_rows
     = (rows_have_padding ? n_chunk_rows - 1 : n_chunk_rows);
 
-  const number*    val_ptr    = val.get();
-  const size_type* colnum_ptr = cols->sparsity_pattern.colnums.get();
-  typename Vector<somenumber>::const_iterator v_ptr = v.begin();
+  const number*    val_ptr   = val.get();
+  const size_type* colnum_ptr= cols->sparsity_pattern.colnums.get();
+  typename Vector<somenumber>::const_iterator v_ptr= v.begin();
 
-  for(size_type chunk_row = 0; chunk_row < n_regular_chunk_rows; ++chunk_row)
+  for(size_type chunk_row= 0; chunk_row < n_regular_chunk_rows; ++chunk_row)
     {
       const number* const val_end_of_row
         = &val[cols->sparsity_pattern.rowstart[chunk_row + 1] * cols->chunk_size
@@ -789,7 +788,7 @@ ChunkSparseMatrix<number>::matrix_norm_square(const Vector<somenumber>& v) const
         {
           if((cols_have_padding == false)
              || (*colnum_ptr != cols->sparsity_pattern.n_cols() - 1))
-            result += internal::ChunkSparseMatrixImplementation::
+            result+= internal::ChunkSparseMatrixImplementation::
               chunk_matrix_scalar_product<somenumber>(
                 cols->chunk_size,
                 val_ptr,
@@ -797,23 +796,23 @@ ChunkSparseMatrix<number>::matrix_norm_square(const Vector<somenumber>& v) const
                 v.begin() + *colnum_ptr * cols->chunk_size);
           else
             // we're at a chunk column that has padding
-            for(size_type r = 0; r < cols->chunk_size; ++r)
-              for(size_type c = 0; c < n() % cols->chunk_size; ++c)
-                result += v(chunk_row * cols->chunk_size + r)
-                          * (val_ptr[r * cols->chunk_size + c]
-                             * v(*colnum_ptr * cols->chunk_size + c));
+            for(size_type r= 0; r < cols->chunk_size; ++r)
+              for(size_type c= 0; c < n() % cols->chunk_size; ++c)
+                result+= v(chunk_row * cols->chunk_size + r)
+                         * (val_ptr[r * cols->chunk_size + c]
+                            * v(*colnum_ptr * cols->chunk_size + c));
 
           ++colnum_ptr;
-          val_ptr += cols->chunk_size * cols->chunk_size;
+          val_ptr+= cols->chunk_size * cols->chunk_size;
         }
 
-      v_ptr += cols->chunk_size;
+      v_ptr+= cols->chunk_size;
     }
 
   // now deal with last chunk row if necessary
   if(rows_have_padding)
     {
-      const size_type chunk_row = n_chunk_rows - 1;
+      const size_type chunk_row= n_chunk_rows - 1;
 
       const number* const val_end_of_row
         = &val[cols->sparsity_pattern.rowstart[chunk_row + 1] * cols->chunk_size
@@ -824,22 +823,22 @@ ChunkSparseMatrix<number>::matrix_norm_square(const Vector<somenumber>& v) const
              || (*colnum_ptr != cols->sparsity_pattern.n_cols() - 1))
             {
               // we're at a chunk row but not column that has padding
-              for(size_type r = 0; r < m() % cols->chunk_size; ++r)
-                for(size_type c = 0; c < cols->chunk_size; ++c)
-                  result += v(chunk_row * cols->chunk_size + r)
-                            * (val_ptr[r * cols->chunk_size + c]
-                               * v(*colnum_ptr * cols->chunk_size + c));
+              for(size_type r= 0; r < m() % cols->chunk_size; ++r)
+                for(size_type c= 0; c < cols->chunk_size; ++c)
+                  result+= v(chunk_row * cols->chunk_size + r)
+                           * (val_ptr[r * cols->chunk_size + c]
+                              * v(*colnum_ptr * cols->chunk_size + c));
             }
           else
             // we're at a chunk row and column that has padding
-            for(size_type r = 0; r < m() % cols->chunk_size; ++r)
-              for(size_type c = 0; c < n() % cols->chunk_size; ++c)
-                result += v(chunk_row * cols->chunk_size + r)
-                          * (val_ptr[r * cols->chunk_size + c]
-                             * v(*colnum_ptr * cols->chunk_size + c));
+            for(size_type r= 0; r < m() % cols->chunk_size; ++r)
+              for(size_type c= 0; c < n() % cols->chunk_size; ++c)
+                result+= v(chunk_row * cols->chunk_size + r)
+                         * (val_ptr[r * cols->chunk_size + c]
+                            * v(*colnum_ptr * cols->chunk_size + c));
 
           ++colnum_ptr;
-          val_ptr += cols->chunk_size * cols->chunk_size;
+          val_ptr+= cols->chunk_size * cols->chunk_size;
         }
     }
 
@@ -859,23 +858,23 @@ ChunkSparseMatrix<number>::matrix_scalar_product(
   Assert(n() == v.size(), ExcDimensionMismatch(n(), v.size()));
 
   // the following works like the vmult_add function
-  somenumber result = 0;
+  somenumber result= 0;
 
-  const size_type n_chunk_rows = cols->sparsity_pattern.n_rows();
+  const size_type n_chunk_rows= cols->sparsity_pattern.n_rows();
 
   // loop over all chunks. note that we need to treat the last chunk row and
   // column differently if they have padding elements
-  const bool rows_have_padding = (m() % cols->chunk_size != 0),
-             cols_have_padding = (n() % cols->chunk_size != 0);
+  const bool rows_have_padding= (m() % cols->chunk_size != 0),
+             cols_have_padding= (n() % cols->chunk_size != 0);
 
   const size_type n_regular_chunk_rows
     = (rows_have_padding ? n_chunk_rows - 1 : n_chunk_rows);
 
-  const number*    val_ptr    = val.get();
-  const size_type* colnum_ptr = cols->sparsity_pattern.colnums.get();
-  typename Vector<somenumber>::const_iterator u_ptr = u.begin();
+  const number*    val_ptr   = val.get();
+  const size_type* colnum_ptr= cols->sparsity_pattern.colnums.get();
+  typename Vector<somenumber>::const_iterator u_ptr= u.begin();
 
-  for(size_type chunk_row = 0; chunk_row < n_regular_chunk_rows; ++chunk_row)
+  for(size_type chunk_row= 0; chunk_row < n_regular_chunk_rows; ++chunk_row)
     {
       const number* const val_end_of_row
         = &val[cols->sparsity_pattern.rowstart[chunk_row + 1] * cols->chunk_size
@@ -884,7 +883,7 @@ ChunkSparseMatrix<number>::matrix_scalar_product(
         {
           if((cols_have_padding == false)
              || (*colnum_ptr != cols->sparsity_pattern.n_cols() - 1))
-            result += internal::ChunkSparseMatrixImplementation::
+            result+= internal::ChunkSparseMatrixImplementation::
               chunk_matrix_scalar_product<somenumber>(
                 cols->chunk_size,
                 val_ptr,
@@ -892,23 +891,23 @@ ChunkSparseMatrix<number>::matrix_scalar_product(
                 v.begin() + *colnum_ptr * cols->chunk_size);
           else
             // we're at a chunk column that has padding
-            for(size_type r = 0; r < cols->chunk_size; ++r)
-              for(size_type c = 0; c < n() % cols->chunk_size; ++c)
-                result += u(chunk_row * cols->chunk_size + r)
-                          * (val_ptr[r * cols->chunk_size + c]
-                             * v(*colnum_ptr * cols->chunk_size + c));
+            for(size_type r= 0; r < cols->chunk_size; ++r)
+              for(size_type c= 0; c < n() % cols->chunk_size; ++c)
+                result+= u(chunk_row * cols->chunk_size + r)
+                         * (val_ptr[r * cols->chunk_size + c]
+                            * v(*colnum_ptr * cols->chunk_size + c));
 
           ++colnum_ptr;
-          val_ptr += cols->chunk_size * cols->chunk_size;
+          val_ptr+= cols->chunk_size * cols->chunk_size;
         }
 
-      u_ptr += cols->chunk_size;
+      u_ptr+= cols->chunk_size;
     }
 
   // now deal with last chunk row if necessary
   if(rows_have_padding)
     {
-      const size_type chunk_row = n_chunk_rows - 1;
+      const size_type chunk_row= n_chunk_rows - 1;
 
       const number* const val_end_of_row
         = &val[cols->sparsity_pattern.rowstart[chunk_row + 1] * cols->chunk_size
@@ -919,22 +918,22 @@ ChunkSparseMatrix<number>::matrix_scalar_product(
              || (*colnum_ptr != cols->sparsity_pattern.n_cols() - 1))
             {
               // we're at a chunk row but not column that has padding
-              for(size_type r = 0; r < m() % cols->chunk_size; ++r)
-                for(size_type c = 0; c < cols->chunk_size; ++c)
-                  result += u(chunk_row * cols->chunk_size + r)
-                            * (val_ptr[r * cols->chunk_size + c]
-                               * v(*colnum_ptr * cols->chunk_size + c));
+              for(size_type r= 0; r < m() % cols->chunk_size; ++r)
+                for(size_type c= 0; c < cols->chunk_size; ++c)
+                  result+= u(chunk_row * cols->chunk_size + r)
+                           * (val_ptr[r * cols->chunk_size + c]
+                              * v(*colnum_ptr * cols->chunk_size + c));
             }
           else
             // we're at a chunk row and column that has padding
-            for(size_type r = 0; r < m() % cols->chunk_size; ++r)
-              for(size_type c = 0; c < n() % cols->chunk_size; ++c)
-                result += u(chunk_row * cols->chunk_size + r)
-                          * (val_ptr[r * cols->chunk_size + c]
-                             * v(*colnum_ptr * cols->chunk_size + c));
+            for(size_type r= 0; r < m() % cols->chunk_size; ++r)
+              for(size_type c= 0; c < n() % cols->chunk_size; ++c)
+                result+= u(chunk_row * cols->chunk_size + r)
+                         * (val_ptr[r * cols->chunk_size + c]
+                            * v(*colnum_ptr * cols->chunk_size + c));
 
           ++colnum_ptr;
-          val_ptr += cols->chunk_size * cols->chunk_size;
+          val_ptr+= cols->chunk_size * cols->chunk_size;
         }
     }
 
@@ -948,7 +947,7 @@ ChunkSparseMatrix<number>::l1_norm() const
   Assert(cols != nullptr, ExcNotInitialized());
   Assert(val != nullptr, ExcNotInitialized());
 
-  const size_type n_chunk_rows = cols->sparsity_pattern.n_rows();
+  const size_type n_chunk_rows= cols->sparsity_pattern.n_rows();
 
   // loop over all rows and columns; it is safe to also loop over the padding
   // elements (they are zero) if we make sure that the vector into which we
@@ -956,12 +955,12 @@ ChunkSparseMatrix<number>::l1_norm() const
   Vector<real_type> column_sums(cols->sparsity_pattern.n_cols()
                                 * cols->chunk_size);
 
-  for(size_type chunk_row = 0; chunk_row < n_chunk_rows; ++chunk_row)
-    for(size_type j = cols->sparsity_pattern.rowstart[chunk_row];
+  for(size_type chunk_row= 0; chunk_row < n_chunk_rows; ++chunk_row)
+    for(size_type j= cols->sparsity_pattern.rowstart[chunk_row];
         j < cols->sparsity_pattern.rowstart[chunk_row + 1];
         ++j)
-      for(size_type r = 0; r < cols->chunk_size; ++r)
-        for(size_type s = 0; s < cols->chunk_size; ++s)
+      for(size_type r= 0; r < cols->chunk_size; ++r)
+        for(size_type s= 0; s < cols->chunk_size; ++s)
           column_sums(cols->sparsity_pattern.colnums[j] * cols->chunk_size + s)
             += numbers::NumberTraits<number>::abs(
               val[j * cols->chunk_size * cols->chunk_size + r * cols->chunk_size
@@ -981,7 +980,7 @@ ChunkSparseMatrix<number>::linfty_norm() const
   // (without allocating a temporary vector) as is done in the SparseMatrix
   // class but since it is rarely called in time critical places it is
   // probably not worth it
-  const size_type n_chunk_rows = cols->sparsity_pattern.n_rows();
+  const size_type n_chunk_rows= cols->sparsity_pattern.n_rows();
 
   // loop over all rows and columns; it is safe to also loop over the padding
   // elements (they are zero) if we make sure that the vector into which we
@@ -989,12 +988,12 @@ ChunkSparseMatrix<number>::linfty_norm() const
   Vector<real_type> row_sums(cols->sparsity_pattern.n_rows()
                              * cols->chunk_size);
 
-  for(size_type chunk_row = 0; chunk_row < n_chunk_rows; ++chunk_row)
-    for(size_type j = cols->sparsity_pattern.rowstart[chunk_row];
+  for(size_type chunk_row= 0; chunk_row < n_chunk_rows; ++chunk_row)
+    for(size_type j= cols->sparsity_pattern.rowstart[chunk_row];
         j < cols->sparsity_pattern.rowstart[chunk_row + 1];
         ++j)
-      for(size_type r = 0; r < cols->chunk_size; ++r)
-        for(size_type s = 0; s < cols->chunk_size; ++s)
+      for(size_type r= 0; r < cols->chunk_size; ++r)
+        for(size_type s= 0; s < cols->chunk_size; ++s)
           row_sums(chunk_row * cols->chunk_size + r)
             += numbers::NumberTraits<number>::abs(
               val[j * cols->chunk_size * cols->chunk_size + r * cols->chunk_size
@@ -1011,9 +1010,9 @@ ChunkSparseMatrix<number>::frobenius_norm() const
   // reference to rows or columns
   //
   // padding elements are zero, so we can add them up as well
-  real_type norm_sqr = 0;
-  for(const number* ptr = val.get(); ptr != val.get() + max_len; ++ptr)
-    norm_sqr += numbers::NumberTraits<number>::abs_square(*ptr);
+  real_type norm_sqr= 0;
+  for(const number* ptr= val.get(); ptr != val.get() + max_len; ++ptr)
+    norm_sqr+= numbers::NumberTraits<number>::abs_square(*ptr);
 
   return std::sqrt(norm_sqr);
 }
@@ -1036,27 +1035,27 @@ ChunkSparseMatrix<number>::residual(Vector<somenumber>&       dst,
   // set dst=b, then subtract the result of A*u from it. since the purpose of
   // the current class is to promote streaming of data rather than more random
   // access patterns, breaking things up into two loops may be reasonable
-  dst = b;
+  dst= b;
 
   /////////
   // the rest of this function is like vmult_add, except that we subtract
   // rather than add A*u
   /////////
-  const size_type n_chunk_rows = cols->sparsity_pattern.n_rows();
+  const size_type n_chunk_rows= cols->sparsity_pattern.n_rows();
 
   // loop over all chunks. note that we need to treat the last chunk row and
   // column differently if they have padding elements
-  const bool rows_have_padding = (m() % cols->chunk_size != 0),
-             cols_have_padding = (n() % cols->chunk_size != 0);
+  const bool rows_have_padding= (m() % cols->chunk_size != 0),
+             cols_have_padding= (n() % cols->chunk_size != 0);
 
   const size_type n_regular_chunk_rows
     = (rows_have_padding ? n_chunk_rows - 1 : n_chunk_rows);
 
-  const number*    val_ptr    = val.get();
-  const size_type* colnum_ptr = cols->sparsity_pattern.colnums.get();
-  typename Vector<somenumber>::iterator dst_ptr = dst.begin();
+  const number*    val_ptr   = val.get();
+  const size_type* colnum_ptr= cols->sparsity_pattern.colnums.get();
+  typename Vector<somenumber>::iterator dst_ptr= dst.begin();
 
-  for(size_type chunk_row = 0; chunk_row < n_regular_chunk_rows; ++chunk_row)
+  for(size_type chunk_row= 0; chunk_row < n_regular_chunk_rows; ++chunk_row)
     {
       const number* const val_end_of_row
         = &val[cols->sparsity_pattern.rowstart[chunk_row + 1] * cols->chunk_size
@@ -1072,23 +1071,23 @@ ChunkSparseMatrix<number>::residual(Vector<somenumber>&       dst,
               dst_ptr);
           else
             // we're at a chunk column that has padding
-            for(size_type r = 0; r < cols->chunk_size; ++r)
-              for(size_type c = 0; c < n() % cols->chunk_size; ++c)
+            for(size_type r= 0; r < cols->chunk_size; ++r)
+              for(size_type c= 0; c < n() % cols->chunk_size; ++c)
                 dst(chunk_row * cols->chunk_size + r)
                   -= (val_ptr[r * cols->chunk_size + c]
                       * u(*colnum_ptr * cols->chunk_size + c));
 
           ++colnum_ptr;
-          val_ptr += cols->chunk_size * cols->chunk_size;
+          val_ptr+= cols->chunk_size * cols->chunk_size;
         }
 
-      dst_ptr += cols->chunk_size;
+      dst_ptr+= cols->chunk_size;
     }
 
   // now deal with last chunk row if necessary
   if(rows_have_padding)
     {
-      const size_type chunk_row = n_chunk_rows - 1;
+      const size_type chunk_row= n_chunk_rows - 1;
 
       const number* const val_end_of_row
         = &val[cols->sparsity_pattern.rowstart[chunk_row + 1] * cols->chunk_size
@@ -1099,25 +1098,25 @@ ChunkSparseMatrix<number>::residual(Vector<somenumber>&       dst,
              || (*colnum_ptr != cols->sparsity_pattern.n_cols() - 1))
             {
               // we're at a chunk row but not column that has padding
-              for(size_type r = 0; r < m() % cols->chunk_size; ++r)
-                for(size_type c = 0; c < cols->chunk_size; ++c)
+              for(size_type r= 0; r < m() % cols->chunk_size; ++r)
+                for(size_type c= 0; c < cols->chunk_size; ++c)
                   dst(chunk_row * cols->chunk_size + r)
                     -= (val_ptr[r * cols->chunk_size + c]
                         * u(*colnum_ptr * cols->chunk_size + c));
             }
           else
             // we're at a chunk row and column that has padding
-            for(size_type r = 0; r < m() % cols->chunk_size; ++r)
-              for(size_type c = 0; c < n() % cols->chunk_size; ++c)
+            for(size_type r= 0; r < m() % cols->chunk_size; ++r)
+              for(size_type c= 0; c < n() % cols->chunk_size; ++c)
                 dst(chunk_row * cols->chunk_size + r)
                   -= (val_ptr[r * cols->chunk_size + c]
                       * u(*colnum_ptr * cols->chunk_size + c));
 
           ++colnum_ptr;
-          val_ptr += cols->chunk_size * cols->chunk_size;
+          val_ptr+= cols->chunk_size * cols->chunk_size;
         }
 
-      dst_ptr += cols->chunk_size;
+      dst_ptr+= cols->chunk_size;
     }
 
   // finally compute the norm
@@ -1178,7 +1177,7 @@ ChunkSparseMatrix<number>::precondition_SOR(Vector<somenumber>&       dst,
   Assert(m() == n(),
          ExcMessage("This operation is only valid on square matrices."));
 
-  dst = src;
+  dst= src;
   SOR(dst, om);
 }
 
@@ -1194,7 +1193,7 @@ ChunkSparseMatrix<number>::precondition_TSOR(Vector<somenumber>&       dst,
   Assert(m() == n(),
          ExcMessage("This operation is only valid on square matrices."));
 
-  dst = src;
+  dst= src;
   TSOR(dst, om);
 }
 
@@ -1378,29 +1377,29 @@ ChunkSparseMatrix<number>::print_formatted(std::ostream&      out,
   Assert(cols != nullptr, ExcNotInitialized());
   Assert(val != nullptr, ExcNotInitialized());
 
-  unsigned int width = width_;
+  unsigned int width= width_;
 
   Assert(false, ExcNotImplemented());
 
-  std::ios::fmtflags old_flags     = out.flags();
-  unsigned int       old_precision = out.precision(precision);
+  std::ios::fmtflags old_flags    = out.flags();
+  unsigned int       old_precision= out.precision(precision);
 
   if(scientific)
     {
       out.setf(std::ios::scientific, std::ios::floatfield);
       if(!width)
-        width = precision + 7;
+        width= precision + 7;
     }
   else
     {
       out.setf(std::ios::fixed, std::ios::floatfield);
       if(!width)
-        width = precision + 2;
+        width= precision + 2;
     }
 
-  for(size_type i = 0; i < m(); ++i)
+  for(size_type i= 0; i < m(); ++i)
     {
-      for(size_type j = 0; j < n(); ++j)
+      for(size_type j= 0; j < n(); ++j)
         if(cols->sparsity_pattern(i, j) != SparsityPattern::invalid_entry)
           out << std::setw(width)
               << val[cols->sparsity_pattern(i, j)] * denominator << ' ';
@@ -1425,27 +1424,27 @@ ChunkSparseMatrix<number>::print_pattern(std::ostream& out,
   Assert(cols != nullptr, ExcNotInitialized());
   Assert(val != nullptr, ExcNotInitialized());
 
-  const size_type chunk_size = cols->get_chunk_size();
+  const size_type chunk_size= cols->get_chunk_size();
 
   // loop over all chunk rows and columns, and each time we find something
   // repeat it chunk_size times in both directions
-  for(size_type i = 0; i < cols->sparsity_pattern.n_rows(); ++i)
+  for(size_type i= 0; i < cols->sparsity_pattern.n_rows(); ++i)
     {
-      for(size_type d = 0; d < chunk_size; ++d)
-        for(size_type j = 0; j < cols->sparsity_pattern.n_cols(); ++j)
+      for(size_type d= 0; d < chunk_size; ++d)
+        for(size_type j= 0; j < cols->sparsity_pattern.n_cols(); ++j)
           if(cols->sparsity_pattern(i, j) == SparsityPattern::invalid_entry)
             {
-              for(size_type e = 0; e < chunk_size; ++e)
+              for(size_type e= 0; e < chunk_size; ++e)
                 out << '.';
             }
           else if(std::fabs(val[cols->sparsity_pattern(i, j)]) > threshold)
             {
-              for(size_type e = 0; e < chunk_size; ++e)
+              for(size_type e= 0; e < chunk_size; ++e)
                 out << '*';
             }
           else
             {
-              for(size_type e = 0; e < chunk_size; ++e)
+              for(size_type e= 0; e < chunk_size; ++e)
                 out << ':';
             }
       out << std::endl;
@@ -1490,7 +1489,7 @@ ChunkSparseMatrix<number>::block_read(std::istream& in)
   AssertThrow(c == '[', ExcIO());
 
   // reallocate space
-  val = std_cxx14::make_unique<number[]>(max_len);
+  val= std_cxx14::make_unique<number[]>(max_len);
 
   // then read data
   in.read(reinterpret_cast<char*>(val.get()),

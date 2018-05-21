@@ -25,9 +25,9 @@ check_value(const int    dim,
             const int    index,
             const double expected,
             const double actual,
-            const double tol = 1e-12)
+            const double tol= 1e-12)
 {
-  const double rel_error = std::abs(expected - actual) / std::abs(actual);
+  const double rel_error= std::abs(expected - actual) / std::abs(actual);
   if(rel_error > tol)
     {
       deallog << "Incorrect value calculated: "
@@ -47,18 +47,18 @@ is_unit_vector(const Tensor<1, dim>& v)
 template <int dim>
 bool check_orientation(Tensor<1, dim> v1, Tensor<1, dim> v2)
 {
-  v1 /= v1.norm();
-  v2 /= v2.norm();
+  v1/= v1.norm();
+  v2/= v2.norm();
   return std::abs(std::abs(v1 * v2) - 1.0) < 1e-9;
 }
 
 void
-test_dim_1(const double e1, const double tol = 1e-12)
+test_dim_1(const double e1, const double tol= 1e-12)
 {
-  const unsigned int      dim = 1;
+  const unsigned int      dim= 1;
   SymmetricTensor<2, dim> T;
-  T[0][0]                                = e1;
-  const std::array<double, dim> eig_vals = eigenvalues(T);
+  T[0][0]                               = e1;
+  const std::array<double, dim> eig_vals= eigenvalues(T);
 
   check_value(dim, 0, e1, eig_vals[0], tol);
 }
@@ -67,20 +67,20 @@ void
 test_dim_2(const double e1,
            Tensor<1, 2> v1,
            const double e2,
-           const double tol = 1e-12)
+           const double tol= 1e-12)
 {
-  const unsigned int dim = 2;
-  v1 /= v1.norm();
-  const Tensor<1, dim> v2 = cross_product_2d(v1);
+  const unsigned int dim= 2;
+  v1/= v1.norm();
+  const Tensor<1, dim> v2= cross_product_2d(v1);
 
   Assert(is_unit_vector(v1), ExcMessage("Vector is not of unit length."));
   Assert(is_unit_vector(v2), ExcMessage("Vector is not of unit length."));
   Assert(e1 >= e2, ExcMessage("Input eigenvalue ordering is not correct."));
 
-  const SymmetricTensor<2, dim> T = e1 * symmetrize(outer_product(v1, v1))
-                                    + e2 * symmetrize(outer_product(v2, v2));
+  const SymmetricTensor<2, dim> T= e1 * symmetrize(outer_product(v1, v1))
+                                   + e2 * symmetrize(outer_product(v2, v2));
 
-  const std::array<double, dim> eig_vals = eigenvalues(T);
+  const std::array<double, dim> eig_vals= eigenvalues(T);
 
   check_value(dim, 0, e1, eig_vals[0], tol);
   check_value(dim, 1, e2, eig_vals[1], tol);
@@ -92,17 +92,17 @@ test_dim_3(const double e1,
            const double e2,
            Tensor<1, 3> v2,
            const double e3,
-           const double tol = 1e-12)
+           const double tol= 1e-12)
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
   // Note: We do not necessarily expect the seed directors v1,v2 to be orthogonal
-  v1 /= v1.norm();
-  v2 /= v2.norm();
-  Tensor<1, dim> v3 = cross_product_3d(v1, v2);
-  v3 /= v3.norm();
-  v1 = cross_product_3d(v2, v3);
-  v3 = cross_product_3d(v1, v2); // Ensure that system is right-handed
+  v1/= v1.norm();
+  v2/= v2.norm();
+  Tensor<1, dim> v3= cross_product_3d(v1, v2);
+  v3/= v3.norm();
+  v1= cross_product_3d(v2, v3);
+  v3= cross_product_3d(v1, v2); // Ensure that system is right-handed
 
   Assert(is_unit_vector(v1), ExcMessage("Vector is not of unit length."));
   Assert(is_unit_vector(v2), ExcMessage("Vector is not of unit length."));
@@ -112,11 +112,11 @@ test_dim_3(const double e1,
   Assert(e1 >= e2, ExcMessage("Input eigenvalue ordering is not correct."));
   Assert(e2 >= e3, ExcMessage("Input eigenvalue ordering is not correct."));
 
-  const SymmetricTensor<2, dim> T = e1 * symmetrize(outer_product(v1, v1))
-                                    + e2 * symmetrize(outer_product(v2, v2))
-                                    + e3 * symmetrize(outer_product(v3, v3));
+  const SymmetricTensor<2, dim> T= e1 * symmetrize(outer_product(v1, v1))
+                                   + e2 * symmetrize(outer_product(v2, v2))
+                                   + e3 * symmetrize(outer_product(v3, v3));
 
-  const std::array<double, dim> eig_vals = eigenvalues(T);
+  const std::array<double, dim> eig_vals= eigenvalues(T);
 
   check_value(dim, 0, e1, eig_vals[0], tol);
   check_value(dim, 1, e2, eig_vals[1], tol);
@@ -128,8 +128,8 @@ main()
 {
   initlog();
 
-  const double e2 = 2.8;
-  const double e3 = 1.2;
+  const double e2= 2.8;
+  const double e3= 1.2;
 
   // Dim = 1
   {
@@ -245,7 +245,7 @@ main()
     // Non-diagonal (2 large difference)
     deallog.push("Test 3g");
     {
-      const double tol = 1e-7;
+      const double tol= 1e-7;
       test_dim_3(9.274e7,
                  Tensor<1, 3>({2, -0.7, 1.4}),
                  2.59343,

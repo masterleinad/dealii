@@ -16,7 +16,7 @@
 // check that computation of hp constraints works for FESystem(FE_Q) elements correctly
 // on a uniformly refined mesh for functions of degree q
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "hp_constraints_common.h"
 
@@ -27,7 +27,7 @@ test()
   deallog << "Test for dim = " << dim << std::endl << std::endl;
   hp::FECollection<dim>     fe;
   std::vector<unsigned int> degrees;
-  for(unsigned int i = 1; i < 4; ++i)
+  for(unsigned int i= 1; i < 4; ++i)
     {
       fe.push_back(FESystem<dim>(
         FE_Q<dim>(QIterated<1>(QTrapez<1>(), i)), 1, FE_DGQ<dim>(i + 1), 1));

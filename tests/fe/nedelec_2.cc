@@ -41,8 +41,8 @@ plot_diff(const Vector<double>& v1,
   AssertDimension(v1.size(), 2);
   AssertDimension(v2.size(), 2);
 
-  double p1 = v1(0) * n[1] - v1(1) * n[0];
-  double p2 = v2(0) * n[1] - v2(1) * n[0];
+  double p1= v1(0) * n[1] - v1(1) * n[0];
+  double p2= v2(0) * n[1] - v2(1) * n[0];
 
   deallog << " tangential  diff " << p1 - p2 << " (" << p1 << " - " << p2 << ')'
           << std::endl;
@@ -57,13 +57,13 @@ plot_diff(const Vector<double>& v1,
   AssertDimension(v2.size(), 3);
 
   Tensor<1, 3> p1, p2;
-  for(unsigned int d = 0; d < 3; ++d)
+  for(unsigned int d= 0; d < 3; ++d)
     {
-      const unsigned int d1 = (d + 1) % 3;
-      const unsigned int d2 = (d + 2) % 3;
+      const unsigned int d1= (d + 1) % 3;
+      const unsigned int d2= (d + 2) % 3;
 
-      p1[d] = v1(d1) * n[d2] - v1(d2) * n[d1];
-      p2[d] = v2(d1) * n[d2] - v2(d2) * n[d1];
+      p1[d]= v1(d1) * n[d2] - v1(d2) * n[d1];
+      p2[d]= v2(d1) * n[d2] - v2(d2) * n[d1];
     }
 
   deallog << " tangential  diff " << p1 - p2 << " (" << p1 << " - " << p2 << ')'
@@ -87,8 +87,8 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
   // generate some numbers for the
   // degrees of freedom on this mesh
   Vector<double> values(dof.n_dofs());
-  for(unsigned int i = 0; i < values.size(); ++i)
-    values(i) = i;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    values(i)= i;
   cm.distribute(values);
 
   // then make sure that hanging node
@@ -121,10 +121,10 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
                                  update_values | update_quadrature_points
                                    | update_normal_vectors);
 
-  for(typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator c= dof.begin_active();
       c != dof.end();
       ++c)
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
       {
         deallog << "cell " << c << " face " << face;
         if(c->at_boundary(face))
@@ -153,7 +153,7 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
             fesubface.reinit(
               c->neighbor(face), neighbor_face.first, neighbor_face.second);
             fesubface.get_function_values(values, shape_values2);
-            for(unsigned int k = 0; k < feface.n_quadrature_points; ++k)
+            for(unsigned int k= 0; k < feface.n_quadrature_points; ++k)
               {
                 deallog << feface.quadrature_point(k);
                 plot_diff(
@@ -164,7 +164,7 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
           {
             feneighbor.reinit(c->neighbor(face), c->neighbor_of_neighbor(face));
             feneighbor.get_function_values(values, shape_values2);
-            for(unsigned int k = 0; k < feface.n_quadrature_points; ++k)
+            for(unsigned int k= 0; k < feface.n_quadrature_points; ++k)
               {
                 deallog << feface.quadrature_point(k);
                 plot_diff(

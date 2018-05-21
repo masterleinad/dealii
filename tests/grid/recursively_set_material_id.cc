@@ -25,7 +25,7 @@ template <int dim>
 void
 test()
 {
-  for(unsigned int t = 0; t < 2; ++t)
+  for(unsigned int t= 0; t < 2; ++t)
     {
       deallog << "dim=" << dim << ", test=" << t << std::endl;
 
@@ -65,7 +65,7 @@ test()
       // and then count how many
       // active cells inherited this
       // flag
-      unsigned int n = 0;
+      unsigned int n= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active();
           cell != tr.end();

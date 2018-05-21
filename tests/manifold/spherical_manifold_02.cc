@@ -58,13 +58,13 @@ struct MappingEnum
 };
 
 void
-test(MappingEnum::type mapping_name, unsigned int refinements = 1)
+test(MappingEnum::type mapping_name, unsigned int refinements= 1)
 {
   using namespace dealii;
 
   deallog.depth_console(0);
 
-  const unsigned int degree = 2; // Degree of shape functions
+  const unsigned int degree= 2; // Degree of shape functions
 
   Triangulation<2, 3> triangulation;
 
@@ -72,7 +72,7 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
   DoFHandler<2, 3> dof_handler(triangulation);
   QGaussLobatto<2> cell_quadrature(degree + 1);
 
-  const double radius = 1.0;
+  const double radius= 1.0;
   Point<3>     center(0.0, 0.0, 0.0);
   GridGenerator::hyper_sphere(triangulation, center, radius);
 
@@ -122,25 +122,25 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
     }
 
   FEValues<2, 3> fe_values(*mapping, fe, cell_quadrature, update_JxW_values);
-  const unsigned int n_q_points = cell_quadrature.size();
+  const unsigned int n_q_points= cell_quadrature.size();
 
-  double surface_area = 0;
-  for(DoFHandler<2, 3>::active_cell_iterator cell = dof_handler.begin_active(),
-                                             endc = dof_handler.end();
+  double surface_area= 0;
+  for(DoFHandler<2, 3>::active_cell_iterator cell= dof_handler.begin_active(),
+                                             endc= dof_handler.end();
       cell != endc;
       ++cell)
     {
-      double patch_surface = 0;
+      double patch_surface= 0;
       fe_values.reinit(cell);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
-          patch_surface += fe_values.JxW(q_point);
+          patch_surface+= fe_values.JxW(q_point);
           // deallog << "--> " << qp[q_point] << std::endl;
         }
       // deallog  << " Patch area       = "
       //            << patch_surface << std::endl;
-      surface_area += patch_surface;
+      surface_area+= patch_surface;
     }
 
   deallog << " Ref      = " << std::setw(5) << refinements;
@@ -162,10 +162,10 @@ main()
   std::string bar(35, '-');
 
   deallog << bar << std::endl;
-  for(unsigned int i = 1; i < 8; ++i)
+  for(unsigned int i= 1; i < 8; ++i)
     test(MappingEnum::MappingManifold, i);
   deallog << bar << std::endl;
-  for(unsigned int i = 1; i < 8; ++i)
+  for(unsigned int i= 1; i < 8; ++i)
     test(MappingEnum::MappingQ, i);
   deallog << bar << std::endl;
 

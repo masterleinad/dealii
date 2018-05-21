@@ -24,11 +24,11 @@ template <int dim>
 void
 check()
 {
-  for(unsigned int round = 0; round < 10; ++round)
+  for(unsigned int round= 0; round < 10; ++round)
     {
       SymmetricTensor<2, dim> S;
-      for(unsigned int i = 0; i < S.n_independent_components; ++i)
-        S[S.unrolled_to_component_indices(i)] = Testing::rand() % 10;
+      for(unsigned int i= 0; i < S.n_independent_components; ++i)
+        S[S.unrolled_to_component_indices(i)]= Testing::rand() % 10;
 
       deallog << "S = " << S << std::endl;
       deallog << "first invariant  = " << first_invariant(S) << std::endl;
@@ -36,21 +36,21 @@ check()
       deallog << "third invariant  = " << third_invariant(S) << std::endl;
 
       Tensor<2, dim> S_cubed;
-      for(unsigned int d = 0; d < dim; ++d)
-        for(unsigned int e = 0; e < dim; ++e)
-          for(unsigned int f = 0; f < dim; ++f)
-            for(unsigned int g = 0; g < dim; ++g)
-              S_cubed[d][e] += S[d][f] * S[f][g] * S[g][e];
+      for(unsigned int d= 0; d < dim; ++d)
+        for(unsigned int e= 0; e < dim; ++e)
+          for(unsigned int f= 0; f < dim; ++f)
+            for(unsigned int g= 0; g < dim; ++g)
+              S_cubed[d][e]+= S[d][f] * S[f][g] * S[g][e];
 
       Tensor<2, dim> S_squared;
-      for(unsigned int d = 0; d < dim; ++d)
-        for(unsigned int e = 0; e < dim; ++e)
-          for(unsigned int f = 0; f < dim; ++f)
-            S_squared[d][e] += S[d][f] * S[f][e];
+      for(unsigned int d= 0; d < dim; ++d)
+        for(unsigned int e= 0; e < dim; ++e)
+          for(unsigned int f= 0; f < dim; ++f)
+            S_squared[d][e]+= S[d][f] * S[f][e];
 
-      Tensor<2, dim> R = S_cubed - first_invariant(S) * S_squared
-                         + second_invariant(S) * S
-                         - third_invariant(S) * unit_symmetric_tensor<dim>();
+      Tensor<2, dim> R= S_cubed - first_invariant(S) * S_squared
+                        + second_invariant(S) * S
+                        - third_invariant(S) * unit_symmetric_tensor<dim>();
       deallog << R << std::endl;
 
       AssertThrow(R.norm() < 1e-10, ExcInternalError());

@@ -47,13 +47,13 @@ void
 check(std::ostream& out)
 {
   names.resize(5);
-  names[0] = "x1";
-  names[1] = "x2";
-  names[2] = "x3";
-  names[3] = "x4";
-  names[4] = "i";
+  names[0]= "x1";
+  names[1]= "x2";
+  names[2]= "x3";
+  names[3]= "x4";
+  names[4]= "i";
 
-  std::vector<std::string> filenames = names;
+  std::vector<std::string> filenames= names;
 
   DataOutX x;
   x.write_pvtu_record(out, filenames);

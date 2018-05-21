@@ -42,9 +42,9 @@ void
 reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
               MGLevelObject<dealii::Vector<number>>&   v)
 {
-  for(unsigned int level = v.min_level(); level <= v.max_leve(); ++level)
+  for(unsigned int level= v.min_level(); level <= v.max_leve(); ++level)
     {
-      unsigned int n = mg_dof.n_dofs(level);
+      unsigned int n= mg_dof.n_dofs(level);
       v[level].reinit(n);
     }
 }
@@ -57,22 +57,22 @@ make_matrix(const Transfer&     transfer,
 {
   Vector<double> src(matrix.n());
   Vector<double> dst(matrix.m());
-  for(unsigned int i = 0; i < src.size(); ++i)
+  for(unsigned int i= 0; i < src.size(); ++i)
     {
-      src    = 0;
-      src(i) = 1;
+      src   = 0;
+      src(i)= 1;
       transfer.prolongate(high_level, dst, src);
-      for(unsigned int j = 0; j < dst.size(); ++j)
-        matrix(j, i) = dst(j);
+      for(unsigned int j= 0; j < dst.size(); ++j)
+        matrix(j, i)= dst(j);
     }
 }
 
 void
 print_matrix(const FullMatrix<double>& m)
 {
-  for(unsigned int i = 0; i < m.m(); ++i)
+  for(unsigned int i= 0; i < m.m(); ++i)
     {
-      for(unsigned int j = 0; j < m.n(); ++j)
+      for(unsigned int j= 0; j < m.n(); ++j)
         deallog << m(i, j) << ' ';
       deallog << std::endl;
     }
@@ -82,18 +82,18 @@ template <int dim>
 void
 refine_mesh(Triangulation<dim>& triangulation)
 {
-  bool cell_refined = false;
+  bool cell_refined= false;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
     {
-      const Point<dim> p        = cell->center();
-      bool             positive = p(0) > 0;
+      const Point<dim> p       = cell->center();
+      bool             positive= p(0) > 0;
       if(positive)
         {
           cell->set_refine_flag();
-          cell_refined = true;
+          cell_refined= true;
         }
     }
   if(!cell_refined) //if no cell was selected for refinement, refine global
@@ -114,7 +114,7 @@ check(const FiniteElement<dim>& fe)
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
 
   std::vector<unsigned int> subdivisions(dim, 1);
-  subdivisions[0] = 2;
+  subdivisions[0]= 2;
 
   const Point<dim> bottom_left
     = (dim == 2 ? Point<dim>(-1, -1) : Point<dim>(-1, -1, -1));
@@ -129,10 +129,10 @@ check(const FiniteElement<dim>& fe)
   mg_dof_handler.distribute_mg_dofs(fe);
 
   std::vector<unsigned int> block_selected(3, 0);
-  block_selected[2] = 1;
+  block_selected[2]= 1;
 
   deallog << "Global  dofs: " << mg_dof_handler.n_dofs() << std::endl;
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     {
       deallog << "Level " << l << " dofs:";
       deallog << ' ' << mg_dof_handler.n_dofs(l);
@@ -140,7 +140,7 @@ check(const FiniteElement<dim>& fe)
     }
 
   DoFRenumbering::component_wise(mg_dof_handler, block_selected);
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for(unsigned int level= 0; level < tr.n_levels(); ++level)
     DoFRenumbering::component_wise(mg_dof_handler, level, block_selected);
 
   MGTransferSelect<double> transfer;

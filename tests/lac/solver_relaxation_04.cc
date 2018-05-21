@@ -37,16 +37,16 @@ check_solve(SolverType&         solver,
             VectorType&         f,
             const PRECONDITION& P)
 {
-  double result = 0.;
-  u             = 0.;
-  f             = 1.;
+  double result= 0.;
+  u            = 0.;
+  f            = 1.;
   try
     {
       solver.solve(A, u, f, P);
     }
   catch(SolverControl::NoConvergence& e)
     {
-      result = e.last_residual;
+      result= e.last_residual;
     }
   return result;
 }
@@ -54,7 +54,7 @@ check_solve(SolverType&         solver,
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   //  logfile.setf(std::ios::fixed);
   deallog << std::setprecision(4);
@@ -64,9 +64,9 @@ main()
   SolverRelaxation<> relax(control);
 
   // Solve non-symmetric laplace with five-point FD
-  for(unsigned int size = 33; size <= 33; size *= 3)
+  for(unsigned int size= 33; size <= 33; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -78,11 +78,11 @@ main()
       SparseMatrix<double> A(structure);
       testproblem.five_point(A, true);
 
-      for(unsigned int blocksize = 4; blocksize < 32; blocksize <<= 1)
+      for(unsigned int blocksize= 4; blocksize < 32; blocksize<<= 1)
         {
           deallog << "Block size " << blocksize << std::endl;
 
-          const unsigned int n_blocks = dim / blocksize;
+          const unsigned int n_blocks= dim / blocksize;
           RelaxationBlock<SparseMatrix<double>, double>::AdditionalData
             relax_data(0.7);
           RelaxationBlock<SparseMatrix<double>, double>::AdditionalData
@@ -90,9 +90,9 @@ main()
 
           relax_data.block_list.reinit(n_blocks, dim, blocksize + 2);
           relax_data_reorder.block_list.reinit(n_blocks, dim, blocksize + 2);
-          for(unsigned int block = 0; block < n_blocks; ++block)
+          for(unsigned int block= 0; block < n_blocks; ++block)
             {
-              for(int i = -1; i < (int) blocksize + 1; ++i)
+              for(int i= -1; i < (int) blocksize + 1; ++i)
                 if((int) (i + block * blocksize) > -1
                    && (i + block * blocksize) < dim)
                   {
@@ -110,8 +110,8 @@ main()
           // reverse the order of the blocks
           relax_data_reorder.order.resize(1);
           relax_data_reorder.order[0].resize(n_blocks);
-          for(unsigned int i = 0; i < n_blocks; ++i)
-            relax_data_reorder.order[0][i] = n_blocks - 1 - i;
+          for(unsigned int i= 0; i < n_blocks; ++i)
+            relax_data_reorder.order[0][i]= n_blocks - 1 - i;
 
           RelaxationBlockJacobi<SparseMatrix<double>, double>
             relax_jacobi_reorder;
@@ -121,16 +121,16 @@ main()
           Vector<double> u(dim);
           Vector<double> res(dim);
 
-          f = 1.;
-          u = 1.;
+          f= 1.;
+          u= 1.;
 
           try
             {
               double r1, r2;
 
               deallog.push("Jacobi");
-              r1 = check_solve(relax, A, u, f, relax_jacobi);
-              r2 = check_solve(relax, A, u, f, relax_jacobi_reorder);
+              r1= check_solve(relax, A, u, f, relax_jacobi);
+              r2= check_solve(relax, A, u, f, relax_jacobi_reorder);
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
               deallog.pop();
             }

@@ -36,7 +36,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
@@ -51,7 +51,7 @@ test()
 
   TrilinosWrappers::MPI::Vector x;
   x.reinit(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
-  x = 2.0;
+  x= 2.0;
 
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dofh);
@@ -81,7 +81,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   test<2>();
 }

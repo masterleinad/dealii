@@ -23,7 +23,7 @@
 
 template <typename NumberType>
 void
-test(const unsigned int n = 3, const unsigned int k = 6)
+test(const unsigned int n= 3, const unsigned int k= 6)
 {
   LAPACKFullMatrix<NumberType> A(n, k);
   A.set(0, 1, 2.);

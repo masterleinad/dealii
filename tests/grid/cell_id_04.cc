@@ -35,7 +35,7 @@ template <int dim>
 void
 check(Triangulation<dim>& tr)
 {
-  typename Triangulation<dim>::cell_iterator cell = tr.begin(), endc = tr.end();
+  typename Triangulation<dim>::cell_iterator cell= tr.begin(), endc= tr.end();
 
   for(; cell != endc; ++cell)
     {
@@ -45,13 +45,13 @@ check(Triangulation<dim>& tr)
       // create a new CellId from that, and create a cell iterator
       // pointing to the same cell
 
-      const CellId cid = cell->id();
+      const CellId cid= cell->id();
 
-      const CellId::binary_type cids = cid.to_binary<dim>();
+      const CellId::binary_type cids= cid.to_binary<dim>();
 
       const CellId cid2(cids);
 
-      typename Triangulation<dim>::cell_iterator cell2 = cid2.to_cell(tr);
+      typename Triangulation<dim>::cell_iterator cell2= cid2.to_cell(tr);
 
       Assert(cid2 == cid, ExcInternalError());
       Assert(cell2 == cell, ExcInternalError());

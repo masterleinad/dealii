@@ -74,7 +74,7 @@ main()
 
   DoFTools::make_sparsity_pattern(dof_handler, sparsity_pattern.block(0, 0));
 
-  for(unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
+  for(unsigned int j= 0; j < dof_handler.n_dofs(); ++j)
     {
       sparsity_pattern.block(0, 1).add(j, 0);
       sparsity_pattern.block(1, 0).add(0, j);
@@ -97,19 +97,19 @@ main()
 
   B.print_formatted(deallog.get_file_stream(), 3, false);
 
-  B.block(0, 0) *= 10.;
+  B.block(0, 0)*= 10.;
   B.print_formatted(deallog.get_file_stream(), 3, false);
 
-  B *= 10.;
+  B*= 10.;
   B.print_formatted(deallog.get_file_stream(), 3, false);
 
-  B /= 10.;
+  B/= 10.;
   B.print_formatted(deallog.get_file_stream(), 3, false);
 
-  B.block(0, 0) /= 10.;
+  B.block(0, 0)/= 10.;
   B.print_formatted(deallog.get_file_stream(), 3, false);
 
-  B = 0;
+  B= 0;
 
   return 0;
 }

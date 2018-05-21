@@ -51,15 +51,15 @@
 
 using namespace LocalIntegrators;
 
-const bool debugging = false;
+const bool debugging= false;
 
 template <int dim>
 void
 cell_matrix(MeshWorker::DoFInfo<dim>&                       dinfo,
             typename MeshWorker::IntegrationInfo<dim, dim>& info)
 {
-  unsigned int dm = 0; // Matrix index
-  unsigned int de = 0; // Element index
+  unsigned int dm= 0; // Matrix index
+  unsigned int de= 0; // Element index
 
   L2::mass_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
   Laplace::cell_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
@@ -120,7 +120,7 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // Setup matrices
   MatrixBlockVector<SparseMatrix<double>> matrices;
 
-  unsigned int d = 0;
+  unsigned int d= 0;
   matrices.add(d, d, "mass-H1");
   matrices.add(d, d, "Laplacian");
   matrices.add(d + 1, d, "grad");
@@ -144,7 +144,7 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   matrices.reinit(sparsity);
 
   if(debugging)
-    for(unsigned int i = 0; i < matrices.size(); ++i)
+    for(unsigned int i= 0; i < matrices.size(); ++i)
       deallog << "Block " << '(' << matrices.block(i).row << ','
               << matrices.block(i).column << ") " << std::setw(3) << std::right
               << matrices.matrix(i).m() << std::left << 'x' << std::setw(3)
@@ -153,7 +153,7 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // Build matrices
 
   MeshWorker::IntegrationInfoBox<dim> info_box;
-  UpdateFlags update_flags = update_values | update_gradients;
+  UpdateFlags update_flags= update_values | update_gradients;
   info_box.add_update_flags_cell(update_flags);
   info_box.initialize(fe, mapping, &dof.block_info());
   if(debugging)
@@ -178,11 +178,11 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
                                                         nullptr,
                                                         assembler);
 
-  for(unsigned int b = 0; b < matrices.size(); ++b)
+  for(unsigned int b= 0; b < matrices.size(); ++b)
     if(b % 3 == 0)
-      for(unsigned int i = 0; i < matrices.block(b).matrix.m(); ++i)
+      for(unsigned int i= 0; i < matrices.block(b).matrix.m(); ++i)
         if(matrices.block(b).matrix.diag_element(i) == 0.)
-          matrices.block(b).matrix.diag_element(i) = 1.;
+          matrices.block(b).matrix.diag_element(i)= 1.;
   if(debugging)
     deallog << "Matrices ready" << std::endl;
   // Set up vectors
@@ -190,18 +190,18 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   BlockVector<double> result1(dof.block_info().global());
   BlockVector<double> result2(dof.block_info().global());
   BlockVector<double> aux(dof.block_info().global());
-  for(unsigned int i = 0; i < source.size(); ++i)
-    source(i) = i % 5;
+  for(unsigned int i= 0; i < source.size(); ++i)
+    source(i)= i % 5;
 
   // now check, whether d*d =
   // D^TM^{-1}D
   SolverControl            control(100, 1.e-13, false, false);
   SolverCG<Vector<double>> solver(control);
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     {
       deallog << "Form " << d << std::endl;
-      const unsigned int m = 3 * d;
+      const unsigned int m= 3 * d;
 
       if(d > 0)
         {
@@ -234,7 +234,7 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
                 << "^T " << result1.block(d).l2_norm() << ' '
                 << matrices.name(m + 1) << ' ' << result2.block(d).l2_norm()
                 << std::endl;
-      result2.block(d) -= result1.block(d);
+      result2.block(d)-= result1.block(d);
       deallog << "Difference d*d " << result2.block(d).l2_norm() << std::endl;
     }
 }

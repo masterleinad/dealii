@@ -116,7 +116,7 @@ test()
 
   // no longer print anything with the
   // exception of the any_change signal
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     connections_1[i].disconnect();
 
   // still show the any_change signal

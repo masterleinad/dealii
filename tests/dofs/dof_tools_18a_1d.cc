@@ -59,9 +59,9 @@ check_this(const DoFHandler<dim>& dof_handler)
   // pattern (if we write out the
   // whole pattern, the output file
   // would be in the range of 40 MB)
-  for(unsigned int l = 0; l < sp.n_rows(); ++l)
+  for(unsigned int l= 0; l < sp.n_rows(); ++l)
     {
-      for(unsigned int c = 0; c < sp.row_length(l); ++c)
+      for(unsigned int c= 0; c < sp.row_length(l); ++c)
         deallog << sp.column_number(l, c) << " ";
       deallog << std::endl;
     }
@@ -71,12 +71,11 @@ check_this(const DoFHandler<dim>& dof_handler)
           << sp.max_entries_per_row() << std::endl
           << sp.n_nonzero_elements() << std::endl;
 
-  unsigned int hash = 0;
-  for(unsigned int l = 0; l < sp.n_rows(); ++l)
-    hash
-      += l
-         * (sp.row_length(l) + (sp.begin(l) - sp.begin())
-            + (sp.row_length(l) > 1 ? ++sp.begin(l) : sp.begin(l))->column());
+  unsigned int hash= 0;
+  for(unsigned int l= 0; l < sp.n_rows(); ++l)
+    hash+= l
+           * (sp.row_length(l) + (sp.begin(l) - sp.begin())
+              + (sp.row_length(l) > 1 ? ++sp.begin(l) : sp.begin(l))->column());
   deallog << hash << std::endl;
 }
 
@@ -85,13 +84,13 @@ check_this()
 {
   // create a mesh where two cells at levels
   // 1 and 3 are adjacent
-  const int          dim = 1;
+  const int          dim= 1;
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  for(Triangulation<dim>::active_cell_iterator c = tr.begin_active(2);
+  for(Triangulation<dim>::active_cell_iterator c= tr.begin_active(2);
       c != tr.end_active(2);
       ++c)
     c->set_refine_flag();

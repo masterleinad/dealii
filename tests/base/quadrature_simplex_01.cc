@@ -39,7 +39,7 @@ test(int n)
           << std::endl
           << std::endl;
 
-  auto quad2 = quad.compute_affine_transformation(get_simplex<dim>());
+  auto quad2= quad.compute_affine_transformation(get_simplex<dim>());
 
   for(auto p : quad2.get_points())
     deallog << p << std::endl;

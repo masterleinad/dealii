@@ -32,7 +32,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_sacado_number : std::false_type
     {};
 
@@ -43,7 +43,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_sacado_dfad_number : std::false_type
     {};
 
@@ -54,7 +54,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_sacado_rad_number : std::false_type
     {};
 
@@ -101,7 +101,7 @@ namespace Differentiation
        *
        * @author Jean-Paul Pelteret, 2017
        */
-      template <typename SacadoNumber, typename = void>
+      template <typename SacadoNumber, typename= void>
       struct SacadoNumberInfo;
 
     } // namespace internal
@@ -187,7 +187,7 @@ namespace Differentiation
         typename std::enable_if<
           std::is_arithmetic<typename std::decay<Number>::type>::value>::type>
       {
-        static const unsigned int n_supported_derivative_levels = 0;
+        static const unsigned int n_supported_derivative_levels= 0;
       };
 
       /**
@@ -201,7 +201,7 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool                     is_taped = false;
+        static const bool                     is_taped= false;
         typedef Sacado::Fad::DFad<ScalarType> real_type;
         typedef
           typename SacadoNumberInfo<real_type>::derivative_type derivative_type;
@@ -220,7 +220,7 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool is_taped = false;
+        static const bool is_taped= false;
         typedef Sacado::Fad::DFad<Sacado::Fad::DFad<ScalarType>> real_type;
         typedef
           typename SacadoNumberInfo<real_type>::derivative_type derivative_type;
@@ -239,7 +239,7 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool                      is_taped = false;
+        static const bool                      is_taped= false;
         typedef Sacado::Rad::ADvar<ScalarType> real_type;
         typedef
           typename SacadoNumberInfo<real_type>::derivative_type derivative_type;
@@ -258,7 +258,7 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool is_taped = false;
+        static const bool is_taped= false;
         typedef Sacado::Rad::ADvar<Sacado::Fad::DFad<ScalarType>> real_type;
         typedef
           typename SacadoNumberInfo<real_type>::derivative_type derivative_type;
@@ -293,7 +293,7 @@ namespace Differentiation
         {
           // It is required that we first initialise the outer number before
           // any of the nested ones.
-          out = ad_type(n_independent_variables, index, in);
+          out= ad_type(n_independent_variables, index, in);
 
           // Initialize potential nested directional derivatives
           Marking<derivative_type>::independent_variable(
@@ -306,7 +306,7 @@ namespace Differentiation
         static void
         dependent_variable(ad_type& out, const ad_type& func)
         {
-          out = func;
+          out= func;
         }
       };
 
@@ -346,7 +346,7 @@ namespace Differentiation
             in, index, n_independent_variables, derivative_initializer);
 
           // Initialize the outer ad_type
-          out = derivative_initializer;
+          out= derivative_initializer;
         }
 
         /*
@@ -355,7 +355,7 @@ namespace Differentiation
         static void
         dependent_variable(ad_type& out, const ad_type& func)
         {
-          out = func;
+          out= func;
         }
       };
 

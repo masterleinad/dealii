@@ -26,10 +26,10 @@ void
 test_bounding_box()
 {
   std::pair<Point<spacedim>, Point<spacedim>> unit;
-  for(int i = 0; i < spacedim; i++)
+  for(int i= 0; i < spacedim; i++)
     {
-      unit.first[i]  = 0.0;
-      unit.second[i] = 1.0;
+      unit.first[i] = 0.0;
+      unit.second[i]= 1.0;
     }
 
   BoundingBox<spacedim> a(unit);
@@ -42,10 +42,10 @@ test_bounding_box()
 
   // This is a simple neighbor
   std::pair<Point<spacedim>, Point<spacedim>> second;
-  for(int i = 0; i < spacedim; i++)
+  for(int i= 0; i < spacedim; i++)
     {
-      second.first[i]  = 1.0;
-      second.second[i] = 2.0;
+      second.first[i] = 1.0;
+      second.second[i]= 2.0;
     }
 
   BoundingBox<spacedim> b(second);
@@ -65,12 +65,12 @@ test_bounding_box()
   if(spacedim == 3)
     {
       std::pair<Point<spacedim>, Point<spacedim>> second_1;
-      second_1.first[0]  = 0.0;
-      second_1.second[0] = 1.0;
-      for(int i = 1; i < spacedim; i++)
+      second_1.first[0] = 0.0;
+      second_1.second[0]= 1.0;
+      for(int i= 1; i < spacedim; i++)
         {
-          second_1.first[i]  = 1.0;
-          second_1.second[i] = 2.0;
+          second_1.first[i] = 1.0;
+          second_1.second[i]= 2.0;
         }
       BoundingBox<spacedim> b_1(second_1);
 
@@ -88,7 +88,7 @@ test_bounding_box()
       //Case of partial edge which is still simple neighbor
       //Note: in dimension 1 everything is only either not neighbor or mergeable
       //neighbor
-      second_1.first[0] = 0.2;
+      second_1.first[0]= 0.2;
 
       BoundingBox<spacedim> b_2(second_1);
 
@@ -105,8 +105,8 @@ test_bounding_box()
 
       //Case which is attached_neighbor
 
-      second_1.first[0] = 0.0;
-      second_1.first[2] = 0.8;
+      second_1.first[0]= 0.0;
+      second_1.first[2]= 0.8;
 
       BoundingBox<spacedim> b_3(second_1);
 
@@ -140,7 +140,7 @@ test_bounding_box()
           << std::endl;
 
   // D contains A, intersects with B
-  unit.second *= 1.4;
+  unit.second*= 1.4;
   BoundingBox<spacedim> d(unit);
 
   deallog << "Bounding box boundaries D: " << std::endl;
@@ -159,10 +159,10 @@ test_bounding_box()
   deallog << "Is neighbor D with D: " << (int) d.get_neighbor_type(d)
           << std::endl;
 
-  for(int i = 0; i < spacedim; i++)
+  for(int i= 0; i < spacedim; i++)
     {
-      second.first[i]  = -10.0;
-      second.second[i] = -8.0;
+      second.first[i] = -10.0;
+      second.second[i]= -8.0;
     }
 
   // E is separated from all others
@@ -188,13 +188,13 @@ test_bounding_box()
           << std::endl;
 
   // A and F are mergeable because one next to the other
-  for(int i = 0; i < spacedim; i++)
+  for(int i= 0; i < spacedim; i++)
     {
-      second.first[i]  = 0.0;
-      second.second[i] = 1.0;
+      second.first[i] = 0.0;
+      second.second[i]= 1.0;
     }
-  second.first[0] += 1.0;
-  second.second[0] += 1.0;
+  second.first[0]+= 1.0;
+  second.second[0]+= 1.0;
 
   BoundingBox<spacedim> f(second);
 
@@ -224,8 +224,8 @@ test_bounding_box()
   deallog << std::endl;
 
   // G is mergeable with A and F and C..
-  second.first[0] -= 0.2;
-  second.second[0] -= 0.2;
+  second.first[0]-= 0.2;
+  second.second[0]-= 0.2;
 
   BoundingBox<spacedim> g(second);
 

@@ -41,9 +41,9 @@ test(std::string filename)
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
   ptria.restore();
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
-      for(cell = ptria.begin_active(); cell != ptria.end(); ++cell)
+      for(cell= ptria.begin_active(); cell != ptria.end(); ++cell)
         if(cell->center()[0] < .5)
           cell->set_refine_flag();
       ptria.execute_coarsening_and_refinement();

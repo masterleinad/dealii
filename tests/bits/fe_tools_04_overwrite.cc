@@ -38,8 +38,8 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     return;
 
   // start with a matrix that is nonzero
-  FullMatrix<double> m = IdentityMatrix(fe1.dofs_per_cell);
-  m *= numbers::PI;
+  FullMatrix<double> m= IdentityMatrix(fe1.dofs_per_cell);
+  m*= numbers::PI;
 
   FETools::get_interpolation_difference_matrix(fe1, fe2, m);
 

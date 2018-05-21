@@ -24,7 +24,7 @@
 void
 test()
 {
-  const int dim = 3;
+  const int dim= 3;
 
   Triangulation<dim> triangulation;
   GridGenerator::cylinder(triangulation);

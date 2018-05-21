@@ -26,7 +26,7 @@
 
 #define PRINTME(name, var)                              \
   deallog << "Block vector: " name << ":" << std::endl; \
-  for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
+  for(unsigned int i= 0; i < var.n_blocks(); ++i)       \
     deallog << "[block " << i << " ]  " << var.block(i);
 
 using namespace dealii;
@@ -44,7 +44,7 @@ main()
 
     SparseMatrix<double> a(sparsity_pattern);
 
-    auto op_a = 0 * linear_operator(a);
+    auto op_a= 0 * linear_operator(a);
 
     Vector<double> u;
     op_a.reinit_domain_vector(u, false);

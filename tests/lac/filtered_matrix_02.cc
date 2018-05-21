@@ -22,7 +22,7 @@ template <typename number>
 void
 checkTvmult(FullMatrix<number>& A,
             Vector<number>&     V,
-            bool                expect_constrained_source = false)
+            bool                expect_constrained_source= false)
 {
   deallog << "Tvmult" << std::endl;
 
@@ -34,7 +34,7 @@ checkTvmult(FullMatrix<number>& A,
 
   F.Tvmult(O, V);
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for(unsigned int i= 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 }
@@ -47,7 +47,7 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const double Adata[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+  const double Adata[]= {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
   FullMatrix<double> A(3, 3);
 
@@ -56,9 +56,9 @@ main()
   Vector<double> V1(3);
   Vector<double> V2(3);
 
-  V1(0) = V2(0) = 1;
-  V1(1) = V2(1) = 2;
-  V1(2) = V2(2) = 3;
+  V1(0)= V2(0)= 1;
+  V1(1)= V2(1)= 2;
+  V1(2)= V2(2)= 3;
 
   checkTvmult<double>(A, V1, false);
   checkTvmult<double>(A, V2, true);

@@ -170,16 +170,15 @@ namespace CUDAWrappers
                                           const Number* in,
                                           Number*       out) const
     {
-      const unsigned int i = (dim == 1) ? 0 : threadIdx.x % n_q_points_1d;
-      const unsigned int j = (dim == 3) ? threadIdx.y : 0;
-      const unsigned int q = (dim == 1) ?
-                               (threadIdx.x % n_q_points_1d) :
-                               (dim == 2) ? threadIdx.y : threadIdx.z;
+      const unsigned int i= (dim == 1) ? 0 : threadIdx.x % n_q_points_1d;
+      const unsigned int j= (dim == 3) ? threadIdx.y : 0;
+      const unsigned int q= (dim == 1) ? (threadIdx.x % n_q_points_1d) :
+                                         (dim == 2) ? threadIdx.y : threadIdx.z;
 
       // This loop simply multiply the shape function at the quadrature point by
       // the value finite element coefficient.
-      Number t = 0;
-      for(int k = 0; k < n_q_points_1d; ++k)
+      Number t= 0;
+      for(int k= 0; k < n_q_points_1d; ++k)
         {
           const unsigned int shape_idx
             = dof_to_quad ? (q + k * n_q_points_1d) : (k + q * n_q_points_1d);
@@ -188,8 +187,8 @@ namespace CUDAWrappers
                                  (direction == 1) ?
                                  (i + n_q_points_1d * (k + n_q_points_1d * j)) :
                                  (i + n_q_points_1d * (j + n_q_points_1d * k));
-          t += shape_data[shape_idx]
-               * (in_place ? out[source_idx] : in[source_idx]);
+          t+= shape_data[shape_idx]
+              * (in_place ? out[source_idx] : in[source_idx]);
         }
 
       if(in_place)
@@ -202,9 +201,9 @@ namespace CUDAWrappers
                                (i + n_q_points_1d * (j + n_q_points_1d * q));
 
       if(add)
-        out[destination_idx] += t;
+        out[destination_idx]+= t;
       else
-        out[destination_idx] = t;
+        out[destination_idx]= t;
     }
 
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>

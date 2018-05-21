@@ -71,7 +71,7 @@ test(const unsigned int degree)
   MappingFEField<dim, spacedim> map_fe(dof_sys, euler, mask);
 
   // Make the grid bigger by a factor two.
-  euler *= 2.0;
+  euler*= 2.0;
 
   deallog << "Min diameter        : " << GridTools::minimal_cell_diameter(tria)
           << std::endl
@@ -88,7 +88,7 @@ main()
 {
   initlog();
 
-  for(unsigned int d = 1; d < 4; ++d)
+  for(unsigned int d= 1; d < 4; ++d)
     {
       test<2, 2>(d);
       test<2, 3>(d);

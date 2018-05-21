@@ -95,12 +95,12 @@ namespace Step38
   class LaplaceBeltramiProblem
   {
   public:
-    LaplaceBeltramiProblem(const unsigned degree = 2);
+    LaplaceBeltramiProblem(const unsigned degree= 2);
     void
     run();
 
   private:
-    static const unsigned int dim = spacedim - 1;
+    static const unsigned int dim= spacedim - 1;
 
     void
     make_grid_and_dofs();
@@ -145,11 +145,11 @@ namespace Step38
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual Tensor<1, dim>
     gradient(const Point<dim>&  p,
-             const unsigned int component = 0) const override;
+             const unsigned int component= 0) const override;
   };
 
   template <>
@@ -164,8 +164,8 @@ namespace Step38
   Solution<2>::gradient(const Point<2>& p, const unsigned int) const
   {
     Tensor<1, 2> return_value;
-    return_value[0] = -2. * p(1) * (1 - 2. * p(0) * p(0));
-    return_value[1] = -2. * p(0) * (1 - 2. * p(1) * p(1));
+    return_value[0]= -2. * p(1) * (1 - 2. * p(0) * p(0));
+    return_value[1]= -2. * p(0) * (1 - 2. * p(1) * p(1));
 
     return return_value;
   }
@@ -186,9 +186,9 @@ namespace Step38
 
     Tensor<1, 3> return_value;
 
-    return_value[0] = PI * cos(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
-    return_value[1] = -PI * sin(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
-    return_value[2] = sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    return_value[0]= PI * cos(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    return_value[1]= -PI * sin(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
+    return_value[2]= sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
 
     return return_value;
   }
@@ -201,7 +201,7 @@ namespace Step38
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <>
@@ -221,26 +221,26 @@ namespace Step38
 
     Tensor<2, 3> hessian;
 
-    hessian[0][0] = -PI * PI * sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
-    hessian[1][1] = -PI * PI * sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
-    hessian[2][2] = sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    hessian[0][0]= -PI * PI * sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    hessian[1][1]= -PI * PI * sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    hessian[2][2]= sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
 
-    hessian[0][1] = -PI * PI * cos(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
-    hessian[1][0] = -PI * PI * cos(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
+    hessian[0][1]= -PI * PI * cos(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
+    hessian[1][0]= -PI * PI * cos(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
 
-    hessian[0][2] = PI * cos(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
-    hessian[2][0] = PI * cos(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    hessian[0][2]= PI * cos(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    hessian[2][0]= PI * cos(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
 
-    hessian[1][2] = -PI * sin(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
-    hessian[2][1] = -PI * sin(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
+    hessian[1][2]= -PI * sin(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
+    hessian[2][1]= -PI * sin(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
 
     Tensor<1, 3> gradient;
-    gradient[0] = PI * cos(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
-    gradient[1] = -PI * sin(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
-    gradient[2] = sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    gradient[0]= PI * cos(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
+    gradient[1]= -PI * sin(PI * p(0)) * sin(PI * p(1)) * exp(p(2));
+    gradient[2]= sin(PI * p(0)) * cos(PI * p(1)) * exp(p(2));
 
-    Point<3> normal = p;
-    normal /= p.norm();
+    Point<3> normal= p;
+    normal/= p.norm();
 
     return (-trace(hessian) + 2 * (gradient * normal)
             + (hessian * normal) * normal);
@@ -349,8 +349,8 @@ namespace Step38
   void
   LaplaceBeltramiProblem<spacedim>::assemble_system()
   {
-    system_matrix = 0;
-    system_rhs    = 0;
+    system_matrix= 0;
+    system_rhs   = 0;
 
     const QGauss<dim>       quadrature_formula(2 * fe.degree);
     FEValues<dim, spacedim> fe_values(mapping,
@@ -360,8 +360,8 @@ namespace Step38
                                         | update_quadrature_points
                                         | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -373,37 +373,37 @@ namespace Step38
 
     for(typename DoFHandler<dim, spacedim>::active_cell_iterator cell
         = dof_handler.begin_active(),
-        endc = dof_handler.end();
+        endc= dof_handler.end();
         cell != endc;
         ++cell)
       {
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
 
         fe_values.reinit(cell);
 
         rhs.value_list(fe_values.get_quadrature_points(), rhs_values);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
-            for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-              cell_matrix(i, j) += fe_values.shape_grad(i, q_point)
-                                   * fe_values.shape_grad(j, q_point)
-                                   * fe_values.JxW(q_point);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
+            for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+              cell_matrix(i, j)+= fe_values.shape_grad(i, q_point)
+                                  * fe_values.shape_grad(j, q_point)
+                                  * fe_values.JxW(q_point);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            cell_rhs(i) += fe_values.shape_value(i, q_point)
-                           * rhs_values[q_point] * fe_values.JxW(q_point);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            cell_rhs(i)+= fe_values.shape_value(i, q_point)
+                          * rhs_values[q_point] * fe_values.JxW(q_point);
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               system_matrix.add(
                 local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-            system_rhs(local_dof_indices[i]) += cell_rhs(i);
+            system_rhs(local_dof_indices[i])+= cell_rhs(i);
           }
       }
 
@@ -471,8 +471,8 @@ namespace Step38
     data_out.build_patches(mapping, mapping.get_degree());
 
     std::string filename("solution-");
-    filename += static_cast<char>('0' + spacedim);
-    filename += "d.vtk";
+    filename+= static_cast<char>('0' + spacedim);
+    filename+= "d.vtk";
     std::ofstream output(filename);
     data_out.write_vtk(output);
   }
@@ -498,7 +498,7 @@ namespace Step38
                                       QGauss<dim>(2 * fe.degree + 1),
                                       VectorTools::H1_norm);
 
-    double h1_error = VectorTools::compute_global_error(
+    double h1_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::H1_norm);
     std::cout << "H1 error = " << h1_error << std::endl;
   }

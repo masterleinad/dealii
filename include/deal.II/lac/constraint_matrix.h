@@ -188,7 +188,7 @@ public:
    * the portion of the overall problem that is handled by the current
    * processor.
    */
-  explicit ConstraintMatrix(const IndexSet& local_constraints = IndexSet());
+  explicit ConstraintMatrix(const IndexSet& local_constraints= IndexSet());
 
   /**
    * Copy constructor
@@ -198,7 +198,7 @@ public:
   /**
    * Move constructor
    */
-  ConstraintMatrix(ConstraintMatrix&& constraint_matrix) = default;
+  ConstraintMatrix(ConstraintMatrix&& constraint_matrix)= default;
 
   /**
    * Copy operator. Like for many other large objects, this operator
@@ -236,7 +236,7 @@ public:
    * is equivalent to calling clear(). See the constructor for details.
    */
   void
-  reinit(const IndexSet& local_constraints = IndexSet());
+  reinit(const IndexSet& local_constraints= IndexSet());
 
   /**
    * Determines if we can store a constraint for the given @p line_index. This
@@ -419,7 +419,7 @@ public:
   merge(const ConstraintMatrix&     other_constraints,
         const MergeConflictBehavior merge_conflict_behavior
         = no_conflicts_allowed,
-        const bool allow_different_local_lines = false);
+        const bool allow_different_local_lines= false);
 
   /**
    * Shift all entries of this matrix down @p offset rows and over @p offset
@@ -851,7 +851,7 @@ public:
     const std::vector<size_type>& local_dof_indices_col,
     VectorType&                   global_vector,
     const FullMatrix<LocalType>&  local_matrix,
-    bool                          diagonal = false) const;
+    bool                          diagonal= false) const;
 
   /**
    * Enter a single value into a result vector, obeying constraints.
@@ -1037,7 +1037,7 @@ public:
     const std::vector<size_type>&                      local_dof_indices,
     MatrixType&                                        global_matrix,
     VectorType&                                        global_vector,
-    bool use_inhomogeneities_for_rhs = false) const;
+    bool use_inhomogeneities_for_rhs= false) const;
 
   /**
    * Do a similar operation as the distribute_local_to_global() function that
@@ -1096,7 +1096,7 @@ public:
   void
   add_entries_local_to_global(const std::vector<size_type>& local_dof_indices,
                               SparsityPatternType&          sparsity_pattern,
-                              const bool keep_constrained_entries = true,
+                              const bool keep_constrained_entries= true,
                               const Table<2, bool>& dof_mask
                               = default_empty_table) const;
 
@@ -1108,7 +1108,7 @@ public:
   add_entries_local_to_global(const std::vector<size_type>& row_indices,
                               const std::vector<size_type>& col_indices,
                               SparsityPatternType&          sparsity_pattern,
-                              const bool keep_constrained_entries = true,
+                              const bool keep_constrained_entries= true,
                               const Table<2, bool>& dof_mask
                               = default_empty_table) const;
 
@@ -1289,7 +1289,7 @@ public:
   is_consistent_in_parallel(const std::vector<IndexSet>& locally_owned_dofs,
                             const IndexSet&              locally_active_dofs,
                             const MPI_Comm               mpi_communicator,
-                            const bool                   verbose = false) const;
+                            const bool                   verbose= false) const;
 
   /**
    * Exception
@@ -1596,7 +1596,7 @@ ConstraintMatrix::add_line(const size_type line)
   // locally. if we don't abort here the program will try to allocate several
   // terabytes of memory to resize the various arrays below :-)
   Assert(line != numbers::invalid_size_type, ExcInternalError());
-  const size_type line_index = calculate_line_index(line);
+  const size_type line_index= calculate_line_index(line);
 
   // check whether line already exists; it may, in which case we can just quit
   if(is_constrained(line))
@@ -1610,9 +1610,9 @@ ConstraintMatrix::add_line(const size_type line)
 
   // push a new line to the end of the list
   lines.emplace_back();
-  lines.back().index         = line;
-  lines.back().inhomogeneity = 0.;
-  lines_cache[line_index]    = lines.size() - 1;
+  lines.back().index        = line;
+  lines.back().inhomogeneity= 0.;
+  lines_cache[line_index]   = lines.size() - 1;
 }
 
 inline void
@@ -1625,7 +1625,7 @@ ConstraintMatrix::add_entry(const size_type line,
          ExcMessage("Can't constrain a degree of freedom to itself"));
 
   // Ensure that the current line is present in the cache:
-  const size_type line_index = calculate_line_index(line);
+  const size_type line_index= calculate_line_index(line);
   Assert(line_index < lines_cache.size(),
          ExcMessage("The current ConstraintMatrix does not contain the line "
                     "for the current entry. Call ConstraintMatrix::add_line "
@@ -1640,9 +1640,9 @@ ConstraintMatrix::add_entry(const size_type line,
          ExcInternalError());
   Assert(!local_lines.size() || local_lines.is_element(column),
          ExcColumnNotStoredHere(line, column));
-  ConstraintLine* line_ptr = &lines[lines_cache[line_index]];
+  ConstraintLine* line_ptr= &lines[lines_cache[line_index]];
   Assert(line_ptr->index == line, ExcInternalError());
-  for(ConstraintLine::Entries::const_iterator p = line_ptr->entries.begin();
+  for(ConstraintLine::Entries::const_iterator p= line_ptr->entries.begin();
       p != line_ptr->entries.end();
       ++p)
     if(p->first == column)
@@ -1658,13 +1658,13 @@ ConstraintMatrix::add_entry(const size_type line,
 inline void
 ConstraintMatrix::set_inhomogeneity(const size_type line, const double value)
 {
-  const size_type line_index = calculate_line_index(line);
+  const size_type line_index= calculate_line_index(line);
   Assert(line_index < lines_cache.size()
            && lines_cache[line_index] != numbers::invalid_size_type,
          ExcMessage("call add_line() before calling set_inhomogeneity()"));
   Assert(lines_cache[line_index] < lines.size(), ExcInternalError());
-  ConstraintLine* line_ptr = &lines[lines_cache[line_index]];
-  line_ptr->inhomogeneity  = value;
+  ConstraintLine* line_ptr= &lines[lines_cache[line_index]];
+  line_ptr->inhomogeneity = value;
 }
 
 inline types::global_dof_index
@@ -1676,7 +1676,7 @@ ConstraintMatrix::n_constraints() const
 inline bool
 ConstraintMatrix::is_constrained(const size_type index) const
 {
-  const size_type line_index = calculate_line_index(index);
+  const size_type line_index= calculate_line_index(index);
   return ((line_index < lines_cache.size())
           && (lines_cache[line_index] != numbers::invalid_size_type));
 }
@@ -1686,7 +1686,7 @@ ConstraintMatrix::is_inhomogeneously_constrained(const size_type index) const
 {
   // check whether the entry is constrained. could use is_constrained, but
   // that means computing the line index twice
-  const size_type line_index = calculate_line_index(index);
+  const size_type line_index= calculate_line_index(index);
   if(line_index >= lines_cache.size()
      || lines_cache[line_index] == numbers::invalid_size_type)
     return false;
@@ -1702,7 +1702,7 @@ ConstraintMatrix::get_constraint_entries(const size_type line) const
 {
   // check whether the entry is constrained. could use is_constrained, but
   // that means computing the line index twice
-  const size_type line_index = calculate_line_index(line);
+  const size_type line_index= calculate_line_index(line);
   if(line_index >= lines_cache.size()
      || lines_cache[line_index] == numbers::invalid_size_type)
     return nullptr;
@@ -1715,7 +1715,7 @@ ConstraintMatrix::get_inhomogeneity(const size_type line) const
 {
   // check whether the entry is constrained. could use is_constrained, but
   // that means computing the line index twice
-  const size_type line_index = calculate_line_index(line);
+  const size_type line_index= calculate_line_index(line);
   if(line_index >= lines_cache.size()
      || lines_cache[line_index] == numbers::invalid_size_type)
     return 0;
@@ -1756,12 +1756,12 @@ ConstraintMatrix::distribute_local_to_global(const size_type index,
   Assert(lines.empty() || sorted == true, ExcMatrixNotClosed());
 
   if(is_constrained(index) == false)
-    global_vector(index) += value;
+    global_vector(index)+= value;
   else
     {
       const ConstraintLine& position
         = lines[lines_cache[calculate_line_index(index)]];
-      for(size_type j = 0; j < position.entries.size(); ++j)
+      for(size_type j= 0; j < position.entries.size(); ++j)
         global_vector(position.entries[j].first)
           += value * position.entries[j].second;
     }
@@ -1788,7 +1788,7 @@ ConstraintMatrix::distribute_local_to_global(
         {
           const ConstraintLine& position
             = lines[lines_cache[calculate_line_index(*local_indices_begin)]];
-          for(size_type j = 0; j < position.entries.size(); ++j)
+          for(size_type j= 0; j < position.entries.size(); ++j)
             internal::ElementAccess<VectorType>::add(
               (*local_vector_begin) * position.entries[j].second,
               position.entries[j].first,
@@ -1826,16 +1826,16 @@ ConstraintMatrix::get_dof_values(const VectorType&  global_vector,
       ++local_vector_begin, ++local_indices_begin)
     {
       if(is_constrained(*local_indices_begin) == false)
-        *local_vector_begin = global_vector(*local_indices_begin);
+        *local_vector_begin= global_vector(*local_indices_begin);
       else
         {
           const ConstraintLine& position
             = lines[lines_cache[calculate_line_index(*local_indices_begin)]];
-          typename VectorType::value_type value = position.inhomogeneity;
-          for(size_type j = 0; j < position.entries.size(); ++j)
-            value += (global_vector(position.entries[j].first)
-                      * position.entries[j].second);
-          *local_vector_begin = value;
+          typename VectorType::value_type value= position.inhomogeneity;
+          for(size_type j= 0; j < position.entries.size(); ++j)
+            value+= (global_vector(position.entries[j].first)
+                     * position.entries[j].second);
+          *local_vector_begin= value;
         }
     }
 }

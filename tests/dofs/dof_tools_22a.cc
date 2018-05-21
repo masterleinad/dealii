@@ -38,9 +38,9 @@
 void
 test()
 {
-  unsigned int np   = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const int    dim  = 2;
+  unsigned int np  = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const int    dim = 2;
   // Setup system
   dealii::parallel::distributed::Triangulation<dim> triangulation(
     MPI_COMM_WORLD);
@@ -72,16 +72,16 @@ test()
   Table<2, DoFTools::Coupling> coupling(2, 2);
   Table<2, DoFTools::Coupling> flux_coupling(2, 2);
 
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
       {
-        coupling[i][j]      = DoFTools::none;
-        flux_coupling[i][j] = DoFTools::none;
+        coupling[i][j]     = DoFTools::none;
+        flux_coupling[i][j]= DoFTools::none;
       }
 
-  coupling[0][0]      = DoFTools::always;
-  coupling[1][1]      = DoFTools::always;
-  flux_coupling[1][1] = DoFTools::always;
+  coupling[0][0]     = DoFTools::always;
+  coupling[1][1]     = DoFTools::always;
+  flux_coupling[1][1]= DoFTools::always;
 
   IndexSet relevant_partitioning(dh.n_dofs());
   DoFTools::extract_locally_relevant_dofs(dh, relevant_partitioning);
@@ -125,7 +125,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   MPILogInitAll      log;
 
   deallog.push(Utilities::int_to_string(myid));

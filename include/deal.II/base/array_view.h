@@ -399,8 +399,8 @@ namespace internal
     bool
     is_contiguous(const Iterator& first, const Iterator& last)
     {
-      const auto n = std::distance(first, last);
-      for(typename std::decay<decltype(n)>::type i = 0; i < n; ++i)
+      const auto n= std::distance(first, last);
+      for(typename std::decay<decltype(n)>::type i= 0; i < n; ++i)
         if(std::addressof(*(std::next(first, i)))
            != std::next(std::addressof(*first), i))
           return false;

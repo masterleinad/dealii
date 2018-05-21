@@ -53,7 +53,7 @@ template <int dim>
 class SolutionBase
 {
 protected:
-  static const unsigned int n_source_centers = 3;
+  static const unsigned int n_source_centers= 3;
   static const Point<dim>   source_centers[n_source_centers];
   static const double       width;
 };
@@ -69,7 +69,7 @@ const Point<2>
   = {Point<2>(-0.5, +0.5), Point<2>(-0.5, -0.5), Point<2>(+0.5, -0.5)};
 
 template <int dim>
-const double SolutionBase<dim>::width = 1. / 3.;
+const double SolutionBase<dim>::width= 1. / 3.;
 
 template <int dim>
 class Solution : public Function<dim>, protected SolutionBase<dim>
@@ -79,20 +79,20 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& p, const unsigned int component = 0) const;
+  gradient(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
 double
 Solution<dim>::value(const Point<dim>& p, const unsigned int) const
 {
-  double return_value = 0;
-  for(unsigned int i = 0; i < this->n_source_centers; ++i)
+  double return_value= 0;
+  for(unsigned int i= 0; i < this->n_source_centers; ++i)
     {
-      const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+      const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
       return_value
         += std::exp(-x_minus_xi.norm_square() / (this->width * this->width));
     }
@@ -106,9 +106,9 @@ Solution<dim>::gradient(const Point<dim>& p, const unsigned int) const
 {
   Tensor<1, dim> return_value;
 
-  for(unsigned int i = 0; i < this->n_source_centers; ++i)
+  for(unsigned int i= 0; i < this->n_source_centers; ++i)
     {
-      const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+      const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
 
       return_value
         += (-2 / (this->width * this->width)
@@ -127,17 +127,17 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
 double
 RightHandSide<dim>::value(const Point<dim>& p, const unsigned int) const
 {
-  double return_value = 0;
-  for(unsigned int i = 0; i < this->n_source_centers; ++i)
+  double return_value= 0;
+  for(unsigned int i= 0; i < this->n_source_centers; ++i)
     {
-      const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+      const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
 
       return_value
         += ((2 * dim
@@ -244,10 +244,10 @@ HelmholtzProblem<dim>::assemble_system()
   hp::QCollection<dim>     quadrature_formula(QGauss<dim>(3));
   hp::QCollection<dim - 1> face_quadrature_formula(QGauss<dim - 1>(3));
 
-  const unsigned int n_q_points      = quadrature_formula[0].size();
-  const unsigned int n_face_q_points = face_quadrature_formula[0].size();
+  const unsigned int n_q_points     = quadrature_formula[0].size();
+  const unsigned int n_face_q_points= face_quadrature_formula[0].size();
 
-  const unsigned int dofs_per_cell = (*fe)[0].dofs_per_cell;
+  const unsigned int dofs_per_cell= (*fe)[0].dofs_per_cell;
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -273,32 +273,32 @@ HelmholtzProblem<dim>::assemble_system()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
       x_fe_values.reinit(cell);
-      const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<dim>& fe_values= x_fe_values.get_present_fe_values();
 
       right_hand_side.value_list(fe_values.get_quadrature_points(), rhs_values);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
-                                       * fe_values.shape_grad(j, q_point)
-                                     + fe_values.shape_value(i, q_point)
-                                         * fe_values.shape_value(j, q_point))
-                                    * fe_values.JxW(q_point));
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
+              cell_matrix(i, j)+= ((fe_values.shape_grad(i, q_point)
+                                      * fe_values.shape_grad(j, q_point)
+                                    + fe_values.shape_value(i, q_point)
+                                        * fe_values.shape_value(j, q_point))
+                                   * fe_values.JxW(q_point));
 
-            cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                            * rhs_values[q_point] * fe_values.JxW(q_point));
+            cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                           * rhs_values[q_point] * fe_values.JxW(q_point));
           }
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         if(cell->face(face)->at_boundary()
            && (cell->face(face)->boundary_id() == 1))
@@ -307,14 +307,14 @@ HelmholtzProblem<dim>::assemble_system()
             const FEFaceValues<dim>& fe_face_values
               = x_fe_face_values.get_present_fe_values();
 
-            for(unsigned int q_point = 0; q_point < n_face_q_points; ++q_point)
+            for(unsigned int q_point= 0; q_point < n_face_q_points; ++q_point)
               {
                 const double neumann_value
                   = (exact_solution.gradient(
                        fe_face_values.quadrature_point(q_point))
                      * fe_face_values.normal_vector(q_point));
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
                   cell_rhs(i)
                     += (neumann_value * fe_face_values.shape_value(i, q_point)
                         * fe_face_values.JxW(q_point));
@@ -322,13 +322,13 @@ HelmholtzProblem<dim>::assemble_system()
           }
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-          system_rhs(local_dof_indices[i]) += cell_rhs(i);
+          system_rhs(local_dof_indices[i])+= cell_rhs(i);
         }
     }
 
@@ -407,7 +407,7 @@ HelmholtzProblem<dim>::process_solution(const unsigned int cycle)
                                     difference_per_cell,
                                     hp::QCollection<dim>(QGauss<dim>(3)),
                                     VectorTools::L2_norm);
-  const double L2_error = difference_per_cell.l2_norm();
+  const double L2_error= difference_per_cell.l2_norm();
 
   VectorTools::integrate_difference(dof_handler,
                                     solution,
@@ -415,7 +415,7 @@ HelmholtzProblem<dim>::process_solution(const unsigned int cycle)
                                     difference_per_cell,
                                     hp::QCollection<dim>(QGauss<dim>(3)),
                                     VectorTools::H1_seminorm);
-  const double H1_error = difference_per_cell.l2_norm();
+  const double H1_error= difference_per_cell.l2_norm();
 
   const QTrapez<1>     q_trapez;
   const QIterated<dim> q_iterated(q_trapez, 5);
@@ -425,10 +425,10 @@ HelmholtzProblem<dim>::process_solution(const unsigned int cycle)
                                     difference_per_cell,
                                     hp::QCollection<dim>(q_iterated),
                                     VectorTools::Linfty_norm);
-  const double Linfty_error = difference_per_cell.linfty_norm();
+  const double Linfty_error= difference_per_cell.linfty_norm();
 
-  const unsigned int n_active_cells = triangulation.n_active_cells();
-  const unsigned int n_dofs         = dof_handler.n_dofs();
+  const unsigned int n_active_cells= triangulation.n_active_cells();
+  const unsigned int n_dofs        = dof_handler.n_dofs();
 
   deallog << "Cycle " << cycle << ':' << std::endl
           << "   Number of active cells:       " << n_active_cells << std::endl
@@ -446,7 +446,7 @@ template <int dim>
 void
 HelmholtzProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 7; ++cycle)
+  for(unsigned int cycle= 0; cycle < 7; ++cycle)
     {
       if(cycle == 0)
         {
@@ -455,9 +455,9 @@ HelmholtzProblem<dim>::run()
 
           typename Triangulation<dim>::cell_iterator cell
             = triangulation.begin(),
-            endc = triangulation.end();
+            endc= triangulation.end();
           for(; cell != endc; ++cell)
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+            for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
                 ++face)
               if((cell->face(face)->center()(0) == -1)
                  || (cell->face(face)->center()(1) == -1))
@@ -480,10 +480,10 @@ HelmholtzProblem<dim>::run()
       switch(refinement_mode)
         {
           case global_refinement:
-            gmv_filename = "solution-global";
+            gmv_filename= "solution-global";
             break;
           case adaptive_refinement:
-            gmv_filename = "solution-adaptive";
+            gmv_filename= "solution-adaptive";
             break;
           default:
             Assert(false, ExcNotImplemented());
@@ -492,17 +492,17 @@ HelmholtzProblem<dim>::run()
       switch((*fe)[0].degree)
         {
           case 1:
-            gmv_filename += "-q1";
+            gmv_filename+= "-q1";
             break;
           case 2:
-            gmv_filename += "-q2";
+            gmv_filename+= "-q2";
             break;
 
           default:
             Assert(false, ExcNotImplemented());
         }
 
-      gmv_filename += ".gmv";
+      gmv_filename+= ".gmv";
 
       DataOut<dim, hp::DoFHandler<dim>> data_out;
       data_out.attach_dof_handler(dof_handler);
@@ -532,14 +532,14 @@ HelmholtzProblem<dim>::run()
   deallog << std::endl;
   convergence_table.write_text(deallog.get_file_stream());
 
-  std::string error_filename = "error";
+  std::string error_filename= "error";
   switch(refinement_mode)
     {
       case global_refinement:
-        error_filename += "-global";
+        error_filename+= "-global";
         break;
       case adaptive_refinement:
-        error_filename += "-adaptive";
+        error_filename+= "-adaptive";
         break;
       default:
         Assert(false, ExcNotImplemented());
@@ -548,16 +548,16 @@ HelmholtzProblem<dim>::run()
   switch((*fe)[0].degree)
     {
       case 1:
-        error_filename += "-q1";
+        error_filename+= "-q1";
         break;
       case 2:
-        error_filename += "-q2";
+        error_filename+= "-q2";
         break;
       default:
         Assert(false, ExcNotImplemented());
     }
 
-  error_filename += ".tex";
+  error_filename+= ".tex";
 
   convergence_table.write_tex(deallog.get_file_stream());
 
@@ -582,14 +582,14 @@ HelmholtzProblem<dim>::run()
       deallog << std::endl;
       convergence_table.write_text(deallog.get_file_stream());
 
-      std::string conv_filename = "convergence";
+      std::string conv_filename= "convergence";
       switch(refinement_mode)
         {
           case global_refinement:
-            conv_filename += "-global";
+            conv_filename+= "-global";
             break;
           case adaptive_refinement:
-            conv_filename += "-adaptive";
+            conv_filename+= "-adaptive";
             break;
           default:
             Assert(false, ExcNotImplemented());
@@ -597,15 +597,15 @@ HelmholtzProblem<dim>::run()
       switch((*fe)[0].degree)
         {
           case 1:
-            conv_filename += "-q1";
+            conv_filename+= "-q1";
             break;
           case 2:
-            conv_filename += "-q2";
+            conv_filename+= "-q2";
             break;
           default:
             Assert(false, ExcNotImplemented());
         }
-      conv_filename += ".tex";
+      conv_filename+= ".tex";
 
       convergence_table.write_tex(deallog.get_file_stream());
     }
@@ -619,7 +619,7 @@ main()
 
   deallog.attach(logfile);
 
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
   try
     {

@@ -25,22 +25,22 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.initialize(tr, fe);
   dof.distribute_mg_dofs(fe);
 
-  const unsigned int level = tr.n_levels() - 1;
+  const unsigned int level= tr.n_levels() - 1;
 
   SparsityPattern bl(tr.n_cells(level), dof.n_dofs(level), fe.dofs_per_cell);
   DoFTools::make_cell_patches(bl, dof, level);
   bl.compress();
 
-  for(unsigned int i = 0; i < bl.n_rows(); ++i)
+  for(unsigned int i= 0; i < bl.n_rows(); ++i)
     {
       deallog << "Block " << std::setw(3) << i;
       std::vector<unsigned int> entries;
-      for(SparsityPattern::iterator b = bl.begin(i); b != bl.end(i); ++b)
+      for(SparsityPattern::iterator b= bl.begin(i); b != bl.end(i); ++b)
         entries.push_back(b->column());
 
       std::sort(entries.begin(), entries.end());
 
-      for(unsigned int i = 0; i < entries.size(); ++i)
+      for(unsigned int i= 0; i < entries.size(); ++i)
         deallog << ' ' << std::setw(4) << entries[i];
       deallog << std::endl;
     }

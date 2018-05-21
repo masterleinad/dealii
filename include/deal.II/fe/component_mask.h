@@ -84,7 +84,7 @@ public:
    * calling this constructor results in a component mask that always returns
    * <code>true</code> whenever asked whether a component is selected.
    */
-  ComponentMask() = default;
+  ComponentMask()= default;
 
   /**
    * Initialize an object of this type with a set of selected components
@@ -271,7 +271,7 @@ inline void
 ComponentMask::set(const unsigned int index, const bool value)
 {
   AssertIndexRange(index, component_mask.size());
-  component_mask[index] = value;
+  component_mask[index]= value;
 }
 
 inline bool ComponentMask::operator[](const unsigned int component_index) const
@@ -301,14 +301,14 @@ ComponentMask::n_selected_components(const unsigned int n) const
   if((n != numbers::invalid_unsigned_int) && (size() > 0))
     AssertDimension(n, size());
 
-  const unsigned int real_n = (n != numbers::invalid_unsigned_int ? n : size());
+  const unsigned int real_n= (n != numbers::invalid_unsigned_int ? n : size());
   if(component_mask.size() == 0)
     return real_n;
   else
     {
       AssertDimension(real_n, component_mask.size());
-      unsigned int c = 0;
-      for(unsigned int i = 0; i < component_mask.size(); ++i)
+      unsigned int c= 0;
+      for(unsigned int i= 0; i < component_mask.size(); ++i)
         if(component_mask[i] == true)
           ++c;
       return c;
@@ -325,7 +325,7 @@ ComponentMask::first_selected_component(const unsigned int n) const
     return 0;
   else
     {
-      for(unsigned int c = 0; c < component_mask.size(); ++c)
+      for(unsigned int c= 0; c < component_mask.size(); ++c)
         if(component_mask[c] == true)
           return c;
 
@@ -355,8 +355,8 @@ ComponentMask::operator|(const ComponentMask& mask) const
       // the combination of the two
       AssertDimension(component_mask.size(), mask.component_mask.size());
       std::vector<bool> new_mask(component_mask.size());
-      for(unsigned int i = 0; i < component_mask.size(); ++i)
-        new_mask[i] = (component_mask[i] || mask.component_mask[i]);
+      for(unsigned int i= 0; i < component_mask.size(); ++i)
+        new_mask[i]= (component_mask[i] || mask.component_mask[i]);
 
       return new_mask;
     }
@@ -376,8 +376,8 @@ inline ComponentMask ComponentMask::operator&(const ComponentMask& mask) const
       // the combination of the two
       AssertDimension(component_mask.size(), mask.component_mask.size());
       std::vector<bool> new_mask(component_mask.size());
-      for(unsigned int i = 0; i < component_mask.size(); ++i)
-        new_mask[i] = (component_mask[i] && mask.component_mask[i]);
+      for(unsigned int i= 0; i < component_mask.size(); ++i)
+        new_mask[i]= (component_mask[i] && mask.component_mask[i]);
 
       return new_mask;
     }

@@ -38,10 +38,10 @@ template <int dim>
 double
 value(const Point<dim>& p)
 {
-  double val = 0;
-  for(unsigned int d = 0; d < dim; ++d)
-    for(unsigned int i = 0; i <= 1; ++i)
-      val += std::pow(p[d], 1. * i);
+  double val= 0;
+  for(unsigned int d= 0; d < dim; ++d)
+    for(unsigned int i= 0; i <= 1; ++i)
+      val+= std::pow(p[d], 1. * i);
   return val;
 }
 
@@ -87,14 +87,14 @@ zero_subrange(const unsigned int   begin,
               const unsigned int   end,
               std::vector<double>& dst)
 {
-  for(unsigned int i = begin; i < end; ++i)
-    dst[i] = 0;
+  for(unsigned int i= begin; i < end; ++i)
+    dst[i]= 0;
 }
 
 void
 zero_element(std::vector<double>& dst, const unsigned int i)
 {
-  dst[i] = 0;
+  dst[i]= 0;
 }
 
 template <int dim>
@@ -105,7 +105,7 @@ mass_assembler(const typename Triangulation<dim>::active_cell_iterator& cell,
 {
   data.x_fe_values.reinit(cell);
 
-  const Point<dim> q = data.x_fe_values.quadrature_point(0);
+  const Point<dim> q= data.x_fe_values.quadrature_point(0);
 
   // this appears to be the key: the following two ways both overwrite some
   // of the memory in which we store the quadrature point location.
@@ -119,19 +119,19 @@ mass_assembler(const typename Triangulation<dim>::active_cell_iterator& cell,
 
   AssertThrow(q == data.x_fe_values.quadrature_point(0), ExcInternalError());
 
-  copy_data.cell_rhs[0] = value(data.x_fe_values.quadrature_point(0));
+  copy_data.cell_rhs[0]= value(data.x_fe_values.quadrature_point(0));
 }
 
 void
 copy_local_to_global(const CopyData& data, double* sum)
 {
-  *sum += data.cell_rhs[0];
+  *sum+= data.cell_rhs[0];
 }
 
 void
 do_project()
 {
-  static const int dim = 3;
+  static const int dim= 3;
 
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -140,11 +140,11 @@ do_project()
   FE_Nothing<dim> fe;
   QMidpoint<dim>  q;
 
-  for(unsigned int i = 0; i < 12; ++i)
+  for(unsigned int i= 0; i < 12; ++i)
     {
       std::vector<double> tmp;
 
-      double       sum = 0;
+      double       sum= 0;
       Scratch<dim> assembler_data(fe, q);
       CopyData     copy_data;
       copy_data.cell_rhs.resize(8);

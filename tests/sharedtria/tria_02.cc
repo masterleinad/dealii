@@ -35,8 +35,8 @@ write_mesh(const parallel::shared::Triangulation<dim, spacedim>& tria,
   Vector<float> subdomain(tria.n_active_cells());
   typename parallel::shared::Triangulation<dim>::active_cell_iterator it
     = tria.begin_active();
-  for(unsigned int i = 0; it != tria.end(); ++it, ++i)
-    subdomain(i) = it->subdomain_id();
+  for(unsigned int i= 0; it != tria.end(); ++it, ++i)
+    subdomain(i)= it->subdomain_id();
 
   data_out.add_data_vector(subdomain, "subdomain");
 
@@ -94,7 +94,7 @@ test()
   //deallog << "subdomains: ";
   typename parallel::shared::Triangulation<dim>::active_cell_iterator it
     = tr.begin_active();
-  for(unsigned int index = 0; it != tr.end(); ++it, ++index)
+  for(unsigned int index= 0; it != tr.end(); ++it, ++index)
     {
       // check that true subdomain_ids are the same as those, stored in cell->subdomain_id()
       AssertThrow(

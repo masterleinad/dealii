@@ -33,7 +33,7 @@ output_matrix(const FullMatrix<double>& m)
   if(m.m() == m.n())
     deallog << m.frobenius_norm() << std::endl;
 
-  for(unsigned int i = 0; i < std::min(m.m(), m.n()); ++i)
+  for(unsigned int i= 0; i < std::min(m.m(), m.n()); ++i)
     deallog << m(i, i) << ' ' << m(i, std::min(m.m(), m.n()) - i - 1) << ' ';
   deallog << std::endl;
 }

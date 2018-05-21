@@ -24,7 +24,7 @@ ConditionalOStream::ConditionalOStream(std::ostream& stream, const bool active)
 void
 ConditionalOStream::set_condition(bool flag)
 {
-  active_flag = flag;
+  active_flag= flag;
 }
 
 bool

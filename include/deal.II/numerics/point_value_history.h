@@ -207,7 +207,7 @@ public:
    * adding points or mesh data.  This may be used for example for recording
    * external input or logging solver performance data.
    */
-  PointValueHistory(const unsigned int n_independent_variables = 0);
+  PointValueHistory(const unsigned int n_independent_variables= 0);
 
   /**
    * Constructor linking the class to a specific @p DoFHandler. This class
@@ -224,7 +224,7 @@ public:
    * example for recording external input or logging solver performance data.
    */
   PointValueHistory(const DoFHandler<dim>& dof_handler,
-                    const unsigned int     n_independent_variables = 0);
+                    const unsigned int     n_independent_variables= 0);
 
   /**
    * Copy constructor. This constructor can be safely called with a @p
@@ -280,7 +280,7 @@ public:
    */
   void
   add_field_name(const std::string&   vector_name,
-                 const ComponentMask& component_mask = ComponentMask());
+                 const ComponentMask& component_mask= ComponentMask());
 
   /**
    * Put another mnemonic string (and hence @p VectorType) into the class.

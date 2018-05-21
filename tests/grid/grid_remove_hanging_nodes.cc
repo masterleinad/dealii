@@ -32,9 +32,9 @@ check_remove_hanging_nodes()
 {
   Point<2> corners[2];
 
-  corners[0]                        = Point<2>(1, 0);
-  corners[1]                        = Point<2>(0, 4);
-  const unsigned int n_subdivisions = 1;
+  corners[0]                       = Point<2>(1, 0);
+  corners[1]                       = Point<2>(0, 4);
+  const unsigned int n_subdivisions= 1;
 
   Triangulation<2> tria;
   GridGenerator::subdivided_parallelepiped(tria, n_subdivisions, corners);

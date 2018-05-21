@@ -30,7 +30,7 @@ template <int dim>
 void
 test(const char* filename)
 {
-  const char* p = strrchr(filename, '/');
+  const char* p= strrchr(filename, '/');
   deallog.push(p);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);

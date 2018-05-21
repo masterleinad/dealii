@@ -27,15 +27,15 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
 {
   // set only certain elements of each
   // vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
+      v(i)= i;
       if(i % 3 == 0)
-        w(i) = i + 1.;
+        w(i)= i + 1.;
     }
   // but then copy elements and make sure the
   // vectors are actually equal
-  v = w;
+  v= w;
   AssertThrow(v == w, ExcInternalError());
 
   deallog << "OK" << std::endl;

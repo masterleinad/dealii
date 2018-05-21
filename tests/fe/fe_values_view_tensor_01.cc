@@ -97,8 +97,8 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   // stress -> 0 gamma -> 1
   std::vector<unsigned int> block_component(
     n_stress_components + n_gamma_components, 1);
-  for(unsigned int ii = 0; ii < n_stress_components; ii++)
-    block_component[ii] = 0;
+  for(unsigned int ii= 0; ii < n_stress_components; ii++)
+    block_component[ii]= 0;
 
   DoFRenumbering::component_wise(dof_handler);
 
@@ -106,8 +106,8 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   std::vector<types::global_dof_index> dofs_per_block(2);
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, block_component);
 
-  const unsigned int n_stress_dof = dofs_per_block[0];
-  const unsigned int n_gamma_dof  = dofs_per_block[1];
+  const unsigned int n_stress_dof= dofs_per_block[0];
+  const unsigned int n_gamma_dof = dofs_per_block[1];
 
   deallog << "Number of active cells: " << triangulation.n_active_cells()
           << std::endl
@@ -153,10 +153,10 @@ MixedElastoPlasticity<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
   deallog << "dofs_per_cell: " << fe.dofs_per_cell << std::endl;
   //return;
-  const unsigned int n_q_points = quadrature_formula.size();
+  const unsigned int n_q_points= quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -172,17 +172,17 @@ MixedElastoPlasticity<dim>::assemble_system()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   std::vector<Tensor<1, dim>> div_values(n_q_points);
   std::vector<Tensor<2, dim>> stress_values(n_q_points);
 
-  unsigned int cc = 0;
+  unsigned int cc= 0;
   for(; cell != endc; ++cell) //loop over all cells
     {
       deallog << ++cc << " ";
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
       fe_values.reinit(cell); //compute requested values for a given cell
 
@@ -203,17 +203,17 @@ MixedElastoPlasticity<dim>::run()
 void
 check()
 {
-  static const unsigned int dim = 3;
+  static const unsigned int dim= 3;
   {
-    for(unsigned int i = 0; i < dim; i++)
+    for(unsigned int i= 0; i < dim; i++)
       {
-        for(unsigned int j = 0; j < dim; j++)
+        for(unsigned int j= 0; j < dim; j++)
           {
             TableIndices<2> indices(i, j);
             unsigned int    unrolled
               = Tensor<2, dim>::component_to_unrolled_index(indices);
             deallog << i << " " << j << " -> " << unrolled << std::endl;
-            indices = Tensor<2, dim>::unrolled_to_component_indices(unrolled);
+            indices= Tensor<2, dim>::unrolled_to_component_indices(unrolled);
             deallog << unrolled << " -> " << indices[0] << " " << indices[1]
                     << std::endl;
           }

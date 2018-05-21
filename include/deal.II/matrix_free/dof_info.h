@@ -69,7 +69,7 @@ namespace internal
        * Size of the chunk is set to 64 kByte which generally fits to current
        * caches.
        */
-      static const unsigned int chunk_size_zero_vector = 8192;
+      static const unsigned int chunk_size_zero_vector= 8192;
 
       /**
        * Default empty constructor.
@@ -79,7 +79,7 @@ namespace internal
       /**
        * Copy constructor.
        */
-      DoFInfo(const DoFInfo&) = default;
+      DoFInfo(const DoFInfo&)= default;
 
       /**
        * Clear all data fields in this class.
@@ -270,15 +270,15 @@ namespace internal
         /**
          * The data index for the faces designated as interior
          */
-        dof_access_face_interior = 0,
+        dof_access_face_interior= 0,
         /**
          * The data index for the faces designated as exterior
          */
-        dof_access_face_exterior = 1,
+        dof_access_face_exterior= 1,
         /**
          * The data index for the cells
          */
-        dof_access_cell = 2
+        dof_access_cell= 2
       };
 
       /**
@@ -518,10 +518,10 @@ namespace internal
     DoFInfo::fe_index_from_degree(const unsigned int first_selected_component,
                                   const unsigned int fe_degree) const
     {
-      const unsigned int n_indices = fe_index_conversion.size();
+      const unsigned int n_indices= fe_index_conversion.size();
       if(n_indices <= 1)
         return 0;
-      for(unsigned int i = 0; i < n_indices; ++i)
+      for(unsigned int i= 0; i < n_indices; ++i)
         if(fe_index_conversion[i][first_selected_component] == fe_degree)
           return i;
       return numbers::invalid_unsigned_int;

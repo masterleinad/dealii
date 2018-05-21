@@ -48,33 +48,33 @@ void
 create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
                        SparseMatrix<double>&  A)
 {
-  const FiniteElement<dim>& fe            = dof_handler.get_fe();
-  const unsigned int        dofs_per_cell = fe.dofs_per_cell;
+  const FiniteElement<dim>& fe           = dof_handler.get_fe();
+  const unsigned int        dofs_per_cell= fe.dofs_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
   QGauss<dim>        quadrature(3);
-  const unsigned int n_q_points = quadrature.size();
+  const unsigned int n_q_points= quadrature.size();
 
   FEValues<dim> fe_values(
     fe, quadrature, update_values | update_gradients | update_JxW_values);
 
-  const double nu = 3.14159265358e-2;
+  const double nu= 3.14159265358e-2;
 
   for(; cell != endc; ++cell)
     {
-      local_matrix = 0;
+      local_matrix= 0;
       fe_values.reinit(cell);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int comp_i = 0; comp_i < fe.n_components(); ++comp_i)
-          for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-            for(unsigned int comp_j = 0; comp_j < fe.n_components(); ++comp_j)
-              for(unsigned int q = 0; q < n_q_points; ++q)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int comp_i= 0; comp_i < fe.n_components(); ++comp_i)
+          for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
+            for(unsigned int comp_j= 0; comp_j < fe.n_components(); ++comp_j)
+              for(unsigned int q= 0; q < n_q_points; ++q)
                 {
                   // velocity-velocity coupling?
                   if((comp_i < dim) && (comp_j < dim))
@@ -101,8 +101,8 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
                 };
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < dofs_per_cell; ++j)
           A.add(local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
     };
 }
@@ -118,35 +118,35 @@ void
 create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
                        SparseMatrix<double>&  A)
 {
-  const FiniteElement<dim>& fe            = dof_handler.get_fe();
-  const unsigned int        dofs_per_cell = fe.dofs_per_cell;
+  const FiniteElement<dim>& fe           = dof_handler.get_fe();
+  const unsigned int        dofs_per_cell= fe.dofs_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
   QGauss<dim>        quadrature(3);
-  const unsigned int n_q_points = quadrature.size();
+  const unsigned int n_q_points= quadrature.size();
 
   FEValues<dim> fe_values(
     fe, quadrature, update_values | update_gradients | update_JxW_values);
 
-  const double nu = 3.14159265358e-2;
+  const double nu= 3.14159265358e-2;
 
   for(; cell != endc; ++cell)
     {
-      local_matrix = 0;
+      local_matrix= 0;
       fe_values.reinit(cell);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int comp_i = 0; comp_i < fe.n_components(); ++comp_i)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int comp_i= 0; comp_i < fe.n_components(); ++comp_i)
           if(fe.get_nonzero_components(i)[comp_i] == true)
-            for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-              for(unsigned int comp_j = 0; comp_j < fe.n_components(); ++comp_j)
+            for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
+              for(unsigned int comp_j= 0; comp_j < fe.n_components(); ++comp_j)
                 if(fe.get_nonzero_components(j)[comp_j] == true)
-                  for(unsigned int q = 0; q < n_q_points; ++q)
+                  for(unsigned int q= 0; q < n_q_points; ++q)
                     {
                       // velocity-velocity coupling?
                       if((comp_i < dim) && (comp_j < dim))
@@ -176,8 +176,8 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
                     };
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < dofs_per_cell; ++j)
           A.add(local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
     };
 }
@@ -225,8 +225,8 @@ test(const unsigned int p)
   // reduce the amount of data
   // written out a little bit, only
   // write every so-many-th element
-  SparseMatrix<double>::const_iterator p2 = A2.begin(), p3 = A3.begin();
-  for(unsigned int i = 0; i < A2.n_nonzero_elements(); ++i, ++p2, ++p3)
+  SparseMatrix<double>::const_iterator p2= A2.begin(), p3= A3.begin();
+  for(unsigned int i= 0; i < A2.n_nonzero_elements(); ++i, ++p2, ++p3)
     {
       if(i % (dim * dim * dim) == 0)
         deallog << i << ' ' << p2->value() << std::endl;

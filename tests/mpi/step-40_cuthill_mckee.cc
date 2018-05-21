@@ -125,7 +125,7 @@ namespace Step40
   LaplaceProblem<dim>::setup_system()
   {
     dof_handler.distribute_dofs(fe);
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
     {
@@ -146,7 +146,7 @@ namespace Step40
         {
           if(cell->is_locally_owned())
             {
-              for(unsigned int face = 0;
+              for(unsigned int face= 0;
                   face < GeometryInfo<dim>::faces_per_cell;
                   ++face)
                 {
@@ -156,7 +156,7 @@ namespace Step40
                     {
                       fe_face_values.reinit(cell, face);
                       //for Q_2 this is in middle of face, dim=2 or what quadrature point to give?
-                      u = fe_face_values.normal_vector(1);
+                      u= fe_face_values.normal_vector(1);
                       if(u * down < 0)
                         {
                           cell->face(face)->get_dof_indices(dof_indices);
@@ -179,7 +179,7 @@ namespace Step40
 
       DoFRenumbering::Cuthill_McKee(dof_handler, false, true, starting_indices);
 
-      locally_owned_dofs = dof_handler.locally_owned_dofs();
+      locally_owned_dofs= dof_handler.locally_owned_dofs();
       DoFTools::extract_locally_relevant_dofs(dof_handler,
                                               locally_relevant_dofs);
     }
@@ -187,7 +187,7 @@ namespace Step40
     locally_relevant_solution.reinit(
       locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
     system_rhs.reinit(locally_owned_dofs, mpi_communicator);
-    system_rhs = PetscScalar();
+    system_rhs= PetscScalar();
 
     constraints.clear();
     constraints.reinit(locally_relevant_dofs);
@@ -222,8 +222,8 @@ namespace Step40
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<PetscScalar> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<PetscScalar>     cell_rhs(dofs_per_cell);
@@ -232,16 +232,16 @@ namespace Step40
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
-          cell_matrix = PetscScalar();
-          cell_rhs    = PetscScalar();
+          cell_matrix= PetscScalar();
+          cell_rhs   = PetscScalar();
 
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
             {
               const double rhs_value
                 = (fe_values.quadrature_point(q_point)[1]
@@ -253,15 +253,15 @@ namespace Step40
                      1 :
                      -1);
 
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                    cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                          * fe_values.shape_grad(j, q_point)
-                                          * fe_values.JxW(q_point));
+                  for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                    cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                         * fe_values.shape_grad(j, q_point)
+                                         * fe_values.JxW(q_point));
 
-                  cell_rhs(i) += (rhs_value * fe_values.shape_value(i, q_point)
-                                  * fe_values.JxW(q_point));
+                  cell_rhs(i)+= (rhs_value * fe_values.shape_value(i, q_point)
+                                 * fe_values.JxW(q_point));
                 }
             }
 
@@ -318,7 +318,7 @@ namespace Step40
 
     constraints.distribute(completely_distributed_solution);
 
-    locally_relevant_solution = completely_distributed_solution;
+    locally_relevant_solution= completely_distributed_solution;
   }
 
   template <int dim>
@@ -332,8 +332,8 @@ namespace Step40
   void
   LaplaceProblem<dim>::run()
   {
-    const unsigned int n_cycles = 2;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    const unsigned int n_cycles= 2;
+    for(unsigned int cycle= 0; cycle < n_cycles; ++cycle)
       {
         pcout << "Cycle " << cycle << ':' << std::endl;
 
@@ -350,7 +350,7 @@ namespace Step40
         pcout << "   Number of active cells:       "
               << triangulation.n_global_active_cells() << std::endl
               << "      ";
-        for(unsigned int i = 0;
+        for(unsigned int i= 0;
             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
             ++i)
           pcout << triangulation.n_locally_owned_active_cells_per_processor()[i]
@@ -360,7 +360,7 @@ namespace Step40
         pcout << "   Number of degrees of freedom: " << dof_handler.n_dofs()
               << std::endl
               << "      ";
-        for(unsigned int i = 0;
+        for(unsigned int i= 0;
             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
             ++i)
           pcout << dof_handler.n_locally_owned_dofs_per_processor()[i] << '+';

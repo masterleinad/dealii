@@ -48,7 +48,7 @@ main()
 
   {
     // Extract the whole boundary of a hyper-cube
-    const int dim = 2;
+    const int dim= 2;
 
     deallog << "Testing hyper_cube in dim: " << dim << "..." << endl;
     map<Triangulation<dim - 1, dim>::cell_iterator,
@@ -72,7 +72,7 @@ main()
 
   {
     // Extract the whole boundary of a hyper-cube
-    const int dim = 3;
+    const int dim= 3;
 
     deallog << "Testing hyper_cube in dim: " << dim << "..." << endl;
     map<Triangulation<dim - 1, dim>::cell_iterator,
@@ -97,7 +97,7 @@ main()
   {
     // Extract a piece of the boundary of a hyper-cube
 
-    const int dim = 3;
+    const int dim= 3;
     deallog << "Testing hyper_cube in dim: " << dim << "..." << endl;
 
     map<Triangulation<dim - 1, dim>::cell_iterator,
@@ -115,7 +115,7 @@ main()
     set<types::boundary_id>     boundary_ids;
     boundary_ids.insert(0);
 
-    surface_to_volume_mapping = GridGenerator::extract_boundary_mesh(
+    surface_to_volume_mapping= GridGenerator::extract_boundary_mesh(
       volume_mesh, boundary_mesh, boundary_ids);
 
     save_mesh(boundary_mesh);

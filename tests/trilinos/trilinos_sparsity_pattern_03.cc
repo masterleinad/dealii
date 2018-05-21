@@ -21,8 +21,8 @@
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   TrilinosWrappers::SparsityPattern sp;
 
@@ -38,8 +38,8 @@ test()
   sp.reinit(rows, columns, MPI_COMM_WORLD, 0u);
   deallog << "SP::is_compressed(): " << sp.is_compressed() << std::endl;
 
-  for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-    for(unsigned int j = 0; j < 3 * n_procs; ++j)
+  for(unsigned int i= 2 * myid; i < 2 * myid + 2; ++i)
+    for(unsigned int j= 0; j < 3 * n_procs; ++j)
       if((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
 
@@ -53,8 +53,8 @@ test()
   deallog << "Number of columns: " << sp.n_cols() << std::endl;
 
   deallog << "Checks: ";
-  IndexSet stored_rows = sp.locally_owned_range_indices();
-  IndexSet stored_cols = sp.locally_owned_domain_indices();
+  IndexSet stored_rows= sp.locally_owned_range_indices();
+  IndexSet stored_cols= sp.locally_owned_domain_indices();
   AssertThrow(stored_rows == rows, ExcInternalError());
   AssertThrow(stored_cols == columns, ExcInternalError());
 

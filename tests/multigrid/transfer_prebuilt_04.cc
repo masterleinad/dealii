@@ -38,7 +38,7 @@ check()
     Triangulation<dim>::limit_level_difference_at_vertices,
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   GridGenerator::subdivided_hyper_cube(tr, 3);
-  for(unsigned int cycle = 0; cycle < (dim == 2 ? 10 : 7); ++cycle)
+  for(unsigned int cycle= 0; cycle < (dim == 2 ? 10 : 7); ++cycle)
     {
       // adaptive refinement into a circle
       for(typename Triangulation<dim>::active_cell_iterator cell
@@ -59,10 +59,10 @@ check()
       MGConstrainedDoFs               mg_constrained_dofs;
       Functions::ZeroFunction<dim>    zero_function;
       typename FunctionMap<dim>::type dirichlet_boundary;
-      dirichlet_boundary[0] = &zero_function;
+      dirichlet_boundary[0]= &zero_function;
       mg_constrained_dofs.initialize(mgdof, dirichlet_boundary);
 
-      unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+      unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
       if(0)
         {
@@ -70,9 +70,9 @@ check()
             ("out" + Utilities::to_string(myid) + ".svg").c_str());
           GridOut           grid_out;
           GridOutFlags::Svg flags;
-          flags.label_level_subdomain_id = true;
-          flags.coloring = GridOutFlags::Svg::level_subdomain_id;
-          flags.convert_level_number_to_height = true;
+          flags.label_level_subdomain_id= true;
+          flags.coloring                = GridOutFlags::Svg::level_subdomain_id;
+          flags.convert_level_number_to_height= true;
           grid_out.set_flags(flags);
 
           grid_out.write_svg(tr, grid_output);

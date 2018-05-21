@@ -54,8 +54,8 @@ namespace GraphColoring
       // them in lockstep and see if we encounter an index that's
       // in both arrays. once we reach the end of either array,
       // we know that there is no intersection
-      std::vector<types::global_dof_index>::const_iterator p = indices1.begin(),
-                                                           q = indices2.begin();
+      std::vector<types::global_dof_index>::const_iterator p= indices1.begin(),
+                                                           q= indices2.begin();
       while((p != indices1.end()) && (q != indices2.end()))
         {
           if(*p < *q)
@@ -110,17 +110,17 @@ namespace GraphColoring
         const Iterator&)>&                     get_conflict_indices)
     {
       // Number of iterators.
-      unsigned int n_iterators = 0;
+      unsigned int n_iterators= 0;
 
       // Create a map from conflict indices to iterators
       boost::unordered_map<types::global_dof_index, std::vector<Iterator>>
         indices_to_iterators;
-      for(Iterator it = begin; it != end; ++it)
+      for(Iterator it= begin; it != end; ++it)
         {
           const std::vector<types::global_dof_index> conflict_indices
             = get_conflict_indices(it);
-          const unsigned int n_conflict_indices = conflict_indices.size();
-          for(unsigned int i = 0; i < n_conflict_indices; ++i)
+          const unsigned int n_conflict_indices= conflict_indices.size();
+          for(unsigned int i= 0; i < n_conflict_indices; ++i)
             indices_to_iterators[conflict_indices[i]].push_back(it);
           ++n_iterators;
         }
@@ -148,11 +148,11 @@ namespace GraphColoring
                 = get_conflict_indices(*previous_zone_it);
 
               const unsigned int n_conflict_indices(conflict_indices.size());
-              for(unsigned int i = 0; i < n_conflict_indices; ++i)
+              for(unsigned int i= 0; i < n_conflict_indices; ++i)
                 {
                   const std::vector<Iterator>& conflicting_elements
                     = indices_to_iterators[conflict_indices[i]];
-                  for(unsigned int j = 0; j < conflicting_elements.size(); ++j)
+                  for(unsigned int j= 0; j < conflicting_elements.size(); ++j)
                     {
                       // check that the iterator conflicting with the current one is not
                       // associated to a zone yet and if so, assign it to the current
@@ -177,7 +177,7 @@ namespace GraphColoring
           if(new_zone.size() != 0)
             zones.push_back(new_zone);
           else
-            for(Iterator it = begin; it != end; ++it)
+            for(Iterator it= begin; it != end; ++it)
               if(used_it.count(it) == 0)
                 {
                   zones.push_back(std::vector<Iterator>(1, it));
@@ -228,16 +228,16 @@ namespace GraphColoring
 
       // Get the conflict indices associated to each iterator. The conflict_indices have to
       // be sorted so we can more easily find conflicts later on
-      for(unsigned int i = 0; i < partition_size; ++i)
+      for(unsigned int i= 0; i < partition_size; ++i)
         {
-          conflict_indices[i] = get_conflict_indices(partition[i]);
+          conflict_indices[i]= get_conflict_indices(partition[i]);
           std::sort(conflict_indices[i].begin(), conflict_indices[i].end());
         }
 
       // Compute the degree of each vertex of the graph using the
       // intersection of the conflict indices.
-      for(unsigned int i = 0; i < partition_size; ++i)
-        for(unsigned int j = i + 1; j < partition_size; ++j)
+      for(unsigned int i= 0; i < partition_size; ++i)
+        for(unsigned int j= i + 1; j < partition_size; ++j)
           // If the two iterators share indices then we increase the degree of the
           // vertices and create an ''edge'' in the graph.
           if(have_nonempty_intersection(conflict_indices[i],
@@ -251,41 +251,41 @@ namespace GraphColoring
 
       // Sort the vertices by decreasing degree.
       std::vector<int>::iterator degrees_it;
-      for(unsigned int i = 0; i < partition_size; ++i)
+      for(unsigned int i= 0; i < partition_size; ++i)
         {
           // Find the largest element.
-          degrees_it         = std::max_element(degrees.begin(), degrees.end());
-          sorted_vertices[i] = degrees_it - degrees.begin();
+          degrees_it        = std::max_element(degrees.begin(), degrees.end());
+          sorted_vertices[i]= degrees_it - degrees.begin();
           // Put the largest element to -1 so it cannot be chosen again.
-          *degrees_it = -1;
+          *degrees_it= -1;
         }
 
       // Color the graph.
       std::vector<boost::unordered_set<unsigned int>> colors_used;
-      for(unsigned int i = 0; i < partition_size; ++i)
+      for(unsigned int i= 0; i < partition_size; ++i)
         {
           const unsigned int current_vertex(sorted_vertices[i]);
           bool               new_color(true);
           // Try to use an existing color, i.e., try to find a color which is not
           // associated to one of the vertices linked to current_vertex.
           // Loop over the color.
-          for(unsigned int j = 0; j < partition_coloring.size(); ++j)
+          for(unsigned int j= 0; j < partition_coloring.size(); ++j)
             {
               // Loop on the vertices linked to current_vertex. If one vertex linked
               // to current_vertex is already using the color j, this color cannot
               // be used anymore.
               bool unused_color(true);
-              for(unsigned int k = 0; k < graph[current_vertex].size(); ++k)
+              for(unsigned int k= 0; k < graph[current_vertex].size(); ++k)
                 if(colors_used[j].count(graph[current_vertex][k]) == 1)
                   {
-                    unused_color = false;
+                    unused_color= false;
                     break;
                   }
               if(unused_color)
                 {
                   partition_coloring[j].push_back(partition[current_vertex]);
                   colors_used[j].insert(current_vertex);
-                  new_color = false;
+                  new_color= false;
                   break;
                 }
             }
@@ -320,54 +320,54 @@ namespace GraphColoring
       // Count the number of iterators in each color.
       const unsigned int partition_size(partition_coloring.size());
       std::vector<std::vector<unsigned int>> colors_counter(partition_size);
-      for(unsigned int i = 0; i < partition_size; ++i)
+      for(unsigned int i= 0; i < partition_size; ++i)
         {
           const unsigned int n_colors(partition_coloring[i].size());
           colors_counter[i].resize(n_colors);
-          for(unsigned int j = 0; j < n_colors; ++j)
-            colors_counter[i][j] = partition_coloring[i][j].size();
+          for(unsigned int j= 0; j < n_colors; ++j)
+            colors_counter[i][j]= partition_coloring[i][j].size();
         }
 
       // Find the partition with the largest number of colors for the even partition.
       unsigned int       i_color(0);
       unsigned int       max_even_n_colors(0);
       const unsigned int colors_size(colors_counter.size());
-      for(unsigned int i = 0; i < colors_size; i += 2)
+      for(unsigned int i= 0; i < colors_size; i+= 2)
         {
           if(max_even_n_colors < colors_counter[i].size())
             {
-              max_even_n_colors = colors_counter[i].size();
-              i_color           = i;
+              max_even_n_colors= colors_counter[i].size();
+              i_color          = i;
             }
         }
       coloring.resize(max_even_n_colors);
-      for(unsigned int j = 0; j < colors_counter[i_color].size(); ++j)
-        coloring[j] = partition_coloring[i_color][j];
+      for(unsigned int j= 0; j < colors_counter[i_color].size(); ++j)
+        coloring[j]= partition_coloring[i_color][j];
 
-      for(unsigned int i = 0; i < partition_size; i += 2)
+      for(unsigned int i= 0; i < partition_size; i+= 2)
         {
           if(i != i_color)
             {
               boost::unordered_set<unsigned int> used_k;
-              for(unsigned int j = 0; j < colors_counter[i].size(); ++j)
+              for(unsigned int j= 0; j < colors_counter[i].size(); ++j)
                 {
                   // Find the color in the current partition with the largest number of
                   // iterators.
                   std::vector<unsigned int>::iterator it;
-                  it = std::max_element(colors_counter[i].begin(),
-                                        colors_counter[i].end());
+                  it= std::max_element(colors_counter[i].begin(),
+                                       colors_counter[i].end());
                   unsigned int min_iterators(static_cast<unsigned int>(-1));
                   unsigned int pos(0);
                   // Find the color of coloring with the least number of colors among
                   // the colors that have not been used yet.
-                  for(unsigned int k = 0; k < max_even_n_colors; ++k)
+                  for(unsigned int k= 0; k < max_even_n_colors; ++k)
                     if(used_k.count(k) == 0)
                       if(colors_counter[i_color][k] < min_iterators)
                         {
-                          min_iterators = colors_counter[i_color][k];
-                          pos           = k;
+                          min_iterators= colors_counter[i_color][k];
+                          pos          = k;
                         }
-                  colors_counter[i_color][pos] += *it;
+                  colors_counter[i_color][pos]+= *it;
                   // Concatenate the current color with the existing coloring.
                   coloring[pos].insert(
                     coloring[pos].end(),
@@ -377,7 +377,7 @@ namespace GraphColoring
                       .end());
                   used_k.insert(pos);
                   // Put the number of iterators to the current color to zero.
-                  *it = 0;
+                  *it= 0;
                 }
             }
         }
@@ -387,42 +387,42 @@ namespace GraphColoring
       if(partition_size > 1)
         {
           unsigned int max_odd_n_colors(0);
-          for(unsigned int i = 1; i < partition_size; i += 2)
+          for(unsigned int i= 1; i < partition_size; i+= 2)
             {
               if(max_odd_n_colors < colors_counter[i].size())
                 {
-                  max_odd_n_colors = colors_counter[i].size();
-                  i_color          = i;
+                  max_odd_n_colors= colors_counter[i].size();
+                  i_color         = i;
                 }
             }
           coloring.resize(max_even_n_colors + max_odd_n_colors);
-          for(unsigned int j = 0; j < colors_counter[i_color].size(); ++j)
-            coloring[max_even_n_colors + j] = partition_coloring[i_color][j];
+          for(unsigned int j= 0; j < colors_counter[i_color].size(); ++j)
+            coloring[max_even_n_colors + j]= partition_coloring[i_color][j];
 
-          for(unsigned int i = 1; i < partition_size; i += 2)
+          for(unsigned int i= 1; i < partition_size; i+= 2)
             {
               if(i != i_color)
                 {
                   boost::unordered_set<unsigned int> used_k;
-                  for(unsigned int j = 0; j < colors_counter[i].size(); ++j)
+                  for(unsigned int j= 0; j < colors_counter[i].size(); ++j)
                     {
                       // Find the color in the current partition with the largest number of
                       // iterators.
                       std::vector<unsigned int>::iterator it;
-                      it = std::max_element(colors_counter[i].begin(),
-                                            colors_counter[i].end());
+                      it= std::max_element(colors_counter[i].begin(),
+                                           colors_counter[i].end());
                       unsigned int min_iterators(static_cast<unsigned int>(-1));
                       unsigned int pos(0);
                       // Find the color of coloring with the least number of colors among
                       // the colors that have not been used yet.
-                      for(unsigned int k = 0; k < max_odd_n_colors; ++k)
+                      for(unsigned int k= 0; k < max_odd_n_colors; ++k)
                         if(used_k.count(k) == 0)
                           if(colors_counter[i_color][k] < min_iterators)
                             {
-                              min_iterators = colors_counter[i_color][k];
-                              pos           = k;
+                              min_iterators= colors_counter[i_color][k];
+                              pos          = k;
                             }
-                      colors_counter[i_color][pos] += *it;
+                      colors_counter[i_color][pos]+= *it;
                       // Concatenate the current color with the existing coloring.
                       coloring[max_even_n_colors + pos].insert(
                         coloring[max_even_n_colors + pos].end(),
@@ -432,7 +432,7 @@ namespace GraphColoring
                           .end());
                       used_k.insert(pos);
                       // Put the number of iterators to the current color to zero.
-                      *it = 0;
+                      *it= 0;
                     }
                 }
             }
@@ -544,11 +544,11 @@ namespace GraphColoring
       partitioning_size);
 
     Threads::TaskGroup<> tasks;
-    for(unsigned int i = 0; i < partitioning_size; ++i)
-      tasks += Threads::new_task(&internal::make_dsatur_coloring<Iterator>,
-                                 partitioning[i],
-                                 get_conflict_indices,
-                                 partition_coloring[i]);
+    for(unsigned int i= 0; i < partitioning_size; ++i)
+      tasks+= Threads::new_task(&internal::make_dsatur_coloring<Iterator>,
+                                partitioning[i],
+                                get_conflict_indices,
+                                partition_coloring[i]);
     tasks.join_all();
 
     // Gather the colors together.

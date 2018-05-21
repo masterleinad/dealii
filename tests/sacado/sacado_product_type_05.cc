@@ -50,18 +50,18 @@ main()
   SSdouble               a(2, 0, 7.0);
   SSdouble               b(2, 1, 3.0);
   SSdouble               c;
-  a.val() = Sdouble(2, 0, 7.0);
-  b.val() = Sdouble(2, 1, 3.0);
+  a.val()= Sdouble(2, 0, 7.0);
+  b.val()= Sdouble(2, 1, 3.0);
 
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
       {
-        t1[i][j] = 2. * a + i * j;
-        t2[i][j] = 3. * b - i + j;
+        t1[i][j]= 2. * a + i * j;
+        t2[i][j]= 3. * b - i + j;
       }
   t1* t2;
 
-  t2 += a * t1;
+  t2+= a * t1;
 
   deallog << "OK" << std::endl;
 }

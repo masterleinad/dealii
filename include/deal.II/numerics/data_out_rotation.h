@@ -114,7 +114,7 @@ namespace internal
  * @ingroup output
  * @author Wolfgang Bangerth, 2000
  */
-template <int dim, typename DoFHandlerType = DoFHandler<dim>>
+template <int dim, typename DoFHandlerType= DoFHandler<dim>>
 class DataOutRotation
   : public DataOut_DoFData<DoFHandlerType, DoFHandlerType::dimension + 1>
 {
@@ -123,13 +123,13 @@ public:
    * An abbreviation for the dimension of the DoFHandler object we work with.
    * Faces are then <code>dimension-1</code> dimensional objects.
    */
-  static const unsigned int dimension = DoFHandlerType::dimension;
+  static const unsigned int dimension= DoFHandlerType::dimension;
 
   /**
    * An abbreviation for the spatial dimension within which the triangulation
    * and DoFHandler are embedded in.
    */
-  static const unsigned int space_dimension = DoFHandlerType::space_dimension;
+  static const unsigned int space_dimension= DoFHandlerType::space_dimension;
 
   /**
    * Typedef to the iterator type of the dof handler class under
@@ -157,7 +157,7 @@ public:
    */
   virtual void
   build_patches(const unsigned int n_patches_per_circle,
-                const unsigned int n_subdivisions = 0);
+                const unsigned int n_subdivisions= 0);
 
   /**
    * Return the first cell which we want output for. The default

@@ -15,7 +15,7 @@
 
 // check that VectorTools::project works for RT elements correctly
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../deal.II/project_common.h"
 
@@ -27,6 +27,6 @@ test()
     // this is interesting also in 3d, but is
     // exceedingly slow there. limit to the
     // case of RT(0) elements in 3d
-    for(unsigned int p = 0; p < (dim == 2 ? 3 : 1); ++p)
+    for(unsigned int p= 0; p < (dim == 2 ? 3 : 1); ++p)
       test_with_wrong_face_orientation(FE_RaviartThomas<dim>(p), p + 1, 1);
 }

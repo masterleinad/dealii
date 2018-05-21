@@ -25,13 +25,13 @@
 #include <type_traits>
 
 using namespace dealii;
-namespace AD = Differentiation::AD;
+namespace AD= Differentiation::AD;
 
 template <typename Number>
 Number
 func(const Number& a, const Number& b, const Number& c)
 {
-  const Number r = c * std::log(b + 1.) / std::sin(a);
+  const Number r= c * std::log(b + 1.) / std::sin(a);
   return r;
 }
 
@@ -60,20 +60,20 @@ main()
   initlog();
 
   // Values of function arguments
-  const double a = M_PI / 4;
-  const double b = 2.0;
-  const double c = 3.0;
+  const double a= M_PI / 4;
+  const double b= 2.0;
+  const double c= 3.0;
 
   // Number of independent variables
-  const int num_deriv = 2;
+  const int num_deriv= 2;
 
   // Fad objects
   Sacado::Fad::DFad<Sacado::Fad::DFad<double>> afad(num_deriv, 0, a);
   Sacado::Fad::DFad<Sacado::Fad::DFad<double>> bfad(num_deriv, 1, b);
-  Sacado::Fad::DFad<Sacado::Fad::DFad<double>> cfad = c;
+  Sacado::Fad::DFad<Sacado::Fad::DFad<double>> cfad= c;
 
-  afad.val() = Sacado::Fad::DFad<double>(num_deriv, 0, a);
-  bfad.val() = Sacado::Fad::DFad<double>(num_deriv, 1, b);
+  afad.val()= Sacado::Fad::DFad<double>(num_deriv, 0, a);
+  bfad.val()= Sacado::Fad::DFad<double>(num_deriv, 1, b);
 
   // AD typedefs
   typedef Sacado::Fad::DFad<Sacado::Fad::DFad<double>> ADNumberType;
@@ -81,18 +81,18 @@ main()
   typedef typename ADNumberType::scalar_type ADScalarType; // == double
 
   // Compute function and derivative with AD
-  const ADNumberType rfad = func(afad, bfad, cfad);
+  const ADNumberType rfad= func(afad, bfad, cfad);
 
   deallog.push("Native");
   {
     // Extract value and derivatives
-    const double r       = rfad.val().val(); // r
-    const double drda    = rfad.dx(0).val(); // dr/da
-    const double drdb    = rfad.dx(1).val(); // dr/db
-    const double d2rda2  = rfad.dx(0).dx(0); // d^2r/da^2
-    const double d2rdadb = rfad.dx(0).dx(1); // d^2r/dadb
-    const double d2rdbda = rfad.dx(1).dx(0); // d^2r/dbda
-    const double d2rdb2  = rfad.dx(1).dx(1); // d^2/db^2
+    const double r      = rfad.val().val(); // r
+    const double drda   = rfad.dx(0).val(); // dr/da
+    const double drdb   = rfad.dx(1).val(); // dr/db
+    const double d2rda2 = rfad.dx(0).dx(0); // d^2r/da^2
+    const double d2rdadb= rfad.dx(0).dx(1); // d^2r/dadb
+    const double d2rdbda= rfad.dx(1).dx(0); // d^2r/dbda
+    const double d2rdb2 = rfad.dx(1).dx(1); // d^2/db^2
 
     print(r, drda, drdb, d2rda2, d2rdb2, d2rdadb, d2rdbda);
   }

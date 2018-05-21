@@ -42,7 +42,7 @@
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<2> tr(MPI_COMM_WORLD);
   GridGenerator::subdivided_hyper_rectangle(
@@ -50,7 +50,7 @@ test()
 
   const FE_Q<2> fe(1);
 
-  for(unsigned int test = 0; test < 2; ++test)
+  for(unsigned int test= 0; test < 2; ++test)
     {
       DoFHandler<2> dof_handler(tr);
       dof_handler.distribute_dofs(fe);
@@ -60,7 +60,7 @@ test()
       // have strictly increasing, contiguous groups of DoF indices.
       if(test == 1)
         {
-          IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+          IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
           std::vector<types::global_dof_index> new_numbers(
             locally_owned_dofs.n_elements());
           for(auto i : locally_owned_dofs)
@@ -78,10 +78,10 @@ test()
       // output DoF indices
       deallog << (test == 0 ? "Without " : "With ")
               << "prior reordering:" << std::endl;
-      const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
+      const unsigned int                   dofs_per_cell= fe.dofs_per_cell;
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-      DoFHandler<2>::active_cell_iterator  cell = dof_handler.begin_active(),
-                                          endc  = dof_handler.end();
+      DoFHandler<2>::active_cell_iterator  cell= dof_handler.begin_active(),
+                                          endc = dof_handler.end();
       for(; cell != endc; ++cell)
         if(cell->subdomain_id() == tr.locally_owned_subdomain())
           {

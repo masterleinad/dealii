@@ -115,8 +115,7 @@ check()
   // multiply matrix by 100 to
   // make test more sensitive
   deallog << "Matrix: " << std::endl;
-  for(SparseMatrix<double>::const_iterator p = matrix.begin();
-      p != matrix.end();
+  for(SparseMatrix<double>::const_iterator p= matrix.begin(); p != matrix.end();
       ++p)
     deallog << p->value() * 100 << std::endl;
 }

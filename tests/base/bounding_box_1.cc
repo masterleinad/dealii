@@ -32,10 +32,10 @@ test_bounding_box()
 
   std::pair<Point<spacedim>, Point<spacedim>> boundaries;
 
-  for(int i = 0; i < spacedim; i++)
+  for(int i= 0; i < spacedim; i++)
     {
-      boundaries.first[i]  = 0.2 - i * 0.2;
-      boundaries.second[i] = 0.8 + i * 0.8;
+      boundaries.first[i] = 0.2 - i * 0.2;
+      boundaries.second[i]= 0.8 + i * 0.8;
     }
 
   BoundingBox<spacedim> b(boundaries);
@@ -50,18 +50,18 @@ test_bounding_box()
 
   //To guarantee points are inside we take a convex combination
   double c;
-  for(int t = 0; t < 5; ++t)
+  for(int t= 0; t < 5; ++t)
     {
       Point<spacedim> test_pt;
-      c = (1 + t) / 5.0;
-      for(unsigned int i = 0; i < spacedim; ++i)
-        test_pt[i] = boundaries.first[i] * c + boundaries.second[i] * (1 - c);
+      c= (1 + t) / 5.0;
+      for(unsigned int i= 0; i < spacedim; ++i)
+        test_pt[i]= boundaries.first[i] * c + boundaries.second[i] * (1 - c);
 
       test_points.push_back(test_pt);
     }
 
   deallog << "Points inside: " << std::endl;
-  for(unsigned int i = 0; i < test_points.size(); ++i)
+  for(unsigned int i= 0; i < test_points.size(); ++i)
     deallog << test_points[i]
             << " is inside: " << b.point_inside(test_points[i]) << std::endl;
 
@@ -69,20 +69,20 @@ test_bounding_box()
   test_points.clear();
 
   //To create outside points we take a non-convex combination
-  for(int t = 0; t < 5; ++t)
+  for(int t= 0; t < 5; ++t)
     {
       Point<spacedim> test_pt;
-      c = (1 + t) * 2.5;
+      c= (1 + t) * 2.5;
       if(t % 2 == 0)
-        c = -c; //Changing the sign sometimes..
-      for(unsigned int i = 0; i < spacedim; ++i)
-        test_pt[i] = boundaries.first[i] * c + boundaries.second[i] * c;
+        c= -c; //Changing the sign sometimes..
+      for(unsigned int i= 0; i < spacedim; ++i)
+        test_pt[i]= boundaries.first[i] * c + boundaries.second[i] * c;
 
       test_points.push_back(test_pt);
     }
 
   deallog << "Points outside:" << std::endl;
-  for(unsigned int i = 0; i < test_points.size(); ++i)
+  for(unsigned int i= 0; i < test_points.size(); ++i)
     deallog << test_points[i]
             << " is inside: " << b.point_inside(test_points[i]) << std::endl;
   deallog << std::endl;
@@ -93,9 +93,9 @@ test_unitary()
 {
   std::pair<Point<3>, Point<3>> boundaries;
 
-  for(int i = 0; i < 3; i++)
+  for(int i= 0; i < 3; i++)
     {
-      boundaries.second[i] = 1.0;
+      boundaries.second[i]= 1.0;
     }
 
   BoundingBox<3> b(boundaries);

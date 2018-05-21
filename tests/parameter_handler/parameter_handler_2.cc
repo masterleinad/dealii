@@ -34,7 +34,7 @@ main()
 
   std::string list;
   prm.enter_subsection("Testing");
-  list = prm.get("Function");
+  list= prm.get("Function");
   prm.leave_subsection();
 
   deallog << list << std::endl;

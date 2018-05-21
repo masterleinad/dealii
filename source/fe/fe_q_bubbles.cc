@@ -48,8 +48,8 @@ namespace internal
         std::vector<std::vector<FullMatrix<double>>>& matrices,
         const bool                                    isotropic_only)
       {
-        const unsigned int dpc    = fe.dofs_per_cell;
-        const unsigned int degree = fe.degree;
+        const unsigned int dpc   = fe.dofs_per_cell;
+        const unsigned int degree= fe.degree;
 
         // Initialize quadrature formula on fine cells
         std::unique_ptr<Quadrature<dim>> q_fine;
@@ -59,41 +59,41 @@ namespace internal
           {
             case 1:
               if(spacedim == 1)
-                q_fine = std_cxx14::make_unique<QGauss<dim>>(degree + 1);
+                q_fine= std_cxx14::make_unique<QGauss<dim>>(degree + 1);
               else if(spacedim == 2)
-                q_fine = std_cxx14::make_unique<QAnisotropic<dim>>(
+                q_fine= std_cxx14::make_unique<QAnisotropic<dim>>(
                   QGauss<1>(degree + 1), q_dummy);
               else
-                q_fine = std_cxx14::make_unique<QAnisotropic<dim>>(
+                q_fine= std_cxx14::make_unique<QAnisotropic<dim>>(
                   QGauss<1>(degree + 1), q_dummy, q_dummy);
               break;
             case 2:
               if(spacedim == 2)
-                q_fine = std_cxx14::make_unique<QGauss<dim>>(degree + 1);
+                q_fine= std_cxx14::make_unique<QGauss<dim>>(degree + 1);
               else
-                q_fine = std_cxx14::make_unique<QAnisotropic<dim>>(
+                q_fine= std_cxx14::make_unique<QAnisotropic<dim>>(
                   QGauss<1>(degree + 1), QGauss<1>(degree + 1), q_dummy);
               break;
             case 3:
-              q_fine = std_cxx14::make_unique<QGauss<dim>>(degree + 1);
+              q_fine= std_cxx14::make_unique<QGauss<dim>>(degree + 1);
               break;
             default:
               Assert(false, ExcInternalError());
           }
 
         Assert(q_fine.get() != nullptr, ExcInternalError());
-        const unsigned int nq = q_fine->size();
+        const unsigned int nq= q_fine->size();
 
         // loop over all possible refinement cases
-        unsigned int ref_case = (isotropic_only) ?
-                                  RefinementCase<dim>::isotropic_refinement :
-                                  RefinementCase<dim>::cut_x;
+        unsigned int ref_case= (isotropic_only) ?
+                                 RefinementCase<dim>::isotropic_refinement :
+                                 RefinementCase<dim>::cut_x;
         for(; ref_case <= RefinementCase<dim>::isotropic_refinement; ++ref_case)
           {
             const unsigned int nc
               = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
 
-            for(unsigned int i = 0; i < nc; ++i)
+            for(unsigned int i= 0; i < nc; ++i)
               {
                 Assert(
                   matrices[ref_case - 1][i].n() == dpc,
@@ -118,7 +118,7 @@ namespace internal
               *q_fine,
               update_quadrature_points | update_JxW_values | update_values);
 
-            const unsigned int n_dofs = dh.n_dofs();
+            const unsigned int n_dofs= dh.n_dofs();
 
             FullMatrix<double> fine_mass(n_dofs);
             FullMatrix<double> coarse_rhs_matrix(n_dofs, dpc);
@@ -127,7 +127,7 @@ namespace internal
               nc, std::vector<types::global_dof_index>(fe.dofs_per_cell));
 
             //now create the mass matrix and all the right_hand sides
-            unsigned int                                           child_no = 0;
+            unsigned int                                           child_no= 0;
             typename dealii::DoFHandler<dim>::active_cell_iterator cell
               = dh.begin_active();
             for(; cell != dh.end(); ++cell, ++child_no)
@@ -135,18 +135,18 @@ namespace internal
                 fine.reinit(cell);
                 cell->get_dof_indices(child_ldi[child_no]);
 
-                for(unsigned int q = 0; q < nq; ++q)
-                  for(unsigned int i = 0; i < dpc; ++i)
-                    for(unsigned int j = 0; j < dpc; ++j)
+                for(unsigned int q= 0; q < nq; ++q)
+                  for(unsigned int i= 0; i < dpc; ++i)
+                    for(unsigned int j= 0; j < dpc; ++j)
                       {
-                        const unsigned int gdi = child_ldi[child_no][i];
-                        const unsigned int gdj = child_ldi[child_no][j];
-                        fine_mass(gdi, gdj) += fine.shape_value(i, q)
-                                               * fine.shape_value(j, q)
-                                               * fine.JxW(q);
+                        const unsigned int gdi= child_ldi[child_no][i];
+                        const unsigned int gdj= child_ldi[child_no][j];
+                        fine_mass(gdi, gdj)+= fine.shape_value(i, q)
+                                              * fine.shape_value(j, q)
+                                              * fine.JxW(q);
                         Point<dim> quad_tmp;
-                        for(unsigned int k = 0; k < dim; ++k)
-                          quad_tmp(k) = fine.quadrature_point(q)(k);
+                        for(unsigned int k= 0; k < dim; ++k)
+                          quad_tmp(k)= fine.quadrature_point(q)(k);
                         coarse_rhs_matrix(gdi, j)
                           += fine.shape_value(i, q)
                              * fe.shape_value(j, quad_tmp) * fine.JxW(q);
@@ -159,14 +159,14 @@ namespace internal
             fine_mass.mmult(solution, coarse_rhs_matrix);
 
             //and distribute to the fine cell matrices
-            for(unsigned int child_no = 0; child_no < nc; ++child_no)
-              for(unsigned int i = 0; i < dpc; ++i)
-                for(unsigned int j = 0; j < dpc; ++j)
+            for(unsigned int child_no= 0; child_no < nc; ++child_no)
+              for(unsigned int i= 0; i < dpc; ++i)
+                for(unsigned int j= 0; j < dpc; ++j)
                   {
-                    const unsigned int gdi = child_ldi[child_no][i];
+                    const unsigned int gdi= child_ldi[child_no][i];
                     //remove small entries
                     if(std::fabs(solution(gdi, j)) > 1.e-12)
-                      matrices[ref_case - 1][child_no](i, j) = solution(gdi, j);
+                      matrices[ref_case - 1][child_no](i, j)= solution(gdi, j);
                   }
           }
       }
@@ -195,9 +195,9 @@ FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree)
 
   // adjust unit support point for discontinuous node
   Point<dim> point;
-  for(unsigned int d = 0; d < dim; ++d)
-    point[d] = 0.5;
-  for(unsigned int i = 0; i < n_bubbles; ++i)
+  for(unsigned int d= 0; d < dim; ++d)
+    point[d]= 0.5;
+  for(unsigned int i= 0; i < n_bubbles; ++i)
     this->unit_support_points.push_back(point);
   AssertDimension(this->dofs_per_cell, this->unit_support_points.size());
 
@@ -231,9 +231,9 @@ FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const Quadrature<1>& points)
 
   // adjust unit support point for discontinuous node
   Point<dim> point;
-  for(unsigned int d = 0; d < dim; ++d)
-    point[d] = 0.5;
-  for(unsigned int i = 0; i < n_bubbles; ++i)
+  for(unsigned int d= 0; d < dim; ++d)
+    point[d]= 0.5;
+  for(unsigned int i= 0; i < n_bubbles; ++i)
     this->unit_support_points.push_back(point);
   AssertDimension(this->dofs_per_cell, this->unit_support_points.size());
 
@@ -256,27 +256,26 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
   // kept in synch
 
   std::ostringstream             namebuf;
-  bool                           type     = true;
-  const unsigned int             n_points = this->degree;
+  bool                           type    = true;
+  const unsigned int             n_points= this->degree;
   std::vector<double>            points(n_points);
-  const unsigned int             dofs_per_cell = this->dofs_per_cell;
-  const std::vector<Point<dim>>& unit_support_points
-    = this->unit_support_points;
-  unsigned int index = 0;
+  const unsigned int             dofs_per_cell      = this->dofs_per_cell;
+  const std::vector<Point<dim>>& unit_support_points= this->unit_support_points;
+  unsigned int                   index              = 0;
 
   // Decode the support points in one coordinate direction.
-  for(unsigned int j = 0; j < dofs_per_cell; j++)
+  for(unsigned int j= 0; j < dofs_per_cell; j++)
     {
       if((dim > 1) ? (unit_support_points[j](1) == 0
                       && ((dim > 2) ? unit_support_points[j](2) == 0 : true)) :
                      true)
         {
           if(index == 0)
-            points[index] = unit_support_points[j](0);
+            points[index]= unit_support_points[j](0);
           else if(index == 1)
-            points[n_points - 1] = unit_support_points[j](0);
+            points[n_points - 1]= unit_support_points[j](0);
           else
-            points[index - 1] = unit_support_points[j](0);
+            points[index - 1]= unit_support_points[j](0);
 
           index++;
         }
@@ -287,10 +286,10 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
     ExcMessage("Could not decode support points in one coordinate direction."));
 
   // Check whether the support points are equidistant.
-  for(unsigned int j = 0; j < n_points; j++)
+  for(unsigned int j= 0; j < n_points; j++)
     if(std::fabs(points[j] - (double) j / (this->degree - 1)) > 1e-15)
       {
-        type = false;
+        type= false;
         break;
       }
 
@@ -307,11 +306,11 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
     {
       // Check whether the support points come from QGaussLobatto.
       const QGaussLobatto<1> points_gl(n_points);
-      type = true;
-      for(unsigned int j = 0; j < n_points; j++)
+      type= true;
+      for(unsigned int j= 0; j < n_points; j++)
         if(points[j] != points_gl.point(j)(0))
           {
-            type = false;
+            type= false;
             break;
           }
       if(type == true)
@@ -346,16 +345,16 @@ FE_Q_Bubbles<dim, spacedim>::
     support_point_values[0].size() == this->n_components(),
     ExcDimensionMismatch(support_point_values[0].size(), this->n_components()));
 
-  for(unsigned int i = 0; i < this->dofs_per_cell - 1; ++i)
+  for(unsigned int i= 0; i < this->dofs_per_cell - 1; ++i)
     {
       const std::pair<unsigned int, unsigned int> index
         = this->system_to_component_index(i);
-      nodal_values[i] = support_point_values[i](index.first);
+      nodal_values[i]= support_point_values[i](index.first);
     }
 
   // We don't use the bubble functions for local interpolation
-  for(unsigned int i = 0; i < n_bubbles; ++i)
-    nodal_values[nodal_values.size() - i - 1] = 0.;
+  for(unsigned int i= 0; i < n_bubbles; ++i)
+    nodal_values[nodal_values.size() - i - 1]= 0.;
 }
 
 template <int dim, int spacedim>
@@ -380,9 +379,9 @@ FE_Q_Bubbles<dim, spacedim>::get_interpolation_matrix(
     ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_cell));
 
   //Provide a short cut in case we are just inquiring the identity
-  auto casted_fe = dynamic_cast<const FEQBUBBLES*>(&x_source_fe);
+  auto casted_fe= dynamic_cast<const FEQBUBBLES*>(&x_source_fe);
   if(casted_fe != nullptr && casted_fe->degree == this->degree)
-    for(unsigned int i = 0; i < interpolation_matrix.m(); ++i)
+    for(unsigned int i= 0; i < interpolation_matrix.m(); ++i)
       interpolation_matrix.set(i, i, 1.);
   //else we need to do more...
   else
@@ -396,8 +395,8 @@ template <int dim, int spacedim>
 std::vector<bool>
 FE_Q_Bubbles<dim, spacedim>::get_riaf_vector(const unsigned int q_deg)
 {
-  unsigned int       n_cont_dofs = Utilities::fixed_power<dim>(q_deg + 1);
-  const unsigned int n_bubbles   = (q_deg <= 1 ? 1 : dim);
+  unsigned int       n_cont_dofs= Utilities::fixed_power<dim>(q_deg + 1);
+  const unsigned int n_bubbles  = (q_deg <= 1 ? 1 : dim);
   return std::vector<bool>(n_cont_dofs + n_bubbles, true);
 }
 
@@ -406,8 +405,8 @@ std::vector<unsigned int>
 FE_Q_Bubbles<dim, spacedim>::get_dpo_vector(const unsigned int q_deg)
 {
   std::vector<unsigned int> dpo(dim + 1, 1U);
-  for(unsigned int i = 1; i < dpo.size(); ++i)
-    dpo[i] = dpo[i - 1] * (q_deg - 1);
+  for(unsigned int i= 1; i < dpo.size(); ++i)
+    dpo[i]= dpo[i - 1] * (q_deg - 1);
 
   dpo[dim]
     += (q_deg <= 1 ? 1 : dim); //all the bubble functions are discontinuous

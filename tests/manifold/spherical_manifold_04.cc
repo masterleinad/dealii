@@ -42,15 +42,15 @@ using namespace dealii;
 void
 test(const double R)
 {
-  const unsigned int dim                          = 3;
-  const unsigned int global_mesh_refinement_steps = 4;
-  const unsigned int fe_degree                    = 2;
-  const unsigned int n_q_points_1d                = 3;
+  const unsigned int dim                         = 3;
+  const unsigned int global_mesh_refinement_steps= 4;
+  const unsigned int fe_degree                   = 2;
+  const unsigned int n_q_points_1d               = 3;
 
   // derived
   Point<dim> center;
-  for(unsigned int d = 0; d < dim; d++)
-    center[d] = d;
+  for(unsigned int d= 0; d < dim; d++)
+    center[d]= d;
 
   Triangulation<dim> triangulation;
   DoFHandler<dim>    dof_handler(triangulation);
@@ -67,16 +67,16 @@ test(const double R)
 
   FEValues<dim> fe_values(mapping, fe, quadrature_formula, update_JxW_values);
 
-  DoFHandler<dim>::active_cell_iterator cell = dof_handler.begin_active(),
-                                        endc = dof_handler.end();
-  const unsigned int n_q_points              = quadrature_formula.size();
+  DoFHandler<dim>::active_cell_iterator cell= dof_handler.begin_active(),
+                                        endc= dof_handler.end();
+  const unsigned int n_q_points             = quadrature_formula.size();
 
-  double volume = 0.;
+  double volume= 0.;
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      for(unsigned int q = 0; q < n_q_points; ++q)
-        volume += fe_values.JxW(q);
+      for(unsigned int q= 0; q < n_q_points; ++q)
+        volume+= fe_values.JxW(q);
     }
 
   deallog << "Volume:       " << volume << std::endl

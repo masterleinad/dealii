@@ -33,12 +33,12 @@ test()
   // try all possible component
   // masks, which we encode as bit
   // strings
-  for(unsigned int int_mask = 0; int_mask < (1U << fe.n_components());
+  for(unsigned int int_mask= 0; int_mask < (1U << fe.n_components());
       ++int_mask)
     {
       std::vector<bool> component_mask(fe.n_components());
-      for(unsigned int c = 0; c < fe.n_components(); ++c)
-        component_mask[c] = (int_mask & (1 << c));
+      for(unsigned int c= 0; c < fe.n_components(); ++c)
+        component_mask[c]= (int_mask & (1 << c));
 
       // now try to convert to a block
       // mask. this should not always

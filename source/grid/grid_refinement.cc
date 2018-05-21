@@ -50,23 +50,23 @@ GridRefinement::refine(Triangulation<dim, spacedim>& tria,
   if(criteria.all_zero())
     return;
 
-  const unsigned int n_cells = criteria.size();
+  const unsigned int n_cells= criteria.size();
 
   //TODO: This is undocumented, looks fishy and seems unnecessary
 
-  double new_threshold = threshold;
+  double new_threshold= threshold;
   // when threshold==0 find the
   // smallest value in criteria
   // greater 0
   if(new_threshold == 0)
     {
-      new_threshold = criteria(0);
-      for(unsigned int index = 1; index < n_cells; ++index)
+      new_threshold= criteria(0);
+      for(unsigned int index= 1; index < n_cells; ++index)
         if(criteria(index) > 0 && (criteria(index) < new_threshold))
-          new_threshold = criteria(index);
+          new_threshold= criteria(index);
     }
 
-  unsigned int marked = 0;
+  unsigned int marked= 0;
   for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
       = tria.begin_active();
       cell != tria.end();
@@ -114,8 +114,8 @@ GridRefinement::adjust_refine_and_coarsen_number_fraction(
   Assert(bottom_fraction <= 1, ExcInvalidParameterValue());
   Assert(top_fraction + bottom_fraction <= 1, ExcInvalidParameterValue());
 
-  double refine_cells  = current_n_cells * top_fraction;
-  double coarsen_cells = current_n_cells * bottom_fraction;
+  double refine_cells = current_n_cells * top_fraction;
+  double coarsen_cells= current_n_cells * bottom_fraction;
 
   const double cell_increase_on_refine
     = GeometryInfo<dim>::max_children_per_cell - 1.0;
@@ -138,11 +138,9 @@ GridRefinement::adjust_refine_and_coarsen_number_fraction(
       // anisotropically, assume isotropic
       // refinement here, though that may
       // result in a worse approximation
-      adjusted_fractions.first = 0;
-      coarsen_cells
-        = (current_n_cells - max_n_cells) / cell_decrease_on_coarsen;
-      adjusted_fractions.second
-        = std::min(coarsen_cells / current_n_cells, 1.0);
+      adjusted_fractions.first= 0;
+      coarsen_cells= (current_n_cells - max_n_cells) / cell_decrease_on_coarsen;
+      adjusted_fractions.second= std::min(coarsen_cells / current_n_cells, 1.0);
     }
   // otherwise, see if we would exceed the
   // maximum desired number of cells with the
@@ -170,12 +168,12 @@ GridRefinement::adjust_refine_and_coarsen_number_fraction(
       // of cells to be equal to
       // max_n_cells. this leads to the
       // following equation for alpha
-      const double alpha = 1. * (max_n_cells - current_n_cells)
-                           / (refine_cells * cell_increase_on_refine
-                              - coarsen_cells * cell_decrease_on_coarsen);
+      const double alpha= 1. * (max_n_cells - current_n_cells)
+                          / (refine_cells * cell_increase_on_refine
+                             - coarsen_cells * cell_decrease_on_coarsen);
 
-      adjusted_fractions.first  = alpha * top_fraction;
-      adjusted_fractions.second = alpha * bottom_fraction;
+      adjusted_fractions.first = alpha * top_fraction;
+      adjusted_fractions.second= alpha * bottom_fraction;
     }
   return (adjusted_fractions);
 }
@@ -264,26 +262,26 @@ GridRefinement::refine_and_coarsen_fixed_fraction(
   // up and compare with
   // @p{fraction_of_error*total_error}.
   Vector<Number> tmp;
-  tmp                      = criteria;
-  const double total_error = tmp.l1_norm();
+  tmp                     = criteria;
+  const double total_error= tmp.l1_norm();
 
   // sort the largest criteria to the
   // beginning of the vector
   std::sort(tmp.begin(), tmp.end(), std::greater<double>());
 
   // compute thresholds
-  typename Vector<Number>::const_iterator pp = tmp.begin();
-  for(double sum = 0;
+  typename Vector<Number>::const_iterator pp= tmp.begin();
+  for(double sum= 0;
       (sum < top_fraction * total_error) && (pp != (tmp.end() - 1));
       ++pp)
-    sum += *pp;
-  double top_threshold = (pp != tmp.begin() ? (*pp + *(pp - 1)) / 2 : *pp);
-  typename Vector<Number>::const_iterator qq = (tmp.end() - 1);
-  for(double sum = 0;
+    sum+= *pp;
+  double top_threshold= (pp != tmp.begin() ? (*pp + *(pp - 1)) / 2 : *pp);
+  typename Vector<Number>::const_iterator qq= (tmp.end() - 1);
+  for(double sum= 0;
       (sum < bottom_fraction * total_error) && (qq != tmp.begin());
       --qq)
-    sum += *qq;
-  double bottom_threshold = (qq != (tmp.end() - 1) ? (*qq + *(qq + 1)) / 2 : 0);
+    sum+= *qq;
+  double bottom_threshold= (qq != (tmp.end() - 1) ? (*qq + *(qq + 1)) / 2 : 0);
 
   // we now have an idea how many cells we
   // are going to refine and coarsen. we use
@@ -298,8 +296,8 @@ GridRefinement::refine_and_coarsen_fixed_fraction(
   // isotropic refinement as guess for a mixed
   // refinemnt as well.
   {
-    const unsigned int refine_cells  = pp - tmp.begin(),
-                       coarsen_cells = tmp.end() - qq;
+    const unsigned int refine_cells = pp - tmp.begin(),
+                       coarsen_cells= tmp.end() - qq;
 
     if(static_cast<unsigned int>(
          tria.n_active_cells()
@@ -351,10 +349,10 @@ GridRefinement::refine_and_coarsen_fixed_fraction(
   const auto minmax_element
     = std::minmax_element(criteria.begin(), criteria.end());
   if((top_threshold == *minmax_element.second) && (top_fraction != 1))
-    top_threshold *= 0.999;
+    top_threshold*= 0.999;
 
   if(bottom_threshold >= top_threshold)
-    bottom_threshold = 0.999 * top_threshold;
+    bottom_threshold= 0.999 * top_threshold;
 
   // actually flag cells
   if(top_threshold < *minmax_element.second)
@@ -384,27 +382,27 @@ GridRefinement::refine_and_coarsen_optimize(Triangulation<dim, spacedim>& tria,
               return criteria[left] > criteria[right];
             });
 
-  double       expected_error_reduction = 0;
-  const double original_error           = criteria.l1_norm();
+  double       expected_error_reduction= 0;
+  const double original_error          = criteria.l1_norm();
 
-  const std::size_t N = criteria.size();
+  const std::size_t N= criteria.size();
 
   // minimize the cost functional discussed in the documentation
-  double      min_cost = std::numeric_limits<double>::max();
-  std::size_t min_arg  = 0;
+  double      min_cost= std::numeric_limits<double>::max();
+  std::size_t min_arg = 0;
 
-  for(std::size_t M = 0; M < criteria.size(); ++M)
+  for(std::size_t M= 0; M < criteria.size(); ++M)
     {
       expected_error_reduction
         += (1 - std::pow(2., -1. * order)) * criteria(cell_indices[M]);
 
-      const double cost = std::pow(((std::pow(2., dim) - 1) * (1 + M) + N),
-                                   (double) order / dim)
-                          * (original_error - expected_error_reduction);
+      const double cost= std::pow(((std::pow(2., dim) - 1) * (1 + M) + N),
+                                  (double) order / dim)
+                         * (original_error - expected_error_reduction);
       if(cost <= min_cost)
         {
-          min_cost = cost;
-          min_arg  = M;
+          min_cost= cost;
+          min_arg = M;
         }
     }
 

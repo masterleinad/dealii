@@ -39,8 +39,8 @@ template <class LA, int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -53,8 +53,8 @@ test()
     typename Triangulation<dim>::MeshSmoothing(
       Triangulation<dim>::smoothing_on_refinement
       | Triangulation<dim>::smoothing_on_coarsening));
-  const double R0 = 6371000. - 2890000;
-  const double R1 = 6371000. - 35000.;
+  const double R0= 6371000. - 2890000;
+  const double R1= 6371000. - 35000.;
   GridGenerator::hyper_shell(
     triangulation, Point<dim>(), R0, R1, (dim == 3) ? 96 : 12, true);
 
@@ -63,7 +63,7 @@ test()
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(temperature_fe);
 
-  IndexSet owned = dof_handler.locally_owned_dofs();
+  IndexSet owned= dof_handler.locally_owned_dofs();
   IndexSet relevant;
   DoFTools::extract_locally_relevant_dofs(dof_handler, relevant);
 
@@ -96,8 +96,8 @@ test_trilinos_alternative()
 {
   typedef LA_Trilinos LA;
 
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -110,8 +110,8 @@ test_trilinos_alternative()
     typename Triangulation<dim>::MeshSmoothing(
       Triangulation<dim>::smoothing_on_refinement
       | Triangulation<dim>::smoothing_on_coarsening));
-  const double R0 = 6371000. - 2890000;
-  const double R1 = 6371000. - 35000.;
+  const double R0= 6371000. - 2890000;
+  const double R1= 6371000. - 35000.;
   GridGenerator::hyper_shell(
     triangulation, Point<dim>(), R0, R1, (dim == 3) ? 96 : 12, true);
 
@@ -120,7 +120,7 @@ test_trilinos_alternative()
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(temperature_fe);
 
-  IndexSet owned = dof_handler.locally_owned_dofs();
+  IndexSet owned= dof_handler.locally_owned_dofs();
   IndexSet relevant;
   DoFTools::extract_locally_relevant_dofs(dof_handler, relevant);
 

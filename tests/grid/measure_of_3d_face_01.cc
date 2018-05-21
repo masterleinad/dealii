@@ -29,7 +29,7 @@ Point<3> distort_planar(Point<3> p)
 {
   if(p(1) > 0.5 && p(2) > 0.5)
     {
-      p(1) += 1;
+      p(1)+= 1;
     }
   return p;
 }
@@ -40,7 +40,7 @@ Point<3> distort_twisted(Point<3> p)
 {
   if(p(2) > 0.5 && (p(0) > 0.5 ^ p(1) > 0.5))
     {
-      p(2) += 1;
+      p(2)+= 1;
     }
   return p;
 }
@@ -56,12 +56,12 @@ test()
   GridTools::transform(&distort_planar, tria);
   gridout.write_eps(tria, deallog.get_file_stream());
 
-  double measure_planar[] = {1.5, 1.5, 1, ::sqrt(2), 1, 2};
+  double measure_planar[]= {1.5, 1.5, 1, ::sqrt(2), 1, 2};
   deallog << "Face\tExact\tMeasure" << std::endl;
-  Triangulation<3>::active_cell_iterator cell = tria.begin_active();
-  for(int i = 0; i < 6; ++i)
+  Triangulation<3>::active_cell_iterator cell= tria.begin_active();
+  for(int i= 0; i < 6; ++i)
     {
-      double m = cell->face(i)->measure();
+      double m= cell->face(i)->measure();
       deallog << i << '\t' << measure_planar[i] << '\t' << m << std::endl;
     }
 
@@ -71,19 +71,19 @@ test()
   GridTools::transform(&distort_twisted, tria);
   gridout.write_eps(tria, deallog.get_file_stream());
 
-  double measure_twisted[] = {1.5, 1.5, 1.5, 1.5, 1, 5. / 3};
+  double measure_twisted[]= {1.5, 1.5, 1.5, 1.5, 1, 5. / 3};
   deallog << "Face\tExact\tMeasure" << std::endl;
-  cell = tria.begin_active();
-  for(int i = 0; i < 6; ++i)
+  cell= tria.begin_active();
+  for(int i= 0; i < 6; ++i)
     {
       double m;
       try
         {
-          m = cell->face(i)->measure();
+          m= cell->face(i)->measure();
         }
       catch(...)
         {
-          m = std::numeric_limits<double>::quiet_NaN();
+          m= std::numeric_limits<double>::quiet_NaN();
         }
       deallog << i << '\t' << measure_twisted[i] << '\t' << m << std::endl;
     }

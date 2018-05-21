@@ -39,12 +39,12 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
   std::vector<unsigned int> sub(2);
-  sub[0] = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  sub[1] = 1;
+  sub[0]= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  sub[1]= 1;
   GridGenerator::subdivided_hyper_rectangle(
     static_cast<Triangulation<dim>&>(tr), sub, Point<2>(0, 0), Point<2>(1, 1));
 
@@ -74,7 +74,7 @@ test()
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         dof_set.print(deallog);
-        for(unsigned int i = 0;
+        for(unsigned int i= 0;
             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
             ++i)
           {
@@ -87,15 +87,15 @@ test()
     if(myid == 0)
       {
         std::vector<types::global_dof_index>           local_dof_indices;
-        typename DoFHandler<dim>::active_cell_iterator cell, endc = dofh.end();
+        typename DoFHandler<dim>::active_cell_iterator cell, endc= dofh.end();
 
         if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-          for(cell = dofh.begin_active(); cell != endc; ++cell)
+          for(cell= dofh.begin_active(); cell != endc; ++cell)
             if(!cell->is_artificial() && !cell->is_ghost())
               {
                 local_dof_indices.resize(cell->get_fe().dofs_per_cell);
                 cell->get_dof_indices(local_dof_indices);
-                for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
+                for(unsigned int i= 0; i < cell->get_fe().dofs_per_cell; ++i)
                   deallog << local_dof_indices[i] << " ";
                 deallog << std::endl;
               }
@@ -108,7 +108,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

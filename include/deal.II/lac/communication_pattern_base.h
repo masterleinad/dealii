@@ -41,7 +41,7 @@ namespace LinearAlgebra
     /**
      * Destructor.
      */
-    virtual ~CommunicationPatternBase() = default;
+    virtual ~CommunicationPatternBase()= default;
 
     /**
      * Reinitialize the communication pattern. The first argument @p
@@ -60,7 +60,7 @@ namespace LinearAlgebra
      * Return a constant reference to the underlying mpi communicator.
      */
     virtual const MPI_Comm&
-    get_mpi_communicator() const = 0;
+    get_mpi_communicator() const= 0;
   };
 
 } // end of namespace LinearAlgebra

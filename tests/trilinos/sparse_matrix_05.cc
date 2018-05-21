@@ -39,10 +39,10 @@ main(int argc, char** argv)
   sparsity.compress();
   SparseMatrix<double> matrix(sparsity);
   {
-    double value = 1;
-    for(SparseMatrix<double>::iterator p = matrix.begin(); p != matrix.end();
+    double value= 1;
+    for(SparseMatrix<double>::iterator p= matrix.begin(); p != matrix.end();
         ++p, ++value)
-      p->value() = value;
+      p->value()= value;
   }
   deallog << "Original:" << std::endl;
   matrix.print_formatted(deallog.get_file_stream());

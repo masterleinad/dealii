@@ -44,17 +44,17 @@ backtrace:
 void
 iterate(DynamicSparsityPattern& sp)
 {
-  DynamicSparsityPattern::const_iterator i = sp.begin();
+  DynamicSparsityPattern::const_iterator i= sp.begin();
   for(; i != sp.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 
   deallog << "OK" << std::endl;
 
   {
-    for(unsigned int row = 0; row < sp.n_rows(); ++row)
+    for(unsigned int row= 0; row < sp.n_rows(); ++row)
       {
-        DynamicSparsityPattern::iterator col     = sp.begin(row),
-                                         end_col = sp.end(row);
+        DynamicSparsityPattern::iterator col    = sp.begin(row),
+                                         end_col= sp.end(row);
         deallog << "row " << row << ":" << std::endl;
         for(; col != end_col; ++col)
           {

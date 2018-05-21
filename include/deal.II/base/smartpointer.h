@@ -58,7 +58,7 @@ DEAL_II_NAMESPACE_OPEN
  * @ingroup memory
  * @author Guido Kanschat, Wolfgang Bangerth, 1998 - 2009
  */
-template <typename T, typename P = void>
+template <typename T, typename P= void>
 class SmartPointer
 {
 public:
@@ -249,7 +249,7 @@ SmartPointer<T, P>::clear()
     {
       t->unsubscribe(id);
       delete t;
-      t = nullptr;
+      t= nullptr;
     }
 }
 
@@ -264,7 +264,7 @@ SmartPointer<T, P>::operator=(T* tt)
 
   if(t != nullptr)
     t->unsubscribe(id);
-  t = tt;
+  t= tt;
   if(tt != nullptr)
     tt->subscribe(id);
   return *this;
@@ -283,7 +283,7 @@ SmartPointer<T, P>::operator=(const SmartPointer<T, Q>& tt)
 
   if(t != nullptr)
     t->unsubscribe(id);
-  t = static_cast<T*>(tt);
+  t= static_cast<T*>(tt);
   if(tt != nullptr)
     tt->subscribe(id);
   return *this;
@@ -301,7 +301,7 @@ SmartPointer<T, P>::operator=(const SmartPointer<T, P>& tt)
 
   if(t != nullptr)
     t->unsubscribe(id);
-  t = static_cast<T*>(tt);
+  t= static_cast<T*>(tt);
   if(tt != nullptr)
     tt->subscribe(id);
   return *this;
@@ -334,8 +334,8 @@ SmartPointer<T, P>::swap(SmartPointer<T, Q>& tt)
 {
 #ifdef DEBUG
   SmartPointer<T, P> aux(t, id);
-  *this = tt;
-  tt    = aux;
+  *this= tt;
+  tt   = aux;
 #else
   std::swap(t, tt.t);
 #endif

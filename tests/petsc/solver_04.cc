@@ -35,8 +35,8 @@ main(int argc, char** argv)
   {
     SolverControl control(100, 1.e-3);
 
-    const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    const unsigned int size= 32;
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -49,7 +49,7 @@ main(int argc, char** argv)
     indices.add_range(0, dim);
     PETScWrappers::MPI::Vector f(indices, MPI_COMM_WORLD);
     PETScWrappers::MPI::Vector u(indices, MPI_COMM_WORLD);
-    f = 1.;
+    f= 1.;
     A.compress(VectorOperation::insert);
 
     PETScWrappers::SolverBiCG         solver(control);

@@ -53,7 +53,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;
   {
-    const unsigned int dim = 2;
+    const unsigned int dim= 2;
 
     MPI_Comm                                  mpi_communicator(MPI_COMM_WORLD);
     parallel::distributed::Triangulation<dim> triangulation(
@@ -72,7 +72,7 @@ main(int argc, char* argv[])
     IndexSet                           locally_owned_dofs;
     IndexSet                           locally_relevant_dofs;
 
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
     locally_relevant_sol.reinit(
       locally_owned_dofs, locally_relevant_dofs, mpi_communicator);

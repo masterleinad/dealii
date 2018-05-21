@@ -24,9 +24,9 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   // set some entries of the vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     if(i % 3 == 0)
-      v(i) = i + 1.;
+      v(i)= i + 1.;
   v.compress(VectorOperation::insert);
 
   // then resize with setting to zero

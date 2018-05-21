@@ -192,42 +192,42 @@ public:
     /**
      * Indicates incompatible continuities of a system.
      */
-    unknown = 0x00,
+    unknown= 0x00,
 
     /**
      * Discontinuous elements. See above!
      */
-    L2 = 0x01,
+    L2= 0x01,
 
     /**
      * Conformity with the space <i>H<sup>curl</sup></i> (continuous
      * tangential component of a vector field)
      */
-    Hcurl = 0x02,
+    Hcurl= 0x02,
 
     /**
      * Conformity with the space <i>H<sup>div</sup></i> (continuous normal
      * component of a vector field)
      */
-    Hdiv = 0x04,
+    Hdiv= 0x04,
 
     /**
      * Conformity with the space <i>H<sup>1</sup></i> (continuous)
      */
-    H1 = Hcurl | Hdiv,
+    H1= Hcurl | Hdiv,
 
     /**
      * Conformity with the space <i>H<sup>2</sup></i> (continuously
      * differentiable)
      */
-    H2 = 0x0e
+    H2= 0x0e
   };
 
   /**
    * The dimension of the finite element, which is the template parameter
    * <tt>dim</tt>
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Number of degrees of freedom on a vertex.
@@ -360,8 +360,8 @@ public:
   FiniteElementData(const std::vector<unsigned int>& dofs_per_object,
                     const unsigned int               n_components,
                     const unsigned int               degree,
-                    const Conformity                 conformity = unknown,
-                    const BlockIndices& block_indices = BlockIndices());
+                    const Conformity                 conformity= unknown,
+                    const BlockIndices& block_indices= BlockIndices());
 
   /**
    * Number of dofs per vertex.

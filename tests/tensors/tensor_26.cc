@@ -30,9 +30,9 @@ test_tensor()
   // a real tensor
   Tensor<1, dim, double> t;
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      t[i] = 2 * i + dim + 1;
+      t[i]= 2 * i + dim + 1;
     }
 
   // multiply on the right by a complex<double>

@@ -26,7 +26,7 @@ int
 main()
 {
   initlog();
-  AssembleFlags flag = assemble_own_cells | assemble_boundary_faces;
+  AssembleFlags flag= assemble_own_cells | assemble_boundary_faces;
 
   deallog.get_file_stream() << flag << std::endl;
 }

@@ -105,16 +105,16 @@ namespace Maxwell
   {
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
-    const unsigned int n_points = points.size();
+    const unsigned int n_points= points.size();
 
-    for(unsigned int i = 0; i < n_points; ++i)
+    for(unsigned int i= 0; i < n_points; ++i)
       {
-        const Point<dim>& p = points[i];
+        const Point<dim>& p= points[i];
 
         /* quadratic: */
-        value_list[i](0) = p(0) * p(0);
-        value_list[i](1) = p(1) * p(1);
-        value_list[i](2) = p(2) * p(2);
+        value_list[i](0)= p(0) * p(0);
+        value_list[i](1)= p(1) * p(1);
+        value_list[i](2)= p(2) * p(2);
       }
   }
   // Additional functions to create Neumann conditions, zero in this case.
@@ -125,16 +125,16 @@ namespace Maxwell
   {
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
-    const unsigned int n_points = points.size();
+    const unsigned int n_points= points.size();
 
     double exponent;
-    for(unsigned int i = 0; i < n_points; ++i)
+    for(unsigned int i= 0; i < n_points; ++i)
       {
-        const Point<dim>& p = points[i];
+        const Point<dim>& p= points[i];
         // Real:
-        value_list[i](0) = 0.0;
-        value_list[i](1) = 0.0;
-        value_list[i](2) = 0.0;
+        value_list[i](0)= 0.0;
+        value_list[i](1)= 0.0;
+        value_list[i](2)= 0.0;
       }
   }
   // END Dirichlet BC
@@ -184,8 +184,8 @@ namespace Maxwell
   MaxwellProblem<dim>::MaxwellProblem(const unsigned int order)
     : mapping(1), dof_handler(triangulation), fe(order), exact_solution()
   {
-    p_order    = order;
-    quad_order = 2 * (p_order + 1);
+    p_order   = order;
+    quad_order= 2 * (p_order + 1);
   }
 
   template <int dim>
@@ -198,7 +198,7 @@ namespace Maxwell
   MaxwellProblem<dim>::calcErrorHcurlNorm()
   {
     QGauss<dim>        quadrature_formula(quad_order);
-    const unsigned int n_q_points = quadrature_formula.size();
+    const unsigned int n_q_points= quadrature_formula.size();
 
     FEValues<dim> fe_values(mapping,
                             fe,
@@ -209,7 +209,7 @@ namespace Maxwell
     // Extractor
     const FEValuesExtractors::Vector E_re(0);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -225,13 +225,13 @@ namespace Maxwell
     std::vector<Tensor<1, dim>> sol(n_q_points);
     Tensor<1, dim>              curlsol;
 
-    double h_curl_norm = 0.0;
+    double h_curl_norm= 0.0;
 
     unsigned int block_index_i;
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
@@ -248,21 +248,21 @@ namespace Maxwell
         // Calc values of curlE from fe solution:
         cell->get_dof_indices(local_dof_indices);
         // Loop over quad points to calculate solution:
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           {
             // Split exact solution into real/imaginary parts:
-            for(unsigned int component = 0; component < dim; component++)
+            for(unsigned int component= 0; component < dim; component++)
               {
-                exactsol[component]     = exactsol_list[q_point][component];
-                exactcurlsol[component] = exactcurlsol_list[q_point][component];
+                exactsol[component]    = exactsol_list[q_point][component];
+                exactcurlsol[component]= exactcurlsol_list[q_point][component];
               }
             // Loop over DoFs to calculate curl of solution @ quad point
-            curlsol = 0.0;
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            curlsol= 0.0;
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
                 // Construct local curl value @ quad point
-                curlsol += solution(local_dof_indices[i])
-                           * fe_values[E_re].curl(i, q_point);
+                curlsol+= solution(local_dof_indices[i])
+                          * fe_values[E_re].curl(i, q_point);
               }
             // Integrate difference at each point:
             h_curl_norm
@@ -306,10 +306,10 @@ namespace Maxwell
     QGauss<dim>     quadrature_formula(quad_order);
     QGauss<dim - 1> face_quadrature_formula(quad_order);
 
-    const unsigned int n_q_points      = quadrature_formula.size();
-    const unsigned int n_face_q_points = face_quadrature_formula.size();
+    const unsigned int n_q_points     = quadrature_formula.size();
+    const unsigned int n_face_q_points= face_quadrature_formula.size();
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
     FEValues<dim> fe_values(mapping,
                             fe,
@@ -349,31 +349,30 @@ namespace Maxwell
     // loop over all cells:
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
 
         // Calc RHS values:
         exact_solution.vector_value_list(fe_values.get_quadrature_points(),
                                          rhs_value_list);
 
         // Loop over all element quad points:
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           {
             // store rhs value at this q point & turn into tensor
-            for(unsigned int component = 0; component < dim; component++)
+            for(unsigned int component= 0; component < dim; component++)
               {
-                rhs_value_vector[component]
-                  = rhs_value_list[q_point](component);
+                rhs_value_vector[component]= rhs_value_list[q_point](component);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
                 // Construct local matrix:
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
                   {
                     cell_matrix(i, j)
                       += ((fe_values[E_re].curl(i, q_point)
@@ -383,9 +382,9 @@ namespace Maxwell
                          * fe_values.JxW(q_point);
                   }
                 // construct local RHS:
-                cell_rhs(i) += rhs_value_vector
-                               * fe_values[E_re].value(i, q_point)
-                               * fe_values.JxW(q_point);
+                cell_rhs(i)+= rhs_value_vector
+                              * fe_values[E_re].value(i, q_point)
+                              * fe_values.JxW(q_point);
               }
           }
 
@@ -419,9 +418,9 @@ namespace Maxwell
                                       QGauss<dim>(quad_order + 2),
                                       VectorTools::L2_norm);
 
-    const double L2_error = diff_per_cell.l2_norm();
+    const double L2_error= diff_per_cell.l2_norm();
 
-    double Hcurl_error = calcErrorHcurlNorm();
+    double Hcurl_error= calcErrorHcurlNorm();
 
     convergence_table.add_value("cycle", cycle);
     convergence_table.add_value("cells", triangulation.n_active_cells());
@@ -434,9 +433,9 @@ namespace Maxwell
   void
   MaxwellProblem<dim>::run()
   {
-    unsigned int numcycles = (p_order > 1) ? 2 : 3;
+    unsigned int numcycles= (p_order > 1) ? 2 : 3;
 
-    for(unsigned int cycle = 0; cycle < numcycles; ++cycle)
+    for(unsigned int cycle= 0; cycle < numcycles; ++cycle)
       {
         if(cycle == 0)
           {
@@ -481,7 +480,7 @@ main()
 
   initlog();
 
-  for(unsigned int p = 0; p < 3; ++p)
+  for(unsigned int p= 0; p < 3; ++p)
     {
       MaxwellProblem<3>(p).run();
     }

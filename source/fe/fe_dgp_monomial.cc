@@ -42,7 +42,7 @@ namespace internal
       // located at
       //
       // points[start_index[k]..start_index[k+1]-1]
-      const unsigned int start_index2d[6] = {0, 1, 4, 10, 20, 35};
+      const unsigned int start_index2d[6]= {0, 1, 4, 10, 20, 35};
       const double       points2d[35][2]
         = {{0, 0},       {0, 0},       {1, 0},       {0, 1},       {0, 0},
            {1, 0},       {0, 1},       {1, 1},       {0.5, 0},     {0, 0.5},
@@ -58,22 +58,22 @@ namespace internal
       //
       // k    0  1  2  3  4  5  6   7
       // dofs 1  4 10 20 35 56 84 120
-      const unsigned int start_index3d[6] = {0, 1, 5, 15 /*,35*/};
-      const double       points3d[35][3]  = {{0, 0, 0},
-                                      {0, 0, 0},
-                                      {1, 0, 0},
-                                      {0, 1, 0},
-                                      {0, 0, 1},
-                                      {0, 0, 0},
-                                      {1, 0, 0},
-                                      {0, 1, 0},
-                                      {0, 0, 1},
-                                      {0.5, 0, 0},
-                                      {0, 0.5, 0},
-                                      {0, 0, 0.5},
-                                      {1, 1, 0},
-                                      {1, 0, 1},
-                                      {0, 1, 1}};
+      const unsigned int start_index3d[6]= {0, 1, 5, 15 /*,35*/};
+      const double       points3d[35][3] = {{0, 0, 0},
+                                     {0, 0, 0},
+                                     {1, 0, 0},
+                                     {0, 1, 0},
+                                     {0, 0, 1},
+                                     {0, 0, 0},
+                                     {1, 0, 0},
+                                     {0, 1, 0},
+                                     {0, 0, 1},
+                                     {0.5, 0, 0},
+                                     {0, 0.5, 0},
+                                     {0, 0, 0.5},
+                                     {1, 1, 0},
+                                     {1, 0, 1},
+                                     {0, 1, 1}};
 
       template <int dim>
       void
@@ -84,9 +84,9 @@ namespace internal
       generate_unit_points(const unsigned int k, std::vector<Point<1>>& p)
       {
         Assert(p.size() == k + 1, ExcDimensionMismatch(p.size(), k + 1));
-        const double h = 1. / k;
-        for(unsigned int i = 0; i < p.size(); ++i)
-          p[i](0) = i * h;
+        const double h= 1. / k;
+        for(unsigned int i= 0; i < p.size(); ++i)
+          p[i](0)= i * h;
       }
 
       template <>
@@ -96,10 +96,10 @@ namespace internal
         Assert(k <= 4, ExcNotImplemented());
         Assert(p.size() == start_index2d[k + 1] - start_index2d[k],
                ExcInternalError());
-        for(unsigned int i = 0; i < p.size(); ++i)
+        for(unsigned int i= 0; i < p.size(); ++i)
           {
-            p[i](0) = points2d[start_index2d[k] + i][0];
-            p[i](1) = points2d[start_index2d[k] + i][1];
+            p[i](0)= points2d[start_index2d[k] + i][0];
+            p[i](1)= points2d[start_index2d[k] + i][1];
           }
       }
 
@@ -110,11 +110,11 @@ namespace internal
         Assert(k <= 2, ExcNotImplemented());
         Assert(p.size() == start_index3d[k + 1] - start_index3d[k],
                ExcInternalError());
-        for(unsigned int i = 0; i < p.size(); ++i)
+        for(unsigned int i= 0; i < p.size(); ++i)
           {
-            p[i](0) = points3d[start_index3d[k] + i][0];
-            p[i](1) = points3d[start_index3d[k] + i][1];
-            p[i](2) = points3d[start_index3d[k] + i][2];
+            p[i](0)= points3d[start_index3d[k] + i][0];
+            p[i](1)= points3d[start_index3d[k] + i][1];
+            p[i](2)= points3d[start_index3d[k] + i][2];
           }
       }
     } // namespace
@@ -191,8 +191,8 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
       // ok, source_fe is a DGP_Monomial
       // element. Then, the interpolation
       // matrix is simple
-      const unsigned int m = interpolation_matrix.m();
-      const unsigned int n = interpolation_matrix.n();
+      const unsigned int m= interpolation_matrix.m();
+      const unsigned int n= interpolation_matrix.n();
       (void) m;
       (void) n;
       Assert(m == this->dofs_per_cell,
@@ -205,8 +205,8 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
             interpolation_matrix.m() :
             interpolation_matrix.n();
 
-      for(unsigned int i = 0; i < min_mn; ++i)
-        interpolation_matrix(i, i) = 1.;
+      for(unsigned int i= 0; i < min_mn; ++i)
+        interpolation_matrix(i, i)= 1.;
     }
   else
     {
@@ -215,14 +215,14 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
 
       FullMatrix<double> source_fe_matrix(unit_points.size(),
                                           source_fe.dofs_per_cell);
-      for(unsigned int j = 0; j < source_fe.dofs_per_cell; ++j)
-        for(unsigned int k = 0; k < unit_points.size(); ++k)
-          source_fe_matrix(k, j) = source_fe.shape_value(j, unit_points[k]);
+      for(unsigned int j= 0; j < source_fe.dofs_per_cell; ++j)
+        for(unsigned int k= 0; k < unit_points.size(); ++k)
+          source_fe_matrix(k, j)= source_fe.shape_value(j, unit_points[k]);
 
       FullMatrix<double> this_matrix(this->dofs_per_cell, this->dofs_per_cell);
-      for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
-        for(unsigned int k = 0; k < unit_points.size(); ++k)
-          this_matrix(k, j) = this->poly_space.compute_value(j, unit_points[k]);
+      for(unsigned int j= 0; j < this->dofs_per_cell; ++j)
+        for(unsigned int k= 0; k < unit_points.size(); ++k)
+          this_matrix(k, j)= this->poly_space.compute_value(j, unit_points[k]);
 
       this_matrix.gauss_jordan();
 
@@ -246,11 +246,11 @@ std::vector<unsigned int>
 FE_DGPMonomial<dim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, 0U);
-  dpo[dim] = deg + 1;
-  for(unsigned int i = 1; i < dim; ++i)
+  dpo[dim]= deg + 1;
+  for(unsigned int i= 1; i < dim; ++i)
     {
-      dpo[dim] *= deg + 1 + i;
-      dpo[dim] /= i + 1;
+      dpo[dim]*= deg + 1 + i;
+      dpo[dim]/= i + 1;
     }
   return dpo;
 }
@@ -388,9 +388,9 @@ bool
 FE_DGPMonomial<2>::has_support_on_face(const unsigned int shape_index,
                                        const unsigned int face_index) const
 {
-  bool support_on_face = false;
+  bool support_on_face= false;
   if(face_index == 1 || face_index == 2)
-    support_on_face = true;
+    support_on_face= true;
   else
     {
       const std::array<unsigned int, 2> degrees
@@ -398,7 +398,7 @@ FE_DGPMonomial<2>::has_support_on_face(const unsigned int shape_index,
 
       if((face_index == 0 && degrees[1] == 0)
          || (face_index == 3 && degrees[0] == 0))
-        support_on_face = true;
+        support_on_face= true;
     }
   return support_on_face;
 }
@@ -408,9 +408,9 @@ bool
 FE_DGPMonomial<3>::has_support_on_face(const unsigned int shape_index,
                                        const unsigned int face_index) const
 {
-  bool support_on_face = false;
+  bool support_on_face= false;
   if(face_index == 1 || face_index == 3 || face_index == 4)
-    support_on_face = true;
+    support_on_face= true;
   else
     {
       const std::array<unsigned int, 3> degrees
@@ -419,7 +419,7 @@ FE_DGPMonomial<3>::has_support_on_face(const unsigned int shape_index,
       if((face_index == 0 && degrees[1] == 0)
          || (face_index == 2 && degrees[2] == 0)
          || (face_index == 5 && degrees[0] == 0))
-        support_on_face = true;
+        support_on_face= true;
     }
   return support_on_face;
 }

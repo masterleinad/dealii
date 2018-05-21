@@ -45,7 +45,7 @@ namespace Differentiation
      */
     template <typename ScalarType,
               enum NumberTypes ADNumberTypeCode,
-              typename T = void>
+              typename T= void>
     struct NumberTraits;
 
     /**
@@ -62,7 +62,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename ADNumberType, typename T = void>
+    template <typename ADNumberType, typename T= void>
     struct ADNumberTraits;
 
     /**
@@ -104,7 +104,7 @@ namespace Differentiation
        */
       template <typename ScalarType,
                 enum NumberTypes ADNumberTypeCode,
-                typename = void>
+                typename= void>
       struct ADNumberInfoFromEnum;
 
       /**
@@ -138,7 +138,7 @@ namespace Differentiation
        *
        * @author Jean-Paul Pelteret, 2017
        */
-      template <typename ADNumberType, typename T = void>
+      template <typename ADNumberType, typename T= void>
       struct Marking;
 
       /**
@@ -172,7 +172,7 @@ namespace Differentiation
        *
        * @author Jean-Paul Pelteret, 2017
        */
-      template <typename ADNumberType, typename T = void>
+      template <typename ADNumberType, typename T= void>
       struct ExtractData;
 
       /**
@@ -189,7 +189,7 @@ namespace Differentiation
        *
        * @author Jean-Paul Pelteret, 2017
        */
-      template <typename ADNumberTrait, typename T = void>
+      template <typename ADNumberTrait, typename T= void>
       struct HasRequiredADInfo;
 
       /**
@@ -241,7 +241,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_taped_ad_number;
 
     /**
@@ -252,7 +252,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_tapeless_ad_number;
 
     /**
@@ -263,7 +263,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_real_valued_ad_number;
 
     /**
@@ -274,7 +274,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_complex_valued_ad_number;
 
   } // namespace AD
@@ -338,7 +338,7 @@ namespace Differentiation
                              const unsigned int,
                              ADNumberType& out)
         {
-          out = in;
+          out= in;
         }
 
         /*
@@ -377,7 +377,7 @@ namespace Differentiation
             false,
             ExcMessage(
               "Marking for complex numbers has not yet been implemented."));
-          out = in;
+          out= in;
         }
 
         /*
@@ -589,7 +589,7 @@ namespace Differentiation
         template <typename F>
         static auto
         value(const F& f,
-              typename std::enable_if<!is_ad_number<F>::value>::type* = nullptr)
+              typename std::enable_if<!is_ad_number<F>::value>::type*= nullptr)
           -> decltype(dealii::internal::NumberType<T>::value(f))
         {
           // We call the other function defined in the numbers
@@ -608,7 +608,7 @@ namespace Differentiation
         value(const F& f,
               typename std::enable_if<
                 is_ad_number<F>::value
-                && std::is_arithmetic<T>::value>::type* = nullptr)
+                && std::is_arithmetic<T>::value>::type*= nullptr)
         {
           // We recursively call this function in case the AD number is a
           // nested one. The recursion ends when the extracted value is
@@ -627,7 +627,7 @@ namespace Differentiation
         value(
           const F& f,
           typename std::enable_if<is_ad_number<F>::value
-                                  && is_ad_number<T>::value>::type* = nullptr)
+                                  && is_ad_number<T>::value>::type*= nullptr)
         {
           return T(f);
         }
@@ -642,7 +642,7 @@ namespace Differentiation
         template <typename F>
         static auto
         value(const F& f,
-              typename std::enable_if<!is_ad_number<F>::value>::type* = nullptr)
+              typename std::enable_if<!is_ad_number<F>::value>::type*= nullptr)
           -> decltype(dealii::internal::NumberType<std::complex<T>>::value(f))
         {
           // We call the other function defined in the numbers
@@ -659,7 +659,7 @@ namespace Differentiation
         value(const F& f,
               typename std::enable_if<
                 is_ad_number<F>::value
-                && std::is_arithmetic<T>::value>::type* = nullptr)
+                && std::is_arithmetic<T>::value>::type*= nullptr)
         {
           // We recursively call this function in case the AD number is a
           // nested one. The recursion ends when the extracted value is
@@ -714,7 +714,7 @@ namespace Differentiation
       /**
        * The type of taping used
        */
-      static constexpr enum NumberTypes type_code = ADNumberTypeCode;
+      static constexpr enum NumberTypes type_code= ADNumberTypeCode;
 
       // The clang compiler does not seem to like these
       // variables being defined as constant expressions
@@ -760,7 +760,7 @@ namespace Differentiation
        * A flag to indicate whether the number is of
        * the taped variety or not
        */
-      static constexpr bool is_taped = internal::ADNumberInfoFromEnum<
+      static constexpr bool is_taped= internal::ADNumberInfoFromEnum<
         typename internal::RemoveComplexWrapper<ScalarType>::type,
         ADNumberTypeCode>::is_taped;
 

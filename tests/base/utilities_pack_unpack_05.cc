@@ -32,7 +32,7 @@ check(const double (&array)[N], const Point<dim>(&point))
 
   // PACK BUFFER
   // add first object to buffer and store buffer size for later separation
-  const size_t buffer_separator = Utilities::pack(array, buffer);
+  const size_t buffer_separator= Utilities::pack(array, buffer);
   // add second object to buffer
   Utilities::pack(point, buffer);
 
@@ -40,15 +40,15 @@ check(const double (&array)[N], const Point<dim>(&point))
   double unpacked_array[N];
   Utilities::unpack(
     buffer.cbegin(), buffer.cbegin() + buffer_separator, unpacked_array);
-  Point<dim> unpacked_point = Utilities::unpack<Point<dim>>(
+  Point<dim> unpacked_point= Utilities::unpack<Point<dim>>(
     buffer.cbegin() + buffer_separator, buffer.cend());
 
   // TEST RESULTS
-  bool equal_array = true;
-  for(unsigned int i = 0; i < N; ++i)
+  bool equal_array= true;
+  for(unsigned int i= 0; i < N; ++i)
     if(array[i] != unpacked_array[i])
       {
-        equal_array = false;
+        equal_array= false;
         break;
       }
   deallog << "compare array: " << (equal_array ? "OK" : "Failed") << std::endl;
@@ -62,17 +62,17 @@ void
 test()
 {
   // try small arrays that are packed by just using memcpy
-  Point<3> p1    = random_point<3>();
-  double   x1[3] = {1, 2, 3};
+  Point<3> p1   = random_point<3>();
+  double   x1[3]= {1, 2, 3};
   check(x1, p1);
 
   // now try much larger arrays that will actually be serialized
   // using BOOST
-  const unsigned int N  = 10000;
-  Point<N>           p2 = random_point<N>();
+  const unsigned int N = 10000;
+  Point<N>           p2= random_point<N>();
   double             x2[N];
-  for(unsigned int i = 0; i < N; ++i)
-    x2[i] = i;
+  for(unsigned int i= 0; i < N; ++i)
+    x2[i]= i;
   check(x2, p2);
 
   deallog << "OK!" << std::endl;

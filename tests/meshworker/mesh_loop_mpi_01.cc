@@ -36,7 +36,7 @@ struct CopyData
   void
   reset()
   {
-    n_cells = n_own_cells = n_ghost_cells = 0;
+    n_cells= n_own_cells= n_ghost_cells= 0;
   }
 };
 
@@ -55,12 +55,12 @@ test()
   ScratchData scratch;
   CopyData    copy;
 
-  auto cell = tria.begin_active();
-  auto endc = tria.end();
+  auto cell= tria.begin_active();
+  auto endc= tria.end();
 
   typedef decltype(cell) Iterator;
 
-  auto cell_worker = [](const Iterator& cell, ScratchData& s, CopyData& c) {
+  auto cell_worker= [](const Iterator& cell, ScratchData& s, CopyData& c) {
     deallog << "Cell worker on : " << cell << " ghost? " << cell->is_ghost()
             << std::endl;
     ++c.n_cells;
@@ -76,14 +76,14 @@ test()
                 << std::endl;
       };
 
-  auto face_worker = [](const Iterator&     cell,
-                        const unsigned int& f,
-                        const unsigned int& sf,
-                        const Iterator&     ncell,
-                        const unsigned int& nf,
-                        const unsigned int& nsf,
-                        ScratchData&        s,
-                        CopyData&           c) {
+  auto face_worker= [](const Iterator&     cell,
+                       const unsigned int& f,
+                       const unsigned int& sf,
+                       const Iterator&     ncell,
+                       const unsigned int& nf,
+                       const unsigned int& nsf,
+                       ScratchData&        s,
+                       CopyData&           c) {
     deallog << "Face worker on : " << cell << ", Neighbor cell : " << ncell
             << ", Face : " << f << ", Neighbor Face : " << nf
             << ", Subface: " << sf << ", Neighbor Subface: " << nsf
@@ -92,10 +92,10 @@ test()
   };
 
   CopyData data;
-  auto     copier = [&](const CopyData& c) {
-    data.n_cells += c.n_cells;
-    data.n_own_cells += c.n_own_cells;
-    data.n_ghost_cells += c.n_ghost_cells;
+  auto     copier= [&](const CopyData& c) {
+    data.n_cells+= c.n_cells;
+    data.n_own_cells+= c.n_own_cells;
+    data.n_ghost_cells+= c.n_ghost_cells;
   };
 
   std::function<void(const decltype(cell)&, ScratchData&, CopyData&)>
@@ -104,7 +104,7 @@ test()
     const decltype(cell)&, const unsigned int&, ScratchData&, CopyData&)>
     empty_boundary_worker;
 
-  auto print_summary = [&]() {
+  auto print_summary= [&]() {
     deallog << "n_cells: " << data.n_cells
             << " n_own_cells: " << data.n_own_cells
             << " n_ghost_cells: " << data.n_ghost_cells << std::endl;

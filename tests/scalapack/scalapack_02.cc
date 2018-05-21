@@ -64,15 +64,15 @@ test(const unsigned int size,
   inverse.cholesky(full_in);
 
   // invert via ScaLAPACK
-  scalapack_matrix = full_in;
+  scalapack_matrix= full_in;
   scalapack_matrix.compute_cholesky_factorization();
   scalapack_matrix.copy_to(full_out);
 
-  diff = 0;
+  diff= 0;
   diff.add(1., inverse);
   diff.add(-1., full_out);
 
-  const NumberType error = diff.frobenius_norm() / inverse.frobenius_norm();
+  const NumberType error= diff.frobenius_norm() / inverse.frobenius_norm();
 
   if(error > tol && this_mpi_process == 0)
     {
@@ -94,11 +94,11 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes  = {{32, 64, 120, 320, 640}};
-  const std::vector<unsigned int> blocks = {{32, 64}};
+  const std::vector<unsigned int> sizes = {{32, 64, 120, 320, 640}};
+  const std::vector<unsigned int> blocks= {{32, 64}};
 
-  const double tol_double = 1e-10;
-  const float  tol_float  = 1e-5;
+  const double tol_double= 1e-10;
+  const float  tol_float = 1e-5;
 
   for(const auto& s : sizes)
     for(const auto& b : blocks)

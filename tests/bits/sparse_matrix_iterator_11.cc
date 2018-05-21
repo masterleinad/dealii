@@ -33,7 +33,7 @@ test()
   // attach a sparse matrix to it
   SparseMatrix<double> A(sparsity);
 
-  SparseMatrix<double>::iterator k = A.begin(), j = ++A.begin();
+  SparseMatrix<double>::iterator k= A.begin(), j= ++A.begin();
 
   AssertThrow(k < j, ExcInternalError());
   AssertThrow(j > k, ExcInternalError());

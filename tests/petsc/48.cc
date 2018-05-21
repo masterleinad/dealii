@@ -25,11 +25,11 @@ test(PETScWrappers::MPI::Vector& v,
      PETScWrappers::MPI::Vector& w,
      PETScWrappers::MPI::Vector& x)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
-      w(i) = i + 1.;
-      x(i) = i + 2.;
+      v(i)= i;
+      w(i)= i + 1.;
+      x(i)= i + 2.;
     }
 
   v.compress(VectorOperation::insert);
@@ -39,8 +39,8 @@ test(PETScWrappers::MPI::Vector& v,
   v.ratio(w, x);
 
   // make sure we get the expected result
-  const double eps = typeid(PetscScalar) == typeid(double) ? 1e-14 : 1e-5;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  const double eps= typeid(PetscScalar) == typeid(double) ? 1e-14 : 1e-5;
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i + 1., ExcInternalError());
       AssertThrow(x(i) == i + 2., ExcInternalError());

@@ -39,12 +39,12 @@ void check_this(Triangulation<3>& tria)
   DoFHandler<3> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
-  DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+  DoFHandler<3>::active_cell_iterator cell= dof_handler.begin_active();
   for(; cell != dof_handler.end(); ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<3>::faces_per_cell;
+    for(unsigned int face_no= 0; face_no < GeometryInfo<3>::faces_per_cell;
         ++face_no)
       if(!cell->at_boundary(face_no) && cell->neighbor(face_no)->has_children())
-        for(unsigned int subface_no = 0;
+        for(unsigned int subface_no= 0;
             subface_no < GeometryInfo<3>::max_children_per_face;
             ++subface_no)
           {
@@ -91,7 +91,7 @@ void check(Triangulation<3>& tria)
   check_this(tria);
   //TODO:[WB] Is there a reason to do this three times?
   // Changed to two. Guido
-  for(unsigned int r = 0; r < 2; ++r)
+  for(unsigned int r= 0; r < 2; ++r)
     {
       tria.refine_global(1);
       deallog << "Check " << r << std::endl;

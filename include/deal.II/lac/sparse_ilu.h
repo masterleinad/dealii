@@ -69,7 +69,7 @@ public:
    * Call the @p initialize function before using this object as
    * preconditioner.
    */
-  SparseILU() = default;
+  SparseILU()= default;
 
   /**
    * Make SparseLUDecomposition::AdditionalData accessible to this class as
@@ -97,7 +97,7 @@ public:
   template <typename somenumber>
   void
   initialize(const SparseMatrix<somenumber>& matrix,
-             const AdditionalData&           parameters = AdditionalData());
+             const AdditionalData&           parameters= AdditionalData());
 
   /**
    * Apply the incomplete decomposition, i.e. do one forward-backward step

@@ -63,8 +63,8 @@ check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
   FETools::compute_projection_from_quadrature_points_matrix(
     fe, q_rhs, q_rhs, X);
 
-  for(unsigned int i = 0; i < X.m(); ++i)
-    X(i, i) -= 1;
+  for(unsigned int i= 0; i < X.m(); ++i)
+    X(i, i)-= 1;
 
   AssertThrow(X.frobenius_norm() < 1e-10, ExcInternalError());
 }

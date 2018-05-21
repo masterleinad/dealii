@@ -105,15 +105,15 @@ public:
      * Default constructor. Set all elements of this structure to their
      * default values.
      */
-    Options(const bool         show_absolute_values = false,
-            const unsigned int block_size           = 1,
-            const bool         discontinuous        = false);
+    Options(const bool         show_absolute_values= false,
+            const unsigned int block_size          = 1,
+            const bool         discontinuous       = false);
   };
 
   /**
    * Destructor. Declared in order to make it virtual.
    */
-  virtual ~MatrixOut() override = default;
+  virtual ~MatrixOut() override= default;
 
   /**
    * Generate a list of patches from the given matrix and use the given string
@@ -136,7 +136,7 @@ public:
   void
   build_patches(const Matrix&      matrix,
                 const std::string& name,
-                const Options      options = Options(false, 1, false));
+                const Options      options= Options(false, 1, false));
 
 private:
   /**
@@ -287,23 +287,23 @@ MatrixOut::get_gridpoint_value(const Matrix&   matrix,
 
   // if blocksize greater than one,
   // then compute average of elements
-  double    average    = 0;
-  size_type n_elements = 0;
-  for(size_type row = i * options.block_size;
+  double    average   = 0;
+  size_type n_elements= 0;
+  for(size_type row= i * options.block_size;
       row < std::min(size_type(matrix.m()),
                      size_type((i + 1) * options.block_size));
       ++row)
-    for(size_type col = j * options.block_size;
+    for(size_type col= j * options.block_size;
         col < std::min(size_type(matrix.m()),
                        size_type((j + 1) * options.block_size));
         ++col, ++n_elements)
       if(options.show_absolute_values == true)
-        average += std::fabs(
+        average+= std::fabs(
           internal::MatrixOutImplementation::get_element(matrix, row, col));
       else
         average
           += internal::MatrixOutImplementation::get_element(matrix, row, col);
-  average /= n_elements;
+  average/= n_elements;
   return average;
 }
 
@@ -313,10 +313,10 @@ MatrixOut::build_patches(const Matrix&      matrix,
                          const std::string& name,
                          const Options      options)
 {
-  size_type gridpoints_x = (matrix.n() / options.block_size
-                            + (matrix.n() % options.block_size != 0 ? 1 : 0)),
-            gridpoints_y = (matrix.m() / options.block_size
-                            + (matrix.m() % options.block_size != 0 ? 1 : 0));
+  size_type gridpoints_x= (matrix.n() / options.block_size
+                           + (matrix.n() % options.block_size != 0 ? 1 : 0)),
+            gridpoints_y= (matrix.m() / options.block_size
+                           + (matrix.m() % options.block_size != 0 ? 1 : 0));
 
   // If continuous, the number of
   // plotted patches is matrix size-1
@@ -332,9 +332,9 @@ MatrixOut::build_patches(const Matrix&      matrix,
   patches.resize((gridpoints_x) * (gridpoints_y));
 
   // now build the patches
-  size_type index = 0;
-  for(size_type i = 0; i < gridpoints_y; ++i)
-    for(size_type j = 0; j < gridpoints_x; ++j, ++index)
+  size_type index= 0;
+  for(size_type i= 0; i < gridpoints_y; ++i)
+    for(size_type j= 0; j < gridpoints_x; ++j, ++index)
       {
         // within each patch, order
         // the points in such a way
@@ -356,22 +356,22 @@ MatrixOut::build_patches(const Matrix&      matrix,
         // straight rim, rather than
         // as a series of bumps and
         // valleys along the diagonal
-        patches[index].vertices[0](0) = j;
-        patches[index].vertices[0](1) = static_cast<signed int>(-i);
-        patches[index].vertices[1](0) = j;
-        patches[index].vertices[1](1) = static_cast<signed int>(-i - 1);
-        patches[index].vertices[2](0) = j + 1;
-        patches[index].vertices[2](1) = static_cast<signed int>(-i);
-        patches[index].vertices[3](0) = j + 1;
-        patches[index].vertices[3](1) = static_cast<signed int>(-i - 1);
+        patches[index].vertices[0](0)= j;
+        patches[index].vertices[0](1)= static_cast<signed int>(-i);
+        patches[index].vertices[1](0)= j;
+        patches[index].vertices[1](1)= static_cast<signed int>(-i - 1);
+        patches[index].vertices[2](0)= j + 1;
+        patches[index].vertices[2](1)= static_cast<signed int>(-i);
+        patches[index].vertices[3](0)= j + 1;
+        patches[index].vertices[3](1)= static_cast<signed int>(-i - 1);
         // next scale all the patch
         // coordinates by the block
         // size, to get original
         // coordinates
-        for(unsigned int v = 0; v < 4; ++v)
-          patches[index].vertices[v] *= options.block_size;
+        for(unsigned int v= 0; v < 4; ++v)
+          patches[index].vertices[v]*= options.block_size;
 
-        patches[index].n_subdivisions = 1;
+        patches[index].n_subdivisions= 1;
 
         patches[index].data.reinit(1, 4);
         if(options.discontinuous)
@@ -399,7 +399,7 @@ MatrixOut::build_patches(const Matrix&      matrix,
       };
 
   // finally set the name
-  this->name = name;
+  this->name= name;
 }
 
 /*----------------------------   matrix_out.h     ---------------------------*/

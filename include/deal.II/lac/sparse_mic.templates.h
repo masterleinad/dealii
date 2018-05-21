@@ -66,7 +66,7 @@ SparseMIC<number>::initialize(const SparseMatrix<somenumber>& matrix,
          ExcInvalidStrengthening(data.strengthen_diagonal));
 
   SparseLUDecomposition<number>::initialize(matrix, data);
-  this->strengthen_diagonal = data.strengthen_diagonal;
+  this->strengthen_diagonal= data.strengthen_diagonal;
   this->prebuild_lower_bound();
   this->copy_from(matrix);
 
@@ -90,13 +90,13 @@ SparseMIC<number>::initialize(const SparseMatrix<somenumber>& matrix,
   inner_sums.resize(this->m());
 
   // precalc sum(j=k+1, N, a[k][j]))
-  for(size_type row = 0; row < this->m(); row++)
-    inner_sums[row] = get_rowsum(row);
+  for(size_type row= 0; row < this->m(); row++)
+    inner_sums[row]= get_rowsum(row);
 
-  for(size_type row = 0; row < this->m(); row++)
+  for(size_type row= 0; row < this->m(); row++)
     {
-      const number temp  = this->begin(row)->value();
-      number       temp1 = 0;
+      const number temp = this->begin(row)->value();
+      number       temp1= 0;
 
       // work on the lower left part of the matrix. we know
       // it's symmetric, so we can work with this alone
@@ -104,12 +104,12 @@ SparseMIC<number>::initialize(const SparseMatrix<somenumber>& matrix,
           = matrix.begin(row) + 1;
           (p != matrix.end(row)) && (p->column() < row);
           ++p)
-        temp1 += p->value() / diag[p->column()] * inner_sums[p->column()];
+        temp1+= p->value() / diag[p->column()] * inner_sums[p->column()];
 
       Assert(temp - temp1 > 0, ExcStrengthenDiagonalTooSmall());
-      diag[row] = temp - temp1;
+      diag[row]= temp - temp1;
 
-      inv_diag[row] = 1.0 / diag[row];
+      inv_diag[row]= 1.0 / diag[row];
     }
 }
 
@@ -119,12 +119,12 @@ SparseMIC<number>::get_rowsum(const size_type row) const
 {
   Assert(this->m() == this->n(), ExcNotQuadratic());
 
-  number rowsum = 0;
-  for(typename SparseMatrix<number>::const_iterator p = this->begin(row) + 1;
+  number rowsum= 0;
+  for(typename SparseMatrix<number>::const_iterator p= this->begin(row) + 1;
       p != this->end(row);
       ++p)
     if(p->column() > row)
-      rowsum += p->value();
+      rowsum+= p->value();
 
   return rowsum;
 }
@@ -139,43 +139,41 @@ SparseMIC<number>::vmult(Vector<somenumber>&       dst,
          ExcDimensionMismatch(dst.size(), src.size()));
   Assert(dst.size() == this->m(), ExcDimensionMismatch(dst.size(), this->m()));
 
-  const size_type N = dst.size();
+  const size_type N= dst.size();
   // We assume the underlying matrix A is: A = X - L - U, where -L and -U are
   // strictly lower- and upper- diagonal parts of the system.
   //
   // Solve (X-L)X{-1}(X-U) x = b in 3 steps:
-  dst = src;
-  for(size_type row = 0; row < N; ++row)
+  dst= src;
+  for(size_type row= 0; row < N; ++row)
     {
       // Now: (X-L)u = b
 
       // get start of this row. skip
       // the diagonal element
-      for(typename SparseMatrix<number>::const_iterator p
-          = this->begin(row) + 1;
+      for(typename SparseMatrix<number>::const_iterator p= this->begin(row) + 1;
           (p != this->end(row)) && (p->column() < row);
           ++p)
-        dst(row) -= p->value() * dst(p->column());
+        dst(row)-= p->value() * dst(p->column());
 
-      dst(row) *= inv_diag[row];
+      dst(row)*= inv_diag[row];
     }
 
   // Now: v = Xu
-  for(size_type row = 0; row < N; row++)
-    dst(row) *= diag[row];
+  for(size_type row= 0; row < N; row++)
+    dst(row)*= diag[row];
 
   // x = (X-U)v
-  for(int row = N - 1; row >= 0; --row)
+  for(int row= N - 1; row >= 0; --row)
     {
       // get end of this row
-      for(typename SparseMatrix<number>::const_iterator p
-          = this->begin(row) + 1;
+      for(typename SparseMatrix<number>::const_iterator p= this->begin(row) + 1;
           p != this->end(row);
           ++p)
         if(p->column() > static_cast<size_type>(row))
-          dst(row) -= p->value() * dst(p->column());
+          dst(row)-= p->value() * dst(p->column());
 
-      dst(row) *= inv_diag[row];
+      dst(row)*= inv_diag[row];
     }
 }
 

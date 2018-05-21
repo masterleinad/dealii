@@ -65,7 +65,7 @@ output_matrix(const FullMatrix<double>& m)
   if(m.m() == m.n())
     deallog << m.frobenius_norm() << std::endl;
 
-  for(unsigned int i = 0; i < std::min(m.m(), m.n()); ++i)
+  for(unsigned int i= 0; i < std::min(m.m(), m.n()); ++i)
     deallog << m(i, i) << ' ' << m(i, std::min(m.m(), m.n()) - i - 1) << ' ';
   deallog << std::endl;
 }
@@ -122,8 +122,8 @@ check_this(const FiniteElement<dim, spacedim>& fe,
   // the product should be the identity
   // matrix now. make sure that this is
   // indeed the case
-  for(unsigned int i = 0; i < product.m(); ++i)
-    product(i, i) -= 1;
+  for(unsigned int i= 0; i < product.m(); ++i)
+    product(i, i)-= 1;
 
   output_matrix(product);
   AssertThrow(product.frobenius_norm() < 1e-10, ExcInternalError());

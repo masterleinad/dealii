@@ -78,16 +78,16 @@ assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator& cell,
                  Assembly::Scratch::Data<dim, fe_degree>&              data,
                  unsigned int&)
 {
-  const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
-  const unsigned int n_q_points    = data.fe_values.get_quadrature().size();
-  data.cell_matrix                 = 0;
-  data.test_matrix                 = 0;
+  const unsigned int dofs_per_cell= cell->get_fe().dofs_per_cell;
+  const unsigned int n_q_points   = data.fe_values.get_quadrature().size();
+  data.cell_matrix                = 0;
+  data.test_matrix                = 0;
   data.fe_values.reinit(cell);
 
-  for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+    for(unsigned int i= 0; i < dofs_per_cell; ++i)
       {
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int j= 0; j < dofs_per_cell; ++j)
           data.cell_matrix(i, j)
             += ((data.fe_values.shape_grad(i, q_point)
                    * data.fe_values.shape_grad(j, q_point)
@@ -96,30 +96,30 @@ assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator& cell,
                 * data.fe_values.JxW(q_point));
       }
 
-  FEEvaluation<dim, fe_degree>& fe_eval = data.fe_eval[0];
+  FEEvaluation<dim, fe_degree>& fe_eval= data.fe_eval[0];
   fe_eval.reinit(cell);
-  for(unsigned int i = 0; i < dofs_per_cell;
-      i += VectorizedArray<double>::n_array_elements)
+  for(unsigned int i= 0; i < dofs_per_cell;
+      i+= VectorizedArray<double>::n_array_elements)
     {
       const unsigned int n_items
         = i + VectorizedArray<double>::n_array_elements > dofs_per_cell ?
             (dofs_per_cell - i) :
             VectorizedArray<double>::n_array_elements;
-      for(unsigned int j = 0; j < dofs_per_cell; ++j)
-        fe_eval.begin_dof_values()[j] = VectorizedArray<double>();
-      for(unsigned int v = 0; v < n_items; ++v)
-        fe_eval.begin_dof_values()[i + v][v] = 1.;
+      for(unsigned int j= 0; j < dofs_per_cell; ++j)
+        fe_eval.begin_dof_values()[j]= VectorizedArray<double>();
+      for(unsigned int v= 0; v < n_items; ++v)
+        fe_eval.begin_dof_values()[i + v][v]= 1.;
 
       fe_eval.evaluate(true, true);
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for(unsigned int q= 0; q < n_q_points; ++q)
         {
           fe_eval.submit_value(10. * fe_eval.get_value(q), q);
           fe_eval.submit_gradient(fe_eval.get_gradient(q), q);
         }
       fe_eval.integrate(true, true);
 
-      for(unsigned int v = 0; v < n_items; ++v)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for(unsigned int v= 0; v < n_items; ++v)
+        for(unsigned int j= 0; j < dofs_per_cell; ++j)
           data.test_matrix(fe_eval.get_internal_dof_numbering()[j],
                            fe_eval.get_internal_dof_numbering()[i + v])
             = fe_eval.begin_dof_values()[j][v];
@@ -138,7 +138,7 @@ do_test(const DoFHandler<dim>& dof)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
 
-  unsigned int dummy = 0;
+  unsigned int dummy= 0;
   WorkStream::run(dof.begin_active(),
                   dof.end(),
                   &assemble_on_cell<dim, fe_degree>,
@@ -157,10 +157,10 @@ test()
   const SphericalManifold<dim> manifold;
   Triangulation<dim>           tria;
   GridGenerator::hyper_ball(tria);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);

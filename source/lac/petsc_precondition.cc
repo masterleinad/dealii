@@ -46,12 +46,12 @@ namespace PETScWrappers
   void
   PreconditionerBase::clear()
   {
-    matrix = nullptr;
+    matrix= nullptr;
 
     if(pc != nullptr)
       {
-        PetscErrorCode ierr = PCDestroy(&pc);
-        pc                  = nullptr;
+        PetscErrorCode ierr= PCDestroy(&pc);
+        pc                 = nullptr;
         AssertThrow(ierr == 0, ExcPETScError(ierr));
       }
   }
@@ -61,7 +61,7 @@ namespace PETScWrappers
   {
     AssertThrow(pc != nullptr, StandardExceptions::ExcInvalidState());
 
-    const PetscErrorCode ierr = PCApply(pc, src, dst);
+    const PetscErrorCode ierr= PCApply(pc, src, dst);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -80,13 +80,13 @@ namespace PETScWrappers
       = PetscObjectGetComm(reinterpret_cast<PetscObject>(matrix), &comm);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCCreate(comm, &pc);
+    ierr= PCCreate(comm, &pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
 #  if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
-    ierr = PCSetOperators(pc, matrix, matrix, SAME_PRECONDITIONER);
+    ierr= PCSetOperators(pc, matrix, matrix, SAME_PRECONDITIONER);
 #  else
-    ierr = PCSetOperators(pc, matrix, matrix);
+    ierr= PCSetOperators(pc, matrix, matrix);
 #  endif
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
@@ -106,9 +106,9 @@ namespace PETScWrappers
   PreconditionJacobi::PreconditionJacobi(const MPI_Comm        comm,
                                          const AdditionalData& additional_data_)
   {
-    additional_data = additional_data_;
+    additional_data= additional_data_;
 
-    PetscErrorCode ierr = PCCreate(comm, &pc);
+    PetscErrorCode ierr= PCCreate(comm, &pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     initialize();
@@ -125,10 +125,10 @@ namespace PETScWrappers
   {
     AssertThrow(pc != nullptr, StandardExceptions::ExcInvalidState());
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCJACOBI));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCJACOBI));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -138,13 +138,13 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
     initialize();
 
-    PetscErrorCode ierr = PCSetUp(pc);
+    PetscErrorCode ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -153,9 +153,9 @@ namespace PETScWrappers
     const MPI_Comm        comm,
     const AdditionalData& additional_data_)
   {
-    additional_data = additional_data_;
+    additional_data= additional_data_;
 
-    PetscErrorCode ierr = PCCreate(comm, &pc);
+    PetscErrorCode ierr= PCCreate(comm, &pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     initialize();
@@ -171,10 +171,10 @@ namespace PETScWrappers
   void
   PreconditionBlockJacobi::initialize()
   {
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCBJACOBI));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCBJACOBI));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -184,13 +184,13 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
     initialize();
 
-    PetscErrorCode ierr = PCSetUp(pc);
+    PetscErrorCode ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -212,22 +212,22 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCSOR));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCSOR));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags as given
-    ierr = PCSORSetOmega(pc, additional_data.omega);
+    ierr= PCSORSetOmega(pc, additional_data.omega);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetUp(pc);
+    ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -249,26 +249,26 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCSOR));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCSOR));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags as given
-    ierr = PCSORSetOmega(pc, additional_data.omega);
+    ierr= PCSORSetOmega(pc, additional_data.omega);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // convert SOR to SSOR
-    ierr = PCSORSetSymmetric(pc, SOR_SYMMETRIC_SWEEP);
+    ierr= PCSORSetSymmetric(pc, SOR_SYMMETRIC_SWEEP);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetUp(pc);
+    ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -291,22 +291,22 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCEISENSTAT));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCEISENSTAT));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags as given
-    ierr = PCEisenstatSetOmega(pc, additional_data.omega);
+    ierr= PCEisenstatSetOmega(pc, additional_data.omega);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetUp(pc);
+    ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -328,22 +328,22 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCICC));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCICC));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags
-    ierr = PCFactorSetLevels(pc, additional_data.levels);
+    ierr= PCFactorSetLevels(pc, additional_data.levels);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetUp(pc);
+    ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -365,22 +365,22 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCILU));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCILU));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // then set flags
-    ierr = PCFactorSetLevels(pc, additional_data.levels);
+    ierr= PCFactorSetLevels(pc, additional_data.levels);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetUp(pc);
+    ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -403,9 +403,9 @@ namespace PETScWrappers
     const MPI_Comm        comm,
     const AdditionalData& additional_data_)
   {
-    additional_data = additional_data_;
+    additional_data= additional_data_;
 
-    PetscErrorCode ierr = PCCreate(comm, &pc);
+    PetscErrorCode ierr= PCCreate(comm, &pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
@@ -429,10 +429,10 @@ namespace PETScWrappers
   PreconditionBoomerAMG::initialize()
   {
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCHYPRE));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCHYPRE));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCHYPRESetType(pc, "boomeramg");
+    ierr= PCHYPRESetType(pc, "boomeramg");
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     if(additional_data.output_details)
@@ -469,7 +469,7 @@ namespace PETScWrappers
                          "Gaussian-elimination");
       }
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 #  else
     Assert(false,
@@ -485,13 +485,13 @@ namespace PETScWrappers
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
     initialize();
 
-    PetscErrorCode ierr = PCSetUp(pc);
+    PetscErrorCode ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
 #  else // DEAL_II_PETSC_WITH_HYPRE
@@ -531,16 +531,16 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCHYPRE));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCHYPRE));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCHYPRESetType(pc, "parasails");
+    ierr= PCHYPRESetType(pc, "parasails");
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     if(additional_data.output_details)
@@ -595,10 +595,10 @@ namespace PETScWrappers
     ssStream << additional_data.filter;
     set_option_value("-pc_hypre_parasails_filter", ssStream.str());
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetUp(pc);
+    ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
 #  else // DEAL_II_PETSC_WITH_HYPRE
@@ -623,18 +623,18 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCNONE));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCNONE));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetUp(pc);
+    ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
@@ -658,28 +658,28 @@ namespace PETScWrappers
   {
     clear();
 
-    matrix          = static_cast<Mat>(matrix_);
-    additional_data = additional_data_;
+    matrix         = static_cast<Mat>(matrix_);
+    additional_data= additional_data_;
 
     create_pc();
 
-    PetscErrorCode ierr = PCSetType(pc, const_cast<char*>(PCLU));
+    PetscErrorCode ierr= PCSetType(pc, const_cast<char*>(PCLU));
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // set flags as given
-    ierr = PCFactorSetColumnPivot(pc, additional_data.pivoting);
+    ierr= PCFactorSetColumnPivot(pc, additional_data.pivoting);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCFactorSetZeroPivot(pc, additional_data.zero_pivot);
+    ierr= PCFactorSetZeroPivot(pc, additional_data.zero_pivot);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCFactorSetShiftAmount(pc, additional_data.damping);
+    ierr= PCFactorSetShiftAmount(pc, additional_data.damping);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetFromOptions(pc);
+    ierr= PCSetFromOptions(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = PCSetUp(pc);
+    ierr= PCSetUp(pc);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 

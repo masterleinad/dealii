@@ -27,7 +27,7 @@ output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
                    const std::string&         text)
 {
   deallog << text;
-  for(unsigned int j = 0; j < eigenvalues.size(); ++j)
+  for(unsigned int j= 0; j < eigenvalues.size(); ++j)
     {
       deallog << ' ' << eigenvalues.at(j);
     }
@@ -38,31 +38,31 @@ template <typename number>
 void
 test(unsigned int variant)
 {
-  const unsigned int n = variant < 3 ? 64 : 20;
+  const unsigned int n= variant < 3 ? 64 : 20;
   Vector<number>     rhs(n), sol(n);
-  rhs = 1.;
+  rhs= 1.;
 
   LAPACKFullMatrix<number> matrix(n, n);
 
   if(variant == 0)
-    for(unsigned int i = 0; i < n; ++i)
-      matrix(i, i) = std::sqrt(i + 1);
+    for(unsigned int i= 0; i < n; ++i)
+      matrix(i, i)= std::sqrt(i + 1);
   else if(variant == 1)
-    for(unsigned int i = 0; i < n; ++i)
-      matrix(i, i) = 1.001 * (3 + i % 5);
+    for(unsigned int i= 0; i < n; ++i)
+      matrix(i, i)= 1.001 * (3 + i % 5);
   else if(variant == 2)
-    for(unsigned int i = 0; i < n; ++i)
-      matrix(i, i) = (i % 2 ? 1. : -1.) * std::sqrt(i + 1);
+    for(unsigned int i= 0; i < n; ++i)
+      matrix(i, i)= (i % 2 ? 1. : -1.) * std::sqrt(i + 1);
   else if(variant == 3)
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       {
-        matrix(i, i) = (i % 2 ? 1. : -1.) * std::sqrt(i + 1);
+        matrix(i, i)= (i % 2 ? 1. : -1.) * std::sqrt(i + 1);
         if(i < n - 1)
-          matrix(i, i + 1) = 1.5 + i;
+          matrix(i, i + 1)= 1.5 + i;
         if(i < n - 2)
-          matrix(i, i + 2) = -1.65;
-        matrix(i, n - 1) = 2.;
-        matrix(n - 1, i) = -2.;
+          matrix(i, i + 2)= -1.65;
+        matrix(i, n - 1)= 2.;
+        matrix(n - 1, i)= -2.;
       }
   else
     Assert(false, ExcMessage("Invalid variant"));
@@ -89,7 +89,7 @@ test(unsigned int variant)
       solver_cg.connect_eigenvalues_slot(std::bind(output_eigenvalues<double>,
                                                    std::placeholders::_1,
                                                    "Eigenvalue estimate: "));
-      sol = 0;
+      sol= 0;
       solver_cg.solve(matrix, sol, rhs, PreconditionIdentity());
     }
 
@@ -97,15 +97,15 @@ test(unsigned int variant)
     {
       matrix.compute_eigenvalues();
       std::vector<std::complex<double>> eigenvalues(n);
-      for(unsigned int i = 0; i < n; ++i)
-        eigenvalues[i] = matrix.eigenvalue(i);
+      for(unsigned int i= 0; i < n; ++i)
+        eigenvalues[i]= matrix.eigenvalue(i);
 
       std::sort(eigenvalues.begin(),
                 eigenvalues.end(),
                 internal::SolverGMRESImplementation::complex_less_pred);
 
       deallog << "Actual eigenvalues:        ";
-      for(unsigned int i = 0; i < n; ++i)
+      for(unsigned int i= 0; i < n; ++i)
         deallog << ' ' << eigenvalues[i];
       deallog << std::endl;
     }

@@ -65,7 +65,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& p, const unsigned int component = 0) const
+  value(const Point<dim>& p, const unsigned int component= 0) const
   {
     (void) component;
     return p[0] * 2. + p[1] - 10.;
@@ -73,19 +73,19 @@ public:
 };
 
 template <int dim,
-          int fe_degree            = 2,
-          int n_q_points           = fe_degree + 1,
-          typename NumberType      = double,
-          typename LevelNumberType = NumberType>
+          int fe_degree           = 2,
+          int n_q_points          = fe_degree + 1,
+          typename NumberType     = double,
+          typename LevelNumberType= NumberType>
 void
-test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
+test(const unsigned int n_glob_ref= 2, const unsigned int n_ref= 0)
 {
   SimpleField<dim> function;
 
   deallog << "dim=" << dim << std::endl;
   MPI_Comm     mpi_communicator(MPI_COMM_WORLD);
-  unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_communicator);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(mpi_communicator);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(mpi_communicator);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(mpi_communicator);
 
   deallog << "numproc=" << numproc << std::endl;
 
@@ -96,7 +96,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
   GridGenerator::subdivided_hyper_cube(triangulation, 5, -1, 1);
   // now do some refinement
   triangulation.refine_global(n_glob_ref);
-  for(unsigned int ref = 0; ref < n_ref; ++ref)
+  for(unsigned int ref= 0; ref < n_ref; ++ref)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
@@ -117,7 +117,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
   dof_handler.distribute_mg_dofs();
 
   IndexSet locally_owned_dofs, locally_relevant_dofs;
-  locally_owned_dofs = dof_handler.locally_owned_dofs();
+  locally_owned_dofs= dof_handler.locally_owned_dofs();
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
   // constraints:
@@ -145,8 +145,8 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
       data_out.add_data_vector(fine_projection, "projection");
 
       Vector<float> subdomain(triangulation.n_active_cells());
-      for(unsigned int i = 0; i < subdomain.size(); ++i)
-        subdomain(i) = triangulation.locally_owned_subdomain();
+      for(unsigned int i= 0; i < subdomain.size(); ++i)
+        subdomain(i)= triangulation.locally_owned_subdomain();
       data_out.add_data_vector(subdomain, "subdomain");
       data_out.build_patches();
       const std::string filename
@@ -154,7 +154,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
       std::ofstream output(filename.c_str());
       data_out.write_vtu(output);
 
-      const std::string mg_mesh = "mg_mesh";
+      const std::string mg_mesh= "mg_mesh";
       GridOut           grid_out;
       grid_out.write_mesh_per_processor_as_vtu(
         triangulation, mg_mesh, true, true);
@@ -172,7 +172,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
   // now the core of the test:
   const unsigned int max_level
     = dof_handler.get_triangulation().n_global_levels() - 1;
-  const unsigned int min_level = 0;
+  const unsigned int min_level= 0;
   MGLevelObject<LinearAlgebra::distributed::Vector<LevelNumberType>>
     level_projection(min_level, max_level);
   mg_transfer.interpolate_to_mg(dof_handler, level_projection, fine_projection);
@@ -184,13 +184,13 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
 
   FEValues<dim> fe_values(
     fe, quadrature, update_values | update_quadrature_points);
-  for(unsigned int level = max_level + 1; level != min_level;)
+  for(unsigned int level= max_level + 1; level != min_level;)
     {
       --level;
 
       std::vector<types::global_dof_index>    dof_indices(fe.dofs_per_cell);
-      typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(level);
-      typename DoFHandler<dim>::cell_iterator endc = dof_handler.end(level);
+      typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin(level);
+      typename DoFHandler<dim>::cell_iterator endc= dof_handler.end(level);
       for(; cell != endc; ++cell)
         if(cell->is_locally_owned_on_level())
           {
@@ -202,9 +202,9 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
             const std::vector<Point<dim>>& q_points
               = fe_values.get_quadrature_points();
 
-            for(unsigned int q = 0; q < q_points.size(); ++q)
+            for(unsigned int q= 0; q < q_points.size(); ++q)
               {
-                const double diff = q_values[q] - function.value(q_points[q]);
+                const double diff= q_values[q] - function.value(q_points[q]);
                 if(std::abs(diff) > 1e-10)
                   {
                     std::cout << "dofs: ";

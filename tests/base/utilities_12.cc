@@ -24,17 +24,17 @@ template <int dim>
 void
 test()
 {
-  VectorizedArray<double> v1 = make_vectorized_array(2.);
-  v1                         = Utilities::fixed_power<dim>(v1);
+  VectorizedArray<double> v1= make_vectorized_array(2.);
+  v1                        = Utilities::fixed_power<dim>(v1);
   deallog << v1[0] << std::endl;
-  v1 = -2;
-  v1 = Utilities::fixed_power<dim>(v1);
+  v1= -2;
+  v1= Utilities::fixed_power<dim>(v1);
   deallog << v1[0] << std::endl;
-  v1 = 2.5;
-  v1 = Utilities::fixed_power<dim>(v1);
+  v1= 2.5;
+  v1= Utilities::fixed_power<dim>(v1);
   deallog << v1[0] << std::endl;
-  VectorizedArray<float> v2 = make_vectorized_array<float>(-2.5);
-  v2                        = Utilities::fixed_power<dim>(v2);
+  VectorizedArray<float> v2= make_vectorized_array<float>(-2.5);
+  v2                       = Utilities::fixed_power<dim>(v2);
   deallog << (double) v2[0] << std::endl;
   deallog << std::endl;
 }

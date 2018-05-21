@@ -32,15 +32,15 @@ test()
 {
   Triangulation<1, 3> tria;
 
-  const unsigned int    dim          = 1;
-  static const Point<3> vertices_1[] = {
+  const unsigned int    dim         = 1;
+  static const Point<3> vertices_1[]= {
     Point<3>(0, 0, 0), Point<3>(1, 0, 0), Point<3>(1, 0, 0), Point<3>(1, 1, 0),
     Point<3>(1, 1, 0), Point<3>(0, 1, 0), Point<3>(0, 1, 0), Point<3>(0, 0, 0),
     Point<3>(0, 0, 1), Point<3>(1, 0, 1), Point<3>(1, 0, 1), Point<3>(1, 1, 1),
     Point<3>(1, 1, 1), Point<3>(0, 1, 1), Point<3>(0, 1, 1), Point<3>(0, 0, 1),
     Point<3>(0, 0, 0), Point<3>(0, 0, 1), Point<3>(1, 0, 0), Point<3>(1, 0, 1),
     Point<3>(1, 1, 0), Point<3>(1, 1, 1), Point<3>(0, 1, 0), Point<3>(0, 1, 1)};
-  const unsigned int n_vertices = sizeof(vertices_1) / sizeof(vertices_1[0]);
+  const unsigned int n_vertices= sizeof(vertices_1) / sizeof(vertices_1[0]);
   const std::vector<Point<3>> vertices(&vertices_1[0], &vertices_1[n_vertices]);
 
   static const int cell_vertices[][GeometryInfo<dim>::vertices_per_cell]
@@ -56,14 +56,14 @@ test()
        {18, 19},
        {20, 21},
        {22, 23}};
-  const unsigned int n_cells = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
+  const unsigned int n_cells= sizeof(cell_vertices) / sizeof(cell_vertices[0]);
   std::vector<CellData<dim>> cells(n_cells, CellData<dim>());
 
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for(unsigned int i= 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
-        cells[i].vertices[j] = cell_vertices[i][j];
-      cells[i].material_id = 0;
+      for(unsigned int j= 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+        cells[i].vertices[j]= cell_vertices[i][j];
+      cells[i].material_id= 0;
     }
   tria.create_triangulation(vertices, cells, SubCellData());
 

@@ -65,12 +65,12 @@ check_this(const DoFHandler<dim>& dof_handler)
 
   VectorTools::interpolate(dof_handler, test_func, unconstrained);
 
-  constrained = unconstrained;
+  constrained= unconstrained;
   cm.distribute(constrained);
 
-  constrained -= unconstrained;
+  constrained-= unconstrained;
 
-  const double p_l2_error = constrained.l2_norm();
+  const double p_l2_error= constrained.l2_norm();
 
   Assert(p_l2_error < 1e-11, ExcInternalError());
 

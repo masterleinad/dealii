@@ -26,8 +26,8 @@
 void
 test()
 {
-  unsigned int my_id   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   IndexSet locally_owned(n_procs * 2);
   locally_owned.add_range(my_id * 2, my_id * 2 + 2);
@@ -36,8 +36,8 @@ test()
 
   LinearAlgebra::distributed::Vector<double> v(locally_owned, MPI_COMM_WORLD);
   LinearAlgebra::ReadWriteVector<double> read_write_vector(read_write_owned);
-  read_write_vector.local_element(0) = 1.;
-  read_write_vector.local_element(1) = 2.;
+  read_write_vector.local_element(0)= 1.;
+  read_write_vector.local_element(1)= 2.;
 
   v.import(read_write_vector, VectorOperation::insert);
 
@@ -48,8 +48,8 @@ test()
   read_write_owned.add_index(1);
   read_write_owned.add_index(2);
   read_write_vector.reinit(read_write_owned);
-  read_write_vector.local_element(0) = 1.;
-  read_write_vector.local_element(1) = 2.;
+  read_write_vector.local_element(0)= 1.;
+  read_write_vector.local_element(1)= 2.;
 
   v.import(read_write_vector, VectorOperation::insert);
 
@@ -66,7 +66,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

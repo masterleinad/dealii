@@ -67,30 +67,30 @@ test(const unsigned int size, const unsigned int block_size)
 
   create_spd(full_in);
 
-  one = 0.;
-  for(unsigned int i = 0; i < size; ++i)
-    one(i, i) = 1.;
+  one= 0.;
+  for(unsigned int i= 0; i < size; ++i)
+    one(i, i)= 1.;
   // invert via Lapack
   inverse.invert(full_in);
   inverse.mmult(prod1, full_in);
   prod1.add(-1., one);
-  const NumberType lapack_error = prod1.linfty_norm();
+  const NumberType lapack_error= prod1.linfty_norm();
 
   // estimated condition number from 1-norm:
-  const NumberType k   = full_in.l1_norm() * inverse.l1_norm();
-  const NumberType tol = k * 1000 * std::numeric_limits<NumberType>::epsilon();
+  const NumberType k  = full_in.l1_norm() * inverse.l1_norm();
+  const NumberType tol= k * 1000 * std::numeric_limits<NumberType>::epsilon();
 
   // invert via ScaLAPACK
-  scalapack_matrix = full_in;
+  scalapack_matrix= full_in;
   scalapack_matrix.invert();
   scalapack_matrix.copy_to(full_out);
   full_out.mmult(prod2, full_in);
   prod2.add(-1., one);
-  const NumberType error = prod2.linfty_norm();
+  const NumberType error= prod2.linfty_norm();
 
   if(error > tol && this_mpi_process == 0)
     {
-      diff = 0;
+      diff= 0;
       diff.add(1., inverse);
       diff.add(-1., full_out);
 
@@ -116,8 +116,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes  = {{32, 64, 120, 320, 640}};
-  const std::vector<unsigned int> blocks = {{32, 64}};
+  const std::vector<unsigned int> sizes = {{32, 64, 120, 320, 640}};
+  const std::vector<unsigned int> blocks= {{32, 64}};
 
   for(const auto& s : sizes)
     for(const auto& b : blocks)

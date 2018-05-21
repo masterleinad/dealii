@@ -25,17 +25,17 @@ void
 test(TrilinosWrappers::MPI::Vector& v)
 {
   // set some elements of the vector
-  TrilinosScalar sum = 0;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  TrilinosScalar sum= 0;
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) = i;
-      sum += i * i * i;
+      v(i)= i;
+      sum+= i * i * i;
     }
   v.compress(VectorOperation::insert);
 
   // then check the norm
-  const double eps = typeid(TrilinosScalar) == typeid(double) ? 1e-14 : 1e-5;
-  const double true_value = std::pow(sum, static_cast<TrilinosScalar>(1. / 3.));
+  const double eps= typeid(TrilinosScalar) == typeid(double) ? 1e-14 : 1e-5;
+  const double true_value= std::pow(sum, static_cast<TrilinosScalar>(1. / 3.));
   AssertThrow(std::fabs(v.lp_norm(3) - true_value) < eps * true_value,
               ExcInternalError());
 

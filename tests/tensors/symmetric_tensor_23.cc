@@ -28,32 +28,32 @@ main()
 
   {
     SymmetricTensor<2, 1> t;
-    t[0][0] = 1;
+    t[0][0]= 1;
 
-    double x[1] = {1};
+    double x[1]= {1};
     AssertThrow((t == SymmetricTensor<2, 1>(x)), ExcInternalError());
   }
 
   {
     SymmetricTensor<2, 2> t;
-    t[0][0] = 1;
-    t[1][1] = 2;
-    t[0][1] = 3;
+    t[0][0]= 1;
+    t[1][1]= 2;
+    t[0][1]= 3;
 
-    double x[3] = {1, 2, 3};
+    double x[3]= {1, 2, 3};
     AssertThrow((t == SymmetricTensor<2, 2>(x)), ExcInternalError());
   }
 
   {
     SymmetricTensor<2, 3> t;
-    t[0][0] = 1;
-    t[1][1] = 2;
-    t[2][2] = 3;
-    t[0][1] = 4;
-    t[0][2] = 5;
-    t[1][2] = 6;
+    t[0][0]= 1;
+    t[1][1]= 2;
+    t[2][2]= 3;
+    t[0][1]= 4;
+    t[0][2]= 5;
+    t[1][2]= 6;
 
-    double x[6] = {1, 2, 3, 4, 5, 6};
+    double x[6]= {1, 2, 3, 4, 5, 6};
     AssertThrow((t == SymmetricTensor<2, 3>(x)), ExcInternalError());
   }
 

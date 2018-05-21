@@ -22,10 +22,10 @@
 void
 test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
-      w(i) = std::complex<double>(i + 1., i + 2.);
+      v(i)= i;
+      w(i)= std::complex<double>(i + 1., i + 2.);
     }
 
   v.compress();
@@ -34,7 +34,7 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
   v.sadd(3, 2, w);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == std::complex<double>(i + 1., i + 2.),
                   ExcInternalError());

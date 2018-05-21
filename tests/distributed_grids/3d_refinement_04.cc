@@ -36,7 +36,7 @@ template <int dim>
 void
 test(std::ostream& /*out*/)
 {
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_cell; ++i)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::max_children_per_cell; ++i)
     {
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
@@ -50,8 +50,7 @@ test(std::ostream& /*out*/)
 
       Assert(tr.n_active_cells() == 8, ExcInternalError());
 
-      typename Triangulation<dim>::active_cell_iterator cell
-        = tr.begin_active();
+      typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
       std::advance(cell, i);
       cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();

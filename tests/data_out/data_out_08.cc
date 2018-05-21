@@ -83,11 +83,11 @@ check()
   tria.refine_global(1);
 
   Vector<double> cell_data(4);
-  for(unsigned int i = 0; i < 4; ++i)
-    cell_data(i) = i * 1.0;
+  for(unsigned int i= 0; i < 4; ++i)
+    cell_data(i)= i * 1.0;
 
   // this should skip the first cell
-  typename Triangulation<dim>::active_cell_iterator it = tria.begin_active();
+  typename Triangulation<dim>::active_cell_iterator it= tria.begin_active();
   //++it;
   it->set_subdomain_id(1);
 

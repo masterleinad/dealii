@@ -32,7 +32,7 @@ template <int dim>
 void
 test_cell(const FEValuesBase<dim>& fev)
 {
-  const unsigned int n = fev.dofs_per_cell;
+  const unsigned int n= fev.dofs_per_cell;
   FullMatrix<double> M(n, n);
   cell_matrix(M, fev);
   {
@@ -45,16 +45,16 @@ test_cell(const FEValuesBase<dim>& fev)
     dim, std::vector<Tensor<1, dim>>(fev.n_quadrature_points));
 
   std::vector<types::global_dof_index> indices(n);
-  for(unsigned int i = 0; i < n; ++i)
-    indices[i] = i;
+  for(unsigned int i= 0; i < n; ++i)
+    indices[i]= i;
 
   {
     deallog << "Residuals" << std::endl;
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       {
-        u    = 0.;
-        u(i) = 1.;
-        w    = 0.;
+        u   = 0.;
+        u(i)= 1.;
+        w   = 0.;
         fev.get_function_gradients(
           u,
           indices,
@@ -73,8 +73,8 @@ template <int dim>
 void
 test_boundary(const FEValuesBase<dim>& fev)
 {
-  const unsigned int n = fev.dofs_per_cell;
-  unsigned int       d = fev.get_fe().n_components();
+  const unsigned int n= fev.dofs_per_cell;
+  unsigned int       d= fev.get_fe().n_components();
   FullMatrix<double> M(n, n);
   nitsche_matrix(M, fev, 17);
   {
@@ -90,16 +90,16 @@ test_boundary(const FEValuesBase<dim>& fev)
     d, std::vector<Tensor<1, dim>>(fev.n_quadrature_points));
 
   std::vector<types::global_dof_index> indices(n);
-  for(unsigned int i = 0; i < n; ++i)
-    indices[i] = i;
+  for(unsigned int i= 0; i < n; ++i)
+    indices[i]= i;
 
   {
     LogStream::Prefix pre("Residuals");
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       {
-        u    = 0.;
-        u(i) = 1.;
-        w    = 0.;
+        u   = 0.;
+        u(i)= 1.;
+        w   = 0.;
         fev.get_function_values(
           u,
           indices,
@@ -128,9 +128,9 @@ template <int dim>
 void
 test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
 {
-  const unsigned int n1 = fev1.dofs_per_cell;
-  const unsigned int n2 = fev1.dofs_per_cell;
-  unsigned int       d  = fev1.get_fe().n_components();
+  const unsigned int n1= fev1.dofs_per_cell;
+  const unsigned int n2= fev1.dofs_per_cell;
+  unsigned int       d = fev1.get_fe().n_components();
   FullMatrix<double> M11(n1, n1);
   FullMatrix<double> M12(n1, n2);
   FullMatrix<double> M21(n2, n1);
@@ -167,19 +167,19 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
       std::vector<Tensor<1, dim>>(fev2.n_quadrature_points, Tensor<1, dim>()));
 
   std::vector<types::global_dof_index> indices1(n1), indices2(n2);
-  for(unsigned int i = 0; i < n1; ++i)
-    indices1[i] = i;
-  for(unsigned int i = 0; i < n2; ++i)
-    indices2[i] = i;
+  for(unsigned int i= 0; i < n1; ++i)
+    indices1[i]= i;
+  for(unsigned int i= 0; i < n2; ++i)
+    indices2[i]= i;
 
   {
     LogStream::Prefix pre("Residuals");
-    for(unsigned int i1 = 0; i1 < n1; ++i1)
+    for(unsigned int i1= 0; i1 < n1; ++i1)
       {
-        u1     = 0.;
-        u1(i1) = 1.;
-        w1     = 0.;
-        w2     = 0.;
+        u1    = 0.;
+        u1(i1)= 1.;
+        w1    = 0.;
+        w2    = 0.;
         fev1.get_function_values(
           u1,
           indices1,
@@ -205,8 +205,8 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
         w2.add(-1., v2);
         deallog << ' ' << w1.l2_norm() + w2.l2_norm();
 
-        w1 = 0.;
-        w2 = 0.;
+        w1= 0.;
+        w2= 0.;
         fev2.get_function_values(
           u1,
           indices2,
@@ -243,7 +243,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
   deallog << fe.get_name() << std::endl << "cell matrix" << std::endl;
   QGauss<dim>   quadrature(fe.tensor_degree() + 1);
   FEValues<dim> fev(fe, quadrature, update_gradients | update_JxW_values);
-  typename Triangulation<dim>::cell_iterator cell1 = tr.begin(1);
+  typename Triangulation<dim>::cell_iterator cell1= tr.begin(1);
   fev.reinit(cell1);
   test_cell(fev);
 
@@ -252,7 +252,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
                          face_quadrature,
                          update_values | update_gradients
                            | update_normal_vectors | update_JxW_values);
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       deallog << "boundary_matrix " << i << std::endl;
       fef1.reinit(cell1, i);
@@ -261,10 +261,10 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
 
   FEFaceValues<dim> fef2(
     fe, face_quadrature, update_values | update_gradients | update_JxW_values);
-  typename Triangulation<dim>::cell_iterator cell2 = cell1->neighbor(1);
+  typename Triangulation<dim>::cell_iterator cell2= cell1->neighbor(1);
 
   deallog << "face_matrix " << 0 << std::endl;
-  cell1 = tr.begin(1);
+  cell1= tr.begin(1);
   fef1.reinit(cell1, 1);
   fef2.reinit(cell2, 0);
   test_face(fef1, fef2);

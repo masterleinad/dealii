@@ -31,12 +31,12 @@ test_applies(std::string                                            description,
              const PackagedOperation<Vector<std::complex<double>>>& expr)
 {
   // test apply
-  Vector<std::complex<double>> tmp = expr;
+  Vector<std::complex<double>> tmp= expr;
   deallog << description << ": " << tmp << std::endl;
 
   // test apply_add
   for(auto& i : tmp)
-    i = 100.;
+    i= 100.;
   expr.apply_add(tmp);
   deallog << "100. * 1_n + " << description << ": " << tmp << std::endl;
 }
@@ -47,14 +47,14 @@ main()
   initlog();
   deallog << std::setprecision(10);
 
-  static const int dim = 2;
+  static const int dim= 2;
 
   // Tests:
 
   Vector<std::complex<double>> u(25);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for(unsigned int i= 0; i < u.size(); ++i)
     {
-      u[i] = (double) (i + 1);
+      u[i]= (double) (i + 1);
     }
 
   deallog << "u: " << u << std::endl;
@@ -68,7 +68,7 @@ main()
 
   // creation via mixed operator+, operator-
 
-  auto expr = 2. * u;
+  auto expr= 2. * u;
 
   test_applies("2. * u + u", expr + u);
   test_applies("2. * u - u", expr - u);
@@ -78,7 +78,7 @@ main()
 
   // operator+, operator-, operator*
 
-  PackagedOperation<Vector<std::complex<double>>> expr2 = u;
+  PackagedOperation<Vector<std::complex<double>>> expr2= u;
 
   test_applies("2. * u + u", expr + expr2);
   test_applies("2. * u - u", expr - expr2);

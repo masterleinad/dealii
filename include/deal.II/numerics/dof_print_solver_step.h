@@ -48,7 +48,7 @@ DEAL_II_NAMESPACE_OPEN
  * @ingroup output
  * @author Guido Kanschat, 2000
  */
-template <int dim, typename SolverType, class VectorType = Vector<double>>
+template <int dim, typename SolverType, class VectorType= Vector<double>>
 class DoFPrintSolverStep : public SolverType
 {
 public:
@@ -113,7 +113,7 @@ DoFPrintSolverStep<dim, SolverType, VectorType>::print_vectors(
   filename << basename << std::setw(3) << std::setfill('0') << step
            << out.default_suffix();
 
-  const std::string fname = filename.str();
+  const std::string fname= filename.str();
 
   deallog << "Writing file:" << fname << std::endl;
 

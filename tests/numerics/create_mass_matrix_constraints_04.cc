@@ -75,8 +75,8 @@ check()
   SparsityPattern sparsity;
   {
     Table<2, DoFTools::Coupling> mask(2, 2);
-    mask(0, 0) = mask(1, 1) = DoFTools::always;
-    mask(0, 1) = mask(1, 0) = DoFTools::none;
+    mask(0, 0)= mask(1, 1)= DoFTools::always;
+    mask(0, 1)= mask(1, 0)= DoFTools::none;
     DynamicSparsityPattern csp(dof.n_dofs(), dof.n_dofs());
     DoFTools::make_sparsity_pattern(dof, mask, csp, constraints);
     sparsity.copy_from(csp);
@@ -106,12 +106,12 @@ check()
   // compute reference: need to cancel constrained entries as these will in
   // general get different values
   matrix.add(-1., matrix_ref);
-  for(unsigned int i = 0; i < matrix.m(); ++i)
+  for(unsigned int i= 0; i < matrix.m(); ++i)
     if(constraints.is_constrained(i) == true)
-      matrix.diag_element(i) = 0;
+      matrix.diag_element(i)= 0;
   deallog << "Matrix error Frobenius: " << matrix.frobenius_norm() << std::endl;
 
-  rhs -= rhs_ref;
+  rhs-= rhs_ref;
   deallog << "RHS vector error l2: " << rhs.l2_norm() << std::endl;
 }
 

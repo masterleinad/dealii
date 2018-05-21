@@ -17,11 +17,11 @@
 #include <deal.II/base/tensor.h>
 #include <deal.II/base/tensor_accessors.h>
 
-#define PRINTME(bar)                      \
-  for(unsigned int i = 0; i < 2; ++i)     \
-    for(unsigned int j = 0; j < 2; ++j)   \
-      for(unsigned int k = 0; k < 2; ++k) \
-        deallog << bar[i][j][k] << " ";   \
+#define PRINTME(bar)                     \
+  for(unsigned int i= 0; i < 2; ++i)     \
+    for(unsigned int j= 0; j < 2; ++j)   \
+      for(unsigned int k= 0; k < 2; ++k) \
+        deallog << bar[i][j][k] << " ";  \
   deallog << std::endl;
 
 int
@@ -30,7 +30,7 @@ main()
   initlog();
 
   Tensor<9, 3, int> t;
-  t[0][1][2][0][1][2][0][1][2] = 42;
+  t[0][1][2][0][1][2][0][1][2]= 42;
 
   // Reorder index 4 (count begins at 0) to last place:
   TensorAccessors::internal::
@@ -43,18 +43,18 @@ main()
     //               0  1  2  3  5  6  7  8  4
     deallog << foo[0][1][2][0][2][0][1][2][1] << std::endl;
 
-    int  temp = foo[0][1][2][0][2][0][1][2][1];
-    int& ref  = foo[0][1][2][0][2][0][1][2][1];
-    ref       = temp;
+    int  temp= foo[0][1][2][0][2][0][1][2][1];
+    int& ref = foo[0][1][2][0][2][0][1][2][1];
+    ref      = temp;
 
-    foo[0][1][2][0][2][0][1][2][1] = temp + ref;
+    foo[0][1][2][0][2][0][1][2][1]= temp + ref;
 
     deallog << t[0][1][2][0][1][2][0][1][2] << std::endl;
   }
 
   // test read-only access:
   {
-    const Tensor<9, 3, int>& t_ref = t;
+    const Tensor<9, 3, int>& t_ref= t;
 
     TensorAccessors::internal::
       ReorderedIndexView<4, 9, const Tensor<9, 3, int>> // auto ...
@@ -64,8 +64,8 @@ main()
     //                     0  1  2  3  5  6  7  8  4
     deallog << const_foo[0][1][2][0][2][0][1][2][1] << std::endl;
 
-    int& tmp = foo[0][1][2][0][2][0][1][2][1];
-    tmp      = const_foo[0][1][2][0][2][0][1][2][1] / 2;
+    int& tmp= foo[0][1][2][0][2][0][1][2][1];
+    tmp     = const_foo[0][1][2][0][2][0][1][2][1] / 2;
     deallog << const_foo[0][1][2][0][2][0][1][2][1] << std::endl;
   }
 
@@ -90,7 +90,7 @@ main()
   {
     // check whether all special cases of reordering work as expected:
 
-    int initializer[2][2][2] = {{{0, 1}, {2, 3}}, {{4, 5}, {6, 7}}};
+    int initializer[2][2][2]= {{{0, 1}, {2, 3}}, {{4, 5}, {6, 7}}};
     Tensor<3, 2, int> t(initializer);
 
     deallog << "Order of indices 0 1 2  -->  ";
@@ -148,7 +148,7 @@ main()
   {
     // check with c-style arrays:
     double t[3][3][3][3][3];
-    t[0][1][2][0][1] = 42.;
+    t[0][1][2][0][1]= 42.;
 
     dealii::TensorAccessors::internal::
       ReorderedIndexView<2, 5, double[3][3][3][3][3]> // auto ...
@@ -156,7 +156,7 @@ main()
       = TensorAccessors::reordered_index_view<2, 5>(t);
     deallog << foo[0][1][0][1][2] << std::endl;
 
-    const double(&t_ref)[3][3][3][3][3] = t;
+    const double(&t_ref)[3][3][3][3][3]= t;
     dealii::TensorAccessors::internal::
       ReorderedIndexView<2, 5, double const[3][3][3][3][3]> // auto ...
         foo2

@@ -52,7 +52,7 @@ test()
 
   hp::DoFHandler<1, spacedim> dof_handler(triangulation);
 
-  unsigned int index = 0;
+  unsigned int index= 0;
   for(typename hp::DoFHandler<1, spacedim>::active_cell_iterator cell
       = dof_handler.begin_active();
       cell != dof_handler.end();
@@ -61,7 +61,7 @@ test()
 
   dof_handler.distribute_dofs(fe);
 
-  const unsigned int N = dof_handler.n_boundary_dofs();
+  const unsigned int N= dof_handler.n_boundary_dofs();
   deallog << N << std::endl;
 }
 

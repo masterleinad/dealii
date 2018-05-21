@@ -25,13 +25,13 @@
 void
 test()
 {
-  const unsigned int dim  = 3;
-  const unsigned int rank = 2;
+  const unsigned int dim = 3;
+  const unsigned int rank= 2;
 
-  double            a1[3][3] = {{1., 2., 3.}, {4., 5., 6.}, {7., 8., 9.}};
+  double            a1[3][3]= {{1., 2., 3.}, {4., 5., 6.}, {7., 8., 9.}};
   Tensor<rank, dim> t1(a1);
 
-  double a2[3][3] = {{10., 11., 12.}, {13., 14., 15.}, {16., 17., 18.}};
+  double a2[3][3]= {{10., 11., 12.}, {13., 14., 15.}, {16., 17., 18.}};
   Tensor<rank, dim> t2(a2);
 
   verify(t1, t2);

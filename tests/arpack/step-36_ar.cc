@@ -116,7 +116,7 @@ namespace Step36
     mass_matrix.reinit(sparsity_pattern);
 
     eigenfunctions.resize(8);
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
       eigenfunctions[i].reinit(dof_handler.n_dofs());
 
     eigenvalues.resize(eigenfunctions.size());
@@ -133,8 +133,8 @@ namespace Step36
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_stiffness_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
@@ -147,19 +147,19 @@ namespace Step36
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        cell_stiffness_matrix = 0;
-        cell_mass_matrix      = 0;
+        cell_stiffness_matrix= 0;
+        cell_mass_matrix     = 0;
 
         potential.value_list(fe_values.get_quadrature_points(),
                              potential_values);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(i, j)
                   += (fe_values.shape_grad(i, q_point)
@@ -169,9 +169,9 @@ namespace Step36
                           * fe_values.shape_value(j, q_point))
                      * fe_values.JxW(q_point);
 
-                cell_mass_matrix(i, j) += (fe_values.shape_value(i, q_point)
-                                           * fe_values.shape_value(j, q_point))
-                                          * fe_values.JxW(q_point);
+                cell_mass_matrix(i, j)+= (fe_values.shape_value(i, q_point)
+                                          * fe_values.shape_value(j, q_point))
+                                         * fe_values.JxW(q_point);
               }
 
         cell->get_dof_indices(local_dof_indices);
@@ -185,15 +185,15 @@ namespace Step36
     stiffness_matrix.compress(VectorOperation::add);
     mass_matrix.compress(VectorOperation::add);
 
-    double min_spurious_eigenvalue = std::numeric_limits<double>::max(),
-           max_spurious_eigenvalue = -std::numeric_limits<double>::max();
+    double min_spurious_eigenvalue= std::numeric_limits<double>::max(),
+           max_spurious_eigenvalue= -std::numeric_limits<double>::max();
 
-    for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
       if(constraints.is_constrained(i))
         {
-          const double ev         = stiffness_matrix(i, i) / mass_matrix(i, i);
-          min_spurious_eigenvalue = std::min(min_spurious_eigenvalue, ev);
-          max_spurious_eigenvalue = std::max(max_spurious_eigenvalue, ev);
+          const double ev        = stiffness_matrix(i, i) / mass_matrix(i, i);
+          min_spurious_eigenvalue= std::min(min_spurious_eigenvalue, ev);
+          max_spurious_eigenvalue= std::max(max_spurious_eigenvalue, ev);
         }
   }
 
@@ -204,7 +204,7 @@ namespace Step36
     SolverControl       solver_control(dof_handler.n_dofs(), 1e-10);
     SparseDirectUMFPACK inverse;
     inverse.initialize(stiffness_matrix);
-    const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 2;
+    const unsigned int num_arnoldi_vectors= 2 * eigenvalues.size() + 2;
     ArpackSolver::AdditionalData additional_data(
       num_arnoldi_vectors, ArpackSolver::largest_magnitude, true);
     ArpackSolver eigensolver(solver_control, additional_data);
@@ -220,11 +220,11 @@ namespace Step36
     // b) x_j*B*x_i=\delta_{ij}
     {
       Vector<double> Ax(eigenfunctions[0]), Bx(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
         {
           mass_matrix.vmult(Bx, eigenfunctions[i]);
 
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for(unsigned int j= 0; j < eigenfunctions.size(); j++)
             if(std::abs(eigenfunctions[j] * Bx - (i == j)) > 1e-8)
               deallog << "Eigenvectors " + Utilities::int_to_string(i) + " and "
                            + Utilities::int_to_string(j)
@@ -244,8 +244,8 @@ namespace Step36
                     << std::endl;
         }
     }
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
-      eigenfunctions[i] /= eigenfunctions[i].linfty_norm();
+    for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
+      eigenfunctions[i]/= eigenfunctions[i].linfty_norm();
 
     return std::make_pair(solver_control.last_step(),
                           solver_control.last_value());
@@ -259,7 +259,7 @@ namespace Step36
 
     data_out.attach_dof_handler(dof_handler);
 
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
       data_out.add_data_vector(eigenfunctions[i],
                                std::string("eigenfunction_")
                                  + Utilities::int_to_string(i));
@@ -294,11 +294,11 @@ namespace Step36
 
     assemble_system();
 
-    const std::pair<unsigned int, double> res = solve();
+    const std::pair<unsigned int, double> res= solve();
 
     std::sort(eigenvalues.begin(), eigenvalues.end(), my_compare);
 
-    for(unsigned int i = 0; i < 5 && i < eigenvalues.size(); ++i)
+    for(unsigned int i= 0; i < 5 && i < eigenvalues.size(); ++i)
       deallog << "      Eigenvalue " << i << " : " << eigenvalues[i]
               << std::endl;
   }

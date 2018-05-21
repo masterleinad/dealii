@@ -54,7 +54,7 @@ test()
 
   ConstraintMatrix           constraints;
   FEValuesExtractors::Vector velocities(1);
-  ComponentMask              mask = fe.component_mask(velocities);
+  ComponentMask              mask= fe.component_mask(velocities);
 
   deallog << "ComponentMask " << mask[0] << mask[1] << mask[2] << std::endl;
   DoFTools::make_zero_boundary_constraints(dof_handler, constraints, mask);
@@ -68,19 +68,19 @@ test()
                         update_values | update_gradients | update_JxW_values
                           | update_quadrature_points);
 
-  const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int                   dofs_per_cell= fe.dofs_per_cell;
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
-                                      endc = dof_handler.end();
+  DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active(),
+                                      endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
 
-      std::vector<Point<2>> locations = fe_values.get_quadrature_points();
+      std::vector<Point<2>> locations= fe_values.get_quadrature_points();
       cell->get_dof_indices(local_dof_indices);
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
           if(constraints.is_constrained(local_dof_indices[i]))
             deallog << "DoF " << local_dof_indices[i] << ", copy "

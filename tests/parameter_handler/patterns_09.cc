@@ -30,11 +30,11 @@ main()
   ps.push_back(std_cxx14::make_unique<Patterns::Anything>());
 
   Patterns::Tuple   pattern(ps, ";");
-  const std::string desc = pattern.description();
+  const std::string desc= pattern.description();
 
   deallog << desc << std::endl;
 
-  std::string test = "5; 3.14; Ciao";
+  std::string test= "5; 3.14; Ciao";
 
   if(pattern.match(test))
     deallog << "OK" << std::endl;

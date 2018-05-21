@@ -116,13 +116,12 @@ check()
   // multiply matrix by 100 to
   // make test more sensitive
   deallog << "Matrix: " << std::endl;
-  for(SparseMatrix<double>::const_iterator p = matrix.begin();
-      p != matrix.end();
+  for(SparseMatrix<double>::const_iterator p= matrix.begin(); p != matrix.end();
       ++p)
     deallog << p->value() * 100 << std::endl;
 
   deallog << "RHS vector: " << std::endl;
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

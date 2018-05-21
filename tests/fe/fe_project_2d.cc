@@ -44,7 +44,7 @@
 
 using namespace dealii;
 
-static const Point<2> vertices_nonaffine[] = {
+static const Point<2> vertices_nonaffine[]= {
   Point<2>(-1., -1.),
   Point<2>(0., -1.),
   Point<2>(1., -1.),
@@ -58,7 +58,7 @@ static const Point<2> vertices_nonaffine[] = {
   Point<2>(1., 1.),
 };
 
-static const Point<2> vertices_affine[] = {
+static const Point<2> vertices_affine[]= {
   Point<2>(-1.4, -1.),
   Point<2>(-0.4, -1.),
   Point<2>(0.6, -1.),
@@ -72,7 +72,7 @@ static const Point<2> vertices_affine[] = {
   Point<2>(1., 1.),
 };
 
-static const Point<2> vertices_rectangular[] = {
+static const Point<2> vertices_rectangular[]= {
   Point<2>(-1., -1.),
   Point<2>(0., -1.),
   Point<2>(1., -1.),
@@ -88,7 +88,7 @@ static const Point<2> vertices_rectangular[] = {
 
 static const unsigned n_vertices
   = sizeof(vertices_rectangular) / sizeof(vertices_rectangular[0]);
-static const unsigned n_cells = 4;
+static const unsigned n_cells= 4;
 
 template <int dim>
 class VectorFunction : public Function<dim>
@@ -108,15 +108,15 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 {
   Assert(component < 2, ExcIndexRange(component, 0, 1));
 
-  const double PI  = numbers::PI;
-  double       val = 0.0;
+  const double PI = numbers::PI;
+  double       val= 0.0;
   switch(component)
     {
       case 0:
-        val = cos(PI * p(0)) * sin(PI * p(1));
+        val= cos(PI * p(0)) * sin(PI * p(1));
         break;
       case 1:
-        val = -sin(PI * p(0)) * cos(PI * p(1));
+        val= -sin(PI * p(0)) * cos(PI * p(1));
         break;
     }
   return val;
@@ -127,8 +127,8 @@ void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
                                   Vector<double>&   values) const
 {
-  for(int i = 0; i < dim; ++i)
-    values(i) = value(p, i);
+  for(int i= 0; i < dim; ++i)
+    values(i)= value(p, i);
 }
 
 void create_tria(Triangulation<2>& triangulation,
@@ -141,11 +141,11 @@ void create_tria(Triangulation<2>& triangulation,
     = {{0, 1, 3, 4}, {1, 2, 4, 5}, {3, 4, 6, 7}, {4, 5, 7, 8}};
 
   std::vector<CellData<2>> cells(n_cells, CellData<2>());
-  for(unsigned i = 0; i < cells.size(); ++i)
+  for(unsigned i= 0; i < cells.size(); ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
-        cells[i].vertices[j] = cell_vertices[i][j];
-      cells[i].material_id = 0;
+      for(unsigned int j= 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+        cells[i].vertices[j]= cell_vertices[i][j];
+      cells[i].material_id= 0;
     }
 
   triangulation.create_triangulation(vertices, cells, SubCellData());
@@ -170,14 +170,14 @@ test(const FiniteElement<dim>& fe,
   VectorFunction<dim>              fe_function;
   const FEValuesExtractors::Vector vec(0);
   const QGauss<dim>                quadrature(fe.degree + 1);
-  const unsigned int               n_q_points = quadrature.size();
+  const unsigned int               n_q_points= quadrature.size();
   MappingQ<dim>                    mapping(1);
   //MappingQGeneric<dim> mapping(1);
   std::vector<double>                                         div_v(n_q_points);
   std::vector<typename FEValuesViews::Vector<dim>::curl_type> curl_v(
     n_q_points);
 
-  for(unsigned cycle = 0; cycle < n_cycles; ++cycle)
+  for(unsigned cycle= 0; cycle < n_cycles; ++cycle)
     {
       dof_handler.distribute_dofs(fe);
 
@@ -199,15 +199,15 @@ test(const FiniteElement<dim>& fe,
                                         VectorTools::L2_norm);
 
       typename FEValuesViews::Vector<dim>::curl_type total_curl;
-      double                                         total_div = 0;
-      total_curl *= 0.;
+      double                                         total_div= 0;
+      total_curl*= 0.;
 
       FEValues<dim> fe_values(mapping,
                               fe,
                               quadrature,
                               update_JxW_values | update_quadrature_points
                                 | update_values | update_gradients);
-      unsigned int  cell_index = 0;
+      unsigned int  cell_index= 0;
 
       for(typename DoFHandler<dim>::active_cell_iterator cell
           = dof_handler.begin_active();
@@ -215,13 +215,13 @@ test(const FiniteElement<dim>& fe,
           ++cell, ++cell_index)
         {
           fe_values.reinit(cell);
-          const std::vector<double>& JxW_values = fe_values.get_JxW_values();
+          const std::vector<double>& JxW_values= fe_values.get_JxW_values();
           fe_values[vec].get_function_divergences(v, div_v);
           fe_values[vec].get_function_curls(v, curl_v);
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
             {
-              total_div += JxW_values[q_point] * div_v[q_point];
-              total_curl += JxW_values[q_point] * curl_v[q_point];
+              total_div+= JxW_values[q_point] * div_v[q_point];
+              total_curl+= JxW_values[q_point] * curl_v[q_point];
             }
         }
 
@@ -248,13 +248,13 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  const static unsigned dim      = 2;
-  unsigned              order    = 1;
-  unsigned              n_cycles = 4;
+  const static unsigned dim     = 2;
+  unsigned              order   = 1;
+  unsigned              n_cycles= 4;
 
   deallog << "2d\nRectangular grid:\n";
 
-  const Point<dim>* vertices = &vertices_rectangular[0];
+  const Point<dim>* vertices= &vertices_rectangular[0];
   test<dim>(FE_Nedelec<dim>(order), n_cycles, true, vertices);
   test<dim>(FE_RaviartThomas<dim>(order), n_cycles, true, vertices);
   test<dim>(FESystem<dim>(FE_Q<dim>(order), dim), n_cycles, true, vertices);
@@ -262,7 +262,7 @@ main()
 
   deallog << "\nAffine grid:\n";
 
-  vertices = &vertices_affine[0];
+  vertices= &vertices_affine[0];
   test<dim>(FE_Nedelec<dim>(order), n_cycles, true, vertices);
   test<dim>(FE_RaviartThomas<dim>(order), n_cycles, true, vertices);
   test<dim>(FESystem<dim>(FE_Q<dim>(order), dim), n_cycles, true, vertices);
@@ -270,7 +270,7 @@ main()
 
   deallog << "\nNon-affine grid:\n";
 
-  vertices = &vertices_nonaffine[0];
+  vertices= &vertices_nonaffine[0];
   test<dim>(FE_Nedelec<dim>(order), n_cycles, true, vertices);
   test<dim>(FE_RaviartThomas<dim>(order), n_cycles, true, vertices);
   test<dim>(FESystem<dim>(FE_Q<dim>(order), dim), n_cycles, true, vertices);

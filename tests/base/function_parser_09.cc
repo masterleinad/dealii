@@ -24,7 +24,7 @@
 double
 eval(const std::string& exp)
 {
-  std::string                   variables = "x,y";
+  std::string                   variables= "x,y";
   std::map<std::string, double> constants;
 
   FunctionParser<2> fp(1);
@@ -40,7 +40,7 @@ main()
 {
   initlog();
 
-  double random = eval("rand()"); //random seed
+  double random= eval("rand()"); //random seed
 
   if(0.0 <= random && random <= 1.0)
     deallog << "OK" << std::endl;

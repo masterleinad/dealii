@@ -35,13 +35,13 @@ namespace std_cxx14
     template <typename T>
     struct is_bounded_array
     {
-      static constexpr bool value = false;
+      static constexpr bool value= false;
     };
 
     template <typename T, std::size_t N>
     struct is_bounded_array<T[N]>
     {
-      static constexpr bool value = true;
+      static constexpr bool value= true;
     };
   } // namespace internal
 

@@ -37,20 +37,20 @@ test()
   // rather than linears and quadratics according to the main function in
   // matrix_vector_faces_common.h
 
-  const unsigned int                        fe_degree = fe_degree_ + 1;
+  const unsigned int                        fe_degree= fe_degree_ + 1;
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria, -1, 1);
 
-  for(typename Triangulation<dim>::cell_iterator cell = tria.begin();
+  for(typename Triangulation<dim>::cell_iterator cell= tria.begin();
       cell != tria.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         cell->face(f)->set_all_boundary_ids(f);
   std::vector<
     GridTools::PeriodicFacePair<typename Triangulation<dim>::cell_iterator>>
     periodic_faces;
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     GridTools::collect_periodic_faces(
       tria, 2 * d, 2 * d + 1, d, periodic_faces);
   tria.add_periodicity(periodic_faces);
@@ -62,7 +62,7 @@ test()
   ConstraintMatrix   constraints;
   constraints.close();
 
-  for(unsigned int test = 0; test < 2; ++test)
+  for(unsigned int test= 0; test < 2; ++test)
     {
       tria.refine_global(1);
 
@@ -79,13 +79,12 @@ test()
       MatrixFree<dim, double>                          mf_data;
       const QGauss<1>                                  quad(fe_degree + 1);
       typename MatrixFree<dim, double>::AdditionalData data;
-      data.tasks_parallel_scheme
-        = MatrixFree<dim, double>::AdditionalData::none;
+      data.tasks_parallel_scheme= MatrixFree<dim, double>::AdditionalData::none;
       data.mapping_update_flags_inner_faces
         = (update_gradients | update_JxW_values);
       data.mapping_update_flags_boundary_faces
         = (update_gradients | update_JxW_values);
-      data.initialize_mapping = false;
+      data.initialize_mapping= false;
 
       mf_data.reinit(mapping, dof, constraints, quad, data);
 
@@ -93,7 +92,7 @@ test()
       mf_data.renumber_dofs(renumbering);
       dof.renumber_dofs(renumbering);
 
-      data.initialize_mapping = true;
+      data.initialize_mapping= true;
       mf_data.reinit(mapping, dof, constraints, quad, data);
 
       mf_data.initialize_dof_vector(in);
@@ -102,10 +101,10 @@ test()
 
       // Set random seed for reproducibility
       Testing::srand(42);
-      for(unsigned int i = 0; i < in.local_size(); ++i)
+      for(unsigned int i= 0; i < in.local_size(); ++i)
         {
-          const double entry  = Testing::rand() / (double) RAND_MAX;
-          in.local_element(i) = entry;
+          const double entry = Testing::rand() / (double) RAND_MAX;
+          in.local_element(i)= entry;
         }
 
       MatrixFreeTest<dim,
@@ -124,16 +123,16 @@ test()
         mf2(mf_data);
       mf2.vmult(out_dist, in);
 
-      out_dist -= out;
+      out_dist-= out;
 
-      double diff_norm = out_dist.linfty_norm() / out.linfty_norm();
+      double diff_norm= out_dist.linfty_norm() / out.linfty_norm();
       deallog << "Norm of difference:          " << diff_norm << " ";
 
       // test again, now doing matrix-vector product twice
       mf2.vmult(out_dist, in);
       mf2.vmult(out_dist, in);
-      out_dist -= out;
-      diff_norm = out_dist.linfty_norm() / out.linfty_norm();
+      out_dist-= out;
+      diff_norm= out_dist.linfty_norm() / out.linfty_norm();
       deallog << diff_norm << std::endl;
     }
 }

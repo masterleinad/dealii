@@ -152,7 +152,7 @@ namespace Step16
                                MeshWorker::IntegrationInfo<dim>& info) const
   {
     AssertDimension(dinfo.n_matrices(), 1);
-    const double coefficient = (dinfo.cell->center()(0) > 0.) ? .1 : 1.;
+    const double coefficient= (dinfo.cell->center()(0) > 0.) ? .1 : 1.;
 
     LocalIntegrators::Laplace::cell_matrix(
       dinfo.matrix(0, false).matrix, info.fe_values(0), coefficient);
@@ -266,7 +266,7 @@ namespace Step16
 
     deallog << "   Number of degrees of freedom: " << dof_handler.n_dofs()
             << " (by level: ";
-    for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+    for(unsigned int level= 0; level < triangulation.n_levels(); ++level)
       deallog << dof_handler.n_dofs(level)
               << (level == triangulation.n_levels() - 1 ? ")" : ", ");
     deallog << std::endl;
@@ -310,7 +310,7 @@ namespace Step16
     // have to resize the container holding the SparseMatrix classes, since
     // they have to release their SparsityPattern before the can be destroyed
     // upon resizing.
-    const unsigned int n_levels = triangulation.n_levels();
+    const unsigned int n_levels= triangulation.n_levels();
 
     mg_interface_in.resize(0, n_levels - 1);
     mg_interface_in.clear_elements();
@@ -335,7 +335,7 @@ namespace Step16
     // the speed with which we can multiply with these matrices), we should
     // use separate and different sparsity patterns for these two kinds of
     // matrices.
-    for(unsigned int level = 0; level < n_levels; ++level)
+    for(unsigned int level= 0; level < n_levels; ++level)
       {
         DynamicSparsityPattern dsp(dof_handler.n_dofs(level),
                                    dof_handler.n_dofs(level));
@@ -406,7 +406,7 @@ namespace Step16
                                            matrix_integrator,
                                            assembler);
 
-    for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
       if(constraints.is_constrained(i))
         system_matrix.set(i, i, 1.);
   }
@@ -448,10 +448,10 @@ namespace Step16
                                            matrix_integrator,
                                            assembler);
 
-    const unsigned int nlevels = triangulation.n_levels();
-    for(unsigned int level = 0; level < nlevels; ++level)
+    const unsigned int nlevels= triangulation.n_levels();
+    for(unsigned int level= 0; level < nlevels; ++level)
       {
-        for(unsigned int i = 0; i < dof_handler.n_dofs(level); ++i)
+        for(unsigned int i= 0; i < dof_handler.n_dofs(level); ++i)
           if(mg_constrained_dofs.is_boundary_index(level, i)
              || mg_constrained_dofs.at_refinement_edge(level, i))
             mg_matrices[level].set(i, i, 1.);
@@ -551,7 +551,7 @@ namespace Step16
     SolverControl solver_control(1000, 1e-12);
     SolverCG<>    solver(solver_control);
 
-    solution = 0;
+    solution= 0;
 
     solver.solve(system_matrix, solution, system_rhs, preconditioner);
     constraints.distribute(solution);
@@ -606,7 +606,7 @@ namespace Step16
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 8; ++cycle)
+    for(unsigned int cycle= 0; cycle < 8; ++cycle)
       {
         deallog << "Cycle " << cycle << std::endl;
 

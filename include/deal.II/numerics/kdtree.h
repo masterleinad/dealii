@@ -88,8 +88,8 @@ public:
    * your points, and do not call set_points() again, then all following results
    * will likely be wrong.
    */
-  KDTree(const unsigned int&            max_leaf_size = 10,
-         const std::vector<Point<dim>>& pts = std::vector<Point<dim>>());
+  KDTree(const unsigned int&            max_leaf_size= 10,
+         const std::vector<Point<dim>>& pts= std::vector<Point<dim>>());
 
   /**
    * Adaptor class used internally by nanoflann. This class stores a reference
@@ -203,7 +203,7 @@ public:
   std::vector<std::pair<unsigned int, double>>
   get_points_within_ball(const Point<dim>& target,
                          const double&     radius,
-                         const bool        sorted = false) const;
+                         const bool        sorted= false) const;
 
   /**
    * Fill and return a vector with the indices and distances of the closest @p n_points
@@ -291,9 +291,9 @@ KDTree<dim>::PointCloudAdaptor::kdtree_distance(const double* p1,
                                                 const size_t  size) const
 {
   AssertDimension(size, dim);
-  double res = 0.0;
-  for(size_t d = 0; d < size; ++d)
-    res += (p1[d] - points[idx_p2][d]) * (p1[d] - points[idx_p2][d]);
+  double res= 0.0;
+  for(size_t d= 0; d < size; ++d)
+    res+= (p1[d] - points[idx_p2][d]) * (p1[d] - points[idx_p2][d]);
   return std::sqrt(res);
 }
 #  endif

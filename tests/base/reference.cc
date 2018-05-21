@@ -26,7 +26,7 @@
 // Provide memory for objects of type T such that access to a deleted
 // object does not cause a segmentation fault
 std::vector<char> memory(10000);
-int               next = 0;
+int               next= 0;
 
 class Test : public Subscriptor
 {
@@ -85,9 +85,9 @@ main()
   u->f(); // should print "const" since #b# is const
   // Now try if subscriptor works
   Test c("C");
-  r = &c;
+  r= &c;
   Test d("D");
-  r = &d;
+  r= &d;
   // Destruction of "Test R" will cause a spurious ExcNotUsed here,
   // since D was deleted first. This shows up in address sanitizers
   // as stack-use-after-scope, but we can't do anything about it.

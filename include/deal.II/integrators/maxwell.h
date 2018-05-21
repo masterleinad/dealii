@@ -97,13 +97,13 @@ namespace LocalIntegrators
       switch(dim)
         {
           case 2:
-            result[0] = h1[0][1] - h0[1][1];
-            result[1] = h0[0][1] - h1[0][0];
+            result[0]= h1[0][1] - h0[1][1];
+            result[1]= h0[0][1] - h1[0][0];
             break;
           case 3:
-            result[0] = h1[0][1] + h2[0][2] - h0[1][1] - h0[2][2];
-            result[1] = h2[1][2] + h0[1][0] - h1[2][2] - h1[0][0];
-            result[2] = h0[2][0] + h1[2][1] - h2[0][0] - h2[1][1];
+            result[0]= h1[0][1] + h2[0][2] - h0[1][1] - h0[2][2];
+            result[1]= h2[1][2] + h0[1][0] - h1[2][2] - h1[0][0];
+            result[2]= h0[2][0] + h1[2][1] - h2[0][0] - h2[1][1];
             break;
           default:
             Assert(false, ExcNotImplemented());
@@ -136,8 +136,8 @@ namespace LocalIntegrators
       switch(dim)
         {
           case 2:
-            result[0] = normal[1] * (g1[0] - g0[1]);
-            result[1] = -normal[0] * (g1[0] - g0[1]);
+            result[0]= normal[1] * (g1[0] - g0[1]);
+            result[1]= -normal[0] * (g1[0] - g0[1]);
             break;
           case 3:
             result[0]
@@ -168,9 +168,9 @@ namespace LocalIntegrators
     void
     curl_curl_matrix(FullMatrix<double>&      M,
                      const FEValuesBase<dim>& fe,
-                     const double             factor = 1.)
+                     const double             factor= 1.)
     {
-      const unsigned int n_dofs = fe.dofs_per_cell;
+      const unsigned int n_dofs= fe.dofs_per_cell;
 
       AssertDimension(fe.get_fe().n_components(), dim);
       AssertDimension(M.m(), n_dofs);
@@ -185,24 +185,24 @@ namespace LocalIntegrators
       // in 2d, we don't. Thus, we
       // need to adapt the loop over
       // all dimensions
-      const unsigned int d_max = (dim == 2) ? 1 : dim;
+      const unsigned int d_max= (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for(unsigned int k= 0; k < fe.n_quadrature_points; ++k)
         {
-          const double dx = factor * fe.JxW(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < d_max; ++d)
+          const double dx= factor * fe.JxW(k);
+          for(unsigned int i= 0; i < n_dofs; ++i)
+            for(unsigned int j= 0; j < n_dofs; ++j)
+              for(unsigned int d= 0; d < d_max; ++d)
                 {
-                  const unsigned int d1 = (d + 1) % dim;
-                  const unsigned int d2 = (d + 2) % dim;
+                  const unsigned int d1= (d + 1) % dim;
+                  const unsigned int d2= (d + 2) % dim;
 
-                  const double cv = fe.shape_grad_component(i, k, d2)[d1]
-                                    - fe.shape_grad_component(i, k, d1)[d2];
-                  const double cu = fe.shape_grad_component(j, k, d2)[d1]
-                                    - fe.shape_grad_component(j, k, d1)[d2];
+                  const double cv= fe.shape_grad_component(i, k, d2)[d1]
+                                   - fe.shape_grad_component(i, k, d1)[d2];
+                  const double cu= fe.shape_grad_component(j, k, d2)[d1]
+                                   - fe.shape_grad_component(j, k, d1)[d2];
 
-                  M(i, j) += dx * cu * cv;
+                  M(i, j)+= dx * cu * cv;
                 }
         }
     }
@@ -225,10 +225,10 @@ namespace LocalIntegrators
     curl_matrix(FullMatrix<double>&      M,
                 const FEValuesBase<dim>& fe,
                 const FEValuesBase<dim>& fetest,
-                double                   factor = 1.)
+                double                   factor= 1.)
     {
-      const unsigned int n_dofs = fe.dofs_per_cell;
-      const unsigned int t_dofs = fetest.dofs_per_cell;
+      const unsigned int n_dofs= fe.dofs_per_cell;
+      const unsigned int t_dofs= fetest.dofs_per_cell;
       AssertDimension(fe.get_fe().n_components(), dim);
       // There should be the right number of components (3 in 3D, otherwise 1)
       // for the curl.
@@ -236,22 +236,22 @@ namespace LocalIntegrators
       AssertDimension(M.m(), t_dofs);
       AssertDimension(M.n(), n_dofs);
 
-      const unsigned int d_max = (dim == 2) ? 1 : dim;
+      const unsigned int d_max= (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for(unsigned int k= 0; k < fe.n_quadrature_points; ++k)
         {
-          const double dx = fe.JxW(k) * factor;
-          for(unsigned int i = 0; i < t_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < d_max; ++d)
+          const double dx= fe.JxW(k) * factor;
+          for(unsigned int i= 0; i < t_dofs; ++i)
+            for(unsigned int j= 0; j < n_dofs; ++j)
+              for(unsigned int d= 0; d < d_max; ++d)
                 {
-                  const unsigned int d1 = (d + 1) % dim;
-                  const unsigned int d2 = (d + 2) % dim;
+                  const unsigned int d1= (d + 1) % dim;
+                  const unsigned int d2= (d + 2) % dim;
 
-                  const double vv = fetest.shape_value_component(i, k, d);
-                  const double cu = fe.shape_grad_component(j, k, d2)[d1]
-                                    - fe.shape_grad_component(j, k, d1)[d2];
-                  M(i, j) += dx * cu * vv;
+                  const double vv= fetest.shape_value_component(i, k, d);
+                  const double cu= fe.shape_grad_component(j, k, d2)[d1]
+                                   - fe.shape_grad_component(j, k, d1)[d2];
+                  M(i, j)+= dx * cu * vv;
                 }
         }
     }
@@ -278,9 +278,9 @@ namespace LocalIntegrators
                         const FEValuesBase<dim>& fe,
                         const unsigned int       face_no,
                         double                   penalty,
-                        double                   factor = 1.)
+                        double                   factor= 1.)
     {
-      const unsigned int n_dofs = fe.dofs_per_cell;
+      const unsigned int n_dofs= fe.dofs_per_cell;
 
       AssertDimension(fe.get_fe().n_components(), dim);
       AssertDimension(M.m(), n_dofs);
@@ -296,26 +296,26 @@ namespace LocalIntegrators
       // but in 2d, we don't. Thus,
       // we need to adapt the loop
       // over all dimensions
-      const unsigned int d_max = (dim == 2) ? 1 : dim;
+      const unsigned int d_max= (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for(unsigned int k= 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
+          const double         dx= factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
+          for(unsigned int i= 0; i < n_dofs; ++i)
+            for(unsigned int j= 0; j < n_dofs; ++j)
               if(fe.get_fe().has_support_on_face(i, face_no)
                  && fe.get_fe().has_support_on_face(j, face_no))
                 {
-                  for(unsigned int d = 0; d < d_max; ++d)
+                  for(unsigned int d= 0; d < d_max; ++d)
                     {
-                      const unsigned int d1 = (d + 1) % dim;
-                      const unsigned int d2 = (d + 2) % dim;
+                      const unsigned int d1= (d + 1) % dim;
+                      const unsigned int d2= (d + 2) % dim;
 
-                      const double cv = fe.shape_grad_component(i, k, d2)[d1]
-                                        - fe.shape_grad_component(i, k, d1)[d2];
-                      const double cu = fe.shape_grad_component(j, k, d2)[d1]
-                                        - fe.shape_grad_component(j, k, d1)[d2];
+                      const double cv= fe.shape_grad_component(i, k, d2)[d1]
+                                       - fe.shape_grad_component(i, k, d1)[d2];
+                      const double cu= fe.shape_grad_component(j, k, d2)[d1]
+                                       - fe.shape_grad_component(j, k, d1)[d2];
                       const double v
                         = fe.shape_value_component(i, k, d1) * n[d2]
                           - fe.shape_value_component(i, k, d2) * n[d1];
@@ -323,7 +323,7 @@ namespace LocalIntegrators
                         = fe.shape_value_component(j, k, d1) * n[d2]
                           - fe.shape_value_component(j, k, d2) * n[d1];
 
-                      M(i, j) += dx * (2. * penalty * u * v - cv * u - cu * v);
+                      M(i, j)+= dx * (2. * penalty * u * v - cv * u - cu * v);
                     }
                 }
         }
@@ -342,9 +342,9 @@ namespace LocalIntegrators
     void
     tangential_trace_matrix(FullMatrix<double>&      M,
                             const FEValuesBase<dim>& fe,
-                            double                   factor = 1.)
+                            double                   factor= 1.)
     {
-      const unsigned int n_dofs = fe.dofs_per_cell;
+      const unsigned int n_dofs= fe.dofs_per_cell;
 
       AssertDimension(fe.get_fe().n_components(), dim);
       AssertDimension(M.m(), n_dofs);
@@ -360,25 +360,25 @@ namespace LocalIntegrators
       // but in 2d, we don't. Thus,
       // we need to adapt the loop
       // over all dimensions
-      const unsigned int d_max = (dim == 2) ? 1 : dim;
+      const unsigned int d_max= (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for(unsigned int k= 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < d_max; ++d)
+          const double         dx= factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
+          for(unsigned int i= 0; i < n_dofs; ++i)
+            for(unsigned int j= 0; j < n_dofs; ++j)
+              for(unsigned int d= 0; d < d_max; ++d)
                 {
-                  const unsigned int d1 = (d + 1) % dim;
-                  const unsigned int d2 = (d + 2) % dim;
+                  const unsigned int d1= (d + 1) % dim;
+                  const unsigned int d2= (d + 2) % dim;
 
-                  const double v = fe.shape_value_component(i, k, d1) * n(d2)
-                                   - fe.shape_value_component(i, k, d2) * n(d1);
-                  const double u = fe.shape_value_component(j, k, d1) * n(d2)
-                                   - fe.shape_value_component(j, k, d2) * n(d1);
+                  const double v= fe.shape_value_component(i, k, d1) * n(d2)
+                                  - fe.shape_value_component(i, k, d2) * n(d1);
+                  const double u= fe.shape_value_component(j, k, d1) * n(d2)
+                                  - fe.shape_value_component(j, k, d2) * n(d1);
 
-                  M(i, j) += dx * u * v;
+                  M(i, j)+= dx * u * v;
                 }
         }
     }
@@ -407,10 +407,10 @@ namespace LocalIntegrators
                    const FEValuesBase<dim>& fe1,
                    const FEValuesBase<dim>& fe2,
                    const double             pen,
-                   const double             factor1 = 1.,
-                   const double             factor2 = -1.)
+                   const double             factor1= 1.,
+                   const double             factor2= -1.)
     {
-      const unsigned int n_dofs = fe1.dofs_per_cell;
+      const unsigned int n_dofs= fe1.dofs_per_cell;
 
       AssertDimension(fe1.get_fe().n_components(), dim);
       AssertDimension(fe2.get_fe().n_components(), dim);
@@ -423,9 +423,9 @@ namespace LocalIntegrators
       AssertDimension(M22.m(), n_dofs);
       AssertDimension(M22.n(), n_dofs);
 
-      const double nu1     = factor1;
-      const double nu2     = (factor2 < 0) ? factor1 : factor2;
-      const double penalty = .5 * pen * (nu1 + nu2);
+      const double nu1    = factor1;
+      const double nu2    = (factor2 < 0) ? factor1 : factor2;
+      const double penalty= .5 * pen * (nu1 + nu2);
 
       // Depending on the
       // dimension, the cross
@@ -437,31 +437,27 @@ namespace LocalIntegrators
       // but in 2d, we don't. Thus,
       // we need to adapt the loop
       // over all dimensions
-      const unsigned int d_max = (dim == 2) ? 1 : dim;
+      const unsigned int d_max= (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for(unsigned int k= 0; k < fe1.n_quadrature_points; ++k)
         {
-          const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < d_max; ++d)
+          const double         dx= fe1.JxW(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
+          for(unsigned int i= 0; i < n_dofs; ++i)
+            for(unsigned int j= 0; j < n_dofs; ++j)
+              for(unsigned int d= 0; d < d_max; ++d)
                 {
-                  const unsigned int d1 = (d + 1) % dim;
-                  const unsigned int d2 = (d + 2) % dim;
+                  const unsigned int d1= (d + 1) % dim;
+                  const unsigned int d2= (d + 2) % dim;
                   // curl u, curl v
-                  const double cv1
-                    = nu1 * fe1.shape_grad_component(i, k, d2)[d1]
-                      - fe1.shape_grad_component(i, k, d1)[d2];
-                  const double cv2
-                    = nu2 * fe2.shape_grad_component(i, k, d2)[d1]
-                      - fe2.shape_grad_component(i, k, d1)[d2];
-                  const double cu1
-                    = nu1 * fe1.shape_grad_component(j, k, d2)[d1]
-                      - fe1.shape_grad_component(j, k, d1)[d2];
-                  const double cu2
-                    = nu2 * fe2.shape_grad_component(j, k, d2)[d1]
-                      - fe2.shape_grad_component(j, k, d1)[d2];
+                  const double cv1= nu1 * fe1.shape_grad_component(i, k, d2)[d1]
+                                    - fe1.shape_grad_component(i, k, d1)[d2];
+                  const double cv2= nu2 * fe2.shape_grad_component(i, k, d2)[d1]
+                                    - fe2.shape_grad_component(i, k, d1)[d2];
+                  const double cu1= nu1 * fe1.shape_grad_component(j, k, d2)[d1]
+                                    - fe1.shape_grad_component(j, k, d1)[d2];
+                  const double cu2= nu2 * fe2.shape_grad_component(j, k, d2)[d1]
+                                    - fe2.shape_grad_component(j, k, d1)[d2];
 
                   // u x n, v x n
                   const double u1

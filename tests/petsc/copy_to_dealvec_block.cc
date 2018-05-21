@@ -27,8 +27,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -49,28 +49,28 @@ test()
     local_active, local_relevant, MPI_COMM_WORLD);
 
   // set local values
-  vb_one(myid * 2)     = myid * 2.0;
-  vb_one(myid * 2 + 1) = myid * 2.0 + 1.0;
+  vb_one(myid * 2)    = myid * 2.0;
+  vb_one(myid * 2 + 1)= myid * 2.0 + 1.0;
 
   vb_one.compress(VectorOperation::insert);
-  vb_one *= 2.0;
-  v_one = vb_one;
+  vb_one*= 2.0;
+  v_one= vb_one;
 
   PETScWrappers::MPI::BlockVector vb, v;
   vb.reinit(2);
   v.reinit(2);
   LinearAlgebra::distributed::BlockVector<double> copied(2);
-  for(unsigned int bl = 0; bl < 2; ++bl)
+  for(unsigned int bl= 0; bl < 2; ++bl)
     {
-      vb.block(bl)     = vb_one;
-      v.block(bl)      = v_one;
-      copied.block(bl) = copied_one;
+      vb.block(bl)    = vb_one;
+      v.block(bl)     = v_one;
+      copied.block(bl)= copied_one;
     }
   vb.collect_sizes();
   v.collect_sizes();
   copied.collect_sizes();
 
-  copied = vb;
+  copied= vb;
 
   // check local values
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
@@ -79,14 +79,14 @@ test()
       deallog << myid * 2 + 1 << ":" << copied(myid * 2 + 1) << std::endl;
     }
 
-  for(unsigned int bl = 0; bl < 2; ++bl)
+  for(unsigned int bl= 0; bl < 2; ++bl)
     {
       Assert(copied.block(bl)(myid * 2) == myid * 4.0, ExcInternalError());
       Assert(copied.block(bl)(myid * 2 + 1) == myid * 4.0 + 2.0,
              ExcInternalError());
     }
 
-  copied = v;
+  copied= v;
 
   // check ghost values
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
@@ -101,7 +101,7 @@ test()
       deallog << myid * 2 + 1 << ":" << copied(myid * 2 + 1) << std::endl;
     }
 
-  for(unsigned int bl = 0; bl < 2; ++bl)
+  for(unsigned int bl= 0; bl < 2; ++bl)
     {
       Assert(copied.block(bl)(myid * 2) == myid * 4.0, ExcInternalError());
       Assert(copied.block(bl)(myid * 2 + 1) == myid * 4.0 + 2.0,
@@ -117,7 +117,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

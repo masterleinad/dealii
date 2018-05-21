@@ -32,8 +32,8 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   {
-    const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    const unsigned int size= 32;
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -45,8 +45,8 @@ main(int argc, char** argv)
     PETScWrappers::MPI::Vector f(MPI_COMM_WORLD, dim, dim);
     PETScWrappers::MPI::Vector u(MPI_COMM_WORLD, dim, dim);
 
-    f = 1.;
-    u = 0.;
+    f= 1.;
+    u= 0.;
 
     A.compress(VectorOperation::insert);
     f.compress(VectorOperation::insert);

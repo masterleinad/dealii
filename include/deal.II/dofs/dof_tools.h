@@ -542,9 +542,8 @@ namespace DoFTools
   void
   make_sparsity_pattern(const DoFHandlerType&   dof_handler,
                         SparsityPatternType&    sparsity_pattern,
-                        const ConstraintMatrix& constraints
-                        = ConstraintMatrix(),
-                        const bool                keep_constrained_dofs = true,
+                        const ConstraintMatrix& constraints= ConstraintMatrix(),
+                        const bool              keep_constrained_dofs= true,
                         const types::subdomain_id subdomain_id
                         = numbers::invalid_subdomain_id);
 
@@ -618,9 +617,8 @@ namespace DoFTools
   make_sparsity_pattern(const DoFHandlerType&     dof_handler,
                         const Table<2, Coupling>& coupling,
                         SparsityPatternType&      sparsity_pattern,
-                        const ConstraintMatrix&   constraints
-                        = ConstraintMatrix(),
-                        const bool                keep_constrained_dofs = true,
+                        const ConstraintMatrix& constraints= ConstraintMatrix(),
+                        const bool              keep_constrained_dofs= true,
                         const types::subdomain_id subdomain_id
                         = numbers::invalid_subdomain_id);
 
@@ -713,7 +711,7 @@ namespace DoFTools
   make_flux_sparsity_pattern(const DoFHandlerType&   dof_handler,
                              SparsityPatternType&    sparsity_pattern,
                              const ConstraintMatrix& constraints,
-                             const bool keep_constrained_dofs = true,
+                             const bool keep_constrained_dofs= true,
                              const types::subdomain_id subdomain_id
                              = numbers::invalid_subdomain_id);
 
@@ -1132,11 +1130,11 @@ namespace DoFTools
     const FaceIterator&                          face_1,
     const typename identity<FaceIterator>::type& face_2,
     dealii::ConstraintMatrix&                    constraint_matrix,
-    const ComponentMask&             component_mask   = ComponentMask(),
-    const bool                       face_orientation = true,
-    const bool                       face_flip        = false,
-    const bool                       face_rotation    = false,
-    const FullMatrix<double>&        matrix           = FullMatrix<double>(),
+    const ComponentMask&             component_mask  = ComponentMask(),
+    const bool                       face_orientation= true,
+    const bool                       face_flip       = false,
+    const bool                       face_rotation   = false,
+    const FullMatrix<double>&        matrix          = FullMatrix<double>(),
     const std::vector<unsigned int>& first_vector_components
     = std::vector<unsigned int>());
 
@@ -1167,8 +1165,8 @@ namespace DoFTools
     const std::vector<GridTools::PeriodicFacePair<
       typename DoFHandlerType::cell_iterator>>& periodic_faces,
     dealii::ConstraintMatrix&                   constraint_matrix,
-    const ComponentMask&             component_mask = ComponentMask(),
-    const std::vector<unsigned int>& first_vector_components
+    const ComponentMask&                        component_mask= ComponentMask(),
+    const std::vector<unsigned int>&            first_vector_components
     = std::vector<unsigned int>());
 
   /**
@@ -1545,7 +1543,7 @@ namespace DoFTools
     const DoFHandlerType& dof_handler,
     const std::function<
       bool(const typename DoFHandlerType::active_cell_iterator&)>& predicate,
-    const ConstraintMatrix& cm = ConstraintMatrix());
+    const ConstraintMatrix& cm= ConstraintMatrix());
 
   /**
    * Extract a vector that represents the constant modes of the DoFHandler for
@@ -1911,9 +1909,8 @@ namespace DoFTools
   make_cell_patches(SparsityPattern&                 block_list,
                     const DoFHandler<dim, spacedim>& dof_handler,
                     const unsigned int               level,
-                    const std::vector<bool>&         selected_dofs
-                    = std::vector<bool>(),
-                    const types::global_dof_index offset = 0);
+                    const std::vector<bool>& selected_dofs= std::vector<bool>(),
+                    const types::global_dof_index offset  = 0);
 
   /**
    * Create an incidence matrix that for every vertex on a given level of a
@@ -1971,10 +1968,10 @@ namespace DoFTools
                       const DoFHandlerType& dof_handler,
                       const unsigned int    level,
                       const bool            interior_dofs_only,
-                      const bool            boundary_patches       = false,
-                      const bool            level_boundary_patches = false,
-                      const bool            single_cell_patches    = false,
-                      const bool            invert_vertex_mapping  = false);
+                      const bool            boundary_patches      = false,
+                      const bool            level_boundary_patches= false,
+                      const bool            single_cell_patches   = false,
+                      const bool            invert_vertex_mapping = false);
 
   /**
    * Same as above but allows boundary dofs on blocks to be excluded individually.
@@ -1996,9 +1993,9 @@ namespace DoFTools
                       const unsigned int    level,
                       const BlockMask&      exclude_boundary_dofs = BlockMask(),
                       const bool            boundary_patches      = false,
-                      const bool            level_boundary_patches = false,
-                      const bool            single_cell_patches    = false,
-                      const bool            invert_vertex_mapping  = false);
+                      const bool            level_boundary_patches= false,
+                      const bool            single_cell_patches   = false,
+                      const bool            invert_vertex_mapping = false);
 
   /**
    * Create an incidence matrix that for every cell on a given level of a
@@ -2043,7 +2040,7 @@ namespace DoFTools
                      const DoFHandlerType& dof_handler,
                      const unsigned int    level,
                      const bool            interior_dofs_only,
-                     const bool            boundary_dofs = false);
+                     const bool            boundary_dofs= false);
 
   /**
    * Create a block list with only a single patch, which in turn contains all
@@ -2069,7 +2066,7 @@ namespace DoFTools
   make_single_patch(SparsityPattern&      block_list,
                     const DoFHandlerType& dof_handler,
                     const unsigned int    level,
-                    const bool            interior_dofs_only = false);
+                    const bool            interior_dofs_only= false);
 
   /**
    * @}
@@ -2118,8 +2115,8 @@ namespace DoFTools
   count_dofs_per_component(
     const DoFHandlerType&                 dof_handler,
     std::vector<types::global_dof_index>& dofs_per_component,
-    const bool                            vector_valued_once = false,
-    std::vector<unsigned int> target_component = std::vector<unsigned int>());
+    const bool                            vector_valued_once= false,
+    std::vector<unsigned int> target_component= std::vector<unsigned int>());
 
   /**
    * Count the degrees of freedom in each block. This function is similar to
@@ -2390,7 +2387,7 @@ namespace DoFTools
   distribute_cell_to_dof_vector(const DoFHandlerType& dof_handler,
                                 const Vector<Number>& cell_data,
                                 Vector<double>&       dof_data,
-                                const unsigned int    component = 0);
+                                const unsigned int    component= 0);
 
   /**
    * Generate text output readable by gnuplot with point data based on the
@@ -2596,9 +2593,9 @@ namespace DoFTools
   operator|=(Coupling& c1, const Coupling c2)
   {
     if(c2 == always)
-      c1 = always;
+      c1= always;
     else if(c1 != always && c2 == nonzero)
-      return c1 = nonzero;
+      return c1= nonzero;
     return c1;
   }
 
@@ -2709,8 +2706,8 @@ namespace DoFTools
     // previous function into the
     // output arg
     point_to_index_map.clear();
-    for(types::global_dof_index i = 0; i < dof_handler.n_dofs(); ++i)
-      point_to_index_map[support_points[i]] = i;
+    for(types::global_dof_index i= 0; i < dof_handler.n_dofs(); ++i)
+      point_to_index_map[support_points[i]]= i;
   }
 } // namespace DoFTools
 

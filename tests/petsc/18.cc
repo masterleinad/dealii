@@ -24,16 +24,16 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   // set some elements of the vector
-  PetscScalar norm = 0;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  PetscScalar norm= 0;
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) = i;
-      norm += std::fabs(1. * i) * std::fabs(1. * i);
+      v(i)= i;
+      norm+= std::fabs(1. * i) * std::fabs(1. * i);
     }
   v.compress(VectorOperation::insert);
 
   // then check the norm
-  const double eps = typeid(PetscScalar) == typeid(double) ? 1e-14 : 1e-5;
+  const double eps= typeid(PetscScalar) == typeid(double) ? 1e-14 : 1e-5;
   AssertThrow(fabs(v.l2_norm() - std::sqrt(norm)) < eps, ExcInternalError());
 
   deallog << "OK" << std::endl;

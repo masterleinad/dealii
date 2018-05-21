@@ -18,10 +18,10 @@
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
 
-std::string input = "set test_1 = 1\n"
-                    "subsection subsec\n"
-                    "  set test_2 = 42\n" // forbidden
-                    "end\n";
+std::string input= "set test_1 = 1\n"
+                   "subsection subsec\n"
+                   "  set test_2 = 42\n" // forbidden
+                   "end\n";
 
 void
 check(const char* p)

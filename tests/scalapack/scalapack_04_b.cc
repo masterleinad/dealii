@@ -58,16 +58,16 @@ test(const unsigned int size,
         << " " << grid->get_process_grid_columns() << std::endl;
 
   create_random(full);
-  scalapack = full;
+  scalapack= full;
 
-  const NumberType l1        = full.l1_norm();
-  const NumberType linfty    = full.linfty_norm();
-  const NumberType frobenius = full.frobenius_norm();
+  const NumberType l1       = full.l1_norm();
+  const NumberType linfty   = full.linfty_norm();
+  const NumberType frobenius= full.frobenius_norm();
 
   // local result on this core:
-  const NumberType s_l1        = scalapack.l1_norm();
-  const NumberType s_linfty    = scalapack.linfty_norm();
-  const NumberType s_frobenius = scalapack.frobenius_norm();
+  const NumberType s_l1       = scalapack.l1_norm();
+  const NumberType s_linfty   = scalapack.linfty_norm();
+  const NumberType s_frobenius= scalapack.frobenius_norm();
 
   // make sure we have the same result on all cores, do average:
   const NumberType as_l1
@@ -96,11 +96,11 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes  = {{32, 64, 120, 320, 640}};
-  const std::vector<unsigned int> blocks = {{32, 64}};
+  const std::vector<unsigned int> sizes = {{32, 64, 120, 320, 640}};
+  const std::vector<unsigned int> blocks= {{32, 64}};
 
-  const double tol_double = 1e-10;
-  const float  tol_float  = 1e-5;
+  const double tol_double= 1e-10;
+  const float  tol_float = 1e-5;
 
   /*for (const auto &s : sizes)
     for (const auto &b : blocks)

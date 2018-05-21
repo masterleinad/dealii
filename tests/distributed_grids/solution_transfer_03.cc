@@ -45,11 +45,11 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int) const
   {
-    double f = p[0] * 2.0 + 1.0;
+    double f= p[0] * 2.0 + 1.0;
     if(dim > 1)
-      f *= p[1] * 3.3 - 1.0;
+      f*= p[1] * 3.3 - 1.0;
     if(dim > 2)
-      f *= p[2] * 5.0;
+      f*= p[2] * 5.0;
     return f;
   };
 };
@@ -70,15 +70,14 @@ test(std::ostream& /*out*/)
 
   parallel::distributed::SolutionTransfer<dim, Vector<double>> soltrans(dofh);
 
-  for(int i = 0; i < 4; ++i)
+  for(int i= 0; i < 4; ++i)
     {
-      for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
+      for(typename Triangulation<dim>::cell_iterator cell= tr.begin();
           cell != tr.end();
           ++cell)
         {
           if(cell->has_children() && !(Testing::rand() % 3))
-            for(unsigned int c = 0;
-                c < GeometryInfo<dim>::max_children_per_cell;
+            for(unsigned int c= 0; c < GeometryInfo<dim>::max_children_per_cell;
                 ++c)
               if(!cell->child(c)->has_children())
                 cell->child(c)->set_coarsen_flag();

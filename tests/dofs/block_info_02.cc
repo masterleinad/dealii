@@ -37,36 +37,36 @@ test_grid(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   deallog << "Global dofs    " << mgdof.n_dofs() << std::endl;
   deallog << "Global blocks ";
-  for(unsigned int i = 0; i < bi.global().size(); ++i)
+  for(unsigned int i= 0; i < bi.global().size(); ++i)
     deallog << ' ' << bi.global().block_size(i);
   deallog << std::endl;
 
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     {
       deallog << "Level dofs     " << mgdof.n_dofs(l) << std::endl;
       deallog << "Level block[" << l << ']';
-      for(unsigned int i = 0; i < bi.level(l).size(); ++i)
+      for(unsigned int i= 0; i < bi.level(l).size(); ++i)
         deallog << ' ' << bi.level(l).block_size(i);
       deallog << std::endl;
     }
 
   deallog << "Local blocks  ";
-  for(unsigned int i = 0; i < bi.local().size(); ++i)
+  for(unsigned int i= 0; i < bi.local().size(); ++i)
     deallog << ' ' << bi.local().block_size(i);
   deallog << std::endl;
 
   std::vector<unsigned int> renumbered(fe.dofs_per_cell);
 
   deallog << "Renumbering   ";
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
     {
       deallog << ' ' << bi.renumber(i);
-      renumbered[bi.renumber(i)] = i;
+      renumbered[bi.renumber(i)]= i;
     }
   deallog << std::endl;
 
   deallog << "Inverse       ";
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
     deallog << ' ' << renumbered[i];
   deallog << std::endl;
 }

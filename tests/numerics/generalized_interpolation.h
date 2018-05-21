@@ -37,10 +37,10 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int) const
   {
-    double v = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
-        v += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
+    double v= 0;
+    for(unsigned int d= 0; d < dim; ++d)
+      for(unsigned int i= 0; i <= q; ++i)
+        v+= (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return v;
   }
 
@@ -54,7 +54,7 @@ test(const FiniteElement<dim>& fe,
      const T&                  f,
      const unsigned int        order_mapping,
      bool                      distort_mesh,
-     bool                      print_function_values = false)
+     bool                      print_function_values= false)
 {
   deallog << "dim " << dim << " " << fe.get_name() << std::endl;
 
@@ -77,7 +77,7 @@ test(const FiniteElement<dim>& fe,
     {
       Functions::FEFieldFunction<dim> f2(dof_handler, interpolant, mapping);
       deallog << "Function value at (0.0,0.0): ";
-      for(unsigned int i = 0; i < fe.n_components(); ++i)
+      for(unsigned int i= 0; i < fe.n_components(); ++i)
         deallog << f2.value(Point<dim>(), i) << " ";
       deallog << std::endl;
     }
@@ -91,7 +91,7 @@ test(const FiniteElement<dim>& fe,
   Vector<double> interpolant2(dof_handler.n_dofs());
   VectorTools::interpolate(mapping, dof_handler, f2, interpolant2);
 
-  interpolant2 -= interpolant;
+  interpolant2-= interpolant;
   deallog << "Check projection property: " << interpolant2.linfty_norm()
           << std::endl;
 }

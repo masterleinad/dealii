@@ -39,8 +39,8 @@ Tensor<1, dim>
 ones()
 {
   Tensor<1, dim> result;
-  for(unsigned int i = 0; i < dim; ++i)
-    result[i] = 1.0;
+  for(unsigned int i= 0; i < dim; ++i)
+    result[i]= 1.0;
   return result;
 }
 
@@ -70,46 +70,45 @@ test(const Triangulation<dim>& tr,
                                      | update_normal_vectors
                                      | update_JxW_values);
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active();
       cell != dof.end();
       ++cell)
     {
       fe_values.reinit(cell);
 
       deallog << "Cell nodes:" << std::endl;
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+      for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
         {
           deallog << i << ": ( ";
-          for(unsigned int d = 0; d < dim; ++d)
+          for(unsigned int d= 0; d < dim; ++d)
             deallog << cell->vertex(i)[d] << " ";
           deallog << ")" << std::endl;
         }
 
-      bool cell_ok = true;
+      bool cell_ok= true;
 
-      for(unsigned int c = 0; c < fe.n_components(); ++c)
+      for(unsigned int c= 0; c < fe.n_components(); ++c)
         {
           FEValuesExtractors::Scalar single_component(c);
 
-          for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe_values.dofs_per_cell; ++i)
             {
               ss << "component=" << c << ", dof=" << i << std::endl;
 
               Tensor<1, dim> bulk_integral;
-              for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+              for(unsigned int q= 0; q < fe_values.n_quadrature_points; ++q)
                 {
-                  bulk_integral += fe_values[single_component].gradient(i, q)
-                                   * fe_values.JxW(q);
+                  bulk_integral+= fe_values[single_component].gradient(i, q)
+                                  * fe_values.JxW(q);
                 }
 
               Tensor<1, dim> boundary_integral;
-              for(unsigned int face = 0;
+              for(unsigned int face= 0;
                   face < GeometryInfo<dim>::faces_per_cell;
                   ++face)
                 {
                   fe_face_values.reinit(cell, face);
-                  for(unsigned int q = 0;
-                      q < fe_face_values.n_quadrature_points;
+                  for(unsigned int q= 0; q < fe_face_values.n_quadrature_points;
                       ++q)
                     {
                       boundary_integral
@@ -132,7 +131,7 @@ test(const Triangulation<dim>& tr,
                     << "Error! difference between bulk and surface integrals is greater than "
                     << tolerance << "!\n\n"
                     << std::endl;
-                  cell_ok = false;
+                  cell_ok= false;
                 }
 
               ss.str("");
@@ -154,12 +153,12 @@ test_hyper_cube(const double tolerance)
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
 
-  typename Triangulation<dim>::active_cell_iterator cell = tr.begin_active();
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+  typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
+  for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
     {
-      Point<dim>& point = cell->vertex(i);
+      Point<dim>& point= cell->vertex(i);
       if(std::abs(point(dim - 1) - 1.0) < 1e-5)
-        point(dim - 1) += 0.15;
+        point(dim - 1)+= 0.15;
     }
 
   FE_RaviartThomas<dim> fe(2);

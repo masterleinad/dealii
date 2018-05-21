@@ -15,7 +15,7 @@
 
 // an attempt to understand the failure of mesh_3d_18
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -36,7 +36,7 @@ test_with_wrong_face_orientation()
   triangulation.begin_active()->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 
-  Triangulation<3>::active_cell_iterator cell = triangulation.begin_active();
+  Triangulation<3>::active_cell_iterator cell= triangulation.begin_active();
   ++cell;
   ++cell;
 
@@ -44,7 +44,7 @@ test_with_wrong_face_orientation()
   deallog << "cell->neighbor(3)=" << cell->neighbor(3) << std::endl;
   deallog << "cell->face(3)=" << cell->face(3) << std::endl;
 
-  for(unsigned int i = 0; i < 6; ++i)
+  for(unsigned int i= 0; i < 6; ++i)
     deallog << "cell->neighbor(3)->face(" << i
             << ")=" << cell->neighbor(3)->face(i) << std::endl;
 }

@@ -118,7 +118,7 @@ namespace Step39
     matrix.reinit(
       dof_handler.locally_owned_dofs(), c_sparsity, MPI_COMM_WORLD, true);
 
-    const unsigned int n_levels = triangulation.n_global_levels();
+    const unsigned int n_levels= triangulation.n_global_levels();
     mg_matrix.resize(0, n_levels - 1);
     mg_matrix.clear_elements();
     mg_matrix_dg_up.resize(0, n_levels - 1);
@@ -126,7 +126,7 @@ namespace Step39
     mg_matrix_dg_down.resize(0, n_levels - 1);
     mg_matrix_dg_down.clear_elements();
 
-    for(unsigned int level = mg_matrix.min_level();
+    for(unsigned int level= mg_matrix.min_level();
         level <= mg_matrix.max_level();
         ++level)
       {
@@ -167,7 +167,7 @@ namespace Step39
   InteriorPenaltyProblem<dim>::run(unsigned int n_steps)
   {
     deallog << "Element: " << fe.get_name() << std::endl;
-    for(unsigned int s = 0; s < n_steps; ++s)
+    for(unsigned int s= 0; s < n_steps; ++s)
       {
         deallog << "Step " << s << std::endl;
         if(s == 0)
@@ -187,7 +187,7 @@ namespace Step39
 
         setup_system();
         deallog << "DoFHandler " << dof_handler.n_dofs() << " dofs, level dofs";
-        for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+        for(unsigned int l= 0; l < triangulation.n_levels(); ++l)
           deallog << ' ' << dof_handler.n_dofs(l);
         deallog << std::endl;
       }

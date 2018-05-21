@@ -26,12 +26,12 @@ test()
 
   ArrayView<int> a
     = make_array_view(v, 4, 7, 3); // writable view to part of a row
-  a[2] = 42;
+  a[2]= 42;
 
   Assert(a[2] == 42, ExcInternalError());
   Assert(v[4][9] == 42, ExcInternalError());
 
-  ArrayView<const int> a2 = make_array_view(v, 4, 7, 3); // readable view
+  ArrayView<const int> a2= make_array_view(v, 4, 7, 3); // readable view
   Assert(a2[2] == 42, ExcInternalError());
 
   // also check a different way of creating a readable view

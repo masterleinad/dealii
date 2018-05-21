@@ -22,11 +22,11 @@
 void
 test()
 {
-  std::vector<int>     arr1 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+  std::vector<int>     arr1= {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   ArrayView<int>       view1(arr1);
   ArrayView<const int> view1_const(arr1);
 
-  std::vector<int>     arr2 = {0, 1, 2, 3, 4};
+  std::vector<int>     arr2= {0, 1, 2, 3, 4};
   ArrayView<int>       view2(arr2);
   ArrayView<const int> view2_const(arr2);
 

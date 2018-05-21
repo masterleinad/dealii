@@ -77,7 +77,7 @@ namespace NonMatching
      * Default constructor to initialize the quadrature with no quadrature
      * points.
      */
-    ImmersedSurfaceQuadrature() = default;
+    ImmersedSurfaceQuadrature()= default;
 
     /**
      * Construct a quadrature formula from vectors of points, weights and

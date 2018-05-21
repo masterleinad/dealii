@@ -45,11 +45,11 @@ check_file()
   std::ifstream in(SOURCE_DIR "/../grid/grids/grid_in_msh_02.msh");
   gi.read_msh(in);
 
-  for(Triangulation<1, 3>::active_cell_iterator cell = tria.begin_active();
+  for(Triangulation<1, 3>::active_cell_iterator cell= tria.begin_active();
       cell != tria.end();
       ++cell)
     {
-      for(unsigned int face = 0; face < 2; ++face)
+      for(unsigned int face= 0; face < 2; ++face)
         {
           if(cell->at_boundary(face))
             deallog << "vertex " << cell->face_index(face)

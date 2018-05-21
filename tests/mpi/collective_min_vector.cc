@@ -21,10 +21,10 @@
 void
 test()
 {
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  unsigned int              values_[2] = {1 + myid, numprocs + myid};
+  unsigned int              values_[2]= {1 + myid, numprocs + myid};
   std::vector<unsigned int> values(&values_[0], &values_[2]);
   std::vector<unsigned int> output(2);
   Utilities::MPI::min(values, MPI_COMM_WORLD, output);

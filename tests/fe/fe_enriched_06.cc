@@ -44,10 +44,10 @@
 
 #include <iostream>
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 // argument for build_patches()
-const unsigned int patches = 10;
+const unsigned int patches= 10;
 
 using namespace dealii;
 
@@ -62,18 +62,18 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component= 0) const
   {
-    Tensor<1, dim> res = point;
+    Tensor<1, dim> res= point;
     Assert(point.norm() > 0,
            dealii::ExcMessage("gradient is not defined at zero"));
-    res *= -value(point) / point.norm();
+    res*= -value(point) / point.norm();
     return res;
   }
 };
@@ -98,40 +98,40 @@ test5()
 
   std::vector<Vector<double>> shape_functions;
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
+  for(unsigned int s= 0; s < dof_handler.n_dofs(); s++)
     {
       names.push_back(std::string("N_") + dealii::Utilities::int_to_string(s));
 
       Vector<double> shape_function;
       shape_function.reinit(dof_handler.n_dofs());
-      shape_function[s] = 1.0;
+      shape_function[s]= 1.0;
 
       shape_functions.push_back(shape_function);
     }
 
   // output 11th:
   {
-    const unsigned int    global_dof = 11;
-    const Vector<double>& solution   = shape_functions[global_dof];
+    const unsigned int    global_dof= 11;
+    const Vector<double>& solution  = shape_functions[global_dof];
     QTrapez<dim>          quadrature;
     FEValues<dim>         fe_values(fe, quadrature, update_values);
 
-    const unsigned int  n_q_points = quadrature.size();
+    const unsigned int  n_q_points= quadrature.size();
     std::vector<double> solution_values(n_q_points);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
     std::vector<dealii::types::global_dof_index> local_dof_indices;
     local_dof_indices.resize(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
 
         // find out which
-        unsigned int local_dof = 0;
+        unsigned int local_dof= 0;
         cell->get_dof_indices(local_dof_indices);
         for(; local_dof < dofs_per_cell; local_dof++)
           if(local_dof_indices[local_dof] == global_dof)
@@ -142,7 +142,7 @@ test5()
         fe_values.get_function_values(solution, solution_values);
 
         deallog << " cell=" << cell->center() << std::endl;
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           {
             // find non-zero shape_value
             deallog << " qp=" << q_points[q_point]
@@ -162,7 +162,7 @@ test5()
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for(unsigned int i= 0; i < shape_functions.size(); i++)
     data_out.add_data_vector(shape_functions[i], names[i]);
 
   data_out.build_patches(patches);

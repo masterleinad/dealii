@@ -129,7 +129,7 @@ namespace Step55
     {
       SolverControl solver_control(src.size(), 1e-8 * src.l2_norm());
       SolverCG<LA::MPI::Vector> cg(solver_control);
-      dst = 0;
+      dst= 0;
 
       try
         {
@@ -198,24 +198,24 @@ namespace Step55
   RightHandSide<dim>::vector_value(const Point<dim>& p,
                                    Vector<double>&   values) const
   {
-    const double R_x = p[0];
-    const double R_y = p[1];
+    const double R_x= p[0];
+    const double R_y= p[1];
 
-    const double pi  = numbers::PI;
-    const double pi2 = pi * pi;
-    values[0]        = -1.0L / 2.0L * (-2 * sqrt(25.0 + 4 * pi2) + 10.0)
-                  * exp(R_x * (-2 * sqrt(25.0 + 4 * pi2) + 10.0))
-                - 0.4 * pi2 * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0))
-                    * cos(2 * R_y * pi)
-                + 0.1 * pow(-sqrt(25.0 + 4 * pi2) + 5.0, 2)
-                    * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0))
-                    * cos(2 * R_y * pi);
-    values[1] = 0.2 * pi * (-sqrt(25.0 + 4 * pi2) + 5.0)
-                  * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0)) * sin(2 * R_y * pi)
-                - 0.05 * pow(-sqrt(25.0 + 4 * pi2) + 5.0, 3)
-                    * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0))
-                    * sin(2 * R_y * pi) / pi;
-    values[2] = 0;
+    const double pi = numbers::PI;
+    const double pi2= pi * pi;
+    values[0]       = -1.0L / 2.0L * (-2 * sqrt(25.0 + 4 * pi2) + 10.0)
+                 * exp(R_x * (-2 * sqrt(25.0 + 4 * pi2) + 10.0))
+               - 0.4 * pi2 * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0))
+                   * cos(2 * R_y * pi)
+               + 0.1 * pow(-sqrt(25.0 + 4 * pi2) + 5.0, 2)
+                   * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0))
+                   * cos(2 * R_y * pi);
+    values[1]= 0.2 * pi * (-sqrt(25.0 + 4 * pi2) + 5.0)
+                 * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0)) * sin(2 * R_y * pi)
+               - 0.05 * pow(-sqrt(25.0 + 4 * pi2) + 5.0, 3)
+                   * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0))
+                   * sin(2 * R_y * pi) / pi;
+    values[2]= 0;
   }
 
   template <int dim>
@@ -234,16 +234,16 @@ namespace Step55
   ExactSolution<dim>::vector_value(const Point<dim>& p,
                                    Vector<double>&   values) const
   {
-    const double R_x = p[0];
-    const double R_y = p[1];
+    const double R_x= p[0];
+    const double R_y= p[1];
 
-    const double pi  = numbers::PI;
-    const double pi2 = pi * pi;
+    const double pi = numbers::PI;
+    const double pi2= pi * pi;
     values[0]
       = -exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0)) * cos(2 * R_y * pi) + 1;
-    values[1] = (1.0L / 2.0L) * (-sqrt(25.0 + 4 * pi2) + 5.0)
-                * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0)) * sin(2 * R_y * pi)
-                / pi;
+    values[1]= (1.0L / 2.0L) * (-sqrt(25.0 + 4 * pi2) + 5.0)
+               * exp(R_x * (-sqrt(25.0 + 4 * pi2) + 5.0)) * sin(2 * R_y * pi)
+               / pi;
     values[2]
       = -1.0L / 2.0L * exp(R_x * (-2 * sqrt(25.0 + 4 * pi2) + 10.0))
         - 2.0
@@ -358,14 +358,14 @@ namespace Step55
     // then reorder the unknowns by block. Finally count how many unknowns
     // we have per block.
     std::vector<unsigned int> stokes_sub_blocks(dim + 1, 0);
-    stokes_sub_blocks[dim] = 1;
+    stokes_sub_blocks[dim]= 1;
     DoFRenumbering::component_wise(dof_handler, stokes_sub_blocks);
 
     std::vector<types::global_dof_index> dofs_per_block(2);
     DoFTools::count_dofs_per_block(
       dof_handler, dofs_per_block, stokes_sub_blocks);
 
-    const unsigned int n_u = dofs_per_block[0], n_p = dofs_per_block[1];
+    const unsigned int n_u= dofs_per_block[0], n_p= dofs_per_block[1];
 
     pcout << "   Number of degrees of freedom: " << dof_handler.n_dofs() << " ("
           << n_u << '+' << n_p << ')' << std::endl;
@@ -374,15 +374,15 @@ namespace Step55
     // into two IndexSets based on how we want to create the block matrices
     // and vectors.
     owned_partitioning.resize(2);
-    owned_partitioning[0] = dof_handler.locally_owned_dofs().get_view(0, n_u);
+    owned_partitioning[0]= dof_handler.locally_owned_dofs().get_view(0, n_u);
     owned_partitioning[1]
       = dof_handler.locally_owned_dofs().get_view(n_u, n_u + n_p);
 
     IndexSet locally_relevant_dofs;
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
     relevant_partitioning.resize(2);
-    relevant_partitioning[0] = locally_relevant_dofs.get_view(0, n_u);
-    relevant_partitioning[1] = locally_relevant_dofs.get_view(n_u, n_u + n_p);
+    relevant_partitioning[0]= locally_relevant_dofs.get_view(0, n_u);
+    relevant_partitioning[1]= locally_relevant_dofs.get_view(n_u, n_u + n_p);
 
     // Setting up the constraints for boundary conditions and hanging nodes
     // is identical to step-40. Rven though we don't have any hanging nodes
@@ -412,14 +412,14 @@ namespace Step55
       system_matrix.clear();
 
       Table<2, DoFTools::Coupling> coupling(dim + 1, dim + 1);
-      for(unsigned int c = 0; c < dim + 1; ++c)
-        for(unsigned int d = 0; d < dim + 1; ++d)
+      for(unsigned int c= 0; c < dim + 1; ++c)
+        for(unsigned int d= 0; d < dim + 1; ++d)
           if(c == dim && d == dim)
-            coupling[c][d] = DoFTools::none;
+            coupling[c][d]= DoFTools::none;
           else if(c == dim || d == dim || c == d)
-            coupling[c][d] = DoFTools::always;
+            coupling[c][d]= DoFTools::always;
           else
-            coupling[c][d] = DoFTools::none;
+            coupling[c][d]= DoFTools::none;
 
       BlockDynamicSparsityPattern dsp(dofs_per_block, dofs_per_block);
 
@@ -442,12 +442,12 @@ namespace Step55
       preconditioner_matrix.clear();
 
       Table<2, DoFTools::Coupling> coupling(dim + 1, dim + 1);
-      for(unsigned int c = 0; c < dim + 1; ++c)
-        for(unsigned int d = 0; d < dim + 1; ++d)
+      for(unsigned int c= 0; c < dim + 1; ++c)
+        for(unsigned int d= 0; d < dim + 1; ++d)
           if(c == dim && d == dim)
-            coupling[c][d] = DoFTools::always;
+            coupling[c][d]= DoFTools::always;
           else
-            coupling[c][d] = DoFTools::none;
+            coupling[c][d]= DoFTools::none;
 
       BlockDynamicSparsityPattern dsp(dofs_per_block, dofs_per_block);
 
@@ -482,9 +482,9 @@ namespace Step55
   {
     TimerOutput::Scope t(computing_timer, "assembly");
 
-    system_matrix         = 0;
-    preconditioner_matrix = 0;
-    system_rhs            = 0;
+    system_matrix        = 0;
+    preconditioner_matrix= 0;
+    system_rhs           = 0;
 
     const QGauss<dim> quadrature_formula(velocity_degree + 1);
 
@@ -493,8 +493,8 @@ namespace Step55
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> cell_matrix2(dofs_per_cell, dofs_per_cell);
@@ -513,29 +513,29 @@ namespace Step55
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
-          cell_matrix  = 0;
-          cell_matrix2 = 0;
-          cell_rhs     = 0;
+          cell_matrix = 0;
+          cell_matrix2= 0;
+          cell_rhs    = 0;
 
           fe_values.reinit(cell);
           right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                             rhs_values);
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for(unsigned int q= 0; q < n_q_points; ++q)
             {
-              for(unsigned int k = 0; k < dofs_per_cell; ++k)
+              for(unsigned int k= 0; k < dofs_per_cell; ++k)
                 {
-                  grad_phi_u[k] = fe_values[velocities].gradient(k, q);
-                  div_phi_u[k]  = fe_values[velocities].divergence(k, q);
-                  phi_p[k]      = fe_values[pressure].value(k, q);
+                  grad_phi_u[k]= fe_values[velocities].gradient(k, q);
+                  div_phi_u[k] = fe_values[velocities].divergence(k, q);
+                  phi_p[k]     = fe_values[pressure].value(k, q);
                 }
 
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                  for(unsigned int j= 0; j < dofs_per_cell; ++j)
                     {
                       cell_matrix(i, j)
                         += (viscosity
@@ -543,15 +543,14 @@ namespace Step55
                             - div_phi_u[i] * phi_p[j] - phi_p[i] * div_phi_u[j])
                            * fe_values.JxW(q);
 
-                      cell_matrix2(i, j) += 1.0 / viscosity * phi_p[i]
-                                            * phi_p[j] * fe_values.JxW(q);
+                      cell_matrix2(i, j)+= 1.0 / viscosity * phi_p[i] * phi_p[j]
+                                           * fe_values.JxW(q);
                     }
 
                   const unsigned int component_i
                     = fe.system_to_component_index(i).first;
-                  cell_rhs(i) += fe_values.shape_value(i, q)
-                                 * rhs_values[q](component_i)
-                                 * fe_values.JxW(q);
+                  cell_rhs(i)+= fe_values.shape_value(i, q)
+                                * rhs_values[q](component_i) * fe_values.JxW(q);
                 }
             }
 
@@ -588,7 +587,7 @@ namespace Step55
       LA::MPI::PreconditionAMG::AdditionalData data;
 
 #ifdef USE_PETSC_LA
-      data.symmetric_operator = true;
+      data.symmetric_operator= true;
 #else
 //      data.n_cycles = 1;
 //      data.higher_order_elements = true;
@@ -611,7 +610,7 @@ namespace Step55
       LA::MPI::PreconditionAMG::AdditionalData data;
 
 #ifdef USE_PETSC_LA
-      data.symmetric_operator = true;
+      data.symmetric_operator= true;
 #else
 #endif
       prec_S.initialize(preconditioner_matrix.block(1, 1), data);
@@ -651,14 +650,14 @@ namespace Step55
     // Like in step-56, we subtract the mean pressure to allow error
     // computations against our reference solution, which has a mean value
     // of zero.
-    locally_relevant_solution = distributed_solution;
+    locally_relevant_solution= distributed_solution;
     const double mean_pressure
       = VectorTools::compute_mean_value(dof_handler,
                                         QGauss<dim>(velocity_degree + 2),
                                         locally_relevant_solution,
                                         dim);
     distributed_solution.block(1).add(-mean_pressure);
-    locally_relevant_solution.block(1) = distributed_solution.block(1);
+    locally_relevant_solution.block(1)= distributed_solution.block(1);
   }
 
   // @sect3{The rest}
@@ -712,7 +711,7 @@ namespace Step55
                                         VectorTools::L2_norm,
                                         &velocity_mask);
 
-      const double error_u_l2 = VectorTools::compute_global_error(
+      const double error_u_l2= VectorTools::compute_global_error(
         triangulation, cellwise_errors, VectorTools::L2_norm);
 
       VectorTools::integrate_difference(dof_handler,
@@ -723,7 +722,7 @@ namespace Step55
                                         VectorTools::L2_norm,
                                         &pressure_mask);
 
-      const double error_p_l2 = VectorTools::compute_global_error(
+      const double error_p_l2= VectorTools::compute_global_error(
         triangulation, cellwise_errors, VectorTools::L2_norm);
 
       pcout << "error: u_0: " << error_u_l2 << " p_0: " << error_p_l2
@@ -751,7 +750,7 @@ namespace Step55
 
     LA::MPI::BlockVector interpolated_relevant(
       owned_partitioning, relevant_partitioning, MPI_COMM_WORLD);
-    interpolated_relevant = interpolated;
+    interpolated_relevant= interpolated;
     {
       std::vector<std::string> solution_names(dim, "ref_u");
       solution_names.emplace_back("ref_p");
@@ -762,8 +761,8 @@ namespace Step55
     }
 
     Vector<float> subdomain(triangulation.n_active_cells());
-    for(unsigned int i = 0; i < subdomain.size(); ++i)
-      subdomain(i) = triangulation.locally_owned_subdomain();
+    for(unsigned int i= 0; i < subdomain.size(); ++i)
+      subdomain(i)= triangulation.locally_owned_subdomain();
     data_out.add_data_vector(subdomain, "subdomain");
 
     data_out.build_patches();
@@ -778,7 +777,7 @@ namespace Step55
     if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
+        for(unsigned int i= 0;
             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
             ++i)
           filenames.push_back("solution-" + Utilities::int_to_string(cycle, 2)
@@ -799,8 +798,8 @@ namespace Step55
 #else
     pcout << "Running using Trilinos." << std::endl;
 #endif
-    const unsigned int n_cycles = 5;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    const unsigned int n_cycles= 5;
+    for(unsigned int cycle= 0; cycle < n_cycles; ++cycle)
       {
         pcout << "Cycle " << cycle << ':' << std::endl;
 

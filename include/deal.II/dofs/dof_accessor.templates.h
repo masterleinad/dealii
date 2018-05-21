@@ -99,7 +99,7 @@ DoFAccessor<structdim, DoFHandlerType, level_dof_access>::set_dof_handler(
   DoFHandlerType* dh)
 {
   Assert(dh != nullptr, ExcInvalidObject());
-  this->dof_handler = dh;
+  this->dof_handler= dh;
 }
 
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
@@ -129,7 +129,7 @@ DoFAccessor<structdim, DoFHandlerType, level_dof_access>::copy_from(
   const DoFAccessor<structdim, DoFHandlerType, level_dof_access2>& a)
 {
   BaseClass::copy_from(a);
-  this->dof_handler = a.dof_handler;
+  this->dof_handler= a.dof_handler;
 }
 
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
@@ -166,9 +166,9 @@ DoFAccessor<structdim, DoFHandlerType, level_dof_access>::child(
   TriaIterator<TriaAccessor<structdim,
                             DoFHandlerType::dimension,
                             DoFHandlerType::space_dimension>>
-    t = TriaAccessor<structdim,
-                     DoFHandlerType::dimension,
-                     DoFHandlerType::space_dimension>::child(i);
+    t= TriaAccessor<structdim,
+                    DoFHandlerType::dimension,
+                    DoFHandlerType::space_dimension>::child(i);
 
   TriaIterator<DoFAccessor<structdim, DoFHandlerType, level_dof_access>> q(
     *t, this->dof_handler);
@@ -982,7 +982,7 @@ namespace internal
             // a fe index is always small
             Assert((*pointer) < std::numeric_limits<unsigned int>::max(),
                    ExcInternalError());
-            const types::global_dof_index this_fe_index = *pointer;
+            const types::global_dof_index this_fe_index= *pointer;
 
             Assert(this_fe_index != numbers::invalid_dof_index,
                    ExcInternalError());
@@ -991,11 +991,11 @@ namespace internal
 
             if(this_fe_index == fe_index)
               {
-                *(pointer + 1 + local_index) = global_index;
+                *(pointer + 1 + local_index)= global_index;
                 return;
               }
             else
-              pointer += static_cast<types::global_dof_index>(
+              pointer+= static_cast<types::global_dof_index>(
                 dof_handler.get_fe(this_fe_index).dofs_per_vertex + 1);
           }
       }
@@ -1072,7 +1072,7 @@ namespace internal
             Assert((*pointer)
                      < std::numeric_limits<types::global_dof_index>::max(),
                    ExcInternalError());
-            const types::global_dof_index this_fe_index = *pointer;
+            const types::global_dof_index this_fe_index= *pointer;
 
             Assert(this_fe_index != numbers::invalid_dof_index,
                    ExcInternalError());
@@ -1082,7 +1082,7 @@ namespace internal
             if(this_fe_index == fe_index)
               return *(pointer + 1 + local_index);
             else
-              pointer += static_cast<types::global_dof_index>(
+              pointer+= static_cast<types::global_dof_index>(
                 dof_handler.get_fe(this_fe_index).dofs_per_vertex + 1);
           }
       }
@@ -1116,19 +1116,19 @@ namespace internal
 
         Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
 
-        unsigned int counter = 0;
+        unsigned int counter= 0;
         while(true)
           {
             Assert(pointer <= &dof_handler.vertex_dofs.back(),
                    ExcInternalError());
 
-            const types::global_dof_index this_fe_index = *pointer;
+            const types::global_dof_index this_fe_index= *pointer;
 
             if(this_fe_index == numbers::invalid_dof_index)
               return counter;
             else
               {
-                pointer += static_cast<types::global_dof_index>(
+                pointer+= static_cast<types::global_dof_index>(
                   dof_handler.get_fe(this_fe_index).dofs_per_vertex + 1);
                 ++counter;
               }
@@ -1168,7 +1168,7 @@ namespace internal
 
         Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
 
-        unsigned int counter = 0;
+        unsigned int counter= 0;
         while(true)
           {
             Assert(pointer <= &dof_handler.vertex_dofs.back(),
@@ -1176,7 +1176,7 @@ namespace internal
 
             Assert((*pointer) < std::numeric_limits<unsigned int>::max(),
                    ExcInternalError());
-            const types::global_dof_index this_fe_index = *pointer;
+            const types::global_dof_index this_fe_index= *pointer;
 
             Assert(this_fe_index < dof_handler.fe_collection.size(),
                    ExcInternalError());
@@ -1187,7 +1187,7 @@ namespace internal
             Assert(this_fe_index != numbers::invalid_dof_index,
                    ExcInternalError());
 
-            pointer += static_cast<types::global_dof_index>(
+            pointer+= static_cast<types::global_dof_index>(
               dof_handler.get_fe(this_fe_index).dofs_per_vertex + 1);
             ++counter;
           }
@@ -1237,7 +1237,7 @@ namespace internal
             Assert((*pointer)
                      < std::numeric_limits<types::global_dof_index>::max(),
                    ExcInternalError());
-            const types::global_dof_index this_fe_index = *pointer;
+            const types::global_dof_index this_fe_index= *pointer;
 
             Assert(this_fe_index < dof_handler.fe_collection.size(),
                    ExcInternalError());
@@ -1247,7 +1247,7 @@ namespace internal
             else if(this_fe_index == fe_index)
               return true;
             else
-              pointer += dof_handler.get_fe(this_fe_index).dofs_per_vertex + 1;
+              pointer+= dof_handler.get_fe(this_fe_index).dofs_per_vertex + 1;
           }
       }
 
@@ -1275,19 +1275,18 @@ namespace internal
         std::vector<types::global_dof_index>::const_iterator next
           = dof_indices.begin();
 
-        for(unsigned int vertex = 0;
-            vertex < GeometryInfo<2>::vertices_per_cell;
+        for(unsigned int vertex= 0; vertex < GeometryInfo<2>::vertices_per_cell;
             ++vertex)
-          for(unsigned int dof = 0; dof < fe.dofs_per_vertex; ++dof)
+          for(unsigned int dof= 0; dof < fe.dofs_per_vertex; ++dof)
             accessor.set_mg_vertex_dof_index(
               level, vertex, dof, *next++, fe_index);
 
-        for(unsigned int line = 0; line < GeometryInfo<2>::lines_per_cell;
+        for(unsigned int line= 0; line < GeometryInfo<2>::lines_per_cell;
             ++line)
-          for(unsigned int dof = 0; dof < fe.dofs_per_line; ++dof)
+          for(unsigned int dof= 0; dof < fe.dofs_per_line; ++dof)
             accessor.line(line)->set_mg_dof_index(level, dof, *next++);
 
-        for(unsigned int dof = 0; dof < fe.dofs_per_quad; ++dof)
+        for(unsigned int dof= 0; dof < fe.dofs_per_quad; ++dof)
           accessor.set_mg_dof_index(level, dof, *next++);
 
         Assert(next == dof_indices.end(), ExcInternalError());
@@ -1308,25 +1307,24 @@ namespace internal
         std::vector<types::global_dof_index>::const_iterator next
           = dof_indices.begin();
 
-        for(unsigned int vertex = 0;
-            vertex < GeometryInfo<3>::vertices_per_cell;
+        for(unsigned int vertex= 0; vertex < GeometryInfo<3>::vertices_per_cell;
             ++vertex)
-          for(unsigned int dof = 0; dof < fe.dofs_per_vertex; ++dof)
+          for(unsigned int dof= 0; dof < fe.dofs_per_vertex; ++dof)
             accessor.set_mg_vertex_dof_index(
               level, vertex, dof, *next++, fe_index);
 
-        for(unsigned int line = 0; line < GeometryInfo<3>::lines_per_cell;
+        for(unsigned int line= 0; line < GeometryInfo<3>::lines_per_cell;
             ++line)
-          for(unsigned int dof = 0; dof < fe.dofs_per_line; ++dof)
+          for(unsigned int dof= 0; dof < fe.dofs_per_line; ++dof)
             accessor.line(line)->set_mg_dof_index(
               level,
               fe.adjust_line_dof_index_for_line_orientation(
                 dof, accessor.line_orientation(line)),
               *next++);
 
-        for(unsigned int quad = 0; quad < GeometryInfo<3>::quads_per_cell;
+        for(unsigned int quad= 0; quad < GeometryInfo<3>::quads_per_cell;
             ++quad)
-          for(unsigned int dof = 0; dof < fe.dofs_per_quad; ++dof)
+          for(unsigned int dof= 0; dof < fe.dofs_per_quad; ++dof)
             accessor.quad(quad)->set_mg_dof_index(
               level,
               fe.adjust_quad_dof_index_for_face_orientation(
@@ -1336,7 +1334,7 @@ namespace internal
                 accessor.face_rotation(quad)),
               *next++);
 
-        for(unsigned int dof = 0; dof < fe.dofs_per_hex; ++dof)
+        for(unsigned int dof= 0; dof < fe.dofs_per_hex; ++dof)
           accessor.set_mg_dof_index(level, dof, *next++);
 
         Assert(next == dof_indices.end(), ExcInternalError());
@@ -1379,10 +1377,10 @@ namespace internal
       {
         std::vector<unsigned int> sorted_indices_pos
           = sort_indices(cache_begin, cache_end);
-        const unsigned int cache_size = cache_end - cache_begin;
+        const unsigned int cache_size= cache_end - cache_begin;
         std::vector<types::global_dof_index> cache_indices(cache_size);
-        for(unsigned int i = 0; i < cache_size; ++i)
-          cache_indices[i] = *(cache_begin + sorted_indices_pos[i]);
+        for(unsigned int i= 0; i < cache_size; ++i)
+          cache_indices[i]= *(cache_begin + sorted_indices_pos[i]);
 
         IndexSet index_set(cache_indices.back() + 1);
         index_set.add_indices(cache_indices.begin(), cache_indices.end());
@@ -1391,8 +1389,8 @@ namespace internal
         read_write_vector.import(values, VectorOperation::insert);
 
         // Copy the elements from read_write_vector and reorder them.
-        for(unsigned int i = 0; i < cache_size; ++i, ++local_values_begin)
-          *local_values_begin = read_write_vector[sorted_indices_pos[i]];
+        for(unsigned int i= 0; i < cache_size; ++i, ++local_values_begin)
+          *local_values_begin= read_write_vector[sorted_indices_pos[i]];
       }
 #endif
     };
@@ -1587,13 +1585,13 @@ namespace internal
     {
       const unsigned int dofs_per_vertex
         = accessor.get_fe(fe_index).dofs_per_vertex,
-        dofs_per_line = accessor.get_fe(fe_index).dofs_per_line;
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
-      for(unsigned int vertex = 0; vertex < 2; ++vertex)
-        for(unsigned int d = 0; d < dofs_per_vertex; ++d)
-          *next++ = accessor.vertex_dof_index(vertex, d, fe_index);
-      for(unsigned int d = 0; d < dofs_per_line; ++d)
-        *next++ = accessor.dof_index(d, fe_index);
+        dofs_per_line= accessor.get_fe(fe_index).dofs_per_line;
+      std::vector<types::global_dof_index>::iterator next= dof_indices.begin();
+      for(unsigned int vertex= 0; vertex < 2; ++vertex)
+        for(unsigned int d= 0; d < dofs_per_vertex; ++d)
+          *next++= accessor.vertex_dof_index(vertex, d, fe_index);
+      for(unsigned int d= 0; d < dofs_per_line; ++d)
+        *next++= accessor.dof_index(d, fe_index);
     }
 
     template <typename DoFHandlerType, bool level_dof_access>
@@ -1605,12 +1603,12 @@ namespace internal
     {
       const unsigned int dofs_per_vertex
         = accessor.get_fe(fe_index).dofs_per_vertex,
-        dofs_per_line = accessor.get_fe(fe_index).dofs_per_line,
-        dofs_per_quad = accessor.get_fe(fe_index).dofs_per_quad;
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
-      for(unsigned int vertex = 0; vertex < 4; ++vertex)
-        for(unsigned int d = 0; d < dofs_per_vertex; ++d)
-          *next++ = accessor.vertex_dof_index(vertex, d, fe_index);
+        dofs_per_line= accessor.get_fe(fe_index).dofs_per_line,
+        dofs_per_quad= accessor.get_fe(fe_index).dofs_per_quad;
+      std::vector<types::global_dof_index>::iterator next= dof_indices.begin();
+      for(unsigned int vertex= 0; vertex < 4; ++vertex)
+        for(unsigned int d= 0; d < dofs_per_vertex; ++d)
+          *next++= accessor.vertex_dof_index(vertex, d, fe_index);
       // now copy dof numbers from the line. for
       // lines with the wrong orientation (which
       // might occur in 3d), we have already made
@@ -1622,15 +1620,15 @@ namespace internal
       // to adjust the shape function indices that
       // we see to correspond to the correct
       // (face-local) ordering.
-      for(unsigned int line = 0; line < 4; ++line)
-        for(unsigned int d = 0; d < dofs_per_line; ++d)
-          *next++ = accessor.line(line)->dof_index(
+      for(unsigned int line= 0; line < 4; ++line)
+        for(unsigned int d= 0; d < dofs_per_line; ++d)
+          *next++= accessor.line(line)->dof_index(
             accessor.get_fe(fe_index)
               .adjust_line_dof_index_for_line_orientation(
                 d, accessor.line_orientation(line)),
             fe_index);
-      for(unsigned int d = 0; d < dofs_per_quad; ++d)
-        *next++ = accessor.dof_index(d, fe_index);
+      for(unsigned int d= 0; d < dofs_per_quad; ++d)
+        *next++= accessor.dof_index(d, fe_index);
     }
 
     template <typename DoFHandlerType, bool level_dof_access>
@@ -1642,13 +1640,13 @@ namespace internal
     {
       const unsigned int dofs_per_vertex
         = accessor.get_fe(fe_index).dofs_per_vertex,
-        dofs_per_line = accessor.get_fe(fe_index).dofs_per_line,
-        dofs_per_quad = accessor.get_fe(fe_index).dofs_per_quad,
-        dofs_per_hex  = accessor.get_fe(fe_index).dofs_per_hex;
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
-      for(unsigned int vertex = 0; vertex < 8; ++vertex)
-        for(unsigned int d = 0; d < dofs_per_vertex; ++d)
-          *next++ = accessor.vertex_dof_index(vertex, d, fe_index);
+        dofs_per_line= accessor.get_fe(fe_index).dofs_per_line,
+        dofs_per_quad= accessor.get_fe(fe_index).dofs_per_quad,
+        dofs_per_hex = accessor.get_fe(fe_index).dofs_per_hex;
+      std::vector<types::global_dof_index>::iterator next= dof_indices.begin();
+      for(unsigned int vertex= 0; vertex < 8; ++vertex)
+        for(unsigned int d= 0; d < dofs_per_vertex; ++d)
+          *next++= accessor.vertex_dof_index(vertex, d, fe_index);
       // now copy dof numbers from the line. for
       // lines with the wrong orientation, we have
       // already made sure that we're ok by picking
@@ -1660,9 +1658,9 @@ namespace internal
       // adjust the shape function indices that we
       // see to correspond to the correct
       // (cell-local) ordering.
-      for(unsigned int line = 0; line < 12; ++line)
-        for(unsigned int d = 0; d < dofs_per_line; ++d)
-          *next++ = accessor.line(line)->dof_index(
+      for(unsigned int line= 0; line < 12; ++line)
+        for(unsigned int d= 0; d < dofs_per_line; ++d)
+          *next++= accessor.line(line)->dof_index(
             accessor.get_fe(fe_index)
               .adjust_line_dof_index_for_line_orientation(
                 d, accessor.line_orientation(line)),
@@ -1680,9 +1678,9 @@ namespace internal
       // correct (cell-local) ordering. The same
       // applies, if the face_rotation or
       // face_orientation is non-standard
-      for(unsigned int quad = 0; quad < 6; ++quad)
-        for(unsigned int d = 0; d < dofs_per_quad; ++d)
-          *next++ = accessor.quad(quad)->dof_index(
+      for(unsigned int quad= 0; quad < 6; ++quad)
+        for(unsigned int d= 0; d < dofs_per_quad; ++d)
+          *next++= accessor.quad(quad)->dof_index(
             accessor.get_fe(fe_index)
               .adjust_quad_dof_index_for_face_orientation(
                 d,
@@ -1690,8 +1688,8 @@ namespace internal
                 accessor.face_flip(quad),
                 accessor.face_rotation(quad)),
             fe_index);
-      for(unsigned int d = 0; d < dofs_per_hex; ++d)
-        *next++ = accessor.dof_index(d, fe_index);
+      for(unsigned int d= 0; d < dofs_per_hex; ++d)
+        *next++= accessor.dof_index(d, fe_index);
     }
 
     template <typename DoFHandlerType, bool level_dof_access>
@@ -1702,20 +1700,20 @@ namespace internal
       std::vector<types::global_dof_index>& dof_indices,
       const unsigned int                    fe_index)
     {
-      const DoFHandlerType& handler = accessor.get_dof_handler();
+      const DoFHandlerType& handler= accessor.get_dof_handler();
 
       const FiniteElement<DoFHandlerType::dimension,
                           DoFHandlerType::space_dimension>& fe
         = handler.get_fe(fe_index);
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      std::vector<types::global_dof_index>::iterator next= dof_indices.begin();
 
-      for(unsigned int vertex = 0; vertex < GeometryInfo<1>::vertices_per_cell;
+      for(unsigned int vertex= 0; vertex < GeometryInfo<1>::vertices_per_cell;
           ++vertex)
-        for(unsigned int dof = 0; dof < fe.dofs_per_vertex; ++dof)
-          *next++ = accessor.mg_vertex_dof_index(level, vertex, dof);
+        for(unsigned int dof= 0; dof < fe.dofs_per_vertex; ++dof)
+          *next++= accessor.mg_vertex_dof_index(level, vertex, dof);
 
-      for(unsigned int dof = 0; dof < fe.dofs_per_line; ++dof)
-        *next++ = accessor.mg_dof_index(level, dof);
+      for(unsigned int dof= 0; dof < fe.dofs_per_line; ++dof)
+        *next++= accessor.mg_dof_index(level, dof);
 
       Assert(next == dof_indices.end(), ExcInternalError());
     }
@@ -1728,24 +1726,24 @@ namespace internal
       std::vector<types::global_dof_index>& dof_indices,
       const unsigned int                    fe_index)
     {
-      const DoFHandlerType& handler = accessor.get_dof_handler();
+      const DoFHandlerType& handler= accessor.get_dof_handler();
 
       const FiniteElement<DoFHandlerType::dimension,
                           DoFHandlerType::space_dimension>& fe
         = handler.get_fe(fe_index);
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      std::vector<types::global_dof_index>::iterator next= dof_indices.begin();
 
-      for(unsigned int vertex = 0; vertex < GeometryInfo<2>::vertices_per_cell;
+      for(unsigned int vertex= 0; vertex < GeometryInfo<2>::vertices_per_cell;
           ++vertex)
-        for(unsigned int dof = 0; dof < fe.dofs_per_vertex; ++dof)
-          *next++ = accessor.mg_vertex_dof_index(level, vertex, dof);
+        for(unsigned int dof= 0; dof < fe.dofs_per_vertex; ++dof)
+          *next++= accessor.mg_vertex_dof_index(level, vertex, dof);
 
-      for(unsigned int line = 0; line < GeometryInfo<2>::lines_per_cell; ++line)
-        for(unsigned int dof = 0; dof < fe.dofs_per_line; ++dof)
-          *next++ = accessor.line(line)->mg_dof_index(level, dof);
+      for(unsigned int line= 0; line < GeometryInfo<2>::lines_per_cell; ++line)
+        for(unsigned int dof= 0; dof < fe.dofs_per_line; ++dof)
+          *next++= accessor.line(line)->mg_dof_index(level, dof);
 
-      for(unsigned int dof = 0; dof < fe.dofs_per_quad; ++dof)
-        *next++ = accessor.mg_dof_index(level, dof);
+      for(unsigned int dof= 0; dof < fe.dofs_per_quad; ++dof)
+        *next++= accessor.mg_dof_index(level, dof);
 
       Assert(next == dof_indices.end(), ExcInternalError());
     }
@@ -1758,29 +1756,29 @@ namespace internal
       std::vector<types::global_dof_index>& dof_indices,
       const unsigned int                    fe_index)
     {
-      const DoFHandlerType& handler = accessor.get_dof_handler();
+      const DoFHandlerType& handler= accessor.get_dof_handler();
 
       const FiniteElement<DoFHandlerType::dimension,
                           DoFHandlerType::space_dimension>& fe
         = handler.get_fe(fe_index);
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      std::vector<types::global_dof_index>::iterator next= dof_indices.begin();
 
-      for(unsigned int vertex = 0; vertex < GeometryInfo<3>::vertices_per_cell;
+      for(unsigned int vertex= 0; vertex < GeometryInfo<3>::vertices_per_cell;
           ++vertex)
-        for(unsigned int dof = 0; dof < fe.dofs_per_vertex; ++dof)
-          *next++ = accessor.mg_vertex_dof_index(level, vertex, dof);
+        for(unsigned int dof= 0; dof < fe.dofs_per_vertex; ++dof)
+          *next++= accessor.mg_vertex_dof_index(level, vertex, dof);
 
-      for(unsigned int line = 0; line < GeometryInfo<3>::lines_per_cell; ++line)
-        for(unsigned int dof = 0; dof < fe.dofs_per_line; ++dof)
-          *next++ = accessor.line(line)->mg_dof_index(
+      for(unsigned int line= 0; line < GeometryInfo<3>::lines_per_cell; ++line)
+        for(unsigned int dof= 0; dof < fe.dofs_per_line; ++dof)
+          *next++= accessor.line(line)->mg_dof_index(
             level,
             accessor.get_fe(fe_index)
               .adjust_line_dof_index_for_line_orientation(
                 dof, accessor.line_orientation(line)));
 
-      for(unsigned int quad = 0; quad < GeometryInfo<3>::quads_per_cell; ++quad)
-        for(unsigned int dof = 0; dof < fe.dofs_per_quad; ++dof)
-          *next++ = accessor.quad(quad)->mg_dof_index(
+      for(unsigned int quad= 0; quad < GeometryInfo<3>::quads_per_cell; ++quad)
+        for(unsigned int dof= 0; dof < fe.dofs_per_quad; ++dof)
+          *next++= accessor.quad(quad)->mg_dof_index(
             level,
             accessor.get_fe(fe_index)
               .adjust_quad_dof_index_for_face_orientation(
@@ -1789,8 +1787,8 @@ namespace internal
                 accessor.face_flip(quad),
                 accessor.face_rotation(quad)));
 
-      for(unsigned int dof = 0; dof < fe.dofs_per_hex; ++dof)
-        *next++ = accessor.mg_dof_index(level, dof);
+      for(unsigned int dof= 0; dof < fe.dofs_per_hex; ++dof)
+        *next++= accessor.mg_dof_index(level, dof);
 
       Assert(next == dof_indices.end(), ExcInternalError());
     }
@@ -2166,7 +2164,7 @@ inline void DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   set_dof_handler(DoFHandlerType<1, spacedim>* dh)
 {
   Assert(dh != nullptr, ExcInvalidObject());
-  this->dof_handler = dh;
+  this->dof_handler= dh;
 }
 
 template <template <int, int> class DoFHandlerType,
@@ -2212,8 +2210,8 @@ DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::get_dof_indices(
   std::vector<types::global_dof_index>& dof_indices,
   const unsigned int                    fe_index) const
 {
-  for(unsigned int i = 0; i < dof_indices.size(); ++i)
-    dof_indices[i] = dealii::internal::DoFAccessorImplementation::
+  for(unsigned int i= 0; i < dof_indices.size(); ++i)
+    dof_indices[i]= dealii::internal::DoFAccessorImplementation::
       Implementation::get_vertex_dof_index(
         *dof_handler, this->global_vertex_index, fe_index, i);
 }
@@ -2439,9 +2437,9 @@ namespace internal
                     * GeometryInfo<1>::vertices_per_cell))
           return;
 
-        const unsigned int dofs_per_vertex = accessor.get_fe().dofs_per_vertex,
-                           dofs_per_line   = accessor.get_fe().dofs_per_line,
-                           dofs_per_cell   = accessor.get_fe().dofs_per_cell;
+        const unsigned int dofs_per_vertex= accessor.get_fe().dofs_per_vertex,
+                           dofs_per_line  = accessor.get_fe().dofs_per_line,
+                           dofs_per_cell  = accessor.get_fe().dofs_per_cell;
 
         // make sure the cache is at least
         // as big as we need it when
@@ -2457,11 +2455,11 @@ namespace internal
                ->cell_dof_indices_cache.begin()
              + accessor.present_index * dofs_per_cell);
 
-        for(unsigned int vertex = 0; vertex < 2; ++vertex)
-          for(unsigned int d = 0; d < dofs_per_vertex; ++d)
-            *next++ = accessor.vertex_dof_index(vertex, d);
-        for(unsigned int d = 0; d < dofs_per_line; ++d)
-          *next++ = accessor.dof_index(d);
+        for(unsigned int vertex= 0; vertex < 2; ++vertex)
+          for(unsigned int d= 0; d < dofs_per_vertex; ++d)
+            *next++= accessor.vertex_dof_index(vertex, d);
+        for(unsigned int d= 0; d < dofs_per_line; ++d)
+          *next++= accessor.dof_index(d);
       }
 
       template <int spacedim, bool level_dof_access>
@@ -2483,10 +2481,10 @@ namespace internal
                     * GeometryInfo<2>::vertices_per_cell))
           return;
 
-        const unsigned int dofs_per_vertex = accessor.get_fe().dofs_per_vertex,
-                           dofs_per_line   = accessor.get_fe().dofs_per_line,
-                           dofs_per_quad   = accessor.get_fe().dofs_per_quad,
-                           dofs_per_cell   = accessor.get_fe().dofs_per_cell;
+        const unsigned int dofs_per_vertex= accessor.get_fe().dofs_per_vertex,
+                           dofs_per_line  = accessor.get_fe().dofs_per_line,
+                           dofs_per_quad  = accessor.get_fe().dofs_per_quad,
+                           dofs_per_cell  = accessor.get_fe().dofs_per_cell;
 
         // make sure the cache is at least
         // as big as we need it when
@@ -2502,14 +2500,14 @@ namespace internal
                ->cell_dof_indices_cache.begin()
              + accessor.present_index * dofs_per_cell);
 
-        for(unsigned int vertex = 0; vertex < 4; ++vertex)
-          for(unsigned int d = 0; d < dofs_per_vertex; ++d)
-            *next++ = accessor.vertex_dof_index(vertex, d);
-        for(unsigned int line = 0; line < 4; ++line)
-          for(unsigned int d = 0; d < dofs_per_line; ++d)
-            *next++ = accessor.line(line)->dof_index(d);
-        for(unsigned int d = 0; d < dofs_per_quad; ++d)
-          *next++ = accessor.dof_index(d);
+        for(unsigned int vertex= 0; vertex < 4; ++vertex)
+          for(unsigned int d= 0; d < dofs_per_vertex; ++d)
+            *next++= accessor.vertex_dof_index(vertex, d);
+        for(unsigned int line= 0; line < 4; ++line)
+          for(unsigned int d= 0; d < dofs_per_line; ++d)
+            *next++= accessor.line(line)->dof_index(d);
+        for(unsigned int d= 0; d < dofs_per_quad; ++d)
+          *next++= accessor.dof_index(d);
       }
 
       template <int spacedim, bool level_dof_access>
@@ -2531,11 +2529,11 @@ namespace internal
                     * GeometryInfo<3>::vertices_per_cell))
           return;
 
-        const unsigned int dofs_per_vertex = accessor.get_fe().dofs_per_vertex,
-                           dofs_per_line   = accessor.get_fe().dofs_per_line,
-                           dofs_per_quad   = accessor.get_fe().dofs_per_quad,
-                           dofs_per_hex    = accessor.get_fe().dofs_per_hex,
-                           dofs_per_cell   = accessor.get_fe().dofs_per_cell;
+        const unsigned int dofs_per_vertex= accessor.get_fe().dofs_per_vertex,
+                           dofs_per_line  = accessor.get_fe().dofs_per_line,
+                           dofs_per_quad  = accessor.get_fe().dofs_per_quad,
+                           dofs_per_hex   = accessor.get_fe().dofs_per_hex,
+                           dofs_per_cell  = accessor.get_fe().dofs_per_cell;
 
         // make sure the cache is at least
         // as big as we need it when
@@ -2551,9 +2549,9 @@ namespace internal
                ->cell_dof_indices_cache.begin()
              + accessor.present_index * dofs_per_cell);
 
-        for(unsigned int vertex = 0; vertex < 8; ++vertex)
-          for(unsigned int d = 0; d < dofs_per_vertex; ++d)
-            *next++ = accessor.vertex_dof_index(vertex, d);
+        for(unsigned int vertex= 0; vertex < 8; ++vertex)
+          for(unsigned int d= 0; d < dofs_per_vertex; ++d)
+            *next++= accessor.vertex_dof_index(vertex, d);
         // now copy dof numbers from the line. for
         // lines with the wrong orientation, we have
         // already made sure that we're ok by picking
@@ -2565,9 +2563,9 @@ namespace internal
         // adjust the shape function indices that we
         // see to correspond to the correct
         // (cell-local) ordering.
-        for(unsigned int line = 0; line < 12; ++line)
-          for(unsigned int d = 0; d < dofs_per_line; ++d)
-            *next++ = accessor.line(line)->dof_index(
+        for(unsigned int line= 0; line < 12; ++line)
+          for(unsigned int d= 0; d < dofs_per_line; ++d)
+            *next++= accessor.line(line)->dof_index(
               accessor.dof_handler->get_fe()
                 .adjust_line_dof_index_for_line_orientation(
                   d, accessor.line_orientation(line)));
@@ -2584,17 +2582,17 @@ namespace internal
         // correct (cell-local) ordering. The same
         // applies, if the face_rotation or
         // face_orientation is non-standard
-        for(unsigned int quad = 0; quad < 6; ++quad)
-          for(unsigned int d = 0; d < dofs_per_quad; ++d)
-            *next++ = accessor.quad(quad)->dof_index(
+        for(unsigned int quad= 0; quad < 6; ++quad)
+          for(unsigned int d= 0; d < dofs_per_quad; ++d)
+            *next++= accessor.quad(quad)->dof_index(
               accessor.dof_handler->get_fe()
                 .adjust_quad_dof_index_for_face_orientation(
                   d,
                   accessor.face_orientation(quad),
                   accessor.face_flip(quad),
                   accessor.face_rotation(quad)));
-        for(unsigned int d = 0; d < dofs_per_hex; ++d)
-          *next++ = accessor.dof_index(d);
+        for(unsigned int d= 0; d < dofs_per_hex; ++d)
+          *next++= accessor.dof_index(d);
       }
 
       // implementation for the case of
@@ -2608,7 +2606,7 @@ namespace internal
         // caches are only for cells with DoFs, i.e., for active ones and not FE_Nothing
         if(accessor.has_children())
           return;
-        const unsigned int dofs_per_cell = accessor.get_fe().dofs_per_cell;
+        const unsigned int dofs_per_cell= accessor.get_fe().dofs_per_cell;
         if(dofs_per_cell == 0)
           return;
 
@@ -2641,8 +2639,8 @@ namespace internal
                ->cell_dof_indices_cache
                  [accessor.dof_handler->levels[accessor.present_level]
                     ->cell_cache_offsets[accessor.present_index]];
-        for(unsigned int i = 0; i < dofs_per_cell; ++i, ++next_dof_index)
-          *next_dof_index = dof_indices[i];
+        for(unsigned int i= 0; i < dofs_per_cell; ++i, ++next_dof_index)
+          *next_dof_index= dof_indices[i];
       }
 
       /**
@@ -2654,24 +2652,24 @@ namespace internal
         const DoFCellAccessor<DoFHandlerType, level_dof_access>& accessor,
         const std::vector<types::global_dof_index>& local_dof_indices)
       {
-        const unsigned int dim = DoFHandlerType::dimension;
+        const unsigned int dim= DoFHandlerType::dimension;
 
         Assert(accessor.has_children() == false, ExcInternalError());
 
-        const unsigned int dofs_per_vertex = accessor.get_fe().dofs_per_vertex,
-                           dofs_per_line   = accessor.get_fe().dofs_per_line,
-                           dofs_per_quad   = accessor.get_fe().dofs_per_quad,
-                           dofs_per_hex    = accessor.get_fe().dofs_per_hex;
+        const unsigned int dofs_per_vertex= accessor.get_fe().dofs_per_vertex,
+                           dofs_per_line  = accessor.get_fe().dofs_per_line,
+                           dofs_per_quad  = accessor.get_fe().dofs_per_quad,
+                           dofs_per_hex   = accessor.get_fe().dofs_per_hex;
 
         Assert(local_dof_indices.size() == accessor.get_fe().dofs_per_cell,
                ExcInternalError());
 
-        unsigned int index = 0;
+        unsigned int index= 0;
 
-        for(unsigned int vertex = 0;
+        for(unsigned int vertex= 0;
             vertex < GeometryInfo<dim>::vertices_per_cell;
             ++vertex)
-          for(unsigned int d = 0; d < dofs_per_vertex; ++d, ++index)
+          for(unsigned int d= 0; d < dofs_per_vertex; ++d, ++index)
             accessor.set_vertex_dof_index(
               vertex, d, local_dof_indices[index], accessor.active_fe_index());
         // now copy dof numbers into the line. for lines in 3d with the
@@ -2683,9 +2681,9 @@ namespace internal
         // to correspond to the correct (cell-local) ordering.
         //
         // of course, if dim<3, then there is nothing to adjust
-        for(unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+        for(unsigned int line= 0; line < GeometryInfo<dim>::lines_per_cell;
             ++line)
-          for(unsigned int d = 0; d < dofs_per_line; ++d, ++index)
+          for(unsigned int d= 0; d < dofs_per_line; ++d, ++index)
             accessor.line(line)->set_dof_index(
               dim < 3 ?
                 d :
@@ -2704,9 +2702,9 @@ namespace internal
         // the face_rotation or face_orientation is non-standard
         //
         // again, if dim<3, then there is nothing to adjust
-        for(unsigned int quad = 0; quad < GeometryInfo<dim>::quads_per_cell;
+        for(unsigned int quad= 0; quad < GeometryInfo<dim>::quads_per_cell;
             ++quad)
-          for(unsigned int d = 0; d < dofs_per_quad; ++d, ++index)
+          for(unsigned int d= 0; d < dofs_per_quad; ++d, ++index)
             accessor.quad(quad)->set_dof_index(
               dim < 3 ?
                 d :
@@ -2717,7 +2715,7 @@ namespace internal
                   accessor.face_rotation(quad)),
               local_dof_indices[index],
               accessor.active_fe_index());
-        for(unsigned int d = 0; d < dofs_per_hex; ++d, ++index)
+        for(unsigned int d= 0; d < dofs_per_hex; ++d, ++index)
           accessor.set_dof_index(
             d, local_dof_indices[index], accessor.active_fe_index());
 
@@ -2815,7 +2813,7 @@ namespace internal
 
         Assert(!accessor.has_children(), ExcMessage("Cell must be active"));
 
-        const unsigned int n_dofs = local_source_end - local_source_begin;
+        const unsigned int n_dofs= local_source_end - local_source_begin;
 
         types::global_dof_index* dofs
           = &accessor.dof_handler->levels[accessor.level()]
@@ -2849,7 +2847,7 @@ namespace internal
                (typename std::decay<decltype(
                   accessor)>::type::ExcVectorDoesNotMatch()));
 
-        const unsigned int n_dofs = local_source_end - local_source_begin;
+        const unsigned int n_dofs= local_source_end - local_source_begin;
 
         //TODO[WB/MK]: This function could me made more efficient because it allocates memory, which could be avoided by passing in another argument as a scratch array. This should be fixed eventually. another option would be to let the surrounding class have a (static, mutable) scratch array that is thread-local
 
@@ -2888,7 +2886,7 @@ namespace internal
 
         Assert(!accessor.has_children(), ExcMessage("Cell must be active."));
 
-        const unsigned int n_dofs = local_source_end - local_source_begin;
+        const unsigned int n_dofs= local_source_end - local_source_begin;
 
         types::global_dof_index* dofs
           = &accessor.dof_handler->levels[accessor.level()]
@@ -2924,7 +2922,7 @@ namespace internal
                (typename std::decay<decltype(
                   accessor)>::type::ExcVectorDoesNotMatch()));
 
-        const unsigned int n_dofs = local_source_end - local_source_begin;
+        const unsigned int n_dofs= local_source_end - local_source_begin;
 
         //TODO[WB/MK]: This function could me made more efficient because it allocates memory, which could be avoided by passing in another argument as a scratch array. This should be fixed eventually
 
@@ -2969,14 +2967,14 @@ namespace internal
 
         Assert(!accessor.has_children(), ExcMessage("Cell must be active."));
 
-        const unsigned int n_dofs = local_source.m();
+        const unsigned int n_dofs= local_source.m();
 
         types::global_dof_index* dofs
           = &accessor.dof_handler->levels[accessor.level()]
                ->cell_dof_indices_cache[accessor.present_index * n_dofs];
 
         // distribute cell matrix
-        for(unsigned int i = 0; i < n_dofs; ++i)
+        for(unsigned int i= 0; i < n_dofs; ++i)
           global_destination.add(dofs[i], n_dofs, dofs, &local_source(i, 0));
       }
 
@@ -3008,7 +3006,7 @@ namespace internal
                (typename std::decay<decltype(
                   accessor)>::type::ExcMatrixDoesNotMatch()));
 
-        const unsigned int n_dofs = local_source.size();
+        const unsigned int n_dofs= local_source.size();
 
         //TODO[WB/MK]: This function could me made more efficient because it allocates memory, which could be avoided by passing in another argument as a scratch array.
 
@@ -3059,16 +3057,16 @@ namespace internal
 
         Assert(!accessor.has_children(), ExcMessage("Cell must be active."));
 
-        const unsigned int       n_dofs = accessor.get_fe().dofs_per_cell;
+        const unsigned int       n_dofs= accessor.get_fe().dofs_per_cell;
         types::global_dof_index* dofs
           = &accessor.dof_handler->levels[accessor.level()]
                ->cell_dof_indices_cache[accessor.present_index * n_dofs];
 
         // distribute cell matrices
-        for(unsigned int i = 0; i < n_dofs; ++i)
+        for(unsigned int i= 0; i < n_dofs; ++i)
           {
             global_matrix.add(dofs[i], n_dofs, dofs, &local_matrix(i, 0));
-            global_vector(dofs[i]) += local_vector(i);
+            global_vector(dofs[i])+= local_vector(i);
           }
       }
 
@@ -3109,7 +3107,7 @@ namespace internal
                (typename std::decay<decltype(
                   accessor)>::type::ExcVectorDoesNotMatch()));
 
-        const unsigned int n_dofs = local_matrix.size();
+        const unsigned int n_dofs= local_matrix.size();
 
         //TODO[WB/MK]: This function could me made more efficient because it
         //allocates memory, which could be avoided by passing in another
@@ -3263,7 +3261,7 @@ DoFCellAccessor<DoFHandlerType, level_dof_access>::face(
   Assert(i < GeometryInfo<dim>::faces_per_cell,
          ExcIndexRange(i, 0, GeometryInfo<dim>::faces_per_cell));
 
-  const unsigned int dim = DoFHandlerType::dimension;
+  const unsigned int dim= DoFHandlerType::dimension;
   return dealii::internal::DoFCellAccessorImplementation::get_face(
     *this, i, std::integral_constant<int, dim>());
 }
@@ -3279,14 +3277,14 @@ DoFCellAccessor<DoFHandlerType, level_dof_access>::get_dof_indices(
          ExcMessage("Can't ask for DoF indices on artificial cells."));
   AssertDimension(dof_indices.size(), this->get_fe().dofs_per_cell);
 
-  const auto dofs_per_cell = this->get_fe().dofs_per_cell;
+  const auto dofs_per_cell= this->get_fe().dofs_per_cell;
   if(dofs_per_cell > 0)
     {
       const types::global_dof_index* cache
         = this->dof_handler->levels[this->present_level]->get_cell_cache_start(
           this->present_index, dofs_per_cell);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i, ++cache)
-        dof_indices[i] = *cache;
+      for(unsigned int i= 0; i < dofs_per_cell; ++i, ++cache)
+        dof_indices[i]= *cache;
     }
 }
 
@@ -3406,7 +3404,7 @@ DoFCellAccessor<DoFHandlerType, level_dof_access>::set_dof_values(
     = this->dof_handler->levels[this->present_level]->get_cell_cache_start(
       this->present_index, this->get_fe().dofs_per_cell);
 
-  for(unsigned int i = 0; i < this->get_fe().dofs_per_cell; ++i, ++cache)
+  for(unsigned int i= 0; i < this->get_fe().dofs_per_cell; ++i, ++cache)
     internal::ElementAccess<OutputVector>::set(local_values(i), *cache, values);
 }
 

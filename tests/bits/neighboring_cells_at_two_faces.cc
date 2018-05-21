@@ -41,25 +41,25 @@
 
 void create_grid(Triangulation<2>& tria)
 {
-  const unsigned int n_points = 5;
+  const unsigned int n_points= 5;
 
-  const Point<2>        points[n_points] = {Point<2>(0.0, 0.0),
-                                     Point<2>(1.0, 1.0),
-                                     Point<2>(2.0, 2.0),
-                                     Point<2>(0.0, 2.0),
-                                     Point<2>(2.0, 0.0)};
+  const Point<2>        points[n_points]= {Point<2>(0.0, 0.0),
+                                    Point<2>(1.0, 1.0),
+                                    Point<2>(2.0, 2.0),
+                                    Point<2>(0.0, 2.0),
+                                    Point<2>(2.0, 0.0)};
   std::vector<Point<2>> vertices(n_points);
   vertices.assign(points, points + n_points);
 
   std::vector<CellData<2>> cells(2);
-  cells[0].vertices[0] = 0;
-  cells[0].vertices[1] = 1;
-  cells[0].vertices[2] = 2;
-  cells[0].vertices[3] = 3;
-  cells[1].vertices[0] = 0;
-  cells[1].vertices[1] = 4;
-  cells[1].vertices[2] = 2;
-  cells[1].vertices[3] = 1;
+  cells[0].vertices[0]= 0;
+  cells[0].vertices[1]= 1;
+  cells[0].vertices[2]= 2;
+  cells[0].vertices[3]= 3;
+  cells[1].vertices[0]= 0;
+  cells[1].vertices[1]= 4;
+  cells[1].vertices[2]= 2;
+  cells[1].vertices[3]= 1;
 
   // generate a triangulation
   // out of this
@@ -77,11 +77,11 @@ void create_grid(Triangulation<2>& tria)
 void
 check_neighbors(const Triangulation<2>& tria)
 {
-  Triangulation<2>::cell_iterator cell = tria.begin();
-  for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+  Triangulation<2>::cell_iterator cell= tria.begin();
+  for(unsigned int f= 0; f < GeometryInfo<2>::faces_per_cell; ++f)
     if(cell->neighbor(f).state() == IteratorState::valid)
       {
-        const unsigned int neighbor_neighbor = cell->neighbor_of_neighbor(f);
+        const unsigned int neighbor_neighbor= cell->neighbor_of_neighbor(f);
         deallog << "At face " << f
                 << ": neighbor_of_neighbor=" << neighbor_neighbor << std::endl;
         Assert(cell->face(f) == cell->neighbor(f)->face(neighbor_neighbor),

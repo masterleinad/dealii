@@ -71,16 +71,16 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
   ::dealii::DataOutBase::Patch<DoFHandlerType::dimension,
                                DoFHandlerType::space_dimension>
     patch;
-  patch.n_subdivisions = n_subdivisions;
+  patch.n_subdivisions= n_subdivisions;
 
   // set the vertices of the patch. if the mapping does not preserve locations
   // (e.g. MappingQEulerian), we need to compute the offset of the vertex for
   // the graphical output. Otherwise, we can just use the vertex info.
-  for(unsigned int vertex = 0;
+  for(unsigned int vertex= 0;
       vertex < GeometryInfo<DoFHandlerType::dimension>::vertices_per_cell;
       ++vertex)
     if(scratch_data.mapping_collection[0].preserves_vertex_locations())
-      patch.vertices[vertex] = cell_and_index->first->vertex(vertex);
+      patch.vertices[vertex]= cell_and_index->first->vertex(vertex);
     else
       patch.vertices[vertex]
         = scratch_data.mapping_collection[0].transform_unit_to_real_cell(
@@ -94,7 +94,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                      DoFHandlerType::space_dimension>& fe_patch_values
     = scratch_data.get_present_fe_values(0);
 
-  const unsigned int n_q_points = fe_patch_values.n_quadrature_points;
+  const unsigned int n_q_points= fe_patch_values.n_quadrature_points;
 
   // depending on the requested output of curved cells, if necessary
   // append the quadrature points to the last rows of the patch.data
@@ -114,7 +114,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
 
       // set the flag indicating that for this cell the points are
       // explicitly given
-      patch.points_are_available = true;
+      patch.points_are_available= true;
 
       // then resize the patch.data member in order to have enough memory for
       // the quadrature points as well, and copy the quadrature points there
@@ -123,8 +123,8 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
 
       patch.data.reinit(
         scratch_data.n_datasets + DoFHandlerType::space_dimension, n_q_points);
-      for(unsigned int i = 0; i < DoFHandlerType::space_dimension; ++i)
-        for(unsigned int q = 0; q < n_q_points; ++q)
+      for(unsigned int i= 0; i < DoFHandlerType::space_dimension; ++i)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           patch.data(patch.data.size(0) - DoFHandlerType::space_dimension + i,
                      q)
             = q_points[q][i];
@@ -132,16 +132,16 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
   else
     {
       patch.data.reinit(scratch_data.n_datasets, n_q_points);
-      patch.points_are_available = false;
+      patch.points_are_available= false;
     }
 
   if(scratch_data.n_datasets > 0)
     {
       // counter for data records
-      unsigned int offset = 0;
+      unsigned int offset= 0;
 
       // first fill dof_data
-      for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)
+      for(unsigned int dataset= 0; dataset < this->dof_data.size(); ++dataset)
         {
           const FEValuesBase<DoFHandlerType::dimension,
                              DoFHandlerType::space_dimension>&
@@ -241,8 +241,8 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                     scratch_data.postprocessed_values[dataset]);
                 }
 
-              for(unsigned int q = 0; q < n_q_points; ++q)
-                for(unsigned int component = 0;
+              for(unsigned int q= 0; q < n_q_points; ++q)
+                for(unsigned int component= 0;
                     component < this->dof_data[dataset]->n_output_variables;
                     ++component)
                   patch.data(offset + component, q)
@@ -259,7 +259,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                 this_fe_patch_values,
                 internal::DataOutImplementation::ComponentExtractor::real_part,
                 scratch_data.patch_values_scalar.solution_values);
-              for(unsigned int q = 0; q < n_q_points; ++q)
+              for(unsigned int q= 0; q < n_q_points; ++q)
                 patch.data(offset, q)
                   = scratch_data.patch_values_scalar.solution_values[q];
 
@@ -271,7 +271,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                     internal::DataOutImplementation::ComponentExtractor::
                       imaginary_part,
                     scratch_data.patch_values_scalar.solution_values);
-                  for(unsigned int q = 0; q < n_q_points; ++q)
+                  for(unsigned int q= 0; q < n_q_points; ++q)
                     patch.data(offset + 1, q)
                       = scratch_data.patch_values_scalar.solution_values[q];
                 }
@@ -287,9 +287,9 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                 this_fe_patch_values,
                 internal::DataOutImplementation::ComponentExtractor::real_part,
                 scratch_data.patch_values_system.solution_values);
-              for(unsigned int component = 0; component < n_components;
+              for(unsigned int component= 0; component < n_components;
                   ++component)
-                for(unsigned int q = 0; q < n_q_points; ++q)
+                for(unsigned int q= 0; q < n_q_points; ++q)
                   patch.data(offset + component * stride, q)
                     = scratch_data.patch_values_system.solution_values[q](
                       component);
@@ -302,9 +302,9 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                     internal::DataOutImplementation::ComponentExtractor::
                       imaginary_part,
                     scratch_data.patch_values_system.solution_values);
-                  for(unsigned int component = 0; component < n_components;
+                  for(unsigned int component= 0; component < n_components;
                       ++component)
-                    for(unsigned int q = 0; q < n_q_points; ++q)
+                    for(unsigned int q= 0; q < n_q_points; ++q)
                       patch.data(offset + component * stride + 1, q)
                         = scratch_data.patch_values_system.solution_values[q](
                           component);
@@ -312,8 +312,8 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
             }
 
           // increment the counter for the actual data record
-          offset += this->dof_data[dataset]->n_output_variables
-                    * (this->dof_data[dataset]->is_complex_valued() ? 2 : 1);
+          offset+= this->dof_data[dataset]->n_output_variables
+                   * (this->dof_data[dataset]->is_complex_valued() ? 2 : 1);
         }
 
       // then do the cell data. only compute the number of a cell if needed;
@@ -323,7 +323,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
         {
           Assert(!cell_and_index->first->has_children(), ExcNotImplemented());
 
-          for(unsigned int dataset = 0; dataset < this->cell_data.size();
+          for(unsigned int dataset= 0; dataset < this->cell_data.size();
               ++dataset)
             {
               // as above, first output the real part
@@ -333,8 +333,8 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                     cell_and_index->second,
                     internal::DataOutImplementation::ComponentExtractor::
                       real_part);
-                for(unsigned int q = 0; q < n_q_points; ++q)
-                  patch.data(offset, q) = value;
+                for(unsigned int q= 0; q < n_q_points; ++q)
+                  patch.data(offset, q)= value;
               }
 
               // and if there is one, also output the imaginary part
@@ -345,16 +345,16 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                       cell_and_index->second,
                       internal::DataOutImplementation::ComponentExtractor::
                         imaginary_part);
-                  for(unsigned int q = 0; q < n_q_points; ++q)
-                    patch.data(offset + 1, q) = value;
+                  for(unsigned int q= 0; q < n_q_points; ++q)
+                    patch.data(offset + 1, q)= value;
                 }
 
-              offset += (this->cell_data[dataset]->is_complex_valued() ? 2 : 1);
+              offset+= (this->cell_data[dataset]->is_complex_valued() ? 2 : 1);
             }
         }
     }
 
-  for(unsigned int f = 0;
+  for(unsigned int f= 0;
       f < GeometryInfo<DoFHandlerType::dimension>::faces_per_cell;
       ++f)
     {
@@ -372,11 +372,11 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
          || (cell_and_index->first->neighbor(f)->level()
              != cell_and_index->first->level()))
         {
-          patch.neighbors[f] = numbers::invalid_unsigned_int;
+          patch.neighbors[f]= numbers::invalid_unsigned_int;
           continue;
         }
 
-      const cell_iterator neighbor = cell_and_index->first->neighbor(f);
+      const cell_iterator neighbor= cell_and_index->first->neighbor(f);
       Assert(static_cast<unsigned int>(neighbor->level())
                < scratch_data.cell_to_patch_index_map->size(),
              ExcInternalError());
@@ -387,7 +387,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
              == dealii::DataOutBase::Patch<
                   DoFHandlerType::dimension>::no_neighbor))
         {
-          patch.neighbors[f] = numbers::invalid_unsigned_int;
+          patch.neighbors[f]= numbers::invalid_unsigned_int;
           continue;
         }
 
@@ -403,7 +403,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
                                              [cell_and_index->first->index()];
   // did we mess up the indices?
   Assert(patch_idx < this->patches.size(), ExcInternalError());
-  patch.patch_index = patch_idx;
+  patch.patch_index= patch_idx;
 
   // Put the patch into the patches vector. instead of copying the data,
   // simply swap the contents to avoid the penalty of writing into another
@@ -459,13 +459,13 @@ DataOut<dim, DoFHandlerType>::build_patches(
   // will be cell_to_patch_index_map[cell->level][cell->index] = patch_index
   std::vector<std::vector<unsigned int>> cell_to_patch_index_map;
   cell_to_patch_index_map.resize(this->triangulation->n_levels());
-  for(unsigned int l = 0; l < this->triangulation->n_levels(); ++l)
+  for(unsigned int l= 0; l < this->triangulation->n_levels(); ++l)
     {
       // max_index is the largest cell->index on level l
-      unsigned int max_index = 0;
-      for(cell_iterator cell = first_locally_owned_cell();
+      unsigned int max_index= 0;
+      for(cell_iterator cell= first_locally_owned_cell();
           cell != this->triangulation->end();
-          cell = next_locally_owned_cell(cell))
+          cell= next_locally_owned_cell(cell))
         if(static_cast<unsigned int>(cell->level()) == l)
           max_index
             = std::max(max_index, static_cast<unsigned int>(cell->index()));
@@ -485,11 +485,11 @@ DataOut<dim, DoFHandlerType>::build_patches(
     // data from (cell data vectors do not have the length distance computed by
     // first_locally_owned_cell/next_locally_owned_cell because this might skip
     // some values (FilteredIterator).
-    active_cell_iterator active_cell  = this->triangulation->begin_active();
-    unsigned int         active_index = 0;
-    cell_iterator        cell         = first_locally_owned_cell();
+    active_cell_iterator active_cell = this->triangulation->begin_active();
+    unsigned int         active_index= 0;
+    cell_iterator        cell        = first_locally_owned_cell();
     for(; cell != this->triangulation->end();
-        cell = next_locally_owned_cell(cell))
+        cell= next_locally_owned_cell(cell))
       {
         // move forward until active_cell points at the cell (cell) we are looking
         // at to compute the current active_index
@@ -508,8 +508,7 @@ DataOut<dim, DoFHandlerType>::build_patches(
                ExcInternalError());
         Assert(active_index < this->triangulation->n_active_cells(),
                ExcInternalError());
-        cell_to_patch_index_map[cell->level()][cell->index()]
-          = all_cells.size();
+        cell_to_patch_index_map[cell->level()][cell->index()]= all_cells.size();
 
         all_cells.emplace_back(cell, active_index);
       }
@@ -519,29 +518,29 @@ DataOut<dim, DoFHandlerType>::build_patches(
   this->patches.resize(all_cells.size());
 
   // now create a default object for the WorkStream object to work with
-  unsigned int n_datasets = 0;
-  for(unsigned int i = 0; i < this->cell_data.size(); ++i)
-    n_datasets += (this->cell_data[i]->is_complex_valued() ? 2 : 1);
-  for(unsigned int i = 0; i < this->dof_data.size(); ++i)
-    n_datasets += (this->dof_data[i]->n_output_variables
-                   * (this->dof_data[i]->is_complex_valued() ? 2 : 1));
+  unsigned int n_datasets= 0;
+  for(unsigned int i= 0; i < this->cell_data.size(); ++i)
+    n_datasets+= (this->cell_data[i]->is_complex_valued() ? 2 : 1);
+  for(unsigned int i= 0; i < this->dof_data.size(); ++i)
+    n_datasets+= (this->dof_data[i]->n_output_variables
+                  * (this->dof_data[i]->is_complex_valued() ? 2 : 1));
 
   std::vector<unsigned int> n_postprocessor_outputs(this->dof_data.size());
-  for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)
+  for(unsigned int dataset= 0; dataset < this->dof_data.size(); ++dataset)
     if(this->dof_data[dataset]->postprocessor)
       n_postprocessor_outputs[dataset]
         = this->dof_data[dataset]->n_output_variables;
     else
-      n_postprocessor_outputs[dataset] = 0;
+      n_postprocessor_outputs[dataset]= 0;
 
   const CurvedCellRegion curved_cell_region
     = (n_subdivisions < 2 ? no_curved_cells : curved_region);
 
-  UpdateFlags update_flags = update_values;
+  UpdateFlags update_flags= update_values;
   if(curved_cell_region != no_curved_cells)
-    update_flags |= update_quadrature_points;
+    update_flags|= update_quadrature_points;
 
-  for(unsigned int i = 0; i < this->dof_data.size(); ++i)
+  for(unsigned int i= 0; i < this->dof_data.size(); ++i)
     if(this->dof_data[i]->postprocessor)
       update_flags
         |= this->dof_data[i]->postprocessor->get_needed_update_flags();
@@ -618,13 +617,13 @@ template <int dim, typename DoFHandlerType>
 typename DataOut<dim, DoFHandlerType>::cell_iterator
 DataOut<dim, DoFHandlerType>::first_locally_owned_cell()
 {
-  typename DataOut<dim, DoFHandlerType>::cell_iterator cell = first_cell();
+  typename DataOut<dim, DoFHandlerType>::cell_iterator cell= first_cell();
 
   // skip cells if the current one has no children (is active) and is a ghost
   // or artificial cell
   while((cell != this->triangulation->end()) && (cell->has_children() == false)
         && !cell->is_locally_owned())
-    cell = next_cell(cell);
+    cell= next_cell(cell);
 
   return cell;
 }
@@ -638,7 +637,7 @@ DataOut<dim, DoFHandlerType>::next_locally_owned_cell(
     = next_cell(old_cell);
   while((cell != this->triangulation->end()) && (cell->has_children() == false)
         && !cell->is_locally_owned())
-    cell = next_cell(cell);
+    cell= next_cell(cell);
   return cell;
 }
 

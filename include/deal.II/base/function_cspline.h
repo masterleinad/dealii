@@ -88,19 +88,19 @@ namespace Functions
 
     virtual double
     value(const Point<dim>&  point,
-          const unsigned int component = 0) const override;
+          const unsigned int component= 0) const override;
 
     virtual Tensor<1, dim>
     gradient(const Point<dim>&  p,
-             const unsigned int component = 0) const override;
+             const unsigned int component= 0) const override;
 
     virtual SymmetricTensor<2, dim>
     hessian(const Point<dim>&  p,
-            const unsigned int component = 0) const override;
+            const unsigned int component= 0) const override;
 
     virtual double
     laplacian(const Point<dim>&  p,
-              const unsigned int component = 0) const override;
+              const unsigned int component= 0) const override;
 
     std::size_t
     memory_consumption() const;

@@ -49,7 +49,7 @@ namespace internal
       std::vector<std::vector<
         std::pair<types::global_dof_index, types::global_dof_index>>>&
                  copy_indices_level_mine,
-      const bool skip_interface_dofs = true);
+      const bool skip_interface_dofs= true);
 
     /**
      * Given the collection of child cells in lexicographic ordering as seen

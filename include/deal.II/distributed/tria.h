@@ -240,7 +240,7 @@ namespace parallel
      * @author Wolfgang Bangerth, Timo Heister 2008, 2009, 2010, 2011
      * @ingroup distributed
      */
-    template <int dim, int spacedim = dim>
+    template <int dim, int spacedim= dim>
     class Triangulation : public dealii::parallel::Triangulation<dim, spacedim>
     {
     public:
@@ -298,7 +298,7 @@ namespace parallel
         /**
          * Default settings, other options are disabled.
          */
-        default_setting = 0x0,
+        default_setting= 0x0,
         /**
          * If set, the deal.II mesh will be reconstructed from the coarse mesh
          * every time a repartitioning in p4est happens. This can be a bit more
@@ -307,20 +307,20 @@ namespace parallel
          * cell ordering, this flag is required to get reproducible behaviour
          * after snapshot/resume.
          */
-        mesh_reconstruction_after_repartitioning = 0x1,
+        mesh_reconstruction_after_repartitioning= 0x1,
         /**
          * This flags needs to be set to use the geometric multigrid
          * functionality. This option requires additional computation and
          * communication. Note: geometric multigrid is still a work in
          * progress.
          */
-        construct_multigrid_hierarchy = 0x2,
+        construct_multigrid_hierarchy= 0x2,
         /**
          * Setting this flag will disable automatic repartitioning of the cells
          * after a refinement cycle. It can be executed manually by calling
          * repartition().
          */
-        no_automatic_repartitioning = 0x4
+        no_automatic_repartitioning= 0x4
       };
 
       /**
@@ -359,7 +359,7 @@ namespace parallel
         const typename dealii::Triangulation<dim, spacedim>::MeshSmoothing
           smooth_grid
         = (dealii::Triangulation<dim, spacedim>::none),
-        const Settings settings = default_setting);
+        const Settings settings= default_setting);
 
       /**
        * Destructor.
@@ -620,7 +620,7 @@ namespace parallel
        * if a different number of MPI processes is encountered).
        */
       void
-      load(const char* filename, const bool autopartition = true);
+      load(const char* filename, const bool autopartition= true);
 
       /**
        * Register a function that can be used to attach data of fixed size
@@ -882,7 +882,7 @@ namespace parallel
          */
         unsigned int n_attached_deserialize;
 
-        using pack_callback_t = std::function<void(
+        using pack_callback_t= std::function<void(
           typename Triangulation<dim, spacedim>::cell_iterator,
           CellStatus,
           void*)>;
@@ -1031,9 +1031,9 @@ namespace parallel
        */
       enum Settings
       {
-        default_setting                          = 0x0,
-        mesh_reconstruction_after_repartitioning = 0x1,
-        construct_multigrid_hierarchy            = 0x2
+        default_setting                         = 0x0,
+        mesh_reconstruction_after_repartitioning= 0x1,
+        construct_multigrid_hierarchy           = 0x2
       };
 
       /**
@@ -1045,7 +1045,7 @@ namespace parallel
         const typename dealii::Triangulation<1, spacedim>::MeshSmoothing
           smooth_grid
         = (dealii::Triangulation<1, spacedim>::none),
-        const Settings settings = default_setting);
+        const Settings settings= default_setting);
 
       /**
        * Destructor.
@@ -1102,7 +1102,7 @@ namespace parallel
        * This function is not implemented, but needs to be present for the compiler.
        */
       void
-      load(const char* filename, const bool autopartition = true);
+      load(const char* filename, const bool autopartition= true);
 
       /**
        * This function is not implemented, but needs to be present for the compiler.
@@ -1189,7 +1189,7 @@ namespace parallel
      * can actually be created as this would be pointless given that
      * p4est is not available.
      */
-    template <int dim, int spacedim = dim>
+    template <int dim, int spacedim= dim>
     class Triangulation : public dealii::parallel::Triangulation<dim, spacedim>
     {
     public:
@@ -1197,7 +1197,7 @@ namespace parallel
        * Constructor. Deleted to make sure that objects of this type cannot be
        * constructed (see also the class documentation).
        */
-      Triangulation() = delete;
+      Triangulation()= delete;
     };
   } // namespace distributed
 } // namespace parallel

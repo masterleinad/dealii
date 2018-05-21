@@ -13,7 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include <deal.II/base/quadrature_lib.h>
 
@@ -24,8 +24,8 @@ void
 test()
 {
   deallog << std::setprecision(10);
-  for(unsigned int i = 1; i < 4; ++i)
-    for(unsigned int j = i; j < 4; ++j)
+  for(unsigned int i= 1; i < 4; ++i)
+    for(unsigned int j= i; j < 4; ++j)
       do_check(FE_Q<dim>(QIterated<1>(QTrapez<1>(), i)),
                FE_Q<dim>(QIterated<1>(QTrapez<1>(), j)));
 }

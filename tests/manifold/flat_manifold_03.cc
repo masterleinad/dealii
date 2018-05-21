@@ -28,12 +28,12 @@
 // Helper function
 template <int dim, int spacedim>
 void
-test(unsigned int ref = 1)
+test(unsigned int ref= 1)
 {
   deallog << "Testing dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
   Tensor<1, spacedim> periodicity;
-  periodicity[0] = 5.0;
+  periodicity[0]= 5.0;
 
   FlatManifold<dim, spacedim> manifold(periodicity);
 
@@ -44,41 +44,41 @@ test(unsigned int ref = 1)
   std::vector<double>                       ws(2, 0.5);
 
   // Case 1: both points are close to left boundary of periodicity
-  ps[0][0][0] = 1;
-  ps[0][1][0] = 2;
+  ps[0][0][0]= 1;
+  ps[0][1][0]= 2;
   // Case 2: same, with different order
-  ps[1][0][0] = 2;
-  ps[1][1][0] = 1;
+  ps[1][0][0]= 2;
+  ps[1][1][0]= 1;
 
   // Case 3: one is close to left, one to right
-  ps[2][0][0] = 1;
-  ps[2][1][0] = 4;
+  ps[2][0][0]= 1;
+  ps[2][1][0]= 4;
   // Case 4: same, opposite order
-  ps[3][0][0] = 4;
-  ps[3][1][0] = 1;
+  ps[3][0][0]= 4;
+  ps[3][1][0]= 1;
 
   // Case 5: both close to right
-  ps[4][0][0] = 3;
-  ps[4][1][0] = 4;
+  ps[4][0][0]= 3;
+  ps[4][1][0]= 4;
   // Case 6: same, opposite order
-  ps[5][0][0] = 4;
-  ps[5][1][0] = 3;
+  ps[5][0][0]= 4;
+  ps[5][1][0]= 3;
 
   // Case 7: both close to middle
-  ps[6][0][0] = 2;
-  ps[6][1][0] = 3;
+  ps[6][0][0]= 2;
+  ps[6][1][0]= 3;
   // Case 8: same, opposite order
-  ps[7][0][0] = 3;
-  ps[7][1][0] = 2;
+  ps[7][0][0]= 3;
+  ps[7][1][0]= 2;
 
   // Case 9: Corner cases
-  ps[8][0][0] = -1e-10;
-  ps[8][1][0] = 5 + 1e-10;
+  ps[8][0][0]= -1e-10;
+  ps[8][1][0]= 5 + 1e-10;
   // Case 10: same, opposite order
-  ps[9][0][0] = 5 + 1e-10;
-  ps[9][1][0] = -1e-10;
+  ps[9][0][0]= 5 + 1e-10;
+  ps[9][1][0]= -1e-10;
 
-  for(unsigned int i = 0; i < ps.size(); ++i)
+  for(unsigned int i= 0; i < ps.size(); ++i)
     {
       middle
         = manifold.get_new_point(make_array_view(ps[i]), make_array_view(ws));

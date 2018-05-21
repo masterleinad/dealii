@@ -57,26 +57,26 @@ test()
 
   dof_handler.distribute_dofs(fe);
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   LinearAlgebra::distributed::Vector<double> locally_owned_solution(
     locally_owned_dofs, MPI_COMM_WORLD);
 
-  locally_owned_solution = 1;
+  locally_owned_solution= 1;
 
   std::vector<Point<dim>> points;
 
-  for(int i = 0; i < 2; i++)
-    for(int j = 0; j < 2; j++)
+  for(int i= 0; i < 2; i++)
+    for(int j= 0; j < 2; j++)
       if(dim == 3)
-        for(int k = 0; k < 2; k++)
+        for(int k= 0; k < 2; k++)
           points.push_back(
             Point<dim>(.25 + .5 * i, .25 + .5 * j, .25 + .5 * k));
       else
         points.push_back(Point<dim>(.25 + .5 * i, .25 + .5 * j));
 
   typename std::vector<Point<dim>>::iterator point_iterator, points_end;
-  point_iterator = points.begin();
-  points_end     = points.end();
+  point_iterator= points.begin();
+  points_end    = points.end();
 
   Vector<double> value(1);
 
@@ -104,7 +104,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(myid == 0)
     {
       std::ofstream logfile("output");

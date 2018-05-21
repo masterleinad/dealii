@@ -38,8 +38,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    v    = 0;
-    v[0] = p.square();
+    v   = 0;
+    v[0]= p.square();
   }
 };
 
@@ -84,7 +84,7 @@ test()
     dh, v1, F<dim>(), error, quad, VectorTools::L2_norm);
   deallog << "L2 Interpolation error: " << abs_zero(error.l2_norm())
           << std::endl;
-  error = 0;
+  error= 0;
   VectorTools::integrate_difference(
     dh, v1, fef, error, quad, VectorTools::L2_norm);
   deallog << "L2 Interpolation error with fef: " << abs_zero(error.l2_norm())

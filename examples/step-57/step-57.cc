@@ -187,8 +187,8 @@ namespace Step57
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
                                     Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
-      values(c) = BoundaryValues<dim>::value(p, c);
+    for(unsigned int c= 0; c < this->n_components; ++c)
+      values(c)= BoundaryValues<dim>::value(p, c);
   }
 
   // @sect3{BlockSchurPreconditioner for Navier Stokes equations}
@@ -261,16 +261,16 @@ namespace Step57
       SolverControl solver_control(1000, 1e-6 * src.block(1).l2_norm());
       SolverCG<>    cg(solver_control);
 
-      dst.block(1) = 0.0;
+      dst.block(1)= 0.0;
       cg.solve(
         pressure_mass_matrix, dst.block(1), src.block(1), mp_preconditioner);
-      dst.block(1) *= -(viscosity + gamma);
+      dst.block(1)*= -(viscosity + gamma);
     }
 
     {
       stokes_matrix.block(0, 1).vmult(utmp, dst.block(1));
-      utmp *= -1.0;
-      utmp += src.block(0);
+      utmp*= -1.0;
+      utmp+= src.block(0);
     }
 
     A_inverse.vmult(dst.block(0), utmp);
@@ -311,14 +311,14 @@ namespace Step57
     // which are separately accessed in the block preconditioner.
     //
     std::vector<unsigned int> block_component(dim + 1, 0);
-    block_component[dim] = 1;
+    block_component[dim]= 1;
     DoFRenumbering::component_wise(dof_handler, block_component);
 
     dofs_per_block.resize(2);
     DoFTools::count_dofs_per_block(
       dof_handler, dofs_per_block, block_component);
-    unsigned int dof_u = dofs_per_block[0];
-    unsigned int dof_p = dofs_per_block[1];
+    unsigned int dof_u= dofs_per_block[0];
+    unsigned int dof_p= dofs_per_block[1];
 
     // In Newton's scheme, we first apply the boundary condition on the solution
     // obtained from the initial step. To make sure the boundary conditions remain
@@ -393,9 +393,9 @@ namespace Step57
                                         const bool assemble_matrix)
   {
     if(assemble_matrix)
-      system_matrix = 0;
+      system_matrix= 0;
 
-    system_rhs = 0;
+    system_rhs= 0;
 
     QGauss<dim> quadrature_formula(degree + 2);
 
@@ -404,8 +404,8 @@ namespace Step57
                             update_values | update_quadrature_points
                               | update_JxW_values | update_gradients);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     const FEValuesExtractors::Vector velocities(0);
     const FEValuesExtractors::Scalar pressure(dim);
@@ -430,14 +430,14 @@ namespace Step57
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
 
-        local_matrix = 0;
-        local_rhs    = 0;
+        local_matrix= 0;
+        local_rhs   = 0;
 
         fe_values[velocities].get_function_values(evaluation_point,
                                                   present_velocity_values);
@@ -455,21 +455,21 @@ namespace Step57
         // zero. Since the pressure mass matrix is used while creating the
         // preconditioner, we assemble it here and then move it into a
         // separate SparseMatrix at the end (same as in step-22).
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
-                div_phi_u[k]  = fe_values[velocities].divergence(k, q);
-                grad_phi_u[k] = fe_values[velocities].gradient(k, q);
-                phi_u[k]      = fe_values[velocities].value(k, q);
-                phi_p[k]      = fe_values[pressure].value(k, q);
+                div_phi_u[k] = fe_values[velocities].divergence(k, q);
+                grad_phi_u[k]= fe_values[velocities].gradient(k, q);
+                phi_u[k]     = fe_values[velocities].value(k, q);
+                phi_p[k]     = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
                 if(assemble_matrix)
                   {
-                    for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                    for(unsigned int j= 0; j < dofs_per_cell; ++j)
                       {
                         local_matrix(i, j)
                           += (viscosity
@@ -534,7 +534,7 @@ namespace Step57
         // hanging node constraints for pressure DoFs. This means that our
         // whole system matrix will have rows that are completely
         // zero. Luckily, FGMRES handles these rows without any problem.
-        system_matrix.block(1, 1) = 0;
+        system_matrix.block(1, 1)= 0;
       }
   }
 
@@ -634,7 +634,7 @@ namespace Step57
     // Finally set up matrix and vectors and set the present_solution to the
     // interpolated data.
     initialize_system();
-    present_solution = tmp;
+    present_solution= tmp;
   }
 
   // @sect4{StationaryNavierStokes<dim>::newton_iteration}
@@ -658,14 +658,14 @@ namespace Step57
   {
     double current_res;
     double last_res;
-    bool   first_step = is_initial_step;
+    bool   first_step= is_initial_step;
 
-    for(unsigned int refinement = 0; refinement < max_refinement + 1;
+    for(unsigned int refinement= 0; refinement < max_refinement + 1;
         ++refinement)
       {
-        unsigned int outer_iteration = 0;
-        last_res                     = 1.0;
-        current_res                  = 1.0;
+        unsigned int outer_iteration= 0;
+        last_res                    = 1.0;
+        current_res                 = 1.0;
         std::cout << "*****************************************" << std::endl;
         std::cout << "************  refinement = " << refinement
                   << " ************ " << std::endl;
@@ -679,25 +679,25 @@ namespace Step57
               {
                 setup_dofs();
                 initialize_system();
-                evaluation_point = present_solution;
+                evaluation_point= present_solution;
                 assemble_system(first_step);
                 solve(first_step);
-                present_solution = newton_update;
+                present_solution= newton_update;
                 nonzero_constraints.distribute(present_solution);
-                first_step       = false;
-                evaluation_point = present_solution;
+                first_step      = false;
+                evaluation_point= present_solution;
                 assemble_rhs(first_step);
-                current_res = system_rhs.l2_norm();
+                current_res= system_rhs.l2_norm();
                 std::cout << "******************************" << std::endl;
                 std::cout << " The residual of initial guess is " << current_res
                           << std::endl;
                 std::cout << " Initialization complete!  " << std::endl;
-                last_res = current_res;
+                last_res= current_res;
               }
 
             else
               {
-                evaluation_point = present_solution;
+                evaluation_point= present_solution;
                 assemble_system(first_step);
                 solve(first_step);
 
@@ -706,13 +706,13 @@ namespace Step57
                 // that the new residual is smaller than the one of last step, which is done
                 // in the following loop. Also the line search method can be located in step-15.
 
-                for(double alpha = 1.0; alpha > 1e-5; alpha *= 0.5)
+                for(double alpha= 1.0; alpha > 1e-5; alpha*= 0.5)
                   {
-                    evaluation_point = present_solution;
+                    evaluation_point= present_solution;
                     evaluation_point.add(alpha, newton_update);
                     nonzero_constraints.distribute(evaluation_point);
                     assemble_rhs(first_step);
-                    current_res = system_rhs.l2_norm();
+                    current_res= system_rhs.l2_norm();
                     std::cout << " alpha = " << std::setw(6) << alpha
                               << std::setw(0) << " res = " << current_res
                               << std::endl;
@@ -720,10 +720,10 @@ namespace Step57
                       break;
                   }
                 {
-                  present_solution = evaluation_point;
+                  present_solution= evaluation_point;
                   std::cout << " ---- Iteration " << outer_iteration
                             << " residual: " << current_res << std::endl;
-                  last_res = current_res;
+                  last_res= current_res;
                 }
               }
             ++outer_iteration;
@@ -760,21 +760,21 @@ namespace Step57
   void
   StationaryNavierStokes<dim>::compute_initial_guess(double step_size)
   {
-    const double target_Re = 1.0 / viscosity;
+    const double target_Re= 1.0 / viscosity;
 
-    bool is_initial_step = true;
+    bool is_initial_step= true;
 
-    for(double Re = 1000.0; Re < target_Re;
-        Re        = std::min(Re + step_size, target_Re))
+    for(double Re= 1000.0; Re < target_Re;
+        Re       = std::min(Re + step_size, target_Re))
       {
-        viscosity = 1.0 / Re;
+        viscosity= 1.0 / Re;
         std::cout << "*****************************************" << std::endl;
         std::cout << " Searching for initial guess with Re = " << Re
                   << std::endl;
         std::cout << "*****************************************" << std::endl;
 
         newton_iteration(1e-12, 50, 0, is_initial_step, false);
-        is_initial_step = false;
+        is_initial_step= false;
       }
   }
 
@@ -826,15 +826,15 @@ namespace Step57
 
     f << std::scientific;
 
-    for(unsigned int i = 0; i <= 100; ++i)
+    for(unsigned int i= 0; i <= 100; ++i)
       {
-        p(dim - 1) = i / 100.0;
+        p(dim - 1)= i / 100.0;
 
         Vector<double> tmp_vector(dim + 1);
         VectorTools::point_value(dof_handler, present_solution, p, tmp_vector);
         f << p(dim - 1);
 
-        for(int j = 0; j < dim; j++)
+        for(int j= 0; j < dim; j++)
           f << " " << tmp_vector(j);
         f << std::endl;
       }
@@ -850,7 +850,7 @@ namespace Step57
     GridGenerator::hyper_cube(triangulation);
     triangulation.refine_global(5);
 
-    const double Re = 1.0 / viscosity;
+    const double Re= 1.0 / viscosity;
 
     // If the viscosity is smaller than 1/1000, we have to first search for an
     // initial guess via a continuation method. What we should notice is the
@@ -861,7 +861,7 @@ namespace Step57
     if(Re > 1000.0)
       {
         std::cout << "       Searching for initial guess ... " << std::endl;
-        const double step_size = 2000.0;
+        const double step_size= 2000.0;
         compute_initial_guess(step_size);
         std::cout << "*****************************************" << std::endl
                   << "       Initial guess obtained            " << std::endl
@@ -873,7 +873,7 @@ namespace Step57
 
         std::cout << "       Computing solution with target Re = " << Re
                   << std::endl;
-        viscosity = 1.0 / Re;
+        viscosity= 1.0 / Re;
         newton_iteration(1e-12, 50, refinement, false, true);
       }
     else

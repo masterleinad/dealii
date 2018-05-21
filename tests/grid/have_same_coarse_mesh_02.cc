@@ -48,10 +48,10 @@ test()
   DoFHandler<dim> dh1(tria[1]);
   DoFHandler<dim> dh2(tria[2]);
 
-  DoFHandler<dim>* dof_handler[3] = {&dh0, &dh1, &dh2};
+  DoFHandler<dim>* dof_handler[3]= {&dh0, &dh1, &dh2};
 
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for(unsigned int i= 0; i < 3; ++i)
+    for(unsigned int j= 0; j < 3; ++j)
       {
         Assert(
           GridTools::have_same_coarse_mesh(*dof_handler[i], *dof_handler[j])

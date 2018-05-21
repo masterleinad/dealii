@@ -26,19 +26,19 @@ main()
   deallog.attach(logfile);
 
   SymmetricTensor<2, 3> t;
-  t[0][0] = 1;
-  t[1][1] = 2;
-  t[2][2] = 3;
-  t[0][1] = 4;
-  t[0][2] = 5;
-  t[1][2] = 6;
+  t[0][0]= 1;
+  t[1][1]= 2;
+  t[2][2]= 3;
+  t[0][1]= 4;
+  t[0][2]= 5;
+  t[1][2]= 6;
 
   AssertThrow(t[0][1] == t[1][0], ExcInternalError());
 
   // check that if a single element is
   // accessed, its transpose element gets the
   // same value
-  t[1][0] = 14;
+  t[1][0]= 14;
   AssertThrow(t[0][1] == 14, ExcInternalError());
 
   // make sure transposition doesn't change

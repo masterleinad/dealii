@@ -80,7 +80,7 @@ public:
    *
    * @dealiiOperationIsMultithreaded
    */
-  AlignedVector(const size_type size, const T& init = T());
+  AlignedVector(const size_type size, const T& init= T());
 
   /**
    * Destructor.
@@ -377,7 +377,7 @@ namespace internal
       Assert(source_end >= source_begin, ExcInternalError());
       Assert(source_end == source_begin || destination != nullptr,
              ExcInternalError());
-      const std::size_t size = source_end - source_begin;
+      const std::size_t size= source_end - source_begin;
       if(size < minimum_parallel_grain_size)
         apply_to_subrange(0, size);
       else
@@ -404,7 +404,7 @@ namespace internal
                     (void*) (source_ + begin),
                     (end - begin) * sizeof(T));
       else
-        for(std::size_t i = begin; i < end; ++i)
+        for(std::size_t i= begin; i < end; ++i)
           new(&destination_[i]) T(source_[i]);
     }
 
@@ -442,7 +442,7 @@ namespace internal
       Assert(source_end >= source_begin, ExcInternalError());
       Assert(source_end == source_begin || destination != nullptr,
              ExcInternalError());
-      const std::size_t size = source_end - source_begin;
+      const std::size_t size= source_end - source_begin;
       if(size < minimum_parallel_grain_size)
         apply_to_subrange(0, size);
       else
@@ -469,7 +469,7 @@ namespace internal
                     (void*) (source_ + begin),
                     (end - begin) * sizeof(T));
       else
-        for(std::size_t i = begin; i < end; ++i)
+        for(std::size_t i= begin; i < end; ++i)
           {
             // initialize memory (copy construct by placement new), and
             // destruct the source
@@ -520,12 +520,12 @@ namespace internal
       if(std::is_trivial<T>::value == true
          && std::is_same<T, long double>::value == false)
         {
-          const unsigned char zero[sizeof(T)] = {};
+          const unsigned char zero[sizeof(T)]= {};
           // cast element to (void*) to silence compiler warning for virtual
           // classes (they will never arrive here because they are
           // non-trivial).
           if(std::memcmp(zero, (void*) &element, sizeof(T)) == 0)
-            trivial_element = true;
+            trivial_element= true;
         }
       if(size < minimum_parallel_grain_size)
         apply_to_subrange(0, size);
@@ -563,8 +563,8 @@ namespace internal
                              const std::size_t end,
                              std::integral_constant<bool, false>) const
     {
-      for(std::size_t i = begin; i < end; ++i)
-        destination_[i] = element_;
+      for(std::size_t i= begin; i < end; ++i)
+        destination_[i]= element_;
     }
 
     // copy constructor (memory initialization)
@@ -573,7 +573,7 @@ namespace internal
                              const std::size_t end,
                              std::integral_constant<bool, true>) const
     {
-      for(std::size_t i = begin; i < end; ++i)
+      for(std::size_t i= begin; i < end; ++i)
         new(&destination_[i]) T(element_);
     }
   };
@@ -641,8 +641,8 @@ namespace internal
                                 const std::size_t end,
                                 std::integral_constant<bool, false>) const
     {
-      for(std::size_t i = begin; i < end; ++i)
-        destination_[i] = std::move(T());
+      for(std::size_t i= begin; i < end; ++i)
+        destination_[i]= std::move(T());
     }
 
     // copy constructor (memory initialization)
@@ -651,7 +651,7 @@ namespace internal
                                 const std::size_t end,
                                 std::integral_constant<bool, true>) const
     {
-      for(std::size_t i = begin; i < end; ++i)
+      for(std::size_t i= begin; i < end; ++i)
         new(&destination_[i]) T;
     }
   };
@@ -685,7 +685,7 @@ inline AlignedVector<T>::AlignedVector(const AlignedVector<T>& vec)
 {
   // copy the data from vec
   reserve(vec._end_data - vec._data);
-  _end_data = _end_allocated;
+  _end_data= _end_allocated;
   internal::AlignedVectorCopy<T>(vec._data, vec._end_data, _data);
 }
 
@@ -695,9 +695,9 @@ inline AlignedVector<T>::AlignedVector(AlignedVector<T>&& vec) noexcept
     _end_data(vec._end_data),
     _end_allocated(vec._end_allocated)
 {
-  vec._data          = nullptr;
-  vec._end_data      = nullptr;
-  vec._end_allocated = nullptr;
+  vec._data         = nullptr;
+  vec._end_data     = nullptr;
+  vec._end_allocated= nullptr;
 }
 
 template <class T>
@@ -716,13 +716,13 @@ AlignedVector<T>::operator=(AlignedVector<T>&& vec) noexcept
 {
   clear();
 
-  _data          = vec._data;
-  _end_data      = vec._end_data;
-  _end_allocated = vec._end_allocated;
+  _data         = vec._data;
+  _end_data     = vec._end_data;
+  _end_allocated= vec._end_allocated;
 
-  vec._data          = nullptr;
-  vec._end_data      = nullptr;
-  vec._end_allocated = nullptr;
+  vec._data         = nullptr;
+  vec._end_data     = nullptr;
+  vec._end_allocated= nullptr;
 
   return *this;
 }
@@ -731,7 +731,7 @@ template <class T>
 inline void
 AlignedVector<T>::resize_fast(const size_type size_in)
 {
-  const size_type old_size = size();
+  const size_type old_size= size();
   if(std::is_trivial<T>::value == false && size_in < old_size)
     {
       // call destructor on fields that are released. doing it backward
@@ -741,7 +741,7 @@ AlignedVector<T>::resize_fast(const size_type size_in)
         (--_end_data)->~T();
     }
   reserve(size_in);
-  _end_data = _data + size_in;
+  _end_data= _data + size_in;
 
   // need to still set the values in case the class is non-trivial because
   // virtual classes etc. need to run their (default) constructor
@@ -754,7 +754,7 @@ template <class T>
 inline void
 AlignedVector<T>::resize(const size_type size_in)
 {
-  const size_type old_size = size();
+  const size_type old_size= size();
   if(std::is_trivial<T>::value == false && size_in < old_size)
     {
       // call destructor on fields that are released. doing it backward
@@ -764,7 +764,7 @@ AlignedVector<T>::resize(const size_type size_in)
         (--_end_data)->~T();
     }
   reserve(size_in);
-  _end_data = _data + size_in;
+  _end_data= _data + size_in;
 
   // finally set the desired init values
   if(size_in > old_size)
@@ -776,7 +776,7 @@ template <class T>
 inline void
 AlignedVector<T>::resize(const size_type size_in, const T& init)
 {
-  const size_type old_size = size();
+  const size_type old_size= size();
   if(std::is_trivial<T>::value == false && size_in < old_size)
     {
       // call destructor on fields that are released. doing it backward
@@ -786,7 +786,7 @@ AlignedVector<T>::resize(const size_type size_in, const T& init)
         (--_end_data)->~T();
     }
   reserve(size_in);
-  _end_data = _data + size_in;
+  _end_data= _data + size_in;
 
   // finally set the desired init values
   if(size_in > old_size)
@@ -798,18 +798,18 @@ template <class T>
 inline void
 AlignedVector<T>::reserve(const size_type size_alloc)
 {
-  const size_type old_size       = _end_data - _data;
-  const size_type allocated_size = _end_allocated - _data;
+  const size_type old_size      = _end_data - _data;
+  const size_type allocated_size= _end_allocated - _data;
   if(size_alloc > allocated_size)
     {
       // if we continuously increase the size of the vector, we might be
       // reallocating a lot of times. therefore, try to increase the size more
       // aggressively
-      size_type new_size = size_alloc;
+      size_type new_size= size_alloc;
       if(size_alloc < (2 * allocated_size))
-        new_size = 2 * allocated_size;
+        new_size= 2 * allocated_size;
 
-      const size_type size_actual_allocate = new_size * sizeof(T);
+      const size_type size_actual_allocate= new_size * sizeof(T);
 
       // allocate and align along 64-byte boundaries (this is enough for all
       // levels of vectorization currently supported by deal.II)
@@ -820,8 +820,8 @@ AlignedVector<T>::reserve(const size_type size_alloc)
       // copy data in case there was some content before and release the old
       // memory with the function corresponding to the one used for allocating
       std::swap(_data, new_data);
-      _end_data      = _data + old_size;
-      _end_allocated = _data + new_size;
+      _end_data     = _data + old_size;
+      _end_allocated= _data + new_size;
       if(_end_data != _data)
         {
           dealii::internal::AlignedVectorMove<T>(
@@ -847,9 +847,9 @@ AlignedVector<T>::clear()
 
       free(_data);
     }
-  _data          = nullptr;
-  _end_data      = nullptr;
-  _end_allocated = nullptr;
+  _data         = nullptr;
+  _end_data     = nullptr;
+  _end_allocated= nullptr;
 }
 
 template <class T>
@@ -862,7 +862,7 @@ AlignedVector<T>::push_back(const T in_data)
   if(std::is_trivial<T>::value == false)
     new(_end_data++) T(in_data);
   else
-    *_end_data++ = in_data;
+    *_end_data++= in_data;
 }
 
 template <class T>
@@ -870,7 +870,7 @@ inline typename AlignedVector<T>::reference
 AlignedVector<T>::back()
 {
   AssertIndexRange(0, size());
-  T* field = _end_data - 1;
+  T* field= _end_data - 1;
   return *field;
 }
 
@@ -879,7 +879,7 @@ inline typename AlignedVector<T>::const_reference
 AlignedVector<T>::back() const
 {
   AssertIndexRange(0, size());
-  const T* field = _end_data - 1;
+  const T* field= _end_data - 1;
   return *field;
 }
 
@@ -888,13 +888,13 @@ template <typename ForwardIterator>
 inline void
 AlignedVector<T>::insert_back(ForwardIterator begin, ForwardIterator end)
 {
-  const unsigned int old_size = size();
+  const unsigned int old_size= size();
   reserve(old_size + (end - begin));
   for(; begin != end; ++begin, ++_end_data)
     {
       if(std::is_trivial<T>::value == false)
         new(_end_data) T;
-      *_end_data = *begin;
+      *_end_data= *begin;
     }
 }
 
@@ -1002,14 +1002,14 @@ template <class Archive>
 inline void
 AlignedVector<T>::load(Archive& ar, const unsigned int)
 {
-  size_type vec_size = 0;
+  size_type vec_size= 0;
   ar&       vec_size;
 
   if(vec_size > 0)
     {
       reserve(vec_size);
       ar& boost::serialization::make_array(_data, vec_size);
-      _end_data = _data + vec_size;
+      _end_data= _data + vec_size;
     }
 }
 
@@ -1017,10 +1017,10 @@ template <class T>
 inline typename AlignedVector<T>::size_type
 AlignedVector<T>::memory_consumption() const
 {
-  size_type memory = sizeof(*this);
-  for(const T* t = _data; t != _end_data; ++t)
-    memory += dealii::MemoryConsumption::memory_consumption(*t);
-  memory += sizeof(T) * (_end_allocated - _end_data);
+  size_type memory= sizeof(*this);
+  for(const T* t= _data; t != _end_data; ++t)
+    memory+= dealii::MemoryConsumption::memory_consumption(*t);
+  memory+= sizeof(T) * (_end_allocated - _end_data);
   return memory;
 }
 
@@ -1037,8 +1037,8 @@ operator==(const AlignedVector<T>& lhs, const AlignedVector<T>& rhs)
 {
   if(lhs.size() != rhs.size())
     return false;
-  for(typename AlignedVector<T>::const_iterator lit = lhs.begin(),
-                                                rit = rhs.begin();
+  for(typename AlignedVector<T>::const_iterator lit= lhs.begin(),
+                                                rit= rhs.begin();
       lit != lhs.end();
       ++lit, ++rit)
     if(*lit != *rit)

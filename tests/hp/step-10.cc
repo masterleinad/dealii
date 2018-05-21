@@ -35,7 +35,7 @@ std::ofstream logfile("output");
 
 #include <iostream>
 
-const long double pi = 3.141592653589793238462643;
+const long double pi= 3.141592653589793238462643;
 
 template <int dim>
 void
@@ -49,15 +49,15 @@ gnuplot_output()
   static const SphericalManifold<dim> boundary;
   triangulation.set_manifold(0, boundary);
 
-  for(unsigned int refinement = 0; refinement < 2;
+  for(unsigned int refinement= 0; refinement < 2;
       ++refinement, triangulation.refine_global(1))
     {
       deallog << "Refinement level: " << refinement << std::endl;
 
-      std::string filename_base = "ball";
-      filename_base += '0' + refinement;
+      std::string filename_base= "ball";
+      filename_base+= '0' + refinement;
 
-      for(unsigned int degree = 1; degree < 4; ++degree)
+      for(unsigned int degree= 1; degree < 4; ++degree)
         {
           deallog << "Degree = " << degree << std::endl;
 
@@ -83,7 +83,7 @@ compute_pi_by_area()
 
   const hp::QCollection<dim> quadrature(QGauss<dim>(4));
 
-  for(unsigned int degree = 1; degree < 5; ++degree)
+  for(unsigned int degree= 1; degree < 5; ++degree)
     {
       deallog << "Degree = " << degree << std::endl;
 
@@ -105,25 +105,25 @@ compute_pi_by_area()
 
       ConvergenceTable table;
 
-      for(unsigned int refinement = 0; refinement < (degree != 4 ? 6 : 4);
+      for(unsigned int refinement= 0; refinement < (degree != 4 ? 6 : 4);
           ++refinement, triangulation.refine_global(1))
         {
           table.add_value("cells", triangulation.n_active_cells());
 
           dof_handler.distribute_dofs(dummy_fe);
 
-          long double area = 0;
+          long double area= 0;
 
           typename hp::DoFHandler<dim>::active_cell_iterator cell
             = dof_handler.begin_active(),
-            endc = dof_handler.end();
+            endc= dof_handler.end();
           for(; cell != endc; ++cell)
             {
               x_fe_values.reinit(cell);
               const FEValues<dim>& fe_values
                 = x_fe_values.get_present_fe_values();
-              for(unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
-                area += fe_values.JxW(i);
+              for(unsigned int i= 0; i < fe_values.n_quadrature_points; ++i)
+                area+= fe_values.JxW(i);
             };
 
           table.add_value("eval.pi", static_cast<double>(area));
@@ -148,7 +148,7 @@ compute_pi_by_perimeter()
 
   const hp::QCollection<dim - 1> quadrature(QGauss<dim - 1>(4));
 
-  for(unsigned int degree = 1; degree < 5; ++degree)
+  for(unsigned int degree= 1; degree < 5; ++degree)
     {
       deallog << "Degree = " << degree << std::endl;
       Triangulation<dim> triangulation;
@@ -167,7 +167,7 @@ compute_pi_by_perimeter()
         mapping, fe, quadrature, update_JxW_values);
       ConvergenceTable table;
 
-      for(unsigned int refinement = 0; refinement < (degree != 4 ? 6 : 4);
+      for(unsigned int refinement= 0; refinement < (degree != 4 ? 6 : 4);
           ++refinement, triangulation.refine_global(1))
         {
           table.add_value("cells", triangulation.n_active_cells());
@@ -176,10 +176,10 @@ compute_pi_by_perimeter()
 
           typename hp::DoFHandler<dim>::active_cell_iterator cell
             = dof_handler.begin_active(),
-            endc                = dof_handler.end();
-          long double perimeter = 0;
+            endc               = dof_handler.end();
+          long double perimeter= 0;
           for(; cell != endc; ++cell)
-            for(unsigned int face_no = 0;
+            for(unsigned int face_no= 0;
                 face_no < GeometryInfo<dim>::faces_per_cell;
                 ++face_no)
               if(cell->face(face_no)->at_boundary())
@@ -188,10 +188,9 @@ compute_pi_by_perimeter()
                   const FEFaceValues<dim>& fe_face_values
                     = x_fe_face_values.get_present_fe_values();
 
-                  for(unsigned int i = 0;
-                      i < fe_face_values.n_quadrature_points;
+                  for(unsigned int i= 0; i < fe_face_values.n_quadrature_points;
                       ++i)
-                    perimeter += fe_face_values.JxW(i);
+                    perimeter+= fe_face_values.JxW(i);
                 };
           table.add_value("eval.pi", static_cast<double>(perimeter / 2.));
           table.add_value("error",

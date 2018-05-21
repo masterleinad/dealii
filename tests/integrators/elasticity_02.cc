@@ -32,8 +32,8 @@ template <int dim>
 void
 test_boundary(const FEValuesBase<dim>& fev)
 {
-  const unsigned int n = fev.dofs_per_cell;
-  unsigned int       d = fev.get_fe().n_components();
+  const unsigned int n= fev.dofs_per_cell;
+  unsigned int       d= fev.get_fe().n_components();
   FullMatrix<double> M(n, n);
   nitsche_tangential_matrix(M, fev, 17);
   {
@@ -49,16 +49,16 @@ test_boundary(const FEValuesBase<dim>& fev)
     d, std::vector<Tensor<1, dim>>(fev.n_quadrature_points));
 
   std::vector<types::global_dof_index> indices(n);
-  for(unsigned int i = 0; i < n; ++i)
-    indices[i] = i;
+  for(unsigned int i= 0; i < n; ++i)
+    indices[i]= i;
 
   {
     deallog << "Residuals" << std::endl;
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       {
-        u    = 0.;
-        u(i) = 1.;
-        w    = 0.;
+        u   = 0.;
+        u(i)= 1.;
+        w   = 0.;
         fev.get_function_values(
           u,
           indices,
@@ -88,14 +88,14 @@ void
 test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl << "cell matrix" << std::endl;
-  typename Triangulation<dim>::cell_iterator cell1 = tr.begin(1);
+  typename Triangulation<dim>::cell_iterator cell1= tr.begin(1);
 
   QGauss<dim - 1>   face_quadrature(fe.tensor_degree() + 1);
   FEFaceValues<dim> fef1(fe,
                          face_quadrature,
                          update_values | update_gradients
                            | update_normal_vectors | update_JxW_values);
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       deallog << "boundary_matrix " << i << std::endl;
       fef1.reinit(cell1, i);

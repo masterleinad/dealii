@@ -191,7 +191,7 @@ namespace SUNDIALS
    *
    * @author Luca Heltai, 2017.
    */
-  template <typename VectorType = Vector<double>>
+  template <typename VectorType= Vector<double>>
   class KINSOL
   {
   public:
@@ -210,19 +210,19 @@ namespace SUNDIALS
         /**
          * Standard Newton iteration.
          */
-        newton = KIN_NONE,
+        newton= KIN_NONE,
         /**
          * Newton iteration with linesearch.
          */
-        linesearch = KIN_LINESEARCH,
+        linesearch= KIN_LINESEARCH,
         /**
          * Fixed point iteration.
          */
-        fixed_point = KIN_FP,
+        fixed_point= KIN_FP,
         /**
          * Picard iteration.
          */
-        picard = KIN_PICARD,
+        picard= KIN_PICARD,
       };
 
       /**
@@ -252,16 +252,16 @@ namespace SUNDIALS
        */
       AdditionalData(
         // Global parameters
-        const SolutionStrategy& strategy                      = linesearch,
-        const unsigned int&     maximum_non_linear_iterations = 200,
-        const double&           function_tolerance            = 0.0,
-        const double&           step_tolerance                = 0.0,
-        const bool&             no_init_setup                 = false,
-        const unsigned int&     maximum_setup_calls           = 0,
-        const double&           maximum_newton_step           = 0.0,
-        const double&           dq_relative_error             = 0.0,
-        const unsigned int&     maximum_beta_failures         = 0,
-        const unsigned int&     anderson_subspace_size        = 0)
+        const SolutionStrategy& strategy                     = linesearch,
+        const unsigned int&     maximum_non_linear_iterations= 200,
+        const double&           function_tolerance           = 0.0,
+        const double&           step_tolerance               = 0.0,
+        const bool&             no_init_setup                = false,
+        const unsigned int&     maximum_setup_calls          = 0,
+        const double&           maximum_newton_step          = 0.0,
+        const double&           dq_relative_error            = 0.0,
+        const unsigned int&     maximum_beta_failures        = 0,
+        const unsigned int&     anderson_subspace_size       = 0)
         : strategy(strategy),
           maximum_non_linear_iterations(maximum_non_linear_iterations),
           function_tolerance(function_tolerance),
@@ -322,13 +322,13 @@ namespace SUNDIALS
           Patterns::Selection("newton|linesearch|fixed_point|picard"));
         prm.add_action("Solution strategy", [&](const std::string& value) {
           if(value == "newton")
-            strategy = newton;
+            strategy= newton;
           else if(value == "linesearch")
-            strategy = linesearch;
+            strategy= linesearch;
           else if(value == "fixed_point")
-            strategy = fixed_point;
+            strategy= fixed_point;
           else if(value == "picard")
-            strategy = picard;
+            strategy= picard;
           else
             Assert(false, ExcInternalError());
         });
@@ -447,8 +447,8 @@ namespace SUNDIALS
      * @param data KINSOL configuration data
      * @param mpi_comm MPI communicator
      */
-    KINSOL(const AdditionalData& data     = AdditionalData(),
-           const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
+    KINSOL(const AdditionalData& data    = AdditionalData(),
+           const MPI_Comm        mpi_comm= MPI_COMM_WORLD);
 
     /**
      * Destructor.

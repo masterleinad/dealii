@@ -137,23 +137,21 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionJacobi() = default;
+    PreconditionJacobi()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
     PreconditionJacobi(const MatrixBase&     matrix,
-                       const AdditionalData& additional_data
-                       = AdditionalData());
+                       const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Same as above but without setting a matrix to form the preconditioner.
      * Intended to be used with SLEPc objects.
      */
     PreconditionJacobi(const MPI_Comm        communicator,
-                       const AdditionalData& additional_data
-                       = AdditionalData());
+                       const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -163,7 +161,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -218,7 +216,7 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionBlockJacobi() = default;
+    PreconditionBlockJacobi()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
@@ -244,7 +242,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -282,7 +280,7 @@ namespace PETScWrappers
       /**
        * Constructor. By default, set the damping parameter to one.
        */
-      AdditionalData(const double omega = 1);
+      AdditionalData(const double omega= 1);
 
       /**
        * Relaxation parameter.
@@ -294,14 +292,14 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionSOR() = default;
+    PreconditionSOR()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
     PreconditionSOR(const MatrixBase&     matrix,
-                    const AdditionalData& additional_data = AdditionalData());
+                    const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -311,7 +309,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -341,7 +339,7 @@ namespace PETScWrappers
       /**
        * Constructor. By default, set the damping parameter to one.
        */
-      AdditionalData(const double omega = 1);
+      AdditionalData(const double omega= 1);
 
       /**
        * Relaxation parameter.
@@ -353,14 +351,14 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionSSOR() = default;
+    PreconditionSSOR()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
     PreconditionSSOR(const MatrixBase&     matrix,
-                     const AdditionalData& additional_data = AdditionalData());
+                     const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -370,7 +368,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -403,7 +401,7 @@ namespace PETScWrappers
       /**
        * Constructor. By default, set the damping parameter to one.
        */
-      AdditionalData(const double omega = 1);
+      AdditionalData(const double omega= 1);
 
       /**
        * Relaxation parameter.
@@ -415,7 +413,7 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionEisenstat() = default;
+    PreconditionEisenstat()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
@@ -433,7 +431,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -463,7 +461,7 @@ namespace PETScWrappers
       /**
        * Constructor. By default, set the fill-in parameter to zero.
        */
-      AdditionalData(const unsigned int levels = 0);
+      AdditionalData(const unsigned int levels= 0);
 
       /**
        * Fill-in parameter.
@@ -475,14 +473,14 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionICC() = default;
+    PreconditionICC()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
     PreconditionICC(const MatrixBase&     matrix,
-                    const AdditionalData& additional_data = AdditionalData());
+                    const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -492,7 +490,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -522,7 +520,7 @@ namespace PETScWrappers
       /**
        * Constructor. By default, set the fill-in parameter to zero.
        */
-      AdditionalData(const unsigned int levels = 0);
+      AdditionalData(const unsigned int levels= 0);
 
       /**
        * Fill-in parameter.
@@ -534,14 +532,14 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionILU() = default;
+    PreconditionILU()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
     PreconditionILU(const MatrixBase&     matrix,
-                    const AdditionalData& additional_data = AdditionalData());
+                    const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -551,7 +549,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -587,9 +585,9 @@ namespace PETScWrappers
        * Constructor. (Default values taken from function PCCreate_LU of the
        * PETSc lib.)
        */
-      AdditionalData(const double pivoting   = 1.e-6,
-                     const double zero_pivot = 1.e-12,
-                     const double damping    = 0.0);
+      AdditionalData(const double pivoting  = 1.e-6,
+                     const double zero_pivot= 1.e-12,
+                     const double damping   = 0.0);
 
       /**
        * Determines, when Pivoting is done during LU decomposition. 0.0
@@ -615,14 +613,14 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionLU() = default;
+    PreconditionLU()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
      * and additional flags if there are any.
      */
     PreconditionLU(const MatrixBase&     matrix,
-                   const AdditionalData& additional_data = AdditionalData());
+                   const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -632,7 +630,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -665,11 +663,11 @@ namespace PETScWrappers
        * Constructor. Note that BoomerAMG offers a lot more options to set
        * than what is exposed here.
        */
-      AdditionalData(const bool         symmetric_operator = false,
-                     const double       strong_threshold   = 0.25,
-                     const double       max_row_sum        = 0.9,
-                     const unsigned int aggressive_coarsening_num_levels = 0,
-                     const bool         output_details = false);
+      AdditionalData(const bool         symmetric_operator              = false,
+                     const double       strong_threshold                = 0.25,
+                     const double       max_row_sum                     = 0.9,
+                     const unsigned int aggressive_coarsening_num_levels= 0,
+                     const bool         output_details= false);
 
       /**
        * Set this flag to true if you have a symmetric system matrix and you
@@ -717,7 +715,7 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionBoomerAMG() = default;
+    PreconditionBoomerAMG()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
@@ -743,7 +741,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   protected:
     /**
@@ -792,11 +790,11 @@ namespace PETScWrappers
       /**
        * Constructor.
        */
-      AdditionalData(const unsigned int symmetric      = 1,
-                     const unsigned int n_levels       = 1,
-                     const double       threshold      = 0.1,
-                     const double       filter         = 0.05,
-                     const bool         output_details = false);
+      AdditionalData(const unsigned int symmetric     = 1,
+                     const unsigned int n_levels      = 1,
+                     const double       threshold     = 0.1,
+                     const double       filter        = 0.05,
+                     const bool         output_details= false);
 
       /**
        * This parameter specifies the type of problem to solve:
@@ -854,7 +852,7 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionParaSails() = default;
+    PreconditionParaSails()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
@@ -872,7 +870,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   private:
     /**
@@ -901,7 +899,7 @@ namespace PETScWrappers
      * Empty Constructor. You need to call initialize() before using this
      * object.
      */
-    PreconditionNone() = default;
+    PreconditionNone()= default;
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
@@ -909,7 +907,7 @@ namespace PETScWrappers
      * in computations.
      */
     PreconditionNone(const MatrixBase&     matrix,
-                     const AdditionalData& additional_data = AdditionalData());
+                     const AdditionalData& additional_data= AdditionalData());
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -920,7 +918,7 @@ namespace PETScWrappers
      */
     void
     initialize(const MatrixBase&     matrix,
-               const AdditionalData& additional_data = AdditionalData());
+               const AdditionalData& additional_data= AdditionalData());
 
   private:
     /**

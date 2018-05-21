@@ -42,14 +42,14 @@ test_vertices_orientation(
   map<typename Triangulation<s_dim, spacedim>::cell_iterator,
       typename Triangulation<s_dim + 1, spacedim>::face_iterator>&
             surface_to_volume_mapping,
-  const int verbosity = 1)
+  const int verbosity= 1)
 {
   typename Triangulation<s_dim, spacedim>::active_cell_iterator cell
     = boundary_mesh.begin_active(),
-    endc = boundary_mesh.end();
+    endc= boundary_mesh.end();
   typename Triangulation<s_dim + 1, spacedim>::face_iterator face;
 
-  bool success = true;
+  bool success= true;
 
   if(verbosity > 1)
     {
@@ -64,12 +64,12 @@ test_vertices_orientation(
 
   for(; cell != endc; ++cell)
     {
-      face = surface_to_volume_mapping[cell];
+      face= surface_to_volume_mapping[cell];
 
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for(unsigned int k= 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           Point<spacedim> diff(face->vertex(k));
-          diff -= cell->vertex(k);
+          diff-= cell->vertex(k);
           if(verbosity > 1)
             {
               deallog << face->vertex(k) << "\t\t";
@@ -77,7 +77,7 @@ test_vertices_orientation(
             }
           if(diff.square() > 0)
             {
-              success = false;
+              success= false;
               break;
             }
         }
@@ -104,7 +104,7 @@ main()
   {
     // Extract the boundary of a hyper-sphere
 
-    const int dim = 3;
+    const int dim= 3;
     deallog << "Testing hyper_ball in dim: " << dim << "..." << endl;
 
     map<Triangulation<dim - 1, dim>::cell_iterator,

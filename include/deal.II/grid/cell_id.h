@@ -199,7 +199,7 @@ inline std::ostream&
 operator<<(std::ostream& os, const CellId& cid)
 {
   os << cid.coarse_cell_id << '_' << cid.n_child_indices << ':';
-  for(unsigned int i = 0; i < cid.n_child_indices; ++i)
+  for(unsigned int i= 0; i < cid.n_child_indices; ++i)
     // write the child indices. because they are between 0 and 2^dim-1, they all
     // just have one digit, so we could write them as one character
     // objects. it's probably clearer to write them as one-digit characters
@@ -231,7 +231,7 @@ operator>>(std::istream& is, CellId& cid)
   if(is.eof())
     return is;
 
-  cid.coarse_cell_id = cellid;
+  cid.coarse_cell_id= cellid;
   char dummy;
   is >> dummy;
   Assert(dummy == '_', ExcMessage("invalid CellId"));
@@ -240,12 +240,12 @@ operator>>(std::istream& is, CellId& cid)
   Assert(dummy == ':', ExcMessage("invalid CellId"));
 
   unsigned char value;
-  for(unsigned int i = 0; i < cid.n_child_indices; ++i)
+  for(unsigned int i= 0; i < cid.n_child_indices; ++i)
     {
       // read the one-digit child index (as an integer number) and
       // convert it back into unsigned integer type
       is >> value;
-      cid.child_indices[i] = value - '0';
+      cid.child_indices[i]= value - '0';
     }
   return is;
 }
@@ -258,7 +258,7 @@ CellId::operator==(const CellId& other) const
   if(n_child_indices != other.n_child_indices)
     return false;
 
-  for(unsigned int i = 0; i < n_child_indices; ++i)
+  for(unsigned int i= 0; i < n_child_indices; ++i)
     if(child_indices[i] != other.child_indices[i])
       return false;
 
@@ -277,7 +277,7 @@ CellId::operator<(const CellId& other) const
   if(this->coarse_cell_id != other.coarse_cell_id)
     return this->coarse_cell_id < other.coarse_cell_id;
 
-  unsigned int idx = 0;
+  unsigned int idx= 0;
   while(idx < n_child_indices)
     {
       if(idx >= other.n_child_indices)

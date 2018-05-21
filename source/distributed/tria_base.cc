@@ -71,7 +71,7 @@ namespace parallel
        = dynamic_cast<const dealii::parallel::Triangulation<dim, spacedim>*>(
          &other_tria))
       {
-        mpi_communicator = other_tria_x->get_communicator();
+        mpi_communicator= other_tria_x->get_communicator();
 
         // release unused vector memory because we will have very different
         // vectors now
@@ -170,8 +170,8 @@ namespace parallel
         // happen when called from the destructor of Triangulation, which
         // can get called during exception handling causing a hang in this
         // function.
-        number_cache.n_global_active_cells = 0;
-        number_cache.n_global_levels       = 0;
+        number_cache.n_global_active_cells= 0;
+        number_cache.n_global_levels      = 0;
         return;
       }
 
@@ -241,27 +241,27 @@ namespace parallel
 #  ifdef DEBUG
     // Check that level_ghost_owners is symmetric by sending a message to everyone
     {
-      int ierr = MPI_Barrier(this->mpi_communicator);
+      int ierr= MPI_Barrier(this->mpi_communicator);
       AssertThrowMPI(ierr);
 
       // important: preallocate to avoid (re)allocation:
       std::vector<MPI_Request> requests(
         this->number_cache.level_ghost_owners.size());
-      unsigned int dummy       = 0;
-      unsigned int req_counter = 0;
+      unsigned int dummy      = 0;
+      unsigned int req_counter= 0;
 
       for(std::set<types::subdomain_id>::iterator it
           = this->number_cache.level_ghost_owners.begin();
           it != this->number_cache.level_ghost_owners.end();
           ++it, ++req_counter)
         {
-          ierr = MPI_Isend(&dummy,
-                           1,
-                           MPI_UNSIGNED,
-                           *it,
-                           9001,
-                           this->mpi_communicator,
-                           &requests[req_counter]);
+          ierr= MPI_Isend(&dummy,
+                          1,
+                          MPI_UNSIGNED,
+                          *it,
+                          9001,
+                          this->mpi_communicator,
+                          &requests[req_counter]);
           AssertThrowMPI(ierr);
         }
 
@@ -271,24 +271,24 @@ namespace parallel
           ++it)
         {
           unsigned int dummy;
-          ierr = MPI_Recv(&dummy,
-                          1,
-                          MPI_UNSIGNED,
-                          *it,
-                          9001,
-                          this->mpi_communicator,
-                          MPI_STATUS_IGNORE);
+          ierr= MPI_Recv(&dummy,
+                         1,
+                         MPI_UNSIGNED,
+                         *it,
+                         9001,
+                         this->mpi_communicator,
+                         MPI_STATUS_IGNORE);
           AssertThrowMPI(ierr);
         }
 
       if(requests.size() > 0)
         {
-          ierr = MPI_Waitall(
+          ierr= MPI_Waitall(
             requests.size(), requests.data(), MPI_STATUSES_IGNORE);
           AssertThrowMPI(ierr);
         }
 
-      ierr = MPI_Barrier(this->mpi_communicator);
+      ierr= MPI_Barrier(this->mpi_communicator);
       AssertThrowMPI(ierr);
     }
 #  endif
@@ -351,15 +351,15 @@ namespace parallel
 
     for(auto cell : this->active_cell_iterators())
       if(cell->is_locally_owned())
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
-          vertex_of_own_cell[cell->vertex_index(v)] = true;
+        for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+          vertex_of_own_cell[cell->vertex_index(v)]= true;
 
     std::map<unsigned int, std::set<dealii::types::subdomain_id>> result;
     for(auto cell : this->active_cell_iterators())
       if(cell->is_ghost())
         {
-          const types::subdomain_id owner = cell->subdomain_id();
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+          const types::subdomain_id owner= cell->subdomain_id();
+          for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
             {
               if(vertex_of_own_cell[cell->vertex_index(v)])
                 result[cell->vertex_index(v)].insert(owner);

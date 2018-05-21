@@ -25,10 +25,10 @@ test(Vector<double>& v)
   // set only certain elements of the
   // vector. they are all positive
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) += i;
-      pattern[i] = true;
+      v(i)+= i;
+      pattern[i]= true;
     }
 
   v.compress();
@@ -39,7 +39,7 @@ test(Vector<double>& v)
 
   // then set a single element to a negative
   // value and check again
-  v(v.size() / 2) = -1;
+  v(v.size() / 2)= -1;
   AssertThrow(v.is_non_negative() == false, ExcInternalError());
 
   deallog << "OK" << std::endl;

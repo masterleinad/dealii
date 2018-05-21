@@ -33,9 +33,9 @@ struct Evaluation
   submit_value(const VectorizedArray<double> val, const unsigned int index)
   {
     if(is_cartesian)
-      values[index] = val * cartesian_weight * jac_weight[index];
+      values[index]= val * cartesian_weight * jac_weight[index];
     else
-      values[index] = val * general_weight[index];
+      values[index]= val * general_weight[index];
   }
 
   bool                    is_cartesian;
@@ -48,13 +48,13 @@ struct Evaluation
 void
 initialize(Evaluation& eval)
 {
-  eval.is_cartesian     = true;
-  eval.cartesian_weight = random_value<double>();
-  for(unsigned int i = 0; i < 4; ++i)
-    eval.cartesian_weight = std::max(
+  eval.is_cartesian    = true;
+  eval.cartesian_weight= random_value<double>();
+  for(unsigned int i= 0; i < 4; ++i)
+    eval.cartesian_weight= std::max(
       eval.cartesian_weight, eval.cartesian_weight * eval.cartesian_weight);
-  eval.general_weight[0] = 0.2313342 * eval.cartesian_weight;
-  eval.jac_weight[0]     = random_value<double>();
+  eval.general_weight[0]= 0.2313342 * eval.cartesian_weight;
+  eval.jac_weight[0]    = random_value<double>();
 }
 
 void
@@ -64,27 +64,27 @@ test()
   initialize(current);
   initialize(old);
   VectorizedArray<double> weight;
-  weight = random_value<double>();
+  weight= random_value<double>();
 
   VectorizedArray<double> vec;
-  for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
-    vec[v] = random_value<double>();
+  for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements; ++v)
+    vec[v]= random_value<double>();
 
-  current.values[0] = vec;
+  current.values[0]= vec;
   old.values[0]
     = vec * 1.112 - std::max(2. * vec - 1., VectorizedArray<double>());
 
   Vector<double> vector(200);
-  vector = 1.2;
+  vector= 1.2;
 
-  VectorizedArray<double> cur = current.get_value(0);
-  VectorizedArray<double> ol  = old.get_value(0);
+  VectorizedArray<double> cur= current.get_value(0);
+  VectorizedArray<double> ol = old.get_value(0);
   current.submit_value(2. * cur - ol - weight * std::sin(cur), 0);
 
-  vector *= 2. * current.get_value(0)[0];
+  vector*= 2. * current.get_value(0)[0];
 
-  double error = 0;
-  for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+  double error= 0;
+  for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements; ++v)
     error
       += std::abs(current.get_value(0)[v]
                     / (current.cartesian_weight[v] * current.jac_weight[0][0])

@@ -120,7 +120,7 @@ private:
   static const double bc_constant;
 };
 template <int dim>
-const double ExactSolution<dim>::bc_constant = 0.1;
+const double ExactSolution<dim>::bc_constant= 0.1;
 
 // RIGHT HAND SIDE CLASS
 template <int dim>
@@ -138,7 +138,7 @@ private:
   static const double bc_constant;
 };
 template <int dim>
-const double RightHandSide<dim>::bc_constant = 0.1;
+const double RightHandSide<dim>::bc_constant= 0.1;
 
 // DEFINE EXACT SOLUTION MEMBERS
 template <int dim>
@@ -149,13 +149,13 @@ ExactSolution<dim>::value(const Point<dim>&  p,
   Assert(dim >= 2, ExcNotImplemented());
   AssertIndexRange(component, dim);
 
-  double val = -1000;
+  double val= -1000;
   switch(component)
     {
       case 0:
-        val = cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
+        val= cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
       case 1:
-        val = -sin(numbers::PI * p(0)) * cos(numbers::PI * p(1)) + bc_constant;
+        val= -sin(numbers::PI * p(0)) * cos(numbers::PI * p(1)) + bc_constant;
     }
   return val;
 }
@@ -165,8 +165,8 @@ ExactSolution<dim>::vector_value(const Point<dim>& p,
                                  Vector<double>&   result) const
 {
   Assert(dim >= 2, ExcNotImplemented());
-  result(0) = cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
-  result(1) = -sin(numbers::PI * p(0)) * cos(numbers::PI * p(1)) + bc_constant;
+  result(0)= cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
+  result(1)= -sin(numbers::PI * p(0)) * cos(numbers::PI * p(1)) + bc_constant;
 }
 template <int dim>
 void
@@ -177,17 +177,17 @@ ExactSolution<dim>::value_list(const std::vector<Point<dim>>& points,
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
   AssertIndexRange(component, dim);
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for(unsigned int i= 0; i < points.size(); ++i)
     {
-      const Point<dim>& p = points[i];
+      const Point<dim>& p= points[i];
       switch(component)
         {
           case 0:
             values[i]
               = cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
           case 1:
-            values[i] = -sin(numbers::PI * p(0)) * cos(numbers::PI * p(1))
-                        + bc_constant;
+            values[i]= -sin(numbers::PI * p(0)) * cos(numbers::PI * p(1))
+                       + bc_constant;
         }
     }
 }
@@ -200,9 +200,9 @@ ExactSolution<dim>::vector_value_list(const std::vector<Point<dim>>& points,
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for(unsigned int i= 0; i < points.size(); ++i)
     {
-      const Point<dim>& p = points[i];
+      const Point<dim>& p= points[i];
       values[i](0)
         = cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
       values[i](1)
@@ -224,12 +224,12 @@ RightHandSide<dim>::vector_value(const Point<dim>& p,
   Assert(dim >= 2, ExcNotImplemented());
 
   //2D solution
-  values(0) = (2 * numbers::PI * numbers::PI + 1) * cos(numbers::PI * p(0))
-                * sin(numbers::PI * p(1))
-              + bc_constant;
-  values(1) = -(2 * numbers::PI * numbers::PI + 1) * sin(numbers::PI * p(0))
-                * cos(numbers::PI * p(1))
-              + bc_constant;
+  values(0)= (2 * numbers::PI * numbers::PI + 1) * cos(numbers::PI * p(0))
+               * sin(numbers::PI * p(1))
+             + bc_constant;
+  values(1)= -(2 * numbers::PI * numbers::PI + 1) * sin(numbers::PI * p(0))
+               * cos(numbers::PI * p(1))
+             + bc_constant;
 }
 template <int dim>
 void
@@ -239,8 +239,8 @@ RightHandSide<dim>::vector_value_list(
 {
   Assert(value_list.size() == points.size(),
          ExcDimensionMismatch(value_list.size(), points.size()));
-  const unsigned int n_points = points.size();
-  for(unsigned int p = 0; p < n_points; ++p)
+  const unsigned int n_points= points.size();
+  for(unsigned int p= 0; p < n_points; ++p)
     {
       RightHandSide<dim>::vector_value(points[p], value_list[p]);
     }
@@ -251,8 +251,8 @@ template <int dim>
 MaxwellProblem<dim>::MaxwellProblem(const unsigned int order)
   : dof_handler(triangulation), fe(order)
 {
-  p_order    = order;
-  quad_order = p_order + 2;
+  p_order   = order;
+  quad_order= p_order + 2;
 }
 template <int dim>
 MaxwellProblem<dim>::~MaxwellProblem()
@@ -265,10 +265,10 @@ double
 MaxwellProblem<dim>::dotprod(const Tensor<1, dim>& A,
                              const Tensor<1, dim>& B) const
 {
-  double return_val = 0;
-  for(unsigned int k = 0; k < dim; k++)
+  double return_val= 0;
+  for(unsigned int k= 0; k < dim; k++)
     {
-      return_val += A[k] * B[k];
+      return_val+= A[k] * B[k];
     }
   return return_val;
 }
@@ -278,10 +278,10 @@ double
 MaxwellProblem<dim>::dotprod(const Tensor<1, dim>& A,
                              const Vector<double>& B) const
 {
-  double return_val = 0;
-  for(unsigned int k = 0; k < dim; k++)
+  double return_val= 0;
+  for(unsigned int k= 0; k < dim; k++)
     {
-      return_val += A[k] * B(k);
+      return_val+= A[k] * B(k);
     }
   return return_val;
 }
@@ -316,8 +316,8 @@ MaxwellProblem<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
   FEValuesViews::Vector<dim> fe_views(fe_values, 0);
-  const unsigned int         dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int         n_q_points    = quadrature_formula.size();
+  const unsigned int         dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int         n_q_points   = quadrature_formula.size();
   FullMatrix<double>         cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>             cell_rhs(dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -328,40 +328,40 @@ MaxwellProblem<dim>::assemble_system()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
       fe_values.reinit(cell);
       right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                         rhs_values);
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
-              value_i[0] = fe_values.shape_value_component(i, q_point, 0);
-              value_i[1] = fe_values.shape_value_component(i, q_point, 1);
+              value_i[0]= fe_values.shape_value_component(i, q_point, 0);
+              value_i[1]= fe_values.shape_value_component(i, q_point, 1);
               if(dim == 3)
                 {
-                  value_i[2] = fe_values.shape_value_component(i, q_point, 2);
+                  value_i[2]= fe_values.shape_value_component(i, q_point, 2);
                 }
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
                 {
-                  value_j[0] = fe_values.shape_value_component(j, q_point, 0);
-                  value_j[1] = fe_values.shape_value_component(j, q_point, 1);
+                  value_j[0]= fe_values.shape_value_component(j, q_point, 0);
+                  value_j[1]= fe_values.shape_value_component(j, q_point, 1);
                   if(dim == 3)
                     {
                       value_j[2]
                         = fe_values.shape_value_component(j, q_point, 2);
                     }
-                  cell_matrix(i, j) += (fe_views.curl(i, q_point)[0]
-                                          * fe_views.curl(j, q_point)[0]
-                                        + dotprod(value_i, value_j))
-                                       * fe_values.JxW(q_point);
+                  cell_matrix(i, j)+= (fe_views.curl(i, q_point)[0]
+                                         * fe_views.curl(j, q_point)[0]
+                                       + dotprod(value_i, value_j))
+                                      * fe_values.JxW(q_point);
                 }
-              cell_rhs(i) += dotprod(value_i, rhs_values[q_point])
-                             * fe_values.JxW(q_point);
+              cell_rhs(i)+= dotprod(value_i, rhs_values[q_point])
+                            * fe_values.JxW(q_point);
             }
         }
       cell->get_dof_indices(local_dof_indices);
@@ -401,7 +401,7 @@ MaxwellProblem<dim>::process_solution(const unsigned int cycle)
                                     diff_per_cell,
                                     QGauss<dim>(quad_order),
                                     VectorTools::L2_norm);
-  const double L2_error = diff_per_cell.l2_norm();
+  const double L2_error= diff_per_cell.l2_norm();
 
   convergence_table.add_value("cycle", cycle);
   convergence_table.add_value("cells", triangulation.n_active_cells());
@@ -413,7 +413,7 @@ template <int dim>
 void
 MaxwellProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for(unsigned int cycle= 0; cycle < 3; ++cycle)
     {
       if(cycle == 0)
         {

@@ -24,8 +24,8 @@ main()
   initlog();
 
   std::vector<types::global_dof_index> row_blocks(2);
-  row_blocks[0] = 10;
-  row_blocks[1] = 5;
+  row_blocks[0]= 10;
+  row_blocks[1]= 5;
 
   BlockDynamicSparsityPattern csp(row_blocks, row_blocks);
 
@@ -42,13 +42,13 @@ main()
 
   csp.print(deallog.get_file_stream());
 
-  for(types::global_dof_index row = 0; row < csp.n_rows(); ++row)
+  for(types::global_dof_index row= 0; row < csp.n_rows(); ++row)
     {
-      types::global_dof_index rlen = csp.row_length(row);
+      types::global_dof_index rlen= csp.row_length(row);
 
-      for(types::global_dof_index c = 0; c < rlen; ++c)
+      for(types::global_dof_index c= 0; c < rlen; ++c)
         {
-          types::global_dof_index column = csp.column_number(row, c);
+          types::global_dof_index column= csp.column_number(row, c);
           deallog << row << "," << column << std::endl;
         }
     }

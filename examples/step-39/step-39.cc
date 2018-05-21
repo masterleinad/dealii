@@ -132,7 +132,7 @@ namespace Step39
     MeshWorker::DoFInfo<dim>&                  dinfo,
     typename MeshWorker::IntegrationInfo<dim>& info) const
   {
-    const unsigned int deg = info.fe_values(0).get_fe().tensor_degree();
+    const unsigned int deg= info.fe_values(0).get_fe().tensor_degree();
     LocalIntegrators::Laplace::nitsche_matrix(
       dinfo.matrix(0, false).matrix,
       info.fe_values(0),
@@ -148,7 +148,7 @@ namespace Step39
     typename MeshWorker::IntegrationInfo<dim>& info1,
     typename MeshWorker::IntegrationInfo<dim>& info2) const
   {
-    const unsigned int deg = info1.fe_values(0).get_fe().tensor_degree();
+    const unsigned int deg= info1.fe_values(0).get_fe().tensor_degree();
     LocalIntegrators::Laplace::ip_matrix(
       dinfo1.matrix(0, false).matrix,
       dinfo1.matrix(0, true).matrix,
@@ -191,22 +191,22 @@ namespace Step39
     MeshWorker::DoFInfo<dim>&                  dinfo,
     typename MeshWorker::IntegrationInfo<dim>& info) const
   {
-    const FEValuesBase<dim>& fe           = info.fe_values();
-    Vector<double>&          local_vector = dinfo.vector(0).block(0);
+    const FEValuesBase<dim>& fe          = info.fe_values();
+    Vector<double>&          local_vector= dinfo.vector(0).block(0);
 
     std::vector<double> boundary_values(fe.n_quadrature_points);
     exact_solution.value_list(fe.get_quadrature_points(), boundary_values);
 
-    const unsigned int deg = fe.get_fe().tensor_degree();
+    const unsigned int deg= fe.get_fe().tensor_degree();
     const double       penalty
       = 2. * deg * (deg + 1) * dinfo.face->measure() / dinfo.cell->measure();
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        local_vector(i) += (-fe.shape_value(i, k) * penalty * boundary_values[k]
-                            + (fe.normal_vector(k) * fe.shape_grad(i, k))
-                                * boundary_values[k])
-                           * fe.JxW(k);
+    for(unsigned k= 0; k < fe.n_quadrature_points; ++k)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        local_vector(i)+= (-fe.shape_value(i, k) * penalty * boundary_values[k]
+                           + (fe.normal_vector(k) * fe.shape_grad(i, k))
+                               * boundary_values[k])
+                          * fe.JxW(k);
   }
 
   template <int dim>
@@ -244,15 +244,15 @@ namespace Step39
   Estimator<dim>::cell(MeshWorker::DoFInfo<dim>&                  dinfo,
                        typename MeshWorker::IntegrationInfo<dim>& info) const
   {
-    const FEValuesBase<dim>& fe = info.fe_values();
+    const FEValuesBase<dim>& fe= info.fe_values();
 
-    const std::vector<Tensor<2, dim>>& DDuh = info.hessians[0][0];
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    const std::vector<Tensor<2, dim>>& DDuh= info.hessians[0][0];
+    for(unsigned k= 0; k < fe.n_quadrature_points; ++k)
       {
-        const double t = dinfo.cell->diameter() * trace(DDuh[k]);
-        dinfo.value(0) += t * t * fe.JxW(k);
+        const double t= dinfo.cell->diameter() * trace(DDuh[k]);
+        dinfo.value(0)+= t * t * fe.JxW(k);
       }
-    dinfo.value(0) = std::sqrt(dinfo.value(0));
+    dinfo.value(0)= std::sqrt(dinfo.value(0));
   }
 
   // At the boundary, we use simply a weighted form of the boundary residual,
@@ -264,21 +264,21 @@ namespace Step39
     MeshWorker::DoFInfo<dim>&                  dinfo,
     typename MeshWorker::IntegrationInfo<dim>& info) const
   {
-    const FEValuesBase<dim>& fe = info.fe_values();
+    const FEValuesBase<dim>& fe= info.fe_values();
 
     std::vector<double> boundary_values(fe.n_quadrature_points);
     exact_solution.value_list(fe.get_quadrature_points(), boundary_values);
 
-    const std::vector<double>& uh = info.values[0][0];
+    const std::vector<double>& uh= info.values[0][0];
 
-    const unsigned int deg = fe.get_fe().tensor_degree();
+    const unsigned int deg= fe.get_fe().tensor_degree();
     const double       penalty
       = 2. * deg * (deg + 1) * dinfo.face->measure() / dinfo.cell->measure();
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
-      dinfo.value(0) += penalty * (boundary_values[k] - uh[k])
-                        * (boundary_values[k] - uh[k]) * fe.JxW(k);
-    dinfo.value(0) = std::sqrt(dinfo.value(0));
+    for(unsigned k= 0; k < fe.n_quadrature_points; ++k)
+      dinfo.value(0)+= penalty * (boundary_values[k] - uh[k])
+                       * (boundary_values[k] - uh[k]) * fe.JxW(k);
+    dinfo.value(0)= std::sqrt(dinfo.value(0));
   }
 
   // Finally, on interior faces, the estimator consists of the jumps of the
@@ -290,30 +290,30 @@ namespace Step39
                        typename MeshWorker::IntegrationInfo<dim>& info1,
                        typename MeshWorker::IntegrationInfo<dim>& info2) const
   {
-    const FEValuesBase<dim>&           fe   = info1.fe_values();
-    const std::vector<double>&         uh1  = info1.values[0][0];
-    const std::vector<double>&         uh2  = info2.values[0][0];
-    const std::vector<Tensor<1, dim>>& Duh1 = info1.gradients[0][0];
-    const std::vector<Tensor<1, dim>>& Duh2 = info2.gradients[0][0];
+    const FEValuesBase<dim>&           fe  = info1.fe_values();
+    const std::vector<double>&         uh1 = info1.values[0][0];
+    const std::vector<double>&         uh2 = info2.values[0][0];
+    const std::vector<Tensor<1, dim>>& Duh1= info1.gradients[0][0];
+    const std::vector<Tensor<1, dim>>& Duh2= info2.gradients[0][0];
 
-    const unsigned int deg = fe.get_fe().tensor_degree();
+    const unsigned int deg= fe.get_fe().tensor_degree();
     const double       penalty1
       = deg * (deg + 1) * dinfo1.face->measure() / dinfo1.cell->measure();
     const double penalty2
       = deg * (deg + 1) * dinfo2.face->measure() / dinfo2.cell->measure();
-    const double penalty = penalty1 + penalty2;
-    const double h       = dinfo1.face->measure();
+    const double penalty= penalty1 + penalty2;
+    const double h      = dinfo1.face->measure();
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for(unsigned k= 0; k < fe.n_quadrature_points; ++k)
       {
-        double diff1 = uh1[k] - uh2[k];
+        double diff1= uh1[k] - uh2[k];
         double diff2
           = fe.normal_vector(k) * Duh1[k] - fe.normal_vector(k) * Duh2[k];
         dinfo1.value(0)
           += (penalty * diff1 * diff1 + h * diff2 * diff2) * fe.JxW(k);
       }
-    dinfo1.value(0) = std::sqrt(dinfo1.value(0));
-    dinfo2.value(0) = dinfo1.value(0);
+    dinfo1.value(0)= std::sqrt(dinfo1.value(0));
+    dinfo2.value(0)= dinfo1.value(0);
   }
 
   // Finally we have an integrator for the error. Since the energy norm for
@@ -364,30 +364,30 @@ namespace Step39
     MeshWorker::DoFInfo<dim>&                  dinfo,
     typename MeshWorker::IntegrationInfo<dim>& info) const
   {
-    const FEValuesBase<dim>&    fe = info.fe_values();
+    const FEValuesBase<dim>&    fe= info.fe_values();
     std::vector<Tensor<1, dim>> exact_gradients(fe.n_quadrature_points);
     std::vector<double>         exact_values(fe.n_quadrature_points);
 
     exact_solution.gradient_list(fe.get_quadrature_points(), exact_gradients);
     exact_solution.value_list(fe.get_quadrature_points(), exact_values);
 
-    const std::vector<Tensor<1, dim>>& Duh = info.gradients[0][0];
-    const std::vector<double>&         uh  = info.values[0][0];
+    const std::vector<Tensor<1, dim>>& Duh= info.gradients[0][0];
+    const std::vector<double>&         uh = info.values[0][0];
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for(unsigned k= 0; k < fe.n_quadrature_points; ++k)
       {
-        double sum = 0;
-        for(unsigned int d = 0; d < dim; ++d)
+        double sum= 0;
+        for(unsigned int d= 0; d < dim; ++d)
           {
-            const double diff = exact_gradients[k][d] - Duh[k][d];
-            sum += diff * diff;
+            const double diff= exact_gradients[k][d] - Duh[k][d];
+            sum+= diff * diff;
           }
-        const double diff = exact_values[k] - uh[k];
-        dinfo.value(0) += sum * fe.JxW(k);
-        dinfo.value(1) += diff * diff * fe.JxW(k);
+        const double diff= exact_values[k] - uh[k];
+        dinfo.value(0)+= sum * fe.JxW(k);
+        dinfo.value(1)+= diff * diff * fe.JxW(k);
       }
-    dinfo.value(0) = std::sqrt(dinfo.value(0));
-    dinfo.value(1) = std::sqrt(dinfo.value(1));
+    dinfo.value(0)= std::sqrt(dinfo.value(0));
+    dinfo.value(1)= std::sqrt(dinfo.value(1));
   }
 
   template <int dim>
@@ -396,23 +396,23 @@ namespace Step39
     MeshWorker::DoFInfo<dim>&                  dinfo,
     typename MeshWorker::IntegrationInfo<dim>& info) const
   {
-    const FEValuesBase<dim>& fe = info.fe_values();
+    const FEValuesBase<dim>& fe= info.fe_values();
 
     std::vector<double> exact_values(fe.n_quadrature_points);
     exact_solution.value_list(fe.get_quadrature_points(), exact_values);
 
-    const std::vector<double>& uh = info.values[0][0];
+    const std::vector<double>& uh= info.values[0][0];
 
-    const unsigned int deg = fe.get_fe().tensor_degree();
+    const unsigned int deg= fe.get_fe().tensor_degree();
     const double       penalty
       = 2. * deg * (deg + 1) * dinfo.face->measure() / dinfo.cell->measure();
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for(unsigned k= 0; k < fe.n_quadrature_points; ++k)
       {
-        const double diff = exact_values[k] - uh[k];
-        dinfo.value(0) += penalty * diff * diff * fe.JxW(k);
+        const double diff= exact_values[k] - uh[k];
+        dinfo.value(0)+= penalty * diff * diff * fe.JxW(k);
       }
-    dinfo.value(0) = std::sqrt(dinfo.value(0));
+    dinfo.value(0)= std::sqrt(dinfo.value(0));
   }
 
   template <int dim>
@@ -423,24 +423,24 @@ namespace Step39
     typename MeshWorker::IntegrationInfo<dim>& info1,
     typename MeshWorker::IntegrationInfo<dim>& info2) const
   {
-    const FEValuesBase<dim>&   fe  = info1.fe_values();
-    const std::vector<double>& uh1 = info1.values[0][0];
-    const std::vector<double>& uh2 = info2.values[0][0];
+    const FEValuesBase<dim>&   fe = info1.fe_values();
+    const std::vector<double>& uh1= info1.values[0][0];
+    const std::vector<double>& uh2= info2.values[0][0];
 
-    const unsigned int deg = fe.get_fe().tensor_degree();
+    const unsigned int deg= fe.get_fe().tensor_degree();
     const double       penalty1
       = deg * (deg + 1) * dinfo1.face->measure() / dinfo1.cell->measure();
     const double penalty2
       = deg * (deg + 1) * dinfo2.face->measure() / dinfo2.cell->measure();
-    const double penalty = penalty1 + penalty2;
+    const double penalty= penalty1 + penalty2;
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for(unsigned k= 0; k < fe.n_quadrature_points; ++k)
       {
-        double diff = uh1[k] - uh2[k];
-        dinfo1.value(0) += (penalty * diff * diff) * fe.JxW(k);
+        double diff= uh1[k] - uh2[k];
+        dinfo1.value(0)+= (penalty * diff * diff) * fe.JxW(k);
       }
-    dinfo1.value(0) = std::sqrt(dinfo1.value(0));
-    dinfo2.value(0) = dinfo1.value(0);
+    dinfo1.value(0)= std::sqrt(dinfo1.value(0));
+    dinfo2.value(0)= dinfo1.value(0);
   }
 
   // @sect3{The main class}
@@ -536,7 +536,7 @@ namespace Step39
     // the mesh and number them.
     dof_handler.distribute_dofs(fe);
     dof_handler.distribute_mg_dofs();
-    unsigned int n_dofs = dof_handler.n_dofs();
+    unsigned int n_dofs= dof_handler.n_dofs();
     // Then, we already know the size of the vectors representing finite
     // element functions.
     solution.reinit(n_dofs);
@@ -551,7 +551,7 @@ namespace Step39
     sparsity.copy_from(dsp);
     matrix.reinit(sparsity);
 
-    const unsigned int n_levels = triangulation.n_levels();
+    const unsigned int n_levels= triangulation.n_levels();
     // The global system is set up, now we attend to the level matrices. We
     // resize all matrix objects to hold one matrix per level.
     mg_matrix.resize(0, n_levels - 1);
@@ -568,7 +568,7 @@ namespace Step39
 
     // Now all objects are prepared to hold one sparsity pattern or matrix per
     // level. What's left is setting up the sparsity patterns on each level.
-    for(unsigned int level = mg_sparsity.min_level();
+    for(unsigned int level= mg_sparsity.min_level();
         level <= mg_sparsity.max_level();
         ++level)
       {
@@ -616,7 +616,7 @@ namespace Step39
     // to initialize the container, which will create all necessary
     // FEValuesBase objects for integration.
     MeshWorker::IntegrationInfoBox<dim> info_box;
-    UpdateFlags update_flags = update_values | update_gradients;
+    UpdateFlags update_flags= update_values | update_gradients;
     info_box.add_update_flags_all(update_flags);
     info_box.initialize(fe, mapping);
 
@@ -656,7 +656,7 @@ namespace Step39
   InteriorPenaltyProblem<dim>::assemble_mg_matrix()
   {
     MeshWorker::IntegrationInfoBox<dim> info_box;
-    UpdateFlags update_flags = update_values | update_gradients;
+    UpdateFlags update_flags= update_values | update_gradients;
     info_box.add_update_flags_all(update_flags);
     info_box.initialize(fe, mapping);
 
@@ -713,7 +713,7 @@ namespace Step39
                                            integrator,
                                            assembler);
 
-    right_hand_side *= -1.;
+    right_hand_side*= -1.;
   }
 
   // Now that we have coded all functions building the discrete linear system,
@@ -796,7 +796,7 @@ namespace Step39
     triangulation.save_user_indices(old_user_indices);
 
     estimates.block(0).reinit(triangulation.n_active_cells());
-    unsigned int i = 0;
+    unsigned int i= 0;
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
         cell != triangulation.end();
@@ -805,8 +805,7 @@ namespace Step39
 
     // This starts like before,
     MeshWorker::IntegrationInfoBox<dim> info_box;
-    const unsigned int                  n_gauss_points
-      = dof_handler.get_fe().tensor_degree() + 1;
+    const unsigned int n_gauss_points= dof_handler.get_fe().tensor_degree() + 1;
     info_box.initialize_gauss_quadrature(
       n_gauss_points, n_gauss_points + 1, n_gauss_points);
 
@@ -871,7 +870,7 @@ namespace Step39
     BlockVector<double> errors(2);
     errors.block(0).reinit(triangulation.n_active_cells());
     errors.block(1).reinit(triangulation.n_active_cells());
-    unsigned int i = 0;
+    unsigned int i= 0;
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
         cell != triangulation.end();
@@ -879,8 +878,7 @@ namespace Step39
       cell->set_user_index(i);
 
     MeshWorker::IntegrationInfoBox<dim> info_box;
-    const unsigned int                  n_gauss_points
-      = dof_handler.get_fe().tensor_degree() + 1;
+    const unsigned int n_gauss_points= dof_handler.get_fe().tensor_degree() + 1;
     info_box.initialize_gauss_quadrature(
       n_gauss_points, n_gauss_points + 1, n_gauss_points);
 
@@ -944,7 +942,7 @@ namespace Step39
   InteriorPenaltyProblem<dim>::run(unsigned int n_steps)
   {
     deallog << "Element: " << fe.get_name() << std::endl;
-    for(unsigned int s = 0; s < n_steps; ++s)
+    for(unsigned int s= 0; s < n_steps; ++s)
       {
         deallog << "Step " << s << std::endl;
         if(estimates.block(0).size() == 0)
@@ -962,7 +960,7 @@ namespace Step39
 
         setup_system();
         deallog << "DoFHandler " << dof_handler.n_dofs() << " dofs, level dofs";
-        for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+        for(unsigned int l= 0; l < triangulation.n_levels(); ++l)
           deallog << ' ' << dof_handler.n_dofs(l);
         deallog << std::endl;
 

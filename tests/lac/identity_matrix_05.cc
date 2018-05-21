@@ -25,41 +25,41 @@ void
 check_vmult()
 {
   SparsityPattern sp(4, 4, 1);
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     sp.add(i, i);
   sp.compress();
 
   SparseMatrix<number> M(sp);
-  M = IdentityMatrix(4);
+  M= IdentityMatrix(4);
   Vector<number> u(4);
   Vector<number> v(4);
 
-  for(unsigned int i = 0; i < 4; ++i)
-    u(i) = i + 1;
+  for(unsigned int i= 0; i < 4; ++i)
+    u(i)= i + 1;
 
   M.vmult(v, u);
   Assert(v == u, ExcInternalError());
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << ' ' << v(i);
   deallog << std::endl;
 
   M.vmult_add(v, u);
-  v /= 2;
+  v/= 2;
   Assert(v == u, ExcInternalError());
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << ' ' << v(i);
   deallog << std::endl;
 
   M.Tvmult(v, u);
   Assert(v == u, ExcInternalError());
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << ' ' << v(i);
   deallog << std::endl;
 
   M.Tvmult_add(v, u);
-  v /= 2;
+  v/= 2;
   Assert(v == u, ExcInternalError());
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << ' ' << v(i);
   deallog << std::endl;
 }

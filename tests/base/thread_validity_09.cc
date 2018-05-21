@@ -37,7 +37,7 @@ worker()
   // acquired on.
   mutex.acquire();
   deallog << "OK." << std::endl;
-  spin_lock = 1;
+  spin_lock= 1;
   mutex.release();
   return 42;
 }
@@ -53,10 +53,10 @@ main()
   }
   sleep(1);
 
-  const unsigned int sz = 1000000;
-  char*              p  = new char[sz];
-  for(unsigned int i = 0; i < sz; ++i)
-    p[i] = 0;
+  const unsigned int sz= 1000000;
+  char*              p = new char[sz];
+  for(unsigned int i= 0; i < sz; ++i)
+    p[i]= 0;
 
   // make sure the worker thread can actually start
   mutex.release();
@@ -65,7 +65,7 @@ main()
   while(spin_lock == 0)
     ;
 
-  for(unsigned int i = 0; i < sz; ++i)
+  for(unsigned int i= 0; i < sz; ++i)
     AssertThrow(p[i] == 0, ExcInternalError());
 
   delete[] p;

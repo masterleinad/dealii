@@ -18,7 +18,7 @@
 #include "../tests.h"
 #include "full_matrix_common.h"
 
-const double ints[9] = {0, -1., 1., -2., 2., -3., 3., -4., 4.};
+const double ints[9]= {0, -1., 1., -2., 2., -3., 3., -4., 4.};
 
 template <typename number>
 void
@@ -33,9 +33,9 @@ check()
   deallog << "Original Vector V" << std::endl;
   deallog << "=================" << std::endl;
 
-  for(unsigned int i = 0; i < First4.size(); i++)
+  for(unsigned int i= 0; i < First4.size(); i++)
     {
-      First4(i) = ints[i];
+      First4(i)= ints[i];
       deallog << First4(i) << "  ";
     }
   deallog << std::endl;
@@ -44,9 +44,9 @@ check()
   deallog << "Original Vector W" << std::endl;
   deallog << "=================" << std::endl;
 
-  for(unsigned int i = 0; i < Second4.size(); i++)
+  for(unsigned int i= 0; i < Second4.size(); i++)
     {
-      Second4(i) = ints[i + 1];
+      Second4(i)= ints[i + 1];
       deallog << Second4(i) << "  ";
     }
   deallog << std::endl;
@@ -82,9 +82,9 @@ check()
   deallog << "Vector V" << std::endl;
   deallog << "========" << std::endl;
 
-  for(unsigned int i = 0; i < First9.size(); i++)
+  for(unsigned int i= 0; i < First9.size(); i++)
     {
-      First9(i) = ints[i];
+      First9(i)= ints[i];
       deallog << First9(i) << "  ";
     }
   deallog << std::endl;
@@ -103,9 +103,9 @@ check()
   deallog << "Vector V" << std::endl;
   deallog << "========" << std::endl;
 
-  for(unsigned int i = 0; i < First9.size(); i++)
+  for(unsigned int i= 0; i < First9.size(); i++)
     {
-      First9(i) = ints[8 - i];
+      First9(i)= ints[8 - i];
       deallog << First9(i) << "  ";
     }
   deallog << std::endl;

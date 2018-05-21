@@ -56,7 +56,7 @@ check()
   // create a system element composed
   // of one Q1 and one Q2 element
   hp::FECollection<dim> element;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for(unsigned int i= 1; i < 7 - dim; ++i)
     element.push_back(FE_Q<dim>(i));
   hp::DoFHandler<dim> dof(tr);
   for(typename hp::DoFHandler<dim>::active_cell_iterator cell
@@ -72,13 +72,13 @@ check()
   // formula suited to the elements
   // we have here
   hp::MappingCollection<dim> mapping;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for(unsigned int i= 1; i < 7 - dim; ++i)
     mapping.push_back(MappingQ<dim>(i + 1));
 
   Vector<double> rhs(dof.n_dofs());
   VectorTools::create_point_source_vector(
     mapping, dof, tr.begin()->center(), rhs);
-  for(unsigned int i = 0; i < rhs.size(); ++i)
+  for(unsigned int i= 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

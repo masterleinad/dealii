@@ -42,7 +42,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Martin Kronbichler, 2016
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class DiagonalMatrix : public Subscriptor
 {
 public:
@@ -52,7 +52,7 @@ public:
   /**
    * Constructor.
    */
-  DiagonalMatrix() = default;
+  DiagonalMatrix()= default;
 
   /**
    * Initialize with a given vector by copying the content of the vector
@@ -143,8 +143,8 @@ public:
       const size_type  n_cols,
       const size_type* col_indices,
       const number2*   values,
-      const bool       elide_zero_values      = true,
-      const bool       col_indices_are_sorted = false);
+      const bool       elide_zero_values     = true,
+      const bool       col_indices_are_sorted= false);
 
   /**
    * Add value to the element (i,j).
@@ -230,7 +230,7 @@ template <typename VectorType>
 void
 DiagonalMatrix<VectorType>::reinit(const VectorType& vec)
 {
-  diagonal = vec;
+  diagonal= vec;
 }
 
 template <typename VectorType>
@@ -304,9 +304,9 @@ DiagonalMatrix<VectorType>::add(const size_type  row,
                                 const bool,
                                 const bool)
 {
-  for(size_type i = 0; i < n_cols; ++i)
+  for(size_type i= 0; i < n_cols; ++i)
     if(col_indices[i] == row)
-      diagonal(row) += values[i];
+      diagonal(row)+= values[i];
 }
 
 template <typename VectorType>
@@ -316,14 +316,14 @@ DiagonalMatrix<VectorType>::add(const size_type  i,
                                 const value_type value)
 {
   if(i == j)
-    diagonal(i) += value;
+    diagonal(i)+= value;
 }
 
 template <typename VectorType>
 void
 DiagonalMatrix<VectorType>::vmult(VectorType& dst, const VectorType& src) const
 {
-  dst = src;
+  dst= src;
   dst.scale(diagonal);
 }
 
@@ -341,7 +341,7 @@ DiagonalMatrix<VectorType>::vmult_add(VectorType&       dst,
 {
   VectorType tmp(src);
   tmp.scale(diagonal);
-  dst += tmp;
+  dst+= tmp;
 }
 
 template <typename VectorType>

@@ -27,7 +27,7 @@ test()
   m.set(1, 1, 2);
   m.set(1, 2, 3);
   m.compress(VectorOperation::insert);
-  PETScWrappers::SparseMatrix::const_iterator i = m.begin();
+  PETScWrappers::SparseMatrix::const_iterator i= m.begin();
   deallog << i->row() << ' ' << i->column() << ' ' << i->value() << std::endl;
   ++i;
   deallog << i->row() << ' ' << i->column() << ' ' << i->value() << std::endl;

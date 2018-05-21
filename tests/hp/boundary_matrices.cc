@@ -54,8 +54,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    for(unsigned int i = 0; i < dim + 1; ++i)
-      values(i) = value(p, i);
+    for(unsigned int i= 0; i < dim + 1; ++i)
+      values(i)= value(p, i);
   }
 };
 
@@ -85,7 +85,7 @@ check()
 
   MySquareFunction<dim>           coefficient;
   typename FunctionMap<dim>::type function_map;
-  function_map[0] = &coefficient;
+  function_map[0]= &coefficient;
 
   hp::QCollection<dim - 1> face_quadrature;
   face_quadrature.push_back(QGauss<dim - 1>(6));
@@ -113,7 +113,7 @@ check()
 
   // Multiply matrix by 100 to
   // make test more sensitive
-  matrix *= 100;
+  matrix*= 100;
 
   // Write out matrix
   matrix.print(deallog.get_file_stream());

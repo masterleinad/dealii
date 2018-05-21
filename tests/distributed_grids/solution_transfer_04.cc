@@ -45,8 +45,7 @@ test(std::ostream& /*out*/)
   parallel::distributed::SolutionTransfer<dim, Vector<double>> soltrans(dofh);
   parallel::distributed::SolutionTransfer<dim, Vector<double>> soltrans2(dofh);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
+  for(typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
       cell != tr.end();
       ++cell)
     {
@@ -58,10 +57,10 @@ test(std::ostream& /*out*/)
   Vector<double> solution(dofh.n_dofs());
 
   Vector<double> solution1(dofh.n_dofs());
-  solution1 = 1.0;
+  solution1= 1.0;
 
   Vector<double> solution2(dofh.n_dofs());
-  solution2 = 2.0;
+  solution2= 2.0;
 
   std::vector<const Vector<double>*> sols;
   sols.push_back(&solution1);

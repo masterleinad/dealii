@@ -32,7 +32,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   mpi_initlog();
 
-  const unsigned int n = 4;
+  const unsigned int n= 4;
 
   PETScWrappers::SparseMatrix      serial_matrix(n, n, n);
   PETScWrappers::MPI::SparseMatrix mpi_matrix(MPI_COMM_WORLD, n, n, n, n, n);
@@ -48,9 +48,9 @@ main(int argc, char** argv)
   std::iota(gdi.begin(), gdi.end(), 0);
   std::iota(cell_rhs.begin(), cell_rhs.end(), 0);
 
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
-      cell_matrix(i, j) = i * n + j;
+  for(unsigned int i= 0; i < n; ++i)
+    for(unsigned int j= 0; j < n; ++j)
+      cell_matrix(i, j)= i * n + j;
 
   constraints.distribute_local_to_global(
     cell_matrix, cell_rhs, gdi, serial_matrix, mpi_vector);

@@ -43,10 +43,10 @@
 
 #include <iostream>
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 // argument for build_patches()
-const unsigned int patches = 10;
+const unsigned int patches= 10;
 
 using namespace dealii;
 
@@ -61,18 +61,18 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component= 0) const
   {
-    Tensor<1, dim> res = point;
+    Tensor<1, dim> res= point;
     Assert(point.norm() > 0,
            dealii::ExcMessage("gradient is not defined at zero"));
-    res *= -value(point) / point.norm();
+    res*= -value(point) / point.norm();
     return res;
   }
 };
@@ -80,8 +80,8 @@ public:
 template <int dim>
 void
 test6(const bool         do_href,
-      const unsigned int p_feq  = 1,
-      const unsigned int p_feen = 2)
+      const unsigned int p_feq = 1,
+      const unsigned int p_feen= 2)
 {
   deallog << "hp: " << do_href << " " << p_feq << " " << p_feen << std::endl;
 
@@ -139,11 +139,11 @@ test6(const bool         do_href,
   // output to check if all is good:
   std::vector<Vector<double>> shape_functions;
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
+  for(unsigned int s= 0; s < dof_handler.n_dofs(); s++)
     {
       Vector<double> shape_function;
       shape_function.reinit(dof_handler.n_dofs());
-      shape_function[s] = 1.0;
+      shape_function[s]= 1.0;
 
       // if the dof is constrained, first output unconstrained vector
       if(constraints.is_constrained(s))
@@ -168,22 +168,22 @@ test6(const bool         do_href,
   Vector<float> fe_index(triangulation.n_active_cells());
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
-  for(unsigned int index = 0; cell != endc; ++cell, ++index)
+    endc= dof_handler.end();
+  for(unsigned int index= 0; cell != endc; ++cell, ++index)
     {
-      fe_index[index] = cell->active_fe_index();
+      fe_index[index]= cell->active_fe_index();
     }
   data_out.add_data_vector(fe_index, "fe_index");
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for(unsigned int i= 0; i < shape_functions.size(); i++)
     data_out.add_data_vector(shape_functions[i], names[i]);
 
   data_out.build_patches(patches);
 
-  std::string filename = "hp-shape_functions_ref=" + std::to_string(do_href)
-                         + "_p_feq=" + std::to_string(p_feq)
-                         + "_p_feenr=" + std::to_string(p_feen) + "_"
-                         + dealii::Utilities::int_to_string(dim) + "D.vtu";
+  std::string filename= "hp-shape_functions_ref=" + std::to_string(do_href)
+                        + "_p_feq=" + std::to_string(p_feq)
+                        + "_p_feenr=" + std::to_string(p_feen) + "_"
+                        + dealii::Utilities::int_to_string(dim) + "D.vtu";
   std::ofstream output(filename.c_str());
   data_out.write_vtu(output);
 #endif

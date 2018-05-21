@@ -102,7 +102,7 @@ namespace TrilinosWrappers
      * reinit(BlockSparsityPattern). The number of blocks per row and column
      * are then determined by that function.
      */
-    BlockSparseMatrix() = default;
+    BlockSparseMatrix()= default;
 
     /**
      * Destructor.
@@ -154,7 +154,7 @@ namespace TrilinosWrappers
     void
     reinit(const std::vector<Epetra_Map>&  input_maps,
            const BlockSparsityPatternType& block_sparsity_pattern,
-           const bool                      exchange_data = false);
+           const bool                      exchange_data= false);
 
     /**
      * Resize the matrix, by using an array of index sets to determine the
@@ -165,8 +165,8 @@ namespace TrilinosWrappers
     void
     reinit(const std::vector<IndexSet>&    input_maps,
            const BlockSparsityPatternType& block_sparsity_pattern,
-           const MPI_Comm&                 communicator  = MPI_COMM_WORLD,
-           const bool                      exchange_data = false);
+           const MPI_Comm&                 communicator = MPI_COMM_WORLD,
+           const bool                      exchange_data= false);
 
     /**
      * Resize the matrix and initialize it by the given sparsity pattern.
@@ -189,7 +189,7 @@ namespace TrilinosWrappers
     void
     reinit(const std::vector<Epetra_Map>&             input_maps,
            const ::dealii::BlockSparseMatrix<double>& deal_ii_sparse_matrix,
-           const double                               drop_tolerance = 1e-13);
+           const double                               drop_tolerance= 1e-13);
 
     /**
      * This function initializes the Trilinos matrix using the deal.II sparse
@@ -200,7 +200,7 @@ namespace TrilinosWrappers
      */
     void
     reinit(const ::dealii::BlockSparseMatrix<double>& deal_ii_sparse_matrix,
-           const double                               drop_tolerance = 1e-13);
+           const double                               drop_tolerance= 1e-13);
 
     /**
      * Return the state of the matrix, i.e., whether compress() needs to be
@@ -445,9 +445,9 @@ namespace TrilinosWrappers
   {
     Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
-      for(size_type c = 0; c < this->n_block_cols(); ++c)
-        this->block(r, c) = d;
+    for(size_type r= 0; r < this->n_block_rows(); ++r)
+      for(size_type c= 0; c < this->n_block_cols(); ++c)
+        this->block(r, c)= d;
 
     return *this;
   }
@@ -455,12 +455,12 @@ namespace TrilinosWrappers
   inline bool
   BlockSparseMatrix::is_compressed() const
   {
-    bool compressed = true;
-    for(size_type row = 0; row < n_block_rows(); ++row)
-      for(size_type col = 0; col < n_block_cols(); ++col)
+    bool compressed= true;
+    for(size_type row= 0; row < n_block_rows(); ++row)
+      for(size_type col= 0; col < n_block_cols(); ++col)
         if(block(row, col).is_compressed() == false)
           {
-            compressed = false;
+            compressed= false;
             break;
           }
 
@@ -552,7 +552,7 @@ namespace TrilinosWrappers
     Assert(this->n_block_rows() != 0, ExcNotInitialized());
 
     std::vector<IndexSet> domain_indices;
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
+    for(size_type c= 0; c < this->n_block_cols(); ++c)
       domain_indices.push_back(
         this->sub_objects[0][c]->locally_owned_domain_indices());
 
@@ -566,7 +566,7 @@ namespace TrilinosWrappers
     Assert(this->n_block_rows() != 0, ExcNotInitialized());
 
     std::vector<IndexSet> range_indices;
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
+    for(size_type r= 0; r < this->n_block_rows(); ++r)
       range_indices.push_back(
         this->sub_objects[r][0]->locally_owned_range_indices());
 

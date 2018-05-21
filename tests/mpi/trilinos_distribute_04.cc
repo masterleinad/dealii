@@ -47,7 +47,7 @@ template <int dim>
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int n_processes
     = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
@@ -58,11 +58,11 @@ test()
 
   if(myid == 0)
     {
-      typename Triangulation<dim>::active_cell_iterator it = tr.begin_active();
+      typename Triangulation<dim>::active_cell_iterator it= tr.begin_active();
       ++it;
       ++it;
       ++it;
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         {
           it->set_refine_flag();
           ++it;
@@ -83,15 +83,15 @@ test()
 
   typename FunctionMap<dim>::type dirichlet_boundary;
   Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
-  dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
+  dirichlet_boundary[0]= &homogeneous_dirichlet_bc;
   VectorTools::interpolate_boundary_values(dofh, dirichlet_boundary, cm);
 
   cm.close();
 
   TrilinosWrappers::MPI::Vector vec(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
-  for(unsigned int i = vec.local_range().first; i < vec.local_range().second;
+  for(unsigned int i= vec.local_range().first; i < vec.local_range().second;
       ++i)
-    vec(i) = i;
+    vec(i)= i;
   vec.compress(VectorOperation::insert);
 
   deallog << "locally owned:" << std::endl;
@@ -115,7 +115,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

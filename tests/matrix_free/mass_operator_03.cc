@@ -50,7 +50,7 @@ test()
   DoFHandler<dim>        dof(tria);
   dof.distribute_dofs(fe);
 
-  IndexSet owned_set = dof.locally_owned_dofs();
+  IndexSet owned_set= dof.locally_owned_dofs();
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dof, relevant_set);
 
@@ -68,8 +68,8 @@ test()
   {
     const QGauss<1>                                  quad(fe_degree + 2);
     typename MatrixFree<dim, number>::AdditionalData data;
-    data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.tasks_block_size      = 7;
+    data.tasks_parallel_scheme= MatrixFree<dim, number>::AdditionalData::none;
+    data.tasks_block_size     = 7;
     mf_data->reinit(dof, constraints, quad, data);
   }
 
@@ -89,16 +89,16 @@ test()
   out.reinit(in);
   ref.reinit(in);
 
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for(unsigned int i= 0; i < in.local_size(); ++i)
     {
-      const unsigned int glob_index = owned_set.nth_index_in_set(i);
+      const unsigned int glob_index= owned_set.nth_index_in_set(i);
       if(constraints.is_constrained(glob_index))
         continue;
-      in.local_element(i) = 1.;
+      in.local_element(i)= 1.;
     }
 
   in.update_ghost_values();
-  out = diagonal;
+  out= diagonal;
 
   // assemble trilinos sparse matrix with
   // (v, u) for reference
@@ -122,27 +122,27 @@ test()
                             update_values | update_gradients
                               | update_JxW_values);
 
-    const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
-                                                   endc = dof.end();
+    typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active(),
+                                                   endc= dof.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
-          cell_matrix = 0;
+          cell_matrix= 0;
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                  cell_matrix(i, j) += (fe_values.shape_value(i, q_point)
-                                        * fe_values.shape_value(j, q_point))
-                                       * fe_values.JxW(q_point);
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                  cell_matrix(i, j)+= (fe_values.shape_value(i, q_point)
+                                       * fe_values.shape_value(j, q_point))
+                                      * fe_values.JxW(q_point);
               }
 
           cell->get_dof_indices(local_dof_indices);
@@ -154,18 +154,18 @@ test()
 
   sparse_matrix.vmult(ref, in);
 
-  for(unsigned int i = 0; i < ref.local_size(); ++i)
+  for(unsigned int i= 0; i < ref.local_size(); ++i)
     {
-      const unsigned int glob_index = owned_set.nth_index_in_set(i);
+      const unsigned int glob_index= owned_set.nth_index_in_set(i);
       if(constraints.is_constrained(glob_index))
-        ref.local_element(i) = 1.;
+        ref.local_element(i)= 1.;
       else
-        ref.local_element(i) = 1. / ref.local_element(i);
+        ref.local_element(i)= 1. / ref.local_element(i);
     }
   ref.compress(VectorOperation::insert);
 
-  out -= ref;
-  const double diff_norm = out.linfty_norm();
+  out-= ref;
+  const double diff_norm= out.linfty_norm();
 
   deallog << "Norm of difference: " << diff_norm << std::endl;
   deallog << "l2_norm: " << diagonal.l2_norm() << std::endl;

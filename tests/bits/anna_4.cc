@@ -63,8 +63,8 @@ VectorBoundaryValues<dim>::vector_value(const Point<dim>& p,
 {
   Assert(values.size() == 2, ExcDimensionMismatch(values.size(), 2));
 
-  for(unsigned int i = 0; i < 2; ++i)
-    values(i) = p(i) * p(i);
+  for(unsigned int i= 0; i < 2; ++i)
+    values(i)= p(i) * p(i);
 }
 
 template <int dim>
@@ -153,15 +153,15 @@ FindBug<dim>::dirichlet_conditions()
   std::vector<bool> component_mask(2);
   // Dirichlet-BC for the
   // Q1-Component
-  component_mask[0] = true;
+  component_mask[0]= true;
   // no Dirichlet-BC for the
   // DG-component
-  component_mask[1] = false;
+  component_mask[1]= false;
 
   // This is just for the final
   // output-test
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    dirichlet_dofs[i] = 1.;
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
+    dirichlet_dofs[i]= 1.;
 
   // Here comes the crucial call....
   VectorTools::interpolate_boundary_values(dof_handler,
@@ -185,7 +185,7 @@ FindBug<dim>::dirichlet_conditions()
   // to 1, and interpolate_b_v should
   // have overwritten those for
   // component 0 by 0)
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     {
       if(fixed_dofs[i] == true)
         {
@@ -206,7 +206,7 @@ FindBug<dim>::dirichlet_conditions()
                                            VectorBoundaryValues<dim>(),
                                            dirichlet_dofs,
                                            component_mask);
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     if(fixed_dofs[i] == true)
       deallog << i << " " << dirichlet_dofs[i] << std::endl;
 }

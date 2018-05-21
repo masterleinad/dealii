@@ -40,10 +40,10 @@ plot_derivatives(Mapping<dim>&       mapping,
   Triangulation<dim> tr;
   DoFHandler<dim>    dof(tr);
   GridGenerator::hyper_cube(tr, 2., 5.);
-  typename DoFHandler<dim>::cell_iterator c = dof.begin();
+  typename DoFHandler<dim>::cell_iterator c= dof.begin();
   dof.distribute_dofs(finel);
 
-  const unsigned int div = 1;
+  const unsigned int div= 1;
 
   QTrapez<dim> q;
   //  QIterated<dim> q(q_trapez, div);
@@ -51,16 +51,16 @@ plot_derivatives(Mapping<dim>&       mapping,
     mapping, finel, q, UpdateFlags(update_gradients | update_hessians));
   fe.reinit(c);
 
-  unsigned int k = 0;
-  for(unsigned int mz = 0; mz <= ((dim > 2) ? div : 0); ++mz)
+  unsigned int k= 0;
+  for(unsigned int mz= 0; mz <= ((dim > 2) ? div : 0); ++mz)
     {
-      for(unsigned int my = 0; my <= ((dim > 1) ? div : 0); ++my)
+      for(unsigned int my= 0; my <= ((dim > 1) ? div : 0); ++my)
         {
-          for(unsigned int mx = 0; mx <= div; ++mx)
+          for(unsigned int mx= 0; mx <= div; ++mx)
             {
               deallog << q.point(k) << std::endl;
 
-              for(unsigned int i = 0; i < finel.dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < finel.dofs_per_cell; ++i)
                 {
                   deallog << "\tGrad " << fe.shape_grad(i, k);
                   deallog << "\t2nd " << fe.shape_hessian(i, k);

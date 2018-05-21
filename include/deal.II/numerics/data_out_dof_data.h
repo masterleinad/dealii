@@ -216,7 +216,7 @@ namespace internal
       /**
        * Destructor made virtual.
        */
-      virtual ~DataEntryBase() = default;
+      virtual ~DataEntryBase()= default;
 
       /**
        * Assuming that the stored vector is a cell vector, extract the given
@@ -224,7 +224,7 @@ namespace internal
        */
       virtual double
       get_cell_data_value(const unsigned int       cell_number,
-                          const ComponentExtractor extract_component) const = 0;
+                          const ComponentExtractor extract_component) const= 0;
 
       /**
        * Given a FEValuesBase object, extract the values on the present cell
@@ -235,7 +235,7 @@ namespace internal
         const FEValuesBase<DoFHandlerType::dimension,
                            DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
-        std::vector<double>& patch_values) const = 0;
+        std::vector<double>& patch_values) const= 0;
 
       /**
        * Given a FEValuesBase object, extract the values on the present cell
@@ -247,7 +247,7 @@ namespace internal
         const FEValuesBase<DoFHandlerType::dimension,
                            DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
-        std::vector<dealii::Vector<double>>& patch_values_system) const = 0;
+        std::vector<dealii::Vector<double>>& patch_values_system) const= 0;
 
       /**
        * Given a FEValuesBase object, extract the gradients on the present
@@ -259,7 +259,7 @@ namespace internal
                            DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
         std::vector<Tensor<1, DoFHandlerType::space_dimension>>&
-          patch_gradients) const = 0;
+          patch_gradients) const= 0;
 
       /**
        * Given a FEValuesBase object, extract the gradients on the present
@@ -272,7 +272,7 @@ namespace internal
                            DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
         std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>&
-          patch_gradients_system) const = 0;
+          patch_gradients_system) const= 0;
 
       /**
        * Given a FEValuesBase object, extract the second derivatives on the
@@ -284,7 +284,7 @@ namespace internal
                            DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
         std::vector<Tensor<2, DoFHandlerType::space_dimension>>& patch_hessians)
-        const = 0;
+        const= 0;
 
       /**
        * Given a FEValuesBase object, extract the second derivatives on the
@@ -297,14 +297,14 @@ namespace internal
                            DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
         std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>&
-          patch_hessians_system) const = 0;
+          patch_hessians_system) const= 0;
 
       /**
        * Return whether the data represented by (a derived class of) this object
        * represents a complex-valued (as opposed to real-valued) information.
        */
       virtual bool
-      is_complex_valued() const = 0;
+      is_complex_valued() const= 0;
 
       /**
        * Clear all references to the vectors.
@@ -318,7 +318,7 @@ namespace internal
        * object.
        */
       virtual std::size_t
-      memory_consumption() const = 0;
+      memory_consumption() const= 0;
 
       /**
        * Pointer to the DoFHandler object that the vector is based on.
@@ -394,7 +394,7 @@ namespace internal
         std::vector<std::shared_ptr<DataEntryBase<DoFHandlerType>>>& dof_data,
         const typename dealii::Triangulation<dim, spacedim>::cell_iterator&
                            cell,
-        const unsigned int face = numbers::invalid_unsigned_int);
+        const unsigned int face= numbers::invalid_unsigned_int);
 
       const FEValuesBase<dim, spacedim>&
       get_present_fe_values(const unsigned int dataset) const;
@@ -568,7 +568,7 @@ namespace internal
  */
 template <typename DoFHandlerType,
           int patch_dim,
-          int patch_space_dim = patch_dim>
+          int patch_space_dim= patch_dim>
 class DataOut_DoFData : public DataOutInterface<patch_dim, patch_space_dim>
 {
 public:
@@ -714,7 +714,7 @@ public:
   add_data_vector(
     const VectorType&               data,
     const std::vector<std::string>& names,
-    const DataVectorType            type = type_automatic,
+    const DataVectorType            type= type_automatic,
     const std::vector<DataComponentInterpretation::DataComponentInterpretation>&
       data_component_interpretation
     = std::vector<DataComponentInterpretation::DataComponentInterpretation>());
@@ -740,7 +740,7 @@ public:
   add_data_vector(
     const VectorType&    data,
     const std::string&   name,
-    const DataVectorType type = type_automatic,
+    const DataVectorType type= type_automatic,
     const std::vector<DataComponentInterpretation::DataComponentInterpretation>&
       data_component_interpretation
     = std::vector<DataComponentInterpretation::DataComponentInterpretation>());
@@ -879,7 +879,7 @@ public:
   void
   merge_patches(
     const DataOut_DoFData<DoFHandlerType2, patch_dim, patch_space_dim>& source,
-    const Point<patch_space_dim>& shift = Point<patch_space_dim>());
+    const Point<patch_space_dim>& shift= Point<patch_space_dim>());
 
   /**
    * Release the pointers to the data vectors and the DoF handler. You have to
@@ -1079,7 +1079,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::merge_patches(
   const DataOut_DoFData<DoFHandlerType2, patch_dim, patch_space_dim>& source,
   const Point<patch_space_dim>&                                       shift)
 {
-  const std::vector<Patch>& source_patches = source.get_patches();
+  const std::vector<Patch>& source_patches= source.get_patches();
   Assert((patches.size() != 0) && (source_patches.size() != 0),
          ExcMessage("When calling this function, both the current "
                     "object and the one being merged need to have a "
@@ -1108,7 +1108,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::merge_patches(
            == source.get_vector_data_ranges().size(),
          ExcMessage("Both sources need to declare the same components "
                     "as vectors."));
-  for(unsigned int i = 0; i < get_vector_data_ranges().size(); ++i)
+  for(unsigned int i= 0; i < get_vector_data_ranges().size(); ++i)
     {
       Assert(std::get<0>(get_vector_data_ranges()[i])
                == std::get<0>(source.get_vector_data_ranges()[i]),
@@ -1128,25 +1128,25 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::merge_patches(
   // of elements, since we need to
   // adjust patch numbers, etc
   // afterwards
-  const unsigned int old_n_patches = patches.size();
+  const unsigned int old_n_patches= patches.size();
   patches.insert(patches.end(), source_patches.begin(), source_patches.end());
 
   // perform shift, if so desired
   if(shift != Point<patch_space_dim>())
-    for(unsigned int i = old_n_patches; i < patches.size(); ++i)
-      for(unsigned int v = 0; v < GeometryInfo<patch_dim>::vertices_per_cell;
+    for(unsigned int i= old_n_patches; i < patches.size(); ++i)
+      for(unsigned int v= 0; v < GeometryInfo<patch_dim>::vertices_per_cell;
           ++v)
-        patches[i].vertices[v] += shift;
+        patches[i].vertices[v]+= shift;
 
   // adjust patch numbers
-  for(unsigned int i = old_n_patches; i < patches.size(); ++i)
-    patches[i].patch_index += old_n_patches;
+  for(unsigned int i= old_n_patches; i < patches.size(); ++i)
+    patches[i].patch_index+= old_n_patches;
 
   // adjust patch neighbors
-  for(unsigned int i = old_n_patches; i < patches.size(); ++i)
-    for(unsigned int n = 0; n < GeometryInfo<patch_dim>::faces_per_cell; ++n)
+  for(unsigned int i= old_n_patches; i < patches.size(); ++i)
+    for(unsigned int n= 0; n < GeometryInfo<patch_dim>::faces_per_cell; ++n)
       if(patches[i].neighbors[n] != Patch::no_neighbor)
-        patches[i].neighbors[n] += old_n_patches;
+        patches[i].neighbors[n]+= old_n_patches;
 }
 
 DEAL_II_NAMESPACE_CLOSE

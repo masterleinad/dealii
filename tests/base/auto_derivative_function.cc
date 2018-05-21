@@ -31,7 +31,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   /**
    * n_components=2. First
@@ -59,8 +59,8 @@ AutoSinExp<dim>::vector_value(const Point<dim>& p, Vector<double>& values) const
 {
   Assert(values.size() == this->n_components,
          ExcDimensionMismatch(values.size(), this->n_components));
-  values(0) = 0;
-  values(1) = value(p);
+  values(0)= 0;
+  values(1)= value(p);
 }
 
 /*----------------------------------------------------------*/
@@ -75,7 +75,7 @@ public:
   {}
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& p, const unsigned int component = 0) const;
+  gradient(const Point<dim>& p, const unsigned int component= 0) const;
 
   virtual void
   vector_gradient(const Point<dim>&                     p,
@@ -87,8 +87,8 @@ Tensor<1, dim>
 ExactSinExp<dim>::gradient(const Point<dim>& p, const unsigned int) const
 {
   Tensor<1, dim> grad;
-  grad[0] = 2 * std::cos(2 * p(0)) * std::exp(3 * p(1));
-  grad[1] = 3 * std::sin(2 * p(0)) * std::exp(3 * p(1));
+  grad[0]= 2 * std::cos(2 * p(0)) * std::exp(3 * p(1));
+  grad[1]= 3 * std::sin(2 * p(0)) * std::exp(3 * p(1));
   return grad;
 }
 
@@ -102,7 +102,7 @@ ExactSinExp<dim>::vector_gradient(
          ExcDimensionMismatch(gradients.size(), this->n_components));
 
   gradients[0].clear();
-  gradients[1] = gradient(p);
+  gradients[1]= gradient(p);
 }
 
 int
@@ -112,25 +112,25 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const unsigned int      dim = 2;
+  const unsigned int      dim= 2;
   AutoSinExp<dim>         auto_function;
   ExactSinExp<dim>        exact_function;
   Point<dim>              p(0.23, 0.1);
   std::vector<Point<dim>> ps(1, p);
 
-  Tensor<1, dim> u_grad = exact_function.gradient(p);
+  Tensor<1, dim> u_grad= exact_function.gradient(p);
 
   AutoDerivativeFunction<dim>::DifferenceFormula formula;
-  const double                                   h_base = 0.1;
-  for(unsigned int order = 1; order < 5; ++order)
+  const double                                   h_base= 0.1;
+  for(unsigned int order= 1; order < 5; ++order)
     {
-      formula = AutoDerivativeFunction<dim>::get_formula_of_order(order);
+      formula= AutoDerivativeFunction<dim>::get_formula_of_order(order);
       auto_function.set_formula(formula);
       deallog << "order=" << order << ",  formula=" << formula << std::endl;
       ConvergenceTable history;
 
-      unsigned int factor = 1;
-      for(unsigned int i = 0; i < 6; ++i, factor *= 2)
+      unsigned int factor= 1;
+      for(unsigned int i= 0; i < 6; ++i, factor*= 2)
         {
           history.add_value("f", factor);
           history.omit_column_from_convergence_rate_evaluation("f");
@@ -138,9 +138,9 @@ main()
           auto_function.set_h(h_base / factor);
 
           // Test of gradient function
-          Tensor<1, dim> a_grad = auto_function.gradient(p);
-          a_grad -= u_grad;
-          double value = std::sqrt(a_grad * a_grad);
+          Tensor<1, dim> a_grad= auto_function.gradient(p);
+          a_grad-= u_grad;
+          double value= std::sqrt(a_grad * a_grad);
           history.add_value("grad", value);
           history.set_scientific("grad", true);
           history.set_precision("grad", 2);
@@ -149,8 +149,8 @@ main()
           // function
           std::vector<Tensor<1, dim>> a_grads(1);
           auto_function.gradient_list(ps, a_grads);
-          a_grads[0] -= u_grad;
-          value = std::sqrt(a_grads[0] * a_grads[0]);
+          a_grads[0]-= u_grad;
+          value= std::sqrt(a_grads[0] * a_grads[0]);
           history.add_value("grads[0]", value);
           history.set_scientific("grads[0]", true);
           history.set_precision("grads[0]", 2);
@@ -159,8 +159,8 @@ main()
           // function
           std::vector<Tensor<1, dim>> a_vgrad(2);
           auto_function.vector_gradient(p, a_vgrad);
-          a_vgrad[1] -= u_grad;
-          value = std::sqrt(a_vgrad[1] * a_vgrad[1]);
+          a_vgrad[1]-= u_grad;
+          value= std::sqrt(a_vgrad[1] * a_vgrad[1]);
           history.add_value("vgrad[1]", value);
           history.set_scientific("vgrad[1]", true);
           history.set_precision("vgrad[1]", 2);
@@ -171,8 +171,8 @@ main()
           std::vector<std::vector<Tensor<1, dim>>> a_vgrads(
             1, std::vector<Tensor<1, dim>>(2));
           auto_function.vector_gradient_list(ps, a_vgrads);
-          a_vgrads[0][1] -= u_grad;
-          value = std::sqrt(a_vgrads[0][1] * a_vgrads[0][1]);
+          a_vgrads[0][1]-= u_grad;
+          value= std::sqrt(a_vgrads[0][1] * a_vgrads[0][1]);
           history.add_value("vgrads[1]", value);
           history.set_scientific("vgrads[1]", true);
           history.set_precision("vgrads[1]", 2);

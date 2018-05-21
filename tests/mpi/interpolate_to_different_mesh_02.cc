@@ -111,12 +111,12 @@ void
 SeventhProblem<dim>::setup_system()
 {
   dof_handler.distribute_dofs(fe);
-  locally_owned_dofs = dof_handler.locally_owned_dofs();
+  locally_owned_dofs= dof_handler.locally_owned_dofs();
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
   locally_relevant_solution.reinit(
     locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
   system_rhs.reinit(locally_owned_dofs, mpi_communicator);
-  system_rhs = 0;
+  system_rhs= 0;
   constraints.clear();
   constraints.reinit(locally_relevant_dofs);
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
@@ -139,7 +139,7 @@ void
 SeventhProblem<dim>::setup_second_system()
 {
   second_dof_handler.distribute_dofs(fe);
-  second_locally_owned_dofs = second_dof_handler.locally_owned_dofs();
+  second_locally_owned_dofs= second_dof_handler.locally_owned_dofs();
   DoFTools::extract_locally_relevant_dofs(second_dof_handler,
                                           second_locally_relevant_dofs);
   second_locally_relevant_solution.reinit(
@@ -157,21 +157,21 @@ SeventhProblem<dim>::assemble_system()
                           quadrature_formula,
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     if(cell->is_locally_owned())
       {
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
         fe_values.reinit(cell);
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           {
             const double rhs_value
               = (fe_values.quadrature_point(q_point)[1]
@@ -182,14 +182,14 @@ SeventhProblem<dim>::assemble_system()
                                  * fe_values.quadrature_point(q_point)[0]) ?
                    1 :
                    -1);
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                  cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                        * fe_values.shape_grad(j, q_point)
-                                        * fe_values.JxW(q_point));
-                cell_rhs(i) += (rhs_value * fe_values.shape_value(i, q_point)
-                                * fe_values.JxW(q_point));
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                  cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                       * fe_values.shape_grad(j, q_point)
+                                       * fe_values.JxW(q_point));
+                cell_rhs(i)+= (rhs_value * fe_values.shape_value(i, q_point)
+                               * fe_values.JxW(q_point));
               }
           }
         cell->get_dof_indices(local_dof_indices);
@@ -215,7 +215,7 @@ SeventhProblem<dim>::solve()
   pcout << " Solved in " << solver_control.last_step() << " iterations."
         << std::endl;
   constraints.distribute(completely_distributed_solution);
-  locally_relevant_solution = completely_distributed_solution;
+  locally_relevant_solution= completely_distributed_solution;
 }
 
 template <int dim>
@@ -258,7 +258,7 @@ SeventhProblem<dim>::run(unsigned int cycle)
       solve();
 
       setup_second_system();
-      second_locally_relevant_solution = locally_relevant_solution;
+      second_locally_relevant_solution= locally_relevant_solution;
 
       VectorTools::interpolate_to_different_mesh(
         dof_handler,
@@ -280,8 +280,8 @@ seventh_grid()
 
   pcout << "7th Starting" << std::endl;
   SeventhProblem<2>  lap(1);
-  const unsigned int n_cycles = 5;
-  for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+  const unsigned int n_cycles= 5;
+  for(unsigned int cycle= 0; cycle < n_cycles; ++cycle)
     {
       pcout << "Cycle " << cycle << ':' << std::endl;
       lap.run(cycle);

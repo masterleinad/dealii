@@ -90,8 +90,8 @@ namespace numbers
         {
           Tensor<1, dim, T> nan_tensor;
 
-          for(unsigned int i = 0; i < dim; ++i)
-            nan_tensor[i] = NaNInitializer<T>::invalid_element();
+          for(unsigned int i= 0; i < dim; ++i)
+            nan_tensor[i]= NaNInitializer<T>::invalid_element();
 
           return nan_tensor;
         }
@@ -111,7 +111,7 @@ namespace numbers
           Tensor<rank, dim, T> nan_tensor;
 
           // recursively initialize sub-tensors with invalid elements
-          for(unsigned int i = 0; i < dim; ++i)
+          for(unsigned int i= 0; i < dim; ++i)
             nan_tensor[i]
               = NaNInitializer<Tensor<rank - 1, dim, T>>::invalid_element();
 
@@ -132,8 +132,8 @@ namespace numbers
         {
           Point<dim, T> nan_point;
 
-          for(unsigned int i = 0; i < dim; ++i)
-            nan_point[i] = NaNInitializer<T>::invalid_element();
+          for(unsigned int i= 0; i < dim; ++i)
+            nan_point[i]= NaNInitializer<T>::invalid_element();
 
           return nan_point;
         }
@@ -153,10 +153,10 @@ namespace numbers
           // initialize symmetric tensors via the unrolled list of elements
           T initializers
             [SymmetricTensor<rank, dim, T>::n_independent_components];
-          for(unsigned int i = 0;
+          for(unsigned int i= 0;
               i < SymmetricTensor<rank, dim, T>::n_independent_components;
               ++i)
-            initializers[i] = NaNInitializer<T>::invalid_element();
+            initializers[i]= NaNInitializer<T>::invalid_element();
 
           return SymmetricTensor<rank, dim, T>(initializers);
         }
@@ -176,8 +176,8 @@ namespace numbers
           DerivativeForm<order, dim, spacedim, T> form;
 
           // recursively initialize sub-tensors with invalid elements
-          for(unsigned int i = 0; i < spacedim; ++i)
-            form[i] = NaNInitializer<Tensor<order, dim, T>>::invalid_element();
+          for(unsigned int i= 0; i < spacedim; ++i)
+            form[i]= NaNInitializer<Tensor<order, dim, T>>::invalid_element();
 
           return form;
         }

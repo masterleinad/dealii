@@ -657,15 +657,15 @@ public:
     /**
      * Solve the primal problem next.
      */
-    primal_problem = 0x0,
+    primal_problem= 0x0,
     /**
      * Solve the dual problem next.
      */
-    dual_problem = 0x1,
+    dual_problem= 0x1,
     /**
      * Perform postprocessing next.
      */
-    postprocess = 0x2
+    postprocess= 0x2
   };
 
   /**
@@ -676,7 +676,7 @@ public:
   /**
    * Destructor. At present, this does nothing.
    */
-  virtual ~TimeStepBase() override = default;
+  virtual ~TimeStepBase() override= default;
 
   /**
    * Reconstruct all the data that is needed for this time level to work. This
@@ -918,7 +918,7 @@ private:
    * private prevents the compiler to provide it's own, incorrect one if
    * anyone chose to copy such an object.
    */
-  TimeStepBase(const TimeStepBase&) = delete;
+  TimeStepBase(const TimeStepBase&)= delete;
 
   /**
    * Copy operator. I can see no reason why someone might want to use it, so I
@@ -1135,16 +1135,16 @@ namespace TimeStepBase_Tria_Flags
      * Constructor. The default values are chosen such that almost no
      * restriction on the mesh refinement is imposed.
      */
-    RefinementFlags(const unsigned int max_refinement_level        = 0,
-                    const unsigned int first_sweep_with_correction = 0,
-                    const unsigned int min_cells_for_correction    = 0,
-                    const double       cell_number_corridor_top    = (1 << dim),
-                    const double       cell_number_corridor_bottom = 1,
+    RefinementFlags(const unsigned int max_refinement_level       = 0,
+                    const unsigned int first_sweep_with_correction= 0,
+                    const unsigned int min_cells_for_correction   = 0,
+                    const double       cell_number_corridor_top   = (1 << dim),
+                    const double       cell_number_corridor_bottom= 1,
                     const CorrectionRelaxations& correction_relaxations
                     = CorrectionRelaxations(),
-                    const unsigned int cell_number_correction_steps  = 0,
-                    const bool         mirror_flags_to_previous_grid = false,
-                    const bool         adapt_grids                   = false);
+                    const unsigned int cell_number_correction_steps = 0,
+                    const bool         mirror_flags_to_previous_grid= false,
+                    const bool         adapt_grids                  = false);
 
     /**
      * Maximum level of a cell in the triangulation of a time level. If it is
@@ -1240,7 +1240,7 @@ namespace TimeStepBase_Tria_Flags
      * Constructor
      */
     RefinementData(const double refinement_threshold,
-                   const double coarsening_threshold = 0);
+                   const double coarsening_threshold= 0);
 
     /**
      * Threshold for refinement: cells having a larger value will be refined
@@ -1308,7 +1308,7 @@ public:
     /**
      * Perform grid refinement next.
      */
-    grid_refinement = 0x1000
+    grid_refinement= 0x1000
   };
 
   /**
@@ -1336,8 +1336,7 @@ public:
   TimeStepBase_Tria(const double                   time,
                     const Triangulation<dim, dim>& coarse_grid,
                     const Flags&                   flags,
-                    const RefinementFlags&         refinement_flags
-                    = RefinementFlags());
+                    const RefinementFlags& refinement_flags= RefinementFlags());
 
   /**
    * Destructor. At present, this does not more than releasing the lock on the
@@ -1417,7 +1416,7 @@ public:
    * management object.
    */
   virtual void
-  get_tria_refinement_criteria(Vector<float>& criteria) const = 0;
+  get_tria_refinement_criteria(Vector<float>& criteria) const= 0;
 
   /**
    * The refinement flags of the triangulation are stored in a local variable
@@ -1515,11 +1514,11 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
   // to be changed at a second place, here
   // for the other direction, also.
 
-  const unsigned int n_timesteps = timesteps.size();
+  const unsigned int n_timesteps= timesteps.size();
 
   // initialize the time steps for
   // a round of this loop
-  for(unsigned int step = 0; step < n_timesteps; ++step)
+  for(unsigned int step= 0; step < n_timesteps; ++step)
     switch(direction)
       {
         case forward:
@@ -1531,8 +1530,8 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
       };
 
   // wake up the first few time levels
-  for(int step = -timestepping_data.look_ahead; step < 0; ++step)
-    for(int look_ahead = 0;
+  for(int step= -timestepping_data.look_ahead; step < 0; ++step)
+    for(int look_ahead= 0;
         look_ahead <= static_cast<int>(timestepping_data.look_ahead);
         ++look_ahead)
       switch(direction)
@@ -1547,11 +1546,11 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
             break;
         };
 
-  for(unsigned int step = 0; step < n_timesteps; ++step)
+  for(unsigned int step= 0; step < n_timesteps; ++step)
     {
       // first thing: wake up the
       // timesteps ahead as necessary
-      for(unsigned int look_ahead = 0;
+      for(unsigned int look_ahead= 0;
           look_ahead <= timestepping_data.look_ahead;
           ++look_ahead)
         switch(direction)
@@ -1579,7 +1578,7 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
         };
 
       // let the timesteps behind sleep
-      for(unsigned int look_back = 0; look_back <= timestepping_data.look_back;
+      for(unsigned int look_back= 0; look_back <= timestepping_data.look_back;
           ++look_back)
         switch(direction)
           {
@@ -1596,10 +1595,10 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
     }
 
   // make the last few timesteps sleep
-  for(int step = n_timesteps;
+  for(int step= n_timesteps;
       step < static_cast<int>(n_timesteps + timestepping_data.look_back);
       ++step)
-    for(int look_back = 0;
+    for(int look_back= 0;
         look_back <= static_cast<int>(timestepping_data.look_back);
         ++look_back)
       switch(direction)

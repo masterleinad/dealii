@@ -43,7 +43,7 @@ public:
    * "milne", "weddle", etc) and, if it is "gauss", the number of quadrature
    * points in each coordinate direction.
    */
-  QuadratureSelector(const std::string& s, const unsigned int order = 0);
+  QuadratureSelector(const std::string& s, const unsigned int order= 0);
 
   /**
    * This function returns all possible names for quadratures as a list

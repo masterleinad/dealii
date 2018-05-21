@@ -23,7 +23,7 @@
 // this should now have become better, since upon marking one cell we
 // also investigate all its neighbors as well
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../tests.h"
 
@@ -42,14 +42,14 @@ test()
   // generate a 100x3 mesh
   Triangulation<2> triangulation(Triangulation<2>::eliminate_unrefined_islands);
   std::vector<unsigned int> ref(2);
-  ref[0] = 100;
-  ref[1] = 3;
+  ref[0]= 100;
+  ref[1]= 3;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, ref, Point<2>(), Point<2>(100, 3));
 
   // refine all cells at the lower
   // boundary. we then have 600 cells
-  for(Triangulation<2>::cell_iterator cell = triangulation.begin();
+  for(Triangulation<2>::cell_iterator cell= triangulation.begin();
       cell != triangulation.end();
       ++cell)
     if(cell->center()[1] < 1)
@@ -78,7 +78,7 @@ test()
   // other things). after the changes
   // to tria.cc, we now need 2
   // iterations
-  for(Triangulation<2>::cell_iterator cell = triangulation.begin();
+  for(Triangulation<2>::cell_iterator cell= triangulation.begin();
       cell != triangulation.end();
       ++cell)
     if(cell->center()[1] > 2)

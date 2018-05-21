@@ -26,7 +26,7 @@ void
 test()
 {
   IndexSet     parallel_partitioner(10);
-  unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int rank= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(rank == 0)
     parallel_partitioner.add_range(0, 5);
   else
@@ -39,7 +39,7 @@ test()
   IndexSet                               read_write_index_set(10);
   LinearAlgebra::ReadWriteVector<double> read_write(parallel_partitioner);
   if(rank == 0)
-    read_write[0] = 1.;
+    read_write[0]= 1.;
   a.import(read_write, VectorOperation::insert);
   AssertThrow(a.all_zero() == false, ExcInternalError());
 }

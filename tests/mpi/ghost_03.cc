@@ -24,8 +24,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -42,19 +42,19 @@ test()
   PETScWrappers::MPI::Vector v(local_active, local_relevant, MPI_COMM_WORLD);
 
   // set local values
-  vb(myid * 2)     = myid * 2.0;
-  vb(myid * 2 + 1) = myid * 2.0 + 1.0;
+  vb(myid * 2)    = myid * 2.0;
+  vb(myid * 2 + 1)= myid * 2.0 + 1.0;
 
   vb.compress(VectorOperation::insert);
-  vb *= 2.0;
-  v = vb;
+  vb*= 2.0;
+  v= vb;
 
   Assert(!vb.has_ghost_elements(), ExcInternalError());
   Assert(v.has_ghost_elements(), ExcInternalError());
 
   try
     {
-      v(0) = 1.0;
+      v(0)= 1.0;
     }
   catch(ExceptionBase& e)
     {
@@ -62,7 +62,7 @@ test()
     }
   try
     {
-      v(0) *= 2.0;
+      v(0)*= 2.0;
     }
   catch(ExceptionBase& e)
     {
@@ -70,7 +70,7 @@ test()
     }
   try
     {
-      v += v;
+      v+= v;
     }
   catch(ExceptionBase& e)
     {
@@ -88,7 +88,7 @@ main(int argc, char** argv)
   deal_II_exceptions::disable_abort_on_exception();
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

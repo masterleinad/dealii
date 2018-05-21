@@ -34,7 +34,7 @@
 
 template <int dim>
 void
-test(const bool with_weighting, const bool write_to_vtk = false)
+test(const bool with_weighting, const bool write_to_vtk= false)
 {
   deallog << "Dimension = " << dim << std::endl;
   deallog << "With weighting = " << std::boolalpha << with_weighting
@@ -43,11 +43,11 @@ test(const bool with_weighting, const bool write_to_vtk = false)
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(4 - dim);
-  for(unsigned int i = 0; i < 11 - 2 * dim; ++i)
+  for(unsigned int i= 0; i < 11 - 2 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+      for(unsigned int index= 0; cell != triangulation.end(); ++cell, ++index)
         if(index % (3 * dim) == 0)
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -63,10 +63,10 @@ test(const bool with_weighting, const bool write_to_vtk = false)
       const Point<dim>                                  origin;
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+      for(unsigned int index= 0; cell != triangulation.end(); ++cell, ++index)
         {
           if(origin.distance(cell->center()) < 0.5)
-            cell_weighting[index] = 10u;
+            cell_weighting[index]= 10u;
         }
     }
 
@@ -84,10 +84,10 @@ test(const bool with_weighting, const bool write_to_vtk = false)
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
-    for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+    for(unsigned int index= 0; cell != triangulation.end(); ++cell, ++index)
       {
-        partitions(index) = cell->subdomain_id();
-        weights(index)    = (with_weighting ? cell_weighting[index] : 1.0);
+        partitions(index)= cell->subdomain_id();
+        weights(index)   = (with_weighting ? cell_weighting[index] : 1.0);
       }
   }
 

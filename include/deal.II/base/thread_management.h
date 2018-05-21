@@ -197,8 +197,8 @@ namespace Threads
      * raises an exception if the <code>count</code> argument is one.
      */
     DummyBarrier(const unsigned int count,
-                 const char*        name = nullptr,
-                 void*              arg  = nullptr);
+                 const char*        name= nullptr,
+                 void*              arg = nullptr);
 
     /**
      * Wait for all threads to reach this point. Since there may only be one
@@ -299,7 +299,7 @@ namespace Threads
     /**
      * Default constructor.
      */
-    Mutex() = default;
+    Mutex()= default;
 
     /**
      * Copy constructor. As discussed in this class's documentation, no state
@@ -423,8 +423,8 @@ namespace Threads
      * Constructor. Initialize the underlying POSIX barrier data structure.
      */
     PosixThreadBarrier(const unsigned int count,
-                       const char*        name = nullptr,
-                       void*              arg  = nullptr);
+                       const char*        name= nullptr,
+                       void*              arg = nullptr);
 
     /**
      * Destructor. Release all resources.
@@ -652,18 +652,18 @@ namespace Threads
       return (std::vector<IteratorPair>(1, IteratorPair(begin, end)));
 
     // if more than one interval requested, do the full work
-    const unsigned int n_elements              = std::distance(begin, end);
-    const unsigned int n_elements_per_interval = n_elements / n_intervals;
-    const unsigned int residual                = n_elements % n_intervals;
+    const unsigned int n_elements             = std::distance(begin, end);
+    const unsigned int n_elements_per_interval= n_elements / n_intervals;
+    const unsigned int residual               = n_elements % n_intervals;
 
     std::vector<IteratorPair> return_values(n_intervals);
 
-    return_values[0].first = begin;
-    for(unsigned int i = 0; i < n_intervals; ++i)
+    return_values[0].first= begin;
+    for(unsigned int i= 0; i < n_intervals; ++i)
       {
         if(i != n_intervals - 1)
           {
-            return_values[i].second = return_values[i].first;
+            return_values[i].second= return_values[i].first;
             // note: the cast is performed to avoid a warning of gcc
             // that in the library `dist>=0' is checked (dist has a
             // template type, which here is unsigned if no cast is
@@ -675,10 +675,10 @@ namespace Threads
             if(i < residual)
               ++return_values[i].second;
 
-            return_values[i + 1].first = return_values[i].second;
+            return_values[i + 1].first= return_values[i].second;
           }
         else
-          return_values[i].second = end;
+          return_values[i].second= end;
       }
     return return_values;
   }
@@ -719,7 +719,7 @@ namespace Threads
       inline void
       set(RT&& v)
       {
-        value = std::move(v);
+        value= std::move(v);
       }
     };
 
@@ -753,7 +753,7 @@ namespace Threads
       inline void
       set(RT& v)
       {
-        value = &v;
+        value= &v;
       }
     };
 
@@ -874,7 +874,7 @@ namespace Threads
         if(!thread_is_active)
           return;
         thread.detach();
-        thread_is_active = false;
+        thread_is_active= false;
       }
 
       /**
@@ -884,9 +884,9 @@ namespace Threads
       void
       start(const std::function<RT()>& function)
       {
-        thread_is_active = true;
-        ret_val          = std::make_shared<return_value<RT>>();
-        thread           = std::thread(thread_entry_point, function, ret_val);
+        thread_is_active= true;
+        ret_val         = std::make_shared<return_value<RT>>();
+        thread          = std::thread(thread_entry_point, function, ret_val);
       }
 
       /**
@@ -906,7 +906,7 @@ namespace Threads
           {
             Assert(thread.joinable(), ExcInternalError());
             thread.join();
-            thread_is_active = false;
+            thread_is_active= false;
           }
       }
 
@@ -965,7 +965,7 @@ namespace Threads
       void
       start(const std::function<RT()>& function)
       {
-        ret_val = std::make_shared<return_value<RT>>();
+        ret_val= std::make_shared<return_value<RT>>();
         call(function, *ret_val);
       }
 
@@ -1002,7 +1002,7 @@ namespace Threads
    * @ingroup threads
    * @ingroup threads
    */
-  template <typename RT = void>
+  template <typename RT= void>
   class Thread
   {
   public:
@@ -1021,7 +1021,7 @@ namespace Threads
      * this way, except for assigning it a thread object that holds data
      * created by the new_thread() functions.
      */
-    Thread() = default;
+    Thread()= default;
 
     /**
      * Copy constructor.
@@ -1299,7 +1299,7 @@ namespace Threads
    * @author Wolfgang Bangerth, 2003
    * @ingroup threads
    */
-  template <typename RT = void>
+  template <typename RT= void>
   class ThreadGroup
   {
   public:
@@ -1322,7 +1322,7 @@ namespace Threads
     void
     join_all() const
     {
-      for(typename std::list<Thread<RT>>::const_iterator t = threads.begin();
+      for(typename std::list<Thread<RT>>::const_iterator t= threads.begin();
           t != threads.end();
           ++t)
         t->join();
@@ -1496,10 +1496,10 @@ namespace Threads
     {
       // use the pattern described in the TBB book on pages 230/231
       // ("Start a large task in parallel with the main program")
-      task = new(tbb::task::allocate_root()) tbb::empty_task;
+      task= new(tbb::task::allocate_root()) tbb::empty_task;
       task->set_ref_count(2);
 
-      tbb::task* worker = new(task->allocate_child()) TaskEntryPoint<RT>(*this);
+      tbb::task* worker= new(task->allocate_child()) TaskEntryPoint<RT>(*this);
 
       // in earlier versions of the TBB, task::spawn was a regular
       // member function; however, in later versions, it was converted
@@ -1576,7 +1576,7 @@ namespace Threads
         return;
 
       // let TBB wait for the task to complete.
-      task_is_done = true;
+      task_is_done= true;
       task->wait_for_all();
     }
 
@@ -1634,7 +1634,7 @@ namespace Threads
    * @author Wolfgang Bangerth, 2009
    * @ingroup threads
    */
-  template <typename RT = void>
+  template <typename RT= void>
   class Task
   {
   public:
@@ -1671,7 +1671,7 @@ namespace Threads
      * @post Using this constructor leaves the object in an unjoinable state,
      * i.e., joinable() will return false.
      */
-    Task() = default;
+    Task()= default;
 
     /**
      * Join the task represented by this object, i.e. wait for it to finish.
@@ -1942,7 +1942,7 @@ namespace Threads
    * @author Wolfgang Bangerth, 2003
    * @ingroup tasks
    */
-  template <typename RT = void>
+  template <typename RT= void>
   class TaskGroup
   {
   public:
@@ -1965,7 +1965,7 @@ namespace Threads
     void
     join_all() const
     {
-      for(typename std::list<Task<RT>>::const_iterator t = tasks.begin();
+      for(typename std::list<Task<RT>>::const_iterator t= tasks.begin();
           t != tasks.end();
           ++t)
         t->join();

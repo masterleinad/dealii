@@ -64,10 +64,10 @@ main()
   MappingQ<3> mapping(3);
 
   Triangulation<3>::active_cell_iterator cell;
-  cell = triangulation.begin_active();
+  cell= triangulation.begin_active();
   ++cell;
 
-  for(unsigned int f = 0; f < 6; ++f)
+  for(unsigned int f= 0; f < 6; ++f)
     deallog << "face: " << f << std::endl
             << "  Face orientation status: " << cell->face_orientation(f)
             << std::endl
@@ -76,7 +76,7 @@ main()
             << (cell->at_boundary(f) ? triangulation.end() : cell->neighbor(f))
             << std::endl;
 
-  for(double x = 0; x <= 1; x += 1.0 / 3.0)
+  for(double x= 0; x <= 1; x+= 1.0 / 3.0)
     {
       const Point<3> p(x, 1. / 3., 0);
       deallog << p << " in unit coordinates maps to real coordinates "

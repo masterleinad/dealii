@@ -78,25 +78,25 @@ namespace FETools
     {
       AssertDimension(fes.size(), multiplicities.size());
 
-      unsigned int multiplied_dofs_per_vertex = 0;
-      unsigned int multiplied_dofs_per_line   = 0;
-      unsigned int multiplied_dofs_per_quad   = 0;
-      unsigned int multiplied_dofs_per_hex    = 0;
+      unsigned int multiplied_dofs_per_vertex= 0;
+      unsigned int multiplied_dofs_per_line  = 0;
+      unsigned int multiplied_dofs_per_quad  = 0;
+      unsigned int multiplied_dofs_per_hex   = 0;
 
-      unsigned int multiplied_n_components = 0;
+      unsigned int multiplied_n_components= 0;
 
-      unsigned int degree = 0; // degree is the maximal degree of the components
+      unsigned int degree= 0; // degree is the maximal degree of the components
 
-      unsigned int n_components = 0;
+      unsigned int n_components= 0;
       // Get the number of components from the first given finite element.
-      for(unsigned int i = 0; i < fes.size(); i++)
+      for(unsigned int i= 0; i < fes.size(); i++)
         if(multiplicities[i] > 0)
           {
-            n_components = fes[i]->n_components();
+            n_components= fes[i]->n_components();
             break;
           }
 
-      for(unsigned int i = 0; i < fes.size(); i++)
+      for(unsigned int i= 0; i < fes.size(); i++)
         if(multiplicities[i] > 0)
           {
             multiplied_dofs_per_vertex
@@ -105,7 +105,7 @@ namespace FETools
               += fes[i]->dofs_per_line * multiplicities[i];
             multiplied_dofs_per_quad
               += fes[i]->dofs_per_quad * multiplicities[i];
-            multiplied_dofs_per_hex += fes[i]->dofs_per_hex * multiplicities[i];
+            multiplied_dofs_per_hex+= fes[i]->dofs_per_hex * multiplicities[i];
 
             multiplied_n_components
               += fes[i]->n_components() * multiplicities[i];
@@ -114,26 +114,26 @@ namespace FETools
                      || (n_components == fes[i]->n_components()),
                    ExcDimensionMismatch(n_components, fes[i]->n_components()));
 
-            degree = std::max(degree, fes[i]->tensor_degree());
+            degree= std::max(degree, fes[i]->tensor_degree());
           }
 
       // assume conformity of the first finite element and then take away
       // bits as indicated by the base elements. if all multiplicities
       // happen to be zero, then it doesn't matter what we set it to.
-      typename FiniteElementData<dim>::Conformity total_conformity =
+      typename FiniteElementData<dim>::Conformity total_conformity=
         typename FiniteElementData<dim>::Conformity();
       {
-        unsigned int index = 0;
-        for(index = 0; index < fes.size(); ++index)
+        unsigned int index= 0;
+        for(index= 0; index < fes.size(); ++index)
           if(multiplicities[index] > 0)
             {
-              total_conformity = fes[index]->conforming_space;
+              total_conformity= fes[index]->conforming_space;
               break;
             }
 
         for(; index < fes.size(); ++index)
           if(multiplicities[index] > 0)
-            total_conformity = typename FiniteElementData<dim>::Conformity(
+            total_conformity= typename FiniteElementData<dim>::Conformity(
               total_conformity & fes[index]->conforming_space);
       }
 
@@ -147,8 +147,8 @@ namespace FETools
 
       BlockIndices block_indices(0, 0);
 
-      for(unsigned int base = 0; base < fes.size(); ++base)
-        for(unsigned int m = 0; m < multiplicities[base]; ++m)
+      for(unsigned int base= 0; base < fes.size(); ++base)
+        for(unsigned int m= 0; m < multiplicities[base]; ++m)
           block_indices.push_back(fes[base]->dofs_per_cell);
 
       return FiniteElementData<dim>(
@@ -198,10 +198,10 @@ namespace FETools
 
       // first count the number of dofs and components that will emerge from the
       // given FEs
-      unsigned int n_shape_functions = 0;
-      for(unsigned int i = 0; i < fes.size(); ++i)
+      unsigned int n_shape_functions= 0;
+      for(unsigned int i= 0; i < fes.size(); ++i)
         if(multiplicities[i] > 0) // check needed as fe might be NULL
-          n_shape_functions += fes[i]->dofs_per_cell * multiplicities[i];
+          n_shape_functions+= fes[i]->dofs_per_cell * multiplicities[i];
 
       // generate the array that will hold the output
       std::vector<bool> retval(n_shape_functions, false);
@@ -213,14 +213,14 @@ namespace FETools
       //
       // for each shape function, copy the flags from the base element to this
       // one, taking into account multiplicities, and other complications
-      unsigned int total_index = 0;
-      for(unsigned int vertex_number = 0;
+      unsigned int total_index= 0;
+      for(unsigned int vertex_number= 0;
           vertex_number < GeometryInfo<dim>::vertices_per_cell;
           ++vertex_number)
         {
-          for(unsigned int base = 0; base < fes.size(); ++base)
-            for(unsigned int m = 0; m < multiplicities[base]; ++m)
-              for(unsigned int local_index = 0;
+          for(unsigned int base= 0; base < fes.size(); ++base)
+            for(unsigned int m= 0; m < multiplicities[base]; ++m)
+              for(unsigned int local_index= 0;
                   local_index < fes[base]->dofs_per_vertex;
                   ++local_index, ++total_index)
                 {
@@ -237,13 +237,13 @@ namespace FETools
 
       // 2. Lines
       if(GeometryInfo<dim>::lines_per_cell > 0)
-        for(unsigned int line_number = 0;
+        for(unsigned int line_number= 0;
             line_number != GeometryInfo<dim>::lines_per_cell;
             ++line_number)
           {
-            for(unsigned int base = 0; base < fes.size(); ++base)
-              for(unsigned int m = 0; m < multiplicities[base]; ++m)
-                for(unsigned int local_index = 0;
+            for(unsigned int base= 0; base < fes.size(); ++base)
+              for(unsigned int m= 0; m < multiplicities[base]; ++m)
+                for(unsigned int local_index= 0;
                     local_index < fes[base]->dofs_per_line;
                     ++local_index, ++total_index)
                   {
@@ -260,13 +260,13 @@ namespace FETools
 
       // 3. Quads
       if(GeometryInfo<dim>::quads_per_cell > 0)
-        for(unsigned int quad_number = 0;
+        for(unsigned int quad_number= 0;
             quad_number != GeometryInfo<dim>::quads_per_cell;
             ++quad_number)
           {
-            for(unsigned int base = 0; base < fes.size(); ++base)
-              for(unsigned int m = 0; m < multiplicities[base]; ++m)
-                for(unsigned int local_index = 0;
+            for(unsigned int base= 0; base < fes.size(); ++base)
+              for(unsigned int m= 0; m < multiplicities[base]; ++m)
+                for(unsigned int local_index= 0;
                     local_index < fes[base]->dofs_per_quad;
                     ++local_index, ++total_index)
                   {
@@ -283,13 +283,13 @@ namespace FETools
 
       // 4. Hexes
       if(GeometryInfo<dim>::hexes_per_cell > 0)
-        for(unsigned int hex_number = 0;
+        for(unsigned int hex_number= 0;
             hex_number != GeometryInfo<dim>::hexes_per_cell;
             ++hex_number)
           {
-            for(unsigned int base = 0; base < fes.size(); ++base)
-              for(unsigned int m = 0; m < multiplicities[base]; ++m)
-                for(unsigned int local_index = 0;
+            for(unsigned int base= 0; base < fes.size(); ++base)
+              for(unsigned int m= 0; m < multiplicities[base]; ++m)
+                for(unsigned int local_index= 0;
                     local_index < fes[base]->dofs_per_hex;
                     ++local_index, ++total_index)
                   {
@@ -360,28 +360,28 @@ namespace FETools
 
       // first count the number of dofs and components that will emerge from the
       // given FEs
-      unsigned int n_shape_functions = 0;
-      for(unsigned int i = 0; i < fes.size(); ++i)
+      unsigned int n_shape_functions= 0;
+      for(unsigned int i= 0; i < fes.size(); ++i)
         if(multiplicities[i] > 0) //needed because fe might be NULL
-          n_shape_functions += fes[i]->dofs_per_cell * multiplicities[i];
+          n_shape_functions+= fes[i]->dofs_per_cell * multiplicities[i];
 
-      unsigned int n_components = 0;
+      unsigned int n_components= 0;
       if(do_tensor_product)
         {
-          for(unsigned int i = 0; i < fes.size(); ++i)
+          for(unsigned int i= 0; i < fes.size(); ++i)
             if(multiplicities[i] > 0) //needed because fe might be NULL
-              n_components += fes[i]->n_components() * multiplicities[i];
+              n_components+= fes[i]->n_components() * multiplicities[i];
         }
       else
         {
-          for(unsigned int i = 0; i < fes.size(); ++i)
+          for(unsigned int i= 0; i < fes.size(); ++i)
             if(multiplicities[i] > 0) //needed because fe might be NULL
               {
-                n_components = fes[i]->n_components();
+                n_components= fes[i]->n_components();
                 break;
               }
           // Now check that all FEs have the same number of components:
-          for(unsigned int i = 0; i < fes.size(); ++i)
+          for(unsigned int i= 0; i < fes.size(); ++i)
             if(multiplicities[i] > 0) //needed because fe might be NULL
               Assert(
                 n_components == fes[i]->n_components(),
@@ -400,18 +400,16 @@ namespace FETools
       // for each shape function, copy the non-zero flags from the base element to
       // this one, taking into account multiplicities, multiple components in base
       // elements, and other complications
-      unsigned int total_index = 0;
-      for(unsigned int vertex_number = 0;
+      unsigned int total_index= 0;
+      for(unsigned int vertex_number= 0;
           vertex_number < GeometryInfo<dim>::vertices_per_cell;
           ++vertex_number)
         {
-          unsigned int comp_start = 0;
-          for(unsigned int base = 0; base < fes.size(); ++base)
-            for(unsigned int m = 0; m < multiplicities[base];
-                ++m,
-                             comp_start
-                             += fes[base]->n_components() * do_tensor_product)
-              for(unsigned int local_index = 0;
+          unsigned int comp_start= 0;
+          for(unsigned int base= 0; base < fes.size(); ++base)
+            for(unsigned int m= 0; m < multiplicities[base];
+                ++m, comp_start+= fes[base]->n_components() * do_tensor_product)
+              for(unsigned int local_index= 0;
                   local_index < fes[base]->dofs_per_vertex;
                   ++local_index, ++total_index)
                 {
@@ -422,7 +420,7 @@ namespace FETools
                   Assert(comp_start + fes[base]->n_components()
                            <= retval[total_index].size(),
                          ExcInternalError());
-                  for(unsigned int c = 0; c < fes[base]->n_components(); ++c)
+                  for(unsigned int c= 0; c < fes[base]->n_components(); ++c)
                     {
                       Assert(c < fes[base]
                                    ->get_nonzero_components(index_in_base)
@@ -436,17 +434,17 @@ namespace FETools
 
       // 2. Lines
       if(GeometryInfo<dim>::lines_per_cell > 0)
-        for(unsigned int line_number = 0;
+        for(unsigned int line_number= 0;
             line_number != GeometryInfo<dim>::lines_per_cell;
             ++line_number)
           {
-            unsigned int comp_start = 0;
-            for(unsigned int base = 0; base < fes.size(); ++base)
-              for(unsigned int m = 0; m < multiplicities[base];
+            unsigned int comp_start= 0;
+            for(unsigned int base= 0; base < fes.size(); ++base)
+              for(unsigned int m= 0; m < multiplicities[base];
                   ++m,
                                comp_start
                                += fes[base]->n_components() * do_tensor_product)
-                for(unsigned int local_index = 0;
+                for(unsigned int local_index= 0;
                     local_index < fes[base]->dofs_per_line;
                     ++local_index, ++total_index)
                   {
@@ -457,7 +455,7 @@ namespace FETools
                     Assert(comp_start + fes[base]->n_components()
                              <= retval[total_index].size(),
                            ExcInternalError());
-                    for(unsigned int c = 0; c < fes[base]->n_components(); ++c)
+                    for(unsigned int c= 0; c < fes[base]->n_components(); ++c)
                       {
                         Assert(c < fes[base]
                                      ->get_nonzero_components(index_in_base)
@@ -471,17 +469,17 @@ namespace FETools
 
       // 3. Quads
       if(GeometryInfo<dim>::quads_per_cell > 0)
-        for(unsigned int quad_number = 0;
+        for(unsigned int quad_number= 0;
             quad_number != GeometryInfo<dim>::quads_per_cell;
             ++quad_number)
           {
-            unsigned int comp_start = 0;
-            for(unsigned int base = 0; base < fes.size(); ++base)
-              for(unsigned int m = 0; m < multiplicities[base];
+            unsigned int comp_start= 0;
+            for(unsigned int base= 0; base < fes.size(); ++base)
+              for(unsigned int m= 0; m < multiplicities[base];
                   ++m,
                                comp_start
                                += fes[base]->n_components() * do_tensor_product)
-                for(unsigned int local_index = 0;
+                for(unsigned int local_index= 0;
                     local_index < fes[base]->dofs_per_quad;
                     ++local_index, ++total_index)
                   {
@@ -492,7 +490,7 @@ namespace FETools
                     Assert(comp_start + fes[base]->n_components()
                              <= retval[total_index].size(),
                            ExcInternalError());
-                    for(unsigned int c = 0; c < fes[base]->n_components(); ++c)
+                    for(unsigned int c= 0; c < fes[base]->n_components(); ++c)
                       {
                         Assert(c < fes[base]
                                      ->get_nonzero_components(index_in_base)
@@ -506,17 +504,17 @@ namespace FETools
 
       // 4. Hexes
       if(GeometryInfo<dim>::hexes_per_cell > 0)
-        for(unsigned int hex_number = 0;
+        for(unsigned int hex_number= 0;
             hex_number != GeometryInfo<dim>::hexes_per_cell;
             ++hex_number)
           {
-            unsigned int comp_start = 0;
-            for(unsigned int base = 0; base < fes.size(); ++base)
-              for(unsigned int m = 0; m < multiplicities[base];
+            unsigned int comp_start= 0;
+            for(unsigned int base= 0; base < fes.size(); ++base)
+              for(unsigned int m= 0; m < multiplicities[base];
                   ++m,
                                comp_start
                                += fes[base]->n_components() * do_tensor_product)
-                for(unsigned int local_index = 0;
+                for(unsigned int local_index= 0;
                     local_index < fes[base]->dofs_per_hex;
                     ++local_index, ++total_index)
                   {
@@ -527,7 +525,7 @@ namespace FETools
                     Assert(comp_start + fes[base]->n_components()
                              <= retval[total_index].size(),
                            ExcInternalError());
-                    for(unsigned int c = 0; c < fes[base]->n_components(); ++c)
+                    for(unsigned int c= 0; c < fes[base]->n_components(); ++c)
                       {
                         Assert(c < fes[base]
                                      ->get_nonzero_components(index_in_base)
@@ -546,8 +544,8 @@ namespace FETools
       // awkward to generate ComponentMasks directly and so we need the
       // recourse of the inner vector<bool> anyway.
       std::vector<ComponentMask> xretval(retval.size());
-      for(unsigned int i = 0; i < retval.size(); ++i)
-        xretval[i] = ComponentMask(retval[i]);
+      for(unsigned int i= 0; i < retval.size(); ++i)
+        xretval[i]= ComponentMask(retval[i]);
       return xretval;
     }
 
@@ -602,15 +600,14 @@ namespace FETools
       const FiniteElement<dim, spacedim>&   fe,
       const bool                            do_tensor_product)
     {
-      unsigned int total_index = 0;
+      unsigned int total_index= 0;
 
       if(do_tensor_product)
         {
-          for(unsigned int base = 0; base < fe.n_base_elements(); ++base)
-            for(unsigned int m = 0; m < fe.element_multiplicity(base); ++m)
+          for(unsigned int base= 0; base < fe.n_base_elements(); ++base)
+            for(unsigned int m= 0; m < fe.element_multiplicity(base); ++m)
               {
-                for(unsigned int k = 0;
-                    k < fe.base_element(base).n_components();
+                for(unsigned int k= 0; k < fe.base_element(base).n_components();
                     ++k)
                   component_to_base_table[total_index++]
                     = std::make_pair(std::make_pair(base, k), m);
@@ -622,7 +619,7 @@ namespace FETools
         {
           // The base element establishing a component does not make sense in this case.
           // Set up to something meaningless:
-          for(unsigned int i = 0; i < component_to_base_table.size(); i++)
+          for(unsigned int i= 0; i < component_to_base_table.size(); i++)
             component_to_base_table[i]
               = std::make_pair(std::make_pair(numbers::invalid_unsigned_int,
                                               numbers::invalid_unsigned_int),
@@ -638,18 +635,18 @@ namespace FETools
       // First enumerate vertex indices, where we first enumerate all indices on
       // the first vertex in the order of the base elements, then of the second
       // vertex, etc
-      total_index = 0;
-      for(unsigned int vertex_number = 0;
+      total_index= 0;
+      for(unsigned int vertex_number= 0;
           vertex_number < GeometryInfo<dim>::vertices_per_cell;
           ++vertex_number)
         {
-          unsigned int comp_start = 0;
-          for(unsigned int base = 0; base < fe.n_base_elements(); ++base)
-            for(unsigned int m = 0; m < fe.element_multiplicity(base);
+          unsigned int comp_start= 0;
+          for(unsigned int base= 0; base < fe.n_base_elements(); ++base)
+            for(unsigned int m= 0; m < fe.element_multiplicity(base);
                 ++m,
-                             comp_start += fe.base_element(base).n_components()
-                                           * do_tensor_product)
-              for(unsigned int local_index = 0;
+                             comp_start+= fe.base_element(base).n_components()
+                                          * do_tensor_product)
+              for(unsigned int local_index= 0;
                   local_index < fe.base_element(base).dofs_per_vertex;
                   ++local_index, ++total_index)
                 {
@@ -666,7 +663,7 @@ namespace FETools
                         = fe.base_element(base)
                             .system_to_component_index(index_in_base)
                             .first;
-                      const unsigned int comp = comp_start + comp_in_base;
+                      const unsigned int comp= comp_start + comp_in_base;
                       const unsigned int index_in_comp
                         = fe.base_element(base)
                             .system_to_component_index(index_in_base)
@@ -675,25 +672,23 @@ namespace FETools
                         = std::make_pair(comp, index_in_comp);
                     }
                   else
-                    system_to_component_table[total_index]
-                      = non_primitive_index;
+                    system_to_component_table[total_index]= non_primitive_index;
                 }
         }
 
       // 2. Lines
       if(GeometryInfo<dim>::lines_per_cell > 0)
-        for(unsigned int line_number = 0;
+        for(unsigned int line_number= 0;
             line_number != GeometryInfo<dim>::lines_per_cell;
             ++line_number)
           {
-            unsigned int comp_start = 0;
-            for(unsigned int base = 0; base < fe.n_base_elements(); ++base)
-              for(unsigned int m = 0; m < fe.element_multiplicity(base);
+            unsigned int comp_start= 0;
+            for(unsigned int base= 0; base < fe.n_base_elements(); ++base)
+              for(unsigned int m= 0; m < fe.element_multiplicity(base);
                   ++m,
-                               comp_start
-                               += fe.base_element(base).n_components()
-                                  * do_tensor_product)
-                for(unsigned int local_index = 0;
+                               comp_start+= fe.base_element(base).n_components()
+                                            * do_tensor_product)
+                for(unsigned int local_index= 0;
                     local_index < fe.base_element(base).dofs_per_line;
                     ++local_index, ++total_index)
                   {
@@ -711,7 +706,7 @@ namespace FETools
                           = fe.base_element(base)
                               .system_to_component_index(index_in_base)
                               .first;
-                        const unsigned int comp = comp_start + comp_in_base;
+                        const unsigned int comp= comp_start + comp_in_base;
                         const unsigned int index_in_comp
                           = fe.base_element(base)
                               .system_to_component_index(index_in_base)
@@ -727,18 +722,17 @@ namespace FETools
 
       // 3. Quads
       if(GeometryInfo<dim>::quads_per_cell > 0)
-        for(unsigned int quad_number = 0;
+        for(unsigned int quad_number= 0;
             quad_number != GeometryInfo<dim>::quads_per_cell;
             ++quad_number)
           {
-            unsigned int comp_start = 0;
-            for(unsigned int base = 0; base < fe.n_base_elements(); ++base)
-              for(unsigned int m = 0; m < fe.element_multiplicity(base);
+            unsigned int comp_start= 0;
+            for(unsigned int base= 0; base < fe.n_base_elements(); ++base)
+              for(unsigned int m= 0; m < fe.element_multiplicity(base);
                   ++m,
-                               comp_start
-                               += fe.base_element(base).n_components()
-                                  * do_tensor_product)
-                for(unsigned int local_index = 0;
+                               comp_start+= fe.base_element(base).n_components()
+                                            * do_tensor_product)
+                for(unsigned int local_index= 0;
                     local_index < fe.base_element(base).dofs_per_quad;
                     ++local_index, ++total_index)
                   {
@@ -756,7 +750,7 @@ namespace FETools
                           = fe.base_element(base)
                               .system_to_component_index(index_in_base)
                               .first;
-                        const unsigned int comp = comp_start + comp_in_base;
+                        const unsigned int comp= comp_start + comp_in_base;
                         const unsigned int index_in_comp
                           = fe.base_element(base)
                               .system_to_component_index(index_in_base)
@@ -772,18 +766,17 @@ namespace FETools
 
       // 4. Hexes
       if(GeometryInfo<dim>::hexes_per_cell > 0)
-        for(unsigned int hex_number = 0;
+        for(unsigned int hex_number= 0;
             hex_number != GeometryInfo<dim>::hexes_per_cell;
             ++hex_number)
           {
-            unsigned int comp_start = 0;
-            for(unsigned int base = 0; base < fe.n_base_elements(); ++base)
-              for(unsigned int m = 0; m < fe.element_multiplicity(base);
+            unsigned int comp_start= 0;
+            for(unsigned int base= 0; base < fe.n_base_elements(); ++base)
+              for(unsigned int m= 0; m < fe.element_multiplicity(base);
                   ++m,
-                               comp_start
-                               += fe.base_element(base).n_components()
-                                  * do_tensor_product)
-                for(unsigned int local_index = 0;
+                               comp_start+= fe.base_element(base).n_components()
+                                            * do_tensor_product)
+                for(unsigned int local_index= 0;
                     local_index < fe.base_element(base).dofs_per_hex;
                     ++local_index, ++total_index)
                   {
@@ -800,7 +793,7 @@ namespace FETools
                           = fe.base_element(base)
                               .system_to_component_index(index_in_base)
                               .first;
-                        const unsigned int comp = comp_start + comp_in_base;
+                        const unsigned int comp= comp_start + comp_in_base;
                         const unsigned int index_in_comp
                           = fe.base_element(base)
                               .system_to_component_index(index_in_base)
@@ -833,18 +826,18 @@ namespace FETools
         numbers::invalid_unsigned_int, numbers::invalid_unsigned_int);
 
       // 1. Vertices
-      unsigned int total_index = 0;
-      for(unsigned int vertex_number = 0;
+      unsigned int total_index= 0;
+      for(unsigned int vertex_number= 0;
           vertex_number < GeometryInfo<dim>::vertices_per_face;
           ++vertex_number)
         {
-          unsigned int comp_start = 0;
-          for(unsigned int base = 0; base < fe.n_base_elements(); ++base)
-            for(unsigned int m = 0; m < fe.element_multiplicity(base);
+          unsigned int comp_start= 0;
+          for(unsigned int base= 0; base < fe.n_base_elements(); ++base)
+            for(unsigned int m= 0; m < fe.element_multiplicity(base);
                 ++m,
-                             comp_start += fe.base_element(base).n_components()
-                                           * do_tensor_product)
-              for(unsigned int local_index = 0;
+                             comp_start+= fe.base_element(base).n_components()
+                                          * do_tensor_product)
+              for(unsigned int local_index= 0;
                   local_index < fe.base_element(base).dofs_per_vertex;
                   ++local_index, ++total_index)
                 {
@@ -864,7 +857,7 @@ namespace FETools
                     = (fe.base_element(base).dofs_per_vertex * vertex_number
                        + local_index);
 
-                  face_system_to_base_table[total_index] = std::make_pair(
+                  face_system_to_base_table[total_index]= std::make_pair(
                     std::make_pair(base, m), face_index_in_base);
 
                   if(fe.base_element(base).is_primitive(index_in_base))
@@ -873,7 +866,7 @@ namespace FETools
                         = fe.base_element(base)
                             .face_system_to_component_index(face_index_in_base)
                             .first;
-                      const unsigned int comp = comp_start + comp_in_base;
+                      const unsigned int comp= comp_start + comp_in_base;
                       const unsigned int face_index_in_comp
                         = fe.base_element(base)
                             .face_system_to_component_index(face_index_in_base)
@@ -889,18 +882,17 @@ namespace FETools
 
       // 2. Lines
       if(GeometryInfo<dim>::lines_per_face > 0)
-        for(unsigned int line_number = 0;
+        for(unsigned int line_number= 0;
             line_number != GeometryInfo<dim>::lines_per_face;
             ++line_number)
           {
-            unsigned int comp_start = 0;
-            for(unsigned int base = 0; base < fe.n_base_elements(); ++base)
-              for(unsigned int m = 0; m < fe.element_multiplicity(base);
+            unsigned int comp_start= 0;
+            for(unsigned int base= 0; base < fe.n_base_elements(); ++base)
+              for(unsigned int m= 0; m < fe.element_multiplicity(base);
                   ++m,
-                               comp_start
-                               += fe.base_element(base).n_components()
-                                  * do_tensor_product)
-                for(unsigned int local_index = 0;
+                               comp_start+= fe.base_element(base).n_components()
+                                            * do_tensor_product)
+                for(unsigned int local_index= 0;
                     local_index < fe.base_element(base).dofs_per_line;
                     ++local_index, ++total_index)
                   {
@@ -915,7 +907,7 @@ namespace FETools
                          + fe.base_element(base).dofs_per_line * line_number
                          + local_index);
 
-                    face_system_to_base_table[total_index] = std::make_pair(
+                    face_system_to_base_table[total_index]= std::make_pair(
                       std::make_pair(base, m), face_index_in_base);
 
                     if(fe.base_element(base).is_primitive(index_in_base))
@@ -925,7 +917,7 @@ namespace FETools
                               .face_system_to_component_index(
                                 face_index_in_base)
                               .first;
-                        const unsigned int comp = comp_start + comp_in_base;
+                        const unsigned int comp= comp_start + comp_in_base;
                         const unsigned int face_index_in_comp
                           = fe.base_element(base)
                               .face_system_to_component_index(
@@ -942,18 +934,17 @@ namespace FETools
 
       // 3. Quads
       if(GeometryInfo<dim>::quads_per_face > 0)
-        for(unsigned int quad_number = 0;
+        for(unsigned int quad_number= 0;
             quad_number != GeometryInfo<dim>::quads_per_face;
             ++quad_number)
           {
-            unsigned int comp_start = 0;
-            for(unsigned int base = 0; base < fe.n_base_elements(); ++base)
-              for(unsigned int m = 0; m < fe.element_multiplicity(base);
+            unsigned int comp_start= 0;
+            for(unsigned int base= 0; base < fe.n_base_elements(); ++base)
+              for(unsigned int m= 0; m < fe.element_multiplicity(base);
                   ++m,
-                               comp_start
-                               += fe.base_element(base).n_components()
-                                  * do_tensor_product)
-                for(unsigned int local_index = 0;
+                               comp_start+= fe.base_element(base).n_components()
+                                            * do_tensor_product)
+                for(unsigned int local_index= 0;
                     local_index < fe.base_element(base).dofs_per_quad;
                     ++local_index, ++total_index)
                   {
@@ -968,7 +959,7 @@ namespace FETools
                          + fe.base_element(base).dofs_per_quad * quad_number
                          + local_index);
 
-                    face_system_to_base_table[total_index] = std::make_pair(
+                    face_system_to_base_table[total_index]= std::make_pair(
                       std::make_pair(base, m), face_index_in_base);
 
                     if(fe.base_element(base).is_primitive(index_in_base))
@@ -978,7 +969,7 @@ namespace FETools
                               .face_system_to_component_index(
                                 face_index_in_base)
                               .first;
-                        const unsigned int comp = comp_start + comp_in_base;
+                        const unsigned int comp= comp_start + comp_in_base;
                         const unsigned int face_index_in_comp
                           = fe.base_element(base)
                               .face_system_to_component_index(
@@ -1134,12 +1125,10 @@ namespace
   {
     result["FE_Q_Hierarchical"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_Q_Hierarchical<dim>>>();
-    result["FE_ABF"]
-      = std_cxx14::make_unique<FETools::FEFactory<FE_ABF<dim>>>();
+    result["FE_ABF"]= std_cxx14::make_unique<FETools::FEFactory<FE_ABF<dim>>>();
     result["FE_Bernstein"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_Bernstein<dim>>>();
-    result["FE_BDM"]
-      = std_cxx14::make_unique<FETools::FEFactory<FE_BDM<dim>>>();
+    result["FE_BDM"]= std_cxx14::make_unique<FETools::FEFactory<FE_BDM<dim>>>();
     result["FE_DGBDM"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_DGBDM<dim>>>();
     result["FE_DGNedelec"]
@@ -1148,7 +1137,7 @@ namespace
       = std_cxx14::make_unique<FETools::FEFactory<FE_DGRaviartThomas<dim>>>();
     result["FE_RaviartThomas"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_RaviartThomas<dim>>>();
-    result["FE_RaviartThomasNodal"] = std_cxx14::make_unique<
+    result["FE_RaviartThomasNodal"]= std_cxx14::make_unique<
       FETools::FEFactory<FE_RaviartThomasNodal<dim>>>();
     result["FE_RT_Bubbles"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_RT_Bubbles<dim>>>();
@@ -1156,12 +1145,10 @@ namespace
       = std_cxx14::make_unique<FETools::FEFactory<FE_Nedelec<dim>>>();
     result["FE_DGPNonparametric"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_DGPNonparametric<dim>>>();
-    result["FE_DGP"]
-      = std_cxx14::make_unique<FETools::FEFactory<FE_DGP<dim>>>();
+    result["FE_DGP"]= std_cxx14::make_unique<FETools::FEFactory<FE_DGP<dim>>>();
     result["FE_DGPMonomial"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_DGPMonomial<dim>>>();
-    result["FE_DGQ"]
-      = std_cxx14::make_unique<FETools::FEFactory<FE_DGQ<dim>>>();
+    result["FE_DGQ"]= std_cxx14::make_unique<FETools::FEFactory<FE_DGQ<dim>>>();
     result["FE_DGQArbitraryNodes"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_DGQ<dim>>>();
     result["FE_DGQLegendre"]
@@ -1172,7 +1159,7 @@ namespace
       = std_cxx14::make_unique<FETools::FEFactory<FE_FaceQ<dim>>>();
     result["FE_FaceP"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_FaceP<dim>>>();
-    result["FE_Q"] = std_cxx14::make_unique<FETools::FEFactory<FE_Q<dim>>>();
+    result["FE_Q"]= std_cxx14::make_unique<FETools::FEFactory<FE_Q<dim>>>();
     result["FE_Q_DG0"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_Q_DG0<dim>>>();
     result["FE_Q_Bubbles"]
@@ -1193,7 +1180,7 @@ namespace
   fill_codim_fe_names(
     std::map<std::string, std::unique_ptr<const Subscriptor>>& result)
   {
-    result["FE_Bernstein"] = std_cxx14::make_unique<
+    result["FE_Bernstein"]= std_cxx14::make_unique<
       FETools::FEFactory<FE_Bernstein<dim, spacedim>>>();
     result["FE_DGP"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_DGP<dim, spacedim>>>();
@@ -1203,19 +1190,19 @@ namespace
       = std_cxx14::make_unique<FETools::FEFactory<FE_Nothing<dim, spacedim>>>();
     result["FE_DGQArbitraryNodes"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_DGQ<dim, spacedim>>>();
-    result["FE_DGQLegendre"] = std_cxx14::make_unique<
+    result["FE_DGQLegendre"]= std_cxx14::make_unique<
       FETools::FEFactory<FE_DGQLegendre<dim, spacedim>>>();
-    result["FE_DGQHermite"] = std_cxx14::make_unique<
+    result["FE_DGQHermite"]= std_cxx14::make_unique<
       FETools::FEFactory<FE_DGQHermite<dim, spacedim>>>();
-    result["FE_Q_Bubbles"] = std_cxx14::make_unique<
+    result["FE_Q_Bubbles"]= std_cxx14::make_unique<
       FETools::FEFactory<FE_Q_Bubbles<dim, spacedim>>>();
     result["FE_Q_DG0"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_Q_DG0<dim, spacedim>>>();
-    result["FE_Q_iso_Q1"] = std_cxx14::make_unique<
+    result["FE_Q_iso_Q1"]= std_cxx14::make_unique<
       FETools::FEFactory<FE_Q_iso_Q1<dim, spacedim>>>();
     result["FE_Q"]
       = std_cxx14::make_unique<FETools::FEFactory<FE_Q<dim, spacedim>>>();
-    result["FE_Bernstein"] = std_cxx14::make_unique<
+    result["FE_Bernstein"]= std_cxx14::make_unique<
       FETools::FEFactory<FE_Bernstein<dim, spacedim>>>();
   }
 
@@ -1277,7 +1264,7 @@ namespace
   static std::array<
     std::array<std::map<std::string, std::unique_ptr<const Subscriptor>>, 4>,
     4>
-    fe_name_map = fill_default_map();
+    fe_name_map= fill_default_map();
 } // namespace
 
 namespace
@@ -1311,7 +1298,7 @@ namespace
   {
     FullMatrix<double> tmp(interpolation_matrix.m(), interpolation_matrix.n());
     fe2.get_interpolation_matrix(fe1, tmp);
-    interpolation_matrix = tmp;
+    interpolation_matrix= tmp;
   }
 
   // return how many characters
@@ -1334,7 +1321,7 @@ namespace
       return 5;
 
     Assert(dim < 10, ExcNotImplemented());
-    const char dim_char = '0' + dim;
+    const char dim_char= '0' + dim;
 
     if((position + 3 < name.size()) && (name[position] == '<')
        && (name[position + 1] == dim_char) && (name[position + 2] == '>'))
@@ -1359,16 +1346,16 @@ namespace FETools
 
     comp_start.resize(element.n_base_elements());
 
-    unsigned int k = 0;
-    for(unsigned int i = 0; i < comp_start.size(); ++i)
+    unsigned int k= 0;
+    for(unsigned int i= 0; i < comp_start.size(); ++i)
       {
         comp_start[i].resize(element.element_multiplicity(i));
-        const unsigned int increment = element.base_element(i).dofs_per_cell;
+        const unsigned int increment= element.base_element(i).dofs_per_cell;
 
-        for(unsigned int j = 0; j < comp_start[i].size(); ++j)
+        for(unsigned int j= 0; j < comp_start[i].size(); ++j)
           {
-            comp_start[i][j] = k;
-            k += increment;
+            comp_start[i][j]= k;
+            k+= increment;
           }
       }
 
@@ -1377,12 +1364,12 @@ namespace FETools
     // numbering, renumbering
     // contains the index of the
     // cell-block numbering
-    for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
+    for(unsigned int i= 0; i < element.dofs_per_cell; ++i)
       {
         std::pair<std::pair<unsigned int, unsigned int>, unsigned int> indices
           = element.system_to_base_index(i);
-        renumbering[i] = comp_start[indices.first.first][indices.first.second]
-                         + indices.second;
+        renumbering[i]= comp_start[indices.first.first][indices.first.second]
+                        + indices.second;
       }
   }
 
@@ -1398,34 +1385,34 @@ namespace FETools
     Assert(block_data.size() == element.n_blocks(),
            ExcDimensionMismatch(block_data.size(), element.n_blocks()));
 
-    types::global_dof_index k     = 0;
-    unsigned int            count = 0;
-    for(unsigned int b = 0; b < element.n_base_elements(); ++b)
-      for(unsigned int m = 0; m < element.element_multiplicity(b); ++m)
+    types::global_dof_index k    = 0;
+    unsigned int            count= 0;
+    for(unsigned int b= 0; b < element.n_base_elements(); ++b)
+      for(unsigned int m= 0; m < element.element_multiplicity(b); ++m)
         {
-          block_data[count++] = (return_start_indices) ?
-                                  k :
-                                  (element.base_element(b).n_dofs_per_cell());
-          k += element.base_element(b).n_dofs_per_cell();
+          block_data[count++]= (return_start_indices) ?
+                                 k :
+                                 (element.base_element(b).n_dofs_per_cell());
+          k+= element.base_element(b).n_dofs_per_cell();
         }
     Assert(count == element.n_blocks(), ExcInternalError());
 
     std::vector<types::global_dof_index> start_indices(block_data.size());
-    k = 0;
-    for(unsigned int i = 0; i < block_data.size(); ++i)
+    k= 0;
+    for(unsigned int i= 0; i < block_data.size(); ++i)
       if(return_start_indices)
-        start_indices[i] = block_data[i];
+        start_indices[i]= block_data[i];
       else
         {
-          start_indices[i] = k;
-          k += block_data[i];
+          start_indices[i]= k;
+          k+= block_data[i];
         }
 
-    for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
+    for(unsigned int i= 0; i < element.dofs_per_cell; ++i)
       {
         std::pair<unsigned int, types::global_dof_index> indices
           = element.system_to_block_index(i);
-        renumbering[i] = start_indices[indices.first] + indices.second;
+        renumbering[i]= start_indices[indices.first] + indices.second;
       }
   }
 
@@ -1447,7 +1434,7 @@ namespace FETools
     // first try the easy way: maybe
     // the FE wants to implement things
     // itself:
-    bool fe_implements_interpolation = true;
+    bool fe_implements_interpolation= true;
     try
       {
         gim_forwarder(fe1, fe2, interpolation_matrix);
@@ -1456,7 +1443,7 @@ namespace FETools
       typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented&)
       {
         // too bad....
-        fe_implements_interpolation = false;
+        fe_implements_interpolation= false;
       }
     if(fe_implements_interpolation == true)
       return;
@@ -1478,17 +1465,17 @@ namespace FETools
     Assert(fe2_support_points.size() == fe2.dofs_per_cell,
            (typename FiniteElement<dim, spacedim>::ExcFEHasNoSupportPoints()));
 
-    for(unsigned int i = 0; i < fe2.dofs_per_cell; ++i)
+    for(unsigned int i= 0; i < fe2.dofs_per_cell; ++i)
       {
-        const unsigned int i1 = fe2.system_to_component_index(i).first;
-        for(unsigned int j = 0; j < fe1.dofs_per_cell; ++j)
+        const unsigned int i1= fe2.system_to_component_index(i).first;
+        for(unsigned int j= 0; j < fe1.dofs_per_cell; ++j)
           {
-            const unsigned int j1 = fe1.system_to_component_index(j).first;
+            const unsigned int j1= fe1.system_to_component_index(j).first;
             if(i1 == j1)
               interpolation_matrix(i, j)
                 = fe1.shape_value(j, fe2_support_points[i]);
             else
-              interpolation_matrix(i, j) = 0.;
+              interpolation_matrix(i, j)= 0.;
           }
       }
   }
@@ -1537,7 +1524,7 @@ namespace FETools
     get_back_interpolation_matrix(fe1, fe2, interpolation_matrix);
 
     // compute difference
-    difference_matrix = IdentityMatrix(fe1.dofs_per_cell);
+    difference_matrix= IdentityMatrix(fe1.dofs_per_cell);
     difference_matrix.add(-1, interpolation_matrix);
   }
 
@@ -1553,10 +1540,10 @@ namespace FETools
     Assert(matrix.m() == fe2.dofs_per_cell && matrix.n() == fe1.dofs_per_cell,
            ExcMatrixDimensionMismatch(
              matrix.m(), matrix.n(), fe2.dofs_per_cell, fe1.dofs_per_cell));
-    matrix = 0;
+    matrix= 0;
 
-    const unsigned int n1 = fe1.dofs_per_cell;
-    const unsigned int n2 = fe2.dofs_per_cell;
+    const unsigned int n1= fe1.dofs_per_cell;
+    const unsigned int n2= fe2.dofs_per_cell;
 
     // First, create a local mass matrix for the unit cell
     Triangulation<dim, spacedim> tr;
@@ -1580,14 +1567,14 @@ namespace FETools
     // Integrate and invert mass matrix. This happens in the target space
     FullMatrix<double> mass(n2, n2);
 
-    for(unsigned int k = 0; k < quadrature.size(); ++k)
+    for(unsigned int k= 0; k < quadrature.size(); ++k)
       {
-        const double dx = val2.JxW(k);
-        for(unsigned int i = 0; i < n2; ++i)
+        const double dx= val2.JxW(k);
+        for(unsigned int i= 0; i < n2; ++i)
           {
-            const double v = val2.shape_value(i, k);
-            for(unsigned int j = 0; j < n2; ++j)
-              mass(i, j) += v * val2.shape_value(j, k) * dx;
+            const double v= val2.shape_value(i, k);
+            for(unsigned int j= 0; j < n2; ++j)
+              mass(i, j)+= v * val2.shape_value(j, k) * dx;
           }
       }
     // Invert the matrix. Gauss-Jordan should be sufficient since we expect the
@@ -1599,22 +1586,22 @@ namespace FETools
     Vector<double> b(n2);
     Vector<double> x(n2);
 
-    for(unsigned int j = 0; j < n1; ++j)
+    for(unsigned int j= 0; j < n1; ++j)
       {
-        b = 0.;
-        for(unsigned int i = 0; i < n2; ++i)
-          for(unsigned int k = 0; k < quadrature.size(); ++k)
+        b= 0.;
+        for(unsigned int i= 0; i < n2; ++i)
+          for(unsigned int k= 0; k < quadrature.size(); ++k)
             {
-              const double dx = val2.JxW(k);
-              const double u  = val1.shape_value(j, k);
-              const double v  = val2.shape_value(i, k);
-              b(i) += u * v * dx;
+              const double dx= val2.JxW(k);
+              const double u = val1.shape_value(j, k);
+              const double v = val2.shape_value(i, k);
+              b(i)+= u * v * dx;
             }
 
         // Multiply by the inverse
         mass.vmult(x, b);
-        for(unsigned int i = 0; i < n2; ++i)
-          matrix(i, j) = x(i);
+        for(unsigned int i= 0; i < n2; ++i)
+          matrix(i, j)= x(i);
       }
   }
 
@@ -1622,14 +1609,14 @@ namespace FETools
   FullMatrix<double>
   compute_node_matrix(const FiniteElement<dim, spacedim>& fe)
   {
-    const unsigned int n_dofs = fe.dofs_per_cell;
+    const unsigned int n_dofs= fe.dofs_per_cell;
 
     FullMatrix<double> N(n_dofs, n_dofs);
 
     Assert(fe.has_generalized_support_points(), ExcNotInitialized());
     Assert(fe.n_components() == dim, ExcNotImplemented());
 
-    const std::vector<Point<dim>>& points = fe.get_generalized_support_points();
+    const std::vector<Point<dim>>& points= fe.get_generalized_support_points();
 
     // We need the values of the polynomials in all generalized support points.
     // This function specifically works for the case where shape functions
@@ -1645,12 +1632,12 @@ namespace FETools
     // are the 'raw' shape functions (i.e., where the element has not yet
     // computed the expansion coefficients with regard to the basis
     // provided by the polynomial space).
-    for(unsigned int i = 0; i < n_dofs; ++i)
+    for(unsigned int i= 0; i < n_dofs; ++i)
       {
         // get the values of the current set of shape functions
         // at the generalized support points
-        for(unsigned int k = 0; k < points.size(); ++k)
-          for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int k= 0; k < points.size(); ++k)
+          for(unsigned int d= 0; d < dim; ++d)
             {
               support_point_values[k][d]
                 = fe.shape_value_component(i, points[k], d);
@@ -1662,9 +1649,9 @@ namespace FETools
           support_point_values, nodal_values);
 
         // Enter the interpolated dofs into the matrix
-        for(unsigned int j = 0; j < n_dofs; ++j)
+        for(unsigned int j= 0; j < n_dofs; ++j)
           {
-            N(j, i) = nodal_values[j];
+            N(j, i)= nodal_values[j];
             Assert(numbers::is_finite(nodal_values[j]), ExcInternalError());
           }
       }
@@ -1716,9 +1703,9 @@ namespace FETools
                                          FullMatrix<number>& this_matrix,
                                          const double        threshold)
     {
-      const unsigned int n  = fe.dofs_per_cell;
-      const unsigned int nd = fe.n_components();
-      const unsigned int nq = coarse.n_quadrature_points;
+      const unsigned int n = fe.dofs_per_cell;
+      const unsigned int nd= fe.n_components();
+      const unsigned int nq= coarse.n_quadrature_points;
 
       Vector<number> v_coarse(nq * nd);
       Vector<number> v_fine(n);
@@ -1731,21 +1718,21 @@ namespace FETools
       // each quadrature point.
       if(fe.is_primitive())
         {
-          const unsigned int d     = fe.system_to_component_index(i).first;
-          const double*      phi_i = &coarse.shape_value(i, 0);
+          const unsigned int d    = fe.system_to_component_index(i).first;
+          const double*      phi_i= &coarse.shape_value(i, 0);
 
-          for(unsigned int k = 0; k < nq; ++k)
-            v_coarse(k * nd + d) = phi_i[k];
+          for(unsigned int k= 0; k < nq; ++k)
+            v_coarse(k * nd + d)= phi_i[k];
         }
 
       else
-        for(unsigned int d = 0; d < nd; ++d)
-          for(unsigned int k = 0; k < nq; ++k)
-            v_coarse(k * nd + d) = coarse.shape_value_component(i, k, d);
+        for(unsigned int d= 0; d < nd; ++d)
+          for(unsigned int k= 0; k < nq; ++k)
+            v_coarse(k * nd + d)= coarse.shape_value_component(i, k, d);
 
       // solve the least squares
       // problem.
-      const double result = H.least_squares(v_fine, v_coarse);
+      const double result= H.least_squares(v_fine, v_coarse);
       Assert(result <= threshold, ExcLeastSquaresError(result));
       // Avoid warnings in release mode
       (void) result;
@@ -1757,8 +1744,8 @@ namespace FETools
       // function to a fine grid
       // function, the columns
       // are fine grid.
-      for(unsigned int j = 0; j < n; ++j)
-        this_matrix(j, i) = v_fine(j);
+      for(unsigned int j= 0; j < n; ++j)
+        this_matrix(j, i)= v_fine(j);
     }
 
     template <int dim, typename number, int spacedim>
@@ -1769,10 +1756,10 @@ namespace FETools
       const unsigned int                  ref_case,
       const double                        threshold)
     {
-      const unsigned int n = fe.dofs_per_cell;
+      const unsigned int n= fe.dofs_per_cell;
       const unsigned int nc
         = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
-      for(unsigned int i = 0; i < nc; ++i)
+      for(unsigned int i= 0; i < nc; ++i)
         {
           Assert(matrices[i].n() == n,
                  ExcDimensionMismatch(matrices[i].n(), n));
@@ -1787,9 +1774,9 @@ namespace FETools
       tria.begin_active()->set_refine_flag(RefinementCase<dim>(ref_case));
       tria.execute_coarsening_and_refinement();
 
-      const unsigned int degree = fe.degree;
+      const unsigned int degree= fe.degree;
       QGauss<dim>        q_fine(degree + 1);
-      const unsigned int nq = q_fine.size();
+      const unsigned int nq= q_fine.size();
 
       FEValues<dim, spacedim> fine(fe,
                                    q_fine,
@@ -1810,16 +1797,16 @@ namespace FETools
       // This matrix is the same for all
       // children.
       fine.reinit(tria.begin_active());
-      const unsigned int nd = fe.n_components();
+      const unsigned int nd= fe.n_components();
       FullMatrix<number> A(nq * nd, n);
 
-      for(unsigned int j = 0; j < n; ++j)
-        for(unsigned int d = 0; d < nd; ++d)
-          for(unsigned int k = 0; k < nq; ++k)
-            A(k * nd + d, j) = fine.shape_value_component(j, k, d);
+      for(unsigned int j= 0; j < n; ++j)
+        for(unsigned int d= 0; d < nd; ++d)
+          for(unsigned int k= 0; k < nq; ++k)
+            A(k * nd + d, j)= fine.shape_value_component(j, k, d);
 
       Householder<double> H(A);
-      unsigned int        cell_number = 0;
+      unsigned int        cell_number= 0;
 
       Threads::TaskGroup<void> task_group;
 
@@ -1837,16 +1824,16 @@ namespace FETools
           const std::vector<Point<spacedim>>& q_points_fine
             = fine.get_quadrature_points();
           std::vector<Point<dim>> q_points_coarse(q_points_fine.size());
-          for(unsigned int i = 0; i < q_points_fine.size(); ++i)
-            for(unsigned int j = 0; j < dim; ++j)
-              q_points_coarse[i](j) = q_points_fine[i](j);
+          for(unsigned int i= 0; i < q_points_fine.size(); ++i)
+            for(unsigned int j= 0; j < dim; ++j)
+              q_points_coarse[i](j)= q_points_fine[i](j);
           const Quadrature<dim>   q_coarse(q_points_coarse,
                                          fine.get_JxW_values());
           FEValues<dim, spacedim> coarse(fe, q_coarse, update_values);
 
           coarse.reinit(tria.begin(0));
 
-          FullMatrix<double>& this_matrix = matrices[cell_number];
+          FullMatrix<double>& this_matrix= matrices[cell_number];
 
           // Compute this once for each
           // coarse grid basis function. can
@@ -1858,9 +1845,9 @@ namespace FETools
           // operations).
           if(n > 30)
             {
-              for(unsigned int i = 0; i < n; ++i)
+              for(unsigned int i= 0; i < n; ++i)
                 {
-                  task_group += Threads::new_task(
+                  task_group+= Threads::new_task(
                     &compute_embedding_for_shape_function<dim,
                                                           number,
                                                           spacedim>,
@@ -1875,7 +1862,7 @@ namespace FETools
             }
           else
             {
-              for(unsigned int i = 0; i < n; ++i)
+              for(unsigned int i= 0; i < n; ++i)
                 {
                   compute_embedding_for_shape_function<dim, number, spacedim>(
                     i, fe, coarse, H, this_matrix, threshold);
@@ -1884,10 +1871,10 @@ namespace FETools
 
           // Remove small entries from
           // the matrix
-          for(unsigned int i = 0; i < this_matrix.m(); ++i)
-            for(unsigned int j = 0; j < this_matrix.n(); ++j)
+          for(unsigned int i= 0; i < this_matrix.m(); ++i)
+            for(unsigned int j= 0; j < this_matrix.n(); ++j)
               if(std::fabs(this_matrix(i, j)) < 1e-12)
-                this_matrix(i, j) = 0.;
+                this_matrix(i, j)= 0.;
         }
 
       Assert(cell_number
@@ -1907,12 +1894,12 @@ namespace FETools
     Threads::TaskGroup<void> task_group;
 
     // loop over all possible refinement cases
-    unsigned int ref_case = (isotropic_only) ?
-                              RefinementCase<dim>::isotropic_refinement :
-                              RefinementCase<dim>::cut_x;
+    unsigned int ref_case= (isotropic_only) ?
+                             RefinementCase<dim>::isotropic_refinement :
+                             RefinementCase<dim>::cut_x;
 
     for(; ref_case <= RefinementCase<dim>::isotropic_refinement; ++ref_case)
-      task_group += Threads::new_task(
+      task_group+= Threads::new_task(
         &compute_embedding_matrices_for_refinement_case<dim, number, spacedim>,
         fe,
         matrices[ref_case - 1],
@@ -1934,15 +1921,15 @@ namespace FETools
     Assert(face_coarse == 0, ExcNotImplemented());
     Assert(face_fine == 0, ExcNotImplemented());
 
-    const unsigned int nc     = GeometryInfo<dim>::max_children_per_face;
-    const unsigned int n      = fe.dofs_per_face;
-    const unsigned int nd     = fe.n_components();
-    const unsigned int degree = fe.degree;
+    const unsigned int nc    = GeometryInfo<dim>::max_children_per_face;
+    const unsigned int n     = fe.dofs_per_face;
+    const unsigned int nd    = fe.n_components();
+    const unsigned int degree= fe.degree;
 
-    const bool normal     = fe.conforms(FiniteElementData<dim>::Hdiv);
-    const bool tangential = fe.conforms(FiniteElementData<dim>::Hcurl);
+    const bool normal    = fe.conforms(FiniteElementData<dim>::Hdiv);
+    const bool tangential= fe.conforms(FiniteElementData<dim>::Hcurl);
 
-    for(unsigned int i = 0; i < nc; ++i)
+    for(unsigned int i= 0; i < nc; ++i)
       {
         Assert(matrices[i].n() == n, ExcDimensionMismatch(matrices[i].n(), n));
         Assert(matrices[i].m() == n, ExcDimensionMismatch(matrices[i].m(), n));
@@ -1956,8 +1943,8 @@ namespace FETools
     std::vector<unsigned int> face_c_dofs(n);
     std::vector<unsigned int> face_f_dofs(n);
     {
-      unsigned int face_dof = 0;
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
+      unsigned int face_dof= 0;
+      for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
         {
           const unsigned int offset_c
             = GeometryInfo<dim>::face_to_cell_vertices(face_coarse, i)
@@ -1965,14 +1952,14 @@ namespace FETools
           const unsigned int offset_f
             = GeometryInfo<dim>::face_to_cell_vertices(face_fine, i)
               * fe.dofs_per_vertex;
-          for(unsigned int j = 0; j < fe.dofs_per_vertex; ++j)
+          for(unsigned int j= 0; j < fe.dofs_per_vertex; ++j)
             {
-              face_c_dofs[face_dof] = offset_c + j;
-              face_f_dofs[face_dof] = offset_f + j;
+              face_c_dofs[face_dof]= offset_c + j;
+              face_f_dofs[face_dof]= offset_f + j;
               ++face_dof;
             }
         }
-      for(unsigned int i = 1; i <= GeometryInfo<dim>::lines_per_face; ++i)
+      for(unsigned int i= 1; i <= GeometryInfo<dim>::lines_per_face; ++i)
         {
           const unsigned int offset_c
             = fe.first_line_index
@@ -1982,23 +1969,23 @@ namespace FETools
             = fe.first_line_index
               + GeometryInfo<dim>::face_to_cell_lines(face_fine, i - 1)
                   * fe.dofs_per_line;
-          for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for(unsigned int j= 0; j < fe.dofs_per_line; ++j)
             {
-              face_c_dofs[face_dof] = offset_c + j;
-              face_f_dofs[face_dof] = offset_f + j;
+              face_c_dofs[face_dof]= offset_c + j;
+              face_f_dofs[face_dof]= offset_f + j;
               ++face_dof;
             }
         }
-      for(unsigned int i = 1; i <= GeometryInfo<dim>::quads_per_face; ++i)
+      for(unsigned int i= 1; i <= GeometryInfo<dim>::quads_per_face; ++i)
         {
           const unsigned int offset_c
             = fe.first_quad_index + face_coarse * fe.dofs_per_quad;
           const unsigned int offset_f
             = fe.first_quad_index + face_fine * fe.dofs_per_quad;
-          for(unsigned int j = 0; j < fe.dofs_per_quad; ++j)
+          for(unsigned int j= 0; j < fe.dofs_per_quad; ++j)
             {
-              face_c_dofs[face_dof] = offset_c + j;
-              face_f_dofs[face_dof] = offset_f + j;
+              face_c_dofs[face_dof]= offset_c + j;
+              face_f_dofs[face_dof]= offset_f + j;
               ++face_dof;
             }
         }
@@ -2023,7 +2010,7 @@ namespace FETools
     QGauss<dim - 1>       q_gauss(degree + 1);
     const Quadrature<dim> q_fine
       = QProjector<dim>::project_to_face(q_gauss, face_fine);
-    const unsigned int nq = q_fine.size();
+    const unsigned int nq= q_fine.size();
 
     FEValues<dim> fine(mapping,
                        fe,
@@ -2046,17 +2033,17 @@ namespace FETools
     // children.
     fine.reinit(tria.begin_active());
     FullMatrix<number> A(nq * nd, n);
-    for(unsigned int j = 0; j < n; ++j)
-      for(unsigned int k = 0; k < nq; ++k)
+    for(unsigned int j= 0; j < n; ++j)
+      for(unsigned int k= 0; k < nq; ++k)
         if(nd != dim)
-          for(unsigned int d = 0; d < nd; ++d)
-            A(k * nd + d, j) = fine.shape_value_component(face_f_dofs[j], k, d);
+          for(unsigned int d= 0; d < nd; ++d)
+            A(k * nd + d, j)= fine.shape_value_component(face_f_dofs[j], k, d);
         else
           {
             if(normal)
-              A(k * nd, j) = fine.shape_value_component(face_f_dofs[j], k, 0);
+              A(k * nd, j)= fine.shape_value_component(face_f_dofs[j], k, 0);
             if(tangential)
-              for(unsigned int d = 1; d < dim; ++d)
+              for(unsigned int d= 1; d < dim; ++d)
                 A(k * nd + d, j)
                   = fine.shape_value_component(face_f_dofs[j], k, d);
           }
@@ -2066,11 +2053,11 @@ namespace FETools
     Vector<number> v_coarse(nq * nd);
     Vector<number> v_fine(n);
 
-    for(unsigned int cell_number = 0;
+    for(unsigned int cell_number= 0;
         cell_number < GeometryInfo<dim>::max_children_per_face;
         ++cell_number)
       {
-        const Quadrature<dim> q_coarse = QProjector<dim>::project_to_subface(
+        const Quadrature<dim> q_coarse= QProjector<dim>::project_to_subface(
           q_gauss, face_coarse, cell_number);
         FEValues<dim> coarse(mapping, fe, q_coarse, update_values);
 
@@ -2080,11 +2067,11 @@ namespace FETools
         fine.reinit(fine_cell);
         coarse.reinit(tria.begin(0));
 
-        FullMatrix<double>& this_matrix = matrices[cell_number];
+        FullMatrix<double>& this_matrix= matrices[cell_number];
 
         // Compute this once for each
         // coarse grid basis function
-        for(unsigned int i = 0; i < n; ++i)
+        for(unsigned int i= 0; i < n; ++i)
           {
             // The right hand side of
             // the least squares
@@ -2092,9 +2079,9 @@ namespace FETools
             // function values of the
             // coarse grid function in
             // each quadrature point.
-            for(unsigned int k = 0; k < nq; ++k)
+            for(unsigned int k= 0; k < nq; ++k)
               if(nd != dim)
-                for(unsigned int d = 0; d < nd; ++d)
+                for(unsigned int d= 0; d < nd; ++d)
                   v_coarse(k * nd + d)
                     = coarse.shape_value_component(face_c_dofs[i], k, d);
               else
@@ -2103,13 +2090,13 @@ namespace FETools
                     v_coarse(k * nd)
                       = coarse.shape_value_component(face_c_dofs[i], k, 0);
                   if(tangential)
-                    for(unsigned int d = 1; d < dim; ++d)
+                    for(unsigned int d= 1; d < dim; ++d)
                       v_coarse(k * nd + d)
                         = coarse.shape_value_component(face_c_dofs[i], k, d);
                 }
             // solve the least squares
             // problem.
-            const double result = H.least_squares(v_fine, v_coarse);
+            const double result= H.least_squares(v_fine, v_coarse);
             Assert(result <= threshold, ExcLeastSquaresError(result));
             // Avoid compiler warnings in Release mode
             (void) result;
@@ -2121,15 +2108,15 @@ namespace FETools
             // function to a fine grid
             // function, the columns
             // are fine grid.
-            for(unsigned int j = 0; j < n; ++j)
-              this_matrix(j, i) = v_fine(j);
+            for(unsigned int j= 0; j < n; ++j)
+              this_matrix(j, i)= v_fine(j);
           }
         // Remove small entries from
         // the matrix
-        for(unsigned int i = 0; i < this_matrix.m(); ++i)
-          for(unsigned int j = 0; j < this_matrix.n(); ++j)
+        for(unsigned int i= 0; i < this_matrix.m(); ++i)
+          for(unsigned int j= 0; j < this_matrix.n(); ++j)
             if(std::fabs(this_matrix(i, j)) < 1e-12)
-              this_matrix(i, j) = 0.;
+              this_matrix(i, j)= 0.;
       }
   }
 
@@ -2140,14 +2127,14 @@ namespace FETools
     std::vector<std::vector<FullMatrix<number>>>& matrices,
     const bool                                    isotropic_only)
   {
-    const unsigned int n      = fe.dofs_per_cell;
-    const unsigned int nd     = fe.n_components();
-    const unsigned int degree = fe.degree;
+    const unsigned int n     = fe.dofs_per_cell;
+    const unsigned int nd    = fe.n_components();
+    const unsigned int degree= fe.degree;
 
     // prepare FEValues, quadrature etc on
     // coarse cell
     QGauss<dim>        q_fine(degree + 1);
-    const unsigned int nq = q_fine.size();
+    const unsigned int nq= q_fine.size();
 
     // create mass matrix on coarse cell.
     FullMatrix<number> mass(n, n);
@@ -2163,26 +2150,26 @@ namespace FETools
         = tr.begin(0);
       coarse.reinit(coarse_cell);
 
-      const std::vector<double>& JxW = coarse.get_JxW_values();
-      for(unsigned int i = 0; i < n; ++i)
-        for(unsigned int j = 0; j < n; ++j)
+      const std::vector<double>& JxW= coarse.get_JxW_values();
+      for(unsigned int i= 0; i < n; ++i)
+        for(unsigned int j= 0; j < n; ++j)
           if(fe.is_primitive())
             {
-              const double* coarse_i = &coarse.shape_value(i, 0);
-              const double* coarse_j = &coarse.shape_value(j, 0);
-              double        mass_ij  = 0;
-              for(unsigned int k = 0; k < nq; ++k)
-                mass_ij += JxW[k] * coarse_i[k] * coarse_j[k];
-              mass(i, j) = mass_ij;
+              const double* coarse_i= &coarse.shape_value(i, 0);
+              const double* coarse_j= &coarse.shape_value(j, 0);
+              double        mass_ij = 0;
+              for(unsigned int k= 0; k < nq; ++k)
+                mass_ij+= JxW[k] * coarse_i[k] * coarse_j[k];
+              mass(i, j)= mass_ij;
             }
           else
             {
-              double mass_ij = 0;
-              for(unsigned int d = 0; d < nd; ++d)
-                for(unsigned int k = 0; k < nq; ++k)
-                  mass_ij += JxW[k] * coarse.shape_value_component(i, k, d)
-                             * coarse.shape_value_component(j, k, d);
-              mass(i, j) = mass_ij;
+              double mass_ij= 0;
+              for(unsigned int d= 0; d < nd; ++d)
+                for(unsigned int k= 0; k < nq; ++k)
+                  mass_ij+= JxW[k] * coarse.shape_value_component(i, k, d)
+                            * coarse.shape_value_component(j, k, d);
+              mass(i, j)= mass_ij;
             }
 
       // invert mass matrix
@@ -2196,7 +2183,7 @@ namespace FETools
           const unsigned int nc
             = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
 
-          for(unsigned int i = 0; i < nc; ++i)
+          for(unsigned int i= 0; i < nc; ++i)
             {
               Assert(matrices[i].n() == n,
                      ExcDimensionMismatch(matrices[i].n(), n));
@@ -2222,9 +2209,9 @@ namespace FETools
           Vector<number> v_coarse(n);
           Vector<number> v_fine(n);
 
-          for(unsigned int cell_number = 0; cell_number < nc; ++cell_number)
+          for(unsigned int cell_number= 0; cell_number < nc; ++cell_number)
             {
-              FullMatrix<double>& this_matrix = matrices[cell_number];
+              FullMatrix<double>& this_matrix= matrices[cell_number];
 
               // Compute right hand side, which is a fine level basis
               // function tested with the coarse level functions.
@@ -2232,9 +2219,9 @@ namespace FETools
               const std::vector<Point<spacedim>>& q_points_fine
                 = fine.get_quadrature_points();
               std::vector<Point<dim>> q_points_coarse(q_points_fine.size());
-              for(unsigned int q = 0; q < q_points_fine.size(); ++q)
-                for(unsigned int j = 0; j < dim; ++j)
-                  q_points_coarse[q](j) = q_points_fine[q](j);
+              for(unsigned int q= 0; q < q_points_fine.size(); ++q)
+                for(unsigned int j= 0; j < dim; ++j)
+                  q_points_coarse[q](j)= q_points_fine[q](j);
               Quadrature<dim> q_coarse(q_points_coarse, fine.get_JxW_values());
               FEValues<dim, spacedim> coarse(
                 StaticMappingQ1<dim, spacedim>::mapping,
@@ -2245,56 +2232,56 @@ namespace FETools
 
               // Build RHS
 
-              const std::vector<double>& JxW = fine.get_JxW_values();
+              const std::vector<double>& JxW= fine.get_JxW_values();
 
               // Outer loop over all fine grid shape functions phi_j
-              for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+              for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
                 {
-                  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
                     {
                       if(fe.is_primitive())
                         {
-                          const double* coarse_i = &coarse.shape_value(i, 0);
-                          const double* fine_j   = &fine.shape_value(j, 0);
+                          const double* coarse_i= &coarse.shape_value(i, 0);
+                          const double* fine_j  = &fine.shape_value(j, 0);
 
-                          double update = 0;
-                          for(unsigned int k = 0; k < nq; ++k)
-                            update += JxW[k] * coarse_i[k] * fine_j[k];
-                          v_fine(i) = update;
+                          double update= 0;
+                          for(unsigned int k= 0; k < nq; ++k)
+                            update+= JxW[k] * coarse_i[k] * fine_j[k];
+                          v_fine(i)= update;
                         }
                       else
                         {
-                          double update = 0;
-                          for(unsigned int d = 0; d < nd; ++d)
-                            for(unsigned int k = 0; k < nq; ++k)
-                              update += JxW[k]
-                                        * coarse.shape_value_component(i, k, d)
-                                        * fine.shape_value_component(j, k, d);
-                          v_fine(i) = update;
+                          double update= 0;
+                          for(unsigned int d= 0; d < nd; ++d)
+                            for(unsigned int k= 0; k < nq; ++k)
+                              update+= JxW[k]
+                                       * coarse.shape_value_component(i, k, d)
+                                       * fine.shape_value_component(j, k, d);
+                          v_fine(i)= update;
                         }
                     }
 
                   // RHS ready. Solve system and enter row into matrix
                   inverse_mass_matrix.vmult(v_coarse, v_fine);
-                  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-                    this_matrix(i, j) = v_coarse(i);
+                  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+                    this_matrix(i, j)= v_coarse(i);
                 }
 
               // Remove small entries from the matrix
-              for(unsigned int i = 0; i < this_matrix.m(); ++i)
-                for(unsigned int j = 0; j < this_matrix.n(); ++j)
+              for(unsigned int i= 0; i < this_matrix.m(); ++i)
+                for(unsigned int j= 0; j < this_matrix.n(); ++j)
                   if(std::fabs(this_matrix(i, j)) < 1e-12)
-                    this_matrix(i, j) = 0.;
+                    this_matrix(i, j)= 0.;
             }
         };
 
     // finally loop over all possible refinement cases
     Threads::TaskGroup<> tasks;
-    unsigned int         ref_case = (isotropic_only) ?
-                              RefinementCase<dim>::isotropic_refinement :
-                              RefinementCase<dim>::cut_x;
+    unsigned int         ref_case= (isotropic_only) ?
+                             RefinementCase<dim>::isotropic_refinement :
+                             RefinementCase<dim>::cut_x;
     for(; ref_case <= RefinementCase<dim>::isotropic_refinement; ++ref_case)
-      tasks += Threads::new_task([&, ref_case]() {
+      tasks+= Threads::new_task([&, ref_case]() {
         compute_one_case(ref_case, mass, matrices[ref_case - 1]);
       });
 
@@ -2308,8 +2295,8 @@ namespace FETools
   {
     // Erase everything after the
     // actual class name
-    std::string  name     = parameter_name;
-    unsigned int name_end = name.find_first_not_of(std::string(
+    std::string  name    = parameter_name;
+    unsigned int name_end= name.find_first_not_of(std::string(
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"));
     if(name_end < name.size())
       name.erase(name_end);
@@ -2349,7 +2336,7 @@ namespace FETools
         // finite element class, which only
         // contains characters, numbers and
         // underscores.
-        unsigned int      name_end = name.find_first_not_of(std::string(
+        unsigned int      name_end= name.find_first_not_of(std::string(
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"));
         const std::string name_part(name, 0, name_end);
         name.erase(0, name_part.size());
@@ -2462,7 +2449,7 @@ namespace FETools
             // argument, which defaults to 1,
             // so this properly returns
             // FE_Nothing()
-            const Subscriptor* ptr = fe_name_map.find(name_part)->second.get();
+            const Subscriptor* ptr= fe_name_map.find(name_part)->second.get();
             const FEFactoryBase<dim, spacedim>* fef
               = dynamic_cast<const FEFactoryBase<dim, spacedim>*>(ptr);
             return fef->get(1);
@@ -2494,7 +2481,7 @@ namespace FETools
               }
             else
               {
-                unsigned int      position = name.find('(');
+                unsigned int      position= name.find('(');
                 const std::string quadrature_name(name, 0, position);
                 name.erase(0, position + 1);
                 if(quadrature_name.compare("QGaussLobatto") == 0)
@@ -2524,7 +2511,7 @@ namespace FETools
                 else if(quadrature_name.compare("QIterated") == 0)
                   {
                     // find sub-quadrature
-                    position = name.find('(');
+                    position= name.find('(');
                     const std::string subquadrature_name(name, 0, position);
                     AssertThrow(
                       subquadrature_name.compare("QTrapez") == 0,
@@ -2582,8 +2569,8 @@ namespace FETools
   std::unique_ptr<FiniteElement<dim, spacedim>>
   get_fe_by_name(const std::string& parameter_name)
   {
-    std::string name  = Utilities::trim(parameter_name);
-    std::size_t index = 1;
+    std::string name = Utilities::trim(parameter_name);
+    std::size_t index= 1;
     // remove spaces that are not between two word (things that match the
     // regular expression [A-Za-z0-9_]) characters.
     while(2 < name.size() && index < name.size() - 1)
@@ -2603,17 +2590,17 @@ namespace FETools
     // Create a version of the name
     // string where all template
     // parameters are eliminated.
-    for(unsigned int pos1 = name.find('<'); pos1 < name.size();
-        pos1              = name.find('<'))
+    for(unsigned int pos1= name.find('<'); pos1 < name.size();
+        pos1             = name.find('<'))
       {
-        const unsigned int pos2 = name.find('>');
+        const unsigned int pos2= name.find('>');
         // If there is only a single
         // character between those two,
         // it should be 'd' or the number
         // representing the dimension.
         if(pos2 - pos1 == 2)
           {
-            const char dimchar = '0' + dim;
+            const char dimchar= '0' + dim;
             (void) dimchar;
             if(name.at(pos1 + 1) != 'd')
               Assert(name.at(pos1 + 1) == dimchar,
@@ -2631,19 +2618,19 @@ namespace FETools
     // Replace all occurrences of "^dim"
     // by "^d" to be handled by the
     // next loop
-    for(unsigned int pos = name.find("^dim"); pos < name.size();
-        pos              = name.find("^dim"))
+    for(unsigned int pos= name.find("^dim"); pos < name.size();
+        pos             = name.find("^dim"))
       name.erase(pos + 2, 2);
 
     // Replace all occurrences of "^d"
     // by using the actual dimension
-    for(unsigned int pos = name.find("^d"); pos < name.size();
-        pos              = name.find("^d"))
-      name.at(pos + 1) = '0' + dim;
+    for(unsigned int pos= name.find("^d"); pos < name.size();
+        pos             = name.find("^d"))
+      name.at(pos + 1)= '0' + dim;
 
     try
       {
-        auto fe = internal::get_fe_by_name<dim, spacedim>(name);
+        auto fe= internal::get_fe_by_name<dim, spacedim>(name);
 
         // Make sure the auxiliary function
         // ate up all characters of the name.
@@ -2677,17 +2664,17 @@ namespace FETools
     FullMatrix<double> M(fe.dofs_per_cell, fe.dofs_per_cell);
     FullMatrix<double> Q(fe.dofs_per_cell, rhs_quadrature.size());
 
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-      for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-        for(unsigned int q = 0; q < lhs_quadrature.size(); ++q)
-          M(i, j) += fe.shape_value(i, lhs_quadrature.point(q))
-                     * fe.shape_value(j, lhs_quadrature.point(q))
-                     * lhs_quadrature.weight(q);
+    for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
+        for(unsigned int q= 0; q < lhs_quadrature.size(); ++q)
+          M(i, j)+= fe.shape_value(i, lhs_quadrature.point(q))
+                    * fe.shape_value(j, lhs_quadrature.point(q))
+                    * lhs_quadrature.weight(q);
 
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-      for(unsigned int q = 0; q < rhs_quadrature.size(); ++q)
-        Q(i, q) += fe.shape_value(i, rhs_quadrature.point(q))
-                   * rhs_quadrature.weight(q);
+    for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int q= 0; q < rhs_quadrature.size(); ++q)
+        Q(i, q)+= fe.shape_value(i, rhs_quadrature.point(q))
+                  * rhs_quadrature.weight(q);
 
     // then invert M
     FullMatrix<double> M_inverse(fe.dofs_per_cell, fe.dofs_per_cell);
@@ -2712,9 +2699,9 @@ namespace FETools
     Assert(I_q.m() == quadrature.size(), ExcMessage("Wrong matrix size"));
     Assert(I_q.n() == fe.dofs_per_cell, ExcMessage("Wrong matrix size"));
 
-    for(unsigned int q = 0; q < quadrature.size(); ++q)
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        I_q(q, i) = fe.shape_value(i, quadrature.point(q));
+    for(unsigned int q= 0; q < quadrature.size(); ++q)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        I_q(q, i)= fe.shape_value(i, quadrature.point(q));
   }
 
   template <int dim>
@@ -2737,18 +2724,18 @@ namespace FETools
                                 vector_of_tensors_at_nodes.size()));
 
     // number of support points (nodes) to project to
-    const unsigned int n_support_points = projection_matrix.n_rows();
+    const unsigned int n_support_points= projection_matrix.n_rows();
     // number of quadrature points to project from
-    const unsigned int n_quad_points = projection_matrix.n_cols();
+    const unsigned int n_quad_points= projection_matrix.n_cols();
 
     // component projected to the nodes
     Vector<double> component_at_node(n_support_points);
     // component at the quadrature point
     Vector<double> component_at_qp(n_quad_points);
 
-    for(unsigned int ii = 0; ii < dim; ++ii)
+    for(unsigned int ii= 0; ii < dim; ++ii)
       {
-        component_at_qp = 0;
+        component_at_qp= 0;
 
         // populate the vector of components at the qps
         // from vector_of_tensors_at_qp
@@ -2756,9 +2743,9 @@ namespace FETools
         //      columns:        0, 1, ...,  dim
         //      rows:           0,1,....,  n_quad_points
         // so extract the ii'th column of vector_of_tensors_at_qp
-        for(unsigned int q = 0; q < n_quad_points; ++q)
+        for(unsigned int q= 0; q < n_quad_points; ++q)
           {
-            component_at_qp(q) = vector_of_tensors_at_qp[q][ii];
+            component_at_qp(q)= vector_of_tensors_at_qp[q][ii];
           }
 
         // project from the qps -> nodes
@@ -2767,9 +2754,9 @@ namespace FETools
 
         // rewrite the projection of the components
         // back into the vector of tensors
-        for(unsigned int nn = 0; nn < n_support_points; ++nn)
+        for(unsigned int nn= 0; nn < n_support_points; ++nn)
           {
-            vector_of_tensors_at_nodes[nn][ii] = component_at_node(nn);
+            vector_of_tensors_at_nodes[nn][ii]= component_at_node(nn);
           }
       }
   }
@@ -2794,9 +2781,9 @@ namespace FETools
                                 vector_of_tensors_at_nodes.size()));
 
     // number of support points (nodes)
-    const unsigned int n_support_points = projection_matrix.n_rows();
+    const unsigned int n_support_points= projection_matrix.n_rows();
     // number of quadrature points to project from
-    const unsigned int n_quad_points = projection_matrix.n_cols();
+    const unsigned int n_quad_points= projection_matrix.n_cols();
 
     // number of unique entries in a symmetric second-order tensor
     const unsigned int n_independent_components
@@ -2808,15 +2795,15 @@ namespace FETools
     Vector<double> component_at_qp(n_quad_points);
 
     // loop over the number of unique dimensions of the tensor
-    for(unsigned int ii = 0; ii < n_independent_components; ++ii)
+    for(unsigned int ii= 0; ii < n_independent_components; ++ii)
       {
-        component_at_qp = 0;
+        component_at_qp= 0;
 
         // row-column entry of tensor corresponding the unrolled index
         TableIndices<2> row_column_index
           = SymmetricTensor<2, dim>::unrolled_to_component_indices(ii);
-        const unsigned int row    = row_column_index[0];
-        const unsigned int column = row_column_index[1];
+        const unsigned int row   = row_column_index[0];
+        const unsigned int column= row_column_index[1];
 
         //  populate the vector of components at the qps
         //  from vector_of_tensors_at_qp
@@ -2824,9 +2811,9 @@ namespace FETools
         //      columns:       0, 1, ..., n_independent_components
         //      rows:           0,1,....,  n_quad_points
         //  so extract the ii'th column of vector_of_tensors_at_qp
-        for(unsigned int q = 0; q < n_quad_points; ++q)
+        for(unsigned int q= 0; q < n_quad_points; ++q)
           {
-            component_at_qp(q) = (vector_of_tensors_at_qp[q])[row][column];
+            component_at_qp(q)= (vector_of_tensors_at_qp[q])[row][column];
           }
 
         // project from the qps -> nodes
@@ -2834,7 +2821,7 @@ namespace FETools
         projection_matrix.vmult(component_at_node, component_at_qp);
 
         // rewrite the projection of the components back into the vector of tensors
-        for(unsigned int nn = 0; nn < n_support_points; ++nn)
+        for(unsigned int nn= 0; nn < n_support_points; ++nn)
           {
             (vector_of_tensors_at_nodes[nn])[row][column]
               = component_at_node(nn);
@@ -2867,15 +2854,15 @@ namespace FETools
       FEFaceValues<dim> fe_face_values(fe, lhs_quadrature, update_values);
       fe_face_values.reinit(cell, face); // setup shape_value on this face.
 
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-          for(unsigned int q = 0; q < lhs_quadrature.size(); ++q)
-            M(i, j) += fe_face_values.shape_value(i, q)
-                       * fe_face_values.shape_value(j, q)
-                       * lhs_quadrature.weight(q);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
+          for(unsigned int q= 0; q < lhs_quadrature.size(); ++q)
+            M(i, j)+= fe_face_values.shape_value(i, q)
+                      * fe_face_values.shape_value(j, q)
+                      * lhs_quadrature.weight(q);
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
         {
-          M(i, i) = (M(i, i) == 0 ? 1 : M(i, i));
+          M(i, i)= (M(i, i) == 0 ? 1 : M(i, i));
         }
     }
 
@@ -2883,10 +2870,9 @@ namespace FETools
       FEFaceValues<dim> fe_face_values(fe, rhs_quadrature, update_values);
       fe_face_values.reinit(cell, face); // setup shape_value on this face.
 
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int q = 0; q < rhs_quadrature.size(); ++q)
-          Q(i, q)
-            += fe_face_values.shape_value(i, q) * rhs_quadrature.weight(q);
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int q= 0; q < rhs_quadrature.size(); ++q)
+          Q(i, q)+= fe_face_values.shape_value(i, q) * rhs_quadrature.weight(q);
     }
     // then invert M
     FullMatrix<double> M_inverse(fe.dofs_per_cell, fe.dofs_per_cell);
@@ -2918,7 +2904,7 @@ namespace FETools
       double_support_point_values.get().resize(support_point_values.size());
       double_dof_values.get().resize(dof_values.size());
 
-      for(unsigned int i = 0; i < support_point_values.size(); ++i)
+      for(unsigned int i= 0; i < support_point_values.size(); ++i)
         {
           double_support_point_values.get()[i].reinit(
             finite_element.n_components(), false);
@@ -2958,7 +2944,7 @@ namespace FETools
         support_point_values.size());
       double_dof_values_imag.get().resize(dof_values.size());
 
-      for(unsigned int i = 0; i < support_point_values.size(); ++i)
+      for(unsigned int i= 0; i < support_point_values.size(); ++i)
         {
           double_support_point_values_real.get()[i].reinit(
             finite_element.n_components(), false);
@@ -3025,15 +3011,15 @@ namespace FETools
                                         std::vector<unsigned int>& h2l)
   {
     // number of support points in each direction
-    const unsigned int n = degree + 1;
+    const unsigned int n= degree + 1;
 
-    const unsigned int dofs_per_cell = Utilities::fixed_power<dim>(n);
+    const unsigned int dofs_per_cell= Utilities::fixed_power<dim>(n);
 
     // Assert size maches degree
     AssertDimension(h2l.size(), dofs_per_cell);
 
     // polynomial degree
-    const unsigned int dofs_per_line = degree - 1;
+    const unsigned int dofs_per_line= degree - 1;
 
     // the following lines of code are somewhat odd, due to the way the
     // hierarchic numbering is organized. if someone would really want to
@@ -3045,43 +3031,43 @@ namespace FETools
       {
         case 1:
           {
-            h2l[0] = 0;
-            h2l[1] = dofs_per_cell - 1;
-            for(unsigned int i = 2; i < dofs_per_cell; ++i)
-              h2l[i] = i - 1;
+            h2l[0]= 0;
+            h2l[1]= dofs_per_cell - 1;
+            for(unsigned int i= 2; i < dofs_per_cell; ++i)
+              h2l[i]= i - 1;
 
             break;
           }
 
         case 2:
           {
-            unsigned int next_index = 0;
+            unsigned int next_index= 0;
             // first the four vertices
-            h2l[next_index++] = 0;
-            h2l[next_index++] = n - 1;
-            h2l[next_index++] = n * (n - 1);
-            h2l[next_index++] = n * n - 1;
+            h2l[next_index++]= 0;
+            h2l[next_index++]= n - 1;
+            h2l[next_index++]= n * (n - 1);
+            h2l[next_index++]= n * n - 1;
 
             // left   line
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = (1 + i) * n;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= (1 + i) * n;
 
             // right  line
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = (2 + i) * n - 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= (2 + i) * n - 1;
 
             // bottom line
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = 1 + i;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= 1 + i;
 
             // top    line
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = n * (n - 1) + i + 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= n * (n - 1) + i + 1;
 
             // inside quad
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              for(unsigned int j = 0; j < dofs_per_line; ++j)
-                h2l[next_index++] = n * (i + 1) + j + 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              for(unsigned int j= 0; j < dofs_per_line; ++j)
+                h2l[next_index++]= n * (i + 1) + j + 1;
 
             Assert(next_index == dofs_per_cell, ExcInternalError());
 
@@ -3090,87 +3076,87 @@ namespace FETools
 
         case 3:
           {
-            unsigned int next_index = 0;
+            unsigned int next_index= 0;
             // first the eight vertices
-            h2l[next_index++] = 0;                        // 0
-            h2l[next_index++] = (1) * degree;             // 1
-            h2l[next_index++] = (n) *degree;              // 2
-            h2l[next_index++] = (n + 1) * degree;         // 3
-            h2l[next_index++] = (n * n) * degree;         // 4
-            h2l[next_index++] = (n * n + 1) * degree;     // 5
-            h2l[next_index++] = (n * n + n) * degree;     // 6
-            h2l[next_index++] = (n * n + n + 1) * degree; // 7
+            h2l[next_index++]= 0;                        // 0
+            h2l[next_index++]= (1) * degree;             // 1
+            h2l[next_index++]= (n) *degree;              // 2
+            h2l[next_index++]= (n + 1) * degree;         // 3
+            h2l[next_index++]= (n * n) * degree;         // 4
+            h2l[next_index++]= (n * n + 1) * degree;     // 5
+            h2l[next_index++]= (n * n + n) * degree;     // 6
+            h2l[next_index++]= (n * n + n + 1) * degree; // 7
 
             // line 0
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = (i + 1) * n;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= (i + 1) * n;
             // line 1
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = n - 1 + (i + 1) * n;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= n - 1 + (i + 1) * n;
             // line 2
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = 1 + i;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= 1 + i;
             // line 3
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = 1 + i + n * (n - 1);
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= 1 + i + n * (n - 1);
 
             // line 4
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = (n - 1) * n * n + (i + 1) * n;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= (n - 1) * n * n + (i + 1) * n;
             // line 5
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = (n - 1) * (n * n + 1) + (i + 1) * n;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= (n - 1) * (n * n + 1) + (i + 1) * n;
             // line 6
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = n * n * (n - 1) + i + 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= n * n * (n - 1) + i + 1;
             // line 7
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = n * n * (n - 1) + i + 1 + n * (n - 1);
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= n * n * (n - 1) + i + 1 + n * (n - 1);
 
             // line 8
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = (i + 1) * n * n;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= (i + 1) * n * n;
             // line 9
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = n - 1 + (i + 1) * n * n;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= n - 1 + (i + 1) * n * n;
             // line 10
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = (i + 1) * n * n + n * (n - 1);
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= (i + 1) * n * n + n * (n - 1);
             // line 11
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              h2l[next_index++] = n - 1 + (i + 1) * n * n + n * (n - 1);
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              h2l[next_index++]= n - 1 + (i + 1) * n * n + n * (n - 1);
 
             // inside quads
             // face 0
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              for(unsigned int j = 0; j < dofs_per_line; ++j)
-                h2l[next_index++] = (i + 1) * n * n + n * (j + 1);
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              for(unsigned int j= 0; j < dofs_per_line; ++j)
+                h2l[next_index++]= (i + 1) * n * n + n * (j + 1);
             // face 1
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              for(unsigned int j = 0; j < dofs_per_line; ++j)
-                h2l[next_index++] = (i + 1) * n * n + n - 1 + n * (j + 1);
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              for(unsigned int j= 0; j < dofs_per_line; ++j)
+                h2l[next_index++]= (i + 1) * n * n + n - 1 + n * (j + 1);
             // face 2, note the orientation!
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              for(unsigned int j = 0; j < dofs_per_line; ++j)
-                h2l[next_index++] = (j + 1) * n * n + i + 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              for(unsigned int j= 0; j < dofs_per_line; ++j)
+                h2l[next_index++]= (j + 1) * n * n + i + 1;
             // face 3, note the orientation!
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              for(unsigned int j = 0; j < dofs_per_line; ++j)
-                h2l[next_index++] = (j + 1) * n * n + n * (n - 1) + i + 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              for(unsigned int j= 0; j < dofs_per_line; ++j)
+                h2l[next_index++]= (j + 1) * n * n + n * (n - 1) + i + 1;
             // face 4
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              for(unsigned int j = 0; j < dofs_per_line; ++j)
-                h2l[next_index++] = n * (i + 1) + j + 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              for(unsigned int j= 0; j < dofs_per_line; ++j)
+                h2l[next_index++]= n * (i + 1) + j + 1;
             // face 5
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              for(unsigned int j = 0; j < dofs_per_line; ++j)
-                h2l[next_index++] = (n - 1) * n * n + n * (i + 1) + j + 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              for(unsigned int j= 0; j < dofs_per_line; ++j)
+                h2l[next_index++]= (n - 1) * n * n + n * (i + 1) + j + 1;
 
             // inside hex
-            for(unsigned int i = 0; i < dofs_per_line; ++i)
-              for(unsigned int j = 0; j < dofs_per_line; ++j)
-                for(unsigned int k = 0; k < dofs_per_line; ++k)
-                  h2l[next_index++] = n * n * (i + 1) + n * (j + 1) + k + 1;
+            for(unsigned int i= 0; i < dofs_per_line; ++i)
+              for(unsigned int j= 0; j < dofs_per_line; ++j)
+                for(unsigned int k= 0; k < dofs_per_line; ++k)
+                  h2l[next_index++]= n * n * (i + 1) + n * (j + 1) + k + 1;
 
             Assert(next_index == dofs_per_cell, ExcInternalError());
 
@@ -3207,7 +3193,7 @@ namespace FETools
   lexicographic_to_hierarchic_numbering(const FiniteElementData<dim>& fe,
                                         std::vector<unsigned int>&    l2h)
   {
-    l2h = lexicographic_to_hierarchic_numbering(fe);
+    l2h= lexicographic_to_hierarchic_numbering(fe);
   }
 
   template <int dim>

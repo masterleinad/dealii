@@ -151,7 +151,7 @@ namespace internal
  * @ingroup output
  * @author Wolfgang Bangerth, 1999
  */
-template <int dim, typename DoFHandlerType = DoFHandler<dim>>
+template <int dim, typename DoFHandlerType= DoFHandler<dim>>
 class DataOut : public DataOut_DoFData<DoFHandlerType,
                                        DoFHandlerType::dimension,
                                        DoFHandlerType::space_dimension>
@@ -256,7 +256,7 @@ public:
    * polynomial degree.
    */
   virtual void
-  build_patches(const unsigned int n_subdivisions = 0);
+  build_patches(const unsigned int n_subdivisions= 0);
 
   /**
    * Same as above, except that the additional first parameter defines a
@@ -292,8 +292,8 @@ public:
   virtual void
   build_patches(const Mapping<DoFHandlerType::dimension,
                               DoFHandlerType::space_dimension>& mapping,
-                const unsigned int     n_subdivisions = 0,
-                const CurvedCellRegion curved_region  = curved_boundary);
+                const unsigned int     n_subdivisions= 0,
+                const CurvedCellRegion curved_region = curved_boundary);
 
   /**
    * Return the first cell which we want output for. The default

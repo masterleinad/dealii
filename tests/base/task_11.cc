@@ -30,7 +30,7 @@ a_task()
 {
   mutex.acquire();
   n_running++;
-  n_max_running = std::max(n_max_running, n_running);
+  n_max_running= std::max(n_max_running, n_running);
   mutex.release();
 
   // Sleep some time to make sure all other concurrently running tasks enter
@@ -47,14 +47,14 @@ test()
 {
   Threads::TaskGroup<> tg;
 
-  n_running     = 0;
-  n_max_running = 0;
+  n_running    = 0;
+  n_max_running= 0;
 
   // force all tasks to wait until we are done starting
   mutex.acquire();
 
-  for(unsigned int t = 0; t < 10; ++t)
-    tg += Threads::new_task(a_task);
+  for(unsigned int t= 0; t < 10; ++t)
+    tg+= Threads::new_task(a_task);
 
   // now let the tasks run
   mutex.release();
@@ -69,7 +69,7 @@ main()
 {
   initlog();
 
-  const unsigned int n = testing_max_num_threads();
+  const unsigned int n= testing_max_num_threads();
 
   // if we have a machine with less than 5 cores fake the output:
   if(MultithreadInfo::n_threads() < n)

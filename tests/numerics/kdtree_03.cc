@@ -52,7 +52,7 @@ main()
     {
       for(auto& r : radii)
         {
-          auto matches = kdtree.get_points_within_ball(p, r, true);
+          auto matches= kdtree.get_points_within_ball(p, r, true);
 
           deallog << std::endl
                   << "At distance less than " << r << " from " << p

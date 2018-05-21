@@ -97,12 +97,12 @@ namespace PETScWrappers
        * reinit(BlockSparsityPattern). The number of blocks per row and column
        * are then determined by that function.
        */
-      BlockSparseMatrix() = default;
+      BlockSparseMatrix()= default;
 
       /**
        * Destructor.
        */
-      ~BlockSparseMatrix() override = default;
+      ~BlockSparseMatrix() override= default;
 
       /**
        * Pseudo copy operator only copying empty objects. The sizes of the
@@ -267,9 +267,9 @@ namespace PETScWrappers
     {
       Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-      for(size_type r = 0; r < this->n_block_rows(); ++r)
-        for(size_type c = 0; c < this->n_block_cols(); ++c)
-          this->block(r, c) = d;
+      for(size_type r= 0; r < this->n_block_rows(); ++r)
+        for(size_type c= 0; c < this->n_block_cols(); ++c)
+          this->block(r, c)= d;
 
       return *this;
     }

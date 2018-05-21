@@ -32,8 +32,8 @@ sub_test()
   create_mesh(tria);
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 0.5)
       cell->set_refine_flag();
@@ -55,11 +55,11 @@ sub_test()
   deallog << "Testing " << fe.get_name() << std::endl;
 
   // run test for several different meshes
-  for(unsigned int i = 0; i < 8 - 2 * dim; ++i)
+  for(unsigned int i= 0; i < 8 - 2 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      endc                 = tria.end();
-      unsigned int counter = 0;
+      cell                = tria.begin_active();
+      endc                = tria.end();
+      unsigned int counter= 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (9 - i) == 0)
           cell->set_refine_flag();
@@ -109,30 +109,30 @@ sub_test()
       Vector<number> out_dist(in_dist), out_color(in_dist),
         out_partition(in_dist);
 
-      for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+      for(unsigned int i= 0; i < dof.n_dofs(); ++i)
         {
           if(constraints.is_constrained(i))
             continue;
-          const double entry = random_value<double>();
-          in_dist(i)         = entry;
+          const double entry= random_value<double>();
+          in_dist(i)        = entry;
         }
 
       mf_ref.vmult(out_dist, in_dist);
 
       // make 10 sweeps in order to get in some
       // variation to the threaded program
-      for(unsigned int sweep = 0; sweep < 10; ++sweep)
+      for(unsigned int sweep= 0; sweep < 10; ++sweep)
         {
           mf_color.vmult(out_color, in_dist);
           mf_partition.vmult(out_partition, in_dist);
 
-          out_color -= out_dist;
-          double diff_norm = out_color.linfty_norm();
+          out_color-= out_dist;
+          double diff_norm= out_color.linfty_norm();
           deallog << "Sweep " << sweep
                   << ", error in partition/color:     " << diff_norm
                   << std::endl;
-          out_partition -= out_dist;
-          diff_norm = out_partition.linfty_norm();
+          out_partition-= out_dist;
+          diff_norm= out_partition.linfty_norm();
           deallog << "Sweep " << sweep
                   << ", error in partition/partition: " << diff_norm
                   << std::endl;

@@ -29,7 +29,7 @@ check_poly(const Point<dim>&      x,
            const PolynomialType1& p,
            const PolynomialType2& q)
 {
-  const unsigned int n = p.n();
+  const unsigned int n= p.n();
 
   std::vector<double>         values1(n), values2(n);
   std::vector<Tensor<1, dim>> gradients1(n), gradients2(n);
@@ -40,14 +40,14 @@ check_poly(const Point<dim>&      x,
   p.compute(x, values1, gradients1, second1, third1, fourth1);
   q.compute(x, values2, gradients2, second2, third2, fourth2);
 
-  for(unsigned int k = 0; k < n; ++k)
+  for(unsigned int k= 0; k < n; ++k)
     {
       // Check if compute_value is ok
-      double val1 = p.compute_value(k, x);
+      double val1= p.compute_value(k, x);
       if(std::fabs(val1 - values1[k]) > 5.0E-12)
         deallog << 'P' << k << ": values differ " << val1
                 << " != " << values1[k] << std::endl;
-      double val2 = q.compute_value(k, x);
+      double val2= q.compute_value(k, x);
       if(std::fabs(val2 - values2[k]) > 5.0E-12)
         deallog << 'Q' << k << ": values differ " << val2
                 << " != " << values2[k] << std::endl;
@@ -56,11 +56,11 @@ check_poly(const Point<dim>&      x,
                 << std::endl;
 
       // Check if compute_grad is ok
-      Tensor<1, dim> grad1 = p.template compute_derivative<1>(k, x);
+      Tensor<1, dim> grad1= p.template compute_derivative<1>(k, x);
       if((grad1 - gradients1[k]).norm() > 5.0E-12)
         deallog << 'P' << k << ": gradients differ " << grad1
                 << " != " << gradients1[k] << std::endl;
-      Tensor<1, dim> grad2 = q.template compute_derivative<1>(k, x);
+      Tensor<1, dim> grad2= q.template compute_derivative<1>(k, x);
       if((grad2 - gradients2[k]).norm() > 5.0E-12)
         deallog << 'Q' << k << ": gradients differ " << grad1
                 << " != " << gradients2[k] << std::endl;
@@ -69,11 +69,11 @@ check_poly(const Point<dim>&      x,
                 << " != " << grad2 << std::endl;
 
       // Check if compute_grad_grad is ok
-      Tensor<2, dim> grad_grad1 = p.template compute_derivative<2>(k, x);
+      Tensor<2, dim> grad_grad1= p.template compute_derivative<2>(k, x);
       if((grad_grad1 - second1[k]).norm() > 5.0E-12)
         deallog << 'P' << k << ": second derivatives differ " << grad_grad1
                 << " != " << second1[k] << std::endl;
-      Tensor<2, dim> grad_grad2 = q.template compute_derivative<2>(k, x);
+      Tensor<2, dim> grad_grad2= q.template compute_derivative<2>(k, x);
       if((grad_grad2 - second2[k]).norm() > 5.0E-12)
         deallog << 'Q' << k << ": second derivatives differ " << grad_grad2
                 << " != " << second2[k] << std::endl;
@@ -82,11 +82,11 @@ check_poly(const Point<dim>&      x,
                 << " != " << grad_grad2 << std::endl;
 
       // Check if third derivative is ok
-      Tensor<3, dim> third_derivative1 = p.template compute_derivative<3>(k, x);
+      Tensor<3, dim> third_derivative1= p.template compute_derivative<3>(k, x);
       if((third_derivative1 - third1[k]).norm() > 5.0E-12)
         deallog << 'P' << k << ": third derivatives differ "
                 << third_derivative1 << " != " << third1[k] << std::endl;
-      Tensor<3, dim> third_derivative2 = q.template compute_derivative<3>(k, x);
+      Tensor<3, dim> third_derivative2= q.template compute_derivative<3>(k, x);
       if((third_derivative2 - third2[k]).norm() > 5.0E-12)
         deallog << 'Q' << k << ": third derivatives differ "
                 << third_derivative2 << " != " << third2[k] << std::endl;
@@ -96,13 +96,11 @@ check_poly(const Point<dim>&      x,
                 << std::endl;
 
       // Check if third derivative is ok
-      Tensor<4, dim> fourth_derivative1
-        = p.template compute_derivative<4>(k, x);
+      Tensor<4, dim> fourth_derivative1= p.template compute_derivative<4>(k, x);
       if((fourth_derivative1 - fourth1[k]).norm() > 5.0E-12)
         deallog << 'P' << k << ": fourth derivatives differ "
                 << fourth_derivative1 << " != " << fourth1[k] << std::endl;
-      Tensor<4, dim> fourth_derivative2
-        = q.template compute_derivative<4>(k, x);
+      Tensor<4, dim> fourth_derivative2= q.template compute_derivative<4>(k, x);
       if((fourth_derivative2 - fourth2[k]).norm() > 5.0E-12)
         deallog << 'Q' << k << ": fourth derivatives differ "
                 << fourth_derivative2 << " != " << fourth2[k] << std::endl;
@@ -113,26 +111,26 @@ check_poly(const Point<dim>&      x,
 
       // finally output values, gradients, etc, to make sure that they are
       // not only consistent, but also correct.
-      values1[k] *= std::pow(10., dim);
-      gradients1[k] *= std::pow(10., dim);
+      values1[k]*= std::pow(10., dim);
+      gradients1[k]*= std::pow(10., dim);
 
       deallog << 'P' << k << "\t= " << values1[k] << "\tgradient\t";
-      for(unsigned int d = 0; d < dim; ++d)
+      for(unsigned int d= 0; d < dim; ++d)
         deallog << gradients1[k][d] << '\t';
       deallog << "\t2nd\t";
-      for(unsigned int d1 = 0; d1 < dim; ++d1)
-        for(unsigned int d2 = 0; d2 < dim; ++d2)
+      for(unsigned int d1= 0; d1 < dim; ++d1)
+        for(unsigned int d2= 0; d2 < dim; ++d2)
           deallog << second1[k][d1][d2] << '\t';
       deallog << "\t3rd\t";
-      for(unsigned int d1 = 0; d1 < dim; ++d1)
-        for(unsigned int d2 = 0; d2 < dim; ++d2)
-          for(unsigned int d3 = 0; d3 < dim; ++d3)
+      for(unsigned int d1= 0; d1 < dim; ++d1)
+        for(unsigned int d2= 0; d2 < dim; ++d2)
+          for(unsigned int d3= 0; d3 < dim; ++d3)
             deallog << third1[k][d1][d2][d3] << '\t';
       deallog << "\t4th\t";
-      for(unsigned int d1 = 0; d1 < dim; ++d1)
-        for(unsigned int d2 = 0; d2 < dim; ++d2)
-          for(unsigned int d3 = 0; d3 < dim; ++d3)
-            for(unsigned int d4 = 0; d4 < dim; ++d4)
+      for(unsigned int d1= 0; d1 < dim; ++d1)
+        for(unsigned int d2= 0; d2 < dim; ++d2)
+          for(unsigned int d3= 0; d3 < dim; ++d3)
+            for(unsigned int d4= 0; d4 < dim; ++d4)
               deallog << fourth1[k][d1][d2][d3][d4] << '\t';
       deallog << std::endl;
     }
@@ -175,7 +173,7 @@ main()
 
   deallog.push("Lagrange");
   std::vector<Polynomial<double>> p;
-  for(unsigned int i = 0; i < 3; ++i)
+  for(unsigned int i= 0; i < 3; ++i)
     p.push_back(LagrangeEquidistant(3, i));
 
   check_dimensions(p);
@@ -184,7 +182,7 @@ main()
   deallog.push("Legendre");
 
   p.clear();
-  for(unsigned int i = 0; i < 3; ++i)
+  for(unsigned int i= 0; i < 3; ++i)
     p.push_back(Legendre(i));
 
   check_dimensions(p);
@@ -193,7 +191,7 @@ main()
   deallog.push("Hierarchical");
 
   p.clear();
-  for(unsigned int i = 0; i < 3; ++i)
+  for(unsigned int i= 0; i < 3; ++i)
     p.push_back(Hierarchical(i));
 
   check_dimensions(p);

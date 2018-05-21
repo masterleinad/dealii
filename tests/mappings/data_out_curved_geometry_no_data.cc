@@ -45,7 +45,7 @@ main()
   const Point<2>             center(0, 0);
   const SphericalManifold<2> boundary_description(center);
 
-  for(unsigned int degree = 1; degree <= 4; ++degree)
+  for(unsigned int degree= 1; degree <= 4; ++degree)
     {
       deallog << "===== Mapping degree " << degree << std::endl;
 
@@ -67,9 +67,8 @@ main()
             cell->set_material_id(0);
         }
 
-      Triangulation<2>::active_cell_iterator cell
-        = triangulation.begin_active(),
-        endc = triangulation.end();
+      Triangulation<2>::active_cell_iterator cell= triangulation.begin_active(),
+                                             endc= triangulation.end();
 
       for(; cell != endc; ++cell)
         if(cell->material_id() != 1)

@@ -48,8 +48,8 @@ main()
 {
   initlog();
 
-  const unsigned int spacedim = 2;
-  const unsigned int dim      = spacedim - 1;
+  const unsigned int spacedim= 2;
+  const unsigned int dim     = spacedim - 1;
 
   Triangulation<dim, spacedim> boundary_mesh;
 
@@ -63,10 +63,10 @@ main()
   dh.distribute_dofs(fe);
 
   Vector<double> solution(dh.n_dofs());
-  solution = 1.0;
+  solution= 1.0;
 
   deallog << "Old values:" << std::endl;
-  for(unsigned int i = 0; i < solution.size(); i++)
+  for(unsigned int i= 0; i < solution.size(); i++)
     deallog << solution(i) << std::endl;
 
   // Do some refinement
@@ -84,11 +84,11 @@ main()
   // get the interpolated solution
   // back
   Vector<double> tmp(dh.n_dofs());
-  tmp = 2;
+  tmp= 2;
   soltrans.interpolate(solution, tmp);
 
   deallog << "New values:" << std::endl;
-  for(unsigned int i = 0; i < tmp.size(); i++)
+  for(unsigned int i= 0; i < tmp.size(); i++)
     deallog << tmp(i) << std::endl;
 
   return 0;

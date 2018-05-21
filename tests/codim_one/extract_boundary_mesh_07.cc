@@ -51,7 +51,7 @@ namespace Step38
     run();
 
   private:
-    static const unsigned int boundary_dim = spacedim - 1;
+    static const unsigned int boundary_dim= spacedim - 1;
 
     Triangulation<spacedim>               volume_mesh_triangulation;
     Triangulation<boundary_dim, spacedim> boundary_triangulation;
@@ -83,7 +83,7 @@ namespace Step38
 
     std::map<typename DoFHandler<boundary_dim, spacedim>::cell_iterator,
              typename DoFHandler<spacedim>::face_iterator>
-      element_assignment = GridGenerator::extract_boundary_mesh(
+      element_assignment= GridGenerator::extract_boundary_mesh(
         space_dof_handler, contact_dof_handler, boundary_ids);
 
     contact_dof_handler.distribute_dofs(boundary_fe);
@@ -92,7 +92,7 @@ namespace Step38
       typename DoFHandler<boundary_dim, spacedim>::cell_iterator,
       typename DoFHandler<spacedim>::face_iterator>::iterator Iterator;
 
-    for(Iterator = element_assignment.begin();
+    for(Iterator= element_assignment.begin();
         Iterator != element_assignment.end();
         ++Iterator)
       {

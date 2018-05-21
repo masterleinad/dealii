@@ -126,8 +126,7 @@ FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
       // Rule of thumb for FP accuracy, that can be expected for a given
       // polynomial degree.  This value is used to cut off values close to
       // zero.
-      double eps
-        = 2e-13 * std::max(this->degree, source_fe->degree) * (dim - 1);
+      double eps= 2e-13 * std::max(this->degree, source_fe->degree) * (dim - 1);
 
       // compute the interpolation matrix by simply taking the value at the
       // support points.
@@ -139,10 +138,10 @@ FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
             QProjector<dim>::project_to_face(quad_face_support, 0) :
             QProjector<dim>::project_to_subface(quad_face_support, 0, subface);
 
-      for(unsigned int i = 0; i < source_fe->dofs_per_face; ++i)
+      for(unsigned int i= 0; i < source_fe->dofs_per_face; ++i)
         {
-          const Point<dim>& p = subface_quadrature.point(i);
-          for(unsigned int j = 0; j < this->dofs_per_face; ++j)
+          const Point<dim>& p= subface_quadrature.point(i);
+          for(unsigned int j= 0; j < this->dofs_per_face; ++j)
             {
               double matrix_entry
                 = this->shape_value(this->face_to_cell_index(j, 0), p);
@@ -151,22 +150,22 @@ FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
               // 0, make it exactly 1 or 0. Unfortunately, this is required to
               // avoid problems with higher order elements.
               if(std::fabs(matrix_entry - 1.0) < eps)
-                matrix_entry = 1.0;
+                matrix_entry= 1.0;
               if(std::fabs(matrix_entry) < eps)
-                matrix_entry = 0.0;
+                matrix_entry= 0.0;
 
-              interpolation_matrix(i, j) = matrix_entry;
+              interpolation_matrix(i, j)= matrix_entry;
             }
         }
 
       // make sure that the row sum of each of the matrices is 1 at this
       // point. this must be so since the shape functions sum up to 1
-      for(unsigned int j = 0; j < source_fe->dofs_per_face; ++j)
+      for(unsigned int j= 0; j < source_fe->dofs_per_face; ++j)
         {
-          double sum = 0.;
+          double sum= 0.;
 
-          for(unsigned int i = 0; i < this->dofs_per_face; ++i)
-            sum += interpolation_matrix(j, i);
+          for(unsigned int i= 0; i < this->dofs_per_face; ++i)
+            sum+= interpolation_matrix(j, i);
 
           Assert(std::fabs(sum - 1) < eps, ExcInternalError());
         }
@@ -318,8 +317,8 @@ FE_Bernstein<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 {
   AssertThrow(deg > 0, ExcMessage("FE_Bernstein needs to be of degree > 0."));
   std::vector<unsigned int> dpo(dim + 1, 1U);
-  for(unsigned int i = 1; i < dpo.size(); ++i)
-    dpo[i] = dpo[i - 1] * (deg - 1);
+  for(unsigned int i= 1; i < dpo.size(); ++i)
+    dpo[i]= dpo[i - 1] * (deg - 1);
   return dpo;
 }
 

@@ -303,7 +303,7 @@ namespace GridRefinement
   void
   refine_and_coarsen_optimize(Triangulation<dim, spacedim>& tria,
                               const Vector<Number>&         criteria,
-                              const unsigned int            order = 2);
+                              const unsigned int            order= 2);
 
   /**
    * Mark all mesh cells for which the value in @p criteria exceeds @p
@@ -324,7 +324,7 @@ namespace GridRefinement
   refine(Triangulation<dim, spacedim>& tria,
          const Vector<Number>&         criteria,
          const double                  threshold,
-         const unsigned int max_to_mark = numbers::invalid_unsigned_int);
+         const unsigned int max_to_mark= numbers::invalid_unsigned_int);
 
   /**
    * Mark all mesh cells for which the value in @p criteria is less than @p

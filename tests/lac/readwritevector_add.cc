@@ -28,11 +28,11 @@ test()
   std::vector<types::global_dof_index> indices(size);
   std::vector<float>                   float_values(size);
   std::vector<double>                  double_values(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     {
-      indices[i]       = i;
-      float_values[i]  = 2. * i;
-      double_values[i] = 3. * i;
+      indices[i]      = i;
+      float_values[i] = 2. * i;
+      double_values[i]= 3. * i;
     }
 
   LinearAlgebra::ReadWriteVector<float>  float_vector;
@@ -58,12 +58,10 @@ test()
   double_vector_1.swap(double_vector_2);
   LinearAlgebra::ReadWriteVector<double>::iterator val_1
     = double_vector_1.begin();
-  LinearAlgebra::ReadWriteVector<double>::iterator end_1
-    = double_vector_1.end();
+  LinearAlgebra::ReadWriteVector<double>::iterator end_1= double_vector_1.end();
   LinearAlgebra::ReadWriteVector<double>::iterator val_2
     = double_vector_2.begin();
-  LinearAlgebra::ReadWriteVector<double>::iterator end_2
-    = double_vector_2.end();
+  LinearAlgebra::ReadWriteVector<double>::iterator end_2= double_vector_2.end();
   deallog << "double_vector_1" << std::endl;
   for(; val_1 < end_1; ++val_1)
     deallog << *val_1 << std::endl;
@@ -72,7 +70,7 @@ test()
     deallog << *val_2 << std::endl;
   double_vector_1.extract_subvector_to(indices, float_values);
   deallog << "subvector" << std::endl;
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for(unsigned int i= 0; i < indices.size(); ++i)
     deallog << float_values[i] << std::endl;
 }
 

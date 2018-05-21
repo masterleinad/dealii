@@ -39,7 +39,7 @@ test()
   Table<2, DoFTools::Coupling> coupling(1, 1);
   coupling.fill(DoFTools::none);
 
-  const IndexSet system_partitioning = dof_handler.locally_owned_dofs();
+  const IndexSet system_partitioning= dof_handler.locally_owned_dofs();
   IndexSet       system_relevant_set;
   DoFTools::extract_locally_relevant_dofs(dof_handler, system_relevant_set);
 

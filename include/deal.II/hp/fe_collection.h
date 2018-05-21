@@ -49,7 +49,7 @@ namespace hp
    *
    * @author Wolfgang Bangerth, 2003
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class FECollection : public Subscriptor
   {
   public:
@@ -57,7 +57,7 @@ namespace hp
      * Default constructor. Leads to an empty collection that can later be
      * filled using push_back().
      */
-    FECollection() = default;
+    FECollection()= default;
 
     /**
      * Conversion constructor. This constructor creates a FECollection from a
@@ -86,12 +86,12 @@ namespace hp
     /**
      * Copy constructor.
      */
-    FECollection(const FECollection<dim, spacedim>&) = default;
+    FECollection(const FECollection<dim, spacedim>&)= default;
 
     /**
      * Move constructor.
      */
-    FECollection(FECollection<dim, spacedim>&&) noexcept = default;
+    FECollection(FECollection<dim, spacedim>&&) noexcept= default;
 
     /**
      * Move assignment operator.
@@ -484,7 +484,7 @@ namespace hp
     // loop over all of the given arguments and add the finite elements to
     // this collection. Inlining the definition of fe_pointers causes internal
     // compiler errors on GCC 7.1.1 so we define it separately:
-    const auto fe_pointers = {&fes...};
+    const auto fe_pointers= {&fes...};
     for(auto p : fe_pointers)
       push_back(*p);
   }
@@ -518,11 +518,11 @@ namespace hp
   FECollection<dim, spacedim>::
   operator==(const FECollection<dim, spacedim>& fe_collection) const
   {
-    const unsigned int n_elements = size();
+    const unsigned int n_elements= size();
     if(n_elements != fe_collection.size())
       return false;
 
-    for(unsigned int i = 0; i < n_elements; ++i)
+    for(unsigned int i= 0; i < n_elements; ++i)
       if(!(*finite_elements[i] == fe_collection[i]))
         return false;
 
@@ -552,10 +552,10 @@ namespace hp
   {
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
-    unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
+    unsigned int max= 0;
+    for(unsigned int i= 0; i < finite_elements.size(); ++i)
       if(finite_elements[i]->dofs_per_vertex > max)
-        max = finite_elements[i]->dofs_per_vertex;
+        max= finite_elements[i]->dofs_per_vertex;
 
     return max;
   }
@@ -566,10 +566,10 @@ namespace hp
   {
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
-    unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
+    unsigned int max= 0;
+    for(unsigned int i= 0; i < finite_elements.size(); ++i)
       if(finite_elements[i]->dofs_per_line > max)
-        max = finite_elements[i]->dofs_per_line;
+        max= finite_elements[i]->dofs_per_line;
 
     return max;
   }
@@ -580,10 +580,10 @@ namespace hp
   {
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
-    unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
+    unsigned int max= 0;
+    for(unsigned int i= 0; i < finite_elements.size(); ++i)
       if(finite_elements[i]->dofs_per_quad > max)
-        max = finite_elements[i]->dofs_per_quad;
+        max= finite_elements[i]->dofs_per_quad;
 
     return max;
   }
@@ -594,10 +594,10 @@ namespace hp
   {
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
-    unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
+    unsigned int max= 0;
+    for(unsigned int i= 0; i < finite_elements.size(); ++i)
       if(finite_elements[i]->dofs_per_hex > max)
-        max = finite_elements[i]->dofs_per_hex;
+        max= finite_elements[i]->dofs_per_hex;
 
     return max;
   }
@@ -608,10 +608,10 @@ namespace hp
   {
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
-    unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
+    unsigned int max= 0;
+    for(unsigned int i= 0; i < finite_elements.size(); ++i)
       if(finite_elements[i]->dofs_per_face > max)
-        max = finite_elements[i]->dofs_per_face;
+        max= finite_elements[i]->dofs_per_face;
 
     return max;
   }
@@ -622,10 +622,10 @@ namespace hp
   {
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
-    unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
+    unsigned int max= 0;
+    for(unsigned int i= 0; i < finite_elements.size(); ++i)
       if(finite_elements[i]->dofs_per_cell > max)
-        max = finite_elements[i]->dofs_per_cell;
+        max= finite_elements[i]->dofs_per_cell;
 
     return max;
   }
@@ -636,10 +636,10 @@ namespace hp
   {
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
-    bool hp_constraints = true;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
-      hp_constraints = hp_constraints
-                       && finite_elements[i]->hp_constraints_are_implemented();
+    bool hp_constraints= true;
+    for(unsigned int i= 0; i < finite_elements.size(); ++i)
+      hp_constraints= hp_constraints
+                      && finite_elements[i]->hp_constraints_are_implemented();
 
     return hp_constraints;
   }

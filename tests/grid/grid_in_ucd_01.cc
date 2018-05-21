@@ -44,18 +44,18 @@ main()
   deallog << '\t' << tria.n_vertices() << '\t' << tria.n_cells() << std::endl;
 
   deallog << "Material IDs: " << std::endl;
-  Triangulation<2, 3>::active_cell_iterator cell = tria.begin_active();
-  Triangulation<2, 3>::active_cell_iterator endc = tria.end();
+  Triangulation<2, 3>::active_cell_iterator cell= tria.begin_active();
+  Triangulation<2, 3>::active_cell_iterator endc= tria.end();
   for(; cell != endc; ++cell)
     {
       deallog << cell << "  " << int(cell->material_id()) << std::endl;
     }
 
   deallog << "Manifold IDs: " << std::endl;
-  cell = tria.begin_active();
+  cell= tria.begin_active();
   for(; cell != endc; ++cell)
     {
-      for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<2>::faces_per_cell; ++f)
         if(cell->face(f)->manifold_id() != numbers::flat_manifold_id)
           deallog << cell << " (" << f << ")  "
                   << int(cell->face(f)->manifold_id()) << std::endl;

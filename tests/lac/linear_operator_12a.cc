@@ -91,7 +91,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -102,7 +102,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -113,7 +113,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -121,9 +121,9 @@ double
 RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
-  double return_value = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    return_value += 2 * std::pow(p(i), 2);
+  double return_value= 0;
+  for(unsigned int i= 0; i < dim; ++i)
+    return_value+= 2 * std::pow(p(i), 2);
 
   return return_value;
 }
@@ -133,9 +133,9 @@ double
 RightHandSideTwo<dim>::value(const Point<dim>& p,
                              const unsigned int /*component*/) const
 {
-  double return_value = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    return_value += 4 * std::pow(p(i), 4);
+  double return_value= 0;
+  for(unsigned int i= 0; i < dim; ++i)
+    return_value+= 4 * std::pow(p(i), 4);
 
   return return_value;
 }
@@ -178,7 +178,7 @@ Step4<dim>::setup_system()
     dof_handler, 0, BoundaryValues<dim>(), constraints);
   constraints.close();
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
 
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
@@ -213,8 +213,8 @@ Step4<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -223,28 +223,28 @@ Step4<dim>::assemble_system()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
       if(cell->is_locally_owned())
         {
           fe_values.reinit(cell);
-          cell_matrix = 0;
-          cell_rhs    = 0;
+          cell_matrix= 0;
+          cell_rhs   = 0;
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                  cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                        * fe_values.shape_grad(j, q_point)
-                                        * fe_values.JxW(q_point));
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                  cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                       * fe_values.shape_grad(j, q_point)
+                                       * fe_values.JxW(q_point));
 
-                cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                                * right_hand_side.value(
-                                    fe_values.quadrature_point(q_point))
-                                * fe_values.JxW(q_point));
+                cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                               * right_hand_side.value(
+                                   fe_values.quadrature_point(q_point))
+                               * fe_values.JxW(q_point));
               }
 
           cell->get_dof_indices(local_dof_indices);
@@ -269,30 +269,30 @@ Step4<dim>::solve()
   VectorType temp_solution(system_rhs);
   {
     deallog.push("DirectKLU");
-    temp_solution = 0;
+    temp_solution= 0;
     TrilinosWrappers::SolverDirect::AdditionalData data;
-    data.solver_type = "Amesos_Klu";
+    data.solver_type= "Amesos_Klu";
     SolverControl                  solver_control(1000, 1e-10);
     TrilinosWrappers::SolverDirect solver(solver_control, data);
     solver.solve(system_matrix, temp_solution, system_rhs);
     constraints.distribute(temp_solution);
-    solution = temp_solution;
+    solution= temp_solution;
     deallog.pop();
   }
 
   VectorType output(system_rhs);
   {
     deallog.push("deal_II_CG_SSOR");
-    output = 0;
+    output= 0;
     SolverControl                           solver_control(1000, 1e-12);
     SolverCG<TrilinosWrappers::MPI::Vector> solver(solver_control);
     TrilinosWrappers::PreconditionSSOR      preconditioner;
     preconditioner.initialize(system_matrix);
     solver.solve(system_matrix, output, system_rhs, preconditioner);
     constraints.distribute(output);
-    output -= temp_solution;
-    const double local_error  = output.l2_norm();
-    const double global_error = std::sqrt(
+    output-= temp_solution;
+    const double local_error = output.l2_norm();
+    const double global_error= std::sqrt(
       Utilities::MPI::sum(local_error * local_error, MPI_COMM_WORLD));
     deallog << "Norm of error in standard solve: " << global_error << std::endl;
     deallog.pop();
@@ -300,18 +300,18 @@ Step4<dim>::solve()
 
   {
     deallog.push("LinearOperator_deal_II_CG_SSOR");
-    output = 0;
+    output= 0;
     SolverControl                           solver_control(1000, 1e-12);
     SolverCG<TrilinosWrappers::MPI::Vector> solver(solver_control);
     TrilinosWrappers::PreconditionSSOR      preconditioner;
     preconditioner.initialize(system_matrix);
-    const auto lo_A     = linear_operator<VectorType>(system_matrix);
-    const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
-    output              = lo_A_inv * system_rhs;
+    const auto lo_A    = linear_operator<VectorType>(system_matrix);
+    const auto lo_A_inv= inverse_operator(lo_A, solver, preconditioner);
+    output             = lo_A_inv * system_rhs;
     constraints.distribute(output);
-    output -= temp_solution;
-    const double local_error  = output.l2_norm();
-    const double global_error = std::sqrt(
+    output-= temp_solution;
+    const double local_error = output.l2_norm();
+    const double global_error= std::sqrt(
       Utilities::MPI::sum(local_error * local_error, MPI_COMM_WORLD));
     deallog << "Norm of error in LinearOperator solve: " << global_error
             << std::endl;

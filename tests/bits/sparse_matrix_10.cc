@@ -22,8 +22,8 @@ void
 test()
 {
   SparsityPattern sp(5, 5, 3);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 5; ++j)
       if((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
   sp.compress();
@@ -31,18 +31,18 @@ test()
   SparseMatrix<double> m(sp);
 
   // first set a few entries
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         m.set(i, j, i * j * .5 + .5);
 
   // then divide everything by 4/3 and
   // make sure we retrieve the values we
   // expect
-  m /= 4. / 3.;
+  m/= 4. / 3.;
 
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           AssertThrow(m(i, j) == (i * j * .5 + .5) / 4 * 3, ExcInternalError());

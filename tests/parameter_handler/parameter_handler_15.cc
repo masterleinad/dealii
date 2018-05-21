@@ -35,10 +35,10 @@ check(const char* content, double& v1, double& v2)
 
   foo.enter_subsection("bar");
   deallog << foo.get("val") << std::endl;
-  v1 = foo.get_double("val");
+  v1= foo.get_double("val");
   foo.leave_subsection();
   deallog << foo.get("val2") << std::endl;
-  v2 = foo.get_double("val2");
+  v2= foo.get_double("val2");
 }
 
 void

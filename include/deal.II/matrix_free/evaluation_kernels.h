@@ -34,45 +34,45 @@ namespace internal
   template <bool is_long>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_general, is_long>
   {
-    static const EvaluatorVariant variant = evaluate_general;
+    static const EvaluatorVariant variant= evaluate_general;
   };
 
   template <>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric, false>
   {
-    static const EvaluatorVariant variant = evaluate_symmetric;
+    static const EvaluatorVariant variant= evaluate_symmetric;
   };
 
   template <>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric, true>
   {
-    static const EvaluatorVariant variant = evaluate_evenodd;
+    static const EvaluatorVariant variant= evaluate_evenodd;
   };
 
   template <bool is_long>
   struct EvaluatorSelector<MatrixFreeFunctions::truncated_tensor, is_long>
   {
-    static const EvaluatorVariant variant = evaluate_general;
+    static const EvaluatorVariant variant= evaluate_general;
   };
 
   template <>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_plus_dg0,
                            false>
   {
-    static const EvaluatorVariant variant = evaluate_general;
+    static const EvaluatorVariant variant= evaluate_general;
   };
 
   template <>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_plus_dg0, true>
   {
-    static const EvaluatorVariant variant = evaluate_evenodd;
+    static const EvaluatorVariant variant= evaluate_evenodd;
   };
 
   template <bool is_long>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_collocation,
                            is_long>
   {
-    static const EvaluatorVariant variant = evaluate_evenodd;
+    static const EvaluatorVariant variant= evaluate_evenodd;
   };
 
   /**
@@ -172,7 +172,7 @@ namespace internal
     Number* temp2;
     if(temp_size == 0)
       {
-        temp1 = scratch_data;
+        temp1= scratch_data;
         temp2
           = temp1
             + std::max(Utilities::fixed_power<dim>(shape_info.fe_degree + 1),
@@ -180,8 +180,8 @@ namespace internal
       }
     else
       {
-        temp1 = scratch_data;
-        temp2 = temp1 + temp_size;
+        temp1= scratch_data;
+        temp2= temp1 + temp_size;
       }
 
     const unsigned int n_q_points
@@ -190,7 +190,7 @@ namespace internal
       = (type == MatrixFreeFunctions::truncated_tensor) ?
           Utilities::fixed_power<dim>(shape_info.fe_degree + 1) :
           shape_info.dofs_per_component_on_cell;
-    const Number* values_dofs = values_dofs_actual;
+    const Number* values_dofs= values_dofs_actual;
     if(type == MatrixFreeFunctions::truncated_tensor)
       {
         Number* values_dofs_tmp
@@ -198,35 +198,34 @@ namespace internal
             + 2
                 * (std::max(shape_info.dofs_per_component_on_cell,
                             shape_info.n_q_points));
-        const int degree = fe_degree != -1 ? fe_degree : shape_info.fe_degree;
-        unsigned int count_p = 0, count_q = 0;
-        for(int i = 0; i < (dim > 2 ? degree + 1 : 1); ++i)
+        const int    degree= fe_degree != -1 ? fe_degree : shape_info.fe_degree;
+        unsigned int count_p= 0, count_q= 0;
+        for(int i= 0; i < (dim > 2 ? degree + 1 : 1); ++i)
           {
-            for(int j = 0; j < (dim > 1 ? degree + 1 - i : 1); ++j)
+            for(int j= 0; j < (dim > 1 ? degree + 1 - i : 1); ++j)
               {
-                for(int k = 0; k < degree + 1 - j - i;
-                    ++k, ++count_p, ++count_q)
-                  for(unsigned int c = 0; c < n_components; ++c)
+                for(int k= 0; k < degree + 1 - j - i; ++k, ++count_p, ++count_q)
+                  for(unsigned int c= 0; c < n_components; ++c)
                     values_dofs_tmp[c * dofs_per_comp + count_q]
                       = values_dofs_actual
                         [c * shape_info.dofs_per_component_on_cell + count_p];
-                for(int k = degree + 1 - j - i; k < degree + 1; ++k, ++count_q)
-                  for(unsigned int c = 0; c < n_components; ++c)
-                    values_dofs_tmp[c * dofs_per_comp + count_q] = Number();
+                for(int k= degree + 1 - j - i; k < degree + 1; ++k, ++count_q)
+                  for(unsigned int c= 0; c < n_components; ++c)
+                    values_dofs_tmp[c * dofs_per_comp + count_q]= Number();
               }
-            for(int j = degree + 1 - i; j < degree + 1; ++j)
-              for(int k = 0; k < degree + 1; ++k, ++count_q)
-                for(unsigned int c = 0; c < n_components; ++c)
-                  values_dofs_tmp[c * dofs_per_comp + count_q] = Number();
+            for(int j= degree + 1 - i; j < degree + 1; ++j)
+              for(int k= 0; k < degree + 1; ++k, ++count_q)
+                for(unsigned int c= 0; c < n_components; ++c)
+                  values_dofs_tmp[c * dofs_per_comp + count_q]= Number();
           }
         AssertDimension(count_q, dofs_per_comp);
-        values_dofs = values_dofs_tmp;
+        values_dofs= values_dofs_tmp;
       }
 
     switch(dim)
       {
         case 1:
-          for(unsigned int c = 0; c < n_components; c++)
+          for(unsigned int c= 0; c < n_components; c++)
             {
               if(evaluate_values == true)
                 eval.template values<0, true, false>(values_dofs, values_quad);
@@ -238,15 +237,15 @@ namespace internal
                                                        hessians_quad);
 
               // advance the next component in 1D array
-              values_dofs += dofs_per_comp;
-              values_quad += n_q_points;
-              gradients_quad += n_q_points;
-              hessians_quad += n_q_points;
+              values_dofs+= dofs_per_comp;
+              values_quad+= n_q_points;
+              gradients_quad+= n_q_points;
+              hessians_quad+= n_q_points;
             }
           break;
 
         case 2:
-          for(unsigned int c = 0; c < n_components; c++)
+          for(unsigned int c= 0; c < n_components; c++)
             {
               // grad x
               if(evaluate_gradients == true)
@@ -283,15 +282,15 @@ namespace internal
                 eval.template values<1, true, false>(temp1, values_quad);
 
               // advance to the next component in 1D array
-              values_dofs += dofs_per_comp;
-              values_quad += n_q_points;
-              gradients_quad += 2 * n_q_points;
-              hessians_quad += 3 * n_q_points;
+              values_dofs+= dofs_per_comp;
+              values_quad+= n_q_points;
+              gradients_quad+= 2 * n_q_points;
+              hessians_quad+= 3 * n_q_points;
             }
           break;
 
         case 3:
-          for(unsigned int c = 0; c < n_components; c++)
+          for(unsigned int c= 0; c < n_components; c++)
             {
               if(evaluate_gradients == true)
                 {
@@ -364,10 +363,10 @@ namespace internal
                 eval.template values<2, true, false>(temp2, values_quad);
 
               // advance to the next component in 1D array
-              values_dofs += dofs_per_comp;
-              values_quad += n_q_points;
-              gradients_quad += 3 * n_q_points;
-              hessians_quad += 6 * n_q_points;
+              values_dofs+= dofs_per_comp;
+              values_quad+= n_q_points;
+              gradients_quad+= 3 * n_q_points;
+              hessians_quad+= 6 * n_q_points;
             }
           break;
 
@@ -380,10 +379,10 @@ namespace internal
     if(type == MatrixFreeFunctions::tensor_symmetric_plus_dg0
        && evaluate_values)
       {
-        values_quad -= n_components * n_q_points;
-        values_dofs -= n_components * dofs_per_comp;
-        for(unsigned int c = 0; c < n_components; ++c)
-          for(unsigned int q = 0; q < shape_info.n_q_points; ++q)
+        values_quad-= n_components * n_q_points;
+        values_dofs-= n_components * dofs_per_comp;
+        for(unsigned int c= 0; c < n_components; ++c)
+          for(unsigned int q= 0; q < shape_info.n_q_points; ++q)
             values_quad[c * shape_info.n_q_points + q]
               += values_dofs[(c + 1) * shape_info.dofs_per_component_on_cell
                              - 1];
@@ -434,7 +433,7 @@ namespace internal
     Number* temp2;
     if(temp_size == 0)
       {
-        temp1 = scratch_data;
+        temp1= scratch_data;
         temp2
           = temp1
             + std::max(Utilities::fixed_power<dim>(shape_info.fe_degree + 1),
@@ -442,8 +441,8 @@ namespace internal
       }
     else
       {
-        temp1 = scratch_data;
-        temp2 = temp1 + temp_size;
+        temp1= scratch_data;
+        temp2= temp1 + temp_size;
       }
 
     const unsigned int n_q_points
@@ -464,7 +463,7 @@ namespace internal
     switch(dim)
       {
         case 1:
-          for(unsigned int c = 0; c < n_components; c++)
+          for(unsigned int c= 0; c < n_components; c++)
             {
               if(integrate_values == true)
                 {
@@ -486,14 +485,14 @@ namespace internal
                 }
 
               // advance to the next component in 1D array
-              values_dofs += dofs_per_comp;
-              values_quad += n_q_points;
-              gradients_quad += n_q_points;
+              values_dofs+= dofs_per_comp;
+              values_quad+= n_q_points;
+              gradients_quad+= n_q_points;
             }
           break;
 
         case 2:
-          for(unsigned int c = 0; c < n_components; c++)
+          for(unsigned int c= 0; c < n_components; c++)
             {
               if(integrate_values == true && integrate_gradients == false)
                 {
@@ -518,14 +517,14 @@ namespace internal
                 }
 
               // advance to the next component in 1D array
-              values_dofs += dofs_per_comp;
-              values_quad += n_q_points;
-              gradients_quad += 2 * n_q_points;
+              values_dofs+= dofs_per_comp;
+              values_quad+= n_q_points;
+              gradients_quad+= 2 * n_q_points;
             }
           break;
 
         case 3:
-          for(unsigned int c = 0; c < n_components; c++)
+          for(unsigned int c= 0; c < n_components; c++)
             {
               if(integrate_values == true && integrate_gradients == false)
                 {
@@ -556,9 +555,9 @@ namespace internal
                 }
 
               // advance to the next component in 1D array
-              values_dofs += dofs_per_comp;
-              values_quad += n_q_points;
-              gradients_quad += 3 * n_q_points;
+              values_dofs+= dofs_per_comp;
+              values_quad+= n_q_points;
+              gradients_quad+= 3 * n_q_points;
             }
           break;
 
@@ -569,46 +568,45 @@ namespace internal
     // case FE_Q_DG0: add values, gradients and second derivatives are zero
     if(type == MatrixFreeFunctions::tensor_symmetric_plus_dg0)
       {
-        values_dofs -= n_components * dofs_per_comp
-                       - shape_info.dofs_per_component_on_cell + 1;
-        values_quad -= n_components * n_q_points;
+        values_dofs-= n_components * dofs_per_comp
+                      - shape_info.dofs_per_component_on_cell + 1;
+        values_quad-= n_components * n_q_points;
         if(integrate_values)
-          for(unsigned int c = 0; c < n_components; ++c)
+          for(unsigned int c= 0; c < n_components; ++c)
             {
-              values_dofs[0] = values_quad[0];
-              for(unsigned int q = 1; q < shape_info.n_q_points; ++q)
-                values_dofs[0] += values_quad[q];
-              values_dofs += dofs_per_comp;
-              values_quad += n_q_points;
+              values_dofs[0]= values_quad[0];
+              for(unsigned int q= 1; q < shape_info.n_q_points; ++q)
+                values_dofs[0]+= values_quad[q];
+              values_dofs+= dofs_per_comp;
+              values_quad+= n_q_points;
             }
         else
           {
-            for(unsigned int c = 0; c < n_components; ++c)
-              values_dofs[c * shape_info.dofs_per_component_on_cell] = Number();
-            values_dofs += n_components * shape_info.dofs_per_component_on_cell;
+            for(unsigned int c= 0; c < n_components; ++c)
+              values_dofs[c * shape_info.dofs_per_component_on_cell]= Number();
+            values_dofs+= n_components * shape_info.dofs_per_component_on_cell;
           }
       }
 
     if(type == MatrixFreeFunctions::truncated_tensor)
       {
-        values_dofs -= dofs_per_comp * n_components;
-        unsigned int count_p = 0, count_q = 0;
-        const int degree = fe_degree != -1 ? fe_degree : shape_info.fe_degree;
-        for(int i = 0; i < (dim > 2 ? degree + 1 : 1); ++i)
+        values_dofs-= dofs_per_comp * n_components;
+        unsigned int count_p= 0, count_q= 0;
+        const int    degree= fe_degree != -1 ? fe_degree : shape_info.fe_degree;
+        for(int i= 0; i < (dim > 2 ? degree + 1 : 1); ++i)
           {
-            for(int j = 0; j < (dim > 1 ? degree + 1 - i : 1); ++j)
+            for(int j= 0; j < (dim > 1 ? degree + 1 - i : 1); ++j)
               {
-                for(int k = 0; k < degree + 1 - j - i;
-                    ++k, ++count_p, ++count_q)
+                for(int k= 0; k < degree + 1 - j - i; ++k, ++count_p, ++count_q)
                   {
-                    for(unsigned int c = 0; c < n_components; ++c)
+                    for(unsigned int c= 0; c < n_components; ++c)
                       values_dofs_actual
                         [c * shape_info.dofs_per_component_on_cell + count_p]
                         = values_dofs[c * dofs_per_comp + count_q];
                   }
-                count_q += j + i;
+                count_q+= j + i;
               }
-            count_q += i * (degree + 1);
+            count_q+= i * (degree + 1);
           }
         AssertDimension(count_q,
                         Utilities::fixed_power<dim>(shape_info.fe_degree + 1));
@@ -709,14 +707,13 @@ namespace internal
       // run loop backwards to ensure correctness if values_in aliases with
       // values_out in case with basis_size_1 < basis_size_2
       values_in = values_in + n_components * Utilities::fixed_power<dim>(np_1);
-      values_out
-        = values_out + n_components * Utilities::fixed_power<dim>(np_2);
-      for(unsigned int c = n_components; c != 0; --c)
+      values_out= values_out + n_components * Utilities::fixed_power<dim>(np_2);
+      for(unsigned int c= n_components; c != 0; --c)
         {
-          values_in -= Utilities::fixed_power<dim>(np_1);
-          values_out -= Utilities::fixed_power<dim>(np_2);
+          values_in-= Utilities::fixed_power<dim>(np_1);
+          values_out-= Utilities::fixed_power<dim>(np_2);
           if(next_dim < dim)
-            for(unsigned int q = np_1; q != 0; --q)
+            for(unsigned int q= np_1; q != 0; --q)
               FEEvaluationImplBasisChange<variant,
                                           next_dim,
                                           basis_size_1,
@@ -824,7 +821,7 @@ namespace internal
       Assert(np_2 > 0 && np_2 != numbers::invalid_unsigned_int,
              ExcMessage("Cannot transform with 0-point basis"));
 
-      for(unsigned int c = 0; c < n_components; ++c)
+      for(unsigned int c= 0; c < n_components; ++c)
         {
           if(basis_size_1 > 0 && basis_size_2 == basis_size_1 && dim == 2)
             {
@@ -847,7 +844,7 @@ namespace internal
                                                                 values_in);
             }
           if(next_dim < dim)
-            for(unsigned int q = 0; q < np_1; ++q)
+            for(unsigned int q= 0; q < np_1; ++q)
               FEEvaluationImplBasisChange<variant,
                                           next_dim,
                                           basis_size_1,
@@ -863,8 +860,8 @@ namespace internal
                   basis_size_1_variable,
                   basis_size_2_variable);
 
-          values_in += Utilities::fixed_power<dim>(np_2);
-          values_out += Utilities::fixed_power<dim>(np_1);
+          values_in+= Utilities::fixed_power<dim>(np_2);
+          values_out+= Utilities::fixed_power<dim>(np_1);
         }
     }
 
@@ -894,10 +891,10 @@ namespace internal
             Number*                       scratch_data,
             Number*                       values_out)
     {
-      constexpr int next_dim = dim > 1 ? dim - 1 : dim;
+      constexpr int next_dim= dim > 1 ? dim - 1 : dim;
       Number*       my_scratch
         = basis_size_1 != basis_size_2 ? scratch_data : values_out;
-      for(unsigned int q = basis_size_1; q != 0; --q)
+      for(unsigned int q= basis_size_1; q != 0; --q)
         FEEvaluationImplBasisChange<variant,
                                     next_dim,
                                     basis_size_1,
@@ -918,21 +915,21 @@ namespace internal
                          eval_val(transformation_matrix);
       const unsigned int n_inner_blocks
         = (dim > 1 && basis_size_2 < 10) ? basis_size_2 : 1;
-      const unsigned int n_blocks = Utilities::pow(basis_size_2, dim - 1);
-      for(unsigned int ii = 0; ii < n_blocks; ii += n_inner_blocks)
-        for(unsigned int c = 0; c < n_components; ++c)
+      const unsigned int n_blocks= Utilities::pow(basis_size_2, dim - 1);
+      for(unsigned int ii= 0; ii < n_blocks; ii+= n_inner_blocks)
+        for(unsigned int c= 0; c < n_components; ++c)
           {
-            for(unsigned int i = ii; i < ii + n_inner_blocks; ++i)
+            for(unsigned int i= ii; i < ii + n_inner_blocks; ++i)
               eval_val.template values_one_line<dim - 1, true, false>(
                 my_scratch + i, my_scratch + i);
-            for(unsigned int q = 0; q < basis_size_2; ++q)
-              for(unsigned int i = ii; i < ii + n_inner_blocks; ++i)
-                my_scratch[i + q * n_blocks] *= coefficients[i + q * n_blocks];
-            for(unsigned int i = ii; i < ii + n_inner_blocks; ++i)
+            for(unsigned int q= 0; q < basis_size_2; ++q)
+              for(unsigned int i= ii; i < ii + n_inner_blocks; ++i)
+                my_scratch[i + q * n_blocks]*= coefficients[i + q * n_blocks];
+            for(unsigned int i= ii; i < ii + n_inner_blocks; ++i)
               eval_val.template values_one_line<dim - 1, false, false>(
                 my_scratch + i, my_scratch + i);
           }
-      for(unsigned int q = 0; q < basis_size_1; ++q)
+      for(unsigned int q= 0; q < basis_size_1; ++q)
         FEEvaluationImplBasisChange<
           variant,
           next_dim,
@@ -1012,13 +1009,13 @@ namespace internal
                            eval(AlignedVector<Number>(),
            shape_info.shape_gradients_collocation_eo,
            shape_info.shape_hessians_collocation_eo);
-    constexpr unsigned int n_q_points = Utilities::pow(fe_degree + 1, dim);
+    constexpr unsigned int n_q_points= Utilities::pow(fe_degree + 1, dim);
 
-    for(unsigned int c = 0; c < n_components; c++)
+    for(unsigned int c= 0; c < n_components; c++)
       {
         if(evaluate_values == true)
-          for(unsigned int i = 0; i < n_q_points; ++i)
-            values_quad[i] = values_dofs[i];
+          for(unsigned int i= 0; i < n_q_points; ++i)
+            values_quad[i]= values_dofs[i];
         if(evaluate_gradients == true || evaluate_hessians == true)
           {
             eval.template gradients<0, true, false>(values_dofs,
@@ -1049,11 +1046,11 @@ namespace internal
                 eval.template hessians<2, true, false>(
                   values_dofs, hessians_quad + 2 * n_q_points);
               }
-            hessians_quad += (dim * (dim + 1)) / 2 * n_q_points;
+            hessians_quad+= (dim * (dim + 1)) / 2 * n_q_points;
           }
-        gradients_quad += dim * n_q_points;
-        values_quad += n_q_points;
-        values_dofs += n_q_points;
+        gradients_quad+= dim * n_q_points;
+        values_quad+= n_q_points;
+        values_dofs+= n_q_points;
       }
   }
 
@@ -1080,16 +1077,16 @@ namespace internal
                            eval(AlignedVector<Number>(),
            shape_info.shape_gradients_collocation_eo,
            shape_info.shape_hessians_collocation_eo);
-    constexpr unsigned int n_q_points = Utilities::pow(fe_degree + 1, dim);
+    constexpr unsigned int n_q_points= Utilities::pow(fe_degree + 1, dim);
 
-    for(unsigned int c = 0; c < n_components; c++)
+    for(unsigned int c= 0; c < n_components; c++)
       {
         if(integrate_values == true && add_into_values_array == false)
-          for(unsigned int i = 0; i < n_q_points; ++i)
-            values_dofs[i] = values_quad[i];
+          for(unsigned int i= 0; i < n_q_points; ++i)
+            values_dofs[i]= values_quad[i];
         else if(integrate_values == true)
-          for(unsigned int i = 0; i < n_q_points; ++i)
-            values_dofs[i] += values_quad[i];
+          for(unsigned int i= 0; i < n_q_points; ++i)
+            values_dofs[i]+= values_quad[i];
         if(integrate_gradients == true)
           {
             if(integrate_values == true || add_into_values_array == true)
@@ -1105,9 +1102,9 @@ namespace internal
               eval.template gradients<2, false, true>(
                 gradients_quad + 2 * n_q_points, values_dofs);
           }
-        gradients_quad += dim * n_q_points;
-        values_quad += n_q_points;
-        values_dofs += n_q_points;
+        gradients_quad+= dim * n_q_points;
+        values_quad+= n_q_points;
+        values_dofs+= n_q_points;
       }
   }
 
@@ -1178,9 +1175,9 @@ namespace internal
                       "of lower degree, so the evaluation results would be "
                       "wrong. Thus, this class does not permit the desired "
                       "operation."));
-    constexpr unsigned int n_q_points = Utilities::pow(n_q_points_1d, dim);
+    constexpr unsigned int n_q_points= Utilities::pow(n_q_points_1d, dim);
 
-    for(unsigned int c = 0; c < n_components; c++)
+    for(unsigned int c= 0; c < n_components; c++)
       {
         FEEvaluationImplBasisChange<
           evaluate_evenodd,
@@ -1206,10 +1203,10 @@ namespace internal
                      evaluate_gradients,
                      evaluate_hessians);
 
-        values_dofs += shape_info.dofs_per_component_on_cell;
-        values_quad += n_q_points;
-        gradients_quad += dim * n_q_points;
-        hessians_quad += (dim * (dim + 1)) / 2 * n_q_points;
+        values_dofs+= shape_info.dofs_per_component_on_cell;
+        values_quad+= n_q_points;
+        gradients_quad+= dim * n_q_points;
+        hessians_quad+= (dim * (dim + 1)) / 2 * n_q_points;
       }
   }
 
@@ -1240,9 +1237,9 @@ namespace internal
                       "operation."));
     AssertDimension(shape_info.shape_gradients_collocation_eo.size(),
                     (n_q_points_1d + 1) / 2 * n_q_points_1d);
-    constexpr unsigned int n_q_points = Utilities::pow(n_q_points_1d, dim);
+    constexpr unsigned int n_q_points= Utilities::pow(n_q_points_1d, dim);
 
-    for(unsigned int c = 0; c < n_components; c++)
+    for(unsigned int c= 0; c < n_components; c++)
       {
         // apply derivatives in collocation space
         if(integrate_gradients == true)
@@ -1268,9 +1265,9 @@ namespace internal
                                add_into_values_array,
                                values_quad,
                                values_dofs);
-        gradients_quad += dim * n_q_points;
-        values_quad += n_q_points;
-        values_dofs += shape_info.dofs_per_component_on_cell;
+        gradients_quad+= dim * n_q_points;
+        values_quad+= n_q_points;
+        values_dofs+= shape_info.dofs_per_component_on_cell;
       }
   }
 
@@ -1342,12 +1339,12 @@ namespace internal
             Utilities::pow(fe_degree + 1, dim - 1) :
             (dim > 1 ? Utilities::fixed_power<dim - 1>(data.fe_degree + 1) : 1);
 
-      const unsigned int n_q_points = fe_degree > -1 ?
-                                        Utilities::pow(n_q_points_1d, dim - 1) :
-                                        data.n_q_points_face;
+      const unsigned int n_q_points= fe_degree > -1 ?
+                                       Utilities::pow(n_q_points_1d, dim - 1) :
+                                       data.n_q_points_face;
 
       if(evaluate_grad == false)
-        for(unsigned int c = 0; c < n_components; ++c)
+        for(unsigned int c= 0; c < n_components; ++c)
           {
             switch(dim)
               {
@@ -1362,16 +1359,16 @@ namespace internal
                                                         values_quad);
                   break;
                 case 1:
-                  values_quad[c] = values_dofs[2 * c];
+                  values_quad[c]= values_dofs[2 * c];
                   break;
                 default:
                   Assert(false, ExcNotImplemented());
               }
-            values_dofs += 2 * size_deg;
-            values_quad += n_q_points;
+            values_dofs+= 2 * size_deg;
+            values_quad+= n_q_points;
           }
       else
-        for(unsigned int c = 0; c < n_components; ++c)
+        for(unsigned int c= 0; c < n_components; ++c)
           {
             switch(dim)
               {
@@ -1429,15 +1426,15 @@ namespace internal
                                                           values_quad);
                   break;
                 case 1:
-                  values_quad[0]    = values_dofs[0];
-                  gradients_quad[0] = values_dofs[1];
+                  values_quad[0]   = values_dofs[0];
+                  gradients_quad[0]= values_dofs[1];
                   break;
                 default:
                   AssertThrow(false, ExcNotImplemented());
               }
-            values_dofs += 2 * size_deg;
-            values_quad += n_q_points;
-            gradients_quad += dim * n_q_points;
+            values_dofs+= 2 * size_deg;
+            values_quad+= n_q_points;
+            gradients_quad+= dim * n_q_points;
           }
     }
 
@@ -1499,7 +1496,7 @@ namespace internal
             data.n_q_points_face;
 
       if(integrate_grad == false)
-        for(unsigned int c = 0; c < n_components; ++c)
+        for(unsigned int c= 0; c < n_components; ++c)
           {
             switch(dim)
               {
@@ -1514,16 +1511,16 @@ namespace internal
                                                          values_dofs);
                   break;
                 case 1:
-                  values_dofs[2 * c] = values_quad[c][0];
+                  values_dofs[2 * c]= values_quad[c][0];
                   break;
                 default:
                   Assert(false, ExcNotImplemented());
               }
-            values_dofs += 2 * size_deg;
-            values_quad += n_q_points;
+            values_dofs+= 2 * size_deg;
+            values_quad+= n_q_points;
           }
       else
-        for(unsigned int c = 0; c < n_components; ++c)
+        for(unsigned int c= 0; c < n_components; ++c)
           {
             switch(dim)
               {
@@ -1588,15 +1585,15 @@ namespace internal
                                                           values_dofs);
                   break;
                 case 1:
-                  values_dofs[0] = values_quad[0];
-                  values_dofs[1] = gradients_quad[0];
+                  values_dofs[0]= values_quad[0];
+                  values_dofs[1]= gradients_quad[0];
                   break;
                 default:
                   AssertThrow(false, ExcNotImplemented());
               }
-            values_dofs += 2 * size_deg;
-            values_quad += n_q_points;
-            gradients_quad += dim * n_q_points;
+            values_dofs+= 2 * size_deg;
+            values_quad+= n_q_points;
+            gradients_quad+= dim * n_q_points;
           }
     }
   };
@@ -1623,14 +1620,14 @@ namespace internal
               data.fe_degree + 1,
               0);
 
-      const unsigned int in_stride = do_evaluate ?
-                                       data.dofs_per_component_on_cell :
-                                       2 * data.dofs_per_component_on_face;
-      const unsigned int out_stride = do_evaluate ?
-                                        2 * data.dofs_per_component_on_face :
-                                        data.dofs_per_component_on_cell;
-      const unsigned int face_direction = face_no / 2;
-      for(unsigned int c = 0; c < n_components; c++)
+      const unsigned int in_stride= do_evaluate ?
+                                      data.dofs_per_component_on_cell :
+                                      2 * data.dofs_per_component_on_face;
+      const unsigned int out_stride= do_evaluate ?
+                                       2 * data.dofs_per_component_on_face :
+                                       data.dofs_per_component_on_cell;
+      const unsigned int face_direction= face_no / 2;
+      for(unsigned int c= 0; c < n_components; c++)
         {
           if(do_gradients)
             {
@@ -1656,8 +1653,8 @@ namespace internal
                 evalf.template apply_face<2, do_evaluate, add_into_output, 0>(
                   input, output);
             }
-          input += in_stride;
-          output += out_stride;
+          input+= in_stride;
+          output+= out_stride;
         }
     }
   };

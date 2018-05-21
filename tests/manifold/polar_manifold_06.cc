@@ -37,10 +37,10 @@ test()
 
   // Go from 0,1 to 1,0
   Point<spacedim> p0, p1;
-  p0[1] = 1.0;
-  p1[0] = 1.0;
+  p0[1]= 1.0;
+  p1[0]= 1.0;
 
-  Tensor<1, spacedim> T = manifold.get_tangent_vector(p0, p1);
+  Tensor<1, spacedim> T= manifold.get_tangent_vector(p0, p1);
 
   deallog << "P0      : " << p0 << std::endl;
   deallog << "P1      : " << p1 << std::endl;

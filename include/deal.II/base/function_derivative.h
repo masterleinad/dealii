@@ -50,7 +50,7 @@ public:
    */
   FunctionDerivative(const Function<dim>& f,
                      const Point<dim>&    direction,
-                     const double         h = 1.e-6);
+                     const double         h= 1.e-6);
 
   /**
    * Constructor. Provided are the functions to compute derivatives of and the
@@ -66,7 +66,7 @@ public:
    */
   FunctionDerivative(const Function<dim>&           f,
                      const std::vector<Point<dim>>& direction,
-                     const double                   h = 1.e-6);
+                     const double                   h= 1.e-6);
 
   /**
    * Choose the difference formula. This is set to the default in the
@@ -86,7 +86,7 @@ public:
   set_h(const double h);
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const override;
+  value(const Point<dim>& p, const unsigned int component= 0) const override;
 
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& value) const override;
@@ -94,7 +94,7 @@ public:
   virtual void
   value_list(const std::vector<Point<dim>>& points,
              std::vector<double>&           values,
-             const unsigned int             component = 0) const override;
+             const unsigned int             component= 0) const override;
 
   /**
    * Return an estimate for the memory consumption, in bytes, of this object.

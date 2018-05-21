@@ -34,7 +34,7 @@
 void
 test()
 {
-  const int dim = 2;
+  const int dim= 2;
 
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -55,12 +55,12 @@ test()
   // then set up a sparsity pattern and a
   // matrix on top of it
   std::vector<unsigned int> block_sizes(2);
-  block_sizes[0] = dof_handler.n_dofs() / 3;
-  block_sizes[1] = dof_handler.n_dofs() - block_sizes[0];
+  block_sizes[0]= dof_handler.n_dofs() / 3;
+  block_sizes[1]= dof_handler.n_dofs() - block_sizes[0];
 
   BlockSparsityPattern sparsity(2, 2);
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
       sparsity.block(i, j).reinit(block_sizes[i],
                                   block_sizes[j],
                                   dof_handler.max_couplings_between_dofs());
@@ -70,8 +70,8 @@ test()
   sparsity.compress();
   BlockSparseMatrix<double> A(sparsity);
 
-  const BlockSparseMatrix<double>::const_iterator begin = A.begin(),
-                                                  end   = A.end();
+  const BlockSparseMatrix<double>::const_iterator begin= A.begin(),
+                                                  end  = A.end();
 
   deallog << begin->row() << ' ' << begin->column() << ' ' << begin->block_row()
           << ' ' << begin->block_column() << std::endl;

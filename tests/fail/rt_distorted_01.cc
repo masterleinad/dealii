@@ -65,7 +65,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -88,8 +88,8 @@ TestMap1<dim>::vector_value(const Point<dim>& p,
          ExcDimensionMismatch(return_value.size(), this->n_components));
 
   // Parabolic inflow profile
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -109,7 +109,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -120,10 +120,10 @@ double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   Point<2> center;
-  center(0)    = 0.5;
-  center(1)    = 0.5;
-  double rad   = p.distance(center),
-         phi_p = atan2(p(0) - center(0), p(1) - center(1));
+  center(0)   = 0.5;
+  center(1)   = 0.5;
+  double rad  = p.distance(center),
+         phi_p= atan2(p(0) - center(0), p(1) - center(1));
 
   if(component == 0)
     return rad * (sin(phi + phi_p) - sin(phi_p));
@@ -138,8 +138,8 @@ TestDef1<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -159,7 +159,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -169,7 +169,7 @@ template <int dim>
 double
 TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
-  double x = p(0), y = p(1);
+  double x= p(0), y= p(1);
 
   if(component == 0)
     return scale * x;
@@ -184,8 +184,8 @@ TestDef2<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -206,7 +206,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -216,7 +216,7 @@ template <int dim>
 double
 TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
-  double y = p(1);
+  double y= p(1);
 
   if(component == 0)
     return scale * y;
@@ -231,8 +231,8 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 /*
@@ -251,13 +251,13 @@ double EvaluateArea(Mapping<2>&     mapping,
     quad,
     UpdateFlags(update_values | update_quadrature_points | update_JxW_values));
 
-  const unsigned int n_q_points   = quad.size();
-  const unsigned int n_components = dof_handler->get_fe().n_components();
+  const unsigned int n_q_points  = quad.size();
+  const unsigned int n_components= dof_handler->get_fe().n_components();
 
   // Cell iterators
-  DoFHandler<2>::active_cell_iterator cell = dof_handler->begin_active(),
-                                      endc = dof_handler->end();
-  double result_u = 0, result_v = 0;
+  DoFHandler<2>::active_cell_iterator cell= dof_handler->begin_active(),
+                                      endc= dof_handler->end();
+  double result_u= 0, result_v= 0;
 
   for(; cell != endc; ++cell)
     {
@@ -268,11 +268,11 @@ double EvaluateArea(Mapping<2>&     mapping,
                                              Vector<double>(n_components));
       fe_values.get_function_values(solution, this_value);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
-          double JxW = fe_values.JxW(q_point);
-          result_u += this_value[q_point](0) * JxW;
-          result_v += this_value[q_point](1) * JxW;
+          double JxW= fe_values.JxW(q_point);
+          result_u+= this_value[q_point](0) * JxW;
+          result_v+= this_value[q_point](1) * JxW;
         }
     }
 
@@ -299,12 +299,12 @@ main(int /*argc*/, char** /*argv*/)
 
   // Create a DoFHandler for the RT space
   FE_RaviartThomas<2> fe(2);
-  dof_handler = new DoFHandler<2>(tria_test);
+  dof_handler= new DoFHandler<2>(tria_test);
   dof_handler->distribute_dofs(fe);
 
   // Create an deformation object for the Eulerian mapping
   FESystem<2> fe_def(FE_Q<2>(1), 2);
-  dof_handler_def = new DoFHandler<2>(tria_test);
+  dof_handler_def= new DoFHandler<2>(tria_test);
   dof_handler_def->distribute_dofs(fe_def);
 
   // Alloc some DoFs
@@ -343,9 +343,9 @@ main(int /*argc*/, char** /*argv*/)
           EvaluateArea(*mapping_euler, dof_handler_def, solution_q));
   deallog << buf;
 
-  unsigned int test_out = 0;
+  unsigned int test_out= 0;
   // Try rotating the elements
-  for(double rotat = 0; rotat < 2 * numbers::PI; rotat += 0.25 * numbers::PI)
+  for(double rotat= 0; rotat < 2 * numbers::PI; rotat+= 0.25 * numbers::PI)
     {
       // Rotate element
       VectorTools::project(*dof_handler_def,
@@ -363,7 +363,7 @@ main(int /*argc*/, char** /*argv*/)
                            solution);
 
       // Write output files
-      DataOut<2>* data_out = new DataOut<2>;
+      DataOut<2>* data_out= new DataOut<2>;
       data_out->attach_dof_handler(*dof_handler);
       data_out->add_data_vector(solution, "solution");
       data_out->build_patches(*mapping_euler, 8);
@@ -373,7 +373,7 @@ main(int /*argc*/, char** /*argv*/)
 
       delete data_out;
 
-      double area_rt = EvaluateArea(*mapping_euler, dof_handler, solution);
+      double area_rt= EvaluateArea(*mapping_euler, dof_handler, solution);
       double area_q = EvaluateArea(*mapping_euler, dof_handler_def, solution_q);
 
       char buf[100];
@@ -383,7 +383,7 @@ main(int /*argc*/, char** /*argv*/)
     }
 
   // Try resizing the elements
-  for(double scale = -0.75; scale < 4.0; scale += 0.25)
+  for(double scale= -0.75; scale < 4.0; scale+= 0.25)
     {
       VectorTools::project(*dof_handler_def,
                            hn_constraints_def,
@@ -409,7 +409,7 @@ main(int /*argc*/, char** /*argv*/)
     }
 
   // Try parallelograms
-  for(double scale = -1.0; scale < 1.0; scale += 0.25)
+  for(double scale= -1.0; scale < 1.0; scale+= 0.25)
     {
       VectorTools::project(*dof_handler_def,
                            hn_constraints_def,

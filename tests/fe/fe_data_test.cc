@@ -55,11 +55,11 @@ test_2d_3d(std::vector<FiniteElement<dim>*>& fe_datas)
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
   // Hdiv elements
-  FE_RaviartThomas<dim>* rt0 = new FE_RaviartThomas<dim>(0);
+  FE_RaviartThomas<dim>* rt0= new FE_RaviartThomas<dim>(0);
   fe_datas.push_back(rt0);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
-  FE_RaviartThomas<dim>* rt1 = new FE_RaviartThomas<dim>(1);
+  FE_RaviartThomas<dim>* rt1= new FE_RaviartThomas<dim>(1);
   fe_datas.push_back(rt1);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
@@ -74,10 +74,10 @@ test_2d_3d(std::vector<FiniteElement<dim>*>& fe_datas)
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
   // Hcurl elements
-  FE_Nedelec<dim>* ned0 = new FE_Nedelec<dim>(0);
+  FE_Nedelec<dim>* ned0= new FE_Nedelec<dim>(0);
   fe_datas.push_back(ned0);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
-  FE_Nedelec<dim>* ned1 = new FE_Nedelec<dim>(1);
+  FE_Nedelec<dim>* ned1= new FE_Nedelec<dim>(1);
   fe_datas.push_back(ned1);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 }
@@ -155,8 +155,8 @@ test_fe_datas()
     }
   if(dim > 1)
     {
-      FE_RaviartThomasNodal<dim>* rt0 = new FE_RaviartThomasNodal<dim>(0);
-      FE_RaviartThomasNodal<dim>* rt1 = new FE_RaviartThomasNodal<dim>(1);
+      FE_RaviartThomasNodal<dim>* rt0= new FE_RaviartThomasNodal<dim>(0);
+      FE_RaviartThomasNodal<dim>* rt1= new FE_RaviartThomasNodal<dim>(1);
       fe_datas.push_back(rt0);
       deallog << (*fe_datas.rbegin())->get_name() << std::endl;
       fe_datas.push_back(rt1);
@@ -204,9 +204,9 @@ test_fe_datas()
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
   deallog << std::endl << "dim=" << dim << std::endl;
-  for(unsigned int n = 0; n < fe_datas.size(); ++n)
+  for(unsigned int n= 0; n < fe_datas.size(); ++n)
     {
-      FiniteElement<dim>* fe_data = fe_datas[n];
+      FiniteElement<dim>* fe_data= fe_datas[n];
       deallog << "fe_data[" << n << "]:" << fe_data->get_name() << std::endl;
       deallog << "dofs_per_vertex=" << fe_data->dofs_per_vertex << std::endl;
       deallog << "dofs_per_line=" << fe_data->dofs_per_line << std::endl;
@@ -249,21 +249,21 @@ test_fe_datas()
               << std::endl;
 
       deallog << "face_to_equivalent_cell_index:";
-      for(unsigned int i = 0; i < fe_data->dofs_per_face; ++i)
+      for(unsigned int i= 0; i < fe_data->dofs_per_face; ++i)
         deallog << ' ' << fe_data->face_to_cell_index(i, 0);
       deallog << std::endl;
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           deallog << "face_to_cell_index:";
-          for(unsigned int i = 0; i < fe_data->dofs_per_face; ++i)
+          for(unsigned int i= 0; i < fe_data->dofs_per_face; ++i)
             deallog << ' ' << fe_data->face_to_cell_index(i, f);
           deallog << std::endl;
         }
 
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           deallog << "support on face " << f << ':';
-          for(unsigned int s = 0; s < fe_data->dofs_per_cell; ++s)
+          for(unsigned int s= 0; s < fe_data->dofs_per_cell; ++s)
             if(fe_datas[n]->has_support_on_face(s, f))
               deallog << '\t' << s;
           deallog << std::endl;
@@ -272,7 +272,7 @@ test_fe_datas()
     }
 
   // delete all FiniteElementDatas
-  for(unsigned int i = 0; i < fe_datas.size(); ++i)
+  for(unsigned int i= 0; i < fe_datas.size(); ++i)
     delete fe_datas[i];
 }
 

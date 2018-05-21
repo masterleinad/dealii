@@ -20,15 +20,15 @@
 
 // burn computer time
 
-double s = 0.;
+double s= 0.;
 void
 burn(unsigned int n)
 {
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     {
-      for(unsigned int j = 1; j < 100000; ++j)
+      for(unsigned int j= 1; j < 100000; ++j)
         {
-          s += 1. / j * i;
+          s+= 1. / j * i;
         }
     }
 }
@@ -70,9 +70,9 @@ test_timer(Timer& t)
 {
   burn(50);
 
-  const double old_wall_time = t.wall_time();
+  const double old_wall_time= t.wall_time();
   AssertThrow(old_wall_time > 0., ExcInternalError());
-  const double old_cpu_time = t.wall_time();
+  const double old_cpu_time= t.wall_time();
   AssertThrow(old_cpu_time > 0., ExcInternalError());
   assert_min_max_avg_invalid(t.get_data());
   assert_min_max_avg_invalid(t.get_total_data());

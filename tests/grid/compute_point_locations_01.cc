@@ -56,32 +56,32 @@ test_compute_pt_loc(unsigned int n_points)
   // Creating the random points
   std::vector<Point<dim>> points;
 
-  for(size_t i = 0; i < n_points; ++i)
+  for(size_t i= 0; i < n_points; ++i)
     points.push_back(random_point<dim>());
 
   // Initializing the cache
   GridTools::Cache<dim, dim> cache(tria);
 
-  auto   cell_qpoint_map = GridTools::compute_point_locations(cache, points);
-  size_t n_cells         = std::get<0>(cell_qpoint_map).size();
+  auto   cell_qpoint_map= GridTools::compute_point_locations(cache, points);
+  size_t n_cells        = std::get<0>(cell_qpoint_map).size();
 
   deallog << "Points found in " << n_cells << " cells" << std::endl;
 
   // testing if the transformation is correct:
   // For each cell check if the quadrature points in the i-th FE
   // are the same as std::get<2>(cell_qpoint_map)[i]
-  for(unsigned int i = 0; i < std::get<0>(cell_qpoint_map).size(); ++i)
+  for(unsigned int i= 0; i < std::get<0>(cell_qpoint_map).size(); ++i)
     {
-      auto& cell      = std::get<0>(cell_qpoint_map)[i];
-      auto& quad      = std::get<1>(cell_qpoint_map)[i];
-      auto& local_map = std::get<2>(cell_qpoint_map)[i];
+      auto& cell     = std::get<0>(cell_qpoint_map)[i];
+      auto& quad     = std::get<1>(cell_qpoint_map)[i];
+      auto& local_map= std::get<2>(cell_qpoint_map)[i];
 
       // Given the std::get<1>(cell_qpoint_map) of the current cell, compute the real points
       FEValues<dim> fev(fe, quad, update_quadrature_points);
       fev.reinit(cell);
-      const auto& real_quad = fev.get_quadrature_points();
+      const auto& real_quad= fev.get_quadrature_points();
 
-      for(unsigned int q = 0; q < real_quad.size(); ++q)
+      for(unsigned int q= 0; q < real_quad.size(); ++q)
         {
           // Check if points are the same as real points
           if(real_quad[q].distance(points[local_map[q]]) > 1e-10)

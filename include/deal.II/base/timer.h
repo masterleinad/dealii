@@ -61,7 +61,7 @@ struct CPUClock
   /**
    * Boolean indicating that the clock monotonically increases.
    */
-  static const bool is_steady = true;
+  static const bool is_steady= true;
 
   /**
    * Return the amount of CPU time that the current process has
@@ -137,7 +137,7 @@ public:
    * communicator occurs; the extra cost of the synchronization is not
    * measured.
    */
-  Timer(MPI_Comm mpi_communicator, const bool sync_lap_times = false);
+  Timer(MPI_Comm mpi_communicator, const bool sync_lap_times= false);
 
   /**
    * Return a reference to the data structure with global timing information
@@ -794,13 +794,13 @@ public:
    * is left.
    */
   void
-  leave_subsection(const std::string& section_name = std::string());
+  leave_subsection(const std::string& section_name= std::string());
 
   /**
    * Same as @p leave_subsection.
    */
   void
-  exit_section(const std::string& section_name = std::string());
+  exit_section(const std::string& section_name= std::string());
 
   /**
    * Get a map with the collected data of the specified type for each subsection
@@ -948,7 +948,7 @@ template <class StreamType>
 inline void
 Timer::print_last_lap_wall_time_data(StreamType& stream) const
 {
-  const Utilities::MPI::MinMaxAvg& statistic = get_last_lap_wall_time_data();
+  const Utilities::MPI::MinMaxAvg& statistic= get_last_lap_wall_time_data();
   stream << statistic.max << " wall,"
          << " max @" << statistic.max_index << ", min=" << statistic.min << " @"
          << statistic.min_index << ", avg=" << statistic.avg << std::endl;
@@ -965,7 +965,7 @@ template <class StreamType>
 inline void
 Timer::print_accumulated_wall_time_data(StreamType& stream) const
 {
-  const Utilities::MPI::MinMaxAvg statistic = get_accumulated_wall_time_data();
+  const Utilities::MPI::MinMaxAvg statistic= get_accumulated_wall_time_data();
   stream << statistic.max << " wall,"
          << " max @" << statistic.max_index << ", min=" << statistic.min << " @"
          << statistic.min_index << ", avg=" << statistic.avg << std::endl;
@@ -995,7 +995,7 @@ TimerOutput::Scope::stop()
 {
   if(!in)
     return;
-  in = false;
+  in= false;
 
   timer.exit_section(section_name);
 }

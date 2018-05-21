@@ -59,8 +59,8 @@ check_solve(SolverType&         solver,
             VectorType&         f,
             const PRECONDITION& P)
 {
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.solve(A, u, f, P);
@@ -93,9 +93,9 @@ main()
   gmres.connect(&monitor_norm);
   gmres.connect(&monitor_mean);
 
-  for(unsigned int size = 4; size <= 30; size *= 3)
+  for(unsigned int size= 4; size <= 30; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -114,8 +114,8 @@ main()
       Vector<double> u(dim);
       Vector<double> res(dim);
 
-      f = 1.;
-      u = 1.;
+      f= 1.;
+      u= 1.;
 
       A.residual(res, u, f);
       A.SOR(res);

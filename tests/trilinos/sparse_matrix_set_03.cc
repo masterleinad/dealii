@@ -25,8 +25,8 @@
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   IndexSet rows(5 * n_procs);
   rows.add_range(5 * myid, 5 * (myid + 1));
@@ -37,8 +37,8 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
+    for(unsigned int i= 5 * myid; i < 5 * (myid + 1); ++i)
+      for(unsigned int j= 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
@@ -49,13 +49,13 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
+    for(unsigned int i= 5 * myid; i < 5 * (myid + 1); ++i)
+      for(unsigned int j= 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
+    for(unsigned int i= 5 * myid; i < 5 * (myid + 1); ++i)
+      for(unsigned int j= 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j + 1.);
 
@@ -66,8 +66,8 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
+    for(unsigned int i= 5 * myid; i < 5 * (myid + 1); ++i)
+      for(unsigned int j= 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
@@ -81,8 +81,8 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
+    for(unsigned int i= 5 * myid; i < 5 * (myid + 1); ++i)
+      for(unsigned int j= 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
@@ -95,8 +95,8 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
+    for(unsigned int i= 5 * myid; i < 5 * (myid + 1); ++i)
+      for(unsigned int j= 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
@@ -107,8 +107,8 @@ test()
     deallog << "Matrix norm set non-local twice: " << m.frobenius_norm()
             << std::endl;
 
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
+    for(unsigned int i= 5 * myid; i < 5 * (myid + 1); ++i)
+      for(unsigned int j= 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
@@ -119,8 +119,8 @@ test()
     deallog << "Matrix norm set twice, 2nd attempt: " << m.frobenius_norm()
             << std::endl;
 
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
+    for(unsigned int i= 5 * myid; i < 5 * (myid + 1); ++i)
+      for(unsigned int j= 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 

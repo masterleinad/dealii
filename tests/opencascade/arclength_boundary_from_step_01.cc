@@ -35,7 +35,7 @@ main()
 {
   std::ofstream logfile("output");
 
-  TopoDS_Shape new_edge = read_STEP(SOURCE_DIR "/step_files/line_03.step", 1.0);
+  TopoDS_Shape new_edge= read_STEP(SOURCE_DIR "/step_files/line_03.step", 1.0);
 
   std::vector<TopoDS_Face>   faces;
   std::vector<TopoDS_Edge>   edges;

@@ -78,7 +78,7 @@ public:
   DEAL_II_DEPRECATED void
   initialize(const DoFHandler<dim, spacedim>&       dof,
              const typename FunctionMap<dim>::type& function_map,
-             const ComponentMask& component_mask = ComponentMask());
+             const ComponentMask& component_mask= ComponentMask());
 
   /**
    * Fill the internal data structures with information
@@ -95,7 +95,7 @@ public:
   make_zero_boundary_constraints(
     const DoFHandler<dim, spacedim>&    dof,
     const std::set<types::boundary_id>& boundary_ids,
-    const ComponentMask&                component_mask = ComponentMask());
+    const ComponentMask&                component_mask= ComponentMask());
 
   /**
    * Reset the data structures.
@@ -184,24 +184,24 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
   refinement_edge_indices.clear();
   level_constraints.clear();
 
-  const unsigned int nlevels = dof.get_triangulation().n_global_levels();
+  const unsigned int nlevels= dof.get_triangulation().n_global_levels();
 
   //At this point level_constraint and refinement_edge_indices are empty.
   level_constraints.resize(nlevels);
   refinement_edge_indices.resize(nlevels);
-  for(unsigned int l = 0; l < nlevels; ++l)
+  for(unsigned int l= 0; l < nlevels; ++l)
     {
       IndexSet relevant_dofs;
       DoFTools::extract_locally_relevant_level_dofs(dof, l, relevant_dofs);
       level_constraints[l].reinit(relevant_dofs);
 
       // Loop through relevant cells and faces finding those which are periodic neighbors.
-      typename DoFHandler<dim, spacedim>::cell_iterator cell = dof.begin(l),
-                                                        endc = dof.end(l);
+      typename DoFHandler<dim, spacedim>::cell_iterator cell= dof.begin(l),
+                                                        endc= dof.end(l);
       for(; cell != endc; ++cell)
         if(cell->level_subdomain_id() != numbers::artificial_subdomain_id)
           {
-            for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+            for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
               if(cell->has_periodic_neighbor(f))
                 {
                   if(cell->is_locally_owned_on_level())
@@ -235,7 +235,7 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
                   // Skip DoFs for which we've previously entered periodicity constraints already;
                   // this can happen, for example, for a vertex dof at a periodic boundary that we
                   // visit from more than one cell
-                  for(unsigned int i = 0; i < dofs_per_face; ++i)
+                  for(unsigned int i= 0; i < dofs_per_face; ++i)
                     if(level_constraints[l].can_store_line(dofs_2[i])
                        && level_constraints[l].can_store_line(dofs_1[i])
                        && !level_constraints[l].is_constrained(dofs_2[i])
@@ -250,7 +250,7 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
       level_constraints[l].close();
 
       // Initialize with empty IndexSet of correct size
-      refinement_edge_indices[l] = IndexSet(dof.n_dofs(l));
+      refinement_edge_indices[l]= IndexSet(dof.n_dofs(l));
     }
 
   MGTools::extract_inner_interface_dofs(dof, refinement_edge_indices);
@@ -267,7 +267,7 @@ MGConstrainedDoFs::initialize(
 
   // allocate an IndexSet for each global level. Contents will be
   // overwritten inside make_boundary_list.
-  const unsigned int n_levels = dof.get_triangulation().n_global_levels();
+  const unsigned int n_levels= dof.get_triangulation().n_global_levels();
   //At this point boundary_indices is empty.
   boundary_indices.resize(n_levels);
 
@@ -284,7 +284,7 @@ MGConstrainedDoFs::make_zero_boundary_constraints(
 {
   // allocate an IndexSet for each global level. Contents will be
   // overwritten inside make_boundary_list.
-  const unsigned int n_levels = dof.get_triangulation().n_global_levels();
+  const unsigned int n_levels= dof.get_triangulation().n_global_levels();
   Assert(boundary_indices.size() == 0 || boundary_indices.size() == n_levels,
          ExcInternalError());
   boundary_indices.resize(n_levels);

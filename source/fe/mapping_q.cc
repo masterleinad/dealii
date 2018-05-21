@@ -82,7 +82,7 @@ MappingQ<dim, spacedim>::MappingQ(const MappingQ<dim, spacedim>& mapping)
   // may be MappingQ1Eulerian and mapping.qp_mapping may be MappingQEulerian.
   std::shared_ptr<const Mapping<dim, spacedim>> other_q1_map
     = mapping.q1_mapping->clone();
-  q1_mapping = std::dynamic_pointer_cast<const MappingQGeneric<dim, spacedim>>(
+  q1_mapping= std::dynamic_pointer_cast<const MappingQGeneric<dim, spacedim>>(
     other_q1_map);
   Assert(q1_mapping != nullptr, ExcInternalError());
   Assert(q1_mapping->get_degree() == 1, ExcInternalError());
@@ -90,7 +90,7 @@ MappingQ<dim, spacedim>::MappingQ(const MappingQ<dim, spacedim>& mapping)
   // Same as the other constructor: if possible reuse the Q1 mapping
   if(this->polynomial_degree == 1)
     {
-      qp_mapping = q1_mapping;
+      qp_mapping= q1_mapping;
     }
   else
     {
@@ -130,23 +130,23 @@ std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingQ<dim, spacedim>::get_data(const UpdateFlags      update_flags,
                                   const Quadrature<dim>& quadrature) const
 {
-  auto data = std_cxx14::make_unique<InternalData>();
+  auto data= std_cxx14::make_unique<InternalData>();
 
   // build the Q1 and Qp internal data objects in parallel
   Threads::Task<
     std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>>
-    do_get_data = Threads::new_task(&MappingQGeneric<dim, spacedim>::get_data,
-                                    *qp_mapping,
-                                    update_flags,
-                                    quadrature);
+    do_get_data= Threads::new_task(&MappingQGeneric<dim, spacedim>::get_data,
+                                   *qp_mapping,
+                                   update_flags,
+                                   quadrature);
 
   if(!use_mapping_q_on_all_cells)
-    data->mapping_q1_data = Utilities::dynamic_unique_cast<
+    data->mapping_q1_data= Utilities::dynamic_unique_cast<
       typename MappingQGeneric<dim, spacedim>::InternalData>(
       std::move(q1_mapping->get_data(update_flags, quadrature)));
 
   // wait for the task above to finish and use returned value
-  data->mapping_qp_data = Utilities::dynamic_unique_cast<
+  data->mapping_qp_data= Utilities::dynamic_unique_cast<
     typename MappingQGeneric<dim, spacedim>::InternalData>(
     std::move(do_get_data.return_value()));
   return std::move(data);
@@ -158,7 +158,7 @@ MappingQ<dim, spacedim>::get_face_data(
   const UpdateFlags          update_flags,
   const Quadrature<dim - 1>& quadrature) const
 {
-  auto data = std_cxx14::make_unique<InternalData>();
+  auto data= std_cxx14::make_unique<InternalData>();
 
   // build the Q1 and Qp internal data objects in parallel
   Threads::Task<
@@ -170,12 +170,12 @@ MappingQ<dim, spacedim>::get_face_data(
                         quadrature);
 
   if(!use_mapping_q_on_all_cells)
-    data->mapping_q1_data = Utilities::dynamic_unique_cast<
+    data->mapping_q1_data= Utilities::dynamic_unique_cast<
       typename MappingQGeneric<dim, spacedim>::InternalData>(
       std::move(q1_mapping->get_face_data(update_flags, quadrature)));
 
   // wait for the task above to finish and use returned value
-  data->mapping_qp_data = Utilities::dynamic_unique_cast<
+  data->mapping_qp_data= Utilities::dynamic_unique_cast<
     typename MappingQGeneric<dim, spacedim>::InternalData>(
     std::move(do_get_data.return_value()));
   return std::move(data);
@@ -187,7 +187,7 @@ MappingQ<dim, spacedim>::get_subface_data(
   const UpdateFlags          update_flags,
   const Quadrature<dim - 1>& quadrature) const
 {
-  auto data = std_cxx14::make_unique<InternalData>();
+  auto data= std_cxx14::make_unique<InternalData>();
 
   // build the Q1 and Qp internal data objects in parallel
   Threads::Task<
@@ -199,12 +199,12 @@ MappingQ<dim, spacedim>::get_subface_data(
                         quadrature);
 
   if(!use_mapping_q_on_all_cells)
-    data->mapping_q1_data = Utilities::dynamic_unique_cast<
+    data->mapping_q1_data= Utilities::dynamic_unique_cast<
       typename MappingQGeneric<dim, spacedim>::InternalData>(
       std::move(q1_mapping->get_subface_data(update_flags, quadrature)));
 
   // wait for the task above to finish and use returned value
-  data->mapping_qp_data = Utilities::dynamic_unique_cast<
+  data->mapping_qp_data= Utilities::dynamic_unique_cast<
     typename MappingQGeneric<dim, spacedim>::InternalData>(
     std::move(do_get_data.return_value()));
   return std::move(data);
@@ -226,7 +226,7 @@ MappingQ<dim, spacedim>::fill_fe_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData& data = static_cast<const InternalData&>(internal_data);
+  const InternalData& data= static_cast<const InternalData&>(internal_data);
 
   // check whether this cell needs the full mapping or can be treated by a
   // reduced Q1 mapping, e.g. if the cell is in the interior of the domain
@@ -277,7 +277,7 @@ MappingQ<dim, spacedim>::fill_fe_face_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData& data = static_cast<const InternalData&>(internal_data);
+  const InternalData& data= static_cast<const InternalData&>(internal_data);
 
   // check whether this cell needs the full mapping or can be treated by a
   // reduced Q1 mapping, e.g. if the cell is entirely in the interior of the
@@ -313,7 +313,7 @@ MappingQ<dim, spacedim>::fill_fe_subface_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData& data = static_cast<const InternalData&>(internal_data);
+  const InternalData& data= static_cast<const InternalData&>(internal_data);
 
   // check whether this cell needs the full mapping or can be treated by a
   // reduced Q1 mapping, e.g. if the cell is entirely in the interior of the
@@ -352,7 +352,7 @@ MappingQ<dim, spacedim>::transform(
 {
   AssertDimension(input.size(), output.size());
 
-  const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
+  const InternalData* data= dynamic_cast<const InternalData*>(&mapping_data);
   Assert(data != nullptr, ExcInternalError());
 
   // check whether we should in fact work on the Q1 portion of it
@@ -376,7 +376,7 @@ MappingQ<dim, spacedim>::transform(
             &mapping_data)
           != nullptr),
          ExcInternalError());
-  const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
+  const InternalData* data= dynamic_cast<const InternalData*>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
   if(data->use_mapping_q1_on_current_cell)
@@ -399,7 +399,7 @@ MappingQ<dim, spacedim>::transform(
             &mapping_data)
           != nullptr),
          ExcInternalError());
-  const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
+  const InternalData* data= dynamic_cast<const InternalData*>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
   if(data->use_mapping_q1_on_current_cell)
@@ -422,7 +422,7 @@ MappingQ<dim, spacedim>::transform(
             &mapping_data)
           != nullptr),
          ExcInternalError());
-  const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
+  const InternalData* data= dynamic_cast<const InternalData*>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
   if(data->use_mapping_q1_on_current_cell)
@@ -445,7 +445,7 @@ MappingQ<dim, spacedim>::transform(
             &mapping_data)
           != nullptr),
          ExcInternalError());
-  const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
+  const InternalData* data= dynamic_cast<const InternalData*>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
   if(data->use_mapping_q1_on_current_cell)

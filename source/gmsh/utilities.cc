@@ -52,22 +52,22 @@ namespace Gmsh
                                            Triangulation<2, spacedim>& tria,
                                            const AdditionalParameters& prm)
   {
-    std::string base_name      = prm.output_base_name;
-    char        dir_template[] = "ctfbc-XXXXXX";
+    std::string base_name     = prm.output_base_name;
+    char        dir_template[]= "ctfbc-XXXXXX";
     if(base_name == "")
       {
-        const char* temp = mkdtemp(dir_template);
+        const char* temp= mkdtemp(dir_template);
         AssertThrow(temp != nullptr,
                     ExcMessage("Creating temporary directory failed!"));
-        base_name = temp;
-        base_name += "tmp";
+        base_name= temp;
+        base_name+= "tmp";
       }
 
-    const std::string iges_file_name     = base_name + ".iges";
-    const std::string geo_file_name      = base_name + ".geo";
-    const std::string msh_file_name      = base_name + ".msh";
-    const std::string log_file_name      = base_name + ".log";
-    const std::string warnings_file_name = base_name + "_warn.log";
+    const std::string iges_file_name    = base_name + ".iges";
+    const std::string geo_file_name     = base_name + ".geo";
+    const std::string msh_file_name     = base_name + ".msh";
+    const std::string log_file_name     = base_name + ".log";
+    const std::string warnings_file_name= base_name + "_warn.log";
 
     dealii::OpenCASCADE::write_IGES(boundary, iges_file_name);
 
@@ -86,7 +86,7 @@ namespace Gmsh
     command << DEAL_II_GMSH_EXECUTABLE_PATH << " -2 " << geo_file_name << " 1> "
             << log_file_name << " 2> " << warnings_file_name;
 
-    const auto ret_value = std::system(command.str().c_str());
+    const auto ret_value= std::system(command.str().c_str());
     AssertThrow(
       ret_value == 0,
       ExcMessage("Gmsh failed to run. Check the " + log_file_name + " file."));
@@ -114,11 +114,11 @@ namespace Gmsh
            &warnings_file_name}};
         for(const std::string* filename : filenames)
           {
-            const auto ret_value = std::remove(filename->c_str());
+            const auto ret_value= std::remove(filename->c_str());
             AssertThrow(ret_value == 0,
                         ExcMessage("Failed to remove " + *filename));
           }
-        const auto ret_value = std::remove(dir_template);
+        const auto ret_value= std::remove(dir_template);
         AssertThrow(
           ret_value == 0,
           ExcMessage("Failed to remove " + std::string(dir_template)));

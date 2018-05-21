@@ -27,8 +27,8 @@ test(int i)
 
   if(i < 10)
     {
-      Threads::Task<> t1 = Threads::new_task(test, 10 * i + 1);
-      Threads::Task<> t2 = Threads::new_task(test, 10 * i + 2);
+      Threads::Task<> t1= Threads::new_task(test, 10 * i + 1);
+      Threads::Task<> t2= Threads::new_task(test, 10 * i + 2);
 
       t1.join();
       t2.join();
@@ -44,8 +44,8 @@ main()
   std::ofstream logfile("output");
   deallog.attach(logfile);
 
-  Threads::Task<> t1 = Threads::new_task(test, 1);
-  Threads::Task<> t2 = Threads::new_task(test, 2);
+  Threads::Task<> t1= Threads::new_task(test, 1);
+  Threads::Task<> t2= Threads::new_task(test, 2);
 
   t1.join();
   t2.join();

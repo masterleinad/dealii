@@ -230,14 +230,14 @@ namespace hp
    * @ingroup hp hpcollection
    * @author Wolfgang Bangerth, 2003
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class FEValues : public dealii::internal::hp::
                      FEValuesBase<dim, dim, dealii::FEValues<dim, spacedim>>
   {
   public:
-    static const unsigned int dimension = dim;
+    static const unsigned int dimension= dim;
 
-    static const unsigned int space_dimension = spacedim;
+    static const unsigned int space_dimension= spacedim;
 
     /**
      * Constructor. Initialize this object with the given parameters.
@@ -317,9 +317,9 @@ namespace hp
     template <typename DoFHandlerType, bool lda>
     void
     reinit(const TriaIterator<DoFCellAccessor<DoFHandlerType, lda>> cell,
-           const unsigned int q_index       = numbers::invalid_unsigned_int,
-           const unsigned int mapping_index = numbers::invalid_unsigned_int,
-           const unsigned int fe_index      = numbers::invalid_unsigned_int);
+           const unsigned int q_index      = numbers::invalid_unsigned_int,
+           const unsigned int mapping_index= numbers::invalid_unsigned_int,
+           const unsigned int fe_index     = numbers::invalid_unsigned_int);
 
     /**
      * Like the previous function, but for non-hp iterators. The reason this
@@ -337,9 +337,9 @@ namespace hp
      */
     void
     reinit(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-           const unsigned int q_index       = numbers::invalid_unsigned_int,
-           const unsigned int mapping_index = numbers::invalid_unsigned_int,
-           const unsigned int fe_index      = numbers::invalid_unsigned_int);
+           const unsigned int q_index      = numbers::invalid_unsigned_int,
+           const unsigned int mapping_index= numbers::invalid_unsigned_int,
+           const unsigned int fe_index     = numbers::invalid_unsigned_int);
   };
 
   /**
@@ -366,7 +366,7 @@ namespace hp
    * @ingroup hp hpcollection
    * @author Wolfgang Bangerth, 2003
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class FEFaceValues
     : public dealii::internal::hp::
         FEValuesBase<dim, dim - 1, dealii::FEFaceValues<dim, spacedim>>
@@ -450,9 +450,9 @@ namespace hp
     void
     reinit(const TriaIterator<DoFCellAccessor<DoFHandlerType, lda>> cell,
            const unsigned int                                       face_no,
-           const unsigned int q_index       = numbers::invalid_unsigned_int,
-           const unsigned int mapping_index = numbers::invalid_unsigned_int,
-           const unsigned int fe_index      = numbers::invalid_unsigned_int);
+           const unsigned int q_index      = numbers::invalid_unsigned_int,
+           const unsigned int mapping_index= numbers::invalid_unsigned_int,
+           const unsigned int fe_index     = numbers::invalid_unsigned_int);
 
     /**
      * Like the previous function, but for non-hp iterators. The reason this
@@ -471,9 +471,9 @@ namespace hp
     void
     reinit(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
            const unsigned int                                          face_no,
-           const unsigned int q_index       = numbers::invalid_unsigned_int,
-           const unsigned int mapping_index = numbers::invalid_unsigned_int,
-           const unsigned int fe_index      = numbers::invalid_unsigned_int);
+           const unsigned int q_index      = numbers::invalid_unsigned_int,
+           const unsigned int mapping_index= numbers::invalid_unsigned_int,
+           const unsigned int fe_index     = numbers::invalid_unsigned_int);
   };
 
   /**
@@ -483,7 +483,7 @@ namespace hp
    * @ingroup hp hpcollection
    * @author Wolfgang Bangerth, 2003
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class FESubfaceValues
     : public dealii::internal::hp::
         FEValuesBase<dim, dim - 1, dealii::FESubfaceValues<dim, spacedim>>
@@ -559,9 +559,9 @@ namespace hp
     reinit(const TriaIterator<DoFCellAccessor<DoFHandlerType, lda>> cell,
            const unsigned int                                       face_no,
            const unsigned int                                       subface_no,
-           const unsigned int q_index       = numbers::invalid_unsigned_int,
-           const unsigned int mapping_index = numbers::invalid_unsigned_int,
-           const unsigned int fe_index      = numbers::invalid_unsigned_int);
+           const unsigned int q_index      = numbers::invalid_unsigned_int,
+           const unsigned int mapping_index= numbers::invalid_unsigned_int,
+           const unsigned int fe_index     = numbers::invalid_unsigned_int);
 
     /**
      * Like the previous function, but for non-hp iterators. The reason this
@@ -581,9 +581,9 @@ namespace hp
     reinit(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
            const unsigned int                                          face_no,
            const unsigned int subface_no,
-           const unsigned int q_index       = numbers::invalid_unsigned_int,
-           const unsigned int mapping_index = numbers::invalid_unsigned_int,
-           const unsigned int fe_index      = numbers::invalid_unsigned_int);
+           const unsigned int q_index      = numbers::invalid_unsigned_int,
+           const unsigned int mapping_index= numbers::invalid_unsigned_int,
+           const unsigned int fe_index     = numbers::invalid_unsigned_int);
   };
 
 } // namespace hp

@@ -39,7 +39,7 @@ std::ofstream logfile("output");
 template <int dim,
           int fe_degree,
           typename Number,
-          typename VectorType = Vector<Number>>
+          typename VectorType= Vector<Number>>
 class MatrixFreeTest
 {
 public:
@@ -51,22 +51,22 @@ public:
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
-    VectorType src_cpy = src;
+    VectorType src_cpy= src;
     constraints.distribute(src_cpy);
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(
       dof_handler.get_fe(),
       QGauss<1>(fe_degree + 1),
       update_gradients | update_values | update_JxW_values);
-    dst = 0;
+    dst= 0;
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(src_cpy);
         fe_eval.evaluate(true, true, false);
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for(unsigned int q= 0; q < fe_eval.n_q_points; ++q)
           {
             fe_eval.submit_value(Number(10) * fe_eval.get_value(q), q);
             fe_eval.submit_gradient(fe_eval.get_gradient(q), q);
@@ -86,7 +86,7 @@ template <int dim, int fe_degree, typename number>
 void
 do_test(const DoFHandler<dim>&  dof,
         const ConstraintMatrix& constraints,
-        const unsigned int      parallel_option = 0)
+        const unsigned int      parallel_option= 0)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
   if(parallel_option > 0)
@@ -100,13 +100,13 @@ do_test(const DoFHandler<dim>&  dof,
   Vector<number>                         in_dist(dof.n_dofs());
   Vector<number>                         out_dist(in_dist);
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     {
       if(constraints.is_constrained(i))
         continue;
-      const double entry = random_value<double>();
-      in(i)              = entry;
-      in_dist(i)         = entry;
+      const double entry= random_value<double>();
+      in(i)             = entry;
+      in_dist(i)        = entry;
     }
 
   mf.vmult(out_dist, in_dist);
@@ -127,28 +127,28 @@ do_test(const DoFHandler<dim>&  dof,
                             update_values | update_gradients
                               | update_JxW_values);
 
-    const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
-                                                   endc = dof.end();
+    typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active(),
+                                                   endc= dof.end();
     for(; cell != endc; ++cell)
       {
-        cell_matrix = 0;
+        cell_matrix= 0;
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
-                                         * fe_values.shape_grad(j, q_point)
-                                       + 10. * fe_values.shape_value(i, q_point)
-                                           * fe_values.shape_value(j, q_point))
-                                      * fe_values.JxW(q_point));
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                cell_matrix(i, j)+= ((fe_values.shape_grad(i, q_point)
+                                        * fe_values.shape_grad(j, q_point)
+                                      + 10. * fe_values.shape_value(i, q_point)
+                                          * fe_values.shape_value(j, q_point))
+                                     * fe_values.JxW(q_point));
             }
 
         cell->get_dof_indices(local_dof_indices);
@@ -158,8 +158,8 @@ do_test(const DoFHandler<dim>&  dof,
   }
 
   sparse_matrix.vmult(out, in);
-  out -= out_dist;
-  const double diff_norm = out.linfty_norm() / out_dist.linfty_norm();
+  out-= out_dist;
+  const double diff_norm= out.linfty_norm() / out_dist.linfty_norm();
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
@@ -171,10 +171,10 @@ test()
   const SphericalManifold<dim> manifold;
   Triangulation<dim>           tria;
   GridGenerator::hyper_ball(tria);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
@@ -184,7 +184,7 @@ test()
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
+  cell= tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 1e-8)
       cell->set_refine_flag();

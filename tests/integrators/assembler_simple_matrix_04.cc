@@ -41,17 +41,17 @@ template <typename number>
 void
 fill_matrices(MeshWorker::LocalResults<number>& results, bool face)
 {
-  for(unsigned int k = 0; k < results.n_matrices(); ++k)
+  for(unsigned int k= 0; k < results.n_matrices(); ++k)
     {
-      FullMatrix<number>& M    = results.matrix(k, false).matrix;
-      double              base = 1000 * (results.matrix(k).row + 1)
-                    + 100 * (results.matrix(k).column + 1);
-      for(unsigned int i = 0; i < M.m(); ++i)
-        for(unsigned int j = 0; j < M.n(); ++j)
+      FullMatrix<number>& M   = results.matrix(k, false).matrix;
+      double              base= 1000 * (results.matrix(k).row + 1)
+                   + 100 * (results.matrix(k).column + 1);
+      for(unsigned int i= 0; i < M.m(); ++i)
+        for(unsigned int j= 0; j < M.n(); ++j)
           {
-            M(i, j) = base + 10 * i + j;
+            M(i, j)= base + 10 * i + j;
             if(face)
-              results.matrix(k, true).matrix(i, j) = base + 10 * i + j;
+              results.matrix(k, true).matrix(i, j)= base + 10 * i + j;
           }
     }
 }
@@ -73,9 +73,9 @@ test(FiniteElement<dim>& fe)
 
   deallog << "DoFs " << dof.n_dofs() << std::endl;
 
-  typename DoFHandler<dim>::active_cell_iterator cell     = dof.begin_active();
-  typename DoFHandler<dim>::face_iterator        face     = cell->face(1);
-  typename DoFHandler<dim>::active_cell_iterator neighbor = cell->neighbor(1);
+  typename DoFHandler<dim>::active_cell_iterator cell    = dof.begin_active();
+  typename DoFHandler<dim>::face_iterator        face    = cell->face(1);
+  typename DoFHandler<dim>::active_cell_iterator neighbor= cell->neighbor(1);
 
   DynamicSparsityPattern csp(dof.n_dofs(), dof.n_dofs());
   DoFTools::make_flux_sparsity_pattern(dof, csp);
@@ -95,7 +95,7 @@ test(FiniteElement<dim>& fe)
   fill_matrices(info, false);
   ass.assemble(info);
   M.print_formatted(deallog.get_file_stream(), 0, false, 6);
-  M = 0.;
+  M= 0.;
 
   deallog << "face" << std::endl;
   ass.initialize_info(info, true);
@@ -110,7 +110,7 @@ test(FiniteElement<dim>& fe)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 

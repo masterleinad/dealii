@@ -32,9 +32,9 @@ test()
 
   GridTools::Cache<dim> cache(tria);
 
-  auto m = cache.get_vertex_to_cell_map();
+  auto m= cache.get_vertex_to_cell_map();
 
-  unsigned int i = 0;
+  unsigned int i= 0;
   for(auto& v : m)
     {
       for(auto& c : v)

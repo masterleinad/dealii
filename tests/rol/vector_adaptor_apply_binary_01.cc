@@ -30,18 +30,18 @@ prepare_vector(VectorType& v)
 {
   const unsigned int myid
     = dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD),
-    numproc = dealii::Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+    numproc= dealii::Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  const unsigned int set = 10;
+  const unsigned int set= 10;
   AssertIndexRange(numproc, set - 2);
-  const unsigned int local_size  = set - myid;
-  unsigned int       global_size = 0;
-  unsigned int       my_start    = 0;
-  for(unsigned int i = 0; i < numproc; ++i)
+  const unsigned int local_size = set - myid;
+  unsigned int       global_size= 0;
+  unsigned int       my_start   = 0;
+  for(unsigned int i= 0; i < numproc; ++i)
     {
-      global_size += set - i;
+      global_size+= set - i;
       if(i < myid)
-        my_start += set - i;
+        my_start+= set - i;
     }
   // each processor owns some indices and all
   // are ghosting elements from three
@@ -65,11 +65,11 @@ test()
 
   Testing::srand(1);
 
-  for(auto iterator = a.begin(); iterator != a.end(); iterator++)
-    *iterator = static_cast<double>(Testing::rand()) / RAND_MAX;
+  for(auto iterator= a.begin(); iterator != a.end(); iterator++)
+    *iterator= static_cast<double>(Testing::rand()) / RAND_MAX;
 
-  for(auto iterator = b.begin(); iterator != b.end(); iterator++)
-    *iterator = static_cast<double>(Testing::rand()) / RAND_MAX;
+  for(auto iterator= b.begin(); iterator != b.end(); iterator++)
+    *iterator= static_cast<double>(Testing::rand()) / RAND_MAX;
 
   a.compress(VectorOperation::insert);
   b.compress(VectorOperation::insert);
@@ -99,7 +99,7 @@ main(int argc, char** argv)
 {
   dealii::Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(dealii::Utilities::int_to_string(myid));
 
   if(myid == 0)

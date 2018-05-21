@@ -31,7 +31,7 @@ using namespace std;
 void
 test()
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
   Triangulation<dim - 1, dim> boundary_mesh;
   map<Triangulation<dim - 1, dim>::cell_iterator,
@@ -51,14 +51,14 @@ test()
 
   for(DoFHandler<dim - 1, dim>::active_cell_iterator cell
       = boundary_dh.begin_active(),
-      endc = boundary_dh.end();
+      endc= boundary_dh.end();
       cell != endc;
       ++cell)
     {
       deallog << "Cell: " << cell << std::endl;
-      for(unsigned int v = 0; v < GeometryInfo<dim - 1>::vertices_per_cell; ++v)
+      for(unsigned int v= 0; v < GeometryInfo<dim - 1>::vertices_per_cell; ++v)
         {
-          unsigned int index = cell->vertex_dof_index(v, 0);
+          unsigned int index= cell->vertex_dof_index(v, 0);
           deallog << "vertex: " << v << ", global: " << cell->vertex_index(v)
                   << " index: " << index << std::endl;
         }

@@ -58,7 +58,7 @@ using namespace dealii;
 
 template <int dim>
 void
-test(VectorTools::NormType norm, double exp = 2.0)
+test(VectorTools::NormType norm, double exp= 2.0)
 {
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);

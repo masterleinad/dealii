@@ -48,8 +48,8 @@ void
 make_block_vector(const Vector<double>& in, BlockVector<double>& out)
 {
   std::vector<types::global_dof_index> block_sizes(2);
-  block_sizes[0] = in.size() / 2;
-  block_sizes[1] = in.size() - block_sizes[0];
+  block_sizes[0]= in.size() / 2;
+  block_sizes[1]= in.size() - block_sizes[0];
 
   out.reinit(block_sizes);
   std::copy(in.begin(), in.end(), out.begin());
@@ -74,12 +74,12 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   dof_handler.distribute_dofs(fe);
 
   Vector<double> v_node(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < v_node.size(); ++i)
-    v_node(i) = i;
+  for(unsigned int i= 0; i < v_node.size(); ++i)
+    v_node(i)= i;
 
   Vector<double> v_cell(dof_handler.get_triangulation().n_active_cells());
-  for(unsigned int i = 0; i < v_cell.size(); ++i)
-    v_cell(i) = i;
+  for(unsigned int i= 0; i < v_cell.size(); ++i)
+    v_cell(i)= i;
 
   // call main function in .cc files
   check_this(dof_handler, v_node, v_cell);

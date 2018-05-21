@@ -27,7 +27,7 @@
 void
 test()
 {
-  const int dim = 3;
+  const int dim= 3;
 
   Triangulation<dim> triangulation;
   GridGenerator::cylinder(triangulation, 100, 200);
@@ -41,7 +41,7 @@ test()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->face(f)->at_boundary())
         {
           if(cell->face(f)->boundary_id() == 0)

@@ -34,7 +34,7 @@
 // and we violate the invariant that we hit again the next time we call this
 // function
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../tests.h"
 
@@ -53,8 +53,8 @@ cell_is_patch_level_1(const typename Triangulation<dim>::cell_iterator& cell)
 {
   Assert(cell->active() == false, ExcInternalError());
 
-  unsigned int n_active_children = 0;
-  for(unsigned int i = 0; i < cell->n_children(); ++i)
+  unsigned int n_active_children= 0;
+  for(unsigned int i= 0; i < cell->n_children(); ++i)
     if(cell->child(i)->active())
       ++n_active_children;
 
@@ -70,13 +70,13 @@ test()
 
   // refine the offspring of one of the cells
   // on level 1
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     triangulation.begin(1)->child(i)->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 
   deallog << "n_active_cells = " << triangulation.n_active_cells() << std::endl;
 
-  for(Triangulation<2>::cell_iterator cell = triangulation.begin();
+  for(Triangulation<2>::cell_iterator cell= triangulation.begin();
       cell != triangulation.end();
       ++cell)
     {
@@ -85,7 +85,7 @@ test()
       if(!cell->active())
         {
           deallog << "and has children: ";
-          for(unsigned int i = 0; i < 4; ++i)
+          for(unsigned int i= 0; i < 4; ++i)
             deallog << cell->child(i) << ' ';
         }
       deallog << std::endl;
@@ -93,8 +93,7 @@ test()
 
   // now flag everything for coarsening
   // again
-  for(Triangulation<2>::active_cell_iterator cell
-      = triangulation.begin_active();
+  for(Triangulation<2>::active_cell_iterator cell= triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
     cell->set_coarsen_flag();
@@ -102,7 +101,7 @@ test()
 
   deallog << "n_active_cells = " << triangulation.n_active_cells() << std::endl;
 
-  for(Triangulation<2>::cell_iterator cell = triangulation.begin();
+  for(Triangulation<2>::cell_iterator cell= triangulation.begin();
       cell != triangulation.end();
       ++cell)
     {

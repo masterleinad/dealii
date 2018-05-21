@@ -801,7 +801,7 @@ private:
   /**
    * Inhibit automatic CopyConstructor.
    */
-  ParameterHandler(const ParameterHandler&) = delete;
+  ParameterHandler(const ParameterHandler&)= delete;
 
   /**
    * Inhibit automatic assignment operator.
@@ -820,16 +820,16 @@ public:
      * Write human readable output suitable to be read by ParameterHandler
      * again.
      */
-    Text = 1,
+    Text= 1,
 
     /**
      * Write parameters as a LaTeX table.
      */
-    LaTeX = 2,
+    LaTeX= 2,
     /**
      * Write out declared parameters with description and possible values.
      */
-    Description = 3,
+    Description= 3,
 
     /**
      * Write out everything as an <a
@@ -837,19 +837,19 @@ public:
      *
      * See the general documentation of this class for an example of output.
      */
-    XML = 4,
+    XML= 4,
 
     /**
      * Write out everything as a <a
      * href="http://en.wikipedia.org/wiki/JSON">JSON</a> file.
      */
-    JSON = 5,
+    JSON= 5,
 
     /**
      * Write input for ParameterHandler without comments or changed default
      * values.
      */
-    ShortText = 193
+    ShortText= 193
   };
 
   /**
@@ -862,7 +862,7 @@ public:
    * safer as we have virtual functions.  It actually does nothing
    * spectacular.
    */
-  virtual ~ParameterHandler() override = default;
+  virtual ~ParameterHandler() override= default;
 
   /**
    * Parse each line from a stream until the stream returns the <tt>eof</tt>
@@ -894,8 +894,8 @@ public:
    */
   virtual void
   parse_input(std::istream&      input,
-              const std::string& filename  = "input file",
-              const std::string& last_line = "");
+              const std::string& filename = "input file",
+              const std::string& last_line= "");
 
   /**
    * Parse the given file to provide values for known parameter fields. The
@@ -941,7 +941,7 @@ public:
    * @endcode
    */
   virtual void
-  parse_input(const std::string& filename, const std::string& last_line = "");
+  parse_input(const std::string& filename, const std::string& last_line= "");
 
   /**
    * Parse input from a string to populate known parameter fields. The lines
@@ -952,7 +952,7 @@ public:
    * there for more information.
    */
   virtual void
-  parse_input_from_string(const char* s, const std::string& last_line = "");
+  parse_input_from_string(const char* s, const std::string& last_line= "");
 
   /**
    * Parse input from an XML stream to populate known parameter fields. This
@@ -1002,8 +1002,8 @@ public:
   void
   declare_entry(const std::string&           entry,
                 const std::string&           default_value,
-                const Patterns::PatternBase& pattern = Patterns::Anything(),
-                const std::string&           documentation = std::string());
+                const Patterns::PatternBase& pattern= Patterns::Anything(),
+                const std::string&           documentation= std::string());
 
   /**
    * Attach an action to the parameter with name @p entry in the current
@@ -1064,7 +1064,7 @@ public:
   void
   add_parameter(const std::string&           entry,
                 ParameterType&               parameter,
-                const std::string&           documentation = std::string(),
+                const std::string&           documentation= std::string(),
                 const Patterns::PatternBase& pattern
                 = *Patterns::Tools::Convert<ParameterType>::to_pattern());
 
@@ -1114,7 +1114,7 @@ public:
   void
   declare_alias(const std::string& existing_entry_name,
                 const std::string& alias_name,
-                const bool         alias_is_deprecated = false);
+                const bool         alias_is_deprecated= false);
 
   /**
    * Enter a subsection. If it does not yet exist, create it.
@@ -1306,7 +1306,7 @@ public:
   print_parameters_section(std::ostream&      out,
                            const OutputStyle  style,
                            const unsigned int indent_level,
-                           const bool include_top_level_elements = false);
+                           const bool include_top_level_elements= false);
 
   /**
    * Print parameters to a logstream. This function allows to print all
@@ -1498,7 +1498,7 @@ private:
    * The separator used when accessing elements of a path into the parameter
    * tree.
    */
-  static const char path_separator = '.';
+  static const char path_separator= '.';
 
   /**
    * Path of presently selected subsections; empty list means top level
@@ -1825,7 +1825,7 @@ public:
      * Destructor. It doesn't actually do anything, but is declared to force
      * derived classes to have a virtual destructor.
      */
-    virtual ~UserClass() = default;
+    virtual ~UserClass()= default;
 
     /**
      * <tt>create_new</tt> must provide a clean object, either by creating a
@@ -1852,7 +1852,7 @@ public:
    * Destructor. Declare this only to have a virtual destructor, which is
    * safer as we have virtual functions. It actually does nothing spectacular.
    */
-  virtual ~MultipleParameterLoop() override = default;
+  virtual ~MultipleParameterLoop() override= default;
 
   /**
    * Read input from a stream until the stream returns the <tt>eof</tt>
@@ -1871,8 +1871,8 @@ public:
    */
   virtual void
   parse_input(std::istream&      input,
-              const std::string& filename  = "input file",
-              const std::string& last_line = "") override;
+              const std::string& filename = "input file",
+              const std::string& last_line= "") override;
 
   /**
    * Overriding virtual functions which are overloaded (like
@@ -2021,7 +2021,7 @@ ParameterHandler::save(Archive& ar, const unsigned int) const
 
   std::vector<std::string> descriptions;
 
-  for(unsigned int j = 0; j < patterns.size(); ++j)
+  for(unsigned int j= 0; j < patterns.size(); ++j)
     descriptions.push_back(patterns[j]->description());
 
   ar& descriptions;
@@ -2041,7 +2041,7 @@ ParameterHandler::load(Archive& ar, const unsigned int)
   ar&                      descriptions;
 
   patterns.clear();
-  for(unsigned int j = 0; j < descriptions.size(); ++j)
+  for(unsigned int j= 0; j < descriptions.size(); ++j)
     patterns.push_back(Patterns::pattern_factory(descriptions[j]));
 }
 
@@ -2062,12 +2062,12 @@ ParameterHandler::add_parameter(const std::string&           entry,
                 pattern,
                 documentation);
 
-  std::string        path = get_current_full_path(entry);
+  std::string        path= get_current_full_path(entry);
   const unsigned int pattern_index
     = entries->get<unsigned int>(path + path_separator + "pattern");
 
-  auto action = [&, pattern_index](const std::string& val) {
-    parameter = Patterns::Tools::Convert<ParameterType>::to_value(
+  auto action= [&, pattern_index](const std::string& val) {
+    parameter= Patterns::Tools::Convert<ParameterType>::to_value(
       val, patterns[pattern_index]->clone());
   };
   add_action(entry, action);

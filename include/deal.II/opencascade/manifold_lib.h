@@ -72,7 +72,7 @@ namespace OpenCASCADE
      * edges or a single face or edge.
      */
     NormalProjectionManifold(const TopoDS_Shape& sh,
-                             const double        tolerance = 1e-7);
+                             const double        tolerance= 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -140,7 +140,7 @@ namespace OpenCASCADE
      */
     DirectionalProjectionManifold(const TopoDS_Shape&        sh,
                                   const Tensor<1, spacedim>& direction,
-                                  const double               tolerance = 1e-7);
+                                  const double               tolerance= 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -236,7 +236,7 @@ namespace OpenCASCADE
      * the mesh cell.
      */
     NormalToMeshProjectionManifold(const TopoDS_Shape& sh,
-                                   const double        tolerance = 1e-7);
+                                   const double        tolerance= 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -297,7 +297,7 @@ namespace OpenCASCADE
      * Default constructor with a TopoDS_Edge.
      */
     ArclengthProjectionLineManifold(const TopoDS_Shape& sh,
-                                    const double        tolerance = 1e-7);
+                                    const double        tolerance= 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -359,7 +359,7 @@ namespace OpenCASCADE
      * @p tolerance. This class uses the interval OpenCASCADE variables @var u,
      * @var v to descrive the manifold.
      */
-    NURBSPatchManifold(const TopoDS_Face& face, const double tolerance = 1e-7);
+    NURBSPatchManifold(const TopoDS_Face& face, const double tolerance= 1e-7);
 
     /**
      * Clone the current Manifold.

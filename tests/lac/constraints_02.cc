@@ -37,14 +37,14 @@ test()
   constraints.close();
 
   std::vector<types::global_dof_index> indices(4);
-  indices[0] = 1;
-  indices[1] = 2;
-  indices[2] = 3;
-  indices[3] = 5;
+  indices[0]= 1;
+  indices[1]= 2;
+  indices[2]= 3;
+  indices[3]= 5;
 
   constraints.resolve_indices(indices);
 
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for(unsigned int i= 0; i < indices.size(); ++i)
     deallog << "Index: " << indices[i] << std::endl;
 }
 

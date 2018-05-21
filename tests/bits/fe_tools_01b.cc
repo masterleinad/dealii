@@ -37,7 +37,7 @@ check(const FE_Q<dim>& fe, const std::string& name)
 
   std::vector<unsigned int> n(fe.dofs_per_cell);
   FETools::hierarchic_to_lexicographic_numbering(fe, n);
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
     deallog << n[i] << " ";
   deallog << std::endl;
 }

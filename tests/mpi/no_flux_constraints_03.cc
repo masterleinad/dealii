@@ -40,8 +40,8 @@ void
 test()
 {
   Assert(dim == 3, ExcNotImplemented());
-  unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
 
@@ -83,18 +83,18 @@ test()
   DoFTools::make_hanging_node_constraints(dofh, constraints);
   std::set<types::boundary_id> no_normal_flux_boundaries;
   no_normal_flux_boundaries.insert(0);
-  const unsigned int degree = 1;
+  const unsigned int degree= 1;
   VectorTools::compute_no_normal_flux_constraints(
     dofh, 0, no_normal_flux_boundaries, constraints, MappingQ<dim>(degree));
   constraints.close();
 
-  std::string base = "";
+  std::string base= "";
 
   MPI_Barrier(MPI_COMM_WORLD);
 
   {
     //write the constraintmatrix to a file on each cpu
-    std::string fname = base + "cm_" + Utilities::int_to_string(myid) + ".dot";
+    std::string   fname= base + "cm_" + Utilities::int_to_string(myid) + ".dot";
     std::ofstream file(fname.c_str());
     constraints.print(file);
   }
@@ -111,7 +111,7 @@ test()
         std::ifstream     file((base + "cm").c_str());
         std::stringstream ss;
         ss << file.rdbuf();
-        std::string str = ss.str();
+        std::string str= ss.str();
         deallog << "checksum: " << checksum(str.begin(), str.end())
                 << std::endl;
       }
@@ -129,7 +129,7 @@ test()
   // processors might write info in different
   // orders, copy all numbers to root processor
   std::vector<unsigned int> n_constraints_glob(numprocs);
-  unsigned int              n_constraints = constraints.n_constraints();
+  unsigned int              n_constraints= constraints.n_constraints();
   MPI_Gather(&n_constraints,
              1,
              MPI_UNSIGNED,
@@ -139,7 +139,7 @@ test()
              0,
              MPI_COMM_WORLD);
   if(myid == 0)
-    for(unsigned int i = 0; i < numprocs; ++i)
+    for(unsigned int i= 0; i < numprocs; ++i)
       deallog << "#constraints on " << i << ": " << n_constraints_glob[i]
               << std::endl;
 
@@ -148,13 +148,13 @@ test()
   TrilinosWrappers::MPI::Vector vector;
   vector.reinit(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
   {
-    const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int                   dofs_per_cell= fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     Vector<double>                       local_vector(dofs_per_cell);
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-      local_vector(i) = 1.;
-    typename DoFHandler<dim>::active_cell_iterator cell = dofh.begin_active(),
-                                                   endc = dofh.end();
+    for(unsigned int i= 0; i < dofs_per_cell; ++i)
+      local_vector(i)= 1.;
+    typename DoFHandler<dim>::active_cell_iterator cell= dofh.begin_active(),
+                                                   endc= dofh.end();
     for(; cell != endc; ++cell)
       if(cell->subdomain_id() == triangulation.locally_owned_subdomain())
         {
@@ -168,8 +168,8 @@ test()
   // now check that no entries were generated
   // for constrained entries on the locally
   // owned range.
-  const std::pair<unsigned int, unsigned int> range = vector.local_range();
-  for(unsigned int i = range.first; i < range.second; ++i)
+  const std::pair<unsigned int, unsigned int> range= vector.local_range();
+  for(unsigned int i= range.first; i < range.second; ++i)
     if(constraints.is_constrained(i))
       AssertThrow(vector(i) == 0, ExcInternalError());
 
@@ -183,7 +183,7 @@ main(int argc, char* argv[])
   {
     Utilities::MPI::MPI_InitFinalize mpi_initialization(
       argc, argv, testing_max_num_threads());
-    unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+    unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
     deallog.push(Utilities::int_to_string(myid));
 

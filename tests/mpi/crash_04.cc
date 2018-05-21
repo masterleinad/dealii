@@ -43,17 +43,16 @@ test()
   triangulation.refine_global(1);
 
   {
-    typename Triangulation<dim>::cell_iterator it
-      = triangulation.begin_active();
+    typename Triangulation<dim>::cell_iterator it= triangulation.begin_active();
     it->set_refine_flag();
     triangulation.execute_coarsening_and_refinement();
 
-    it = triangulation.begin(1);
+    it= triangulation.begin(1);
     ++it;
     ++it;
     ++it;
-    it = triangulation.begin(1);
-    for(unsigned int a = 0; a < 4; a++)
+    it= triangulation.begin(1);
+    for(unsigned int a= 0; a < 4; a++)
       it->child(a)->set_coarsen_flag();
 
     triangulation.prepare_coarsening_and_refinement();
@@ -65,26 +64,26 @@ test()
 
       dof_handler.distribute_dofs(fe);
 
-      unsigned int  n_coarse = 0;
+      unsigned int  n_coarse= 0;
       Vector<float> subdomain(triangulation.n_active_cells());
       {
-        unsigned int index = 0;
+        unsigned int index= 0;
 
         for(typename Triangulation<dim>::active_cell_iterator cell
             = triangulation.begin_active();
             cell != triangulation.end();
             ++cell, ++index)
           {
-            subdomain(index) = 0;
+            subdomain(index)= 0;
 
             if(cell->is_ghost() || cell->is_artificial())
-              subdomain(index) = -4;
+              subdomain(index)= -4;
 
             if(cell->refine_flag_set())
-              subdomain(index) += 1;
+              subdomain(index)+= 1;
             if(cell->coarsen_flag_set())
               {
-                subdomain(index) += 2;
+                subdomain(index)+= 2;
                 ++n_coarse;
               }
           }
@@ -93,7 +92,7 @@ test()
         {
           deallog << "id=" << triangulation.locally_owned_subdomain()
                   << " n_coarsen=" << n_coarse << std::endl;
-          for(unsigned int i = 0; i < subdomain.size(); ++i)
+          for(unsigned int i= 0; i < subdomain.size(); ++i)
             deallog << subdomain(i) << std::endl;
         }
 
@@ -107,7 +106,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(myid == 0)
     {
       initlog();

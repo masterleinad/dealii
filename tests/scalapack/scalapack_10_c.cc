@@ -44,7 +44,7 @@ test()
   pcout << "Saving and restoring the state and property of ScaLAPACKMatrix"
         << std::endl;
 
-  const unsigned int size = 100, block_size = 8;
+  const unsigned int size= 100, block_size= 8;
 
   //create FullMatrix and fill it
   FullMatrix<NumberType> full(100);
@@ -116,7 +116,7 @@ test()
               ExcInternalError());
 
   // the assignment operator changes the state to LAPACKSupport::State::matrix
-  scalapack_matrix = full;
+  scalapack_matrix= full;
   scalapack_matrix.save(filename.c_str());
   scalapack_matrix_copy.load(filename.c_str());
   std::remove(filename.c_str());

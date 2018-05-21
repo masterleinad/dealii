@@ -35,16 +35,16 @@ namespace internal
     {
       Assert(new_objects_in_pairs % 2 == 0, ExcInternalError());
 
-      next_free_single               = 0;
-      next_free_pair                 = 0;
-      reverse_order_next_free_single = false;
+      next_free_single              = 0;
+      next_free_pair                = 0;
+      reverse_order_next_free_single= false;
 
       // count the number of objects, of unused single objects and of
       // unused pairs of objects
-      unsigned int n_objects        = 0;
-      unsigned int n_unused_pairs   = 0;
-      unsigned int n_unused_singles = 0;
-      for(unsigned int i = 0; i < used.size(); ++i)
+      unsigned int n_objects       = 0;
+      unsigned int n_unused_pairs  = 0;
+      unsigned int n_unused_singles= 0;
+      for(unsigned int i= 0; i < used.size(); ++i)
         {
           if(used[i])
             ++n_objects;
@@ -54,13 +54,13 @@ namespace internal
                 {
                   ++n_unused_singles;
                   if(next_free_single == 0)
-                    next_free_single = i;
+                    next_free_single= i;
                 }
               else
                 {
                   ++n_unused_pairs;
                   if(next_free_pair == 0)
-                    next_free_pair = i;
+                    next_free_pair= i;
                   ++i;
                 }
             }
@@ -78,7 +78,7 @@ namespace internal
       unsigned int new_size
         = used.size() + new_objects_in_pairs - 2 * n_unused_pairs;
       if(additional_single_objects > 0)
-        new_size += additional_single_objects;
+        new_size+= additional_single_objects;
 
       // only allocate space if necessary
       if(new_size > cells.size())
@@ -124,8 +124,8 @@ namespace internal
 
       if(n_unused_singles == 0)
         {
-          next_free_single               = new_size - 1;
-          reverse_order_next_free_single = true;
+          next_free_single              = new_size - 1;
+          reverse_order_next_free_single= true;
         }
     }
 
@@ -138,7 +138,7 @@ namespace internal
     {
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 
-      int pos = next_free_pair, last = used.size() - 1;
+      int pos= next_free_pair, last= used.size() - 1;
       for(; pos < last; ++pos)
         if(!used[pos])
           {
@@ -150,7 +150,7 @@ namespace internal
         // no free slot
         return tria.end_hex();
       else
-        next_free_pair = pos + 2;
+        next_free_pair= pos + 2;
 
       return typename dealii::Triangulation<dim, spacedim>::raw_hex_iterator(
         &tria, level, pos);
@@ -219,7 +219,7 @@ namespace internal
                                   - face_rotations.size(),
                                 false);
         }
-      next_free_single = next_free_pair = 0;
+      next_free_single= next_free_pair= 0;
     }
 
     void
@@ -228,16 +228,16 @@ namespace internal
     {
       Assert(new_quads_in_pairs % 2 == 0, ExcInternalError());
 
-      next_free_single               = 0;
-      next_free_pair                 = 0;
-      reverse_order_next_free_single = false;
+      next_free_single              = 0;
+      next_free_pair                = 0;
+      reverse_order_next_free_single= false;
 
       // count the number of objects, of unused single objects and of
       // unused pairs of objects
-      unsigned int n_quads          = 0;
-      unsigned int n_unused_pairs   = 0;
-      unsigned int n_unused_singles = 0;
-      for(unsigned int i = 0; i < used.size(); ++i)
+      unsigned int n_quads         = 0;
+      unsigned int n_unused_pairs  = 0;
+      unsigned int n_unused_singles= 0;
+      for(unsigned int i= 0; i < used.size(); ++i)
         {
           if(used[i])
             ++n_quads;
@@ -247,13 +247,13 @@ namespace internal
                 {
                   ++n_unused_singles;
                   if(next_free_single == 0)
-                    next_free_single = i;
+                    next_free_single= i;
                 }
               else
                 {
                   ++n_unused_pairs;
                   if(next_free_pair == 0)
-                    next_free_pair = i;
+                    next_free_pair= i;
                   ++i;
                 }
             }
@@ -264,12 +264,12 @@ namespace internal
              ExcInternalError());
 
       // how many single quads are needed in addition to n_unused_quads?
-      const int additional_single_quads = new_quads_single - n_unused_singles;
+      const int additional_single_quads= new_quads_single - n_unused_singles;
 
       unsigned int new_size
         = used.size() + new_quads_in_pairs - 2 * n_unused_pairs;
       if(additional_single_quads > 0)
-        new_size += additional_single_quads;
+        new_size+= additional_single_quads;
 
       // see above...
       if(new_size > cells.size())
@@ -287,8 +287,8 @@ namespace internal
 
       if(n_unused_singles == 0)
         {
-          next_free_single               = new_size - 1;
-          reverse_order_next_free_single = true;
+          next_free_single              = new_size - 1;
+          reverse_order_next_free_single= true;
         }
     }
 
@@ -384,7 +384,7 @@ namespace internal
       boundary_or_material_id.clear();
       manifold_id.clear();
       user_data.clear();
-      user_data_type = data_unknown;
+      user_data_type= data_unknown;
     }
 
     void

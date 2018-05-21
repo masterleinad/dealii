@@ -48,21 +48,21 @@
 
 #include <iostream>
 
-const unsigned int dim = 2;
+const unsigned int dim= 2;
 
 using namespace dealii;
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
-const unsigned int fe_degree = 1;
+const unsigned int fe_degree= 1;
 
 void
 test()
 {
-  const unsigned int global_mesh_refinement_steps = 5;
-  const unsigned int number_of_eigenvalues        = 5;
+  const unsigned int global_mesh_refinement_steps= 5;
+  const unsigned int number_of_eigenvalues       = 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm           mpi_communicator= MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
@@ -117,7 +117,7 @@ test()
 
   eigenfunctions.resize(number_of_eigenvalues);
   eigenvalues.resize(number_of_eigenvalues);
-  for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+  for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
     mf_data->initialize_dof_vector(eigenfunctions[i]);
 
   // test PArpack with matrix-free
@@ -130,10 +130,10 @@ test()
     typedef LinearAlgebra::distributed::Vector<double> VectorType;
     SolverCG<VectorType> solver_c(inner_control_c);
     PreconditionIdentity preconditioner;
-    const auto           invert = inverse_operator(
+    const auto           invert= inverse_operator(
       linear_operator<VectorType>(mass), solver_c, preconditioner);
 
-    const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 40;
+    const unsigned int num_arnoldi_vectors= 2 * eigenvalues.size() + 40;
     PArpackSolver<LinearAlgebra::distributed::Vector<double>>::AdditionalData
     additional_data(
       num_arnoldi_vectors,
@@ -155,38 +155,38 @@ test()
     {
       LinearAlgebra::distributed::Vector<double> init_vector;
       mf_data->initialize_dof_vector(init_vector);
-      for(auto it = init_vector.begin(); it != init_vector.end(); ++it)
-        *it = random_value<double>();
+      for(auto it= init_vector.begin(); it != init_vector.end(); ++it)
+        *it= random_value<double>();
 
       constraints.set_zero(init_vector);
       eigensolver.set_initial_vector(init_vector);
     }
     // avoid output of iterative solver:
-    const unsigned int previous_depth = deallog.depth_file(0);
+    const unsigned int previous_depth= deallog.depth_file(0);
     eigensolver.solve(
       laplace, mass, invert, lambda, eigenfunctions, eigenvalues.size());
     deallog.depth_file(previous_depth);
 
-    for(unsigned int i = 0; i < lambda.size(); i++)
-      eigenvalues[i] = lambda[i].real();
+    for(unsigned int i= 0; i < lambda.size(); i++)
+      eigenvalues[i]= lambda[i].real();
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for(unsigned int i= 0; i < eigenvalues.size(); i++)
       deallog << eigenvalues[i] << std::endl;
 
     // make sure that we have eigenvectors and they are mass-orthonormal:
     // a) (A*x_i-\lambda*B*x_i).L2() == 0
     // b) x_j*B*x_i=\delta_{ij}
     {
-      const double                               precision = 1e-7;
+      const double                               precision= 1e-7;
       LinearAlgebra::distributed::Vector<double> Ax(eigenfunctions[0]),
         Bx(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
         {
           mass.vmult(Bx, eigenfunctions[i]);
 
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for(unsigned int j= 0; j < eigenfunctions.size(); j++)
             {
-              const double err = std::abs(eigenfunctions[j] * Bx - (i == j));
+              const double err= std::abs(eigenfunctions[j] * Bx - (i == j));
               Assert(
                 err < precision,
                 ExcMessage("Eigenvectors " + Utilities::int_to_string(i)
@@ -196,7 +196,7 @@ test()
 
           laplace.vmult(Ax, eigenfunctions[i]);
           Ax.add(-1.0 * eigenvalues[i], Bx);
-          const double err = Ax.l2_norm();
+          const double err= Ax.l2_norm();
           Assert(
             err < precision,
             ExcMessage("Returned vector " + Utilities::int_to_string(i)

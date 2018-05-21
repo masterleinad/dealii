@@ -55,7 +55,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Guido Kanschat, 2001; Ralf Hartmann, 2005
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class MappingCartesian : public Mapping<dim, spacedim>
 {
 public:
@@ -251,7 +251,7 @@ private:
   /**
    * Value to indicate that a given face or subface number is invalid.
    */
-  static const unsigned int invalid_face_number = numbers::invalid_unsigned_int;
+  static const unsigned int invalid_face_number= numbers::invalid_unsigned_int;
 };
 
 /*@}*/

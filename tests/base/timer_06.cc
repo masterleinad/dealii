@@ -30,10 +30,10 @@ main(int argc, char** argv)
 
   Timer timer;
   timer.start();
-  const auto t0 = std::chrono::system_clock::now();
+  const auto t0= std::chrono::system_clock::now();
   std::this_thread::sleep_for(std::chrono::seconds(4));
   timer.stop();
-  const auto t1 = std::chrono::system_clock::now();
+  const auto t1= std::chrono::system_clock::now();
 
   // verify that the timer wall time is not double the manually calculated one
   AssertThrow(

@@ -23,12 +23,12 @@ void
 test()
 {
   SymmetricTensor<2, dim> t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      t[i][j] = (1. + (i + 1) * (j * 2));
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      t[i][j]= (1. + (i + 1) * (j * 2));
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       deallog << i << ' ' << j << ' ' << t[i][j] << std::endl;
 
   deallog << determinant(t) << std::endl;

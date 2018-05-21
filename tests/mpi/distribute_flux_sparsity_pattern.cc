@@ -91,8 +91,8 @@ namespace LinearAdvectionTest
     : triangulation(MPI_COMM_WORLD), fe(1), dof_handler(triangulation)
   {
     std::vector<unsigned int> repetitions(2);
-    repetitions[0] = 2;
-    repetitions[1] = 1;
+    repetitions[0]= 2;
+    repetitions[1]= 1;
 
     const Point<2> p0(0.0, 0.0);
     const Point<2> p1(2.0, 1.0);
@@ -105,7 +105,7 @@ namespace LinearAdvectionTest
   AdvectionProblem<dim>::setup_system()
   {
     dof_handler.distribute_dofs(fe);
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
     DynamicSparsityPattern dynamic_sparsity_pattern(locally_relevant_dofs);
@@ -113,12 +113,12 @@ namespace LinearAdvectionTest
                                                     fe.n_components());
     Table<2, DoFTools::Coupling> flux_integral_mask(fe.n_components(),
                                                     fe.n_components());
-    for(unsigned int i = 0; i < fe.n_components(); ++i)
+    for(unsigned int i= 0; i < fe.n_components(); ++i)
       {
-        for(unsigned int j = 0; j < fe.n_components(); ++j)
+        for(unsigned int j= 0; j < fe.n_components(); ++j)
           {
-            cell_integral_mask(i, j) = DoFTools::always;
-            flux_integral_mask(i, j) = DoFTools::nonzero;
+            cell_integral_mask(i, j)= DoFTools::always;
+            flux_integral_mask(i, j)= DoFTools::nonzero;
           }
       }
 
@@ -151,7 +151,7 @@ namespace LinearAdvectionTest
     FullMatrix<double>& neighbor_to_current_flux,
     FullMatrix<double>& neighbor_to_neighbor_flux)
   {
-    for(unsigned int q_point_n = 0;
+    for(unsigned int q_point_n= 0;
         q_point_n < neighbor_face_values.n_quadrature_points;
         ++q_point_n)
       {
@@ -162,9 +162,9 @@ namespace LinearAdvectionTest
          * Do integration on both cells (rather than use something like
          * upwinding) since this is just a test.
          */
-        for(unsigned int i = 0; i < neighbor_face_values.dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < neighbor_face_values.dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < neighbor_face_values.dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < neighbor_face_values.dofs_per_cell; ++j)
               {
                 current_to_current_flux(i, j)
                   += current_face_values.shape_value(i, q_point_n)
@@ -206,7 +206,7 @@ namespace LinearAdvectionTest
   void
   AdvectionProblem<dim>::assemble_system()
   {
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
     FullMatrix<double> current_to_current_flux(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> current_to_neighbor_flux(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> neighbor_to_current_flux(dofs_per_cell, dofs_per_cell);
@@ -226,23 +226,23 @@ namespace LinearAdvectionTest
 
     typename DoFHandler<dim>::active_cell_iterator current_cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; current_cell != endc; ++current_cell)
       {
         if(current_cell->is_locally_owned())
           {
-            for(unsigned int face_n = 0;
+            for(unsigned int face_n= 0;
                 face_n < GeometryInfo<dim>::faces_per_cell;
                 ++face_n)
               {
-                const int neighbor_index = current_cell->neighbor_index(face_n);
+                const int neighbor_index= current_cell->neighbor_index(face_n);
                 if(neighbor_index != -1) // interior face
                   {
                     typename DoFHandler<dim>::active_cell_iterator neighbor_cell
                       = current_cell->neighbor(face_n);
 
-                    bool do_face_integration     = false;
-                    bool neighbor_is_level_lower = false;
+                    bool do_face_integration    = false;
+                    bool neighbor_is_level_lower= false;
 
                     /*
                      * Always integrate if the current cell is more refined
@@ -250,8 +250,8 @@ namespace LinearAdvectionTest
                      */
                     if(current_cell->level() > neighbor_cell->level())
                       {
-                        do_face_integration     = true;
-                        neighbor_is_level_lower = true;
+                        do_face_integration    = true;
+                        neighbor_is_level_lower= true;
                       }
                     // If the neighbor is not active, then it is at a higher
                     // refinement level (so we do not need to integrate now)
@@ -261,7 +261,7 @@ namespace LinearAdvectionTest
                           {
                             if(neighbor_cell < current_cell)
                               {
-                                do_face_integration = true;
+                                do_face_integration= true;
                               }
                           }
                         else
@@ -273,7 +273,7 @@ namespace LinearAdvectionTest
                                && current_cell->subdomain_id()
                                     < neighbor_cell->subdomain_id())
                               {
-                                do_face_integration = true;
+                                do_face_integration= true;
                               }
                           }
                       }
@@ -288,10 +288,10 @@ namespace LinearAdvectionTest
                                                     neighbor_face_n);
 
                         current_face_values.reinit(current_cell, face_n);
-                        current_to_current_flux   = 0.0;
-                        current_to_neighbor_flux  = 0.0;
-                        neighbor_to_current_flux  = 0.0;
-                        neighbor_to_neighbor_flux = 0.0;
+                        current_to_current_flux  = 0.0;
+                        current_to_neighbor_flux = 0.0;
+                        neighbor_to_current_flux = 0.0;
+                        neighbor_to_neighbor_flux= 0.0;
 
                         calculate_flux_terms(current_cell,
                                              current_face_values,

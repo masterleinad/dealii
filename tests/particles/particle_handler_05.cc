@@ -31,27 +31,27 @@ void
 create_regular_particle_distribution(
   Particles::ParticleHandler<dim, spacedim>&                 particle_handler,
   const parallel::distributed::Triangulation<dim, spacedim>& tr,
-  const unsigned int particles_per_direction = 3)
+  const unsigned int particles_per_direction= 3)
 {
-  for(unsigned int i = 0; i < particles_per_direction; ++i)
-    for(unsigned int j = 0; j < particles_per_direction; ++j)
+  for(unsigned int i= 0; i < particles_per_direction; ++i)
+    for(unsigned int j= 0; j < particles_per_direction; ++j)
       {
         Point<spacedim> position;
         Point<dim>      reference_position;
-        unsigned int    id = i * particles_per_direction + j;
+        unsigned int    id= i * particles_per_direction + j;
 
-        position[0] = static_cast<double>(i)
-                      / static_cast<double>(particles_per_direction - 1);
-        position[1] = static_cast<double>(j)
-                      / static_cast<double>(particles_per_direction - 1);
+        position[0]= static_cast<double>(i)
+                     / static_cast<double>(particles_per_direction - 1);
+        position[1]= static_cast<double>(j)
+                     / static_cast<double>(particles_per_direction - 1);
 
         if(dim > 2)
-          for(unsigned int k = 0; k < particles_per_direction; ++k)
+          for(unsigned int k= 0; k < particles_per_direction; ++k)
             {
-              position[2] = static_cast<double>(j)
-                            / static_cast<double>(particles_per_direction - 1);
-              id = i * particles_per_direction * particles_per_direction
-                   + j * particles_per_direction + k;
+              position[2]= static_cast<double>(j)
+                           / static_cast<double>(particles_per_direction - 1);
+              id= i * particles_per_direction * particles_per_direction
+                  + j * particles_per_direction + k;
               Particles::Particle<dim, spacedim> particle(
                 position, reference_position, id);
 
@@ -107,7 +107,7 @@ test()
 
     create_regular_particle_distribution(particle_handler, tr);
 
-    for(auto particle = particle_handler.begin();
+    for(auto particle= particle_handler.begin();
         particle != particle_handler.end();
         ++particle)
       deallog << "Before refinement particle id " << particle->get_id()
@@ -117,7 +117,7 @@ test()
     // Check that all particles are moved to children
     tr.refine_global(1);
 
-    for(auto particle = particle_handler.begin();
+    for(auto particle= particle_handler.begin();
         particle != particle_handler.end();
         ++particle)
       deallog << "After refinement particle id " << particle->get_id()
@@ -125,12 +125,12 @@ test()
               << std::endl;
 
     // Reverse the refinement and check again
-    for(auto cell = tr.begin_active(); cell != tr.end(); ++cell)
+    for(auto cell= tr.begin_active(); cell != tr.end(); ++cell)
       cell->set_coarsen_flag();
 
     tr.execute_coarsening_and_refinement();
 
-    for(auto particle = particle_handler.begin();
+    for(auto particle= particle_handler.begin();
         particle != particle_handler.end();
         ++particle)
       deallog << "After coarsening particle id " << particle->get_id()

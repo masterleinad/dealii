@@ -423,7 +423,7 @@ public:
    * virtual to ensure that data postprocessors can be destroyed through
    * pointers to the base class.
    */
-  virtual ~DataPostprocessor() override = default;
+  virtual ~DataPostprocessor() override= default;
 
   /**
    * This is the main function which actually performs the postprocessing. The
@@ -461,7 +461,7 @@ public:
    * quantities.
    */
   virtual std::vector<std::string>
-  get_names() const = 0;
+  get_names() const= 0;
 
   /**
    * This function returns information about how the individual components of
@@ -496,7 +496,7 @@ public:
    * update_normal_vectors flag.
    */
   virtual UpdateFlags
-  get_needed_update_flags() const = 0;
+  get_needed_update_flags() const= 0;
 };
 
 /**
@@ -1062,11 +1062,11 @@ namespace DataPostprocessorInputs
     // inside boost::any
     if(typename DoFHandlerType::cell_iterator* storage_location
        = boost::any_cast<typename DoFHandlerType::cell_iterator>(&cell))
-      *storage_location = new_cell;
+      *storage_location= new_cell;
     else
       // if we had nothing stored before, or if we had stored a different
       // data type, just let boost::any replace things
-      cell = new_cell;
+      cell= new_cell;
   }
 
   template <int spacedim>

@@ -25,15 +25,15 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
 {
   // set only certain elements of each
   // vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = std::complex<double>(i, i + 1.);
+      v(i)= std::complex<double>(i, i + 1.);
       if(i % 3 == 0)
-        w(i) = std::complex<double>(i + 1., i + 2.);
+        w(i)= std::complex<double>(i + 1., i + 2.);
     }
   // but then copy elements and make sure the
   // vectors are actually equal
-  v = w;
+  v= w;
   AssertThrow(v == w, ExcInternalError());
 
   deallog << "OK" << std::endl;

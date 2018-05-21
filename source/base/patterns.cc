@@ -130,43 +130,43 @@ namespace Patterns
   {
     std::unique_ptr<PatternBase> p;
 
-    p = Integer::create(description);
+    p= Integer::create(description);
     if(p != nullptr)
       return p;
 
-    p = Double::create(description);
+    p= Double::create(description);
     if(p != nullptr)
       return p;
 
-    p = Selection::create(description);
+    p= Selection::create(description);
     if(p != nullptr)
       return p;
 
-    p = List::create(description);
+    p= List::create(description);
     if(p != nullptr)
       return p;
 
-    p = Map::create(description);
+    p= Map::create(description);
     if(p != nullptr)
       return p;
 
-    p = MultipleSelection::create(description);
+    p= MultipleSelection::create(description);
     if(p != nullptr)
       return p;
 
-    p = Bool::create(description);
+    p= Bool::create(description);
     if(p != nullptr)
       return p;
 
-    p = Anything::create(description);
+    p= Anything::create(description);
     if(p != nullptr)
       return p;
 
-    p = FileName::create(description);
+    p= FileName::create(description);
     if(p != nullptr)
       return p;
 
-    p = DirectoryName::create(description);
+    p= DirectoryName::create(description);
     if(p != nullptr)
       return p;
 
@@ -190,10 +190,10 @@ namespace Patterns
       return sizeof(*this) + 32;
   }
 
-  const int Integer::min_int_value = std::numeric_limits<int>::min();
-  const int Integer::max_int_value = std::numeric_limits<int>::max();
+  const int Integer::min_int_value= std::numeric_limits<int>::min();
+  const int Integer::max_int_value= std::numeric_limits<int>::max();
 
-  const char* Integer::description_init = "[Integer";
+  const char* Integer::description_init= "[Integer";
 
   Integer::Integer(const int lower_bound, const int upper_bound)
     : lower_bound(lower_bound), upper_bound(upper_bound)
@@ -316,10 +316,10 @@ namespace Patterns
       return std::unique_ptr<Integer>();
   }
 
-  const double Double::min_double_value = -std::numeric_limits<double>::max();
-  const double Double::max_double_value = std::numeric_limits<double>::max();
+  const double Double::min_double_value= -std::numeric_limits<double>::max();
+  const double Double::max_double_value= std::numeric_limits<double>::max();
 
-  const char* Double::description_init = "[Double";
+  const char* Double::description_init= "[Double";
 
   Double::Double(const double lower_bound, const double upper_bound)
     : lower_bound(lower_bound), upper_bound(upper_bound)
@@ -454,14 +454,14 @@ namespace Patterns
   std::unique_ptr<Double>
   Double::create(const std::string& description)
   {
-    const std::string description_init_str = description_init;
+    const std::string description_init_str= description_init;
     if(description.compare(0, description_init_str.size(), description_init_str)
        != 0)
       return std::unique_ptr<Double>();
     if(*description.rbegin() != ']')
       return std::unique_ptr<Double>();
 
-    std::string temp = description.substr(description_init_str.size());
+    std::string temp= description.substr(description_init_str.size());
     if(temp == "]")
       return std_cxx14::make_unique<Double>(1.0,
                                             -1.0); // return an invalid range
@@ -469,7 +469,7 @@ namespace Patterns
     if(temp.find("...") != std::string::npos)
       temp.replace(temp.find("..."), 3, " ");
 
-    double lower_bound = min_double_value, upper_bound = max_double_value;
+    double lower_bound= min_double_value, upper_bound= max_double_value;
 
     std::istringstream is(temp);
     if(0 == temp.compare(0, std::strlen(" -MAX_DOUBLE"), " -MAX_DOUBLE"))
@@ -484,12 +484,12 @@ namespace Patterns
     // ignore failure here and assume we got MAX_DOUBLE as upper bound:
     is >> upper_bound;
     if(is.fail())
-      upper_bound = max_double_value;
+      upper_bound= max_double_value;
 
     return std_cxx14::make_unique<Double>(lower_bound, upper_bound);
   }
 
-  const char* Selection::description_init = "[Selection";
+  const char* Selection::description_init= "[Selection";
 
   Selection::Selection(const std::string& seq) : sequence(seq)
   {
@@ -595,7 +595,7 @@ namespace Patterns
   const unsigned int List::max_int_value
     = std::numeric_limits<unsigned int>::max();
 
-  const char* List::description_init = "[List";
+  const char* List::description_init= "[List";
 
   List::List(const PatternBase& p,
              const unsigned int min_elements,
@@ -710,7 +710,7 @@ namespace Patterns
     if(description.compare(0, std::strlen(description_init), description_init)
        == 0)
       {
-        unsigned int min_elements = 0, max_elements = 0;
+        unsigned int min_elements= 0, max_elements= 0;
 
         std::istringstream is(description);
         is.ignore(strlen(description_init) + strlen(" of <"));
@@ -733,7 +733,7 @@ namespace Patterns
         if(!is.eof())
           std::getline(is, separator, '>');
         else
-          separator = ",";
+          separator= ",";
 
         return std_cxx14::make_unique<List>(
           *base_pattern, min_elements, max_elements, separator);
@@ -745,7 +745,7 @@ namespace Patterns
   const unsigned int Map::max_int_value
     = std::numeric_limits<unsigned int>::max();
 
-  const char* Map::description_init = "[Map";
+  const char* Map::description_init= "[Map";
 
   Map::Map(const PatternBase& p_key,
            const PatternBase& p_value,
@@ -883,7 +883,7 @@ namespace Patterns
     if(description.compare(0, std::strlen(description_init), description_init)
        == 0)
       {
-        unsigned int min_elements = 0, max_elements = 0;
+        unsigned int min_elements= 0, max_elements= 0;
 
         std::istringstream is(description);
         is.ignore(strlen(description_init) + strlen(" of <"));
@@ -915,7 +915,7 @@ namespace Patterns
         if(!is.eof())
           std::getline(is, separator, '>');
         else
-          separator = ",";
+          separator= ",";
 
         return std_cxx14::make_unique<Map>(*key_pattern,
                                            *value_pattern,
@@ -952,7 +952,7 @@ namespace Patterns
     return key_value_separator;
   }
 
-  const char* Tuple::description_init = "[Tuple";
+  const char* Tuple::description_init= "[Tuple";
 
   Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
                const std::string&                               separator)
@@ -963,8 +963,8 @@ namespace Patterns
     Assert(separator.size() > 0,
            ExcMessage("The separator must have a non-zero length."));
     patterns.resize(ps.size());
-    for(unsigned int i = 0; i < ps.size(); ++i)
-      patterns[i] = ps[i]->clone();
+    for(unsigned int i= 0; i < ps.size(); ++i)
+      patterns[i]= ps[i]->clone();
   }
 
   Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
@@ -975,8 +975,8 @@ namespace Patterns
   Tuple::Tuple(const Tuple& other) : separator(other.separator)
   {
     patterns.resize(other.patterns.size());
-    for(unsigned int i = 0; i < other.patterns.size(); ++i)
-      patterns[i] = other.patterns[i]->clone();
+    for(unsigned int i= 0; i < other.patterns.size(); ++i)
+      patterns[i]= other.patterns[i]->clone();
   }
 
   bool
@@ -987,7 +987,7 @@ namespace Patterns
     if(split_list.size() != patterns.size())
       return false;
 
-    for(unsigned int i = 0; i < patterns.size(); ++i)
+    for(unsigned int i= 0; i < patterns.size(); ++i)
       {
         if(patterns[i]->match(split_list[i]) == false)
           return false;
@@ -1008,7 +1008,7 @@ namespace Patterns
             description << description_init << " of <" << patterns.size()
                         << "> elements <" << patterns[0]->description(style)
                         << ">";
-            for(unsigned int i = 1; i < patterns.size(); ++i)
+            for(unsigned int i= 1; i < patterns.size(); ++i)
               description << ", <" << patterns[i]->description(style) << ">";
 
             if(separator != ":")
@@ -1028,7 +1028,7 @@ namespace Patterns
                           << internal::escape(separator, style) << "> ";
             description << " where each element is ["
                         << patterns[0]->description(style) << "]";
-            for(unsigned int i = 1; i < patterns.size(); ++i)
+            for(unsigned int i= 1; i < patterns.size(); ++i)
               {
                 description << internal::escape(separator, style) << "["
                             << patterns[i]->description(style) << "]";
@@ -1070,7 +1070,7 @@ namespace Patterns
 
         std::string len;
         std::getline(is, len, '>');
-        const unsigned int n_elements = Utilities::string_to_int(len);
+        const unsigned int n_elements= Utilities::string_to_int(len);
         Assert(n_elements > 0,
                ExcMessage("Provide at least 1 element in the tuple."));
         patterns.resize(n_elements);
@@ -1079,13 +1079,13 @@ namespace Patterns
 
         std::string element;
         std::getline(is, element, '>');
-        patterns[0] = pattern_factory(element);
+        patterns[0]= pattern_factory(element);
 
-        for(unsigned int i = 1; i < n_elements; ++i)
+        for(unsigned int i= 1; i < n_elements; ++i)
           {
             is.ignore(strlen(", <"));
             std::getline(is, element, '>');
-            patterns[i] = pattern_factory(element);
+            patterns[i]= pattern_factory(element);
           }
 
         is.ignore(strlen(" separated by <"));
@@ -1094,7 +1094,7 @@ namespace Patterns
         if(!is.eof())
           std::getline(is, separator, '>');
         else
-          separator = ":";
+          separator= ":";
 
         return std_cxx14::make_unique<Tuple>(patterns, separator);
       }
@@ -1114,14 +1114,14 @@ namespace Patterns
     return separator;
   }
 
-  const char* MultipleSelection::description_init = "[MultipleSelection";
+  const char* MultipleSelection::description_init= "[MultipleSelection";
 
   MultipleSelection::MultipleSelection(const std::string& seq)
   {
     Assert(seq.find(',') == std::string::npos,
            ExcCommasNotAllowed(seq.find(',')));
 
-    sequence = seq;
+    sequence= seq;
     while(sequence.find(" |") != std::string::npos)
       sequence.replace(sequence.find(" |"), 2, "|");
     while(sequence.find("| ") != std::string::npos)
@@ -1131,14 +1131,14 @@ namespace Patterns
   bool
   MultipleSelection::match(const std::string& test_string_list) const
   {
-    std::string              tmp = test_string_list;
+    std::string              tmp= test_string_list;
     std::vector<std::string> split_names;
 
     // first split the input list
     while(tmp.length() != 0)
       {
         std::string name;
-        name = tmp;
+        name= tmp;
 
         if(name.find(',') != std::string::npos)
           {
@@ -1146,7 +1146,7 @@ namespace Patterns
             tmp.erase(0, tmp.find(',') + 1);
           }
         else
-          tmp = "";
+          tmp= "";
 
         while((name.length() != 0) && (std::isspace(name[0])))
           name.erase(0, 1);
@@ -1162,9 +1162,9 @@ namespace Patterns
         test_string != split_names.end();
         ++test_string)
       {
-        bool string_found = false;
+        bool string_found= false;
 
-        tmp = sequence;
+        tmp= sequence;
         while(tmp.find('|') != std::string::npos)
           {
             if(*test_string == std::string(tmp, 0, tmp.find('|')))
@@ -1173,7 +1173,7 @@ namespace Patterns
                 // loop. don't change
                 // tmp, since we don't
                 // need it anymore.
-                string_found = true;
+                string_found= true;
                 break;
               };
 
@@ -1182,7 +1182,7 @@ namespace Patterns
         // check last choice, not finished by |
         if(!string_found)
           if(*test_string == tmp)
-            string_found = true;
+            string_found= true;
 
         if(!string_found)
           return false;
@@ -1254,7 +1254,7 @@ namespace Patterns
       return std::unique_ptr<MultipleSelection>();
   }
 
-  const char* Bool::description_init = "[Bool";
+  const char* Bool::description_init= "[Bool";
 
   Bool::Bool() : Selection("true|false")
   {}
@@ -1301,7 +1301,7 @@ namespace Patterns
       return std::unique_ptr<Bool>();
   }
 
-  const char* Anything::description_init = "[Anything";
+  const char* Anything::description_init= "[Anything";
 
   bool
   Anything::match(const std::string&) const
@@ -1351,7 +1351,7 @@ namespace Patterns
       return std::unique_ptr<Anything>();
   }
 
-  const char* FileName::description_init = "[FileName";
+  const char* FileName::description_init= "[FileName";
 
   FileName::FileName(const FileType type) : file_type(type)
   {}
@@ -1417,9 +1417,9 @@ namespace Patterns
         is >> file_type;
 
         if(file_type == "input)]")
-          type = input;
+          type= input;
         else
-          type = output;
+          type= output;
 
         return std_cxx14::make_unique<FileName>(type);
       }
@@ -1427,7 +1427,7 @@ namespace Patterns
       return std::unique_ptr<FileName>();
   }
 
-  const char* DirectoryName::description_init = "[DirectoryName";
+  const char* DirectoryName::description_init= "[DirectoryName";
 
   bool
   DirectoryName::match(const std::string&) const

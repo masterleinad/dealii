@@ -69,7 +69,7 @@ namespace internal
         /**
          * Default constructor.
          */
-        type() = default;
+        type()= default;
 
         /**
          * Dummy constructor. Only level zero is allowed.
@@ -277,7 +277,7 @@ namespace TriaAccessorExceptions
  * @ingroup Accessors
  * @author Wolfgang Bangerth, Guido Kanschat, 1998, 2010
  */
-template <int structdim, int dim, int spacedim = dim>
+template <int structdim, int dim, int spacedim= dim>
 class TriaAccessorBase
 {
 public:
@@ -286,21 +286,21 @@ public:
    * For example, if this accessor represents a quad that is part of a two-
    * dimensional surface in four-dimensional space, then this value is four.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * Dimensionality of the object that the thing represented by this accessor
    * is part of. For example, if this accessor represents a line that is part
    * of a hexahedron, then this value will be three.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Dimensionality of the current object represented by this accessor. For
    * example, if it is line (irrespective of whether it is part of a quad or
    * hex, and what dimension we are in), then this value equals 1.
    */
-  static const unsigned int structure_dimension = structdim;
+  static const unsigned int structure_dimension= structdim;
 
 protected:
   /**
@@ -313,10 +313,10 @@ protected:
   /**
    * Constructor. Protected, thus only callable from friend classes.
    */
-  TriaAccessorBase(const Triangulation<dim, spacedim>* parent = nullptr,
-                   const int                           level  = -1,
-                   const int                           index  = -1,
-                   const AccessorData*                        = nullptr);
+  TriaAccessorBase(const Triangulation<dim, spacedim>* parent= nullptr,
+                   const int                           level = -1,
+                   const int                           index = -1,
+                   const AccessorData*                       = nullptr);
 
   /**
    * Copy constructor. Creates an object with exactly the same data.
@@ -538,7 +538,7 @@ private:
  * @ingroup Accessors
  * @author Wolfgang Bangerth, 2008
  */
-template <int structdim, int dim, int spacedim = dim>
+template <int structdim, int dim, int spacedim= dim>
 class InvalidAccessor : public TriaAccessorBase<structdim, dim, spacedim>
 {
 public:
@@ -555,10 +555,10 @@ public:
    * semantic sense, and we generate an exception when such an object is
    * actually generated.
    */
-  InvalidAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-                  const int                           level      = -1,
-                  const int                           index      = -1,
-                  const AccessorData*                 local_data = nullptr);
+  InvalidAccessor(const Triangulation<dim, spacedim>* parent    = nullptr,
+                  const int                           level     = -1,
+                  const int                           index     = -1,
+                  const AccessorData*                 local_data= nullptr);
 
   /**
    * Copy constructor.  This class is used for iterators that do not make
@@ -670,10 +670,10 @@ public:
   /**
    * Constructor.
    */
-  TriaAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-               const int                           level      = -1,
-               const int                           index      = -1,
-               const AccessorData*                 local_data = nullptr);
+  TriaAccessor(const Triangulation<dim, spacedim>* parent    = nullptr,
+               const int                           level     = -1,
+               const int                           index     = -1,
+               const AccessorData*                 local_data= nullptr);
 
   /**
    * Conversion constructor. This constructor exists to make certain
@@ -1491,8 +1491,8 @@ public:
    * cell.
    */
   Point<spacedim>
-  center(const bool respect_manifold             = false,
-         const bool interpolate_from_surrounding = false) const;
+  center(const bool respect_manifold            = false,
+         const bool interpolate_from_surrounding= false) const;
 
   /**
    * Return the barycenter (also called centroid)
@@ -1705,21 +1705,21 @@ public:
    * For example, if this accessor represents a quad that is part of a two-
    * dimensional surface in four-dimensional space, then this value is four.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * Dimensionality of the object that the thing represented by this accessor
    * is part of. For example, if this accessor represents a line that is part
    * of a hexahedron, then this value will be three.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Dimensionality of the current object represented by this accessor. For
    * example, if it is line (irrespective of whether it is part of a quad or
    * hex, and what dimension we are in), then this value equals 1.
    */
-  static const unsigned int structure_dimension = 0;
+  static const unsigned int structure_dimension= 0;
 
   /**
    * Pointer to internal data.
@@ -1738,10 +1738,10 @@ public:
    * compatibility with the other accessor classes. @p index can be used to
    * set the global index of the vertex we point to.
    */
-  TriaAccessor(const Triangulation<dim, spacedim>* tria  = nullptr,
-               const int                           level = 0,
-               const int                           index = 0,
-               const AccessorData*                       = nullptr);
+  TriaAccessor(const Triangulation<dim, spacedim>* tria = nullptr,
+               const int                           level= 0,
+               const int                           index= 0,
+               const AccessorData*                      = nullptr);
 
   /**
    * Constructor. Should never be called and thus produces an error.
@@ -1831,7 +1831,7 @@ public:
    * distributed triangulation stored on the current processor.
    */
   unsigned int
-  vertex_index(const unsigned int i = 0) const;
+  vertex_index(const unsigned int i= 0) const;
 
   /**
    * Return a reference to the @p ith vertex. If i is zero, this returns a
@@ -1839,7 +1839,7 @@ public:
    * throws an exception.
    */
   Point<spacedim>&
-  vertex(const unsigned int i = 0) const;
+  vertex(const unsigned int i= 0) const;
 
   /**
    * Pointer to the @p ith line bounding this object. Will point to an invalid
@@ -1902,8 +1902,8 @@ public:
    * <code>TriaAccessor<structdim,dim,spacedim></code>.
    */
   Point<spacedim>
-  center(const bool respect_manifold             = false,
-         const bool interpolate_from_surrounding = false) const;
+  center(const bool respect_manifold            = false,
+         const bool interpolate_from_surrounding= false) const;
 
   /**
    * Compute the dim-dimensional measure of the object. For a dim-dimensional
@@ -2081,21 +2081,21 @@ public:
    * For example, if this accessor represents a quad that is part of a two-
    * dimensional surface in four-dimensional space, then this value is four.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * Dimensionality of the object that the thing represented by this accessor
    * is part of. For example, if this accessor represents a line that is part
    * of a hexahedron, then this value will be three.
    */
-  static const unsigned int dimension = 1;
+  static const unsigned int dimension= 1;
 
   /**
    * Dimensionality of the current object represented by this accessor. For
    * example, if it is line (irrespective of whether it is part of a quad or
    * hex, and what dimension we are in), then this value equals 1.
    */
-  static const unsigned int structure_dimension = 0;
+  static const unsigned int structure_dimension= 0;
 
   /**
    * Pointer to internal data.
@@ -2142,10 +2142,10 @@ public:
    * compatibility with the other accessor classes. However, it doesn't do
    * anything useful here and so may not actually be called.
    */
-  TriaAccessor(const Triangulation<1, spacedim>* tria = nullptr,
-               const int                              = 0,
-               const int                              = 0,
-               const AccessorData*                    = nullptr);
+  TriaAccessor(const Triangulation<1, spacedim>* tria= nullptr,
+               const int                             = 0,
+               const int                             = 0,
+               const AccessorData*                   = nullptr);
 
   /**
    * Constructor. Should never be called and thus produces an error.
@@ -2246,7 +2246,7 @@ public:
    * distributed triangulation stored on the current processor.
    */
   unsigned int
-  vertex_index(const unsigned int i = 0) const;
+  vertex_index(const unsigned int i= 0) const;
 
   /**
    * Return a reference to the @p ith vertex. If i is zero, this returns a
@@ -2254,7 +2254,7 @@ public:
    * throws an exception.
    */
   Point<spacedim>&
-  vertex(const unsigned int i = 0) const;
+  vertex(const unsigned int i= 0) const;
 
   /**
    * Return the center of this object, which of course coincides with the
@@ -2550,7 +2550,7 @@ protected:
  * @ingroup Accessors
  * @author Wolfgang Bangerth, 1998, 1999, 2000
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class CellAccessor : public TriaAccessor<dim, dim, spacedim>
 {
 public:
@@ -2574,10 +2574,10 @@ public:
   /**
    * Constructor.
    */
-  CellAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-               const int                           level      = -1,
-               const int                           index      = -1,
-               const AccessorData*                 local_data = nullptr);
+  CellAccessor(const Triangulation<dim, spacedim>* parent    = nullptr,
+               const int                           level     = -1,
+               const int                           index     = -1,
+               const AccessorData*                 local_data= nullptr);
 
   /**
    * Copy constructor.

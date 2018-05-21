@@ -16,7 +16,7 @@
 // check that VectorTools::project works for DGPNonparametric elements
 // correctly on a uniformly refined mesh for functions of degree q
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../deal.II/project_common.h"
 
@@ -24,6 +24,6 @@ template <int dim>
 void
 test()
 {
-  for(unsigned int p = 0; p < 6 - dim; ++p)
+  for(unsigned int p= 0; p < 6 - dim; ++p)
     test_with_hanging_nodes(FE_DGPNonparametric<dim>(p), p);
 }

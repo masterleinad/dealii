@@ -52,19 +52,19 @@ SolverControl::check(const unsigned int step, const double check_value)
   // residual for later comparisons
   if(step == 0)
     {
-      initial_val = check_value;
+      initial_val= check_value;
     }
 
   if(m_log_history && ((step % m_log_frequency) == 0))
     deallog << "Check " << step << "\t" << check_value << std::endl;
 
-  lstep  = step;
-  lvalue = check_value;
+  lstep = step;
+  lvalue= check_value;
 
   if(step == 0)
     {
       if(check_failure)
-        failure_residual = relative_failure_residual * check_value;
+        failure_residual= relative_failure_residual * check_value;
 
       if(m_log_result)
         deallog << "Starting value " << check_value << std::endl;
@@ -78,7 +78,7 @@ SolverControl::check(const unsigned int step, const double check_value)
       if(m_log_result)
         deallog << "Convergence step " << step << " value " << check_value
                 << std::endl;
-      lcheck = success;
+      lcheck= success;
       return success;
     }
 
@@ -88,11 +88,11 @@ SolverControl::check(const unsigned int step, const double check_value)
       if(m_log_result)
         deallog << "Failure step " << step << " value " << check_value
                 << std::endl;
-      lcheck = failure;
+      lcheck= failure;
       return failure;
     }
 
-  lcheck = iterate;
+  lcheck= iterate;
   return iterate;
 }
 
@@ -124,16 +124,16 @@ unsigned int
 SolverControl::log_frequency(unsigned int f)
 {
   if(f == 0)
-    f = 1;
-  unsigned int old = m_log_frequency;
-  m_log_frequency  = f;
+    f= 1;
+  unsigned int old= m_log_frequency;
+  m_log_frequency = f;
   return old;
 }
 
 void
 SolverControl::enable_history_data()
 {
-  history_data_enabled = true;
+  history_data_enabled= true;
 }
 
 const std::vector<double>&
@@ -237,8 +237,8 @@ ReductionControl::check(const unsigned int step, const double check_value)
   // residual for later comparisons
   if(step == 0)
     {
-      initial_val = check_value;
-      reduced_tol = check_value * reduce;
+      initial_val= check_value;
+      reduced_tol= check_value * reduce;
     }
 
   // check whether desired reduction
@@ -250,9 +250,9 @@ ReductionControl::check(const unsigned int step, const double check_value)
       if(m_log_result)
         deallog << "Convergence step " << step << " value " << check_value
                 << std::endl;
-      lstep  = step;
-      lvalue = check_value;
-      lcheck = success;
+      lstep = step;
+      lvalue= check_value;
+      lcheck= success;
 
       if(history_data_enabled)
         history_data.push_back(check_value);
@@ -296,10 +296,10 @@ IterationNumberControl::check(const unsigned int step, const double check_value)
       if(m_log_result)
         deallog << "Convergence step " << step << " value " << check_value
                 << std::endl;
-      lstep  = step;
-      lvalue = check_value;
+      lstep = step;
+      lvalue= check_value;
 
-      lcheck = success;
+      lcheck= success;
       return success;
     }
   else
@@ -329,9 +329,9 @@ ConsecutiveControl::ConsecutiveControl(const SolverControl& c)
 ConsecutiveControl&
 ConsecutiveControl::operator=(const SolverControl& c)
 {
-  SolverControl::operator  =(c);
-  n_consecutive_iterations = 1;
-  n_converged_iterations   = 0;
+  SolverControl::operator =(c);
+  n_consecutive_iterations= 1;
+  n_converged_iterations  = 0;
   return *this;
 }
 
@@ -340,7 +340,7 @@ ConsecutiveControl::check(const unsigned int step, const double check_value)
 {
   // reset the counter if ConsecutiveControl is being reused
   if(step == 0)
-    n_converged_iterations = 0;
+    n_converged_iterations= 0;
   else
     {
       // check two things:
@@ -350,7 +350,7 @@ ConsecutiveControl::check(const unsigned int step, const double check_value)
              ExcMessage("steps should be ascending integers."));
     }
 
-  SolverControl::State state = SolverControl::check(step, check_value);
+  SolverControl::State state= SolverControl::check(step, check_value);
   // check if we need to override the success:
   if(state == success)
     {
@@ -361,13 +361,13 @@ ConsecutiveControl::check(const unsigned int step, const double check_value)
         }
       else
         {
-          lcheck = iterate;
+          lcheck= iterate;
           return iterate;
         }
     }
   else
     {
-      n_converged_iterations = 0;
+      n_converged_iterations= 0;
       return state;
     }
 }

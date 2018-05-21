@@ -56,7 +56,7 @@ public:
     const Number*                                               src,
     Number*                                                     dst) const;
 
-  static const unsigned int n_dofs_1d = fe_degree + 1;
+  static const unsigned int n_dofs_1d= fe_degree + 1;
   static const unsigned int n_local_dofs
     = dealii::Utilities::fixed_int_power<fe_degree + 1, dim>::value;
   static const unsigned int n_q_points
@@ -85,7 +85,7 @@ operator()(const unsigned int                                          cell,
 template <int dim,
           int fe_degree,
           typename Number,
-          int n_q_points_1d = fe_degree + 1>
+          int n_q_points_1d= fe_degree + 1>
 class MatrixFreeTest
 {
 public:
@@ -106,7 +106,7 @@ MatrixFreeTest<dim, fe_degree, Number, n_q_points_1d>::vmult(
   LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
   const LinearAlgebra::CUDAWrappers::Vector<Number>& src)
 {
-  dst = static_cast<Number>(0.);
+  dst= static_cast<Number>(0.);
   HelmholtzOperator<dim, fe_degree, Number, n_q_points_1d> helmholtz_operator;
   data.cell_loop(helmholtz_operator, src, dst);
 }

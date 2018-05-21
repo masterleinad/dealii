@@ -56,21 +56,21 @@ test(std::ostream& /*out*/)
 
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
 
-  for(unsigned int i = 0; i < 15 - 3 * dim; ++i)
+  for(unsigned int i= 0; i < 15 - 3 * dim; ++i)
     {
       // refine one-fifth of cells randomly
       std::vector<bool> flags(tr.n_active_cells(), false);
-      for(unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
-        flags[Testing::rand() % flags.size()] = true;
+      for(unsigned int k= 0; k < flags.size() / 5 + 1; ++k)
+        flags[Testing::rand() % flags.size()]= true;
       // make sure there's at least one that
       // will be refined
-      flags[0] = true;
+      flags[0]= true;
 
       InterGridMap<Triangulation<dim>> intergrid_map;
       intergrid_map.make_mapping(tr, tr2);
 
       // refine tr and tr2
-      unsigned int index = 0;
+      unsigned int index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active();
           cell != tr.end();
@@ -86,7 +86,7 @@ test(std::ostream& /*out*/)
       // (this should ensure that at least
       // some of them will actually be
       // coarsened)
-      index = 0;
+      index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active();
           cell != tr.end();

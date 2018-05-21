@@ -53,7 +53,7 @@ test()
     const std::vector<IndexSet> locally_owned_dofs_per_subdomain
       = DoFTools::locally_owned_dofs_per_subdomain(dh);
 
-    const types::global_dof_index dofs_per_block = dh.n_dofs() / 2;
+    const types::global_dof_index dofs_per_block= dh.n_dofs() / 2;
     std::vector<IndexSet>         locally_owned_dofs_per_block(2);
     locally_owned_dofs_per_block[0]
       = locally_owned_dofs_per_subdomain[this_mpi_process].get_view(

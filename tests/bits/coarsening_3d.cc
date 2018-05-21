@@ -35,7 +35,7 @@ main()
 
   // refine once, then unrefine again
   coarse_grid.refine_global(1);
-  for(Triangulation<3>::active_cell_iterator c = coarse_grid.begin_active();
+  for(Triangulation<3>::active_cell_iterator c= coarse_grid.begin_active();
       c != coarse_grid.end();
       ++c)
     c->set_coarsen_flag();

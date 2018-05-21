@@ -35,7 +35,7 @@ namespace std
    * Implementation of the error function for real-valued Sacado numbers.
    */
   template <typename ADNumberType,
-            typename = typename std::enable_if<
+            typename= typename std::enable_if<
               dealii::Differentiation::AD::is_sacado_number<ADNumberType>::value
               && dealii::Differentiation::AD::is_real_valued_ad_number<
                    ADNumberType>::value>::type>
@@ -54,24 +54,24 @@ namespace std
     // Note: This implementation has a reported maximum round-off error of 1.5e-7.
 
     // Constants
-    const double a1 = 0.254829592;
-    const double a2 = -0.284496736;
-    const double a3 = 1.421413741;
-    const double a4 = -1.453152027;
-    const double a5 = 1.061405429;
-    const double p  = 0.3275911;
+    const double a1= 0.254829592;
+    const double a2= -0.284496736;
+    const double a3= 1.421413741;
+    const double a4= -1.453152027;
+    const double a5= 1.061405429;
+    const double p = 0.3275911;
 
     // Save the sign of x
     const bool neg_val
       = (x < dealii::internal::NumberType<ADNumberType>::value(0.0) ? true :
                                                                       false);
-    x = std::fabs(x);
+    x= std::fabs(x);
 
     // Abramowitz1972a equation 7.1.26
-    const ADNumberType t = 1.0 / (1.0 + p * x);
-    const ADNumberType y = 1.0
-                           - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1)
-                               * t * std::exp(-x * x);
+    const ADNumberType t= 1.0 / (1.0 + p * x);
+    const ADNumberType y= 1.0
+                          - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t
+                              * std::exp(-x * x);
 
     if(!neg_val)
       return y;
@@ -84,7 +84,7 @@ namespace std
    */
   template <
     typename ADNumberType,
-    typename = typename std::enable_if<
+    typename= typename std::enable_if<
       dealii::Differentiation::AD::is_sacado_number<ADNumberType>::value>::type>
   inline ADNumberType
   erfc(const ADNumberType& x)

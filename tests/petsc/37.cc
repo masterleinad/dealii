@@ -23,15 +23,15 @@
 void
 test(PETScWrappers::MPI::Vector& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = i;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= i;
 
   v.compress(VectorOperation::insert);
 
   v.add(1.);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     AssertThrow(v(i) == i + 1., ExcInternalError());
 
   deallog << "OK" << std::endl;

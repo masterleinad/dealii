@@ -29,7 +29,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -53,7 +53,7 @@ test()
       deallog << "locally owned cells: " << tr.n_locally_owned_active_cells()
               << " / " << tr.n_global_active_cells() << std::endl;
 
-      const unsigned int checksum = tr.get_checksum();
+      const unsigned int checksum= tr.get_checksum();
       if(myid == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }

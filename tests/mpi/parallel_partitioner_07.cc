@@ -26,20 +26,20 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   Assert(numproc > 2, ExcNotImplemented());
 
-  const unsigned int set = 50;
+  const unsigned int set= 50;
   AssertIndexRange(numproc, set - 2);
-  const unsigned int      local_size  = set - myid;
-  types::global_dof_index global_size = 0;
-  types::global_dof_index my_start    = 0;
-  for(unsigned int i = 0; i < numproc; ++i)
+  const unsigned int      local_size = set - myid;
+  types::global_dof_index global_size= 0;
+  types::global_dof_index my_start   = 0;
+  for(unsigned int i= 0; i < numproc; ++i)
     {
-      global_size += set - i;
+      global_size+= set - i;
       if(i < myid)
-        my_start += set - i;
+        my_start+= set - i;
     }
 
   // each processor owns some indices and all are ghosting elements from three
@@ -48,17 +48,17 @@ test()
   IndexSet local_owned(global_size);
   local_owned.add_range(my_start, my_start + local_size);
   IndexSet local_relevant_1(global_size), local_relevant_2(global_size);
-  local_relevant_1                          = local_owned;
-  types::global_dof_index ghost_indices[10] = {1,
-                                               2,
-                                               13,
-                                               set - 2,
-                                               set - 1,
-                                               set,
-                                               set + 1,
-                                               2 * set,
-                                               2 * set + 1,
-                                               2 * set + 3};
+  local_relevant_1                         = local_owned;
+  types::global_dof_index ghost_indices[10]= {1,
+                                              2,
+                                              13,
+                                              set - 2,
+                                              set - 1,
+                                              set,
+                                              set + 1,
+                                              2 * set,
+                                              2 * set + 1,
+                                              2 * set + 3};
   local_relevant_1.add_indices(&ghost_indices[0], ghost_indices + 10);
   if(myid > 0)
     local_relevant_1.add_range(my_start - 10, my_start);
@@ -66,7 +66,7 @@ test()
     local_relevant_1.add_range(my_start + local_size,
                                my_start + local_size + 10);
 
-  local_relevant_2 = local_owned;
+  local_relevant_2= local_owned;
   local_relevant_2.add_indices(&ghost_indices[0], ghost_indices + 10);
   if(myid > 0)
     local_relevant_2.add_index(my_start - 10);
@@ -107,11 +107,11 @@ test()
       make_array_view(ghosts),
       requests);
     // check that the ghost entries are zeroed out in these calls
-    for(unsigned int i = 0; i < v.n_ghost_indices(); ++i)
+    for(unsigned int i= 0; i < v.n_ghost_indices(); ++i)
       AssertDimension(ghosts[i], 0);
   }
   deallog << "From all ghosts: ";
-  for(unsigned int i = 0; i < locally_owned_array.size(); ++i)
+  for(unsigned int i= 0; i < locally_owned_array.size(); ++i)
     deallog << locally_owned_array[i] << " ";
   deallog << std::endl;
 
@@ -133,11 +133,11 @@ test()
       requests);
 
     // check that the ghost entries are zeroed out in these calls
-    for(unsigned int i = 0; i < w.n_ghost_indices(); ++i)
+    for(unsigned int i= 0; i < w.n_ghost_indices(); ++i)
       AssertDimension(ghosts[i], 0);
   }
   deallog << "From reduced ghosts 1: ";
-  for(unsigned int i = 0; i < locally_owned_array.size(); ++i)
+  for(unsigned int i= 0; i < locally_owned_array.size(); ++i)
     deallog << locally_owned_array[i] << " ";
   deallog << std::endl;
 
@@ -159,11 +159,11 @@ test()
       requests);
 
     // check that the ghost entries are zeroed out in these calls
-    for(unsigned int i = 0; i < x.n_ghost_indices(); ++i)
+    for(unsigned int i= 0; i < x.n_ghost_indices(); ++i)
       AssertDimension(ghosts[i], 0);
   }
   deallog << "From reduced ghosts 2: ";
-  for(unsigned int i = 0; i < locally_owned_array.size(); ++i)
+  for(unsigned int i= 0; i < locally_owned_array.size(); ++i)
     deallog << locally_owned_array[i] << " ";
   deallog << std::endl;
 
@@ -181,7 +181,7 @@ test()
     make_array_view(ghosts),
     requests);
   deallog << "From tight reduced ghosts 2: ";
-  for(unsigned int i = 0; i < locally_owned_array.size(); ++i)
+  for(unsigned int i= 0; i < locally_owned_array.size(); ++i)
     deallog << locally_owned_array[i] << " ";
   deallog << std::endl;
 }

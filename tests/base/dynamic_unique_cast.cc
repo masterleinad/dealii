@@ -31,10 +31,10 @@ void
 test()
 {
   // Create a pointer to D
-  std::unique_ptr<D> d = std_cxx14::make_unique<D>();
+  std::unique_ptr<D> d= std_cxx14::make_unique<D>();
 
   // See that we can successfully downcast to B
-  std::unique_ptr<B> b = Utilities::dynamic_unique_cast<B>(std::move(d));
+  std::unique_ptr<B> b= Utilities::dynamic_unique_cast<B>(std::move(d));
 
   // Ownership now rests with b, but it's still a D. Verify this:
   Assert(d.get() == nullptr, ExcInternalError());
@@ -42,7 +42,7 @@ test()
   Assert(dynamic_cast<D*>(b.get()) != nullptr, ExcInternalError());
 
   // Check that we can again upcast to D:
-  std::unique_ptr<D> dd = Utilities::dynamic_unique_cast<D>(std::move(b));
+  std::unique_ptr<D> dd= Utilities::dynamic_unique_cast<D>(std::move(b));
 
   // Ownership now rests with b, but it's still a D. Verify this:
   Assert(b.get() == nullptr, ExcInternalError());
@@ -55,12 +55,12 @@ void
 invalid_test()
 {
   // Create a pointer to B
-  std::unique_ptr<B> b = std_cxx14::make_unique<B>();
+  std::unique_ptr<B> b= std_cxx14::make_unique<B>();
 
   // Check that we can indeed not upcast to D:
   try
     {
-      std::unique_ptr<D> dd = Utilities::dynamic_unique_cast<D>(std::move(b));
+      std::unique_ptr<D> dd= Utilities::dynamic_unique_cast<D>(std::move(b));
     }
   catch(const std::bad_cast&)
     {

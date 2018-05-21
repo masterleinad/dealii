@@ -59,12 +59,12 @@ test(std::string filename)
 
   dof_handler.distribute_dofs(dummy_fe);
 
-  double area    = 0;
-  double normals = 0;
+  double area   = 0;
+  double normals= 0;
 
   typename DoFHandler<dim, spacedim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   std::vector<Point<spacedim>> expectedcellnormals(
     fe_values.n_quadrature_points);
@@ -77,11 +77,11 @@ test(std::string filename)
       const std::vector<Point<spacedim>>& quad_points
         = fe_values.get_quadrature_points();
 
-      for(unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
+      for(unsigned int i= 0; i < fe_values.n_quadrature_points; ++i)
         {
-          expectedcellnormals[i] = quad_points[i] / quad_points[i].norm();
-          area += fe_values.JxW(i);
-          normals += (expectedcellnormals[i] - cellnormals[i]).norm();
+          expectedcellnormals[i]= quad_points[i] / quad_points[i].norm();
+          area+= fe_values.JxW(i);
+          normals+= (expectedcellnormals[i] - cellnormals[i]).norm();
         }
     };
 

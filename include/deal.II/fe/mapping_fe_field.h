@@ -70,9 +70,9 @@ DEAL_II_NAMESPACE_OPEN
  * @author Luca Heltai, Marco Tezzele 2013, 2015
  */
 template <int dim,
-          int spacedim            = dim,
-          typename VectorType     = Vector<double>,
-          typename DoFHandlerType = DoFHandler<dim, spacedim>>
+          int spacedim           = dim,
+          typename VectorType    = Vector<double>,
+          typename DoFHandlerType= DoFHandler<dim, spacedim>>
 class MappingFEField : public Mapping<dim, spacedim>
 {
 public:
@@ -110,7 +110,7 @@ public:
    */
   MappingFEField(const DoFHandlerType& euler_dof_handler,
                  const VectorType&     euler_vector,
-                 const ComponentMask&  mask = ComponentMask());
+                 const ComponentMask&  mask= ComponentMask());
 
   /**
    * Copy constructor.

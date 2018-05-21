@@ -122,7 +122,7 @@ class MappingQ;
  *
  * @author Wolfgang Bangerth, 2015, Martin Kronbichler, 2017
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class MappingQGeneric : public Mapping<dim, spacedim>
 {
 public:

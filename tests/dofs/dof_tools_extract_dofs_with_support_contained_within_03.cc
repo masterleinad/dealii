@@ -56,7 +56,7 @@ pred_r(const typename Triangulation<dim>::active_cell_iterator& cell)
 
 template <int dim>
 void
-test(const bool left = true)
+test(const bool left= true)
 {
   // Setup system
   Triangulation<dim> triangulation;

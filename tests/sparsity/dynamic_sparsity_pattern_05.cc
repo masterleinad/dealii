@@ -23,15 +23,15 @@
 void
 test()
 {
-  const unsigned int     N = 100;
+  const unsigned int     N= 100;
   DynamicSparsityPattern csp(N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < 10; ++j)
+  for(unsigned int i= 0; i < N; ++i)
+    for(unsigned int j= 0; j < 10; ++j)
       csp.add(i, (i + (i + 1) * (j * j + i)) % N);
   csp.symmetrize();
 
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < csp.row_length(i); ++j)
+  for(unsigned int i= 0; i < N; ++i)
+    for(unsigned int j= 0; j < csp.row_length(i); ++j)
       deallog << i << ' ' << j << ' ' << csp.column_number(i, j) << std::endl;
 }
 

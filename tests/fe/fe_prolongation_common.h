@@ -45,9 +45,9 @@ print_formatted(const FullMatrix<number>& A,
                 const unsigned int        precision,
                 const unsigned int        width)
 {
-  for(unsigned int i = 0; i < A.m(); ++i)
+  for(unsigned int i= 0; i < A.m(); ++i)
     {
-      for(unsigned int j = 0; j < A.n(); ++j)
+      for(unsigned int j= 0; j < A.n(); ++j)
         {
           if(A(i, j) != 0)
             deallog << std::setw(width) << std::setprecision(precision)
@@ -67,7 +67,7 @@ check_prolongation(FiniteElement<dim>& fe, const char* name)
   deallog << name << '<' << dim << '>' << " constraint " << std::endl;
   print_formatted(fe.constraints(), 8, 10);
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_cell; ++i)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::max_children_per_cell; ++i)
     {
       deallog << name << '<' << dim << '>' << " prolongation " << i
               << std::endl;

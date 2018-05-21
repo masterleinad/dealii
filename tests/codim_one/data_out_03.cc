@@ -50,8 +50,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    for(unsigned int i = 0; i < dim; i++)
-      values(i) = p(i);
+    for(unsigned int i= 0; i < dim; i++)
+      values(i)= p(i);
   }
 };
 
@@ -60,8 +60,8 @@ main()
 {
   deallog.attach(logfile);
 
-  int fe_degree      = 2;
-  int mapping_degree = 2;
+  int fe_degree     = 2;
+  int mapping_degree= 2;
 
   Triangulation<2, 3> tria;
 

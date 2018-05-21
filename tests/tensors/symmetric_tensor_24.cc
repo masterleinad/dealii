@@ -25,7 +25,7 @@ void
 check()
 {
   typedef SymmetricTensor<2, dim> S;
-  for(unsigned int i = 0; i < S::n_independent_components; ++i)
+  for(unsigned int i= 0; i < S::n_independent_components; ++i)
     {
       deallog << i << "  --  " << S::unrolled_to_component_indices(i)
               << std::endl;

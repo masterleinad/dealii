@@ -69,17 +69,17 @@ namespace CUDAWrappers
    */
   template <int dim,
             int fe_degree,
-            int n_q_points_1d = fe_degree + 1,
-            int n_components_ = 1,
-            typename Number   = double>
+            int n_q_points_1d= fe_degree + 1,
+            int n_components_= 1,
+            typename Number  = double>
   class FEEvaluation
   {
   public:
     typedef Number                                 value_type;
     typedef Tensor<1, dim, Number>                 gradient_type;
     typedef typename MatrixFree<dim, Number>::Data data_type;
-    static constexpr unsigned int                  dimension    = dim;
-    static constexpr unsigned int                  n_components = n_components_;
+    static constexpr unsigned int                  dimension   = dim;
+    static constexpr unsigned int                  n_components= n_components_;
     static constexpr unsigned int                  n_q_points
       = Utilities::pow(n_q_points_1d, dim);
     static constexpr unsigned int tensor_dofs_per_cell
@@ -200,12 +200,12 @@ namespace CUDAWrappers
       constraint_mask(data->constraint_mask[cell_id]),
       values(shdata->values)
   {
-    local_to_global = data->local_to_global + padding_length * cell_id;
-    inv_jac         = data->inv_jacobian + padding_length * cell_id;
-    JxW             = data->JxW + padding_length * cell_id;
+    local_to_global= data->local_to_global + padding_length * cell_id;
+    inv_jac        = data->inv_jacobian + padding_length * cell_id;
+    JxW            = data->JxW + padding_length * cell_id;
 
-    for(unsigned int i = 0; i < dim; ++i)
-      gradients[i] = shdata->gradients[i];
+    for(unsigned int i= 0; i < dim; ++i)
+      gradients[i]= shdata->gradients[i];
   }
 
   template <int dim,
@@ -224,9 +224,9 @@ namespace CUDAWrappers
         + (dim > 1 ? threadIdx.y : 0) * n_q_points_1d
         + (dim > 2 ? threadIdx.z : 0) * n_q_points_1d * n_q_points_1d;
 
-    const unsigned int src_idx = local_to_global[idx];
+    const unsigned int src_idx= local_to_global[idx];
     // Use the read-only data cache.
-    values[idx] = __ldg(&src[src_idx]);
+    values[idx]= __ldg(&src[src_idx]);
 
     if(constraint_mask)
       internal::resolve_hanging_nodes_shmem<dim, fe_degree, false>(
@@ -254,9 +254,9 @@ namespace CUDAWrappers
       = (threadIdx.x % n_q_points_1d)
         + (dim > 1 ? threadIdx.y : 0) * n_q_points_1d
         + (dim > 2 ? threadIdx.z : 0) * n_q_points_1d * n_q_points_1d;
-    const unsigned int destination_idx = local_to_global[idx];
+    const unsigned int destination_idx= local_to_global[idx];
 
-    dst[destination_idx] += values[idx];
+    dst[destination_idx]+= values[idx];
   }
 
   template <int dim,
@@ -351,7 +351,7 @@ namespace CUDAWrappers
   FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     submit_value(const value_type& val_in, const unsigned int q_point)
   {
-    values[q_point] = val_in * JxW[q_point];
+    values[q_point]= val_in * JxW[q_point];
   }
 
   template <int dim,
@@ -370,15 +370,15 @@ namespace CUDAWrappers
     static_assert(n_components_ == 1, "This function only supports FE with one \
                   components");
     // TODO optimize if the mesh is uniform
-    const Number* inv_jacobian = &inv_jac[q_point];
+    const Number* inv_jacobian= &inv_jac[q_point];
     gradient_type grad;
-    for(int d_1 = 0; d_1 < dim; ++d_1)
+    for(int d_1= 0; d_1 < dim; ++d_1)
       {
-        Number tmp = 0.;
-        for(int d_2 = 0; d_2 < dim; ++d_2)
-          tmp += inv_jacobian[padding_length * n_cells * (dim * d_2 + d_1)]
-                 * gradients[d_2][q_point];
-        grad[d_1] = tmp;
+        Number tmp= 0.;
+        for(int d_2= 0; d_2 < dim; ++d_2)
+          tmp+= inv_jacobian[padding_length * n_cells * (dim * d_2 + d_1)]
+                * gradients[d_2][q_point];
+        grad[d_1]= tmp;
       }
 
     return grad;
@@ -394,14 +394,14 @@ namespace CUDAWrappers
     submit_gradient(const gradient_type& grad_in, const unsigned int q_point)
   {
     // TODO optimize if the mesh is uniform
-    const Number* inv_jacobian = &inv_jac[q_point];
-    for(int d_1 = 0; d_1 < dim; ++d_1)
+    const Number* inv_jacobian= &inv_jac[q_point];
+    for(int d_1= 0; d_1 < dim; ++d_1)
       {
-        Number tmp = 0.;
-        for(int d_2 = 0; d_2 < dim; ++d_2)
-          tmp += inv_jacobian[n_cells * padding_length * (dim * d_1 + d_2)]
-                 * grad_in[d_2];
-        gradients[d_1][q_point] = tmp * JxW[q_point];
+        Number tmp= 0.;
+        for(int d_2= 0; d_2 < dim; ++d_2)
+          tmp+= inv_jacobian[n_cells * padding_length * (dim * d_1 + d_2)]
+                * grad_in[d_2];
+        gradients[d_1][q_point]= tmp * JxW[q_point];
       }
   }
 

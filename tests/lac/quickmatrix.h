@@ -38,33 +38,33 @@ template <typename number2>
 void
 QuickMatrix<number>::vmult(Vector<number2>& d, const Vector<number2>& s) const
 {
-  const unsigned int step  = nx - 1;
-  const unsigned int right = step - 1;
-  const unsigned int top   = ny - 1;
+  const unsigned int step = nx - 1;
+  const unsigned int right= step - 1;
+  const unsigned int top  = ny - 1;
 
   // Bottom row
 
-  d(0) = s(0) - .25 * (s(1) + s(step));
+  d(0)= s(0) - .25 * (s(1) + s(step));
 
-  for(unsigned int x = 1; x < right; ++x)
-    d(x) = s(x) - .25 * (s(x - 1) + s(x + 1) + s(x + step));
+  for(unsigned int x= 1; x < right; ++x)
+    d(x)= s(x) - .25 * (s(x - 1) + s(x + 1) + s(x + step));
 
-  d(right) = s(right) - .25 * (s(right - 1) + s(right + step));
+  d(right)= s(right) - .25 * (s(right - 1) + s(right + step));
 
   // Middle rows
 
-  unsigned int start = 0;
-  for(unsigned int y = 1; y < top; y++)
+  unsigned int start= 0;
+  for(unsigned int y= 1; y < top; y++)
     {
-      start += step;
+      start+= step;
       d(start)
         = s(start) - .25 * (s(start - step) + s(start + 1) + s(start + step));
 
-      for(unsigned int x = 1; x < right; ++x)
+      for(unsigned int x= 1; x < right; ++x)
         {
-          const unsigned int xy = start + x;
-          d(xy)                 = s(xy)
-                  - .25 * (s(xy - step) + s(xy - 1) + s(xy + 1) + s(xy + step));
+          const unsigned int xy= start + x;
+          d(xy)                = s(xy)
+                 - .25 * (s(xy - step) + s(xy - 1) + s(xy + 1) + s(xy + step));
         }
       d(start + right)
         = s(start + right)
@@ -73,13 +73,13 @@ QuickMatrix<number>::vmult(Vector<number2>& d, const Vector<number2>& s) const
 
   // Top row
 
-  start += step;
-  d(start) = s(start) - .25 * (s(start - step) + s(start + 1));
+  start+= step;
+  d(start)= s(start) - .25 * (s(start - step) + s(start + 1));
 
-  for(unsigned int x = 1; x < right; ++x)
+  for(unsigned int x= 1; x < right; ++x)
     {
-      const unsigned int xy = start + x;
-      d(xy) = s(xy) - .25 * (s(xy - step) + s(xy - 1) + s(xy + 1));
+      const unsigned int xy= start + x;
+      d(xy)= s(xy) - .25 * (s(xy - step) + s(xy - 1) + s(xy + 1));
     }
   d(start + right)
     = s(start + right) - .25 * (s(start + right - step) + s(start + right - 1));

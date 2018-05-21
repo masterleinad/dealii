@@ -44,7 +44,7 @@
 
 #include <iostream>
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 // create a mesh without hanging nodes,
 // move nodes randomly
@@ -54,7 +54,7 @@ const double eps = 1e-10;
 // elements and faces.
 // The comparison is straight forward because local dofs are enumerated
 // in the same way for FE_System and FEEnriched.
-const unsigned int patches = 10;
+const unsigned int patches= 10;
 
 using namespace dealii;
 
@@ -66,32 +66,32 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component= 0) const
   {
-    Tensor<1, dim> res = point;
+    Tensor<1, dim> res= point;
     Assert(point.norm() > 0,
            dealii::ExcMessage("gradient is not defined at zero"));
-    res *= -value(point) / point.norm();
+    res*= -value(point) / point.norm();
     return res;
   }
 
   virtual SymmetricTensor<2, dim>
-  hessian(const Point<dim>& p, const unsigned int component = 0) const
+  hessian(const Point<dim>& p, const unsigned int component= 0) const
   {
-    Tensor<1, dim> dir = p;
-    const double   r   = dir.norm();
+    Tensor<1, dim> dir= p;
+    const double   r  = dir.norm();
     Assert(r > 0.0, ExcMessage("r is not positive"));
-    dir /= r;
+    dir/= r;
     SymmetricTensor<2, dim> dir_x_dir;
-    for(unsigned int i = 0; i < dim; i++)
-      for(unsigned int j = i; j < dim; j++)
-        dir_x_dir[i][j] = dir[i] * dir[j];
+    for(unsigned int i= 0; i < dim; i++)
+      for(unsigned int j= i; j < dim; j++)
+        dir_x_dir[i][j]= dir[i] * dir[j];
 
     return std::exp(-r)
            * ((1.0 + 0.5 / r) * dir_x_dir - unit_symmetric_tensor<dim>() / r);
@@ -126,14 +126,14 @@ check_consistency(const Point<dim>&     p,
                   const Tensor<1, dim>& g_s1,
                   const Tensor<2, dim>& h_s1)
 {
-  const double                  v_f = func.value(p);
-  const Tensor<1, dim>          g_f = func.gradient(p);
-  const SymmetricTensor<2, dim> h_f = func.hessian(p);
+  const double                  v_f= func.value(p);
+  const Tensor<1, dim>          g_f= func.gradient(p);
+  const SymmetricTensor<2, dim> h_f= func.hessian(p);
 
   // product rule:
-  const double         v_s = v_s0 + v_s1 * v_f;
-  const Tensor<1, dim> g_s = g_s0 + g_s1 * v_f + v_s1 * g_f;
-  Tensor<2, dim>       op  = outer_product(g_s1, g_f);
+  const double         v_s= v_s0 + v_s1 * v_f;
+  const Tensor<1, dim> g_s= g_s0 + g_s1 * v_f + v_s1 * g_f;
+  Tensor<2, dim>       op = outer_product(g_s1, g_f);
 
   const SymmetricTensor<2, dim> sp
     = symmetrize(op) * 2.0; // symmetrize does [s+s^T]/2
@@ -141,15 +141,15 @@ check_consistency(const Point<dim>&     p,
   // that deal.II stores hessians in tensors, we may end up with failing check
   // for symmetry in SymmetricTensor class.
   // For a moment stick with usual Tensor
-  const Tensor<2, dim> h_s = h_s0 + h_s1 * v_f + sp + v_s1 * h_f;
+  const Tensor<2, dim> h_s= h_s0 + h_s1 * v_f + sp + v_s1 * h_f;
 
-  const double v_d = v_s - v_e;
+  const double v_d= v_s - v_e;
   AssertThrow(std::abs(v_d) < eps, ExcInternalError());
-  const Tensor<1, dim> g_d = g_s - g_e;
+  const Tensor<1, dim> g_d= g_s - g_e;
   AssertThrow(g_d.norm() < eps, ExcInternalError());
 
   // see note above.
-  const Tensor<2, dim> h_d = h_s - h_e;
+  const Tensor<2, dim> h_d= h_s - h_e;
   AssertThrow(h_d.norm() < eps, ExcInternalError());
 }
 
@@ -172,11 +172,11 @@ test(const FiniteElement<dim>&  fe1,
   {
     Point<dim>                p1, p2;
     std::vector<unsigned int> repetitions(dim);
-    for(unsigned int d = 0; d < dim; d++)
+    for(unsigned int d= 0; d < dim; d++)
       {
-        p1[d]          = -1.0;
-        p2[d]          = 2.0;
-        repetitions[d] = 3;
+        p1[d]         = -1.0;
+        p2[d]         = 2.0;
+        repetitions[d]= 3;
       }
     GridGenerator::subdivided_hyper_rectangle(
       triangulation, repetitions, p1, p2);
@@ -208,26 +208,26 @@ test(const FiniteElement<dim>&  fe1,
                                             | update_hessians
                                             | update_quadrature_points);
 
-  const unsigned int dofs_per_cell = fe_enriched.dofs_per_cell;
+  const unsigned int dofs_per_cell= fe_enriched.dofs_per_cell;
   Assert(fe_enriched.dofs_per_cell == fe_system.dofs_per_cell,
          ExcInternalError());
 
   typename DoFHandler<dim>::active_cell_iterator cell_enriched
     = dof_handler_enriched.begin_active(),
-    endc_enriched = dof_handler_enriched.end(),
-    cell_system   = dof_handler_system.begin_active(),
-    endc_system   = dof_handler_system.end();
+    endc_enriched= dof_handler_enriched.end(),
+    cell_system  = dof_handler_system.begin_active(),
+    endc_system  = dof_handler_system.end();
   for(; cell_enriched != endc_enriched; ++cell_enriched, ++cell_system)
     {
       fe_values_enriched.reinit(cell_enriched);
       fe_values_system.reinit(cell_system);
-      const unsigned int                     n_q_points = volume_quad.size();
+      const unsigned int                     n_q_points= volume_quad.size();
       const std::vector<dealii::Point<dim>>& q_points
         = fe_values_system.get_quadrature_points();
 
       // check shape functions
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           check_consistency(
             q_points[q_point],
             function,
@@ -241,17 +241,17 @@ test(const FiniteElement<dim>&  fe1,
             fe_values_system.shape_grad_component(i, q_point, 1),
             fe_values_system.shape_hessian_component(i, q_point, 1));
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         {
           fe_face_values_enriched.reinit(cell_enriched, face);
           fe_face_values_system.reinit(cell_system, face);
-          const unsigned int n_q_points_face = face_quad.size();
+          const unsigned int n_q_points_face= face_quad.size();
           const std::vector<dealii::Point<dim>>& q_points
             = fe_face_values_system.get_quadrature_points();
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int q_point = 0; q_point < n_q_points_face; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int q_point= 0; q_point < n_q_points_face; ++q_point)
               check_consistency(
                 q_points[q_point],
                 function,
@@ -284,7 +284,7 @@ main(int argc, char** argv)
   try
     {
       {
-        const unsigned int dim = 2;
+        const unsigned int dim= 2;
         test(FE_Q<dim>(3),
              FE_Q<dim>(2),
              QGauss<dim>(2),
@@ -295,7 +295,7 @@ main(int argc, char** argv)
       }
 
       {
-        const unsigned int dim = 3;
+        const unsigned int dim= 3;
         test(FE_Q<dim>(3),
              FE_Q<dim>(2),
              QGauss<dim>(2),

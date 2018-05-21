@@ -43,21 +43,21 @@ check(const unsigned int fe_degree)
   deallog << "FE: " << fe.get_name() << std::endl;
 
   // run a few different sizes...
-  unsigned int sizes[] = {1, 2, 3};
-  for(unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
+  unsigned int sizes[]= {1, 2, 3};
+  for(unsigned int cycle= 0; cycle < sizeof(sizes) / sizeof(unsigned int);
       ++cycle)
     {
-      unsigned int n_refinements = 0;
-      unsigned int n_subdiv      = sizes[cycle];
+      unsigned int n_refinements= 0;
+      unsigned int n_subdiv     = sizes[cycle];
       if(n_subdiv > 1)
         while(n_subdiv % 2 == 0)
           {
-            n_refinements += 1;
-            n_subdiv /= 2;
+            n_refinements+= 1;
+            n_subdiv/= 2;
           }
-      n_refinements += 3 - dim;
+      n_refinements+= 3 - dim;
       if(fe_degree < 3)
-        n_refinements += 1;
+        n_refinements+= 1;
 
       parallel::distributed::Triangulation<dim> tr(
         MPI_COMM_WORLD,
@@ -101,7 +101,7 @@ check(const unsigned int fe_degree)
       MGConstrainedDoFs               mg_constrained_dofs;
       ZeroFunction<dim>               zero_function;
       typename FunctionMap<dim>::type dirichlet_boundary;
-      dirichlet_boundary[0] = &zero_function;
+      dirichlet_boundary[0]= &zero_function;
       mg_constrained_dofs.initialize(mgdof, dirichlet_boundary);
 
       // build reference non-block
@@ -112,7 +112,7 @@ check(const unsigned int fe_degree)
       MGTransferBlockMatrixFree<dim, Number> transfer(mg_constrained_dofs);
       transfer.build(mgdof);
 
-      const unsigned int nb = 3;
+      const unsigned int nb= 3;
 
       MGLevelObject<LinearAlgebra::distributed::BlockVector<Number>> lbv(
         0, tr.n_global_levels() - 1);
@@ -124,37 +124,37 @@ check(const unsigned int fe_degree)
 
       // initialize
       v.reinit(mgdof.locally_owned_dofs(), MPI_COMM_WORLD);
-      for(unsigned int b = 0; b < nb; ++b)
+      for(unsigned int b= 0; b < nb; ++b)
         bv.block(b).reinit(mgdof.locally_owned_dofs(), MPI_COMM_WORLD);
 
-      for(unsigned int l = lbv.min_level(); l <= lbv.max_level(); ++l)
+      for(unsigned int l= lbv.min_level(); l <= lbv.max_level(); ++l)
         {
           lv[l].reinit(mgdof.locally_owned_mg_dofs(l), MPI_COMM_WORLD);
 
           lbv[l].reinit(nb);
-          for(unsigned int b = 0; b < nb; ++b)
+          for(unsigned int b= 0; b < nb; ++b)
             lbv[l].block(b).reinit(mgdof.locally_owned_mg_dofs(l),
                                    MPI_COMM_WORLD);
 
           lbv[l].collect_sizes();
 
           // set values:
-          for(unsigned int b = 0; b < nb; ++b)
-            for(unsigned int i = 0; i < lbv[l].block(b).local_size(); ++i)
-              lbv[l].block(b).local_element(i) = random_value<double>();
+          for(unsigned int b= 0; b < nb; ++b)
+            for(unsigned int i= 0; i < lbv[l].block(b).local_size(); ++i)
+              lbv[l].block(b).local_element(i)= random_value<double>();
 
           lbv[l].compress(VectorOperation::insert);
         }
 
       // check copy_from_mg
       transfer.copy_from_mg(mgdof, bv, lbv);
-      for(unsigned int b = 0; b < nb; ++b)
+      for(unsigned int b= 0; b < nb; ++b)
         {
-          for(unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
-            lv[l] = lbv[l].block(b);
+          for(unsigned int l= lv.min_level(); l <= lv.max_level(); ++l)
+            lv[l]= lbv[l].block(b);
 
           transfer_ref.copy_from_mg(mgdof, v, lv);
-          v -= bv.block(b);
+          v-= bv.block(b);
           deallog << "Diff copy_from_mg b" << b << ": " << v.l2_norm()
                   << std::endl;
         }
@@ -164,30 +164,30 @@ check(const unsigned int fe_degree)
       // set correctly in copy_to_mg().
       MGLevelObject<LinearAlgebra::distributed::BlockVector<Number>> lbv2(
         0, tr.n_global_levels() - 1);
-      for(unsigned int b = 0; b < nb; ++b)
-        for(unsigned int i = 0; i < bv.block(b).local_size(); ++i)
-          bv.block(b).local_element(i) = random_value<double>();
+      for(unsigned int b= 0; b < nb; ++b)
+        for(unsigned int i= 0; i < bv.block(b).local_size(); ++i)
+          bv.block(b).local_element(i)= random_value<double>();
 
       transfer.copy_to_mg(mgdof, lbv2, bv);
       // Also check that the block vector has its (global) size set on each level:
-      for(unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
+      for(unsigned int l= lv.min_level(); l <= lv.max_level(); ++l)
         {
-          unsigned int total_size = 0;
-          for(unsigned int b = 0; b < nb; ++b)
-            total_size += lbv2[l].block(b).size();
+          unsigned int total_size= 0;
+          for(unsigned int b= 0; b < nb; ++b)
+            total_size+= lbv2[l].block(b).size();
 
           AssertThrow(total_size == lbv2[l].size(),
                       ExcDimensionMismatch(total_size, lbv2[l].size()));
         }
 
       // Finally check the difference:
-      for(unsigned int b = 0; b < nb; ++b)
+      for(unsigned int b= 0; b < nb; ++b)
         {
-          v = bv.block(b);
+          v= bv.block(b);
           transfer_ref.copy_to_mg(mgdof, lv, v);
-          for(unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
+          for(unsigned int l= lv.min_level(); l <= lv.max_level(); ++l)
             {
-              lv[l] -= lbv2[l].block(b);
+              lv[l]-= lbv2[l].block(b);
               deallog << "Diff copy_to_mg   l" << l << ": " << lv[l].l2_norm()
                       << std::endl;
             }

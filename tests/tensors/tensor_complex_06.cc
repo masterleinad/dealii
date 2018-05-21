@@ -24,9 +24,9 @@ void
 test_tensor_01()
 {
   Tensor<1, dim, std::complex<double>> t;
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      t[i] = std::complex<double>(i, 1);
+      t[i]= std::complex<double>(i, 1);
     }
   const Tensor<1, dim, std::complex<double>> res
     = t * std::complex<double>(1, 2);
@@ -39,9 +39,9 @@ void
 test_tensor_02()
 {
   Tensor<1, dim, std::complex<double>> t;
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      t[i] = std::complex<double>(1, i);
+      t[i]= std::complex<double>(1, i);
     }
   const Tensor<1, dim, std::complex<double>> res
     = t * std::complex<double>(1, 2);

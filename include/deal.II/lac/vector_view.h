@@ -202,7 +202,7 @@ public:
    * call this reinit function if you really know what you are doing.
    */
   virtual void
-  reinit(const size_type N, const bool omit_zeroing_entries = false) override;
+  reinit(const size_type N, const bool omit_zeroing_entries= false) override;
 
   /**
    * This reinit function is equivalent to constructing a new object with the
@@ -235,8 +235,8 @@ public:
 template <typename Number>
 inline VectorView<Number>::VectorView(const size_type new_size, Number* ptr)
 {
-  this->vec_size     = new_size;
-  this->max_vec_size = new_size;
+  this->vec_size    = new_size;
+  this->max_vec_size= new_size;
   // release the pointer, but do not delete the object pointed to
   this->values.release();
   this->values.reset(ptr);
@@ -246,8 +246,8 @@ template <typename Number>
 inline VectorView<Number>::VectorView(const size_type new_size,
                                       const Number*   ptr)
 {
-  this->vec_size     = new_size;
-  this->max_vec_size = new_size;
+  this->vec_size    = new_size;
+  this->max_vec_size= new_size;
   this->values.reset(const_cast<Number*>(ptr));
 }
 
@@ -256,8 +256,8 @@ inline VectorView<Number>::~VectorView()
 {
   // avoid that the base class releases
   // memory it doesn't own
-  this->vec_size     = 0;
-  this->max_vec_size = 0;
+  this->vec_size    = 0;
+  this->max_vec_size= 0;
 
   // release the pointer, but do not delete the object pointed to
   this->values.release();
@@ -267,8 +267,8 @@ template <typename Number>
 inline void
 VectorView<Number>::reinit(const size_type N, const bool omit_zeroing_entries)
 {
-  this->vec_size     = N;
-  this->max_vec_size = N;
+  this->vec_size    = N;
+  this->max_vec_size= N;
   if(omit_zeroing_entries == false)
     Vector<Number>::operator=(static_cast<Number>(0));
 }
@@ -277,8 +277,8 @@ template <typename Number>
 inline void
 VectorView<Number>::reinit(const size_type new_size, Number* ptr)
 {
-  this->vec_size     = new_size;
-  this->max_vec_size = new_size;
+  this->vec_size    = new_size;
+  this->max_vec_size= new_size;
   // release the pointer, but do not delete the object pointed to
   this->values.release();
   this->values.reset(ptr);
@@ -288,8 +288,8 @@ template <typename Number>
 inline void
 VectorView<Number>::reinit(const size_type new_size, const Number* ptr)
 {
-  this->vec_size     = new_size;
-  this->max_vec_size = new_size;
+  this->vec_size    = new_size;
+  this->max_vec_size= new_size;
   // release the pointer, but do not delete the object pointed to
   this->values.release();
   this->values.reset(const_cast<Number*>(ptr));

@@ -29,27 +29,27 @@ test(TrilinosWrappers::MPI::Vector& v)
   // set only certain elements of the
   // vector.
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) += i;
-      pattern[i] = true;
+      v(i)+= i;
+      pattern[i]= true;
     }
 
   v.compress(VectorOperation::add);
 
   Vector<double> w(v.size());
-  w = v;
+  w= v;
   Vector<float> x(v.size());
-  x = v;
+  x= v;
 
   TrilinosWrappers::MPI::Vector w1;
   w1.reinit(complete_index_set(v.size()), MPI_COMM_WORLD);
-  w1 = w;
+  w1= w;
   TrilinosWrappers::MPI::Vector x1;
   x1.reinit(complete_index_set(v.size()), MPI_COMM_WORLD);
-  x1 = x;
+  x1= x;
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w1(i) == w(i), ExcInternalError());
       AssertThrow(x1(i) == x(i), ExcInternalError());

@@ -37,11 +37,11 @@ test()
   // test on a built-in array
   {
     int  v[10];
-    auto a = make_array_view(std::begin(v) + 1, std::end(v));
+    auto a= make_array_view(std::begin(v) + 1, std::end(v));
     AssertThrow(a.begin() == v + 1, ExcInternalError());
     AssertThrow(a.end() == v + sizeof(v) / sizeof(v[0]), ExcInternalError());
     AssertThrow(a.begin() + 2 == &v[3], ExcInternalError());
-    a[2] = 42;
+    a[2]= 42;
     AssertThrow(v[3] == 42, ExcInternalError());
 
     // check that we cannot create a backwards array
@@ -59,14 +59,14 @@ test()
   {
     std::array<double, 10> v;
     std::fill(v.begin(), v.end(), 42.0);
-    const std::array<double, 10>& v2 = v;
-    const auto                    a  = make_array_view(v2.begin(), v2.end());
+    const std::array<double, 10>& v2= v;
+    const auto                    a = make_array_view(v2.begin(), v2.end());
     static_assert(is_const_reference<decltype(*a.begin())>(),
                   "type should be const");
     static_assert(is_const_reference<decltype(*a.end())>(),
                   "type should be const");
 
-    v[5] = 10;
+    v[5]= 10;
     AssertThrow(a[5] == 10, ExcInternalError());
   }
 
@@ -74,7 +74,7 @@ test()
   {
     std::vector<double> v(10);
     std::fill(v.begin(), v.end(), 42.0);
-    auto a = make_array_view(v.cbegin() + 2, v.cend());
+    auto a= make_array_view(v.cbegin() + 2, v.cend());
     // a should be ArrayView<const double>
     static_assert(!std::is_const<decltype(a)>::value,
                   "a should not be const (but has const value)");
@@ -84,7 +84,7 @@ test()
                   "type should be const");
     static_assert(is_const_reference<decltype(*a.end())>(),
                   "type should be const");
-    v[2] = 10.0;
+    v[2]= 10.0;
     AssertThrow(a[0] == v[2], ExcInternalError());
   }
 
@@ -93,7 +93,7 @@ test()
     boost::container::static_vector<double, 20> v(10);
     std::fill(v.begin(), v.end(), 42.0);
 
-    const auto a = make_array_view(v.cbegin() + 2, v.cend());
+    const auto a= make_array_view(v.cbegin() + 2, v.cend());
     AssertThrow(a.size() + 2 == v.size(), ExcInternalError());
     // some older versions of boost (1.57 in particular) do not implement
     // static_vector::cbegin() and static_vector::cend() correctly, so ignore
@@ -109,7 +109,7 @@ test()
     static_assert(is_const_reference<decltype(*a.end())>(),
                   "type should be const");
 #endif
-    v[2] = 10.0;
+    v[2]= 10.0;
     AssertThrow(a[0] == v[2], ExcInternalError());
 
     // check that we cannot create a backwards array

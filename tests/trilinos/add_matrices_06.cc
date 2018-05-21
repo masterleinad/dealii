@@ -30,8 +30,8 @@ test(TrilinosWrappers::SparseMatrix& m)
   TrilinosWrappers::SparseMatrix m2(m.m(), m.n(), 0), m3(m.m(), m.n(), 0);
 
   // first set a few entries one-by-one
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
       if((i + 2 * j + 1) % 3 == 0 || i == j)
         {
           m.set(i, j, i * j * .5 + .5);
@@ -51,7 +51,7 @@ test(TrilinosWrappers::SparseMatrix& m)
   m.add(0.12, m3);
 
   Vector<double> src(m.m()), dst(m.m());
-  src = 1.;
+  src= 1.;
 
   TrilinosWrappers::PreconditionJacobi prec;
   prec.initialize(m);

@@ -48,12 +48,12 @@ void check_this(Triangulation<3>& tria)
   DoFHandler<3> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
-  DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+  DoFHandler<3>::active_cell_iterator cell= dof_handler.begin_active();
   for(; cell != dof_handler.end(); ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<3>::faces_per_cell;
+    for(unsigned int face_no= 0; face_no < GeometryInfo<3>::faces_per_cell;
         ++face_no)
       if(!cell->at_boundary(face_no) && cell->neighbor(face_no)->has_children())
-        for(unsigned int subface_no = 0;
+        for(unsigned int subface_no= 0;
             subface_no < GeometryInfo<3>::max_children_per_face;
             ++subface_no)
           {
@@ -69,7 +69,7 @@ void check_this(Triangulation<3>& tria)
             fe_face_values1.reinit(neighbor_child, neighbor_neighbor);
             fe_face_values2.reinit(cell, face_no, subface_no);
 
-            for(unsigned int q = 0; q < quadrature.size(); ++q)
+            for(unsigned int q= 0; q < quadrature.size(); ++q)
               {
                 AssertThrow((fe_face_values1.quadrature_point(q)
                              - fe_face_values2.quadrature_point(q))
@@ -98,7 +98,7 @@ void check(Triangulation<3>& tria)
   deallog << "Initial check" << std::endl;
   check_this(tria);
 
-  for(unsigned int r = 0; r < 3; ++r)
+  for(unsigned int r= 0; r < 3; ++r)
     {
       tria.refine_global(1);
       deallog << "Check " << r << std::endl;

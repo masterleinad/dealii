@@ -50,11 +50,11 @@ test()
   // circle to be of type FE_Q(1)
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; cell++)
     {
-      Point<dim> center = cell->center();
+      Point<dim> center= cell->center();
       if(std::sqrt(center.square()) < 0.5)
         cell->set_active_fe_index(1);
       else

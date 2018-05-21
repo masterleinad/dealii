@@ -53,11 +53,11 @@ test()
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, n_cells, left_bottom, right_top, true);
 
-  Triangulation<2>::active_cell_iterator cell = triangulation.begin_active(),
-                                         endc = triangulation.end();
+  Triangulation<2>::active_cell_iterator cell= triangulation.begin_active(),
+                                         endc= triangulation.end();
   for(; cell != endc; ++cell)
     {
-      Point<2> cell_center = cell->center();
+      Point<2> cell_center= cell->center();
       if(std::abs(cell_center(0) - 1500) < 550)
         {
           cell->set_refine_flag();

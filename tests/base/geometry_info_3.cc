@@ -24,8 +24,8 @@ test()
 {
   deallog << "Checking in " << dim << "d" << std::endl;
 
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+  for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
       {
         deallog << "Face " << f << ", vertex=" << v << ": ";
         deallog << GeometryInfo<dim>::face_to_cell_vertices(f, v, true)
@@ -33,8 +33,8 @@ test()
       }
 
   if(dim == 3)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
         {
           deallog << "Face " << f << ", vertex=" << v
                   << " (reverse orientation): ";

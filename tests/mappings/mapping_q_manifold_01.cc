@@ -39,7 +39,7 @@ using namespace dealii;
 double
 zvalue(const double x, const double y)
 {
-  double xh = x * 5., yh = y * 5.;
+  double xh= x * 5., yh= y * 5.;
   return (xh * exp(-xh * xh - yh * yh)) / 10.;
 }
 
@@ -59,19 +59,19 @@ template <int dim>
 Point<dim>
 Geometry<dim>::pull_back(const Point<dim>& space_point) const
 {
-  const double d = space_point[dim - 1];
-  const double z = zvalue(space_point[0], dim == 3 ? space_point[1] : 0);
+  const double d= space_point[dim - 1];
+  const double z= zvalue(space_point[0], dim == 3 ? space_point[1] : 0);
 
-  double d_hat = 0.;
+  double d_hat= 0.;
   if((d - z) <= 0)
-    d_hat = (d - z) / (1. + z);
+    d_hat= (d - z) / (1. + z);
   else
-    d_hat = (d - z) / (1. - z);
+    d_hat= (d - z) / (1. - z);
 
   Point<dim> p;
-  for(unsigned i = 0; i < dim - 1; ++i)
-    p[i] = space_point[i];
-  p[dim - 1] = d_hat;
+  for(unsigned i= 0; i < dim - 1; ++i)
+    p[i]= space_point[i];
+  p[dim - 1]= d_hat;
 
   return p;
 }
@@ -80,19 +80,19 @@ template <int dim>
 Point<dim>
 Geometry<dim>::push_forward(const Point<dim>& chart_point) const
 {
-  const double d_hat = chart_point[dim - 1];
-  const double z     = zvalue(chart_point[0], dim == 3 ? chart_point[1] : 0);
+  const double d_hat= chart_point[dim - 1];
+  const double z    = zvalue(chart_point[0], dim == 3 ? chart_point[1] : 0);
 
-  double d = 0.;
+  double d= 0.;
   if(d_hat <= 0)
-    d = d_hat + (d_hat + 1.) * z;
+    d= d_hat + (d_hat + 1.) * z;
   else
-    d = d_hat - (d_hat - 1.) * z;
+    d= d_hat - (d_hat - 1.) * z;
 
   Point<dim> p;
-  for(unsigned i = 0; i < dim - 1; ++i)
-    p[i] = chart_point[i];
-  p[dim - 1] = d;
+  for(unsigned i= 0; i < dim - 1; ++i)
+    p[i]= chart_point[i];
+  p[dim - 1]= d;
 
   return p;
 }
@@ -136,8 +136,8 @@ template <int dim>
 void
 VectorFunction<dim>::value(const Point<dim>& p, Vector<double>& values) const
 {
-  for(unsigned i = 0; i < values.size(); ++i)
-    values[i] = value(p, i);
+  for(unsigned i= 0; i < values.size(); ++i)
+    values[i]= value(p, i);
 }
 
 template <int dim>
@@ -145,8 +145,8 @@ void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
                                   Vector<double>&   values) const
 {
-  for(int i = 0; i < dim; ++i)
-    values(i) = value(p, i);
+  for(int i= 0; i < dim; ++i)
+    values(i)= value(p, i);
 }
 
 template <int dim>
@@ -162,8 +162,7 @@ create_tria(Triangulation<dim>& triangulation, const Geometry<dim>& geometry)
                        triangulation);
 
   triangulation.set_manifold(0, geometry);
-  for(Triangulation<3>::active_cell_iterator cell
-      = triangulation.begin_active();
+  for(Triangulation<3>::active_cell_iterator cell= triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
     cell->set_all_manifold_ids(0);
@@ -185,7 +184,7 @@ test(const FiniteElement<dim>& fe)
 
   VectorFunction<dim> fe_function(fe.n_components());
 
-  for(unsigned mapping_p = 1; mapping_p <= 5; ++mapping_p)
+  for(unsigned mapping_p= 1; mapping_p <= 5; ++mapping_p)
     {
       MappingQ<dim> mapping(mapping_p, true);
 
@@ -231,9 +230,9 @@ main()
   deallog.attach(std::cout);
   deallog.depth_console(0);
 
-  const static unsigned dim = 3;
+  const static unsigned dim= 3;
 
-  for(unsigned p = 1; p < 5; ++p)
+  for(unsigned p= 1; p < 5; ++p)
     {
       test<dim>(FE_Q<dim>(QGaussLobatto<1>(p + 1)));
 

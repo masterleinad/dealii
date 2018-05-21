@@ -45,11 +45,11 @@ test()
   tr.refine_global(2);
 
   hp::FECollection<dim> fe;
-  for(unsigned int i = 1; i < 5; ++i)
+  for(unsigned int i= 1; i < 5; ++i)
     fe.push_back(FE_Q<dim>(i));
 
   hp::DoFHandler<dim> dof_handler(tr);
-  for(typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+  for(typename hp::DoFHandler<dim>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
     if(cell->has_children() == false)
@@ -59,19 +59,19 @@ test()
 
   // create a mostly arbitrary FE field
   Vector<double> solution(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < solution.size(); ++i)
-    solution(i) = i;
+  for(unsigned int i= 0; i < solution.size(); ++i)
+    solution(i)= i;
 
   // try to interpolate from the active cell onto the coarsest cell,
   // which is definitely not active. this can't work, so expect an
   // exception for both the call to cell->get_fe() and the call to
   // cell->get_interpolated_dof_values
-  typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin(0);
+  typename hp::DoFHandler<dim>::cell_iterator cell= dof_handler.begin(0);
 
-  unsigned int dofs_per_cell = 4;
+  unsigned int dofs_per_cell= 4;
   try
     {
-      dofs_per_cell = cell->get_fe().dofs_per_cell;
+      dofs_per_cell= cell->get_fe().dofs_per_cell;
     }
   catch(const ExceptionBase& e)
     {

@@ -55,19 +55,19 @@ test()
   // ids based on their position, in
   // particular we take the quadrant
   // (octant)
-  active_cell_iterator cell = tria.begin_active(), endc = tria.end();
+  active_cell_iterator cell= tria.begin_active(), endc= tria.end();
   for(; cell != endc; ++cell)
     {
-      unsigned int subdomain = 0;
-      for(unsigned int d = 0; d < 2; ++d)
+      unsigned int subdomain= 0;
+      for(unsigned int d= 0; d < 2; ++d)
         if(cell->center()(d) > 0)
-          subdomain |= (1 << d);
+          subdomain|= (1 << d);
       AssertThrow(subdomain < (1 << 2), ExcInternalError());
 
       cell->set_subdomain_id(subdomain);
     };
 
-  std::ostream& logfile = deallog.get_file_stream();
+  std::ostream& logfile= deallog.get_file_stream();
 
   // check 1: count number of cells
   // on some level

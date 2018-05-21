@@ -28,7 +28,7 @@
 // Helper function
 template <int dim, int spacedim>
 void
-test(unsigned int ref = 1)
+test(unsigned int ref= 1)
 {
   deallog << "Testing dim " << dim << ", spacedim " << spacedim << std::endl;
 
@@ -39,12 +39,12 @@ test(unsigned int ref = 1)
   switch(spacedim)
     {
       case 2:
-        push_forward_expression = "x; y";
-        pull_back_expression    = "x; y";
+        push_forward_expression= "x; y";
+        pull_back_expression   = "x; y";
         break;
       case 3:
-        push_forward_expression = "x; y; z";
-        pull_back_expression    = "x; y; z";
+        push_forward_expression= "x; y; z";
+        pull_back_expression   = "x; y; z";
         break;
       default:
         Assert(false, ExcInternalError());

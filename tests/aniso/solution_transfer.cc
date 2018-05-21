@@ -42,9 +42,9 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int) const
   {
-    double ret_value = sin(p[0] * 4) * cos(p[1] * 4);
+    double ret_value= sin(p[0] * 4) * cos(p[1] * 4);
     if(dim == 3)
-      ret_value *= sin(5 * p[2] + 1);
+      ret_value*= sin(5 * p[2] + 1);
     return ret_value;
   };
 };
@@ -77,8 +77,8 @@ transfer(std::ostream& out)
   SolutionTransfer<dim> soltrans(dof_handler);
 
   // test a): pure refinement
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
     cell->set_refine_flag(RefinementCase<dim>::cut_x);
 
@@ -90,7 +90,7 @@ transfer(std::ostream& out)
   Vector<double> new_solution(dof_handler.n_dofs());
   soltrans.refine_interpolate(solution, new_solution);
   solution.reinit(dof_handler.n_dofs());
-  solution = new_solution;
+  solution= new_solution;
 
   data_out.clear_data_vectors();
   data_out.add_data_vector(solution, "solution");
@@ -102,11 +102,11 @@ transfer(std::ostream& out)
 
   // test b): with coarsening
   SolutionTransfer<dim> soltrans2(dof_handler);
-  cell = tria.begin_active(tria.n_levels() - 1);
-  endc = tria.end(tria.n_levels() - 1);
+  cell= tria.begin_active(tria.n_levels() - 1);
+  endc= tria.end(tria.n_levels() - 1);
   for(; cell != endc; ++cell)
     cell->set_coarsen_flag();
-  Vector<double> old_solution = solution;
+  Vector<double> old_solution= solution;
   tria.prepare_coarsening_and_refinement();
   soltrans2.prepare_for_coarsening_and_refinement(old_solution);
   tria.execute_coarsening_and_refinement();

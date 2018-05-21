@@ -24,8 +24,8 @@ template <class Prec>
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // only proc 0 and 1 own rows
   IndexSet rows(4 * n_procs);
@@ -41,22 +41,22 @@ test()
   TrilinosWrappers::SparseMatrix mat(rows, rows, MPI_COMM_WORLD);
   for(const auto& row : rows)
     {
-      const unsigned int i = row;
+      const unsigned int i= row;
       mat.set(i, i, 100.);
-      for(unsigned int j = 0; j < mat.n(); ++j)
+      for(unsigned int j= 0; j < mat.n(); ++j)
         if(i != j)
           mat.set(i, j, i * j * .5 + .5);
     }
 
-  for(unsigned int i = 0; i < src.size(); ++i)
-    src(i) = i;
+  for(unsigned int i= 0; i < src.size(); ++i)
+    src(i)= i;
 
   mat.compress(VectorOperation::insert);
   src.compress(VectorOperation::insert);
 
   Prec                          preconditioner;
   typename Prec::AdditionalData data;
-  data.block_size = 4;
+  data.block_size= 4;
 
   preconditioner.initialize(mat, data);
   preconditioner.vmult(dst, src);

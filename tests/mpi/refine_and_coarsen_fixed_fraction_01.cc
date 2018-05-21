@@ -32,28 +32,28 @@
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<2> tr(MPI_COMM_WORLD);
 
   std::vector<unsigned int> sub(2);
-  sub[0] = 5 * Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  sub[1] = 1;
+  sub[0]= 5 * Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  sub[1]= 1;
   GridGenerator::subdivided_hyper_rectangle(
     static_cast<Triangulation<2>&>(tr), sub, Point<2>(0, 0), Point<2>(1, 1));
   tr.refine_global(1);
 
   Vector<float> indicators(tr.n_active_cells());
   {
-    unsigned int cell_index    = 0;
-    unsigned int my_cell_index = 0;
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+    unsigned int cell_index   = 0;
+    unsigned int my_cell_index= 0;
+    for(Triangulation<2>::active_cell_iterator cell= tr.begin_active();
         cell != tr.end();
         ++cell, ++cell_index)
       if(cell->subdomain_id() == myid)
         {
           ++my_cell_index;
-          indicators(cell_index) = my_cell_index;
+          indicators(cell_index)= my_cell_index;
         }
     AssertThrow(my_cell_index == 20, ExcInternalError());
   }
@@ -75,8 +75,8 @@ test()
   // flagged for refinement and
   // coarsening. we have to
   // accumulate over all processors
-  unsigned int my_refined = 0, my_coarsened = 0;
-  for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+  unsigned int my_refined= 0, my_coarsened= 0;
+  for(Triangulation<2>::active_cell_iterator cell= tr.begin_active();
       cell != tr.end();
       ++cell)
     if(cell->refine_flag_set())
@@ -84,7 +84,7 @@ test()
     else if(cell->coarsen_flag_set())
       ++my_coarsened;
 
-  unsigned int n_refined = 0, n_coarsened = 0;
+  unsigned int n_refined= 0, n_coarsened= 0;
   MPI_Reduce(
     &my_refined, &n_refined, 1, MPI_UNSIGNED, MPI_SUM, 0, MPI_COMM_WORLD);
   MPI_Reduce(
@@ -121,7 +121,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

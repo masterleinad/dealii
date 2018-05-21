@@ -29,13 +29,13 @@ template <>
 void
 test<2, 2>()
 {
-  const int                            dim      = 2;
-  const int                            spacedim = 2;
+  const int                            dim     = 2;
+  const int                            spacedim= 2;
   Triangulation<dim, spacedim>         tria;
   Point<spacedim>                      origin;
   std::array<Tensor<1, spacedim>, dim> edges;
-  edges[0] = Point<spacedim>(2.0, 0.0) - Point<spacedim>();
-  edges[1] = Point<spacedim>(0.2, 0.8) - Point<spacedim>();
+  edges[0]= Point<spacedim>(2.0, 0.0) - Point<spacedim>();
+  edges[1]= Point<spacedim>(0.2, 0.8) - Point<spacedim>();
   GridGenerator::subdivided_parallelepiped<dim, spacedim>(tria, origin, edges);
 
   //GridOut().write_gnuplot (tria, deallog.get_file_stream());
@@ -51,11 +51,11 @@ test()
   Triangulation<dim, spacedim>         tria;
   Point<spacedim>                      origin(0.1, 0.2, 0.3);
   std::array<Tensor<1, spacedim>, dim> edges;
-  edges[0] = Point<spacedim>(2.0, 0.0, 0.1) - Point<spacedim>();
+  edges[0]= Point<spacedim>(2.0, 0.0, 0.1) - Point<spacedim>();
   if(dim >= 2)
-    edges[1] = Point<spacedim>(0.2, 0.8, 0.15) - Point<spacedim>();
+    edges[1]= Point<spacedim>(0.2, 0.8, 0.15) - Point<spacedim>();
   if(dim >= 3)
-    edges[2] = Point<spacedim>(0.0, 0.0, 0.1) - Point<spacedim>();
+    edges[2]= Point<spacedim>(0.0, 0.0, 0.1) - Point<spacedim>();
 
   GridGenerator::subdivided_parallelepiped<dim, spacedim>(tria, origin, edges);
 

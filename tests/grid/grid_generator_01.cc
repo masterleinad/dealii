@@ -26,35 +26,35 @@ void
 test(std::ostream& out)
 {
   Point<dim> p1;
-  p1[0] = 2.;
+  p1[0]= 2.;
   if(dim > 1)
-    p1[1] = -1.;
+    p1[1]= -1.;
   if(dim > 2)
-    p1[2] = 0.;
+    p1[2]= 0.;
   Point<dim> p2;
-  p2[0] = 3.;
+  p2[0]= 3.;
   if(dim > 1)
-    p2[1] = 2.;
+    p2[1]= 2.;
   if(dim > 2)
-    p2[2] = 4.;
+    p2[2]= 4.;
   Point<dim> p3;
-  p3[0] = 2.;
+  p3[0]= 2.;
   if(dim > 1)
-    p3[1] = 1.;
+    p3[1]= 1.;
   if(dim > 2)
-    p3[2] = 4.;
+    p3[2]= 4.;
 
   GridOut            go;
   GridOutFlags::XFig xfig_flags;
-  xfig_flags.fill_style = 25;
+  xfig_flags.fill_style= 25;
 
   go.set_flags(xfig_flags);
 
-  GridOut::OutputFormat format = GridOut::gnuplot;
+  GridOut::OutputFormat format= GridOut::gnuplot;
   if(dim == 2)
-    format = GridOut::xfig;
+    format= GridOut::xfig;
   if(dim == 3)
-    format = GridOut::dx;
+    format= GridOut::dx;
 
   if(true)
     {
@@ -85,11 +85,11 @@ test(std::ostream& out)
       deallog << "subdivided_hyper_rectangle" << std::endl;
       Triangulation<dim>        tr;
       std::vector<unsigned int> sub(dim);
-      sub[0] = 2;
+      sub[0]= 2;
       if(dim > 1)
-        sub[1] = 3;
+        sub[1]= 3;
       if(dim > 2)
-        sub[2] = 4;
+        sub[2]= 4;
       GridGenerator::subdivided_hyper_rectangle(tr, sub, p1, p2, true);
       if(tr.n_cells() > 0)
         go.write(tr, out, format);
@@ -99,11 +99,11 @@ test(std::ostream& out)
       deallog << "parallelogram" << std::endl;
       Triangulation<dim> tr;
       Point<dim>         corners[dim];
-      corners[0] = p1;
+      corners[0]= p1;
       if(dim > 1)
-        corners[1] = p2;
+        corners[1]= p2;
       if(dim > 2)
-        corners[2] = p3;
+        corners[2]= p3;
       GridGenerator::parallelogram(tr, corners, true);
       if(tr.n_cells() > 0)
         go.write(tr, out, format);

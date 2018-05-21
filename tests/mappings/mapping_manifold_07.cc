@@ -29,17 +29,17 @@ template <int dim, int spacedim>
 void
 test()
 {
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream& out= deallog.get_file_stream();
 
   out << "# dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
   Triangulation<dim, spacedim> triangulation;
 
   Point<spacedim> center;
-  center[0] = 1.5;
-  center[1] = 2.5;
+  center[0]= 1.5;
+  center[1]= 2.5;
 
-  double radius = 1.0;
+  double radius= 1.0;
 
   static const PolarManifold<dim, spacedim> manifold(center);
   GridGenerator::hyper_ball(triangulation, center, radius);
@@ -47,7 +47,7 @@ test()
   triangulation.set_all_manifold_ids_on_boundary(0);
   triangulation.set_manifold(0, manifold);
 
-  for(unsigned int cycle = 0; cycle < 4; ++cycle)
+  for(unsigned int cycle= 0; cycle < 4; ++cycle)
     {
       MappingManifold<dim, spacedim> map_manifold;
       FE_Q<dim, spacedim>            fe(1);
@@ -55,18 +55,18 @@ test()
 
       FEFaceValues<dim, spacedim> fe_v(
         map_manifold, fe, quad, update_JxW_values);
-      double area = 0;
+      double area= 0;
 
       for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
           = triangulation.begin_active();
           cell != triangulation.end();
           ++cell)
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
           if(cell->face(f)->at_boundary())
             {
               fe_v.reinit(cell, f);
-              for(unsigned int i = 0; i < quad.size(); ++i)
-                area += fe_v.JxW(i);
+              for(unsigned int i= 0; i < quad.size(); ++i)
+                area+= fe_v.JxW(i);
             }
       deallog << "Cycle	      : " << cycle << std::endl;
       deallog << "Surface Area  : " << area << std::endl;

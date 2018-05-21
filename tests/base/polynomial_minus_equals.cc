@@ -38,21 +38,21 @@ main()
   //      should always be zero
 
   //      check polynomials up to order 32
-  const unsigned int p_dim = 32;
+  const unsigned int p_dim= 32;
 
   std::vector<double> coefficients_a;
 
   //      arbitrary point
-  double evalutation_number = 12.123;
+  double evalutation_number= 12.123;
 
-  for(unsigned int pp = 0; pp < p_dim; pp++)
+  for(unsigned int pp= 0; pp < p_dim; pp++)
     {
       coefficients_a.push_back(pp);
 
       Polynomials::Polynomial<double> test_poly_a(coefficients_a);
       Polynomials::Polynomial<double> test_poly_b(coefficients_a);
 
-      test_poly_b -= test_poly_a;
+      test_poly_b-= test_poly_a;
 
       deallog << test_poly_b.value(evalutation_number) << std::endl;
     }

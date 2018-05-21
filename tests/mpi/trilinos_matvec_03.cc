@@ -30,11 +30,11 @@
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int my_id   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  const unsigned int n_rows = 3;
-  const unsigned int n_cols = 4;
+  const unsigned int n_rows= 3;
+  const unsigned int n_cols= 4;
 
   IndexSet row_partitioning(n_rows);
   IndexSet col_partitioning(n_cols);
@@ -87,22 +87,22 @@ test()
     col_partitioning, col_partitioning, MPI_COMM_WORLD),
     dy(row_partitioning, row_partitioning, MPI_COMM_WORLD);
 
-  for(unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
+  for(unsigned int i= 0; i < col_partitioning.n_elements(); ++i)
     {
-      const unsigned int global_index = col_partitioning.nth_index_in_set(i);
-      dx(global_index)                = random_value<double>();
-      x(global_index)                 = dx(global_index);
+      const unsigned int global_index= col_partitioning.nth_index_in_set(i);
+      dx(global_index)               = random_value<double>();
+      x(global_index)                = dx(global_index);
     }
-  dy = 1.;
+  dy= 1.;
 
   A.vmult(y, x);
   A.vmult(dy, dx);
 
   // compare whether we got the same result
   // (should be no roundoff difference)
-  for(unsigned int i = 0; i < row_partitioning.n_elements(); ++i)
+  for(unsigned int i= 0; i < row_partitioning.n_elements(); ++i)
     {
-      const unsigned int global_index = row_partitioning.nth_index_in_set(i);
+      const unsigned int global_index= row_partitioning.nth_index_in_set(i);
       AssertThrow(dy(global_index) == y(global_index), ExcInternalError());
     }
 
@@ -111,25 +111,25 @@ test()
 
   // compare whether we got the same result
   // (should be no roundoff difference)
-  for(unsigned int i = 0; i < row_partitioning.n_elements(); ++i)
+  for(unsigned int i= 0; i < row_partitioning.n_elements(); ++i)
     {
-      const unsigned int global_index = row_partitioning.nth_index_in_set(i);
+      const unsigned int global_index= row_partitioning.nth_index_in_set(i);
       AssertThrow(dy(global_index) == y(global_index), ExcInternalError());
     }
 
   A.Tvmult(x, y);
   A.Tvmult(dx, dy);
-  for(unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
+  for(unsigned int i= 0; i < col_partitioning.n_elements(); ++i)
     {
-      const unsigned int global_index = col_partitioning.nth_index_in_set(i);
+      const unsigned int global_index= col_partitioning.nth_index_in_set(i);
       AssertThrow(dx(global_index) == x(global_index), ExcInternalError());
     }
 
   A.Tvmult_add(x, y);
   A.Tvmult_add(dx, dy);
-  for(unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
+  for(unsigned int i= 0; i < col_partitioning.n_elements(); ++i)
     {
-      const unsigned int global_index = col_partitioning.nth_index_in_set(i);
+      const unsigned int global_index= col_partitioning.nth_index_in_set(i);
       AssertThrow(dx(global_index) == x(global_index), ExcInternalError());
     }
 
@@ -143,8 +143,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int       myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

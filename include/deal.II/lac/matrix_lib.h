@@ -64,7 +64,7 @@ public:
   /**
    * Constructor, optionally selecting a component.
    */
-  MeanValueFilter(const size_type component = numbers::invalid_size_type);
+  MeanValueFilter(const size_type component= numbers::invalid_size_type);
 
   /**
    * Subtract mean value from @p v.

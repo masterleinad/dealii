@@ -37,7 +37,7 @@
 
 bool inside(Triangulation<3>& tria, Point<3>& p)
 {
-  for(Triangulation<3>::cell_iterator cell = tria.begin(0); cell != tria.end(0);
+  for(Triangulation<3>::cell_iterator cell= tria.begin(0); cell != tria.end(0);
       ++cell)
     if(cell->point_inside(p))
       return true;
@@ -56,8 +56,8 @@ check2()
 
   Point<3> p2(304.767, -57.0113, 254.766);
 
-  int idx = 0;
-  for(Triangulation<3>::active_cell_iterator cell = tria.begin_active();
+  int idx= 0;
+  for(Triangulation<3>::active_cell_iterator cell= tria.begin_active();
       cell != tria.end();
       ++cell, ++idx)
     {

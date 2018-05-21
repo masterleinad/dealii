@@ -43,8 +43,8 @@ check_solve(SolverType&          solver,
 {
   deallog << "Solver type: " << typeid(solver).name() << std::endl;
 
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.solve(A, u, f, P);
@@ -69,8 +69,8 @@ main()
   GrowingVectorMemory<> mem;
   SolverControl         control(100, 1.e-3);
 
-  const unsigned int size = 32;
-  unsigned int       dim  = (size - 1) * (size - 1);
+  const unsigned int size= 32;
+  unsigned int       dim = (size - 1) * (size - 1);
 
   deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -84,7 +84,7 @@ main()
 
   Vector<double> f(dim);
   Vector<double> u(dim);
-  f = 1.;
+  f= 1.;
 
   SolverQMRS<>         solver(control, mem);
   PreconditionIdentity preconditioner;

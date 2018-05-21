@@ -36,7 +36,7 @@ main()
 
   tria.refine_global(4);
 
-  auto curves = OpenCASCADE::create_curves_from_triangulation_boundary(tria);
+  auto curves= OpenCASCADE::create_curves_from_triangulation_boundary(tria);
   tria.clear();
 
   Gmsh::create_triangulation_from_boundary_curve(curves[0], tria);

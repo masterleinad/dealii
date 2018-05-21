@@ -39,7 +39,7 @@ template <>
 void
 check<2>()
 {
-  constexpr int      dim = 2;
+  constexpr int      dim= 2;
   Triangulation<dim> triangulation;
   GridGenerator::truncated_cone(triangulation);
 
@@ -52,7 +52,7 @@ template <>
 void
 check<3>()
 {
-  constexpr int      dim = 3;
+  constexpr int      dim= 3;
   Triangulation<dim> triangulation;
   GridGenerator::truncated_cone(triangulation);
   static const CylindricalManifold<dim> boundary;

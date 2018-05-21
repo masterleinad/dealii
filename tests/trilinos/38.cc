@@ -24,10 +24,10 @@
 void
 test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
-      w(i) = i + 1.;
+      v(i)= i;
+      w(i)= i + 1.;
     }
 
   v.compress(VectorOperation::insert);
@@ -36,7 +36,7 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
   v.add(w);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i + 1., ExcInternalError());
       AssertThrow(v(i) == i + (i + 1.), ExcInternalError());

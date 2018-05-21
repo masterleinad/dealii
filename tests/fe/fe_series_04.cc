@@ -59,8 +59,7 @@ public:
   {}
 
   virtual double
-  value(const dealii::Point<dim>& point,
-        const unsigned int        component = 0) const;
+  value(const dealii::Point<dim>& point, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -69,7 +68,7 @@ LegendreFunction<dim>::value(const Point<dim>& point, const unsigned int) const
 {
   Assert(dim == 1, dealii::ExcNotImplemented());
 
-  const double& x = point[0];
+  const double& x= point[0];
   return 1.81735e-05 * (1.0 - x) * (0.5 - x) * 2
          + 0.000901649 * x * (x - 0.5) * 2 + 1.35059e-05 * x * (1.0 - x) * 4.0;
 }
@@ -83,7 +82,7 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
   hp::FECollection<dim> fe_collection;
   hp::QCollection<dim>  quadrature_formula;
 
-  for(unsigned int p = poly_degree; p <= poly_degree + 3; p++)
+  for(unsigned int p= poly_degree; p <= poly_degree + 3; p++)
     {
       fe_collection.push_back(dealii::FE_Q<dim>(p));
       quadrature_formula.push_back(dealii::QGauss<dim>(p + 1 + 5));
@@ -97,7 +96,7 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
   Vector<double> values(dof_handler.n_dofs());
 
   VectorTools::interpolate(dof_handler, func, values);
-  const unsigned int      N = 4;
+  const unsigned int      N= 4;
   FESeries::Legendre<dim> legendre(N, fe_collection, quadrature_formula);
 
   Table<1, double> coeff_out(N);
@@ -106,8 +105,8 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active();
   {
-    const unsigned int cell_n_dofs          = cell->get_fe().dofs_per_cell;
-    const unsigned int cell_active_fe_index = cell->active_fe_index();
+    const unsigned int cell_n_dofs         = cell->get_fe().dofs_per_cell;
+    const unsigned int cell_active_fe_index= cell->active_fe_index();
 
     local_dof_values.reinit(cell_n_dofs);
     cell->get_dof_values(values, local_dof_values);
@@ -115,23 +114,23 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
     legendre.calculate(local_dof_values, cell_active_fe_index, coeff_out);
 
     deallog << "local dofs:";
-    for(unsigned int i = 0; i < cell_n_dofs; i++)
+    for(unsigned int i= 0; i < cell_n_dofs; i++)
       dealii::deallog << " " << local_dof_values[i];
 
     dealii::deallog << std::endl;
   }
 
   deallog << "calculated:" << std::endl;
-  for(unsigned int i = 0; i < N; i++)
+  for(unsigned int i= 0; i < N; i++)
     deallog << coeff_out[i] << std::endl;
 
   std::vector<double> coeff_exp(3);
   // coeff calculated in maxima (see MWE above):
-  coeff_exp[0] = 1.147688635236788e-4;
-  coeff_exp[1] = 3.123557585310879e-4;
-  coeff_exp[2] = 2.104375000953028e-4;
+  coeff_exp[0]= 1.147688635236788e-4;
+  coeff_exp[1]= 3.123557585310879e-4;
+  coeff_exp[2]= 2.104375000953028e-4;
   deallog << "exact:" << std::endl;
-  for(unsigned int i = 0; i < coeff_exp.size(); i++)
+  for(unsigned int i= 0; i < coeff_exp.size(); i++)
     deallog << coeff_exp[i] << std::endl;
 
   dof_handler.clear();
@@ -144,12 +143,12 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 void
 test_legendre_orthonormal(const unsigned int N)
 {
-  const unsigned int dim = 1;
+  const unsigned int dim= 1;
   deallog << "Pl @ -1;0;1" << std::endl;
-  for(unsigned int l = 0; l < N; l++)
+  for(unsigned int l= 0; l < N; l++)
     {
       deallog << "l=" << l << ": ";
-      for(double x = -1.0; x <= 1.0; x += 1.0)
+      for(double x= -1.0; x <= 1.0; x+= 1.0)
         deallog << gsl_sf_legendre_Pl(l, x) << " ";
 
       deallog << std::endl;
@@ -157,22 +156,22 @@ test_legendre_orthonormal(const unsigned int N)
 
   QGauss<dim> quadrature(8);
   deallog << "orthogonality: " << std::endl;
-  for(int k1 = 0; k1 < N; k1++)
-    for(int k2 = 0; k2 < N; k2++)
+  for(int k1= 0; k1 < N; k1++)
+    for(int k2= 0; k2 < N; k2++)
       {
-        double ortho = 0;
-        for(unsigned int q = 0; q < quadrature.size(); ++q)
+        double ortho= 0;
+        for(unsigned int q= 0; q < quadrature.size(); ++q)
           {
-            const Point<dim>& x_q = quadrature.point(q);
-            const double      m   = 0.5;              // mid-point
-            const double      h   = 0.5;              // half-length
-            const double      x   = (x_q[0] - m) / h; // 1D only
+            const Point<dim>& x_q= quadrature.point(q);
+            const double      m  = 0.5;              // mid-point
+            const double      h  = 0.5;              // half-length
+            const double      x  = (x_q[0] - m) / h; // 1D only
             Assert(std::fabs(x) < 1.0, dealii::ExcInternalError());
-            const double L1 = std::sqrt(1.0 / h) * gsl_sf_legendre_Pl(k1, x);
-            const double L2 = std::sqrt(1.0 / h) * gsl_sf_legendre_Pl(k2, x);
-            ortho += L1 * L2 * quadrature.weight(q);
+            const double L1= std::sqrt(1.0 / h) * gsl_sf_legendre_Pl(k1, x);
+            const double L2= std::sqrt(1.0 / h) * gsl_sf_legendre_Pl(k2, x);
+            ortho+= L1 * L2 * quadrature.weight(q);
           }
-        ortho *= (1.0 + k1 + k2) / 2.0;
+        ortho*= (1.0 + k1 + k2) / 2.0;
 
         deallog << "(" << k1 << "," << k2 << ") = " << ortho << std::endl;
       }
@@ -182,7 +181,7 @@ test_legendre_orthonormal(const unsigned int N)
 int
 main()
 {
-  const int dim = 1;
+  const int dim= 1;
 
   initlog();
 

@@ -46,7 +46,7 @@ void
 test()
 {
   const X               x(42);
-  Threads::Thread<void> t = Threads::new_thread(&execute, x);
+  Threads::Thread<void> t= Threads::new_thread(&execute, x);
   t.join();
 }
 

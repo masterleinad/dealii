@@ -68,10 +68,10 @@ namespace
     // MPI communication. we can do that by taking the elementwise minimum of
     // the local min and the negative maximum over all processors
 
-    const double local_min = min_element(criteria),
-                 local_max = max_element(criteria);
-    double comp[2]         = {local_min, -local_max};
-    double result[2]       = {0, 0};
+    const double local_min= min_element(criteria),
+                 local_max= max_element(criteria);
+    double comp[2]        = {local_min, -local_max};
+    double result[2]      = {0, 0};
 
     // compute the minimum on processor zero
     const int ierr
@@ -101,9 +101,9 @@ namespace
                         /* do accumulation in the correct data type: */
                         number());
 
-    double result = 0;
+    double result= 0;
     // compute the minimum on processor zero
-    const int ierr = MPI_Reduce(
+    const int ierr= MPI_Reduce(
       &my_sum, &result, 1, MPI_DOUBLE, MPI_SUM, 0, mpi_communicator);
     AssertThrowMPI(ierr);
 
@@ -129,7 +129,7 @@ namespace
              == tria.n_locally_owned_active_cells(),
            ExcInternalError());
 
-    unsigned int owned_index = 0;
+    unsigned int owned_index= 0;
     for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
         = tria.begin_active();
         cell != tria.end();
@@ -161,10 +161,10 @@ namespace
     // adjust the lower bound only if the end point is not equal to zero,
     // otherwise it could happen, that the result becomes negative
     if(interesting_range[0] > 0)
-      interesting_range[0] *= 0.99;
+      interesting_range[0]*= 0.99;
 
     if(interesting_range[1] > 0)
-      interesting_range[1] *= 1.01;
+      interesting_range[1]*= 1.01;
     else
       interesting_range[1]
         += 0.01 * (interesting_range[1] - interesting_range[0]);
@@ -215,16 +215,16 @@ namespace
         = {global_min_and_max.first, global_min_and_max.second};
       adjust_interesting_range(interesting_range);
 
-      const unsigned int master_mpi_rank = 0;
-      unsigned int       iteration       = 0;
+      const unsigned int master_mpi_rank= 0;
+      unsigned int       iteration      = 0;
 
       do
         {
-          int ierr = MPI_Bcast(interesting_range,
-                               2,
-                               MPI_DOUBLE,
-                               master_mpi_rank,
-                               mpi_communicator);
+          int ierr= MPI_Bcast(interesting_range,
+                              2,
+                              MPI_DOUBLE,
+                              master_mpi_rank,
+                              mpi_communicator);
           AssertThrowMPI(ierr);
 
           if(interesting_range[0] == interesting_range[1])
@@ -237,19 +237,19 @@ namespace
 
           // count how many of our own elements would be above this threshold
           // and then add to it the number for all the others
-          unsigned int my_count = std::count_if(
+          unsigned int my_count= std::count_if(
             criteria.begin(), criteria.end(), [test_threshold](const double c) {
               return c > test_threshold;
             });
 
           unsigned int total_count;
-          ierr = MPI_Reduce(&my_count,
-                            &total_count,
-                            1,
-                            MPI_UNSIGNED,
-                            MPI_SUM,
-                            master_mpi_rank,
-                            mpi_communicator);
+          ierr= MPI_Reduce(&my_count,
+                           &total_count,
+                           1,
+                           MPI_UNSIGNED,
+                           MPI_SUM,
+                           master_mpi_rank,
+                           mpi_communicator);
           AssertThrowMPI(ierr);
 
           // now adjust the range. if we have to many cells, we take the upper
@@ -259,11 +259,11 @@ namespace
           // results are not significant since the values will be overwritten by
           // MPI_Bcast from the master node in next loop.
           if(total_count > n_target_cells)
-            interesting_range[0] = test_threshold;
+            interesting_range[0]= test_threshold;
           else if(total_count < n_target_cells)
-            interesting_range[1] = test_threshold;
+            interesting_range[1]= test_threshold;
           else
-            interesting_range[0] = interesting_range[1] = test_threshold;
+            interesting_range[0]= interesting_range[1]= test_threshold;
 
           // terminate the iteration after 25 go-arounds. this is necessary
           // because oftentimes error indicators on cells have exactly the
@@ -276,7 +276,7 @@ namespace
           // are perfectly equidistributed
           ++iteration;
           if(iteration == 25)
-            interesting_range[0] = interesting_range[1] = test_threshold;
+            interesting_range[0]= interesting_range[1]= test_threshold;
         }
       while(true);
 
@@ -304,16 +304,16 @@ namespace
         = {global_min_and_max.first, global_min_and_max.second};
       adjust_interesting_range(interesting_range);
 
-      const unsigned int master_mpi_rank = 0;
-      unsigned int       iteration       = 0;
+      const unsigned int master_mpi_rank= 0;
+      unsigned int       iteration      = 0;
 
       do
         {
-          int ierr = MPI_Bcast(interesting_range,
-                               2,
-                               MPI_DOUBLE,
-                               master_mpi_rank,
-                               mpi_communicator);
+          int ierr= MPI_Bcast(interesting_range,
+                              2,
+                              MPI_DOUBLE,
+                              master_mpi_rank,
+                              mpi_communicator);
           AssertThrowMPI(ierr);
 
           if(interesting_range[0] == interesting_range[1])
@@ -327,11 +327,11 @@ namespace
               // largest value
               double final_threshold
                 = std::min(interesting_range[0], global_min_and_max.second);
-              ierr = MPI_Bcast(&final_threshold,
-                               1,
-                               MPI_DOUBLE,
-                               master_mpi_rank,
-                               mpi_communicator);
+              ierr= MPI_Bcast(&final_threshold,
+                              1,
+                              MPI_DOUBLE,
+                              master_mpi_rank,
+                              mpi_communicator);
               AssertThrowMPI(ierr);
 
               return final_threshold;
@@ -344,19 +344,19 @@ namespace
 
           // accumulate the error of those our own elements above this threshold
           // and then add to it the number for all the others
-          double my_error = 0;
-          for(unsigned int i = 0; i < criteria.size(); ++i)
+          double my_error= 0;
+          for(unsigned int i= 0; i < criteria.size(); ++i)
             if(criteria(i) > test_threshold)
-              my_error += criteria(i);
+              my_error+= criteria(i);
 
           double total_error;
-          ierr = MPI_Reduce(&my_error,
-                            &total_error,
-                            1,
-                            MPI_DOUBLE,
-                            MPI_SUM,
-                            master_mpi_rank,
-                            mpi_communicator);
+          ierr= MPI_Reduce(&my_error,
+                           &total_error,
+                           1,
+                           MPI_DOUBLE,
+                           MPI_SUM,
+                           master_mpi_rank,
+                           mpi_communicator);
           AssertThrowMPI(ierr);
 
           // now adjust the range. if we have to many cells, we take the upper
@@ -366,11 +366,11 @@ namespace
           // results are not significant since the values will be overwritten by
           // MPI_Bcast from the master node in next loop.
           if(total_error > target_error)
-            interesting_range[0] = test_threshold;
+            interesting_range[0]= test_threshold;
           else if(total_error < target_error)
-            interesting_range[1] = test_threshold;
+            interesting_range[1]= test_threshold;
           else
-            interesting_range[0] = interesting_range[1] = test_threshold;
+            interesting_range[0]= interesting_range[1]= test_threshold;
 
           // terminate the iteration after 25 go-arounds. this is
           // necessary because oftentimes error indicators on cells
@@ -384,7 +384,7 @@ namespace
           // perfectly equidistributed
           ++iteration;
           if(iteration == 25)
-            interesting_range[0] = interesting_range[1] = test_threshold;
+            interesting_range[0]= interesting_range[1]= test_threshold;
         }
       while(true);
 
@@ -434,7 +434,7 @@ namespace parallel
           tria.n_locally_owned_active_cells());
         get_locally_owned_indicators(tria, criteria, locally_owned_indicators);
 
-        MPI_Comm mpi_communicator = tria.get_communicator();
+        MPI_Comm mpi_communicator= tria.get_communicator();
 
         // figure out the global max and min of the indicators. we don't need it
         // here, but it's a collective communication call
@@ -443,7 +443,7 @@ namespace parallel
                                                mpi_communicator);
 
         double top_threshold, bottom_threshold;
-        top_threshold = RefineAndCoarsenFixedNumber::compute_threshold(
+        top_threshold= RefineAndCoarsenFixedNumber::compute_threshold(
           locally_owned_indicators,
           global_min_and_max,
           static_cast<unsigned int>(adjusted_fractions.first
@@ -453,7 +453,7 @@ namespace parallel
         // compute bottom threshold only if necessary. otherwise use a threshold
         // lower than the smallest value we have locally
         if(adjusted_fractions.second > 0)
-          bottom_threshold = RefineAndCoarsenFixedNumber::compute_threshold(
+          bottom_threshold= RefineAndCoarsenFixedNumber::compute_threshold(
             locally_owned_indicators,
             global_min_and_max,
             static_cast<unsigned int>((1 - adjusted_fractions.second)
@@ -463,7 +463,7 @@ namespace parallel
           {
             bottom_threshold
               = *std::min_element(criteria.begin(), criteria.end());
-            bottom_threshold -= std::fabs(bottom_threshold);
+            bottom_threshold-= std::fabs(bottom_threshold);
           }
 
         // now refine the mesh
@@ -496,7 +496,7 @@ namespace parallel
           tria.n_locally_owned_active_cells());
         get_locally_owned_indicators(tria, criteria, locally_owned_indicators);
 
-        MPI_Comm mpi_communicator = tria.get_communicator();
+        MPI_Comm mpi_communicator= tria.get_communicator();
 
         // figure out the global max and min of the indicators. we don't need it
         // here, but it's a collective communication call
@@ -507,7 +507,7 @@ namespace parallel
         const double total_error
           = compute_global_sum(locally_owned_indicators, mpi_communicator);
         double top_threshold, bottom_threshold;
-        top_threshold = RefineAndCoarsenFixedFraction::compute_threshold(
+        top_threshold= RefineAndCoarsenFixedFraction::compute_threshold(
           locally_owned_indicators,
           global_min_and_max,
           top_fraction_of_error * total_error,
@@ -515,7 +515,7 @@ namespace parallel
         // compute bottom threshold only if necessary. otherwise use a threshold
         // lower than the smallest value we have locally
         if(bottom_fraction_of_error > 0)
-          bottom_threshold = RefineAndCoarsenFixedFraction::compute_threshold(
+          bottom_threshold= RefineAndCoarsenFixedFraction::compute_threshold(
             locally_owned_indicators,
             global_min_and_max,
             (1 - bottom_fraction_of_error) * total_error,
@@ -524,7 +524,7 @@ namespace parallel
           {
             bottom_threshold
               = *std::min_element(criteria.begin(), criteria.end());
-            bottom_threshold -= std::fabs(bottom_threshold);
+            bottom_threshold-= std::fabs(bottom_threshold);
           }
 
         // now refine the mesh

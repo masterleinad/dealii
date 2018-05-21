@@ -85,7 +85,7 @@ namespace internal
             int              n_rows,
             int              n_columns,
             typename Number,
-            typename Number2 = Number>
+            typename Number2= Number>
   struct EvaluatorTensorProduct
   {};
 
@@ -137,8 +137,8 @@ namespace internal
     EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
-                           const unsigned int            dummy1 = 0,
-                           const unsigned int            dummy2 = 0)
+                           const unsigned int            dummy1= 0,
+                           const unsigned int            dummy2= 0)
       : shape_values(shape_values.begin()),
         shape_gradients(shape_gradients.begin()),
         shape_hessians(shape_hessians.begin())
@@ -233,7 +233,7 @@ namespace internal
     template <int  direction,
               bool contract_over_rows,
               bool add,
-              bool one_line = false>
+              bool one_line= false>
     static void
     apply(const Number2* DEAL_II_RESTRICT shape_data,
           const Number*                   in,
@@ -308,41 +308,41 @@ namespace internal
            ExcMessage("In-place operation only supported for "
                       "n_rows==n_columns or single-line interpolation"));
     AssertIndexRange(direction, dim);
-    constexpr int mm = contract_over_rows ? n_rows : n_columns,
-                  nn = contract_over_rows ? n_columns : n_rows;
+    constexpr int mm= contract_over_rows ? n_rows : n_columns,
+                  nn= contract_over_rows ? n_columns : n_rows;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
-    constexpr int n_blocks1 = one_line ? 1 : stride;
+    constexpr int stride   = Utilities::pow(n_columns, direction);
+    constexpr int n_blocks1= one_line ? 1 : stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
 
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
             Number x[mm];
-            for(int i = 0; i < mm; ++i)
-              x[i] = in[stride * i];
-            for(int col = 0; col < nn; ++col)
+            for(int i= 0; i < mm; ++i)
+              x[i]= in[stride * i];
+            for(int col= 0; col < nn; ++col)
               {
                 Number2 val0;
                 if(contract_over_rows == true)
-                  val0 = shape_data[col];
+                  val0= shape_data[col];
                 else
-                  val0 = shape_data[col * n_columns];
-                Number res0 = val0 * x[0];
-                for(int i = 1; i < mm; ++i)
+                  val0= shape_data[col * n_columns];
+                Number res0= val0 * x[0];
+                for(int i= 1; i < mm; ++i)
                   {
                     if(contract_over_rows == true)
-                      val0 = shape_data[i * n_columns + col];
+                      val0= shape_data[i * n_columns + col];
                     else
-                      val0 = shape_data[col * n_columns + i];
-                    res0 += val0 * x[i];
+                      val0= shape_data[col * n_columns + i];
+                    res0+= val0 * x[i];
                   }
                 if(add == false)
-                  out[stride * col] = res0;
+                  out[stride * col]= res0;
                 else
-                  out[stride * col] += res0;
+                  out[stride * col]+= res0;
               }
 
             if(one_line == false)
@@ -353,8 +353,8 @@ namespace internal
           }
         if(one_line == false)
           {
-            in += stride * (mm - 1);
-            out += stride * (nn - 1);
+            in+= stride * (mm - 1);
+            out+= stride * (nn - 1);
           }
       }
   }
@@ -385,59 +385,59 @@ namespace internal
       shape_values != nullptr,
       ExcMessage("The given array shape_values must not be the null pointer."));
 
-    constexpr int n_blocks1 = dim > 1 ? n_rows : 1;
-    constexpr int n_blocks2 = dim > 2 ? n_rows : 1;
+    constexpr int n_blocks1= dim > 1 ? n_rows : 1;
+    constexpr int n_blocks2= dim > 2 ? n_rows : 1;
 
     AssertIndexRange(face_direction, dim);
-    constexpr int stride     = Utilities::pow(n_rows, face_direction);
-    constexpr int out_stride = Utilities::pow(n_rows, dim - 1);
-    const Number* DEAL_II_RESTRICT shape_values = this->shape_values;
+    constexpr int stride    = Utilities::pow(n_rows, face_direction);
+    constexpr int out_stride= Utilities::pow(n_rows, dim - 1);
+    const Number* DEAL_II_RESTRICT shape_values= this->shape_values;
 
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
             if(contract_onto_face == true)
               {
-                Number res0 = shape_values[0] * in[0];
+                Number res0= shape_values[0] * in[0];
                 Number res1, res2;
                 if(max_derivative > 0)
-                  res1 = shape_values[n_rows] * in[0];
+                  res1= shape_values[n_rows] * in[0];
                 if(max_derivative > 1)
-                  res2 = shape_values[2 * n_rows] * in[0];
-                for(int ind = 1; ind < n_rows; ++ind)
+                  res2= shape_values[2 * n_rows] * in[0];
+                for(int ind= 1; ind < n_rows; ++ind)
                   {
-                    res0 += shape_values[ind] * in[stride * ind];
+                    res0+= shape_values[ind] * in[stride * ind];
                     if(max_derivative > 0)
-                      res1 += shape_values[ind + n_rows] * in[stride * ind];
+                      res1+= shape_values[ind + n_rows] * in[stride * ind];
                     if(max_derivative > 1)
-                      res2 += shape_values[ind + 2 * n_rows] * in[stride * ind];
+                      res2+= shape_values[ind + 2 * n_rows] * in[stride * ind];
                   }
                 if(add == false)
                   {
-                    out[0] = res0;
+                    out[0]= res0;
                     if(max_derivative > 0)
-                      out[out_stride] = res1;
+                      out[out_stride]= res1;
                     if(max_derivative > 1)
-                      out[2 * out_stride] = res2;
+                      out[2 * out_stride]= res2;
                   }
                 else
                   {
-                    out[0] += res0;
+                    out[0]+= res0;
                     if(max_derivative > 0)
-                      out[out_stride] += res1;
+                      out[out_stride]+= res1;
                     if(max_derivative > 1)
-                      out[2 * out_stride] += res2;
+                      out[2 * out_stride]+= res2;
                   }
               }
             else
               {
-                for(int col = 0; col < n_rows; ++col)
+                for(int col= 0; col < n_rows; ++col)
                   {
                     if(add == false)
-                      out[col * stride] = shape_values[col] * in[0];
+                      out[col * stride]= shape_values[col] * in[0];
                     else
-                      out[col * stride] += shape_values[col] * in[0];
+                      out[col * stride]+= shape_values[col] * in[0];
                     if(max_derivative > 0)
                       out[col * stride]
                         += shape_values[col + n_rows] * in[out_stride];
@@ -453,8 +453,8 @@ namespace internal
             switch(face_direction)
               {
                 case 0:
-                  in += contract_onto_face ? n_rows : 1;
-                  out += contract_onto_face ? 1 : n_rows;
+                  in+= contract_onto_face ? n_rows : 1;
+                  out+= contract_onto_face ? 1 : n_rows;
                   break;
                 case 1:
                   ++in;
@@ -465,9 +465,9 @@ namespace internal
                   if(dim == 3)
                     {
                       if(contract_onto_face)
-                        out += n_rows - 1;
+                        out+= n_rows - 1;
                       else
-                        in += n_rows - 1;
+                        in+= n_rows - 1;
                     }
                   break;
                 case 2:
@@ -483,13 +483,13 @@ namespace internal
             // adjust for local coordinate system zx
             if(contract_onto_face)
               {
-                in += n_rows * (n_rows - 1);
-                out -= n_rows * n_rows - 1;
+                in+= n_rows * (n_rows - 1);
+                out-= n_rows * n_rows - 1;
               }
             else
               {
-                out += n_rows * (n_rows - 1);
-                in -= n_rows * n_rows - 1;
+                out+= n_rows * (n_rows - 1);
+                in-= n_rows * n_rows - 1;
               }
           }
       }
@@ -606,7 +606,7 @@ namespace internal
     template <int  direction,
               bool contract_over_rows,
               bool add,
-              bool one_line = false>
+              bool one_line= false>
     void
     apply(const Number2* DEAL_II_RESTRICT shape_data,
           const Number*                   in,
@@ -645,44 +645,44 @@ namespace internal
            ExcMessage("In-place operation only supported for "
                       "n_rows==n_columns or single-line interpolation"));
     AssertIndexRange(direction, dim);
-    const int mm = contract_over_rows ? n_rows : n_columns,
-              nn = contract_over_rows ? n_columns : n_rows;
+    const int mm= contract_over_rows ? n_rows : n_columns,
+              nn= contract_over_rows ? n_columns : n_rows;
 
     const int stride
       = direction == 0 ? 1 : Utilities::fixed_power<direction>(n_columns);
-    const int n_blocks1 = one_line ? 1 : stride;
-    const int n_blocks2 = direction >= dim - 1 ?
-                            1 :
-                            Utilities::fixed_power<dim - direction - 1>(n_rows);
+    const int n_blocks1= one_line ? 1 : stride;
+    const int n_blocks2= direction >= dim - 1 ?
+                           1 :
+                           Utilities::fixed_power<dim - direction - 1>(n_rows);
     Assert(n_rows <= 128, ExcNotImplemented());
 
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
             Number x[129];
-            for(int i = 0; i < mm; ++i)
-              x[i] = in[stride * i];
-            for(int col = 0; col < nn; ++col)
+            for(int i= 0; i < mm; ++i)
+              x[i]= in[stride * i];
+            for(int col= 0; col < nn; ++col)
               {
                 Number2 val0;
                 if(contract_over_rows == true)
-                  val0 = shape_data[col];
+                  val0= shape_data[col];
                 else
-                  val0 = shape_data[col * n_columns];
-                Number res0 = val0 * x[0];
-                for(int i = 1; i < mm; ++i)
+                  val0= shape_data[col * n_columns];
+                Number res0= val0 * x[0];
+                for(int i= 1; i < mm; ++i)
                   {
                     if(contract_over_rows == true)
-                      val0 = shape_data[i * n_columns + col];
+                      val0= shape_data[i * n_columns + col];
                     else
-                      val0 = shape_data[col * n_columns + i];
-                    res0 += val0 * x[i];
+                      val0= shape_data[col * n_columns + i];
+                    res0+= val0 * x[i];
                   }
                 if(add == false)
-                  out[stride * col] = res0;
+                  out[stride * col]= res0;
                 else
-                  out[stride * col] += res0;
+                  out[stride * col]+= res0;
               }
 
             if(one_line == false)
@@ -693,8 +693,8 @@ namespace internal
           }
         if(one_line == false)
           {
-            in += stride * (mm - 1);
-            out += stride * (nn - 1);
+            in+= stride * (mm - 1);
+            out+= stride * (nn - 1);
           }
       }
   }
@@ -713,60 +713,59 @@ namespace internal
       shape_values != nullptr,
       ExcMessage("The given array shape_data must not be the null pointer!"));
     static_assert(dim > 0 && dim < 4, "Only dim=1,2,3 supported");
-    const int n_blocks1 = dim > 1 ? n_rows : 1;
-    const int n_blocks2 = dim > 2 ? n_rows : 1;
+    const int n_blocks1= dim > 1 ? n_rows : 1;
+    const int n_blocks2= dim > 2 ? n_rows : 1;
 
     AssertIndexRange(face_direction, dim);
     const int stride
       = face_direction > 0 ? Utilities::fixed_power<face_direction>(n_rows) : 1;
-    const int out_stride
-      = dim > 1 ? Utilities::fixed_power<dim - 1>(n_rows) : 1;
+    const int out_stride= dim > 1 ? Utilities::fixed_power<dim - 1>(n_rows) : 1;
 
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
             if(contract_onto_face == true)
               {
-                Number res0 = shape_values[0] * in[0];
+                Number res0= shape_values[0] * in[0];
                 Number res1, res2;
                 if(max_derivative > 0)
-                  res1 = shape_values[n_rows] * in[0];
+                  res1= shape_values[n_rows] * in[0];
                 if(max_derivative > 1)
-                  res2 = shape_values[2 * n_rows] * in[0];
-                for(unsigned int ind = 1; ind < n_rows; ++ind)
+                  res2= shape_values[2 * n_rows] * in[0];
+                for(unsigned int ind= 1; ind < n_rows; ++ind)
                   {
-                    res0 += shape_values[ind] * in[stride * ind];
+                    res0+= shape_values[ind] * in[stride * ind];
                     if(max_derivative > 0)
-                      res1 += shape_values[ind + n_rows] * in[stride * ind];
+                      res1+= shape_values[ind + n_rows] * in[stride * ind];
                     if(max_derivative > 1)
-                      res2 += shape_values[ind + 2 * n_rows] * in[stride * ind];
+                      res2+= shape_values[ind + 2 * n_rows] * in[stride * ind];
                   }
                 if(add == false)
                   {
-                    out[0] = res0;
+                    out[0]= res0;
                     if(max_derivative > 0)
-                      out[out_stride] = res1;
+                      out[out_stride]= res1;
                     if(max_derivative > 1)
-                      out[2 * out_stride] = res2;
+                      out[2 * out_stride]= res2;
                   }
                 else
                   {
-                    out[0] += res0;
+                    out[0]+= res0;
                     if(max_derivative > 0)
-                      out[out_stride] += res1;
+                      out[out_stride]+= res1;
                     if(max_derivative > 1)
-                      out[2 * out_stride] += res2;
+                      out[2 * out_stride]+= res2;
                   }
               }
             else
               {
-                for(unsigned int col = 0; col < n_rows; ++col)
+                for(unsigned int col= 0; col < n_rows; ++col)
                   {
                     if(add == false)
-                      out[col * stride] = shape_values[col] * in[0];
+                      out[col * stride]= shape_values[col] * in[0];
                     else
-                      out[col * stride] += shape_values[col] * in[0];
+                      out[col * stride]+= shape_values[col] * in[0];
                     if(max_derivative > 0)
                       out[col * stride]
                         += shape_values[col + n_rows] * in[out_stride];
@@ -782,8 +781,8 @@ namespace internal
             switch(face_direction)
               {
                 case 0:
-                  in += contract_onto_face ? n_rows : 1;
-                  out += contract_onto_face ? 1 : n_rows;
+                  in+= contract_onto_face ? n_rows : 1;
+                  out+= contract_onto_face ? 1 : n_rows;
                   break;
                 case 1:
                   ++in;
@@ -794,9 +793,9 @@ namespace internal
                   if(dim == 3)
                     {
                       if(contract_onto_face)
-                        out += n_rows - 1;
+                        out+= n_rows - 1;
                       else
-                        in += n_rows - 1;
+                        in+= n_rows - 1;
                     }
                   break;
                 case 2:
@@ -812,13 +811,13 @@ namespace internal
             // adjust for local coordinate system zx
             if(contract_onto_face)
               {
-                in += n_rows * (n_rows - 1);
-                out -= n_rows * n_rows - 1;
+                in+= n_rows * (n_rows - 1);
+                out-= n_rows * n_rows - 1;
               }
             else
               {
-                out += n_rows * (n_rows - 1);
-                in -= n_rows * n_rows - 1;
+                out+= n_rows * (n_rows - 1);
+                in-= n_rows * n_rows - 1;
               }
           }
       }
@@ -867,8 +866,8 @@ namespace internal
     EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
-                           const unsigned int            dummy1 = 0,
-                           const unsigned int            dummy2 = 0)
+                           const unsigned int            dummy1= 0,
+                           const unsigned int            dummy2= 0)
       : shape_values(shape_values.begin()),
         shape_gradients(shape_gradients.begin()),
         shape_hessians(shape_hessians.begin())
@@ -937,156 +936,155 @@ namespace internal
   {
     Assert(shape_values != nullptr, ExcNotInitialized());
     AssertIndexRange(direction, dim);
-    constexpr int mm     = contract_over_rows ? n_rows : n_columns,
-                  nn     = contract_over_rows ? n_columns : n_rows;
-    constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int mm    = contract_over_rows ? n_rows : n_columns,
+                  nn    = contract_over_rows ? n_columns : n_rows;
+    constexpr int n_cols= nn / 2;
+    constexpr int mid   = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
-    constexpr int n_blocks1 = stride;
+    constexpr int stride   = Utilities::pow(n_columns, direction);
+    constexpr int n_blocks1= stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
 
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
-            for(int col = 0; col < n_cols; ++col)
+            for(int col= 0; col < n_cols; ++col)
               {
                 Number2 val0, val1;
                 Number  in0, in1, res0, res1;
                 if(contract_over_rows == true)
                   {
-                    val0 = shape_values[col];
-                    val1 = shape_values[nn - 1 - col];
+                    val0= shape_values[col];
+                    val1= shape_values[nn - 1 - col];
                   }
                 else
                   {
-                    val0 = shape_values[col * n_columns];
-                    val1 = shape_values[(col + 1) * n_columns - 1];
+                    val0= shape_values[col * n_columns];
+                    val1= shape_values[(col + 1) * n_columns - 1];
                   }
                 if(mid > 0)
                   {
-                    in0  = in[0];
-                    in1  = in[stride * (mm - 1)];
-                    res0 = val0 * in0;
-                    res1 = val1 * in0;
-                    res0 += val1 * in1;
-                    res1 += val0 * in1;
-                    for(int ind = 1; ind < mid; ++ind)
+                    in0 = in[0];
+                    in1 = in[stride * (mm - 1)];
+                    res0= val0 * in0;
+                    res1= val1 * in0;
+                    res0+= val1 * in1;
+                    res1+= val0 * in1;
+                    for(int ind= 1; ind < mid; ++ind)
                       {
                         if(contract_over_rows == true)
                           {
-                            val0 = shape_values[ind * n_columns + col];
-                            val1 = shape_values[ind * n_columns + nn - 1 - col];
+                            val0= shape_values[ind * n_columns + col];
+                            val1= shape_values[ind * n_columns + nn - 1 - col];
                           }
                         else
                           {
-                            val0 = shape_values[col * n_columns + ind];
-                            val1
-                              = shape_values[(col + 1) * n_columns - 1 - ind];
+                            val0= shape_values[col * n_columns + ind];
+                            val1= shape_values[(col + 1) * n_columns - 1 - ind];
                           }
-                        in0 = in[stride * ind];
-                        in1 = in[stride * (mm - 1 - ind)];
-                        res0 += val0 * in0;
-                        res1 += val1 * in0;
-                        res0 += val1 * in1;
-                        res1 += val0 * in1;
+                        in0= in[stride * ind];
+                        in1= in[stride * (mm - 1 - ind)];
+                        res0+= val0 * in0;
+                        res1+= val1 * in0;
+                        res0+= val1 * in1;
+                        res1+= val0 * in1;
                       }
                   }
                 else
-                  res0 = res1 = Number();
+                  res0= res1= Number();
                 if(contract_over_rows == true)
                   {
                     if(mm % 2 == 1)
                       {
-                        val0 = shape_values[mid * n_columns + col];
-                        in1  = val0 * in[stride * mid];
-                        res0 += in1;
-                        res1 += in1;
+                        val0= shape_values[mid * n_columns + col];
+                        in1 = val0 * in[stride * mid];
+                        res0+= in1;
+                        res1+= in1;
                       }
                   }
                 else
                   {
                     if(mm % 2 == 1 && nn % 2 == 0)
                       {
-                        val0 = shape_values[col * n_columns + mid];
-                        in1  = val0 * in[stride * mid];
-                        res0 += in1;
-                        res1 += in1;
+                        val0= shape_values[col * n_columns + mid];
+                        in1 = val0 * in[stride * mid];
+                        res0+= in1;
+                        res1+= in1;
                       }
                   }
                 if(add == false)
                   {
-                    out[stride * col]            = res0;
-                    out[stride * (nn - 1 - col)] = res1;
+                    out[stride * col]           = res0;
+                    out[stride * (nn - 1 - col)]= res1;
                   }
                 else
                   {
-                    out[stride * col] += res0;
-                    out[stride * (nn - 1 - col)] += res1;
+                    out[stride * col]+= res0;
+                    out[stride * (nn - 1 - col)]+= res1;
                   }
               }
             if(contract_over_rows == true && nn % 2 == 1 && mm % 2 == 1)
               {
                 if(add == false)
-                  out[stride * n_cols] = in[stride * mid];
+                  out[stride * n_cols]= in[stride * mid];
                 else
-                  out[stride * n_cols] += in[stride * mid];
+                  out[stride * n_cols]+= in[stride * mid];
               }
             else if(contract_over_rows == true && nn % 2 == 1)
               {
                 Number  res0;
-                Number2 val0 = shape_values[n_cols];
+                Number2 val0= shape_values[n_cols];
                 if(mid > 0)
                   {
-                    res0 = val0 * (in[0] + in[stride * (mm - 1)]);
-                    for(int ind = 1; ind < mid; ++ind)
+                    res0= val0 * (in[0] + in[stride * (mm - 1)]);
+                    for(int ind= 1; ind < mid; ++ind)
                       {
-                        val0 = shape_values[ind * n_columns + n_cols];
+                        val0= shape_values[ind * n_columns + n_cols];
                         res0
                           += val0
                              * (in[stride * ind] + in[stride * (mm - 1 - ind)]);
                       }
                   }
                 else
-                  res0 = Number();
+                  res0= Number();
                 if(add == false)
-                  out[stride * n_cols] = res0;
+                  out[stride * n_cols]= res0;
                 else
-                  out[stride * n_cols] += res0;
+                  out[stride * n_cols]+= res0;
               }
             else if(contract_over_rows == false && nn % 2 == 1)
               {
                 Number res0;
                 if(mid > 0)
                   {
-                    Number2 val0 = shape_values[n_cols * n_columns];
-                    res0         = val0 * (in[0] + in[stride * (mm - 1)]);
-                    for(int ind = 1; ind < mid; ++ind)
+                    Number2 val0= shape_values[n_cols * n_columns];
+                    res0        = val0 * (in[0] + in[stride * (mm - 1)]);
+                    for(int ind= 1; ind < mid; ++ind)
                       {
-                        val0 = shape_values[n_cols * n_columns + ind];
+                        val0= shape_values[n_cols * n_columns + ind];
                         Number in1
                           = val0
                             * (in[stride * ind] + in[stride * (mm - 1 - ind)]);
-                        res0 += in1;
+                        res0+= in1;
                       }
                     if(mm % 2)
-                      res0 += in[stride * mid];
+                      res0+= in[stride * mid];
                   }
                 else
-                  res0 = in[0];
+                  res0= in[0];
                 if(add == false)
-                  out[stride * n_cols] = res0;
+                  out[stride * n_cols]= res0;
                 else
-                  out[stride * n_cols] += res0;
+                  out[stride * n_cols]+= res0;
               }
 
             ++in;
             ++out;
           }
-        in += stride * (mm - 1);
-        out += stride * (nn - 1);
+        in+= stride * (mm - 1);
+        out+= stride * (nn - 1);
       }
   }
 
@@ -1126,85 +1124,85 @@ namespace internal
   {
     Assert(shape_gradients != nullptr, ExcNotInitialized());
     AssertIndexRange(direction, dim);
-    constexpr int mm     = contract_over_rows ? n_rows : n_columns,
-                  nn     = contract_over_rows ? n_columns : n_rows;
-    constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int mm    = contract_over_rows ? n_rows : n_columns,
+                  nn    = contract_over_rows ? n_columns : n_rows;
+    constexpr int n_cols= nn / 2;
+    constexpr int mid   = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
-    constexpr int n_blocks1 = stride;
+    constexpr int stride   = Utilities::pow(n_columns, direction);
+    constexpr int n_blocks1= stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
 
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
-            for(int col = 0; col < n_cols; ++col)
+            for(int col= 0; col < n_cols; ++col)
               {
                 Number2 val0, val1;
                 Number  in0, in1, res0, res1;
                 if(contract_over_rows == true)
                   {
-                    val0 = shape_gradients[col];
-                    val1 = shape_gradients[nn - 1 - col];
+                    val0= shape_gradients[col];
+                    val1= shape_gradients[nn - 1 - col];
                   }
                 else
                   {
-                    val0 = shape_gradients[col * n_columns];
-                    val1 = shape_gradients[(nn - col - 1) * n_columns];
+                    val0= shape_gradients[col * n_columns];
+                    val1= shape_gradients[(nn - col - 1) * n_columns];
                   }
                 if(mid > 0)
                   {
-                    in0  = in[0];
-                    in1  = in[stride * (mm - 1)];
-                    res0 = val0 * in0;
-                    res1 = val1 * in0;
-                    res0 -= val1 * in1;
-                    res1 -= val0 * in1;
-                    for(int ind = 1; ind < mid; ++ind)
+                    in0 = in[0];
+                    in1 = in[stride * (mm - 1)];
+                    res0= val0 * in0;
+                    res1= val1 * in0;
+                    res0-= val1 * in1;
+                    res1-= val0 * in1;
+                    for(int ind= 1; ind < mid; ++ind)
                       {
                         if(contract_over_rows == true)
                           {
-                            val0 = shape_gradients[ind * n_columns + col];
+                            val0= shape_gradients[ind * n_columns + col];
                             val1
                               = shape_gradients[ind * n_columns + nn - 1 - col];
                           }
                         else
                           {
-                            val0 = shape_gradients[col * n_columns + ind];
-                            val1 = shape_gradients[(nn - col - 1) * n_columns
-                                                   + ind];
+                            val0= shape_gradients[col * n_columns + ind];
+                            val1= shape_gradients[(nn - col - 1) * n_columns
+                                                  + ind];
                           }
-                        in0 = in[stride * ind];
-                        in1 = in[stride * (mm - 1 - ind)];
-                        res0 += val0 * in0;
-                        res1 += val1 * in0;
-                        res0 -= val1 * in1;
-                        res1 -= val0 * in1;
+                        in0= in[stride * ind];
+                        in1= in[stride * (mm - 1 - ind)];
+                        res0+= val0 * in0;
+                        res1+= val1 * in0;
+                        res0-= val1 * in1;
+                        res1-= val0 * in1;
                       }
                   }
                 else
-                  res0 = res1 = Number();
+                  res0= res1= Number();
                 if(mm % 2 == 1)
                   {
                     if(contract_over_rows == true)
-                      val0 = shape_gradients[mid * n_columns + col];
+                      val0= shape_gradients[mid * n_columns + col];
                     else
-                      val0 = shape_gradients[col * n_columns + mid];
-                    in1 = val0 * in[stride * mid];
-                    res0 += in1;
-                    res1 -= in1;
+                      val0= shape_gradients[col * n_columns + mid];
+                    in1= val0 * in[stride * mid];
+                    res0+= in1;
+                    res1-= in1;
                   }
                 if(add == false)
                   {
-                    out[stride * col]            = res0;
-                    out[stride * (nn - 1 - col)] = res1;
+                    out[stride * col]           = res0;
+                    out[stride * (nn - 1 - col)]= res1;
                   }
                 else
                   {
-                    out[stride * col] += res0;
-                    out[stride * (nn - 1 - col)] += res1;
+                    out[stride * col]+= res0;
+                    out[stride * (nn - 1 - col)]+= res1;
                   }
               }
             if(nn % 2 == 1)
@@ -1212,31 +1210,31 @@ namespace internal
                 Number2 val0;
                 Number  res0;
                 if(contract_over_rows == true)
-                  val0 = shape_gradients[n_cols];
+                  val0= shape_gradients[n_cols];
                 else
-                  val0 = shape_gradients[n_cols * n_columns];
-                res0 = val0 * (in[0] - in[stride * (mm - 1)]);
-                for(int ind = 1; ind < mid; ++ind)
+                  val0= shape_gradients[n_cols * n_columns];
+                res0= val0 * (in[0] - in[stride * (mm - 1)]);
+                for(int ind= 1; ind < mid; ++ind)
                   {
                     if(contract_over_rows == true)
-                      val0 = shape_gradients[ind * n_columns + n_cols];
+                      val0= shape_gradients[ind * n_columns + n_cols];
                     else
-                      val0 = shape_gradients[n_cols * n_columns + ind];
+                      val0= shape_gradients[n_cols * n_columns + ind];
                     Number in1
                       = val0 * (in[stride * ind] - in[stride * (mm - 1 - ind)]);
-                    res0 += in1;
+                    res0+= in1;
                   }
                 if(add == false)
-                  out[stride * n_cols] = res0;
+                  out[stride * n_cols]= res0;
                 else
-                  out[stride * n_cols] += res0;
+                  out[stride * n_cols]+= res0;
               }
 
             ++in;
             ++out;
           }
-        in += stride * (mm - 1);
-        out += stride * (nn - 1);
+        in+= stride * (mm - 1);
+        out+= stride * (nn - 1);
       }
   }
 
@@ -1260,85 +1258,85 @@ namespace internal
   {
     Assert(shape_hessians != nullptr, ExcNotInitialized());
     AssertIndexRange(direction, dim);
-    constexpr int mm     = contract_over_rows ? n_rows : n_columns;
-    constexpr int nn     = contract_over_rows ? n_columns : n_rows;
-    constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int mm    = contract_over_rows ? n_rows : n_columns;
+    constexpr int nn    = contract_over_rows ? n_columns : n_rows;
+    constexpr int n_cols= nn / 2;
+    constexpr int mid   = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
-    constexpr int n_blocks1 = stride;
+    constexpr int stride   = Utilities::pow(n_columns, direction);
+    constexpr int n_blocks1= stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
 
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
-            for(int col = 0; col < n_cols; ++col)
+            for(int col= 0; col < n_cols; ++col)
               {
                 Number2 val0, val1;
                 Number  in0, in1, res0, res1;
                 if(contract_over_rows == true)
                   {
-                    val0 = shape_hessians[col];
-                    val1 = shape_hessians[nn - 1 - col];
+                    val0= shape_hessians[col];
+                    val1= shape_hessians[nn - 1 - col];
                   }
                 else
                   {
-                    val0 = shape_hessians[col * n_columns];
-                    val1 = shape_hessians[(col + 1) * n_columns - 1];
+                    val0= shape_hessians[col * n_columns];
+                    val1= shape_hessians[(col + 1) * n_columns - 1];
                   }
                 if(mid > 0)
                   {
-                    in0  = in[0];
-                    in1  = in[stride * (mm - 1)];
-                    res0 = val0 * in0;
-                    res1 = val1 * in0;
-                    res0 += val1 * in1;
-                    res1 += val0 * in1;
-                    for(int ind = 1; ind < mid; ++ind)
+                    in0 = in[0];
+                    in1 = in[stride * (mm - 1)];
+                    res0= val0 * in0;
+                    res1= val1 * in0;
+                    res0+= val1 * in1;
+                    res1+= val0 * in1;
+                    for(int ind= 1; ind < mid; ++ind)
                       {
                         if(contract_over_rows == true)
                           {
-                            val0 = shape_hessians[ind * n_columns + col];
+                            val0= shape_hessians[ind * n_columns + col];
                             val1
                               = shape_hessians[ind * n_columns + nn - 1 - col];
                           }
                         else
                           {
-                            val0 = shape_hessians[col * n_columns + ind];
+                            val0= shape_hessians[col * n_columns + ind];
                             val1
                               = shape_hessians[(col + 1) * n_columns - 1 - ind];
                           }
-                        in0 = in[stride * ind];
-                        in1 = in[stride * (mm - 1 - ind)];
-                        res0 += val0 * in0;
-                        res1 += val1 * in0;
-                        res0 += val1 * in1;
-                        res1 += val0 * in1;
+                        in0= in[stride * ind];
+                        in1= in[stride * (mm - 1 - ind)];
+                        res0+= val0 * in0;
+                        res1+= val1 * in0;
+                        res0+= val1 * in1;
+                        res1+= val0 * in1;
                       }
                   }
                 else
-                  res0 = res1 = Number();
+                  res0= res1= Number();
                 if(mm % 2 == 1)
                   {
                     if(contract_over_rows == true)
-                      val0 = shape_hessians[mid * n_columns + col];
+                      val0= shape_hessians[mid * n_columns + col];
                     else
-                      val0 = shape_hessians[col * n_columns + mid];
-                    in1 = val0 * in[stride * mid];
-                    res0 += in1;
-                    res1 += in1;
+                      val0= shape_hessians[col * n_columns + mid];
+                    in1= val0 * in[stride * mid];
+                    res0+= in1;
+                    res1+= in1;
                   }
                 if(add == false)
                   {
-                    out[stride * col]            = res0;
-                    out[stride * (nn - 1 - col)] = res1;
+                    out[stride * col]           = res0;
+                    out[stride * (nn - 1 - col)]= res1;
                   }
                 else
                   {
-                    out[stride * col] += res0;
-                    out[stride * (nn - 1 - col)] += res1;
+                    out[stride * col]+= res0;
+                    out[stride * (nn - 1 - col)]+= res1;
                   }
               }
             if(nn % 2 == 1)
@@ -1346,45 +1344,45 @@ namespace internal
                 Number2 val0;
                 Number  res0;
                 if(contract_over_rows == true)
-                  val0 = shape_hessians[n_cols];
+                  val0= shape_hessians[n_cols];
                 else
-                  val0 = shape_hessians[n_cols * n_columns];
+                  val0= shape_hessians[n_cols * n_columns];
                 if(mid > 0)
                   {
-                    res0 = val0 * (in[0] + in[stride * (mm - 1)]);
-                    for(int ind = 1; ind < mid; ++ind)
+                    res0= val0 * (in[0] + in[stride * (mm - 1)]);
+                    for(int ind= 1; ind < mid; ++ind)
                       {
                         if(contract_over_rows == true)
-                          val0 = shape_hessians[ind * n_columns + n_cols];
+                          val0= shape_hessians[ind * n_columns + n_cols];
                         else
-                          val0 = shape_hessians[n_cols * n_columns + ind];
+                          val0= shape_hessians[n_cols * n_columns + ind];
                         Number in1
                           = val0
                             * (in[stride * ind] + in[stride * (mm - 1 - ind)]);
-                        res0 += in1;
+                        res0+= in1;
                       }
                   }
                 else
-                  res0 = Number();
+                  res0= Number();
                 if(mm % 2 == 1)
                   {
                     if(contract_over_rows == true)
-                      val0 = shape_hessians[mid * n_columns + n_cols];
+                      val0= shape_hessians[mid * n_columns + n_cols];
                     else
-                      val0 = shape_hessians[n_cols * n_columns + mid];
-                    res0 += val0 * in[stride * mid];
+                      val0= shape_hessians[n_cols * n_columns + mid];
+                    res0+= val0 * in[stride * mid];
                   }
                 if(add == false)
-                  out[stride * n_cols] = res0;
+                  out[stride * n_cols]= res0;
                 else
-                  out[stride * n_cols] += res0;
+                  out[stride * n_cols]+= res0;
               }
 
             ++in;
             ++out;
           }
-        in += stride * (mm - 1);
-        out += stride * (nn - 1);
+        in+= stride * (mm - 1);
+        out+= stride * (nn - 1);
       }
   }
 
@@ -1464,8 +1462,8 @@ namespace internal
     EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
-                           const unsigned int            dummy1 = 0,
-                           const unsigned int            dummy2 = 0)
+                           const unsigned int            dummy1= 0,
+                           const unsigned int            dummy2= 0)
       : shape_values(shape_values.begin()),
         shape_gradients(shape_gradients.begin()),
         shape_hessians(shape_hessians.begin())
@@ -1564,7 +1562,7 @@ namespace internal
               bool contract_over_rows,
               bool add,
               int  type,
-              bool one_line = false>
+              bool one_line= false>
     static void
     apply(const Number2* DEAL_II_RESTRICT shape_data,
           const Number*                   in,
@@ -1607,127 +1605,127 @@ namespace internal
     // an additional dynamic check
     AssertIndexRange(direction, dim);
 
-    constexpr int nn     = contract_over_rows ? n_columns : n_rows;
-    constexpr int mm     = contract_over_rows ? n_rows : n_columns;
-    constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int nn    = contract_over_rows ? n_columns : n_rows;
+    constexpr int mm    = contract_over_rows ? n_rows : n_columns;
+    constexpr int n_cols= nn / 2;
+    constexpr int mid   = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
-    constexpr int n_blocks1 = one_line ? 1 : stride;
+    constexpr int stride   = Utilities::pow(n_columns, direction);
+    constexpr int n_blocks1= one_line ? 1 : stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
 
-    constexpr int offset = (n_columns + 1) / 2;
+    constexpr int offset= (n_columns + 1) / 2;
 
     // this code may look very inefficient at first sight due to the many
     // different cases with if's at the innermost loop part, but all of the
     // conditionals can be evaluated at compile time because they are
     // templates, so the compiler should optimize everything away
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
             Number xp[mid > 0 ? mid : 1], xm[mid > 0 ? mid : 1];
-            for(int i = 0; i < mid; ++i)
+            for(int i= 0; i < mid; ++i)
               {
                 if(contract_over_rows == true && type == 1)
                   {
-                    xp[i] = in[stride * i] - in[stride * (mm - 1 - i)];
-                    xm[i] = in[stride * i] + in[stride * (mm - 1 - i)];
+                    xp[i]= in[stride * i] - in[stride * (mm - 1 - i)];
+                    xm[i]= in[stride * i] + in[stride * (mm - 1 - i)];
                   }
                 else
                   {
-                    xp[i] = in[stride * i] + in[stride * (mm - 1 - i)];
-                    xm[i] = in[stride * i] - in[stride * (mm - 1 - i)];
+                    xp[i]= in[stride * i] + in[stride * (mm - 1 - i)];
+                    xm[i]= in[stride * i] - in[stride * (mm - 1 - i)];
                   }
               }
-            Number xmid = in[stride * mid];
-            for(int col = 0; col < n_cols; ++col)
+            Number xmid= in[stride * mid];
+            for(int col= 0; col < n_cols; ++col)
               {
                 Number r0, r1;
                 if(mid > 0)
                   {
                     if(contract_over_rows == true)
                       {
-                        r0 = shapes[col] * xp[0];
-                        r1 = shapes[(n_rows - 1) * offset + col] * xm[0];
+                        r0= shapes[col] * xp[0];
+                        r1= shapes[(n_rows - 1) * offset + col] * xm[0];
                       }
                     else
                       {
-                        r0 = shapes[col * offset] * xp[0];
-                        r1 = shapes[(n_rows - 1 - col) * offset] * xm[0];
+                        r0= shapes[col * offset] * xp[0];
+                        r1= shapes[(n_rows - 1 - col) * offset] * xm[0];
                       }
-                    for(int ind = 1; ind < mid; ++ind)
+                    for(int ind= 1; ind < mid; ++ind)
                       {
                         if(contract_over_rows == true)
                           {
-                            r0 += shapes[ind * offset + col] * xp[ind];
-                            r1 += shapes[(n_rows - 1 - ind) * offset + col]
-                                  * xm[ind];
+                            r0+= shapes[ind * offset + col] * xp[ind];
+                            r1+= shapes[(n_rows - 1 - ind) * offset + col]
+                                 * xm[ind];
                           }
                         else
                           {
-                            r0 += shapes[col * offset + ind] * xp[ind];
-                            r1 += shapes[(n_rows - 1 - col) * offset + ind]
-                                  * xm[ind];
+                            r0+= shapes[col * offset + ind] * xp[ind];
+                            r1+= shapes[(n_rows - 1 - col) * offset + ind]
+                                 * xm[ind];
                           }
                       }
                   }
                 else
-                  r0 = r1 = Number();
+                  r0= r1= Number();
                 if(mm % 2 == 1 && contract_over_rows == true)
                   {
                     if(type == 1)
-                      r1 += shapes[mid * offset + col] * xmid;
+                      r1+= shapes[mid * offset + col] * xmid;
                     else
-                      r0 += shapes[mid * offset + col] * xmid;
+                      r0+= shapes[mid * offset + col] * xmid;
                   }
                 else if(mm % 2 == 1 && (nn % 2 == 0 || type > 0))
-                  r0 += shapes[col * offset + mid] * xmid;
+                  r0+= shapes[col * offset + mid] * xmid;
 
                 if(add == false)
                   {
-                    out[stride * col] = r0 + r1;
+                    out[stride * col]= r0 + r1;
                     if(type == 1 && contract_over_rows == false)
-                      out[stride * (nn - 1 - col)] = r1 - r0;
+                      out[stride * (nn - 1 - col)]= r1 - r0;
                     else
-                      out[stride * (nn - 1 - col)] = r0 - r1;
+                      out[stride * (nn - 1 - col)]= r0 - r1;
                   }
                 else
                   {
-                    out[stride * col] += r0 + r1;
+                    out[stride * col]+= r0 + r1;
                     if(type == 1 && contract_over_rows == false)
-                      out[stride * (nn - 1 - col)] += r1 - r0;
+                      out[stride * (nn - 1 - col)]+= r1 - r0;
                     else
-                      out[stride * (nn - 1 - col)] += r0 - r1;
+                      out[stride * (nn - 1 - col)]+= r0 - r1;
                   }
               }
             if(type == 0 && contract_over_rows == true && nn % 2 == 1
                && mm % 2 == 1)
               {
                 if(add == false)
-                  out[stride * n_cols] = shapes[mid * offset + n_cols] * xmid;
+                  out[stride * n_cols]= shapes[mid * offset + n_cols] * xmid;
                 else
-                  out[stride * n_cols] += shapes[mid * offset + n_cols] * xmid;
+                  out[stride * n_cols]+= shapes[mid * offset + n_cols] * xmid;
               }
             else if(contract_over_rows == true && nn % 2 == 1)
               {
                 Number r0;
                 if(mid > 0)
                   {
-                    r0 = shapes[n_cols] * xp[0];
-                    for(int ind = 1; ind < mid; ++ind)
-                      r0 += shapes[ind * offset + n_cols] * xp[ind];
+                    r0= shapes[n_cols] * xp[0];
+                    for(int ind= 1; ind < mid; ++ind)
+                      r0+= shapes[ind * offset + n_cols] * xp[ind];
                   }
                 else
-                  r0 = Number();
+                  r0= Number();
                 if(type != 1 && mm % 2 == 1)
-                  r0 += shapes[mid * offset + n_cols] * xmid;
+                  r0+= shapes[mid * offset + n_cols] * xmid;
 
                 if(add == false)
-                  out[stride * n_cols] = r0;
+                  out[stride * n_cols]= r0;
                 else
-                  out[stride * n_cols] += r0;
+                  out[stride * n_cols]+= r0;
               }
             else if(contract_over_rows == false && nn % 2 == 1)
               {
@@ -1736,38 +1734,38 @@ namespace internal
                   {
                     if(type == 1)
                       {
-                        r0 = shapes[n_cols * offset] * xm[0];
-                        for(int ind = 1; ind < mid; ++ind)
-                          r0 += shapes[n_cols * offset + ind] * xm[ind];
+                        r0= shapes[n_cols * offset] * xm[0];
+                        for(int ind= 1; ind < mid; ++ind)
+                          r0+= shapes[n_cols * offset + ind] * xm[ind];
                       }
                     else
                       {
-                        r0 = shapes[n_cols * offset] * xp[0];
-                        for(int ind = 1; ind < mid; ++ind)
-                          r0 += shapes[n_cols * offset + ind] * xp[ind];
+                        r0= shapes[n_cols * offset] * xp[0];
+                        for(int ind= 1; ind < mid; ++ind)
+                          r0+= shapes[n_cols * offset + ind] * xp[ind];
                       }
                   }
                 else
-                  r0 = Number();
+                  r0= Number();
 
                 if((type == 0 || type == 2) && mm % 2 == 1)
-                  r0 += shapes[n_cols * offset + mid] * xmid;
+                  r0+= shapes[n_cols * offset + mid] * xmid;
 
                 if(add == false)
-                  out[stride * n_cols] = r0;
+                  out[stride * n_cols]= r0;
                 else
-                  out[stride * n_cols] += r0;
+                  out[stride * n_cols]+= r0;
               }
             if(one_line == false)
               {
-                in += 1;
-                out += 1;
+                in+= 1;
+                out+= 1;
               }
           }
         if(one_line == false)
           {
-            in += stride * (mm - 1);
-            out += stride * (nn - 1);
+            in+= stride * (mm - 1);
+            out+= stride * (nn - 1);
           }
       }
   }
@@ -1843,8 +1841,8 @@ namespace internal
     EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
-                           const unsigned int            dummy1 = 0,
-                           const unsigned int            dummy2 = 0)
+                           const unsigned int            dummy1= 0,
+                           const unsigned int            dummy2= 0)
       : shape_values(shape_values.begin()),
         shape_gradients(shape_gradients.begin()),
         shape_hessians(shape_hessians.begin())
@@ -1934,7 +1932,7 @@ namespace internal
               bool contract_over_rows,
               bool add,
               int  type,
-              bool one_line = false>
+              bool one_line= false>
     static void
     apply(const Number2* DEAL_II_RESTRICT shape_data,
           const Number*                   in,
@@ -1979,13 +1977,13 @@ namespace internal
     // an additional dynamic check
     AssertIndexRange(direction, dim);
 
-    constexpr int nn     = contract_over_rows ? n_columns : n_rows;
-    constexpr int mm     = contract_over_rows ? n_rows : n_columns;
-    constexpr int n_cols = nn / 2;
-    constexpr int mid    = mm / 2;
+    constexpr int nn    = contract_over_rows ? n_columns : n_rows;
+    constexpr int mm    = contract_over_rows ? n_rows : n_columns;
+    constexpr int n_cols= nn / 2;
+    constexpr int mid   = mm / 2;
 
-    constexpr int stride    = Utilities::pow(n_columns, direction);
-    constexpr int n_blocks1 = one_line ? 1 : stride;
+    constexpr int stride   = Utilities::pow(n_columns, direction);
+    constexpr int n_blocks1= one_line ? 1 : stride;
     constexpr int n_blocks2
       = Utilities::pow(n_rows, (direction >= dim) ? 0 : (dim - direction - 1));
 
@@ -1993,121 +1991,120 @@ namespace internal
     // different cases with if's at the innermost loop part, but all of the
     // conditionals can be evaluated at compile time because they are
     // templates, so the compiler should optimize everything away
-    for(int i2 = 0; i2 < n_blocks2; ++i2)
+    for(int i2= 0; i2 < n_blocks2; ++i2)
       {
-        for(int i1 = 0; i1 < n_blocks1; ++i1)
+        for(int i1= 0; i1 < n_blocks1; ++i1)
           {
             if(contract_over_rows)
               {
                 Number x[mm];
-                for(unsigned int i = 0; i < mm; ++i)
-                  x[i] = in[stride * i];
-                for(unsigned int col = 0; col < n_cols; ++col)
+                for(unsigned int i= 0; i < mm; ++i)
+                  x[i]= in[stride * i];
+                for(unsigned int col= 0; col < n_cols; ++col)
                   {
                     Number r0, r1;
                     if(mid > 0)
                       {
-                        r0 = shapes[col] * x[0];
-                        r1 = shapes[col + n_columns] * x[1];
-                        for(unsigned int ind = 1; ind < mid; ++ind)
+                        r0= shapes[col] * x[0];
+                        r1= shapes[col + n_columns] * x[1];
+                        for(unsigned int ind= 1; ind < mid; ++ind)
                           {
-                            r0
-                              += shapes[col + 2 * ind * n_columns] * x[2 * ind];
-                            r1 += shapes[col + (2 * ind + 1) * n_columns]
-                                  * x[2 * ind + 1];
+                            r0+= shapes[col + 2 * ind * n_columns] * x[2 * ind];
+                            r1+= shapes[col + (2 * ind + 1) * n_columns]
+                                 * x[2 * ind + 1];
                           }
                       }
                     else
-                      r0 = r1 = Number();
+                      r0= r1= Number();
                     if(mm % 2 == 1)
-                      r0 += shapes[col + (mm - 1) * n_columns] * x[mm - 1];
+                      r0+= shapes[col + (mm - 1) * n_columns] * x[mm - 1];
                     if(add == false)
                       {
-                        out[stride * col] = r0 + r1;
+                        out[stride * col]= r0 + r1;
                         if(type == 1)
-                          out[stride * (nn - 1 - col)] = r1 - r0;
+                          out[stride * (nn - 1 - col)]= r1 - r0;
                         else
-                          out[stride * (nn - 1 - col)] = r0 - r1;
+                          out[stride * (nn - 1 - col)]= r0 - r1;
                       }
                     else
                       {
-                        out[stride * col] += r0 + r1;
+                        out[stride * col]+= r0 + r1;
                         if(type == 1)
-                          out[stride * (nn - 1 - col)] += r1 - r0;
+                          out[stride * (nn - 1 - col)]+= r1 - r0;
                         else
-                          out[stride * (nn - 1 - col)] += r0 - r1;
+                          out[stride * (nn - 1 - col)]+= r0 - r1;
                       }
                   }
                 if(nn % 2 == 1)
                   {
                     Number             r0;
-                    const unsigned int shift = type == 1 ? 1 : 0;
+                    const unsigned int shift= type == 1 ? 1 : 0;
                     if(mid > 0)
                       {
-                        r0 = shapes[n_cols + shift * n_columns] * x[shift];
-                        for(unsigned int ind = 1; ind < mid; ++ind)
-                          r0 += shapes[n_cols + (2 * ind + shift) * n_columns]
-                                * x[2 * ind + shift];
+                        r0= shapes[n_cols + shift * n_columns] * x[shift];
+                        for(unsigned int ind= 1; ind < mid; ++ind)
+                          r0+= shapes[n_cols + (2 * ind + shift) * n_columns]
+                               * x[2 * ind + shift];
                       }
                     else
-                      r0 = 0;
+                      r0= 0;
                     if(type != 1 && mm % 2 == 1)
-                      r0 += shapes[n_cols + (mm - 1) * n_columns] * x[mm - 1];
+                      r0+= shapes[n_cols + (mm - 1) * n_columns] * x[mm - 1];
                     if(add == false)
-                      out[stride * n_cols] = r0;
+                      out[stride * n_cols]= r0;
                     else
-                      out[stride * n_cols] += r0;
+                      out[stride * n_cols]+= r0;
                   }
               }
             else
               {
                 Number xp[mid + 1], xm[mid > 0 ? mid : 1];
-                for(int i = 0; i < mid; ++i)
+                for(int i= 0; i < mid; ++i)
                   if(type == 0)
                     {
-                      xp[i] = in[stride * i] + in[stride * (mm - 1 - i)];
-                      xm[i] = in[stride * i] - in[stride * (mm - 1 - i)];
+                      xp[i]= in[stride * i] + in[stride * (mm - 1 - i)];
+                      xm[i]= in[stride * i] - in[stride * (mm - 1 - i)];
                     }
                   else
                     {
-                      xp[i] = in[stride * i] - in[stride * (mm - 1 - i)];
-                      xm[i] = in[stride * i] + in[stride * (mm - 1 - i)];
+                      xp[i]= in[stride * i] - in[stride * (mm - 1 - i)];
+                      xm[i]= in[stride * i] + in[stride * (mm - 1 - i)];
                     }
                 if(mm % 2 == 1)
-                  xp[mid] = in[stride * mid];
-                for(unsigned int col = 0; col < n_cols; ++col)
+                  xp[mid]= in[stride * mid];
+                for(unsigned int col= 0; col < n_cols; ++col)
                   {
                     Number r0, r1;
                     if(mid > 0)
                       {
-                        r0 = shapes[2 * col * n_columns] * xp[0];
-                        r1 = shapes[(2 * col + 1) * n_columns] * xm[0];
-                        for(unsigned int ind = 1; ind < mid; ++ind)
+                        r0= shapes[2 * col * n_columns] * xp[0];
+                        r1= shapes[(2 * col + 1) * n_columns] * xm[0];
+                        for(unsigned int ind= 1; ind < mid; ++ind)
                           {
-                            r0 += shapes[2 * col * n_columns + ind] * xp[ind];
-                            r1 += shapes[(2 * col + 1) * n_columns + ind]
-                                  * xm[ind];
+                            r0+= shapes[2 * col * n_columns + ind] * xp[ind];
+                            r1+= shapes[(2 * col + 1) * n_columns + ind]
+                                 * xm[ind];
                           }
                       }
                     else
-                      r0 = r1 = Number();
+                      r0= r1= Number();
                     if(mm % 2 == 1)
                       {
                         if(type == 1)
-                          r1 += shapes[(2 * col + 1) * n_columns + mid]
-                                * xp[mid];
+                          r1+= shapes[(2 * col + 1) * n_columns + mid]
+                               * xp[mid];
                         else
-                          r0 += shapes[2 * col * n_columns + mid] * xp[mid];
+                          r0+= shapes[2 * col * n_columns + mid] * xp[mid];
                       }
                     if(add == false)
                       {
-                        out[stride * (2 * col)]     = r0;
-                        out[stride * (2 * col + 1)] = r1;
+                        out[stride * (2 * col)]    = r0;
+                        out[stride * (2 * col + 1)]= r1;
                       }
                     else
                       {
-                        out[stride * (2 * col)] += r0;
-                        out[stride * (2 * col + 1)] += r1;
+                        out[stride * (2 * col)]+= r0;
+                        out[stride * (2 * col + 1)]+= r1;
                       }
                   }
                 if(nn % 2 == 1)
@@ -2115,30 +2112,30 @@ namespace internal
                     Number r0;
                     if(mid > 0)
                       {
-                        r0 = shapes[(nn - 1) * n_columns] * xp[0];
-                        for(unsigned int ind = 1; ind < mid; ++ind)
-                          r0 += shapes[(nn - 1) * n_columns + ind] * xp[ind];
+                        r0= shapes[(nn - 1) * n_columns] * xp[0];
+                        for(unsigned int ind= 1; ind < mid; ++ind)
+                          r0+= shapes[(nn - 1) * n_columns + ind] * xp[ind];
                       }
                     else
-                      r0 = Number();
+                      r0= Number();
                     if(mm % 2 == 1 && type == 0)
-                      r0 += shapes[(nn - 1) * n_columns + mid] * xp[mid];
+                      r0+= shapes[(nn - 1) * n_columns + mid] * xp[mid];
                     if(add == false)
-                      out[stride * (nn - 1)] = r0;
+                      out[stride * (nn - 1)]= r0;
                     else
-                      out[stride * (nn - 1)] += r0;
+                      out[stride * (nn - 1)]+= r0;
                   }
               }
             if(one_line == false)
               {
-                in += 1;
-                out += 1;
+                in+= 1;
+                out+= 1;
               }
           }
         if(one_line == false)
           {
-            in += stride * (mm - 1);
-            out += stride * (nn - 1);
+            in+= stride * (mm - 1);
+            out+= stride * (nn - 1);
           }
       }
   }

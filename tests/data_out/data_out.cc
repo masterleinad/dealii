@@ -70,7 +70,7 @@ LaplaceProblem<dim>::make_grid_and_dofs()
 {
   GridGenerator::hyper_cube(triangulation, 0, 1);
   triangulation.refine_global(1);
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       triangulation.begin_active()->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -95,15 +95,15 @@ LaplaceProblem<dim>::solve()
 {
   // dummy solve. just insert some
   // arbitrary values
-  for(unsigned int i = 0; i < solution.size(); ++i)
-    solution(i) = i;
+  for(unsigned int i= 0; i < solution.size(); ++i)
+    solution(i)= i;
 }
 
 template <>
 void
 LaplaceProblem<2>::output_results() const
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
   // test regular output in 2d
   if(true)
@@ -120,7 +120,7 @@ LaplaceProblem<2>::output_results() const
       data_out.write_povray(logfile);
       data_out.write_eps(logfile);
 
-      const unsigned int                    number_of_time_steps = 3;
+      const unsigned int                    number_of_time_steps= 3;
       std::vector<std::vector<std::string>> piece_names(number_of_time_steps);
       piece_names[0].push_back("subdomain-01.time_step_0.vtk");
       piece_names[0].push_back("subdomain-02.time_step_0.vtk");
@@ -151,7 +151,7 @@ template <>
 void
 LaplaceProblem<3>::output_results() const
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
   // test regular output in 3d
   if(true)

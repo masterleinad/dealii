@@ -31,7 +31,7 @@
 
 #define PRINTME(name, var)                              \
   deallog << "Block vector: " name << ":" << std::endl; \
-  for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
+  for(unsigned int i= 0; i < var.n_blocks(); ++i)       \
     deallog << "[block " << i << " ]  " << var.block(i);
 
 using namespace dealii;
@@ -42,7 +42,7 @@ main()
   initlog();
   deallog << std::setprecision(10);
 
-  static const int dim = 2;
+  static const int dim= 2;
 
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -58,8 +58,8 @@ main()
   DoFTools::count_dofs_per_component(dof_handler, dpc);
 
   BlockDynamicSparsityPattern dsp(3, 3);
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for(unsigned int i= 0; i < 3; ++i)
+    for(unsigned int j= 0; j < 3; ++j)
       dsp.block(i, j).reinit(dpc[i], dpc[j]);
   dsp.collect_sizes();
 
@@ -71,28 +71,28 @@ main()
 
   // Come up with a simple structure:
 
-  for(unsigned int i = 0; i < a.block(0, 0).m(); ++i)
+  for(unsigned int i= 0; i < a.block(0, 0).m(); ++i)
     a.block(0, 0).set(i, i, 10.);
-  for(unsigned int i = 0; i < a.block(1, 1).m(); ++i)
+  for(unsigned int i= 0; i < a.block(1, 1).m(); ++i)
     a.block(1, 1).set(i, i, 5.);
-  for(unsigned int i = 0; i < a.block(2, 2).m(); ++i)
+  for(unsigned int i= 0; i < a.block(2, 2).m(); ++i)
     a.block(2, 2).set(i, i, 3.);
 
-  auto op_a = block_operator(a);
+  auto op_a= block_operator(a);
 
-  auto op_b0 = linear_operator(a.block(0, 0));
-  auto op_b1 = linear_operator(a.block(1, 1));
-  auto op_b2 = linear_operator(a.block(2, 2));
+  auto op_b0= linear_operator(a.block(0, 0));
+  auto op_b1= linear_operator(a.block(1, 1));
+  auto op_b2= linear_operator(a.block(2, 2));
 
   std::array<decltype(op_b0), 3> temp{{op_b0, op_b1, op_b2}};
-  auto op_b = block_diagonal_operator<3, BlockVector<double>>(temp);
+  auto op_b= block_diagonal_operator<3, BlockVector<double>>(temp);
 
   {
     BlockVector<double> u;
     op_a.reinit_domain_vector(u, false);
-    for(unsigned int i = 0; i < u.size(); ++i)
+    for(unsigned int i= 0; i < u.size(); ++i)
       {
-        u[i] = (double) (i + 1);
+        u[i]= (double) (i + 1);
       }
 
     PRINTME("u", u);
@@ -110,42 +110,42 @@ main()
     op_b.vmult(w, u);
     PRINTME("Bu", w);
 
-    x = v;
-    x -= w;
+    x= v;
+    x-= w;
     PRINTME("Au-Bu", x);
 
     // Test that both objects give the same results:
 
-    auto op_x = op_a - op_b;
+    auto op_x= op_a - op_b;
 
     op_x.vmult(x, u);
     PRINTME("(A-B).vmult", x);
 
-    x = 0.;
+    x= 0.;
     op_x.vmult_add(x, u);
     PRINTME("(A-B).vmult_add", x);
 
     op_x.Tvmult(x, u);
     PRINTME("(A-B).Tvmult", x);
 
-    x = 0.;
+    x= 0.;
     op_x.Tvmult_add(x, u);
     PRINTME("(A-B).Tvmult_add", x);
 
     // Test vector reinitalization:
 
-    op_x = op_b * op_b * op_b;
+    op_x= op_b * op_b * op_b;
     op_x.vmult(x, u);
     PRINTME("(B*B*B) vmult", x);
 
-    x = 0.;
+    x= 0.;
     op_x.vmult_add(x, u);
     PRINTME("(B*B*B) vmult_add", x);
 
     op_x.Tvmult(x, u);
     PRINTME("(B*B*B) Tvmult", x);
 
-    x = 0.;
+    x= 0.;
     op_x.Tvmult_add(x, u);
     PRINTME("(B*B*B) Tvmult_add", x);
   }
@@ -153,35 +153,35 @@ main()
   // And finally the other block_diagonal_operator variant:
 
   std::array<decltype(op_b0), 5> temp2{{op_b0, op_b0, op_b0, op_b0, op_b0}};
-  auto op_c = block_diagonal_operator<5, BlockVector<double>>(temp2);
+  auto op_c= block_diagonal_operator<5, BlockVector<double>>(temp2);
 
-  auto op_d = block_diagonal_operator<5, BlockVector<double>>(op_b0);
+  auto op_d= block_diagonal_operator<5, BlockVector<double>>(op_b0);
 
   {
     BlockVector<double> u;
     op_c.reinit_domain_vector(u, false);
-    for(unsigned int i = 0; i < u.size(); ++i)
+    for(unsigned int i= 0; i < u.size(); ++i)
       {
-        u[i] = (double) (i + 1);
+        u[i]= (double) (i + 1);
       }
     PRINTME("u", u);
 
     BlockVector<double> x;
     op_c.reinit_range_vector(x, false);
 
-    auto op_x = op_c - op_d;
+    auto op_x= op_c - op_d;
 
     op_x.vmult(x, u);
     PRINTME("(C-D) vmult", x);
 
-    x = 0.;
+    x= 0.;
     op_x.vmult_add(x, u);
     PRINTME("(C-D) vmult_add", x);
 
     op_x.Tvmult(x, u);
     PRINTME("(C-D) Tvmult", x);
 
-    x = 0.;
+    x= 0.;
     op_x.Tvmult_add(x, u);
     PRINTME("(C-D) Tvmult_add", x);
   }

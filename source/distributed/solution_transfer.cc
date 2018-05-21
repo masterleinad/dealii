@@ -62,7 +62,7 @@ namespace parallel
       prepare_for_coarsening_and_refinement(
         const std::vector<const VectorType*>& all_in)
     {
-      input_vectors = all_in;
+      input_vectors= all_in;
       register_data_attach(get_data_size() * input_vectors.size());
     }
 
@@ -84,7 +84,7 @@ namespace parallel
             &dof_handler->get_triangulation())));
       Assert(tria != nullptr, ExcInternalError());
 
-      handle = tria->register_data_attach(
+      handle= tria->register_data_attach(
         size,
         std::bind(
           &SolutionTransfer<dim, VectorType, DoFHandlerType>::pack_callback,
@@ -171,7 +171,7 @@ namespace parallel
           std::placeholders::_3,
           std::ref(all_out)));
 
-      for(typename std::vector<VectorType*>::iterator it = all_out.begin();
+      for(typename std::vector<VectorType*>::iterator it= all_out.begin();
           it != all_out.end();
           ++it)
         (*it)->compress(::dealii::VectorOperation::insert);
@@ -210,7 +210,7 @@ namespace parallel
 
       typename DoFHandlerType::cell_iterator cell(*cell_, dof_handler);
 
-      const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
+      const unsigned int dofs_per_cell= cell->get_fe().dofs_per_cell;
       ::dealii::Vector<typename VectorType::value_type> dofvalues(
         dofs_per_cell);
       for(typename std::vector<const VectorType*>::iterator it
@@ -222,7 +222,7 @@ namespace parallel
           std::memcpy(data_store,
                       &dofvalues(0),
                       sizeof(typename VectorType::value_type) * dofs_per_cell);
-          data_store += dofs_per_cell;
+          data_store+= dofs_per_cell;
         }
     }
 
@@ -238,13 +238,13 @@ namespace parallel
     {
       typename DoFHandlerType::cell_iterator cell(*cell_, dof_handler);
 
-      const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
+      const unsigned int dofs_per_cell= cell->get_fe().dofs_per_cell;
       ::dealii::Vector<typename VectorType::value_type> dofvalues(
         dofs_per_cell);
       const typename VectorType::value_type* data_store
         = reinterpret_cast<const typename VectorType::value_type*>(data);
 
-      for(typename std::vector<VectorType*>::iterator it = all_out.begin();
+      for(typename std::vector<VectorType*>::iterator it= all_out.begin();
           it != all_out.end();
           ++it)
         {
@@ -252,7 +252,7 @@ namespace parallel
                       data_store,
                       sizeof(typename VectorType::value_type) * dofs_per_cell);
           cell->set_dof_values_by_interpolation(dofvalues, *(*it));
-          data_store += dofs_per_cell;
+          data_store+= dofs_per_cell;
         }
     }
 

@@ -43,19 +43,19 @@ test()
   dof_handler.distribute_dofs(fe);
 
   std::vector<types::global_dof_index> renumbering(dof_handler.n_dofs());
-  renumbering[0] = 3;
-  renumbering[1] = 2;
-  renumbering[2] = 1;
-  renumbering[3] = 0;
+  renumbering[0]= 3;
+  renumbering[1]= 2;
+  renumbering[2]= 1;
+  renumbering[3]= 0;
 
   dof_handler.renumber_dofs(renumbering);
 
   Vector<double> v_node(dof_handler.n_dofs());
   Vector<double> v_cell(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     {
-      v_node[i] = i;
-      v_cell[i] = 10 + i;
+      v_node[i]= i;
+      v_cell[i]= 10 + i;
     }
 
   //correct one is done if both are possible but specified

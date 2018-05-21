@@ -44,8 +44,8 @@ namespace Step48
 {
   using namespace dealii;
 
-  const unsigned int dimension = 2;
-  const unsigned int fe_degree = 4;
+  const unsigned int dimension= 2;
+  const unsigned int fe_degree= 4;
 
   template <int dim, int fe_degree>
   class SineGordonOperation
@@ -78,29 +78,28 @@ namespace Step48
     const double                   time_step)
     : data(data_in), delta_t_sqr(make_vectorized_array(time_step * time_step))
   {
-    VectorizedArray<double> one = make_vectorized_array(1.);
+    VectorizedArray<double> one= make_vectorized_array(1.);
 
     data.initialize_dof_vector(inv_mass_matrix);
 
     FEEvaluation<dim, fe_degree> fe_eval(data);
-    const unsigned int           n_q_points = fe_eval.n_q_points;
+    const unsigned int           n_q_points= fe_eval.n_q_points;
 
-    for(unsigned int cell = 0; cell < data.n_macro_cells(); ++cell)
+    for(unsigned int cell= 0; cell < data.n_macro_cells(); ++cell)
       {
         fe_eval.reinit(cell);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           fe_eval.submit_value(one, q);
         fe_eval.integrate(true, false);
         fe_eval.distribute_local_to_global(inv_mass_matrix);
       }
 
     inv_mass_matrix.compress(VectorOperation::add);
-    for(unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
+    for(unsigned int k= 0; k < inv_mass_matrix.local_size(); ++k)
       if(inv_mass_matrix.local_element(k) > 1e-15)
-        inv_mass_matrix.local_element(k)
-          = 1. / inv_mass_matrix.local_element(k);
+        inv_mass_matrix.local_element(k)= 1. / inv_mass_matrix.local_element(k);
       else
-        inv_mass_matrix.local_element(k) = 0;
+        inv_mass_matrix.local_element(k)= 0;
   }
 
   template <int dim, int fe_degree>
@@ -113,7 +112,7 @@ namespace Step48
   {
     AssertDimension(src.size(), 2);
     FEEvaluation<dim, fe_degree> current(data), old(data);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         current.reinit(cell);
         old.reinit(cell);
@@ -124,10 +123,10 @@ namespace Step48
         current.evaluate(true, true, false);
         old.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < current.n_q_points; ++q)
+        for(unsigned int q= 0; q < current.n_q_points; ++q)
           {
-            const VectorizedArray<double> current_value = current.get_value(q);
-            const VectorizedArray<double> old_value     = old.get_value(q);
+            const VectorizedArray<double> current_value= current.get_value(q);
+            const VectorizedArray<double> old_value    = old.get_value(q);
 
             current.submit_value(2. * current_value - old_value, q);
             current.submit_gradient(-delta_t_sqr * current.get_gradient(q), q);
@@ -144,7 +143,7 @@ namespace Step48
     LinearAlgebra::distributed::Vector<double>&                     dst,
     const std::vector<LinearAlgebra::distributed::Vector<double>*>& src) const
   {
-    dst = 0;
+    dst= 0;
     data.cell_loop(
       &SineGordonOperation<dim, fe_degree>::local_apply, this, dst, src);
     dst.scale(inv_mass_matrix);
@@ -154,11 +153,11 @@ namespace Step48
   class InitialSolution : public Function<dim>
   {
   public:
-    InitialSolution(const unsigned int n_components = 1, const double time = 0.)
+    InitialSolution(const unsigned int n_components= 1, const double time= 0.)
       : Function<dim>(n_components, time)
     {}
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component= 0) const;
   };
 
   template <int dim>
@@ -273,7 +272,7 @@ namespace Step48
                                       norm_per_cell,
                                       QGauss<dim>(fe_degree + 1),
                                       VectorTools::L2_norm);
-    const double solution_norm = std::sqrt(
+    const double solution_norm= std::sqrt(
       Utilities::MPI::sum(norm_per_cell.norm_sqr(), MPI_COMM_WORLD));
 
     deallog << "   Time:" << std::setw(8) << std::setprecision(3) << time
@@ -291,8 +290,8 @@ namespace Step48
       = triangulation.last()->diameter() / std::sqrt(dim);
     const double global_min_cell_diameter
       = -Utilities::MPI::max(-local_min_cell_diameter, MPI_COMM_WORLD);
-    time_step = cfl_number * global_min_cell_diameter;
-    time_step = (final_time - time) / (int((final_time - time) / time_step));
+    time_step= cfl_number * global_min_cell_diameter;
+    time_step= (final_time - time) / (int((final_time - time) / time_step));
     deallog << "   Time step size: " << time_step
             << ", finest cell: " << global_min_cell_diameter << std::endl
             << std::endl;
@@ -310,10 +309,10 @@ namespace Step48
     SineGordonOperation<dim, fe_degree> sine_gordon_op(matrix_free_data,
                                                        time_step);
 
-    unsigned int timestep_number = 1;
+    unsigned int timestep_number= 1;
 
-    for(time += time_step; time <= final_time;
-        time += time_step, ++timestep_number)
+    for(time+= time_step; time <= final_time;
+        time+= time_step, ++timestep_number)
       {
         old_old_solution.swap(old_solution);
         old_solution.swap(solution);
@@ -336,7 +335,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

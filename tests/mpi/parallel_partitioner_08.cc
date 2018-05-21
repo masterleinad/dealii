@@ -22,11 +22,11 @@
 #include <deal.II/base/mpi.h>
 #include <deal.II/base/partitioner.h>
 
-template <typename Number = double>
+template <typename Number= double>
 void
 test()
 {
-  const unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int rank= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // setup index sets
   //                            subset:                    is2
@@ -77,12 +77,12 @@ test()
   AlignedVector<Number> owned(rank == 0 ? 8 : 0);
   AlignedVector<Number> ghost(4);
 
-  for(unsigned int i = 0; i < 4; ++i)
-    ghost[i] = 0.;
+  for(unsigned int i= 0; i < 4; ++i)
+    ghost[i]= 0.;
 
   if(rank == 0)
-    for(int i = 0; i < 8; i++)
-      owned[i] = i;
+    for(int i= 0; i < 8; i++)
+      owned[i]= i;
 
   // update ghost values
   // vector of requests
@@ -105,7 +105,7 @@ test()
   tight_partitioner->export_to_ghosted_array_finish(
     ArrayView<Number>(ghost.begin(), ghost.size()), requests);
 
-  auto print = [&]() {
+  auto print= [&]() {
     deallog << "owned:" << std::endl;
     for(auto el : owned)
       deallog << el << " ";
@@ -122,8 +122,8 @@ test()
   import_data.resize_fast(tight_partitioner->n_import_indices());
 
   // now do insert:
-  auto compress = [&](VectorOperation::values operation) {
-    const unsigned int counter = 0;
+  auto compress= [&](VectorOperation::values operation) {
+    const unsigned int counter= 0;
     tight_partitioner->import_from_ghosted_array_start(
       operation,
       counter,
@@ -147,8 +147,8 @@ test()
 
   if(rank == 1)
     {
-      ghost[1] = 10;
-      ghost[2] = 20;
+      ghost[1]= 10;
+      ghost[2]= 20;
     }
 
   deallog << "compress(add)" << std::endl;

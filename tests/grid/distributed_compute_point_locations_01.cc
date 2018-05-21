@@ -33,7 +33,7 @@ template <int dim>
 void
 test_compute_pt_loc(unsigned int n_points)
 {
-  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm mpi_communicator= MPI_COMM_WORLD;
   deallog << "Testing for dim = " << dim << std::endl;
   deallog << "Testing on: " << n_points << " points." << std::endl;
 
@@ -45,7 +45,7 @@ test_compute_pt_loc(unsigned int n_points)
   // Creating the random points
   std::vector<Point<dim>> points;
 
-  for(size_t i = 0; i < n_points; ++i)
+  for(size_t i= 0; i < n_points; ++i)
     points.push_back(random_point<dim>());
 
   // Initializing the cache
@@ -65,31 +65,31 @@ test_compute_pt_loc(unsigned int n_points)
 
   // Obtaining the global mesh description through an all to all communication
   std::vector<std::vector<BoundingBox<dim>>> global_bboxes;
-  global_bboxes = Utilities::MPI::all_gather(mpi_communicator, local_bbox);
+  global_bboxes= Utilities::MPI::all_gather(mpi_communicator, local_bbox);
 
   // Using the distributed version of compute point location
   auto output_tuple
     = distributed_compute_point_locations(cache, points, global_bboxes);
   // Testing in serial against the serial version
-  auto cell_qpoint_map = GridTools::compute_point_locations(cache, points);
+  auto cell_qpoint_map= GridTools::compute_point_locations(cache, points);
 
-  auto&  serial_cells   = std::get<0>(cell_qpoint_map);
-  auto&  serial_qpoints = std::get<1>(cell_qpoint_map);
-  size_t n_cells        = std::get<0>(output_tuple).size();
+  auto&  serial_cells  = std::get<0>(cell_qpoint_map);
+  auto&  serial_qpoints= std::get<1>(cell_qpoint_map);
+  size_t n_cells       = std::get<0>(output_tuple).size();
 
   deallog << "Points found in " << n_cells << " cells" << std::endl;
 
   // testing if the result coincides with
   // the serial one
-  for(unsigned int c = 0; c < n_cells; ++c)
+  for(unsigned int c= 0; c < n_cells; ++c)
     {
-      auto& cell            = std::get<0>(output_tuple)[c];
-      auto& quad            = std::get<1>(output_tuple)[c];
-      auto& local_map       = std::get<2>(output_tuple)[c];
-      auto& original_points = std::get<3>(output_tuple)[c];
-      auto& ranks           = std::get<4>(output_tuple)[c];
+      auto& cell           = std::get<0>(output_tuple)[c];
+      auto& quad           = std::get<1>(output_tuple)[c];
+      auto& local_map      = std::get<2>(output_tuple)[c];
+      auto& original_points= std::get<3>(output_tuple)[c];
+      auto& ranks          = std::get<4>(output_tuple)[c];
 
-      auto pos_cell = std::find(serial_cells.begin(), serial_cells.end(), cell);
+      auto pos_cell= std::find(serial_cells.begin(), serial_cells.end(), cell);
       for(auto r : ranks)
         if(r != 0)
           deallog << "ERROR: rank is not 0 but " << std::to_string(r)
@@ -99,7 +99,7 @@ test_compute_pt_loc(unsigned int n_points)
         deallog << "ERROR: cell not found" << std::endl;
       else
         {
-          auto serial_cell_idx = pos_cell - serial_cells.begin();
+          auto serial_cell_idx= pos_cell - serial_cells.begin();
           if(original_points.size() != serial_qpoints[serial_cell_idx].size())
             deallog << "ERROR: in the number of points for cell"
                     << std::to_string(serial_cell_idx) << std::endl;
@@ -107,12 +107,12 @@ test_compute_pt_loc(unsigned int n_points)
             deallog << "ERROR: in the number of points for cell"
                     << std::to_string(serial_cell_idx) << std::endl;
 
-          unsigned int pt_num = 0;
+          unsigned int pt_num= 0;
           for(const auto& p_idx : local_map)
             {
               auto serial_pt_pos
                 = std::find(local_map.begin(), local_map.end(), p_idx);
-              auto serial_pt_idx = serial_pt_pos - local_map.begin();
+              auto serial_pt_idx= serial_pt_pos - local_map.begin();
               if(serial_pt_pos == local_map.end())
                 deallog << "ERROR: point index not found for "
                         << std::to_string(serial_pt_idx) << std::endl;

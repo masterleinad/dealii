@@ -39,8 +39,8 @@ main()
   // cells, each with 4 outer faces,
   // plus 5 faces each for the top
   // and bottom of the cylinder)
-  unsigned int external_faces = 0;
-  for(Triangulation<3>::face_iterator face = tria.begin_face();
+  unsigned int external_faces= 0;
+  for(Triangulation<3>::face_iterator face= tria.begin_face();
       face != tria.end_face();
       ++face)
     {

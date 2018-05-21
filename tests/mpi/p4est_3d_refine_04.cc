@@ -36,7 +36,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -45,8 +45,8 @@ test()
       // create a mesh for the
       // hypershell and refine it
       // twice globally
-      const double R0 = 6371000. - 2890000.;
-      const double R1 = 6371000. - 35000.;
+      const double R0= 6371000. - 2890000.;
+      const double R1= 6371000. - 35000.;
       GridGenerator::hyper_shell(
         triangulation, Point<dim>(), R0, R1, (dim == 3) ? 96 : 12, true);
       triangulation.reset_manifold(0);
@@ -55,7 +55,7 @@ test()
       // then flag all cells for
       // refinement that are close to
       // the north pole
-      unsigned int x_flagged_cells = 0;
+      unsigned int x_flagged_cells= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
           cell != triangulation.end();
@@ -75,7 +75,7 @@ test()
       // same as before
       triangulation.prepare_coarsening_and_refinement();
       {
-        unsigned int n_flagged_cells = 0;
+        unsigned int n_flagged_cells= 0;
         for(typename Triangulation<dim>::active_cell_iterator cell
             = triangulation.begin_active();
             cell != triangulation.end();
@@ -86,7 +86,7 @@ test()
 
         Assert(n_flagged_cells == x_flagged_cells, ExcInternalError());
 
-        unsigned int global_f_c = 0;
+        unsigned int global_f_c= 0;
         MPI_Allreduce(&n_flagged_cells,
                       &global_f_c,
                       1,
@@ -114,7 +114,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

@@ -292,7 +292,7 @@ protected:
   /**
    * The inheriting class should have a default constructor.
    */
-  LinearIndexIterator() = default;
+  LinearIndexIterator()= default;
 
   /**
    * Constructor that copies an accessor.
@@ -311,8 +311,8 @@ inline DerivedIterator&
 LinearIndexIterator<DerivedIterator, AccessorType>::
 operator=(const DerivedIterator& it)
 {
-  accessor.container    = it.container;
-  accessor.linear_index = it.linear_index;
+  accessor.container   = it.container;
+  accessor.linear_index= it.linear_index;
   return static_cast<DerivedIterator&>(*this);
 }
 
@@ -354,7 +354,7 @@ LinearIndexIterator<DerivedIterator, AccessorType>::
 operator+(const difference_type n) const
 {
   DerivedIterator copy(this->accessor);
-  copy += n;
+  copy+= n;
   return copy;
 }
 
@@ -364,7 +364,7 @@ LinearIndexIterator<DerivedIterator, AccessorType>::
 operator-(const difference_type n) const
 {
   DerivedIterator copy(this->accessor);
-  copy += -n;
+  copy+= -n;
   return copy;
 }
 
@@ -373,7 +373,7 @@ inline DerivedIterator&
 LinearIndexIterator<DerivedIterator, AccessorType>::
 operator+=(const difference_type n)
 {
-  accessor.linear_index += n;
+  accessor.linear_index+= n;
   return static_cast<DerivedIterator&>(*this);
 }
 
@@ -416,7 +416,7 @@ inline bool
 LinearIndexIterator<DerivedIterator, AccessorType>::
 operator==(const DerivedIterator& other) const
 {
-  const auto& other_2 = static_cast<decltype(*this)&>(other);
+  const auto& other_2= static_cast<decltype(*this)&>(other);
   return accessor.container == other_2.accessor.container
          && accessor.linear_index == other_2.accessor.linear_index;
 }

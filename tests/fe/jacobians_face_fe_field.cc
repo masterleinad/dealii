@@ -57,8 +57,8 @@ test()
   // choose a point that is not right in the middle of the cell so that the
   // Jacobian contains many nonzero entries
   Point<dim - 1> quad_p;
-  for(int d = 0; d < dim - 1; ++d)
-    quad_p(d) = 0.42 + 0.11 * d;
+  for(int d= 0; d < dim - 1; ++d)
+    quad_p(d)= 0.42 + 0.11 * d;
   Quadrature<dim - 1> quad(quad_p);
 
   {
@@ -66,16 +66,15 @@ test()
     FESubfaceValues<dim> fe_sub_val(mapping, dummy, quad, update_jacobians);
 
     deallog << dim << "D Jacobians:" << std::endl;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_val.reinit(cell, f);
 
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
               deallog << fe_val.jacobian(0)[d][e] << " ";
           deallog << std::endl;
 
@@ -87,8 +86,8 @@ test()
                                 cell->neighbor_face_no(f),
                                 cell->neighbor_of_coarser_neighbor(f).second);
 
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
                   deallog << fe_sub_val.jacobian(0)[d][e] << " ";
               deallog << std::endl;
             }
@@ -102,16 +101,15 @@ test()
       mapping, dummy, quad, update_inverse_jacobians);
 
     deallog << dim << "D inverse Jacobians:" << std::endl;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_val.reinit(cell, f);
 
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
               deallog << fe_val.inverse_jacobian(0)[d][e] << " ";
           deallog << std::endl;
 
@@ -123,8 +121,8 @@ test()
                                 cell->neighbor_face_no(f),
                                 cell->neighbor_of_coarser_neighbor(f).second);
 
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
                   deallog << fe_sub_val.inverse_jacobian(0)[d][e] << " ";
               deallog << std::endl;
             }
@@ -138,17 +136,16 @@ test()
       mapping, dummy, quad, update_jacobian_grads);
 
     deallog << dim << "D Jacobian gradients:" << std::endl;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_val.reinit(cell, f);
 
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
-              for(unsigned int f = 0; f < dim; ++f)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
+              for(unsigned int f= 0; f < dim; ++f)
                 deallog << fe_val.jacobian_grad(0)[d][e][f] << " ";
           deallog << std::endl;
 
@@ -160,9 +157,9 @@ test()
                                 cell->neighbor_face_no(f),
                                 cell->neighbor_of_coarser_neighbor(f).second);
 
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
-                  for(unsigned int f = 0; f < dim; ++f)
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
+                  for(unsigned int f= 0; f < dim; ++f)
                     deallog << fe_sub_val.jacobian_grad(0)[d][e][f] << " ";
               deallog << std::endl;
             }
@@ -177,17 +174,16 @@ test()
       mapping, dummy, quad, update_jacobian_pushed_forward_grads);
 
     deallog << dim << "D Jacobian pushed forward gradients:" << std::endl;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_val.reinit(cell, f);
 
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
-              for(unsigned int f = 0; f < dim; ++f)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
+              for(unsigned int f= 0; f < dim; ++f)
                 deallog << fe_val.jacobian_pushed_forward_grad(0)[d][e][f]
                         << " ";
           deallog << std::endl;
@@ -200,9 +196,9 @@ test()
                                 cell->neighbor_face_no(f),
                                 cell->neighbor_of_coarser_neighbor(f).second);
 
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
-                  for(unsigned int f = 0; f < dim; ++f)
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
+                  for(unsigned int f= 0; f < dim; ++f)
                     deallog
                       << fe_sub_val.jacobian_pushed_forward_grad(0)[d][e][f]
                       << " ";
@@ -219,18 +215,17 @@ test()
       mapping, dummy, quad, update_jacobian_2nd_derivatives);
 
     deallog << dim << "D Jacobian hessians:" << std::endl;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_val.reinit(cell, f);
 
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
-              for(unsigned int f = 0; f < dim; ++f)
-                for(unsigned int g = 0; g < dim; ++g)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
+              for(unsigned int f= 0; f < dim; ++f)
+                for(unsigned int g= 0; g < dim; ++g)
                   deallog << fe_val.jacobian_2nd_derivative(0)[d][e][f][g]
                           << " ";
           deallog << std::endl;
@@ -243,10 +238,10 @@ test()
                                 cell->neighbor_face_no(f),
                                 cell->neighbor_of_coarser_neighbor(f).second);
 
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
-                  for(unsigned int f = 0; f < dim; ++f)
-                    for(unsigned int g = 0; g < dim; ++g)
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
+                  for(unsigned int f= 0; f < dim; ++f)
+                    for(unsigned int g= 0; g < dim; ++g)
                       deallog
                         << fe_sub_val.jacobian_2nd_derivative(0)[d][e][f][g]
                         << " ";
@@ -263,18 +258,17 @@ test()
       mapping, dummy, quad, update_jacobian_pushed_forward_2nd_derivatives);
 
     deallog << dim << "D Jacobian pushed forward hessians:" << std::endl;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_val.reinit(cell, f);
 
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
-              for(unsigned int f = 0; f < dim; ++f)
-                for(unsigned int g = 0; g < dim; ++g)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
+              for(unsigned int f= 0; f < dim; ++f)
+                for(unsigned int g= 0; g < dim; ++g)
                   deallog << fe_val.jacobian_pushed_forward_2nd_derivative(
                                0)[d][e][f][g]
                           << " ";
@@ -288,10 +282,10 @@ test()
                                 cell->neighbor_face_no(f),
                                 cell->neighbor_of_coarser_neighbor(f).second);
 
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
-                  for(unsigned int f = 0; f < dim; ++f)
-                    for(unsigned int g = 0; g < dim; ++g)
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
+                  for(unsigned int f= 0; f < dim; ++f)
+                    for(unsigned int g= 0; g < dim; ++g)
                       deallog
                         << fe_sub_val.jacobian_pushed_forward_2nd_derivative(
                              0)[d][e][f][g]
@@ -309,19 +303,18 @@ test()
       mapping, dummy, quad, update_jacobian_3rd_derivatives);
 
     deallog << dim << "D Jacobian hessian gradients:" << std::endl;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_val.reinit(cell, f);
 
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
-              for(unsigned int f = 0; f < dim; ++f)
-                for(unsigned int g = 0; g < dim; ++g)
-                  for(unsigned int h = 0; h < dim; ++h)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
+              for(unsigned int f= 0; f < dim; ++f)
+                for(unsigned int g= 0; g < dim; ++g)
+                  for(unsigned int h= 0; h < dim; ++h)
                     deallog << fe_val.jacobian_3rd_derivative(0)[d][e][f][g][h]
                             << " ";
           deallog << std::endl;
@@ -334,11 +327,11 @@ test()
                                 cell->neighbor_face_no(f),
                                 cell->neighbor_of_coarser_neighbor(f).second);
 
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
-                  for(unsigned int f = 0; f < dim; ++f)
-                    for(unsigned int g = 0; g < dim; ++g)
-                      for(unsigned int h = 0; h < dim; ++h)
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
+                  for(unsigned int f= 0; f < dim; ++f)
+                    for(unsigned int g= 0; g < dim; ++g)
+                      for(unsigned int h= 0; h < dim; ++h)
                         deallog << fe_sub_val.jacobian_3rd_derivative(
                                      0)[d][e][f][g][h]
                                 << " ";
@@ -356,19 +349,18 @@ test()
 
     deallog << dim
             << "D Jacobian pushed forward hessian gradients:" << std::endl;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_val.reinit(cell, f);
 
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
-              for(unsigned int f = 0; f < dim; ++f)
-                for(unsigned int g = 0; g < dim; ++g)
-                  for(unsigned int h = 0; h < dim; ++h)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
+              for(unsigned int f= 0; f < dim; ++f)
+                for(unsigned int g= 0; g < dim; ++g)
+                  for(unsigned int h= 0; h < dim; ++h)
                     deallog << fe_val.jacobian_pushed_forward_3rd_derivative(
                                  0)[d][e][f][g][h]
                             << " ";
@@ -382,11 +374,11 @@ test()
                                 cell->neighbor_face_no(f),
                                 cell->neighbor_of_coarser_neighbor(f).second);
 
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
-                  for(unsigned int f = 0; f < dim; ++f)
-                    for(unsigned int g = 0; g < dim; ++g)
-                      for(unsigned int h = 0; h < dim; ++h)
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
+                  for(unsigned int f= 0; f < dim; ++f)
+                    for(unsigned int g= 0; g < dim; ++g)
+                      for(unsigned int h= 0; h < dim; ++h)
                         deallog
                           << fe_sub_val.jacobian_pushed_forward_3rd_derivative(
                                0)[d][e][f][g][h]

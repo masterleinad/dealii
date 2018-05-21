@@ -27,14 +27,14 @@ test()
 
   // make the domain periodic in the first direction with periodicity 1.1
   Tensor<1, spacedim> periodicity;
-  periodicity[0] = 1.1;
+  periodicity[0]= 1.1;
   FlatManifold<dim, spacedim> manifold(periodicity);
 
   Point<spacedim> x1, x2;
-  for(unsigned int d = 0; d < spacedim; ++d)
+  for(unsigned int d= 0; d < spacedim; ++d)
     {
-      x1[d] = 0.1;
-      x2[d] = 0.9;
+      x1[d]= 0.1;
+      x2[d]= 0.9;
     }
 
   // get the connecting vector between these two points. because we

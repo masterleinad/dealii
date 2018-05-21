@@ -44,7 +44,7 @@ check()
   // one cell to use the second
   // element of this collection
   hp::FECollection<dim> element;
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     element.push_back(
       FESystem<dim>(FE_Q<dim>(1 + i), 1, FE_Nedelec<dim>(0), 1));
   hp::DoFHandler<dim> dof(tr);
@@ -54,7 +54,7 @@ check()
   std::vector<types::global_dof_index> count(element.n_components());
   DoFTools::count_dofs_per_component(dof, count, false);
 
-  for(unsigned int d = 0; d < count.size(); ++d)
+  for(unsigned int d= 0; d < count.size(); ++d)
     deallog << count[d] << std::endl;
 }
 

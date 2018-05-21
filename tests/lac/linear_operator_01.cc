@@ -33,25 +33,25 @@ struct LeftVector
   LeftVector&
   operator=(value_type new_value)
   {
-    value = new_value;
+    value= new_value;
     return *this;
   }
   LeftVector&
   operator*=(value_type scale)
   {
-    value *= scale;
+    value*= scale;
     return *this;
   }
   LeftVector&
   operator/=(value_type scale)
   {
-    value /= scale;
+    value/= scale;
     return *this;
   }
   LeftVector&
   operator+=(const LeftVector& u)
   {
-    value += u.value;
+    value+= u.value;
     return *this;
   }
   int
@@ -74,25 +74,25 @@ struct RightVector
   RightVector&
   operator=(value_type new_value)
   {
-    value = new_value;
+    value= new_value;
     return *this;
   }
   RightVector&
   operator*=(value_type scale)
   {
-    value *= scale;
+    value*= scale;
     return *this;
   }
   RightVector&
   operator/=(value_type scale)
   {
-    value /= scale;
+    value/= scale;
     return *this;
   }
   RightVector&
   operator+=(const RightVector& u)
   {
-    value += u.value;
+    value+= u.value;
     return *this;
   }
   int
@@ -117,30 +117,30 @@ main()
   typedef dealii::internal::LinearOperatorImplementation::EmptyPayload Payload;
   LinearOperator<LeftVector, RightVector, Payload> multiply2;
   multiply2.vmult
-    = [](LeftVector& v, const RightVector& u) { v.value = 2 * u.value; };
+    = [](LeftVector& v, const RightVector& u) { v.value= 2 * u.value; };
   multiply2.vmult_add
-    = [](LeftVector& v, const RightVector& u) { v.value += 2 * u.value; };
+    = [](LeftVector& v, const RightVector& u) { v.value+= 2 * u.value; };
   multiply2.Tvmult
-    = [](RightVector& v, const LeftVector& u) { v.value = 2 * u.value; };
+    = [](RightVector& v, const LeftVector& u) { v.value= 2 * u.value; };
   multiply2.Tvmult_add
-    = [](RightVector& v, const LeftVector& u) { v.value += 2 * u.value; };
-  multiply2.reinit_range_vector  = [](LeftVector&, bool) {};
-  multiply2.reinit_domain_vector = [](RightVector&, bool) {};
+    = [](RightVector& v, const LeftVector& u) { v.value+= 2 * u.value; };
+  multiply2.reinit_range_vector = [](LeftVector&, bool) {};
+  multiply2.reinit_domain_vector= [](RightVector&, bool) {};
 
-  auto multiply4 = multiply2;
+  auto multiply4= multiply2;
   multiply4.vmult
-    = [](LeftVector& v, const RightVector& u) { v.value = 4 * u.value; };
+    = [](LeftVector& v, const RightVector& u) { v.value= 4 * u.value; };
   multiply4.vmult_add
-    = [](LeftVector& v, const RightVector& u) { v.value += 4 * u.value; };
+    = [](LeftVector& v, const RightVector& u) { v.value+= 4 * u.value; };
   multiply4.Tvmult
-    = [](RightVector& v, const LeftVector& u) { v.value = 4 * u.value; };
+    = [](RightVector& v, const LeftVector& u) { v.value= 4 * u.value; };
   multiply4.Tvmult_add
-    = [](RightVector& v, const LeftVector& u) { v.value += 4 * u.value; };
+    = [](RightVector& v, const LeftVector& u) { v.value+= 4 * u.value; };
 
   // Small unit tests for all functions:
 
-  RightVector u = {4.};
-  LeftVector  v = {0.};
+  RightVector u= {4.};
+  LeftVector  v= {0.};
 
   // vmult, vmult_add
 
@@ -158,7 +158,7 @@ main()
 
   // Tvmult, Tvmult_add
 
-  v.value = 4.;
+  v.value= 4.;
 
   multiply2.Tvmult(u, v);
   deallog << "2 * " << v.value << " = " << u.value << std::endl;
@@ -174,57 +174,57 @@ main()
 
   // operator+, operator-, operator+=, operator-=
 
-  auto test = multiply2 + multiply4;
+  auto test= multiply2 + multiply4;
   test.vmult(v, u);
   deallog << "(2 + 4) * " << u.value << " = " << v.value << std::endl;
 
-  test = multiply2 - multiply4;
+  test= multiply2 - multiply4;
   test.vmult(v, u);
   deallog << "(2 - 4) * " << u.value << " = " << v.value << std::endl;
 
-  test += multiply2;
+  test+= multiply2;
   test.vmult(v, u);
   deallog << "(2 - 4 + 2) * " << u.value << " = " << v.value << std::endl;
 
-  test -= multiply4;
+  test-= multiply4;
   test.vmult(v, u);
   deallog << "(2 - 4 + 2 - 4) * " << u.value << " = " << v.value << std::endl;
 
   // operator* with scalar
 
-  test = 4. * multiply4;
+  test= 4. * multiply4;
   test.vmult(v, u);
   deallog << "(4 * 4) * " << u.value << " = " << v.value << std::endl;
 
-  test = multiply4;
-  test *= 4.;
+  test= multiply4;
+  test*= 4.;
   test.vmult(v, u);
   deallog << "(4 * 4) * " << u.value << " = " << v.value << std::endl;
 
-  test = multiply4 * 4.;
+  test= multiply4 * 4.;
   test.vmult(v, u);
   deallog << "(4 * 4) * " << u.value << " = " << v.value << std::endl;
 
   // operator* and transpose
 
-  auto        test2 = transpose_operator(multiply2) * multiply4;
-  RightVector w     = {0.};
+  auto        test2= transpose_operator(multiply2) * multiply4;
+  RightVector w    = {0.};
   test2.vmult(w, u);
   deallog << "(2 * 4) * " << u.value << " = " << w.value << std::endl;
 
-  test2 *= identity_operator(test2.reinit_range_vector);
+  test2*= identity_operator(test2.reinit_range_vector);
   test2.vmult(w, u);
   deallog << "(2 * 4) * 1 * " << u.value << " = " << w.value << std::endl;
 
   // identity
 
-  auto test3 = identity_operator(test2.reinit_range_vector) + test2;
+  auto test3= identity_operator(test2.reinit_range_vector) + test2;
   test3.vmult(w, u);
   deallog << "(1 + 2 * 4) * " << u.value << " = " << w.value << std::endl;
 
   // null operator
 
-  auto test4 = null_operator(test2);
+  auto test4= null_operator(test2);
   test4.vmult(w, u);
   deallog << " 0 * " << u.value << " = " << w.value << std::endl;
 }

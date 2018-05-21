@@ -101,15 +101,15 @@ DEAL_II_NAMESPACE_OPEN
  * @ingroup grid
  * @author Wolfgang Bangerth, 1999
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class PersistentTriangulation : public Triangulation<dim, spacedim>
 {
 public:
   /**
    * Make the dimension available in function templates.
    */
-  static const unsigned int dimension      = dim;
-  static const unsigned int spacedimension = spacedim;
+  static const unsigned int dimension     = dim;
+  static const unsigned int spacedimension= spacedim;
 
   /**
    * Build up the triangulation from the coarse grid in future. Copy smoothing
@@ -133,7 +133,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~PersistentTriangulation() override = default;
+  virtual ~PersistentTriangulation() override= default;
 
   /**
    * Overloaded version of the same function in the base class which stores

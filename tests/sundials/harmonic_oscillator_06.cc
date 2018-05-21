@@ -68,68 +68,68 @@ main(int argc, char** argv)
 
   SUNDIALS::ARKode<VectorType> ode(data);
 
-  ode.reinit_vector = [&](VectorType& v) {
+  ode.reinit_vector= [&](VectorType& v) {
     // Three independent variables
     v.reinit(3);
   };
 
   // Parameters
-  double u0 = 3.9, v0 = 1.1, w0 = 2.8, a = 1.2, b = 2.5, eps = 1e-5;
+  double u0= 3.9, v0= 1.1, w0= 2.8, a= 1.2, b= 2.5, eps= 1e-5;
   // Explicit jacobian.
   FullMatrix<double> J(3, 3);
 
   ode.implicit_function
     = [&](double, const VectorType& y, VectorType& ydot) -> int {
-    ydot[0] = 0;
-    ydot[1] = 0;
-    ydot[2] = (b - y[2]) / eps;
+    ydot[0]= 0;
+    ydot[1]= 0;
+    ydot[2]= (b - y[2]) / eps;
     return 0;
   };
 
   ode.explicit_function
     = [&](double, const VectorType& y, VectorType& ydot) -> int {
-    ydot[0] = a - (y[2] + 1) * y[0] + y[1] * y[0] * y[0];
-    ydot[1] = y[2] * y[0] - y[1] * y[0] * y[0];
-    ydot[2] = -y[2] * y[0];
+    ydot[0]= a - (y[2] + 1) * y[0] + y[1] * y[0] * y[0];
+    ydot[1]= y[2] * y[0] - y[1] * y[0] * y[0];
+    ydot[2]= -y[2] * y[0];
     return 0;
   };
 
-  ode.setup_jacobian = [&](const int,
-                           const double,
-                           const double gamma,
-                           const VectorType&,
-                           const VectorType&,
-                           bool& j_is_current) -> int {
-    J       = 0;
-    J(0, 0) = 1;
-    J(1, 1) = 1;
-    J(2, 2) = 1 + gamma / eps;
+  ode.setup_jacobian= [&](const int,
+                          const double,
+                          const double gamma,
+                          const VectorType&,
+                          const VectorType&,
+                          bool& j_is_current) -> int {
+    J      = 0;
+    J(0, 0)= 1;
+    J(1, 1)= 1;
+    J(2, 2)= 1 + gamma / eps;
     J.gauss_jordan();
-    j_is_current = true;
+    j_is_current= true;
     return 0;
   };
 
-  ode.solve_jacobian_system = [&](const double t,
-                                  const double gamma,
-                                  const VectorType&,
-                                  const VectorType&,
-                                  const VectorType& src,
-                                  VectorType&       dst) -> int {
+  ode.solve_jacobian_system= [&](const double t,
+                                 const double gamma,
+                                 const VectorType&,
+                                 const VectorType&,
+                                 const VectorType& src,
+                                 VectorType&       dst) -> int {
     J.vmult(dst, src);
     return 0;
   };
 
-  ode.output_step = [&](const double       t,
-                        const VectorType&  sol,
-                        const unsigned int step_number) -> int {
+  ode.output_step= [&](const double       t,
+                       const VectorType&  sol,
+                       const unsigned int step_number) -> int {
     out << t << " " << sol[0] << " " << sol[1] << " " << sol[2] << std::endl;
     return 0;
   };
 
   Vector<double> y(3);
-  y[0] = u0;
-  y[1] = v0;
-  y[2] = w0;
+  y[0]= u0;
+  y[1]= v0;
+  y[2]= w0;
   ode.solve_ode(y);
   return 0;
 }

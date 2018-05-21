@@ -30,7 +30,7 @@ main()
   initlog();
   deallog << std::setprecision(3);
 
-  constexpr unsigned int dim = 3;
+  constexpr unsigned int dim= 3;
   SphericalManifold<3>   spherical;
 
   Triangulation<dim> tria;
@@ -39,7 +39,7 @@ main()
   tria.set_manifold(0, spherical);
 
   for(auto cell : tria.active_cell_iterators())
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         {
           if(std::abs(cell->face(f)->vertex(1).norm() - 1.) < 1e-1)
@@ -78,7 +78,7 @@ main()
             }
         }
   for(auto cell : tria.active_cell_iterators())
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         {
           // the first choice will contain perturbations in the normal because

@@ -80,7 +80,7 @@ LaplaceMatrix<dim>::boundary(
   MeshWorker::DoFInfo<dim>&                  dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
-  const unsigned int deg = info.fe_values(0).get_fe().tensor_degree();
+  const unsigned int deg= info.fe_values(0).get_fe().tensor_degree();
   Laplace::nitsche_matrix(dinfo.matrix(0, false).matrix,
                           info.fe_values(0),
                           Laplace::compute_penalty(dinfo, dinfo, deg, deg));
@@ -96,7 +96,7 @@ LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
   if(info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::H1))
     return;
 
-  const unsigned int deg = info1.fe_values(0).get_fe().tensor_degree();
+  const unsigned int deg= info1.fe_values(0).get_fe().tensor_degree();
 
   if(info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::Hdiv)
      && !info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::Hcurl))
@@ -133,7 +133,7 @@ assemble_mg_matrix(DoFHandler<dim>&                    dof_handler,
   MappingQGeneric<dim> mapping(1);
 
   MeshWorker::IntegrationInfoBox<dim> info_box;
-  UpdateFlags update_flags = update_values | update_gradients | update_hessians;
+  UpdateFlags update_flags= update_values | update_gradients | update_hessians;
   info_box.add_update_flags_all(update_flags);
   info_box.initialize(dof_handler.get_fe(), mapping, &dof_handler.block_info());
 
@@ -152,10 +152,10 @@ assemble_mg_matrix(DoFHandler<dim>&                    dof_handler,
                                          matrix_integrator,
                                          assembler);
 
-  const unsigned int nlevels = dof_handler.get_triangulation().n_levels();
-  for(unsigned int level = 0; level < nlevels; ++level)
+  const unsigned int nlevels= dof_handler.get_triangulation().n_levels();
+  for(unsigned int level= 0; level < nlevels; ++level)
     {
-      for(unsigned int i = 0; i < dof_handler.n_dofs(level); ++i)
+      for(unsigned int i= 0; i < dof_handler.n_dofs(level); ++i)
         if(mg.matrix[level].diag_element(i) == 0)
           mg.matrix[level].set(i, i, 1.);
     }
@@ -169,10 +169,10 @@ test(FiniteElement<dim>& fe)
 
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
   std::vector<unsigned int> repititions(dim, 1);
-  repititions[0]      = 2;
-  const Point<dim> p1 = (dim == 1 ? Point<dim>(-1.) :
-                                    (dim == 2 ? Point<dim>(-1., -1.) :
-                                                Point<dim>(-1., -1., -1.)));
+  repititions[0]     = 2;
+  const Point<dim> p1= (dim == 1 ? Point<dim>(-1.) :
+                                   (dim == 2 ? Point<dim>(-1., -1.) :
+                                               Point<dim>(-1., -1., -1.)));
   const Point<dim> p2
     = (dim == 1 ? Point<dim>(1.) :
                   (dim == 2 ? Point<dim>(1., 1.) : Point<dim>(1., 1., 1.)));
@@ -191,10 +191,10 @@ test(FiniteElement<dim>& fe)
   mg.reinit(dof);
   assemble_mg_matrix(dof, matrix_integrator, mg);
 
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for(unsigned int level= 0; level < tr.n_levels(); ++level)
     {
-      const unsigned int prec = 3;
-      const unsigned int wd   = 2;
+      const unsigned int prec= 3;
+      const unsigned int wd  = 2;
 
       deallog << "Level " << level << std::endl << "mg" << std::endl;
       mg.matrix[level].print_formatted(

@@ -46,7 +46,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // create a mesh so that all but one
   // processor are empty
@@ -56,13 +56,13 @@ test()
   DoFHandler<dim> dofh(tr);
   dofh.distribute_dofs(fe);
 
-  IndexSet                      owned_set = dofh.locally_owned_dofs();
+  IndexSet                      owned_set= dofh.locally_owned_dofs();
   TrilinosWrappers::MPI::Vector x;
 
   x.reinit(owned_set, MPI_COMM_WORLD);
 
   VectorTools::interpolate(dofh, Functions::ConstantFunction<dim>(1), x);
-  const double norm = x.l2_norm();
+  const double norm= x.l2_norm();
   if(myid == 0)
     deallog << dofh.n_locally_owned_dofs() << ' ' << dofh.n_dofs() << std::endl
             << norm << std::endl;
@@ -80,7 +80,7 @@ main(int argc, char* argv[])
   compile_time_error;
 #endif
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

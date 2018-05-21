@@ -38,12 +38,12 @@
 // 2) multiple eps-files and output to
 // std::cout in order to check
 // changes in the library
-bool single_file = true;
+bool single_file= true;
 // maximum number of refinement steps and cells
 // to be created during refinement. whichever
 // is reached first terminates the loop
-const unsigned int max_cycle = 200;
-const unsigned int max_cells = 50000;
+const unsigned int max_cycle= 200;
+const unsigned int max_cells= 50000;
 
 template <int dim>
 void
@@ -75,11 +75,11 @@ test_isotropic(int type, std::ostream* logfile)
 
   *logfile << "cycle: 0, number of cells: " << tria.n_cells() << std::endl;
 
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
-  for(unsigned int cycle = 1; cycle < max_cycle + 1; ++cycle)
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
+  for(unsigned int cycle= 1; cycle < max_cycle + 1; ++cycle)
     {
-      cell = tria.begin_active();
+      cell= tria.begin_active();
       for(; cell != endc; ++cell)
         if(Testing::rand() % 5 == 0)
           {
@@ -120,9 +120,9 @@ main()
   std::ostream* logfile;
 
   if(single_file)
-    logfile = new std::ofstream("output");
+    logfile= new std::ofstream("output");
   else
-    logfile = &std::cout;
+    logfile= &std::cout;
 
   *logfile << std::endl
            << "         2D" << std::endl

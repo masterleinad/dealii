@@ -62,18 +62,18 @@ check_renumbering(hp::DoFHandler<dim>& dof)
   // component maps to its natural
   // block
   std::vector<unsigned int> order(dof.get_fe().n_components());
-  order[0] = 0;
-  order[1] = 1;
-  order[2] = 1;
+  order[0]= 0;
+  order[1]= 1;
+  order[2]= 1;
 
   // do component-wise and save the
   // results
   DoFRenumbering::component_wise(dof, order);
-  const std::vector<types::global_dof_index> vc = get_dofs(dof);
+  const std::vector<types::global_dof_index> vc= get_dofs(dof);
 
   // now do the same with blocks
   DoFRenumbering::block_wise(dof);
-  const std::vector<types::global_dof_index> vb = get_dofs(dof);
+  const std::vector<types::global_dof_index> vb= get_dofs(dof);
 
   AssertThrow(vc == vb, ExcInternalError());
 
@@ -97,14 +97,14 @@ check()
 
   hp::DoFHandler<dim> dof(tr);
   {
-    bool coin = false;
+    bool coin= false;
     for(typename hp::DoFHandler<dim>::active_cell_iterator cell
         = dof.begin_active();
         cell != dof.end();
         ++cell)
       {
         cell->set_active_fe_index(coin ? 0 : 1);
-        coin = !coin;
+        coin= !coin;
       }
   }
 

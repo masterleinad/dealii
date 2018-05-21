@@ -48,10 +48,10 @@ public:
   /**
    * Constructor.
    */
-  MGSmoother(const unsigned int steps     = 1,
-             const bool         variable  = false,
-             const bool         symmetric = false,
-             const bool         transpose = false);
+  MGSmoother(const unsigned int steps    = 1,
+             const bool         variable = false,
+             const bool         symmetric= false,
+             const bool         transpose= false);
 
   /**
    * Modify the number of smoothing steps on finest level.
@@ -187,10 +187,10 @@ namespace mg
     /**
      * Constructor. Sets smoothing parameters.
      */
-    SmootherRelaxation(const unsigned int steps     = 1,
-                       const bool         variable  = false,
-                       const bool         symmetric = false,
-                       const bool         transpose = false);
+    SmootherRelaxation(const unsigned int steps    = 1,
+                       const bool         variable = false,
+                       const bool         symmetric= false,
+                       const bool         transpose= false);
 
     /**
      * Initialize for matrices. This function initializes the smoothing
@@ -298,10 +298,10 @@ public:
   /**
    * Constructor. Sets smoothing parameters.
    */
-  MGSmootherRelaxation(const unsigned int steps     = 1,
-                       const bool         variable  = false,
-                       const bool         symmetric = false,
-                       const bool         transpose = false);
+  MGSmootherRelaxation(const unsigned int steps    = 1,
+                       const bool         variable = false,
+                       const bool         symmetric= false,
+                       const bool         transpose= false);
 
   /**
    * Initialize for matrices. This function stores pointers to the level
@@ -447,10 +447,10 @@ public:
   /**
    * Constructor. Sets smoothing parameters.
    */
-  MGSmootherPrecondition(const unsigned int steps     = 1,
-                         const bool         variable  = false,
-                         const bool         symmetric = false,
-                         const bool         transpose = false);
+  MGSmootherPrecondition(const unsigned int steps    = 1,
+                         const bool         variable = false,
+                         const bool         symmetric= false,
+                         const bool         transpose= false);
 
   /**
    * Initialize for matrices. This function stores pointers to the level
@@ -603,35 +603,35 @@ template <typename VectorType>
 inline void
 MGSmoother<VectorType>::set_steps(const unsigned int s)
 {
-  steps = s;
+  steps= s;
 }
 
 template <typename VectorType>
 inline void
 MGSmoother<VectorType>::set_debug(const unsigned int s)
 {
-  debug = s;
+  debug= s;
 }
 
 template <typename VectorType>
 inline void
 MGSmoother<VectorType>::set_variable(const bool flag)
 {
-  variable = flag;
+  variable= flag;
 }
 
 template <typename VectorType>
 inline void
 MGSmoother<VectorType>::set_symmetric(const bool flag)
 {
-  symmetric = flag;
+  symmetric= flag;
 }
 
 template <typename VectorType>
 inline void
 MGSmoother<VectorType>::set_transpose(const bool flag)
 {
-  transpose = flag;
+  transpose= flag;
 }
 
 //----------------------------------------------------------------------//
@@ -661,12 +661,12 @@ namespace mg
     const MGLevelObject<MatrixType2>&              m,
     const typename RelaxationType::AdditionalData& data)
   {
-    const unsigned int min = m.min_level();
-    const unsigned int max = m.max_level();
+    const unsigned int min= m.min_level();
+    const unsigned int max= m.max_level();
 
     this->resize(min, max);
 
-    for(unsigned int i = min; i <= max; ++i)
+    for(unsigned int i= min; i <= max; ++i)
       (*this)[i].initialize(m[i], data);
   }
 
@@ -677,12 +677,12 @@ namespace mg
     const MGLevelObject<MatrixType2>& m,
     const MGLevelObject<DATA>&        data)
   {
-    const unsigned int min = std::max(m.min_level(), data.min_level());
-    const unsigned int max = std::min(m.max_level(), data.max_level());
+    const unsigned int min= std::max(m.min_level(), data.min_level());
+    const unsigned int max= std::min(m.max_level(), data.max_level());
 
     this->resize(min, max);
 
-    for(unsigned int i = min; i <= max; ++i)
+    for(unsigned int i= min; i <= max; ++i)
       (*this)[i].initialize(m[i], data[i]);
   }
 
@@ -693,26 +693,26 @@ namespace mg
     VectorType&        u,
     const VectorType&  rhs) const
   {
-    unsigned int maxlevel = this->max_level();
-    unsigned int steps2   = this->steps;
+    unsigned int maxlevel= this->max_level();
+    unsigned int steps2  = this->steps;
 
     if(this->variable)
-      steps2 *= (1 << (maxlevel - level));
+      steps2*= (1 << (maxlevel - level));
 
-    bool T = this->transpose;
+    bool T= this->transpose;
     if(this->symmetric && (steps2 % 2 == 0))
-      T = false;
+      T= false;
     if(this->debug > 0)
       deallog << 'S' << level << ' ';
 
-    for(unsigned int i = 0; i < steps2; ++i)
+    for(unsigned int i= 0; i < steps2; ++i)
       {
         if(T)
           (*this)[level].Tstep(u, rhs);
         else
           (*this)[level].step(u, rhs);
         if(this->symmetric)
-          T = !T;
+          T= !T;
       }
   }
 
@@ -723,15 +723,15 @@ namespace mg
     VectorType&        u,
     const VectorType&  rhs) const
   {
-    unsigned int maxlevel = this->max_level();
-    unsigned int steps2   = this->steps;
+    unsigned int maxlevel= this->max_level();
+    unsigned int steps2  = this->steps;
 
     if(this->variable)
-      steps2 *= (1 << (maxlevel - level));
+      steps2*= (1 << (maxlevel - level));
 
-    bool T = this->transpose;
+    bool T= this->transpose;
     if(this->symmetric && (steps2 % 2 == 0))
-      T = false;
+      T= false;
     if(this->debug > 0)
       deallog << 'S' << level << ' ';
 
@@ -740,15 +740,15 @@ namespace mg
     else
       (*this)[level].vmult(u, rhs);
     if(this->symmetric)
-      T = !T;
-    for(unsigned int i = 1; i < steps2; ++i)
+      T= !T;
+    for(unsigned int i= 1; i < steps2; ++i)
       {
         if(T)
           (*this)[level].Tstep(u, rhs);
         else
           (*this)[level].step(u, rhs);
         if(this->symmetric)
-          T = !T;
+          T= !T;
       }
   }
 
@@ -779,9 +779,9 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::clear()
 {
   smoothers.clear_elements();
 
-  unsigned int i = matrices.min_level(), max_level = matrices.max_level();
+  unsigned int i= matrices.min_level(), max_level= matrices.max_level();
   for(; i <= max_level; ++i)
-    matrices[i] = LinearOperator<VectorType>();
+    matrices[i]= LinearOperator<VectorType>();
 }
 
 template <typename MatrixType, class RelaxationType, typename VectorType>
@@ -791,13 +791,13 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   const MGLevelObject<MatrixType2>&              m,
   const typename RelaxationType::AdditionalData& data)
 {
-  const unsigned int min = m.min_level();
-  const unsigned int max = m.max_level();
+  const unsigned int min= m.min_level();
+  const unsigned int max= m.max_level();
 
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for(unsigned int i= min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -815,8 +815,8 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   const MGLevelObject<MatrixType2>& m,
   const MGLevelObject<DATA>&        data)
 {
-  const unsigned int min = m.min_level();
-  const unsigned int max = m.max_level();
+  const unsigned int min= m.min_level();
+  const unsigned int max= m.max_level();
 
   Assert(data.min_level() == min, ExcDimensionMismatch(data.min_level(), min));
   Assert(data.max_level() == max, ExcDimensionMismatch(data.max_level(), max));
@@ -824,7 +824,7 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for(unsigned int i= min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -844,19 +844,19 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   const unsigned int                row,
   const unsigned int                col)
 {
-  const unsigned int min = m.min_level();
-  const unsigned int max = m.max_level();
+  const unsigned int min= m.min_level();
+  const unsigned int max= m.max_level();
 
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for(unsigned int i= min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
       // apply an empty LinearOperator exemplar.
-      matrices[i] = linear_operator<VectorType>(LinearOperator<VectorType>(),
-                                                m[i].block(row, col));
+      matrices[i]= linear_operator<VectorType>(LinearOperator<VectorType>(),
+                                               m[i].block(row, col));
       smoothers[i].initialize(m[i].block(row, col), data);
     }
 }
@@ -870,8 +870,8 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   const unsigned int                row,
   const unsigned int                col)
 {
-  const unsigned int min = m.min_level();
-  const unsigned int max = m.max_level();
+  const unsigned int min= m.min_level();
+  const unsigned int max= m.max_level();
 
   Assert(data.min_level() == min, ExcDimensionMismatch(data.min_level(), min));
   Assert(data.max_level() == max, ExcDimensionMismatch(data.max_level(), max));
@@ -879,13 +879,13 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for(unsigned int i= min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
       // apply an empty LinearOperator exemplar.
-      matrices[i] = linear_operator<VectorType>(LinearOperator<VectorType>(),
-                                                m[i].block(row, col));
+      matrices[i]= linear_operator<VectorType>(LinearOperator<VectorType>(),
+                                               m[i].block(row, col));
       smoothers[i].initialize(m[i].block(row, col), data[i]);
     }
 }
@@ -897,26 +897,26 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::smooth(
   VectorType&        u,
   const VectorType&  rhs) const
 {
-  unsigned int maxlevel = smoothers.max_level();
-  unsigned int steps2   = this->steps;
+  unsigned int maxlevel= smoothers.max_level();
+  unsigned int steps2  = this->steps;
 
   if(this->variable)
-    steps2 *= (1 << (maxlevel - level));
+    steps2*= (1 << (maxlevel - level));
 
-  bool T = this->transpose;
+  bool T= this->transpose;
   if(this->symmetric && (steps2 % 2 == 0))
-    T = false;
+    T= false;
   if(this->debug > 0)
     deallog << 'S' << level << ' ';
 
-  for(unsigned int i = 0; i < steps2; ++i)
+  for(unsigned int i= 0; i < steps2; ++i)
     {
       if(T)
         smoothers[level].Tstep(u, rhs);
       else
         smoothers[level].step(u, rhs);
       if(this->symmetric)
-        T = !T;
+        T= !T;
     }
 }
 
@@ -927,15 +927,15 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::apply(
   VectorType&        u,
   const VectorType&  rhs) const
 {
-  unsigned int maxlevel = smoothers.max_level();
-  unsigned int steps2   = this->steps;
+  unsigned int maxlevel= smoothers.max_level();
+  unsigned int steps2  = this->steps;
 
   if(this->variable)
-    steps2 *= (1 << (maxlevel - level));
+    steps2*= (1 << (maxlevel - level));
 
-  bool T = this->transpose;
+  bool T= this->transpose;
   if(this->symmetric && (steps2 % 2 == 0))
-    T = false;
+    T= false;
   if(this->debug > 0)
     deallog << 'S' << level << ' ';
 
@@ -944,15 +944,15 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::apply(
   else
     smoothers[level].vmult(u, rhs);
   if(this->symmetric)
-    T = !T;
-  for(unsigned int i = 1; i < steps2; ++i)
+    T= !T;
+  for(unsigned int i= 1; i < steps2; ++i)
     {
       if(T)
         smoothers[level].Tstep(u, rhs);
       else
         smoothers[level].step(u, rhs);
       if(this->symmetric)
-        T = !T;
+        T= !T;
     }
 }
 
@@ -983,9 +983,9 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::clear()
 {
   smoothers.clear_elements();
 
-  unsigned int i = matrices.min_level(), max_level = matrices.max_level();
+  unsigned int i= matrices.min_level(), max_level= matrices.max_level();
   for(; i <= max_level; ++i)
-    matrices[i] = LinearOperator<VectorType>();
+    matrices[i]= LinearOperator<VectorType>();
 }
 
 template <typename MatrixType, typename PreconditionerType, typename VectorType>
@@ -995,13 +995,13 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   const MGLevelObject<MatrixType2>&                  m,
   const typename PreconditionerType::AdditionalData& data)
 {
-  const unsigned int min = m.min_level();
-  const unsigned int max = m.max_level();
+  const unsigned int min= m.min_level();
+  const unsigned int max= m.max_level();
 
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for(unsigned int i= min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -1019,8 +1019,8 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   const MGLevelObject<MatrixType2>& m,
   const MGLevelObject<DATA>&        data)
 {
-  const unsigned int min = m.min_level();
-  const unsigned int max = m.max_level();
+  const unsigned int min= m.min_level();
+  const unsigned int max= m.max_level();
 
   Assert(data.min_level() == min, ExcDimensionMismatch(data.min_level(), min));
   Assert(data.max_level() == max, ExcDimensionMismatch(data.max_level(), max));
@@ -1028,7 +1028,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for(unsigned int i= min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -1048,15 +1048,15 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   const unsigned int                row,
   const unsigned int                col)
 {
-  const unsigned int min = m.min_level();
-  const unsigned int max = m.max_level();
+  const unsigned int min= m.min_level();
+  const unsigned int max= m.max_level();
 
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for(unsigned int i= min; i <= max; ++i)
     {
-      matrices[i] = &(m[i].block(row, col));
+      matrices[i]= &(m[i].block(row, col));
       smoothers[i].initialize(m[i].block(row, col), data);
     }
 }
@@ -1070,8 +1070,8 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   const unsigned int                row,
   const unsigned int                col)
 {
-  const unsigned int min = m.min_level();
-  const unsigned int max = m.max_level();
+  const unsigned int min= m.min_level();
+  const unsigned int max= m.max_level();
 
   Assert(data.min_level() == min, ExcDimensionMismatch(data.min_level(), min));
   Assert(data.max_level() == max, ExcDimensionMismatch(data.max_level(), max));
@@ -1079,9 +1079,9 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for(unsigned int i= min; i <= max; ++i)
     {
-      matrices[i] = &(m[i].block(row, col));
+      matrices[i]= &(m[i].block(row, col));
       smoothers[i].initialize(m[i].block(row, col), data[i]);
     }
 }
@@ -1093,11 +1093,11 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::smooth(
   VectorType&        u,
   const VectorType&  rhs) const
 {
-  unsigned int maxlevel = matrices.max_level();
-  unsigned int steps2   = this->steps;
+  unsigned int maxlevel= matrices.max_level();
+  unsigned int steps2  = this->steps;
 
   if(this->variable)
-    steps2 *= (1 << (maxlevel - level));
+    steps2*= (1 << (maxlevel - level));
 
   typename VectorMemory<VectorType>::Pointer r(this->vector_memory);
   typename VectorMemory<VectorType>::Pointer d(this->vector_memory);
@@ -1105,13 +1105,13 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::smooth(
   r->reinit(u, true);
   d->reinit(u, true);
 
-  bool T = this->transpose;
+  bool T= this->transpose;
   if(this->symmetric && (steps2 % 2 == 0))
-    T = false;
+    T= false;
   if(this->debug > 0)
     deallog << 'S' << level << ' ';
 
-  for(unsigned int i = 0; i < steps2; ++i)
+  for(unsigned int i= 0; i < steps2; ++i)
     {
       if(T)
         {
@@ -1137,9 +1137,9 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::smooth(
           if(this->debug > 1)
             deallog << ' ' << d->l2_norm() << ' ';
         }
-      u += *d;
+      u+= *d;
       if(this->symmetric)
-        T = !T;
+        T= !T;
     }
   if(this->debug > 0)
     deallog << std::endl;
@@ -1152,15 +1152,15 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::apply(
   VectorType&        u,
   const VectorType&  rhs) const
 {
-  unsigned int maxlevel = matrices.max_level();
-  unsigned int steps2   = this->steps;
+  unsigned int maxlevel= matrices.max_level();
+  unsigned int steps2  = this->steps;
 
   if(this->variable)
-    steps2 *= (1 << (maxlevel - level));
+    steps2*= (1 << (maxlevel - level));
 
-  bool T = this->transpose;
+  bool T= this->transpose;
   if(this->symmetric && (steps2 % 2 == 0))
-    T = false;
+    T= false;
   if(this->debug > 0)
     deallog << 'S' << level << ' ';
 
@@ -1176,7 +1176,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::apply(
   if(this->debug > 1)
     deallog << ' ' << u.l2_norm() << ' ';
   if(this->symmetric)
-    T = !T;
+    T= !T;
 
   typename VectorMemory<VectorType>::Pointer r(this->vector_memory);
   typename VectorMemory<VectorType>::Pointer d(this->vector_memory);
@@ -1187,7 +1187,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::apply(
       d->reinit(u, true);
     }
 
-  for(unsigned int i = 1; i < steps2; ++i)
+  for(unsigned int i= 1; i < steps2; ++i)
     {
       if(T)
         {
@@ -1213,9 +1213,9 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::apply(
           if(this->debug > 1)
             deallog << ' ' << d->l2_norm() << ' ';
         }
-      u += *d;
+      u+= *d;
       if(this->symmetric)
-        T = !T;
+        T= !T;
     }
   if(this->debug > 0)
     deallog << std::endl;

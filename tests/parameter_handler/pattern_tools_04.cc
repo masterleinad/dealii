@@ -30,9 +30,9 @@ template <class T>
 void
 test(T t)
 {
-  auto p = Convert<T>::to_pattern();
+  auto p= Convert<T>::to_pattern();
   deallog << "Pattern  : " << p->description() << std::endl;
-  auto s = Convert<T>::to_string(t);
+  auto s= Convert<T>::to_string(t);
   deallog << "To String: " << s << std::endl;
   deallog << "To value : " << Convert<T>::to_string(Convert<T>::to_value(s))
           << std::endl;
@@ -43,11 +43,11 @@ main()
 {
   initlog();
 
-  int           t0 = 1;
-  unsigned int  t1 = 2;
-  unsigned char t2 = 3;
-  std::string   t3 = "Ciao";
-  double        t4 = 4.0;
+  int           t0= 1;
+  unsigned int  t1= 2;
+  unsigned char t2= 3;
+  std::string   t3= "Ciao";
+  double        t4= 4.0;
 
   std::map<unsigned int, int>           t10;
   std::map<unsigned int, unsigned int>  t11;
@@ -55,17 +55,17 @@ main()
   std::map<unsigned int, std::string>   t13;
   std::map<unsigned int, double>        t14;
 
-  t10[0] = t0;
-  t11[0] = t1;
-  t12[0] = t2;
-  t13[0] = t3;
-  t14[0] = t4;
+  t10[0]= t0;
+  t11[0]= t1;
+  t12[0]= t2;
+  t13[0]= t3;
+  t14[0]= t4;
 
-  t10[2] = t0;
-  t11[2] = t1;
-  t12[2] = t2;
-  t13[2] = t3;
-  t14[2] = t4;
+  t10[2]= t0;
+  t11[2]= t1;
+  t12[2]= t2;
+  t13[2]= t3;
+  t14[2]= t4;
 
   test(t10);
   test(t11);

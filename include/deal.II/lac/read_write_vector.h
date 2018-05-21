@@ -170,7 +170,7 @@ namespace LinearAlgebra
     /**
      * Destructor.
      */
-    ~ReadWriteVector() override = default;
+    ~ReadWriteVector() override= default;
 
     /**
      * Set the global size of the vector to @p size. The stored elements have
@@ -181,7 +181,7 @@ namespace LinearAlgebra
      * user must make sure to fill it with reasonable data before using it).
      */
     virtual void
-    reinit(const size_type size, const bool omit_zeroing_entries = false);
+    reinit(const size_type size, const bool omit_zeroing_entries= false);
 
     /**
      * Uses the same IndexSet as the one of the input vector @p in_vector and
@@ -194,7 +194,7 @@ namespace LinearAlgebra
     template <typename Number2>
     void
     reinit(const ReadWriteVector<Number2>& in_vector,
-           const bool                      omit_zeroing_entries = false);
+           const bool                      omit_zeroing_entries= false);
 
     /**
      * Initializes the vector. The indices are specified by @p
@@ -207,7 +207,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const IndexSet& locally_stored_indices,
-           const bool      omit_zeroing_entries = false);
+           const bool      omit_zeroing_entries= false);
 
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
@@ -572,8 +572,8 @@ namespace LinearAlgebra
      */
     void
     print(std::ostream&      out,
-          const unsigned int precision  = 3,
-          const bool         scientific = true) const;
+          const unsigned int precision = 3,
+          const bool         scientific= true) const;
 
     /**
      * Return the memory consumption of this class in bytes.
@@ -823,8 +823,8 @@ namespace LinearAlgebra
     const std::vector<size_type>& indices,
     std::vector<Number2>&         extracted_values) const
   {
-    for(size_type i = 0; i < indices.size(); ++i)
-      extracted_values[i] = operator()(indices[i]);
+    for(size_type i= 0; i < indices.size(); ++i)
+      extracted_values[i]= operator()(indices[i]);
   }
 
   template <typename Number>
@@ -837,7 +837,7 @@ namespace LinearAlgebra
   {
     while(indices_begin != indices_end)
       {
-        *values_begin = operator()(*indices_begin);
+        *values_begin= operator()(*indices_begin);
         indices_begin++;
         values_begin++;
       }
@@ -877,14 +877,14 @@ namespace LinearAlgebra
   ReadWriteVector<Number>::add(const std::vector<size_type>&   indices,
                                const ReadWriteVector<Number2>& values)
   {
-    const size_type size = indices.size();
-    for(size_type i = 0; i < size; ++i)
+    const size_type size= indices.size();
+    for(size_type i= 0; i < size; ++i)
       {
         Assert(
           numbers::is_finite(values[i]),
           ExcMessage(
             "The given value is not finite but either infinite or Not A Number (NaN)"));
-        this->operator()(indices[i]) += values[indices[i]];
+        this->operator()(indices[i])+= values[indices[i]];
       }
   }
 
@@ -895,13 +895,13 @@ namespace LinearAlgebra
                                const size_type* indices,
                                const Number2*   values_to_add)
   {
-    for(size_type i = 0; i < n_indices; ++i)
+    for(size_type i= 0; i < n_indices; ++i)
       {
         Assert(
           numbers::is_finite(values[i]),
           ExcMessage(
             "The given value is not finite but either infinite or Not A Number (NaN)"));
-        this->operator()(indices[i]) += values_to_add[i];
+        this->operator()(indices[i])+= values_to_add[i];
       }
   }
 
@@ -919,7 +919,7 @@ namespace LinearAlgebra
   ReadWriteVector<Number>::FunctorTemplate<Functor>::
   operator()(const size_type begin, const size_type end)
   {
-    for(size_type i = begin; i < end; ++i)
+    for(size_type i= begin; i < end; ++i)
       functor(parent.values[i]);
   }
 

@@ -38,7 +38,7 @@ main()
 {
   deallog.attach(logfile);
 
-  const unsigned int dim = 1;
+  const unsigned int dim= 1;
 
   Triangulation<dim, dim + 1> triangulation;
   FE_Q<dim, dim + 1>          fe(1);
@@ -52,9 +52,9 @@ main()
 
   dof_handler.distribute_dofs(fe);
   soln.reinit(dof_handler.n_dofs());
-  soln = 0;
-  for(unsigned int i = 0; i < soln.size(); ++i)
-    soln(i) = i;
+  soln= 0;
+  for(unsigned int i= 0; i < soln.size(); ++i)
+    soln(i)= i;
   DataOut<dim, DoFHandler<dim, dim + 1>> data_out;
   data_out.attach_dof_handler(dof_handler);
 

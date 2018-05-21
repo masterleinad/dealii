@@ -88,7 +88,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Guido Kanschat, 1999; Ingo Kligge 2017
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class SolverQMRS : public Solver<VectorType>
 {
 public:
@@ -120,10 +120,10 @@ public:
      * The default is right preconditioning, with the @p solver_tolerance chosen to be 1e-9 and
      * the @p breakdown_threshold set at 1e-16.
      */
-    explicit AdditionalData(const bool   left_preconditioning = false,
-                            const double solver_tolerance     = 1.e-9,
-                            const bool   breakdown_testing    = true,
-                            const double breakdown_threshold  = 1.e-16)
+    explicit AdditionalData(const bool   left_preconditioning= false,
+                            const double solver_tolerance    = 1.e-9,
+                            const bool   breakdown_testing   = true,
+                            const double breakdown_threshold = 1.e-16)
       : left_preconditioning(left_preconditioning),
         solver_tolerance(solver_tolerance),
         breakdown_testing(breakdown_testing),
@@ -156,13 +156,13 @@ public:
    */
   SolverQMRS(SolverControl&            cn,
              VectorMemory<VectorType>& mem,
-             const AdditionalData&     data = AdditionalData());
+             const AdditionalData&     data= AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverQMRS(SolverControl& cn, const AdditionalData& data = AdditionalData());
+  SolverQMRS(SolverControl& cn, const AdditionalData& data= AdditionalData());
 
   /**
    * Solve the linear system $Ax=b$ for x.
@@ -287,7 +287,7 @@ SolverQMRS<VectorType>::solve(const MatrixType&         A,
   Vt->reinit(x, true);
   Vd->reinit(x, true);
 
-  step = 0;
+  step= 0;
 
   IterationResult state(SolverControl::failure, 0);
 
@@ -295,7 +295,7 @@ SolverQMRS<VectorType>::solve(const MatrixType&         A,
     {
       if(step > 0)
         deallog << "Restart step " << step << std::endl;
-      state = iterate(A, x, b, preconditioner, *Vr, *Vu, *Vq, *Vt, *Vd);
+      state= iterate(A, x, b, preconditioner, *Vr, *Vu, *Vq, *Vt, *Vd);
     }
   while(state.state == SolverControl::iterate);
 
@@ -318,11 +318,11 @@ SolverQMRS<VectorType>::iterate(const MatrixType&         A,
                                 VectorType&               t,
                                 VectorType&               d)
 {
-  SolverControl::State state = SolverControl::iterate;
+  SolverControl::State state= SolverControl::iterate;
 
-  int it = 0;
+  int it= 0;
 
-  double tau, rho, theta = 0;
+  double tau, rho, theta= 0;
   double res;
 
   // Compute the start residual
@@ -334,22 +334,22 @@ SolverQMRS<VectorType>::iterate(const MatrixType&         A,
     {
       // Left preconditioning
       preconditioner.vmult(t, r);
-      q = t;
+      q= t;
     }
   else
     {
       // Right preconditioning
-      t = r;
+      t= r;
       preconditioner.vmult(q, t);
     }
 
-  tau = t.norm_sqr();
-  res = std::sqrt(tau);
+  tau= t.norm_sqr();
+  res= std::sqrt(tau);
 
   if(this->iteration_status(step, res, x) == SolverControl::success)
     return IterationResult(SolverControl::success, res);
 
-  rho = q * r;
+  rho= q * r;
 
   while(state == SolverControl::iterate)
     {
@@ -359,20 +359,20 @@ SolverQMRS<VectorType>::iterate(const MatrixType&         A,
       // Step 1: apply the system matrix and compute one inner product
       //--------------------------------------------------------------
       A.vmult(t, q);
-      const double sigma = q * t;
+      const double sigma= q * t;
 
       // Check the breakdown criterion
       if(additional_data.breakdown_testing == true
          && std::fabs(sigma) < additional_data.breakdown_threshold)
         return IterationResult(SolverControl::iterate, res);
       // Update the residual
-      const double alpha = rho / sigma;
+      const double alpha= rho / sigma;
       r.add(-alpha, t);
 
       //--------------------------------------------------------------
       // Step 2: update the solution vector
       //--------------------------------------------------------------
-      const double theta_old = theta;
+      const double theta_old= theta;
 
       // Apply the preconditioner
       if(additional_data.left_preconditioning)
@@ -383,31 +383,31 @@ SolverQMRS<VectorType>::iterate(const MatrixType&         A,
       else
         {
           // Right Preconditioning
-          t = r;
+          t= r;
         }
 
       // Double updates
-      theta            = t * t / tau;
-      const double psi = 1. / (1. + theta);
-      tau *= theta * psi;
+      theta           = t * t / tau;
+      const double psi= 1. / (1. + theta);
+      tau*= theta * psi;
 
       // Actual update of the solution vector
       d.sadd(psi * theta_old, psi * alpha, q);
-      x += d;
+      x+= d;
 
       print_vectors(step, x, r, d);
 
       // Check for convergence
       // Compute a simple and cheap upper bound of the norm of the residual vector b-Ax
-      res = std::sqrt((it + 1) * tau);
+      res= std::sqrt((it + 1) * tau);
       // If res lies close enough, within the desired tolerance, calculate the exact residual
       if(res < additional_data.solver_tolerance)
         {
           A.vmult(u, x);
           u.sadd(-1., 1., b);
-          res = u.l2_norm();
+          res= u.l2_norm();
         }
-      state = this->iteration_status(step, res, x);
+      state= this->iteration_status(step, res, x);
       if((state == SolverControl::success) || (state == SolverControl::failure))
         return IterationResult(state, res);
 
@@ -418,13 +418,13 @@ SolverQMRS<VectorType>::iterate(const MatrixType&         A,
          && std::fabs(sigma) < additional_data.breakdown_threshold)
         return IterationResult(SolverControl::iterate, res);
 
-      const double rho_old = rho;
+      const double rho_old= rho;
 
       // Applying the preconditioner
       if(additional_data.left_preconditioning)
         {
           // Left preconditioning
-          u = t;
+          u= t;
         }
       else
         {
@@ -433,8 +433,8 @@ SolverQMRS<VectorType>::iterate(const MatrixType&         A,
         }
 
       // Double and vector updates
-      rho               = u * r;
-      const double beta = rho / rho_old;
+      rho              = u * r;
+      const double beta= rho / rho_old;
       q.sadd(beta, u);
     }
   return IterationResult(SolverControl::success, res);

@@ -43,7 +43,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
@@ -58,8 +58,7 @@ test()
 
   typename Triangulation<dim, dim>::active_cell_iterator cell1, cell2;
 
-  for(cell1 = tr.begin_active(), cell2 = new_tr.begin_active();
-      cell1 != tr.end();
+  for(cell1= tr.begin_active(), cell2= new_tr.begin_active(); cell1 != tr.end();
       ++cell1, ++cell2)
     {
       if(cell1->is_locally_owned())
@@ -78,7 +77,7 @@ test()
           Assert(cell1->subdomain_id() == cell2->subdomain_id(),
                  ExcInternalError());
 
-          for(unsigned int vertex = 0;
+          for(unsigned int vertex= 0;
               vertex < GeometryInfo<dim>::vertices_per_cell;
               ++vertex)
             {
@@ -126,7 +125,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

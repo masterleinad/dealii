@@ -55,7 +55,7 @@ namespace SUNDIALS
     int
     t_kinsol_function(N_Vector yy, N_Vector FF, void* user_data)
     {
-      KINSOL<VectorType>& solver = *static_cast<KINSOL<VectorType>*>(user_data);
+      KINSOL<VectorType>& solver= *static_cast<KINSOL<VectorType>*>(user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_yy(mem);
@@ -66,11 +66,11 @@ namespace SUNDIALS
 
       copy(*src_yy, yy);
 
-      int err = 0;
+      int err= 0;
       if(solver.residual)
-        err = solver.residual(*src_yy, *dst_FF);
+        err= solver.residual(*src_yy, *dst_FF);
       else if(solver.iteration_function)
-        err = solver.iteration_function(*src_yy, *dst_FF);
+        err= solver.iteration_function(*src_yy, *dst_FF);
       else
         Assert(false, ExcInternalError());
 
@@ -96,7 +96,7 @@ namespace SUNDIALS
       copy(*src_ycur, kinsol_mem->kin_uu);
       copy(*src_fcur, kinsol_mem->kin_fval);
 
-      int err = solver.setup_jacobian(*src_ycur, *src_fcur);
+      int err= solver.setup_jacobian(*src_ycur, *src_fcur);
       return err;
     }
 
@@ -129,13 +129,13 @@ namespace SUNDIALS
 
       copy(*src, b);
 
-      int err = solver.solve_jacobian_system(*src_ycur, *src_fcur, *src, *dst);
+      int err= solver.solve_jacobian_system(*src_ycur, *src_fcur, *src, *dst);
       copy(x, *dst);
 
-      *sJpnorm = N_VWL2Norm(b, kinsol_mem->kin_fscale);
+      *sJpnorm= N_VWL2Norm(b, kinsol_mem->kin_fscale);
       N_VProd(b, kinsol_mem->kin_fscale, b);
       N_VProd(b, kinsol_mem->kin_fscale, b);
-      *sFdotJp = N_VDotProd(kinsol_mem->kin_fval, b);
+      *sFdotJp= N_VDotProd(kinsol_mem->kin_fval, b);
 
       return err;
     }
@@ -164,7 +164,7 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const int ierr = MPI_Comm_free(&communicator);
+        const int ierr= MPI_Comm_free(&communicator);
         (void) ierr;
         AssertNothrow(ierr == MPI_SUCCESS, ExcMPI(ierr));
       }
@@ -175,7 +175,7 @@ namespace SUNDIALS
   unsigned int
   KINSOL<VectorType>::solve(VectorType& initial_guess_and_solution)
   {
-    unsigned int system_size = initial_guess_and_solution.size();
+    unsigned int system_size= initial_guess_and_solution.size();
 
     // The solution is stored in
     // solution. Here we take only a
@@ -183,16 +183,15 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is = initial_guess_and_solution.locally_owned_elements();
-        const unsigned int local_system_size = is.n_elements();
+        const IndexSet is= initial_guess_and_solution.locally_owned_elements();
+        const unsigned int local_system_size= is.n_elements();
 
-        solution
-          = N_VNew_Parallel(communicator, local_system_size, system_size);
+        solution= N_VNew_Parallel(communicator, local_system_size, system_size);
 
-        u_scale = N_VNew_Parallel(communicator, local_system_size, system_size);
+        u_scale= N_VNew_Parallel(communicator, local_system_size, system_size);
         N_VConst_Parallel(1.e0, u_scale);
 
-        f_scale = N_VNew_Parallel(communicator, local_system_size, system_size);
+        f_scale= N_VNew_Parallel(communicator, local_system_size, system_size);
         N_VConst_Parallel(1.e0, f_scale);
       }
     else
@@ -201,10 +200,10 @@ namespace SUNDIALS
         Assert(is_serial_vector<VectorType>::value,
                ExcInternalError(
                  "Trying to use a serial code with a parallel vector."));
-        solution = N_VNew_Serial(system_size);
-        u_scale  = N_VNew_Serial(system_size);
+        solution= N_VNew_Serial(system_size);
+        u_scale = N_VNew_Serial(system_size);
         N_VConst_Serial(1.e0, u_scale);
-        f_scale = N_VNew_Serial(system_size);
+        f_scale= N_VNew_Serial(system_size);
         N_VConst_Serial(1.e0, f_scale);
       }
 
@@ -219,67 +218,67 @@ namespace SUNDIALS
     if(kinsol_mem)
       KINFree(&kinsol_mem);
 
-    kinsol_mem = KINCreate();
+    kinsol_mem= KINCreate();
 
-    int status = KINInit(kinsol_mem, t_kinsol_function<VectorType>, solution);
+    int status= KINInit(kinsol_mem, t_kinsol_function<VectorType>, solution);
     (void) status;
     AssertKINSOL(status);
 
-    status = KINSetUserData(kinsol_mem, (void*) this);
+    status= KINSetUserData(kinsol_mem, (void*) this);
     AssertKINSOL(status);
 
-    status = KINSetNumMaxIters(kinsol_mem, data.maximum_non_linear_iterations);
+    status= KINSetNumMaxIters(kinsol_mem, data.maximum_non_linear_iterations);
     AssertKINSOL(status);
 
-    status = KINSetFuncNormTol(kinsol_mem, data.function_tolerance);
+    status= KINSetFuncNormTol(kinsol_mem, data.function_tolerance);
     AssertKINSOL(status);
 
-    status = KINSetScaledStepTol(kinsol_mem, data.step_tolerance);
+    status= KINSetScaledStepTol(kinsol_mem, data.step_tolerance);
     AssertKINSOL(status);
 
-    status = KINSetMaxSetupCalls(kinsol_mem, data.maximum_setup_calls);
+    status= KINSetMaxSetupCalls(kinsol_mem, data.maximum_setup_calls);
     AssertKINSOL(status);
 
-    status = KINSetNoInitSetup(kinsol_mem, (int) data.no_init_setup);
+    status= KINSetNoInitSetup(kinsol_mem, (int) data.no_init_setup);
     AssertKINSOL(status);
 
-    status = KINSetMaxNewtonStep(kinsol_mem, data.maximum_newton_step);
+    status= KINSetMaxNewtonStep(kinsol_mem, data.maximum_newton_step);
     AssertKINSOL(status);
 
-    status = KINSetMaxBetaFails(kinsol_mem, data.maximum_beta_failures);
+    status= KINSetMaxBetaFails(kinsol_mem, data.maximum_beta_failures);
     AssertKINSOL(status);
 
-    status = KINSetMAA(kinsol_mem, data.anderson_subspace_size);
+    status= KINSetMAA(kinsol_mem, data.anderson_subspace_size);
     AssertKINSOL(status);
 
-    status = KINSetRelErrFunc(kinsol_mem, data.dq_relative_error);
+    status= KINSetRelErrFunc(kinsol_mem, data.dq_relative_error);
     AssertKINSOL(status);
 
 #  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
-    SUNMatrix       J  = nullptr;
-    SUNLinearSolver LS = nullptr;
+    SUNMatrix       J = nullptr;
+    SUNLinearSolver LS= nullptr;
 #  endif
 
     if(solve_jacobian_system)
       {
-        KINMem KIN_mem      = (KINMem) kinsol_mem;
-        KIN_mem->kin_lsolve = t_kinsol_solve_jacobian<VectorType>;
+        KINMem KIN_mem     = (KINMem) kinsol_mem;
+        KIN_mem->kin_lsolve= t_kinsol_solve_jacobian<VectorType>;
         if(setup_jacobian)
           {
-            KIN_mem->kin_lsetup = t_kinsol_setup_jacobian<VectorType>;
+            KIN_mem->kin_lsetup= t_kinsol_setup_jacobian<VectorType>;
 #  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
-            KIN_mem->kin_setupNonNull = true;
+            KIN_mem->kin_setupNonNull= true;
 #  endif
           }
       }
     else
       {
 #  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
-        J      = SUNDenseMatrix(system_size, system_size);
-        LS     = SUNDenseLinearSolver(u_scale, J);
-        status = KINDlsSetLinearSolver(kinsol_mem, LS, J);
+        J     = SUNDenseMatrix(system_size, system_size);
+        LS    = SUNDenseLinearSolver(u_scale, J);
+        status= KINDlsSetLinearSolver(kinsol_mem, LS, J);
 #  else
-        status = KINDense(kinsol_mem, system_size);
+        status= KINDense(kinsol_mem, system_size);
 #  endif
         AssertKINSOL(status);
       }
@@ -293,8 +292,7 @@ namespace SUNDIALS
       Assert(iteration_function, ExcFunctionNotProvided("iteration_function"));
 
     // call to KINSol
-    status
-      = KINSol(kinsol_mem, solution, (int) data.strategy, u_scale, f_scale);
+    status= KINSol(kinsol_mem, solution, (int) data.strategy, u_scale, f_scale);
     AssertKINSOL(status);
 
     copy(initial_guess_and_solution, solution);
@@ -316,7 +314,7 @@ namespace SUNDIALS
       }
 
     long nniters;
-    status = KINGetNumNonlinSolvIters(kinsol_mem, &nniters);
+    status= KINGetNumNonlinSolvIters(kinsol_mem, &nniters);
     AssertKINSOL(status);
 
 #  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
@@ -332,7 +330,7 @@ namespace SUNDIALS
   void
   KINSOL<VectorType>::set_functions_to_trigger_an_assert()
   {
-    reinit_vector = [](VectorType&) {
+    reinit_vector= [](VectorType&) {
       AssertThrow(false, ExcFunctionNotProvided("reinit_vector"));
     };
   }

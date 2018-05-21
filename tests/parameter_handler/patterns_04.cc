@@ -23,14 +23,14 @@ void
 test(const Patterns::PatternBase& p)
 {
   // Print description
-  auto desc = p.description();
+  auto desc= p.description();
   deallog << p.description() << std::endl;
 
   // Check that we can clone
-  auto p2 = p.clone();
+  auto p2= p.clone();
   deallog << p2->description() << std::endl;
 
-  auto p3 = Patterns::pattern_factory(desc);
+  auto p3= Patterns::pattern_factory(desc);
   deallog << p3->description() << std::endl;
 
   AssertThrow(desc == p2->description(),

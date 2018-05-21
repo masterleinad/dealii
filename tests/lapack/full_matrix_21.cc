@@ -34,31 +34,31 @@ test(const unsigned int size)
 
   // Lapack:
   LAPACKFullMatrix<NumberType> C(size), D(size);
-  C = A;
-  D = B;
+  C= A;
+  D= B;
 
   // do addition
-  NumberType val = 0.1234;
+  NumberType val= 0.1234;
   A.add(val, B);
   C.add(val, D);
 
   FullMatrix<NumberType> diff(size);
-  diff = C;
+  diff= C;
   diff.add(-1., A);
 
-  const NumberType error = diff.frobenius_norm();
+  const NumberType error= diff.frobenius_norm();
   deallog << "difference: " << error << std::endl;
 }
 
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{17, 391}};
+  const std::vector<unsigned int> sizes= {{17, 391}};
   for(const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;

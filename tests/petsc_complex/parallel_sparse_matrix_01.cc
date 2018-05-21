@@ -50,7 +50,7 @@ using namespace dealii;
 
 template <int dim>
 void
-test(const unsigned int poly_degree = 1)
+test(const unsigned int poly_degree= 1)
 {
   MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
@@ -72,7 +72,7 @@ test(const unsigned int poly_degree = 1)
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -98,7 +98,7 @@ test(const unsigned int poly_degree = 1)
     locally_owned_dofs, locally_owned_dofs, dsp, mpi_communicator);
 
   //assemble mass matrix:
-  mass_matrix = PetscScalar();
+  mass_matrix= PetscScalar();
   {
     QGauss<dim>   quadrature_formula(poly_degree + 1);
     FEValues<dim> fe_values(fe,
@@ -106,8 +106,8 @@ test(const unsigned int poly_degree = 1)
                             update_values | update_gradients
                               | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<PetscScalar> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -115,21 +115,20 @@ test(const unsigned int poly_degree = 1)
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
           fe_values.reinit(cell);
-          cell_mass_matrix = PetscScalar();
+          cell_mass_matrix= PetscScalar();
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
                 {
-                  cell_mass_matrix(i, j)
-                    += (fe_values.shape_value(i, q_point)
-                        * fe_values.shape_value(j, q_point))
-                       * fe_values.JxW(q_point);
+                  cell_mass_matrix(i, j)+= (fe_values.shape_value(i, q_point)
+                                            * fe_values.shape_value(j, q_point))
+                                           * fe_values.JxW(q_point);
                 }
 
           cell->get_dof_indices(local_dof_indices);
@@ -140,26 +139,26 @@ test(const unsigned int poly_degree = 1)
     mass_matrix.compress(VectorOperation::add);
   }
 
-  for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); i++)
+  for(unsigned int i= 0; i < locally_owned_dofs.n_elements(); i++)
     {
-      double re = 0, im = 0;
+      double re= 0, im= 0;
       if(i % 2)
         {
-          re = 1.0 * i;
-          im = 1.0 * (this_mpi_process + 1);
+          re= 1.0 * i;
+          im= 1.0 * (this_mpi_process + 1);
         }
       else if(i % 3)
         {
-          re = 0.0;
-          im = -1.0 * (this_mpi_process + 1);
+          re= 0.0;
+          im= -1.0 * (this_mpi_process + 1);
         }
       else
         {
-          re = 3.0 * i;
-          im = 0.0;
+          re= 3.0 * i;
+          im= 0.0;
         }
-      const PetscScalar val                          = re + im * PETSC_i;
-      vector(locally_owned_dofs.nth_index_in_set(i)) = val;
+      const PetscScalar val                         = re + im * PETSC_i;
+      vector(locally_owned_dofs.nth_index_in_set(i))= val;
     }
   vector.compress(VectorOperation::insert);
   constraints.distribute(vector);
@@ -168,7 +167,7 @@ test(const unsigned int poly_degree = 1)
   mass_matrix.vmult(tmp, vector);
   //mass_matrix.Tvmult (tmp, vector);
 
-  const std::complex<double> norm1 = vector * tmp;
+  const std::complex<double> norm1= vector * tmp;
   deallog << "(conj(vector),M vector): " << std::endl;
   deallog << "real part:      " << PetscRealPart(norm1) << std::endl;
   deallog << "imaginary part: " << PetscImaginaryPart(norm1) << std::endl;
@@ -179,7 +178,7 @@ test(const unsigned int poly_degree = 1)
   deallog << "real part:      " << PetscRealPart(norm2) << std::endl;
   deallog << "imaginary part: " << PetscImaginaryPart(norm2) << std::endl;
 
-  const std::complex<double> norm3 = mass_matrix.matrix_norm_square(vector);
+  const std::complex<double> norm3= mass_matrix.matrix_norm_square(vector);
   deallog << "matrix_norm_square(vec): " << std::endl;
   deallog << "real part:      " << PetscRealPart(norm3) << std::endl;
   deallog << "imaginary part: " << PetscImaginaryPart(norm3) << std::endl;

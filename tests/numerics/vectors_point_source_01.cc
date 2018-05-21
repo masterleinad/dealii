@@ -52,7 +52,7 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    values(0) = value(p, 0);
+    values(0)= value(p, 0);
   }
 };
 
@@ -88,7 +88,7 @@ check()
 
   Vector<double> rhs(dof.n_dofs());
   VectorTools::create_point_source_vector(dof, tr.begin()->center(), rhs);
-  for(unsigned int i = 0; i < rhs.size(); ++i)
+  for(unsigned int i= 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

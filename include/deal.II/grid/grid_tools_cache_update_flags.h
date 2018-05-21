@@ -36,12 +36,12 @@ namespace GridTools
     /**
      * Update Nothing.
      */
-    update_nothing = 0x00,
+    update_nothing= 0x00,
 
     /**
      * Update vertex_to_cell_map, as returned by GridTools::vertex_to_cell_map().
      */
-    update_vertex_to_cell_map = 0x01,
+    update_vertex_to_cell_map= 0x01,
 
     /**
      * Update vertex_to_cell_centers_directions, as returned by
@@ -53,17 +53,17 @@ namespace GridTools
     /**
      * Update a KDTree object, initialized with the vertices of the Triangulation.
      */
-    update_vertex_kdtree = 0x04,
+    update_vertex_kdtree= 0x04,
 
     /**
      * Update a mapping of used vertices.
      */
-    update_used_vertices = 0x08,
+    update_used_vertices= 0x08,
 
     /**
      * Update all objects.
      */
-    update_all = 0xFF,
+    update_all= 0xFF,
   };
 
   /**
@@ -128,7 +128,7 @@ namespace GridTools
   inline CacheUpdateFlags&
   operator|=(CacheUpdateFlags& f1, const CacheUpdateFlags f2)
   {
-    f1 = f1 | f2;
+    f1= f1 | f2;
     return f1;
   }
 
@@ -157,7 +157,7 @@ namespace GridTools
   inline CacheUpdateFlags&
   operator&=(CacheUpdateFlags& f1, const CacheUpdateFlags f2)
   {
-    f1 = f1 & f2;
+    f1= f1 & f2;
     return f1;
   }
 

@@ -26,7 +26,7 @@
 #include <type_traits>
 
 using namespace dealii;
-namespace AD = Differentiation::AD;
+namespace AD= Differentiation::AD;
 
 template <typename NumberTraitsType>
 void

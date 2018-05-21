@@ -69,7 +69,7 @@ main(int argc, char** argv)
   A.reinit(sparsity_pattern);
   A2.reinit(sparsity_pattern);
 
-  SparseMatrix<double>::iterator it = A_tmp.begin(), endit = A_tmp.end();
+  SparseMatrix<double>::iterator it= A_tmp.begin(), endit= A_tmp.end();
   for(; it != endit; ++it)
     {
       A.set(it->row(), it->column(), it->value());
@@ -78,11 +78,11 @@ main(int argc, char** argv)
   A.compress(VectorOperation::insert);
   A2.compress(VectorOperation::insert);
 
-  const unsigned int n_dofs = dof_handler.n_dofs();
+  const unsigned int n_dofs= dof_handler.n_dofs();
 
   PETScWrappers::MPI::Vector right_hand_side(MPI_COMM_WORLD, n_dofs, n_dofs);
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    right_hand_side[i] = 1.;
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
+    right_hand_side[i]= 1.;
   right_hand_side.compress(VectorOperation::insert);
 
   // solve
@@ -104,7 +104,7 @@ main(int argc, char** argv)
     else
       deallog << "OK" << std::endl;
   }
-  solution = 0.;
+  solution= 0.;
   {
     SolverControl              solver_control(n_dofs, 1e-6, false, false);
     PETScWrappers::SolverGMRES solver(solver_control);

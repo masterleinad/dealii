@@ -56,7 +56,7 @@ test(const unsigned int flag)
   DoFHandler<dim> dh(triangulation);
 
   // Extra refinement to generate hanging nodes
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dh.begin_active();
       cell != dh.end();
       ++cell)
     if((flag == 1 && pred_d<dim>(cell)) || (flag == 2 && !pred_d<dim>(cell)))
@@ -71,7 +71,7 @@ test(const unsigned int flag)
   ConstraintMatrix cm;
   DoFTools::make_hanging_node_constraints(dh, cm);
 
-  IndexSet support = DoFTools::extract_dofs_with_support_contained_within(
+  IndexSet support= DoFTools::extract_dofs_with_support_contained_within(
     dh,
     std::function<bool(const typename DoFHandler<dim>::active_cell_iterator&)>(
       &pred_d<dim>),
@@ -89,8 +89,8 @@ test(const unsigned int flag)
       MappingQ1<dim>                                mapping;
       DoFTools::map_dofs_to_support_points(mapping, dh, support_points);
 
-      const std::string filename = "grid" + Utilities::int_to_string(dim)
-                                   + Utilities::int_to_string(flag) + ".gp";
+      const std::string filename= "grid" + Utilities::int_to_string(dim)
+                                  + Utilities::int_to_string(flag) + ".gp";
       std::ofstream f(filename.c_str());
 
       f << "set terminal png size 400,410 enhanced font \"Helvetica,8\""

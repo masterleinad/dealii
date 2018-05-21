@@ -40,10 +40,10 @@ public:
   {}
 
   double
-  value(const Point<dim>& p, const unsigned int comp = 0) const
+  value(const Point<dim>& p, const unsigned int comp= 0) const
   {
-    const double x = p[0];
-    const double y = p[1];
+    const double x= p[0];
+    const double y= p[1];
     // some function we know we can project with FE_Q<dim>(2)
     return 0.5 * x * x + 2.1 * y * y + 2;
   }
@@ -58,7 +58,7 @@ public:
   double value;
 };
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 DeclException3(ExcWrongValue,
                double,
                double,
@@ -81,7 +81,7 @@ check_qph(Triangulation<dim>&          tr,
   FEValues<dim>   fe_values(dummy_fe, rhs_quadrature, update_quadrature_points);
   dof_handler.distribute_dofs(dummy_fe);
   typename Triangulation<dim, dim>::active_cell_iterator cell;
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+  for(cell= tr.begin_active(); cell != tr.end(); ++cell)
     if(cell->is_locally_owned())
       {
         typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
@@ -91,10 +91,10 @@ check_qph(Triangulation<dim>&          tr,
           = fe_values.get_quadrature_points();
         const std::vector<std::shared_ptr<const DATA>> qpd
           = manager.get_data(cell);
-        for(unsigned int q = 0; q < q_points.size(); q++)
+        for(unsigned int q= 0; q < q_points.size(); q++)
           {
-            const double value  = func.value(q_points[q]);
-            const double value2 = qpd[q]->value;
+            const double value = func.value(q_points[q]);
+            const double value2= qpd[q]->value;
             AssertThrow(std::fabs(value - value2) < eps,
                         ExcWrongValue(value, value2, value - value2));
           }
@@ -122,7 +122,7 @@ test()
     FE_Q<dim>       dummy_fe(1);
     FEValues<dim>   fe_values(dummy_fe, rhs, update_quadrature_points);
     dof_handler.distribute_dofs(dummy_fe);
-    for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+    for(cell= tr.begin_active(); cell != tr.end(); ++cell)
       if(cell->is_locally_owned())
         {
           typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
@@ -133,8 +133,8 @@ test()
           data_storage.initialize(cell, rhs.size());
           std::vector<std::shared_ptr<MyQData>> qpd
             = data_storage.get_data(cell);
-          for(unsigned int q = 0; q < rhs.size(); q++)
-            qpd[q]->value = my_func.value(q_points[q]);
+          for(unsigned int q= 0; q < rhs.size(); q++)
+            qpd[q]->value= my_func.value(q_points[q]);
         }
     dof_handler.clear();
   }

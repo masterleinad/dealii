@@ -37,16 +37,16 @@ check_solve(SolverType&         solver,
             VectorType&         f,
             const PRECONDITION& P)
 {
-  double result = 0.;
-  u             = 0.;
-  f             = 1.;
+  double result= 0.;
+  u            = 0.;
+  f            = 1.;
   try
     {
       solver.solve(A, u, f, P);
     }
   catch(SolverControl::NoConvergence& e)
     {
-      result = e.last_residual;
+      result= e.last_residual;
     }
   return result;
 }
@@ -54,7 +54,7 @@ check_solve(SolverType&         solver,
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   //  logfile.setf(std::ios::fixed);
   deallog << std::setprecision(4);
@@ -64,9 +64,9 @@ main()
   SolverRichardson<> rich(control);
   SolverRelaxation<> relax(control);
 
-  for(unsigned int size = 7; size <= 30; size *= 3)
+  for(unsigned int size= 7; size <= 30; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -91,27 +91,27 @@ main()
       Vector<double> u(dim);
       Vector<double> res(dim);
 
-      f = 1.;
-      u = 1.;
+      f= 1.;
+      u= 1.;
 
       try
         {
           double r1, r2;
 
-          r1 = check_solve(rich, A, u, f, prec_jacobi);
-          r2 = check_solve(relax, A, u, f, prec_jacobi);
+          r1= check_solve(rich, A, u, f, prec_jacobi);
+          r2= check_solve(relax, A, u, f, prec_jacobi);
           deallog << "Jacobi  diff " << std::fabs(r1 - r2) / r1 << std::endl;
 
-          r1 = check_solve(rich, A, u, f, prec_sor);
-          r2 = check_solve(relax, A, u, f, prec_sor);
+          r1= check_solve(rich, A, u, f, prec_sor);
+          r2= check_solve(relax, A, u, f, prec_sor);
           deallog << "SOR     diff " << std::fabs(r1 - r2) / r1 << std::endl;
 
-          r1 = check_solve(rich, A, u, f, prec_ssor1);
-          r2 = check_solve(relax, A, u, f, prec_ssor1);
+          r1= check_solve(rich, A, u, f, prec_ssor1);
+          r2= check_solve(relax, A, u, f, prec_ssor1);
           deallog << "SSOR1   diff " << std::fabs(r1 - r2) / r1 << std::endl;
 
-          r1 = check_solve(rich, A, u, f, prec_ssor2);
-          r2 = check_solve(relax, A, u, f, prec_ssor2);
+          r1= check_solve(rich, A, u, f, prec_ssor2);
+          r2= check_solve(relax, A, u, f, prec_ssor2);
           deallog << "SSOR1.2 diff " << std::fabs(r1 - r2) / r1 << std::endl;
         }
       catch(std::exception& e)
@@ -121,9 +121,9 @@ main()
     };
 
   // Solve advection problem
-  for(unsigned int size = 4; size <= 3; size *= 3)
+  for(unsigned int size= 4; size <= 3; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -144,21 +144,21 @@ main()
       // Create a permutation: Blocks
       // backwards and every second
       // block backwards
-      unsigned int k = 0;
-      for(unsigned int i = 0; i < size - 1; ++i)
-        for(unsigned int j = 0; j < size - 1; ++j)
+      unsigned int k= 0;
+      for(unsigned int i= 0; i < size - 1; ++i)
+        for(unsigned int j= 0; j < size - 1; ++j)
           {
-            permutation[k++] = i * (size - 1) + size - j - 2;
+            permutation[k++]= i * (size - 1) + size - j - 2;
           }
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
+      for(unsigned int i= 0; i < permutation.size(); ++i)
         std::cerr << ' ' << permutation[i];
       std::cerr << std::endl;
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
-        inverse_permutation[permutation[i]] = i;
+      for(unsigned int i= 0; i < permutation.size(); ++i)
+        inverse_permutation[permutation[i]]= i;
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
+      for(unsigned int i= 0; i < permutation.size(); ++i)
         std::cerr << ' ' << inverse_permutation[i];
       std::cerr << std::endl;
 
@@ -167,8 +167,8 @@ main()
 
       Vector<double> f(dim);
       Vector<double> u(dim);
-      f = 1.;
-      u = 1.;
+      f= 1.;
+      u= 1.;
 
       std::cerr << "******************************" << std::endl;
 

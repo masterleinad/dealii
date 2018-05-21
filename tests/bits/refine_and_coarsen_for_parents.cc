@@ -27,7 +27,7 @@
 
 void do_refine(Triangulation<1>& tria)
 {
-  const int dim = 1;
+  const int dim= 1;
 
   tria.refine_global(2);
   tria.begin_active()->set_refine_flag();
@@ -36,7 +36,7 @@ void do_refine(Triangulation<1>& tria)
 
 void do_refine(Triangulation<2>& tria)
 {
-  const int dim = 2;
+  const int dim= 2;
 
   tria.refine_global(2);
   tria.begin_active()->set_refine_flag();
@@ -49,7 +49,7 @@ void do_refine(Triangulation<2>& tria)
 
 void do_refine(Triangulation<3>& tria)
 {
-  const int dim = 3;
+  const int dim= 3;
 
   tria.refine_global(2);
   tria.begin_active()->set_refine_flag();
@@ -80,10 +80,10 @@ check()
   // holds
   tria.refine_global(1);
 
-  for(typename Triangulation<dim>::cell_iterator cell = tria.begin();
+  for(typename Triangulation<dim>::cell_iterator cell= tria.begin();
       cell != tria.end();
       ++cell)
-    for(unsigned int child = 0; child < cell->n_children(); ++child)
+    for(unsigned int child= 0; child < cell->n_children(); ++child)
       AssertThrow(cell->child(child)->parent() == cell, ExcInternalError());
 
   // coarsen the mesh globally and
@@ -97,10 +97,10 @@ check()
 
   tria.execute_coarsening_and_refinement();
 
-  for(typename Triangulation<dim>::cell_iterator cell = tria.begin();
+  for(typename Triangulation<dim>::cell_iterator cell= tria.begin();
       cell != tria.end();
       ++cell)
-    for(unsigned int child = 0; child < cell->n_children(); ++child)
+    for(unsigned int child= 0; child < cell->n_children(); ++child)
       AssertThrow(cell->child(child)->parent() == cell, ExcInternalError());
 
   deallog << "OK for " << dim << "d" << std::endl;

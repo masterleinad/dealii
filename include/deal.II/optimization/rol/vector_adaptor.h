@@ -113,17 +113,17 @@ namespace Rol
     /**
      * A typedef for size type of <tt>VectorType</tt>.
      */
-    using size_type = typename VectorType::size_type;
+    using size_type= typename VectorType::size_type;
 
     /**
      * A typedef for element type stored in the <tt>VectorType</tt>.
      */
-    using value_type = typename VectorType::value_type;
+    using value_type= typename VectorType::value_type;
 
     /**
      * A typedef for real-valued numbers.
      */
-    using real_type = typename VectorType::real_type;
+    using real_type= typename VectorType::real_type;
 
     static_assert(std::is_convertible<real_type, value_type>::value,
                   "The real_type of the current VectorType is not "
@@ -281,7 +281,7 @@ namespace Rol
     const VectorAdaptor& vector_adaptor
       = Teuchos::dyn_cast<const VectorAdaptor>(rol_vector);
 
-    (*vector_ptr) = *(vector_adaptor.getVector());
+    (*vector_ptr)= *(vector_adaptor.getVector());
   }
 
   template <typename VectorType>
@@ -294,7 +294,7 @@ namespace Rol
     const VectorAdaptor& vector_adaptor
       = Teuchos::dyn_cast<const VectorAdaptor>(rol_vector);
 
-    *vector_ptr += *(vector_adaptor.getVector());
+    *vector_ptr+= *(vector_adaptor.getVector());
   }
 
   template <typename VectorType>
@@ -325,7 +325,7 @@ namespace Rol
   void
   VectorAdaptor<VectorType>::scale(const value_type alpha)
   {
-    (*vector_ptr) *= alpha;
+    (*vector_ptr)*= alpha;
   }
 
   template <typename VectorType>
@@ -353,8 +353,8 @@ namespace Rol
   Teuchos::RCP<ROL::Vector<typename VectorType::value_type>>
   VectorAdaptor<VectorType>::clone() const
   {
-    Teuchos::RCP<VectorType> vec_ptr = Teuchos::rcp(new VectorType);
-    (*vec_ptr)                       = (*vector_ptr);
+    Teuchos::RCP<VectorType> vec_ptr= Teuchos::rcp(new VectorType);
+    (*vec_ptr)                      = (*vector_ptr);
 
     return Teuchos::rcp(new VectorAdaptor(vec_ptr));
   }
@@ -363,17 +363,17 @@ namespace Rol
   Teuchos::RCP<ROL::Vector<typename VectorType::value_type>>
   VectorAdaptor<VectorType>::basis(const int i) const
   {
-    Teuchos::RCP<VectorType> vec_ptr = Teuchos::rcp(new VectorType);
+    Teuchos::RCP<VectorType> vec_ptr= Teuchos::rcp(new VectorType);
 
     // Zero all the entries in dealii vector.
     vec_ptr->reinit(*vector_ptr, false);
 
     if(vector_ptr->locally_owned_elements().is_element(i))
-      vec_ptr->operator[](i) = 1.;
+      vec_ptr->operator[](i)= 1.;
 
     vec_ptr->compress(VectorOperation::insert);
 
-    Teuchos::RCP<VectorAdaptor> e = Teuchos::rcp(new VectorAdaptor(vec_ptr));
+    Teuchos::RCP<VectorAdaptor> e= Teuchos::rcp(new VectorAdaptor(vec_ptr));
 
     return e;
   }
@@ -383,12 +383,12 @@ namespace Rol
   VectorAdaptor<VectorType>::applyUnary(
     const ROL::Elementwise::UnaryFunction<value_type>& f)
   {
-    const typename VectorType::iterator vend = vector_ptr->end();
+    const typename VectorType::iterator vend= vector_ptr->end();
 
-    for(typename VectorType::iterator iterator = vector_ptr->begin();
+    for(typename VectorType::iterator iterator= vector_ptr->begin();
         iterator != vend;
         iterator++)
-      *iterator = f.apply(*iterator);
+      *iterator= f.apply(*iterator);
 
     vector_ptr->compress(VectorOperation::insert);
   }
@@ -405,16 +405,16 @@ namespace Rol
     const VectorAdaptor& vector_adaptor
       = Teuchos::dyn_cast<const VectorAdaptor>(rol_vector);
 
-    const VectorType& given_rol_vector = *(vector_adaptor.getVector());
+    const VectorType& given_rol_vector= *(vector_adaptor.getVector());
 
-    const typename VectorType::iterator       vend   = vector_ptr->end();
-    const typename VectorType::const_iterator rolend = given_rol_vector.end();
+    const typename VectorType::iterator       vend  = vector_ptr->end();
+    const typename VectorType::const_iterator rolend= given_rol_vector.end();
 
-    typename VectorType::const_iterator r_iterator = given_rol_vector.begin();
-    for(typename VectorType::iterator l_iterator = vector_ptr->begin();
+    typename VectorType::const_iterator r_iterator= given_rol_vector.begin();
+    for(typename VectorType::iterator l_iterator= vector_ptr->begin();
         l_iterator != vend && r_iterator != rolend;
         l_iterator++, r_iterator++)
-      *l_iterator = f.apply(*l_iterator, *r_iterator);
+      *l_iterator= f.apply(*l_iterator, *r_iterator);
 
     vector_ptr->compress(VectorOperation::insert);
   }
@@ -424,11 +424,11 @@ namespace Rol
   VectorAdaptor<VectorType>::reduce(
     const ROL::Elementwise::ReductionOp<value_type>& r) const
   {
-    typename VectorType::value_type result = r.initialValue();
+    typename VectorType::value_type result= r.initialValue();
 
-    const typename VectorType::iterator vend = vector_ptr->end();
+    const typename VectorType::iterator vend= vector_ptr->end();
 
-    for(typename VectorType::iterator iterator = vector_ptr->begin();
+    for(typename VectorType::iterator iterator= vector_ptr->begin();
         iterator != vend;
         iterator++)
       r.reduce(*iterator, result);

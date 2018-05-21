@@ -27,16 +27,16 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
   // set only certain elements of each
   // vector, and record the expected scalar
   // product
-  PetscScalar product = PetscScalar(0);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  PetscScalar product= PetscScalar(0);
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      const PetscScalar vi = std::complex<double>(i, (i % 2) * 2.0);
-      v(i)                 = vi;
+      const PetscScalar vi= std::complex<double>(i, (i % 2) * 2.0);
+      v(i)                = vi;
       if(i % 3 == 0)
         {
-          const PetscScalar wi = std::complex<double>(5.0 - i, 2.5 * (i % 6));
-          w(i)                 = wi;
-          product += PetscConj(vi) * wi;
+          const PetscScalar wi= std::complex<double>(5.0 - i, 2.5 * (i % 6));
+          w(i)                = wi;
+          product+= PetscConj(vi) * wi;
         }
     }
 

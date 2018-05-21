@@ -56,7 +56,7 @@ test()
 
   std::vector<unsigned int> active_fe_indices(tria.n_active_cells());
   DoFTools::get_active_fe_indices(dof_handler, active_fe_indices);
-  for(unsigned int i = 0; i < tria.n_active_cells(); ++i)
+  for(unsigned int i= 0; i < tria.n_active_cells(); ++i)
     deallog << active_fe_indices[i] << std::endl;
 }
 

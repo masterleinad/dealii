@@ -29,7 +29,7 @@ main()
 {
   initlog();
 
-  static const int dim = 2;
+  static const int dim= 2;
 
   FESystem<dim> fe(FE_RaviartThomas<dim>(1),
                    1,
@@ -40,7 +40,7 @@ main()
                    FESystem<dim>(FE_Q<dim>(1), dim),
                    1);
 
-  const unsigned int n_comp = fe.n_components();
+  const unsigned int n_comp= fe.n_components();
 
   test<2>(fe, F<2>(n_comp, 1), 1, false);
 }

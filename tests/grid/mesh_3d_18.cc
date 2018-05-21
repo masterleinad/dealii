@@ -18,7 +18,7 @@
 // crash that at the time of writing the test afflicts all
 // hp/hp_constraints_*_03 tests
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -39,7 +39,7 @@ test_with_wrong_face_orientation()
   triangulation.begin_active()->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 
-  Triangulation<3>::active_cell_iterator cell = triangulation.begin_active();
+  Triangulation<3>::active_cell_iterator cell= triangulation.begin_active();
   ++cell;
   ++cell;
 
@@ -61,15 +61,15 @@ test_with_wrong_face_orientation()
           << std::endl;
 
   deallog << "cell->face(3)=" << cell->face(3) << std::endl;
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     deallog << "cell->face(3)->child(" << i << ")=" << cell->face(3)->child(i)
             << std::endl;
 
-  for(unsigned int i = 0; i < 6; ++i)
+  for(unsigned int i= 0; i < 6; ++i)
     deallog << "cell->neighbor(3)->face(" << i
             << ")=" << cell->neighbor(3)->face(i) << std::endl;
 
-  for(unsigned int i = 0; i < 6; ++i)
+  for(unsigned int i= 0; i < 6; ++i)
     deallog << "cell->neighbor_child_on_subface(3,1)->face(" << i
             << ")=" << cell->neighbor_child_on_subface(3, 1)->face(i)
             << std::endl;

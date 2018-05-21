@@ -297,7 +297,7 @@ struct CellData;
  * Pelteret 2015, Timo Heister 2015,  Krzysztof Bzowski, 2015
  */
 
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class GridIn
 {
 public:
@@ -347,7 +347,7 @@ public:
    * GridIn::Format::Default is used.
    */
   void
-  read(std::istream& in, Format format = Default);
+  read(std::istream& in, Format format= Default);
 
   /**
    * Open the file given by the string and call the previous function read().
@@ -355,7 +355,7 @@ public:
    * used is <code>MESH</code>.
    */
   void
-  read(const std::string& in, Format format = Default);
+  read(const std::string& in, Format format= Default);
 
   /**
    * Read grid data from an vtk file. Numerical data is ignored.
@@ -385,7 +385,7 @@ public:
    */
   void
   read_ucd(std::istream& in,
-           const bool    apply_all_indicators_to_manifolds = false);
+           const bool    apply_all_indicators_to_manifolds= false);
 
   /**
    * Read grid data from an Abaqus file. Numerical and constitutive data is
@@ -428,7 +428,7 @@ public:
    */
   void
   read_abaqus(std::istream& in,
-              const bool    apply_all_indicators_to_manifolds = false);
+              const bool    apply_all_indicators_to_manifolds= false);
 
   /**
    * Read grid data from a file containing data in the DB mesh format.
@@ -506,10 +506,10 @@ public:
    */
   void
   read_assimp(const std::string& filename,
-              const unsigned int mesh_index = numbers::invalid_unsigned_int,
-              const bool         remove_duplicates                = true,
-              const double       tol                              = 1e-12,
-              const bool         ignore_unsupported_element_types = true);
+              const unsigned int mesh_index= numbers::invalid_unsigned_int,
+              const bool         remove_duplicates               = true,
+              const double       tol                             = 1e-12,
+              const bool         ignore_unsupported_element_types= true);
 
   /**
    * Return the standard suffix for a file in this format.

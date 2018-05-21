@@ -27,8 +27,8 @@ main()
 {
   initlog();
 
-  constexpr int dim      = 2;
-  constexpr int spacedim = 2;
+  constexpr int dim     = 2;
+  constexpr int spacedim= 2;
 
   Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_cube(tria);

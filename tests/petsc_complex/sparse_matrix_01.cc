@@ -23,17 +23,17 @@
 void
 test()
 {
-  const unsigned int          s = 10;
+  const unsigned int          s= 10;
   PETScWrappers::SparseMatrix m(s, s, s);
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l <= k; ++l)
+  for(unsigned int k= 0; k < m.m(); ++k)
+    for(unsigned int l= 0; l <= k; ++l)
       m.set(k, l, k + 2 * l);
 
   m.compress(VectorOperation::insert);
 
   PETScWrappers::SparseMatrix m2(s, s, s);
   m2.set(0, 1, 5.0);
-  for(unsigned int k = 0; k < m2.m(); ++k)
+  for(unsigned int k= 0; k < m2.m(); ++k)
     m2.set(k, k, PetscScalar(1.0 + k, -1.0 - k));
   m2.compress(VectorOperation::insert);
 
@@ -42,21 +42,21 @@ test()
   // original matrix back.
 
   deallog << "before: " << m(0, 1) << std::endl;
-  for(unsigned int k = 0; k < s; ++k)
+  for(unsigned int k= 0; k < s; ++k)
     deallog << m(k, k) << " ";
   deallog << std::endl;
 
   m.add(m2, 1.0);
 
   deallog << "after: " << m(0, 1) << std::endl;
-  for(unsigned int k = 0; k < s; ++k)
+  for(unsigned int k= 0; k < s; ++k)
     deallog << m(k, k) << " ";
   deallog << std::endl;
 
   m.add(m2, -1.0);
 
   deallog << "back to original: " << m(0, 1) << std::endl;
-  for(unsigned int k = 0; k < s; ++k)
+  for(unsigned int k= 0; k < s; ++k)
     deallog << m(k, k) << " ";
   deallog << std::endl;
 

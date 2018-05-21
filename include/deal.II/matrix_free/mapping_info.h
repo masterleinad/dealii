@@ -45,21 +45,21 @@ namespace internal
       /**
        * The cell or face is Cartesian.
        */
-      cartesian = 0,
+      cartesian= 0,
       /**
        * The cell or face can be described with an affine mapping.
        */
-      affine = 1,
+      affine= 1,
       /**
        * The face is flat, i.e., the normal factor on a face is the same on
        * all quadrature points. This type is not assigned for cells.
        */
-      flat_faces = 2,
+      flat_faces= 2,
       /**
        * There is no special information available for compressing the
        * representation of the object under consideration.
        */
-      general = 3
+      general= 3
     };
 
     /**
@@ -111,7 +111,7 @@ namespace internal
          */
         void
         initialize(const Quadrature<1>& quadrature_1d,
-                   const UpdateFlags update_flags_inner_faces = update_default);
+                   const UpdateFlags update_flags_inner_faces= update_default);
 
         /**
          * Returns the memory consumption in bytes.
@@ -512,7 +512,7 @@ namespace internal
     MappingInfoStorage<structdim, spacedim, Number>::quad_index_from_n_q_points(
       const unsigned int n_q_points) const
     {
-      for(unsigned int i = 0; i < descriptor.size(); ++i)
+      for(unsigned int i= 0; i < descriptor.size(); ++i)
         if(n_q_points == descriptor[i].n_q_points)
           return i;
       return 0;

@@ -15,7 +15,7 @@
 
 // check that computation of hp constraints works for DGP_Monomial elements correctly
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "hp_constraints_common.h"
 
@@ -26,7 +26,7 @@ test()
   deallog << "Test for dim = " << dim << std::endl << std::endl;
   hp::FECollection<dim>     fe;
   std::vector<unsigned int> degrees;
-  for(unsigned int i = 1; i < 4; ++i)
+  for(unsigned int i= 1; i < 4; ++i)
     {
       fe.push_back(FE_Q_Hierarchical<dim>(i));
       degrees.push_back(i);

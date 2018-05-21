@@ -32,7 +32,7 @@ public:
   void
   generate(const char* myname)
   {
-    std::string name = myname;
+    std::string name= myname;
 
     std::unique_ptr<FiniteElement<dim, spacedim>> fe
       = FETools::get_fe_by_name<dim, spacedim>(name);

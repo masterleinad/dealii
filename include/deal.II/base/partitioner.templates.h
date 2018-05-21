@@ -48,8 +48,8 @@ namespace Utilities
                                             n_ghost_indices(),
                                             n_ghost_indices_in_larger_set));
 
-      const unsigned int n_import_targets = import_targets_data.size();
-      const unsigned int n_ghost_targets  = ghost_targets_data.size();
+      const unsigned int n_import_targets= import_targets_data.size();
+      const unsigned int n_ghost_targets = ghost_targets_data.size();
 
       if(n_import_targets > 0)
         AssertDimension(locally_owned_array.size(), local_size());
@@ -76,7 +76,7 @@ namespace Utilities
                              - n_ghost_indices() :
                            ghost_array.data();
 
-      for(unsigned int i = 0; i < n_ghost_targets; i++)
+      for(unsigned int i= 0; i < n_ghost_targets; i++)
         {
           // allow writing into ghost indices even though we are in a
           // const function
@@ -89,23 +89,23 @@ namespace Utilities
                         communicator,
                         &requests[i]);
           AssertThrowMPI(ierr);
-          ghost_array_ptr += ghost_targets()[i].second;
+          ghost_array_ptr+= ghost_targets()[i].second;
         }
 
-      Number* temp_array_ptr = temporary_storage.data();
-      for(unsigned int i = 0; i < n_import_targets; i++)
+      Number* temp_array_ptr= temporary_storage.data();
+      for(unsigned int i= 0; i < n_import_targets; i++)
         {
           // copy the data to be sent to the import_data field
           std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
             my_imports
             = import_indices_data.begin()
               + import_indices_chunks_by_rank_data[i],
-            end_my_imports = import_indices_data.begin()
-                             + import_indices_chunks_by_rank_data[i + 1];
-          unsigned int index = 0;
+            end_my_imports= import_indices_data.begin()
+                            + import_indices_chunks_by_rank_data[i + 1];
+          unsigned int index= 0;
           for(; my_imports != end_my_imports; ++my_imports)
-            for(unsigned int j = my_imports->first; j < my_imports->second; j++)
-              temp_array_ptr[index++] = locally_owned_array[j];
+            for(unsigned int j= my_imports->first; j < my_imports->second; j++)
+              temp_array_ptr[index++]= locally_owned_array[j];
           AssertDimension(index, import_targets_data[i].second);
 
           // start the send operations
@@ -118,7 +118,7 @@ namespace Utilities
                         communicator,
                         &requests[n_ghost_targets + i]);
           AssertThrowMPI(ierr);
-          temp_array_ptr += import_targets_data[i].second;
+          temp_array_ptr+= import_targets_data[i].second;
         }
     }
 
@@ -140,7 +140,7 @@ namespace Utilities
                       requests.size());
       if(requests.size() > 0)
         {
-          const int ierr = MPI_Waitall(
+          const int ierr= MPI_Waitall(
             requests.size(), requests.data(), MPI_STATUSES_IGNORE);
           AssertThrowMPI(ierr);
         }
@@ -160,11 +160,11 @@ namespace Utilities
               my_ghosts != ghost_indices_subset_data.end();
               ++my_ghosts)
             if(offset > my_ghosts->first)
-              for(unsigned int j = my_ghosts->first; j < my_ghosts->second;
+              for(unsigned int j= my_ghosts->first; j < my_ghosts->second;
                   ++j, ++offset)
                 {
-                  ghost_array[j]      = ghost_array[offset];
-                  ghost_array[offset] = Number();
+                  ghost_array[j]     = ghost_array[offset];
+                  ghost_array[offset]= Number();
                 }
             else
               {
@@ -207,8 +207,8 @@ namespace Utilities
       if(n_ghost_indices() == 0 && n_import_indices() == 0)
         return;
 
-      const unsigned int n_import_targets = import_targets_data.size();
-      const unsigned int n_ghost_targets  = ghost_targets_data.size();
+      const unsigned int n_import_targets= import_targets_data.size();
+      const unsigned int n_ghost_targets = ghost_targets_data.size();
 
       Assert(requests.size() == 0,
              ExcMessage("Another compress operation seems to still be running. "
@@ -219,12 +219,12 @@ namespace Utilities
       // then actually send the data
 
       // set channels in different range from update_ghost_values channels
-      const unsigned int channel = communication_channel + 401;
+      const unsigned int channel= communication_channel + 401;
       requests.resize(n_import_targets + n_ghost_targets);
 
       // initiate the receive operations
-      Number* temp_array_ptr = temporary_storage.data();
-      for(unsigned int i = 0; i < n_import_targets; i++)
+      Number* temp_array_ptr= temporary_storage.data();
+      for(unsigned int i= 0; i < n_import_targets; i++)
         {
           AssertThrow(
             static_cast<std::size_t>(import_targets_data[i].second)
@@ -242,7 +242,7 @@ namespace Utilities
                         communicator,
                         &requests[i]);
           AssertThrowMPI(ierr);
-          temp_array_ptr += import_targets_data[i].second;
+          temp_array_ptr+= import_targets_data[i].second;
         }
 
       // initiate the send operations
@@ -250,8 +250,8 @@ namespace Utilities
       // in case we want to import only from a subset of the ghosts we want to
       // move the data to send to the front of the array
       AssertIndexRange(n_ghost_indices(), n_ghost_indices_in_larger_set + 1);
-      Number* ghost_array_ptr = ghost_array.data();
-      for(unsigned int i = 0; i < n_ghost_targets; i++)
+      Number* ghost_array_ptr= ghost_array.data();
+      for(unsigned int i= 0; i < n_ghost_targets; i++)
         {
           // in case we only sent a subset of indices, we now need to move the data
           // to the correct positions and delete the old content
@@ -265,18 +265,18 @@ namespace Utilities
                 end_my_ghosts
                 = ghost_indices_subset_data.begin()
                   + ghost_indices_subset_chunks_by_rank_data[i + 1];
-              unsigned int offset = 0;
+              unsigned int offset= 0;
               for(; my_ghosts != end_my_ghosts; ++my_ghosts)
                 if(ghost_array_ptr + offset
                    != ghost_array.data() + my_ghosts->first)
-                  for(unsigned int j = my_ghosts->first; j < my_ghosts->second;
+                  for(unsigned int j= my_ghosts->first; j < my_ghosts->second;
                       ++j, ++offset)
                     {
-                      ghost_array_ptr[offset] = ghost_array[j];
-                      ghost_array[j]          = Number();
+                      ghost_array_ptr[offset]= ghost_array[j];
+                      ghost_array[j]         = Number();
                     }
                 else
-                  offset += my_ghosts->second - my_ghosts->first;
+                  offset+= my_ghosts->second - my_ghosts->first;
               AssertDimension(offset, ghost_targets_data[i].second);
             }
 
@@ -297,7 +297,7 @@ namespace Utilities
                         &requests[n_import_targets + i]);
           AssertThrowMPI(ierr);
 
-          ghost_array_ptr += ghost_targets_data[i].second;
+          ghost_array_ptr+= ghost_targets_data[i].second;
         }
     }
 
@@ -371,8 +371,8 @@ namespace Utilities
       if(n_ghost_indices() == 0 && n_import_indices() == 0)
         return;
 
-      const unsigned int n_import_targets = import_targets_data.size();
-      const unsigned int n_ghost_targets  = ghost_targets_data.size();
+      const unsigned int n_import_targets= import_targets_data.size();
+      const unsigned int n_ghost_targets = ghost_targets_data.size();
 
       if(vector_operation != dealii::VectorOperation::insert)
         AssertDimension(n_ghost_targets + n_import_targets, requests.size());
@@ -381,11 +381,11 @@ namespace Utilities
       if(requests.size() > 0 && n_import_targets > 0)
         {
           AssertDimension(locally_owned_array.size(), local_size());
-          const int ierr = MPI_Waitall(
+          const int ierr= MPI_Waitall(
             n_import_targets, requests.data(), MPI_STATUSES_IGNORE);
           AssertThrowMPI(ierr);
 
-          const Number* read_position = temporary_storage.data();
+          const Number* read_position= temporary_storage.data();
           std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
             my_imports
             = import_indices_data.begin();
@@ -396,12 +396,12 @@ namespace Utilities
           // the ones already present
           if(vector_operation != dealii::VectorOperation::insert)
             for(; my_imports != import_indices_data.end(); ++my_imports)
-              for(unsigned int j = my_imports->first; j < my_imports->second;
+              for(unsigned int j= my_imports->first; j < my_imports->second;
                   j++)
-                locally_owned_array[j] += *read_position++;
+                locally_owned_array[j]+= *read_position++;
           else
             for(; my_imports != import_indices_data.end(); ++my_imports)
-              for(unsigned int j = my_imports->first; j < my_imports->second;
+              for(unsigned int j= my_imports->first; j < my_imports->second;
                   j++, read_position++)
                 // Below we use relatively large precision in units in the last place (ULP) as
                 // this Assert can be easily triggered in p::d::SolutionTransfer.
@@ -428,7 +428,7 @@ namespace Utilities
       // wait for the send operations to complete
       if(requests.size() > 0 && n_ghost_targets > 0)
         {
-          const int ierr = MPI_Waitall(
+          const int ierr= MPI_Waitall(
             n_ghost_targets, &requests[n_import_targets], MPI_STATUSES_IGNORE);
           AssertThrowMPI(ierr);
         }

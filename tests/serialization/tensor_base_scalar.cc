@@ -22,7 +22,7 @@
 void
 test()
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
   Tensor<0, dim> t1(1.);
 

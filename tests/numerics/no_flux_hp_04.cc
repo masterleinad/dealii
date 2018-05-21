@@ -44,13 +44,13 @@ public:
     switch(dim)
       {
         case 2:
-          v(0) = p[0] + p[1];
-          v(1) = p[1] - p[0];
+          v(0)= p[0] + p[1];
+          v(1)= p[1] - p[0];
           break;
         case 3:
-          v(0) = p[0] + p[1];
-          v(1) = p[1] - p[0];
-          v(2) = p[2];
+          v(0)= p[0] + p[1];
+          v(1)= p[1] - p[0];
+          v(2)= p[2];
           break;
         default:
           Assert(false, ExcNotImplemented());
@@ -83,9 +83,9 @@ test(const Triangulation<dim>& tr, const hp::FECollection<dim>& fe)
   cm.distribute(v);
 
   // remove small entries
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     if(std::fabs(v(i)) < 1e-12)
-      v(i) = 0;
+      v(i)= 0;
 
   DataOut<dim, hp::DoFHandler<dim>> data_out;
   data_out.attach_dof_handler(dh);
@@ -115,7 +115,7 @@ test_hyper_sphere()
 
   tr.refine_global(2);
 
-  for(unsigned int degree = 1; degree < 6 - dim; ++degree)
+  for(unsigned int degree= 1; degree < 6 - dim; ++degree)
     {
       hp::FECollection<dim> fe(
         FESystem<dim>(FE_Q<dim>(QIterated<1>(QTrapez<1>(), degree)), dim));

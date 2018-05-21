@@ -53,7 +53,7 @@ test(const unsigned int degree)
 
   deallog << "Degree=" << degree << std::endl;
 
-  for(double h = 1; h > 1. / 128; h /= 2)
+  for(double h= 1; h > 1. / 128; h/= 2)
     {
       deallog << "  h=" << h << std::endl;
 
@@ -67,13 +67,13 @@ test(const unsigned int degree)
 
       FEFaceValues<dim> fe_values(fe_rt, quadrature, update_values);
       fe_values.reinit(dof.begin_active(), 0);
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for(unsigned int q= 0; q < quadrature.size(); ++q)
         {
           deallog << "    Quadrature point " << q << ": ";
-          for(unsigned int i = 0; i < fe_rt.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe_rt.dofs_per_cell; ++i)
             {
               deallog << "[ ";
-              for(unsigned int c = 0; c < fe_rt.n_components(); ++c)
+              for(unsigned int c= 0; c < fe_rt.n_components(); ++c)
                 deallog << fe_values.shape_value_component(i, q, c) << ' ';
               deallog << ']';
             }
@@ -89,7 +89,7 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     test<2>(i);
 
   return 0;

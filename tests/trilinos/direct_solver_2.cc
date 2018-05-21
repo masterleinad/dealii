@@ -88,7 +88,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -99,7 +99,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -110,7 +110,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -118,9 +118,9 @@ double
 RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
-  double return_value = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    return_value += 2 * std::pow(p(i), 2);
+  double return_value= 0;
+  for(unsigned int i= 0; i < dim; ++i)
+    return_value+= 2 * std::pow(p(i), 2);
 
   return return_value;
 }
@@ -130,9 +130,9 @@ double
 RightHandSideTwo<dim>::value(const Point<dim>& p,
                              const unsigned int /*component*/) const
 {
-  double return_value = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    return_value += 4 * std::pow(p(i), 4);
+  double return_value= 0;
+  for(unsigned int i= 0; i < dim; ++i)
+    return_value+= 4 * std::pow(p(i), 4);
 
   return return_value;
 }
@@ -175,7 +175,7 @@ Step4<dim>::setup_system()
     dof_handler, 0, BoundaryValues<dim>(), constraints);
   constraints.close();
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
 
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
@@ -213,8 +213,8 @@ Step4<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -224,34 +224,34 @@ Step4<dim>::assemble_system()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
       if(cell->is_locally_owned())
         {
           fe_values.reinit(cell);
-          cell_matrix  = 0;
-          cell_rhs     = 0;
-          cell_rhs_two = 0;
+          cell_matrix = 0;
+          cell_rhs    = 0;
+          cell_rhs_two= 0;
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                  cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                        * fe_values.shape_grad(j, q_point)
-                                        * fe_values.JxW(q_point));
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                  cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                       * fe_values.shape_grad(j, q_point)
+                                       * fe_values.JxW(q_point));
 
-                cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                                * right_hand_side.value(
-                                    fe_values.quadrature_point(q_point))
-                                * fe_values.JxW(q_point));
+                cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                               * right_hand_side.value(
+                                   fe_values.quadrature_point(q_point))
+                               * fe_values.JxW(q_point));
 
-                cell_rhs_two(i) += (fe_values.shape_value(i, q_point)
-                                    * right_hand_side.value(
-                                        fe_values.quadrature_point(q_point))
-                                    * fe_values.JxW(q_point));
+                cell_rhs_two(i)+= (fe_values.shape_value(i, q_point)
+                                   * right_hand_side.value(
+                                       fe_values.quadrature_point(q_point))
+                                   * fe_values.JxW(q_point));
               }
 
           cell->get_dof_indices(local_dof_indices);
@@ -278,34 +278,34 @@ Step4<dim>::solve()
   TrilinosWrappers::PreconditionSSOR preconditioner;
   preconditioner.initialize(system_matrix);
   TrilinosWrappers::MPI::Vector temp_solution(system_rhs);
-  temp_solution = 0;
+  temp_solution= 0;
   SolverControl                           solver_control(1000, 1e-12);
   SolverCG<TrilinosWrappers::MPI::Vector> solver(solver_control);
 
   solver.solve(system_matrix, temp_solution, system_rhs, preconditioner);
 
   constraints.distribute(temp_solution);
-  solution = temp_solution;
+  solution= temp_solution;
 
   TrilinosWrappers::MPI::Vector output(temp_solution);
 
   // do CG solve for new rhs
-  temp_solution = 0;
-  solution      = 0;
+  temp_solution= 0;
+  solution     = 0;
   solver.solve(system_matrix, temp_solution, system_rhs_two, preconditioner);
 
   constraints.distribute(temp_solution);
-  solution = temp_solution;
+  solution= temp_solution;
 
   TrilinosWrappers::MPI::Vector output_two(temp_solution);
 
   // factorize matrix for direct solver
-  temp_solution = 0;
-  solution      = 0;
+  temp_solution= 0;
+  solution     = 0;
 
   deallog.push("DirectKLU");
   TrilinosWrappers::SolverDirect::AdditionalData data;
-  data.solver_type = "Amesos_Klu";
+  data.solver_type= "Amesos_Klu";
   TrilinosWrappers::SolverDirect direct_solver(solver_control, data);
   direct_solver.initialize(system_matrix);
 
@@ -313,30 +313,30 @@ Step4<dim>::solve()
   direct_solver.solve(temp_solution, system_rhs);
 
   constraints.distribute(temp_solution);
-  solution = temp_solution;
+  solution= temp_solution;
 
   // calculate l2 errors
   output.add(-1.0, temp_solution);
 
-  const double local_error = output.l2_norm();
+  const double local_error= output.l2_norm();
   const double global_error
     = std::sqrt(Utilities::MPI::sum(local_error * local_error, MPI_COMM_WORLD));
 
   deallog << "Norm of error in direct solve 1: " << global_error << std::endl;
 
   // do solve 2 without refactorizing
-  temp_solution = 0;
-  solution      = 0;
+  temp_solution= 0;
+  solution     = 0;
   direct_solver.solve(temp_solution, system_rhs_two);
 
   constraints.distribute(temp_solution);
-  solution = temp_solution;
+  solution= temp_solution;
 
   // calculate l2 errors
   output_two.add(-1.0, temp_solution);
 
-  const double local_error_two  = output_two.l2_norm();
-  const double global_error_two = std::sqrt(
+  const double local_error_two = output_two.l2_norm();
+  const double global_error_two= std::sqrt(
     Utilities::MPI::sum(local_error_two * local_error_two, MPI_COMM_WORLD));
 
   deallog << "Norm of error in direct solve 2: " << global_error_two

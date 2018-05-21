@@ -42,7 +42,7 @@ check_this(const DoFHandler<dim>& dof_handler);
 void
 output_vector(std::vector<bool>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << (v[i] ? '1' : '0');
   deallog << std::endl;
 }
@@ -50,7 +50,7 @@ output_vector(std::vector<bool>& v)
 void
 output_vector(std::vector<unsigned int>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << ' ' << v[i];
   deallog << std::endl;
 }

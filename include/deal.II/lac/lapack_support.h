@@ -69,7 +69,7 @@ namespace LAPACKSupport
     /// Matrix is the inverse of a singular value decomposition
     inverse_svd,
     /// Contents is something useless.
-    unusable = 0x8000
+    unusable= 0x8000
   };
 
   /**
@@ -108,17 +108,17 @@ namespace LAPACKSupport
   enum Property
   {
     /// No special properties
-    general = 0,
+    general= 0,
     /// Matrix is symmetric
-    symmetric = 1,
+    symmetric= 1,
     /// Matrix is upper triangular
-    upper_triangular = 2,
+    upper_triangular= 2,
     /// Matrix is lower triangular
-    lower_triangular = 4,
+    lower_triangular= 4,
     /// Matrix is diagonal
-    diagonal = 6,
+    diagonal= 6,
     /// Matrix is in upper Hessenberg form
-    hessenberg = 8
+    hessenberg= 8
   };
 
   /**
@@ -150,35 +150,35 @@ namespace LAPACKSupport
   /**
    * Character constant.
    */
-  static const char A = 'A';
+  static const char A= 'A';
   /**
    * Character constant.
    */
-  static const char N = 'N';
+  static const char N= 'N';
   /**
    * Character constant.
    */
-  static const char T = 'T';
+  static const char T= 'T';
   /**
    * Character constant.
    */
-  static const char U = 'U';
+  static const char U= 'U';
   /**
    * Character constant.
    */
-  static const char L = 'L';
+  static const char L= 'L';
   /**
    * Character constant.
    */
-  static const char V = 'V';
+  static const char V= 'V';
   /**
    * Integer constant.
    */
-  static const types::blas_int zero = 0;
+  static const types::blas_int zero= 0;
   /**
    * Integer constant.
    */
-  static const types::blas_int one = 1;
+  static const types::blas_int one= 1;
 
   /**
    * A LAPACK function returned an error code.

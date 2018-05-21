@@ -140,8 +140,8 @@ namespace LinearAdvectionTest
       dof_handler(triangulation)
   {
     std::vector<unsigned int> repetitions(2);
-    repetitions[0] = 2;
-    repetitions[1] = 1;
+    repetitions[0]= 2;
+    repetitions[1]= 1;
 
     const Point<2> p0(0.0, 0.0);
     const Point<2> p1(2.0, 1.0);
@@ -154,14 +154,14 @@ namespace LinearAdvectionTest
   AdvectionProblem<dim>::setup_system()
   {
     dof_handler.distribute_dofs(fe);
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
     DynamicSparsityPattern dynamic_sparsity_pattern(locally_relevant_dofs);
     Table<2, DoFTools::Coupling> cell_integral_mask(1, 1);
     Table<2, DoFTools::Coupling> flux_integral_mask(1, 1);
-    cell_integral_mask(0, 0) = DoFTools::always;
-    flux_integral_mask(0, 0) = DoFTools::nonzero;
+    cell_integral_mask(0, 0)= DoFTools::always;
+    flux_integral_mask(0, 0)= DoFTools::nonzero;
 
     DoFTools::make_flux_sparsity_pattern(dof_handler,
                                          dynamic_sparsity_pattern,
@@ -201,7 +201,7 @@ namespace LinearAdvectionTest
     neighbor_cell->get_dof_indices(neighbor_dofs);
 
     // This is the actual test.
-    neighbor_to_neighbor_flux = 0.0;
+    neighbor_to_neighbor_flux= 0.0;
     system_matrix.add(neighbor_dofs, neighbor_to_neighbor_flux, true);
     deallog << "OK" << std::endl;
   }
@@ -210,7 +210,7 @@ namespace LinearAdvectionTest
   void
   AdvectionProblem<dim>::assemble_system()
   {
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
     FullMatrix<double> current_to_current_flux(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> current_to_neighbor_flux(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> neighbor_to_current_flux(dofs_per_cell, dofs_per_cell);
@@ -226,24 +226,24 @@ namespace LinearAdvectionTest
 
     typename DoFHandler<dim>::active_cell_iterator current_cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; current_cell != endc; ++current_cell)
       {
         if(current_cell->is_locally_owned())
           {
-            for(unsigned int face_n = 0;
+            for(unsigned int face_n= 0;
                 face_n < GeometryInfo<dim>::faces_per_cell;
                 ++face_n)
               {
-                const int neighbor_index = current_cell->neighbor_index(face_n);
+                const int neighbor_index= current_cell->neighbor_index(face_n);
                 if(neighbor_index != -1) // interior face
                   {
                     // for DG we need to access the FE space on the adjacent cell.
                     typename DoFHandler<dim>::active_cell_iterator neighbor_cell
                       = current_cell->neighbor(face_n);
 
-                    bool do_face_integration     = false;
-                    bool neighbor_is_level_lower = false;
+                    bool do_face_integration    = false;
+                    bool neighbor_is_level_lower= false;
 
                     /*
                      * Always integrate if the current cell is more refined
@@ -251,8 +251,8 @@ namespace LinearAdvectionTest
                      */
                     if(current_cell->level() > neighbor_cell->level())
                       {
-                        do_face_integration     = true;
-                        neighbor_is_level_lower = true;
+                        do_face_integration    = true;
+                        neighbor_is_level_lower= true;
                       }
                     // If the neighbor is not active, then it is at a higher
                     // refinement level (so we do not need to integrate now)
@@ -262,7 +262,7 @@ namespace LinearAdvectionTest
                           {
                             if(neighbor_cell < current_cell)
                               {
-                                do_face_integration = true;
+                                do_face_integration= true;
                               }
                           }
                         else
@@ -274,7 +274,7 @@ namespace LinearAdvectionTest
                                && current_cell->subdomain_id()
                                     < neighbor_cell->subdomain_id())
                               {
-                                do_face_integration = true;
+                                do_face_integration= true;
                               }
                           }
                       }

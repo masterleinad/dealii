@@ -29,14 +29,14 @@ main()
   deallog.attach(logfile);
 
   std::vector<types::global_dof_index> row_blocks(4);
-  row_blocks[0] = 4;
-  row_blocks[1] = 5;
-  row_blocks[2] = 1;
-  row_blocks[3] = 4;
+  row_blocks[0]= 4;
+  row_blocks[1]= 5;
+  row_blocks[2]= 1;
+  row_blocks[3]= 4;
   std::vector<types::global_dof_index> col_blocks(3);
-  col_blocks[0] = 2;
-  col_blocks[1] = 3;
-  col_blocks[2] = 2;
+  col_blocks[0]= 2;
+  col_blocks[1]= 3;
+  col_blocks[2]= 2;
 
   BlockDynamicSparsityPattern bcsp(row_blocks, col_blocks);
 

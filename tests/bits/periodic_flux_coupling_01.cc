@@ -63,9 +63,9 @@ MakeFlux<dim>::make_grid()
   typedef typename dealii::Triangulation<dim>::cell_iterator CellIteratorTria;
   std::vector<dealii::GridTools::PeriodicFacePair<CellIteratorTria>>
                      periodic_faces;
-  const unsigned int b_id1     = 2;
-  const unsigned int b_id2     = 3;
-  const unsigned int direction = 1;
+  const unsigned int b_id1    = 2;
+  const unsigned int b_id2    = 3;
+  const unsigned int direction= 1;
 
   dealii::GridTools::collect_periodic_faces(triangulation,
                                             b_id1,
@@ -81,7 +81,7 @@ template <int dim>
 void
 MakeFlux<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for(unsigned int cycle= 0; cycle < 3; ++cycle)
     {
       if(cycle == 0)
         make_grid();
@@ -93,7 +93,7 @@ MakeFlux<dim>::run()
           */
 
           Point<dim> refn_point;
-          refn_point = Point<dim>(0.005, 0.995);
+          refn_point= Point<dim>(0.005, 0.995);
           typename Triangulation<dim>::active_cell_iterator cell_it
             = triangulation.begin_active();
           for(; cell_it != triangulation.end(); ++cell_it)
@@ -113,11 +113,11 @@ MakeFlux<dim>::run()
       DynamicSparsityPattern dsp(dof_handler.n_dofs());
 
       // set up full mask not doing anything
-      const unsigned int n_components = dof_handler.get_fe().n_components();
+      const unsigned int n_components= dof_handler.get_fe().n_components();
       Table<2, DoFTools::Coupling> mask(n_components, n_components);
-      for(unsigned int i = 0; i < n_components; ++i)
-        for(unsigned int j = 0; j < n_components; ++j)
-          mask(i, j) = DoFTools::always;
+      for(unsigned int i= 0; i < n_components; ++i)
+        for(unsigned int j= 0; j < n_components; ++j)
+          mask(i, j)= DoFTools::always;
       DoFTools::make_flux_sparsity_pattern(dof_handler, dsp, mask, mask);
       deallog << Utilities::int_to_string(dof_handler.n_dofs(), 2) << std::endl;
       deallog.pop();

@@ -62,7 +62,7 @@ test_hyper_sphere()
 
   tr.refine_global(2);
 
-  for(unsigned int degree = 1; degree < 4; ++degree)
+  for(unsigned int degree= 1; degree < 4; ++degree)
     {
       FESystem<dim> fe(FE_Q<dim>(QIterated<1>(QTrapez<1>(), degree)), dim);
       test(tr, fe);

@@ -24,16 +24,16 @@ void
 test(PETScWrappers::FullMatrix& m)
 {
   // first set a few entries
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         m.set(i, j, i * j * .5 + .5);
 
   m.compress(VectorOperation::insert);
 
   // then make sure we retrieve the same ones
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           AssertThrow(m(i, j) == i * j * .5 + .5, ExcInternalError());

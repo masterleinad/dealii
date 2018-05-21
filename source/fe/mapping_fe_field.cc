@@ -194,9 +194,9 @@ namespace
     if(quad.size() == 0)
       {
         std::vector<Point<dim>> points(GeometryInfo<dim>::vertices_per_cell);
-        for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-          points[i] = GeometryInfo<dim>::unit_cell_vertex(i);
-        quad = Quadrature<dim>(points);
+        for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+          points[i]= GeometryInfo<dim>::unit_cell_vertex(i);
+        quad= Quadrature<dim>(points);
       }
     return quad;
   }
@@ -219,11 +219,11 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
               get_vertex_quadrature<dim>(),
               update_values)
 {
-  unsigned int size = 0;
-  for(unsigned int i = 0; i < fe_mask.size(); ++i)
+  unsigned int size= 0;
+  for(unsigned int i= 0; i < fe_mask.size(); ++i)
     {
       if(fe_mask[i])
-        fe_to_real[i] = size++;
+        fe_to_real[i]= size++;
     }
   AssertDimension(size, spacedim);
 }
@@ -288,10 +288,10 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_vertices(
   }
   std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell> vertices;
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-    for(unsigned int j = 0; j < fe_to_real.size(); ++j)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for(unsigned int j= 0; j < fe_to_real.size(); ++j)
       if(fe_to_real[j] != numbers::invalid_unsigned_int)
-        vertices[i][fe_to_real[j]] = values[i][j];
+        vertices[i][fe_to_real[j]]= values[i][j];
 
   return vertices;
 }
@@ -304,31 +304,31 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
     typename MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       InternalData& data) const
 {
-  const auto         fe       = &euler_dof_handler->get_fe();
-  const unsigned int n_points = unit_points.size();
+  const auto         fe      = &euler_dof_handler->get_fe();
+  const unsigned int n_points= unit_points.size();
 
-  for(unsigned int point = 0; point < n_points; ++point)
+  for(unsigned int point= 0; point < n_points; ++point)
     {
       if(data.shape_values.size() != 0)
-        for(unsigned int i = 0; i < data.n_shape_functions; ++i)
-          data.shape(point, i) = fe->shape_value(i, unit_points[point]);
+        for(unsigned int i= 0; i < data.n_shape_functions; ++i)
+          data.shape(point, i)= fe->shape_value(i, unit_points[point]);
 
       if(data.shape_derivatives.size() != 0)
-        for(unsigned int i = 0; i < data.n_shape_functions; ++i)
-          data.derivative(point, i) = fe->shape_grad(i, unit_points[point]);
+        for(unsigned int i= 0; i < data.n_shape_functions; ++i)
+          data.derivative(point, i)= fe->shape_grad(i, unit_points[point]);
 
       if(data.shape_second_derivatives.size() != 0)
-        for(unsigned int i = 0; i < data.n_shape_functions; ++i)
+        for(unsigned int i= 0; i < data.n_shape_functions; ++i)
           data.second_derivative(point, i)
             = fe->shape_grad_grad(i, unit_points[point]);
 
       if(data.shape_third_derivatives.size() != 0)
-        for(unsigned int i = 0; i < data.n_shape_functions; ++i)
+        for(unsigned int i= 0; i < data.n_shape_functions; ++i)
           data.third_derivative(point, i)
             = fe->shape_3rd_derivative(i, unit_points[point]);
 
       if(data.shape_fourth_derivatives.size() != 0)
-        for(unsigned int i = 0; i < data.n_shape_functions; ++i)
+        for(unsigned int i= 0; i < data.n_shape_functions; ++i)
           data.fourth_derivative(point, i)
             = fe->shape_4th_derivative(i, unit_points[point]);
     }
@@ -345,8 +345,8 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   // logic. the only way to treat this is to iterate. since there are
   // 5 if-clauses in the loop, it will take at most 4 iterations to
   // converge. do them:
-  UpdateFlags out = in;
-  for(unsigned int i = 0; i < 5; ++i)
+  UpdateFlags out= in;
+  for(unsigned int i= 0; i < 5; ++i)
     {
       // The following is a little incorrect:
       // If not applied on a face,
@@ -358,19 +358,19 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       // ignored for the interior of a
       // cell.
       if(out & (update_JxW_values | update_normal_vectors))
-        out |= update_boundary_forms;
+        out|= update_boundary_forms;
 
       if(out
          & (update_covariant_transformation | update_JxW_values
             | update_jacobians | update_jacobian_grads | update_boundary_forms
             | update_normal_vectors))
-        out |= update_contravariant_transformation;
+        out|= update_contravariant_transformation;
 
       if(out
          & (update_inverse_jacobians | update_jacobian_pushed_forward_grads
             | update_jacobian_pushed_forward_2nd_derivatives
             | update_jacobian_pushed_forward_3rd_derivatives))
-        out |= update_covariant_transformation;
+        out|= update_covariant_transformation;
 
       // The contravariant transformation
       // is a Piola transformation, which
@@ -379,10 +379,10 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       // Therefore these values have to be
       // updated for each cell.
       if(out & update_contravariant_transformation)
-        out |= update_JxW_values;
+        out|= update_JxW_values;
 
       if(out & update_normal_vectors)
-        out |= update_JxW_values;
+        out|= update_JxW_values;
     }
 
   return out;
@@ -399,9 +399,9 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_data(
   // store the flags in the internal data object so we can access them
   // in fill_fe_*_values(). use the transitive hull of the required
   // flags
-  data.update_each = requires_update_flags(update_flags);
+  data.update_each= requires_update_flags(update_flags);
 
-  const unsigned int n_q_points = q.size();
+  const unsigned int n_q_points= q.size();
 
   // see if we need the (transformation) shape function values
   // and/or gradients and resize the necessary arrays
@@ -458,19 +458,18 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_face_data(
             dim - 1, std::vector<Tensor<1, spacedim>>(n_original_q_points));
 
           // Compute tangentials to the unit cell.
-          for(unsigned int i = 0; i < data.unit_tangentials.size(); ++i)
+          for(unsigned int i= 0; i < data.unit_tangentials.size(); ++i)
             data.unit_tangentials[i].resize(n_original_q_points);
 
           if(dim == 2)
             {
               // ensure a counterclockwise
               // orientation of tangentials
-              static const int tangential_orientation[4] = {-1, 1, 1, -1};
-              for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell;
-                  ++i)
+              static const int tangential_orientation[4]= {-1, 1, 1, -1};
+              for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
                 {
                   Tensor<1, dim> tang;
-                  tang[1 - i / 2] = tangential_orientation[i];
+                  tang[1 - i / 2]= tangential_orientation[i];
                   std::fill(data.unit_tangentials[i].begin(),
                             data.unit_tangentials[i].end(),
                             tang);
@@ -478,8 +477,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_face_data(
             }
           else if(dim == 3)
             {
-              for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell;
-                  ++i)
+              for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
                 {
                   Tensor<1, dim> tang1, tang2;
 
@@ -496,7 +494,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_face_data(
                   // second tangential
                   // vector in direction
                   // of the (nd+2)%3 axis
-                  tang2[(nd + 2) % dim] = 1.;
+                  tang2[(nd + 2) % dim]= 1.;
 
                   // same unit tangents
                   // for all quadrature
@@ -522,8 +520,8 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_data(
   const UpdateFlags      update_flags,
   const Quadrature<dim>& quadrature) const
 {
-  auto data = std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(),
-                                                   fe_mask);
+  auto data= std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(),
+                                                  fe_mask);
   this->compute_data(update_flags, quadrature, quadrature.size(), *data);
   return std::move(data);
 }
@@ -534,8 +532,8 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_face_data(
   const UpdateFlags          update_flags,
   const Quadrature<dim - 1>& quadrature) const
 {
-  auto data = std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(),
-                                                   fe_mask);
+  auto data= std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(),
+                                                  fe_mask);
   const Quadrature<dim> q(QProjector<dim>::project_to_all_faces(quadrature));
   this->compute_face_data(update_flags, q, quadrature.size(), *data);
 
@@ -548,8 +546,8 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_subface_data(
   const UpdateFlags          update_flags,
   const Quadrature<dim - 1>& quadrature) const
 {
-  auto data = std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(),
-                                                   fe_mask);
+  auto data= std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(),
+                                                  fe_mask);
   const Quadrature<dim> q(QProjector<dim>::project_to_all_subfaces(quadrature));
   this->compute_face_data(update_flags, q, quadrature.size(), *data);
 
@@ -583,25 +581,25 @@ namespace internal
         const std::vector<unsigned int>&    fe_to_real,
         std::vector<Point<spacedim>>&       quadrature_points)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
 
         if(update_flags & update_quadrature_points)
           {
-            for(unsigned int point = 0; point < quadrature_points.size();
+            for(unsigned int point= 0; point < quadrature_points.size();
                 ++point)
               {
                 Point<spacedim> result;
-                const double*   shape = &data.shape(point + data_set, 0);
+                const double*   shape= &data.shape(point + data_set, 0);
 
-                for(unsigned int k = 0; k < data.n_shape_functions; ++k)
+                for(unsigned int k= 0; k < data.n_shape_functions; ++k)
                   {
-                    unsigned int comp_k = fe.system_to_component_index(k).first;
+                    unsigned int comp_k= fe.system_to_component_index(k).first;
                     if(fe_mask[comp_k])
                       result[fe_to_real[comp_k]]
                         += data.local_dof_values[k] * shape[k];
                   }
 
-                quadrature_points[point] = result;
+                quadrature_points[point]= result;
               }
           }
       }
@@ -628,7 +626,7 @@ namespace internal
         const ComponentMask&                fe_mask,
         const std::vector<unsigned int>&    fe_to_real)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
 
         // then Jacobians
         if(update_flags & update_contravariant_transformation)
@@ -637,18 +635,18 @@ namespace internal
             // need to recompute jacobians...
             if(cell_similarity != CellSimilarity::translation)
               {
-                const unsigned int n_q_points = data.contravariant.size();
+                const unsigned int n_q_points= data.contravariant.size();
 
                 Assert(data.n_shape_functions > 0, ExcInternalError());
 
-                for(unsigned int point = 0; point < n_q_points; ++point)
+                for(unsigned int point= 0; point < n_q_points; ++point)
                   {
                     const Tensor<1, dim>* data_derv
                       = &data.derivative(point + data_set, 0);
 
                     Tensor<1, dim> result[spacedim];
 
-                    for(unsigned int k = 0; k < data.n_shape_functions; ++k)
+                    for(unsigned int k= 0; k < data.n_shape_functions; ++k)
                       {
                         unsigned int comp_k
                           = fe.system_to_component_index(k).first;
@@ -658,9 +656,9 @@ namespace internal
                       }
 
                     // write result into contravariant data
-                    for(unsigned int i = 0; i < spacedim; ++i)
+                    for(unsigned int i= 0; i < spacedim; ++i)
                       {
-                        data.contravariant[point][i] = result[i];
+                        data.contravariant[point][i]= result[i];
                       }
                   }
               }
@@ -670,7 +668,7 @@ namespace internal
           {
             AssertDimension(data.covariant.size(), data.contravariant.size());
             if(cell_similarity != CellSimilarity::translation)
-              for(unsigned int point = 0; point < data.contravariant.size();
+              for(unsigned int point= 0; point < data.contravariant.size();
                   ++point)
                 data.covariant[point]
                   = (data.contravariant[point]).covariant_form();
@@ -680,7 +678,7 @@ namespace internal
           {
             AssertDimension(data.covariant.size(), data.volume_elements.size());
             if(cell_similarity != CellSimilarity::translation)
-              for(unsigned int point = 0; point < data.contravariant.size();
+              for(unsigned int point= 0; point < data.contravariant.size();
                   ++point)
                 data.volume_elements[point]
                   = data.contravariant[point].determinant();
@@ -709,37 +707,37 @@ namespace internal
         const std::vector<unsigned int>&               fe_to_real,
         std::vector<DerivativeForm<2, dim, spacedim>>& jacobian_grads)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
         if(update_flags & update_jacobian_grads)
           {
-            const unsigned int n_q_points = jacobian_grads.size();
+            const unsigned int n_q_points= jacobian_grads.size();
 
             if(cell_similarity != CellSimilarity::translation)
               {
-                for(unsigned int point = 0; point < n_q_points; ++point)
+                for(unsigned int point= 0; point < n_q_points; ++point)
                   {
                     const Tensor<2, dim>* second
                       = &data.second_derivative(point + data_set, 0);
 
                     DerivativeForm<2, dim, spacedim> result;
 
-                    for(unsigned int k = 0; k < data.n_shape_functions; ++k)
+                    for(unsigned int k= 0; k < data.n_shape_functions; ++k)
                       {
                         unsigned int comp_k
                           = fe.system_to_component_index(k).first;
                         if(fe_mask[comp_k])
-                          for(unsigned int j = 0; j < dim; ++j)
-                            for(unsigned int l = 0; l < dim; ++l)
+                          for(unsigned int j= 0; j < dim; ++j)
+                            for(unsigned int l= 0; l < dim; ++l)
                               result[fe_to_real[comp_k]][j][l]
                                 += (second[k][j][l] * data.local_dof_values[k]);
                       }
 
                     // never touch any data for j=dim in case dim<spacedim, so
                     // it will always be zero as it was initialized
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < dim; ++j)
-                        for(unsigned int l = 0; l < dim; ++l)
-                          jacobian_grads[point][i][j][l] = result[i][j][l];
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < dim; ++j)
+                        for(unsigned int l= 0; l < dim; ++l)
+                          jacobian_grads[point][i][j][l]= result[i][j][l];
                   }
               }
           }
@@ -767,55 +765,54 @@ namespace internal
         const std::vector<unsigned int>&    fe_to_real,
         std::vector<Tensor<3, spacedim>>&   jacobian_pushed_forward_grads)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
         if(update_flags & update_jacobian_pushed_forward_grads)
           {
-            const unsigned int n_q_points
-              = jacobian_pushed_forward_grads.size();
+            const unsigned int n_q_points= jacobian_pushed_forward_grads.size();
 
             if(cell_similarity != CellSimilarity::translation)
               {
                 double tmp[spacedim][spacedim][spacedim];
-                for(unsigned int point = 0; point < n_q_points; ++point)
+                for(unsigned int point= 0; point < n_q_points; ++point)
                   {
                     const Tensor<2, dim>* second
                       = &data.second_derivative(point + data_set, 0);
 
                     DerivativeForm<2, dim, spacedim> result;
 
-                    for(unsigned int k = 0; k < data.n_shape_functions; ++k)
+                    for(unsigned int k= 0; k < data.n_shape_functions; ++k)
                       {
                         unsigned int comp_k
                           = fe.system_to_component_index(k).first;
                         if(fe_mask[comp_k])
-                          for(unsigned int j = 0; j < dim; ++j)
-                            for(unsigned int l = 0; l < dim; ++l)
+                          for(unsigned int j= 0; j < dim; ++j)
+                            for(unsigned int l= 0; l < dim; ++l)
                               result[fe_to_real[comp_k]][j][l]
                                 += (second[k][j][l] * data.local_dof_values[k]);
                       }
 
                     // first push forward the j-components
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < dim; ++l)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < dim; ++l)
                           {
                             tmp[i][j][l]
                               = result[i][0][l] * data.covariant[point][j][0];
-                            for(unsigned int jr = 1; jr < dim; ++jr)
+                            for(unsigned int jr= 1; jr < dim; ++jr)
                               {
-                                tmp[i][j][l] += result[i][jr][l]
-                                                * data.covariant[point][j][jr];
+                                tmp[i][j][l]+= result[i][jr][l]
+                                               * data.covariant[point][j][jr];
                               }
                           }
 
                     // now, pushing forward the l-components
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < spacedim; ++l)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < spacedim; ++l)
                           {
                             jacobian_pushed_forward_grads[point][i][j][l]
                               = tmp[i][j][0] * data.covariant[point][l][0];
-                            for(unsigned int lr = 1; lr < dim; ++lr)
+                            for(unsigned int lr= 1; lr < dim; ++lr)
                               {
                                 jacobian_pushed_forward_grads[point][i][j][l]
                                   += tmp[i][j][lr]
@@ -849,28 +846,28 @@ namespace internal
         const std::vector<unsigned int>&               fe_to_real,
         std::vector<DerivativeForm<3, dim, spacedim>>& jacobian_2nd_derivatives)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
         if(update_flags & update_jacobian_2nd_derivatives)
           {
-            const unsigned int n_q_points = jacobian_2nd_derivatives.size();
+            const unsigned int n_q_points= jacobian_2nd_derivatives.size();
 
             if(cell_similarity != CellSimilarity::translation)
               {
-                for(unsigned int point = 0; point < n_q_points; ++point)
+                for(unsigned int point= 0; point < n_q_points; ++point)
                   {
                     const Tensor<3, dim>* third
                       = &data.third_derivative(point + data_set, 0);
 
                     DerivativeForm<3, dim, spacedim> result;
 
-                    for(unsigned int k = 0; k < data.n_shape_functions; ++k)
+                    for(unsigned int k= 0; k < data.n_shape_functions; ++k)
                       {
                         unsigned int comp_k
                           = fe.system_to_component_index(k).first;
                         if(fe_mask[comp_k])
-                          for(unsigned int j = 0; j < dim; ++j)
-                            for(unsigned int l = 0; l < dim; ++l)
-                              for(unsigned int m = 0; m < dim; ++m)
+                          for(unsigned int j= 0; j < dim; ++j)
+                            for(unsigned int l= 0; l < dim; ++l)
+                              for(unsigned int m= 0; m < dim; ++m)
                                 result[fe_to_real[comp_k]][j][l][m]
                                   += (third[k][j][l][m]
                                       * data.local_dof_values[k]);
@@ -878,10 +875,10 @@ namespace internal
 
                     // never touch any data for j=dim in case dim<spacedim, so
                     // it will always be zero as it was initialized
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < dim; ++j)
-                        for(unsigned int l = 0; l < dim; ++l)
-                          for(unsigned int m = 0; m < dim; ++m)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < dim; ++j)
+                        for(unsigned int l= 0; l < dim; ++l)
+                          for(unsigned int m= 0; m < dim; ++m)
                             jacobian_2nd_derivatives[point][i][j][l][m]
                               = result[i][j][l][m];
                   }
@@ -912,7 +909,7 @@ namespace internal
         std::vector<Tensor<4, spacedim>>&
           jacobian_pushed_forward_2nd_derivatives)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
         if(update_flags & update_jacobian_pushed_forward_2nd_derivatives)
           {
             const unsigned int n_q_points
@@ -921,37 +918,37 @@ namespace internal
             if(cell_similarity != CellSimilarity::translation)
               {
                 double tmp[spacedim][spacedim][spacedim][spacedim];
-                for(unsigned int point = 0; point < n_q_points; ++point)
+                for(unsigned int point= 0; point < n_q_points; ++point)
                   {
                     const Tensor<3, dim>* third
                       = &data.third_derivative(point + data_set, 0);
 
                     DerivativeForm<3, dim, spacedim> result;
 
-                    for(unsigned int k = 0; k < data.n_shape_functions; ++k)
+                    for(unsigned int k= 0; k < data.n_shape_functions; ++k)
                       {
                         unsigned int comp_k
                           = fe.system_to_component_index(k).first;
                         if(fe_mask[comp_k])
-                          for(unsigned int j = 0; j < dim; ++j)
-                            for(unsigned int l = 0; l < dim; ++l)
-                              for(unsigned int m = 0; m < dim; ++m)
+                          for(unsigned int j= 0; j < dim; ++j)
+                            for(unsigned int l= 0; l < dim; ++l)
+                              for(unsigned int m= 0; m < dim; ++m)
                                 result[fe_to_real[comp_k]][j][l][m]
                                   += (third[k][j][l][m]
                                       * data.local_dof_values[k]);
                       }
 
                     // push forward the j-coordinate
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < dim; ++l)
-                          for(unsigned int m = 0; m < dim; ++m)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < dim; ++l)
+                          for(unsigned int m= 0; m < dim; ++m)
                             {
                               jacobian_pushed_forward_2nd_derivatives[point][i]
                                                                      [j][l][m]
                                 = result[i][0][l][m]
                                   * data.covariant[point][j][0];
-                              for(unsigned int jr = 1; jr < dim; ++jr)
+                              for(unsigned int jr= 1; jr < dim; ++jr)
                                 jacobian_pushed_forward_2nd_derivatives[point]
                                                                        [i][j][l]
                                                                        [m]
@@ -960,17 +957,17 @@ namespace internal
                             }
 
                     // push forward the l-coordinate
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < spacedim; ++l)
-                          for(unsigned int m = 0; m < dim; ++m)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < spacedim; ++l)
+                          for(unsigned int m= 0; m < dim; ++m)
                             {
                               tmp[i][j][l][m]
                                 = jacobian_pushed_forward_2nd_derivatives[point]
                                                                          [i][j]
                                                                          [0][m]
                                   * data.covariant[point][l][0];
-                              for(unsigned int lr = 1; lr < dim; ++lr)
+                              for(unsigned int lr= 1; lr < dim; ++lr)
                                 tmp[i][j][l][m]
                                   += jacobian_pushed_forward_2nd_derivatives
                                        [point][i][j][lr][m]
@@ -978,15 +975,15 @@ namespace internal
                             }
 
                     // push forward the m-coordinate
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < spacedim; ++l)
-                          for(unsigned int m = 0; m < spacedim; ++m)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < spacedim; ++l)
+                          for(unsigned int m= 0; m < spacedim; ++m)
                             {
                               jacobian_pushed_forward_2nd_derivatives[point][i]
                                                                      [j][l][m]
                                 = tmp[i][j][l][0] * data.covariant[point][m][0];
-                              for(unsigned int mr = 1; mr < dim; ++mr)
+                              for(unsigned int mr= 1; mr < dim; ++mr)
                                 jacobian_pushed_forward_2nd_derivatives[point]
                                                                        [i][j][l]
                                                                        [m]
@@ -1020,29 +1017,29 @@ namespace internal
         const std::vector<unsigned int>&               fe_to_real,
         std::vector<DerivativeForm<4, dim, spacedim>>& jacobian_3rd_derivatives)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
         if(update_flags & update_jacobian_3rd_derivatives)
           {
-            const unsigned int n_q_points = jacobian_3rd_derivatives.size();
+            const unsigned int n_q_points= jacobian_3rd_derivatives.size();
 
             if(cell_similarity != CellSimilarity::translation)
               {
-                for(unsigned int point = 0; point < n_q_points; ++point)
+                for(unsigned int point= 0; point < n_q_points; ++point)
                   {
                     const Tensor<4, dim>* fourth
                       = &data.fourth_derivative(point + data_set, 0);
 
                     DerivativeForm<4, dim, spacedim> result;
 
-                    for(unsigned int k = 0; k < data.n_shape_functions; ++k)
+                    for(unsigned int k= 0; k < data.n_shape_functions; ++k)
                       {
                         unsigned int comp_k
                           = fe.system_to_component_index(k).first;
                         if(fe_mask[comp_k])
-                          for(unsigned int j = 0; j < dim; ++j)
-                            for(unsigned int l = 0; l < dim; ++l)
-                              for(unsigned int m = 0; m < dim; ++m)
-                                for(unsigned int n = 0; n < dim; ++n)
+                          for(unsigned int j= 0; j < dim; ++j)
+                            for(unsigned int l= 0; l < dim; ++l)
+                              for(unsigned int m= 0; m < dim; ++m)
+                                for(unsigned int n= 0; n < dim; ++n)
                                   result[fe_to_real[comp_k]][j][l][m][n]
                                     += (fourth[k][j][l][m][n]
                                         * data.local_dof_values[k]);
@@ -1050,11 +1047,11 @@ namespace internal
 
                     // never touch any data for j,l,m,n=dim in case dim<spacedim, so
                     // it will always be zero as it was initialized
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < dim; ++j)
-                        for(unsigned int l = 0; l < dim; ++l)
-                          for(unsigned int m = 0; m < dim; ++m)
-                            for(unsigned int n = 0; n < dim; ++n)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < dim; ++j)
+                        for(unsigned int l= 0; l < dim; ++l)
+                          for(unsigned int m= 0; m < dim; ++m)
+                            for(unsigned int n= 0; n < dim; ++n)
                               jacobian_3rd_derivatives[point][i][j][l][m][n]
                                 = result[i][j][l][m][n];
                   }
@@ -1086,7 +1083,7 @@ namespace internal
         std::vector<Tensor<5, spacedim>>&
           jacobian_pushed_forward_3rd_derivatives)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
         if(update_flags & update_jacobian_pushed_forward_3rd_derivatives)
           {
             const unsigned int n_q_points
@@ -1095,56 +1092,56 @@ namespace internal
             if(cell_similarity != CellSimilarity::translation)
               {
                 double tmp[spacedim][spacedim][spacedim][spacedim][spacedim];
-                for(unsigned int point = 0; point < n_q_points; ++point)
+                for(unsigned int point= 0; point < n_q_points; ++point)
                   {
                     const Tensor<4, dim>* fourth
                       = &data.fourth_derivative(point + data_set, 0);
 
                     DerivativeForm<4, dim, spacedim> result;
 
-                    for(unsigned int k = 0; k < data.n_shape_functions; ++k)
+                    for(unsigned int k= 0; k < data.n_shape_functions; ++k)
                       {
                         unsigned int comp_k
                           = fe.system_to_component_index(k).first;
                         if(fe_mask[comp_k])
-                          for(unsigned int j = 0; j < dim; ++j)
-                            for(unsigned int l = 0; l < dim; ++l)
-                              for(unsigned int m = 0; m < dim; ++m)
-                                for(unsigned int n = 0; n < dim; ++n)
+                          for(unsigned int j= 0; j < dim; ++j)
+                            for(unsigned int l= 0; l < dim; ++l)
+                              for(unsigned int m= 0; m < dim; ++m)
+                                for(unsigned int n= 0; n < dim; ++n)
                                   result[fe_to_real[comp_k]][j][l][m][n]
                                     += (fourth[k][j][l][m][n]
                                         * data.local_dof_values[k]);
                       }
 
                     // push-forward the j-coordinate
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < dim; ++l)
-                          for(unsigned int m = 0; m < dim; ++m)
-                            for(unsigned int n = 0; n < dim; ++n)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < dim; ++l)
+                          for(unsigned int m= 0; m < dim; ++m)
+                            for(unsigned int n= 0; n < dim; ++n)
                               {
                                 tmp[i][j][l][m][n]
                                   = result[i][0][l][m][n]
                                     * data.covariant[point][j][0];
-                                for(unsigned int jr = 1; jr < dim; ++jr)
+                                for(unsigned int jr= 1; jr < dim; ++jr)
                                   tmp[i][j][l][m][n]
                                     += result[i][jr][l][m][n]
                                        * data.covariant[point][j][jr];
                               }
 
                     // push-forward the l-coordinate
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < spacedim; ++l)
-                          for(unsigned int m = 0; m < dim; ++m)
-                            for(unsigned int n = 0; n < dim; ++n)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < spacedim; ++l)
+                          for(unsigned int m= 0; m < dim; ++m)
+                            for(unsigned int n= 0; n < dim; ++n)
                               {
                                 jacobian_pushed_forward_3rd_derivatives[point]
                                                                        [i][j][l]
                                                                        [m][n]
                                   = tmp[i][j][0][m][n]
                                     * data.covariant[point][l][0];
-                                for(unsigned int lr = 1; lr < dim; ++lr)
+                                for(unsigned int lr= 1; lr < dim; ++lr)
                                   jacobian_pushed_forward_3rd_derivatives
                                     [point][i][j][l][m][n]
                                     += tmp[i][j][lr][m][n]
@@ -1152,17 +1149,17 @@ namespace internal
                               }
 
                     // push-forward the m-coordinate
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < spacedim; ++l)
-                          for(unsigned int m = 0; m < spacedim; ++m)
-                            for(unsigned int n = 0; n < dim; ++n)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < spacedim; ++l)
+                          for(unsigned int m= 0; m < spacedim; ++m)
+                            for(unsigned int n= 0; n < dim; ++n)
                               {
                                 tmp[i][j][l][m][n]
                                   = jacobian_pushed_forward_3rd_derivatives
                                       [point][i][j][l][0][n]
                                     * data.covariant[point][m][0];
-                                for(unsigned int mr = 1; mr < dim; ++mr)
+                                for(unsigned int mr= 1; mr < dim; ++mr)
                                   tmp[i][j][l][m][n]
                                     += jacobian_pushed_forward_3rd_derivatives
                                          [point][i][j][l][mr][n]
@@ -1170,18 +1167,18 @@ namespace internal
                               }
 
                     // push-forward the n-coordinate
-                    for(unsigned int i = 0; i < spacedim; ++i)
-                      for(unsigned int j = 0; j < spacedim; ++j)
-                        for(unsigned int l = 0; l < spacedim; ++l)
-                          for(unsigned int m = 0; m < spacedim; ++m)
-                            for(unsigned int n = 0; n < spacedim; ++n)
+                    for(unsigned int i= 0; i < spacedim; ++i)
+                      for(unsigned int j= 0; j < spacedim; ++j)
+                        for(unsigned int l= 0; l < spacedim; ++l)
+                          for(unsigned int m= 0; m < spacedim; ++m)
+                            for(unsigned int n= 0; n < spacedim; ++n)
                               {
                                 jacobian_pushed_forward_3rd_derivatives[point]
                                                                        [i][j][l]
                                                                        [m][n]
                                   = tmp[i][j][l][m][0]
                                     * data.covariant[point][n][0];
-                                for(unsigned int nr = 1; nr < dim; ++nr)
+                                for(unsigned int nr= 1; nr < dim; ++nr)
                                   jacobian_pushed_forward_3rd_derivatives
                                     [point][i][j][l][m][n]
                                     += tmp[i][j][l][m][nr]
@@ -1219,11 +1216,11 @@ namespace internal
         internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
           output_data)
       {
-        const UpdateFlags update_flags = data.update_each;
+        const UpdateFlags update_flags= data.update_each;
 
         if(update_flags & update_boundary_forms)
           {
-            const unsigned int n_q_points = output_data.boundary_forms.size();
+            const unsigned int n_q_points= output_data.boundary_forms.size();
             if(update_flags & update_normal_vectors)
               AssertDimension(output_data.normal_vectors.size(), n_q_points);
             if(update_flags & update_JxW_values)
@@ -1232,7 +1229,7 @@ namespace internal
             // map the unit tangentials to the real cell. checking for d!=dim-1
             // eliminates compiler warnings regarding unsigned int expressions <
             // 0.
-            for(unsigned int d = 0; d != dim - 1; ++d)
+            for(unsigned int d= 0; d != dim - 1; ++d)
               {
                 Assert(face_no + GeometryInfo<dim>::faces_per_cell * d
                          < data.unit_tangentials.size(),
@@ -1259,7 +1256,7 @@ namespace internal
             // boundary form by simply taking the cross product
             if(dim == spacedim)
               {
-                for(unsigned int i = 0; i < n_q_points; ++i)
+                for(unsigned int i= 0; i < n_q_points; ++i)
                   switch(dim)
                     {
                       case 1:
@@ -1292,7 +1289,7 @@ namespace internal
                 // fill_fe_values for cells above
                 AssertDimension(data.contravariant.size(), n_q_points);
 
-                for(unsigned int point = 0; point < n_q_points; ++point)
+                for(unsigned int point= 0; point < n_q_points; ++point)
                   {
                     if(dim == 1)
                       {
@@ -1311,7 +1308,7 @@ namespace internal
 
                         Tensor<1, spacedim> cell_normal
                           = cross_product_3d(DX_t[0], DX_t[1]);
-                        cell_normal /= cell_normal.norm();
+                        cell_normal/= cell_normal.norm();
 
                         // then compute the face normal from the face tangent
                         // and the cell normal:
@@ -1322,8 +1319,7 @@ namespace internal
               }
 
             if(update_flags & (update_normal_vectors | update_JxW_values))
-              for(unsigned int i = 0; i < output_data.boundary_forms.size();
-                  ++i)
+              for(unsigned int i= 0; i < output_data.boundary_forms.size(); ++i)
                 {
                   if(update_flags & update_JxW_values)
                     {
@@ -1335,7 +1331,7 @@ namespace internal
                           const double area_ratio
                             = GeometryInfo<dim>::subface_ratio(
                               cell->subface_case(face_no), subface_no);
-                          output_data.JxW_values[i] *= area_ratio;
+                          output_data.JxW_values[i]*= area_ratio;
                         }
                     }
 
@@ -1346,11 +1342,11 @@ namespace internal
                 }
 
             if(update_flags & update_jacobians)
-              for(unsigned int point = 0; point < n_q_points; ++point)
-                output_data.jacobians[point] = data.contravariant[point];
+              for(unsigned int point= 0; point < n_q_points; ++point)
+                output_data.jacobians[point]= data.contravariant[point];
 
             if(update_flags & update_inverse_jacobians)
-              for(unsigned int point = 0; point < n_q_points; ++point)
+              for(unsigned int point= 0; point < n_q_points; ++point)
                 output_data.inverse_jacobians[point]
                   = data.covariant[point].transpose();
           }
@@ -1493,9 +1489,9 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData& data = static_cast<const InternalData&>(internal_data);
+  const InternalData& data= static_cast<const InternalData&>(internal_data);
 
-  const unsigned int               n_q_points = quadrature.size();
+  const unsigned int               n_q_points= quadrature.size();
   const CellSimilarity::Similarity updated_cell_similarity
     = (get_degree() == 1 ? cell_similarity : CellSimilarity::invalid_next_cell);
 
@@ -1519,8 +1515,8 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
       fe_mask,
       fe_to_real);
 
-  const UpdateFlags          update_flags = data.update_each;
-  const std::vector<double>& weights      = quadrature.get_weights();
+  const UpdateFlags          update_flags= data.update_each;
+  const std::vector<double>& weights     = quadrature.get_weights();
 
   // Multiply quadrature weights by absolute value of Jacobian determinants or
   // the area element g=sqrt(DX^t DX) in case of codim > 0
@@ -1535,11 +1531,11 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
         ExcDimensionMismatch(output_data.normal_vectors.size(), n_q_points));
 
       if(cell_similarity != CellSimilarity::translation)
-        for(unsigned int point = 0; point < n_q_points; ++point)
+        for(unsigned int point= 0; point < n_q_points; ++point)
           {
             if(dim == spacedim)
               {
-                const double det = data.contravariant[point].determinant();
+                const double det= data.contravariant[point].determinant();
 
                 // check for distorted cells.
 
@@ -1551,7 +1547,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
                                    cell->diameter() / std::sqrt(double(dim))),
                        (typename Mapping<dim, spacedim>::ExcDistortedMappedCell(
                          cell->center(), det, point)));
-                output_data.JxW_values[point] = weights[point] * det;
+                output_data.JxW_values[point]= weights[point] * det;
               }
             // if dim==spacedim, then there is no cell normal to
             // compute. since this is for FEValues (and not FEFaceValues),
@@ -1559,14 +1555,14 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
             else //codim>0 case
               {
                 Tensor<1, spacedim> DX_t[dim];
-                for(unsigned int i = 0; i < spacedim; ++i)
-                  for(unsigned int j = 0; j < dim; ++j)
-                    DX_t[j][i] = data.contravariant[point][i][j];
+                for(unsigned int i= 0; i < spacedim; ++i)
+                  for(unsigned int j= 0; j < dim; ++j)
+                    DX_t[j][i]= data.contravariant[point][i][j];
 
                 Tensor<2, dim> G; //First fundamental form
-                for(unsigned int i = 0; i < dim; ++i)
-                  for(unsigned int j = 0; j < dim; ++j)
-                    G[i][j] = DX_t[i] * DX_t[j];
+                for(unsigned int i= 0; i < dim; ++i)
+                  for(unsigned int j= 0; j < dim; ++j)
+                    G[i][j]= DX_t[i] * DX_t[j];
 
                 output_data.JxW_values[point]
                   = sqrt(determinant(G)) * weights[point];
@@ -1575,7 +1571,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
                   {
                     // we only need to flip the normal
                     if(update_flags & update_normal_vectors)
-                      output_data.normal_vectors[point] *= -1.;
+                      output_data.normal_vectors[point]*= -1.;
                   }
                 else
                   {
@@ -1596,7 +1592,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
                           /= output_data.normal_vectors[point].norm();
 
                         if(cell->direction_flag() == false)
-                          output_data.normal_vectors[point] *= -1.;
+                          output_data.normal_vectors[point]*= -1.;
                       }
                   }
               } //codim>0 case
@@ -1608,8 +1604,8 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
     {
       AssertDimension(output_data.jacobians.size(), n_q_points);
       if(cell_similarity != CellSimilarity::translation)
-        for(unsigned int point = 0; point < n_q_points; ++point)
-          output_data.jacobians[point] = data.contravariant[point];
+        for(unsigned int point= 0; point < n_q_points; ++point)
+          output_data.jacobians[point]= data.contravariant[point];
     }
 
   // copy values from InternalData to vector given by reference
@@ -1617,7 +1613,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
     {
       AssertDimension(output_data.inverse_jacobians.size(), n_q_points);
       if(cell_similarity != CellSimilarity::translation)
-        for(unsigned int point = 0; point < n_q_points; ++point)
+        for(unsigned int point= 0; point < n_q_points; ++point)
           output_data.inverse_jacobians[point]
             = data.covariant[point].transpose();
     }
@@ -1719,7 +1715,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_face_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData& data = static_cast<const InternalData&>(internal_data);
+  const InternalData& data= static_cast<const InternalData&>(internal_data);
 
   update_internal_dofs(cell, data);
 
@@ -1758,7 +1754,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData& data = static_cast<const InternalData&>(internal_data);
+  const InternalData& data= static_cast<const InternalData&>(internal_data);
 
   update_internal_dofs(cell, data);
 
@@ -1828,7 +1824,7 @@ namespace internal
                   typename FEValuesBase<dim>::ExcAccessToUninitializedField(
                     "update_contravariant_transformation"));
 
-                for(unsigned int i = 0; i < output.size(); ++i)
+                for(unsigned int i= 0; i < output.size(); ++i)
                   output[i]
                     = apply_transformation(data.contravariant[i], input[i]);
 
@@ -1846,11 +1842,11 @@ namespace internal
                   typename FEValuesBase<dim>::ExcAccessToUninitializedField(
                     "update_volume_elements"));
                 Assert(rank == 1, ExcMessage("Only for rank 1"));
-                for(unsigned int i = 0; i < output.size(); ++i)
+                for(unsigned int i= 0; i < output.size(); ++i)
                   {
                     output[i]
                       = apply_transformation(data.contravariant[i], input[i]);
-                    output[i] /= data.volume_elements[i];
+                    output[i]/= data.volume_elements[i];
                   }
                 return;
               }
@@ -1865,8 +1861,8 @@ namespace internal
                   typename FEValuesBase<dim>::ExcAccessToUninitializedField(
                     "update_contravariant_transformation"));
 
-                for(unsigned int i = 0; i < output.size(); ++i)
-                  output[i] = apply_transformation(data.covariant[i], input[i]);
+                for(unsigned int i= 0; i < output.size(); ++i)
+                  output[i]= apply_transformation(data.covariant[i], input[i]);
 
                 return;
               }
@@ -1914,8 +1910,8 @@ namespace internal
                   typename FEValuesBase<dim>::ExcAccessToUninitializedField(
                     "update_contravariant_transformation"));
 
-                for(unsigned int i = 0; i < output.size(); ++i)
-                  output[i] = apply_transformation(data.covariant[i], input[i]);
+                for(unsigned int i= 0; i < output.size(); ++i)
+                  output[i]= apply_transformation(data.covariant[i], input[i]);
 
                 return;
               }
@@ -1984,7 +1980,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData*>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData& data = static_cast<const InternalData&>(mapping_data);
+  const InternalData& data= static_cast<const InternalData&>(mapping_data);
 
   switch(mapping_type)
     {
@@ -1994,21 +1990,21 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
                  typename FEValuesBase<dim>::ExcAccessToUninitializedField(
                    "update_covariant_transformation"));
 
-          for(unsigned int q = 0; q < output.size(); ++q)
-            for(unsigned int i = 0; i < spacedim; ++i)
-              for(unsigned int j = 0; j < spacedim; ++j)
-                for(unsigned int k = 0; k < spacedim; ++k)
+          for(unsigned int q= 0; q < output.size(); ++q)
+            for(unsigned int i= 0; i < spacedim; ++i)
+              for(unsigned int j= 0; j < spacedim; ++j)
+                for(unsigned int k= 0; k < spacedim; ++k)
                   {
-                    output[q][i][j][k] = data.covariant[q][j][0]
-                                         * data.covariant[q][k][0]
-                                         * input[q][i][0][0];
-                    for(unsigned int J = 0; J < dim; ++J)
+                    output[q][i][j][k]= data.covariant[q][j][0]
+                                        * data.covariant[q][k][0]
+                                        * input[q][i][0][0];
+                    for(unsigned int J= 0; J < dim; ++J)
                       {
-                        const unsigned int K0 = (0 == J) ? 1 : 0;
-                        for(unsigned int K = K0; K < dim; ++K)
-                          output[q][i][j][k] += data.covariant[q][j][J]
-                                                * data.covariant[q][k][K]
-                                                * input[q][i][J][K];
+                        const unsigned int K0= (0 == J) ? 1 : 0;
+                        for(unsigned int K= K0; K < dim; ++K)
+                          output[q][i][j][k]+= data.covariant[q][j][J]
+                                               * data.covariant[q][k][K]
+                                               * input[q][i][J][K];
                       }
                   }
           return;
@@ -2063,7 +2059,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
 {
   Point<spacedim> p_real;
 
-  for(unsigned int i = 0; i < data.n_shape_functions; ++i)
+  for(unsigned int i= 0; i < data.n_shape_functions; ++i)
     {
       unsigned int comp_i
         = euler_dof_handler->get_fe().system_to_component_index(i).first;
@@ -2096,20 +2092,20 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       // mirror the conditions of the code below to determine if we need to
       // use an arbitrary starting point or if we just need to rethrow the
       // exception
-      for(unsigned int d = 0; d < dim; ++d)
-        initial_p_unit[d] = 0.5;
+      for(unsigned int d= 0; d < dim; ++d)
+        initial_p_unit[d]= 0.5;
     }
 
-  initial_p_unit = GeometryInfo<dim>::project_to_unit_cell(initial_p_unit);
+  initial_p_unit= GeometryInfo<dim>::project_to_unit_cell(initial_p_unit);
 
   // for (unsigned int d=0; d<dim; ++d)
   //   initial_p_unit[d] = 0.;
 
   const Quadrature<dim> point_quadrature(initial_p_unit);
 
-  UpdateFlags update_flags = update_quadrature_points | update_jacobians;
+  UpdateFlags update_flags= update_quadrature_points | update_jacobians;
   if(spacedim > dim)
-    update_flags |= update_jacobian_grads;
+    update_flags|= update_jacobian_grads;
   std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase> mdata(
     get_data(update_flags, point_quadrature));
   Assert(dynamic_cast<InternalData*>(mdata.get()) != nullptr,
@@ -2130,7 +2126,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
     const Point<dim>&                                           initial_p_unit,
     InternalData&                                               mdata) const
 {
-  const unsigned int n_shapes = mdata.shape_values.size();
+  const unsigned int n_shapes= mdata.shape_values.size();
   (void) n_shapes;
   Assert(n_shapes != 0, ExcInternalError());
   AssertDimension(mdata.shape_derivatives.size(), n_shapes);
@@ -2144,40 +2140,39 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   // of the mapping at this point are
   // previously computed.
   // f(x)
-  Point<dim> p_unit = initial_p_unit;
+  Point<dim> p_unit= initial_p_unit;
   Point<dim> f;
   compute_shapes_virtual(std::vector<Point<dim>>(1, p_unit), mdata);
   Point<spacedim>     p_real(do_transform_unit_to_real_cell(mdata));
-  Tensor<1, spacedim> p_minus_F              = p - p_real;
-  const double        eps                    = 1.e-12 * cell->diameter();
-  const unsigned int  newton_iteration_limit = 20;
-  unsigned int        newton_iteration       = 0;
+  Tensor<1, spacedim> p_minus_F             = p - p_real;
+  const double        eps                   = 1.e-12 * cell->diameter();
+  const unsigned int  newton_iteration_limit= 20;
+  unsigned int        newton_iteration      = 0;
   while(p_minus_F.norm_square() > eps * eps)
     {
       // f'(x)
       Point<spacedim> DF[dim];
       Tensor<2, dim>  df;
-      for(unsigned int k = 0; k < mdata.n_shape_functions; ++k)
+      for(unsigned int k= 0; k < mdata.n_shape_functions; ++k)
         {
-          const Tensor<1, dim>& grad_k = mdata.derivative(0, k);
+          const Tensor<1, dim>& grad_k= mdata.derivative(0, k);
           unsigned int          comp_k
             = euler_dof_handler->get_fe().system_to_component_index(k).first;
           if(fe_mask[comp_k])
-            for(unsigned int j = 0; j < dim; ++j)
-              DF[j][fe_to_real[comp_k]]
-                += mdata.local_dof_values[k] * grad_k[j];
+            for(unsigned int j= 0; j < dim; ++j)
+              DF[j][fe_to_real[comp_k]]+= mdata.local_dof_values[k] * grad_k[j];
         }
-      for(unsigned int j = 0; j < dim; ++j)
+      for(unsigned int j= 0; j < dim; ++j)
         {
-          f[j] = DF[j] * p_minus_F;
-          for(unsigned int l = 0; l < dim; ++l)
-            df[j][l] = -DF[j] * DF[l];
+          f[j]= DF[j] * p_minus_F;
+          for(unsigned int l= 0; l < dim; ++l)
+            df[j][l]= -DF[j] * DF[l];
         }
       // Solve  [f'(x)]d=f(x)
       const Tensor<1, dim> delta
         = invert(df) * static_cast<const Tensor<1, dim>&>(f);
       // do a line search
-      double step_length = 1;
+      double step_length= 1;
       do
         {
           // update of p_unit. The
@@ -2189,27 +2184,27 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
           // projecting the point to the
           // surface or curve identified
           // by the cell.
-          Point<dim> p_unit_trial = p_unit;
-          for(unsigned int i = 0; i < dim; ++i)
-            p_unit_trial[i] -= step_length * delta[i];
+          Point<dim> p_unit_trial= p_unit;
+          for(unsigned int i= 0; i < dim; ++i)
+            p_unit_trial[i]-= step_length * delta[i];
           // shape values and derivatives
           // at new p_unit point
           compute_shapes_virtual(std::vector<Point<dim>>(1, p_unit_trial),
                                  mdata);
           // f(x)
-          Point<spacedim> p_real_trial = do_transform_unit_to_real_cell(mdata);
-          const Tensor<1, spacedim> f_trial = p - p_real_trial;
+          Point<spacedim> p_real_trial= do_transform_unit_to_real_cell(mdata);
+          const Tensor<1, spacedim> f_trial= p - p_real_trial;
           // see if we are making progress with the current step length
           // and if not, reduce it by a factor of two and try again
           if(f_trial.norm() < p_minus_F.norm())
             {
-              p_real    = p_real_trial;
-              p_unit    = p_unit_trial;
-              p_minus_F = f_trial;
+              p_real   = p_real_trial;
+              p_unit   = p_unit_trial;
+              p_minus_F= f_trial;
               break;
             }
           else if(step_length > 0.05)
-            step_length /= 2;
+            step_length/= 2;
           else
             goto failure;
         }
@@ -2269,8 +2264,8 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::update_internal_dofs(
 
   dof_cell->get_dof_indices(data.local_dof_indices);
 
-  for(unsigned int i = 0; i < data.local_dof_values.size(); ++i)
-    data.local_dof_values[i] = internal::ElementAccess<VectorType>::get(
+  for(unsigned int i= 0; i < data.local_dof_values.size(); ++i)
+    data.local_dof_values[i]= internal::ElementAccess<VectorType>::get(
       *euler_vector, data.local_dof_indices[i]);
 }
 

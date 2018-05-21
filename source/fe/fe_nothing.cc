@@ -24,7 +24,7 @@ namespace internal
   {
     namespace
     {
-      const char* zero_dof_message = "This element has no shape functions.";
+      const char* zero_dof_message= "This element has no shape functions.";
     }
   } // namespace FE_Nothing
 } // namespace internal

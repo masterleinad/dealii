@@ -43,19 +43,19 @@ check()
 {
   Triangulation<dim>        triangulation;
   std::vector<unsigned int> subdivisions(dim, 1U);
-  subdivisions[0] = 2;
+  subdivisions[0]= 2;
   Point<dim> p1, p2;
   switch(dim)
     {
       case 2:
-        p1[0] = p1[1] = 0.0;
-        p2[0]         = 2.0;
-        p2[1]         = 1.0;
+        p1[0]= p1[1]= 0.0;
+        p2[0]       = 2.0;
+        p2[1]       = 1.0;
         break;
       case 3:
-        p1[0] = p1[1] = p1[2] = 0.0;
-        p2[0]                 = 2.0;
-        p2[1] = p2[2] = 1.0;
+        p1[0]= p1[1]= p1[2]= 0.0;
+        p2[0]              = 2.0;
+        p2[1]= p2[2]= 1.0;
         break;
       default:
         Assert(false, ExcNotImplemented());
@@ -91,20 +91,20 @@ check()
   Table<2, DoFTools::Coupling> face_coupling(fe_collection.n_components(),
                                              fe_collection.n_components());
 
-  for(unsigned int c = 0; c < fe_collection.n_components(); ++c)
-    for(unsigned int d = 0; d < fe_collection.n_components(); ++d)
+  for(unsigned int c= 0; c < fe_collection.n_components(); ++c)
+    for(unsigned int d= 0; d < fe_collection.n_components(); ++d)
       {
         // RT-RT, RT-DGQ and DGQ-RT
         if((c < dim + 1 && d < dim + 1) && !((c == dim) && (d == dim)))
-          cell_coupling[c][d] = DoFTools::always;
+          cell_coupling[c][d]= DoFTools::always;
 
         // Q-Q
         if(c >= dim + 1 && d >= dim + 1)
-          cell_coupling[c][d] = DoFTools::always;
+          cell_coupling[c][d]= DoFTools::always;
 
         // RT-Q
         if(c < dim && d >= dim + 1)
-          face_coupling[c][d] = DoFTools::always;
+          face_coupling[c][d]= DoFTools::always;
       }
 
   DoFTools::make_flux_sparsity_pattern(

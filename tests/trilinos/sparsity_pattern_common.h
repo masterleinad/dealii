@@ -19,7 +19,7 @@
 #include "../tests.h"
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 
-const unsigned int N = 15;
+const unsigned int N= 15;
 
 // reinitialize sparsity patterns for 5-point star
 void
@@ -47,7 +47,7 @@ row_length()
   TrilinosWrappers::SparsityPattern sparsity_pattern;
   build_sparsity(sparsity_pattern);
 
-  for(unsigned int i = 0; i < sparsity_pattern.n_rows(); ++i)
+  for(unsigned int i= 0; i < sparsity_pattern.n_rows(); ++i)
     deallog << sparsity_pattern.row_length(i) << std::endl;
 
   deallog << "OK" << std::endl;

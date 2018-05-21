@@ -27,13 +27,13 @@ test()
   sp.add(3, 3);
   sp.compress();
 
-  DynamicSparsityPattern::const_iterator i = sp.begin();
+  DynamicSparsityPattern::const_iterator i= sp.begin();
   for(; i != sp.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 
   deallog << "OK" << std::endl;
 
-  i = sp.begin(1);
+  i= sp.begin(1);
   deallog << i->row() << ' ' << i->column() << std::endl;
   deallog << "OK" << std::endl;
 }

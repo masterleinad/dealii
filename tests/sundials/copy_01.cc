@@ -37,10 +37,10 @@ main(int argc, char** argv)
     = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   // give the zeroth process 1 dof, the first 2, etc
-  const types::global_dof_index n_local_dofs = 1 + current_process;
+  const types::global_dof_index n_local_dofs= 1 + current_process;
   const types::global_dof_index begin_dof
     = (current_process * (current_process + 1)) / 2;
-  const types::global_dof_index end_dof = begin_dof + n_local_dofs;
+  const types::global_dof_index end_dof= begin_dof + n_local_dofs;
 
   const types::global_dof_index n_global_dofs
     = ((n_processes - 1) * (n_processes)) / 2 + n_processes;
@@ -52,10 +52,10 @@ main(int argc, char** argv)
   PETScWrappers::MPI::Vector vec(local_dofs, MPI_COMM_WORLD);
   for(const types::global_dof_index local_dof : local_dofs)
     {
-      vec[local_dof] = 2 * local_dof - current_process;
+      vec[local_dof]= 2 * local_dof - current_process;
     }
   vec.compress(VectorOperation::insert);
-  const std::size_t n_dofs = vec.size();
+  const std::size_t n_dofs= vec.size();
 
   N_Vector sundials_vector
     = N_VNew_Parallel(MPI_COMM_WORLD, n_local_dofs, n_dofs);

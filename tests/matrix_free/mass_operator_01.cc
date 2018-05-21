@@ -51,9 +51,9 @@ test()
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
-  cell                                                   = tria.begin_active();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
+  cell                                                  = tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->is_locally_owned())
       if(cell->center().norm() < 0.2)
@@ -68,11 +68,11 @@ test()
   if(tria.last()->is_locally_owned())
     tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  cell= tria.begin_active();
+  for(unsigned int i= 0; i < 10 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      unsigned int counter = 0;
+      cell                = tria.begin_active();
+      unsigned int counter= 0;
       for(; cell != endc; ++cell, ++counter)
         if(cell->is_locally_owned())
           if(counter % (7 - i) == 0)
@@ -84,7 +84,7 @@ test()
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
-  IndexSet owned_set = dof.locally_owned_dofs();
+  IndexSet owned_set= dof.locally_owned_dofs();
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dof, relevant_set);
 
@@ -104,8 +104,8 @@ test()
   {
     const QGauss<1>                                  quad(fe_degree + 2);
     typename MatrixFree<dim, number>::AdditionalData data;
-    data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.tasks_block_size      = 7;
+    data.tasks_parallel_scheme= MatrixFree<dim, number>::AdditionalData::none;
+    data.tasks_block_size     = 7;
     mf_data->reinit(dof, constraints, quad, data);
   }
 
@@ -122,12 +122,12 @@ test()
   out.reinit(in);
   ref.reinit(in);
 
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for(unsigned int i= 0; i < in.local_size(); ++i)
     {
-      const unsigned int glob_index = owned_set.nth_index_in_set(i);
+      const unsigned int glob_index= owned_set.nth_index_in_set(i);
       if(constraints.is_constrained(glob_index))
         continue;
-      in.local_element(i) = random_value<double>();
+      in.local_element(i)= random_value<double>();
     }
 
   mf.vmult(out, in);
@@ -154,27 +154,27 @@ test()
                             update_values | update_gradients
                               | update_JxW_values);
 
-    const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
-                                                   endc = dof.end();
+    typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active(),
+                                                   endc= dof.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
-          cell_matrix = 0;
+          cell_matrix= 0;
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                  cell_matrix(i, j) += (fe_values.shape_value(i, q_point)
-                                        * fe_values.shape_value(j, q_point))
-                                       * fe_values.JxW(q_point);
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                  cell_matrix(i, j)+= (fe_values.shape_value(i, q_point)
+                                       * fe_values.shape_value(j, q_point))
+                                      * fe_values.JxW(q_point);
               }
 
           cell->get_dof_indices(local_dof_indices);
@@ -185,8 +185,8 @@ test()
   sparse_matrix.compress(VectorOperation::add);
 
   sparse_matrix.vmult(ref, in);
-  out -= ref;
-  const double diff_norm = out.linfty_norm();
+  out-= ref;
+  const double diff_norm= out.linfty_norm();
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
@@ -197,7 +197,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

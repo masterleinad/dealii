@@ -61,16 +61,16 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
   if(!cells)
     return;
-  for(unsigned int k = 0; k < info.n_matrices(); ++k)
+  for(unsigned int k= 0; k < info.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info.matrix(k).row;
-      const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      const unsigned int  block_row= info.matrix(k).row;
+      const unsigned int  block_col= info.matrix(k).column;
+      FullMatrix<double>& M1       = info.matrix(k).matrix;
       if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+        for(unsigned int i= 0; i < M1.m(); ++i)
+          for(unsigned int j= 0; j < M1.n(); ++j)
             {
-              M1(i, j) = 10.;
+              M1(i, j)= 10.;
             }
     }
 }
@@ -81,16 +81,16 @@ Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
   if(!faces)
     return;
-  for(unsigned int k = 0; k < info.n_matrices(); ++k)
+  for(unsigned int k= 0; k < info.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info.matrix(k).row;
-      const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      const unsigned int  block_row= info.matrix(k).row;
+      const unsigned int  block_col= info.matrix(k).column;
+      FullMatrix<double>& M1       = info.matrix(k).matrix;
       if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+        for(unsigned int i= 0; i < M1.m(); ++i)
+          for(unsigned int j= 0; j < M1.n(); ++j)
             {
-              M1(i, j) = 1.;
+              M1(i, j)= 1.;
             }
     }
 }
@@ -104,19 +104,19 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
 {
   if(!faces)
     return;
-  for(unsigned int k = 0; k < info1.n_matrices(); ++k)
+  for(unsigned int k= 0; k < info1.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info1.matrix(k).row;
-      const unsigned int  block_col = info1.matrix(k).column;
-      FullMatrix<double>& M1        = info1.matrix(k).matrix;
+      const unsigned int  block_row= info1.matrix(k).row;
+      const unsigned int  block_col= info1.matrix(k).column;
+      FullMatrix<double>& M1       = info1.matrix(k).matrix;
       if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+        for(unsigned int i= 0; i < M1.m(); ++i)
+          for(unsigned int j= 0; j < M1.n(); ++j)
             {
-              info1.matrix(k, false).matrix(i, j) = 1.;
-              info2.matrix(k, false).matrix(i, j) = 1.;
-              info1.matrix(k, true).matrix(i, j)  = -1.;
-              info2.matrix(k, true).matrix(i, j)  = -1.;
+              info1.matrix(k, false).matrix(i, j)= 1.;
+              info2.matrix(k, false).matrix(i, j)= 1.;
+              info1.matrix(k, true).matrix(i, j) = -1.;
+              info2.matrix(k, true).matrix(i, j) = -1.;
             }
     }
 }
@@ -128,7 +128,7 @@ test_simple(DoFHandler<dim>& dofs, bool faces)
   SparsityPattern      pattern;
   SparseMatrix<double> matrix;
 
-  const FiniteElement<dim>& fe = dofs.get_fe();
+  const FiniteElement<dim>& fe= dofs.get_fe();
   pattern.reinit(dofs.n_dofs(),
                  dofs.n_dofs(),
                  (GeometryInfo<dim>::faces_per_cell
@@ -140,8 +140,8 @@ test_simple(DoFHandler<dim>& dofs, bool faces)
   matrix.reinit(pattern);
 
   Local<dim> local;
-  local.cells = true;
-  local.faces = faces;
+  local.cells= true;
+  local.faces= faces;
 
   MappingQGeneric<dim> mapping(1);
 
@@ -156,8 +156,8 @@ test_simple(DoFHandler<dim>& dofs, bool faces)
   assembler.initialize(matrix);
 
   MeshWorker::LoopControl lctrl;
-  lctrl.cells_first = true;
-  lctrl.own_faces   = MeshWorker::LoopControl::one;
+  lctrl.cells_first= true;
+  lctrl.own_faces  = MeshWorker::LoopControl::one;
   MeshWorker::loop<dim,
                    dim,
                    MeshWorker::DoFInfo<dim>,
@@ -196,12 +196,12 @@ test(const FiniteElement<dim>& fe)
   // tr.execute_coarsening_and_refinement();
   //  tr.refine_global(1);
   deallog << "Triangulation levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << tr.n_cells(l);
   deallog << std::endl;
 
-  unsigned int cn = 0;
-  for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
+  unsigned int cn= 0;
+  for(typename Triangulation<dim>::cell_iterator cell= tr.begin();
       cell != tr.end();
       ++cell, ++cn)
     cell->set_user_index(cn);
@@ -219,7 +219,7 @@ test(const FiniteElement<dim>& fe)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 
@@ -231,6 +231,6 @@ main()
   fe2.push_back(&q1);
   fe2.push_back(&sys1);
 
-  for(unsigned int i = 0; i < fe2.size(); ++i)
+  for(unsigned int i= 0; i < fe2.size(); ++i)
     test(*fe2[i]);
 }

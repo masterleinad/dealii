@@ -28,14 +28,14 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
-  types::global_dof_index min_index  = 0xffffffffU - 39;
-  types::global_dof_index local_size = 42;
+  types::global_dof_index min_index = 0xffffffffU - 39;
+  types::global_dof_index local_size= 42;
   IndexSet                local_owned(min_index + numproc * local_size);
   local_owned.add_range(min_index + myid * local_size,
                         min_index + (myid + 1) * local_size);
@@ -43,7 +43,7 @@ test()
   // all processors ghost some entries around invalid_unsigned_int and on the
   // border between two processors
   IndexSet local_relevant(local_owned.size());
-  local_relevant = local_owned;
+  local_relevant= local_owned;
   local_relevant.add_range(min_index + 38, min_index + 40);
   local_relevant.add_range(min_index + 41, min_index + 43);
 
@@ -54,10 +54,10 @@ test()
           << v.local_range().second << std::endl;
 
   // set local values
-  for(types::global_dof_index i = min_index + myid * local_size;
+  for(types::global_dof_index i= min_index + myid * local_size;
       i < min_index + (myid + 1) * local_size;
       ++i)
-    v(i) = (double) i;
+    v(i)= (double) i;
 
   deallog << "vector norm: " << v.l2_norm() << std::endl;
 
@@ -70,10 +70,10 @@ test()
   Assert(v(min_index + 38) == min_index + 38, ExcInternalError());
 
   v.zero_out_ghosts();
-  v(min_index + 38) = min_index;
-  v(min_index + 39) = min_index * 2;
-  v(min_index + 41) = min_index + 7;
-  v(min_index + 42) = -static_cast<double>(min_index);
+  v(min_index + 38)= min_index;
+  v(min_index + 39)= min_index * 2;
+  v(min_index + 41)= min_index + 7;
+  v(min_index + 42)= -static_cast<double>(min_index);
   v.compress(VectorOperation::add);
   v.update_ghost_values();
   deallog << "v(38) = " << v(min_index + 38) << std::endl;
@@ -90,7 +90,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

@@ -27,8 +27,8 @@ test(TrilinosWrappers::SparseMatrix& m)
   TrilinosWrappers::SparseMatrix m2(m.m(), m.n(), m.m() / 3 + 1);
 
   // first set a few entries one-by-one
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           m.set(i, j, i * j * .5 + .5);
@@ -42,25 +42,25 @@ test(TrilinosWrappers::SparseMatrix& m)
   {
     std::vector<types::global_dof_index> col_indices(m.n() / 3 + 1);
     std::vector<double>                  col_values(m.n() / 3 + 1);
-    for(unsigned int i = 0; i < m.m(); ++i)
+    for(unsigned int i= 0; i < m.m(); ++i)
       {
-        unsigned int col_index = 0;
+        unsigned int col_index= 0;
         // count the number of elements in this
         // row
-        for(unsigned int j = 0; j < m.n(); ++j)
+        for(unsigned int j= 0; j < m.n(); ++j)
           if((i + 2 * j + 1) % 3 == 0)
             ++col_index;
 
         col_indices.resize(col_index);
         col_values.resize(col_index);
-        col_index = 0;
+        col_index= 0;
 
         // extract column values
-        for(unsigned int j = 0; j < m.n(); ++j)
+        for(unsigned int j= 0; j < m.n(); ++j)
           if((i + 2 * j + 1) % 3 == 0)
             {
-              col_indices[col_index] = j;
-              col_values[col_index]  = i * j * .5 + .5;
+              col_indices[col_index]= j;
+              col_values[col_index] = i * j * .5 + .5;
               col_index++;
             }
 
@@ -76,7 +76,7 @@ test(TrilinosWrappers::SparseMatrix& m)
   // calculate the Frobenius norm of the
   // matrix in order to check whether all
   // elements really are zero
-  double norm = m2.frobenius_norm();
+  double norm= m2.frobenius_norm();
   AssertThrow(norm == 0, ExcInternalError());
 
   deallog << "OK" << std::endl;

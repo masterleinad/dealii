@@ -46,10 +46,10 @@ main()
   // no constraints in 1d, but we had
   // the matrices precomputed up to
   // Q4 for 2d and Q2 for 3d
-  for(unsigned int degree = 1; degree <= 4; ++degree)
+  for(unsigned int degree= 1; degree <= 4; ++degree)
     test<2>(degree);
 
-  for(unsigned int degree = 1; degree <= 2; ++degree)
+  for(unsigned int degree= 1; degree <= 2; ++degree)
     test<3>(degree);
 
   return 0;

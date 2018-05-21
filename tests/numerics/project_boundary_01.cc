@@ -44,7 +44,7 @@ public:
   void
   set_scaling(const double scaling)
   {
-    this->scaling = scaling;
+    this->scaling= scaling;
   }
 
   virtual double
@@ -56,8 +56,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    for(unsigned int d = 0; d < this->n_components; ++d)
-      values(d) = value(p, d);
+    for(unsigned int d= 0; d < this->n_components; ++d)
+      values(d)= value(p, d);
   }
 
 private:
@@ -75,14 +75,14 @@ boundary_q(const DoFHandler<dim>&)
 const Quadrature<0>&
 boundary_q(const DoFHandler<1>&)
 {
-  static const Quadrature<0>* q = nullptr;
+  static const Quadrature<0>* q= nullptr;
   return *q;
 }
 
 void
 write_map(const std::map<types::global_dof_index, double>& bv)
 {
-  for(std::map<types::global_dof_index, double>::const_iterator i = bv.begin();
+  for(std::map<types::global_dof_index, double>::const_iterator i= bv.begin();
       i != bv.end();
       ++i)
     // also output log of value to also display small numbers
@@ -130,22 +130,22 @@ check()
   function_list.push_back(new MySquareFunction<dim>(1));
 
   // test four different cases for the parameter: 1, 1e-20, 1e-170, 1e-800 (= 0)
-  double factors[] = {1., 1e-40, 1e-170, 1e-800};
-  for(unsigned int it = 0; it < 4; ++it)
+  double factors[]= {1., 1e-40, 1e-170, 1e-800};
+  for(unsigned int it= 0; it < 4; ++it)
     {
       deallog.push(Utilities::int_to_string(it, 1));
 
       // check all of them
-      for(unsigned int i = 0; i < fe_list.size(); ++i)
+      for(unsigned int i= 0; i < fe_list.size(); ++i)
         {
           function_list[i]->set_scaling(factors[it]);
-          const FiniteElement<dim>& fe = *fe_list[i];
+          const FiniteElement<dim>& fe= *fe_list[i];
 
           DoFHandler<dim> dof(tr);
           dof.distribute_dofs(fe);
 
           typename FunctionMap<dim>::type function_map;
-          function_map[0] = function_list[i];
+          function_map[0]= function_list[i];
 
           // interpolate boundary values
           deallog << "Interpolated boundary values" << std::endl;
@@ -164,7 +164,7 @@ check()
     }
 
   // delete objects now no more needed
-  for(unsigned int i = 0; i < fe_list.size(); ++i)
+  for(unsigned int i= 0; i < fe_list.size(); ++i)
     {
       delete fe_list[i];
       delete function_list[i];

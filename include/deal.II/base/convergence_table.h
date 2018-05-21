@@ -63,7 +63,7 @@ public:
   /**
    * Constructor.
    */
-  ConvergenceTable() = default;
+  ConvergenceTable()= default;
 
   /**
    * Rate in relation to the rows.
@@ -131,7 +131,7 @@ public:
   evaluate_convergence_rates(const std::string& data_column_key,
                              const std::string& reference_column_key,
                              const RateMode     rate_mode,
-                             const unsigned int dim = 2);
+                             const unsigned int dim= 2);
 
   /**
    * Evaluate the convergence rates of the data column

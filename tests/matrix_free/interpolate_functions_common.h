@@ -46,8 +46,8 @@ class CompareFunction;
 
 template <int dim,
           int fe_degree,
-          int n_q_points_1d = fe_degree + 1,
-          typename Number   = double>
+          int n_q_points_1d= fe_degree + 1,
+          typename Number  = double>
 class MatrixFreeTest
 {
 public:
@@ -72,28 +72,28 @@ public:
 
     CompareFunction<dim> function;
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(src);
         fe_eval.evaluate(true, true, true);
 
-        for(unsigned int j = 0; j < data.n_components_filled(cell); ++j)
-          for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for(unsigned int j= 0; j < data.n_components_filled(cell); ++j)
+          for(unsigned int q= 0; q < fe_eval.n_q_points; ++q)
             {
               ++cell_times;
               Point<dim> p;
-              for(unsigned int d = 0; d < dim; ++d)
-                p[d] = fe_eval.quadrature_point(q)[d][j];
+              for(unsigned int d= 0; d < dim; ++d)
+                p[d]= fe_eval.quadrature_point(q)[d][j];
               cell_errors[0]
                 += std::abs(fe_eval.get_value(q)[j] - function.value(p, 0));
-              for(unsigned int d = 0; d < dim; ++d)
-                cell_errors[1] += std::abs(fe_eval.get_gradient(q)[d][j]
-                                           - function.gradient(p, 0)[d]);
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
-                  cell_errors[2] += std::abs(fe_eval.get_hessian(q)[d][e][j]
-                                             - function.hessian(p, 0)[d][e]);
+              for(unsigned int d= 0; d < dim; ++d)
+                cell_errors[1]+= std::abs(fe_eval.get_gradient(q)[d][j]
+                                          - function.gradient(p, 0)[d]);
+              for(unsigned int d= 0; d < dim; ++d)
+                for(unsigned int e= 0; e < dim; ++e)
+                  cell_errors[2]+= std::abs(fe_eval.get_hessian(q)[d][e][j]
+                                            - function.hessian(p, 0)[d][e]);
             }
       }
   }
@@ -111,7 +111,7 @@ public:
 
     CompareFunction<dim> function;
 
-    for(unsigned int face = face_range.first; face < face_range.second; ++face)
+    for(unsigned int face= face_range.first; face < face_range.second; ++face)
       {
         fe_evalm.reinit(face);
         fe_evalm.read_dof_values(src);
@@ -120,41 +120,41 @@ public:
         fe_evalp.read_dof_values(src);
         fe_evalp.evaluate(true, true);
 
-        for(unsigned int j = 0; j < VectorizedArray<Number>::n_array_elements;
+        for(unsigned int j= 0; j < VectorizedArray<Number>::n_array_elements;
             ++j)
           {
             // skip empty components in VectorizedArray
             if(data.get_face_info(face).cells_interior[j]
                == numbers::invalid_unsigned_int)
               break;
-            for(unsigned int q = 0; q < fe_evalm.n_q_points; ++q)
+            for(unsigned int q= 0; q < fe_evalm.n_q_points; ++q)
               {
                 ++facem_times;
                 ++facep_times;
                 Point<dim> p;
-                for(unsigned int d = 0; d < dim; ++d)
-                  p[d] = fe_evalm.quadrature_point(q)[d][j];
+                for(unsigned int d= 0; d < dim; ++d)
+                  p[d]= fe_evalm.quadrature_point(q)[d][j];
                 facem_errors[0]
                   += std::abs(fe_evalm.get_value(q)[j] - function.value(p, 0));
-                for(unsigned int d = 0; d < dim; ++d)
+                for(unsigned int d= 0; d < dim; ++d)
                   {
                     //std::cout << fe_evalm.get_gradient(q)[d][j] << " ";
-                    facem_errors[1] += std::abs(fe_evalm.get_gradient(q)[d][j]
-                                                - function.gradient(p, 0)[d]);
+                    facem_errors[1]+= std::abs(fe_evalm.get_gradient(q)[d][j]
+                                               - function.gradient(p, 0)[d]);
                   }
-                double normal_derivative = 0;
-                for(unsigned int d = 0; d < dim; ++d)
-                  normal_derivative += function.gradient(p, 0)[d]
-                                       * fe_evalm.get_normal_vector(q)[d][j];
-                facem_errors[3] += std::abs(fe_evalm.get_normal_derivative(q)[j]
-                                            - normal_derivative);
+                double normal_derivative= 0;
+                for(unsigned int d= 0; d < dim; ++d)
+                  normal_derivative+= function.gradient(p, 0)[d]
+                                      * fe_evalm.get_normal_vector(q)[d][j];
+                facem_errors[3]+= std::abs(fe_evalm.get_normal_derivative(q)[j]
+                                           - normal_derivative);
                 facep_errors[0]
                   += std::abs(fe_evalp.get_value(q)[j] - function.value(p, 0));
-                for(unsigned int d = 0; d < dim; ++d)
-                  facep_errors[1] += std::abs(fe_evalp.get_gradient(q)[d][j]
-                                              - function.gradient(p, 0)[d]);
-                facep_errors[3] += std::abs(fe_evalp.get_normal_derivative(q)[j]
-                                            - normal_derivative);
+                for(unsigned int d= 0; d < dim; ++d)
+                  facep_errors[1]+= std::abs(fe_evalp.get_gradient(q)[d][j]
+                                             - function.gradient(p, 0)[d]);
+                facep_errors[3]+= std::abs(fe_evalp.get_normal_derivative(q)[j]
+                                           - normal_derivative);
                 // hessians not currently implemented in FEFaceEvaluation
                 //for (unsigned int d=0; d<dim; ++d)
                 //  for (unsigned int e=0; e<dim; ++e)
@@ -177,35 +177,35 @@ public:
 
     CompareFunction<dim> function;
 
-    for(unsigned int face = face_range.first; face < face_range.second; ++face)
+    for(unsigned int face= face_range.first; face < face_range.second; ++face)
       {
         fe_evalm.reinit(face);
         fe_evalm.read_dof_values(src);
         fe_evalm.evaluate(true, true);
 
-        for(unsigned int j = 0; j < VectorizedArray<Number>::n_array_elements;
+        for(unsigned int j= 0; j < VectorizedArray<Number>::n_array_elements;
             ++j)
           {
             // skip empty components in VectorizedArray
             if(data.get_face_info(face).cells_interior[j]
                == numbers::invalid_unsigned_int)
               break;
-            for(unsigned int q = 0; q < fe_evalm.n_q_points; ++q)
+            for(unsigned int q= 0; q < fe_evalm.n_q_points; ++q)
               {
                 ++boundary_times;
                 Point<dim> p;
-                for(unsigned int d = 0; d < dim; ++d)
-                  p[d] = fe_evalm.quadrature_point(q)[d][j];
+                for(unsigned int d= 0; d < dim; ++d)
+                  p[d]= fe_evalm.quadrature_point(q)[d][j];
                 boundary_errors[0]
                   += std::abs(fe_evalm.get_value(q)[j] - function.value(p, 0));
-                for(unsigned int d = 0; d < dim; ++d)
-                  boundary_errors[1] += std::abs(fe_evalm.get_gradient(q)[d][j]
-                                                 - function.gradient(p, 0)[d]);
-                double normal_derivative = 0;
-                for(unsigned int d = 0; d < dim; ++d)
-                  normal_derivative += function.gradient(p, 0)[d]
-                                       * fe_evalm.get_normal_vector(q)[d][j];
-                boundary_errors[3] += std::abs(
+                for(unsigned int d= 0; d < dim; ++d)
+                  boundary_errors[1]+= std::abs(fe_evalm.get_gradient(q)[d][j]
+                                                - function.gradient(p, 0)[d]);
+                double normal_derivative= 0;
+                for(unsigned int d= 0; d < dim; ++d)
+                  normal_derivative+= function.gradient(p, 0)[d]
+                                      * fe_evalm.get_normal_vector(q)[d][j];
+                boundary_errors[3]+= std::abs(
                   fe_evalm.get_normal_derivative(q)[j] - normal_derivative);
                 // hessians not currently implemented in FEFaceEvaluation
                 //for (unsigned int d=0; d<dim; ++d)
@@ -220,14 +220,14 @@ public:
   void
   test_functions(const Vector<Number>& src) const
   {
-    for(unsigned int i = 0; i < 4; ++i)
+    for(unsigned int i= 0; i < 4; ++i)
       {
-        cell_errors[i]     = 0;
-        facem_errors[i]    = 0;
-        facep_errors[i]    = 0;
-        boundary_errors[i] = 0;
+        cell_errors[i]    = 0;
+        facem_errors[i]   = 0;
+        facep_errors[i]   = 0;
+        boundary_errors[i]= 0;
       }
-    cell_times = facem_times = facep_times = boundary_times = 0;
+    cell_times= facem_times= facep_times= boundary_times= 0;
 
     Vector<Number> dst_dummy;
     data.loop(&MatrixFreeTest::cell,
@@ -238,16 +238,16 @@ public:
               src);
 
     if(std::is_same<Number, float>::value)
-      for(unsigned int i = 0; i < 4; ++i)
+      for(unsigned int i= 0; i < 4; ++i)
         {
           if(cell_errors[i] / cell_times < 1e-5)
-            cell_errors[i] = 0;
+            cell_errors[i]= 0;
           if(facem_errors[i] / cell_times < 1e-5)
-            facem_errors[i] = 0;
+            facem_errors[i]= 0;
           if(facep_errors[i] / cell_times < 1e-5)
-            facep_errors[i] = 0;
+            facep_errors[i]= 0;
           if(boundary_errors[i] / cell_times < 1e-5)
-            boundary_errors[i] = 0;
+            boundary_errors[i]= 0;
         }
     deallog << "Error cell values:      " << cell_errors[0] / cell_times
             << std::endl;
@@ -306,7 +306,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   {
     const QGauss<1> quad(dof.get_fe().degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
-    data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
+    data.tasks_parallel_scheme= MatrixFree<dim, number>::AdditionalData::none;
     data.mapping_update_flags
       = update_gradients | update_second_derivatives | update_quadrature_points;
     data.mapping_update_flags_boundary_faces

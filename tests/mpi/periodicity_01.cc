@@ -136,20 +136,20 @@ namespace Step40
   {
     dof_handler.distribute_dofs(fe);
 
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
     locally_relevant_solution.reinit(
       locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
     system_rhs.reinit(mpi_communicator,
                       dof_handler.n_dofs(),
                       dof_handler.n_locally_owned_dofs());
-    system_rhs = 0;
+    system_rhs= 0;
 
     //Periodic Conditions
     constraints.clear();
     constraints.reinit(locally_relevant_dofs);
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
-    for(int i = 1; i < dim; ++i)
+    for(int i= 1; i < dim; ++i)
       DoFTools::make_periodicity_constraints(dof_handler,
                                              /*b_id1*/ 2 * i,
                                              /*b_id2*/ 2 * i + 1,
@@ -186,8 +186,8 @@ namespace Step40
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<PetscScalar> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<PetscScalar>     cell_rhs(dofs_per_cell);
@@ -196,16 +196,16 @@ namespace Step40
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
-          cell_matrix = PetscScalar();
-          cell_rhs    = PetscScalar();
+          cell_matrix= PetscScalar();
+          cell_rhs   = PetscScalar();
 
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
             {
               PetscScalar rhs_value
                 = (std::cos(2 * numbers::PI
@@ -221,15 +221,15 @@ namespace Step40
                               * fe_values.quadrature_point(q_point)[2])
                      * std::exp(-3 * fe_values.quadrature_point(q_point)[2]);
 
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                    cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                          * fe_values.shape_grad(j, q_point)
-                                          * fe_values.JxW(q_point));
+                  for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                    cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                         * fe_values.shape_grad(j, q_point)
+                                         * fe_values.JxW(q_point));
 
-                  cell_rhs(i) += (rhs_value * fe_values.shape_value(i, q_point)
-                                  * fe_values.JxW(q_point));
+                  cell_rhs(i)+= (rhs_value * fe_values.shape_value(i, q_point)
+                                 * fe_values.JxW(q_point));
                 }
             }
 
@@ -278,7 +278,7 @@ namespace Step40
 
     constraints.distribute(completely_distributed_solution);
 
-    locally_relevant_solution = completely_distributed_solution;
+    locally_relevant_solution= completely_distributed_solution;
   }
 
   template <int dim>
@@ -312,8 +312,8 @@ namespace Step40
 
     std::vector<double> tmp(value.size());
     std::vector<double> tmp2(value.size());
-    for(unsigned int i = 0; i < value.size(); ++i)
-      tmp[i] = get_real_assert_zero_imag(value[i]);
+    for(unsigned int i= 0; i < value.size(); ++i)
+      tmp[i]= get_real_assert_zero_imag(value[i]);
 
     MPI_Reduce(&(tmp[0]),
                &(tmp2[0]),
@@ -323,8 +323,8 @@ namespace Step40
                proc,
                mpi_communicator);
 
-    for(unsigned int i = 0; i < value.size(); ++i)
-      value[i] = tmp2[i];
+    for(unsigned int i= 0; i < value.size(); ++i)
+      value[i]= tmp2[i];
   }
 
   template <int dim>
@@ -336,24 +336,24 @@ namespace Step40
   void
   LaplaceProblem<2>::check_periodicity(const unsigned int cycle) const
   {
-    unsigned int n_points = 2;
-    for(unsigned int i = 0; i < cycle; i++)
-      n_points *= 2;
+    unsigned int n_points= 2;
+    for(unsigned int i= 0; i < cycle; i++)
+      n_points*= 2;
 
     //don't test exactly at the support points, since point_value is not stable there
-    const double eps = 1. / (16. * n_points);
+    const double eps= 1. / (16. * n_points);
 
-    for(unsigned int i = 1; i < n_points; i++)
+    for(unsigned int i= 1; i < n_points; i++)
       {
         Vector<PetscScalar> value1(1);
         Vector<PetscScalar> value2(1);
 
         Point<2> point1;
-        point1(0) = 1. * i / n_points + eps;
-        point1(1) = 0.;
+        point1(0)= 1. * i / n_points + eps;
+        point1(1)= 0.;
         Point<2> point2;
-        point2(0) = 1. * i / n_points + eps;
-        point2(1) = 1.;
+        point2(0)= 1. * i / n_points + eps;
+        point2(1)= 1.;
 
         get_point_value(point1, 0, value1);
         get_point_value(point2, 0, value2);
@@ -381,15 +381,15 @@ namespace Step40
   void
   LaplaceProblem<3>::check_periodicity(const unsigned int cycle) const
   {
-    unsigned int n_points = 2;
-    for(unsigned int i = 0; i < cycle; i++)
-      n_points *= 2;
+    unsigned int n_points= 2;
+    for(unsigned int i= 0; i < cycle; i++)
+      n_points*= 2;
 
     //don't test exactly at the support points, since point_value is not stable there
-    const double eps = 1. / (16. * n_points);
+    const double eps= 1. / (16. * n_points);
 
-    for(unsigned int i = 1; i < n_points; i++)
-      for(unsigned int j = 1; j < n_points; j++)
+    for(unsigned int i= 1; i < n_points; i++)
+      for(unsigned int j= 1; j < n_points; j++)
         {
           Vector<PetscScalar> value1(1);
           Vector<PetscScalar> value2(1);
@@ -397,21 +397,21 @@ namespace Step40
           Vector<PetscScalar> value4(1);
 
           Point<3> point1;
-          point1(0) = 1. * i / n_points + eps;
-          point1(1) = 1. * j / n_points + eps;
-          point1(2) = 0;
+          point1(0)= 1. * i / n_points + eps;
+          point1(1)= 1. * j / n_points + eps;
+          point1(2)= 0;
           Point<3> point2;
-          point2(0) = 1. * i / n_points + eps;
-          point2(1) = 1. * j / n_points + eps;
-          point2(2) = 1.;
+          point2(0)= 1. * i / n_points + eps;
+          point2(1)= 1. * j / n_points + eps;
+          point2(2)= 1.;
           Point<3> point3;
-          point3(0) = 1. * i / n_points + eps;
-          point3(1) = 0.;
-          point3(2) = 1. * j / n_points + eps;
+          point3(0)= 1. * i / n_points + eps;
+          point3(1)= 0.;
+          point3(2)= 1. * j / n_points + eps;
           Point<3> point4;
-          point4(0) = 1. * i / n_points + eps;
-          point4(1) = 1.;
-          point4(2) = 1. * j / n_points + eps;
+          point4(0)= 1. * i / n_points + eps;
+          point4(1)= 1.;
+          point4(2)= 1. * j / n_points + eps;
 
           get_point_value(point1, 0, value1);
           get_point_value(point2, 0, value2);
@@ -453,8 +453,8 @@ namespace Step40
     data_out.add_data_vector(locally_relevant_solution, "u");
 
     Vector<float> subdomain(triangulation.n_active_cells());
-    for(unsigned int i = 0; i < subdomain.size(); ++i)
-      subdomain(i) = triangulation.locally_owned_subdomain();
+    for(unsigned int i= 0; i < subdomain.size(); ++i)
+      subdomain(i)= triangulation.locally_owned_subdomain();
     data_out.add_data_vector(subdomain, "subdomain");
 
     data_out.build_patches(3);
@@ -469,7 +469,7 @@ namespace Step40
     if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
+        for(unsigned int i= 0;
             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
             ++i)
           filenames.push_back("solution-" + Utilities::int_to_string(cycle, 2)
@@ -486,8 +486,8 @@ namespace Step40
   {
     pcout << std::endl << "Testing for dim=" << dim << std::endl;
 
-    const unsigned int n_cycles = 3;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    const unsigned int n_cycles= 3;
+    for(unsigned int cycle= 0; cycle < n_cycles; ++cycle)
       {
         pcout << std::endl << "Cycle " << cycle << ':' << std::endl;
 
@@ -501,8 +501,8 @@ namespace Step40
 
             Point<dim> p1;
             Point<dim> p2;
-            for(unsigned int i = 0; i < dim; ++i)
-              p2(i) = 1.0;
+            for(unsigned int i= 0; i < dim; ++i)
+              p2(i)= 1.0;
 
             GridGenerator::subdivided_hyper_rectangle(
               triangulation, reps, p1, p2, true);
@@ -512,7 +512,7 @@ namespace Step40
                                             Triangulation<dim>::cell_iterator>>
               periodicity_vector;
 
-            for(int i = 1; i < dim; ++i)
+            for(int i= 1; i < dim; ++i)
               GridTools::collect_periodic_faces(triangulation,
                                                 /*b_id1*/ 2 * i,
                                                 /*b_id2*/ 2 * i + 1,

@@ -31,30 +31,30 @@ test(PETScWrappers::MatrixBase& m)
   Assert(m.n() != 0, ExcInternalError());
 
   // build a tri-diagonal pattern
-  double          norm_sqr = 0;
-  unsigned int    nnz      = 0;
-  const size_type N        = m.m();
-  for(size_type i = 0; i < N; ++i)
+  double          norm_sqr= 0;
+  unsigned int    nnz     = 0;
+  const size_type N       = m.m();
+  for(size_type i= 0; i < N; ++i)
     {
       if(i >= 5)
         {
-          const double s = Testing::rand();
+          const double s= Testing::rand();
           m.add(i, i - 5, s);
-          norm_sqr += s * s;
+          norm_sqr+= s * s;
           ++nnz;
         }
 
       if(i < N - 5)
         {
-          const double s = Testing::rand();
+          const double s= Testing::rand();
           m.add(i, i + 5, s);
-          norm_sqr += s * s;
+          norm_sqr+= s * s;
           ++nnz;
         }
 
-      const double s = Testing::rand();
+      const double s= Testing::rand();
       m.add(i, i, s);
-      norm_sqr += s * s;
+      norm_sqr+= s * s;
       ++nnz;
     }
   m.compress(VectorOperation::add);
@@ -68,17 +68,17 @@ test(PETScWrappers::MatrixBase& m)
   Assert(m.n_nonzero_elements() - nnz == 0, ExcInternalError());
 
   // now remove the entries of rows N/2 and N/3
-  for(size_type i = 0; i < N; ++i)
+  for(size_type i= 0; i < N; ++i)
     {
-      const double s = m.el(N / 2, i);
-      norm_sqr -= s * s;
+      const double s= m.el(N / 2, i);
+      norm_sqr-= s * s;
     }
-  for(size_type i = 0; i < N; ++i)
+  for(size_type i= 0; i < N; ++i)
     {
-      const double s = m.el(N / 3, i);
-      norm_sqr -= s * s;
+      const double s= m.el(N / 3, i);
+      norm_sqr-= s * s;
     }
-  const size_type rows[2] = {N / 3, N / 2};
+  const size_type rows[2]= {N / 3, N / 2};
   m.clear_rows(std::vector<size_type>(&rows[0], &rows[2]));
 
   deallog << m.frobenius_norm() << ' ' << std::sqrt(norm_sqr) << std::endl;

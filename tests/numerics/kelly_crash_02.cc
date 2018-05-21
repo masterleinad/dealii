@@ -39,9 +39,9 @@
 void
 test()
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
-  static const Point<3> vertices_1[] = {
+  static const Point<3> vertices_1[]= {
     // points on the lower surface
     Point<dim>(0, 0, -4),
     Point<dim>(
@@ -135,10 +135,10 @@ test()
 
   };
 
-  const unsigned int n_vertices = sizeof(vertices_1) / sizeof(vertices_1[0]);
+  const unsigned int n_vertices= sizeof(vertices_1) / sizeof(vertices_1[0]);
   const std::vector<Point<dim>> vertices(&vertices_1[0],
                                          &vertices_1[n_vertices]);
-  static const int cell_vertices[][GeometryInfo<dim>::vertices_per_cell] = {
+  static const int cell_vertices[][GeometryInfo<dim>::vertices_per_cell]= {
     // the three cells in the stem
     {0, 2, 4, 3, 7, 9, 11, 10},
     {6, 0, 5, 4, 13, 7, 12, 11},
@@ -152,14 +152,14 @@ test()
     // third extension
     {12, 13, 14, 8, 24, 25, 23, 26},
   };
-  const unsigned int n_cells = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
+  const unsigned int n_cells= sizeof(cell_vertices) / sizeof(cell_vertices[0]);
 
   std::vector<CellData<dim>> cells(n_cells, CellData<dim>());
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for(unsigned int i= 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
-        cells[i].vertices[j] = cell_vertices[i][j];
-      cells[i].material_id = 0;
+      for(unsigned int j= 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+        cells[i].vertices[j]= cell_vertices[i][j];
+      cells[i].material_id= 0;
     }
 
   Triangulation<3> triangulation;
@@ -169,7 +169,7 @@ test()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if((cell->face(f)->center()[2] != -4) && (cell->face(f)->center()[2] != 7)
          && (cell->face(f)->at_boundary()))
         cell->face(f)->set_boundary_id(1);
@@ -180,7 +180,7 @@ test()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+    for(unsigned int face_no= 0; face_no < GeometryInfo<dim>::faces_per_cell;
         ++face_no)
       AssertThrow(cell->at_boundary(face_no)
                     == cell->face(face_no)->at_boundary(),

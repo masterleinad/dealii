@@ -29,7 +29,7 @@ execute()
 void
 test()
 {
-  Threads::Thread<> t = Threads::new_thread(&execute);
+  Threads::Thread<> t= Threads::new_thread(&execute);
   deallog << "Before first join()" << std::endl;
   t.join();
   deallog << "Between join()s" << std::endl;

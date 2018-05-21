@@ -30,10 +30,10 @@ test_bounding_box()
   deallog << a.volume() << std::endl;
 
   std::pair<Point<spacedim>, Point<spacedim>> unit;
-  for(int i = 0; i < spacedim; i++)
+  for(int i= 0; i < spacedim; i++)
     {
-      unit.first[i]  = 0.0;
-      unit.second[i] = 1.0;
+      unit.first[i] = 0.0;
+      unit.second[i]= 1.0;
     }
 
   BoundingBox<spacedim> b(unit);
@@ -48,10 +48,10 @@ test_bounding_box()
   deallog << b.get_boundary_points().second << std::endl;
 
   std::pair<Point<spacedim>, Point<spacedim>> boundaries;
-  for(int i = 0; i < spacedim; i++)
+  for(int i= 0; i < spacedim; i++)
     {
-      unit.first[i]  = 1.0;
-      unit.second[i] = 2.0 + i;
+      unit.first[i] = 1.0;
+      unit.second[i]= 2.0 + i;
     }
 
   BoundingBox<spacedim> c(unit);

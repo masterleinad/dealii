@@ -163,7 +163,7 @@ namespace MGTools
   count_dofs_per_block(
     const DoFHandlerType&                              dof_handler,
     std::vector<std::vector<types::global_dof_index>>& dofs_per_block,
-    std::vector<unsigned int> target_block = std::vector<unsigned int>());
+    std::vector<unsigned int> target_block= std::vector<unsigned int>());
 
   /**
    * Count the dofs component-wise on each level.
@@ -177,8 +177,8 @@ namespace MGTools
   count_dofs_per_component(
     const DoFHandler<dim, spacedim>&                   mg_dof,
     std::vector<std::vector<types::global_dof_index>>& result,
-    const bool                                         only_once = false,
-    std::vector<unsigned int> target_component = std::vector<unsigned int>());
+    const bool                                         only_once= false,
+    std::vector<unsigned int> target_component= std::vector<unsigned int>());
 
   /**
    * Generate a list of those degrees of freedom at the boundary of the domain
@@ -205,7 +205,7 @@ namespace MGTools
     const DoFHandler<dim, spacedim>&                mg_dof,
     const typename FunctionMap<dim>::type&          function_map,
     std::vector<std::set<types::global_dof_index>>& boundary_indices,
-    const ComponentMask& component_mask = ComponentMask());
+    const ComponentMask& component_mask= ComponentMask());
 
   /**
    * The same function as above, but return an IndexSet rather than a
@@ -219,7 +219,7 @@ namespace MGTools
   make_boundary_list(const DoFHandler<dim, spacedim>&       mg_dof,
                      const typename FunctionMap<dim>::type& function_map,
                      std::vector<IndexSet>&                 boundary_indices,
-                     const ComponentMask& component_mask = ComponentMask());
+                     const ComponentMask& component_mask= ComponentMask());
 
   /**
    * The same function as above, but return an IndexSet rather than a
@@ -233,7 +233,7 @@ namespace MGTools
   make_boundary_list(const DoFHandler<dim, spacedim>&    mg_dof,
                      const std::set<types::boundary_id>& boundary_ids,
                      std::vector<IndexSet>&              boundary_indices,
-                     const ComponentMask& component_mask = ComponentMask());
+                     const ComponentMask& component_mask= ComponentMask());
 
   /**
    * For each level in a multigrid hierarchy, produce an IndexSet that

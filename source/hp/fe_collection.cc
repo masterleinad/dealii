@@ -37,25 +37,25 @@ namespace hp
     if(fes.size() == 1)
       return *fes.begin();
 
-    const hp::FECollection<dim, spacedim>& fe_collection = *this;
+    const hp::FECollection<dim, spacedim>& fe_collection= *this;
     std::set<unsigned int>                 candidate_fes;
 
     // first loop over all FEs and check which can dominate those given in @p fes:
-    for(unsigned int cur_fe = 0; cur_fe < fe_collection.size(); cur_fe++)
+    for(unsigned int cur_fe= 0; cur_fe < fe_collection.size(); cur_fe++)
       {
         FiniteElementDomination::Domination domination
           = FiniteElementDomination::no_requirements;
         // check if cur_fe can dominate all FEs in @p fes:
-        for(std::set<unsigned int>::const_iterator it = fes.begin();
+        for(std::set<unsigned int>::const_iterator it= fes.begin();
             it != fes.end();
             ++it)
           {
             Assert(
               *it < fe_collection.size(),
               ExcIndexRangeType<unsigned int>(*it, 0, fe_collection.size()));
-            domination = domination
-                         & fe_collection[cur_fe].compare_for_face_domination(
-                             fe_collection[*it]);
+            domination= domination
+                        & fe_collection[cur_fe].compare_for_face_domination(
+                            fe_collection[*it]);
           }
 
         // if we found dominating element, keep them in a set.
@@ -74,21 +74,20 @@ namespace hp
         return *candidate_fes.begin();
       }
     else
-      for(std::set<unsigned int>::const_iterator it = candidate_fes.begin();
+      for(std::set<unsigned int>::const_iterator it= candidate_fes.begin();
           it != candidate_fes.end();
           ++it)
         {
           FiniteElementDomination::Domination domination
             = FiniteElementDomination::no_requirements;
-          for(std::set<unsigned int>::const_iterator ito
-              = candidate_fes.begin();
+          for(std::set<unsigned int>::const_iterator ito= candidate_fes.begin();
               ito != candidate_fes.end();
               ++ito)
             if(it != ito)
               {
-                domination = domination
-                             & fe_collection[*it].compare_for_face_domination(
-                                 fe_collection[*ito]);
+                domination= domination
+                            & fe_collection[*it].compare_for_face_domination(
+                                fe_collection[*ito]);
               }
 
           if(
@@ -116,7 +115,7 @@ namespace hp
     Assert(fes.size() > 0,
            ExcMessage("Need to pass at least one finite element."));
 
-    for(unsigned int i = 0; i < fes.size(); ++i)
+    for(unsigned int i= 0; i < fes.size(); ++i)
       push_back(*fes[i]);
   }
 
@@ -147,11 +146,11 @@ namespace hp
            ExcMessage("This collection contains no finite element."));
 
     // get the mask from the first element of the collection
-    const ComponentMask mask = (*this)[0].component_mask(scalar);
+    const ComponentMask mask= (*this)[0].component_mask(scalar);
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for(unsigned int c= 1; c < size(); ++c)
       Assert(mask == (*this)[c].component_mask(scalar), ExcInternalError());
 
     return mask;
@@ -166,11 +165,11 @@ namespace hp
            ExcMessage("This collection contains no finite element."));
 
     // get the mask from the first element of the collection
-    const ComponentMask mask = (*this)[0].component_mask(vector);
+    const ComponentMask mask= (*this)[0].component_mask(vector);
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for(unsigned int c= 1; c < size(); ++c)
       Assert(mask == (*this)[c].component_mask(vector), ExcInternalError());
 
     return mask;
@@ -185,11 +184,11 @@ namespace hp
            ExcMessage("This collection contains no finite element."));
 
     // get the mask from the first element of the collection
-    const ComponentMask mask = (*this)[0].component_mask(sym_tensor);
+    const ComponentMask mask= (*this)[0].component_mask(sym_tensor);
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for(unsigned int c= 1; c < size(); ++c)
       Assert(mask == (*this)[c].component_mask(sym_tensor), ExcInternalError());
 
     return mask;
@@ -203,11 +202,11 @@ namespace hp
            ExcMessage("This collection contains no finite element."));
 
     // get the mask from the first element of the collection
-    const ComponentMask mask = (*this)[0].component_mask(block_mask);
+    const ComponentMask mask= (*this)[0].component_mask(block_mask);
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for(unsigned int c= 1; c < size(); ++c)
       Assert(mask == (*this)[c].component_mask(block_mask),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -224,11 +223,11 @@ namespace hp
            ExcMessage("This collection contains no finite element."));
 
     // get the mask from the first element of the collection
-    const BlockMask mask = (*this)[0].block_mask(scalar);
+    const BlockMask mask= (*this)[0].block_mask(scalar);
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for(unsigned int c= 1; c < size(); ++c)
       Assert(mask == (*this)[c].block_mask(scalar),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -245,11 +244,11 @@ namespace hp
            ExcMessage("This collection contains no finite element."));
 
     // get the mask from the first element of the collection
-    const BlockMask mask = (*this)[0].block_mask(vector);
+    const BlockMask mask= (*this)[0].block_mask(vector);
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for(unsigned int c= 1; c < size(); ++c)
       Assert(mask == (*this)[c].block_mask(vector),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -266,11 +265,11 @@ namespace hp
            ExcMessage("This collection contains no finite element."));
 
     // get the mask from the first element of the collection
-    const BlockMask mask = (*this)[0].block_mask(sym_tensor);
+    const BlockMask mask= (*this)[0].block_mask(sym_tensor);
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for(unsigned int c= 1; c < size(); ++c)
       Assert(mask == (*this)[c].block_mask(sym_tensor),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -287,11 +286,11 @@ namespace hp
            ExcMessage("This collection contains no finite element."));
 
     // get the mask from the first element of the collection
-    const BlockMask mask = (*this)[0].block_mask(component_mask);
+    const BlockMask mask= (*this)[0].block_mask(component_mask);
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for(unsigned int c= 1; c < size(); ++c)
       Assert(mask == (*this)[c].block_mask(component_mask),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -305,8 +304,8 @@ namespace hp
   {
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
-    const unsigned int nb = finite_elements[0]->n_blocks();
-    for(unsigned int i = 1; i < finite_elements.size(); ++i)
+    const unsigned int nb= finite_elements[0]->n_blocks();
+    for(unsigned int i= 1; i < finite_elements.size(); ++i)
       Assert(finite_elements[i]->n_blocks() == nb,
              ExcMessage("Not all finite elements in this collection have "
                         "the same number of components."));
@@ -318,11 +317,10 @@ namespace hp
   std::size_t
   FECollection<dim, spacedim>::memory_consumption() const
   {
-    std::size_t mem
-      = (sizeof(*this)
-         + MemoryConsumption::memory_consumption(finite_elements));
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
-      mem += finite_elements[i]->memory_consumption();
+    std::size_t mem= (sizeof(*this)
+                      + MemoryConsumption::memory_consumption(finite_elements));
+    for(unsigned int i= 0; i < finite_elements.size(); ++i)
+      mem+= finite_elements[i]->memory_consumption();
 
     return mem;
   }

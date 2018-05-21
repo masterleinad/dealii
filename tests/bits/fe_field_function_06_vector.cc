@@ -43,8 +43,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    v    = 0;
-    v[0] = p.square();
+    v   = 0;
+    v[0]= p.square();
   }
 };
 

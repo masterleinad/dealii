@@ -46,17 +46,17 @@
 
 // test parallel (MPI) version of Step-36
 
-const unsigned int dim = 2; //run in 2d to save time
+const unsigned int dim= 2; //run in 2d to save time
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 void
 test(std::string solver_name, std::string preconditioner_name)
 {
-  const unsigned int global_mesh_refinement_steps = 5;
-  const unsigned int number_of_eigenvalues        = 5;
+  const unsigned int global_mesh_refinement_steps= 5;
+  const unsigned int number_of_eigenvalues       = 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm           mpi_communicator= MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
@@ -79,19 +79,19 @@ test(std::string solver_name, std::string preconditioner_name)
   // we do not use metis but rather partition by hand below.
   //dealii::GridTools::partition_triangulation (n_mpi_processes, triangulation);
   {
-    const double x0 = -1.0;
-    const double x1 = 1.0;
-    const double dL = (x1 - x0) / n_mpi_processes;
+    const double x0= -1.0;
+    const double x1= 1.0;
+    const double dL= (x1 - x0) / n_mpi_processes;
 
     dealii::Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
-      endc = triangulation.end();
+      endc= triangulation.end();
     for(; cell != endc; ++cell)
       {
-        const dealii::Point<dim>& center = cell->center();
-        const double              x      = center[0];
+        const dealii::Point<dim>& center= cell->center();
+        const double              x     = center[0];
 
-        const unsigned int id = std::floor((x - x0) / dL);
+        const unsigned int id= std::floor((x - x0) / dL);
         cell->set_subdomain_id(id);
       }
   }
@@ -100,7 +100,7 @@ test(std::string solver_name, std::string preconditioner_name)
   dealii::DoFRenumbering::subdomain_wise(dof_handler);
   std::vector<dealii::IndexSet> locally_owned_dofs_per_processor
     = DoFTools::locally_owned_dofs_per_subdomain(dof_handler);
-  locally_owned_dofs = locally_owned_dofs_per_processor[this_mpi_process];
+  locally_owned_dofs= locally_owned_dofs_per_processor[this_mpi_process];
   locally_relevant_dofs.clear();
   dealii::DoFTools::extract_locally_relevant_dofs(dof_handler,
                                                   locally_relevant_dofs);
@@ -120,8 +120,8 @@ test(std::string solver_name, std::string preconditioner_name)
                                           /* keep constrained dofs */ true);
   std::vector<dealii::types::global_dof_index> n_locally_owned_dofs(
     n_mpi_processes);
-  for(unsigned int i = 0; i < n_mpi_processes; i++)
-    n_locally_owned_dofs[i] = locally_owned_dofs_per_processor[i].n_elements();
+  for(unsigned int i= 0; i < n_mpi_processes; i++)
+    n_locally_owned_dofs[i]= locally_owned_dofs_per_processor[i].n_elements();
 
   dealii::SparsityTools::distribute_sparsity_pattern(
     csp, n_locally_owned_dofs, mpi_communicator, locally_relevant_dofs);
@@ -134,11 +134,11 @@ test(std::string solver_name, std::string preconditioner_name)
     locally_owned_dofs, locally_owned_dofs, csp, mpi_communicator);
 
   eigenfunctions.resize(5);
-  for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+  for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
     {
       eigenfunctions[i].reinit(locally_owned_dofs,
                                mpi_communicator); //without ghost dofs
-      for(unsigned int j = 0; j < locally_owned_dofs.n_elements(); ++j)
+      for(unsigned int j= 0; j < locally_owned_dofs.n_elements(); ++j)
         eigenfunctions[i][locally_owned_dofs.nth_index_in_set(j)]
           = random_value<double>();
 
@@ -148,8 +148,8 @@ test(std::string solver_name, std::string preconditioner_name)
   eigenvalues.resize(eigenfunctions.size());
 
   // ready for assembly
-  stiffness_matrix = 0;
-  mass_matrix      = 0;
+  stiffness_matrix= 0;
+  mass_matrix     = 0;
 
   dealii::QGauss<dim>   quadrature_formula(2);
   dealii::FEValues<dim> fe_values(
@@ -158,8 +158,8 @@ test(std::string solver_name, std::string preconditioner_name)
     dealii::update_values | dealii::update_gradients
       | dealii::update_quadrature_points | dealii::update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   dealii::FullMatrix<double> cell_stiffness_matrix(dofs_per_cell,
                                                    dofs_per_cell);
@@ -169,26 +169,26 @@ test(std::string solver_name, std::string preconditioner_name)
 
   typename dealii::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     if(cell->subdomain_id() == this_mpi_process)
       {
         fe_values.reinit(cell);
-        cell_stiffness_matrix = 0;
-        cell_mass_matrix      = 0;
+        cell_stiffness_matrix= 0;
+        cell_mass_matrix     = 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(i, j)
                   += (fe_values.shape_grad(i, q_point)
                       * fe_values.shape_grad(j, q_point))
                      * fe_values.JxW(q_point);
 
-                cell_mass_matrix(i, j) += (fe_values.shape_value(i, q_point)
-                                           * fe_values.shape_value(j, q_point))
-                                          * fe_values.JxW(q_point);
+                cell_mass_matrix(i, j)+= (fe_values.shape_value(i, q_point)
+                                          * fe_values.shape_value(j, q_point))
+                                         * fe_values.JxW(q_point);
               }
 
         cell->get_dof_indices(local_dof_indices);
@@ -209,13 +209,12 @@ test(std::string solver_name, std::string preconditioner_name)
     dealii::deallog << preconditioner_name << std::endl;
     if(preconditioner_name == "Jacobi")
       {
-        preconditioner
-          = new PETScWrappers::PreconditionJacobi(mpi_communicator);
+        preconditioner= new PETScWrappers::PreconditionJacobi(mpi_communicator);
       }
     else if(preconditioner_name == "Boomer")
       {
         PETScWrappers::PreconditionBoomerAMG::AdditionalData data;
-        data.symmetric_operator = true;
+        data.symmetric_operator= true;
 
         preconditioner
           = new PETScWrappers::PreconditionBoomerAMG(mpi_communicator, data);
@@ -230,8 +229,7 @@ test(std::string solver_name, std::string preconditioner_name)
         AssertThrow(false, ExcMessage("not supported preconditioner"));
 
         // make compiler happy
-        preconditioner
-          = new PETScWrappers::PreconditionJacobi(mpi_communicator);
+        preconditioner= new PETScWrappers::PreconditionJacobi(mpi_communicator);
       }
 
     dealii::SolverControl   linear_solver_control(dof_handler.n_dofs(),
@@ -251,24 +249,24 @@ test(std::string solver_name, std::string preconditioner_name)
     // Get a handle on the wanted eigenspectrum solver
     if(solver_name == "KrylovSchur")
       {
-        eigensolver = new dealii::SLEPcWrappers::SolverKrylovSchur(
+        eigensolver= new dealii::SLEPcWrappers::SolverKrylovSchur(
           solver_control, mpi_communicator);
       }
 
     else if(solver_name == "GeneralizedDavidson")
       {
-        eigensolver = new dealii::SLEPcWrappers::SolverGeneralizedDavidson(
+        eigensolver= new dealii::SLEPcWrappers::SolverGeneralizedDavidson(
           solver_control, mpi_communicator);
       }
     else if(solver_name == "JacobiDavidson")
       {
-        eigensolver = new dealii::SLEPcWrappers::SolverJacobiDavidson(
+        eigensolver= new dealii::SLEPcWrappers::SolverJacobiDavidson(
           solver_control, mpi_communicator);
       }
     else if(solver_name == "Lanczos")
       {
-        eigensolver = new dealii::SLEPcWrappers::SolverLanczos(
-          solver_control, mpi_communicator);
+        eigensolver= new dealii::SLEPcWrappers::SolverLanczos(solver_control,
+                                                              mpi_communicator);
       }
     else
       {
@@ -276,7 +274,7 @@ test(std::string solver_name, std::string preconditioner_name)
 
         // Make compiler happy and not complaining about non
         // uninitialized variables
-        eigensolver = new dealii::SLEPcWrappers::SolverKrylovSchur(
+        eigensolver= new dealii::SLEPcWrappers::SolverKrylovSchur(
           solver_control, mpi_communicator);
       }
 
@@ -302,7 +300,7 @@ test(std::string solver_name, std::string preconditioner_name)
     // as solve_04 works ok.
     //dealii::deallog << "outer iterations: "<< solver_control.last_step ()<<std::endl;
     //dealii::deallog << "last inner iterations: "<<linear_solver_control.last_step()<<std::endl;
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for(unsigned int i= 0; i < eigenvalues.size(); i++)
       dealii::deallog << eigenvalues[i] << std::endl;
 
     delete preconditioner;
@@ -312,13 +310,13 @@ test(std::string solver_name, std::string preconditioner_name)
     // a) (A*x_i-\lambda*B*x_i).L2() == 0
     // b) x_j*B*x_i=\delta_{ij}
     {
-      const double               precision = 1e-5;
+      const double               precision= 1e-5;
       PETScWrappers::MPI::Vector Ax(eigenfunctions[0]), Bx(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
         {
           mass_matrix.vmult(Bx, eigenfunctions[i]);
 
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for(unsigned int j= 0; j < eigenfunctions.size(); j++)
             Assert(std::abs(eigenfunctions[j] * Bx - (i == j)) < precision,
                    ExcMessage("Eigenvectors " + Utilities::int_to_string(i)
                               + " and " + Utilities::int_to_string(j)

@@ -25,9 +25,9 @@ void
 test()
 {
   PETScWrappers::MPI::Vector v(PETSC_COMM_WORLD, 100, 100);
-  v(0) = 1;
+  v(0)= 1;
   v.compress(VectorOperation::insert);
-  v = 0;
+  v= 0;
 
   deallog << "OK" << std::endl;
 }

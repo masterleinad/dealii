@@ -115,8 +115,8 @@ BoundaryFunction<dim>::vector_value(const Point<dim>&,
   Assert(values.size() == dim + 1,
          ExcDimensionMismatch(values.size(), dim + 1));
 
-  values      = 0;
-  values(dim) = 1.;
+  values     = 0;
+  values(dim)= 1.;
 }
 
 // Construct FE with first component: Nedelec-Element,
@@ -145,8 +145,8 @@ ImposeBC<dim>::get_ready()
   // component we have:
   // dofs_per_comp[0] = dofs_per_comp[1] = # Ned-DoFs
   // dofs_per_comp[2] = # Q1-DoFs
-  n_u_dofs = dofs_per_comp[0];
-  n_p_dofs = dofs_per_comp[2];
+  n_u_dofs= dofs_per_comp[0];
+  n_p_dofs= dofs_per_comp[2];
 }
 
 template <int dim>
@@ -158,9 +158,9 @@ ImposeBC<dim>::test_extract_boundary_DoFs()
 
   // extract boundary DoFs for the Nedelec-component
   // and impose zero boundary condition
-  bc_component_select[0] = true;
-  bc_component_select[1] = true;
-  bc_component_select[2] = false;
+  bc_component_select[0]= true;
+  bc_component_select[1]= true;
+  bc_component_select[2]= false;
 
   std::vector<bool>            ned_boundary_dofs(dof_handler.n_dofs());
   std::set<types::boundary_id> boundary_ids;
@@ -168,9 +168,9 @@ ImposeBC<dim>::test_extract_boundary_DoFs()
   DoFTools::extract_boundary_dofs(
     dof_handler, bc_component_select, ned_boundary_dofs, boundary_ids);
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     if(ned_boundary_dofs[i] == true)
-      boundary_values[i] = 0.;
+      boundary_values[i]= 0.;
 }
 
 template <int dim>
@@ -182,7 +182,7 @@ ImposeBC<dim>::test_interpolate_BC()
 
   // impose inhomogeneous boundary condition
   // on the scalar variable
-  bc_component_select.back() = true;
+  bc_component_select.back()= true;
 
   VectorTools::interpolate_boundary_values(dof_handler,
                                            0,
@@ -198,7 +198,7 @@ ImposeBC<dim>::test_interpolate_BC()
   boundary_ids.insert(0);
   DoFTools::extract_boundary_dofs(
     dof_handler, bc_component_select, p_boundary_dofs, boundary_ids);
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     {
       // error: pressure boundary DoF
       // i has not been set to the

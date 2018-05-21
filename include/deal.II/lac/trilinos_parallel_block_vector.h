@@ -94,7 +94,7 @@ namespace TrilinosWrappers
       /**
        * Default constructor. Generate an empty vector without any blocks.
        */
-      BlockVector() = default;
+      BlockVector()= default;
 
       /**
        * Constructor. Generate a block vector with as many blocks as there are
@@ -103,7 +103,7 @@ namespace TrilinosWrappers
        * the MPI processes.
        */
       explicit BlockVector(const std::vector<IndexSet>& parallel_partitioning,
-                           const MPI_Comm& communicator = MPI_COMM_WORLD);
+                           const MPI_Comm& communicator= MPI_COMM_WORLD);
 
       /**
        * Creates a BlockVector with ghost elements. See the respective
@@ -113,7 +113,7 @@ namespace TrilinosWrappers
       BlockVector(const std::vector<IndexSet>& parallel_partitioning,
                   const std::vector<IndexSet>& ghost_values,
                   const MPI_Comm&              communicator,
-                  const bool                   vector_writable = false);
+                  const bool                   vector_writable= false);
 
       /**
        * Copy-Constructor. Set all the properties of the parallel vector to
@@ -137,7 +137,7 @@ namespace TrilinosWrappers
       /**
        * Destructor. Clears memory
        */
-      ~BlockVector() override = default;
+      ~BlockVector() override= default;
 
       /**
        * Copy operator: fill all components of the vector that are locally
@@ -183,8 +183,8 @@ namespace TrilinosWrappers
        */
       void
       reinit(const std::vector<IndexSet>& parallel_partitioning,
-             const MPI_Comm&              communicator         = MPI_COMM_WORLD,
-             const bool                   omit_zeroing_entries = false);
+             const MPI_Comm&              communicator        = MPI_COMM_WORLD,
+             const bool                   omit_zeroing_entries= false);
 
       /**
        * Reinit functionality. This function destroys the old vector content
@@ -206,8 +206,8 @@ namespace TrilinosWrappers
       void
       reinit(const std::vector<IndexSet>& partitioning,
              const std::vector<IndexSet>& ghost_values,
-             const MPI_Comm&              communicator    = MPI_COMM_WORLD,
-             const bool                   vector_writable = false);
+             const MPI_Comm&              communicator   = MPI_COMM_WORLD,
+             const bool                   vector_writable= false);
 
       /**
        * Change the dimension to that of the vector <tt>V</tt>. The same
@@ -224,7 +224,7 @@ namespace TrilinosWrappers
        * be routed to the wrong block.
        */
       void
-      reinit(const BlockVector& V, const bool omit_zeroing_entries = false);
+      reinit(const BlockVector& V, const bool omit_zeroing_entries= false);
 
       /**
        * Change the number of blocks to <tt>num_blocks</tt>. The individual
@@ -290,9 +290,9 @@ namespace TrilinosWrappers
        */
       void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const;
+            const unsigned int precision = 3,
+            const bool         scientific= true,
+            const bool         across    = true) const;
 
       /**
        * Exception
@@ -332,10 +332,10 @@ namespace TrilinosWrappers
       : dealii::BlockVectorBase<MPI::Vector>()
     {
       this->components.resize(v.n_blocks());
-      this->block_indices = v.block_indices;
+      this->block_indices= v.block_indices;
 
-      for(size_type i = 0; i < this->n_blocks(); ++i)
-        this->components[i] = v.components[i];
+      for(size_type i= 0; i < this->n_blocks(); ++i)
+        this->components[i]= v.components[i];
     }
 
     inline BlockVector::BlockVector(BlockVector&& v) noexcept
@@ -357,8 +357,8 @@ namespace TrilinosWrappers
             components.resize(n_blocks());
         }
 
-      for(size_type i = 0; i < this->n_blocks(); ++i)
-        this->components[i] = v.block(i);
+      for(size_type i= 0; i < this->n_blocks(); ++i)
+        this->components[i]= v.block(i);
 
       collect_sizes();
 
@@ -368,9 +368,9 @@ namespace TrilinosWrappers
     inline bool
     BlockVector::has_ghost_elements() const
     {
-      bool ghosted = block(0).has_ghost_elements();
+      bool ghosted= block(0).has_ghost_elements();
 #  ifdef DEBUG
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
         Assert(block(i).has_ghost_elements() == ghosted, ExcInternalError());
 #  endif
       return ghosted;

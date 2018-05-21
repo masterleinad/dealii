@@ -39,11 +39,11 @@ public:
   virtual double
   value(const Point<2>& p, const unsigned int) const
   {
-    double delta = 0.05;
+    double delta= 0.05;
     double x, y, r;
-    x = p(0);
-    y = p(1);
-    r = std::sqrt(x * x + y * y);
+    x= p(0);
+    y= p(1);
+    r= std::sqrt(x * x + y * y);
     return 0.5 * (1 - std::tanh((r - 0.5) / (2 * M_SQRT2 * delta)));
   }
 };
@@ -67,8 +67,8 @@ main()
 
   dof_handler.distribute_dofs(fe);
 
-  DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
-                                      endc = dof_handler.end();
+  DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active(),
+                                      endc= dof_handler.end();
 
   phi_solution.reinit(dof_handler.n_dofs());
   VectorTools::interpolate(dof_handler, F(), phi_solution);
@@ -77,17 +77,17 @@ main()
   DerivativeApproximation::approximate_gradient(
     dof_handler, phi_solution, gradient_phi);
 
-  gradient_phi_min = 1e30;
-  gradient_phi_max = -1;
+  gradient_phi_min= 1e30;
+  gradient_phi_max= -1;
 
-  cell = dof_handler.begin_active();
-  for(unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+  cell= dof_handler.begin_active();
+  for(unsigned int cell_no= 0; cell != endc; ++cell, ++cell_no)
     {
       if(gradient_phi(cell_no) < gradient_phi_min)
-        gradient_phi_min = gradient_phi(cell_no);
+        gradient_phi_min= gradient_phi(cell_no);
 
       if(gradient_phi(cell_no) > gradient_phi_max)
-        gradient_phi_max = gradient_phi(cell_no);
+        gradient_phi_max= gradient_phi(cell_no);
     }
 
   deallog << "gradient_phi_min: " << gradient_phi_min << std::endl;

@@ -44,8 +44,8 @@ test();
 
 template <int dim,
           int fe_degree,
-          int n_q_points_1d = fe_degree + 1,
-          typename Number   = double>
+          int n_q_points_1d= fe_degree + 1,
+          typename Number  = double>
 class MatrixFreeTest
 {
 public:
@@ -62,7 +62,7 @@ public:
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
 
@@ -70,17 +70,17 @@ public:
         if(read_vector)
           fe_eval.read_dof_values(src);
         else
-          for(unsigned int e = 0; e < fe_eval.dofs_per_cell; ++e)
+          for(unsigned int e= 0; e < fe_eval.dofs_per_cell; ++e)
             fe_eval.submit_dof_value(make_vectorized_array<Number>(1.), e);
         fe_eval.evaluate(true, true, true);
 
         // values should evaluate to one, derivatives to zero
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
-          for(unsigned int d = 0; d < VectorizedArray<Number>::n_array_elements;
+        for(unsigned int q= 0; q < fe_eval.n_q_points; ++q)
+          for(unsigned int d= 0; d < VectorizedArray<Number>::n_array_elements;
               ++d)
             {
               Assert(fe_eval.get_value(q)[d] == 1., ExcInternalError());
-              for(unsigned int e = 0; e < dim; ++e)
+              for(unsigned int e= 0; e < dim; ++e)
                 Assert(fe_eval.get_gradient(q)[e][d] == 0., ExcInternalError());
               Assert(fe_eval.get_laplacian(q)[d] == 0., ExcInternalError());
             }
@@ -112,12 +112,12 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   Vector<number> solution(dof.n_dofs());
 
   // create vector with random entries
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     {
       if(constraints.is_constrained(i))
         continue;
-      const double entry = random_value<double>();
-      solution(i)        = entry;
+      const double entry= random_value<double>();
+      solution(i)       = entry;
     }
 
   constraints.distribute(solution);
@@ -125,9 +125,9 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   {
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
-    data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.mapping_update_flags  = update_gradients | update_hessians;
-    data.initialize_indices    = false;
+    data.tasks_parallel_scheme= MatrixFree<dim, number>::AdditionalData::none;
+    data.mapping_update_flags = update_gradients | update_hessians;
+    data.initialize_indices   = false;
     mf_data.reinit(dof, constraints, quad, data);
   }
 
@@ -139,7 +139,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   deallog << "Testing " << dof.get_fe().get_name() << " with read" << std::endl;
   try
     {
-      mf.read_vector = true;
+      mf.read_vector= true;
       mf.test_functions(solution);
     }
   catch(ExceptionBase& e)
@@ -165,10 +165,10 @@ test()
   const SphericalManifold<dim> manifold;
   Triangulation<dim>           tria;
   GridGenerator::hyper_ball(tria);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);

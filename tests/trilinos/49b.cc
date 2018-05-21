@@ -31,21 +31,21 @@ test(TrilinosWrappers::MPI::BlockVector& v)
   std::vector<types::global_dof_index> sizes(2, 3);
   dealii::BlockVector<TrilinosScalar>  w(sizes);
 
-  for(unsigned int i = 0; i < w.size(); ++i)
-    w(i) = i;
+  for(unsigned int i= 0; i < w.size(); ++i)
+    w(i)= i;
 
-  v = w;
+  v= w;
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i, ExcInternalError());
       AssertThrow(v(i) == i, ExcInternalError());
     }
 
   // now also check the reverse assignment
-  w = v;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  w= v;
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i, ExcInternalError());
       AssertThrow(v(i) == i, ExcInternalError());

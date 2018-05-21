@@ -49,7 +49,7 @@ test(DOFINFO& info, MeshWorker::Assembler::MGMatrixSimple<MatrixType>& ass)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 

@@ -32,11 +32,11 @@ using namespace dealii;
 double Adata[]
   = {4., .5, .1, 0., .5, 4., .5, .1, .1, .5, 4., .5, 0., .1, .5, 4.};
 
-double B1data[] = {.5, .1, .4, .2, .3, .3, .2, .4};
+double B1data[]= {.5, .1, .4, .2, .3, .3, .2, .4};
 
-double B2data[] = {.3, 0., -.3, 0., -.3, 0., .3, 0.};
+double B2data[]= {.3, 0., -.3, 0., -.3, 0., .3, 0.};
 
-double Cdata[] = {8., 1., 1., 8.};
+double Cdata[]= {8., 1., 1., 8.};
 
 int
 main()
@@ -62,14 +62,14 @@ main()
   matrix.print_latex(deallog);
 
   std::vector<unsigned int> block_sizes(2);
-  block_sizes[0] = 4;
-  block_sizes[1] = 2;
+  block_sizes[0]= 4;
+  block_sizes[1]= 2;
 
   BlockVector<double> result(block_sizes);
   BlockVector<double> x(block_sizes);
   BlockVector<double> y(block_sizes);
-  for(unsigned int i = 0; i < result.size(); ++i)
-    result(i) = i;
+  for(unsigned int i= 0; i < result.size(); ++i)
+    result(i)= i;
 
   matrix.vmult(y, result);
 

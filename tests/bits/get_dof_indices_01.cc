@@ -49,7 +49,7 @@ test()
   // loop over all cells, active or
   // not
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
-  for(typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+  for(typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
     {
@@ -64,7 +64,7 @@ test()
         }
 
       deallog << "Cell = " << cell << ", DoFs=";
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
         {
           Assert(local_dof_indices[i] != numbers::invalid_dof_index,
                  ExcInternalError());

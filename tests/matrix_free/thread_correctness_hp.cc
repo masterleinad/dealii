@@ -43,10 +43,10 @@ public:
     // Ask MatrixFree for cell_range for different
     // orders
     std::pair<unsigned int, unsigned int> subrange_deg;
-#define CALL_METHOD(degree)                                        \
-  subrange_deg = data.create_cell_subrange_hp(cell_range, degree); \
-  if(subrange_deg.second > subrange_deg.first)                     \
-  helmholtz_operator<dim, degree, Vector<Number>, degree + 1>(     \
+#define CALL_METHOD(degree)                                       \
+  subrange_deg= data.create_cell_subrange_hp(cell_range, degree); \
+  if(subrange_deg.second > subrange_deg.first)                    \
+  helmholtz_operator<dim, degree, Vector<Number>, degree + 1>(    \
     data, dst, src, subrange_deg)
 
     CALL_METHOD(1);
@@ -63,7 +63,7 @@ public:
   void
   vmult(Vector<Number>& dst, const Vector<Number>& src) const
   {
-    dst = 0;
+    dst= 0;
     data.cell_loop(&MatrixFreeTestHP<dim, Number>::local_apply, this, dst, src);
   };
 
@@ -83,23 +83,23 @@ do_test(const unsigned int parallel_option)
 #endif
 
   // refine a few cells
-  for(unsigned int i = 0; i < 11 - 3 * dim; ++i)
+  for(unsigned int i= 0; i < 11 - 3 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
-        endc = tria.end();
+        endc= tria.end();
       for(; cell != endc; ++cell)
         if(Testing::rand() % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
 
-  const unsigned int max_degree = 9 - 2 * dim;
+  const unsigned int max_degree= 9 - 2 * dim;
 
   hp::FECollection<dim> fe_collection;
   hp::QCollection<1>    quadrature_collection_mf;
 
-  for(unsigned int deg = 1; deg <= max_degree; ++deg)
+  for(unsigned int deg= 1; deg <= max_degree; ++deg)
     {
       fe_collection.push_back(FE_Q<dim>(QGaussLobatto<1>(deg + 1)));
       quadrature_collection_mf.push_back(QGauss<1>(deg + 1));
@@ -108,12 +108,11 @@ do_test(const unsigned int parallel_option)
   hp::DoFHandler<dim> dof(tria);
   // set the active FE index in a random order
   {
-    typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active(),
-      endc = dof.end();
+    typename hp::DoFHandler<dim>::active_cell_iterator cell= dof.begin_active(),
+                                                       endc= dof.end();
     for(; cell != endc; ++cell)
       {
-        const unsigned int fe_index = Testing::rand() % max_degree;
+        const unsigned int fe_index= Testing::rand() % max_degree;
         cell->set_active_fe_index(fe_index);
       }
   }
@@ -133,13 +132,13 @@ do_test(const unsigned int parallel_option)
   // set up reference MatrixFree
   MatrixFree<dim, number>                          mf_data;
   typename MatrixFree<dim, number>::AdditionalData data;
-  data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
+  data.tasks_parallel_scheme= MatrixFree<dim, number>::AdditionalData::none;
   mf_data.reinit(dof, constraints, quadrature_collection_mf, data);
   MatrixFreeTestHP<dim, number> mf(mf_data);
 
   // test different block sizes, starting from
   // auto setting (= 0)
-  for(unsigned int block_size = 0; block_size < 5; ++block_size)
+  for(unsigned int block_size= 0; block_size < 5; ++block_size)
     {
       deallog.push("blk_" + Utilities::int_to_string(block_size, 1));
       MatrixFree<dim, number> mf_data_par;
@@ -161,7 +160,7 @@ do_test(const unsigned int parallel_option)
             = MatrixFree<dim, number>::AdditionalData::color;
           deallog << "Parallel option partition/color" << std::endl;
         }
-      data.tasks_block_size = 1;
+      data.tasks_block_size= 1;
       mf_data_par.reinit(dof, constraints, quadrature_collection_mf, data);
       MatrixFreeTestHP<dim, number> mf_par(mf_data_par);
 
@@ -170,10 +169,10 @@ do_test(const unsigned int parallel_option)
       Vector<number> src(dof.n_dofs());
       Vector<number> result_ref(src), result_mf(src);
 
-      for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+      for(unsigned int i= 0; i < dof.n_dofs(); ++i)
         {
           if(constraints.is_constrained(i) == false)
-            src(i) = random_value<double>();
+            src(i)= random_value<double>();
         }
 
       // now perform 30 matrix-vector products in
@@ -182,11 +181,11 @@ do_test(const unsigned int parallel_option)
       // error)
       mf.vmult(result_ref, src);
       deallog << "Norm of difference: ";
-      for(unsigned int i = 0; i < 50; ++i)
+      for(unsigned int i= 0; i < 50; ++i)
         {
           mf_par.vmult(result_mf, src);
-          result_mf -= result_ref;
-          double diff_norm = result_mf.linfty_norm() / result_ref.linfty_norm();
+          result_mf-= result_ref;
+          double diff_norm= result_mf.linfty_norm() / result_ref.linfty_norm();
           deallog << diff_norm << "  ";
         }
       deallog << std::endl << std::endl;
@@ -203,11 +202,11 @@ test()
 
   // 'misuse' fe_degree for setting the parallel
   // option here
-  unsigned int parallel_option = 0;
+  unsigned int parallel_option= 0;
   if(fe_degree == 1)
-    parallel_option = 0;
+    parallel_option= 0;
   else if(fe_degree == 2)
-    parallel_option = 1;
+    parallel_option= 1;
   else
     return;
   deallog.push("double");

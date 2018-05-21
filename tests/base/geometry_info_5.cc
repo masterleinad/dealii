@@ -25,8 +25,8 @@ test()
   deallog << "Checking in " << dim << "d" << std::endl;
 
   // check phi_i(v_j) = delta_{ij}
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       {
         const Tensor<1, dim> phi_i_grad
           = GeometryInfo<dim>::d_linear_shape_function_gradient(
@@ -41,11 +41,11 @@ test()
   // gradient of the sum of shape functions
   // is zero. do so at every vertex, and then
   // at the center
-  for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+  for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
     {
       Tensor<1, dim> s;
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-        s += GeometryInfo<dim>::d_linear_shape_function_gradient(
+      for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+        s+= GeometryInfo<dim>::d_linear_shape_function_gradient(
           GeometryInfo<dim>::unit_cell_vertex(v), i);
       AssertThrow(s.norm() == 0, ExcInternalError());
 
@@ -53,12 +53,12 @@ test()
     }
   {
     Point<dim> center;
-    for(unsigned int i = 0; i < dim; ++i)
-      center[i] = 0.5;
+    for(unsigned int i= 0; i < dim; ++i)
+      center[i]= 0.5;
 
     Tensor<1, dim> s;
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-      s += GeometryInfo<dim>::d_linear_shape_function_gradient(center, i);
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+      s+= GeometryInfo<dim>::d_linear_shape_function_gradient(center, i);
     AssertThrow(s.norm() == 0, ExcInternalError());
 
     deallog << "Sum of shape functions: " << s << std::endl;

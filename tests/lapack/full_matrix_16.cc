@@ -33,7 +33,7 @@ test(const unsigned int size)
 
   // Lapack:
   LAPACKFullMatrix<NumberType> M(size);
-  M = F;
+  M= F;
   M.set_property(LAPACKSupport::symmetric);
 
   deallog << "l1:        " << (F.l1_norm() - M.l1_norm()) << std::endl
@@ -45,12 +45,12 @@ test(const unsigned int size)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{1, 3, 11, 17, 32, 64, 200, 391}};
+  const std::vector<unsigned int> sizes= {{1, 3, 11, 17, 32, 64, 200, 391}};
   for(const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;

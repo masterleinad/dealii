@@ -87,8 +87,7 @@ namespace mg
     AssertIndexRange(sparsity.max_level(),
                      dof_handler.get_triangulation().n_levels());
 
-    for(unsigned int level = sparsity.min_level();
-        level <= sparsity.max_level();
+    for(unsigned int level= sparsity.min_level(); level <= sparsity.max_level();
         ++level)
       {
         DynamicSparsityPattern dsp(dof_handler.n_dofs(level));
@@ -115,11 +114,11 @@ namespace mg
   void
   SparseMatrixCollection<number>::set_zero()
   {
-    matrix      = 0.;
-    matrix_in   = 0.;
-    matrix_out  = 0.;
-    matrix_up   = 0.;
-    matrix_down = 0.;
+    matrix     = 0.;
+    matrix_in  = 0.;
+    matrix_out = 0.;
+    matrix_up  = 0.;
+    matrix_down= 0.;
   }
 
 } // namespace mg

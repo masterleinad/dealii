@@ -23,7 +23,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-static const char* unknown_subscriber = "unknown subscriber";
+static const char* unknown_subscriber= "unknown subscriber";
 
 Subscriptor::Subscriptor() : counter(0), object_info(nullptr)
 {
@@ -43,7 +43,7 @@ Subscriptor::Subscriptor(Subscriptor&& subscriptor) noexcept
 Subscriptor::~Subscriptor()
 {
   check_no_subscribers();
-  object_info = nullptr;
+  object_info= nullptr;
 }
 
 void
@@ -74,16 +74,16 @@ Subscriptor::check_no_subscribers() const noexcept
       if(std::uncaught_exception() == false)
         {
           std::string infostring;
-          for(map_iterator it = counter_map.begin(); it != counter_map.end();
+          for(map_iterator it= counter_map.begin(); it != counter_map.end();
               ++it)
             {
               if(it->second > 0)
-                infostring += std::string("\n  from Subscriber ")
-                              + std::string(it->first);
+                infostring+= std::string("\n  from Subscriber ")
+                             + std::string(it->first);
             }
 
           if(infostring == "")
-            infostring = "<none>";
+            infostring= "<none>";
 
           AssertNothrow(
             counter == 0,
@@ -114,7 +114,7 @@ Subscriptor&
 Subscriptor::operator=(const Subscriptor& s)
 {
   check_no_subscribers();
-  object_info = s.object_info;
+  object_info= s.object_info;
   return *this;
 }
 
@@ -123,7 +123,7 @@ Subscriptor::operator=(Subscriptor&& s) noexcept
 {
   check_no_subscribers();
   s.check_no_subscribers();
-  object_info = s.object_info;
+  object_info= s.object_info;
   return *this;
 }
 
@@ -132,15 +132,15 @@ Subscriptor::subscribe(const char* id) const
 {
 #ifdef DEBUG
   if(object_info == nullptr)
-    object_info = &typeid(*this);
+    object_info= &typeid(*this);
   ++counter;
 
   // This feature is disabled when we compile with threads: see the
   // documentation of this class.
 #  ifndef DEAL_II_WITH_THREADS
-  const char* const name = (id != 0) ? id : unknown_subscriber;
+  const char* const name= (id != 0) ? id : unknown_subscriber;
 
-  map_iterator it = counter_map.find(name);
+  map_iterator it= counter_map.find(name);
   if(it == counter_map.end())
     counter_map.insert(map_value_type(name, 1U));
 
@@ -158,7 +158,7 @@ void
 Subscriptor::unsubscribe(const char* id) const
 {
 #ifdef DEBUG
-  const char* name = (id != nullptr) ? id : unknown_subscriber;
+  const char* name= (id != nullptr) ? id : unknown_subscriber;
   AssertNothrow(counter > 0, ExcNoSubscriber(object_info->name(), name));
   // This is for the case that we do
   // not abort after the exception
@@ -170,7 +170,7 @@ Subscriptor::unsubscribe(const char* id) const
   // This feature is disabled when we compile with threads: see the
   // documentation of this class.
 #  ifndef DEAL_II_WITH_THREADS
-  map_iterator it = counter_map.find(name);
+  map_iterator it= counter_map.find(name);
   AssertNothrow(it != counter_map.end(),
                 ExcNoSubscriber(object_info->name(), name));
   AssertNothrow(it->second > 0, ExcNoSubscriber(object_info->name(), name));
@@ -192,7 +192,7 @@ void
 Subscriptor::list_subscribers() const
 {
 #ifndef DEAL_II_WITH_THREADS
-  for(map_iterator it = counter_map.begin(); it != counter_map.end(); ++it)
+  for(map_iterator it= counter_map.begin(); it != counter_map.end(); ++it)
     deallog << it->second << '/' << counter << " subscriptions from \""
             << it->first << '\"' << std::endl;
 #else

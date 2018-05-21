@@ -51,13 +51,13 @@ test(const unsigned int degree)
   dof.distribute_dofs(fe_rt);
 
   QTrapez<1>         q_trapez;
-  const unsigned int div = 4;
+  const unsigned int div= 4;
   QIterated<dim>     q(q_trapez, div);
 
-  const unsigned int dofs_per_cell = fe_rt.dofs_per_cell;
+  const unsigned int dofs_per_cell= fe_rt.dofs_per_cell;
   SparsityPattern    sp(dofs_per_cell, dofs_per_cell, dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
-    for(unsigned int j = 0; j < dofs_per_cell; ++j)
+  for(unsigned int i= 0; i < dofs_per_cell; ++i)
+    for(unsigned int j= 0; j < dofs_per_cell; ++j)
       sp.add(i, j);
   sp.compress();
   SparseMatrix<double> mass_matrix(sp);
@@ -71,8 +71,8 @@ test(const unsigned int degree)
   SolverCG<>              solver(solver_control, vector_memory);
 
   Vector<double> tmp1(dofs_per_cell), tmp2(dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
-    tmp1(i) = random_value<double>();
+  for(unsigned int i= 0; i < dofs_per_cell; ++i)
+    tmp1(i)= random_value<double>();
 
   deallog << "solving degree = " << degree << std::endl;
   check_solver_within_range(
@@ -89,7 +89,7 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  for(unsigned int i = 1; i < 4; ++i)
+  for(unsigned int i= 1; i < 4; ++i)
     {
       test<2>(i);
       if(i < 3)

@@ -136,7 +136,7 @@ namespace PETScWrappers
          * processes. If an addition is elided on one process, this may lead
          * to other processes hanging in an infinite waiting loop.
          */
-        static const bool zero_addition_can_be_elided = false;
+        static const bool zero_addition_can_be_elided= false;
       };
 
       /**
@@ -178,8 +178,8 @@ namespace PETScWrappers
                    const size_type local_rows,
                    const size_type local_columns,
                    const size_type n_nonzero_per_row,
-                   const bool      is_symmetric              = false,
-                   const size_type n_offdiag_nonzero_per_row = 0);
+                   const bool      is_symmetric             = false,
+                   const size_type n_offdiag_nonzero_per_row= 0);
 
       /**
        * Initialize a rectangular matrix with @p m rows and @p n columns. The
@@ -211,7 +211,7 @@ namespace PETScWrappers
                    const size_type               local_rows,
                    const size_type               local_columns,
                    const std::vector<size_type>& row_lengths,
-                   const bool                    is_symmetric = false,
+                   const bool                    is_symmetric= false,
                    const std::vector<size_type>& offdiag_row_lengths
                    = std::vector<size_type>());
 
@@ -243,7 +243,7 @@ namespace PETScWrappers
                    const std::vector<size_type>& local_rows_per_process,
                    const std::vector<size_type>& local_columns_per_process,
                    const unsigned int            this_process,
-                   const bool preset_nonzero_locations = true);
+                   const bool preset_nonzero_locations= true);
 
       /**
        * This operator assigns a scalar to a matrix. Since this does usually
@@ -280,8 +280,8 @@ namespace PETScWrappers
              const size_type local_rows,
              const size_type local_columns,
              const size_type n_nonzero_per_row,
-             const bool      is_symmetric              = false,
-             const size_type n_offdiag_nonzero_per_row = 0);
+             const bool      is_symmetric             = false,
+             const size_type n_offdiag_nonzero_per_row= 0);
 
       /**
        * Throw away the present matrix and generate one that has the same
@@ -299,7 +299,7 @@ namespace PETScWrappers
              const size_type               local_rows,
              const size_type               local_columns,
              const std::vector<size_type>& row_lengths,
-             const bool                    is_symmetric = false,
+             const bool                    is_symmetric= false,
              const std::vector<size_type>& offdiag_row_lengths
              = std::vector<size_type>());
 
@@ -329,7 +329,7 @@ namespace PETScWrappers
              const std::vector<size_type>& local_rows_per_process,
              const std::vector<size_type>& local_columns_per_process,
              const unsigned int            this_process,
-             const bool                    preset_nonzero_locations = true);
+             const bool                    preset_nonzero_locations= true);
 
       /**
        * Create a matrix where the size() of the IndexSets determine the
@@ -427,7 +427,7 @@ namespace PETScWrappers
       void
       mmult(SparseMatrix&       C,
             const SparseMatrix& B,
-            const MPI::Vector&  V = MPI::Vector()) const;
+            const MPI::Vector&  V= MPI::Vector()) const;
 
       /**
        * Perform the matrix-matrix multiplication with the transpose of
@@ -439,7 +439,7 @@ namespace PETScWrappers
       void
       Tmmult(SparseMatrix&       C,
              const SparseMatrix& B,
-             const MPI::Vector&  V = MPI::Vector()) const;
+             const MPI::Vector&  V= MPI::Vector()) const;
 
     private:
       /**
@@ -462,8 +462,8 @@ namespace PETScWrappers
                 const size_type local_rows,
                 const size_type local_columns,
                 const size_type n_nonzero_per_row,
-                const bool      is_symmetric              = false,
-                const size_type n_offdiag_nonzero_per_row = 0);
+                const bool      is_symmetric             = false,
+                const size_type n_offdiag_nonzero_per_row= 0);
 
       /**
        * Same as previous function.
@@ -478,7 +478,7 @@ namespace PETScWrappers
                 const size_type               local_rows,
                 const size_type               local_columns,
                 const std::vector<size_type>& row_lengths,
-                const bool                    is_symmetric = false,
+                const bool                    is_symmetric= false,
                 const std::vector<size_type>& offdiag_row_lengths
                 = std::vector<size_type>());
 

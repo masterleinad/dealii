@@ -53,11 +53,11 @@ test()
 
   Vector<double> in(dof.n_dofs()), out(dof.n_dofs());
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     {
       if(constraints.is_constrained(i))
         continue;
-      in(i) = 1.;
+      in(i)= 1.;
     }
 
   {
@@ -65,8 +65,7 @@ test()
     {
       const QGauss<1>                                  quad(fe_degree + 1);
       typename MatrixFree<dim, double>::AdditionalData data;
-      data.tasks_parallel_scheme
-        = MatrixFree<dim, double>::AdditionalData::none;
+      data.tasks_parallel_scheme= MatrixFree<dim, double>::AdditionalData::none;
       mf_data.reinit(dof, constraints, quad, data);
     }
 
@@ -80,8 +79,7 @@ test()
     {
       const QGauss<1>                                  quad(fe_degree + 2);
       typename MatrixFree<dim, double>::AdditionalData data;
-      data.tasks_parallel_scheme
-        = MatrixFree<dim, double>::AdditionalData::none;
+      data.tasks_parallel_scheme= MatrixFree<dim, double>::AdditionalData::none;
       mf_data.reinit(dof, constraints, quad, data);
     }
 

@@ -89,7 +89,7 @@ namespace Step22
     BoundaryValues() : Function<dim>(dim + 1)
     {}
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component= 0) const;
     virtual void
     vector_value(const Point<dim>& p, Vector<double>& value) const;
   };
@@ -111,8 +111,8 @@ namespace Step22
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
                                     Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
-      values(c) = BoundaryValues<dim>::value(p, c);
+    for(unsigned int c= 0; c < this->n_components; ++c)
+      values(c)= BoundaryValues<dim>::value(p, c);
   }
 
   template <int dim>
@@ -122,7 +122,7 @@ namespace Step22
     RightHandSide() : Function<dim>(dim + 1)
     {}
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component= 0) const;
     virtual void
     vector_value(const Point<dim>& p, Vector<double>& value) const;
   };
@@ -140,8 +140,8 @@ namespace Step22
   RightHandSide<dim>::vector_value(const Point<dim>& p,
                                    Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
-      values(c) = RightHandSide<dim>::value(p, c);
+    for(unsigned int c= 0; c < this->n_components; ++c)
+      values(c)= RightHandSide<dim>::value(p, c);
   }
 
   template <int dim>
@@ -160,7 +160,7 @@ namespace Step22
     dof_handler.distribute_dofs(fe);
     DoFRenumbering::Cuthill_McKee(dof_handler);
     std::vector<unsigned int> block_component(dim + 1, 0);
-    block_component[dim] = 1;
+    block_component[dim]= 1;
     DoFRenumbering::component_wise(dof_handler, block_component);
     {
       constraints.clear();
@@ -176,7 +176,7 @@ namespace Step22
     std::vector<types::global_dof_index> dofs_per_block(2);
     DoFTools::count_dofs_per_block(
       dof_handler, dofs_per_block, block_component);
-    const unsigned int n_u = dofs_per_block[0], n_p = dofs_per_block[1];
+    const unsigned int n_u= dofs_per_block[0], n_p= dofs_per_block[1];
     deallog << "   Number of active cells: " << triangulation.n_active_cells()
             << std::endl
             << "   Number of degrees of freedom: " << dof_handler.n_dofs()
@@ -206,15 +206,15 @@ namespace Step22
   void
   StokesProblem<dim>::assemble_system()
   {
-    system_matrix = 0;
-    system_rhs    = 0;
+    system_matrix= 0;
+    system_rhs   = 0;
     QGauss<dim>        quadrature_formula(degree + 2);
     FEValues<dim>      fe_values(fe,
                             quadrature_formula,
                             update_values | update_quadrature_points
                               | update_JxW_values | update_gradients);
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     local_rhs(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -228,26 +228,26 @@ namespace Step22
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        local_matrix = 0;
-        local_rhs    = 0;
+        local_matrix= 0;
+        local_rhs   = 0;
         right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                           rhs_values);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
-                div_phi_u[k] = fe_values[velocities].divergence(k, q);
-                phi_p[k]     = fe_values[pressure].value(k, q);
+                div_phi_u[k]= fe_values[velocities].divergence(k, q);
+                phi_p[k]    = fe_values[pressure].value(k, q);
               }
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for(unsigned int j= 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (2 * (symgrad_phi_u[i] * symgrad_phi_u[j])
@@ -257,13 +257,13 @@ namespace Step22
                   }
                 const unsigned int component_i
                   = fe.system_to_component_index(i).first;
-                local_rhs(i) += fe_values.shape_value(i, q)
-                                * rhs_values[q](component_i) * fe_values.JxW(q);
+                local_rhs(i)+= fe_values.shape_value(i, q)
+                               * rhs_values[q](component_i) * fe_values.JxW(q);
               }
           }
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
-            local_matrix(i, j) = local_matrix(j, i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= i + 1; j < dofs_per_cell; ++j)
+            local_matrix(i, j)= local_matrix(j, i);
         cell->get_dof_indices(local_dof_indices);
         constraints.distribute_local_to_global(local_matrix,
                                                local_rhs,
@@ -278,12 +278,12 @@ namespace Step22
   StokesProblem<dim>::solve()
   {
     // Linear operators
-    const auto A = linear_operator(system_matrix.block(0, 0));
-    const auto B = linear_operator(system_matrix.block(0, 1));
-    const auto C = linear_operator(system_matrix.block(1, 0));
-    const auto M = linear_operator(
+    const auto A= linear_operator(system_matrix.block(0, 0));
+    const auto B= linear_operator(system_matrix.block(0, 1));
+    const auto C= linear_operator(system_matrix.block(1, 0));
+    const auto M= linear_operator(
       system_matrix.block(1, 1)); // Mass matrix stored in this block
-    const auto D0 = null_operator(M);
+    const auto D0= null_operator(M);
 
     // Inverse of A
     SparseILU<double> preconditioner_A;
@@ -292,7 +292,7 @@ namespace Step22
     ReductionControl solver_control_A(
       system_matrix.block(0, 0).m(), 1e-10, 1e-6);
     SolverCG<> solver_A(solver_control_A);
-    const auto A_inv = inverse_operator(A, solver_A, preconditioner_A);
+    const auto A_inv= inverse_operator(A, solver_A, preconditioner_A);
 
     // Inverse of mass matrix stored in block "D"
     SparseILU<double> preconditioner_M;
@@ -301,24 +301,24 @@ namespace Step22
     ReductionControl solver_control_M(
       system_matrix.block(1, 1).m(), 1e-10, 1e-6);
     SolverCG<> solver_M(solver_control_M);
-    const auto M_inv = inverse_operator(M, solver_M, preconditioner_M);
+    const auto M_inv= inverse_operator(M, solver_M, preconditioner_M);
 
     // Schur complement
-    const auto S = schur_complement(A_inv, B, C, D0);
+    const auto S= schur_complement(A_inv, B, C, D0);
 
     // Inverse of Schur complement
     ReductionControl solver_control_S(
       system_matrix.block(1, 1).m(), 1e-10, 1e-6);
     SolverCG<> solver_S(solver_control_S);
-    const auto S_inv = inverse_operator(S, solver_S, M_inv);
+    const auto S_inv= inverse_operator(S, solver_S, M_inv);
 
-    Vector<double>&       x   = solution.block(0);
-    Vector<double>&       y   = solution.block(1);
-    const Vector<double>& f   = system_rhs.block(0);
-    const Vector<double>& g   = system_rhs.block(1);
-    auto                  rhs = condense_schur_rhs(A_inv, C, f, g);
-    y                         = S_inv * rhs;
-    x                         = postprocess_schur_solution(A_inv, B, y, f);
+    Vector<double>&       x  = solution.block(0);
+    Vector<double>&       y  = solution.block(1);
+    const Vector<double>& f  = system_rhs.block(0);
+    const Vector<double>& g  = system_rhs.block(1);
+    auto                  rhs= condense_schur_rhs(A_inv, C, f, g);
+    y                        = S_inv * rhs;
+    x                        = postprocess_schur_solution(A_inv, B, y, f);
 
     constraints.distribute(solution);
     deallog << "  " << solver_control_S.last_step()
@@ -361,11 +361,11 @@ namespace Step22
         = triangulation.begin_active();
         cell != triangulation.end();
         ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->face(f)->center()[dim - 1] == 0)
           cell->face(f)->set_all_boundary_ids(1);
     triangulation.refine_global(4 - dim);
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 2;
+    for(unsigned int refinement_cycle= 0; refinement_cycle < 2;
         ++refinement_cycle)
       {
         deallog << "Refinement cycle " << refinement_cycle << std::endl;

@@ -26,8 +26,8 @@ test(TrilinosWrappers::SparseMatrix& m)
   TrilinosWrappers::SparseMatrix m2(m.m(), m.n(), 0);
 
   // first set a few entries one-by-one
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           m.set(i, j, i * j * .5 + .5);

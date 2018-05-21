@@ -37,7 +37,7 @@ print(TrilinosWrappers::MPI::Vector& v, unsigned int first_element)
 void
 test()
 {
-  unsigned int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int my_id= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector v;
   IndexSet                      owned_indices_1(6);
   IndexSet                      ghosted_indices_1(6);
@@ -49,8 +49,8 @@ test()
   IndexSet                      owned_indices_2(10);
   owned_indices_2.add_range(my_id * 5, (my_id + 1) * 5);
   w.reinit(owned_indices_2, MPI_COMM_WORLD);
-  for(unsigned int i = my_id * 5; i < (my_id + 1) * 5; ++i)
-    w(i) = 2;
+  for(unsigned int i= my_id * 5; i < (my_id + 1) * 5; ++i)
+    w(i)= 2;
 
   deallog << "v: ";
   print(v, my_id * 3);

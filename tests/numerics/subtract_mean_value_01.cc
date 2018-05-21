@@ -28,10 +28,10 @@ test(VectorType& v)
 {
   std::vector<bool> filter(v.size(), false);
   // set some elements of the vector
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      filter[i] = true;
-      v(i)      = i;
+      filter[i]= true;
+      v(i)     = i;
     }
 
   // then check the norm

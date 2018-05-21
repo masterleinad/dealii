@@ -530,7 +530,7 @@ public:
      * It is safe to elide additions of zeros to individual elements of this
      * matrix.
      */
-    static const bool zero_addition_can_be_elided = true;
+    static const bool zero_addition_can_be_elided= true;
   };
 
   /**
@@ -712,7 +712,7 @@ public:
    * nonzero (or whose absolute value is greater than threshold).
    */
   std::size_t
-  n_actually_nonzero_elements(const double threshold = 0.) const;
+  n_actually_nonzero_elements(const double threshold= 0.) const;
 
   /**
    * Return a (constant) reference to the underlying sparsity pattern of this
@@ -769,7 +769,7 @@ public:
   void
   set(const std::vector<size_type>& indices,
       const FullMatrix<number2>&    full_matrix,
-      const bool                    elide_zero_values = false);
+      const bool                    elide_zero_values= false);
 
   /**
    * Same function as before, but now including the possibility to use
@@ -781,7 +781,7 @@ public:
   set(const std::vector<size_type>& row_indices,
       const std::vector<size_type>& col_indices,
       const FullMatrix<number2>&    full_matrix,
-      const bool                    elide_zero_values = false);
+      const bool                    elide_zero_values= false);
 
   /**
    * Set several elements in the specified row of the matrix with column
@@ -798,7 +798,7 @@ public:
   set(const size_type               row,
       const std::vector<size_type>& col_indices,
       const std::vector<number2>&   values,
-      const bool                    elide_zero_values = false);
+      const bool                    elide_zero_values= false);
 
   /**
    * Set several elements to values given by <tt>values</tt> in a given row in
@@ -815,7 +815,7 @@ public:
       const size_type  n_cols,
       const size_type* col_indices,
       const number2*   values,
-      const bool       elide_zero_values = false);
+      const bool       elide_zero_values= false);
 
   /**
    * Add <tt>value</tt> to the element (<i>i,j</i>).  Throws an error if the
@@ -843,7 +843,7 @@ public:
   void
   add(const std::vector<size_type>& indices,
       const FullMatrix<number2>&    full_matrix,
-      const bool                    elide_zero_values = true);
+      const bool                    elide_zero_values= true);
 
   /**
    * Same function as before, but now including the possibility to use
@@ -855,7 +855,7 @@ public:
   add(const std::vector<size_type>& row_indices,
       const std::vector<size_type>& col_indices,
       const FullMatrix<number2>&    full_matrix,
-      const bool                    elide_zero_values = true);
+      const bool                    elide_zero_values= true);
 
   /**
    * Set several elements in the specified row of the matrix with column
@@ -871,7 +871,7 @@ public:
   add(const size_type               row,
       const std::vector<size_type>& col_indices,
       const std::vector<number2>&   values,
-      const bool                    elide_zero_values = true);
+      const bool                    elide_zero_values= true);
 
   /**
    * Add an array of values given by <tt>values</tt> in the given global
@@ -888,8 +888,8 @@ public:
       const size_type  n_cols,
       const size_type* col_indices,
       const number2*   values,
-      const bool       elide_zero_values      = true,
-      const bool       col_indices_are_sorted = false);
+      const bool       elide_zero_values     = true,
+      const bool       col_indices_are_sorted= false);
 
   /**
    * Multiply the entire matrix by a fixed factor.
@@ -1226,8 +1226,8 @@ public:
   void
   mmult(SparseMatrix<numberC>&       C,
         const SparseMatrix<numberB>& B,
-        const Vector<number>&        V = Vector<number>(),
-        const bool                   rebuild_sparsity_pattern = true) const;
+        const Vector<number>&        V                       = Vector<number>(),
+        const bool                   rebuild_sparsity_pattern= true) const;
 
   /**
    * Perform the matrix-matrix multiplication with the transpose of
@@ -1257,8 +1257,8 @@ public:
   void
   Tmmult(SparseMatrix<numberC>&       C,
          const SparseMatrix<numberB>& B,
-         const Vector<number>&        V = Vector<number>(),
-         const bool                   rebuild_sparsity_pattern = true) const;
+         const Vector<number>&        V= Vector<number>(),
+         const bool                   rebuild_sparsity_pattern= true) const;
 
   //@}
   /**
@@ -1307,7 +1307,7 @@ public:
   void
   precondition_Jacobi(Vector<somenumber>&       dst,
                       const Vector<somenumber>& src,
-                      const number              omega = 1.) const;
+                      const number              omega= 1.) const;
 
   /**
    * Apply SSOR preconditioning to <tt>src</tt> with damping <tt>omega</tt>.
@@ -1319,7 +1319,7 @@ public:
   void
   precondition_SSOR(Vector<somenumber>&             dst,
                     const Vector<somenumber>&       src,
-                    const number                    omega = 1.,
+                    const number                    omega= 1.,
                     const std::vector<std::size_t>& pos_right_of_diagonal
                     = std::vector<std::size_t>()) const;
 
@@ -1330,7 +1330,7 @@ public:
   void
   precondition_SOR(Vector<somenumber>&       dst,
                    const Vector<somenumber>& src,
-                   const number              om = 1.) const;
+                   const number              om= 1.) const;
 
   /**
    * Apply transpose SOR preconditioning matrix to <tt>src</tt>.
@@ -1339,7 +1339,7 @@ public:
   void
   precondition_TSOR(Vector<somenumber>&       dst,
                     const Vector<somenumber>& src,
-                    const number              om = 1.) const;
+                    const number              om= 1.) const;
 
   /**
    * Perform SSOR preconditioning in-place.  Apply the preconditioner matrix
@@ -1348,7 +1348,7 @@ public:
    */
   template <typename somenumber>
   void
-  SSOR(Vector<somenumber>& v, const number omega = 1.) const;
+  SSOR(Vector<somenumber>& v, const number omega= 1.) const;
 
   /**
    * Perform an SOR preconditioning in-place.  <tt>omega</tt> is the
@@ -1356,7 +1356,7 @@ public:
    */
   template <typename somenumber>
   void
-  SOR(Vector<somenumber>& v, const number om = 1.) const;
+  SOR(Vector<somenumber>& v, const number om= 1.) const;
 
   /**
    * Perform a transpose SOR preconditioning in-place.  <tt>omega</tt> is the
@@ -1364,7 +1364,7 @@ public:
    */
   template <typename somenumber>
   void
-  TSOR(Vector<somenumber>& v, const number om = 1.) const;
+  TSOR(Vector<somenumber>& v, const number om= 1.) const;
 
   /**
    * Perform a permuted SOR preconditioning in-place.
@@ -1381,7 +1381,7 @@ public:
   PSOR(Vector<somenumber>&           v,
        const std::vector<size_type>& permutation,
        const std::vector<size_type>& inverse_permutation,
-       const number                  om = 1.) const;
+       const number                  om= 1.) const;
 
   /**
    * Perform a transposed permuted SOR preconditioning in-place.
@@ -1398,7 +1398,7 @@ public:
   TPSOR(Vector<somenumber>&           v,
         const std::vector<size_type>& permutation,
         const std::vector<size_type>& inverse_permutation,
-        const number                  om = 1.) const;
+        const number                  om= 1.) const;
 
   /**
    * Do one Jacobi step on <tt>v</tt>.  Performs a direct Jacobi step with
@@ -1409,7 +1409,7 @@ public:
   void
   Jacobi_step(Vector<somenumber>&       v,
               const Vector<somenumber>& b,
-              const number              om = 1.) const;
+              const number              om= 1.) const;
 
   /**
    * Do one SOR step on <tt>v</tt>.  Performs a direct SOR step with right
@@ -1419,7 +1419,7 @@ public:
   void
   SOR_step(Vector<somenumber>&       v,
            const Vector<somenumber>& b,
-           const number              om = 1.) const;
+           const number              om= 1.) const;
 
   /**
    * Do one adjoint SOR step on <tt>v</tt>.  Performs a direct TSOR step with
@@ -1429,7 +1429,7 @@ public:
   void
   TSOR_step(Vector<somenumber>&       v,
             const Vector<somenumber>& b,
-            const number              om = 1.) const;
+            const number              om= 1.) const;
 
   /**
    * Do one SSOR step on <tt>v</tt>.  Performs a direct SSOR step with right
@@ -1439,7 +1439,7 @@ public:
   void
   SSOR_step(Vector<somenumber>&       v,
             const Vector<somenumber>& b,
-            const number              om = 1.) const;
+            const number              om= 1.) const;
   //@}
   /**
    * @name Iterators
@@ -1528,8 +1528,8 @@ public:
   template <class StreamType>
   void
   print(StreamType& out,
-        const bool  across         = false,
-        const bool  diagonal_first = true) const;
+        const bool  across        = false,
+        const bool  diagonal_first= true) const;
 
   /**
    * Print the matrix in the usual format, i.e. as a matrix and not as a list
@@ -1553,11 +1553,11 @@ public:
    */
   void
   print_formatted(std::ostream&      out,
-                  const unsigned int precision   = 3,
-                  const bool         scientific  = true,
-                  const unsigned int width       = 0,
-                  const char*        zero_string = " ",
-                  const double       denominator = 1.) const;
+                  const unsigned int precision  = 3,
+                  const bool         scientific = true,
+                  const unsigned int width      = 0,
+                  const char*        zero_string= " ",
+                  const double       denominator= 1.) const;
 
   /**
    * Print the actual pattern of the matrix. For each entry with an absolute
@@ -1565,7 +1565,7 @@ public:
    * smaller and a '.' for every entry not allocated.
    */
   void
-  print_pattern(std::ostream& out, const double threshold = 0.) const;
+  print_pattern(std::ostream& out, const double threshold= 0.) const;
 
   /**
    * Write the data of this object en bloc to a file. This is done in a binary
@@ -1759,7 +1759,7 @@ SparseMatrix<number>::set(const size_type i,
 {
   AssertIsFinite(value);
 
-  const size_type index = cols->operator()(i, j);
+  const size_type index= cols->operator()(i, j);
 
   // it is allowed to set elements of the matrix that are not part of the
   // sparsity pattern, if the value to which we set it is zero
@@ -1770,7 +1770,7 @@ SparseMatrix<number>::set(const size_type i,
       return;
     }
 
-  val[index] = value;
+  val[index]= value;
 }
 
 template <typename number>
@@ -1784,7 +1784,7 @@ SparseMatrix<number>::set(const std::vector<size_type>& indices,
          ExcDimensionMismatch(indices.size(), values.m()));
   Assert(values.m() == values.n(), ExcNotQuadratic());
 
-  for(size_type i = 0; i < indices.size(); ++i)
+  for(size_type i= 0; i < indices.size(); ++i)
     set(indices[i],
         indices.size(),
         indices.data(),
@@ -1805,7 +1805,7 @@ SparseMatrix<number>::set(const std::vector<size_type>& row_indices,
   Assert(col_indices.size() == values.n(),
          ExcDimensionMismatch(col_indices.size(), values.n()));
 
-  for(size_type i = 0; i < row_indices.size(); ++i)
+  for(size_type i= 0; i < row_indices.size(); ++i)
     set(row_indices[i],
         col_indices.size(),
         col_indices.data(),
@@ -1842,7 +1842,7 @@ SparseMatrix<number>::add(const size_type i,
   if(value == number())
     return;
 
-  const size_type index = cols->operator()(i, j);
+  const size_type index= cols->operator()(i, j);
 
   // it is allowed to add elements to the matrix that are not part of the
   // sparsity pattern, if the value to which we set it is zero
@@ -1853,7 +1853,7 @@ SparseMatrix<number>::add(const size_type i,
       return;
     }
 
-  val[index] += value;
+  val[index]+= value;
 }
 
 template <typename number>
@@ -1867,7 +1867,7 @@ SparseMatrix<number>::add(const std::vector<size_type>& indices,
          ExcDimensionMismatch(indices.size(), values.m()));
   Assert(values.m() == values.n(), ExcNotQuadratic());
 
-  for(size_type i = 0; i < indices.size(); ++i)
+  for(size_type i= 0; i < indices.size(); ++i)
     add(indices[i],
         indices.size(),
         indices.data(),
@@ -1888,7 +1888,7 @@ SparseMatrix<number>::add(const std::vector<size_type>& row_indices,
   Assert(col_indices.size() == values.n(),
          ExcDimensionMismatch(col_indices.size(), values.n()));
 
-  for(size_type i = 0; i < row_indices.size(); ++i)
+  for(size_type i= 0; i < row_indices.size(); ++i)
     add(row_indices[i],
         col_indices.size(),
         col_indices.data(),
@@ -1921,11 +1921,11 @@ SparseMatrix<number>::operator*=(const number factor)
   Assert(cols != nullptr, ExcNotInitialized());
   Assert(val != nullptr, ExcNotInitialized());
 
-  number*             val_ptr = val.get();
-  const number* const end_ptr = val.get() + cols->n_nonzero_elements();
+  number*             val_ptr= val.get();
+  const number* const end_ptr= val.get() + cols->n_nonzero_elements();
 
   while(val_ptr != end_ptr)
-    *val_ptr++ *= factor;
+    *val_ptr++*= factor;
 
   return *this;
 }
@@ -1938,13 +1938,13 @@ SparseMatrix<number>::operator/=(const number factor)
   Assert(val != nullptr, ExcNotInitialized());
   Assert(factor != number(), ExcDivideByZero());
 
-  const number factor_inv = number(1.) / factor;
+  const number factor_inv= number(1.) / factor;
 
-  number*             val_ptr = val.get();
-  const number* const end_ptr = val.get() + cols->n_nonzero_elements();
+  number*             val_ptr= val.get();
+  const number* const end_ptr= val.get() + cols->n_nonzero_elements();
 
   while(val_ptr != end_ptr)
-    *val_ptr++ *= factor_inv;
+    *val_ptr++*= factor_inv;
 
   return *this;
 }
@@ -1974,7 +1974,7 @@ inline number
 SparseMatrix<number>::el(const size_type i, const size_type j) const
 {
   Assert(cols != nullptr, ExcNotInitialized());
-  const size_type index = cols->operator()(i, j);
+  const size_type index= cols->operator()(i, j);
 
   if(index != SparsityPattern::invalid_entry)
     return val[index];
@@ -2022,11 +2022,11 @@ SparseMatrix<number>::copy_from(const ForwardIterator begin,
   typedef
     typename std::iterator_traits<ForwardIterator>::value_type::const_iterator
             inner_iterator;
-  size_type row = 0;
-  for(ForwardIterator i = begin; i != end; ++i, ++row)
+  size_type row= 0;
+  for(ForwardIterator i= begin; i != end; ++i, ++row)
     {
-      const inner_iterator end_of_row = i->end();
-      for(inner_iterator j = i->begin(); j != end_of_row; ++j)
+      const inner_iterator end_of_row= i->end();
+      for(inner_iterator j= i->begin(); j != end_of_row; ++j)
         // write entries
         set(row, j->first, j->second);
     };
@@ -2091,7 +2091,7 @@ namespace SparseMatrixIterators
   {
     AssertIndexRange(accessor->index_within_sparsity,
                      accessor->matrix->n_nonzero_elements());
-    accessor->matrix->val[accessor->index_within_sparsity] = n;
+    accessor->matrix->val[accessor->index_within_sparsity]= n;
     return *this;
   }
 
@@ -2101,7 +2101,7 @@ namespace SparseMatrixIterators
   {
     AssertIndexRange(accessor->index_within_sparsity,
                      accessor->matrix->n_nonzero_elements());
-    accessor->matrix->val[accessor->index_within_sparsity] += n;
+    accessor->matrix->val[accessor->index_within_sparsity]+= n;
     return *this;
   }
 
@@ -2111,7 +2111,7 @@ namespace SparseMatrixIterators
   {
     AssertIndexRange(accessor->index_within_sparsity,
                      accessor->matrix->n_nonzero_elements());
-    accessor->matrix->val[accessor->index_within_sparsity] -= n;
+    accessor->matrix->val[accessor->index_within_sparsity]-= n;
     return *this;
   }
 
@@ -2121,7 +2121,7 @@ namespace SparseMatrixIterators
   {
     AssertIndexRange(accessor->index_within_sparsity,
                      accessor->matrix->n_nonzero_elements());
-    accessor->matrix->val[accessor->index_within_sparsity] *= n;
+    accessor->matrix->val[accessor->index_within_sparsity]*= n;
     return *this;
   }
 
@@ -2131,7 +2131,7 @@ namespace SparseMatrixIterators
   {
     AssertIndexRange(accessor->index_within_sparsity,
                      accessor->matrix->n_nonzero_elements());
-    accessor->matrix->val[accessor->index_within_sparsity] /= n;
+    accessor->matrix->val[accessor->index_within_sparsity]/= n;
     return *this;
   }
 
@@ -2192,7 +2192,7 @@ namespace SparseMatrixIterators
   inline Iterator<number, Constness>
   Iterator<number, Constness>::operator++(int)
   {
-    const Iterator iter = *this;
+    const Iterator iter= *this;
     accessor.advance();
     return iter;
   }
@@ -2256,8 +2256,8 @@ namespace SparseMatrixIterators
   inline Iterator<number, Constness>
   Iterator<number, Constness>::operator+(const size_type n) const
   {
-    Iterator x = *this;
-    for(size_type i = 0; i < n; ++i)
+    Iterator x= *this;
+    for(size_type i= 0; i < n; ++i)
       ++x;
 
     return x;
@@ -2339,17 +2339,17 @@ SparseMatrix<number>::print(StreamType& out,
   Assert(cols != nullptr, ExcNotInitialized());
   Assert(val != nullptr, ExcNotInitialized());
 
-  bool   hanging_diagonal = false;
-  number diagonal         = number();
+  bool   hanging_diagonal= false;
+  number diagonal        = number();
 
-  for(size_type i = 0; i < cols->rows; ++i)
+  for(size_type i= 0; i < cols->rows; ++i)
     {
-      for(size_type j = cols->rowstart[i]; j < cols->rowstart[i + 1]; ++j)
+      for(size_type j= cols->rowstart[i]; j < cols->rowstart[i + 1]; ++j)
         {
           if(!diagonal_first && i == cols->colnums[j])
             {
-              diagonal         = val[j];
-              hanging_diagonal = true;
+              diagonal        = val[j];
+              hanging_diagonal= true;
             }
           else
             {
@@ -2360,7 +2360,7 @@ SparseMatrix<number>::print(StreamType& out,
                   else
                     out << '(' << i << ',' << i << ") " << diagonal
                         << std::endl;
-                  hanging_diagonal = false;
+                  hanging_diagonal= false;
                 }
               if(across)
                 out << ' ' << i << ',' << cols->colnums[j] << ':' << val[j];
@@ -2375,7 +2375,7 @@ SparseMatrix<number>::print(StreamType& out,
             out << ' ' << i << ',' << i << ':' << diagonal;
           else
             out << '(' << i << ',' << i << ") " << diagonal << std::endl;
-          hanging_diagonal = false;
+          hanging_diagonal= false;
         }
     }
   if(across)

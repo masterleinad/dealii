@@ -72,7 +72,7 @@ namespace
   {
     std::set<CheapEdge> edges;
 
-    for(typename std::vector<CellData<dim>>::const_iterator c = cells.begin();
+    for(typename std::vector<CellData<dim>>::const_iterator c= cells.begin();
         c != cells.end();
         ++c)
       {
@@ -81,7 +81,7 @@ namespace
         // edges (return false if the reverse edge already *is* in
         // the list) and then add the actual edge to it; std::set
         // eliminates duplicates automatically
-        for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+        for(unsigned int l= 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
           {
             const CheapEdge reverse_edge(
               c->vertices[GeometryInfo<dim>::line_to_cell_vertices(l, 1)],
@@ -121,23 +121,23 @@ namespace
      * Number and indices of all of those edges parallel to each of the
      * edges in a cell.
      */
-    static const unsigned int n_other_parallel_edges = (1 << (dim - 1)) - 1;
+    static const unsigned int n_other_parallel_edges= (1 << (dim - 1)) - 1;
     static const unsigned int parallel_edges[GeometryInfo<dim>::lines_per_cell]
                                             [n_other_parallel_edges];
   };
 
   template <>
-  const unsigned int ParallelEdges<2>::starter_edges[2] = {0, 2};
+  const unsigned int ParallelEdges<2>::starter_edges[2]= {0, 2};
 
   template <>
   const unsigned int ParallelEdges<2>::parallel_edges[4][1]
     = {{1}, {0}, {3}, {2}};
 
   template <>
-  const unsigned int ParallelEdges<3>::starter_edges[3] = {0, 2, 8};
+  const unsigned int ParallelEdges<3>::starter_edges[3]= {0, 2, 8};
 
   template <>
-  const unsigned int ParallelEdges<3>::parallel_edges[12][3] = {
+  const unsigned int ParallelEdges<3>::parallel_edges[12][3]= {
     {1, 4, 5},   // line 0
     {0, 4, 5},   // line 1
     {3, 6, 7},   // line 2
@@ -208,12 +208,12 @@ namespace
     push_back(const AdjacentCell& adjacent_cell)
     {
       if(adjacent_cells[0].cell_index == numbers::invalid_unsigned_int)
-        adjacent_cells[0] = adjacent_cell;
+        adjacent_cells[0]= adjacent_cell;
       else
         {
           Assert(adjacent_cells[1].cell_index == numbers::invalid_unsigned_int,
                  ExcInternalError());
-          adjacent_cells[1] = adjacent_cell;
+          adjacent_cells[1]= adjacent_cell;
         }
     }
 
@@ -366,12 +366,12 @@ namespace
      */
     Cell(const CellData<dim>& c, const std::vector<Edge<dim>>& edge_list)
     {
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-        vertex_indices[i] = c.vertices[i];
+      for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+        vertex_indices[i]= c.vertices[i];
 
       // now for each of the edges of this cell, find the location inside the
       // given edge_list array and store than index
-      for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+      for(unsigned int l= 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
         {
           const Edge<dim> e(c, l);
           edge_indices[l]
@@ -421,7 +421,7 @@ namespace
      */
     EdgeDeltaSet()
     {
-      edge_indices[0] = edge_indices[1] = numbers::invalid_unsigned_int;
+      edge_indices[0]= edge_indices[1]= numbers::invalid_unsigned_int;
     }
 
     /**
@@ -430,7 +430,7 @@ namespace
     void
     clear()
     {
-      edge_indices[0] = edge_indices[1] = numbers::invalid_unsigned_int;
+      edge_indices[0]= edge_indices[1]= numbers::invalid_unsigned_int;
     }
 
     /**
@@ -441,12 +441,12 @@ namespace
     insert(const unsigned int edge_index)
     {
       if(edge_indices[0] == numbers::invalid_unsigned_int)
-        edge_indices[0] = edge_index;
+        edge_indices[0]= edge_index;
       else
         {
           Assert(edge_indices[1] == numbers::invalid_unsigned_int,
                  ExcInternalError());
-          edge_indices[1] = edge_index;
+          edge_indices[1]= edge_index;
         }
     }
 
@@ -512,8 +512,8 @@ namespace
     // some of them will be duplicates, and we throw them out below
     std::vector<Edge<dim>> edge_list;
     edge_list.reserve(cells.size() * GeometryInfo<dim>::lines_per_cell);
-    for(unsigned int i = 0; i < cells.size(); ++i)
-      for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+    for(unsigned int i= 0; i < cells.size(); ++i)
+      for(unsigned int l= 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
         edge_list.emplace_back(cells[i], l);
 
     // next sort the edge list and then remove duplicates
@@ -535,7 +535,7 @@ namespace
   {
     std::vector<Cell<dim>> cell_list;
     cell_list.reserve(cells.size());
-    for(unsigned int i = 0; i < cells.size(); ++i)
+    for(unsigned int i= 0; i < cells.size(); ++i)
       {
         // create our own data structure for the cells and let it
         // connect to the edges array
@@ -543,7 +543,7 @@ namespace
 
         // then also inform the edges that they are adjacent
         // to the current cell, and where within this cell
-        for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+        for(unsigned int l= 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
           edges[cell_list.back().edge_indices[l]].adjacent_cells.push_back(
             AdjacentCell(i, l));
       }
@@ -562,8 +562,8 @@ namespace
                            const std::vector<Edge<dim>>& edges,
                            const unsigned int            current_cell)
   {
-    for(unsigned int c = current_cell; c < cells.size(); ++c)
-      for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+    for(unsigned int c= current_cell; c < cells.size(); ++c)
+      for(unsigned int l= 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
         if(edges[cells[c].edge_indices[l]].orientation_status
            == Edge<dim>::not_oriented)
           return c;
@@ -658,7 +658,7 @@ namespace
                 adjacent_cell != edges[*delta].adjacent_cells.end();
                 ++adjacent_cell)
               {
-                const unsigned int K = adjacent_cell->cell_index;
+                const unsigned int K= adjacent_cell->cell_index;
                 const unsigned int delta_is_edge_in_K
                   = adjacent_cell->edge_within_cell;
 
@@ -681,7 +681,7 @@ namespace
 
                 // now figure out which direction the each of the "opposite" edges
                 // needs to be oriented into.
-                for(unsigned int o_e = 0;
+                for(unsigned int o_e= 0;
                     o_e < ParallelEdges<dim>::n_other_parallel_edges;
                     ++o_e)
                   {
@@ -753,7 +753,7 @@ namespace
         // finally copy the new set to the previous one
         // (corresponding to increasing 'k' by one in the
         // algorithm)
-        Delta_k_minus_1 = Delta_k;
+        Delta_k_minus_1= Delta_k;
       }
   }
 
@@ -774,7 +774,7 @@ namespace
     // find the first vertex of the cell. this is the vertex where dim edges
     // originate, so for each of the edges record which the starting vertex is
     unsigned int starting_vertex_of_edge[GeometryInfo<dim>::lines_per_cell];
-    for(unsigned int e = 0; e < GeometryInfo<dim>::lines_per_cell; ++e)
+    for(unsigned int e= 0; e < GeometryInfo<dim>::lines_per_cell; ++e)
       {
         Assert(
           edge_list[cell_list[cell_index].edge_indices[e]].orientation_status
@@ -794,7 +794,7 @@ namespace
     // find the vertex number that appears dim times. this will then be
     // the vertex at which we want to locate the origin of the cell's
     // coordinate system (i.e., vertex 0)
-    unsigned int origin_vertex_of_cell = numbers::invalid_unsigned_int;
+    unsigned int origin_vertex_of_cell= numbers::invalid_unsigned_int;
     switch(dim)
       {
         case 2:
@@ -804,11 +804,11 @@ namespace
             // any vertices, and the same for edges two and three
             if((starting_vertex_of_edge[0] == starting_vertex_of_edge[2])
                || (starting_vertex_of_edge[0] == starting_vertex_of_edge[3]))
-              origin_vertex_of_cell = starting_vertex_of_edge[0];
+              origin_vertex_of_cell= starting_vertex_of_edge[0];
             else if((starting_vertex_of_edge[1] == starting_vertex_of_edge[2])
                     || (starting_vertex_of_edge[1]
                         == starting_vertex_of_edge[3]))
-              origin_vertex_of_cell = starting_vertex_of_edge[1];
+              origin_vertex_of_cell= starting_vertex_of_edge[1];
             else
               Assert(false, ExcInternalError());
 
@@ -820,7 +820,7 @@ namespace
             // one could probably do something similar in 3d, but that seems
             // more complicated than one wants to write down. just go
             // through the list of possible starting vertices and check
-            for(origin_vertex_of_cell = 0;
+            for(origin_vertex_of_cell= 0;
                 origin_vertex_of_cell < GeometryInfo<dim>::vertices_per_cell;
                 ++origin_vertex_of_cell)
               if(std::count(
@@ -853,14 +853,14 @@ namespace
             // vertices (not in clockwise or counter-clockwise sense)
             while(raw_cells[cell_index].vertices[0] != origin_vertex_of_cell)
               {
-                const unsigned int tmp = raw_cells[cell_index].vertices[0];
+                const unsigned int tmp= raw_cells[cell_index].vertices[0];
                 raw_cells[cell_index].vertices[0]
                   = raw_cells[cell_index].vertices[1];
                 raw_cells[cell_index].vertices[1]
                   = raw_cells[cell_index].vertices[3];
                 raw_cells[cell_index].vertices[3]
                   = raw_cells[cell_index].vertices[2];
-                raw_cells[cell_index].vertices[2] = tmp;
+                raw_cells[cell_index].vertices[2]= tmp;
               }
             break;
           }
@@ -888,14 +888,14 @@ namespace
 
             unsigned int
               temp_vertex_indices[GeometryInfo<dim>::vertices_per_cell];
-            for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+            for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell;
                 ++v)
               temp_vertex_indices[v]
                 = raw_cells[cell_index]
                     .vertices[cube_permutations[origin_vertex_of_cell][v]];
-            for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+            for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell;
                 ++v)
-              raw_cells[cell_index].vertices[v] = temp_vertex_indices[v];
+              raw_cells[cell_index].vertices[v]= temp_vertex_indices[v];
 
             break;
           }
@@ -918,14 +918,14 @@ namespace
   {
     // first build the arrays that connect cells to edges and the other
     // way around
-    std::vector<Edge<dim>> edge_list = build_edges(cells);
+    std::vector<Edge<dim>> edge_list= build_edges(cells);
     std::vector<Cell<dim>> cell_list
       = build_cells_and_connect_edges(cells, edge_list);
 
     // then loop over all cells and start orienting parallel edge sets
     // of cells that still have non-oriented edges
-    unsigned int next_cell_with_unoriented_edge = 0;
-    while((next_cell_with_unoriented_edge = get_next_unoriented_cell(
+    unsigned int next_cell_with_unoriented_edge= 0;
+    while((next_cell_with_unoriented_edge= get_next_unoriented_cell(
              cell_list, edge_list, next_cell_with_unoriented_edge))
           != numbers::invalid_unsigned_int)
       {
@@ -940,7 +940,7 @@ namespace
         // already be oriented because the line (sheet) that connects
         // globally parallel edges may be self-intersecting in the
         // current cell
-        for(unsigned int l = 0; l < dim; ++l)
+        for(unsigned int l= 0; l < dim; ++l)
           if(edge_list[cell_list[next_cell_with_unoriented_edge]
                          .edge_indices[ParallelEdges<dim>::starter_edges[l]]]
                .orientation_status
@@ -953,7 +953,7 @@ namespace
 
         // ensure that we have really oriented all edges now, not just
         // the starter edges
-        for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+        for(unsigned int l= 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
           Assert(
             edge_list[cell_list[next_cell_with_unoriented_edge].edge_indices[l]]
                 .orientation_status
@@ -964,7 +964,7 @@ namespace
     // now that we have oriented all edges, we need to rotate cells
     // so that the edges point in the right direction with the now
     // rotated coordinate system
-    for(unsigned int c = 0; c < cells.size(); ++c)
+    for(unsigned int c= 0; c < cells.size(); ++c)
       rotate_cell(cell_list, edge_list, c, cells);
   }
 
@@ -991,19 +991,19 @@ namespace
 
   void reorder_new_to_old_style(std::vector<CellData<2>>& cells)
   {
-    for(unsigned int cell = 0; cell < cells.size(); ++cell)
+    for(unsigned int cell= 0; cell < cells.size(); ++cell)
       std::swap(cells[cell].vertices[2], cells[cell].vertices[3]);
   }
 
   void reorder_new_to_old_style(std::vector<CellData<3>>& cells)
   {
     unsigned int tmp[GeometryInfo<3>::vertices_per_cell];
-    for(unsigned int cell = 0; cell < cells.size(); ++cell)
+    for(unsigned int cell= 0; cell < cells.size(); ++cell)
       {
-        for(unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
-          tmp[i] = cells[cell].vertices[i];
-        for(unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
-          cells[cell].vertices[i] = tmp[GeometryInfo<3>::ucd_to_deal[i]];
+        for(unsigned int i= 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
+          tmp[i]= cells[cell].vertices[i];
+        for(unsigned int i= 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
+          cells[cell].vertices[i]= tmp[GeometryInfo<3>::ucd_to_deal[i]];
       }
   }
 
@@ -1023,12 +1023,12 @@ namespace
   {
     // undo the ordering above
     unsigned int tmp[GeometryInfo<3>::vertices_per_cell];
-    for(unsigned int cell = 0; cell < cells.size(); ++cell)
+    for(unsigned int cell= 0; cell < cells.size(); ++cell)
       {
-        for(unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
-          tmp[i] = cells[cell].vertices[i];
-        for(unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
-          cells[cell].vertices[GeometryInfo<3>::ucd_to_deal[i]] = tmp[i];
+        for(unsigned int i= 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
+          tmp[i]= cells[cell].vertices[i];
+        for(unsigned int i= 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
+          cells[cell].vertices[GeometryInfo<3>::ucd_to_deal[i]]= tmp[i];
       }
   }
 } // namespace
@@ -1104,13 +1104,13 @@ GridReordering<2>::invert_all_cells_of_negative_grid(
   std::vector<CellData<2>>&    cells)
 {
   unsigned int vertices_lex[GeometryInfo<2>::vertices_per_cell];
-  unsigned int n_negative_cells = 0;
-  for(unsigned int cell_no = 0; cell_no < cells.size(); ++cell_no)
+  unsigned int n_negative_cells= 0;
+  for(unsigned int cell_no= 0; cell_no < cells.size(); ++cell_no)
     {
       // GridTools::cell_measure
       // requires the vertices to be
       // in lexicographic ordering
-      for(unsigned int i = 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
+      for(unsigned int i= 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
         vertices_lex[GeometryInfo<2>::ucd_to_deal[i]]
           = cells[cell_no].vertices[i];
       if(GridTools::cell_measure<2>(all_vertices, vertices_lex) < 0)
@@ -1124,7 +1124,7 @@ GridReordering<2>::invert_all_cells_of_negative_grid(
           // seriously broken and
           // should be sticked into the
           // bin
-          for(unsigned int i = 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
+          for(unsigned int i= 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
             vertices_lex[GeometryInfo<2>::ucd_to_deal[i]]
               = cells[cell_no].vertices[i];
           AssertThrow(GridTools::cell_measure<2>(all_vertices, vertices_lex)
@@ -1172,20 +1172,20 @@ GridReordering<3>::invert_all_cells_of_negative_grid(
   std::vector<CellData<3>>&    cells)
 {
   unsigned int vertices_lex[GeometryInfo<3>::vertices_per_cell];
-  unsigned int n_negative_cells = 0;
-  for(unsigned int cell_no = 0; cell_no < cells.size(); ++cell_no)
+  unsigned int n_negative_cells= 0;
+  for(unsigned int cell_no= 0; cell_no < cells.size(); ++cell_no)
     {
       // GridTools::cell_measure
       // requires the vertices to be
       // in lexicographic ordering
-      for(unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
+      for(unsigned int i= 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
         vertices_lex[GeometryInfo<3>::ucd_to_deal[i]]
           = cells[cell_no].vertices[i];
       if(GridTools::cell_measure<3>(all_vertices, vertices_lex) < 0)
         {
           ++n_negative_cells;
           // reorder vertices: swap front and back face
-          for(unsigned int i = 0; i < 4; ++i)
+          for(unsigned int i= 0; i < 4; ++i)
             std::swap(cells[cell_no].vertices[i],
                       cells[cell_no].vertices[i + 4]);
 
@@ -1195,7 +1195,7 @@ GridReordering<3>::invert_all_cells_of_negative_grid(
           // seriously broken and
           // should be sticked into the
           // bin
-          for(unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
+          for(unsigned int i= 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
             vertices_lex[GeometryInfo<3>::ucd_to_deal[i]]
               = cells[cell_no].vertices[i];
           AssertThrow(GridTools::cell_measure<3>(all_vertices, vertices_lex)

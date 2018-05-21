@@ -22,13 +22,13 @@
 void
 test()
 {
-  constexpr int* p = nullptr;
-  constexpr int* q = nullptr;
+  constexpr int* p= nullptr;
+  constexpr int* q= nullptr;
 
   // the following code would fail if we tried to call the
   // non-constexpr version of the function, so this really must be the
   // pointer overload which we know always returns true
-  constexpr bool b = internal::ArrayViewHelper::is_contiguous(p, q);
+  constexpr bool b= internal::ArrayViewHelper::is_contiguous(p, q);
 
   Assert(b == true, ExcInternalError());
 

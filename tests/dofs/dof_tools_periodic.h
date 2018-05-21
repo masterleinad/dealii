@@ -45,7 +45,7 @@ check_this(const DoFHandler<dim>& dof_handler);
 void
 output_bool_vector(std::vector<bool>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << (v[i] ? '1' : '0');
   deallog << std::endl;
 }
@@ -66,7 +66,7 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   GridGenerator::hyper_cube(tria, -2., 2.);
   tria.refine_global(1);
   // refine the first two cells:
-  for(int i = 0; i < 2; ++i)
+  for(int i= 0; i < 2; ++i)
     {
       tria.begin_active()->set_refine_flag();
       tria.execute_coarsening_and_refinement();

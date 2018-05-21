@@ -31,28 +31,28 @@ test(const unsigned int size)
   LAPACKFullMatrix<NumberType> A(size);
   A.set_property(LAPACKSupport::symmetric);
   Vector<NumberType> v(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     {
-      v(i) = random_value<NumberType>();
-      for(unsigned int j = i; j < size; ++j)
+      v(i)= random_value<NumberType>();
+      for(unsigned int j= i; j < size; ++j)
         {
-          const NumberType val = random_value<NumberType>();
-          A(i, j)              = val;
-          A(j, i)              = val;
+          const NumberType val= random_value<NumberType>();
+          A(i, j)             = val;
+          A(j, i)             = val;
         }
     }
 
-  const NumberType a = random_value<NumberType>();
+  const NumberType a= random_value<NumberType>();
 
   LAPACKFullMatrix<NumberType> B(size);
-  B = A;
+  B= A;
 
   B.rank1_update(a, v);
 
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= 0; j < size; ++j)
       {
-        const NumberType diff = A(i, j) + a * v(i) * v(j) - B(i, j);
+        const NumberType diff= A(i, j) + a * v(i) * v(j) - B(i, j);
         AssertThrow(std::abs(diff) < 1e-10 * std::abs(B(i, j)),
                     ExcMessage("diff=" + std::to_string(diff)));
       }
@@ -63,12 +63,12 @@ test(const unsigned int size)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{17, 35, 391}};
+  const std::vector<unsigned int> sizes= {{17, 35, 391}};
   for(const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;

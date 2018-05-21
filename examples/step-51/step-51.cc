@@ -95,7 +95,7 @@ namespace Step51
   class SolutionBase
   {
   protected:
-    static const unsigned int n_source_centers = 3;
+    static const unsigned int n_source_centers= 3;
     static const Point<dim>   source_centers[n_source_centers];
     static const double       width;
   };
@@ -118,7 +118,7 @@ namespace Step51
        Point<3>(+0.5, -0.5, 0.5)};
 
   template <int dim>
-  const double SolutionBase<dim>::width = 1. / 5.;
+  const double SolutionBase<dim>::width= 1. / 5.;
 
   template <int dim>
   class Solution : public Function<dim>, protected SolutionBase<dim>
@@ -128,21 +128,21 @@ namespace Step51
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual Tensor<1, dim>
     gradient(const Point<dim>&  p,
-             const unsigned int component = 0) const override;
+             const unsigned int component= 0) const override;
   };
 
   template <int dim>
   double
   Solution<dim>::value(const Point<dim>& p, const unsigned int) const
   {
-    double return_value = 0;
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    double return_value= 0;
+    for(unsigned int i= 0; i < this->n_source_centers; ++i)
       {
-        const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+        const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
         return_value
           += std::exp(-x_minus_xi.norm_square() / (this->width * this->width));
       }
@@ -158,14 +158,14 @@ namespace Step51
   {
     Tensor<1, dim> return_value;
 
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    for(unsigned int i= 0; i < this->n_source_centers; ++i)
       {
-        const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+        const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
 
-        return_value += (-2 / (this->width * this->width)
-                         * std::exp(-x_minus_xi.norm_square()
-                                    / (this->width * this->width))
-                         * x_minus_xi);
+        return_value+= (-2 / (this->width * this->width)
+                        * std::exp(-x_minus_xi.norm_square()
+                                   / (this->width * this->width))
+                        * x_minus_xi);
       }
 
     return return_value
@@ -195,10 +195,10 @@ namespace Step51
   {
     AssertDimension(v.size(), dim + 1);
     Solution<dim>  solution;
-    Tensor<1, dim> grad = solution.gradient(p);
-    for(unsigned int d = 0; d < dim; ++d)
-      v[d] = -grad[d];
-    v[dim] = solution.value(p);
+    Tensor<1, dim> grad= solution.gradient(p);
+    for(unsigned int d= 0; d < dim; ++d)
+      v[d]= -grad[d];
+    v[dim]= solution.value(p);
   }
 
   // Next comes the implementation of the convection velocity. As described in
@@ -223,16 +223,16 @@ namespace Step51
     switch(dim)
       {
         case 1:
-          convection[0] = 1;
+          convection[0]= 1;
           break;
         case 2:
-          convection[0] = p[1];
-          convection[1] = -p[0];
+          convection[0]= p[1];
+          convection[1]= -p[0];
           break;
         case 3:
-          convection[0] = p[1];
-          convection[1] = -p[0];
-          convection[2] = 1;
+          convection[0]= p[1];
+          convection[1]= -p[0];
+          convection[2]= 1;
           break;
         default:
           Assert(false, ExcNotImplemented());
@@ -253,7 +253,7 @@ namespace Step51
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
   private:
     const ConvectionVelocity<dim> convection_velocity;
@@ -263,11 +263,11 @@ namespace Step51
   double
   RightHandSide<dim>::value(const Point<dim>& p, const unsigned int) const
   {
-    Tensor<1, dim> convection   = convection_velocity.value(p);
-    double         return_value = 0;
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    Tensor<1, dim> convection  = convection_velocity.value(p);
+    double         return_value= 0;
+    for(unsigned int i= 0; i < this->n_source_centers; ++i)
       {
-        const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+        const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
 
         return_value
           += ((2 * dim - 2 * convection * x_minus_xi
@@ -313,7 +313,7 @@ namespace Step51
     void
     setup_system();
     void
-    assemble_system(const bool reconstruct_trace = false);
+    assemble_system(const bool reconstruct_trace= false);
     void
     solve();
     void
@@ -443,7 +443,7 @@ namespace Step51
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
     typename FunctionMap<dim>::type boundary_functions;
     Solution<dim>                   solution_function;
-    boundary_functions[0] = &solution_function;
+    boundary_functions[0]= &solution_function;
     VectorTools::project_boundary_values(dof_handler,
                                          boundary_functions,
                                          QGauss<dim - 1>(fe.degree + 1),
@@ -563,17 +563,17 @@ namespace Step51
         fe_local_support_on_face(GeometryInfo<dim>::faces_per_cell),
         fe_support_on_face(GeometryInfo<dim>::faces_per_cell)
     {
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
-        for(unsigned int i = 0; i < fe_local.dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < fe_local.dofs_per_cell; ++i)
           {
             if(fe_local.has_support_on_face(i, face))
               fe_local_support_on_face[face].push_back(i);
           }
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
           {
             if(fe.has_support_on_face(i, face))
               fe_support_on_face[face].push_back(i);
@@ -720,14 +720,14 @@ namespace Step51
     const FEValuesExtractors::Vector fluxes(0);
     const FEValuesExtractors::Scalar scalar(dim);
 
-    scratch.ll_matrix = 0;
-    scratch.l_rhs     = 0;
+    scratch.ll_matrix= 0;
+    scratch.l_rhs    = 0;
     if(!task_data.trace_reconstruct)
       {
-        scratch.lf_matrix     = 0;
-        scratch.fl_matrix     = 0;
-        task_data.cell_matrix = 0;
-        task_data.cell_vector = 0;
+        scratch.lf_matrix    = 0;
+        scratch.fl_matrix    = 0;
+        task_data.cell_matrix= 0;
+        task_data.cell_vector= 0;
       }
     scratch.fe_values_local.reinit(loc_cell);
 
@@ -737,39 +737,39 @@ namespace Step51
     // store the values at each quadrature point for the basis functions, the
     // right-hand-side value, and the convection velocity, in order to have
     // quick access to these fields.
-    for(unsigned int q = 0; q < n_q_points; ++q)
+    for(unsigned int q= 0; q < n_q_points; ++q)
       {
-        const double rhs_value = scratch.right_hand_side.value(
+        const double rhs_value= scratch.right_hand_side.value(
           scratch.fe_values_local.quadrature_point(q));
-        const Tensor<1, dim> convection = scratch.convection_velocity.value(
+        const Tensor<1, dim> convection= scratch.convection_velocity.value(
           scratch.fe_values_local.quadrature_point(q));
-        const double JxW = scratch.fe_values_local.JxW(q);
-        for(unsigned int k = 0; k < loc_dofs_per_cell; ++k)
+        const double JxW= scratch.fe_values_local.JxW(q);
+        for(unsigned int k= 0; k < loc_dofs_per_cell; ++k)
           {
-            scratch.q_phi[k] = scratch.fe_values_local[fluxes].value(k, q);
+            scratch.q_phi[k]= scratch.fe_values_local[fluxes].value(k, q);
             scratch.q_phi_div[k]
               = scratch.fe_values_local[fluxes].divergence(k, q);
-            scratch.u_phi[k] = scratch.fe_values_local[scalar].value(k, q);
+            scratch.u_phi[k]= scratch.fe_values_local[scalar].value(k, q);
             scratch.u_phi_grad[k]
               = scratch.fe_values_local[scalar].gradient(k, q);
           }
-        for(unsigned int i = 0; i < loc_dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < loc_dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < loc_dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < loc_dofs_per_cell; ++j)
               scratch.ll_matrix(i, j)
                 += (scratch.q_phi[i] * scratch.q_phi[j]
                     - scratch.q_phi_div[i] * scratch.u_phi[j]
                     + scratch.u_phi[i] * scratch.q_phi_div[j]
                     - (scratch.u_phi_grad[i] * convection) * scratch.u_phi[j])
                    * JxW;
-            scratch.l_rhs(i) += scratch.u_phi[i] * rhs_value * JxW;
+            scratch.l_rhs(i)+= scratch.u_phi[i] * rhs_value * JxW;
           }
       }
 
     // Face terms are assembled on all faces of all elements. This is in
     // contrast to more traditional DG methods, where each face is only visited
     // once in the assembly procedure.
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
       {
         scratch.fe_face_values_local.reinit(loc_cell, face);
         scratch.fe_face_values.reinit(cell, face);
@@ -780,9 +780,9 @@ namespace Step51
           scratch.fe_face_values.get_function_values(solution,
                                                      scratch.trace_values);
 
-        for(unsigned int q = 0; q < n_face_q_points; ++q)
+        for(unsigned int q= 0; q < n_face_q_points; ++q)
           {
-            const double     JxW = scratch.fe_face_values.JxW(q);
+            const double     JxW= scratch.fe_face_values.JxW(q);
             const Point<dim> quadrature_point
               = scratch.fe_face_values.quadrature_point(q);
             const Tensor<1, dim> normal
@@ -796,11 +796,11 @@ namespace Step51
             // of 5 for the diffusion part and the magnitude of convection
             // through the element boundary in a centered scheme for the
             // convection part.
-            const double tau_stab = (5. + std::abs(convection * normal));
+            const double tau_stab= (5. + std::abs(convection * normal));
 
             // We store the non-zero flux and scalar values, making use of the
             // support_on_face information we created in @p ScratchData.
-            for(unsigned int k = 0;
+            for(unsigned int k= 0;
                 k < scratch.fe_local_support_on_face[face].size();
                 ++k)
               {
@@ -821,15 +821,15 @@ namespace Step51
             // copy_local_to_global.
             if(!task_data.trace_reconstruct)
               {
-                for(unsigned int k = 0;
+                for(unsigned int k= 0;
                     k < scratch.fe_support_on_face[face].size();
                     ++k)
-                  scratch.tr_phi[k] = scratch.fe_face_values.shape_value(
+                  scratch.tr_phi[k]= scratch.fe_face_values.shape_value(
                     scratch.fe_support_on_face[face][k], q);
-                for(unsigned int i = 0;
+                for(unsigned int i= 0;
                     i < scratch.fe_local_support_on_face[face].size();
                     ++i)
-                  for(unsigned int j = 0;
+                  for(unsigned int j= 0;
                       j < scratch.fe_support_on_face[face].size();
                       ++j)
                     {
@@ -855,10 +855,10 @@ namespace Step51
                            * JxW;
                     }
 
-                for(unsigned int i = 0;
+                for(unsigned int i= 0;
                     i < scratch.fe_support_on_face[face].size();
                     ++i)
-                  for(unsigned int j = 0;
+                  for(unsigned int j= 0;
                       j < scratch.fe_support_on_face[face].size();
                       ++j)
                     {
@@ -880,7 +880,7 @@ namespace Step51
                           * normal
                         + convection * normal
                             * scratch.exact_solution.value(quadrature_point);
-                    for(unsigned int i = 0;
+                    for(unsigned int i= 0;
                         i < scratch.fe_support_on_face[face].size();
                         ++i)
                       {
@@ -895,10 +895,10 @@ namespace Step51
             // This last term adds the contribution of the term $\left<w,\tau
             // u_h\right>_{\partial \mathcal T}$ to the local matrix. As opposed
             // to the face matrices above, we need it in both assembly stages.
-            for(unsigned int i = 0;
+            for(unsigned int i= 0;
                 i < scratch.fe_local_support_on_face[face].size();
                 ++i)
-              for(unsigned int j = 0;
+              for(unsigned int j= 0;
                   j < scratch.fe_local_support_on_face[face].size();
                   ++j)
                 {
@@ -917,7 +917,7 @@ namespace Step51
             // trace_values.  Of course, the sign of the matrix is now minus
             // since we have moved everything to the other side of the equation.
             if(task_data.trace_reconstruct)
-              for(unsigned int i = 0;
+              for(unsigned int i= 0;
                   i < scratch.fe_local_support_on_face[face].size();
                   ++i)
                 {
@@ -1056,7 +1056,7 @@ namespace Step51
                                       QGauss<dim>(fe.degree + 2),
                                       VectorTools::L2_norm,
                                       &value_select);
-    const double L2_error = VectorTools::compute_global_error(
+    const double L2_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::L2_norm);
 
     ComponentSelectFunction<dim> gradient_select(
@@ -1068,7 +1068,7 @@ namespace Step51
                                       QGauss<dim>(fe.degree + 2),
                                       VectorTools::L2_norm,
                                       &gradient_select);
-    const double grad_error = VectorTools::compute_global_error(
+    const double grad_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::L2_norm);
 
     VectorTools::integrate_difference(dof_handler_u_post,
@@ -1077,7 +1077,7 @@ namespace Step51
                                       difference_per_cell,
                                       QGauss<dim>(fe.degree + 3),
                                       VectorTools::L2_norm);
-    const double post_error = VectorTools::compute_global_error(
+    const double post_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::L2_norm);
 
     convergence_table.add_value("cells", triangulation.n_active_cells());
@@ -1122,45 +1122,45 @@ namespace Step51
     FEValuesExtractors::Vector fluxes(0);
     FEValuesExtractors::Scalar scalar(dim);
 
-    const unsigned int n_q_points = scratch.fe_values.get_quadrature().size();
-    const unsigned int dofs_per_cell = scratch.fe_values.dofs_per_cell;
+    const unsigned int n_q_points   = scratch.fe_values.get_quadrature().size();
+    const unsigned int dofs_per_cell= scratch.fe_values.dofs_per_cell;
 
     scratch.fe_values_local[scalar].get_function_values(solution_local,
                                                         scratch.u_values);
     scratch.fe_values_local[fluxes].get_function_values(solution_local,
                                                         scratch.u_gradients);
 
-    double sum = 0;
-    for(unsigned int i = 1; i < dofs_per_cell; ++i)
+    double sum= 0;
+    for(unsigned int i= 1; i < dofs_per_cell; ++i)
       {
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int j= 0; j < dofs_per_cell; ++j)
           {
-            sum = 0;
-            for(unsigned int q = 0; q < n_q_points; ++q)
-              sum += (scratch.fe_values.shape_grad(i, q)
-                      * scratch.fe_values.shape_grad(j, q))
-                     * scratch.fe_values.JxW(q);
-            scratch.cell_matrix(i, j) = sum;
+            sum= 0;
+            for(unsigned int q= 0; q < n_q_points; ++q)
+              sum+= (scratch.fe_values.shape_grad(i, q)
+                     * scratch.fe_values.shape_grad(j, q))
+                    * scratch.fe_values.JxW(q);
+            scratch.cell_matrix(i, j)= sum;
           }
 
-        sum = 0;
-        for(unsigned int q = 0; q < n_q_points; ++q)
-          sum -= (scratch.fe_values.shape_grad(i, q) * scratch.u_gradients[q])
-                 * scratch.fe_values.JxW(q);
-        scratch.cell_rhs(i) = sum;
+        sum= 0;
+        for(unsigned int q= 0; q < n_q_points; ++q)
+          sum-= (scratch.fe_values.shape_grad(i, q) * scratch.u_gradients[q])
+                * scratch.fe_values.JxW(q);
+        scratch.cell_rhs(i)= sum;
       }
-    for(unsigned int j = 0; j < dofs_per_cell; ++j)
+    for(unsigned int j= 0; j < dofs_per_cell; ++j)
       {
-        sum = 0;
-        for(unsigned int q = 0; q < n_q_points; ++q)
-          sum += scratch.fe_values.shape_value(j, q) * scratch.fe_values.JxW(q);
-        scratch.cell_matrix(0, j) = sum;
+        sum= 0;
+        for(unsigned int q= 0; q < n_q_points; ++q)
+          sum+= scratch.fe_values.shape_value(j, q) * scratch.fe_values.JxW(q);
+        scratch.cell_matrix(0, j)= sum;
       }
     {
-      sum = 0;
-      for(unsigned int q = 0; q < n_q_points; ++q)
-        sum += scratch.u_values[q] * scratch.fe_values.JxW(q);
-      scratch.cell_rhs(0) = sum;
+      sum= 0;
+      for(unsigned int q= 0; q < n_q_points; ++q)
+        sum+= scratch.u_values[q] * scratch.fe_values.JxW(q);
+      scratch.cell_rhs(0)= sum;
     }
 
     // Having assembled all terms, we can again go on and solve the linear
@@ -1188,21 +1188,21 @@ namespace Step51
     switch(refinement_mode)
       {
         case global_refinement:
-          filename = "solution-global";
+          filename= "solution-global";
           break;
         case adaptive_refinement:
-          filename = "solution-adaptive";
+          filename= "solution-adaptive";
           break;
         default:
           Assert(false, ExcNotImplemented());
       }
 
     std::string face_out(filename);
-    face_out += "-face";
+    face_out+= "-face";
 
-    filename += "-q" + Utilities::int_to_string(fe.degree, 1);
-    filename += "-" + Utilities::int_to_string(cycle, 2);
-    filename += ".vtk";
+    filename+= "-q" + Utilities::int_to_string(fe.degree, 1);
+    filename+= "-" + Utilities::int_to_string(cycle, 2);
+    filename+= ".vtk";
     std::ofstream output(filename);
 
     DataOut<dim> data_out;
@@ -1231,9 +1231,9 @@ namespace Step51
     data_out.build_patches(fe.degree);
     data_out.write_vtk(output);
 
-    face_out += "-q" + Utilities::int_to_string(fe.degree, 1);
-    face_out += "-" + Utilities::int_to_string(cycle, 2);
-    face_out += ".vtk";
+    face_out+= "-q" + Utilities::int_to_string(fe.degree, 1);
+    face_out+= "-" + Utilities::int_to_string(cycle, 2);
+    face_out+= ".vtk";
     std::ofstream face_output(face_out);
 
     // The <code>DataOutFaces</code> class works analogously to the <code>DataOut</code>
@@ -1319,10 +1319,10 @@ namespace Step51
     // conditions. Since we re-create the triangulation every time for global
     // refinement, the flags are set in every refinement step, not just at the
     // beginning.
-    typename Triangulation<dim>::cell_iterator cell = triangulation.begin(),
-                                               endc = triangulation.end();
+    typename Triangulation<dim>::cell_iterator cell= triangulation.begin(),
+                                               endc= triangulation.end();
     for(; cell != endc; ++cell)
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         if(cell->face(face)->at_boundary())
           if((std::fabs(cell->face(face)->center()(0) - (-1)) < 1e-12)
@@ -1338,7 +1338,7 @@ namespace Step51
   void
   HDG<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 10; ++cycle)
+    for(unsigned int cycle= 0; cycle < 10; ++cycle)
       {
         std::cout << "Cycle " << cycle << ':' << std::endl;
 
@@ -1381,7 +1381,7 @@ namespace Step51
 int
 main()
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
   try
     {

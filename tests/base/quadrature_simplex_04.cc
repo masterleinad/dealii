@@ -24,7 +24,7 @@
 void
 test(int n)
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
   {
     QSplit<2> quad(QTrianglePolar(n), Point<2>(.3, .4));

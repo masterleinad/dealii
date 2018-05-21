@@ -68,7 +68,7 @@ MatrixIntegrator<dim>::boundary(
   MeshWorker::DoFInfo<dim>&                  dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
-  const unsigned int deg = info.fe_values(0).get_fe().degree;
+  const unsigned int deg= info.fe_values(0).get_fe().degree;
   LocalIntegrators::Laplace ::nitsche_matrix(
     dinfo.matrix(0, false).matrix,
     info.fe_values(0),
@@ -83,7 +83,7 @@ MatrixIntegrator<dim>::face(
   typename MeshWorker::IntegrationInfo<dim>& info1,
   typename MeshWorker::IntegrationInfo<dim>& info2) const
 {
-  const unsigned int deg = info1.fe_values(0).get_fe().degree;
+  const unsigned int deg= info1.fe_values(0).get_fe().degree;
   LocalIntegrators::Laplace ::ip_matrix(
     dinfo1.matrix(0, false).matrix,
     dinfo1.matrix(0, true).matrix,
@@ -137,9 +137,9 @@ Step4<dim>::make_grid()
   typedef typename dealii::Triangulation<dim>::cell_iterator CellIteratorTria;
   std::vector<dealii::GridTools::PeriodicFacePair<CellIteratorTria>>
                      periodic_faces;
-  const unsigned int b_id1     = 2;
-  const unsigned int b_id2     = 3;
-  const unsigned int direction = 1;
+  const unsigned int b_id1    = 2;
+  const unsigned int b_id2    = 3;
+  const unsigned int direction= 1;
 
   dealii::GridTools::collect_periodic_faces(triangulation,
                                             b_id1,
@@ -167,7 +167,7 @@ Step4<dim>::setup_system()
 
   MappingQGeneric<dim>                mapping(1);
   MeshWorker::IntegrationInfoBox<dim> info_box;
-  UpdateFlags update_flags = update_values | update_gradients;
+  UpdateFlags update_flags= update_values | update_gradients;
   info_box.add_update_flags_all(update_flags);
   info_box.initialize(fe, mapping);
 
@@ -182,15 +182,15 @@ Step4<dim>::setup_system()
                                          integrator,
                                          assembler);
 
-  for(unsigned int i = 0; i < system_rhs.size(); ++i)
-    system_rhs(i) = 0.01 * i - 0.000001 * i * i;
+  for(unsigned int i= 0; i < system_rhs.size(); ++i)
+    system_rhs(i)= 0.01 * i - 0.000001 * i * i;
 }
 
 template <int dim>
 void
 Step4<dim>::solve()
 {
-  solution = 0;
+  solution= 0;
   SolverControl solver_control(1000, 1e-10, false, false);
   SolverCG<>    solver(solver_control);
 
@@ -225,32 +225,32 @@ template <>
 void
 Step4<2>::check_periodicity(const unsigned int cycle) const
 {
-  unsigned int n_points = 4;
-  for(unsigned int i = 0; i < cycle; i++)
-    n_points *= 2;
+  unsigned int n_points= 4;
+  for(unsigned int i= 0; i < cycle; i++)
+    n_points*= 2;
 
   //don't test exactly at the support points, since point_value is not stable there
-  const double eps = 1. / (16. * n_points);
+  const double eps= 1. / (16. * n_points);
 
-  bool all_passed = true;
+  bool all_passed= true;
 
-  for(unsigned int i = 1; i < n_points; i++)
+  for(unsigned int i= 1; i < n_points; i++)
     {
       Vector<double> value1(1);
       Vector<double> value2(1);
 
       Point<2> point1;
-      point1(0) = 2 * (1. * i / n_points + eps) - 1;
-      point1(1) = -1.;
+      point1(0)= 2 * (1. * i / n_points + eps) - 1;
+      point1(1)= -1.;
       Point<2> point2;
-      point2(0) = 2 * (1. * i / n_points + eps) - 1;
-      point2(1) = 1.;
+      point2(0)= 2 * (1. * i / n_points + eps) - 1;
+      point2(1)= 1.;
 
       VectorTools::point_value(dof_handler, solution, point1, value1);
       VectorTools::point_value(dof_handler, solution, point2, value2);
 
-      const double rel_error = std::abs((value2[0] - value1[0]) / value1[0]);
-      const double rel_tol   = 1. / std::pow(2., cycle);
+      const double rel_error= std::abs((value2[0] - value1[0]) / value1[0]);
+      const double rel_tol  = 1. / std::pow(2., cycle);
 
       if(rel_error < rel_tol)
         deallog << point1 << "\t pass" << std::endl;
@@ -259,7 +259,7 @@ Step4<2>::check_periodicity(const unsigned int cycle) const
           deallog << point1 << "\t fail" << std::endl;
           deallog << point1 << "\t" << value1[0] << "\t" << value2[0] << "\t"
                   << rel_error << std::endl;
-          all_passed = false;
+          all_passed= false;
         }
     }
   AssertThrow(all_passed, ExcInternalError());
@@ -269,7 +269,7 @@ template <int dim>
 void
 Step4<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 4; ++cycle)
+  for(unsigned int cycle= 0; cycle < 4; ++cycle)
     {
       if(cycle == 0)
         make_grid();

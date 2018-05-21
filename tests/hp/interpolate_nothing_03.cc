@@ -51,11 +51,11 @@ test()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
-      Point<dim> center = cell->center();
+      Point<dim> center= cell->center();
       if(center[0] < 0)
         cell->set_active_fe_index(1);
       else

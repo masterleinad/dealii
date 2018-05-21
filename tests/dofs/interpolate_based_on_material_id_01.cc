@@ -44,10 +44,10 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int) const
   {
-    double v = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
-        v += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
+    double v= 0;
+    for(unsigned int d= 0; d < dim; ++d)
+      for(unsigned int i= 0; i <= q; ++i)
+        v+= (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return v;
   }
 
@@ -74,7 +74,7 @@ test()
           = new Functions::ConstantFunction<dim>(cell->index() % 128);
     }
 
-  for(unsigned int p = 1; p < 7 - dim; ++p)
+  for(unsigned int p= 1; p < 7 - dim; ++p)
     {
       FE_DGQ<dim>     fe(p);
       DoFHandler<dim> dof_handler(triangulation);
@@ -90,7 +90,7 @@ test()
         {
           Vector<double> values(fe.dofs_per_cell);
           cell->get_dof_values(interpolant, values);
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
             AssertThrow(values[i] == cell->index() % 128, ExcInternalError());
         }
     }

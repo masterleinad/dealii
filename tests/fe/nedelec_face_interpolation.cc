@@ -42,7 +42,7 @@ test(unsigned p1, unsigned p2)
   // *----*----*
   Triangulation<dim>        triangulation;
   std::vector<unsigned int> subdivisions(dim, 1);
-  subdivisions[0] = 2;
+  subdivisions[0]= 2;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation,
     subdivisions,
@@ -62,15 +62,15 @@ test(unsigned p1, unsigned p2)
 
   fe[0].get_face_interpolation_matrix(fe[1], face_int_matrix);
 
-  bool is_zero_column = true;
-  for(unsigned int i = 0; i < face_int_matrix.n(); ++i)
+  bool is_zero_column= true;
+  for(unsigned int i= 0; i < face_int_matrix.n(); ++i)
     {
-      is_zero_column = true;
-      for(unsigned int j = 0; j < face_int_matrix.m(); ++j)
+      is_zero_column= true;
+      for(unsigned int j= 0; j < face_int_matrix.m(); ++j)
         {
           if(fabs(face_int_matrix(j, i)) > 1e-10)
             {
-              is_zero_column = false;
+              is_zero_column= false;
               break;
             }
         }

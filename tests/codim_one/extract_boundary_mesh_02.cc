@@ -45,25 +45,25 @@ test_vertices_orientation(
 {
   typename Triangulation<s_dim, spacedim>::active_cell_iterator cell
     = boundary_mesh.begin_active(),
-    endc = boundary_mesh.end();
+    endc= boundary_mesh.end();
   typename Triangulation<s_dim + 1, spacedim>::face_iterator face;
 
   for(; cell != endc; ++cell)
     {
-      face = surface_to_volume_mapping[cell];
+      face= surface_to_volume_mapping[cell];
 
       deallog << "Surface cell: " << cell << " with vertices:" << std::endl;
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for(unsigned int k= 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         deallog << "  " << cell->vertex(k) << std::endl;
 
       deallog << "Volume face: " << face << " with vertices:" << std::endl;
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for(unsigned int k= 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         deallog << "  " << face->vertex(k) << std::endl;
 
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for(unsigned int k= 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           Point<spacedim> diff(face->vertex(k));
-          diff -= cell->vertex(k);
+          diff-= cell->vertex(k);
           AssertThrow(diff.square() < 1.e-15 * face->vertex(k).square(),
                       ExcInternalError());
         }
@@ -87,7 +87,7 @@ main()
   {
     // Extract the boundary of a hyper-sphere
 
-    const int dim = 3;
+    const int dim= 3;
     deallog << "Testing hyper_cube in dim: " << dim << "..." << endl;
 
     map<Triangulation<dim - 1, dim>::cell_iterator,

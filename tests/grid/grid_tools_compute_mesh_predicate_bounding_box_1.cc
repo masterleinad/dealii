@@ -39,11 +39,11 @@ pred_locally_owned(
   return cell->is_locally_owned();
 }
 
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 void
 test_hypercube(unsigned int ref, unsigned int max_bbox)
 {
-  const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm& mpi_communicator= MPI_COMM_WORLD;
   deallog << "Testing hypercube for spacedim = " << spacedim
           << " refinement: " << ref << " max number of boxes: " << max_bbox
           << std::endl;
@@ -77,7 +77,7 @@ test_hypercube(unsigned int ref, unsigned int max_bbox)
     deallog << "Has no locally owned children cells" << std::endl;
 
   //Checking if all the points are inside the bounding boxes
-  bool check = true;
+  bool check= true;
 
   typename parallel::distributed::Triangulation<dim,
                                                 spacedim>::active_cell_iterator
@@ -91,18 +91,17 @@ test_hypercube(unsigned int ref, unsigned int max_bbox)
   //Looking if every point is at least inside a bounding box
   for(; cell < endc; ++cell)
     if(cell->is_locally_owned())
-      for(unsigned int v = 0; v < GeometryInfo<spacedim>::vertices_per_cell;
-          ++v)
+      for(unsigned int v= 0; v < GeometryInfo<spacedim>::vertices_per_cell; ++v)
         {
-          bool inside_a_box = false;
-          for(unsigned int i = 0; i < local_bbox.size(); ++i)
+          bool inside_a_box= false;
+          for(unsigned int i= 0; i < local_bbox.size(); ++i)
             {
               if(local_bbox[i].point_inside(cell->vertex(v)))
-                inside_a_box = true;
+                inside_a_box= true;
             }
           if(!inside_a_box)
             {
-              check = false;
+              check= false;
               deallog << "Point outside " << cell->vertex(v) << std::endl;
               break;
             }

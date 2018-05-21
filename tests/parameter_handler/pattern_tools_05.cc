@@ -30,9 +30,9 @@ template <class T>
 void
 test(T t)
 {
-  auto p = Convert<T>::to_pattern();
+  auto p= Convert<T>::to_pattern();
   deallog << "Pattern  : " << p->description() << std::endl;
-  auto s = Convert<T>::to_string(t);
+  auto s= Convert<T>::to_string(t);
   deallog << "To String: " << s << std::endl;
   deallog << "To value : " << Convert<T>::to_string(Convert<T>::to_value(s))
           << std::endl;
@@ -53,15 +53,15 @@ main()
   std::map<unsigned int, std::vector<Point<3>>>             t12;
   std::map<unsigned int, std::vector<std::complex<double>>> t13;
 
-  t10[0] = t0;
-  t11[0] = t1;
-  t12[0] = t2;
-  t13[0] = t3;
+  t10[0]= t0;
+  t11[0]= t1;
+  t12[0]= t2;
+  t13[0]= t3;
 
-  t10[2] = t0;
-  t11[2] = t1;
-  t12[2] = t2;
-  t13[2] = t3;
+  t10[2]= t0;
+  t11[2]= t1;
+  t12[2]= t2;
+  t13[2]= t3;
 
   test(t10);
   test(t11);

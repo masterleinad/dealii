@@ -43,10 +43,10 @@
 
 #include <iostream>
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 // argument for build_patches()
-const unsigned int patches = 10;
+const unsigned int patches= 10;
 
 using namespace dealii;
 
@@ -61,18 +61,18 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component= 0) const
   {
-    Tensor<1, dim> res = point;
+    Tensor<1, dim> res= point;
     Assert(point.norm() > 0,
            dealii::ExcMessage("gradient is not defined at zero"));
-    res *= -value(point) / point.norm();
+    res*= -value(point) / point.norm();
     return res;
   }
 };
@@ -99,35 +99,35 @@ test3()
 
   Vector<double> solution_fe(dof_handler.n_dofs()),
     solution_pou(dof_handler.n_dofs()), solution(dof_handler.n_dofs());
-  solution_fe  = 0;
-  solution_pou = 0;
+  solution_fe = 0;
+  solution_pou= 0;
 
   // groups are one after another
   // thus set to 1.0 the same shape function in the underlying FE
-  solution_fe[0]  = 2.0;
-  solution_pou[1] = 2.0;
-  solution        = solution_fe;
-  solution += solution_pou;
+  solution_fe[0] = 2.0;
+  solution_pou[1]= 2.0;
+  solution       = solution_fe;
+  solution+= solution_pou;
 
-  const unsigned int n_q_points = quadrature.size();
+  const unsigned int n_q_points= quadrature.size();
 
   std::vector<double> solution_values_fe(n_q_points),
     solution_values_pou(n_q_points), solution_values(n_q_points);
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
 
-      const unsigned int                     dofs_per_cell = fe.dofs_per_cell;
+      const unsigned int                     dofs_per_cell= fe.dofs_per_cell;
       const std::vector<dealii::Point<dim>>& q_points
         = fe_values.get_quadrature_points();
       fe_values.get_function_values(solution_fe, solution_values_fe);
       fe_values.get_function_values(solution_pou, solution_values_pou);
       fe_values.get_function_values(solution, solution_values);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         deallog << " qp=" << q_points[q_point]
                 << " f(qp)=" << function.value(q_points[q_point])
                 << " U_fe(qp)=" << solution_values_fe[q_point]
@@ -152,27 +152,27 @@ plot_shape_function()
 
   std::vector<Vector<double>> shape_functions(dof_handler.n_dofs());
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < shape_functions.size(); s++)
+  for(unsigned int s= 0; s < shape_functions.size(); s++)
     {
       names.push_back(std::string("N_") + dealii::Utilities::int_to_string(s));
 
       shape_functions[s].reinit(dof_handler.n_dofs());
 
       // this is ok for 1 cell only!
-      const unsigned int group = fe.system_to_base_index(s).first.first;
+      const unsigned int group= fe.system_to_base_index(s).first.first;
 
       // zero everywhere but
       // the DoF corresponding to this shape function
       if(group == 0)
-        shape_functions[s][s] = 1.0;
+        shape_functions[s][s]= 1.0;
       else
-        shape_functions[s][s] = 1.0; //can potentially put another value here
+        shape_functions[s][s]= 1.0; //can potentially put another value here
     }
 
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for(unsigned int i= 0; i < shape_functions.size(); i++)
     {
       data_out.add_data_vector(shape_functions[i], names[i]);
     }

@@ -32,17 +32,17 @@ enum class NeighborType
   /**
    * not neighbours: the intersection is empty
    */
-  not_neighbors = 0,
+  not_neighbors= 0,
 
   /**
    * simple neighbors: the boxes intersect with an intersection of dimension at most spacedim - 2
    */
-  simple_neighbors = 1,
+  simple_neighbors= 1,
 
   /**
    * attached neighbors: neighbors with an intersection of dimension > spacedim - 2
    */
-  attached_neighbors = 2,
+  attached_neighbors= 2,
 
   /**
    * mergeable neighbors: neighbors which can be expressed with a single
@@ -54,7 +54,7 @@ enum class NeighborType
    *  @endcode
    * or one is inside the other
    */
-  mergeable_neighbors = 3
+  mergeable_neighbors= 3
 };
 
 /**
@@ -89,7 +89,7 @@ enum class NeighborType
  *
  * @author Giovanni Alzetta, 2017.
  */
-template <int spacedim, typename Number = double>
+template <int spacedim, typename Number= double>
 class BoundingBox
 {
 public:
@@ -97,7 +97,7 @@ public:
    * Standard constructor. Creates an object that corresponds to an empty box,
    * i.e. a degenerate box with both points being the origin.
    */
-  BoundingBox() = default;
+  BoundingBox()= default;
 
   /**
    * Standard constructor for non-empty boxes: it uses a pair of points
@@ -163,13 +163,13 @@ inline BoundingBox<spacedim, Number>::BoundingBox(
     boundary_points)
 {
   //We check the Bounding Box is not degenerate
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for(unsigned int i= 0; i < spacedim; ++i)
     Assert(
       boundary_points.first[i] <= boundary_points.second[i],
       ExcMessage(
         "Bounding Box can't be created: the point's order should be bottom left, top right!"));
 
-  this->boundary_points = boundary_points;
+  this->boundary_points= boundary_points;
 }
 
 template <int spacedim, typename Number>

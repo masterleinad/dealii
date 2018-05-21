@@ -15,7 +15,7 @@
 
 // check that computation of hp constraints works for Bernstein elements correctly
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "hp_constraints_common_no_support.h"
 
@@ -26,7 +26,7 @@ test()
   deallog << "Test for dim = " << dim << std::endl << std::endl;
   hp::FECollection<dim>     fe;
   std::vector<unsigned int> degrees;
-  for(unsigned int i = 1; i < 5; ++i)
+  for(unsigned int i= 1; i < 5; ++i)
     {
       fe.push_back(FE_Bernstein<dim>(i));
       degrees.push_back(i);

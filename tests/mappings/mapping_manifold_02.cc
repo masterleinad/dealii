@@ -37,10 +37,10 @@ test()
   Triangulation<dim, spacedim> triangulation;
 
   Point<spacedim> center;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    center[i] = 5 + i;
+  for(unsigned int i= 0; i < spacedim; ++i)
+    center[i]= 5 + i;
 
-  const double inner_radius = 0.5, outer_radius = 1.0;
+  const double inner_radius= 0.5, outer_radius= 1.0;
   GridGenerator::hyper_shell(triangulation, center, inner_radius, outer_radius);
 
   static const PolarManifold<dim> manifold(center);
@@ -66,8 +66,8 @@ test()
       ++cell)
     {
       fe_values.reinit(cell);
-      std::vector<Point<spacedim>> fev_qp = fe_values.get_quadrature_points();
-      for(unsigned int q = 0; q < fev_qp.size(); ++q)
+      std::vector<Point<spacedim>> fev_qp= fe_values.get_quadrature_points();
+      for(unsigned int q= 0; q < fev_qp.size(); ++q)
         {
           const Point<spacedim> pq
             = mapping.transform_unit_to_real_cell(cell, quad.point(q));

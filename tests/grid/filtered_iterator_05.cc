@@ -36,7 +36,7 @@ test()
     IteratorFilters::LocallyOwnedLevelCell(), dof_handler.begin());
   FilteredIterator<typename DoFHandler<dim>::level_cell_iterator> end(
     IteratorFilters::LocallyOwnedLevelCell(), dof_handler.end());
-  end = begin;
+  end= begin;
 
   deallog << "OK" << std::endl;
 }

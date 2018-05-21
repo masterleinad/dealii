@@ -40,12 +40,11 @@ mesh_info(const Triangulation<dim>& tria)
   // indicator is used:
   {
     std::map<unsigned int, unsigned int>              boundary_count;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
       {
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
             ++face)
           {
             if(cell->face(face)->at_boundary())

@@ -42,11 +42,10 @@ test(unsigned int degree)
 
   // Try to project a point on the
   // surface
-  for(unsigned int i = 0; i < dim; ++i)
-    p[i] = .2;
+  for(unsigned int i= 0; i < dim; ++i)
+    p[i]= .2;
 
-  Point<dim - 1> q
-    = mapping.transform_real_to_unit_cell(mesh.begin_active(), p);
+  Point<dim - 1> q= mapping.transform_real_to_unit_cell(mesh.begin_active(), p);
 
   deallog << "Mapping Q(" << degree << "): P: " << p << ", on unit: " << q
           << std::endl;

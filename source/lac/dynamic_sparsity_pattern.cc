@@ -30,11 +30,11 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
                                           ForwardIterator end,
                                           const bool      indices_are_sorted)
 {
-  const int n_elements = end - begin;
+  const int n_elements= end - begin;
   if(n_elements <= 0)
     return;
 
-  const size_type stop_size = entries.size() + n_elements;
+  const size_type stop_size= entries.size() + n_elements;
 
   if(indices_are_sorted == true && n_elements > 3)
     {
@@ -42,7 +42,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
       // indices really are sorted.
 #ifdef DEBUG
       {
-        ForwardIterator test = begin, test1 = begin;
+        ForwardIterator test= begin, test1= begin;
         ++test1;
         for(; test1 != end; ++test, ++test1)
           Assert(*test1 > *test, ExcInternalError());
@@ -59,8 +59,8 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
       // the first entry. check whether the
       // first entry is a duplicate before
       // actually doing something.
-      ForwardIterator                  my_it = begin;
-      size_type                        col   = *my_it;
+      ForwardIterator                  my_it= begin;
+      size_type                        col  = *my_it;
       std::vector<size_type>::iterator it
         = Utilities::lower_bound(entries.begin(), entries.end(), col);
       while(*it == col)
@@ -68,7 +68,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
           ++my_it;
           if(my_it == end)
             break;
-          col = *my_it;
+          col= *my_it;
           // check the very next entry in the
           // current array
           ++it;
@@ -80,7 +80,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
             continue;
           // ok, it wasn't the very next one, do a
           // binary search to find the insert point
-          it = Utilities::lower_bound(it, entries.end(), col);
+          it= Utilities::lower_bound(it, entries.end(), col);
           if(it == entries.end())
             break;
         }
@@ -90,15 +90,15 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
 
       // resize vector by just inserting the
       // list
-      const size_type pos1 = it - entries.begin();
+      const size_type pos1= it - entries.begin();
       Assert(pos1 <= entries.size(), ExcInternalError());
       entries.insert(it, my_it, end);
-      it = entries.begin() + pos1;
+      it= entries.begin() + pos1;
       Assert(entries.size() >= (size_type)(it - entries.begin()),
              ExcInternalError());
 
       // now merge the two lists.
-      std::vector<size_type>::iterator it2 = it + (end - my_it);
+      std::vector<size_type>::iterator it2= it + (end - my_it);
 
       // as long as there are indices both in
       // the end of the entries list and in the
@@ -106,27 +106,27 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
       while(my_it != end && it2 != entries.end())
         {
           if(*my_it < *it2)
-            *it++ = *my_it++;
+            *it++= *my_it++;
           else if(*my_it == *it2)
             {
-              *it++ = *it2++;
+              *it++= *it2++;
               ++my_it;
             }
           else
-            *it++ = *it2++;
+            *it++= *it2++;
         }
       // in case there are indices left in the
       // input list
       while(my_it != end)
-        *it++ = *my_it++;
+        *it++= *my_it++;
 
       // in case there are indices left in the
       // end of entries
       while(it2 != entries.end())
-        *it++ = *it2++;
+        *it++= *it2++;
 
       // resize and return
-      const size_type new_size = it - entries.begin();
+      const size_type new_size= it - entries.begin();
       Assert(new_size <= stop_size, ExcInternalError());
       entries.resize(new_size);
       return;
@@ -134,14 +134,14 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
 
   // unsorted case or case with too few
   // elements
-  ForwardIterator my_it = begin;
+  ForwardIterator my_it= begin;
 
   // If necessary, increase the size of the
   // array.
   if(stop_size > entries.capacity())
     entries.reserve(stop_size);
 
-  size_type                        col = *my_it;
+  size_type                        col= *my_it;
   std::vector<size_type>::iterator it, it2;
   // insert the first element as for one
   // entry only first check the last
@@ -149,13 +149,13 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
   if((entries.size() == 0) || (entries.back() < col))
     {
       entries.push_back(col);
-      it = entries.end() - 1;
+      it= entries.end() - 1;
     }
   else
     {
       // do a binary search to find the place
       // where to insert:
-      it2 = Utilities::lower_bound(entries.begin(), entries.end(), col);
+      it2= Utilities::lower_bound(entries.begin(), entries.end(), col);
 
       // If this entry is a duplicate, continue
       // immediately Insert at the right place
@@ -163,9 +163,9 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
       // automatically to fit elements. Always
       // doubles its size.
       if(*it2 != col)
-        it = entries.insert(it2, col);
+        it= entries.insert(it2, col);
       else
-        it = it2;
+        it= it2;
     }
 
   ++my_it;
@@ -177,28 +177,28 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
   // decrease the work needed in here.
   for(; my_it != end; ++my_it)
     {
-      col = *my_it;
+      col= *my_it;
       // need a special insertion command when
       // we're at the end of the list
       if(col > entries.back())
         {
           entries.push_back(col);
-          it = entries.end() - 1;
+          it= entries.end() - 1;
         }
       // search to the right (preferred search
       // direction)
       else if(col > *it)
         {
-          it2 = Utilities::lower_bound(it++, entries.end(), col);
+          it2= Utilities::lower_bound(it++, entries.end(), col);
           if(*it2 != col)
-            it = entries.insert(it2, col);
+            it= entries.insert(it2, col);
         }
       // search to the left
       else if(col < *it)
         {
-          it2 = Utilities::lower_bound(entries.begin(), it, col);
+          it2= Utilities::lower_bound(entries.begin(), it, col);
           if(*it2 != col)
-            it = entries.insert(it2, col);
+            it= entries.insert(it2, col);
         }
       // if we're neither larger nor smaller,
       // then this was a duplicate and we can
@@ -269,10 +269,10 @@ DynamicSparsityPattern::reinit(const size_type m,
                                const size_type n,
                                const IndexSet& rowset_)
 {
-  have_entries = false;
-  rows         = m;
-  cols         = n;
-  rowset       = rowset_;
+  have_entries= false;
+  rows        = m;
+  cols        = n;
+  rowset      = rowset_;
 
   Assert(
     rowset.size() == 0 || rowset.size() == m,
@@ -303,10 +303,10 @@ DynamicSparsityPattern::max_entries_per_row() const
   if(!have_entries)
     return 0;
 
-  size_type m = 0;
-  for(size_type i = 0; i < lines.size(); ++i)
+  size_type m= 0;
+  for(size_type i= 0; i < lines.size(); ++i)
     {
-      m = std::max(m, static_cast<size_type>(lines[i].entries.size()));
+      m= std::max(m, static_cast<size_type>(lines[i].entries.size()));
     }
 
   return m;
@@ -322,8 +322,7 @@ DynamicSparsityPattern::exists(const size_type i, const size_type j) const
   if(!have_entries)
     return false;
 
-  const size_type rowindex
-    = rowset.size() == 0 ? i : rowset.index_within_set(i);
+  const size_type rowindex= rowset.size() == 0 ? i : rowset.index_within_set(i);
 
   return std::binary_search(
     lines[rowindex].entries.begin(), lines[rowindex].entries.end(), j);
@@ -345,12 +344,12 @@ DynamicSparsityPattern::symmetrize()
   // 2. that the @p{add} function can
   // be called on elements that
   // already exist without any harm
-  for(size_type row = 0; row < lines.size(); ++row)
+  for(size_type row= 0; row < lines.size(); ++row)
     {
       const size_type rowindex
         = rowset.size() == 0 ? row : rowset.nth_index_in_set(row);
 
-      for(std::vector<size_type>::const_iterator j = lines[row].entries.begin();
+      for(std::vector<size_type>::const_iterator j= lines[row].entries.begin();
           j != lines[row].entries.end();
           ++j)
         // add the transpose entry if
@@ -371,17 +370,17 @@ DynamicSparsityPattern::compute_mmult_pattern(
 
   this->reinit(left.n_rows(), right.n_cols());
 
-  typename SparsityPatternTypeLeft::iterator it_left  = left.begin(),
-                                             end_left = left.end();
+  typename SparsityPatternTypeLeft::iterator it_left = left.begin(),
+                                             end_left= left.end();
   for(; it_left != end_left; ++it_left)
     {
-      const unsigned int j = it_left->column();
+      const unsigned int j= it_left->column();
 
       // We are sitting on entry (i,j) of the left sparsity pattern. We then need
       // to add all entries (i,k) to the final sparsity pattern where (j,k) exists
       // in the right sparsity pattern -- i.e., we need to iterate over row j.
-      typename SparsityPatternTypeRight::iterator it_right  = right.begin(j),
-                                                  end_right = right.end(j);
+      typename SparsityPatternTypeRight::iterator it_right = right.begin(j),
+                                                  end_right= right.end(j);
       for(; it_right != end_right; ++it_right)
         this->add(it_left->row(), it_right->column());
     }
@@ -390,11 +389,11 @@ DynamicSparsityPattern::compute_mmult_pattern(
 void
 DynamicSparsityPattern::print(std::ostream& out) const
 {
-  for(size_type row = 0; row < lines.size(); ++row)
+  for(size_type row= 0; row < lines.size(); ++row)
     {
       out << '[' << (rowset.size() == 0 ? row : rowset.nth_index_in_set(row));
 
-      for(std::vector<size_type>::const_iterator j = lines[row].entries.begin();
+      for(std::vector<size_type>::const_iterator j= lines[row].entries.begin();
           j != lines[row].entries.end();
           ++j)
         out << ',' << *j;
@@ -408,12 +407,12 @@ DynamicSparsityPattern::print(std::ostream& out) const
 void
 DynamicSparsityPattern::print_gnuplot(std::ostream& out) const
 {
-  for(size_type row = 0; row < lines.size(); ++row)
+  for(size_type row= 0; row < lines.size(); ++row)
     {
       const size_type rowindex
         = rowset.size() == 0 ? row : rowset.nth_index_in_set(row);
 
-      for(std::vector<size_type>::const_iterator j = lines[row].entries.begin();
+      for(std::vector<size_type>::const_iterator j= lines[row].entries.begin();
           j != lines[row].entries.end();
           ++j)
         // while matrix entries are usually
@@ -430,18 +429,18 @@ DynamicSparsityPattern::print_gnuplot(std::ostream& out) const
 DynamicSparsityPattern::size_type
 DynamicSparsityPattern::bandwidth() const
 {
-  size_type b = 0;
-  for(size_type row = 0; row < lines.size(); ++row)
+  size_type b= 0;
+  for(size_type row= 0; row < lines.size(); ++row)
     {
       const size_type rowindex
         = rowset.size() == 0 ? row : rowset.nth_index_in_set(row);
 
-      for(std::vector<size_type>::const_iterator j = lines[row].entries.begin();
+      for(std::vector<size_type>::const_iterator j= lines[row].entries.begin();
           j != lines[row].entries.end();
           ++j)
         if(static_cast<size_type>(std::abs(static_cast<int>(rowindex - *j)))
            > b)
-          b = std::abs(static_cast<signed int>(rowindex - *j));
+          b= std::abs(static_cast<signed int>(rowindex - *j));
     }
 
   return b;
@@ -453,10 +452,10 @@ DynamicSparsityPattern::n_nonzero_elements() const
   if(!have_entries)
     return 0;
 
-  size_type n = 0;
-  for(size_type i = 0; i < lines.size(); ++i)
+  size_type n= 0;
+  for(size_type i= 0; i < lines.size(); ++i)
     {
-      n += lines[i].entries.size();
+      n+= lines[i].entries.size();
     }
 
   return n;
@@ -465,12 +464,12 @@ DynamicSparsityPattern::n_nonzero_elements() const
 DynamicSparsityPattern::size_type
 DynamicSparsityPattern::memory_consumption() const
 {
-  size_type mem = sizeof(DynamicSparsityPattern)
-                  + MemoryConsumption::memory_consumption(rowset)
-                  - sizeof(rowset);
+  size_type mem= sizeof(DynamicSparsityPattern)
+                 + MemoryConsumption::memory_consumption(rowset)
+                 - sizeof(rowset);
 
-  for(size_type i = 0; i < lines.size(); ++i)
-    mem += MemoryConsumption::memory_consumption(lines[i]);
+  for(size_type i= 0; i < lines.size(); ++i)
+    mem+= MemoryConsumption::memory_consumption(lines[i]);
 
   return mem;
 }

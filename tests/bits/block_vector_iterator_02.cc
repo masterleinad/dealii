@@ -22,13 +22,13 @@ void
 test()
 {
   BlockVector<double> v(2, 1);
-  v(0) = 1;
-  v(1) = 2;
+  v(0)= 1;
+  v(1)= 2;
 
   // first check reading through a const
   // iterator
   {
-    BlockVector<double>::const_iterator i = v.begin();
+    BlockVector<double>::const_iterator i= v.begin();
     AssertThrow(i[0] == 1, ExcInternalError());
     AssertThrow(i[1] == 2, ExcInternalError());
   }
@@ -44,21 +44,21 @@ test()
 
   // read through a read-write iterator
   {
-    BlockVector<double>::iterator i = v.begin();
+    BlockVector<double>::iterator i= v.begin();
     AssertThrow(i[0] == 1, ExcInternalError());
     AssertThrow(i[1] == 2, ExcInternalError());
   }
 
   // write through a read-write iterator
   {
-    BlockVector<double>::iterator i = v.begin();
-    i[0]                            = 2;
-    i[1]                            = 3;
+    BlockVector<double>::iterator i= v.begin();
+    i[0]                           = 2;
+    i[1]                           = 3;
   }
 
   // and read again
   {
-    BlockVector<double>::iterator i = v.begin();
+    BlockVector<double>::iterator i= v.begin();
     AssertThrow(i[0] == 2, ExcInternalError());
     AssertThrow(i[1] == 3, ExcInternalError());
   }

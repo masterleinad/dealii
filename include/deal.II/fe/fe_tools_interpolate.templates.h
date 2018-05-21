@@ -89,11 +89,11 @@ namespace FETools
     Assert(u2.size() == dof2.n_dofs(),
            ExcDimensionMismatch(u2.size(), dof2.n_dofs()));
 
-    const IndexSet u2_elements = u2.locally_owned_elements();
+    const IndexSet u2_elements= u2.locally_owned_elements();
 #ifdef DEBUG
-    const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
-    const IndexSet& dof2_local_dofs = dof2.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
+    const IndexSet& dof1_local_dofs= dof1.locally_owned_dofs();
+    const IndexSet& dof2_local_dofs= dof2.locally_owned_dofs();
+    const IndexSet  u1_elements    = u1.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
            ExcMessage("The provided vector and DoF handler should have the same"
                       " index sets."));
@@ -122,18 +122,18 @@ namespace FETools
 
     typename DoFHandlerType1<dim, spacedim>::active_cell_iterator cell1
       = dof1.begin_active(),
-      endc1 = dof1.end();
+      endc1= dof1.end();
     typename DoFHandlerType2<dim, spacedim>::active_cell_iterator cell2
       = dof2.begin_active(),
-      endc2 = dof2.end();
+      endc2= dof2.end();
     (void) endc2;
 
     std::vector<types::global_dof_index> dofs;
     dofs.reserve(DoFTools::max_dofs_per_cell(dof2));
 
-    u2 = typename OutVector::value_type(0.);
+    u2= typename OutVector::value_type(0.);
     OutVector touch_count(u2);
-    touch_count = typename OutVector::value_type(0.);
+    touch_count= typename OutVector::value_type(0.);
 
     // for distributed triangulations,
     // we can only interpolate u1 on
@@ -163,14 +163,14 @@ namespace FETools
                && (constraints.n_constraints() == 0));
 
           if(hanging_nodes_not_allowed)
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+            for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
                 ++face)
               Assert(cell1->at_boundary(face)
                        || cell1->neighbor(face)->level() == cell1->level(),
                      ExcHangingNodesNotAllowed(0));
 
-          const unsigned int dofs_per_cell1 = cell1->get_fe().dofs_per_cell;
-          const unsigned int dofs_per_cell2 = cell2->get_fe().dofs_per_cell;
+          const unsigned int dofs_per_cell1= cell1->get_fe().dofs_per_cell;
+          const unsigned int dofs_per_cell2= cell2->get_fe().dofs_per_cell;
           u1_local.reinit(dofs_per_cell1);
           u2_local.reinit(dofs_per_cell2);
 
@@ -199,10 +199,10 @@ namespace FETools
           dofs.resize(dofs_per_cell2);
           cell2->get_dof_indices(dofs);
 
-          for(unsigned int i = 0; i < dofs_per_cell2; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell2; ++i)
             {
               // if dof is locally_owned
-              const types::global_dof_index gdi = dofs[i];
+              const types::global_dof_index gdi= dofs[i];
               if(u2_elements.is_element(gdi))
                 {
                   ::dealii::internal::ElementAccess<OutVector>::add(
@@ -222,7 +222,7 @@ namespace FETools
     // if we work on parallel distributed
     // vectors, we have to ensure, that we only
     // work on dofs this processor owns.
-    const IndexSet& locally_owned_dofs = dof2.locally_owned_dofs();
+    const IndexSet& locally_owned_dofs= dof2.locally_owned_dofs();
 
     // when a discontinuous element is
     // interpolated to a continuous
@@ -230,7 +230,7 @@ namespace FETools
     // for parallel vectors check,
     // if this component is owned by
     // this processor.
-    for(types::global_dof_index i = 0; i < dof2.n_dofs(); ++i)
+    for(types::global_dof_index i= 0; i < dof2.n_dofs(); ++i)
       if(locally_owned_dofs.is_element(i))
         {
           Assert(
@@ -275,8 +275,8 @@ namespace FETools
            ExcDimensionMismatch(u1_interpolated.size(), dof1.n_dofs()));
 
 #ifdef DEBUG
-    const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
+    const IndexSet& dof1_local_dofs= dof1.locally_owned_dofs();
+    const IndexSet  u1_elements    = u1.locally_owned_elements();
     const IndexSet  u1_interpolated_elements
       = u1_interpolated.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
@@ -297,7 +297,7 @@ namespace FETools
 
     typename DoFHandlerType<dim, spacedim>::active_cell_iterator cell
       = dof1.begin_active(),
-      endc = dof1.end();
+      endc= dof1.end();
 
     // map from possible fe objects in
     // dof1 to the back_interpolation
@@ -321,13 +321,13 @@ namespace FETools
               || (fe2.dofs_per_vertex != 0);
 
           if(hanging_nodes_not_allowed)
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+            for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
                 ++face)
               Assert(cell->at_boundary(face)
                        || cell->neighbor(face)->level() == cell->level(),
                      ExcHangingNodesNotAllowed(0));
 
-          const unsigned int dofs_per_cell1 = cell->get_fe().dofs_per_cell;
+          const unsigned int dofs_per_cell1= cell->get_fe().dofs_per_cell;
 
           // make sure back_interpolation
           // matrix is available
@@ -385,7 +385,7 @@ namespace FETools
         // if u1 is a parallel distributed PETSc vector, we create a
         // vector u2 with based on the sets of locally owned and relevant
         // dofs of dof2
-        const IndexSet& dof2_locally_owned_dofs = dof2.locally_owned_dofs();
+        const IndexSet& dof2_locally_owned_dofs= dof2.locally_owned_dofs();
         IndexSet        dof2_locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dof2,
                                                 dof2_locally_relevant_dofs);
@@ -396,7 +396,7 @@ namespace FETools
         PETScWrappers::MPI::Vector u2(dof2_locally_owned_dofs,
                                       dof2_locally_relevant_dofs,
                                       u1.get_mpi_communicator());
-        u2 = u2_out;
+        u2= u2_out;
         interpolate(dof2, u2, dof1, constraints1, u1_interpolated);
       }
 #endif
@@ -415,7 +415,7 @@ namespace FETools
         // if u1 is a parallel distributed Trilinos vector, we create a
         // vector u2 with based on the sets of locally owned and relevant
         // dofs of dof2
-        const IndexSet& dof2_locally_owned_dofs = dof2.locally_owned_dofs();
+        const IndexSet& dof2_locally_owned_dofs= dof2.locally_owned_dofs();
         IndexSet        dof2_locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dof2,
                                                 dof2_locally_relevant_dofs);
@@ -426,7 +426,7 @@ namespace FETools
         TrilinosWrappers::MPI::Vector u2(dof2_locally_owned_dofs,
                                          dof2_locally_relevant_dofs,
                                          u1.get_mpi_communicator());
-        u2 = u2_out;
+        u2= u2_out;
         interpolate(dof2, u2, dof1, constraints1, u1_interpolated);
       }
 #endif
@@ -442,7 +442,7 @@ namespace FETools
         const ConstraintMatrix&                           constraints2,
         LinearAlgebra::distributed::Vector<Number>&       u1_interpolated)
       {
-        const IndexSet& dof2_locally_owned_dofs = dof2.locally_owned_dofs();
+        const IndexSet& dof2_locally_owned_dofs= dof2.locally_owned_dofs();
         IndexSet        dof2_locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dof2,
                                                 dof2_locally_relevant_dofs);
@@ -508,8 +508,8 @@ namespace FETools
            ExcDimensionMismatch(u1_difference.size(), dof1.n_dofs()));
 
 #ifdef DEBUG
-    const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
+    const IndexSet& dof1_local_dofs= dof1.locally_owned_dofs();
+    const IndexSet  u1_elements    = u1.locally_owned_elements();
     const IndexSet  u1_difference_elements
       = u1_difference.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
@@ -530,7 +530,7 @@ namespace FETools
     const bool hanging_nodes_not_allowed
       = (dof1.get_fe().dofs_per_vertex != 0) || (fe2.dofs_per_vertex != 0);
 
-    const unsigned int dofs_per_cell = dof1.get_fe().dofs_per_cell;
+    const unsigned int dofs_per_cell= dof1.get_fe().dofs_per_cell;
 
     Vector<typename OutVector::value_type> u1_local(dofs_per_cell);
     Vector<typename OutVector::value_type> u1_diff_local(dofs_per_cell);
@@ -543,14 +543,14 @@ namespace FETools
 
     typename DoFHandler<dim, spacedim>::active_cell_iterator cell
       = dof1.begin_active(),
-      endc = dof1.end();
+      endc= dof1.end();
 
     for(; cell != endc; ++cell)
       if((cell->subdomain_id() == subdomain_id)
          || (subdomain_id == numbers::invalid_subdomain_id))
         {
           if(hanging_nodes_not_allowed)
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+            for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
                 ++face)
               Assert(cell->at_boundary(face)
                        || cell->neighbor(face)->level() == cell->level(),
@@ -605,7 +605,7 @@ namespace FETools
         // from the vector with ghost entries
         TrilinosWrappers::MPI::Vector u1_completely_distributed;
         u1_completely_distributed.reinit(u1_difference, true);
-        u1_completely_distributed = u1;
+        u1_completely_distributed= u1;
 
         u1_difference.sadd(-1, u1_completely_distributed);
       }
@@ -658,10 +658,10 @@ namespace FETools
       = dof1.begin_active();
     typename DoFHandler<dim, spacedim>::active_cell_iterator cell2
       = dof2.begin_active();
-    typename DoFHandler<dim, spacedim>::active_cell_iterator end = dof2.end();
+    typename DoFHandler<dim, spacedim>::active_cell_iterator end= dof2.end();
 
-    const unsigned int n1 = dof1.get_fe().dofs_per_cell;
-    const unsigned int n2 = dof2.get_fe().dofs_per_cell;
+    const unsigned int n1= dof1.get_fe().dofs_per_cell;
+    const unsigned int n2= dof2.get_fe().dofs_per_cell;
 
     Vector<typename OutVector::value_type> u1_local(n1);
     Vector<typename OutVector::value_type> u2_local(n2);
@@ -670,13 +670,13 @@ namespace FETools
     FullMatrix<double> matrix(n2, n1);
     get_projection_matrix(dof1.get_fe(), dof2.get_fe(), matrix);
 
-    u2 = typename OutVector::value_type(0.);
+    u2= typename OutVector::value_type(0.);
     while(cell2 != end)
       {
         cell1->get_dof_values(u1, u1_local);
         matrix.vmult(u2_local, u1_local);
         cell2->get_dof_indices(dofs);
-        for(unsigned int i = 0; i < n2; ++i)
+        for(unsigned int i= 0; i < n2; ++i)
           {
             ::dealii::internal::ElementAccess<OutVector>::add(
               u2_local(i), dofs[i], u2);

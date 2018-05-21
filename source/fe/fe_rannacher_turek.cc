@@ -48,7 +48,7 @@ std::vector<unsigned int>
 FE_RannacherTurek<dim>::get_dpo_vector()
 {
   std::vector<unsigned int> dpo(dim + 1, 0);
-  dpo[dim - 1] = 1;
+  dpo[dim - 1]= 1;
 
   return dpo;
 }
@@ -78,9 +78,9 @@ FE_RannacherTurek<dim>::initialize_support_points()
 {
   Assert(dim == 2, ExcNotImplemented());
   dealii::QGauss<dim - 1> face_quadrature(this->n_face_support_points);
-  this->weights = face_quadrature.get_weights();
+  this->weights= face_quadrature.get_weights();
   this->generalized_support_points.resize(4 * face_quadrature.size());
-  for(unsigned int q = 0; q < face_quadrature.size(); ++q)
+  for(unsigned int q= 0; q < face_quadrature.size(); ++q)
     {
       this->generalized_support_points[0 * face_quadrature.size() + q]
         = dealii::Point<dim>(0, 1 - face_quadrature.point(q)(0));
@@ -103,17 +103,17 @@ FE_RannacherTurek<dim>::convert_generalized_support_point_values_to_dof_values(
                   this->generalized_support_points.size());
   AssertDimension(nodal_values.size(), this->dofs_per_cell);
 
-  const unsigned int q_points_per_face = this->weights.size();
+  const unsigned int q_points_per_face= this->weights.size();
   std::fill(nodal_values.begin(), nodal_values.end(), 0.0);
 
   std::vector<Vector<double>>::const_iterator value
     = support_point_values.begin();
-  for(unsigned int face = 0; face < dealii::GeometryInfo<dim>::faces_per_cell;
+  for(unsigned int face= 0; face < dealii::GeometryInfo<dim>::faces_per_cell;
       ++face)
     {
-      for(unsigned int q = 0; q < q_points_per_face; ++q)
+      for(unsigned int q= 0; q < q_points_per_face; ++q)
         {
-          nodal_values[face] += (*value)[0] * this->weights[q];
+          nodal_values[face]+= (*value)[0] * this->weights[q];
           ++value;
         }
     }

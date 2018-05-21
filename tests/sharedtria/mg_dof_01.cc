@@ -50,16 +50,16 @@ compare_meshes(DoFHandler<dim>& shared_dof_handler,
 
   unsigned int n_levels
     = distributed_dof_handler.get_triangulation().n_global_levels();
-  for(unsigned int lvl = 0; lvl < n_levels; ++lvl)
+  for(unsigned int lvl= 0; lvl < n_levels; ++lvl)
     {
-      IndexSet shared_dofs = shared_dof_handler.locally_owned_mg_dofs(lvl);
+      IndexSet shared_dofs= shared_dof_handler.locally_owned_mg_dofs(lvl);
       IndexSet distributed_dofs
         = distributed_dof_handler.locally_owned_mg_dofs(lvl);
       Assert(shared_dofs == distributed_dofs, ExcInternalError());
 
       typename DoFHandler<dim>::cell_iterator cell
         = distributed_dof_handler.begin(lvl),
-        endc = distributed_dof_handler.end(lvl);
+        endc= distributed_dof_handler.end(lvl);
       for(; cell != endc; ++cell)
         {
           if(cell->level_subdomain_id() == numbers::artificial_subdomain_id)
@@ -79,7 +79,7 @@ compare_meshes(DoFHandler<dim>& shared_dof_handler,
             fe.dofs_per_cell);
           cell->get_mg_dof_indices(distributed_cell_dofs);
           dof_shared_cell->get_mg_dof_indices(shared_cell_dofs);
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
             Assert(distributed_cell_dofs[i] == shared_cell_dofs[i],
                    ExcInternalError());
         }

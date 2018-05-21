@@ -50,7 +50,7 @@ namespace hp
      * Default constructor. Leads to an empty collection that can later be
      * filled using push_back().
      */
-    QCollection() = default;
+    QCollection()= default;
 
     /**
      * Conversion constructor. This constructor creates a QCollection from a
@@ -146,10 +146,10 @@ namespace hp
     Assert(quadratures.size() > 0,
            ExcMessage("You can't call this function for an empty collection"));
 
-    unsigned int m = 0;
-    for(unsigned int i = 0; i < quadratures.size(); ++i)
+    unsigned int m= 0;
+    for(unsigned int i= 0; i < quadratures.size(); ++i)
       if(quadratures[i]->size() > m)
-        m = quadratures[i]->size();
+        m= quadratures[i]->size();
 
     return m;
   }

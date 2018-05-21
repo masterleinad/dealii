@@ -23,20 +23,20 @@
 void
 test()
 {
-  const int n_proc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const int n_proc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   //All processes should own 10 entries
-  const int entries_per_process = 10;
+  const int entries_per_process= 10;
 
   IndexSet  locally_owned(entries_per_process * n_proc);
-  const int begin_index = my_id * entries_per_process;
-  const int end_index   = (my_id + 1) * entries_per_process;
+  const int begin_index= my_id * entries_per_process;
+  const int end_index  = (my_id + 1) * entries_per_process;
   locally_owned.add_range(begin_index, end_index);
 
   IndexSet  locally_relevant(entries_per_process * n_proc);
-  const int local_begin = std::max(0, begin_index - entries_per_process / 2);
-  const int local_end   = entries_per_process * n_proc;
+  const int local_begin= std::max(0, begin_index - entries_per_process / 2);
+  const int local_end  = entries_per_process * n_proc;
   locally_relevant.add_range(local_begin, local_end);
 
   TrilinosWrappers::MPI::Vector ghosted, distributed;
@@ -45,7 +45,7 @@ test()
 
   IndexSet locally_owned_elements_distributed
     = distributed.locally_owned_elements();
-  IndexSet locally_owned_elements_ghosted = ghosted.locally_owned_elements();
+  IndexSet locally_owned_elements_ghosted= ghosted.locally_owned_elements();
 
   const types::global_dof_index local_range_begin_ghosted
     = ghosted.local_range().first;

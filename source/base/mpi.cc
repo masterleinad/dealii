@@ -62,8 +62,8 @@ namespace Utilities
     unsigned int
     n_mpi_processes(const MPI_Comm& mpi_communicator)
     {
-      int       n_jobs = 1;
-      const int ierr   = MPI_Comm_size(mpi_communicator, &n_jobs);
+      int       n_jobs= 1;
+      const int ierr  = MPI_Comm_size(mpi_communicator, &n_jobs);
       AssertThrowMPI(ierr);
 
       return n_jobs;
@@ -72,8 +72,8 @@ namespace Utilities
     unsigned int
     this_mpi_process(const MPI_Comm& mpi_communicator)
     {
-      int       rank = 0;
-      const int ierr = MPI_Comm_rank(mpi_communicator, &rank);
+      int       rank= 0;
+      const int ierr= MPI_Comm_rank(mpi_communicator, &rank);
       AssertThrowMPI(ierr);
 
       return rank;
@@ -83,7 +83,7 @@ namespace Utilities
     duplicate_communicator(const MPI_Comm& mpi_communicator)
     {
       MPI_Comm  new_communicator;
-      const int ierr = MPI_Comm_dup(mpi_communicator, &new_communicator);
+      const int ierr= MPI_Comm_dup(mpi_communicator, &new_communicator);
       AssertThrowMPI(ierr);
       return new_communicator;
     }
@@ -98,68 +98,68 @@ namespace Utilities
       return MPI_Comm_create_group(comm, group, tag, new_comm);
 #  else
       int rank;
-      int ierr = MPI_Comm_rank(comm, &rank);
+      int ierr= MPI_Comm_rank(comm, &rank);
       AssertThrowMPI(ierr);
 
       int grp_rank;
-      ierr = MPI_Group_rank(group, &grp_rank);
+      ierr= MPI_Group_rank(group, &grp_rank);
       AssertThrowMPI(ierr);
       if(grp_rank == MPI_UNDEFINED)
         {
-          *new_comm = MPI_COMM_NULL;
+          *new_comm= MPI_COMM_NULL;
           return MPI_SUCCESS;
         }
 
       int grp_size;
-      ierr = MPI_Group_size(group, &grp_size);
+      ierr= MPI_Group_size(group, &grp_size);
       AssertThrowMPI(ierr);
 
-      ierr = MPI_Comm_dup(MPI_COMM_SELF, new_comm);
+      ierr= MPI_Comm_dup(MPI_COMM_SELF, new_comm);
       AssertThrowMPI(ierr);
 
       MPI_Group parent_grp;
-      ierr = MPI_Comm_group(comm, &parent_grp);
+      ierr= MPI_Comm_group(comm, &parent_grp);
       AssertThrowMPI(ierr);
 
       std::vector<int> pids(grp_size);
       std::vector<int> grp_pids(grp_size);
       std::iota(grp_pids.begin(), grp_pids.end(), 0);
-      ierr = MPI_Group_translate_ranks(
+      ierr= MPI_Group_translate_ranks(
         group, grp_size, grp_pids.data(), parent_grp, pids.data());
       AssertThrowMPI(ierr);
-      ierr = MPI_Group_free(&parent_grp);
+      ierr= MPI_Group_free(&parent_grp);
       AssertThrowMPI(ierr);
 
-      MPI_Comm comm_old = *new_comm;
+      MPI_Comm comm_old= *new_comm;
       MPI_Comm ic;
-      for(int merge_sz = 1; merge_sz < grp_size; merge_sz *= 2)
+      for(int merge_sz= 1; merge_sz < grp_size; merge_sz*= 2)
         {
-          const int gid = grp_rank / merge_sz;
-          comm_old      = *new_comm;
+          const int gid= grp_rank / merge_sz;
+          comm_old     = *new_comm;
           if(gid % 2 == 0)
             {
               if((gid + 1) * merge_sz < grp_size)
                 {
-                  ierr = (MPI_Intercomm_create(
+                  ierr= (MPI_Intercomm_create(
                     *new_comm, 0, comm, pids[(gid + 1) * merge_sz], tag, &ic));
                   AssertThrowMPI(ierr);
-                  ierr = MPI_Intercomm_merge(ic, 0 /* LOW */, new_comm);
+                  ierr= MPI_Intercomm_merge(ic, 0 /* LOW */, new_comm);
                   AssertThrowMPI(ierr);
                 }
             }
           else
             {
-              ierr = MPI_Intercomm_create(
+              ierr= MPI_Intercomm_create(
                 *new_comm, 0, comm, pids[(gid - 1) * merge_sz], tag, &ic);
               AssertThrowMPI(ierr);
-              ierr = MPI_Intercomm_merge(ic, 1 /* HIGH */, new_comm);
+              ierr= MPI_Intercomm_merge(ic, 1 /* HIGH */, new_comm);
               AssertThrowMPI(ierr);
             }
           if(*new_comm != comm_old)
             {
-              ierr = MPI_Comm_free(&ic);
+              ierr= MPI_Comm_free(&ic);
               AssertThrowMPI(ierr);
-              ierr = MPI_Comm_free(&comm_old);
+              ierr= MPI_Comm_free(&comm_old);
               AssertThrowMPI(ierr);
             }
         }
@@ -173,10 +173,10 @@ namespace Utilities
       const MPI_Comm&                  mpi_comm,
       const std::vector<unsigned int>& destinations)
     {
-      const unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_comm);
-      const unsigned int n_procs = Utilities::MPI::n_mpi_processes(mpi_comm);
+      const unsigned int myid   = Utilities::MPI::this_mpi_process(mpi_comm);
+      const unsigned int n_procs= Utilities::MPI::n_mpi_processes(mpi_comm);
 
-      for(unsigned int i = 0; i < destinations.size(); ++i)
+      for(unsigned int i= 0; i < destinations.size(); ++i)
         {
           Assert(destinations[i] < n_procs,
                  ExcIndexRange(destinations[i], 0, n_procs));
@@ -207,20 +207,20 @@ namespace Utilities
       // processors in this case, which is more expensive than the reduction
       // operation above in MPI_Allreduce)
       std::vector<unsigned int> all_destinations(max_n_destinations * n_procs);
-      const int                 ierr = MPI_Allgather(my_destinations.data(),
-                                     max_n_destinations,
-                                     MPI_UNSIGNED,
-                                     all_destinations.data(),
-                                     max_n_destinations,
-                                     MPI_UNSIGNED,
-                                     mpi_comm);
+      const int                 ierr= MPI_Allgather(my_destinations.data(),
+                                    max_n_destinations,
+                                    MPI_UNSIGNED,
+                                    all_destinations.data(),
+                                    max_n_destinations,
+                                    MPI_UNSIGNED,
+                                    mpi_comm);
       AssertThrowMPI(ierr);
 
       // now we know who is going to communicate with whom. collect who is
       // going to communicate with us!
       std::vector<unsigned int> origins;
-      for(unsigned int i = 0; i < n_procs; ++i)
-        for(unsigned int j = 0; j < max_n_destinations; ++j)
+      for(unsigned int i= 0; i < n_procs; ++i)
+        for(unsigned int j= 0; j < max_n_destinations; ++j)
           if(all_destinations[i * max_n_destinations + j] == myid)
             origins.push_back(i);
           else if(all_destinations[i * max_n_destinations + j]
@@ -237,34 +237,34 @@ namespace Utilities
       max_reduce(const void* in_lhs_, void* inout_rhs_, int* len, MPI_Datatype*)
       {
         (void) len;
-        const MinMaxAvg* in_lhs    = static_cast<const MinMaxAvg*>(in_lhs_);
-        MinMaxAvg*       inout_rhs = static_cast<MinMaxAvg*>(inout_rhs_);
+        const MinMaxAvg* in_lhs   = static_cast<const MinMaxAvg*>(in_lhs_);
+        MinMaxAvg*       inout_rhs= static_cast<MinMaxAvg*>(inout_rhs_);
 
         Assert(*len == 1, ExcInternalError());
 
-        inout_rhs->sum += in_lhs->sum;
+        inout_rhs->sum+= in_lhs->sum;
         if(inout_rhs->min > in_lhs->min)
           {
-            inout_rhs->min       = in_lhs->min;
-            inout_rhs->min_index = in_lhs->min_index;
+            inout_rhs->min      = in_lhs->min;
+            inout_rhs->min_index= in_lhs->min_index;
           }
         else if(inout_rhs->min == in_lhs->min)
           {
             // choose lower cpu index when tied to make operator commutative
             if(inout_rhs->min_index > in_lhs->min_index)
-              inout_rhs->min_index = in_lhs->min_index;
+              inout_rhs->min_index= in_lhs->min_index;
           }
 
         if(inout_rhs->max < in_lhs->max)
           {
-            inout_rhs->max       = in_lhs->max;
-            inout_rhs->max_index = in_lhs->max_index;
+            inout_rhs->max      = in_lhs->max;
+            inout_rhs->max_index= in_lhs->max_index;
           }
         else if(inout_rhs->max == in_lhs->max)
           {
             // choose lower cpu index when tied to make operator commutative
             if(inout_rhs->max_index > in_lhs->max_index)
-              inout_rhs->max_index = in_lhs->max_index;
+              inout_rhs->max_index= in_lhs->max_index;
           }
       }
     } // namespace
@@ -277,24 +277,24 @@ namespace Utilities
       if(job_supports_mpi() == false)
         {
           MinMaxAvg result;
-          result.sum       = my_value;
-          result.avg       = my_value;
-          result.min       = my_value;
-          result.max       = my_value;
-          result.min_index = 0;
-          result.max_index = 0;
+          result.sum      = my_value;
+          result.avg      = my_value;
+          result.min      = my_value;
+          result.max      = my_value;
+          result.min_index= 0;
+          result.max_index= 0;
 
           return result;
         }
 
       // To avoid uninitialized values on some MPI implementations, provide
       // result with a default value already...
-      MinMaxAvg result = {0.,
-                          std::numeric_limits<double>::max(),
-                          -std::numeric_limits<double>::max(),
-                          0,
-                          0,
-                          0.};
+      MinMaxAvg result= {0.,
+                         std::numeric_limits<double>::max(),
+                         -std::numeric_limits<double>::max(),
+                         0,
+                         0,
+                         0.};
 
       const unsigned int my_id
         = dealii::Utilities::MPI::this_mpi_process(mpi_communicator);
@@ -302,33 +302,33 @@ namespace Utilities
         = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
 
       MPI_Op op;
-      int    ierr = MPI_Op_create((MPI_User_function*) &max_reduce, true, &op);
+      int    ierr= MPI_Op_create((MPI_User_function*) &max_reduce, true, &op);
       AssertThrowMPI(ierr);
 
       MinMaxAvg in;
-      in.sum = in.min = in.max = my_value;
-      in.min_index = in.max_index = my_id;
+      in.sum= in.min= in.max= my_value;
+      in.min_index= in.max_index= my_id;
 
       MPI_Datatype type;
-      int          lengths[]       = {3, 2};
-      MPI_Aint     displacements[] = {0, offsetof(MinMaxAvg, min_index)};
-      MPI_Datatype types[]         = {MPI_DOUBLE, MPI_INT};
+      int          lengths[]      = {3, 2};
+      MPI_Aint     displacements[]= {0, offsetof(MinMaxAvg, min_index)};
+      MPI_Datatype types[]        = {MPI_DOUBLE, MPI_INT};
 
-      ierr = MPI_Type_struct(2, lengths, displacements, types, &type);
+      ierr= MPI_Type_struct(2, lengths, displacements, types, &type);
       AssertThrowMPI(ierr);
 
-      ierr = MPI_Type_commit(&type);
+      ierr= MPI_Type_commit(&type);
       AssertThrowMPI(ierr);
-      ierr = MPI_Allreduce(&in, &result, 1, type, op, mpi_communicator);
-      AssertThrowMPI(ierr);
-
-      ierr = MPI_Type_free(&type);
+      ierr= MPI_Allreduce(&in, &result, 1, type, op, mpi_communicator);
       AssertThrowMPI(ierr);
 
-      ierr = MPI_Op_free(&op);
+      ierr= MPI_Type_free(&type);
       AssertThrowMPI(ierr);
 
-      result.avg = result.sum / numproc;
+      ierr= MPI_Op_free(&op);
+      AssertThrowMPI(ierr);
+
+      result.avg= result.sum / numproc;
 
       return result;
     }
@@ -358,12 +358,12 @@ namespace Utilities
     {
       MinMaxAvg result;
 
-      result.sum       = my_value;
-      result.avg       = my_value;
-      result.min       = my_value;
-      result.max       = my_value;
-      result.min_index = 0;
-      result.max_index = 0;
+      result.sum      = my_value;
+      result.avg      = my_value;
+      result.min      = my_value;
+      result.max      = my_value;
+      result.min_index= 0;
+      result.max_index= 0;
 
       return result;
     }
@@ -374,18 +374,18 @@ namespace Utilities
                                        char**&            argv,
                                        const unsigned int max_num_threads)
     {
-      static bool constructor_has_already_run = false;
+      static bool constructor_has_already_run= false;
       (void) constructor_has_already_run;
       Assert(constructor_has_already_run == false,
              ExcMessage("You can only create a single object of this class "
                         "in a program since it initializes the MPI system."));
 
-      int ierr = 0;
+      int ierr= 0;
 #ifdef DEAL_II_WITH_MPI
       // if we have PETSc, we will initialize it and let it handle MPI.
       // Otherwise, we will do it.
-      int MPI_has_been_started = 0;
-      ierr                     = MPI_Initialized(&MPI_has_been_started);
+      int MPI_has_been_started= 0;
+      ierr                    = MPI_Initialized(&MPI_has_been_started);
       AssertThrowMPI(ierr);
       AssertThrow(MPI_has_been_started == 0,
                   ExcMessage("MPI error. You can only start MPI once!"));
@@ -395,8 +395,8 @@ namespace Utilities
       // we might use several threads but never call two MPI functions at the
       // same time. For an explanation see on why we do this see
       // http://www.open-mpi.org/community/lists/users/2010/03/12244.php
-      int wanted = MPI_THREAD_SERIALIZED;
-      ierr       = MPI_Init_thread(&argc, &argv, wanted, &provided);
+      int wanted= MPI_THREAD_SERIALIZED;
+      ierr      = MPI_Init_thread(&argc, &argv, wanted, &provided);
       AssertThrowMPI(ierr);
 
       // disable for now because at least some implementations always return
@@ -415,11 +415,11 @@ namespace Utilities
 #ifdef DEAL_II_WITH_PETSC
 #  ifdef DEAL_II_WITH_SLEPC
       // Initialize SLEPc (with PETSc):
-      ierr = SlepcInitialize(&argc, &argv, nullptr, nullptr);
+      ierr= SlepcInitialize(&argc, &argv, nullptr, nullptr);
       AssertThrow(ierr == 0, SLEPcWrappers::SolverBase::ExcSLEPcError(ierr));
 #  else
       // or just initialize PETSc alone:
-      ierr = PetscInitialize(&argc, &argv, nullptr, nullptr);
+      ierr= PetscInitialize(&argc, &argv, nullptr, nullptr);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 #  endif
 
@@ -446,7 +446,7 @@ namespace Utilities
       p4est_init(nullptr, SC_LP_SILENT);
 #endif
 
-      constructor_has_already_run = true;
+      constructor_has_already_run= true;
 
       // Now also see how many threads we'd like to run
       if(max_num_threads != numbers::invalid_unsigned_int)
@@ -467,7 +467,7 @@ namespace Utilities
           //
           // in calculating the length of the string, don't forget the
           // terminating \0 on C-style strings
-          const std::string  hostname = Utilities::System::get_hostname();
+          const std::string  hostname= Utilities::System::get_hostname();
           const unsigned int max_hostname_size
             = Utilities::MPI::max(hostname.size() + 1, MPI_COMM_WORLD);
           std::vector<char> hostname_array(max_hostname_size);
@@ -477,20 +477,20 @@ namespace Utilities
 
           std::vector<char> all_hostnames(
             max_hostname_size * MPI::n_mpi_processes(MPI_COMM_WORLD));
-          const int ierr = MPI_Allgather(hostname_array.data(),
-                                         max_hostname_size,
-                                         MPI_CHAR,
-                                         all_hostnames.data(),
-                                         max_hostname_size,
-                                         MPI_CHAR,
-                                         MPI_COMM_WORLD);
+          const int ierr= MPI_Allgather(hostname_array.data(),
+                                        max_hostname_size,
+                                        MPI_CHAR,
+                                        all_hostnames.data(),
+                                        max_hostname_size,
+                                        MPI_CHAR,
+                                        MPI_COMM_WORLD);
           AssertThrowMPI(ierr);
 
           // search how often our own hostname appears and the how-manyth
           // instance the current process represents
-          unsigned int n_local_processes   = 0;
-          unsigned int nth_process_on_host = 0;
-          for(unsigned int i = 0; i < MPI::n_mpi_processes(MPI_COMM_WORLD); ++i)
+          unsigned int n_local_processes  = 0;
+          unsigned int nth_process_on_host= 0;
+          for(unsigned int i= 0; i < MPI::n_mpi_processes(MPI_COMM_WORLD); ++i)
             if(std::string(all_hostnames.data() + i * max_hostname_size)
                == hostname)
               {
@@ -514,7 +514,7 @@ namespace Utilities
                               0),
                        1U);
 #else
-          const unsigned int n_threads = MultithreadInfo::n_cores();
+          const unsigned int n_threads= MultithreadInfo::n_cores();
 #endif
 
           // finally set this number of threads
@@ -593,7 +593,7 @@ namespace Utilities
             }
           else
             {
-              const int ierr = MPI_Finalize();
+              const int ierr= MPI_Finalize();
               (void) ierr;
               AssertNothrow(ierr == MPI_SUCCESS, dealii::ExcMPI(ierr));
             }
@@ -605,8 +605,8 @@ namespace Utilities
     job_supports_mpi()
     {
 #ifdef DEAL_II_WITH_MPI
-      int       MPI_has_been_started = 0;
-      const int ierr                 = MPI_Initialized(&MPI_has_been_started);
+      int       MPI_has_been_started= 0;
+      const int ierr                = MPI_Initialized(&MPI_has_been_started);
       AssertThrowMPI(ierr);
 
       return (MPI_has_been_started > 0);

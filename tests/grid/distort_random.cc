@@ -31,7 +31,7 @@ test1(const bool keep_boundary)
 
   GridTools::distort_random(0.1, tria, keep_boundary);
 
-  std::ostream& logfile = deallog.get_file_stream();
+  std::ostream& logfile= deallog.get_file_stream();
   deallog << "dim=" << dim << ", keep_boundary=" << keep_boundary << std::endl;
   GridOut().write_gnuplot(tria, logfile);
 }

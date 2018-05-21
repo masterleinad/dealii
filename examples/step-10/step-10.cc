@@ -53,7 +53,7 @@ namespace Step10
   // computed approximation to $\pi$ being in the range of the number of
   // digits which a double variable can hold, we rather declare the reference
   // value as a <code>long double</code> and give it a number of extra digits:
-  const long double pi = 3.141592653589793238462643L;
+  const long double pi= 3.141592653589793238462643L;
 
   // Then, the first task will be to generate some output. Since this program
   // is so small, we do not employ object oriented techniques in it and do not
@@ -85,7 +85,7 @@ namespace Step10
     // that we have hidden the mesh refinement in the loop header, which might
     // be uncommon but nevertheless works. Also it is strangely consistent
     // with incrementing the loop index denoting the refinement level.
-    for(unsigned int refinement = 0; refinement < 2;
+    for(unsigned int refinement= 0; refinement < 2;
         ++refinement, triangulation.refine_global(1))
       {
         std::cout << "Refinement level: " << refinement << std::endl;
@@ -93,10 +93,10 @@ namespace Step10
         // Then have a string which denotes the base part of the names of the
         // files into which we write the output (ending with the refinement
         // level).
-        std::string filename_base = "ball_" + Utilities::to_string(refinement);
+        std::string filename_base= "ball_" + Utilities::to_string(refinement);
 
         // Then output the present grid for $Q_1$, $Q_2$, and $Q_3$ mappings:
-        for(unsigned int degree = 1; degree < 4; ++degree)
+        for(unsigned int degree= 1; degree < 4; ++degree)
           {
             std::cout << "Degree = " << degree << std::endl;
 
@@ -133,8 +133,8 @@ namespace Step10
             grid_out.set_flags(gnuplot_flags);
 
             // Finally, generate a filename and a file for output:
-            std::string filename = filename_base + "_mapping_q_"
-                                   + Utilities::to_string(degree) + ".dat";
+            std::string filename= filename_base + "_mapping_q_"
+                                  + Utilities::to_string(degree) + ".dat";
             std::ofstream gnuplot_file(filename);
 
             // Then write out the triangulation to this file. The last
@@ -192,7 +192,7 @@ namespace Step10
     const QGauss<dim> quadrature(4);
 
     // Now start by looping over polynomial mapping degrees=1..4:
-    for(unsigned int degree = 1; degree < 5; ++degree)
+    for(unsigned int degree= 1; degree < 5; ++degree)
       {
         std::cout << "Degree = " << degree << std::endl;
 
@@ -241,7 +241,7 @@ namespace Step10
         ConvergenceTable table;
 
         // Now we loop over several refinement steps of the triangulation.
-        for(unsigned int refinement = 0; refinement < 6;
+        for(unsigned int refinement= 0; refinement < 6;
             ++refinement, triangulation.refine_global(1))
           {
             // In this loop we first add the number of active cells of the
@@ -259,19 +259,19 @@ namespace Step10
 
             // We define the variable area as `long double' like we did for
             // the pi variable before.
-            long double area = 0;
+            long double area= 0;
 
             // Now we loop over all cells, reinitialize the FEValues object
             // for each cell, and add up all the `JxW' values for this cell to
             // `area'...
             typename DoFHandler<dim>::active_cell_iterator cell
               = dof_handler.begin_active(),
-              endc = dof_handler.end();
+              endc= dof_handler.end();
             for(; cell != endc; ++cell)
               {
                 fe_values.reinit(cell);
-                for(unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
-                  area += static_cast<long double>(fe_values.JxW(i));
+                for(unsigned int i= 0; i < fe_values.n_quadrature_points; ++i)
+                  area+= static_cast<long double>(fe_values.JxW(i));
               }
 
             // ...and store the resulting area values and the errors in the
@@ -327,7 +327,7 @@ namespace Step10
     // We loop over all degrees, create the triangulation, the boundary, the
     // mapping, the dummy finite element and the DoFHandler object as seen
     // before.
-    for(unsigned int degree = 1; degree < 5; ++degree)
+    for(unsigned int degree= 1; degree < 5; ++degree)
       {
         std::cout << "Degree = " << degree << std::endl;
         Triangulation<dim> triangulation;
@@ -345,7 +345,7 @@ namespace Step10
           mapping, fe, quadrature, update_JxW_values);
         ConvergenceTable table;
 
-        for(unsigned int refinement = 0; refinement < 6;
+        for(unsigned int refinement= 0; refinement < 6;
             ++refinement, triangulation.refine_global(1))
           {
             table.add_value("cells", triangulation.n_active_cells());
@@ -357,10 +357,10 @@ namespace Step10
             // added to the long double variable `perimeter'.
             typename DoFHandler<dim>::active_cell_iterator cell
               = dof_handler.begin_active(),
-              endc                = dof_handler.end();
-            long double perimeter = 0;
+              endc               = dof_handler.end();
+            long double perimeter= 0;
             for(; cell != endc; ++cell)
-              for(unsigned int face_no = 0;
+              for(unsigned int face_no= 0;
                   face_no < GeometryInfo<dim>::faces_per_cell;
                   ++face_no)
                 if(cell->face(face_no)->at_boundary())
@@ -368,7 +368,7 @@ namespace Step10
                     // We reinit the FEFaceValues object with the cell
                     // iterator and the number of the face.
                     fe_face_values.reinit(cell, face_no);
-                    for(unsigned int i = 0;
+                    for(unsigned int i= 0;
                         i < fe_face_values.n_quadrature_points;
                         ++i)
                       perimeter

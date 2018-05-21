@@ -169,12 +169,12 @@ namespace Step50
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component= 0) const;
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
                std::vector<double>&           values,
-               const unsigned int             component = 0) const;
+               const unsigned int             component= 0) const;
   };
 
   template <int dim>
@@ -194,15 +194,15 @@ namespace Step50
                                const unsigned int             component) const
   {
     (void) component;
-    const unsigned int n_points = points.size();
+    const unsigned int n_points= points.size();
 
     Assert(values.size() == n_points,
            ExcDimensionMismatch(values.size(), n_points));
 
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    for(unsigned int i = 0; i < n_points; ++i)
-      values[i] = Coefficient<dim>::value(points[i]);
+    for(unsigned int i= 0; i < n_points; ++i)
+      values[i]= Coefficient<dim>::value(points[i]);
   }
 
   template <int dim>
@@ -236,7 +236,7 @@ namespace Step50
     typename FunctionMap<dim>::type  dirichlet_boundary;
     Functions::ConstantFunction<dim> homogeneous_dirichlet_bc(1.0);
     dirichlet_boundary_ids.insert(0);
-    dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
+    dirichlet_boundary[0]= &homogeneous_dirichlet_bc;
     VectorTools::interpolate_boundary_values(
       mg_dof_handler, dirichlet_boundary, constraints);
     constraints.close();
@@ -252,14 +252,14 @@ namespace Step50
     mg_constrained_dofs.make_zero_boundary_constraints(mg_dof_handler,
                                                        dirichlet_boundary_ids);
 
-    const unsigned int n_levels = triangulation.n_global_levels();
+    const unsigned int n_levels= triangulation.n_global_levels();
 
     mg_interface_matrices.resize(0, n_levels - 1);
     mg_interface_matrices.clear_elements();
     mg_matrices.resize(0, n_levels - 1);
     mg_matrices.clear_elements();
 
-    for(unsigned int level = 0; level < n_levels; ++level)
+    for(unsigned int level= 0; level < n_levels; ++level)
       {
         {
           DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(level),
@@ -296,12 +296,12 @@ namespace Step50
                                      ScratchData<dim>&   scratch_data,
                                      CopyData&           copy_data)
   {
-    const unsigned int level = cell->level();
-    copy_data.level          = level;
+    const unsigned int level= cell->level();
+    copy_data.level         = level;
 
     const unsigned int dofs_per_cell
       = scratch_data.fe_values.get_fe().dofs_per_cell;
-    copy_data.dofs_per_cell = dofs_per_cell;
+    copy_data.dofs_per_cell= dofs_per_cell;
     const unsigned int n_q_points
       = scratch_data.fe_values.get_quadrature().size();
 
@@ -319,10 +319,10 @@ namespace Step50
     coefficient.value_list(scratch_data.fe_values.get_quadrature_points(),
                            coefficient_values);
 
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+    for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             copy_data.cell_matrix(i, j)
               += (coefficient_values[q_point]
                   * scratch_data.fe_values.shape_grad(i, q_point)
@@ -341,8 +341,7 @@ namespace Step50
   {
     std::vector<ConstraintMatrix> boundary_constraints(
       triangulation.n_global_levels());
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for(unsigned int level= 0; level < triangulation.n_global_levels(); ++level)
       {
         IndexSet dofset;
         DoFTools::extract_locally_relevant_level_dofs(
@@ -362,13 +361,13 @@ namespace Step50
           this->assemble_cell(cell, scratch_data, copy_data);
         };
 
-    auto cell_worker_mg = [&](const decltype(mg_dof_handler.begin_mg())& cell,
-                              ScratchData<dim>& scratch_data,
-                              CopyData&         copy_data) {
+    auto cell_worker_mg= [&](const decltype(mg_dof_handler.begin_mg())& cell,
+                             ScratchData<dim>& scratch_data,
+                             CopyData&         copy_data) {
       this->assemble_cell(cell, scratch_data, copy_data);
     };
 
-    auto copier_active = [&](const CopyData& c) {
+    auto copier_active= [&](const CopyData& c) {
       constraints.distribute_local_to_global(c.cell_matrix,
                                              c.cell_rhs,
                                              c.local_dof_indices,
@@ -376,12 +375,12 @@ namespace Step50
                                              system_rhs);
     };
 
-    auto copier_mg = [&](const CopyData& c) {
+    auto copier_mg= [&](const CopyData& c) {
       boundary_constraints[c.level].distribute_local_to_global(
         c.cell_matrix, c.local_dof_indices, mg_matrices[c.level]);
 
-      for(unsigned int i = 0; i < c.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < c.dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < c.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < c.dofs_per_cell; ++j)
           if(mg_constrained_dofs.is_interface_matrix_entry(
                c.level, c.local_dof_indices[i], c.local_dof_indices[j]))
             mg_interface_matrices[c.level].add(c.local_dof_indices[i],
@@ -408,8 +407,7 @@ namespace Step50
     system_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
 
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for(unsigned int level= 0; level < triangulation.n_global_levels(); ++level)
       {
         mg_matrices[level].compress(VectorOperation::add);
         deallog << "mg_matrices[" << level
@@ -428,7 +426,7 @@ namespace Step50
     MGTransferPrebuilt<vector_t> mg_transfer(mg_constrained_dofs);
     mg_transfer.build_matrices(mg_dof_handler);
 
-    matrix_t& coarse_matrix = mg_matrices[0];
+    matrix_t& coarse_matrix= mg_matrices[0];
 
     SolverControl        coarse_solver_control(1000, 1e-10, false, false);
     SolverCG<vector_t>   coarse_solver(coarse_solver_control);
@@ -474,7 +472,7 @@ namespace Step50
         = triangulation.begin_active();
         cell != triangulation.end();
         ++cell)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         if(cell->vertex(v)[0] <= 0.5 && cell->vertex(v)[1] <= 0.5)
           cell->set_refine_flag();
     triangulation.execute_coarsening_and_refinement();
@@ -484,7 +482,7 @@ namespace Step50
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 3; ++cycle)
+    for(unsigned int cycle= 0; cycle < 3; ++cycle)
       {
         deallog << "Cycle " << cycle << ':' << std::endl;
 
@@ -503,7 +501,7 @@ namespace Step50
 
         deallog << "   Number of degrees of freedom: "
                 << mg_dof_handler.n_dofs() << " (by level: ";
-        for(unsigned int level = 0; level < triangulation.n_global_levels();
+        for(unsigned int level= 0; level < triangulation.n_global_levels();
             ++level)
           deallog << mg_dof_handler.n_dofs(level)
                   << (level == triangulation.n_global_levels() - 1 ? ")" :

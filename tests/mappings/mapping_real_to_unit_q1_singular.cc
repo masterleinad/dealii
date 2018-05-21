@@ -35,10 +35,10 @@ test_real_to_unit_cell()
   Point<dim>           point;
   MappingQGeneric<dim> mapping(1);
 
-  point[1] = -1. / (1 + std::sqrt(2.0)) / std::sqrt(2);
+  point[1]= -1. / (1 + std::sqrt(2.0)) / std::sqrt(2);
 
   // check on cell 2
-  typename Triangulation<dim>::cell_iterator cell = triangulation.begin();
+  typename Triangulation<dim>::cell_iterator cell= triangulation.begin();
   ++cell;
   try
     {

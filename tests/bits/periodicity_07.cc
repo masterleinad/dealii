@@ -42,7 +42,7 @@ using namespace dealii;
 ConstraintMatrix
 make_constraint_matrix(const DoFHandler<3>& dof_handler, int version)
 {
-  constexpr int dim = 3;
+  constexpr int dim= 3;
 
   ConstraintMatrix constraints;
   constraints.clear();
@@ -106,7 +106,7 @@ public:
   PeriodicReference() : Function<dim>()
   {}
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const override
+  value(const Point<dim>& p, const unsigned int component= 0) const override
   {
     if(dim == 3)
       return std::sin(p(0) + 1.) * std::sin(p(1) + 2.) * std::sin(p(2) + 3.);
@@ -129,27 +129,27 @@ check_periodicity(const DoFHandler<3>& dof_handler,
                   Vector<double>&      solution,
                   const unsigned int   cycle)
 {
-  unsigned int n_points = 2;
-  for(unsigned int i = 0; i < cycle; ++i)
-    n_points *= 2;
+  unsigned int n_points= 2;
+  for(unsigned int i= 0; i < cycle; ++i)
+    n_points*= 2;
 
   //don't test exactly at the support points, since point_value is not stable there
-  const double eps = 1. / (16. * n_points);
+  const double eps= 1. / (16. * n_points);
 
-  for(unsigned int i = 1; i < n_points; ++i)
-    for(unsigned int j = 1; j < n_points; ++j)
+  for(unsigned int i= 1; i < n_points; ++i)
+    for(unsigned int j= 1; j < n_points; ++j)
       {
         Vector<double> value1(1);
         Vector<double> value2(1);
 
         Point<3> point1;
-        point1(0) = -numbers::PI + 2. * i / n_points + eps;
-        point1(1) = -numbers::PI;
-        point1(2) = -numbers::PI + 2. * j / n_points + eps;
+        point1(0)= -numbers::PI + 2. * i / n_points + eps;
+        point1(1)= -numbers::PI;
+        point1(2)= -numbers::PI + 2. * j / n_points + eps;
         Point<3> point2;
-        point2(0) = -numbers::PI + 2. * i / n_points + eps;
-        point2(1) = numbers::PI;
-        point2(2) = -numbers::PI + 2. * j / n_points + eps;
+        point2(0)= -numbers::PI + 2. * i / n_points + eps;
+        point2(1)= numbers::PI;
+        point2(2)= -numbers::PI + 2. * j / n_points + eps;
 
         VectorTools::point_value(dof_handler, solution, point1, value1);
         VectorTools::point_value(dof_handler, solution, point2, value2);
@@ -169,20 +169,20 @@ check_periodicity(const DoFHandler<3>& dof_handler,
           }
       }
 
-  for(unsigned int i = 1; i < n_points; ++i)
-    for(unsigned int j = 1; j < n_points; ++j)
+  for(unsigned int i= 1; i < n_points; ++i)
+    for(unsigned int j= 1; j < n_points; ++j)
       {
         Vector<double> value1(1);
         Vector<double> value2(1);
 
         Point<3> point1;
-        point1(2) = -numbers::PI + 2. * j / n_points + eps;
-        point1(1) = -numbers::PI + 2. * i / n_points + eps;
-        point1(0) = -numbers::PI;
+        point1(2)= -numbers::PI + 2. * j / n_points + eps;
+        point1(1)= -numbers::PI + 2. * i / n_points + eps;
+        point1(0)= -numbers::PI;
         Point<3> point2;
-        point2(2) = -numbers::PI + 2. * j / n_points + eps;
-        point2(1) = -numbers::PI + 2. * i / n_points + eps;
-        point2(0) = numbers::PI;
+        point2(2)= -numbers::PI + 2. * j / n_points + eps;
+        point2(1)= -numbers::PI + 2. * i / n_points + eps;
+        point2(0)= numbers::PI;
 
         VectorTools::point_value(dof_handler, solution, point1, value1);
         VectorTools::point_value(dof_handler, solution, point2, value2);
@@ -202,20 +202,20 @@ check_periodicity(const DoFHandler<3>& dof_handler,
           }
       }
 
-  for(unsigned int i = 1; i < n_points; ++i)
-    for(unsigned int j = 1; j < n_points; ++j)
+  for(unsigned int i= 1; i < n_points; ++i)
+    for(unsigned int j= 1; j < n_points; ++j)
       {
         Vector<double> value1(1);
         Vector<double> value2(1);
 
         Point<3> point1;
-        point1(0) = -numbers::PI + 2. * j / n_points + eps;
-        point1(1) = -numbers::PI + 2. * i / n_points + eps;
-        point1(2) = -numbers::PI;
+        point1(0)= -numbers::PI + 2. * j / n_points + eps;
+        point1(1)= -numbers::PI + 2. * i / n_points + eps;
+        point1(2)= -numbers::PI;
         Point<3> point2;
-        point2(0) = -numbers::PI + 2. * j / n_points + eps;
-        point2(1) = -numbers::PI + 2. * i / n_points + eps;
-        point2(2) = numbers::PI;
+        point2(0)= -numbers::PI + 2. * j / n_points + eps;
+        point2(1)= -numbers::PI + 2. * i / n_points + eps;
+        point2(2)= numbers::PI;
 
         VectorTools::point_value(dof_handler, solution, point1, value1);
         VectorTools::point_value(dof_handler, solution, point2, value2);
@@ -241,8 +241,8 @@ main(int argc, char* argv[])
 {
   initlog();
 
-  constexpr int      dim = 3;
-  const double       L   = numbers::PI;
+  constexpr int      dim= 3;
+  const double       L  = numbers::PI;
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation, -L, L, true);
 
@@ -263,10 +263,10 @@ main(int argc, char* argv[])
   std::vector<Vector<double>> projection(4,
                                          Vector<double>(dof_handler.n_dofs()));
 
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     {
       deallog << "Testing version " << i << std::endl;
-      constraints[i] = make_constraint_matrix(dof_handler, i);
+      constraints[i]= make_constraint_matrix(dof_handler, i);
       VectorTools::project(dof_handler,
                            constraints[i],
                            QGauss<dim>(3),

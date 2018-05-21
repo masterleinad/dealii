@@ -40,13 +40,13 @@ namespace Functions
     switch(dim)
       {
         case 1:
-          vnames = "x,t";
+          vnames= "x,t";
           break;
         case 2:
-          vnames = "x,y,t";
+          vnames= "x,y,t";
           break;
         case 3:
-          vnames = "x,y,z,t";
+          vnames= "x,y,z,t";
           break;
         default:
           AssertThrow(false, ExcNotImplemented());
@@ -69,9 +69,9 @@ namespace Functions
       "variable names in your function expression.");
 
     // The expression of the function
-    std::string expr = "0";
-    for(unsigned int i = 1; i < n_components; ++i)
-      expr += "; 0";
+    std::string expr= "0";
+    for(unsigned int i= 1; i < n_components; ++i)
+      expr+= "; 0";
 
     prm.declare_entry(
       "Function expression",
@@ -110,14 +110,14 @@ namespace Functions
   void
   ParsedFunction<dim>::parse_parameters(ParameterHandler& prm)
   {
-    std::string vnames         = prm.get("Variable names");
-    std::string expression     = prm.get("Function expression");
-    std::string constants_list = prm.get("Function constants");
+    std::string vnames        = prm.get("Variable names");
+    std::string expression    = prm.get("Function expression");
+    std::string constants_list= prm.get("Function constants");
 
     std::vector<std::string> const_list
       = Utilities::split_string_list(constants_list, ',');
     std::map<std::string, double> constants;
-    for(unsigned int i = 0; i < const_list.size(); ++i)
+    for(unsigned int i= 0; i < const_list.size(); ++i)
       {
         std::vector<std::string> this_c
           = Utilities::split_string_list(const_list[i], '=');
@@ -125,15 +125,15 @@ namespace Functions
         double tmp;
         AssertThrow(std::sscanf(this_c[1].c_str(), "%lf", &tmp),
                     ExcMessage("Double number?"));
-        constants[this_c[0]] = tmp;
+        constants[this_c[0]]= tmp;
       }
 
     // set pi and Pi as synonyms for the corresponding value. note that
     // this overrides any value a user may have given
-    constants["pi"] = numbers::PI;
-    constants["Pi"] = numbers::PI;
+    constants["pi"]= numbers::PI;
+    constants["Pi"]= numbers::PI;
 
-    const unsigned int nn = (Utilities::split_string_list(vnames)).size();
+    const unsigned int nn= (Utilities::split_string_list(vnames)).size();
     switch(nn)
       {
         case dim:

@@ -48,10 +48,10 @@ BlockVector<Number>::BlockVector(const BlockVector<Number>& v)
   : BlockVectorBase<Vector<Number>>()
 {
   this->components.resize(v.n_blocks());
-  this->block_indices = v.block_indices;
+  this->block_indices= v.block_indices;
 
-  for(size_type i = 0; i < this->n_blocks(); ++i)
-    this->components[i] = v.components[i];
+  for(size_type i= 0; i < this->n_blocks(); ++i)
+    this->components[i]= v.components[i];
 }
 
 template <typename Number>
@@ -59,7 +59,7 @@ template <typename OtherNumber>
 BlockVector<Number>::BlockVector(const BlockVector<OtherNumber>& v)
 {
   reinit(v, true);
-  *this = v;
+  *this= v;
 }
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -67,11 +67,11 @@ BlockVector<Number>::BlockVector(const BlockVector<OtherNumber>& v)
 template <typename Number>
 BlockVector<Number>::BlockVector(const TrilinosWrappers::MPI::BlockVector& v)
 {
-  this->block_indices = v.get_block_indices();
+  this->block_indices= v.get_block_indices();
   this->components.resize(this->n_blocks());
 
-  for(size_type i = 0; i < this->n_blocks(); ++i)
-    this->components[i] = v.block(i);
+  for(size_type i= 0; i < this->n_blocks(); ++i)
+    this->components[i]= v.block(i);
 
   BaseClass::collect_sizes();
 }
@@ -97,7 +97,7 @@ BlockVector<Number>::reinit(const std::vector<size_type>& block_sizes,
   if(this->components.size() != this->n_blocks())
     this->components.resize(this->n_blocks());
 
-  for(size_type i = 0; i < this->n_blocks(); ++i)
+  for(size_type i= 0; i < this->n_blocks(); ++i)
     this->components[i].reinit(block_sizes[i], omit_zeroing_entries);
 }
 
@@ -106,11 +106,11 @@ void
 BlockVector<Number>::reinit(const BlockIndices& n,
                             const bool          omit_zeroing_entries)
 {
-  this->block_indices = n;
+  this->block_indices= n;
   if(this->components.size() != this->n_blocks())
     this->components.resize(this->n_blocks());
 
-  for(size_type i = 0; i < this->n_blocks(); ++i)
+  for(size_type i= 0; i < this->n_blocks(); ++i)
     this->components[i].reinit(n.block_size(i), omit_zeroing_entries);
 }
 
@@ -120,11 +120,11 @@ void
 BlockVector<Number>::reinit(const BlockVector<Number2>& v,
                             const bool                  omit_zeroing_entries)
 {
-  this->block_indices = v.get_block_indices();
+  this->block_indices= v.get_block_indices();
   if(this->components.size() != this->n_blocks())
     this->components.resize(this->n_blocks());
 
-  for(size_type i = 0; i < this->n_blocks(); ++i)
+  for(size_type i= 0; i < this->n_blocks(); ++i)
     this->block(i).reinit(v.block(i), omit_zeroing_entries);
 }
 
@@ -154,7 +154,7 @@ BlockVector<Number>::print(std::ostream&      out,
                            const bool         scientific,
                            const bool         across) const
 {
-  for(size_type i = 0; i < this->n_blocks(); ++i)
+  for(size_type i= 0; i < this->n_blocks(); ++i)
     {
       if(across)
         out << 'C' << i << ':';
@@ -168,7 +168,7 @@ template <typename Number>
 void
 BlockVector<Number>::block_write(std::ostream& out) const
 {
-  for(size_type i = 0; i < this->n_blocks(); ++i)
+  for(size_type i= 0; i < this->n_blocks(); ++i)
     this->components[i].block_write(out);
 }
 
@@ -176,7 +176,7 @@ template <typename Number>
 void
 BlockVector<Number>::block_read(std::istream& in)
 {
-  for(size_type i = 0; i < this->n_blocks(); ++i)
+  for(size_type i= 0; i < this->n_blocks(); ++i)
     this->components[i].block_read(in);
 }
 

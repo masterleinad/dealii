@@ -103,10 +103,10 @@ namespace
   template <int dim,
             int n_components,
             typename Number,
-            int DEPTH         = 0,
-            int degree        = 0,
-            int n_q_points_1d = 0,
-            class Enable      = void>
+            int DEPTH        = 0,
+            int degree       = 0,
+            int n_q_points_1d= 0,
+            class Enable     = void>
   struct Factory : Default<dim, n_components, Number>
   {};
 
@@ -159,8 +159,8 @@ namespace
              const bool evaluate_gradients,
              const bool evaluate_hessians)
     {
-      const unsigned int     runtime_degree   = shape_info.fe_degree;
-      constexpr unsigned int start_n_q_points = degree + 1;
+      const unsigned int     runtime_degree  = shape_info.fe_degree;
+      constexpr unsigned int start_n_q_points= degree + 1;
       if(runtime_degree == degree)
         Factory<dim, n_components, Number, 1, degree, start_n_q_points>::
           evaluate(shape_info,
@@ -195,8 +195,8 @@ namespace
       const bool integrate_values,
       const bool integrate_gradients)
     {
-      const int              runtime_degree   = shape_info.fe_degree;
-      constexpr unsigned int start_n_q_points = degree + 1;
+      const int              runtime_degree  = shape_info.fe_degree;
+      constexpr unsigned int start_n_q_points= degree + 1;
       if(runtime_degree == degree)
         Factory<dim, n_components, Number, 1, degree, start_n_q_points>::
           integrate(shape_info,
@@ -245,7 +245,7 @@ namespace
              const bool evaluate_gradients,
              const bool evaluate_hessians)
     {
-      const int runtime_n_q_points_1d = shape_info.n_q_points_1d;
+      const int runtime_n_q_points_1d= shape_info.n_q_points_1d;
       if(runtime_n_q_points_1d == n_q_points_1d)
         {
           if(n_q_points_1d == degree + 1
@@ -318,7 +318,7 @@ namespace
       const bool integrate_values,
       const bool integrate_gradients)
     {
-      const int runtime_n_q_points_1d = shape_info.n_q_points_1d;
+      const int runtime_n_q_points_1d= shape_info.n_q_points_1d;
       if(runtime_n_q_points_1d == n_q_points_1d)
         {
           if(n_q_points_1d == degree + 1

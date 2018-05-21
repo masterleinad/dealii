@@ -34,7 +34,7 @@ main()
 {
   initlog();
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       ParameterHandler prm;
       prm.enter_subsection("Testing");
@@ -44,7 +44,7 @@ main()
       prm.leave_subsection();
 
       // We need a local path for the file to get consistent output messages.
-      const int chdir_return_code = chdir(SOURCE_DIR);
+      const int chdir_return_code= chdir(SOURCE_DIR);
       AssertThrow(chdir_return_code == 0, ExcInternalError());
       // test both relevant parse_input functions. They should fail with a
       // specific exception.
@@ -64,7 +64,7 @@ main()
           // parse_input should fail and we should not get here
           std::string list;
           prm.enter_subsection("Testing");
-          list = prm.get("Function");
+          list= prm.get("Function");
           prm.leave_subsection();
 
           deallog << list << std::endl;

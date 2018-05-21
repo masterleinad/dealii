@@ -31,8 +31,8 @@ check(TrilinosWrappers::MPI::Vector& v, bool ghost)
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -42,7 +42,7 @@ test()
   IndexSet local_active(numproc * 2);
   local_active.add_range(myid * 2, myid * 2 + 2);
   IndexSet local_relevant(numproc * 2);
-  local_relevant = local_active;
+  local_relevant= local_active;
   local_relevant.add_range(1, 2);
 
   TrilinosWrappers::MPI::Vector v(local_active, MPI_COMM_WORLD);
@@ -51,7 +51,7 @@ test()
   TrilinosWrappers::MPI::Vector v2(local_relevant, MPI_COMM_WORLD);
   check(v2, true);
 
-  TrilinosWrappers::MPI::Vector v3 = v;
+  TrilinosWrappers::MPI::Vector v3= v;
   check(v3, false);
 
   v3.reinit(v2);
@@ -63,13 +63,13 @@ test()
   v3.reinit(local_relevant);
   check(v3, true);
 
-  TrilinosWrappers::MPI::Vector v4 = v2;
+  TrilinosWrappers::MPI::Vector v4= v2;
   check(v4, true);
 
-  v4 = v;
+  v4= v;
   check(v4, true); //this only copies contents!
 
-  v4 = v2;
+  v4= v2;
   check(v4, true);
 
   TrilinosWrappers::MPI::Vector v5(v2);
@@ -85,7 +85,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

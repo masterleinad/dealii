@@ -52,7 +52,7 @@ namespace SparsityTools
     /**
      * Use METIS partitioner.
      */
-    metis = 0,
+    metis= 0,
     /**
      * Use ZOLTAN partitioner.
      */
@@ -98,7 +98,7 @@ namespace SparsityTools
   partition(const SparsityPattern&     sparsity_pattern,
             const unsigned int         n_partitions,
             std::vector<unsigned int>& partition_indices,
-            const Partitioner          partitioner = Partitioner::metis);
+            const Partitioner          partitioner= Partitioner::metis);
 
   /**
    * This function performs the same operation as the one above, except that
@@ -115,7 +115,7 @@ namespace SparsityTools
             const std::vector<unsigned int>& cell_weights,
             const unsigned int               n_partitions,
             std::vector<unsigned int>&       partition_indices,
-            const Partitioner                partitioner = Partitioner::metis);
+            const Partitioner                partitioner= Partitioner::metis);
 
   /**
    * Using a coloring algorithm provided by ZOLTAN to color nodes whose

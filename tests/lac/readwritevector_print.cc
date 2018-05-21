@@ -28,9 +28,9 @@ test()
   LinearAlgebra::ReadWriteVector<double> vec(is);
   deallog << "size: " << vec.n_elements() << std::endl;
 
-  vec = 0.;
-  for(unsigned int i = 0; i < vec.n_elements(); ++i)
-    vec.local_element(i) += i;
+  vec= 0.;
+  for(unsigned int i= 0; i < vec.n_elements(); ++i)
+    vec.local_element(i)+= i;
 
   vec.print(deallog.get_file_stream());
 }

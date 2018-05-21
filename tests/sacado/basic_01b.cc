@@ -54,8 +54,8 @@ df(const double& x,
    double&       df_dx,
    double&       df_dy)
 {
-  df_dx = z * (1.0 + y);
-  df_dy = z * (z + x);
+  df_dx= z * (1.0 + y);
+  df_dy= z * (z + x);
 }
 void
 dg(const double& x,
@@ -64,8 +64,8 @@ dg(const double& x,
    double&       dg_dx,
    double&       dg_dy)
 {
-  dg_dx = z * std::cos(x * z) * std::cos(y / z);
-  dg_dy = -(1.0 / z) * std::sin(x * z) * std::sin(y / z);
+  dg_dx= z * std::cos(x * z) * std::cos(y / z);
+  dg_dy= -(1.0 / z) * std::sin(x * z) * std::sin(y / z);
 }
 void
 dh(const double& x,
@@ -74,8 +74,8 @@ dh(const double& x,
    double&       dh_dx,
    double&       dh_dy)
 {
-  dh_dx = y * z;
-  dh_dy = x * z;
+  dh_dx= y * z;
+  dh_dy= x * z;
 }
 
 int
@@ -84,9 +84,9 @@ main()
   initlog();
 
   // Values of function arguments
-  const double x = 5.0;
-  const double y = 10.0;
-  const double z = 4.0;
+  const double x= 5.0;
+  const double y= 10.0;
+  const double z= 4.0;
 
   // RAD objects: Independent variables
   const Sacado::Rad::ADvar<double> x_ad(x);
@@ -99,16 +99,16 @@ main()
   deallog << "z_ad: " << z_ad.val() << std::endl;
 
   // Compute functions
-  const double f = ::f(x, y, z);
-  const double g = ::g(x, y, z);
-  const double h = ::h(x, y, z);
+  const double f= ::f(x, y, z);
+  const double g= ::g(x, y, z);
+  const double h= ::h(x, y, z);
 
   // Compute derivatives analytically
-  double df_dx = 0.0, df_dy = 0.0;
+  double df_dx= 0.0, df_dy= 0.0;
   df(x, y, z, df_dx, df_dy);
-  double dg_dx = 0.0, dg_dy = 0.0;
+  double dg_dx= 0.0, dg_dy= 0.0;
   dg(x, y, z, dg_dx, dg_dy);
-  double dh_dx = 0.0, dh_dy = 0.0;
+  double dh_dx= 0.0, dh_dy= 0.0;
   dh(x, y, z, dh_dx, dh_dy);
 
   // Compute function values
@@ -116,10 +116,10 @@ main()
   // before computing gradients, because this mixes the operations
   // performed with each independent variables to produce each
   // dependent variable
-  Sacado::Rad::ADvar<double> f_rad = ::f(x_ad, y_ad, z_ad); // Cannot be const
+  Sacado::Rad::ADvar<double> f_rad= ::f(x_ad, y_ad, z_ad); // Cannot be const
   Sacado::Rad::ADvar<double> h_rad
     = ::h(x_ad, y_ad, z_ad); // Cannot be const <----- Before g_rad
-  Sacado::Rad::ADvar<double> g_rad = ::g(x_ad, y_ad, z_ad); // Cannot be const
+  Sacado::Rad::ADvar<double> g_rad= ::g(x_ad, y_ad, z_ad); // Cannot be const
   deallog << "f_rad: " << f_rad.val() << std::endl;
   deallog << "g_rad: " << g_rad.val() << std::endl;
   deallog << "h_rad: " << h_rad.val() << std::endl;
@@ -128,9 +128,9 @@ main()
   // related to the dependent function "f"
   Sacado::Rad::ADvar<double>::Outvar_Gradcomp(f_rad);
   // Extract value and derivatives
-  const double f_ad     = f_rad.val(); // f
-  const double df_dx_ad = x_ad.adj();  // df/dx
-  const double df_dy_ad = y_ad.adj();  // df/dy
+  const double f_ad    = f_rad.val(); // f
+  const double df_dx_ad= x_ad.adj();  // df/dx
+  const double df_dy_ad= y_ad.adj();  // df/dy
 
   std::cout << "df_dx: " << df_dx << "  df_dx_ad: " << df_dx_ad << std::endl;
   std::cout << "df_dy: " << df_dy << "  df_dy_ad: " << df_dy_ad << std::endl;
@@ -139,7 +139,7 @@ main()
   // related to the dependent function "g"
   Sacado::Rad::ADvar<double>::Outvar_Gradcomp(g_rad);
   // Extract value and derivatives
-  const double g_ad = g_rad.val(); // g
+  const double g_ad= g_rad.val(); // g
   const double dg_dx_ad
     = (x_ad.adj()
        - df_dx_ad); // dg/dx ; Note: Accumulation of partial derivatives
@@ -154,7 +154,7 @@ main()
   // related to the dependent function "h"
   Sacado::Rad::ADvar<double>::Outvar_Gradcomp(h_rad);
   // Extract value and derivatives
-  const double h_ad = h_rad.val(); // h
+  const double h_ad= h_rad.val(); // h
   const double dh_dx_ad
     = (x_ad.adj() - dg_dx_ad
        - df_dx_ad); // dh/dx ; Note: Accumulation of partial derivatives
@@ -169,7 +169,7 @@ main()
   std::cout << "dh_dx: " << dh_dx << "  dh_dx_ad: " << dh_dx_ad << std::endl;
   std::cout << "dh_dy: " << dh_dy << "  dh_dy_ad: " << dh_dy_ad << std::endl;
 
-  const double tol = 1.0e-14;
+  const double tol= 1.0e-14;
   Assert(std::fabs(f - f_ad) < tol,
          ExcMessage("Computation incorrect: Value of f"));
   Assert(std::fabs(df_dx - df_dx_ad) < tol && std::fabs(df_dy - df_dy_ad) < tol,

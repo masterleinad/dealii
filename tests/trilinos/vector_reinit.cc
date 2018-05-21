@@ -32,7 +32,7 @@
 
 using namespace dealii;
 
-static const unsigned int dim = 2;
+static const unsigned int dim= 2;
 
 void
 test()
@@ -48,13 +48,13 @@ test()
   GridGenerator::hyper_cube(tria, -1, 0);
   tria.refine_global(2);
 
-  const unsigned int poly_degree = 1;
+  const unsigned int poly_degree= 1;
   FE_Q<dim>          fe(poly_degree);
 
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
 
   TrilinosWrappers::MPI::Vector vector_Re;
   vector_Re.reinit(locally_owned_dofs, mpi_communicator);

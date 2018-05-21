@@ -32,18 +32,18 @@ template <int dim, int spacedim>
 void
 check(DataOutBase::DXFlags flags, std::ostream& out)
 {
-  const unsigned int np = 4;
+  const unsigned int np= 4;
 
   std::vector<DataOutBase::Patch<dim, spacedim>> patches(np);
 
   create_patches(patches);
 
   std::vector<std::string> names(5);
-  names[0] = "x1";
-  names[1] = "x2";
-  names[2] = "x3";
-  names[3] = "x4";
-  names[4] = "i";
+  names[0]= "x1";
+  names[1]= "x2";
+  names[2]= "x3";
+  names[3]= "x4";
+  names[4]= "i";
 
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
 
@@ -62,7 +62,7 @@ check_cont(unsigned int         ncells,
   create_continuous_patches(patches, ncells, nsub);
 
   std::vector<std::string> names(1);
-  names[0] = "CutOff";
+  names[0]= "CutOff";
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   DataOutBase::write_dx(patches, names, vectors, flags, out);
 }
@@ -72,11 +72,11 @@ void
 check_all(std::ostream& log)
 {
 #if SEPARATE_FILES == 0
-  std::ostream& out = log;
+  std::ostream& out= log;
 #endif
 
   char                 name[100];
-  const char*          format = "%d%d%s.dx";
+  const char*          format= "%d%d%s.dx";
   DataOutBase::DXFlags flags(false, false, false, false);
   if(dim == 2 && spacedim == 2)
     {
@@ -100,7 +100,7 @@ check_all(std::ostream& log)
 #endif
       check<dim, spacedim>(flags, out);
     }
-  flags.int_binary = true;
+  flags.int_binary= true;
   if(true)
     {
       sprintf(name, format, dim, spacedim, "tfff");
@@ -112,7 +112,7 @@ check_all(std::ostream& log)
 #endif
       check<dim, spacedim>(flags, out);
     }
-  flags.coordinates_binary = true;
+  flags.coordinates_binary= true;
   if(true)
     {
       sprintf(name, format, dim, spacedim, "ttff");
@@ -124,7 +124,7 @@ check_all(std::ostream& log)
 #endif
       check<dim, spacedim>(flags, out);
     }
-  flags.data_binary = true;
+  flags.data_binary= true;
   if(true)
     {
       sprintf(name, format, dim, spacedim, "tttf");
@@ -136,7 +136,7 @@ check_all(std::ostream& log)
 #endif
       check<dim, spacedim>(flags, out);
     }
-  flags.data_double = true;
+  flags.data_double= true;
   if(true)
     {
       sprintf(name, format, dim, spacedim, "tttf");

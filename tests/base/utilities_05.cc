@@ -25,8 +25,8 @@ using namespace dealii;
 void
 test()
 {
-  int number = 5;
-  for(unsigned int i = 0; i < 7; ++i)
+  int number= 5;
+  for(unsigned int i= 0; i < 7; ++i)
     {
       std::ostringstream s;
       s << "test test" << number << "test test";
@@ -42,7 +42,7 @@ test()
               << Utilities::get_integer_at_position(s.str(), 9).first
               << std::endl;
 
-      number = number * 10 + i;
+      number= number * 10 + i;
     }
 }
 

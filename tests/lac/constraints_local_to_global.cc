@@ -76,17 +76,17 @@ test()
   // random values, insert both into sparse and
   // full matrix. Make some random entries equal
   // to zero
-  typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
-                                                 endc = dof.end();
-  unsigned int counter                                = 0;
+  typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active(),
+                                                 endc= dof.end();
+  unsigned int counter                               = 0;
   for(; cell != endc; ++cell)
     {
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j, ++counter)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j, ++counter)
           if(counter % 42 == 0)
-            local_mat(i, j) = 0;
+            local_mat(i, j)= 0;
           else
-            local_mat(i, j) = random_value<double>();
+            local_mat(i, j)= random_value<double>();
       cell->get_dof_indices(local_dof_indices);
       constraints.distribute_local_to_global(
         local_mat, local_dof_indices, sparse);

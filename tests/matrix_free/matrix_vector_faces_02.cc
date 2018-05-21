@@ -36,12 +36,12 @@ test()
   else
     tria.refine_global(1);
   typename Triangulation<dim>::active_cell_iterator cell, endc;
-  cell = tria.begin_active(), endc = tria.end();
+  cell= tria.begin_active(), endc= tria.end();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
+  cell= tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 0.2)
       cell->set_refine_flag();
@@ -49,11 +49,11 @@ test()
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  cell= tria.begin_active();
+  for(unsigned int i= 0; i < 10 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      unsigned int counter = 0;
+      cell                = tria.begin_active();
+      unsigned int counter= 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)
           cell->set_refine_flag();

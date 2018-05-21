@@ -51,25 +51,25 @@ plot(const PolynomialsBDM<dim>& poly)
   std::vector<Tensor<4, dim>> thirds;
   std::vector<Tensor<5, dim>> fourths;
 
-  const unsigned int n_sub = legendre_poly_space.n();
+  const unsigned int n_sub= legendre_poly_space.n();
 
-  for(unsigned int k = 0; k < points.size(); ++k)
+  for(unsigned int k= 0; k < points.size(); ++k)
     {
       if(k % (poly.degree() + 4) == 0)
         deallog << "BDM" << poly.degree() << '<' << dim << '>' << std::endl;
 
-      unsigned int start = dim * n_sub;
+      unsigned int start= dim * n_sub;
 
       deallog << "BDM" << poly.degree() << '<' << dim << '>' << points[k]
               << std::endl;
       poly.compute(points[k], values, grads, grads2, thirds, fourths);
 
-      for(unsigned int i = 0; i < poly.degree() + 1; ++i, start += dim)
-        for(unsigned int j = 0; j < dim; ++j)
+      for(unsigned int i= 0; i < poly.degree() + 1; ++i, start+= dim)
+        for(unsigned int j= 0; j < dim; ++j)
           {
-            for(unsigned int d1 = 0; d1 < dim; ++d1)
-              for(unsigned int d2 = 0; d2 < dim; ++d2)
-                for(unsigned int d3 = 0; d3 < dim; ++d3)
+            for(unsigned int d1= 0; d1 < dim; ++d1)
+              for(unsigned int d2= 0; d2 < dim; ++d2)
+                for(unsigned int d3= 0; d3 < dim; ++d3)
                   deallog << '\t' << grads2[start + j][d1][d2][d3];
           }
       deallog << std::endl;
@@ -79,7 +79,7 @@ plot(const PolynomialsBDM<dim>& poly)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog << std::setprecision(3);
   deallog.attach(logfile);

@@ -168,7 +168,7 @@ namespace Step23
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -179,7 +179,7 @@ namespace Step23
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -212,7 +212,7 @@ namespace Step23
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -235,7 +235,7 @@ namespace Step23
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -246,7 +246,7 @@ namespace Step23
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -491,7 +491,7 @@ namespace Step23
     Vector<double> tmp(solution_u.size());
     Vector<double> forcing_terms(solution_u.size());
 
-    for(; time <= 5; time += time_step, ++timestep_number)
+    for(; time <= 5; time+= time_step, ++timestep_number)
       {
         std::cout << "Time step " << timestep_number << " at t=" << time
                   << std::endl;
@@ -508,8 +508,8 @@ namespace Step23
         rhs_function.set_time(time);
         VectorTools::create_right_hand_side(
           dof_handler, QGauss<dim>(2), rhs_function, tmp);
-        forcing_terms = tmp;
-        forcing_terms *= theta * time_step;
+        forcing_terms= tmp;
+        forcing_terms*= theta * time_step;
 
         rhs_function.set_time(time - time_step);
         VectorTools::create_right_hand_side(
@@ -557,15 +557,15 @@ namespace Step23
         // are applied in the same way as before, except that now we have to
         // use the BoundaryValuesV class:
         laplace_matrix.vmult(system_rhs, solution_u);
-        system_rhs *= -theta * time_step;
+        system_rhs*= -theta * time_step;
 
         mass_matrix.vmult(tmp, old_solution_v);
-        system_rhs += tmp;
+        system_rhs+= tmp;
 
         laplace_matrix.vmult(tmp, old_solution_u);
         system_rhs.add(-time_step * (1 - theta), tmp);
 
-        system_rhs += forcing_terms;
+        system_rhs+= forcing_terms;
 
         {
           BoundaryValuesV<dim> boundary_values_v_function;
@@ -596,8 +596,8 @@ namespace Step23
                        / 2
                   << std::endl;
 
-        old_solution_u = solution_u;
-        old_solution_v = solution_v;
+        old_solution_u= solution_u;
+        old_solution_v= solution_v;
       }
   }
 } // namespace Step23

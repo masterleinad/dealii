@@ -32,22 +32,22 @@ test(Utilities::CUDA::Handle& cuda_handle)
   // Create the matrix on the host.
   dealii::SparsityPattern                sparsity_pattern;
   dealii::SparseMatrix<double>           matrix;
-  unsigned int const                     size = 30;
+  unsigned int const                     size= 30;
   std::vector<std::vector<unsigned int>> column_indices(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     {
-      unsigned int j_max = std::min(size, i + 2);
-      unsigned int j_min = (i == 0) ? 0 : i - 1;
-      for(unsigned int j = j_min; j < j_max; ++j)
+      unsigned int j_max= std::min(size, i + 2);
+      unsigned int j_min= (i == 0) ? 0 : i - 1;
+      for(unsigned int j= j_min; j < j_max; ++j)
         column_indices[i].emplace_back(j);
     }
   sparsity_pattern.copy_from(
     size, size, column_indices.begin(), column_indices.end());
   matrix.reinit(sparsity_pattern);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     {
-      unsigned int j_max = std::min(size - 1, i + 1);
-      unsigned int j_min = (i == 0) ? 0 : i - 1;
+      unsigned int j_max= std::min(size - 1, i + 1);
+      unsigned int j_min= (i == 0) ? 0 : i - 1;
       matrix.set(i, j_min, -1.);
       matrix.set(i, j_max, -1.);
       matrix.set(i, i, 4.);
@@ -56,7 +56,7 @@ test(Utilities::CUDA::Handle& cuda_handle)
   // Generate a random solution and then compute the rhs
   dealii::Vector<double> sol_ref(size);
   for(auto& val : sol_ref)
-    val = random_value(5., 15.);
+    val= random_value(5., 15.);
 
   dealii::Vector<double> rhs(size);
   matrix.vmult(rhs, sol_ref);
@@ -88,7 +88,7 @@ test(Utilities::CUDA::Handle& cuda_handle)
       solution_host.import(solution_dev, VectorOperation::insert);
 
       // Check the result
-      for(unsigned int i = 0; i < size; ++i)
+      for(unsigned int i= 0; i < size; ++i)
         AssertThrow(std::abs(solution_host[i] - sol_ref[i]) < 1e-12,
                     ExcInternalError());
       deallog << solver_type << std::endl;

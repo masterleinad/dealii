@@ -24,7 +24,7 @@ template <int dim>
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int n_processes
     = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
@@ -32,13 +32,13 @@ test()
   {
     AssertThrow(n_processes == 2, ExcNotImplemented());
     IndexSet index(10);
-    for(unsigned int i = 0; i < 10; i += 2)
+    for(unsigned int i= 0; i < 10; i+= 2)
       index.add_range(i + myid, i + myid + 1);
     index.compress();
 
     TrilinosWrappers::MPI::Vector vec(index, MPI_COMM_WORLD);
 
-    IndexSet index2 = vec.locally_owned_elements();
+    IndexSet index2= vec.locally_owned_elements();
     AssertThrow(index == index2, ExcInternalError());
   }
 
@@ -50,7 +50,7 @@ test()
 
     TrilinosWrappers::MPI::Vector vec(index, MPI_COMM_WORLD);
 
-    IndexSet index2 = vec.locally_owned_elements();
+    IndexSet index2= vec.locally_owned_elements();
     AssertThrow(index == index2, ExcInternalError());
   }
 
@@ -63,7 +63,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

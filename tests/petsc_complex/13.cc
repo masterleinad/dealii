@@ -26,16 +26,16 @@ test(PETScWrappers::MPI::Vector& v)
   // set only certain elements of the vector. have a bit pattern of
   // where we actually wrote elements to
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) += PetscScalar(i, i);
-      pattern[i] = true;
+      v(i)+= PetscScalar(i, i);
+      pattern[i]= true;
     }
 
   v.compress(VectorOperation::add);
 
   // check that they are ok, and this time all of them
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     AssertThrow(
       ((pattern[i] == true) && (v(i).real() == i) && (v(i).imag() == i)) ||
         //&& (v(i)==std::complex<double> (1.,1.)) ) ||

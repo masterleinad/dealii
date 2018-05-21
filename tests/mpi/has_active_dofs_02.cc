@@ -31,7 +31,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // create a mesh with fewer cells than there are MPI processes
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -51,22 +51,22 @@ test()
   // let each of the processors report whether they own
   // cells or now by setting a bit mask that we then add up.
   // output which processor owns something and which don't
-  const int cells_owned = Utilities::MPI::sum(
+  const int cells_owned= Utilities::MPI::sum(
     tr.n_locally_owned_active_cells() > 0 ?
       1 << Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) :
       0,
     MPI_COMM_WORLD);
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
-      for(unsigned int i = 0;
+      for(unsigned int i= 0;
           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
           ++i)
         deallog << "Processor " << i
                 << " has cells: " << ((cells_owned & (1 << i)) ? "yes" : "no")
                 << std::endl;
 
-      unsigned int n_owning_processors = 0;
-      for(unsigned int i = 0;
+      unsigned int n_owning_processors= 0;
+      for(unsigned int i= 0;
           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
           ++i)
         if(cells_owned & (1 << i))
@@ -76,22 +76,22 @@ test()
     }
 
   // now check how many processors own DoFs using the same procedure
-  const int dofs_owned = Utilities::MPI::sum(
+  const int dofs_owned= Utilities::MPI::sum(
     dof_handler.has_active_dofs() ?
       1 << Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) :
       0,
     MPI_COMM_WORLD);
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
-      for(unsigned int i = 0;
+      for(unsigned int i= 0;
           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
           ++i)
         deallog << "Processor " << i
                 << " has dofs: " << ((dofs_owned & (1 << i)) ? "yes" : "no")
                 << std::endl;
 
-      unsigned int n_owning_processors = 0;
-      for(unsigned int i = 0;
+      unsigned int n_owning_processors= 0;
+      for(unsigned int i= 0;
           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
           ++i)
         if(dofs_owned & (1 << i))

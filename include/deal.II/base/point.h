@@ -99,7 +99,7 @@ DEAL_II_NAMESPACE_OPEN
  * @ingroup geomprimitives
  * @author Wolfgang Bangerth, 1997
  */
-template <int dim, typename Number = double>
+template <int dim, typename Number= double>
 class Point : public Tensor<1, dim, Number>
 {
 public:
@@ -302,7 +302,7 @@ inline Point<dim, Number>::Point(const Number x)
   switch(dim)
     {
       case 1:
-        this->values[0] = x;
+        this->values[0]= x;
         break;
 
       default:;
@@ -321,9 +321,9 @@ inline Point<dim, Number>::Point(const Number x, const Number y)
   // we can only get here if we pass the assertion. use the indirection anyway
   // so as to avoid compiler warnings about uninitialized elements or writing
   // beyond the end of the 'values' array
-  constexpr unsigned int y_index = (dim < 2) ? 0 : 1;
-  this->values[0]                = x;
-  this->values[y_index]          = y;
+  constexpr unsigned int y_index= (dim < 2) ? 0 : 1;
+  this->values[0]               = x;
+  this->values[y_index]         = y;
 }
 
 template <int dim, typename Number>
@@ -339,11 +339,11 @@ inline Point<dim, Number>::Point(const Number x, const Number y, const Number z)
   // we can only get here if we pass the assertion. use the indirection anyway
   // so as to avoid compiler warnings about uninitialized elements or writing
   // beyond the end of the 'values' array
-  constexpr unsigned int y_index = (dim < 2) ? 0 : 1;
-  constexpr unsigned int z_index = (dim < 3) ? 0 : 2;
-  this->values[0]                = x;
-  this->values[y_index]          = y;
-  this->values[z_index]          = z;
+  constexpr unsigned int y_index= (dim < 2) ? 0 : 1;
+  constexpr unsigned int z_index= (dim < 3) ? 0 : 2;
+  this->values[0]               = x;
+  this->values[y_index]         = y;
+  this->values[z_index]         = z;
 }
 
 template <int dim, typename Number>
@@ -351,7 +351,7 @@ inline Point<dim, Number>
 Point<dim, Number>::unit_vector(unsigned int i)
 {
   Point<dim, Number> p;
-  p[i] = 1.;
+  p[i]= 1.;
   return p;
 }
 
@@ -375,8 +375,8 @@ template <int dim, typename Number>
 inline Point<dim, Number>
 Point<dim, Number>::operator+(const Tensor<1, dim, Number>& p) const
 {
-  Point<dim, Number> tmp = *this;
-  tmp += p;
+  Point<dim, Number> tmp= *this;
+  tmp+= p;
   return tmp;
 }
 
@@ -384,15 +384,15 @@ template <int dim, typename Number>
 inline Tensor<1, dim, Number>
 Point<dim, Number>::operator-(const Point<dim, Number>& p) const
 {
-  return (Tensor<1, dim, Number>(*this) -= p);
+  return (Tensor<1, dim, Number>(*this)-= p);
 }
 
 template <int dim, typename Number>
 inline Point<dim, Number>
 Point<dim, Number>::operator-(const Tensor<1, dim, Number>& p) const
 {
-  Point<dim, Number> tmp = *this;
-  tmp -= p;
+  Point<dim, Number> tmp= *this;
+  tmp-= p;
   return tmp;
 }
 
@@ -401,8 +401,8 @@ inline Point<dim, Number>
 Point<dim, Number>::operator-() const
 {
   Point<dim, Number> result;
-  for(unsigned int i = 0; i < dim; ++i)
-    result.values[i] = -this->values[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    result.values[i]= -this->values[i];
   return result;
 }
 
@@ -415,8 +415,8 @@ inline Point<
   Point<dim, Number>::operator*(const OtherNumber factor) const
 {
   Point<dim, typename ProductType<Number, OtherNumber>::type> tmp;
-  for(unsigned int i = 0; i < dim; ++i)
-    tmp[i] = this->operator[](i) * factor;
+  for(unsigned int i= 0; i < dim; ++i)
+    tmp[i]= this->operator[](i) * factor;
   return tmp;
 }
 
@@ -429,8 +429,8 @@ inline Point<
 Point<dim, Number>::operator/(const OtherNumber factor) const
 {
   Point<dim, typename ProductType<Number, OtherNumber>::type> tmp;
-  for(unsigned int i = 0; i < dim; ++i)
-    tmp[i] = this->operator[](i) / factor;
+  for(unsigned int i= 0; i < dim; ++i)
+    tmp[i]= this->operator[](i) / factor;
   return tmp;
 }
 
@@ -438,9 +438,9 @@ template <int dim, typename Number>
 inline Number Point<dim, Number>::
               operator*(const Tensor<1, dim, Number>& p) const
 {
-  Number res = Number();
-  for(unsigned int i = 0; i < dim; ++i)
-    res += this->operator[](i) * p[i];
+  Number res= Number();
+  for(unsigned int i= 0; i < dim; ++i)
+    res+= this->operator[](i) * p[i];
   return res;
 }
 
@@ -462,11 +462,11 @@ template <int dim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
 Point<dim, Number>::distance_square(const Point<dim, Number>& p) const
 {
-  Number sum = internal::NumberType<Number>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
+  Number sum= internal::NumberType<Number>::value(0.0);
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      const Number diff = static_cast<Number>(this->values[i]) - p(i);
-      sum += numbers::NumberTraits<Number>::abs_square(diff);
+      const Number diff= static_cast<Number>(this->values[i]) - p(i);
+      sum+= numbers::NumberTraits<Number>::abs_square(diff);
     }
 
   return sum;
@@ -511,7 +511,7 @@ template <int dim, typename Number>
 inline std::ostream&
 operator<<(std::ostream& out, const Point<dim, Number>& p)
 {
-  for(unsigned int i = 0; i < dim - 1; ++i)
+  for(unsigned int i= 0; i < dim - 1; ++i)
     out << p[i] << ' ';
   out << p[dim - 1];
 
@@ -526,7 +526,7 @@ template <int dim, typename Number>
 inline std::istream&
 operator>>(std::istream& in, Point<dim, Number>& p)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     in >> p[i];
 
   return in;

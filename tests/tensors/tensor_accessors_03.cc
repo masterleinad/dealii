@@ -25,9 +25,9 @@ main()
 {
   initlog();
 
-  int               c_left1[5] = {0, 1, 2, 3, 4};
+  int               c_left1[5]= {0, 1, 2, 3, 4};
   Tensor<1, 5, int> left1(c_left1);
-  int               c_right1[5] = {0, 10, 20, 30, 40};
+  int               c_right1[5]= {0, 10, 20, 30, 40};
   Tensor<1, 5, int> right1(c_right1);
 
   deallog << "left1: " << left1 << std::endl;
@@ -44,7 +44,7 @@ main()
 
   // Apply contract with no_contr == 1, this is a scalar product:
   {
-    int result = 0;
+    int result= 0;
     TensorAccessors::contract<1, 1, 1, 5>(result, left1, right1);
 
     deallog << "Scalar product of left1 and right1:" << std::endl;
@@ -52,18 +52,18 @@ main()
   }
 
   Tensor<2, 5, int> left2;
-  left2[0] = left1;
-  left2[1] = 2 * left1;
-  left2[2] = 4 * left1;
-  left2[3] = 8 * left1;
-  left2[4] = 16 * left1;
+  left2[0]= left1;
+  left2[1]= 2 * left1;
+  left2[2]= 4 * left1;
+  left2[3]= 8 * left1;
+  left2[4]= 16 * left1;
 
   Tensor<2, 5, int> right2;
-  right2[0] = right1;
-  right2[1] = 2 * right1;
-  right2[2] = 4 * right1;
-  right2[3] = 8 * right1;
-  right2[4] = 16 * right1;
+  right2[0]= right1;
+  right2[1]= 2 * right1;
+  right2[2]= 4 * right1;
+  right2[3]= 8 * right1;
+  right2[4]= 16 * right1;
 
   deallog << "left2: " << left2 << std::endl;
   deallog << "right2: " << right2 << std::endl;
@@ -92,7 +92,7 @@ main()
   {
     dealii::TensorAccessors::internal::
       ReorderedIndexView<0, 2, dealii::Tensor<2, 5, int>>
-        reordered = TensorAccessors::reordered_index_view<0, 2>(right2);
+        reordered= TensorAccessors::reordered_index_view<0, 2>(right2);
 
     Tensor<2, 5, int> result;
     TensorAccessors::contract<1, 2, 2, 5>(result, left2, reordered);

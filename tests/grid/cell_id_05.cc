@@ -38,18 +38,18 @@ test(const unsigned int& ref)
       cell_ids.push_back(cell->id());
     }
 
-  auto buffer = Utilities::pack(cell_ids);
+  auto buffer= Utilities::pack(cell_ids);
 
-  auto unpacked = Utilities::unpack<std::vector<CellId>>(buffer);
+  auto unpacked= Utilities::unpack<std::vector<CellId>>(buffer);
 
-  unsigned int i  = 0;
-  bool         ok = true;
+  unsigned int i = 0;
+  bool         ok= true;
   for(auto cell : tria.active_cell_iterators())
     {
       if(cell->id() != unpacked[i++])
         {
           deallog << "NOT OK; problem with cell " << i << std::endl;
-          ok = false;
+          ok= false;
         }
     }
 

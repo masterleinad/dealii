@@ -29,8 +29,8 @@
 int
 main()
 {
-  const int dim      = 2;
-  const int spacedim = 3;
+  const int dim     = 2;
+  const int spacedim= 3;
 
   initlog();
 

@@ -40,8 +40,8 @@ df(const double& x,
    double&       df_dx,
    double&       df_dy)
 {
-  df_dx = z * (1.0 + y);
-  df_dy = z * (z + x);
+  df_dx= z * (1.0 + y);
+  df_dy= z * (z + x);
 }
 
 int
@@ -50,9 +50,9 @@ main()
   initlog();
 
   // Values of function arguments
-  const double x = 5.0;
-  const double y = 10.0;
-  const double z = 4.0;
+  const double x= 5.0;
+  const double y= 10.0;
+  const double z= 4.0;
 
   // RAD objects: Independent variables
   const Sacado::Rad::ADvar<double> x_ad(x);
@@ -65,24 +65,24 @@ main()
   deallog << "z_ad: " << z_ad.val() << std::endl;
 
   // Compute function
-  const double f = ::f(x, y, z);
+  const double f= ::f(x, y, z);
 
   // Compute derivative analytically
-  double df_dx = 0.0, df_dy = 0.0;
+  double df_dx= 0.0, df_dy= 0.0;
   df(x, y, z, df_dx, df_dy);
 
   // Compute function and derivative with AD
-  const Sacado::Rad::ADvar<double> f_rad = ::f(x_ad, y_ad, z_ad);
+  const Sacado::Rad::ADvar<double> f_rad= ::f(x_ad, y_ad, z_ad);
   Sacado::Rad::ADvar<double>::Gradcomp();
 
   deallog << "f_rad: " << f_rad.val() << std::endl;
 
   // Extract value and derivatives
-  const double f_ad     = f_rad.val(); // f
-  const double df_dx_ad = x_ad.adj();  // df/dx
-  const double df_dy_ad = y_ad.adj();  // df/dy
+  const double f_ad    = f_rad.val(); // f
+  const double df_dx_ad= x_ad.adj();  // df/dx
+  const double df_dy_ad= y_ad.adj();  // df/dy
 
-  const double tol = 1.0e-14;
+  const double tol= 1.0e-14;
   Assert(std::fabs(f - f_ad) < tol, ExcMessage("Computation incorrect: Value"));
   Assert(std::fabs(df_dx - df_dx_ad) < tol && std::fabs(df_dy - df_dy_ad) < tol,
          ExcMessage("Computation incorrect: First derivative"));

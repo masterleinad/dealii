@@ -259,7 +259,7 @@ public:
    * perform some optimizations, but the actual value of the variable may
    * change over time.
    */
-  static const size_type invalid_entry = SparsityPattern::invalid_entry;
+  static const size_type invalid_entry= SparsityPattern::invalid_entry;
 
   /**
    * Initialize the matrix empty, that is with no memory allocated. This is
@@ -334,7 +334,7 @@ public:
   /**
    * Destructor.
    */
-  ~ChunkSparsityPattern() override = default;
+  ~ChunkSparsityPattern() override= default;
 
   /**
    * Copy operator. For this the same holds as for the copy constructor: it is
@@ -529,7 +529,7 @@ public:
               const unsigned int n,
               const Sparsity&    sparsity_pattern_for_chunks,
               const unsigned int chunk_size,
-              const bool         optimize_diagonal = true);
+              const bool         optimize_diagonal= true);
 
   /**
    * Return whether the object is empty. It is empty if no memory is
@@ -955,7 +955,7 @@ namespace ChunkSparsityPatternIterators
   inline void
   Accessor::advance()
   {
-    const unsigned int chunk_size = sparsity_pattern->get_chunk_size();
+    const unsigned int chunk_size= sparsity_pattern->get_chunk_size();
     Assert(chunk_row < chunk_size && chunk_col < chunk_size,
            ExcIteratorPastEnd());
     Assert(reduced_accessor.row() * chunk_size + chunk_row
@@ -976,21 +976,21 @@ namespace ChunkSparsityPatternIterators
        || reduced_accessor.column() * chunk_size + chunk_col
             == sparsity_pattern->n_cols())
       {
-        const unsigned int reduced_row = reduced_accessor.row();
+        const unsigned int reduced_row= reduced_accessor.row();
         // end of row
         if(reduced_accessor.index_within_sparsity + 1
            == reduced_accessor.sparsity_pattern->rowstart[reduced_row + 1])
           {
             ++chunk_row;
 
-            chunk_col = 0;
+            chunk_col= 0;
 
             // end of chunk rows or end of matrix
             if(chunk_row == chunk_size
                || (reduced_row * chunk_size + chunk_row
                    == sparsity_pattern->n_rows()))
               {
-                chunk_row = 0;
+                chunk_row= 0;
                 reduced_accessor.advance();
               }
             // go back to the beginning of the same reduced row but with
@@ -1003,7 +1003,7 @@ namespace ChunkSparsityPatternIterators
         else
           {
             reduced_accessor.advance();
-            chunk_col = 0;
+            chunk_col= 0;
           }
       }
   }
@@ -1023,7 +1023,7 @@ namespace ChunkSparsityPatternIterators
   inline Iterator
   Iterator::operator++(int)
   {
-    const Iterator iter = *this;
+    const Iterator iter= *this;
     accessor.advance();
     return iter;
   }
@@ -1123,23 +1123,23 @@ ChunkSparsityPattern::copy_from(const size_type       n_rows,
   // then we might have to add an additional entry for the diagonal, if that
   // is not yet present. as we have to call compress anyway later on, don't
   // bother to check whether that diagonal entry is in a certain row or not
-  const bool             is_square = (n_rows == n_cols);
+  const bool             is_square= (n_rows == n_cols);
   std::vector<size_type> row_lengths;
   row_lengths.reserve(n_rows);
-  for(ForwardIterator i = begin; i != end; ++i)
+  for(ForwardIterator i= begin; i != end; ++i)
     row_lengths.push_back(std::distance(i->begin(), i->end())
                           + (is_square ? 1 : 0));
   reinit(n_rows, n_cols, row_lengths, chunk_size);
 
   // now enter all the elements into the matrix
-  size_type row = 0;
+  size_type row= 0;
   typedef
     typename std::iterator_traits<ForwardIterator>::value_type::const_iterator
       inner_iterator;
-  for(ForwardIterator i = begin; i != end; ++i, ++row)
+  for(ForwardIterator i= begin; i != end; ++i, ++row)
     {
-      const inner_iterator end_of_row = i->end();
-      for(inner_iterator j = i->begin(); j != end_of_row; ++j)
+      const inner_iterator end_of_row= i->end();
+      for(inner_iterator j= i->begin(); j != end_of_row; ++j)
         {
           const size_type col
             = internal::SparsityPatternTools::get_column_index_from_iterator(

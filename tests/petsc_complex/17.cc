@@ -24,15 +24,15 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   // set some elements of the vector
-  double norm = 0;
-  for(unsigned int k = 0; k < v.size(); k += 1 + k)
+  double norm= 0;
+  for(unsigned int k= 0; k < v.size(); k+= 1 + k)
     {
       const PetscScalar s(1. * k, 2. * k);
-      v(k) = s;
+      v(k)= s;
 #if DEAL_II_PETSC_VERSION_LT(3, 7, 0)
-      norm += std::fabs(1. * k) + std::fabs(2. * k);
+      norm+= std::fabs(1. * k) + std::fabs(2. * k);
 #else
-      norm += std::abs(s);
+      norm+= std::abs(s);
 #endif
     }
   v.compress(VectorOperation::insert);

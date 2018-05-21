@@ -81,15 +81,15 @@ test()
       ++cell)
     {
       cell->get_dof_indices(local_dofs);
-      local_matrix = 0;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      local_matrix= 0;
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           local_matrix(i, j)
             = (i + 1.) * (j + 1.) * (local_dofs[i] + 1.) * (local_dofs[j] + 1.);
 
       // copy local to global
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           A.add(local_dofs[i], local_dofs[j], local_matrix(i, j));
     }
 
@@ -97,7 +97,7 @@ test()
   constraints.condense(A);
 
   // and output what we have
-  for(SparseMatrix<double>::const_iterator i = A.begin(); i != A.end(); ++i)
+  for(SparseMatrix<double>::const_iterator i= A.begin(); i != A.end(); ++i)
     deallog << i->row() << ' ' << i->column() << ' ' << i->value() << std::endl;
 }
 

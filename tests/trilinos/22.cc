@@ -27,11 +27,11 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
 {
   // set only certain elements of each
   // vector, but disjoint sets of elements
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     if(i % 3 == 0)
-      v(i) = i;
+      v(i)= i;
     else
-      w(i) = i;
+      w(i)= i;
   v.compress(VectorOperation::insert);
   w.compress(VectorOperation::insert);
 

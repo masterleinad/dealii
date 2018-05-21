@@ -41,11 +41,11 @@ test()
   // generate as many hanging node
   // constraints as possible
   triangulation.refine_global(4 - dim);
-  for(unsigned int i = 0; i < 11 - 2 * dim; ++i)
+  for(unsigned int i= 0; i < 11 - 2 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+      for(unsigned int index= 0; cell != triangulation.end(); ++cell, ++index)
         if(index % (3 * dim) == 0)
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -81,13 +81,13 @@ test()
       ++cell)
     {
       cell->get_dof_indices(local_dofs);
-      local_vector = 0;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        local_vector(i) = (i + 1.) * (local_dofs[i] + 1.);
+      local_vector= 0;
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        local_vector(i)= (i + 1.) * (local_dofs[i] + 1.);
 
       // copy local to global by ourselves
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        A(local_dofs[i]) += local_vector(i);
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        A(local_dofs[i])+= local_vector(i);
 
       // or let other functions do that
       constraints.distribute_local_to_global(local_vector, local_dofs, B);
@@ -100,13 +100,13 @@ test()
   // for constrained nodes. we can do so at
   // will, since these values don't matter
   // anyway
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     if(constraints.is_constrained(i))
-      B(i) = A(i);
+      B(i)= A(i);
 
   // now comes the check: we subtract B from
   // A, and make sure that the result is zero
-  A -= B;
+  A-= B;
   deallog << "|A|=" << A.l2_norm() << std::endl;
   deallog << "|B|=" << B.l2_norm() << std::endl;
   Assert(A.l2_norm() < 1e-12 * B.l2_norm(), ExcInternalError());

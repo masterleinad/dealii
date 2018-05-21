@@ -46,7 +46,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // create a mesh so that all but one
   // processor are empty
@@ -56,13 +56,13 @@ test()
   DoFHandler<dim> dofh(tr);
   dofh.distribute_dofs(fe);
 
-  IndexSet                   owned_set = dofh.locally_owned_dofs();
+  IndexSet                   owned_set= dofh.locally_owned_dofs();
   PETScWrappers::MPI::Vector x(
     MPI_COMM_WORLD, dofh.n_dofs(), owned_set.n_elements());
 
   VectorTools::interpolate(
     dofh, Functions::ConstantFunction<dim, PetscScalar>(1), x);
-  const double norm = x.l2_norm();
+  const double norm= x.l2_norm();
   if(myid == 0)
     deallog << dofh.n_locally_owned_dofs() << ' ' << dofh.n_dofs() << std::endl
             << norm << std::endl;
@@ -73,7 +73,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

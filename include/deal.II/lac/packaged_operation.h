@@ -29,7 +29,7 @@ template <typename Number>
 class Vector;
 template <typename Range, typename Domain, typename Payload>
 class LinearOperator;
-template <typename Range = Vector<double>>
+template <typename Range= Vector<double>>
 class PackagedOperation;
 
 /**
@@ -105,19 +105,19 @@ public:
    */
   PackagedOperation()
   {
-    apply = [](Range&) {
+    apply= [](Range&) {
       Assert(
         false,
         ExcMessage("Uninitialized PackagedOperation<Range>::apply called"));
     };
 
-    apply_add = [](Range&) {
+    apply_add= [](Range&) {
       Assert(
         false,
         ExcMessage("Uninitialized PackagedOperation<Range>::apply_add called"));
     };
 
-    reinit_vector = [](Range&, bool) {
+    reinit_vector= [](Range&, bool) {
       Assert(false,
              ExcMessage("Uninitialized PackagedOperation<Range>::reinit_vector "
                         "method called"));
@@ -127,7 +127,7 @@ public:
   /**
    * Default copy constructor.
    */
-  PackagedOperation(const PackagedOperation<Range>&) = default;
+  PackagedOperation(const PackagedOperation<Range>&)= default;
 
   /**
    * Constructor that creates a PackagedOperation object from a reference
@@ -140,7 +140,7 @@ public:
    */
   PackagedOperation(const Range& u)
   {
-    *this = u;
+    *this= u;
   }
 
   /**
@@ -162,11 +162,11 @@ public:
   PackagedOperation<Range>&
   operator=(const Range& u)
   {
-    apply = [&u](Range& v) { v = u; };
+    apply= [&u](Range& v) { v= u; };
 
-    apply_add = [&u](Range& v) { v += u; };
+    apply_add= [&u](Range& v) { v+= u; };
 
-    reinit_vector = [&u](Range& v, bool omit_zeroing_entries) {
+    reinit_vector= [&u](Range& v, bool omit_zeroing_entries) {
       v.reinit(u, omit_zeroing_entries);
     };
 
@@ -200,7 +200,7 @@ public:
   PackagedOperation<Range>&
   operator+=(const PackagedOperation<Range>& second_comp)
   {
-    *this = *this + second_comp;
+    *this= *this + second_comp;
     return *this;
   }
 
@@ -211,7 +211,7 @@ public:
   PackagedOperation<Range>&
   operator-=(const PackagedOperation<Range>& second_comp)
   {
-    *this = *this - second_comp;
+    *this= *this - second_comp;
     return *this;
   }
 
@@ -222,7 +222,7 @@ public:
   PackagedOperation<Range>&
   operator+=(const Range& offset)
   {
-    *this = *this + PackagedOperation<Range>(offset);
+    *this= *this + PackagedOperation<Range>(offset);
     return *this;
   }
 
@@ -233,7 +233,7 @@ public:
   PackagedOperation<Range>&
   operator-=(const Range& offset)
   {
-    *this = *this - PackagedOperation<Range>(offset);
+    *this= *this - PackagedOperation<Range>(offset);
     return *this;
   }
 
@@ -243,7 +243,7 @@ public:
   PackagedOperation<Range>&
   operator*=(typename Range::value_type number)
   {
-    *this = *this * number;
+    *this= *this * number;
     return *this;
   }
   //@}
@@ -290,17 +290,17 @@ operator+(const PackagedOperation<Range>& first_comp,
 {
   PackagedOperation<Range> return_comp;
 
-  return_comp.reinit_vector = first_comp.reinit_vector;
+  return_comp.reinit_vector= first_comp.reinit_vector;
 
   // ensure to have valid PackagedOperation objects by catching first_comp and
   // second_comp by value
 
-  return_comp.apply = [first_comp, second_comp](Range& v) {
+  return_comp.apply= [first_comp, second_comp](Range& v) {
     first_comp.apply(v);
     second_comp.apply_add(v);
   };
 
-  return_comp.apply_add = [first_comp, second_comp](Range& v) {
+  return_comp.apply_add= [first_comp, second_comp](Range& v) {
     first_comp.apply_add(v);
     second_comp.apply_add(v);
   };
@@ -323,22 +323,22 @@ operator-(const PackagedOperation<Range>& first_comp,
 {
   PackagedOperation<Range> return_comp;
 
-  return_comp.reinit_vector = first_comp.reinit_vector;
+  return_comp.reinit_vector= first_comp.reinit_vector;
 
   // ensure to have valid PackagedOperation objects by catching first_comp and
   // second_comp by value
 
-  return_comp.apply = [first_comp, second_comp](Range& v) {
+  return_comp.apply= [first_comp, second_comp](Range& v) {
     second_comp.apply(v);
-    v *= -1.;
+    v*= -1.;
     first_comp.apply_add(v);
   };
 
-  return_comp.apply_add = [first_comp, second_comp](Range& v) {
+  return_comp.apply_add= [first_comp, second_comp](Range& v) {
     first_comp.apply_add(v);
-    v *= -1.;
+    v*= -1.;
     second_comp.apply_add(v);
-    v *= -1.;
+    v*= -1.;
   };
 
   return return_comp;
@@ -358,26 +358,26 @@ PackagedOperation<Range> operator*(const PackagedOperation<Range>& comp,
 {
   PackagedOperation<Range> return_comp;
 
-  return_comp.reinit_vector = comp.reinit_vector;
+  return_comp.reinit_vector= comp.reinit_vector;
 
   // the trivial case: number is zero
   if(number == 0.)
     {
-      return_comp.apply = [](Range& v) { v = 0.; };
+      return_comp.apply= [](Range& v) { v= 0.; };
 
-      return_comp.apply_add = [](Range&) {};
+      return_comp.apply_add= [](Range&) {};
     }
   else
     {
-      return_comp.apply = [comp, number](Range& v) {
+      return_comp.apply= [comp, number](Range& v) {
         comp.apply(v);
-        v *= number;
+        v*= number;
       };
 
-      return_comp.apply_add = [comp, number](Range& v) {
-        v /= number;
+      return_comp.apply_add= [comp, number](Range& v) {
+        v/= number;
         comp.apply_add(v);
-        v *= number;
+        v*= number;
       };
     }
 
@@ -509,7 +509,7 @@ namespace
  */
 
 template <typename Range,
-          typename = typename std::enable_if<
+          typename= typename std::enable_if<
             has_vector_interface<Range>::type::value>::type>
 PackagedOperation<Range>
 operator+(const Range& u, const Range& v)
@@ -519,18 +519,18 @@ operator+(const Range& u, const Range& v)
   // ensure to have valid PackagedOperation objects by catching op by value
   // u is caught by reference
 
-  return_comp.reinit_vector = [&u](Range& x, bool omit_zeroing_entries) {
+  return_comp.reinit_vector= [&u](Range& x, bool omit_zeroing_entries) {
     x.reinit(u, omit_zeroing_entries);
   };
 
-  return_comp.apply = [&u, &v](Range& x) {
-    x = u;
-    x += v;
+  return_comp.apply= [&u, &v](Range& x) {
+    x= u;
+    x+= v;
   };
 
-  return_comp.apply_add = [&u, &v](Range& x) {
-    x += u;
-    x += v;
+  return_comp.apply_add= [&u, &v](Range& x) {
+    x+= u;
+    x+= v;
   };
 
   return return_comp;
@@ -552,7 +552,7 @@ operator+(const Range& u, const Range& v)
  */
 
 template <typename Range,
-          typename = typename std::enable_if<
+          typename= typename std::enable_if<
             has_vector_interface<Range>::type::value>::type>
 PackagedOperation<Range>
 operator-(const Range& u, const Range& v)
@@ -562,18 +562,18 @@ operator-(const Range& u, const Range& v)
   // ensure to have valid PackagedOperation objects by catching op by value
   // u is caught by reference
 
-  return_comp.reinit_vector = [&u](Range& x, bool omit_zeroing_entries) {
+  return_comp.reinit_vector= [&u](Range& x, bool omit_zeroing_entries) {
     x.reinit(u, omit_zeroing_entries);
   };
 
-  return_comp.apply = [&u, &v](Range& x) {
-    x = u;
-    x -= v;
+  return_comp.apply= [&u, &v](Range& x) {
+    x= u;
+    x-= v;
   };
 
-  return_comp.apply_add = [&u, &v](Range& x) {
-    x += u;
-    x -= v;
+  return_comp.apply_add= [&u, &v](Range& x) {
+    x+= u;
+    x-= v;
   };
 
   return return_comp;
@@ -594,7 +594,7 @@ operator-(const Range& u, const Range& v)
  * @ingroup LAOperators
  */
 template <typename Range,
-          typename = typename std::enable_if<
+          typename= typename std::enable_if<
             has_vector_interface<Range>::type::value>::type>
 PackagedOperation<Range> operator*(const Range&               u,
                                    typename Range::value_type number)
@@ -617,7 +617,7 @@ PackagedOperation<Range> operator*(const Range&               u,
  * @ingroup LAOperators
  */
 template <typename Range,
-          typename = typename std::enable_if<
+          typename= typename std::enable_if<
             has_vector_interface<Range>::type::value>::type>
 PackagedOperation<Range> operator*(typename Range::value_type number,
                                    const Range&               u)
@@ -647,14 +647,14 @@ operator*(const LinearOperator<Range, Domain, Payload>& op, const Domain& u)
 {
   PackagedOperation<Range> return_comp;
 
-  return_comp.reinit_vector = op.reinit_range_vector;
+  return_comp.reinit_vector= op.reinit_range_vector;
 
   // ensure to have valid PackagedOperation objects by catching op by value
   // u is caught by reference
 
-  return_comp.apply = [op, &u](Range& v) { op.vmult(v, u); };
+  return_comp.apply= [op, &u](Range& v) { op.vmult(v, u); };
 
-  return_comp.apply_add = [op, &u](Range& v) { op.vmult_add(v, u); };
+  return_comp.apply_add= [op, &u](Range& v) { op.vmult_add(v, u); };
 
   return return_comp;
 }
@@ -681,14 +681,14 @@ operator*(const Range& u, const LinearOperator<Range, Domain, Payload>& op)
 {
   PackagedOperation<Range> return_comp;
 
-  return_comp.reinit_vector = op.reinit_domain_vector;
+  return_comp.reinit_vector= op.reinit_domain_vector;
 
   // ensure to have valid PackagedOperation objects by catching op by value
   // u is caught by reference
 
-  return_comp.apply = [op, &u](Domain& v) { op.Tvmult(v, u); };
+  return_comp.apply= [op, &u](Domain& v) { op.Tvmult(v, u); };
 
-  return_comp.apply_add = [op, &u](Domain& v) { op.Tvmult_add(v, u); };
+  return_comp.apply_add= [op, &u](Domain& v) { op.Tvmult_add(v, u); };
 
   return return_comp;
 }
@@ -708,12 +708,12 @@ operator*(const LinearOperator<Range, Domain, Payload>& op,
 {
   PackagedOperation<Range> return_comp;
 
-  return_comp.reinit_vector = op.reinit_range_vector;
+  return_comp.reinit_vector= op.reinit_range_vector;
 
   // ensure to have valid PackagedOperation objects by catching op by value
   // u is caught by reference
 
-  return_comp.apply = [op, comp](Domain& v) {
+  return_comp.apply= [op, comp](Domain& v) {
     GrowingVectorMemory<Range> vector_memory;
 
     typename VectorMemory<Range>::Pointer i(vector_memory);
@@ -723,7 +723,7 @@ operator*(const LinearOperator<Range, Domain, Payload>& op,
     op.vmult(v, *i);
   };
 
-  return_comp.apply_add = [op, comp](Domain& v) {
+  return_comp.apply_add= [op, comp](Domain& v) {
     GrowingVectorMemory<Range> vector_memory;
 
     typename VectorMemory<Range>::Pointer i(vector_memory);
@@ -751,12 +751,12 @@ operator*(const PackagedOperation<Range>&               comp,
 {
   PackagedOperation<Range> return_comp;
 
-  return_comp.reinit_vector = op.reinit_domain_vector;
+  return_comp.reinit_vector= op.reinit_domain_vector;
 
   // ensure to have valid PackagedOperation objects by catching op by value
   // u is caught by reference
 
-  return_comp.apply = [op, comp](Domain& v) {
+  return_comp.apply= [op, comp](Domain& v) {
     GrowingVectorMemory<Range> vector_memory;
 
     typename VectorMemory<Range>::Pointer i(vector_memory);
@@ -766,7 +766,7 @@ operator*(const PackagedOperation<Range>&               comp,
     op.Tvmult(v, *i);
   };
 
-  return_comp.apply_add = [op, comp](Domain& v) {
+  return_comp.apply_add= [op, comp](Domain& v) {
     GrowingVectorMemory<Range> vector_memory;
 
     typename VectorMemory<Range>::Pointer i(vector_memory);

@@ -38,12 +38,12 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
 
-  std::string filename = "dat";
+  std::string filename= "dat";
   {
     parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
@@ -67,7 +67,7 @@ test()
 
     dh.distribute_dofs(fe);
 
-    IndexSet locally_owned_dofs = dh.locally_owned_dofs();
+    IndexSet locally_owned_dofs= dh.locally_owned_dofs();
     IndexSet locally_relevant_dofs;
 
     DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
@@ -84,19 +84,19 @@ test()
     parallel::distributed::SolutionTransfer<dim, PETScWrappers::MPI::Vector>
       soltrans2(dh);
 
-    for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); ++i)
+    for(unsigned int i= 0; i < locally_owned_dofs.n_elements(); ++i)
       {
-        unsigned int idx = locally_owned_dofs.nth_index_in_set(i);
-        x(idx)           = idx;
-        x2(idx)          = 2 * idx;
+        unsigned int idx= locally_owned_dofs.nth_index_in_set(i);
+        x(idx)          = idx;
+        x2(idx)         = 2 * idx;
 
         //  std::cout << '[' << idx << ']' << ' ' << solution(idx) << std::endl;
       }
 
     x.compress(VectorOperation::insert);
-    solution = x;
-    x *= 2.0;
-    solution2 = x;
+    solution= x;
+    x*= 2.0;
+    solution2= x;
 
     soltrans.prepare_serialization(solution);
     soltrans2.prepare_serialization(solution2);
@@ -122,7 +122,7 @@ test()
 
     dh.distribute_dofs(fe);
 
-    IndexSet locally_owned_dofs = dh.locally_owned_dofs();
+    IndexSet locally_owned_dofs= dh.locally_owned_dofs();
     IndexSet locally_relevant_dofs;
 
     DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
@@ -133,13 +133,13 @@ test()
       soltrans(dh);
     parallel::distributed::SolutionTransfer<dim, PETScWrappers::MPI::Vector>
       soltrans2(dh);
-    solution = 2;
+    solution= 2;
     soltrans.deserialize(solution);
     soltrans2.deserialize(solution2);
 
-    for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); ++i)
+    for(unsigned int i= 0; i < locally_owned_dofs.n_elements(); ++i)
       {
-        unsigned int idx = locally_owned_dofs.nth_index_in_set(i);
+        unsigned int idx= locally_owned_dofs.nth_index_in_set(i);
         //std::cout << '[' << idx << ']' << ' ' << solution(idx) << std::endl;
         AssertThrow(idx == get_real_assert_zero_imag(solution(idx)),
                     ExcInternalError());
@@ -147,8 +147,8 @@ test()
                     ExcInternalError());
       }
 
-    double norm  = solution.l1_norm();
-    double norm2 = solution2.l1_norm();
+    double norm = solution.l1_norm();
+    double norm2= solution2.l1_norm();
 
     if(myid == 0)
       {
@@ -168,7 +168,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

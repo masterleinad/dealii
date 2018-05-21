@@ -31,7 +31,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -54,13 +54,13 @@ test()
           // time (but at least one).
           // note that only the own marked cells
           // will be refined.
-          for(unsigned int i = 0; i < tr.n_active_cells() / 5 + 1; ++i)
+          for(unsigned int i= 0; i < tr.n_active_cells() / 5 + 1; ++i)
             {
-              const unsigned int x = Testing::rand() % flags.size();
-              flags[x]             = true;
+              const unsigned int x= Testing::rand() % flags.size();
+              flags[x]            = true;
             }
 
-          unsigned int index = 0;
+          unsigned int index= 0;
           for(typename Triangulation<dim>::active_cell_iterator cell
               = tr.begin_active();
               cell != tr.end();
@@ -89,7 +89,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

@@ -29,7 +29,7 @@ do_test(const Triangulation<dim, spacedim>& tria, const Point<spacedim>& p)
 {
   MappingQ<dim, spacedim> mapping(1);
 
-  for(typename Triangulation<dim, spacedim>::cell_iterator cell = tria.begin();
+  for(typename Triangulation<dim, spacedim>::cell_iterator cell= tria.begin();
       cell != tria.end();
       ++cell)
     {
@@ -38,10 +38,10 @@ do_test(const Triangulation<dim, spacedim>& tria, const Point<spacedim>& p)
       Point<dim> mapping_point;
       try
         {
-          mapping_point = mapping.transform_real_to_unit_cell(cell, p);
-          mapping_point -= cell->real_to_unit_cell_affine_approximation(p);
+          mapping_point= mapping.transform_real_to_unit_cell(cell, p);
+          mapping_point-= cell->real_to_unit_cell_affine_approximation(p);
           deallog << "Distance to mapping point: ";
-          for(unsigned int d = 0; d < dim; ++d)
+          for(unsigned int d= 0; d < dim; ++d)
             deallog << mapping_point[d] << " ";
           deallog << std::endl;
         }
@@ -61,8 +61,8 @@ test1()
   GridGenerator::hyper_cube(tria, -1, 1);
   tria.refine_global(1);
   Point<dim> p;
-  for(unsigned int d = 0; d < dim; ++d)
-    p[d] = -0.2 + 0.3 * d;
+  for(unsigned int d= 0; d < dim; ++d)
+    p[d]= -0.2 + 0.3 * d;
 
   do_test(tria, p);
 }
@@ -74,8 +74,8 @@ test2()
   Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   Point<dim> p;
-  for(unsigned int d = 0; d < dim; ++d)
-    p[d] = -0.4 + 0.5 * d;
+  for(unsigned int d= 0; d < dim; ++d)
+    p[d]= -0.4 + 0.5 * d;
 
   do_test(tria, p);
 }
@@ -99,8 +99,8 @@ test3()
     }
 
   Point<spacedim> p;
-  for(unsigned int d = 0; d < dim; ++d)
-    p[d] = -0.4 + 0.5 * d;
+  for(unsigned int d= 0; d < dim; ++d)
+    p[d]= -0.4 + 0.5 * d;
 
   do_test(triangulation, p);
 }

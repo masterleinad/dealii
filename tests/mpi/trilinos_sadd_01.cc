@@ -27,20 +27,20 @@
 void
 test()
 {
-  const int n_proc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const int n_proc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   //All processes should own 10 entries
-  const int entries_per_process = 10;
+  const int entries_per_process= 10;
 
   IndexSet  locally_owned(entries_per_process * n_proc);
-  const int begin_index = my_id * entries_per_process;
-  const int end_index   = (my_id + 1) * entries_per_process;
+  const int begin_index= my_id * entries_per_process;
+  const int end_index  = (my_id + 1) * entries_per_process;
   locally_owned.add_range(begin_index, end_index);
 
   IndexSet  locally_relevant(entries_per_process * n_proc);
-  const int local_begin = std::max(0, begin_index - entries_per_process / 2);
-  const int local_end   = entries_per_process * n_proc;
+  const int local_begin= std::max(0, begin_index - entries_per_process / 2);
+  const int local_end  = entries_per_process * n_proc;
   locally_relevant.add_range(local_begin, local_end);
 
   TrilinosWrappers::MPI::Vector ghosted, distributed;
@@ -49,32 +49,32 @@ test()
 
   // set the 'distributed' vector to all ones and store its results in
   // 'ghosted'
-  distributed = 1.;
-  ghosted     = distributed;
+  distributed= 1.;
+  ghosted    = distributed;
 
   // then multiply 'distributed' by two and add 'ghosted' to it again
-  distributed *= 2;
+  distributed*= 2;
   distributed.add(ghosted, true);
 
   // assign the result, which should contain all 3s to 'ghosted'
-  ghosted = distributed;
+  ghosted= distributed;
 
   if(my_id == 0)
     {
       deallog << "Distributed:" << std::endl;
-      for(unsigned int i = begin_index; i < end_index; ++i)
+      for(unsigned int i= begin_index; i < end_index; ++i)
         deallog << i << ": " << distributed(i) << std::endl;
 
       deallog << "Ghosted:" << std::endl;
-      for(unsigned int i = local_begin; i < local_end; ++i)
+      for(unsigned int i= local_begin; i < local_end; ++i)
         deallog << i << ": " << ghosted(i) << std::endl;
     }
 
   // verify correct value
-  for(unsigned int i = begin_index; i < end_index; ++i)
+  for(unsigned int i= begin_index; i < end_index; ++i)
     Assert(distributed(i) == 3, ExcInternalError());
 
-  for(unsigned int i = local_begin; i < local_end; ++i)
+  for(unsigned int i= local_begin; i < local_end; ++i)
     Assert(ghosted(i) == 3, ExcInternalError());
 }
 
@@ -84,7 +84,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

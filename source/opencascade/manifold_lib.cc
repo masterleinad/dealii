@@ -65,7 +65,7 @@ namespace OpenCASCADE
     double
     shape_length(const TopoDS_Shape& sh)
     {
-      Handle_Adaptor3d_HCurve adapt = curve_adaptor(sh);
+      Handle_Adaptor3d_HCurve adapt= curve_adaptor(sh);
       return GCPnts_AbscissaPoint::Length(adapt->GetCurve());
     }
   } // namespace
@@ -96,7 +96,7 @@ namespace OpenCASCADE
   {
     (void) surrounding_points;
 #  ifdef DEBUG
-    for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+    for(unsigned int i= 0; i < surrounding_points.size(); ++i)
       Assert(closest_point(sh, surrounding_points[i], tolerance)
                  .distance(surrounding_points[i])
                < std::max(tolerance * surrounding_points[i].norm(), tolerance),
@@ -132,7 +132,7 @@ namespace OpenCASCADE
   {
     (void) surrounding_points;
 #  ifdef DEBUG
-    for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+    for(unsigned int i= 0; i < surrounding_points.size(); ++i)
       Assert(closest_point(sh, surrounding_points[i], tolerance)
                  .distance(surrounding_points[i])
                < std::max(tolerance * surrounding_points[i].norm(), tolerance),
@@ -172,7 +172,7 @@ namespace OpenCASCADE
     TopoDS_Shape out_shape;
     Tensor<1, 3> average_normal;
 #  ifdef DEBUG
-    for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+    for(unsigned int i= 0; i < surrounding_points.size(); ++i)
       {
         Assert(
           closest_point(sh, surrounding_points[i], tolerance)
@@ -186,93 +186,93 @@ namespace OpenCASCADE
       {
         case 2:
           {
-            for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+            for(unsigned int i= 0; i < surrounding_points.size(); ++i)
               {
                 std::tuple<Point<3>, Tensor<1, 3>, double, double>
-                  p_and_diff_forms = closest_point_and_differential_forms(
+                  p_and_diff_forms= closest_point_and_differential_forms(
                     sh, surrounding_points[i], tolerance);
-                average_normal += std::get<1>(p_and_diff_forms);
+                average_normal+= std::get<1>(p_and_diff_forms);
               }
 
-            average_normal /= 2.0;
+            average_normal/= 2.0;
 
             Assert(
               average_normal.norm() > 1e-4,
               ExcMessage(
                 "Failed to refine cell: the average of the surface normals at the surrounding edge turns out to be a null vector, making the projection direction undetermined."));
 
-            Tensor<1, 3> T = surrounding_points[0] - surrounding_points[1];
-            T /= T.norm();
-            average_normal = average_normal - (average_normal * T) * T;
-            average_normal /= average_normal.norm();
+            Tensor<1, 3> T= surrounding_points[0] - surrounding_points[1];
+            T/= T.norm();
+            average_normal= average_normal - (average_normal * T) * T;
+            average_normal/= average_normal.norm();
             break;
           }
         case 4:
           {
-            Tensor<1, 3> u = surrounding_points[1] - surrounding_points[0];
-            Tensor<1, 3> v = surrounding_points[2] - surrounding_points[0];
-            const double n1_coords[3] = {u[1] * v[2] - u[2] * v[1],
-                                         u[2] * v[0] - u[0] * v[2],
-                                         u[0] * v[1] - u[1] * v[0]};
+            Tensor<1, 3> u= surrounding_points[1] - surrounding_points[0];
+            Tensor<1, 3> v= surrounding_points[2] - surrounding_points[0];
+            const double n1_coords[3]= {u[1] * v[2] - u[2] * v[1],
+                                        u[2] * v[0] - u[0] * v[2],
+                                        u[0] * v[1] - u[1] * v[0]};
             Tensor<1, 3> n1(n1_coords);
-            n1 = n1 / n1.norm();
-            u  = surrounding_points[2] - surrounding_points[3];
-            v  = surrounding_points[1] - surrounding_points[3];
-            const double n2_coords[3] = {u[1] * v[2] - u[2] * v[1],
-                                         u[2] * v[0] - u[0] * v[2],
-                                         u[0] * v[1] - u[1] * v[0]};
+            n1= n1 / n1.norm();
+            u = surrounding_points[2] - surrounding_points[3];
+            v = surrounding_points[1] - surrounding_points[3];
+            const double n2_coords[3]= {u[1] * v[2] - u[2] * v[1],
+                                        u[2] * v[0] - u[0] * v[2],
+                                        u[0] * v[1] - u[1] * v[0]};
             Tensor<1, 3> n2(n2_coords);
-            n2 = n2 / n2.norm();
+            n2= n2 / n2.norm();
 
-            average_normal = (n1 + n2) / 2.0;
+            average_normal= (n1 + n2) / 2.0;
 
             Assert(
               average_normal.norm() > tolerance,
               ExcMessage(
                 "Failed to refine cell: the normal estimated via the surrounding points turns out to be a null vector, making the projection direction undetermined."));
 
-            average_normal /= average_normal.norm();
+            average_normal/= average_normal.norm();
             break;
           }
         case 8:
           {
-            Tensor<1, 3> u = surrounding_points[1] - surrounding_points[0];
-            Tensor<1, 3> v = surrounding_points[2] - surrounding_points[0];
-            const double n1_coords[3] = {u[1] * v[2] - u[2] * v[1],
-                                         u[2] * v[0] - u[0] * v[2],
-                                         u[0] * v[1] - u[1] * v[0]};
+            Tensor<1, 3> u= surrounding_points[1] - surrounding_points[0];
+            Tensor<1, 3> v= surrounding_points[2] - surrounding_points[0];
+            const double n1_coords[3]= {u[1] * v[2] - u[2] * v[1],
+                                        u[2] * v[0] - u[0] * v[2],
+                                        u[0] * v[1] - u[1] * v[0]};
             Tensor<1, 3> n1(n1_coords);
-            n1 = n1 / n1.norm();
-            u  = surrounding_points[2] - surrounding_points[3];
-            v  = surrounding_points[1] - surrounding_points[3];
-            const double n2_coords[3] = {u[1] * v[2] - u[2] * v[1],
-                                         u[2] * v[0] - u[0] * v[2],
-                                         u[0] * v[1] - u[1] * v[0]};
+            n1= n1 / n1.norm();
+            u = surrounding_points[2] - surrounding_points[3];
+            v = surrounding_points[1] - surrounding_points[3];
+            const double n2_coords[3]= {u[1] * v[2] - u[2] * v[1],
+                                        u[2] * v[0] - u[0] * v[2],
+                                        u[0] * v[1] - u[1] * v[0]};
             Tensor<1, 3> n2(n2_coords);
-            n2 = n2 / n2.norm();
-            u  = surrounding_points[4] - surrounding_points[7];
-            v  = surrounding_points[6] - surrounding_points[7];
-            const double n3_coords[3] = {u[1] * v[2] - u[2] * v[1],
-                                         u[2] * v[0] - u[0] * v[2],
-                                         u[0] * v[1] - u[1] * v[0]};
+            n2= n2 / n2.norm();
+            u = surrounding_points[4] - surrounding_points[7];
+            v = surrounding_points[6] - surrounding_points[7];
+            const double n3_coords[3]= {u[1] * v[2] - u[2] * v[1],
+                                        u[2] * v[0] - u[0] * v[2],
+                                        u[0] * v[1] - u[1] * v[0]};
             Tensor<1, 3> n3(n3_coords);
-            n3 = n3 / n3.norm();
-            u  = surrounding_points[6] - surrounding_points[7];
-            v  = surrounding_points[5] - surrounding_points[7];
-            const double n4_coords[3] = {u[1] * v[2] - u[2] * v[1],
-                                         u[2] * v[0] - u[0] * v[2],
-                                         u[0] * v[1] - u[1] * v[0]};
+            n3= n3 / n3.norm();
+            u = surrounding_points[6] - surrounding_points[7];
+            v = surrounding_points[5] - surrounding_points[7];
+            const double n4_coords[3]= {u[1] * v[2] - u[2] * v[1],
+                                        u[2] * v[0] - u[0] * v[2],
+                                        u[0] * v[1] - u[1] * v[0]};
             Tensor<1, 3> n4(n4_coords);
-            n4 = n4 / n4.norm();
+            n4= n4 / n4.norm();
 
-            average_normal = (n1 + n2 + n3 + n4) / 4.0;
+            average_normal= (n1 + n2 + n3 + n4) / 4.0;
 
             Assert(
               average_normal.norm() > tolerance,
               ExcMessage(
                 "Failed to refine cell: the normal estimated via the surrounding points turns out to be a null vector, making the projection direction undetermined."));
 
-            average_normal /= average_normal.norm();
+            average_normal/= average_normal.norm();
             break;
           }
         default:
@@ -318,7 +318,7 @@ namespace OpenCASCADE
     double              t(0.0);
     ShapeAnalysis_Curve curve_analysis;
     gp_Pnt              proj;
-    const double        dist = curve_analysis.Project(
+    const double        dist= curve_analysis.Project(
       curve->GetCurve(), point(space_point), tolerance, proj, t, true);
     Assert(dist < tolerance * length,
            ExcPointNotOnManifold<spacedim>(space_point));
@@ -334,7 +334,7 @@ namespace OpenCASCADE
   {
     GCPnts_AbscissaPoint AP(
       curve->GetCurve(), chart_point[0], curve->GetCurve().FirstParameter());
-    gp_Pnt P = curve->GetCurve().Value(AP.Parameter());
+    gp_Pnt P= curve->GetCurve().Value(AP.Parameter());
     return point<spacedim>(P);
   }
 
@@ -357,13 +357,13 @@ namespace OpenCASCADE
   NURBSPatchManifold<dim, spacedim>::pull_back(
     const Point<spacedim>& space_point) const
   {
-    Handle(Geom_Surface) SurfToProj = BRep_Tool::Surface(face);
+    Handle(Geom_Surface) SurfToProj= BRep_Tool::Surface(face);
 
     ShapeAnalysis_Surface projector(SurfToProj);
-    gp_Pnt2d proj_params = projector.ValueOfUV(point(space_point), tolerance);
+    gp_Pnt2d proj_params= projector.ValueOfUV(point(space_point), tolerance);
 
-    double u = proj_params.X();
-    double v = proj_params.Y();
+    double u= proj_params.X();
+    double v= proj_params.Y();
 
     return Point<2>(u, v);
   }
@@ -383,24 +383,24 @@ namespace OpenCASCADE
     const Point<2>& chart_point) const
   {
     DerivativeForm<1, 2, spacedim> DX;
-    Handle(Geom_Surface) surf = BRep_Tool::Surface(face);
+    Handle(Geom_Surface) surf= BRep_Tool::Surface(face);
 
     gp_Pnt q;
     gp_Vec Du, Dv;
     surf->D1(chart_point[0], chart_point[1], q, Du, Dv);
 
-    DX[0][0] = Du.X();
-    DX[1][0] = Du.Y();
+    DX[0][0]= Du.X();
+    DX[1][0]= Du.Y();
     if(spacedim > 2)
-      DX[2][0] = Du.Z();
+      DX[2][0]= Du.Z();
     else
       Assert(
         std::abs(Du.Z()) < tolerance,
         ExcMessage("Expecting derivative along Z to be zero! Bailing out."));
-    DX[0][1] = Dv.X();
-    DX[1][1] = Dv.Y();
+    DX[0][1]= Dv.X();
+    DX[1][1]= Dv.Y();
     if(spacedim > 2)
-      DX[2][1] = Dv.Z();
+      DX[2][1]= Dv.Z();
     else
       Assert(
         std::abs(Dv.Z()) < tolerance,

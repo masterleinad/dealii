@@ -67,7 +67,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -97,8 +97,8 @@ TestMap1<dim>::vector_value(const Point<dim>& p,
          ExcDimensionMismatch(return_value.size(), this->n_components));
 
   // Just fill the vector with the appropriate components
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -118,7 +118,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -129,10 +129,10 @@ double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   Point<2> center;
-  center(0)    = 0.5;
-  center(1)    = 0.5;
-  double rad   = p.distance(center),
-         phi_p = atan2(p(0) - center(0), p(1) - center(1));
+  center(0)   = 0.5;
+  center(1)   = 0.5;
+  double rad  = p.distance(center),
+         phi_p= atan2(p(0) - center(0), p(1) - center(1));
 
   if(component == 0)
     return rad * (sin(phi + phi_p) - sin(phi_p));
@@ -147,8 +147,8 @@ TestDef1<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -168,7 +168,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -178,7 +178,7 @@ template <int dim>
 double
 TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
-  double x = p(0), y = p(1);
+  double x= p(0), y= p(1);
 
   if(component == 0)
     return scale * x;
@@ -193,8 +193,8 @@ TestDef2<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -215,7 +215,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -225,7 +225,7 @@ template <int dim>
 double
 TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
-  double y = p(1);
+  double y= p(1);
 
   if(component == 0)
     return scale * y;
@@ -240,8 +240,8 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 /*
@@ -261,13 +261,13 @@ double EvaluateDiver(Mapping<2>&     mapping,
                                     | update_gradients | update_JxW_values
                                     | update_contravariant_transformation));
 
-  const unsigned int n_q_points   = quad.size();
-  const unsigned int n_components = dof_handler.get_fe().n_components();
+  const unsigned int n_q_points  = quad.size();
+  const unsigned int n_components= dof_handler.get_fe().n_components();
 
   // Cell iterators
-  DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
-                                      endc = dof_handler.end();
-  double result                            = 0;
+  DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active(),
+                                      endc= dof_handler.end();
+  double result                           = 0;
 
   for(; cell != endc; ++cell)
     {
@@ -282,12 +282,12 @@ double EvaluateDiver(Mapping<2>&     mapping,
         n_q_points, std::vector<Tensor<1, 2>>(n_components));
       fe_values.get_function_gradients(solution, grads_here);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
-          double JxW  = fe_values.JxW(q_point);
-          double dudx = grads_here[q_point][0][0];
-          double dvdy = grads_here[q_point][1][1];
-          result += (dudx + dvdy) * JxW;
+          double JxW = fe_values.JxW(q_point);
+          double dudx= grads_here[q_point][0][0];
+          double dvdy= grads_here[q_point][1][1];
+          result+= (dudx + dvdy) * JxW;
         }
     }
 
@@ -364,7 +364,7 @@ main()
   deallog << buf;
 
   // Try rotating the elements
-  for(double rotat = 0; rotat < 2 * numbers::PI; rotat += 0.25 * numbers::PI)
+  for(double rotat= 0; rotat < 2 * numbers::PI; rotat+= 0.25 * numbers::PI)
     {
       // Rotate element
       VectorTools::project(dof_handler_def,
@@ -381,7 +381,7 @@ main()
     }
 
   // Try resizing the elements
-  for(double scale = -0.75; scale < 4.0; scale += 0.25)
+  for(double scale= -0.75; scale < 4.0; scale+= 0.25)
     {
       VectorTools::project(dof_handler_def,
                            hn_constraints_def,
@@ -397,7 +397,7 @@ main()
     }
 
   // Try paralellogramming the elements
-  for(double scale = -1.0; scale < 1.0; scale += 0.25)
+  for(double scale= -1.0; scale < 1.0; scale+= 0.25)
     {
       VectorTools::project(dof_handler_def,
                            hn_constraints_def,

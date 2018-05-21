@@ -28,7 +28,7 @@
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int n_processes
     = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
@@ -52,21 +52,21 @@ test()
   AssertThrow(vec.block(1).local_range().second == 100 * myid + 100,
               ExcInternalError());
 
-  for(unsigned int i = vec.block(0).local_range().first;
+  for(unsigned int i= vec.block(0).local_range().first;
       i < vec.block(0).local_range().second;
       ++i)
-    vec.block(0)(i) = i;
-  for(unsigned int i = vec.block(1).local_range().first;
+    vec.block(0)(i)= i;
+  for(unsigned int i= vec.block(1).local_range().first;
       i < vec.block(1).local_range().second;
       ++i)
-    vec.block(1)(i) = i;
+    vec.block(1)(i)= i;
   vec.compress(VectorOperation::insert);
 
   // verify correctness so far
   {
-    double exact_l1 = 0;
-    for(unsigned int i = 0; i < vec.block(0).size(); ++i)
-      exact_l1 += 2 * i;
+    double exact_l1= 0;
+    for(unsigned int i= 0; i < vec.block(0).size(); ++i)
+      exact_l1+= 2 * i;
     AssertThrow(vec.l1_norm() == exact_l1, ExcInternalError());
   }
 
@@ -91,7 +91,7 @@ test()
   // note that we tell each processor about all constraints, but most
   // of them will throw away this information since it is not for a
   // DoF inside the locally relevant range
-  for(unsigned int p = 0; p < n_processes; ++p)
+  for(unsigned int p= 0; p < n_processes; ++p)
     {
       if((p != 0) && locally_relevant_range.is_element(p * 100 + 10))
         {
@@ -140,46 +140,46 @@ test()
                   == vec.block(1).local_range().first + 105,
                 ExcInternalError());
 
-  for(unsigned int i = vec.block(0).local_range().first;
+  for(unsigned int i= vec.block(0).local_range().first;
       i < vec.block(0).local_range().second;
       ++i)
     {
       if((i != vec.block(0).local_range().first + 10)
          && (i != vec.block(0).local_range().first + 90))
         {
-          double val = vec.block(0)(i);
+          double val= vec.block(0)(i);
           AssertThrow(std::fabs(val - i) <= 1e-6, ExcInternalError());
         }
     }
-  for(unsigned int i = vec.block(1).local_range().first;
+  for(unsigned int i= vec.block(1).local_range().first;
       i < vec.block(1).local_range().second;
       ++i)
     {
       if((i != vec.block(1).local_range().first + 10)
          && (i != vec.block(1).local_range().first + 90))
         {
-          double val = vec.block(1)(i);
+          double val= vec.block(1)(i);
           AssertThrow(std::fabs(val - i) <= 1e-6, ExcInternalError());
         }
     }
 
   {
-    double exact_l1 = 0;
+    double exact_l1= 0;
 
     // add up original values of vector entries
-    for(unsigned int i = 0; i < vec.block(0).size(); ++i)
-      exact_l1 += i;
+    for(unsigned int i= 0; i < vec.block(0).size(); ++i)
+      exact_l1+= i;
 
     // but then correct for the constrained values
-    for(unsigned int p = 0; p < n_processes; ++p)
+    for(unsigned int p= 0; p < n_processes; ++p)
       {
         if(p != 0)
-          exact_l1 = exact_l1 - (p * 100 + 10) + (p * 100 - 25);
+          exact_l1= exact_l1 - (p * 100 + 10) + (p * 100 - 25);
         if(p != n_processes - 1)
-          exact_l1 = exact_l1 - (p * 100 + 90) + (p * 100 + 105);
+          exact_l1= exact_l1 - (p * 100 + 90) + (p * 100 + 105);
       }
 
-    const double l1_norm = vec.l1_norm();
+    const double l1_norm= vec.l1_norm();
     AssertThrow(l1_norm == 2 * exact_l1, ExcInternalError());
 
     // generate output. write the norm divided by two so that it matches the
@@ -194,7 +194,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

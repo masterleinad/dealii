@@ -68,13 +68,13 @@ test()
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
   TrilinosWrappers::MPI::Vector x_rel(relevant_set, MPI_COMM_WORLD);
-  x_rel = interpolated;
+  x_rel= interpolated;
 
   Functions::
     FEFieldFunction<dim, DoFHandler<dim>, TrilinosWrappers::MPI::Vector>
       field_function(dofh, x_rel);
 
-  for(unsigned int test = 0; test < 4; ++test)
+  for(unsigned int test= 0; test < 4; ++test)
     {
       double     value;
       Point<dim> p
@@ -82,11 +82,11 @@ test()
                       Point<dim>(test / 2 + 1, test / 2 + 1, test % 2 + 1) / 3);
 
       // see if we can find the point on the current processor
-      bool point_found = false;
+      bool point_found= false;
       try
         {
-          value       = field_function.value(p);
-          point_found = true;
+          value      = field_function.value(p);
+          point_found= true;
 
           Assert(std::fabs(value - (p[0] + 2))
                    < 1e-8 * std::fabs(value + (p[0] + 2)),
@@ -94,7 +94,7 @@ test()
         }
       catch(typename VectorTools::ExcPointNotAvailableHere&)
         {
-          point_found = false;
+          point_found= false;
         }
 
       // the point should be found at least once (it  might also be found
@@ -112,7 +112,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

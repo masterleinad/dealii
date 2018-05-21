@@ -41,8 +41,8 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
 
   Vector<double> fe_function(dof.n_dofs());
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
-    fe_function(i) = i + 1;
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
+    fe_function(i)= i + 1;
 
   const QGauss<dim> quadrature(2);
   FEValues<dim>     fe_values(
@@ -55,7 +55,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   fe_values.get_function_hessians(fe_function, vector_values);
 
-  for(unsigned int c = 0; c < fe.n_components(); ++c)
+  for(unsigned int c= 0; c < fe.n_components(); ++c)
     // use a vector extractor if there
     // are sufficiently many components
     // left after the current component
@@ -67,11 +67,11 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
           fe_function, selected_vector_values);
         deallog << "component=" << c << std::endl;
 
-        for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
-          for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int q= 0; q < fe_values.n_quadrature_points; ++q)
+          for(unsigned int d= 0; d < dim; ++d)
             {
-              for(unsigned int e = 0; e < dim; ++e)
-                for(unsigned int f = 0; f < dim; ++f)
+              for(unsigned int e= 0; e < dim; ++e)
+                for(unsigned int f= 0; f < dim; ++f)
                   deallog << selected_vector_values[q][d][e][f] << " ";
               deallog << std::endl;
               Assert(

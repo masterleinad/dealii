@@ -97,7 +97,7 @@ namespace Step7
   class SolutionBase
   {
   protected:
-    static const unsigned int n_source_centers = 3;
+    static const unsigned int n_source_centers= 3;
     static const Point<dim>   source_centers[n_source_centers];
     static const double       width;
   };
@@ -138,7 +138,7 @@ namespace Step7
   // concrete instantiation by substituting <code>dim</code> with a concrete
   // value:
   template <int dim>
-  const double SolutionBase<dim>::width = 1. / 8.;
+  const double SolutionBase<dim>::width= 1. / 8.;
 
   // After declaring and defining the characteristics of solution and right
   // hand side, we can declare the classes representing these two. They both
@@ -181,11 +181,11 @@ namespace Step7
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual Tensor<1, dim>
     gradient(const Point<dim>&  p,
-             const unsigned int component = 0) const override;
+             const unsigned int component= 0) const override;
   };
 
   // The actual definition of the values and gradients of the exact solution
@@ -206,10 +206,10 @@ namespace Step7
   double
   Solution<dim>::value(const Point<dim>& p, const unsigned int) const
   {
-    double return_value = 0;
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    double return_value= 0;
+    for(unsigned int i= 0; i < this->n_source_centers; ++i)
       {
-        const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+        const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
         return_value
           += std::exp(-x_minus_xi.norm_square() / (this->width * this->width));
       }
@@ -247,17 +247,17 @@ namespace Step7
   {
     Tensor<1, dim> return_value;
 
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    for(unsigned int i= 0; i < this->n_source_centers; ++i)
       {
-        const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+        const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
 
         // For the gradient, note that its direction is along (x-x_i), so we
         // add up multiples of this distance vector, where the factor is given
         // by the exponentials.
-        return_value += (-2 / (this->width * this->width)
-                         * std::exp(-x_minus_xi.norm_square()
-                                    / (this->width * this->width))
-                         * x_minus_xi);
+        return_value+= (-2 / (this->width * this->width)
+                        * std::exp(-x_minus_xi.norm_square()
+                                   / (this->width * this->width))
+                        * x_minus_xi);
       }
 
     return return_value;
@@ -277,7 +277,7 @@ namespace Step7
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   // The value of the right hand side is given by the negative Laplacian of
@@ -287,10 +287,10 @@ namespace Step7
   double
   RightHandSide<dim>::value(const Point<dim>& p, const unsigned int) const
   {
-    double return_value = 0;
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    double return_value= 0;
+    for(unsigned int i= 0; i < this->n_source_centers; ++i)
       {
-        const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
+        const Tensor<1, dim> x_minus_xi= p - this->source_centers[i];
 
         // The first contribution is the Laplacian:
         return_value
@@ -559,10 +559,10 @@ namespace Step7
     QGauss<dim>     quadrature_formula(3);
     QGauss<dim - 1> face_quadrature_formula(3);
 
-    const unsigned int n_q_points      = quadrature_formula.size();
-    const unsigned int n_face_q_points = face_quadrature_formula.size();
+    const unsigned int n_q_points     = quadrature_formula.size();
+    const unsigned int n_face_q_points= face_quadrature_formula.size();
 
-    const unsigned int dofs_per_cell = fe->dofs_per_cell;
+    const unsigned int dofs_per_cell= fe->dofs_per_cell;
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -626,32 +626,32 @@ namespace Step7
     // previous examples, so we only comment on the things that have changed.
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
 
         fe_values.reinit(cell);
 
         right_hand_side.value_list(fe_values.get_quadrature_points(),
                                    rhs_values);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
                 // The first thing that has changed is the bilinear form. It
                 // now contains the additional term from the Helmholtz
                 // equation:
-                cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
-                                         * fe_values.shape_grad(j, q_point)
-                                       + fe_values.shape_value(i, q_point)
-                                           * fe_values.shape_value(j, q_point))
-                                      * fe_values.JxW(q_point));
+                cell_matrix(i, j)+= ((fe_values.shape_grad(i, q_point)
+                                        * fe_values.shape_grad(j, q_point)
+                                      + fe_values.shape_value(i, q_point)
+                                          * fe_values.shape_value(j, q_point))
+                                     * fe_values.JxW(q_point));
 
-              cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                              * rhs_values[q_point] * fe_values.JxW(q_point));
+              cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                             * rhs_values[q_point] * fe_values.JxW(q_point));
             }
 
         // Then there is that second term on the right hand side, the contour
@@ -663,7 +663,7 @@ namespace Step7
         // <code>run()</code> function further below. (The default value of
         // boundary indicators is <code>0</code>, so faces can only have an
         // indicator equal to <code>1</code> if we have explicitly set it.)
-        for(unsigned int face_number = 0;
+        for(unsigned int face_number= 0;
             face_number < GeometryInfo<dim>::faces_per_cell;
             ++face_number)
           if(cell->face(face_number)->at_boundary()
@@ -687,15 +687,14 @@ namespace Step7
               // <code>fe_face_values</code> object. This is then used to
               // compute the additional contribution of this face to the right
               // hand side:
-              for(unsigned int q_point = 0; q_point < n_face_q_points;
-                  ++q_point)
+              for(unsigned int q_point= 0; q_point < n_face_q_points; ++q_point)
                 {
                   const double neumann_value
                     = (exact_solution.gradient(
                          fe_face_values.quadrature_point(q_point))
                        * fe_face_values.normal_vector(q_point));
 
-                  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                  for(unsigned int i= 0; i < dofs_per_cell; ++i)
                     cell_rhs(i)
                       += (neumann_value * fe_face_values.shape_value(i, q_point)
                           * fe_face_values.JxW(q_point));
@@ -706,13 +705,13 @@ namespace Step7
         // transfer it to the global matrix and right hand side vector, as in
         // the examples before:
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               system_matrix.add(
                 local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-            system_rhs(local_dof_indices[i]) += cell_rhs(i);
+            system_rhs(local_dof_indices[i])+= cell_rhs(i);
           }
       }
 
@@ -863,7 +862,7 @@ namespace Step7
                                       difference_per_cell,
                                       QGauss<dim>(3),
                                       VectorTools::L2_norm);
-    const double L2_error = VectorTools::compute_global_error(
+    const double L2_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::L2_norm);
 
     // By same procedure we get the H1 semi-norm. We re-use the
@@ -879,7 +878,7 @@ namespace Step7
                                       difference_per_cell,
                                       QGauss<dim>(3),
                                       VectorTools::H1_seminorm);
-    const double H1_error = VectorTools::compute_global_error(
+    const double H1_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::H1_seminorm);
 
     // Finally, we compute the maximum norm. Of course, we can't actually
@@ -904,7 +903,7 @@ namespace Step7
                                       difference_per_cell,
                                       q_iterated,
                                       VectorTools::Linfty_norm);
-    const double Linfty_error = VectorTools::compute_global_error(
+    const double Linfty_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::Linfty_norm);
 
     // After all these errors have been computed, we finally write some
@@ -913,8 +912,8 @@ namespace Step7
     // necessary to define column keys beforehand -- it is sufficient to just
     // add values, and columns will be introduced into the table in the order
     // values are added the first time.
-    const unsigned int n_active_cells = triangulation.n_active_cells();
-    const unsigned int n_dofs         = dof_handler.n_dofs();
+    const unsigned int n_active_cells= triangulation.n_active_cells();
+    const unsigned int n_dofs        = dof_handler.n_dofs();
 
     std::cout << "Cycle " << cycle << ':' << std::endl
               << "   Number of active cells:       " << n_active_cells
@@ -970,9 +969,8 @@ namespace Step7
   void
   HelmholtzProblem<dim>::run()
   {
-    const unsigned int n_cycles
-      = (refinement_mode == global_refinement) ? 5 : 9;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    const unsigned int n_cycles= (refinement_mode == global_refinement) ? 5 : 9;
+    for(unsigned int cycle= 0; cycle < n_cycles; ++cycle)
       {
         if(cycle == 0)
           {
@@ -981,9 +979,9 @@ namespace Step7
 
             typename Triangulation<dim>::cell_iterator cell
               = triangulation.begin(),
-              endc = triangulation.end();
+              endc= triangulation.end();
             for(; cell != endc; ++cell)
-              for(unsigned int face_number = 0;
+              for(unsigned int face_number= 0;
                   face_number < GeometryInfo<dim>::faces_per_cell;
                   ++face_number)
                 if((std::fabs(cell->face(face_number)->center()(0) - (-1))
@@ -1026,10 +1024,10 @@ namespace Step7
     switch(refinement_mode)
       {
         case global_refinement:
-          vtk_filename = "solution-global";
+          vtk_filename= "solution-global";
           break;
         case adaptive_refinement:
-          vtk_filename = "solution-adaptive";
+          vtk_filename= "solution-adaptive";
           break;
         default:
           Assert(false, ExcNotImplemented());
@@ -1049,10 +1047,10 @@ namespace Step7
     switch(fe->degree)
       {
         case 1:
-          vtk_filename += "-q1";
+          vtk_filename+= "-q1";
           break;
         case 2:
-          vtk_filename += "-q2";
+          vtk_filename+= "-q2";
           break;
 
         default:
@@ -1062,7 +1060,7 @@ namespace Step7
     // Once we have the base name for the output file, we add an extension
     // appropriate for VTK output, open a file, and add the solution vector to
     // the object that will do the actual output:
-    vtk_filename += ".vtk";
+    vtk_filename+= ".vtk";
     std::ofstream output(vtk_filename);
 
     DataOut<dim> data_out;
@@ -1154,14 +1152,14 @@ namespace Step7
     // e.g. `xdvi filename', where filename is the name of the file to which
     // we will write output now. We construct the file name in the same way as
     // before, but with a different prefix "error":
-    std::string error_filename = "error";
+    std::string error_filename= "error";
     switch(refinement_mode)
       {
         case global_refinement:
-          error_filename += "-global";
+          error_filename+= "-global";
           break;
         case adaptive_refinement:
-          error_filename += "-adaptive";
+          error_filename+= "-adaptive";
           break;
         default:
           Assert(false, ExcNotImplemented());
@@ -1170,16 +1168,16 @@ namespace Step7
     switch(fe->degree)
       {
         case 1:
-          error_filename += "-q1";
+          error_filename+= "-q1";
           break;
         case 2:
-          error_filename += "-q2";
+          error_filename+= "-q2";
           break;
         default:
           Assert(false, ExcNotImplemented());
       }
 
-    error_filename += ".tex";
+    error_filename+= ".tex";
     std::ofstream error_table_file(error_filename);
 
     convergence_table.write_tex(error_table_file);
@@ -1239,14 +1237,14 @@ namespace Step7
         std::cout << std::endl;
         convergence_table.write_text(std::cout);
 
-        std::string conv_filename = "convergence";
+        std::string conv_filename= "convergence";
         switch(refinement_mode)
           {
             case global_refinement:
-              conv_filename += "-global";
+              conv_filename+= "-global";
               break;
             case adaptive_refinement:
-              conv_filename += "-adaptive";
+              conv_filename+= "-adaptive";
               break;
             default:
               Assert(false, ExcNotImplemented());
@@ -1254,15 +1252,15 @@ namespace Step7
         switch(fe->degree)
           {
             case 1:
-              conv_filename += "-q1";
+              conv_filename+= "-q1";
               break;
             case 2:
-              conv_filename += "-q2";
+              conv_filename+= "-q2";
               break;
             default:
               Assert(false, ExcNotImplemented());
           }
-        conv_filename += ".tex";
+        conv_filename+= ".tex";
 
         std::ofstream table_file(conv_filename);
         convergence_table.write_tex(table_file);
@@ -1288,7 +1286,7 @@ namespace Step7
 int
 main()
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
   try
     {

@@ -79,7 +79,7 @@ namespace LinearAlgebra
     // check whether we need to reallocate
     resize_val(size);
 
-    stored_elements = complete_index_set(size);
+    stored_elements= complete_index_set(size);
     stored_elements.compress();
 
     // set entries to zero if so requested
@@ -99,7 +99,7 @@ namespace LinearAlgebra
   {
     resize_val(v.n_elements());
 
-    stored_elements = v.get_stored_elements();
+    stored_elements= v.get_stored_elements();
 
     if(omit_zeroing_entries == false)
       this->operator=(Number());
@@ -114,7 +114,7 @@ namespace LinearAlgebra
   ReadWriteVector<Number>::reinit(const IndexSet& locally_stored_indices,
                                   const bool      omit_zeroing_entries)
   {
-    stored_elements = locally_stored_indices;
+    stored_elements= locally_stored_indices;
 
     // set vector size and allocate memory
     resize_val(stored_elements.n_elements());
@@ -139,14 +139,14 @@ namespace LinearAlgebra
     // the argument's lifetime needs to be longer then. If we do this, we need
     // to think about whether the view should be read/write.
 
-    stored_elements = IndexSet(trilinos_vec.vector_partitioner());
+    stored_elements= IndexSet(trilinos_vec.vector_partitioner());
 
     resize_val(stored_elements.n_elements());
 
     TrilinosScalar* start_ptr;
     int             leading_dimension;
-    int ierr = trilinos_vec.trilinos_vector().ExtractView(&start_ptr,
-                                                          &leading_dimension);
+    int             ierr= trilinos_vec.trilinos_vector().ExtractView(&start_ptr,
+                                                         &leading_dimension);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
     std::copy(start_ptr, start_ptr + leading_dimension, values.get());
@@ -174,7 +174,7 @@ namespace LinearAlgebra
     if(PointerComparison::equal(this, &in_vector))
       return *this;
 
-    thread_loop_partitioner = in_vector.thread_loop_partitioner;
+    thread_loop_partitioner= in_vector.thread_loop_partitioner;
     if(n_elements() != in_vector.n_elements())
       reinit(in_vector, true);
 
@@ -191,7 +191,7 @@ namespace LinearAlgebra
   ReadWriteVector<Number>&
   ReadWriteVector<Number>::operator=(const ReadWriteVector<Number2>& in_vector)
   {
-    thread_loop_partitioner = in_vector.thread_loop_partitioner;
+    thread_loop_partitioner= in_vector.thread_loop_partitioner;
     if(n_elements() != in_vector.n_elements())
       reinit(in_vector, true);
 
@@ -211,7 +211,7 @@ namespace LinearAlgebra
            ExcMessage("Only 0 can be assigned to a vector."));
     (void) s;
 
-    const size_type this_size = n_elements();
+    const size_type this_size= n_elements();
     if(this_size > 0)
       {
         dealii::internal::VectorOperations::Vector_set<Number> setter(
@@ -236,7 +236,7 @@ namespace LinearAlgebra
     std::shared_ptr<const Utilities::MPI::Partitioner> comm_pattern;
     if(communication_pattern.get() == nullptr)
       {
-        comm_pattern = std::make_shared<Utilities::MPI::Partitioner>(
+        comm_pattern= std::make_shared<Utilities::MPI::Partitioner>(
           vec.locally_owned_elements(),
           get_stored_elements(),
           vec.get_mpi_communicator());
@@ -255,13 +255,13 @@ namespace LinearAlgebra
     std::copy(vec.begin(), vec.end(), tmp_vector.begin());
     tmp_vector.update_ghost_values();
 
-    const IndexSet& stored = get_stored_elements();
+    const IndexSet& stored= get_stored_elements();
     if(operation == VectorOperation::add)
-      for(size_type i = 0; i < stored.n_elements(); ++i)
-        local_element(i) += tmp_vector(stored.nth_index_in_set(i));
+      for(size_type i= 0; i < stored.n_elements(); ++i)
+        local_element(i)+= tmp_vector(stored.nth_index_in_set(i));
     else
-      for(size_type i = 0; i < stored.n_elements(); ++i)
-        local_element(i) = tmp_vector(stored.nth_index_in_set(i));
+      for(size_type i= 0; i < stored.n_elements(); ++i)
+        local_element(i)= tmp_vector(stored.nth_index_in_set(i));
   }
 
 #ifdef DEAL_II_WITH_PETSC
@@ -313,11 +313,11 @@ namespace LinearAlgebra
       = VecGetArray(static_cast<const Vec&>(petsc_vec), &start_ptr);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    const size_type vec_size = petsc_vec.local_size();
+    const size_type vec_size= petsc_vec.local_size();
     internal::copy_petsc_vector(start_ptr, start_ptr + vec_size, begin());
 
     // restore the representation of the vector
-    ierr = VecRestoreArray(static_cast<const Vec&>(petsc_vec), &start_ptr);
+    ierr= VecRestoreArray(static_cast<const Vec&>(petsc_vec), &start_ptr);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 #endif
@@ -346,7 +346,7 @@ namespace LinearAlgebra
         if((source_elements.size() == source_stored_elements.size())
            && (source_elements == source_stored_elements))
           {
-            epetra_comm_pattern = std::dynamic_pointer_cast<
+            epetra_comm_pattern= std::dynamic_pointer_cast<
               const EpetraWrappers::CommunicationPattern>(comm_pattern);
             if(epetra_comm_pattern == nullptr)
               epetra_comm_pattern
@@ -360,7 +360,7 @@ namespace LinearAlgebra
       }
     else
       {
-        epetra_comm_pattern = std::dynamic_pointer_cast<
+        epetra_comm_pattern= std::dynamic_pointer_cast<
           const EpetraWrappers::CommunicationPattern>(communication_pattern);
         AssertThrow(
           epetra_comm_pattern != nullptr,
@@ -374,33 +374,33 @@ namespace LinearAlgebra
 
     if(operation == VectorOperation::insert)
       {
-        const int err = target_vector.Import(multivector, import, Insert);
+        const int err= target_vector.Import(multivector, import, Insert);
         AssertThrow(err == 0,
                     ExcMessage("Epetra Import() failed with error code: "
                                + Utilities::to_string(err)));
 
-        const double* new_values = target_vector.Values();
-        const int     size       = target_vector.MyLength();
+        const double* new_values= target_vector.Values();
+        const int     size      = target_vector.MyLength();
         Assert(size == 0 || values != nullptr,
                ExcInternalError("Import failed."));
 
-        for(int i = 0; i < size; ++i)
-          values[i] = new_values[i];
+        for(int i= 0; i < size; ++i)
+          values[i]= new_values[i];
       }
     else if(operation == VectorOperation::add)
       {
-        const int err = target_vector.Import(multivector, import, Add);
+        const int err= target_vector.Import(multivector, import, Add);
         AssertThrow(err == 0,
                     ExcMessage("Epetra Import() failed with error code: "
                                + Utilities::to_string(err)));
 
-        const double* new_values = target_vector.Values();
-        const int     size       = target_vector.MyLength();
+        const double* new_values= target_vector.Values();
+        const int     size      = target_vector.MyLength();
         Assert(size == 0 || values != nullptr,
                ExcInternalError("Import failed."));
 
-        for(int i = 0; i < size; ++i)
-          values[i] += new_values[i];
+        for(int i= 0; i < size; ++i)
+          values[i]+= new_values[i];
       }
     else
       AssertThrow(false, ExcNotImplemented());
@@ -450,28 +450,28 @@ namespace LinearAlgebra
     VectorOperation::values                            operation,
     std::shared_ptr<const CommunicationPatternBase>)
   {
-    const unsigned int n_elements = stored_elements.n_elements();
+    const unsigned int n_elements= stored_elements.n_elements();
     if(operation == VectorOperation::insert)
       {
-        cudaError_t error_code = cudaMemcpy(values.get(),
-                                            cuda_vec.get_values(),
-                                            n_elements * sizeof(Number),
-                                            cudaMemcpyDeviceToHost);
+        cudaError_t error_code= cudaMemcpy(values.get(),
+                                           cuda_vec.get_values(),
+                                           n_elements * sizeof(Number),
+                                           cudaMemcpyDeviceToHost);
         AssertCuda(error_code);
       }
     else
       {
         // Copy the vector from the device to a temporary vector on the host
         std::vector<Number> tmp(n_elements);
-        cudaError_t         error_code = cudaMemcpy(tmp.data(),
-                                            cuda_vec.get_values(),
-                                            n_elements * sizeof(Number),
-                                            cudaMemcpyDeviceToHost);
+        cudaError_t         error_code= cudaMemcpy(tmp.data(),
+                                           cuda_vec.get_values(),
+                                           n_elements * sizeof(Number),
+                                           cudaMemcpyDeviceToHost);
         AssertCuda(error_code);
 
         // Add the two vectors
-        for(unsigned int i = 0; i < n_elements; ++i)
-          values[i] += tmp[i];
+        for(unsigned int i= 0; i < n_elements; ++i)
+          values[i]+= tmp[i];
       }
   }
 #endif
@@ -488,10 +488,10 @@ namespace LinearAlgebra
   std::size_t
   ReadWriteVector<Number>::memory_consumption() const
   {
-    std::size_t memory = sizeof(*this);
-    memory += sizeof(Number) * static_cast<std::size_t>(this->n_elements());
+    std::size_t memory= sizeof(*this);
+    memory+= sizeof(Number) * static_cast<std::size_t>(this->n_elements());
 
-    memory += stored_elements.memory_consumption();
+    memory+= stored_elements.memory_consumption();
 
     return memory;
   }
@@ -514,7 +514,7 @@ namespace LinearAlgebra
     out << "IndexSet: ";
     stored_elements.print(out);
     out << std::endl;
-    unsigned int i = 0;
+    unsigned int i= 0;
     for(const auto& idx : this->stored_elements)
       out << "[" << idx << "]: " << values[i++] << '\n';
     out << std::flush;
@@ -529,10 +529,10 @@ namespace LinearAlgebra
     const IndexSet& source_index_set,
     const MPI_Comm& mpi_comm)
   {
-    source_stored_elements = source_index_set;
+    source_stored_elements= source_index_set;
     EpetraWrappers::CommunicationPattern epetra_comm_pattern(
       source_stored_elements, stored_elements, mpi_comm);
-    comm_pattern = std::make_shared<EpetraWrappers::CommunicationPattern>(
+    comm_pattern= std::make_shared<EpetraWrappers::CommunicationPattern>(
       source_stored_elements, stored_elements, mpi_comm);
 
     return epetra_comm_pattern;

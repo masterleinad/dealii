@@ -90,8 +90,8 @@ class SparseMatrix;
  * @author Ralf Hartmann, 1999; extension for full compatibility with
  * LinearOperator class: Jean-Paul Pelteret, 2015
  */
-template <typename MatrixType = SparseMatrix<double>,
-          typename VectorType = dealii::Vector<double>>
+template <typename MatrixType= SparseMatrix<double>,
+          typename VectorType= dealii::Vector<double>>
 class PreconditionSelector : public Subscriptor
 {
 public:
@@ -105,7 +105,7 @@ public:
    * preconditioning.
    */
   PreconditionSelector(const std::string&                     preconditioning,
-                       const typename VectorType::value_type& omega = 1.);
+                       const typename VectorType::value_type& omega= 1.);
 
   /**
    * Destructor.
@@ -205,14 +205,14 @@ template <typename MatrixType, typename VectorType>
 PreconditionSelector<MatrixType, VectorType>::~PreconditionSelector()
 {
   // release the matrix A
-  A = nullptr;
+  A= nullptr;
 }
 
 template <typename MatrixType, typename VectorType>
 void
 PreconditionSelector<MatrixType, VectorType>::use_matrix(const MatrixType& M)
 {
-  A = &M;
+  A= &M;
 }
 
 template <typename MatrixType, typename VectorType>
@@ -238,7 +238,7 @@ PreconditionSelector<MatrixType, VectorType>::vmult(VectorType&       dst,
 {
   if(preconditioning == "none")
     {
-      dst = src;
+      dst= src;
     }
   else
     {
@@ -269,7 +269,7 @@ PreconditionSelector<MatrixType, VectorType>::Tvmult(
 {
   if(preconditioning == "none")
     {
-      dst = src;
+      dst= src;
     }
   else
     {

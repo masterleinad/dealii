@@ -46,31 +46,31 @@ template <typename NumberType>
 void
 test()
 {
-  const unsigned int           size = 3;
+  const unsigned int           size= 3;
   LAPACKFullMatrix<NumberType> M(size);
   M.set_property(LAPACKSupport::upper_triangular);
 
-  M                    = 0.;
-  unsigned int counter = 1;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  M                   = 0.;
+  unsigned int counter= 1;
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= 0; j < size; ++j)
       {
         if(j >= i)
-          M(i, j) = counter;
+          M(i, j)= counter;
 
         counter++;
       }
 
   Vector<NumberType> x(size), y(size);
-  x[0] = 2;
-  x[1] = -7;
-  x[2] = 1;
+  x[0]= 2;
+  x[1]= -7;
+  x[2]= 1;
 
-  y = x;
+  y= x;
   M.solve(y, false);
   y.print(deallog.get_file_stream(), 6, false);
 
-  y = x;
+  y= x;
   M.solve(y, true);
   y.print(deallog.get_file_stream(), 6, false);
 }
@@ -78,7 +78,7 @@ test()
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);

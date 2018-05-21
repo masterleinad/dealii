@@ -25,8 +25,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -39,7 +39,7 @@ test()
   if(myid < 8)
     local_owned.add_range(myid * 2, myid * 2 + 2);
   IndexSet local_relevant(numproc * 2);
-  local_relevant = local_owned;
+  local_relevant= local_owned;
   local_relevant.add_range(1, 2);
 
   LinearAlgebra::distributed::Vector<double> v(
@@ -48,17 +48,17 @@ test()
   // set local values
   if(myid < 8)
     {
-      types::global_dof_index n_elements = 2;
+      types::global_dof_index n_elements= 2;
       types::global_dof_index indices[n_elements];
-      indices[0] = myid * 2;
-      indices[1] = myid * 2 + 1;
+      indices[0]= myid * 2;
+      indices[1]= myid * 2 + 1;
       float values[2];
-      values[0] = myid * 2.0;
-      values[1] = myid * 2.0 + 1.0;
+      values[0]= myid * 2.0;
+      values[1]= myid * 2.0 + 1.0;
       v.add(n_elements, &indices[0], &values[0]);
     }
   v.compress(VectorOperation::insert);
-  v *= 2.0;
+  v*= 2.0;
   if(myid < 8)
     {
       AssertThrow(v(myid * 2) == myid * 4.0, ExcInternalError());
@@ -75,7 +75,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

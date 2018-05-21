@@ -28,7 +28,7 @@ check()
   make_matrix(m);
 
   FullMatrix<std::complex<number>> n;
-  n = m;
+  n= m;
 
   print_matrix(n);
 }

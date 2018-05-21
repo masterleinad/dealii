@@ -28,7 +28,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);
   mpi_initlog();
-  const double                            L = 7.6 / 2.0;
+  const double                            L= 7.6 / 2.0;
   parallel::distributed::Triangulation<3> triangulation(MPI_COMM_WORLD);
   GridIn<3>                               gridin;
   gridin.attach_triangulation(triangulation);
@@ -37,12 +37,12 @@ main(int argc, char* argv[])
 
   typename parallel::distributed::Triangulation<3>::active_cell_iterator cell
     = triangulation.begin_active(),
-    endc = triangulation.end();
+    endc= triangulation.end();
   for(; cell != endc; ++cell)
     {
-      for(unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<3>::faces_per_cell; ++f)
         {
-          const Point<3> face_center = cell->face(f)->center();
+          const Point<3> face_center= cell->face(f)->center();
           if(cell->face(f)->at_boundary())
             {
               if(std::abs(face_center[0] + (L)) < 1.0e-4)
@@ -64,7 +64,7 @@ main(int argc, char* argv[])
   std::vector<GridTools::PeriodicFacePair<
     typename parallel::distributed::Triangulation<3>::cell_iterator>>
     periodicity_vector;
-  for(int i = 0; i < 3; ++i)
+  for(int i= 0; i < 3; ++i)
     GridTools::collect_periodic_faces(triangulation,
                                       /*b_id1*/ 2 * i + 1,
                                       /*b_id2*/ 2 * i + 2,

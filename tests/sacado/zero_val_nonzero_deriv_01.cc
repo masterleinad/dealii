@@ -35,7 +35,7 @@ main()
 {
   initlog();
 
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
   Triangulation<dim> triangulation;
   FE_Q<dim>          fe(1);
   QGauss<dim>        quadrature_formula(2);
@@ -53,8 +53,8 @@ main()
   const FEValuesExtractors::Scalar extractor_sclr(0);
 
   typedef Sacado::Fad::DFad<double>     ad_type;
-  DoFHandler<dim>::active_cell_iterator cell = dof_handler.begin_active();
-  DoFHandler<dim>::active_cell_iterator endc = dof_handler.end();
+  DoFHandler<dim>::active_cell_iterator cell= dof_handler.begin_active();
+  DoFHandler<dim>::active_cell_iterator endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
@@ -66,7 +66,7 @@ main()
       // Configure AD-equivalent DoF values. These
       // are the independent variables "x".
       std::vector<ad_type> local_ad_dof_values(fe.n_dofs_per_cell());
-      for(unsigned int i = 0; i < fe.n_dofs_per_cell(); ++i)
+      for(unsigned int i= 0; i < fe.n_dofs_per_cell(); ++i)
         local_ad_dof_values[i]
           = ad_type(fe.n_dofs_per_cell(), i, local_dof_values[i]);
 
@@ -78,12 +78,12 @@ main()
         local_ad_dof_values, local_qp_soln_values_ad);
 
       // Compute the dependent variable "f(x)".
-      ad_type f_x = 0.0;
-      for(unsigned int i = 0; i < fe.n_dofs_per_cell(); ++i)
-        f_x += local_qp_soln_values_ad[i];
+      ad_type f_x= 0.0;
+      for(unsigned int i= 0; i < fe.n_dofs_per_cell(); ++i)
+        f_x+= local_qp_soln_values_ad[i];
 
       deallog << "f(x): " << f_x.val() << std::endl;
-      for(unsigned int i = 0; i < fe.n_dofs_per_cell(); ++i)
+      for(unsigned int i= 0; i < fe.n_dofs_per_cell(); ++i)
         deallog << "df/dx_" << i << ": " << f_x.dx(i) << std::endl;
     }
 

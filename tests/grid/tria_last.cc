@@ -34,7 +34,7 @@ test()
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   tria.refine_global(3);
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tria.begin_active(2);

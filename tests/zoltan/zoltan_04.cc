@@ -41,7 +41,7 @@ main(int argc, char** argv)
   MPILogInitAll                    all;
 
   //Number of nodes
-  unsigned int num_indices = 5;
+  unsigned int num_indices= 5;
 
   //Create temporary object to hold graph connection info.
   DynamicSparsityPattern dynamic_sparse_graph;
@@ -60,12 +60,12 @@ main(int argc, char** argv)
   unsigned int              num_colors;
 
   color_indices.resize(num_indices);
-  num_colors = GraphColoring::color_sparsity_pattern(sp_graph, color_indices);
+  num_colors= GraphColoring::color_sparsity_pattern(sp_graph, color_indices);
 
   //color
   deallog << "Coloring" << std::endl;
   deallog << "Number of colors used: " << num_colors << std::endl;
-  for(unsigned int i = 0; i < num_indices; i++)
+  for(unsigned int i= 0; i < num_indices; i++)
     {
       deallog << i << " " << color_indices[i] << std::endl;
     }

@@ -47,7 +47,7 @@ test()
 
   dofh.distribute_dofs(fe);
 
-  IndexSet owned_set = dofh.locally_owned_dofs();
+  IndexSet owned_set= dofh.locally_owned_dofs();
 
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
@@ -61,14 +61,14 @@ test()
   // we have interpolated values, so
   // ConstraintMatrix::distribute should not do
   // anything
-  x1 = x_ref;
+  x1= x_ref;
   ConstraintMatrix cm(relevant_set);
   DoFTools::make_hanging_node_constraints(dofh, cm);
   cm.close();
   cm.distribute(x1);
 
-  x1 -= x_ref;
-  double err = x1.linfty_norm();
+  x1-= x_ref;
+  double err= x1.linfty_norm();
   if(err > 1.0e-12)
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << "err:" << err << std::endl;
@@ -77,10 +77,10 @@ test()
   // that we manually fill with ones, not by a
   // function in interpolate
   TrilinosWrappers::MPI::Vector x2(owned_set, MPI_COMM_WORLD);
-  x2 = 1;
+  x2= 1;
   cm.distribute(x2);
-  x2 -= x_ref;
-  err = x2.linfty_norm();
+  x2-= x_ref;
+  err= x2.linfty_norm();
   if(err > 1.0e-12)
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << "err:" << err << std::endl;
@@ -94,7 +94,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

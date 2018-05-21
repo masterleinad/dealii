@@ -360,7 +360,7 @@ namespace Algorithms
   inline void
   ThetaTimestepping<VectorType>::set_output(OutputOperator<VectorType>& out)
   {
-    output = &out;
+    output= &out;
   }
 
   template <typename VectorType>
@@ -374,8 +374,8 @@ namespace Algorithms
   inline double
   ThetaTimestepping<VectorType>::theta(double new_theta)
   {
-    const double tmp = vtheta;
-    vtheta           = new_theta;
+    const double tmp= vtheta;
+    vtheta          = new_theta;
     return tmp;
   }
 

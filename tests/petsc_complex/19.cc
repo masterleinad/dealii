@@ -24,13 +24,13 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   // set some elements of the vector
-  double norm = 0;
-  for(unsigned int k = 0; k < v.size(); k += 1 + k)
+  double norm= 0;
+  for(unsigned int k= 0; k < v.size(); k+= 1 + k)
     {
-      v(k) = std::complex<double>(k, 2. * k);
+      v(k)= std::complex<double>(k, 2. * k);
 
       // Ugly, but equal.
-      norm = std::max(norm, std::fabs(std::sqrt((k * k + 2. * k * 2. * k))));
+      norm= std::max(norm, std::fabs(std::sqrt((k * k + 2. * k * 2. * k))));
     }
 
   v.compress(VectorOperation::insert);

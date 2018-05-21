@@ -183,32 +183,32 @@ namespace Polynomials
   PiecewisePolynomial<number>::value(const number x) const
   {
     AssertIndexRange(interval, n_intervals);
-    number y = x;
+    number y= x;
     // shift polynomial if necessary
     if(n_intervals > 1)
       {
-        const number step = 1. / n_intervals;
+        const number step= 1. / n_intervals;
 
         // polynomial spans over two intervals
         if(spans_two_intervals == true)
           {
-            const number offset = step * interval;
+            const number offset= step * interval;
             if(x < offset)
               return 0;
             else if(x > offset + step + step)
               return 0;
             else if(x < offset + step)
-              y = x - offset;
+              y= x - offset;
             else
-              y = offset + step + step - x;
+              y= offset + step + step - x;
           }
         else
           {
-            const number offset = step * interval;
+            const number offset= step * interval;
             if(x < offset || x > offset + step)
               return 0;
             else
-              y = x - offset;
+              y= x - offset;
           }
 
         return polynomial.value(y);

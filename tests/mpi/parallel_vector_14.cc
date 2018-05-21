@@ -26,8 +26,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -38,14 +38,14 @@ test()
   if(myid < 2)
     local_owned.add_range(myid * 2, myid * 2 + 2);
   IndexSet local_relevant(local_owned.size());
-  local_relevant = local_owned;
+  local_relevant= local_owned;
   local_relevant.add_range(1, 2);
   if(numproc > 1)
     local_relevant.add_range(3, 4);
 
   // run this twice, once where the vectors have called update_ghost_values
   // and once where they have not
-  for(unsigned int run = 0; run < 2; ++run)
+  for(unsigned int run= 0; run < 2; ++run)
     {
       LinearAlgebra::distributed::Vector<double> v(
         local_owned, local_relevant, MPI_COMM_WORLD);
@@ -53,16 +53,16 @@ test()
       // set local values
       if(myid < 2)
         {
-          v(myid * 2)     = myid * 2.0;
-          v(myid * 2 + 1) = myid * 2.0 + 1.0;
+          v(myid * 2)    = myid * 2.0;
+          v(myid * 2 + 1)= myid * 2.0 + 1.0;
         }
 
       v.compress(VectorOperation::insert);
 
       LinearAlgebra::distributed::Vector<double> w(v), u(v);
-      u = 0;
+      u= 0;
 
-      v *= 2.0;
+      v*= 2.0;
       v.add(1.0);
 
       if(run == 1)
@@ -83,14 +83,14 @@ test()
                                                         MPI_COMM_WORLD),
         w_dist(v_dist), u_dist(v_dist);
 
-      v_dist = v;
-      w_dist = w;
-      u_dist = u;
+      v_dist= v;
+      w_dist= w;
+      u_dist= u;
 
       u_dist.add(1.0, v_dist, -1.0, w);
 
       // copy back to a ghosted vector and update ghost values there
-      u = u_dist;
+      u= u_dist;
       u.update_ghost_values();
 
       if(myid < 2)
@@ -110,7 +110,7 @@ test()
         }
 
       // check l2 norm
-      const double l2_norm = u.l2_norm();
+      const double l2_norm= u.l2_norm();
       if(myid == 0 && run == 1)
         deallog << "L2 norm: " << l2_norm << std::endl;
     }
@@ -125,7 +125,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

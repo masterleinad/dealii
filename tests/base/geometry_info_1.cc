@@ -29,10 +29,10 @@ void
 test()
 {
   // Output normal directions for each face
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     {
       deallog << "Face " << f << ": n = ( ";
-      for(unsigned int d = 0; d < dim; ++d)
+      for(unsigned int d= 0; d < dim; ++d)
         {
           if(d != 0)
             deallog << " , ";
@@ -46,7 +46,7 @@ test()
 
   Point<dim> p;
 
-  for(unsigned int ref_case_no = 1;
+  for(unsigned int ref_case_no= 1;
       ref_case_no <= RefinementPossibilities<dim>::isotropic_refinement;
       ++ref_case_no)
     {
@@ -58,15 +58,15 @@ test()
       // [-2:2]^d, and transform them
       // back and forth between mother
       // and child cell
-      const unsigned int N = 7;
-      for(unsigned int i = 0; i < N; ++i)
+      const unsigned int N= 7;
+      for(unsigned int i= 0; i < N; ++i)
         {
-          for(unsigned int d = 0; d < dim; ++d)
-            p[d] = rand_2();
+          for(unsigned int d= 0; d < dim; ++d)
+            p[d]= rand_2();
 
           deallog << i << ' ' << p << ' '
                   << GeometryInfo<dim>::is_inside_unit_cell(p) << std::endl;
-          for(unsigned int c = 0; c < GeometryInfo<dim>::n_children(ref_case);
+          for(unsigned int c= 0; c < GeometryInfo<dim>::n_children(ref_case);
               ++c)
             {
               const Point<dim> q

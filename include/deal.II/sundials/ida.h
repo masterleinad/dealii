@@ -230,7 +230,7 @@ namespace SUNDIALS
    *
    * @author Luca Heltai, Alberto Sartori, 2017.
    */
-  template <typename VectorType = Vector<double>>
+  template <typename VectorType= Vector<double>>
   class IDA
   {
   public:
@@ -254,7 +254,7 @@ namespace SUNDIALS
         /**
          * Do not try to make initial conditions consistent.
          */
-        none = 0,
+        none= 0,
 
         /**
          * Compute the algebraic components of y and differential
@@ -262,12 +262,12 @@ namespace SUNDIALS
          *    This option requires that the user specifies differential and
          *    algebraic components in the function get_differential_components.
          */
-        use_y_diff = 1,
+        use_y_diff= 1,
 
         /**
          * Compute all components of y, given y_dot.
          */
-        use_y_dot = 2
+        use_y_dot= 2
       };
 
       /**
@@ -299,22 +299,22 @@ namespace SUNDIALS
        * @param maximum_non_linear_iterations_ic Initial condition Newton max iterations
        */
       AdditionalData( // Initial parameters
-        const double& initial_time      = 0.0,
-        const double& final_time        = 1.0,
-        const double& initial_step_size = 1e-2,
-        const double& output_period     = 1e-1,
+        const double& initial_time     = 0.0,
+        const double& final_time       = 1.0,
+        const double& initial_step_size= 1e-2,
+        const double& output_period    = 1e-1,
         // Running parameters
-        const double&       minimum_step_size             = 1e-6,
-        const unsigned int& maximum_order                 = 5,
-        const unsigned int& maximum_non_linear_iterations = 10,
+        const double&       minimum_step_size            = 1e-6,
+        const unsigned int& maximum_order                = 5,
+        const unsigned int& maximum_non_linear_iterations= 10,
         // Error parameters
-        const double& absolute_tolerance                = 1e-6,
-        const double& relative_tolerance                = 1e-5,
-        const bool&   ignore_algebraic_terms_for_errors = true,
+        const double& absolute_tolerance               = 1e-6,
+        const double& relative_tolerance               = 1e-5,
+        const bool&   ignore_algebraic_terms_for_errors= true,
         // Initial conditions parameters
-        const InitialConditionCorrection& ic_type    = use_y_diff,
-        const InitialConditionCorrection& reset_type = use_y_diff,
-        const unsigned int&               maximum_non_linear_iterations_ic = 5)
+        const InitialConditionCorrection& ic_type   = use_y_diff,
+        const InitialConditionCorrection& reset_type= use_y_diff,
+        const unsigned int&               maximum_non_linear_iterations_ic= 5)
         : initial_time(initial_time),
           final_time(final_time),
           initial_step_size(initial_step_size),
@@ -397,7 +397,7 @@ namespace SUNDIALS
         prm.leave_subsection();
 
         prm.enter_subsection("Initial condition correction parameters");
-        static std::string ic_type_str = "use_y_diff";
+        static std::string ic_type_str= "use_y_diff";
         prm.add_parameter(
           "Correction type at initial time",
           ic_type_str,
@@ -413,16 +413,16 @@ namespace SUNDIALS
         prm.add_action("Correction type at initial time",
                        [&](const std::string& value) {
                          if(value == "use_y_diff")
-                           ic_type = use_y_diff;
+                           ic_type= use_y_diff;
                          else if(value == "use_y_dot")
-                           ic_type = use_y_dot;
+                           ic_type= use_y_dot;
                          else if(value == "none")
-                           ic_type = none;
+                           ic_type= none;
                          else
                            AssertThrow(false, ExcInternalError());
                        });
 
-        static std::string reset_type_str = "use_y_diff";
+        static std::string reset_type_str= "use_y_diff";
         prm.add_parameter(
           "Correction type after restart",
           reset_type_str,
@@ -438,11 +438,11 @@ namespace SUNDIALS
         prm.add_action("Correction type after restart",
                        [&](const std::string& value) {
                          if(value == "use_y_diff")
-                           reset_type = use_y_diff;
+                           reset_type= use_y_diff;
                          else if(value == "use_y_dot")
-                           reset_type = use_y_dot;
+                           reset_type= use_y_dot;
                          else if(value == "none")
-                           reset_type = none;
+                           reset_type= none;
                          else
                            AssertThrow(false, ExcInternalError());
                        });
@@ -570,8 +570,8 @@ namespace SUNDIALS
      * @param data IDA configuration data
      * @param mpi_comm MPI communicator
      */
-    IDA(const AdditionalData& data     = AdditionalData(),
-        const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
+    IDA(const AdditionalData& data    = AdditionalData(),
+        const MPI_Comm        mpi_comm= MPI_COMM_WORLD);
 
     /**
      * Destructor.

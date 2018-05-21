@@ -34,15 +34,15 @@ test(const unsigned int size)
 
   // Lapack:
   LAPACKFullMatrix<NumberType> M(size);
-  M = F;
+  M= F;
   M.set_property(LAPACKSupport::symmetric);
   M.compute_cholesky_factorization();
   M.invert();
 
   FullMatrix<NumberType> diff(size);
-  diff = M;
+  diff= M;
   diff.add(-1., invF);
-  const double error = diff.frobenius_norm();
+  const double error= diff.frobenius_norm();
   deallog << error << std::endl;
 
   if(error > 1e-10)
@@ -59,12 +59,12 @@ test(const unsigned int size)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{1, 3, 11, 17, 32, 64, 200, 391}};
+  const std::vector<unsigned int> sizes= {{1, 3, 11, 17, 32, 64, 200, 391}};
   for(const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;

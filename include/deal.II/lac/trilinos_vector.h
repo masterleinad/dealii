@@ -441,7 +441,7 @@ namespace TrilinosWrappers
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       explicit Vector(const IndexSet& parallel_partitioning,
-                      const MPI_Comm& communicator = MPI_COMM_WORLD);
+                      const MPI_Comm& communicator= MPI_COMM_WORLD);
 
       /**
        * Creates a ghosted parallel vector.
@@ -456,7 +456,7 @@ namespace TrilinosWrappers
        */
       Vector(const IndexSet& local,
              const IndexSet& ghost,
-             const MPI_Comm& communicator = MPI_COMM_WORLD);
+             const MPI_Comm& communicator= MPI_COMM_WORLD);
 
       /**
        * Copy constructor from the TrilinosWrappers vector class. Since a
@@ -474,7 +474,7 @@ namespace TrilinosWrappers
        */
       Vector(const IndexSet& parallel_partitioning,
              const Vector&   v,
-             const MPI_Comm& communicator = MPI_COMM_WORLD);
+             const MPI_Comm& communicator= MPI_COMM_WORLD);
 
       /**
        * Copy-constructor from deal.II vectors. Sets the dimension to that of
@@ -491,7 +491,7 @@ namespace TrilinosWrappers
       template <typename Number>
       Vector(const IndexSet&               parallel_partitioning,
              const dealii::Vector<Number>& v,
-             const MPI_Comm&               communicator = MPI_COMM_WORLD);
+             const MPI_Comm&               communicator= MPI_COMM_WORLD);
 
       /**
        * Move constructor. Creates a new vector by stealing the internal data
@@ -502,7 +502,7 @@ namespace TrilinosWrappers
       /**
        * Destructor.
        */
-      ~Vector() override = default;
+      ~Vector() override= default;
 
       /**
        * Release all memory and return to a state just like after having called
@@ -536,8 +536,8 @@ namespace TrilinosWrappers
        */
       void
       reinit(const Vector& v,
-             const bool    omit_zeroing_entries = false,
-             const bool    allow_different_maps = false);
+             const bool    omit_zeroing_entries= false,
+             const bool    allow_different_maps= false);
 
       /**
        * Reinit functionality. This function destroys the old vector content
@@ -563,8 +563,8 @@ namespace TrilinosWrappers
        */
       void
       reinit(const IndexSet& parallel_partitioning,
-             const MPI_Comm& communicator         = MPI_COMM_WORLD,
-             const bool      omit_zeroing_entries = false);
+             const MPI_Comm& communicator        = MPI_COMM_WORLD,
+             const bool      omit_zeroing_entries= false);
 
       /**
        * Reinit functionality. This function destroys the old vector content
@@ -594,14 +594,14 @@ namespace TrilinosWrappers
       void
       reinit(const IndexSet& locally_owned_entries,
              const IndexSet& ghost_entries,
-             const MPI_Comm& communicator    = MPI_COMM_WORLD,
-             const bool      vector_writable = false);
+             const MPI_Comm& communicator   = MPI_COMM_WORLD,
+             const bool      vector_writable= false);
 
       /**
        * Create vector by merging components from a block vector.
        */
       void
-      reinit(const BlockVector& v, const bool import_data = false);
+      reinit(const BlockVector& v, const bool import_data= false);
 
       /**
        * Compress the underlying representation of the Trilinos object, i.e.
@@ -1114,7 +1114,7 @@ namespace TrilinosWrappers
        * same map.
        */
       void
-      add(const Vector& V, const bool allow_different_maps = false);
+      add(const Vector& V, const bool allow_different_maps= false);
 
       /**
        * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
@@ -1194,9 +1194,9 @@ namespace TrilinosWrappers
        */
       void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const;
+            const unsigned int precision = 3,
+            const bool         scientific= true,
+            const bool         across    = true) const;
 
       /**
        * Swap the contents of this vector and the other vector @p v. One could
@@ -1344,7 +1344,7 @@ namespace TrilinosWrappers
       // documentation, this is not the copy
       // operator. so simply pass on to the
       // "correct" assignment operator
-      *this = static_cast<TrilinosScalar>(r);
+      *this= static_cast<TrilinosScalar>(r);
 
       return *this;
     }
@@ -1353,7 +1353,7 @@ namespace TrilinosWrappers
     VectorReference::operator=(const VectorReference& r)
     {
       // as above
-      *this = static_cast<TrilinosScalar>(r);
+      *this= static_cast<TrilinosScalar>(r);
 
       return *this;
     }
@@ -1375,7 +1375,7 @@ namespace TrilinosWrappers
     inline const VectorReference&
     VectorReference::operator-=(const TrilinosScalar& value) const
     {
-      TrilinosScalar new_value = -value;
+      TrilinosScalar new_value= -value;
       vector.add(1, &index, &new_value);
       return *this;
     }
@@ -1383,7 +1383,7 @@ namespace TrilinosWrappers
     inline const VectorReference&
     VectorReference::operator*=(const TrilinosScalar& value) const
     {
-      TrilinosScalar new_value = static_cast<TrilinosScalar>(*this) * value;
+      TrilinosScalar new_value= static_cast<TrilinosScalar>(*this) * value;
       vector.set(1, &index, &new_value);
       return *this;
     }
@@ -1391,7 +1391,7 @@ namespace TrilinosWrappers
     inline const VectorReference&
     VectorReference::operator/=(const TrilinosScalar& value) const
     {
-      TrilinosScalar new_value = static_cast<TrilinosScalar>(*this) / value;
+      TrilinosScalar new_value= static_cast<TrilinosScalar>(*this) / value;
       vector.set(1, &index, &new_value);
       return *this;
     }
@@ -1402,7 +1402,7 @@ namespace TrilinosWrappers
     inline bool
     Vector::in_local_range(const size_type index) const
     {
-      std::pair<size_type, size_type> range = local_range();
+      std::pair<size_type, size_type> range= local_range();
 
       return ((index >= range.first) && (index < range.second));
     }
@@ -1448,8 +1448,8 @@ namespace TrilinosWrappers
     Vector::extract_subvector_to(const std::vector<size_type>& indices,
                                  std::vector<TrilinosScalar>&  values) const
     {
-      for(size_type i = 0; i < indices.size(); ++i)
-        values[i] = operator()(indices[i]);
+      for(size_type i= 0; i < indices.size(); ++i)
+        values[i]= operator()(indices[i]);
     }
 
     template <typename ForwardIterator, typename OutputIterator>
@@ -1460,7 +1460,7 @@ namespace TrilinosWrappers
     {
       while(indices_begin != indices_end)
         {
-          *values_begin = operator()(*indices_begin);
+          *values_begin= operator()(*indices_begin);
           indices_begin++;
           values_begin++;
         }
@@ -1529,28 +1529,28 @@ namespace TrilinosWrappers
 
       if(last_action == Add)
         {
-          const int ierr = vector->GlobalAssemble(Add);
+          const int ierr= vector->GlobalAssemble(Add);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         }
 
       if(last_action != Insert)
-        last_action = Insert;
+        last_action= Insert;
 
-      for(size_type i = 0; i < n_elements; ++i)
+      for(size_type i= 0; i < n_elements; ++i)
         {
-          const size_type                         row       = indices[i];
-          const TrilinosWrappers::types::int_type local_row = vector->Map().LID(
+          const size_type                         row      = indices[i];
+          const TrilinosWrappers::types::int_type local_row= vector->Map().LID(
             static_cast<TrilinosWrappers::types::int_type>(row));
           if(local_row != -1)
-            (*vector)[0][local_row] = values[i];
+            (*vector)[0][local_row]= values[i];
           else
             {
-              const int ierr = vector->ReplaceGlobalValues(
+              const int ierr= vector->ReplaceGlobalValues(
                 1,
                 (const TrilinosWrappers::types::int_type*) (&row),
                 &values[i]);
               AssertThrow(ierr == 0, ExcTrilinosError(ierr));
-              compressed = false;
+              compressed= false;
             }
           // in set operation, do not use the pre-allocated vector for nonlocal
           // entries even if it exists. This is to ensure that we really only
@@ -1599,27 +1599,27 @@ namespace TrilinosWrappers
         {
           if(last_action == Insert)
             {
-              const int ierr = vector->GlobalAssemble(Insert);
+              const int ierr= vector->GlobalAssemble(Insert);
               AssertThrow(ierr == 0, ExcTrilinosError(ierr));
             }
-          last_action = Add;
+          last_action= Add;
         }
 
-      for(size_type i = 0; i < n_elements; ++i)
+      for(size_type i= 0; i < n_elements; ++i)
         {
-          const size_type                         row       = indices[i];
-          const TrilinosWrappers::types::int_type local_row = vector->Map().LID(
+          const size_type                         row      = indices[i];
+          const TrilinosWrappers::types::int_type local_row= vector->Map().LID(
             static_cast<TrilinosWrappers::types::int_type>(row));
           if(local_row != -1)
-            (*vector)[0][local_row] += values[i];
+            (*vector)[0][local_row]+= values[i];
           else if(nonlocal_vector.get() == nullptr)
             {
-              const int ierr = vector->SumIntoGlobalValues(
+              const int ierr= vector->SumIntoGlobalValues(
                 1,
                 (const TrilinosWrappers::types::int_type*) (&row),
                 &values[i]);
               AssertThrow(ierr == 0, ExcTrilinosError(ierr));
-              compressed = false;
+              compressed= false;
             }
           else
             {
@@ -1633,8 +1633,8 @@ namespace TrilinosWrappers
                 ExcMessage("Attempted to write into off-processor vector entry "
                            "that has not be specified as being writable upon "
                            "initialization"));
-              (*nonlocal_vector)[0][my_row] += values[i];
-              compressed = false;
+              (*nonlocal_vector)[0][my_row]+= values[i];
+              compressed= false;
             }
         }
     }
@@ -1661,12 +1661,10 @@ namespace TrilinosWrappers
     Vector::local_range() const
     {
 #    ifndef DEAL_II_WITH_64BIT_INDICES
-      const TrilinosWrappers::types::int_type begin = vector->Map().MinMyGID();
-      const TrilinosWrappers::types::int_type end
-        = vector->Map().MaxMyGID() + 1;
+      const TrilinosWrappers::types::int_type begin= vector->Map().MinMyGID();
+      const TrilinosWrappers::types::int_type end= vector->Map().MaxMyGID() + 1;
 #    else
-      const TrilinosWrappers::types::int_type begin
-        = vector->Map().MinMyGID64();
+      const TrilinosWrappers::types::int_type begin= vector->Map().MinMyGID64();
       const TrilinosWrappers::types::int_type end
         = vector->Map().MaxMyGID64() + 1;
 #    endif
@@ -1689,7 +1687,7 @@ namespace TrilinosWrappers
 
       TrilinosScalar result;
 
-      const int ierr = vector->Dot(*(vec.vector), &result);
+      const int ierr= vector->Dot(*(vec.vector), &result);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return result;
@@ -1698,7 +1696,7 @@ namespace TrilinosWrappers
     inline Vector::real_type
     Vector::norm_sqr() const
     {
-      const TrilinosScalar d = l2_norm();
+      const TrilinosScalar d= l2_norm();
       return d * d;
     }
 
@@ -1708,7 +1706,7 @@ namespace TrilinosWrappers
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
       TrilinosScalar mean;
-      const int      ierr = vector->MeanValue(&mean);
+      const int      ierr= vector->MeanValue(&mean);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return mean;
@@ -1718,7 +1716,7 @@ namespace TrilinosWrappers
     Vector::min() const
     {
       TrilinosScalar min_value;
-      const int      ierr = vector->MinValue(&min_value);
+      const int      ierr= vector->MinValue(&min_value);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return min_value;
@@ -1728,7 +1726,7 @@ namespace TrilinosWrappers
     Vector::max() const
     {
       TrilinosScalar max_value;
-      const int      ierr = vector->MaxValue(&max_value);
+      const int      ierr= vector->MaxValue(&max_value);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return max_value;
@@ -1740,7 +1738,7 @@ namespace TrilinosWrappers
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
       TrilinosScalar d;
-      const int      ierr = vector->Norm1(&d);
+      const int      ierr= vector->Norm1(&d);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return d;
@@ -1752,7 +1750,7 @@ namespace TrilinosWrappers
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
       TrilinosScalar d;
-      const int      ierr = vector->Norm2(&d);
+      const int      ierr= vector->Norm2(&d);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return d;
@@ -1763,16 +1761,16 @@ namespace TrilinosWrappers
     {
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
-      TrilinosScalar  norm    = 0;
-      TrilinosScalar  sum     = 0;
-      const size_type n_local = local_size();
+      TrilinosScalar  norm   = 0;
+      TrilinosScalar  sum    = 0;
+      const size_type n_local= local_size();
 
       // loop over all the elements because
       // Trilinos does not support lp norms
-      for(size_type i = 0; i < n_local; i++)
-        sum += std::pow(std::fabs((*vector)[0][i]), p);
+      for(size_type i= 0; i < n_local; i++)
+        sum+= std::pow(std::fabs((*vector)[0][i]), p);
 
-      norm = std::pow(sum, static_cast<TrilinosScalar>(1. / p));
+      norm= std::pow(sum, static_cast<TrilinosScalar>(1. / p));
 
       return norm;
     }
@@ -1786,7 +1784,7 @@ namespace TrilinosWrappers
       // is safe to run even in the
       // presence of ghost elements
       TrilinosScalar d;
-      const int      ierr = vector->NormInf(&d);
+      const int      ierr= vector->NormInf(&d);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return d;
@@ -1811,7 +1809,7 @@ namespace TrilinosWrappers
     {
       AssertIsFinite(a);
 
-      const int ierr = vector->Scale(a);
+      const int ierr= vector->Scale(a);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return *this;
@@ -1822,11 +1820,11 @@ namespace TrilinosWrappers
     {
       AssertIsFinite(a);
 
-      const TrilinosScalar factor = 1. / a;
+      const TrilinosScalar factor= 1. / a;
 
       AssertIsFinite(factor);
 
-      const int ierr = vector->Scale(factor);
+      const int ierr= vector->Scale(factor);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return *this;
@@ -1839,7 +1837,7 @@ namespace TrilinosWrappers
       Assert(vector->Map().SameAs(v.vector->Map()),
              ExcDifferentParallelPartitioning());
 
-      const int ierr = vector->Update(1.0, *(v.vector), 1.0);
+      const int ierr= vector->Update(1.0, *(v.vector), 1.0);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return *this;
@@ -1852,7 +1850,7 @@ namespace TrilinosWrappers
       Assert(vector->Map().SameAs(v.vector->Map()),
              ExcDifferentParallelPartitioning());
 
-      const int ierr = vector->Update(-1.0, *(v.vector), 1.0);
+      const int ierr= vector->Update(-1.0, *(v.vector), 1.0);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return *this;
@@ -1866,9 +1864,9 @@ namespace TrilinosWrappers
       Assert(!has_ghost_elements(), ExcGhostsPresent());
       AssertIsFinite(s);
 
-      size_type n_local = local_size();
-      for(size_type i = 0; i < n_local; i++)
-        (*vector)[0][i] += s;
+      size_type n_local= local_size();
+      for(size_type i= 0; i < n_local; i++)
+        (*vector)[0][i]+= s;
     }
 
     inline void
@@ -1882,7 +1880,7 @@ namespace TrilinosWrappers
 
       AssertIsFinite(a);
 
-      const int ierr = vector->Update(a, *(v.vector), 1.);
+      const int ierr= vector->Update(a, *(v.vector), 1.);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     }
 
@@ -1903,7 +1901,7 @@ namespace TrilinosWrappers
       AssertIsFinite(a);
       AssertIsFinite(b);
 
-      const int ierr = vector->Update(a, *(v.vector), b, *(w.vector), 1.);
+      const int ierr= vector->Update(a, *(v.vector), b, *(w.vector), 1.);
 
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     }
@@ -1924,12 +1922,12 @@ namespace TrilinosWrappers
         {
           Assert(this->vector->Map().SameAs(v.vector->Map()) == true,
                  ExcDifferentParallelPartitioning());
-          const int ierr = vector->Update(1., *(v.vector), s);
+          const int ierr= vector->Update(1., *(v.vector), s);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         }
       else
         {
-          (*this) *= s;
+          (*this)*= s;
           this->add(v, true);
         }
     }
@@ -1952,14 +1950,14 @@ namespace TrilinosWrappers
         {
           Assert(this->vector->Map().SameAs(v.vector->Map()) == true,
                  ExcDifferentParallelPartitioning());
-          const int ierr = vector->Update(a, *(v.vector), s);
+          const int ierr= vector->Update(a, *(v.vector), s);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         }
       else
         {
-          (*this) *= s;
-          Vector tmp = v;
-          tmp *= a;
+          (*this)*= s;
+          Vector tmp= v;
+          tmp*= a;
           this->add(tmp, true);
         }
     }
@@ -1973,7 +1971,7 @@ namespace TrilinosWrappers
       Assert(local_size() == factors.local_size(),
              ExcDimensionMismatch(local_size(), factors.local_size()));
 
-      const int ierr = vector->Multiply(1.0, *(factors.vector), *vector, 0.0);
+      const int ierr= vector->Multiply(1.0, *(factors.vector), *vector, 0.0);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     }
 
@@ -1993,10 +1991,10 @@ namespace TrilinosWrappers
       else
         {
           // Otherwise, just update
-          int ierr = vector->Update(a, *v.vector, 0.0);
+          int ierr= vector->Update(a, *v.vector, 0.0);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-          last_action = Zero;
+          last_action= Zero;
         }
     }
 
@@ -2027,11 +2025,11 @@ namespace TrilinosWrappers
 
       const Epetra_MpiComm* mpi_comm
         = dynamic_cast<const Epetra_MpiComm*>(&vector->Map().Comm());
-      comm = mpi_comm->Comm();
+      comm= mpi_comm->Comm();
 
 #    else
 
-      comm = MPI_COMM_SELF;
+      comm= MPI_COMM_SELF;
 
 #    endif
 
@@ -2045,7 +2043,7 @@ namespace TrilinosWrappers
     {
       *this
         = Vector(parallel_partitioner.make_trilinos_map(communicator, true), v);
-      owned_elements = parallel_partitioner;
+      owned_elements= parallel_partitioner;
     }
 
     inline Vector&
@@ -2053,12 +2051,12 @@ namespace TrilinosWrappers
     {
       AssertIsFinite(s);
 
-      int ierr = vector->PutScalar(s);
+      int ierr= vector->PutScalar(s);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       if(nonlocal_vector.get() != nullptr)
         {
-          ierr = nonlocal_vector->PutScalar(0.);
+          ierr= nonlocal_vector->PutScalar(0.);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         }
 

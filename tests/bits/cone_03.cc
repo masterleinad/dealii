@@ -39,7 +39,7 @@ template <>
 void
 check<2>()
 {
-  constexpr int      dim = 2;
+  constexpr int      dim= 2;
   Triangulation<dim> triangulation;
   GridGenerator::truncated_cone(triangulation);
   static const FlatManifold<dim> boundary;
@@ -49,7 +49,7 @@ check<2>()
 
   const typename Triangulation<dim>::active_cell_iterator cell
     = triangulation.begin_active();
-  for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+  for(unsigned int face_no= 0; face_no < GeometryInfo<dim>::faces_per_cell;
       ++face_no)
     {
       const typename Triangulation<dim>::face_iterator face
@@ -59,7 +59,7 @@ check<2>()
           deallog << face->boundary_id() << std::endl;
           typename Manifold<dim>::FaceVertexNormals normals;
           boundary.get_normals_at_vertices(face, normals);
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+          for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
             deallog << face->vertex(v) << ": " << normals[v] << std::endl;
         }
     }
@@ -69,7 +69,7 @@ template <>
 void
 check<3>()
 {
-  constexpr int      dim = 3;
+  constexpr int      dim= 3;
   Triangulation<dim> triangulation;
   GridGenerator::truncated_cone(triangulation);
   static const CylindricalManifold<dim> boundary;
@@ -79,7 +79,7 @@ check<3>()
 
   const typename Triangulation<dim>::active_cell_iterator cell
     = triangulation.begin_active();
-  for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+  for(unsigned int face_no= 0; face_no < GeometryInfo<dim>::faces_per_cell;
       ++face_no)
     {
       const typename Triangulation<dim>::face_iterator face
@@ -89,7 +89,7 @@ check<3>()
           deallog << face->boundary_id() << std::endl;
           typename Manifold<dim>::FaceVertexNormals normals;
           boundary.get_normals_at_vertices(face, normals);
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+          for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
             deallog << face->vertex(v) << ": " << normals[v] << std::endl;
         }
     }

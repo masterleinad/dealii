@@ -48,7 +48,7 @@ main()
 
   // compute the volume of the mesh
   fe_values.reinit(triangulation.begin_active());
-  const double volume_before = fe_values.JxW(0);
+  const double volume_before= fe_values.JxW(0);
   deallog << volume_before << std::endl;
 
   // shrink the mesh
@@ -56,6 +56,6 @@ main()
 
   // Now we measure the volume again:
   fe_values.reinit(triangulation.begin_active());
-  const double volume_after = fe_values.JxW(0);
+  const double volume_after= fe_values.JxW(0);
   deallog << volume_after << std::endl;
 }

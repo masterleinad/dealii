@@ -24,13 +24,13 @@ void
 test(Vector<double>& v)
 {
   // set some entries of the vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     if(i % 3 == 0)
-      v(i) = i + 1.;
+      v(i)= i + 1.;
   v.compress();
 
-  const unsigned int sz = v.size();
-  v                     = 2;
+  const unsigned int sz= v.size();
+  v                    = 2;
   AssertThrow(v.size() == sz, ExcInternalError());
   AssertThrow(v.l2_norm() == std::sqrt(4. * sz), ExcInternalError());
 

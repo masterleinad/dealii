@@ -36,7 +36,7 @@ void
 print(const std::vector<types::global_dof_index>& v)
 {
   deallog << v.size();
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << ' ' << v[i];
   deallog << std::endl;
 }
@@ -51,7 +51,7 @@ check()
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria, 0., 1.);
   tria.refine_global(1);
-  for(int i = 0; i < 2; ++i)
+  for(int i= 0; i < 2; ++i)
     {
       tria.begin_active()->set_refine_flag();
       tria.execute_coarsening_and_refinement();
@@ -67,7 +67,7 @@ check()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     cell->set_active_fe_index(Testing::rand() % fe.size());
 
@@ -90,7 +90,7 @@ check()
   // components
   {
     std::vector<unsigned int> group(dim + 1, 0);
-    group[dim] = 1;
+    group[dim]= 1;
     std::vector<types::global_dof_index> dpc(2);
     DoFTools::count_dofs_per_component(dof_handler, dpc, false, group);
     Assert(dpc.size() == 2, ExcInternalError());
@@ -99,7 +99,7 @@ check()
 
   {
     std::vector<unsigned int> group(dim + 1, 0);
-    group[dim] = 1;
+    group[dim]= 1;
     std::vector<types::global_dof_index> dpc(2);
     DoFTools::count_dofs_per_block(dof_handler, dpc, group);
     Assert(dpc.size() == 2, ExcInternalError());
@@ -110,7 +110,7 @@ check()
   // components
   {
     std::vector<unsigned int> group(dim + 1, 2 * dim);
-    group[dim] = 0;
+    group[dim]= 0;
     std::vector<types::global_dof_index> dpc(2 * dim + 1);
     DoFTools::count_dofs_per_component(dof_handler, dpc, false, group);
     Assert(dpc.size() == 2 * dim + 1, ExcInternalError());
@@ -119,7 +119,7 @@ check()
 
   {
     std::vector<unsigned int> group(dim + 1, 2 * dim);
-    group[dim] = 0;
+    group[dim]= 0;
     std::vector<types::global_dof_index> dpc(2 * dim + 1);
     DoFTools::count_dofs_per_block(dof_handler, dpc, group);
     Assert(dpc.size() == 2 * dim + 1, ExcInternalError());

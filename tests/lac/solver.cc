@@ -39,8 +39,8 @@ check_solve(SolverType&         solver,
             VectorType&         f,
             const PRECONDITION& P)
 {
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.solve(A, u, f, P);
@@ -62,8 +62,8 @@ check_Tsolve(SolverType&         solver,
              VectorType&         f,
              const PRECONDITION& P)
 {
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.Tsolve(A, u, f, P);
@@ -96,9 +96,9 @@ main()
   SolverQMRS<>                  qmrs(control, mem);
   SolverFIRE<>                  fire(control, mem);
 
-  for(unsigned int size = 4; size <= 30; size *= 3)
+  for(unsigned int size= 4; size <= 30; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -124,18 +124,18 @@ main()
       // Create a permutation: Blocks
       // backwards and every second
       // block backwards
-      unsigned int k = 0;
-      for(unsigned int i = 0; i < size - 1; ++i)
-        for(unsigned int j = 0; j < size - 1; ++j)
+      unsigned int k= 0;
+      for(unsigned int i= 0; i < size - 1; ++i)
+        for(unsigned int j= 0; j < size - 1; ++j)
           {
             if(i % 2)
-              permutation[k++] = (size - i - 2) * (size - 1) + j;
+              permutation[k++]= (size - i - 2) * (size - 1) + j;
             else
-              permutation[k++] = (size - i - 2) * (size - 1) + size - j - 2;
+              permutation[k++]= (size - i - 2) * (size - 1) + size - j - 2;
           }
 
-      for(unsigned int i = 0; i < dim; ++i)
-        inverse_permutation[permutation[i]] = i;
+      for(unsigned int i= 0; i < dim; ++i)
+        inverse_permutation[permutation[i]]= i;
 
       PreconditionPSOR<> prec_psor;
       prec_psor.initialize(A, permutation, inverse_permutation, 1.2);
@@ -144,8 +144,8 @@ main()
       Vector<double> u(dim);
       Vector<double> res(dim);
 
-      f = 1.;
-      u = 1.;
+      f= 1.;
+      u= 1.;
 
       A.residual(res, u, f);
       A.SOR(res);
@@ -246,9 +246,9 @@ main()
     };
 
   // Solve advection problem
-  for(unsigned int size = 4; size <= 3; size *= 3)
+  for(unsigned int size= 4; size <= 3; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -269,21 +269,21 @@ main()
       // Create a permutation: Blocks
       // backwards and every second
       // block backwards
-      unsigned int k = 0;
-      for(unsigned int i = 0; i < size - 1; ++i)
-        for(unsigned int j = 0; j < size - 1; ++j)
+      unsigned int k= 0;
+      for(unsigned int i= 0; i < size - 1; ++i)
+        for(unsigned int j= 0; j < size - 1; ++j)
           {
-            permutation[k++] = i * (size - 1) + size - j - 2;
+            permutation[k++]= i * (size - 1) + size - j - 2;
           }
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
+      for(unsigned int i= 0; i < permutation.size(); ++i)
         std::cerr << ' ' << permutation[i];
       std::cerr << std::endl;
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
-        inverse_permutation[permutation[i]] = i;
+      for(unsigned int i= 0; i < permutation.size(); ++i)
+        inverse_permutation[permutation[i]]= i;
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
+      for(unsigned int i= 0; i < permutation.size(); ++i)
         std::cerr << ' ' << inverse_permutation[i];
       std::cerr << std::endl;
 
@@ -292,8 +292,8 @@ main()
 
       Vector<double> f(dim);
       Vector<double> u(dim);
-      f = 1.;
-      u = 1.;
+      f= 1.;
+      u= 1.;
 
       std::cerr << "******************************" << std::endl;
 

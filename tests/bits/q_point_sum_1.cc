@@ -51,26 +51,25 @@ check(const Triangulation<dim>& tria)
       // and make sure that the
       // result of the integration is
       // close to zero
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->at_boundary(f))
           {
             fe_face_values.reinit(cell, f);
-            for(unsigned int q = 0; q < q_face.size(); ++q)
-              n1 += fe_face_values.quadrature_point(q) * fe_face_values.JxW(q);
+            for(unsigned int q= 0; q < q_face.size(); ++q)
+              n1+= fe_face_values.quadrature_point(q) * fe_face_values.JxW(q);
           }
 
       // now same for subface
       // integration
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->at_boundary(f))
-          for(unsigned int sf = 0;
-              sf < GeometryInfo<dim>::max_children_per_face;
+          for(unsigned int sf= 0; sf < GeometryInfo<dim>::max_children_per_face;
               ++sf)
             {
               fe_subface_values.reinit(cell, f, sf);
-              for(unsigned int q = 0; q < q_face.size(); ++q)
-                n2 += fe_subface_values.quadrature_point(q)
-                      * fe_subface_values.JxW(q);
+              for(unsigned int q= 0; q < q_face.size(); ++q)
+                n2+= fe_subface_values.quadrature_point(q)
+                     * fe_subface_values.JxW(q);
             }
     }
 

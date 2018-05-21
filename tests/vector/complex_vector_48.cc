@@ -24,11 +24,11 @@ test(Vector<std::complex<double>>& v,
      Vector<std::complex<double>>& w,
      Vector<std::complex<double>>& x)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = std::complex<double>(i + 1., i + 2.);
-      w(i) = std::complex<double>(i + 2., i + 3.);
-      x(i) = std::complex<double>(i + 3., i + 4.);
+      v(i)= std::complex<double>(i + 1., i + 2.);
+      w(i)= std::complex<double>(i + 2., i + 3.);
+      x(i)= std::complex<double>(i + 3., i + 4.);
     }
 
   v.compress();
@@ -38,7 +38,7 @@ test(Vector<std::complex<double>>& v,
   v.ratio(w, x);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == std::complex<double>(i + 2., i + 3.),
                   ExcInternalError());

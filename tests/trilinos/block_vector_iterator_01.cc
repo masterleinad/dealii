@@ -25,17 +25,17 @@ test()
 {
   TrilinosWrappers::MPI::BlockVector v;
   v.reinit(2);
-  for(unsigned int i = 0; i < v.n_blocks(); ++i)
+  for(unsigned int i= 0; i < v.n_blocks(); ++i)
     v.block(i).reinit(complete_index_set(1), MPI_COMM_WORLD);
   v.collect_sizes();
 
-  v(0) = 1;
-  v(1) = 2;
+  v(0)= 1;
+  v(1)= 2;
 
   // first check reading through a const
   // iterator
   {
-    TrilinosWrappers::MPI::BlockVector::const_iterator i = v.begin();
+    TrilinosWrappers::MPI::BlockVector::const_iterator i= v.begin();
     AssertThrow(*i == 1, ExcInternalError());
     ++i;
     AssertThrow(*i == 2, ExcInternalError());
@@ -53,7 +53,7 @@ test()
 
   // read through a read-write iterator
   {
-    TrilinosWrappers::MPI::BlockVector::iterator i = v.begin();
+    TrilinosWrappers::MPI::BlockVector::iterator i= v.begin();
     AssertThrow(*i == 1, ExcInternalError());
     ++i;
     AssertThrow(*i == 2, ExcInternalError());
@@ -61,16 +61,16 @@ test()
 
   // write through a read-write iterator
   {
-    TrilinosWrappers::MPI::BlockVector::iterator i = v.begin();
+    TrilinosWrappers::MPI::BlockVector::iterator i= v.begin();
 
-    *i = 2;
+    *i= 2;
     ++i;
-    *i = 3;
+    *i= 3;
   }
 
   // and read again
   {
-    TrilinosWrappers::MPI::BlockVector::iterator i = v.begin();
+    TrilinosWrappers::MPI::BlockVector::iterator i= v.begin();
     AssertThrow(*i == 2, ExcInternalError());
     ++i;
     AssertThrow(*i == 3, ExcInternalError());

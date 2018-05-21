@@ -35,16 +35,16 @@ using namespace dealii;
 void
 print_patches(const SparsityPattern& bl)
 {
-  for(unsigned int i = 0; i < bl.n_rows(); ++i)
+  for(unsigned int i= 0; i < bl.n_rows(); ++i)
     {
       deallog << "Block " << std::setw(3) << i;
       std::vector<unsigned int> entries;
-      for(SparsityPattern::iterator b = bl.begin(i); b != bl.end(i); ++b)
+      for(SparsityPattern::iterator b= bl.begin(i); b != bl.end(i); ++b)
         entries.push_back(b->column());
 
       std::sort(entries.begin(), entries.end());
 
-      for(unsigned int i = 0; i < entries.size(); ++i)
+      for(unsigned int i= 0; i < entries.size(); ++i)
         deallog << ' ' << std::setw(4) << entries[i];
       deallog << std::endl;
     }
@@ -55,7 +55,7 @@ void
 test_global_refinement(
   void (*test_block_list)(const TR& tr, const FiniteElement<TR::dimension>& fe))
 {
-  const unsigned int dim = TR::dimension;
+  const unsigned int dim= TR::dimension;
   TR trc(Triangulation<dim>::limit_level_difference_at_vertices);
   TR trl(Triangulation<dim>::limit_level_difference_at_vertices);
   GridGenerator::hyper_cube(trc);

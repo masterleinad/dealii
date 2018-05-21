@@ -27,8 +27,8 @@ template <class PRE>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   deallog << numproc << std::endl;
 
@@ -37,12 +37,12 @@ test()
 
   IndexSet local_active(numproc * 2);
   local_active.add_range(myid * 2, myid * 2 + 2);
-  IndexSet local_relevant = local_active;
+  IndexSet local_relevant= local_active;
   local_relevant.add_range(0, 1);
 
   DynamicSparsityPattern csp(local_relevant);
 
-  for(unsigned int i = 0; i < 2 * numproc; ++i)
+  for(unsigned int i= 0; i < 2 * numproc; ++i)
     if(local_relevant.is_element(i))
       csp.add(i, i);
 
@@ -64,7 +64,7 @@ test()
     PETScWrappers::MPI::Vector src, dst;
     src.reinit(local_active, MPI_COMM_WORLD);
     dst.reinit(local_active, MPI_COMM_WORLD);
-    src(myid * 2) = 1.0;
+    src(myid * 2)= 1.0;
     src.compress(VectorOperation::insert);
 
     PRE pre;

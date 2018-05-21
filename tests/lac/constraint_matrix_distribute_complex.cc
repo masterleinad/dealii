@@ -30,7 +30,7 @@ main()
 {
   initlog();
 
-  const int dim = 2;
+  const int dim= 2;
 
   Triangulation<dim> triangulation;
   FE_Q<dim>          fe(2);

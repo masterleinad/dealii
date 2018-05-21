@@ -37,8 +37,8 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
@@ -47,11 +47,10 @@ test()
 
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
-  for(unsigned int step = 0; step < 8; ++step)
+  for(unsigned int step= 0; step < 8; ++step)
     {
-      typename Triangulation<dim>::active_cell_iterator cell
-        = tr.begin_active(),
-        endc = tr.end();
+      typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active(),
+                                                        endc= tr.end();
 
       for(; cell != endc; ++cell)
         if(Testing::rand() % 42 == 1)
@@ -86,7 +85,7 @@ test()
 
   if(myid == 0)
     {
-      for(unsigned int i = 0; i < numproc; ++i)
+      for(unsigned int i= 0; i < numproc; ++i)
         {
           cat_file((std::string("dat.") + Utilities::int_to_string(i)).c_str());
         }
@@ -98,7 +97,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

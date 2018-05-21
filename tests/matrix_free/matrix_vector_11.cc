@@ -44,9 +44,9 @@ test()
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
-  cell                                                   = tria.begin_active();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
+  cell                                                  = tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->is_locally_owned())
       if(cell->center().norm() < 0.2)
@@ -61,11 +61,11 @@ test()
   if(tria.last()->is_locally_owned())
     tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
-  for(unsigned int i = 0; i < 11 - 3 * dim; ++i)
+  cell= tria.begin_active();
+  for(unsigned int i= 0; i < 11 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      unsigned int counter = 0;
+      cell                = tria.begin_active();
+      unsigned int counter= 0;
       for(; cell != endc; ++cell, ++counter)
         if(cell->is_locally_owned())
           if(counter % (7 - i) == 0)
@@ -77,7 +77,7 @@ test()
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
-  IndexSet owned_set = dof.locally_owned_dofs();
+  IndexSet owned_set= dof.locally_owned_dofs();
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dof, relevant_set);
 
@@ -96,8 +96,8 @@ test()
   {
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
-    data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.tasks_block_size      = 7;
+    data.tasks_parallel_scheme= MatrixFree<dim, number>::AdditionalData::none;
+    data.tasks_block_size     = 7;
     mf_data.reinit(dof, constraints, quad, data);
   }
 
@@ -111,17 +111,17 @@ test()
   out.reinit(in);
   ref.reinit(in);
 
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for(unsigned int i= 0; i < in.local_size(); ++i)
     {
-      const unsigned int glob_index = owned_set.nth_index_in_set(i);
+      const unsigned int glob_index= owned_set.nth_index_in_set(i);
       if(constraints.is_constrained(glob_index))
         continue;
-      in.local_element(i) = random_value<double>();
+      in.local_element(i)= random_value<double>();
     }
 
   mf.vmult(ref, in);
 
-  for(unsigned int parallel_option = 0; parallel_option < 3; ++parallel_option)
+  for(unsigned int parallel_option= 0; parallel_option < 3; ++parallel_option)
     {
       const QGauss<1>                                  quad(fe_degree + 1);
       typename MatrixFree<dim, number>::AdditionalData data;
@@ -144,7 +144,7 @@ test()
           deallog << "Parallel option: color" << std::endl;
         }
 
-      data.tasks_block_size = 3;
+      data.tasks_block_size= 3;
       mf_data.reinit(dof, constraints, quad, data);
       MatrixFreeTest<dim,
                      fe_degree,
@@ -155,11 +155,11 @@ test()
 
       // run 10 times to make a possible error more
       // likely to show up
-      for(unsigned int run = 0; run < 10; ++run)
+      for(unsigned int run= 0; run < 10; ++run)
         {
           mf.vmult(out, in);
-          out -= ref;
-          const double diff_norm = out.linfty_norm();
+          out-= ref;
+          const double diff_norm= out.linfty_norm();
           deallog << " " << diff_norm;
         }
       deallog << std::endl;
@@ -173,7 +173,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

@@ -33,7 +33,7 @@ test1()
       Triangulation<dim, dim + 1> tria;
       GridGenerator::hyper_cube(tria);
 
-      for(unsigned int i = 0; i < 2; ++i)
+      for(unsigned int i= 0; i < 2; ++i)
         {
           tria.refine_global(2);
           deallog << dim << "d, "

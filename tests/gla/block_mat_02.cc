@@ -43,8 +43,8 @@ template <class LA, int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -62,7 +62,7 @@ test()
 
   DoFHandler<dim>           stokes_dof_handler(triangulation);
   std::vector<unsigned int> stokes_sub_blocks(1 + 1, 0);
-  stokes_sub_blocks[1] = 1;
+  stokes_sub_blocks[1]= 1;
   stokes_dof_handler.distribute_dofs(stokes_fe);
   DoFRenumbering::component_wise(stokes_dof_handler, stokes_sub_blocks);
 
@@ -70,12 +70,12 @@ test()
   DoFTools::count_dofs_per_block(
     stokes_dof_handler, stokes_dofs_per_block, stokes_sub_blocks);
 
-  const unsigned int n_u = stokes_dofs_per_block[0],
-                     n_p = stokes_dofs_per_block[1];
+  const unsigned int n_u= stokes_dofs_per_block[0],
+                     n_p= stokes_dofs_per_block[1];
 
   std::vector<IndexSet> stokes_partitioning, stokes_relevant_partitioning;
 
-  IndexSet stokes_index_set = stokes_dof_handler.locally_owned_dofs();
+  IndexSet stokes_index_set= stokes_dof_handler.locally_owned_dofs();
   stokes_partitioning.push_back(stokes_index_set.get_view(0, n_u));
   stokes_partitioning.push_back(stokes_index_set.get_view(n_u, n_u + n_p));
 
@@ -98,9 +98,9 @@ test()
   BlockDynamicSparsityPattern sp(stokes_relevant_partitioning);
 
   Table<2, DoFTools::Coupling> coupling(1 + 1, 1 + 1);
-  coupling[0][0] = DoFTools::always;
-  coupling[1][1] = DoFTools::always;
-  coupling[0][1] = DoFTools::always;
+  coupling[0][0]= DoFTools::always;
+  coupling[1][1]= DoFTools::always;
+  coupling[0][1]= DoFTools::always;
 
   DoFTools::make_sparsity_pattern(
     stokes_dof_handler,
@@ -134,8 +134,8 @@ test_LA_Trilinos()
 {
   typedef LA_Trilinos LA;
 
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -153,7 +153,7 @@ test_LA_Trilinos()
 
   DoFHandler<dim>           stokes_dof_handler(triangulation);
   std::vector<unsigned int> stokes_sub_blocks(1 + 1, 0);
-  stokes_sub_blocks[1] = 1;
+  stokes_sub_blocks[1]= 1;
   stokes_dof_handler.distribute_dofs(stokes_fe);
   DoFRenumbering::component_wise(stokes_dof_handler, stokes_sub_blocks);
 
@@ -161,12 +161,12 @@ test_LA_Trilinos()
   DoFTools::count_dofs_per_block(
     stokes_dof_handler, stokes_dofs_per_block, stokes_sub_blocks);
 
-  const unsigned int n_u = stokes_dofs_per_block[0],
-                     n_p = stokes_dofs_per_block[1];
+  const unsigned int n_u= stokes_dofs_per_block[0],
+                     n_p= stokes_dofs_per_block[1];
 
   std::vector<IndexSet> stokes_partitioning, stokes_relevant_partitioning;
 
-  IndexSet stokes_index_set = stokes_dof_handler.locally_owned_dofs();
+  IndexSet stokes_index_set= stokes_dof_handler.locally_owned_dofs();
   stokes_partitioning.push_back(stokes_index_set.get_view(0, n_u));
   stokes_partitioning.push_back(stokes_index_set.get_view(n_u, n_u + n_p));
 
@@ -190,9 +190,9 @@ test_LA_Trilinos()
 
   Table<2, DoFTools::Coupling> coupling(1 + 1, 1 + 1);
 
-  coupling[0][0] = DoFTools::always;
-  coupling[1][1] = DoFTools::always;
-  coupling[0][1] = DoFTools::always;
+  coupling[0][0]= DoFTools::always;
+  coupling[1][1]= DoFTools::always;
+  coupling[0][1]= DoFTools::always;
 
   DoFTools::make_sparsity_pattern(
     stokes_dof_handler,

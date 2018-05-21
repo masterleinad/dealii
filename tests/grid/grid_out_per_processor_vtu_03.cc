@@ -40,7 +40,7 @@ test()
   GridGenerator::hyper_cube(tr);
   tr.refine_global(3);
 
-  std::string filename = "file" + Utilities::int_to_string(dim);
+  std::string filename= "file" + Utilities::int_to_string(dim);
   GridOut     grid_out;
   grid_out.write_mesh_per_processor_as_vtu(tr, filename, true);
 

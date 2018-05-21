@@ -88,7 +88,7 @@ namespace LinearAlgebra
        * left untouched (true).
        */
       void
-      reinit(const size_type n, const bool omit_zeroing_entries = false);
+      reinit(const size_type n, const bool omit_zeroing_entries= false);
 
       /**
        * Change the dimension to that of the vector V. The elements of V are not
@@ -96,7 +96,7 @@ namespace LinearAlgebra
        */
       virtual void
       reinit(const VectorSpaceVector<Number>& V,
-             const bool omit_zeroing_entries = false) override;
+             const bool omit_zeroing_entries= false) override;
 
       /**
        * Import all the element from the input vector @p V.
@@ -275,9 +275,9 @@ namespace LinearAlgebra
        */
       virtual void
       print(std::ostream&      out,
-            const unsigned int precision  = 2,
-            const bool         scientific = true,
-            const bool         across     = true) const override;
+            const unsigned int precision = 2,
+            const bool         scientific= true,
+            const bool         across    = true) const override;
 
       /**
        * Return the memory consumption of this class in bytes.

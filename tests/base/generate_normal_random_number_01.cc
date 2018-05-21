@@ -24,22 +24,22 @@
 std::pair<double, double>
 test()
 {
-  const double mu    = 13;
-  const double sigma = 3;
+  const double mu   = 13;
+  const double sigma= 3;
 
-  unsigned int N          = 1000000;
-  double       sum        = 0;
-  double       sum_square = 0;
-  for(unsigned int i = 0; i < N; ++i)
+  unsigned int N         = 1000000;
+  double       sum       = 0;
+  double       sum_square= 0;
+  for(unsigned int i= 0; i < N; ++i)
     {
-      const double x = Utilities::generate_normal_random_number(mu, sigma);
+      const double x= Utilities::generate_normal_random_number(mu, sigma);
 
-      sum += x;
-      sum_square += x * x;
+      sum+= x;
+      sum_square+= x * x;
     }
 
-  const double mean   = sum / N;
-  const double stddev = std::sqrt(sum_square / N - sum / N * sum / N);
+  const double mean  = sum / N;
+  const double stddev= std::sqrt(sum_square / N - sum / N * sum / N);
 
   return std::make_pair(mean, stddev);
 }
@@ -51,10 +51,10 @@ main()
 
   // create 4 threads, run the test function on them
   Threads::Thread<std::pair<double, double>> tg[4];
-  tg[0] = Threads::new_thread(&test);
-  tg[1] = Threads::new_thread(&test);
-  tg[2] = Threads::new_thread(&test);
-  tg[3] = Threads::new_thread(&test);
+  tg[0]= Threads::new_thread(&test);
+  tg[1]= Threads::new_thread(&test);
+  tg[2]= Threads::new_thread(&test);
+  tg[3]= Threads::new_thread(&test);
 
   tg[0].join();
   tg[1].join();

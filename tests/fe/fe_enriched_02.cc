@@ -43,10 +43,10 @@
 
 #include <iostream>
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 // argument for build_patches()
-const unsigned int patches = 10;
+const unsigned int patches= 10;
 
 using namespace dealii;
 
@@ -61,18 +61,18 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component= 0) const
   {
-    Tensor<1, dim> res = point;
+    Tensor<1, dim> res= point;
     Assert(point.norm() > 0,
            dealii::ExcMessage("gradient is not defined at zero"));
-    res *= -value(point) / point.norm();
+    res*= -value(point) / point.norm();
     return res;
   }
 };
@@ -99,17 +99,17 @@ test1()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      const unsigned int                     n_q_points    = quadrature.size();
-      const unsigned int                     dofs_per_cell = fe.dofs_per_cell;
+      const unsigned int                     n_q_points   = quadrature.size();
+      const unsigned int                     dofs_per_cell= fe.dofs_per_cell;
       const std::vector<dealii::Point<dim>>& q_points
         = fe_values.get_quadrature_points();
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           deallog << "dof=" << i << " qp=" << q_points[q_point]
                   << " f(qp)=" << function.value(q_points[q_point])
                   << " N(qp)=" << fe_values.shape_value(i, q_point)

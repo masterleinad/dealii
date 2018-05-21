@@ -95,8 +95,8 @@ public:
    * Confer the other constructor further down if you intend to use blocks of
    * different sizes.
    */
-  explicit BlockVector(const unsigned int n_blocks   = 0,
-                       const size_type    block_size = 0);
+  explicit BlockVector(const unsigned int n_blocks  = 0,
+                       const size_type    block_size= 0);
 
   /**
    * Copy Constructor. Dimension set to that of @p v, all components are
@@ -108,7 +108,7 @@ public:
    * Move constructor. Creates a new vector by stealing the internal data of
    * the given argument vector.
    */
-  BlockVector(BlockVector<Number>&& /*v*/) noexcept = default;
+  BlockVector(BlockVector<Number>&& /*v*/) noexcept= default;
 
   /**
    * Copy constructor taking a BlockVector of another data type. This will
@@ -162,7 +162,7 @@ public:
   /**
    * Destructor. Clears memory
    */
-  ~BlockVector() override = default;
+  ~BlockVector() override= default;
 
   /**
    * Call the compress() function on all the subblocks.
@@ -237,8 +237,8 @@ public:
    */
   void
   reinit(const unsigned int n_blocks,
-         const size_type    block_size           = 0,
-         const bool         omit_zeroing_entries = false);
+         const size_type    block_size          = 0,
+         const bool         omit_zeroing_entries= false);
 
   /**
    * Reinitialize the BlockVector such that it contains
@@ -258,7 +258,7 @@ public:
    */
   void
   reinit(const std::vector<size_type>& block_sizes,
-         const bool                    omit_zeroing_entries = false);
+         const bool                    omit_zeroing_entries= false);
 
   /**
    * Reinitialize the BlockVector to reflect the structure found in
@@ -271,7 +271,7 @@ public:
    */
   void
   reinit(const BlockIndices& block_indices,
-         const bool          omit_zeroing_entries = false);
+         const bool          omit_zeroing_entries= false);
 
   /**
    * Change the dimension to that of the vector <tt>V</tt>. The same applies
@@ -288,8 +288,7 @@ public:
    */
   template <typename Number2>
   void
-  reinit(const BlockVector<Number2>& V,
-         const bool                  omit_zeroing_entries = false);
+  reinit(const BlockVector<Number2>& V, const bool omit_zeroing_entries= false);
 
   /**
    * Multiply each element of this vector by the corresponding element of
@@ -318,9 +317,9 @@ public:
    */
   void
   print(std::ostream&      out,
-        const unsigned int precision  = 3,
-        const bool         scientific = true,
-        const bool         across     = true) const;
+        const unsigned int precision = 3,
+        const bool         scientific= true,
+        const bool         across    = true) const;
 
   /**
    * Write the vector en bloc to a stream. This is done in a binary mode, so
@@ -372,13 +371,13 @@ BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes,
   // copy elements soon
   (void) end;
   reinit(block_sizes, true);
-  InputIterator start = first;
-  for(size_type b = 0; b < block_sizes.size(); ++b)
+  InputIterator start= first;
+  for(size_type b= 0; b < block_sizes.size(); ++b)
     {
-      InputIterator end = start;
+      InputIterator end= start;
       std::advance(end, static_cast<signed int>(block_sizes[b]));
       std::copy(start, end, this->block(b).begin());
-      start = end;
+      start= end;
     };
   Assert(start == end, ExcIteratorRangeDoesNotMatchVectorSize());
 }
@@ -424,7 +423,7 @@ template <typename Number>
 inline void
 BlockVector<Number>::compress(::dealii::VectorOperation::values operation)
 {
-  for(size_type i = 0; i < this->n_blocks(); ++i)
+  for(size_type i= 0; i < this->n_blocks(); ++i)
     this->components[i].compress(operation);
 }
 

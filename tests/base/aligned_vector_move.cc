@@ -28,13 +28,13 @@ test()
 
   deallog << "Size: " << a.size() << std::endl;
 
-  VEC b = std::move(a);
+  VEC b= std::move(a);
 
   deallog << "Size of new VEC: " << b.size() << std::endl;
   deallog << "Size of moved VEC: " << a.size() << std::endl;
 
   deallog << "Contents of new VEC: ";
-  for(unsigned int i = 0; i < b.size(); ++i)
+  for(unsigned int i= 0; i < b.size(); ++i)
     deallog << b[i] << " ";
   deallog << std::endl;
 
@@ -43,11 +43,11 @@ test()
   deallog << "Size of moved VEC after resize: " << a.size() << std::endl;
 
   deallog << "Contents of new VEC: ";
-  for(unsigned int i = 0; i < a.size(); ++i)
+  for(unsigned int i= 0; i < a.size(); ++i)
     deallog << a[i] << " ";
   deallog << std::endl;
 
-  a = std::move(b);
+  a= std::move(b);
 
   deallog << "Size of move-assigned VEC: " << a.size() << std::endl;
   deallog << "Size of moved VEC: " << b.size() << std::endl;

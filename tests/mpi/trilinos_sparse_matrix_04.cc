@@ -29,11 +29,11 @@
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int my_id   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  const unsigned int n_rows = 3;
-  const unsigned int n_cols = 4;
+  const unsigned int n_rows= 3;
+  const unsigned int n_cols= 4;
 
   IndexSet row_partitioning(n_rows);
   IndexSet col_partitioning(n_cols);
@@ -92,7 +92,7 @@ test()
   // now access elements by iterator. ensure that we can iterate over
   // all rows but that iterators into rows not stored locally just
   // look empty
-  for(TrilinosWrappers::SparseMatrix::iterator p = A.begin(); p != A.end(); ++p)
+  for(TrilinosWrappers::SparseMatrix::iterator p= A.begin(); p != A.end(); ++p)
     if(my_id == 0)
       {
         deallog << "Looking at entry (" << p->row() << ',' << p->column()
@@ -114,8 +114,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int       myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

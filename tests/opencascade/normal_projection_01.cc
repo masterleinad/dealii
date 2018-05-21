@@ -49,7 +49,7 @@ main()
   gp_Pnt        center(.5, .5, .5);
   Standard_Real radius(Point<3>().distance(point<3>(center)));
 
-  TopoDS_Face face = BRepPrimAPI_MakeSphere(center, radius);
+  TopoDS_Face face= BRepPrimAPI_MakeSphere(center, radius);
 
   // Create a boundary projector.
   NormalProjectionBoundary<3, 3> sphere(face);

@@ -62,7 +62,7 @@ test()
       = tria.begin_active();
       cell != tria.end();
       ++cell)
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       {
         if(dim == 2)
           if(cell->vertex(v)[0] < 0.5 && cell->vertex(v)[1] < 0.5)
@@ -98,7 +98,7 @@ test()
   typename FunctionMap<dim>::type  dirichlet_boundary;
   Functions::ConstantFunction<dim> homogeneous_dirichlet_bc(0.0);
   dirichlet_boundary_ids.insert(0);
-  dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
+  dirichlet_boundary[0]= &homogeneous_dirichlet_bc;
   VectorTools::interpolate_boundary_values(
     mg_dof_handler, dirichlet_boundary, constraints);
   constraints.close();
@@ -108,7 +108,7 @@ test()
   mg_constrained_dofs.make_zero_boundary_constraints(mg_dof_handler,
                                                      dirichlet_boundary_ids);
 
-  for(unsigned int level = 0; level < tria.n_levels(); ++level)
+  for(unsigned int level= 0; level < tria.n_levels(); ++level)
     {
       DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(level),
                                  mg_dof_handler.n_dofs(level));

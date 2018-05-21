@@ -60,8 +60,8 @@ check_solve(SolverType&         solver,
             VectorType&         f,
             const PRECONDITION& P)
 {
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.solve(A, u, f, P);
@@ -86,12 +86,12 @@ main()
 
   // create CG and GMRES solvers and attach monitors to it
   SolverCG<>                  cg(control, mem);
-  boost::signals2::connection cg_c1 = cg.connect(&monitor_norm);
-  boost::signals2::connection cg_c2 = cg.connect(&monitor_mean);
+  boost::signals2::connection cg_c1= cg.connect(&monitor_norm);
+  boost::signals2::connection cg_c2= cg.connect(&monitor_mean);
 
-  for(unsigned int size = 4; size <= 12; size *= 3)
+  for(unsigned int size= 4; size <= 12; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -110,8 +110,8 @@ main()
       Vector<double> u(dim);
       Vector<double> res(dim);
 
-      f = 1.;
-      u = 1.;
+      f= 1.;
+      u= 1.;
 
       A.residual(res, u, f);
       A.SOR(res);

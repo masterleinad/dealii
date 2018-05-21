@@ -32,7 +32,7 @@ works(const FiniteElement<dim>& fe, const ComponentMask& m)
 {
   deallog << "FE: " << fe.get_name() << " mask: " << m << std::endl;
 
-  const FiniteElement<dim>& child = fe.get_sub_fe(m);
+  const FiniteElement<dim>& child= fe.get_sub_fe(m);
 
   deallog << "  worked: " << child.get_name() << std::endl;
 }
@@ -45,7 +45,7 @@ fails(const FiniteElement<dim>& fe, const ComponentMask& m)
 
   try
     {
-      const FiniteElement<dim>& child = fe.get_sub_fe(m);
+      const FiniteElement<dim>& child= fe.get_sub_fe(m);
       deallog << "  ERROR: we succeeded and got " << child.get_name()
               << " but we should have failed!" << std::endl;
     }
@@ -59,23 +59,23 @@ template <int dim>
 void
 check()
 {
-  auto mask_none = [](const unsigned int n_components) -> ComponentMask {
+  auto mask_none= [](const unsigned int n_components) -> ComponentMask {
     return ComponentMask(n_components, false);
   };
-  auto mask_all = [](const unsigned int n_components) -> ComponentMask {
+  auto mask_all= [](const unsigned int n_components) -> ComponentMask {
     return ComponentMask(n_components, true);
   };
-  auto mask_single = [](const unsigned int n_components,
-                        const unsigned int single) -> ComponentMask {
+  auto mask_single= [](const unsigned int n_components,
+                       const unsigned int single) -> ComponentMask {
     ComponentMask c(n_components, false);
     c.set(single, true);
     return c;
   };
-  auto mask = [](const unsigned int n_components,
-                 const unsigned int first,
-                 const unsigned int last) -> ComponentMask {
+  auto mask= [](const unsigned int n_components,
+                const unsigned int first,
+                const unsigned int last) -> ComponentMask {
     ComponentMask c(n_components, false);
-    for(unsigned int i = first; i <= last; ++i)
+    for(unsigned int i= first; i <= last; ++i)
       c.set(i, true);
     return c;
   };
@@ -126,7 +126,7 @@ check()
   {
     FESystem<dim> fe(fe_nonprim, 1, fe_dg, 2);
     // non-contiguous is a fail!
-    auto m = mask(dim + 2, 0, dim);
+    auto m= mask(dim + 2, 0, dim);
     m.set(1, false);
     m.set(dim + 1, true);
     fails(fe, m);

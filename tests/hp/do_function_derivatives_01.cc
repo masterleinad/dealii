@@ -59,9 +59,9 @@ main()
 
   // Assign FE to cells
   hp::DoFHandler<2>::active_cell_iterator cell;
-  hp::DoFHandler<2>::active_cell_iterator endc = dof_handler.end();
+  hp::DoFHandler<2>::active_cell_iterator endc= dof_handler.end();
 
-  cell = dof_handler.begin_active();
+  cell= dof_handler.begin_active();
   cell->set_active_fe_index(1);
   cell++;
   cell->set_active_fe_index(1);
@@ -74,7 +74,7 @@ main()
 
   // Init solution
   Vector<double> solution(dof_handler.n_dofs());
-  solution = 1.0;
+  solution= 1.0;
 
   SolutionTransfer<2, Vector<double>, hp::DoFHandler<2>> solultion_trans(
     dof_handler);
@@ -90,7 +90,7 @@ main()
   q.push_back(QMidpoint<2>());
   q.push_back(QMidpoint<2>());
   hp::FEValues<2> x_fe_values(fe_collection, q, update_gradients);
-  for(hp::DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active();
+  for(hp::DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active();
       cell != dof_handler.end();
       ++cell)
     {

@@ -27,7 +27,7 @@ template <int dim>
 void
 test1(const bool keep_boundary)
 {
-  const unsigned int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int my_id= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria, -1., 1.);
   tria.refine_global(2);
@@ -37,11 +37,11 @@ test1(const bool keep_boundary)
       ++cell)
     if(cell->is_locally_owned())
       {
-        const Point<dim>& p            = cell->center();
-        bool              all_positive = true;
-        for(unsigned int d = 0; d < dim; ++d)
+        const Point<dim>& p           = cell->center();
+        bool              all_positive= true;
+        for(unsigned int d= 0; d < dim; ++d)
           if(p(d) <= 0.)
-            all_positive = false;
+            all_positive= false;
         if(all_positive)
           cell->set_refine_flag();
       }
@@ -51,10 +51,10 @@ test1(const bool keep_boundary)
   deallog << "dim=" << dim << ", keep_boundary=" << keep_boundary << std::endl;
   std::string filename;
   if(keep_boundary)
-    filename = "keep_true-";
+    filename= "keep_true-";
   else
-    filename = "keep_false-";
-  filename += Utilities::int_to_string(dim);
+    filename= "keep_false-";
+  filename+= Utilities::int_to_string(dim);
 
   std::ofstream logfile(
     (filename + "-" + Utilities::int_to_string(my_id, 2)).c_str());
@@ -63,7 +63,7 @@ test1(const bool keep_boundary)
   MPI_Barrier(MPI_COMM_WORLD);
 
   if(my_id == 0)
-    for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+    for(unsigned int i= 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
         ++i)
       {
         deallog << "Process " << i << ":" << std::endl;

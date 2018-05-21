@@ -27,7 +27,7 @@ template <int dim>
 void
 print_quadrature(const NonMatching::ImmersedSurfaceQuadrature<dim>& quadrature)
 {
-  for(unsigned int i = 0; i < quadrature.size(); ++i)
+  for(unsigned int i= 0; i < quadrature.size(); ++i)
     {
       deallog << quadrature.point(i) << ", " << quadrature.weight(i) << ", "
               << quadrature.normal_vector(i) << std::endl;
@@ -40,8 +40,8 @@ template <int dim>
 void
 check_get_normals(const NonMatching::ImmersedSurfaceQuadrature<dim>& quadrature)
 {
-  const std::vector<Point<dim>>&     points  = quadrature.get_points();
-  const std::vector<Tensor<1, dim>>& normals = quadrature.get_normal_vectors();
+  const std::vector<Point<dim>>&     points = quadrature.get_points();
+  const std::vector<Tensor<1, dim>>& normals= quadrature.get_normal_vectors();
   AssertThrow(points.size() == normals.size(), ExcInternalError())
 }
 
@@ -66,8 +66,8 @@ test_push_back()
 {
   deallog << "Using push_back" << std::endl;
   const Point<dim>     point;
-  const double         weight = 1;
-  const Tensor<1, dim> normal = Point<dim>::unit_vector(dim - 1);
+  const double         weight= 1;
+  const Tensor<1, dim> normal= Point<dim>::unit_vector(dim - 1);
 
   NonMatching::ImmersedSurfaceQuadrature<dim> quadrature;
   quadrature.push_back(point, weight, normal);

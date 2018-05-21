@@ -84,7 +84,7 @@ namespace Functions
      * to initialize the AutoDerivativeFunction class from which this class is
      * derived.
      */
-    ParsedFunction(const unsigned int n_components = 1, const double h = 1e-8);
+    ParsedFunction(const unsigned int n_components= 1, const double h= 1e-8);
 
     /**
      * Declare parameters needed by this class. The additional parameter @p
@@ -106,7 +106,7 @@ namespace Functions
      */
     static void
     declare_parameters(ParameterHandler&  prm,
-                       const unsigned int n_components = 1);
+                       const unsigned int n_components= 1);
 
     /**
      * Parse parameters needed by this class.  If the number of components
@@ -194,7 +194,7 @@ namespace Functions
      * first component.
      */
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     /**
      * Set the time to a specific value for time-dependent functions.

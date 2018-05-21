@@ -29,7 +29,7 @@ test()
     typename Particles::PropertyPool::Handle handle
       = pool.allocate_properties_array();
 
-    pool.get_properties(handle)[0] = 2.5;
+    pool.get_properties(handle)[0]= 2.5;
 
     deallog << "Pool properties: " << pool.get_properties(handle)[0]
             << std::endl;

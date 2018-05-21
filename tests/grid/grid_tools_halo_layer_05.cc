@@ -25,10 +25,10 @@ template <int dim>
 void
 write_active_fe_index_to_file(const hp::DoFHandler<dim>& dof_handler)
 {
-  int                                                count = 0;
+  int                                                count= 0;
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell, ++count)
     {
       deallog << count << " " << cell->active_fe_index() << std::endl;
@@ -42,13 +42,13 @@ write_vtk(const hp::DoFHandler<dim>& dof_handler, const std::string filename)
 {
   Vector<double> active_fe_index(
     dof_handler.get_triangulation().n_active_cells());
-  int                                                count = 0;
+  int                                                count= 0;
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell, ++count)
     {
-      active_fe_index[count] = cell->active_fe_index();
+      active_fe_index[count]= cell->active_fe_index();
     }
 
   const std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -82,14 +82,14 @@ test()
   typedef typename hp::DoFHandler<dim>::active_cell_iterator cell_iterator;
 
   // Mark a small block at the corner of the hypercube
-  cell_iterator cell = dof_handler.begin_active(), endc = dof_handler.end();
+  cell_iterator cell= dof_handler.begin_active(), endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      bool mark = true;
-      for(unsigned int d = 0; d < dim; ++d)
+      bool mark= true;
+      for(unsigned int d= 0; d < dim; ++d)
         if(cell->center()[d] > 0.5)
           {
-            mark = false;
+            mark= false;
             break;
           }
 

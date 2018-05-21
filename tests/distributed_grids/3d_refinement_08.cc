@@ -55,17 +55,17 @@ test(std::ostream& /*out*/)
 
       // refine one 1/50 of all cells each time (but at least one)
       deallog << "Refining cells ... " << std::endl;
-      for(unsigned int i = 0; i < tr.n_active_cells() / 50 + 1; ++i)
+      for(unsigned int i= 0; i < tr.n_active_cells() / 50 + 1; ++i)
         {
-          const unsigned int x = Testing::rand() % flags.size();
-          flags[x]             = true;
+          const unsigned int x= Testing::rand() % flags.size();
+          flags[x]            = true;
         }
 
       InterGridMap<Triangulation<dim>> intergrid_map;
       intergrid_map.make_mapping(tr, tr2);
 
       // refine tr and tr2
-      unsigned int index = 0;
+      unsigned int index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active();
           cell != tr.end();

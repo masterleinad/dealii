@@ -123,11 +123,11 @@ EigenvalueProblem<dim>::make_grid_and_dofs()
   eigenvalues.resize(n_eigenvalues);
 
   arpack_vectors.resize(n_eigenvalues + 1);
-  for(unsigned int i = 0; i < arpack_vectors.size(); ++i)
+  for(unsigned int i= 0; i < arpack_vectors.size(); ++i)
     arpack_vectors[i].reinit(dof_handler.n_dofs());
 
   eigenvectors.resize(2 * n_eigenvalues);
-  for(unsigned int i = 0; i < eigenvectors.size(); ++i)
+  for(unsigned int i= 0; i < eigenvectors.size(); ++i)
     eigenvectors[i].reinit(dof_handler.n_dofs());
 }
 
@@ -142,8 +142,8 @@ EigenvalueProblem<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_stiffness_matrix(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
@@ -152,21 +152,21 @@ EigenvalueProblem<dim>::assemble_system()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      cell_stiffness_matrix = 0;
-      cell_mass_matrix      = 0;
+      cell_stiffness_matrix= 0;
+      cell_mass_matrix     = 0;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
-          const Point<dim> cur_point = fe_values.quadrature_point(q_point);
+          const Point<dim> cur_point= fe_values.quadrature_point(q_point);
           Tensor<1, dim>   advection;
-          advection[0] = 10.;
-          advection[1] = 10. * cur_point[0];
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          advection[0]= 10.;
+          advection[1]= 10. * cur_point[0];
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(i, j)
                   += (fe_values.shape_grad(i, q_point)
@@ -175,9 +175,9 @@ EigenvalueProblem<dim>::assemble_system()
                           * fe_values.shape_value(j, q_point))
                      * fe_values.JxW(q_point);
 
-                cell_mass_matrix(i, j) += (fe_values.shape_value(i, q_point)
-                                           * fe_values.shape_value(j, q_point))
-                                          * fe_values.JxW(q_point);
+                cell_mass_matrix(i, j)+= (fe_values.shape_value(i, q_point)
+                                          * fe_values.shape_value(j, q_point))
+                                         * fe_values.JxW(q_point);
               }
         }
 
@@ -200,11 +200,11 @@ EigenvalueProblem<dim>::solve()
   SolverControl       solver_control(dof_handler.n_dofs(), 1e-10);
   SparseDirectUMFPACK inverse;
   inverse.initialize(stiffness_matrix);
-  const unsigned int           num_arnoldi_vectors = 2 * eigenvalues.size() + 2;
+  const unsigned int           num_arnoldi_vectors= 2 * eigenvalues.size() + 2;
   ArpackSolver::AdditionalData additional_data(num_arnoldi_vectors,
                                                ArpackSolver::largest_real_part);
   ArpackSolver                 eigensolver(solver_control, additional_data);
-  arpack_vectors[0] = 1.;
+  arpack_vectors[0]= 1.;
   eigensolver.set_initial_vector(arpack_vectors[0]);
   eigensolver.solve(stiffness_matrix,
                     mass_matrix,
@@ -214,17 +214,17 @@ EigenvalueProblem<dim>::solve()
                     eigenvalues.size());
 
   // extract real and complex components of eigenvectors
-  for(unsigned int i = 0; i < n_eigenvalues; ++i)
+  for(unsigned int i= 0; i < n_eigenvalues; ++i)
     {
-      eigenvectors[i] = arpack_vectors[i];
+      eigenvectors[i]= arpack_vectors[i];
       if(eigenvalues[i].imag() != 0.)
         {
-          eigenvectors[i + eigenvalues.size()] = arpack_vectors[i + 1];
+          eigenvectors[i + eigenvalues.size()]= arpack_vectors[i + 1];
           if(i + 1 < eigenvalues.size())
             {
-              eigenvectors[i + 1]                      = arpack_vectors[i];
-              eigenvectors[i + 1 + eigenvalues.size()] = arpack_vectors[i + 1];
-              eigenvectors[i + 1 + eigenvalues.size()] *= -1;
+              eigenvectors[i + 1]                     = arpack_vectors[i];
+              eigenvectors[i + 1 + eigenvalues.size()]= arpack_vectors[i + 1];
+              eigenvectors[i + 1 + eigenvalues.size()]*= -1;
               ++i;
             }
         }
@@ -236,7 +236,7 @@ EigenvalueProblem<dim>::solve()
   {
     Vector<double> Ax(eigenvectors[0]), Bx(eigenvectors[0]);
     Vector<double> Ay(eigenvectors[0]), By(eigenvectors[0]);
-    for(unsigned int i = 0; i < n_eigenvalues; ++i)
+    for(unsigned int i= 0; i < n_eigenvalues; ++i)
       {
         stiffness_matrix.vmult(Ax, eigenvectors[i]);
         stiffness_matrix.vmult(Ay, eigenvectors[i + n_eigenvalues]);
@@ -250,16 +250,16 @@ EigenvalueProblem<dim>::solve()
         Vector<double> tmpx(Ax), tmpy(Ay);
         tmpx.scale(Ax);
         tmpy.scale(Ay);
-        tmpx += tmpy;
+        tmpx+= tmpy;
         if(std::sqrt(tmpx.l1_norm()) > 1e-8)
           deallog << "Returned vector " << i << " is not an eigenvector!"
                   << " L2 norm of the residual is " << std::sqrt(tmpx.l1_norm())
                   << std::endl;
 
-        const double tmp = std::abs(eigenvectors[i] * Bx
-                                    + eigenvectors[i + n_eigenvalues] * By - 1.)
-                           + std::abs(eigenvectors[i + n_eigenvalues] * Bx
-                                      - eigenvectors[i] * By);
+        const double tmp= std::abs(eigenvectors[i] * Bx
+                                   + eigenvectors[i + n_eigenvalues] * By - 1.)
+                          + std::abs(eigenvectors[i + n_eigenvalues] * Bx
+                                     - eigenvectors[i] * By);
         if(tmp > 1e-8)
           deallog << "Eigenvector " << i << " is not normal! failing norm is"
                   << tmp << std::endl;
@@ -288,7 +288,7 @@ EigenvalueProblem<dim>::run()
 
   std::sort(eigenvalues.begin(), eigenvalues.end(), my_compare);
 
-  for(unsigned int i = 0; i < n_eigenvalues; ++i)
+  for(unsigned int i= 0; i < n_eigenvalues; ++i)
     deallog << "      Eigenvalue " << i << " : " << eigenvalues[i] << std::endl;
 }
 

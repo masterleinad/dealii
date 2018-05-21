@@ -45,8 +45,8 @@ main(int argc, char** argv)
 
   // Check that the B stole the data of A
   TrilinosWrappers::SparseMatrix B(std::move(A));
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for(unsigned int i= 0; i < 3; ++i)
+    for(unsigned int j= 0; j < 3; ++j)
       {
         if((i == 2) && (j == 1))
           {
@@ -65,8 +65,8 @@ main(int argc, char** argv)
   A.reinit(sp_2);
   A.add(1, 2, 2.0);
   A.compress(VectorOperation::add);
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for(unsigned int i= 0; i < 3; ++i)
+    for(unsigned int j= 0; j < 3; ++j)
       {
         if((i == 1) && (j == 2))
           {

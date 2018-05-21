@@ -106,7 +106,7 @@ diffusionMechanics<dim>::diffusionMechanics(const unsigned int mech_degree,
     face_quadrature_formula(2)
 {
   //Nodal Solution names
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
       nodal_solution_names.push_back("u");
     }
@@ -115,7 +115,7 @@ diffusionMechanics<dim>::diffusionMechanics(const unsigned int mech_degree,
   //FE object
   fe_collection.push_back(omega1_fe);
   fe_collection.push_back(omega2_fe);
-  alen = 10.0, blen = 10.0, clen = 4.0;
+  alen= 10.0, blen= 10.0, clen= 4.0;
 }
 template <int dim>
 diffusionMechanics<dim>::~diffusionMechanics()
@@ -135,10 +135,10 @@ public:
   {
     Assert(values.size() == totalDOF,
            ExcDimensionMismatch(values.size(), totalDOF));
-    values(totalDOF - 4) = 0; // u=0
-    values(totalDOF - 3) = 0;
-    values(totalDOF - 2) = 0;
-    values(totalDOF - 1) = 1.0;
+    values(totalDOF - 4)= 0; // u=0
+    values(totalDOF - 3)= 0;
+    values(totalDOF - 2)= 0;
+    values(totalDOF - 1)= 1.0;
   };
 };
 // Boolean functions for specifying sub-domains
@@ -216,9 +216,9 @@ diffusionMechanics<dim>::run()
 {
   //subdivided_hyper
   std::vector<unsigned int> repetitions(3);
-  repetitions[0] = 2;
-  repetitions[1] = 2;
-  repetitions[2] = 4;
+  repetitions[0]= 2;
+  repetitions[1]= 2;
+  repetitions[2]= 4;
   GridGenerator::subdivided_hyper_rectangle(triangulation,
                                             repetitions,
                                             Point<3>(0.0, 0.0, 0.0),
@@ -239,8 +239,8 @@ diffusionMechanics<dim>::run()
   //Initial conditions
   VectorTools::interpolate(dof_handler, InitialConditions<dim>(), Un);
   //  VectorTools::interpolate(dof_handler, Functions::ZeroFunction<dim>(fe_collection.n_components()), Un);
-  U  = Un;
-  U0 = Un;
+  U = Un;
+  U0= Un;
 
   deallog << Un.l2_norm() << std::endl;
 }

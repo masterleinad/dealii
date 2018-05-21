@@ -26,17 +26,17 @@ main()
   initlog();
 
   Tensor<9, 3, int> t;
-  t[0][1][2][0][1][2][0][1][2] = 42;
+  t[0][1][2][0][1][2][0][1][2]= 42;
 
   TableIndices<9> indices(0, 1, 2, 0, 1, 2, 0, 1, 2);
 
   deallog << TensorAccessors::extract<9>(t, indices) << std::endl;
 
-  TensorAccessors::extract<9>(t, indices) = 84;
+  TensorAccessors::extract<9>(t, indices)= 84;
 
   deallog << t[0][1][2][0][1][2][0][1][2] << std::endl;
 
-  const Tensor<9, 3, int>& t_ref = t;
+  const Tensor<9, 3, int>& t_ref= t;
 
   deallog << TensorAccessors::extract<9>(t_ref, indices) << std::endl;
 
@@ -66,20 +66,20 @@ main()
   {
     double foo[3][3][3][3][3];
 
-    foo[2][1][0][2][1] = 42.;
+    foo[2][1][0][2][1]= 42.;
 
     unsigned int indices[5];
-    indices[0] = 2;
-    indices[1] = 1;
-    indices[2] = 0;
-    indices[3] = 2;
-    indices[4] = 1;
+    indices[0]= 2;
+    indices[1]= 1;
+    indices[2]= 0;
+    indices[3]= 2;
+    indices[4]= 1;
 
     deallog << TensorAccessors::extract<5>(foo, indices) << std::endl;
 
     // read-only:
 
-    const double(&foo2)[3][3][3][3][3] = foo;
+    const double(&foo2)[3][3][3][3][3]= foo;
     deallog << TensorAccessors::extract<5>(foo2, indices) << std::endl;
 
     // via std::array

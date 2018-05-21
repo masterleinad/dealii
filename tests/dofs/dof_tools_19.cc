@@ -80,7 +80,7 @@ check_this(const DoFHandler<dim>& dof_handler)
                                     cellwise_errors,
                                     quadrature,
                                     VectorTools::L2_norm);
-  const double p_l2_error = cellwise_errors.l2_norm();
+  const double p_l2_error= cellwise_errors.l2_norm();
 
   Assert(p_l2_error < 1e-11, ExcInternalError());
 

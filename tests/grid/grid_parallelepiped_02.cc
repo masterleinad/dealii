@@ -46,22 +46,22 @@ check_nd_parallelepiped_by_comparison(bool log)
     {
       case 1:
         {
-          corners[0] = Point<dim>(0.50);
+          corners[0]= Point<dim>(0.50);
           break;
         }
 
       case 2:
         {
-          corners[0] = Point<dim>(0.50, 0.25);
-          corners[1] = Point<dim>(0.25, 0.50);
+          corners[0]= Point<dim>(0.50, 0.25);
+          corners[1]= Point<dim>(0.25, 0.50);
           break;
         }
 
       case 3:
         {
-          corners[0] = Point<dim>(0.25, 0.50, 0.50);
-          corners[1] = Point<dim>(0.50, 0.25, 0.50);
-          corners[2] = Point<dim>(0.50, 0.50, 0.25);
+          corners[0]= Point<dim>(0.25, 0.50, 0.50);
+          corners[1]= Point<dim>(0.50, 0.25, 0.50);
+          corners[2]= Point<dim>(0.50, 0.50, 0.25);
           break;
         }
 

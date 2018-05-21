@@ -41,18 +41,18 @@ test()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(2);
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       // refine one-fifth of cells randomly
       std::vector<bool> flags(triangulation.n_active_cells(), false);
-      for(unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
-        flags[Testing::rand() % flags.size()] = true;
+      for(unsigned int k= 0; k < flags.size() / 5 + 1; ++k)
+        flags[Testing::rand() % flags.size()]= true;
       // make sure there's at least one that
       // will be refined
-      flags[0] = true;
+      flags[0]= true;
 
       // refine triangulation
-      unsigned int index = 0;
+      unsigned int index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
           cell != triangulation.end();
@@ -65,7 +65,7 @@ test()
       // (this should ensure that at least
       // some of them will actually be
       // coarsened)
-      index = 0;
+      index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
           cell != triangulation.end();
@@ -82,7 +82,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(myid == 0)
     {
       initlog();

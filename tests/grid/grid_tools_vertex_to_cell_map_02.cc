@@ -32,11 +32,11 @@ test()
   Point<3>                  a(0., 0., 0.);
   Point<3>                  b(1., 1., 1.);
   std::vector<unsigned int> repetitions(3);
-  repetitions[0] = 2;
-  repetitions[1] = 2;
-  repetitions[2] = 1;
+  repetitions[0]= 2;
+  repetitions[1]= 2;
+  repetitions[2]= 1;
   GridGenerator::subdivided_hyper_rectangle(tria, repetitions, a, b);
-  Triangulation<3>::active_cell_iterator cell = tria.begin_active();
+  Triangulation<3>::active_cell_iterator cell= tria.begin_active();
   cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
@@ -47,12 +47,12 @@ test()
               ExcMessage("Wrong number of vertices"));
 
   std::vector<unsigned int> n_cells;
-  for(unsigned int i = 0; i < vertex_to_cell.size(); ++i)
+  for(unsigned int i= 0; i < vertex_to_cell.size(); ++i)
     n_cells.push_back(vertex_to_cell[i].size());
 
   std::vector<unsigned int> histogram(9, 0);
-  for(unsigned int i = 0; i < n_cells.size(); ++i)
-    histogram[n_cells[i]] += 1;
+  for(unsigned int i= 0; i < n_cells.size(); ++i)
+    histogram[n_cells[i]]+= 1;
 
   AssertThrow(histogram[0] == 0, ExcMessage("Wrong cell distribution"));
   AssertThrow(histogram[1] == 8, ExcMessage("Wrong cell distribution"));

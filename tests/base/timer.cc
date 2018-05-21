@@ -18,15 +18,15 @@
 
 // burn computer time
 
-double s = 0.;
+double s= 0.;
 void
 burn(unsigned int n)
 {
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     {
-      for(unsigned int j = 1; j < 100000; ++j)
+      for(unsigned int j= 1; j < 100000; ++j)
         {
-          s += 1. / j * i;
+          s+= 1. / j * i;
         }
     }
 }
@@ -39,7 +39,7 @@ main()
   Timer t;
   burn(50);
 
-  double s1 = t();
+  double s1= t();
 
   if(s1 > 0.)
     deallog << "OK" << std::endl;
@@ -48,7 +48,7 @@ main()
 
   burn(50);
   t.stop();
-  double s2 = t();
+  double s2= t();
 
   if(s2 > s1)
     deallog << "OK" << std::endl;
@@ -56,7 +56,7 @@ main()
     deallog << "ERROR - s2 should be greater than s1" << std::endl;
 
   burn(50);
-  double s3 = t();
+  double s3= t();
 
   if(s3 == s2)
     deallog << "OK" << std::endl;
@@ -65,7 +65,7 @@ main()
 
   t.start();
   burn(50);
-  double s4 = t();
+  double s4= t();
 
   if(s4 > s3)
     deallog << "OK" << std::endl;
@@ -75,7 +75,7 @@ main()
   t.stop();
   t.reset();
   burn(50);
-  double s5 = t();
+  double s5= t();
 
   if(s5 == 0.)
     deallog << "OK" << std::endl;
@@ -86,7 +86,7 @@ main()
   burn(50);
   t.reset();
   burn(50);
-  double s6 = t();
+  double s6= t();
 
   if(s6 == 0.)
     deallog << "OK" << std::endl;

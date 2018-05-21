@@ -74,7 +74,7 @@ print_mesh_info(const Triangulation<dim>& triangulation,
     std::map<types::boundary_id, unsigned int> boundary_count;
     for(auto cell : triangulation.active_cell_iterators())
       {
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
             ++face)
           {
             if(cell->face(face)->at_boundary())
@@ -133,8 +133,8 @@ grid_2()
 
   Triangulation<2>          tria2;
   std::vector<unsigned int> repetitions(2);
-  repetitions[0] = 3;
-  repetitions[1] = 2;
+  repetitions[0]= 3;
+  repetitions[1]= 2;
   GridGenerator::subdivided_hyper_rectangle(
     tria2, repetitions, Point<2>(1.0, -1.0), Point<2>(4.0, 1.0));
 
@@ -173,11 +173,11 @@ grid_3()
 
   for(const auto& cell : triangulation.active_cell_iterators())
     {
-      for(unsigned int i = 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
+      for(unsigned int i= 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
         {
-          Point<2>& v = cell->vertex(i);
+          Point<2>& v= cell->vertex(i);
           if(std::abs(v(1) - 1.0) < 1e-5)
-            v(1) += 0.5;
+            v(1)+= 0.5;
         }
     }
 
@@ -239,8 +239,8 @@ grid_5()
 {
   Triangulation<2>          triangulation;
   std::vector<unsigned int> repetitions(2);
-  repetitions[0] = 14;
-  repetitions[1] = 2;
+  repetitions[0]= 14;
+  repetitions[1]= 2;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, repetitions, Point<2>(0.0, 0.0), Point<2>(10.0, 1.0));
 
@@ -282,7 +282,7 @@ grid_6()
 {
   Triangulation<2>          triangulation;
   std::vector<unsigned int> repetitions(2);
-  repetitions[0] = repetitions[1] = 40;
+  repetitions[0]= repetitions[1]= 40;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, repetitions, Point<2>(0.0, 0.0), Point<2>(1.0, 1.0));
 
@@ -303,7 +303,7 @@ grid_7()
 {
   Triangulation<2>          triangulation;
   std::vector<unsigned int> repetitions(2);
-  repetitions[0] = repetitions[1] = 16;
+  repetitions[0]= repetitions[1]= 16;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, repetitions, Point<2>(0.0, 0.0), Point<2>(1.0, 1.0));
 

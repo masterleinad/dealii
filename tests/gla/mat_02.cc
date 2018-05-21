@@ -29,8 +29,8 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -38,14 +38,14 @@ test()
   IndexSet local_active(10);
   if(myid == 0)
     local_active.add_range(0, 10);
-  IndexSet local_relevant = local_active;
+  IndexSet local_relevant= local_active;
   if(myid == 1)
     local_relevant.add_range(5, 10);
   local_relevant.add_range(0, 1);
 
   DynamicSparsityPattern csp(local_relevant);
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for(unsigned int i= 0; i < 10; ++i)
     if(local_relevant.is_element(i))
       csp.add(i, i);
 

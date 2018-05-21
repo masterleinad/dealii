@@ -24,19 +24,19 @@ void
 test()
 {
   {
-    const unsigned int      n_properties = 3;
+    const unsigned int      n_properties= 3;
     Particles::PropertyPool pool(n_properties);
 
     typename Particles::PropertyPool::Handle handle
       = pool.allocate_properties_array();
 
-    pool.get_properties(handle)[0] = 1.2;
-    pool.get_properties(handle)[1] = 2.5;
-    pool.get_properties(handle)[2] = 2.7;
+    pool.get_properties(handle)[0]= 1.2;
+    pool.get_properties(handle)[1]= 2.5;
+    pool.get_properties(handle)[2]= 2.7;
 
     deallog << "Pool properties:";
 
-    for(unsigned int i = 0; i < pool.get_properties(handle).size(); ++i)
+    for(unsigned int i= 0; i < pool.get_properties(handle).size(); ++i)
       deallog << " " << pool.get_properties(handle)[i];
 
     deallog << std::endl;

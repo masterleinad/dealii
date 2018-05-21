@@ -319,7 +319,7 @@ class Vector;
  * @author Wolfgang Bangerth, Guido Kanschat, Ralf Hartmann, 1997-2001, 2005,
  * 2014
  */
-template <class VectorType = Vector<double>>
+template <class VectorType= Vector<double>>
 class Solver : public Subscriptor
 {
 public:
@@ -477,11 +477,11 @@ Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
          ExcMessage("You can't combine iterator states if no state is given."));
 
   // combine the first with all of the following states
-  SolverControl::State state = *begin;
-  Iterator             p     = begin;
+  SolverControl::State state= *begin;
+  Iterator             p    = begin;
   ++p;
   for(; p != end; ++p)
-    state = this->operator()(state, *p);
+    state= this->operator()(state, *p);
 
   return state;
 }

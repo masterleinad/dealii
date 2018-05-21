@@ -16,7 +16,7 @@
 // like all the hp_constraint_*_03 tests that produced a crash at one point,
 // except that we don't refine the mesh that much
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -95,7 +95,7 @@ main()
   deallog.attach(logfile);
 
   hp::FECollection<3> fe;
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     fe.push_back(FE_DGQ<3>(i));
   test_with_wrong_face_orientation(fe);
 }

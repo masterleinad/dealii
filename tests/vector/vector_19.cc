@@ -23,11 +23,11 @@ void
 test(Vector<double>& v)
 {
   // set some elements of the vector
-  double norm = 0;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  double norm= 0;
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) = i;
-      norm = std::max(norm, std::fabs(static_cast<double>(i)));
+      v(i)= i;
+      norm= std::max(norm, std::fabs(static_cast<double>(i)));
     }
   v.compress();
 

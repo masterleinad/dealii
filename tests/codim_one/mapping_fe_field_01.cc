@@ -45,7 +45,7 @@ test(const unsigned int refs,
      const unsigned int degree,
      const unsigned int subdivisions)
 {
-  const unsigned int id = degree + 10 * refs + 100 * subdivisions;
+  const unsigned int id= degree + 10 * refs + 100 * subdivisions;
 
   Triangulation<dim, spacedim> triangulation;
 
@@ -73,7 +73,7 @@ test(const unsigned int refs,
 
   euler_vec.reinit(map_dh.n_dofs());
   scal_sol.reinit(dof_handler.n_dofs());
-  scal_sol = 1;
+  scal_sol= 1;
   VectorTools::get_position_vector(map_dh, euler_vec);
 
   MappingFEField<dim, spacedim> mapping(map_dh, euler_vec);

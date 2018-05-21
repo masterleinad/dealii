@@ -51,15 +51,15 @@ do_check(const FiniteElement<dim>& coarse_fe, const FiniteElement<dim>& fine_fe)
   FullMatrix<double> injection_2(fine_fe.dofs_per_cell,
                                  coarse_fe.dofs_per_cell);
 
-  for(unsigned int child_1 = 0;
+  for(unsigned int child_1= 0;
       child_1 < GeometryInfo<dim>::max_children_per_cell;
       ++child_1)
-    for(unsigned int child_2 = 0;
+    for(unsigned int child_2= 0;
         child_2 < GeometryInfo<dim>::max_children_per_cell;
         ++child_2)
       {
-        injection_1 = 0;
-        injection_2 = 0;
+        injection_1= 0;
+        injection_2= 0;
 
         // check 1: first to finer fe, then
         // to finer cells
@@ -93,15 +93,15 @@ do_check(const FiniteElement<dim>& coarse_fe, const FiniteElement<dim>& fine_fe)
         // some of the matrices
         if(child_1
            == ((child_2 + 1) % GeometryInfo<dim>::max_children_per_cell))
-          for(unsigned int i = 0; i < fine_fe.dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < coarse_fe.dofs_per_cell; ++j)
+          for(unsigned int i= 0; i < fine_fe.dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < coarse_fe.dofs_per_cell; ++j)
               deallog << i << ' ' << j << ' ' << injection_1(i, j) << std::endl;
 
         // make sure that the two matrices
         // are pretty much equal
-        for(unsigned int i = 0; i < fine_fe.dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < coarse_fe.dofs_per_cell; ++j)
-            injection_2(i, j) -= injection_1(i, j);
+        for(unsigned int i= 0; i < fine_fe.dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < coarse_fe.dofs_per_cell; ++j)
+            injection_2(i, j)-= injection_1(i, j);
         AssertThrow(injection_2.frobenius_norm()
                       <= 1e-12 * injection_1.frobenius_norm(),
                     ExcInternalError());

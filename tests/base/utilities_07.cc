@@ -25,14 +25,14 @@ using namespace dealii;
 void
 verify(const std::string& s)
 {
-  bool exception_caught = false;
+  bool exception_caught= false;
   try
     {
       Utilities::string_to_double(s);
     }
   catch(...)
     {
-      exception_caught = true;
+      exception_caught= true;
     }
   Assert(exception_caught == true, ExcMessage("Function is broken!"));
 

@@ -35,9 +35,9 @@ public:
                       const Point<spacedim>& candidate) const override
   {
     // Shift the y coordinate to 4*x*(1-x)
-    Point<spacedim> p = candidate;
+    Point<spacedim> p= candidate;
     if(spacedim > 1)
-      p[1] = 4 * p[0] * (1 - p[0]);
+      p[1]= 4 * p[0] * (1 - p[0]);
     return p;
   }
 
@@ -51,19 +51,19 @@ public:
 // Helper function
 template <int dim, int spacedim>
 void
-test(unsigned int ref = 1)
+test(unsigned int ref= 1)
 {
   deallog << "Testing dim=" << dim << ", spacedim=" << spacedim << std::endl;
   MyManifold<dim, spacedim> manifold;
 
   // Test that we get the right thing with two simple points.
   Point<spacedim> p0, p1;
-  p1[0] = 1.0;
+  p1[0]= 1.0;
 
-  Point<spacedim> p2 = manifold.get_intermediate_point(p0, p1, .5);
+  Point<spacedim> p2= manifold.get_intermediate_point(p0, p1, .5);
   deallog << "p2(0.5): " << p2 << std::endl;
 
-  p2 = manifold.get_intermediate_point(p0, p1, .2);
+  p2= manifold.get_intermediate_point(p0, p1, .2);
   deallog << "p2(0.2): " << p2 << std::endl;
 }
 

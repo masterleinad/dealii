@@ -27,24 +27,24 @@ void
 test()
 {
   {
-    const unsigned int      n_properties_per_particle = 3;
+    const unsigned int      n_properties_per_particle= 3;
     Particles::PropertyPool pool(n_properties_per_particle);
 
     Point<dim> position;
-    position(0) = 0.3;
+    position(0)= 0.3;
 
     if(dim > 1)
-      position(1) = 0.5;
+      position(1)= 0.5;
 
     Point<dim> reference_position;
-    reference_position(0) = 0.2;
+    reference_position(0)= 0.2;
 
     if(dim > 1)
-      reference_position(1) = 0.4;
+      reference_position(1)= 0.4;
 
     const types::particle_index index(7);
 
-    std::vector<double> properties = {0.15, 0.45, 0.75};
+    std::vector<double> properties= {0.15, 0.45, 0.75};
 
     Particles::Particle<dim> particle(position, reference_position, index);
     particle.set_property_pool(pool);
@@ -53,10 +53,10 @@ test()
 
     std::multimap<Particles::internal::LevelInd, Particles::Particle<dim>> map;
 
-    Particles::internal::LevelInd level_index = std::make_pair(0, 0);
+    Particles::internal::LevelInd level_index= std::make_pair(0, 0);
     map.insert(std::make_pair(level_index, particle));
 
-    particle.get_properties()[0] = 0.05;
+    particle.get_properties()[0]= 0.05;
     map.insert(std::make_pair(level_index, particle));
 
     Particles::ParticleIterator<dim> particle_it(map, map.begin());

@@ -160,7 +160,7 @@ class FE_Enriched;
  * @author Wolfgang Bangerth, Guido Kanschat, 1999, 2002, 2003, 2006, Ralf
  * Hartmann 2001.
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FESystem : public FiniteElement<dim, spacedim>
 {
 public:
@@ -472,7 +472,7 @@ public:
    */
   template <
     class... FEPairs,
-    typename = typename enable_if_all<
+    typename= typename enable_if_all<
       (std::is_same<typename std::decay<FEPairs>::type,
                     std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>,
                               unsigned int>>::value
@@ -497,17 +497,17 @@ public:
    * Copy constructor. This constructor is deleted, i.e., copying
    * FESystem objects is not allowed.
    */
-  FESystem(const FESystem<dim, spacedim>&) = delete;
+  FESystem(const FESystem<dim, spacedim>&)= delete;
 
   /**
    * Move constructor.
    */
-  FESystem(FESystem<dim, spacedim>&&) = default; // NOLINT
+  FESystem(FESystem<dim, spacedim>&&)= default; // NOLINT
 
   /**
    * Destructor.
    */
-  virtual ~FESystem() override = default;
+  virtual ~FESystem() override= default;
 
   /**
    * Return a string that uniquely identifies a finite element. This element
@@ -821,9 +821,9 @@ public:
   virtual unsigned int
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
-                     const bool         face_orientation = true,
-                     const bool         face_flip        = false,
-                     const bool         face_rotation = false) const override;
+                     const bool         face_orientation= true,
+                     const bool         face_flip       = false,
+                     const bool         face_rotation   = false) const override;
 
   /**
    * Implementation of the respective function in the base class.
@@ -1072,7 +1072,7 @@ private:
   /**
    * Value to indicate that a given face or subface number is invalid.
    */
-  static const unsigned int invalid_face_number = numbers::invalid_unsigned_int;
+  static const unsigned int invalid_face_number= numbers::invalid_unsigned_int;
 
   /**
    * Pointers to underlying finite element objects.

@@ -22,8 +22,8 @@
 void
 test(bool have_set)
 {
-  const int size     = 100000000;
-  const int my_start = size / 3;
+  const int size    = 100000000;
+  const int my_start= size / 3;
 
   IndexSet empty_set;
   IndexSet owned(size);
@@ -31,8 +31,8 @@ test(bool have_set)
 
   DynamicSparsityPattern sp(size, 5, have_set ? owned : empty_set);
 
-  for(unsigned int i = my_start; i < my_start + 5; ++i)
-    for(DynamicSparsityPattern::iterator p = sp.begin(i); p != sp.end(i); ++p)
+  for(unsigned int i= my_start; i < my_start + 5; ++i)
+    for(DynamicSparsityPattern::iterator p= sp.begin(i); p != sp.end(i); ++p)
       deallog << p->row() << ' ' << p->column() << std::endl;
 
   deallog << "OK" << std::endl;

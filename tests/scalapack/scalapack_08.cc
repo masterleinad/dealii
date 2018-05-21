@@ -62,7 +62,7 @@ test(const unsigned int size,
   //compute eigenpairs of s.p.d matrix
   ScaLAPACKMatrix<NumberType> scalapack_A_ev(size, grid_2d, block_size);
   scalapack_A_ev.set_property(LAPACKSupport::Property::symmetric);
-  scalapack_A_ev = full_A;
+  scalapack_A_ev= full_A;
   std::vector<NumberType> eigenvalues
     = scalapack_A_ev.eigenpairs_symmetric_by_index(std::make_pair(0, size - 1),
                                                    true);
@@ -74,7 +74,7 @@ test(const unsigned int size,
   ScaLAPACKMatrix<NumberType> scalapack_U(size, grid_2d, block_size);
   ScaLAPACKMatrix<NumberType> scalapack_VT(size, grid_2d, block_size);
   scalapack_A_sv.set_property(LAPACKSupport::Property::symmetric);
-  scalapack_A_sv = full_A;
+  scalapack_A_sv= full_A;
   std::vector<NumberType> singular_values
     = scalapack_A_sv.compute_SVD(&scalapack_U, &scalapack_VT);
   FullMatrix<NumberType> l_singular_vectors(size, size);
@@ -82,10 +82,10 @@ test(const unsigned int size,
   scalapack_U.copy_to(l_singular_vectors);
   scalapack_VT.copy_to(r_singular_vectors);
 
-  const unsigned int max_num_values = 5;
+  const unsigned int max_num_values= 5;
   pcout << "comparing the SVD and Eigendecomposition of a s.p.d matrix"
         << std::endl;
-  for(unsigned i = 0; i < max_num_values; ++i)
+  for(unsigned i= 0; i < max_num_values; ++i)
     AssertThrow(std::abs(eigenvalues[size - 1 - i] - singular_values[i]) < tol,
                 ExcMessage("singular and eigenvalues do not match"));
   pcout
@@ -94,16 +94,16 @@ test(const unsigned int size,
 
   Vector<NumberType> eigenvector(size), l_singular_vector(size),
     r_singular_vector(size);
-  for(unsigned int i = 0; i < max_num_values; ++i)
+  for(unsigned int i= 0; i < max_num_values; ++i)
     {
-      for(unsigned int j = 0; j < size; ++j)
+      for(unsigned int j= 0; j < size; ++j)
         {
-          eigenvector[j]       = eigenvectors(j, size - 1 - i);
-          l_singular_vector[j] = l_singular_vectors(j, i);
-          r_singular_vector[j] = r_singular_vectors(i, j);
+          eigenvector[j]      = eigenvectors(j, size - 1 - i);
+          l_singular_vector[j]= l_singular_vectors(j, i);
+          r_singular_vector[j]= r_singular_vectors(i, j);
         }
-      NumberType product_1 = eigenvector * l_singular_vector;
-      NumberType product_2 = eigenvector * r_singular_vector;
+      NumberType product_1= eigenvector * l_singular_vector;
+      NumberType product_2= eigenvector * r_singular_vector;
       //the tolerance is reduced for the singular vectors
       AssertThrow(
         (std::abs(product_1) - 1) < tol * 10,
@@ -124,9 +124,9 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes      = {{200, 400, 600}};
-  const std::vector<unsigned int> blocks     = {{32, 64}};
-  const double                    tol_double = 1e-10;
+  const std::vector<unsigned int> sizes     = {{200, 400, 600}};
+  const std::vector<unsigned int> blocks    = {{32, 64}};
+  const double                    tol_double= 1e-10;
 
   for(const auto& s : sizes)
     for(const auto& b : blocks)

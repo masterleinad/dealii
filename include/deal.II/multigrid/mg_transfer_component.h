@@ -184,7 +184,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~MGTransferSelect() override = default;
+  virtual ~MGTransferSelect() override= default;
 
   //TODO: rewrite docs; make sure defaulted args are actually allowed
   /**
@@ -231,7 +231,7 @@ public:
    */
   void
   select(const unsigned int component,
-         const unsigned int mg_component = numbers::invalid_unsigned_int);
+         const unsigned int mg_component= numbers::invalid_unsigned_int);
 
   virtual void
   prolongate(const unsigned int    to_level,
@@ -377,10 +377,10 @@ inline void
 MGTransferSelect<number>::select(const unsigned int component,
                                  const unsigned int mg_component)
 {
-  selected_component    = component;
-  mg_selected_component = (mg_component == numbers::invalid_unsigned_int) ?
-                            component :
-                            mg_component;
+  selected_component   = component;
+  mg_selected_component= (mg_component == numbers::invalid_unsigned_int) ?
+                           component :
+                           mg_component;
 }
 
 DEAL_II_NAMESPACE_CLOSE

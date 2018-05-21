@@ -98,9 +98,9 @@ namespace PETScWrappers
   inline void
   set_matrix_option(Mat&            matrix,
                     const MatOption option_name,
-                    const PetscBool option_value = PETSC_FALSE)
+                    const PetscBool option_value= PETSC_FALSE)
   {
-    const PetscErrorCode ierr = MatSetOption(matrix, option_name, option_value);
+    const PetscErrorCode ierr= MatSetOption(matrix, option_name, option_value);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 

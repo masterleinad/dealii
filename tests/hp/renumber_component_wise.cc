@@ -43,7 +43,7 @@ print_dofs(const hp::DoFHandler<dim>& dof)
       v.resize(cell->get_fe().dofs_per_cell);
       deallog << "Cell " << cell << " -- ";
       cell->get_dof_indices(v);
-      for(unsigned int i = 0; i < v.size(); ++i)
+      for(unsigned int i= 0; i < v.size(); ++i)
         deallog << v[i] << ' ';
       deallog << std::endl;
     }
@@ -56,8 +56,8 @@ check_renumbering(hp::DoFHandler<dim>& dof)
   // Prepare a reordering of
   // components for later use
   std::vector<unsigned int> order(dof.get_fe().n_components());
-  for(unsigned int i = 0; i < order.size(); ++i)
-    order[i] = order.size() - i - 1;
+  for(unsigned int i= 0; i < order.size(); ++i)
+    order[i]= order.size() - i - 1;
 
   DoFRenumbering::component_wise(dof, order);
   print_dofs(dof);
@@ -80,14 +80,14 @@ check()
 
   hp::DoFHandler<dim> dof(tr);
   {
-    bool coin = false;
+    bool coin= false;
     for(typename hp::DoFHandler<dim>::active_cell_iterator cell
         = dof.begin_active();
         cell != dof.end();
         ++cell)
       {
         cell->set_active_fe_index(coin ? 0 : 1);
-        coin = !coin;
+        coin= !coin;
       }
   }
 

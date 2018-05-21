@@ -23,32 +23,32 @@ void
 test()
 {
   std::vector<double> v(9);
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v[i] = double(i + 1);
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v[i]= double(i + 1);
 
   std::vector<types::global_dof_index> partition(3);
-  for(unsigned int i = 0; i < partition.size(); ++i)
-    partition[i] = 3;
+  for(unsigned int i= 0; i < partition.size(); ++i)
+    partition[i]= 3;
 
   dealii::BlockVector<double> b(partition);
   AssertThrow(b.n_blocks() == partition.size(), ExcInternalError());
 
-  unsigned int size = 0;
-  for(unsigned int i = 0; i < b.n_blocks(); ++i)
+  unsigned int size= 0;
+  for(unsigned int i= 0; i < b.n_blocks(); ++i)
     {
       AssertThrow(b.block(i).size() == partition[i], ExcInternalError());
-      size += b.block(i).size();
+      size+= b.block(i).size();
     }
   AssertThrow(b.size() == size, ExcInternalError());
 
-  for(unsigned int i = 0; i < b.size(); ++i)
+  for(unsigned int i= 0; i < b.size(); ++i)
     {
-      b(i) = v[i];
+      b(i)= v[i];
       AssertThrow(b(i) == v[i], ExcInternalError());
     }
 
   dealii::BlockVector<double> c;
-  c = b;
+  c= b;
   AssertThrow(c == b, ExcInternalError());
   AssertThrow(c.n_blocks() == b.n_blocks(), ExcInternalError());
 
@@ -66,9 +66,9 @@ main()
   // do the same weird stuff as in
   // tests/base/reference.cc
 #if __GNUC__ != 2
-  std::basic_streambuf<char>* old_cerr_buf = std::cerr.rdbuf();
+  std::basic_streambuf<char>* old_cerr_buf= std::cerr.rdbuf();
 #else
-  streambuf* old_cerr_buf = std::cerr.rdbuf();
+  streambuf* old_cerr_buf= std::cerr.rdbuf();
 #endif
   std::cerr.rdbuf(logfile.rdbuf());
 

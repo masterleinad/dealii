@@ -27,7 +27,7 @@ template <int dim>
 void
 test1(const bool keep_boundary)
 {
-  const unsigned int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int my_id= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   parallel::shared::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
@@ -36,14 +36,14 @@ test1(const bool keep_boundary)
   deallog << "dim=" << dim << ", keep_boundary=" << keep_boundary << std::endl;
   std::string filename;
   if(keep_boundary)
-    filename = "keep_true-";
+    filename= "keep_true-";
   else
-    filename = "keep_false-";
-  filename += Utilities::int_to_string(dim);
+    filename= "keep_false-";
+  filename+= Utilities::int_to_string(dim);
 
   std::stringstream ss;
   GridOut().write_gnuplot(tria, ss);
-  const std::string local_grid = ss.str();
+  const std::string local_grid= ss.str();
   deallog << checksum(local_grid.begin(), local_grid.end()) << std::endl;
 
   deallog << "OK" << std::endl;

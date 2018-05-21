@@ -47,7 +47,7 @@ main()
           << endl;
 
   Point<2> center(0.5, 0.5);
-  for(unsigned int m = 1; m < 6; ++m)
+  for(unsigned int m= 1; m < 6; ++m)
     {
       deallog << " =========Quadrature Order: " << m
               << " =============================== " << endl;
@@ -59,32 +59,32 @@ main()
       QTelles<2>        quad(4 * m, center);
       QGaussOneOverR<2> quad_2(m, center, true);
 
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         {
-          for(unsigned int j = 0; j < 5; ++j)
+          for(unsigned int j= 0; j < 5; ++j)
             {
-              double exact_integral    = exact_integral_one_over_r_middle(i, j);
-              double approx_integral   = 0;
-              double approx_integral_2 = 0;
+              double exact_integral   = exact_integral_one_over_r_middle(i, j);
+              double approx_integral  = 0;
+              double approx_integral_2= 0;
 
-              for(unsigned int q = 0; q < quad.size(); ++q)
+              for(unsigned int q= 0; q < quad.size(); ++q)
                 {
-                  double x = quad.point(q)[0];
-                  double y = quad.point(q)[1];
-                  double R = sqrt((x - center[0]) * (x - center[0])
-                                  + (y - center[1]) * (y - center[1]));
-                  approx_integral += (pow(x, (double) i) * pow(y, (double) j)
-                                      / R * quad.weight(q));
+                  double x= quad.point(q)[0];
+                  double y= quad.point(q)[1];
+                  double R= sqrt((x - center[0]) * (x - center[0])
+                                 + (y - center[1]) * (y - center[1]));
+                  approx_integral+= (pow(x, (double) i) * pow(y, (double) j) / R
+                                     * quad.weight(q));
                 }
 
-              for(unsigned int q = 0; q < quad_2.size(); ++q)
+              for(unsigned int q= 0; q < quad_2.size(); ++q)
                 {
-                  double x = quad_2.point(q)[0];
-                  double y = quad_2.point(q)[1];
-                  double R = sqrt((x - center[0]) * (x - center[0])
-                                  + (y - center[1]) * (y - center[1]));
-                  approx_integral_2 += (pow(x, (double) i) * pow(y, (double) j)
-                                        / R * quad_2.weight(q));
+                  double x= quad_2.point(q)[0];
+                  double y= quad_2.point(q)[1];
+                  double R= sqrt((x - center[0]) * (x - center[0])
+                                 + (y - center[1]) * (y - center[1]));
+                  approx_integral_2+= (pow(x, (double) i) * pow(y, (double) j)
+                                       / R * quad_2.weight(q));
                 }
 
               deallog << "f(x,y) = x^" << i << " y^" << j

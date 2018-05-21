@@ -78,7 +78,7 @@ check()
 
   Vector<double> rhs(dof.n_dofs());
   VectorTools::create_point_source_vector(dof, tr.begin()->center(), rhs);
-  for(unsigned int i = 0; i < rhs.size(); ++i)
+  for(unsigned int i= 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

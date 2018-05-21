@@ -35,8 +35,8 @@ test()
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   typename Triangulation<dim>::active_cell_iterator cell, endc;
-  cell = tria.begin_active();
-  endc = tria.end();
+  cell= tria.begin_active();
+  endc= tria.end();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 0.5)
       cell->set_refine_flag();
@@ -45,12 +45,12 @@ test()
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
-  for(unsigned int i = 0; i < 9 - 3 * dim; ++i)
+  cell= tria.begin_active();
+  for(unsigned int i= 0; i < 9 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      endc                 = tria.end();
-      unsigned int counter = 0;
+      cell                = tria.begin_active();
+      endc                = tria.end();
+      unsigned int counter= 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)
           cell->set_refine_flag();
@@ -65,9 +65,8 @@ test()
 
   MatrixFree<dim>                          mf_data;
   typename MatrixFree<dim>::AdditionalData data;
-  data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
-  data.mapping_update_flags_inner_faces
-    = (update_gradients | update_JxW_values);
+  data.tasks_parallel_scheme           = MatrixFree<dim>::AdditionalData::none;
+  data.mapping_update_flags_inner_faces= (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces
     = (update_gradients | update_JxW_values);
 
@@ -77,21 +76,21 @@ test()
       data.cell_vectorization_category[cell->active_cell_index()]
         = cell->center()[1] * 10.;
 
-  data.cell_vectorization_categories_strict = false;
+  data.cell_vectorization_categories_strict= false;
   mf_data.reinit(dof, constraints, QGauss<1>(2), data);
 
   deallog << "Number of cell batches: " << mf_data.n_macro_cells() << std::endl;
-  for(unsigned int i = 0; i < mf_data.n_macro_cells(); ++i)
-    for(unsigned int c = 0; c < mf_data.n_components_filled(i); ++c)
+  for(unsigned int i= 0; i < mf_data.n_macro_cells(); ++i)
+    for(unsigned int c= 0; c < mf_data.n_components_filled(i); ++c)
       deallog << mf_data.get_cell_iterator(i, c)->id() << " with "
               << mf_data.get_cell_category(i) << std::endl;
   deallog << std::endl;
 
-  data.cell_vectorization_categories_strict = true;
+  data.cell_vectorization_categories_strict= true;
   mf_data.reinit(dof, constraints, QGauss<1>(2), data);
   deallog << "Number of cell batches: " << mf_data.n_macro_cells() << std::endl;
-  for(unsigned int i = 0; i < mf_data.n_macro_cells(); ++i)
-    for(unsigned int c = 0; c < mf_data.n_components_filled(i); ++c)
+  for(unsigned int i= 0; i < mf_data.n_macro_cells(); ++i)
+    for(unsigned int c= 0; c < mf_data.n_components_filled(i); ++c)
       deallog << mf_data.get_cell_iterator(i, c)->id() << " with "
               << mf_data.get_cell_category(i) << std::endl;
   deallog << std::endl;
@@ -102,11 +101,11 @@ test()
             data.cell_vectorization_category.end(),
             100000000);
 
-  data.cell_vectorization_categories_strict = false;
+  data.cell_vectorization_categories_strict= false;
   mf_data.reinit(dof, constraints, QGauss<1>(2), data);
   deallog << "Number of cell batches: " << mf_data.n_macro_cells() << std::endl;
-  for(unsigned int i = 0; i < mf_data.n_macro_cells(); ++i)
-    for(unsigned int c = 0; c < mf_data.n_components_filled(i); ++c)
+  for(unsigned int i= 0; i < mf_data.n_macro_cells(); ++i)
+    for(unsigned int c= 0; c < mf_data.n_components_filled(i); ++c)
       deallog << mf_data.get_cell_iterator(i, c)->id() << " with "
               << mf_data.get_cell_category(i) << std::endl;
   deallog << std::endl;

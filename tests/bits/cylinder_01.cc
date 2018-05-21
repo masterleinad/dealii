@@ -39,7 +39,7 @@ template <>
 void
 check<2>()
 {
-  constexpr int      dim = 2;
+  constexpr int      dim= 2;
   Triangulation<dim> triangulation;
   GridGenerator::cylinder(triangulation);
   triangulation.refine_global(2);
@@ -48,7 +48,7 @@ check<2>()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       deallog << cell->vertex(i) << std::endl;
 }
 
@@ -56,7 +56,7 @@ template <>
 void
 check<3>()
 {
-  constexpr int                  dim = 3;
+  constexpr int                  dim= 3;
   const CylindricalManifold<dim> boundary;
   Triangulation<dim>             triangulation;
   GridGenerator::cylinder(triangulation);
@@ -67,7 +67,7 @@ check<3>()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       deallog << cell->vertex(i) << std::endl;
 }
 

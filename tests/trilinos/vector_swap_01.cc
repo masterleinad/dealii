@@ -35,12 +35,12 @@ test()
 {
   TrilinosWrappers::MPI::Vector v;
   v.reinit(complete_index_set(5), MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = 1;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= 1;
   TrilinosWrappers::MPI::Vector w;
   w.reinit(complete_index_set(9), MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < w.size(); ++i)
-    w(i) = 2;
+  for(unsigned int i= 0; i < w.size(); ++i)
+    w(i)= 2;
 
   deallog << "v: ";
   print(v);

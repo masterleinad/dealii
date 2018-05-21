@@ -55,8 +55,8 @@ test()
   hp::DoFHandler<2> hp_dof_handler2(triangulation);
 
   //set different fe for testing
-  hp::DoFHandler<2>::active_cell_iterator cell = hp_dof_handler.begin_active(),
-                                          endc = hp_dof_handler.end();
+  hp::DoFHandler<2>::active_cell_iterator cell= hp_dof_handler.begin_active(),
+                                          endc= hp_dof_handler.end();
 
   for(; cell != endc; ++cell)
     cell->set_active_fe_index(1);
@@ -70,9 +70,9 @@ test()
   Vector<double> rhs_vector(hp_dof_handler.n_dofs());
   Vector<double> rhs_vector2(hp_dof_handler2.n_dofs());
 
-  types::boundary_id           myints[1] = {0};
+  types::boundary_id           myints[1]= {0};
   std::set<types::boundary_id> boundary_ids(myints, myints + 1);
-  myints[0] = 0;
+  myints[0]= 0;
   hp::QCollection<1> quadrature;
   quadrature.push_back(QGauss<1>(1));
 

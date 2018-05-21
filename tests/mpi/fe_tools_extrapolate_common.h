@@ -46,11 +46,11 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const
+  value(const Point<dim>& p, const unsigned int component= 0) const
   {
-    double return_value = 0.;
-    for(unsigned int d = 0; d < dim; ++d)
-      return_value += std::pow(std::abs(.5 - p(d)), degree);
+    double return_value= 0.;
+    for(unsigned int d= 0; d < dim; ++d)
+      return_value+= std::pow(std::abs(.5 - p(d)), degree);
 
     return return_value;
   }
@@ -68,9 +68,9 @@ make_tria()
   typename parallel::distributed::Triangulation<dim>::active_cell_iterator cell;
   GridGenerator::hyper_cube(*tria, 0., 1.);
   tria->refine_global(2);
-  for(int i = 0; i < 2; ++i)
+  for(int i= 0; i < 2; ++i)
     {
-      cell = tria->begin_active();
+      cell= tria->begin_active();
       cell->set_refine_flag();
       ++cell;
       if(cell != tria->end())
@@ -86,7 +86,7 @@ DoFHandler<dim>*
 make_dof_handler(const parallel::distributed::Triangulation<dim>& tria,
                  const FiniteElement<dim>&                        fe)
 {
-  DoFHandler<dim>* dof_handler = new DoFHandler<dim>(tria);
+  DoFHandler<dim>* dof_handler= new DoFHandler<dim>(tria);
   dof_handler->distribute_dofs(fe);
   return dof_handler;
 }
@@ -102,7 +102,7 @@ output_vector(const VectorType&      v,
   data_out.attach_dof_handler(dof_handler);
   data_out.add_data_vector(v, output_name, DataOut<dim>::type_dof_data);
 
-  const unsigned int degree = dof_handler.get_fe().degree;
+  const unsigned int degree= dof_handler.get_fe().degree;
   data_out.build_patches(degree);
 
   const std::string filename
@@ -178,28 +178,27 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   DoFTools::make_hanging_node_constraints(*dof2, cm2);
   cm2.close();
 
-  IndexSet locally_owned_dofs1 = dof1->locally_owned_dofs();
+  IndexSet locally_owned_dofs1= dof1->locally_owned_dofs();
   IndexSet locally_relevant_dofs1;
   DoFTools::extract_locally_relevant_dofs(*dof1, locally_relevant_dofs1);
-  IndexSet locally_owned_dofs2 = dof2->locally_owned_dofs();
+  IndexSet locally_owned_dofs2= dof2->locally_owned_dofs();
   IndexSet locally_relevant_dofs2;
   DoFTools::extract_locally_relevant_dofs(*dof2, locally_relevant_dofs2);
 
   VectorType in_ghosted
     = build_ghosted<VectorType>(locally_owned_dofs1, locally_relevant_dofs1);
-  VectorType in_distributed
-    = build_distributed<VectorType>(locally_owned_dofs1);
+  VectorType in_distributed= build_distributed<VectorType>(locally_owned_dofs1);
   VectorType out_distributed
     = build_distributed<VectorType>(locally_owned_dofs2);
   VectorType out_ghosted
     = build_ghosted<VectorType>(locally_owned_dofs2, locally_relevant_dofs2);
-  VectorType out_reference = build_distributed<VectorType>(locally_owned_dofs2);
+  VectorType out_reference= build_distributed<VectorType>(locally_owned_dofs2);
 
   // Choose some reference function of sufficiently high polynomial degree.
   TestFunction<dim> function(std::max(fe1.degree, fe2.degree));
   VectorTools::interpolate(*dof1, function, in_distributed);
   cm1.distribute(in_distributed);
-  in_ghosted = in_distributed;
+  in_ghosted= in_distributed;
 
   Vector<double> difference_before;
   VectorTools::integrate_difference(*dof1,
@@ -208,8 +207,8 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                     difference_before,
                                     QGauss<dim>(fe1.degree + 2),
                                     VectorTools::L2_norm);
-  const double local_error_before  = difference_before.l2_norm();
-  const double global_error_before = std::sqrt(
+  const double local_error_before = difference_before.l2_norm();
+  const double global_error_before= std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_before, 2.), MPI_COMM_WORLD));
 
 #ifdef DEBUG_OUTPUT_VTK
@@ -220,16 +219,16 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                  *dof1);
 #endif
   {
-    const double l1_norm     = in_distributed.l1_norm();
-    const double l2_norm     = in_distributed.l2_norm();
-    const double linfty_norm = in_distributed.linfty_norm();
+    const double l1_norm    = in_distributed.l1_norm();
+    const double l2_norm    = in_distributed.l2_norm();
+    const double linfty_norm= in_distributed.linfty_norm();
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << l1_norm << ' ' << l2_norm << ' ' << linfty_norm << std::endl;
   }
 
   FETools::extrapolate(*dof1, in_ghosted, *dof2, cm2, out_distributed);
   out_distributed.compress(VectorOperation::insert);
-  out_ghosted = out_distributed;
+  out_ghosted= out_distributed;
 #ifdef DEBUG_OUTPUT_VTK
   output_vector<dim, VectorType>(out_ghosted,
                                  Utilities::int_to_string(fe2.degree, 1)
@@ -239,9 +238,9 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 #endif
 
   {
-    const double l1_norm     = out_distributed.l1_norm();
-    const double l2_norm     = out_distributed.l2_norm();
-    const double linfty_norm = out_distributed.linfty_norm();
+    const double l1_norm    = out_distributed.l1_norm();
+    const double l2_norm    = out_distributed.l2_norm();
+    const double linfty_norm= out_distributed.linfty_norm();
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << l1_norm << ' ' << l2_norm << ' ' << linfty_norm << std::endl;
   }
@@ -253,8 +252,8 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                     difference_after,
                                     QGauss<dim>(fe2.degree + 2),
                                     VectorTools::L2_norm);
-  const double local_error_after  = difference_after.l2_norm();
-  const double global_error_after = std::sqrt(
+  const double local_error_after = difference_after.l2_norm();
+  const double global_error_after= std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_after, 2.), MPI_COMM_WORLD));
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
@@ -264,7 +263,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     }
   if(fe2.degree == fe1.degree)
     {
-      out_distributed -= in_distributed;
+      out_distributed-= in_distributed;
       AssertThrow(out_distributed.l2_norm() < 1.e-8, ExcInternalError());
     }
   if(fe2.degree > fe1.degree)
@@ -308,10 +307,10 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   DoFTools::make_hanging_node_constraints(*dof2, cm2);
   cm2.close();
 
-  IndexSet locally_owned_dofs1 = dof1->locally_owned_dofs();
+  IndexSet locally_owned_dofs1= dof1->locally_owned_dofs();
   IndexSet locally_relevant_dofs1;
   DoFTools::extract_locally_relevant_dofs(*dof1, locally_relevant_dofs1);
-  IndexSet locally_owned_dofs2 = dof2->locally_owned_dofs();
+  IndexSet locally_owned_dofs2= dof2->locally_owned_dofs();
   IndexSet locally_relevant_dofs2;
   DoFTools::extract_locally_relevant_dofs(*dof2, locally_relevant_dofs2);
 
@@ -338,8 +337,8 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                     difference_before,
                                     QGauss<dim>(fe1.degree + 2),
                                     VectorTools::L2_norm);
-  const double local_error_before  = difference_before.l2_norm();
-  const double global_error_before = std::sqrt(
+  const double local_error_before = difference_before.l2_norm();
+  const double global_error_before= std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_before, 2.), MPI_COMM_WORLD));
 #ifdef DEBUG_OUTPUT_VTK
   output_vector<dim, VectorType>(in_ghosted,
@@ -349,9 +348,9 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                  *dof1);
 #endif
   {
-    const double l1_norm     = in_ghosted.l1_norm();
-    const double l2_norm     = in_ghosted.l2_norm();
-    const double linfty_norm = in_ghosted.linfty_norm();
+    const double l1_norm    = in_ghosted.l1_norm();
+    const double l2_norm    = in_ghosted.l2_norm();
+    const double linfty_norm= in_ghosted.linfty_norm();
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << l1_norm << ' ' << l2_norm << ' ' << linfty_norm << std::endl;
   }
@@ -367,9 +366,9 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                  *dof2);
 #endif
   {
-    const double l1_norm     = out_ghosted.l1_norm();
-    const double l2_norm     = out_ghosted.l2_norm();
-    const double linfty_norm = out_ghosted.linfty_norm();
+    const double l1_norm    = out_ghosted.l1_norm();
+    const double l2_norm    = out_ghosted.l2_norm();
+    const double linfty_norm= out_ghosted.linfty_norm();
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << l1_norm << ' ' << l2_norm << ' ' << linfty_norm << std::endl;
   }
@@ -381,8 +380,8 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                                     difference_after,
                                     QGauss<dim>(fe2.degree + 2),
                                     VectorTools::L2_norm);
-  const double local_error_after  = difference_after.l2_norm();
-  const double global_error_after = std::sqrt(
+  const double local_error_after = difference_after.l2_norm();
+  const double global_error_after= std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_after, 2.), MPI_COMM_WORLD));
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
@@ -392,7 +391,7 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     }
   if(fe2.degree == fe1.degree)
     {
-      out_ghosted -= in_ghosted;
+      out_ghosted-= in_ghosted;
       AssertThrow(out_ghosted.l2_norm() < 1.e-8, ExcInternalError());
     }
   if(fe2.degree > fe1.degree)

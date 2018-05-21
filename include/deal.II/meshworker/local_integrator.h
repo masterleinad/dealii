@@ -49,7 +49,7 @@ namespace MeshWorker
    * @author Guido Kanschat
    * @date 2012
    */
-  template <int dim, int spacedim = dim, typename number = double>
+  template <int dim, int spacedim= dim, typename number= double>
   class LocalIntegrator : public Subscriptor
   {
   public:
@@ -67,7 +67,7 @@ namespace MeshWorker
     /**
      * The empty virtual destructor.
      */
-    virtual ~LocalIntegrator() override = default;
+    virtual ~LocalIntegrator() override= default;
 
     /**
      * Virtual function for integrating on cells. Throws exception

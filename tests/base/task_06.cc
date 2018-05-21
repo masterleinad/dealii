@@ -40,8 +40,8 @@ main()
   deallog.attach(logfile);
 
   {
-    Threads::Thread<> t1 = Threads::new_thread(test, 1);
-    Threads::Thread<> t2 = Threads::new_thread(test, 2);
+    Threads::Thread<> t1= Threads::new_thread(test, 1);
+    Threads::Thread<> t2= Threads::new_thread(test, 2);
 
     t1.join();
     t2.join();

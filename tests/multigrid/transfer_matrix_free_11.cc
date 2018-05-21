@@ -66,7 +66,7 @@ check(const unsigned int fe_degree)
   transfer.build(mgdof);
 
   // check prolongation for all levels using random vector
-  for(unsigned int level = 1;
+  for(unsigned int level= 1;
       level < mgdof.get_triangulation().n_global_levels();
       ++level)
     {
@@ -75,13 +75,13 @@ check(const unsigned int fe_degree)
       v1.reinit(mgdof.locally_owned_mg_dofs(level - 1), MPI_COMM_WORLD);
       v2.reinit(mgdof.locally_owned_mg_dofs(level), MPI_COMM_WORLD);
       v3.reinit(mgdof.locally_owned_mg_dofs(level), MPI_COMM_WORLD);
-      for(unsigned int i = 0; i < v1.local_size(); ++i)
-        v1.local_element(i) = random_value<double>();
-      v1_cpy = v1;
+      for(unsigned int i= 0; i < v1.local_size(); ++i)
+        v1.local_element(i)= random_value<double>();
+      v1_cpy= v1;
       transfer.prolongate(level, v2, v1);
       transfer_ref.prolongate(level, v3, v1_cpy);
-      v2_cpy = v2;
-      v3 -= v2_cpy;
+      v2_cpy= v2;
+      v3-= v2_cpy;
       deallog << "Diff prolongate   l" << level << ": " << v3.l2_norm()
               << std::endl;
       if(v3.l2_norm() > 1e-12)
@@ -95,7 +95,7 @@ check(const unsigned int fe_degree)
     }
 
   // check restriction for all levels using random vector
-  for(unsigned int level = 1;
+  for(unsigned int level= 1;
       level < mgdof.get_triangulation().n_global_levels();
       ++level)
     {
@@ -104,22 +104,22 @@ check(const unsigned int fe_degree)
       v1.reinit(mgdof.locally_owned_mg_dofs(level), MPI_COMM_WORLD);
       v2.reinit(mgdof.locally_owned_mg_dofs(level - 1), MPI_COMM_WORLD);
       v3.reinit(mgdof.locally_owned_mg_dofs(level - 1), MPI_COMM_WORLD);
-      for(unsigned int i = 0; i < v1.local_size(); ++i)
-        v1.local_element(i) = random_value<double>();
-      v1_cpy = v1;
+      for(unsigned int i= 0; i < v1.local_size(); ++i)
+        v1.local_element(i)= random_value<double>();
+      v1_cpy= v1;
       transfer.restrict_and_add(level, v2, v1);
       transfer_ref.restrict_and_add(level, v3, v1_cpy);
-      v2_cpy = v2;
-      v3 -= v2_cpy;
+      v2_cpy= v2;
+      v3-= v2_cpy;
       deallog << "Diff restrict     l" << level << ": " << v3.l2_norm()
               << std::endl;
 
-      v2 = 1.;
-      v3 = 1.;
+      v2= 1.;
+      v3= 1.;
       transfer.restrict_and_add(level, v2, v1);
       transfer_ref.restrict_and_add(level, v3, v1_cpy);
-      v2_cpy = v2;
-      v3 -= v2_cpy;
+      v2_cpy= v2;
+      v3-= v2_cpy;
       deallog << "Diff restrict add l" << level << ": " << v3.l2_norm()
               << std::endl;
     }

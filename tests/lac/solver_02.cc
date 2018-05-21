@@ -30,19 +30,19 @@ template <typename SolverType>
 void
 test()
 {
-  const unsigned int size = 3;
+  const unsigned int size= 3;
   SparsityPattern    sparsity(size, size, 1);
   sparsity.compress();
   SparseMatrix<double> mat;
   mat.reinit(sparsity);
-  mat = IdentityMatrix(size);
+  mat= IdentityMatrix(size);
 
   Vector<double> rhs;
   Vector<double> solvec;
   solvec.reinit(size);
 
   rhs.reinit(size);
-  rhs(size - 1) = 1.0;
+  rhs(size - 1)= 1.0;
 
   SolverControl solvctrl(1000, 1e-12, true);
   SolverType    solver(solvctrl);

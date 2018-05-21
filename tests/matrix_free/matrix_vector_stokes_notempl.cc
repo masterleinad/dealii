@@ -62,7 +62,7 @@ public:
     FEEvaluation<dim, -1, 0, dim, Number> velocity(data, 0);
     FEEvaluation<dim, -1, 0, 1, Number>   pressure(data, 1);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         velocity.reinit(cell);
         velocity.read_dof_values(src.block(0));
@@ -71,17 +71,17 @@ public:
         pressure.read_dof_values(src.block(1));
         pressure.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for(unsigned int q= 0; q < velocity.n_q_points; ++q)
           {
             SymmetricTensor<2, dim, vector_t> sym_grad_u
               = velocity.get_symmetric_gradient(q);
-            vector_t pres = pressure.get_value(q);
-            vector_t div  = -trace(sym_grad_u);
+            vector_t pres= pressure.get_value(q);
+            vector_t div = -trace(sym_grad_u);
             pressure.submit_value(div, q);
 
             // subtract p * I
-            for(unsigned int d = 0; d < dim; ++d)
-              sym_grad_u[d][d] -= pres;
+            for(unsigned int d= 0; d < dim; ++d)
+              sym_grad_u[d][d]-= pres;
 
             velocity.submit_symmetric_gradient(sym_grad_u, q);
           }
@@ -96,7 +96,7 @@ public:
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
-    dst = 0;
+    dst= 0;
     data.cell_loop(
       &MatrixFreeTest<dim, VectorType>::local_apply, this, dst, src);
   };
@@ -146,7 +146,7 @@ test(const unsigned int fe_degree)
   dof_handler_u.distribute_dofs(fe_u);
   dof_handler_p.distribute_dofs(fe_p);
   std::vector<unsigned int> stokes_sub_blocks(dim + 1, 0);
-  stokes_sub_blocks[dim] = 1;
+  stokes_sub_blocks[dim]= 1;
   DoFRenumbering::component_wise(dof_handler, stokes_sub_blocks);
 
   std::set<types::boundary_id> no_normal_flux_boundaries;
@@ -178,8 +178,8 @@ test(const unsigned int fe_degree)
   {
     BlockDynamicSparsityPattern csp(2, 2);
 
-    for(unsigned int d = 0; d < 2; ++d)
-      for(unsigned int e = 0; e < 2; ++e)
+    for(unsigned int d= 0; d < 2; ++d)
+      for(unsigned int e= 0; e < 2; ++e)
         csp.block(d, e).reinit(dofs_per_block[d], dofs_per_block[e]);
 
     csp.collect_sizes();
@@ -200,8 +200,8 @@ test(const unsigned int fe_degree)
                             update_values | update_JxW_values
                               | update_gradients);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -216,24 +216,24 @@ test(const unsigned int fe_degree)
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        local_matrix = 0;
+        local_matrix= 0;
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
-                phi_grads_u[k] = fe_values[velocities].symmetric_gradient(k, q);
-                div_phi_u[k]   = fe_values[velocities].divergence(k, q);
-                phi_p[k]       = fe_values[pressure].value(k, q);
+                phi_grads_u[k]= fe_values[velocities].symmetric_gradient(k, q);
+                div_phi_u[k]  = fe_values[velocities].divergence(k, q);
+                phi_p[k]      = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for(unsigned int j= 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (phi_grads_u[i] * phi_grads_u[j]
@@ -242,9 +242,9 @@ test(const unsigned int fe_degree)
                   }
               }
           }
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
-            local_matrix(i, j) = local_matrix(j, i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= i + 1; j < dofs_per_cell; ++j)
+            local_matrix(i, j)= local_matrix(j, i);
 
         cell->get_dof_indices(local_dof_indices);
         constraints.distribute_local_to_global(
@@ -253,7 +253,7 @@ test(const unsigned int fe_degree)
   }
 
   solution.reinit(2);
-  for(unsigned int d = 0; d < 2; ++d)
+  for(unsigned int d= 0; d < 2; ++d)
     solution.block(d).reinit(dofs_per_block[d]);
   solution.collect_sizes();
 
@@ -261,17 +261,17 @@ test(const unsigned int fe_degree)
   mf_solution.reinit(solution);
 
   // fill system_rhs with random numbers
-  for(unsigned int j = 0; j < system_rhs.block(0).size(); ++j)
+  for(unsigned int j= 0; j < system_rhs.block(0).size(); ++j)
     if(constraints_u.is_constrained(j) == false)
       {
-        const double val       = -1 + 2. * random_value<double>();
-        system_rhs.block(0)(j) = val;
+        const double val      = -1 + 2. * random_value<double>();
+        system_rhs.block(0)(j)= val;
       }
-  for(unsigned int j = 0; j < system_rhs.block(1).size(); ++j)
+  for(unsigned int j= 0; j < system_rhs.block(1).size(); ++j)
     if(constraints_p.is_constrained(j) == false)
       {
-        const double val       = -1 + 2. * random_value<double>();
-        system_rhs.block(1)(j) = val;
+        const double val      = -1 + 2. * random_value<double>();
+        system_rhs.block(1)(j)= val;
       }
 
   // setup matrix-free structure
@@ -298,9 +298,9 @@ test(const unsigned int fe_degree)
   mf.vmult(mf_solution, system_rhs);
 
   // Verification
-  mf_solution -= solution;
-  const double error    = mf_solution.linfty_norm();
-  const double relative = solution.linfty_norm();
+  mf_solution-= solution;
+  const double error   = mf_solution.linfty_norm();
+  const double relative= solution.linfty_norm();
   deallog << "Verification fe degree " << fe_degree << ": " << error / relative
           << std::endl
           << std::endl;

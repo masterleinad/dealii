@@ -33,7 +33,7 @@ template <int dim>
 void
 test()
 {
-  const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm& mpi_communicator= MPI_COMM_WORLD;
   deallog << "dim = " << dim << std::endl;
 
   parallel::distributed::Triangulation<dim> tria(mpi_communicator);
@@ -46,7 +46,7 @@ test()
     typename parallel::distributed::Triangulation<dim>::active_cell_iterator
                  cell_iterator;
   typedef double DT;
-  int            counter = 0;
+  int            counter= 0;
   GridTools::
     exchange_cell_data_to_ghosts<DT, parallel::distributed::Triangulation<dim>>(
       tria,
@@ -54,7 +54,7 @@ test()
         ++counter;
         if(counter % 2 == 0)
           {
-            DT value = counter;
+            DT value= counter;
 
             deallog << "pack " << cell->id() << " " << value << std::endl;
             return value;

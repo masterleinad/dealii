@@ -80,11 +80,11 @@ std::vector<unsigned int>
 FE_DGP<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, 0U);
-  dpo[dim] = deg + 1;
-  for(unsigned int i = 1; i < dim; ++i)
+  dpo[dim]= deg + 1;
+  for(unsigned int i= 1; i < dim; ++i)
     {
-      dpo[dim] *= deg + 1 + i;
-      dpo[dim] /= i + 1;
+      dpo[dim]*= deg + 1 + i;
+      dpo[dim]/= i + 1;
     }
   return dpo;
 }
@@ -216,7 +216,7 @@ std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_DGP<dim, spacedim>::get_constant_modes() const
 {
   Table<2, bool> constant_modes(1, this->dofs_per_cell);
-  constant_modes(0, 0) = true;
+  constant_modes(0, 0)= true;
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(
     constant_modes, std::vector<unsigned int>(1, 0));
 }

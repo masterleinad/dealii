@@ -25,9 +25,9 @@ main()
   herr_t status;
 
   /* Create a new file using default properties. */
-  file_id = H5Fcreate("file.h5", H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+  file_id= H5Fcreate("file.h5", H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
 
   /* Terminate access to the file. */
-  status = H5Fclose(file_id);
+  status= H5Fclose(file_id);
   std::remove("file.h5");
 }

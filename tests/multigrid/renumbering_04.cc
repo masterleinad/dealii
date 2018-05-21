@@ -51,41 +51,41 @@ check(FiniteElement<dim>& fe)
 
   deallog << "** before:" << std::endl;
   {
-    unsigned int                         n_dofs_per_cell = fe.dofs_per_cell;
+    unsigned int                         n_dofs_per_cell= fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dofs(n_dofs_per_cell);
-    for(unsigned int level = 0; level < tria.n_levels(); ++level)
+    for(unsigned int level= 0; level < tria.n_levels(); ++level)
       {
         deallog << "* level " << level << std::endl;
-        for(typename DoFHandler<dim>::cell_iterator cell = dh.begin(level);
+        for(typename DoFHandler<dim>::cell_iterator cell= dh.begin(level);
             cell != dh.end(level);
             ++cell)
           {
             deallog << "cell " << cell->id() << ":" << std::endl;
             cell->get_mg_dof_indices(local_dofs);
-            for(unsigned int i = 0; i < n_dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < n_dofs_per_cell; ++i)
               deallog << local_dofs[i] << " ";
             deallog << std::endl;
           }
       }
   }
 
-  for(unsigned int level = 0; level < tria.n_levels(); ++level)
+  for(unsigned int level= 0; level < tria.n_levels(); ++level)
     DoFRenumbering::block_wise(dh, level);
 
   deallog << std::endl << "** after:" << std::endl;
   {
-    unsigned int                         n_dofs_per_cell = fe.dofs_per_cell;
+    unsigned int                         n_dofs_per_cell= fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dofs(n_dofs_per_cell);
-    for(unsigned int level = 0; level < tria.n_levels(); ++level)
+    for(unsigned int level= 0; level < tria.n_levels(); ++level)
       {
         deallog << "* level " << level << std::endl;
-        for(typename DoFHandler<dim>::cell_iterator cell = dh.begin(level);
+        for(typename DoFHandler<dim>::cell_iterator cell= dh.begin(level);
             cell != dh.end(level);
             ++cell)
           {
             deallog << "cell " << cell->id() << ":" << std::endl;
             cell->get_mg_dof_indices(local_dofs);
-            for(unsigned int i = 0; i < n_dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < n_dofs_per_cell; ++i)
               deallog << local_dofs[i] << " ";
             deallog << std::endl;
           }

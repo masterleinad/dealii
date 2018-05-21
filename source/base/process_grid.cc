@@ -56,17 +56,17 @@ namespace
 
     // Get the total number of cores we can occupy in a rectangular dense matrix
     // with rectangular blocks when every core owns only a single block:
-    const int n_processes_heuristic = int(std::ceil((1. * m) / block_size_m))
-                                      * int(std::ceil((1. * n) / block_size_n));
-    const int Np = std::min(n_processes_heuristic, n_processes);
+    const int n_processes_heuristic= int(std::ceil((1. * m) / block_size_m))
+                                     * int(std::ceil((1. * n) / block_size_n));
+    const int Np= std::min(n_processes_heuristic, n_processes);
 
     // Now we need to split Np into  Pr x Pc. Assume we know the shape/ratio
     // Pc =: ratio * Pr
     // therefore
     // Np = Pc * Pc / ratio
     // for quadratic matrices the ratio equals 1
-    const double ratio = double(n) / m;
-    int          Pc    = std::floor(std::sqrt(ratio * Np));
+    const double ratio= double(n) / m;
+    int          Pc   = std::floor(std::sqrt(ratio * Np));
 
     // one could rounds up Pc to the number which has zero remainder from the division of Np
     // while ( Np % Pc != 0 )
@@ -74,9 +74,9 @@ namespace
     // but this affects the grid shape dramatically, i.e. 10 cores 3x3 becomes 2x5.
 
     // limit our estimate to be in [2, Np]
-    int n_process_columns = std::min(Np, std::max(2, Pc));
+    int n_process_columns= std::min(Np, std::max(2, Pc));
     // finally, get the rows:
-    int n_process_rows = Np / n_process_columns;
+    int n_process_rows= Np / n_process_columns;
 
     Assert(n_process_columns >= 1 && n_process_rows >= 1
              && n_processes >= n_process_rows * n_process_columns,
@@ -119,19 +119,19 @@ namespace Utilities
           "Size of process grid is larger than number of available MPI processes."));
 
       // processor grid order.
-      const bool column_major = false;
+      const bool column_major= false;
 
       // Initialize Cblas context from the provided communicator
-      blacs_context     = Csys2blacs_handle(mpi_communicator);
-      const char* order = (column_major ? "Col" : "Row");
+      blacs_context    = Csys2blacs_handle(mpi_communicator);
+      const char* order= (column_major ? "Col" : "Row");
       // Note that blacs_context can be modified below. Thus Cblacs2sys_handle
       // may not return the same MPI communicator.
       Cblacs_gridinit(&blacs_context, order, n_process_rows, n_process_columns);
 
       // Blacs may modify the grid size on processes which are not used
       // in the grid. So provide copies below:
-      int procrows_ = n_process_rows;
-      int proccols_ = n_process_columns;
+      int procrows_= n_process_rows;
+      int proccols_= n_process_columns;
       Cblacs_gridinfo(blacs_context,
                       &procrows_,
                       &proccols_,
@@ -143,9 +143,9 @@ namespace Utilities
       // Note that a different condition is used in FORTRAN code here
       // https://stackoverflow.com/questions/18516915/calling-blacs-with-more-processes-than-used
       if(this_process_row < 0 || this_process_column < 0)
-        mpi_process_is_active = false;
+        mpi_process_is_active= false;
       else
-        mpi_process_is_active = true;
+        mpi_process_is_active= true;
 
       // Create an auxiliary communicator which has root and all inactive cores.
       // Assume that inactive cores start with id=n_process_rows*n_process_columns
@@ -157,37 +157,37 @@ namespace Utilities
 
       std::vector<int> inactive_with_root_ranks;
       inactive_with_root_ranks.push_back(0);
-      for(unsigned int i = n_active_mpi_processes; i < n_mpi_processes; ++i)
+      for(unsigned int i= n_active_mpi_processes; i < n_mpi_processes; ++i)
         inactive_with_root_ranks.push_back(i);
 
       // Get the group of processes in mpi_communicator
-      int       ierr = 0;
+      int       ierr= 0;
       MPI_Group all_group;
-      ierr = MPI_Comm_group(mpi_communicator, &all_group);
+      ierr= MPI_Comm_group(mpi_communicator, &all_group);
       AssertThrowMPI(ierr);
 
       // Construct the group containing all ranks we need:
       MPI_Group inactive_with_root_group;
-      const int n = inactive_with_root_ranks.size();
-      ierr        = MPI_Group_incl(all_group,
-                            n,
-                            inactive_with_root_ranks.data(),
-                            &inactive_with_root_group);
+      const int n= inactive_with_root_ranks.size();
+      ierr       = MPI_Group_incl(all_group,
+                           n,
+                           inactive_with_root_ranks.data(),
+                           &inactive_with_root_group);
       AssertThrowMPI(ierr);
 
       // Create the communicator based on inactive_with_root_group.
       // Note that on all the active MPI processes (except for the one with
       // rank 0) the resulting MPI_Comm mpi_communicator_inactive_with_root
       // will be MPI_COMM_NULL.
-      ierr = Utilities::MPI::create_group(mpi_communicator,
-                                          inactive_with_root_group,
-                                          55,
-                                          &mpi_communicator_inactive_with_root);
+      ierr= Utilities::MPI::create_group(mpi_communicator,
+                                         inactive_with_root_group,
+                                         55,
+                                         &mpi_communicator_inactive_with_root);
       AssertThrowMPI(ierr);
 
-      ierr = MPI_Group_free(&all_group);
+      ierr= MPI_Group_free(&all_group);
       AssertThrowMPI(ierr);
-      ierr = MPI_Group_free(&inactive_with_root_group);
+      ierr= MPI_Group_free(&inactive_with_root_group);
       AssertThrowMPI(ierr);
 
       // Double check that the process with rank 0 in subgroup is active:

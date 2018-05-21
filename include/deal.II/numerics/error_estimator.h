@@ -246,7 +246,7 @@ namespace hp
  * @author Wolfgang Bangerth, 1998, 1999, 2000, 2004, 2006, Denis Davydov,
  * 2015; parallelization by Thomas Richter, 2000
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class KellyErrorEstimator
 {
 public:
@@ -257,7 +257,7 @@ public:
   enum Strategy
   {
     //! Kelly error estimator with the factor $\frac {h_K}{24}$.
-    cell_diameter_over_24 = 0,
+    cell_diameter_over_24= 0,
     //! the boundary residual estimator with the factor $\frac {h_F}{2 max(p^+,p^-)}$.
     face_diameter_over_twice_max_degree,
     //! Kelly error estimator with the factor $h_K$.
@@ -334,13 +334,13 @@ public:
                                      neumann_bc,
            const InputVector&        solution,
            Vector<float>&            error,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = nullptr,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Call the @p estimate function, see above, with
@@ -355,13 +355,13 @@ public:
                                      neumann_bc,
            const InputVector&        solution,
            Vector<float>&            error,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = nullptr,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Same function as above, but accepts more than one solution vector and
@@ -386,13 +386,13 @@ public:
                                                   neumann_bc,
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Call the @p estimate function, see above, with
@@ -407,13 +407,13 @@ public:
                                                   neumann_bc,
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -429,13 +429,13 @@ public:
                                      neumann_bc,
            const InputVector&        solution,
            Vector<float>&            error,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -450,13 +450,13 @@ public:
                                      neumann_bc,
            const InputVector&        solution,
            Vector<float>&            error,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = nullptr,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -472,13 +472,13 @@ public:
                                                   neumann_bc,
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -493,13 +493,13 @@ public:
                                                   neumann_bc,
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = nullptr,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Exception
@@ -576,7 +576,7 @@ public:
   enum Strategy
   {
     //! Kelly error estimator with the factor $\frac {h_K}{24}$.
-    cell_diameter_over_24 = 0,
+    cell_diameter_over_24= 0,
     //! the boundary residual estimator with the factor $\frac {h_F}{2 max(p^+,p^-)}$.
     face_diameter_over_twice_max_degree,
     //! Kelly error estimator with the factor $h_K$.
@@ -615,13 +615,13 @@ public:
                                      neumann_bc,
            const InputVector&        solution,
            Vector<float>&            error,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficient    = nullptr,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficient   = nullptr,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Call the @p estimate function, see above, with
@@ -636,13 +636,13 @@ public:
                                      neumann_bc,
            const InputVector&        solution,
            Vector<float>&            error,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = nullptr,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = nullptr,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Same function as above, but accepts more than one solution vectors and
@@ -667,13 +667,13 @@ public:
                                                   neumann_bc,
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Call the @p estimate function, see above, with
@@ -688,13 +688,13 @@ public:
                                                   neumann_bc,
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -710,13 +710,13 @@ public:
                                      neumann_bc,
            const InputVector&        solution,
            Vector<float>&            error,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -731,13 +731,13 @@ public:
                                      neumann_bc,
            const InputVector&        solution,
            Vector<float>&            error,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -753,13 +753,13 @@ public:
                                                   neumann_bc,
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -774,13 +774,13 @@ public:
                                                   neumann_bc,
            const std::vector<const InputVector*>& solutions,
            std::vector<Vector<float>*>&           errors,
-           const ComponentMask&      component_mask = ComponentMask(),
-           const Function<spacedim>* coefficients   = 0,
-           const unsigned int        n_threads = numbers::invalid_unsigned_int,
+           const ComponentMask&      component_mask= ComponentMask(),
+           const Function<spacedim>* coefficients  = 0,
+           const unsigned int        n_threads= numbers::invalid_unsigned_int,
            const types::subdomain_id subdomain_id
            = numbers::invalid_subdomain_id,
-           const types::material_id material_id = numbers::invalid_material_id,
-           const Strategy           strategy    = cell_diameter_over_24);
+           const types::material_id material_id= numbers::invalid_material_id,
+           const Strategy           strategy   = cell_diameter_over_24);
 
   /**
    * Exception

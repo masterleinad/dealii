@@ -41,7 +41,7 @@ static std::atomic<int> counter(0);
 void
 execute(int i)
 {
-  tls_data->get().i = i;
+  tls_data->get().i= i;
 
   // indicate that the TLS object has been
   // accessed
@@ -60,7 +60,7 @@ void
 test()
 {
   // create a thread local storage object
-  tls_data = new Threads::ThreadLocalStorage<X>();
+  tls_data= new Threads::ThreadLocalStorage<X>();
 
   // create 5 threads and wait for their
   // return. the OS will create 5 individual
@@ -68,8 +68,8 @@ test()
   // create 5 individual thread specific
   // storage locations
   Threads::ThreadGroup<> tg;
-  for(unsigned int i = 10; i < 15; ++i)
-    tg += Threads::new_thread(execute, i);
+  for(unsigned int i= 10; i < 15; ++i)
+    tg+= Threads::new_thread(execute, i);
 
   // spin lock until all threads have created
   // their objects

@@ -67,20 +67,20 @@ main(int argc, char** argv)
 
   SUNDIALS::ARKode<VectorType> ode(data);
 
-  ode.reinit_vector = [&](VectorType& v) { v.reinit(2); };
+  ode.reinit_vector= [&](VectorType& v) { v.reinit(2); };
 
-  double kappa = 1.0;
+  double kappa= 1.0;
 
   ode.implicit_function
     = [&](double, const VectorType& y, VectorType& ydot) -> int {
-    ydot[0] = y[1];
-    ydot[1] = -kappa * kappa * y[0];
+    ydot[0]= y[1];
+    ydot[1]= -kappa * kappa * y[0];
     return 0;
   };
 
-  ode.output_step = [&](const double       t,
-                        const VectorType&  sol,
-                        const unsigned int step_number) -> int {
+  ode.output_step= [&](const double       t,
+                       const VectorType&  sol,
+                       const unsigned int step_number) -> int {
     // limit the output to every 10th step and increase the precision to make
     // the test more robust
     if(step_number % 10 == 0)
@@ -90,8 +90,8 @@ main(int argc, char** argv)
   };
 
   Vector<double> y(2);
-  y[0] = 0;
-  y[1] = kappa;
+  y[0]= 0;
+  y[1]= kappa;
   ode.solve_ode(y);
   return 0;
 }

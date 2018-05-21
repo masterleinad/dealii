@@ -43,10 +43,10 @@ test(const unsigned int size, const unsigned int block_size)
 
   //create FullMatrix and fill it
   FullMatrix<NumberType> full(size);
-  unsigned int           count = 0;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j, ++count)
-      full(i, j) = count;
+  unsigned int           count= 0;
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= 0; j < size; ++j, ++count)
+      full(i, j)= count;
 
   //create 2d process grid
   std::shared_ptr<Utilities::MPI::ProcessGrid> grid
@@ -58,7 +58,7 @@ test(const unsigned int size, const unsigned int block_size)
   ScaLAPACKMatrix<NumberType> scalapack_matrix_copy(
     size, size, grid, block_size, block_size);
 
-  scalapack_matrix = full;
+  scalapack_matrix= full;
   scalapack_matrix.save(filename.c_str());
   scalapack_matrix_copy.load(filename.c_str());
 
@@ -81,8 +81,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes       = {{100, 200, 300}};
-  const std::vector<unsigned int> block_sizes = {{1, 16, 32}};
+  const std::vector<unsigned int> sizes      = {{100, 200, 300}};
+  const std::vector<unsigned int> block_sizes= {{1, 16, 32}};
 
   for(const auto& s : sizes)
     for(const auto& b : block_sizes)

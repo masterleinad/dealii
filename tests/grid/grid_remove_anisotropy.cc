@@ -32,11 +32,11 @@ check_remove_anisotropy()
 {
   Point<3>(corners)[3];
 
-  corners[0] = Point<3>(1, 0, 0);
-  corners[1] = Point<3>(0, 4, 0);
-  corners[2] = Point<3>(0, 0, 2);
+  corners[0]= Point<3>(1, 0, 0);
+  corners[1]= Point<3>(0, 4, 0);
+  corners[2]= Point<3>(0, 0, 2);
 
-  const unsigned int n_subdivisions = 1;
+  const unsigned int n_subdivisions= 1;
 
   Triangulation<3> triangulation;
   GridGenerator::subdivided_parallelepiped(

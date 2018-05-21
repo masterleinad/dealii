@@ -23,22 +23,22 @@ void
 test()
 {
   DerivativeForm<1, dim, spacedim> dF;
-  double                           dF_norm_sqr = 0;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  double                           dF_norm_sqr= 0;
+  for(unsigned int i= 0; i < spacedim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       {
-        dF[i][j] = (i + 2 * j + 1);
-        dF_norm_sqr += (i + 2 * j + 1) * (i + 2 * j + 1);
+        dF[i][j]= (i + 2 * j + 1);
+        dF_norm_sqr+= (i + 2 * j + 1) * (i + 2 * j + 1);
       }
 
   DerivativeForm<2, dim, spacedim> ddF;
-  double                           ddF_norm_sqr = 0;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
+  double                           ddF_norm_sqr= 0;
+  for(unsigned int i= 0; i < spacedim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
         {
-          ddF[i][j][k] = (i + 2 * j + 3 * k + 1);
-          ddF_norm_sqr += (i + 2 * j + 3 * k + 1) * (i + 2 * j + 3 * k + 1);
+          ddF[i][j][k]= (i + 2 * j + 3 * k + 1);
+          ddF_norm_sqr+= (i + 2 * j + 3 * k + 1) * (i + 2 * j + 3 * k + 1);
         }
 
   // output the norms of these objects

@@ -81,12 +81,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   virtual void
   value_list(const std::vector<Point<dim>>& points,
              std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+             const unsigned int             component= 0) const;
 };
 
 template <int dim>
@@ -111,14 +111,14 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
 
   Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-  const unsigned int n_points = points.size();
+  const unsigned int n_points= points.size();
 
-  for(unsigned int i = 0; i < n_points; ++i)
+  for(unsigned int i= 0; i < n_points; ++i)
     {
       if(points[i].square() < 0.5 * 0.5)
-        values[i] = 20;
+        values[i]= 20;
       else
-        values[i] = 1;
+        values[i]= 1;
     }
 }
 
@@ -158,8 +158,8 @@ LaplaceProblem<dim>::assemble_system()
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -171,39 +171,39 @@ LaplaceProblem<dim>::assemble_system()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
       x_fe_values.reinit(cell);
-      const FEValues<2>& fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<2>& fe_values= x_fe_values.get_present_fe_values();
 
       coefficient.value_list(fe_values.get_quadrature_points(),
                              coefficient_values);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              cell_matrix(i, j) += (coefficient_values[q_point]
-                                    * fe_values.shape_grad(i, q_point)
-                                    * fe_values.shape_grad(j, q_point)
-                                    * fe_values.JxW(q_point));
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
+              cell_matrix(i, j)+= (coefficient_values[q_point]
+                                   * fe_values.shape_grad(i, q_point)
+                                   * fe_values.shape_grad(j, q_point)
+                                   * fe_values.JxW(q_point));
 
-            cell_rhs(i) += (fe_values.shape_value(i, q_point) * 1.0
-                            * fe_values.JxW(q_point));
+            cell_rhs(i)+= (fe_values.shape_value(i, q_point) * 1.0
+                           * fe_values.JxW(q_point));
           }
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-          system_rhs(local_dof_indices[i]) += cell_rhs(i);
+          system_rhs(local_dof_indices[i])+= cell_rhs(i);
         }
     }
 
@@ -246,9 +246,9 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   data_out.build_patches();
 
   DataOutBase::EpsFlags eps_flags;
-  eps_flags.z_scaling    = 4;
-  eps_flags.azimut_angle = 40;
-  eps_flags.turn_angle   = 10;
+  eps_flags.z_scaling   = 4;
+  eps_flags.azimut_angle= 40;
+  eps_flags.turn_angle  = 10;
   data_out.set_flags(eps_flags);
 
   data_out.write_eps(deallog.get_file_stream());
@@ -258,7 +258,7 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 6; ++cycle)
+  for(unsigned int cycle= 0; cycle < 6; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 

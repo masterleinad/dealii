@@ -31,8 +31,8 @@ void
 test(Utilities::CUDA::Handle& cuda_handle)
 {
   // Build the sparse matrix on the host
-  const unsigned int   problem_size = 10;
-  unsigned int         size         = (problem_size - 1) * (problem_size - 1);
+  const unsigned int   problem_size= 10;
+  unsigned int         size        = (problem_size - 1) * (problem_size - 1);
   FDMatrix             testproblem(problem_size, problem_size);
   SparsityPattern      structure(size, size, 5);
   SparseMatrix<double> A;
@@ -47,8 +47,8 @@ test(Utilities::CUDA::Handle& cuda_handle)
   SolverCG<>           cg_host(control);
   Vector<double>       sol_host(size);
   Vector<double>       rhs_host(size);
-  for(unsigned int i = 0; i < size; ++i)
-    rhs_host[i] = static_cast<double>(i);
+  for(unsigned int i= 0; i < size; ++i)
+    rhs_host[i]= static_cast<double>(i);
   cg_host.solve(A, sol_host, rhs_host, prec_no);
 
   // Solve on the device
@@ -56,15 +56,15 @@ test(Utilities::CUDA::Handle& cuda_handle)
   LinearAlgebra::CUDAWrappers::Vector<double> sol_dev(size);
   LinearAlgebra::CUDAWrappers::Vector<double> rhs_dev(size);
   LinearAlgebra::ReadWriteVector<double>      rw_vector(size);
-  for(unsigned int i = 0; i < size; ++i)
-    rw_vector[i] = static_cast<double>(i);
+  for(unsigned int i= 0; i < size; ++i)
+    rw_vector[i]= static_cast<double>(i);
   rhs_dev.import(rw_vector, VectorOperation::insert);
   SolverCG<LinearAlgebra::CUDAWrappers::Vector<double>> cg_dev(control);
   cg_dev.solve(A_dev, sol_dev, rhs_dev, prec_no);
 
   // Check the result
   rw_vector.import(sol_dev, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     AssertThrow(std::fabs(rw_vector[i] - sol_host[i]) < 1e-8,
                 ExcInternalError());
 }

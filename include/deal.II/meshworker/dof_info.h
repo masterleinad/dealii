@@ -64,7 +64,7 @@ namespace MeshWorker
    * @ingroup MeshWorker
    * @author Guido Kanschat, 2009
    */
-  template <int dim, int spacedim = dim, typename number = double>
+  template <int dim, int spacedim= dim, typename number= double>
   class DoFInfo : public LocalResults<number>
   {
   public:
@@ -287,7 +287,7 @@ namespace MeshWorker
       level_cell(false)
   {
     std::vector<types::global_dof_index> aux(1);
-    aux[0] = dof_handler.get_fe().dofs_per_cell;
+    aux[0]= dof_handler.get_fe().dofs_per_cell;
     aux_local_indices.reinit(aux);
   }
 
@@ -313,11 +313,11 @@ namespace MeshWorker
   DoFInfo<dim, spacedim, number>::reinit(const DHCellIterator& c)
   {
     get_indices(c);
-    level_cell = c->is_level_cell();
+    level_cell= c->is_level_cell();
 
-    cell        = typename Triangulation<dim, spacedim>::cell_iterator(*c);
-    face_number = numbers::invalid_unsigned_int;
-    sub_number  = numbers::invalid_unsigned_int;
+    cell       = typename Triangulation<dim, spacedim>::cell_iterator(*c);
+    face_number= numbers::invalid_unsigned_int;
+    sub_number = numbers::invalid_unsigned_int;
     if(block_info)
       LocalResults<number>::reinit(block_info->local());
     else
@@ -330,9 +330,9 @@ namespace MeshWorker
   DoFInfo<dim, spacedim, number>::set_face(const DHFaceIterator& f,
                                            const unsigned int    face_no)
   {
-    face = static_cast<typename Triangulation<dim, spacedim>::face_iterator>(f);
-    face_number = face_no;
-    sub_number  = numbers::invalid_unsigned_int;
+    face= static_cast<typename Triangulation<dim, spacedim>::face_iterator>(f);
+    face_number= face_no;
+    sub_number = numbers::invalid_unsigned_int;
   }
 
   template <int dim, int spacedim, typename number>
@@ -345,9 +345,9 @@ namespace MeshWorker
     if((cell.state() != IteratorState::valid)
        || cell != typename Triangulation<dim, spacedim>::cell_iterator(*c))
       get_indices(c);
-    level_cell = c->is_level_cell();
+    level_cell= c->is_level_cell();
 
-    cell = typename Triangulation<dim, spacedim>::cell_iterator(*c);
+    cell= typename Triangulation<dim, spacedim>::cell_iterator(*c);
     set_face(f, face_no);
 
     if(block_info)
@@ -363,9 +363,9 @@ namespace MeshWorker
                                               const unsigned int    face_no,
                                               const unsigned int    subface_no)
   {
-    face = static_cast<typename Triangulation<dim, spacedim>::face_iterator>(f);
-    face_number = face_no;
-    sub_number  = subface_no;
+    face= static_cast<typename Triangulation<dim, spacedim>::face_iterator>(f);
+    face_number= face_no;
+    sub_number = subface_no;
   }
 
   template <int dim, int spacedim, typename number>
@@ -381,9 +381,9 @@ namespace MeshWorker
             != static_cast<
                  typename Triangulation<dim, spacedim>::cell_iterator>(c))
       get_indices(c);
-    level_cell = c->is_level_cell();
+    level_cell= c->is_level_cell();
 
-    cell = static_cast<typename Triangulation<dim, spacedim>::cell_iterator>(c);
+    cell= static_cast<typename Triangulation<dim, spacedim>::cell_iterator>(c);
     set_subface(f, face_no, subface_no);
 
     if(block_info)
@@ -407,12 +407,12 @@ namespace MeshWorker
   inline DoFInfoBox<dim, DOFINFO>::DoFInfoBox(const DOFINFO& seed)
     : cell(seed), cell_valid(true)
   {
-    for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
       {
-        exterior[i]                = seed;
-        interior[i]                = seed;
-        interior_face_available[i] = false;
-        exterior_face_available[i] = false;
+        exterior[i]               = seed;
+        interior[i]               = seed;
+        interior_face_available[i]= false;
+        exterior_face_available[i]= false;
       }
   }
 
@@ -421,12 +421,12 @@ namespace MeshWorker
     const DoFInfoBox<dim, DOFINFO>& other)
     : cell(other.cell), cell_valid(other.cell_valid)
   {
-    for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
       {
-        exterior[i]                = other.exterior[i];
-        interior[i]                = other.interior[i];
-        interior_face_available[i] = false;
-        exterior_face_available[i] = false;
+        exterior[i]               = other.exterior[i];
+        interior[i]               = other.interior[i];
+        interior_face_available[i]= false;
+        exterior_face_available[i]= false;
       }
   }
 
@@ -434,11 +434,11 @@ namespace MeshWorker
   inline void
   DoFInfoBox<dim, DOFINFO>::reset()
   {
-    cell_valid = false;
-    for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+    cell_valid= false;
+    for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
       {
-        interior_face_available[i] = false;
-        exterior_face_available[i] = false;
+        interior_face_available[i]= false;
+        exterior_face_available[i]= false;
       }
   }
 
@@ -451,7 +451,7 @@ namespace MeshWorker
       return;
 
     assembler.assemble(cell);
-    for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
       {
         // Only do something if data available
         if(interior_face_available[i])

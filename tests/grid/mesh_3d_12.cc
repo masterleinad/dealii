@@ -62,7 +62,7 @@ void check(Triangulation<3>& tria)
   deallog << "Initial check" << std::endl;
   check_this(tria);
 
-  for(unsigned int r = 0; r < 2; ++r)
+  for(unsigned int r= 0; r < 2; ++r)
     {
       tria.refine_global(1);
       deallog << "Check " << r << std::endl;

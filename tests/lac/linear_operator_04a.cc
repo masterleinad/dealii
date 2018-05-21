@@ -39,10 +39,10 @@ main(int argc, char* argv[])
   matrix_t a(5U, 5U, 3U);
   a.compress(VectorOperation::add);
 
-  auto     op_a = linear_operator<vector_t>(a);
+  auto     op_a= linear_operator<vector_t>(a);
   vector_t u, res;
   op_a.reinit_domain_vector(u, false);
-  res = op_a * u;
+  res= op_a * u;
   // ^^ this was not working, whereas op_a.vmult(res,u) did.
 
   deallog << "OK" << std::endl;

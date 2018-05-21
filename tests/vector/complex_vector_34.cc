@@ -23,14 +23,14 @@ void
 test(Vector<std::complex<double>>& v)
 {
   // set some elements of the vector
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) = std::complex<double>(i + 1., i + 2.);
+      v(i)= std::complex<double>(i + 1., i + 2.);
     }
   v.compress();
 
   // set them to zero again
-  v = 0;
+  v= 0;
 
   // then check all_zero
   AssertThrow(v.all_zero() == true, ExcInternalError());

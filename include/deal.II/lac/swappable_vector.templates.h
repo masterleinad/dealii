@@ -85,7 +85,7 @@ SwappableVector<number>::swap_out(const std::string& name)
   if(filename != "")
     kill_file();
 
-  filename = name;
+  filename= name;
 
   Assert(this->size() != 0, ExcSizeZero());
 
@@ -128,7 +128,7 @@ SwappableVector<number>::reload()
     {
       // clear flag since no more
       // needed
-      data_is_preloaded = false;
+      data_is_preloaded= false;
 
       // release lock. the lock is
       // also released in the other
@@ -188,7 +188,7 @@ SwappableVector<number>::reload_vector(const bool set_flag)
 
   // set the flag if so required
   if(set_flag)
-    data_is_preloaded = true;
+    data_is_preloaded= true;
   lock.release();
 #endif
 }
@@ -212,11 +212,11 @@ SwappableVector<number>::kill_file()
 
   if(filename != "")
     {
-      int status = std::remove(filename.c_str());
+      int status= std::remove(filename.c_str());
       (void) status;
       AssertThrow(status == 0, ExcIO());
 
-      filename = "";
+      filename= "";
     };
 }
 

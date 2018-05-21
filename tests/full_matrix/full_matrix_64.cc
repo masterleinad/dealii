@@ -24,6 +24,6 @@ check()
 {
   FullMatrix<number> m;
   make_matrix(m);
-  m = 0;
+  m= 0;
   print_matrix(m);
 }

@@ -27,10 +27,10 @@ test(PETScWrappers::MPI::Vector& v)
   Vector<double> w(v.size());
   Vector<float>  x(v.size());
 
-  for(unsigned int i = 0; i < w.size(); ++i)
+  for(unsigned int i= 0; i < w.size(); ++i)
     {
-      w(i) = i;
-      x(i) = i + 1;
+      w(i)= i;
+      x(i)= i + 1;
     }
 
   // first copy from w and make sure we get
@@ -39,16 +39,16 @@ test(PETScWrappers::MPI::Vector& v)
   // two cases, the template argument to
   // Vector<T> must be different from
   // PetscScalar
-  v = w;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  v= w;
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i, ExcInternalError());
       AssertThrow(v(i) == i, ExcInternalError());
       AssertThrow(x(i) == i + 1, ExcInternalError());
     }
 
-  v = x;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  v= x;
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i, ExcInternalError());
       AssertThrow(v(i) == i + 1, ExcInternalError());

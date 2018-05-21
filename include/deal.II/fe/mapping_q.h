@@ -77,7 +77,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Ralf Hartmann, 2000, 2001, 2005; Guido Kanschat 2000, 2001,
  * Wolfgang Bangerth, 2015
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class MappingQ : public Mapping<dim, spacedim>
 {
 public:
@@ -99,7 +99,7 @@ public:
    * embedded into higher dimensional spaces.
    */
   MappingQ(const unsigned int polynomial_degree,
-           const bool         use_mapping_q_on_all_cells = false);
+           const bool         use_mapping_q_on_all_cells= false);
 
   /**
    * Copy constructor.

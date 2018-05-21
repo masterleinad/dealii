@@ -41,13 +41,13 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
 
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));
 
-  const unsigned int size = 500;
+  const unsigned int size= 500;
   //create FullMatrix and fill it
   FullMatrix<NumberType> full(size);
-  unsigned int           count = 0;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j, ++count)
-      full(i, j) = count;
+  unsigned int           count= 0;
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= 0; j < size; ++j, ++count)
+      full(i, j)= count;
 
   //create 2d process grid
   std::shared_ptr<Utilities::MPI::ProcessGrid> grid_2d
@@ -86,7 +86,7 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
         << "x" << grid_single->get_process_grid_columns() << std::endl
         << std::endl;
 
-  scalapack_matrix_source = full;
+  scalapack_matrix_source= full;
 
   scalapack_matrix_source.copy_to(scalapack_matrix_2d);
   scalapack_matrix_source.copy_to(scalapack_matrix_1d);
@@ -111,8 +111,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> blocks_i = {{16, 32, 64}};
-  const std::vector<unsigned int> blocks_j = {{16, 32, 64}};
+  const std::vector<unsigned int> blocks_i= {{16, 32, 64}};
+  const std::vector<unsigned int> blocks_j= {{16, 32, 64}};
 
   for(const auto& s : blocks_i)
     for(const auto& b : blocks_j)

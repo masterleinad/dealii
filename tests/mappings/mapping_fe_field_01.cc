@@ -73,7 +73,7 @@ test(const unsigned int degree)
 
   typename DoFHandler<dim, spacedim>::active_cell_iterator cell
     = dof_sys.begin_active(),
-    endc = dof_sys.end();
+    endc= dof_sys.end();
 
   for(; cell != endc; ++cell)
     {
@@ -87,7 +87,7 @@ main()
 {
   initlog();
 
-  for(unsigned int d = 1; d < 4; ++d)
+  for(unsigned int d= 1; d < 4; ++d)
     {
       test<2, 2>(d);
       test<2, 3>(d);

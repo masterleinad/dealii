@@ -13,7 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../fe/injection_common.h"
 
@@ -21,7 +21,7 @@ template <int dim>
 void
 test()
 {
-  for(unsigned int i = 1; i < 4; ++i)
-    for(unsigned int j = i; j < 4; ++j)
+  for(unsigned int i= 1; i < 4; ++i)
+    for(unsigned int j= i; j < 4; ++j)
       do_check(FE_DGP<dim>(i), FE_DGP<dim>(j));
 }

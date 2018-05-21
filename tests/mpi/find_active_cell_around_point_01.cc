@@ -29,7 +29,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -44,8 +44,8 @@ test()
       // choose a point that is guaranteed to lie in the domain but not
       // at the interface between cells
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
-        p[d] = 1. / 3;
+      for(unsigned int d= 0; d < dim; ++d)
+        p[d]= 1. / 3;
 
       typename parallel::distributed::Triangulation<dim>::active_cell_iterator
         cell
@@ -69,7 +69,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

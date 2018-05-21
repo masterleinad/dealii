@@ -97,7 +97,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Katharina Kormann, Martin Kronbichler, 2010, 2011
  */
 
-template <int dim, typename Number = double>
+template <int dim, typename Number= double>
 class MatrixFree : public Subscriptor
 {
 public:
@@ -110,7 +110,7 @@ public:
   /**
    * The dimension set by the template argument `dim`.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Collects the options for initialization of the MatrixFree class. The
@@ -170,7 +170,7 @@ public:
       /**
        * Perform application in serial.
        */
-      none = internal::MatrixFreeFunctions::TaskInfo::none,
+      none= internal::MatrixFreeFunctions::TaskInfo::none,
       /**
        * Partition the cells into two levels and afterwards form chunks.
        */
@@ -179,33 +179,32 @@ public:
       /**
        * Partition on the global level and color cells within the partitions.
        */
-      partition_color
-      = internal::MatrixFreeFunctions::TaskInfo::partition_color,
+      partition_color= internal::MatrixFreeFunctions::TaskInfo::partition_color,
       /**
        * Use the traditional coloring algorithm: this is like
        * TasksParallelScheme::partition_color, but only uses one partition.
        */
-      color = internal::MatrixFreeFunctions::TaskInfo::color
+      color= internal::MatrixFreeFunctions::TaskInfo::color
     };
 
     /**
      * Constructor for AdditionalData.
      */
     AdditionalData(
-      const TasksParallelScheme tasks_parallel_scheme = partition_partition,
-      const unsigned int        tasks_block_size      = 0,
+      const TasksParallelScheme tasks_parallel_scheme= partition_partition,
+      const unsigned int        tasks_block_size     = 0,
       const UpdateFlags         mapping_update_flags
       = update_gradients | update_JxW_values,
-      const UpdateFlags  mapping_update_flags_boundary_faces = update_default,
-      const UpdateFlags  mapping_update_flags_inner_faces    = update_default,
-      const UpdateFlags  mapping_update_flags_faces_by_cells = update_default,
-      const unsigned int level_mg_handler    = numbers::invalid_unsigned_int,
-      const bool         store_plain_indices = true,
-      const bool         initialize_indices  = true,
-      const bool         initialize_mapping  = true,
-      const bool         overlap_communication_computation    = true,
-      const bool         hold_all_faces_to_owned_cells        = false,
-      const bool         cell_vectorization_categories_strict = false)
+      const UpdateFlags  mapping_update_flags_boundary_faces= update_default,
+      const UpdateFlags  mapping_update_flags_inner_faces   = update_default,
+      const UpdateFlags  mapping_update_flags_faces_by_cells= update_default,
+      const unsigned int level_mg_handler   = numbers::invalid_unsigned_int,
+      const bool         store_plain_indices= true,
+      const bool         initialize_indices = true,
+      const bool         initialize_mapping = true,
+      const bool         overlap_communication_computation   = true,
+      const bool         hold_all_faces_to_owned_cells       = false,
+      const bool         cell_vectorization_categories_strict= false)
       : tasks_parallel_scheme(tasks_parallel_scheme),
         tasks_block_size(tasks_block_size),
         mapping_update_flags(mapping_update_flags),
@@ -464,7 +463,7 @@ public:
   /**
    * Destructor.
    */
-  ~MatrixFree() override = default;
+  ~MatrixFree() override= default;
 
   /**
    * Extracts the information needed to perform loops over cells. The
@@ -483,7 +482,7 @@ public:
          const DoFHandlerType&   dof_handler,
          const ConstraintMatrix& constraint,
          const QuadratureType&   quad,
-         const AdditionalData    additional_data = AdditionalData());
+         const AdditionalData    additional_data= AdditionalData());
 
   /**
    * Initializes the data structures. Same as above, but using a $Q_1$
@@ -494,7 +493,7 @@ public:
   reinit(const DoFHandlerType&   dof_handler,
          const ConstraintMatrix& constraint,
          const QuadratureType&   quad,
-         const AdditionalData    additional_data = AdditionalData());
+         const AdditionalData    additional_data= AdditionalData());
 
   /**
    * Same as above.
@@ -510,7 +509,7 @@ public:
          const ConstraintMatrix& constraint,
          const IndexSet&         locally_owned_dofs,
          const QuadratureType&   quad,
-         const AdditionalData    additional_data = AdditionalData());
+         const AdditionalData    additional_data= AdditionalData());
 
   /**
    * Extracts the information needed to perform loops over cells. The
@@ -538,7 +537,7 @@ public:
          const std::vector<const DoFHandlerType*>&   dof_handler,
          const std::vector<const ConstraintMatrix*>& constraint,
          const std::vector<QuadratureType>&          quad,
-         const AdditionalData additional_data = AdditionalData());
+         const AdditionalData additional_data= AdditionalData());
 
   /**
    * Initializes the data structures. Same as above, but  using a $Q_1$
@@ -549,7 +548,7 @@ public:
   reinit(const std::vector<const DoFHandlerType*>&   dof_handler,
          const std::vector<const ConstraintMatrix*>& constraint,
          const std::vector<QuadratureType>&          quad,
-         const AdditionalData additional_data = AdditionalData());
+         const AdditionalData additional_data= AdditionalData());
 
   /**
    * Same as above.
@@ -565,7 +564,7 @@ public:
          const std::vector<const ConstraintMatrix*>& constraint,
          const std::vector<IndexSet>&                locally_owned_set,
          const std::vector<QuadratureType>&          quad,
-         const AdditionalData additional_data = AdditionalData());
+         const AdditionalData additional_data= AdditionalData());
 
   /**
    * Initializes the data structures. Same as before, but now the index set
@@ -580,7 +579,7 @@ public:
          const std::vector<const DoFHandlerType*>&   dof_handler,
          const std::vector<const ConstraintMatrix*>& constraint,
          const QuadratureType&                       quad,
-         const AdditionalData additional_data = AdditionalData());
+         const AdditionalData additional_data= AdditionalData());
 
   /**
    * Initializes the data structures. Same as above, but  using a $Q_1$
@@ -591,7 +590,7 @@ public:
   reinit(const std::vector<const DoFHandlerType*>&   dof_handler,
          const std::vector<const ConstraintMatrix*>& constraint,
          const QuadratureType&                       quad,
-         const AdditionalData additional_data = AdditionalData());
+         const AdditionalData additional_data= AdditionalData());
 
   /**
    * Copy function. Creates a deep copy of all data structures. It is usually
@@ -714,7 +713,7 @@ public:
                     cell_operation,
     OutVector&      dst,
     const InVector& src,
-    const bool      zero_dst_vector = false) const;
+    const bool      zero_dst_vector= false) const;
 
   /**
    * This is the second variant to run the loop over all cells, now providing
@@ -767,7 +766,7 @@ public:
             const CLASS*    owning_class,
             OutVector&      dst,
             const InVector& src,
-            const bool      zero_dst_vector = false) const;
+            const bool      zero_dst_vector= false) const;
 
   /**
    * Same as above, but for class member functions which are non-const.
@@ -782,7 +781,7 @@ public:
     CLASS*          owning_class,
     OutVector&      dst,
     const InVector& src,
-    const bool      zero_dst_vector = false) const;
+    const bool      zero_dst_vector= false) const;
 
   /**
    * This method runs a loop over all cells (in parallel) and performs the MPI
@@ -878,7 +877,7 @@ public:
                                boundary_operation,
        OutVector&              dst,
        const InVector&         src,
-       const bool              zero_dst_vector = false,
+       const bool              zero_dst_vector= false,
        const DataAccessOnFaces dst_vector_face_access
        = DataAccessOnFaces::unspecified,
        const DataAccessOnFaces src_vector_face_access
@@ -989,7 +988,7 @@ public:
     const CLASS*            owning_class,
     OutVector&              dst,
     const InVector&         src,
-    const bool              zero_dst_vector = false,
+    const bool              zero_dst_vector= false,
     const DataAccessOnFaces dst_vector_face_access
     = DataAccessOnFaces::unspecified,
     const DataAccessOnFaces src_vector_face_access
@@ -1017,7 +1016,7 @@ public:
     CLASS*                  owning_class,
     OutVector&              dst,
     const InVector&         src,
-    const bool              zero_dst_vector = false,
+    const bool              zero_dst_vector= false,
     const DataAccessOnFaces dst_vector_face_access
     = DataAccessOnFaces::unspecified,
     const DataAccessOnFaces src_vector_face_access
@@ -1033,7 +1032,7 @@ public:
   std::pair<unsigned int, unsigned int>
   create_cell_subrange_hp(const std::pair<unsigned int, unsigned int>& range,
                           const unsigned int fe_degree,
-                          const unsigned int dof_handler_index = 0) const;
+                          const unsigned int dof_handler_index= 0) const;
 
   /**
    * In the hp adaptive case, a subrange of cells as computed during the cell
@@ -1045,7 +1044,7 @@ public:
   create_cell_subrange_hp_by_index(
     const std::pair<unsigned int, unsigned int>& range,
     const unsigned int                           fe_index,
-    const unsigned int                           dof_handler_index = 0) const;
+    const unsigned int                           dof_handler_index= 0) const;
 
   //@}
 
@@ -1076,7 +1075,7 @@ public:
   template <typename VectorType>
   void
   initialize_dof_vector(VectorType&        vec,
-                        const unsigned int dof_handler_index = 0) const;
+                        const unsigned int dof_handler_index= 0) const;
 
   /**
    * Initialize function for a distributed vector. The length of the vector is
@@ -1101,7 +1100,7 @@ public:
   template <typename Number2>
   void
   initialize_dof_vector(LinearAlgebra::distributed::Vector<Number2>& vec,
-                        const unsigned int dof_handler_index = 0) const;
+                        const unsigned int dof_handler_index= 0) const;
 
   /**
    * Return the partitioner that represents the locally owned data and the
@@ -1114,19 +1113,19 @@ public:
    * be reused from one vector to another.
    */
   const std::shared_ptr<const Utilities::MPI::Partitioner>&
-  get_vector_partitioner(const unsigned int dof_handler_index = 0) const;
+  get_vector_partitioner(const unsigned int dof_handler_index= 0) const;
 
   /**
    * Return the set of cells that are oned by the processor.
    */
   const IndexSet&
-  get_locally_owned_set(const unsigned int dof_handler_index = 0) const;
+  get_locally_owned_set(const unsigned int dof_handler_index= 0) const;
 
   /**
    * Return the set of ghost cells needed but not owned by the processor.
    */
   const IndexSet&
-  get_ghost_set(const unsigned int dof_handler_index = 0) const;
+  get_ghost_set(const unsigned int dof_handler_index= 0) const;
 
   /**
    * Return a list of all degrees of freedom that are constrained. The list
@@ -1138,7 +1137,7 @@ public:
    * that are owned locally, not for ghosts.
    */
   const std::vector<unsigned int>&
-  get_constrained_dofs(const unsigned int dof_handler_index = 0) const;
+  get_constrained_dofs(const unsigned int dof_handler_index= 0) const;
 
   /**
    * Computes a renumbering of degrees of freedom that better fits with the
@@ -1152,7 +1151,7 @@ public:
    */
   void
   renumber_dofs(std::vector<types::global_dof_index>& renumbering,
-                const unsigned int                    dof_handler_index = 0);
+                const unsigned int                    dof_handler_index= 0);
 
   //@}
 
@@ -1273,7 +1272,7 @@ public:
    * `std::vector` argument in the reinit() function.
    */
   const DoFHandler<dim>&
-  get_dof_handler(const unsigned int dof_handler_index = 0) const;
+  get_dof_handler(const unsigned int dof_handler_index= 0) const;
 
   /**
    * Return the cell iterator in deal.II speak to a given cell in the
@@ -1288,7 +1287,7 @@ public:
   typename DoFHandler<dim>::cell_iterator
   get_cell_iterator(const unsigned int macro_cell_number,
                     const unsigned int vector_number,
-                    const unsigned int fe_component = 0) const;
+                    const unsigned int fe_component= 0) const;
 
   /**
    * This returns the cell iterator in deal.II speak to a given cell in the
@@ -1304,7 +1303,7 @@ public:
   typename hp::DoFHandler<dim>::active_cell_iterator
   get_hp_cell_iterator(const unsigned int macro_cell_number,
                        const unsigned int vector_number,
-                       const unsigned int dof_handler_index = 0) const;
+                       const unsigned int dof_handler_index= 0) const;
 
   /**
    * Since this class uses vectorized data types with usually more than one
@@ -1358,45 +1357,45 @@ public:
    * Return the number of degrees of freedom per cell for a given hp index.
    */
   unsigned int
-  get_dofs_per_cell(const unsigned int dof_handler_index  = 0,
-                    const unsigned int hp_active_fe_index = 0) const;
+  get_dofs_per_cell(const unsigned int dof_handler_index = 0,
+                    const unsigned int hp_active_fe_index= 0) const;
 
   /**
    * Return the number of quadrature points per cell for a given hp index.
    */
   unsigned int
-  get_n_q_points(const unsigned int quad_index         = 0,
-                 const unsigned int hp_active_fe_index = 0) const;
+  get_n_q_points(const unsigned int quad_index        = 0,
+                 const unsigned int hp_active_fe_index= 0) const;
 
   /**
    * Return the number of degrees of freedom on each face of the cell for
    * given hp index.
    */
   unsigned int
-  get_dofs_per_face(const unsigned int fe_component       = 0,
-                    const unsigned int hp_active_fe_index = 0) const;
+  get_dofs_per_face(const unsigned int fe_component      = 0,
+                    const unsigned int hp_active_fe_index= 0) const;
 
   /**
    * Return the number of quadrature points on each face of the cell for
    * given hp index.
    */
   unsigned int
-  get_n_q_points_face(const unsigned int quad_index         = 0,
-                      const unsigned int hp_active_fe_index = 0) const;
+  get_n_q_points_face(const unsigned int quad_index        = 0,
+                      const unsigned int hp_active_fe_index= 0) const;
 
   /**
    * Return the quadrature rule for given hp index.
    */
   const Quadrature<dim>&
-  get_quadrature(const unsigned int quad_index         = 0,
-                 const unsigned int hp_active_fe_index = 0) const;
+  get_quadrature(const unsigned int quad_index        = 0,
+                 const unsigned int hp_active_fe_index= 0) const;
 
   /**
    * Return the quadrature rule for given hp index.
    */
   const Quadrature<dim - 1>&
-  get_face_quadrature(const unsigned int quad_index         = 0,
-                      const unsigned int hp_active_fe_index = 0) const;
+  get_face_quadrature(const unsigned int quad_index        = 0,
+                      const unsigned int hp_active_fe_index= 0) const;
 
   /**
    * Return the category the current batch of cells was assigned to. Categories
@@ -1479,7 +1478,7 @@ public:
    * Return information on indexation degrees of freedom.
    */
   const internal::MatrixFreeFunctions::DoFInfo&
-  get_dof_info(const unsigned int dof_handler_index_component = 0) const;
+  get_dof_info(const unsigned int dof_handler_index_component= 0) const;
 
   /**
    * Return the number of weights in the constraint pool.
@@ -1506,11 +1505,11 @@ public:
    * Return the unit cell information for given hp index.
    */
   const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>&
-  get_shape_info(const unsigned int dof_handler_index_component = 0,
-                 const unsigned int quad_index                  = 0,
-                 const unsigned int fe_base_element             = 0,
-                 const unsigned int hp_active_fe_index          = 0,
-                 const unsigned int hp_active_quad_index        = 0) const;
+  get_shape_info(const unsigned int dof_handler_index_component= 0,
+                 const unsigned int quad_index                 = 0,
+                 const unsigned int fe_base_element            = 0,
+                 const unsigned int hp_active_fe_index         = 0,
+                 const unsigned int hp_active_quad_index       = 0) const;
 
   /**
    * Return the connectivity information of a face.
@@ -1902,8 +1901,8 @@ MatrixFree<dim, Number>::get_faces_by_cells_boundary_id(
   std::array<types::boundary_id, VectorizedArray<Number>::n_array_elements>
     result;
   result.fill(numbers::invalid_boundary_id);
-  for(unsigned int v = 0; v < n_active_entries_per_cell_batch(macro_cell); ++v)
-    result[v] = face_info.cell_and_face_boundary_id(macro_cell, face_number, v);
+  for(unsigned int v= 0; v < n_active_entries_per_cell_batch(macro_cell); ++v)
+    result[v]= face_info.cell_and_face_boundary_id(macro_cell, face_number, v);
   return result;
 }
 
@@ -2006,7 +2005,7 @@ MatrixFree<dim, Number>::n_active_entries_per_cell_batch(
   const unsigned int cell_batch_number) const
 {
   AssertIndexRange(cell_batch_number, task_info.cell_partition_data.back());
-  unsigned int n_components = VectorizedArray<Number>::n_array_elements;
+  unsigned int n_components= VectorizedArray<Number>::n_array_elements;
   while(n_components > 1
         && cell_level_index[cell_batch_number
                               * VectorizedArray<Number>::n_array_elements
@@ -2025,7 +2024,7 @@ MatrixFree<dim, Number>::n_active_entries_per_face_batch(
   const unsigned int face_batch_number) const
 {
   AssertIndexRange(face_batch_number, face_info.faces.size());
-  unsigned int n_components = VectorizedArray<Number>::n_array_elements;
+  unsigned int n_components= VectorizedArray<Number>::n_array_elements;
   while(n_components > 1
         && face_info.faces[face_batch_number].cells_interior[n_components - 1]
              == numbers::invalid_unsigned_int)
@@ -2165,26 +2164,26 @@ MatrixFree<dim, Number>::get_face_category(const unsigned int macro_face) const
     return std::make_pair(0U, 0U);
 
   std::pair<unsigned int, unsigned int> result;
-  for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements
-                          && face_info.faces[macro_face].cells_interior[v]
-                               != numbers::invalid_unsigned_int;
+  for(unsigned int v= 0; v < VectorizedArray<Number>::n_array_elements
+                         && face_info.faces[macro_face].cells_interior[v]
+                              != numbers::invalid_unsigned_int;
       ++v)
-    result.first = std::max(
+    result.first= std::max(
       result.first,
       dof_info[0]
         .cell_active_fe_index[face_info.faces[macro_face].cells_interior[v]]);
   if(face_info.faces[macro_face].cells_exterior[0]
      != numbers::invalid_unsigned_int)
-    for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements
-                            && face_info.faces[macro_face].cells_exterior[v]
-                                 != numbers::invalid_unsigned_int;
+    for(unsigned int v= 0; v < VectorizedArray<Number>::n_array_elements
+                           && face_info.faces[macro_face].cells_exterior[v]
+                                != numbers::invalid_unsigned_int;
         ++v)
-      result.second = std::max(
+      result.second= std::max(
         result.first,
         dof_info[0]
           .cell_active_fe_index[face_info.faces[macro_face].cells_exterior[v]]);
   else
-    result.second = numbers::invalid_unsigned_int;
+    result.second= numbers::invalid_unsigned_int;
   return result;
 }
 
@@ -2208,11 +2207,11 @@ MatrixFree<dim, Number>::acquire_scratch_data() const
 {
   typedef std::list<std::pair<bool, AlignedVector<VectorizedArray<Number>>>>
              list_type;
-  list_type& data = scratch_pad.get();
-  for(typename list_type::iterator it = data.begin(); it != data.end(); ++it)
+  list_type& data= scratch_pad.get();
+  for(typename list_type::iterator it= data.begin(); it != data.end(); ++it)
     if(it->first == false)
       {
-        it->first = true;
+        it->first= true;
         return &it->second;
       }
   data.push_front(
@@ -2227,12 +2226,12 @@ MatrixFree<dim, Number>::release_scratch_data(
 {
   typedef std::list<std::pair<bool, AlignedVector<VectorizedArray<Number>>>>
              list_type;
-  list_type& data = scratch_pad.get();
-  for(typename list_type::iterator it = data.begin(); it != data.end(); ++it)
+  list_type& data= scratch_pad.get();
+  for(typename list_type::iterator it= data.begin(); it != data.end(); ++it)
     if(&it->second == scratch)
       {
         Assert(it->first == true, ExcInternalError());
-        it->first = false;
+        it->first= false;
         return;
       }
   AssertThrow(false, ExcMessage("Tried to release invalid scratch pad"));
@@ -2248,7 +2247,7 @@ MatrixFree<dim, Number>::acquire_scratch_data_non_threadsafe() const
       ++it)
     if(it->first == false)
       {
-        it->first = true;
+        it->first= true;
         return &it->second;
       }
   scratch_pad_non_threadsafe.push_front(
@@ -2268,7 +2267,7 @@ MatrixFree<dim, Number>::release_scratch_data_non_threadsafe(
     if(&it->second == scratch)
       {
         Assert(it->first == true, ExcInternalError());
-        it->first = false;
+        it->first= false;
         return;
       }
   AssertThrow(false, ExcMessage("Tried to release invalid scratch pad"));
@@ -2288,7 +2287,7 @@ namespace internal
     {
       std::vector<IndexSet> locally_owned_set;
       locally_owned_set.reserve(dofh.size());
-      for(unsigned int j = 0; j < dofh.size(); j++)
+      for(unsigned int j= 0; j < dofh.size(); j++)
         if(level == numbers::invalid_unsigned_int)
           locally_owned_set.push_back(dofh[j]->locally_owned_dofs());
         else
@@ -2304,7 +2303,7 @@ namespace internal
     {
       std::vector<IndexSet> locally_owned_set;
       locally_owned_set.reserve(dofh.size());
-      for(unsigned int j = 0; j < dofh.size(); j++)
+      for(unsigned int j= 0; j < dofh.size(); j++)
         if(level == numbers::invalid_unsigned_int)
           locally_owned_set.push_back(dofh[j]->locally_owned_dofs());
         else
@@ -2390,7 +2389,7 @@ MatrixFree<dim, Number>::reinit(
     = internal::MatrixFreeImplementation::extract_locally_owned_index_sets(
       dof_handler, additional_data.level_mg_handler);
   std::vector<hp::QCollection<1>> quad_hp;
-  for(unsigned int q = 0; q < quad.size(); ++q)
+  for(unsigned int q= 0; q < quad.size(); ++q)
     quad_hp.emplace_back(quad[q]);
   internal_reinit(StaticMappingQ1<dim>::mapping,
                   dof_handler,
@@ -2459,7 +2458,7 @@ MatrixFree<dim, Number>::reinit(
     = internal::MatrixFreeImplementation::extract_locally_owned_index_sets(
       dof_handler, additional_data.level_mg_handler);
   std::vector<hp::QCollection<1>> quad_hp;
-  for(unsigned int q = 0; q < quad.size(); ++q)
+  for(unsigned int q= 0; q < quad.size(); ++q)
     quad_hp.emplace_back(quad[q]);
   internal_reinit(mapping,
                   dof_handler,
@@ -2482,7 +2481,7 @@ MatrixFree<dim, Number>::reinit(
 {
   // find out whether we use a hp Quadrature or a standard quadrature
   std::vector<hp::QCollection<1>> quad_hp;
-  for(unsigned int q = 0; q < quad.size(); ++q)
+  for(unsigned int q= 0; q < quad.size(); ++q)
     quad_hp.emplace_back(quad[q]);
   internal_reinit(mapping,
                   dof_handler,
@@ -2510,7 +2509,7 @@ namespace internal
     // An arbitrary shift for communication to reduce the risk for accidental
     // interaction with other open communications that a user program might
     // set up
-    static constexpr unsigned int channel_shift = 103;
+    static constexpr unsigned int channel_shift= 103;
 
     VectorDataExchange(
       const dealii::MatrixFree<dim, Number>& matrix_free,
@@ -2532,7 +2531,7 @@ namespace internal
       (void) n_components;
       if(this->vector_face_access
          != dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified)
-        for(unsigned int c = 0; c < matrix_free.n_components(); ++c)
+        for(unsigned int c= 0; c < matrix_free.n_components(); ++c)
           AssertDimension(
             matrix_free.get_dof_info(c).vector_partitioner_face_variants.size(),
             3);
@@ -2541,7 +2540,7 @@ namespace internal
     ~VectorDataExchange()
     {
 #  ifdef DEAL_II_WITH_MPI
-      for(unsigned int i = 0; i < tmp_data.size(); ++i)
+      for(unsigned int i= 0; i < tmp_data.size(); ++i)
         if(tmp_data[i] != nullptr)
           matrix_free.release_scratch_data_non_threadsafe(tmp_data[i]);
 #  endif
@@ -2549,11 +2548,11 @@ namespace internal
 
     unsigned int
     find_vector_in_mf(const LinearAlgebra::distributed::Vector<Number>& vec,
-                      const bool check_global_compatibility = true) const
+                      const bool check_global_compatibility= true) const
     {
-      unsigned int mf_component = numbers::invalid_unsigned_int;
+      unsigned int mf_component= numbers::invalid_unsigned_int;
       (void) check_global_compatibility;
-      for(unsigned int c = 0; c < matrix_free.n_components(); ++c)
+      for(unsigned int c= 0; c < matrix_free.n_components(); ++c)
         if(
 #  ifdef DEBUG
           check_global_compatibility ?
@@ -2563,7 +2562,7 @@ namespace internal
             vec.get_partitioner()->is_compatible(
               *matrix_free.get_dof_info(c).vector_partitioner))
           {
-            mf_component = c;
+            mf_component= c;
             break;
           }
       return mf_component;
@@ -2594,9 +2593,9 @@ namespace internal
       const LinearAlgebra::distributed::Vector<Number>& vec)
     {
       (void) component_in_block_vector;
-      bool ghosts_set = vec.has_ghost_elements();
+      bool ghosts_set= vec.has_ghost_elements();
       if(ghosts_set)
-        ghosts_were_set = true;
+        ghosts_were_set= true;
       if(vector_face_access
            == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
          || vec.size() == 0)
@@ -2605,7 +2604,7 @@ namespace internal
       else
         {
 #  ifdef DEAL_II_WITH_MPI
-          const unsigned int mf_component = find_vector_in_mf(vec);
+          const unsigned int mf_component= find_vector_in_mf(vec);
           if(&get_partitioner(mf_component)
              == matrix_free.get_dof_info(mf_component).vector_partitioner.get())
             {
@@ -2655,7 +2654,7 @@ namespace internal
           AssertIndexRange(component_in_block_vector, tmp_data.size());
           AssertDimension(requests.size(), tmp_data.size());
 
-          const unsigned int mf_component = find_vector_in_mf(vec);
+          const unsigned int mf_component= find_vector_in_mf(vec);
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
           if(&part
@@ -2676,7 +2675,7 @@ namespace internal
 
           matrix_free.release_scratch_data_non_threadsafe(
             tmp_data[component_in_block_vector]);
-          tmp_data[component_in_block_vector] = nullptr;
+          tmp_data[component_in_block_vector]= nullptr;
 #  endif
         }
     }
@@ -2695,7 +2694,7 @@ namespace internal
         {
 #  ifdef DEAL_II_WITH_MPI
 
-          const unsigned int mf_component = find_vector_in_mf(vec);
+          const unsigned int mf_component= find_vector_in_mf(vec);
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
           if(&part
@@ -2741,7 +2740,7 @@ namespace internal
           AssertIndexRange(component_in_block_vector, tmp_data.size());
           AssertDimension(requests.size(), tmp_data.size());
 
-          const unsigned int mf_component = find_vector_in_mf(vec);
+          const unsigned int mf_component= find_vector_in_mf(vec);
 
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
@@ -2767,7 +2766,7 @@ namespace internal
 
           matrix_free.release_scratch_data_non_threadsafe(
             tmp_data[component_in_block_vector]);
-          tmp_data[component_in_block_vector] = nullptr;
+          tmp_data[component_in_block_vector]= nullptr;
 #  endif
         }
     }
@@ -2788,7 +2787,7 @@ namespace internal
 #  ifdef DEAL_II_WITH_MPI
           AssertDimension(requests.size(), tmp_data.size());
 
-          const unsigned int mf_component = find_vector_in_mf(vec);
+          const unsigned int mf_component= find_vector_in_mf(vec);
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
           if(&part
@@ -2802,7 +2801,7 @@ namespace internal
                   my_ghosts
                   != part.ghost_indices_within_larger_ghost_set().end();
                   ++my_ghosts)
-                for(unsigned int j = my_ghosts->first; j < my_ghosts->second;
+                for(unsigned int j= my_ghosts->first; j < my_ghosts->second;
                     j++)
                   {
                     const_cast<LinearAlgebra::distributed::Vector<Number>&>(vec)
@@ -2819,10 +2818,10 @@ namespace internal
                        LinearAlgebra::distributed::Vector<Number>& vec) const
     {
       if(range_index == numbers::invalid_unsigned_int)
-        vec = Number();
+        vec= Number();
       else
         {
-          const unsigned int mf_component = find_vector_in_mf(vec, false);
+          const unsigned int mf_component= find_vector_in_mf(vec, false);
           const internal::MatrixFreeFunctions::DoFInfo& dof_info
             = matrix_free.get_dof_info(mf_component);
           Assert(dof_info.vector_zero_range_list_index.empty() == false,
@@ -2837,10 +2836,9 @@ namespace internal
               id != dof_info.vector_zero_range_list_index[range_index + 1];
               ++id)
             {
-              const unsigned int start_pos
-                = dof_info.vector_zero_range_list[id]
-                  * internal::MatrixFreeFunctions::DoFInfo::
-                      chunk_size_zero_vector;
+              const unsigned int start_pos= dof_info.vector_zero_range_list[id]
+                                            * internal::MatrixFreeFunctions::
+                                                DoFInfo::chunk_size_zero_vector;
               const unsigned int end_pos
                 = std::min((dof_info.vector_zero_range_list[id] + 1)
                              * internal::MatrixFreeFunctions::DoFInfo::
@@ -2873,9 +2871,9 @@ namespace internal
   n_components_block(const VectorStruct& vec,
                      std::integral_constant<bool, true>)
   {
-    unsigned int components = 0;
-    for(unsigned int bl = 0; bl < vec.n_blocks(); ++bl)
-      components += n_components(vec.block(bl));
+    unsigned int components= 0;
+    for(unsigned int bl= 0; bl < vec.n_blocks(); ++bl)
+      components+= n_components(vec.block(bl));
     return components;
   }
 
@@ -2898,9 +2896,9 @@ namespace internal
   inline unsigned int
   n_components(const std::vector<VectorStruct>& vec)
   {
-    unsigned int components = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
-      components += n_components_block(
+    unsigned int components= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
+      components+= n_components_block(
         vec[comp],
         std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
     return components;
@@ -2910,9 +2908,9 @@ namespace internal
   inline unsigned int
   n_components(const std::vector<VectorStruct*>& vec)
   {
-    unsigned int components = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
-      components += n_components_block(
+    unsigned int components= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
+      components+= n_components_block(
         *vec[comp],
         std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
     return components;
@@ -2996,14 +2994,14 @@ namespace internal
                            VectorDataExchange<dim, Number>&)
   {
     if(range_index == 0 || range_index == numbers::invalid_unsigned_int)
-      vec = 0;
+      vec= 0;
   }
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
   update_ghost_values_start(const VectorStruct&              vec,
                             VectorDataExchange<dim, Number>& exchanger,
-                            const unsigned int               channel = 0)
+                            const unsigned int               channel= 0)
   {
     update_ghost_values_start_block(
       vec,
@@ -3017,7 +3015,7 @@ namespace internal
   update_ghost_values_start(
     const LinearAlgebra::distributed::Vector<Number>& vec,
     VectorDataExchange<dim, Number2>&                 exchanger,
-    const unsigned int                                channel = 0)
+    const unsigned int                                channel= 0)
   {
     exchanger.update_ghost_values_start(channel, vec);
   }
@@ -3027,11 +3025,11 @@ namespace internal
   update_ghost_values_start(const std::vector<VectorStruct>& vec,
                             VectorDataExchange<dim, Number>& exchanger)
   {
-    unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    unsigned int component_index= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       {
         update_ghost_values_start(vec[comp], exchanger, component_index);
-        component_index += n_components(vec[comp]);
+        component_index+= n_components(vec[comp]);
       }
   }
 
@@ -3040,11 +3038,11 @@ namespace internal
   update_ghost_values_start(const std::vector<VectorStruct*>& vec,
                             VectorDataExchange<dim, Number>&  exchanger)
   {
-    unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    unsigned int component_index= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       {
         update_ghost_values_start(*vec[comp], exchanger, component_index);
-        component_index += n_components(*vec[comp]);
+        component_index+= n_components(*vec[comp]);
       }
   }
 
@@ -3055,7 +3053,7 @@ namespace internal
                                   std::integral_constant<bool, true>,
                                   VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for(unsigned int i= 0; i < vec.n_blocks(); ++i)
       update_ghost_values_start(vec.block(i), exchanger, channel + i);
   }
 
@@ -3086,7 +3084,7 @@ namespace internal
   reset_ghost_values(const std::vector<VectorStruct>& vec,
                      VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       reset_ghost_values(vec[comp], exchanger);
   }
 
@@ -3095,7 +3093,7 @@ namespace internal
   reset_ghost_values(const std::vector<VectorStruct*>& vec,
                      VectorDataExchange<dim, Number>&  exchanger)
   {
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       reset_ghost_values(*vec[comp], exchanger);
   }
 
@@ -3105,7 +3103,7 @@ namespace internal
                            std::integral_constant<bool, true>,
                            VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for(unsigned int i= 0; i < vec.n_blocks(); ++i)
       reset_ghost_values(vec.block(i), exchanger);
   }
 
@@ -3113,7 +3111,7 @@ namespace internal
   inline void
   update_ghost_values_finish(const VectorStruct&              vec,
                              VectorDataExchange<dim, Number>& exchanger,
-                             const unsigned int               channel = 0)
+                             const unsigned int               channel= 0)
   {
     update_ghost_values_finish_block(
       vec,
@@ -3127,7 +3125,7 @@ namespace internal
   update_ghost_values_finish(
     const LinearAlgebra::distributed::Vector<Number>& vec,
     VectorDataExchange<dim, Number2>&                 exchanger,
-    const unsigned int                                channel = 0)
+    const unsigned int                                channel= 0)
   {
     exchanger.update_ghost_values_finish(channel, vec);
   }
@@ -3137,11 +3135,11 @@ namespace internal
   update_ghost_values_finish(const std::vector<VectorStruct>& vec,
                              VectorDataExchange<dim, Number>& exchanger)
   {
-    unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    unsigned int component_index= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       {
         update_ghost_values_finish(vec[comp], exchanger, component_index);
-        component_index += n_components(vec[comp]);
+        component_index+= n_components(vec[comp]);
       }
   }
 
@@ -3150,11 +3148,11 @@ namespace internal
   update_ghost_values_finish(const std::vector<VectorStruct*>& vec,
                              VectorDataExchange<dim, Number>&  exchanger)
   {
-    unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    unsigned int component_index= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       {
         update_ghost_values_finish(*vec[comp], exchanger, component_index);
-        component_index += n_components(*vec[comp]);
+        component_index+= n_components(*vec[comp]);
       }
   }
 
@@ -3165,7 +3163,7 @@ namespace internal
                                    std::integral_constant<bool, true>,
                                    VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for(unsigned int i= 0; i < vec.n_blocks(); ++i)
       update_ghost_values_finish(vec.block(i), exchanger, channel + i);
   }
 
@@ -3173,7 +3171,7 @@ namespace internal
   inline void
   compress_start(VectorStruct&                    vec,
                  VectorDataExchange<dim, Number>& exchanger,
-                 const unsigned int               channel = 0)
+                 const unsigned int               channel= 0)
   {
     compress_start_block(
       vec,
@@ -3186,7 +3184,7 @@ namespace internal
   inline void
   compress_start(LinearAlgebra::distributed::Vector<Number>& vec,
                  VectorDataExchange<dim, Number2>&           exchanger,
-                 const unsigned int                          channel = 0)
+                 const unsigned int                          channel= 0)
   {
     exchanger.compress_start(channel, vec);
   }
@@ -3196,11 +3194,11 @@ namespace internal
   compress_start(std::vector<VectorStruct>&       vec,
                  VectorDataExchange<dim, Number>& exchanger)
   {
-    unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    unsigned int component_index= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       {
         compress_start(vec[comp], exchanger, component_index);
-        component_index += n_components(vec[comp]);
+        component_index+= n_components(vec[comp]);
       }
   }
 
@@ -3209,11 +3207,11 @@ namespace internal
   compress_start(std::vector<VectorStruct*>&      vec,
                  VectorDataExchange<dim, Number>& exchanger)
   {
-    unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    unsigned int component_index= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       {
         compress_start(*vec[comp], exchanger, component_index);
-        component_index += n_components(*vec[comp]);
+        component_index+= n_components(*vec[comp]);
       }
   }
 
@@ -3224,7 +3222,7 @@ namespace internal
                        std::integral_constant<bool, true>,
                        VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for(unsigned int i= 0; i < vec.n_blocks(); ++i)
       compress_start(vec.block(i), exchanger, channel + i);
   }
 
@@ -3232,7 +3230,7 @@ namespace internal
   inline void
   compress_finish(VectorStruct&                    vec,
                   VectorDataExchange<dim, Number>& exchanger,
-                  const unsigned int               channel = 0)
+                  const unsigned int               channel= 0)
   {
     compress_finish_block(
       vec,
@@ -3245,7 +3243,7 @@ namespace internal
   inline void
   compress_finish(LinearAlgebra::distributed::Vector<Number>& vec,
                   VectorDataExchange<dim, Number2>&           exchanger,
-                  const unsigned int                          channel = 0)
+                  const unsigned int                          channel= 0)
   {
     exchanger.compress_finish(channel, vec);
   }
@@ -3255,11 +3253,11 @@ namespace internal
   compress_finish(std::vector<VectorStruct>&       vec,
                   VectorDataExchange<dim, Number>& exchanger)
   {
-    unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    unsigned int component_index= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       {
         compress_finish(vec[comp], exchanger, component_index);
-        component_index += n_components(vec[comp]);
+        component_index+= n_components(vec[comp]);
       }
   }
 
@@ -3268,11 +3266,11 @@ namespace internal
   compress_finish(std::vector<VectorStruct*>&      vec,
                   VectorDataExchange<dim, Number>& exchanger)
   {
-    unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    unsigned int component_index= 0;
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       {
         compress_finish(*vec[comp], exchanger, component_index);
-        component_index += n_components(*vec[comp]);
+        component_index+= n_components(*vec[comp]);
       }
   }
 
@@ -3283,7 +3281,7 @@ namespace internal
                         std::integral_constant<bool, true>,
                         VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for(unsigned int i= 0; i < vec.n_blocks(); ++i)
       compress_finish(vec.block(i), exchanger, channel + i);
   }
 
@@ -3315,7 +3313,7 @@ namespace internal
                      std::vector<VectorStruct>&       vec,
                      VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       zero_vector_region(range_index, vec[comp], exchanger);
   }
 
@@ -3325,7 +3323,7 @@ namespace internal
                      std::vector<VectorStruct*>&      vec,
                      VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for(unsigned int comp= 0; comp < vec.size(); comp++)
       zero_vector_region(range_index, *vec[comp], exchanger);
   }
 
@@ -3336,7 +3334,7 @@ namespace internal
                            std::integral_constant<bool, true>,
                            VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for(unsigned int i= 0; i < vec.n_blocks(); ++i)
       zero_vector_region(range_index, vec.block(i), exchanger);
   }
 

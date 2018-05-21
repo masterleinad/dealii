@@ -34,7 +34,7 @@
 #include <vector>
 using namespace std;
 
-const double a = 4, b = 5;
+const double a= 4, b= 5;
 
 template <int dim>
 class MyFunction : public Function<dim>
@@ -54,40 +54,40 @@ template <int dim>
 void
 exact_gradient(Point<dim>& p, Tensor<1, dim>& grad)
 {
-  double x = p[0], y = p[1];
+  double x= p[0], y= p[1];
 
-  grad[0] = a * cos(a * x) * cos(b * y);
-  grad[1] = -b * sin(a * x) * sin(b * y);
+  grad[0]= a * cos(a * x) * cos(b * y);
+  grad[1]= -b * sin(a * x) * sin(b * y);
 }
 
 template <int dim>
 void
 exact_second(Point<dim>& p, Tensor<2, dim>& sec)
 {
-  double x = p[0], y = p[1];
+  double x= p[0], y= p[1];
 
-  sec[0][0] = -a * a * sin(a * x) * cos(b * y);
+  sec[0][0]= -a * a * sin(a * x) * cos(b * y);
   //  sec[0][1]=-a*b*cos(a*x)*sin(b*y);
-  sec[1][0] = sec[0][1] = -a * b * cos(a * x) * sin(b * y);
-  sec[1][1]             = -b * b * sin(a * x) * cos(b * y);
+  sec[1][0]= sec[0][1]= -a * b * cos(a * x) * sin(b * y);
+  sec[1][1]           = -b * b * sin(a * x) * cos(b * y);
 }
 
 template <int dim>
 void
 exact_third(Point<dim>& p, Tensor<3, dim>& third)
 {
-  double x = p[0], y = p[1];
+  double x= p[0], y= p[1];
   // array of function and its derivatives
-  double dx[4] = {
+  double dx[4]= {
     sin(a * x), a * cos(a * x), -a * a * sin(a * x), -a * a * a * cos(a * x)};
-  double dy[4] = {
+  double dy[4]= {
     cos(b * y), -b * sin(b * y), -b * b * cos(b * y), b * b * b * sin(b * y)};
 
-  for(int i = 0; i < dim; ++i)
-    for(int j = 0; j < dim; ++j)
-      for(int k = 0; k < dim; ++k)
+  for(int i= 0; i < dim; ++i)
+    for(int j= 0; j < dim; ++j)
+      for(int k= 0; k < dim; ++k)
         {
-          int zeros = 0, ones = 0;
+          int zeros= 0, ones= 0;
           switch(i)
             {
               case 0:
@@ -97,7 +97,7 @@ exact_third(Point<dim>& p, Tensor<3, dim>& third)
                 ++ones;
                 break;
               default:
-                third[i][j][k] = 0;
+                third[i][j][k]= 0;
                 continue;
             }
           switch(j)
@@ -109,7 +109,7 @@ exact_third(Point<dim>& p, Tensor<3, dim>& third)
                 ++ones;
                 break;
               default:
-                third[i][j][k] = 0;
+                third[i][j][k]= 0;
                 continue;
             }
           switch(k)
@@ -121,10 +121,10 @@ exact_third(Point<dim>& p, Tensor<3, dim>& third)
                 ++ones;
                 break;
               default:
-                third[i][j][k] = 0;
+                third[i][j][k]= 0;
                 continue;
             }
-          third[i][j][k] = dx[zeros] * dy[ones];
+          third[i][j][k]= dx[zeros] * dy[ones];
         }
 }
 
@@ -150,7 +150,7 @@ derivatives()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
@@ -161,15 +161,15 @@ derivatives()
 
       DerivativeApproximation::approximate_derivative_tensor(
         mapping, dof_handler, solution, cell, grad, 0);
-      double normgrad = DerivativeApproximation::derivative_norm(grad);
+      double normgrad= DerivativeApproximation::derivative_norm(grad);
 
       DerivativeApproximation::approximate_derivative_tensor(
         mapping, dof_handler, solution, cell, second, 0);
-      double normsecond = DerivativeApproximation::derivative_norm(second);
+      double normsecond= DerivativeApproximation::derivative_norm(second);
 
       DerivativeApproximation::approximate_derivative_tensor(
         mapping, dof_handler, solution, cell, third, 0);
-      double normthird = DerivativeApproximation::derivative_norm(third);
+      double normthird= DerivativeApproximation::derivative_norm(third);
 
       // symmetry of second derivative
       Assert(second == transpose(second),
@@ -179,22 +179,21 @@ derivatives()
       // that this is only part of the truth,
       // we would have to test more here to be
       // really sure, but this should be enough
-      for(unsigned int i = 0; i < dim; ++i)
+      for(unsigned int i= 0; i < dim; ++i)
         Assert(third[i] == transpose(third[i]),
                ExcMessage("Third derivative is not symmetric"));
 
       // get exact derivatives
       fe_values.reinit(cell);
       std::vector<Point<dim>> q_point;
-      q_point = fe_values.get_quadrature_points();
+      q_point= fe_values.get_quadrature_points();
 
       exact_gradient(q_point[0], ex_grad);
       exact_second(q_point[0], ex_second);
       exact_third(q_point[0], ex_third);
 
-      double ex_normgrad = DerivativeApproximation::derivative_norm(ex_grad);
-      double ex_normsecond
-        = DerivativeApproximation::derivative_norm(ex_second);
+      double ex_normgrad  = DerivativeApproximation::derivative_norm(ex_grad);
+      double ex_normsecond= DerivativeApproximation::derivative_norm(ex_second);
       double ex_normthird = DerivativeApproximation::derivative_norm(ex_third);
 
       // output of all values for comparison

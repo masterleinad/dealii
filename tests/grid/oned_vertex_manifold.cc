@@ -27,7 +27,7 @@ main()
 
   SphericalManifold<1> spherical_manifold;
 
-  constexpr types::manifold_id spherical_manifold_id = 42;
+  constexpr types::manifold_id spherical_manifold_id= 42;
 
   Triangulation<1> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -41,7 +41,7 @@ main()
       deallog << "current cell manifold id: " << cell->manifold_id()
               << std::endl;
 
-      for(unsigned int vertex_n = 0;
+      for(unsigned int vertex_n= 0;
           vertex_n < GeometryInfo<1>::vertices_per_cell;
           ++vertex_n)
         {

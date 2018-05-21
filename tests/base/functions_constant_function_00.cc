@@ -37,12 +37,12 @@ test_one_object(const TESTEE<dim>& f,
 {
   // Create a vector of random points
   std::vector<Point<dim>> points(n_points);
-  for(unsigned int i_point = 0; i_point < n_points; ++i_point)
+  for(unsigned int i_point= 0; i_point < n_points; ++i_point)
     {
-      points[i_point] = Point<dim>();
-      for(unsigned int id = 0; id < dim; ++id)
+      points[i_point]= Point<dim>();
+      for(unsigned int id= 0; id < dim; ++id)
         {
-          points[i_point][id] = (Number) Testing::rand();
+          points[i_point][id]= (Number) Testing::rand();
         }
     }
 
@@ -72,14 +72,14 @@ test_one_object(const TESTEE<dim>& f,
     deallog << std::endl;
     std::vector<Number> return_values(n_points);
     f.value_list(points, return_values /*, component = 0*/);
-    for(int i = 0; i < n_points; ++i)
+    for(int i= 0; i < n_points; ++i)
       {
         deallog << return_values[i] << ' ';
       }
     deallog << std::endl;
 
     f.value_list(points, return_values, std::min(n_component - 1, 3u));
-    for(int i = 0; i < n_points; ++i)
+    for(int i= 0; i < n_points; ++i)
       {
         deallog << return_values[i] << ' ';
       }
@@ -92,9 +92,9 @@ test_one_object(const TESTEE<dim>& f,
     std::vector<Vector<Number>> return_values(n_points,
                                               Vector<Number>(n_component));
     f.vector_value_list(points, return_values);
-    for(int p = 0; p < n_points; ++p)
+    for(int p= 0; p < n_points; ++p)
       {
-        for(unsigned int c = 0; c < n_component; ++c)
+        for(unsigned int c= 0; c < n_component; ++c)
           deallog << return_values[p][c] << ' ';
         deallog << std::endl;
       }
@@ -130,8 +130,8 @@ test_constructor(const unsigned int         n_component,
   // Construct with std::vector<>
   {
     std::vector<Number> v(n_component);
-    for(unsigned int i = 0; i < n_component; ++i)
-      v[i] = component_data[i];
+    for(unsigned int i= 0; i < n_component; ++i)
+      v[i]= component_data[i];
 
     deallog.flags(std::ios::fixed);
     deallog << "\nIn " << dim << " dimension, "
@@ -147,8 +147,8 @@ test_constructor(const unsigned int         n_component,
   // Construct with Vector
   {
     Vector<Number> v(n_component);
-    for(unsigned int i = 0; i < n_component; ++i)
-      v[i] = component_data[i];
+    for(unsigned int i= 0; i < n_component; ++i)
+      v[i]= component_data[i];
 
     deallog.flags(std::ios::fixed);
     deallog << "\nIn " << dim << " dimension, "
@@ -183,9 +183,9 @@ void
 test_n_components(const std::vector<NUMBER>& component_data)
 {
 #define N_COMPONENT_CASE 3
-  const unsigned int components[N_COMPONENT_CASE] = {1, 4, 7};
+  const unsigned int components[N_COMPONENT_CASE]= {1, 4, 7};
 
-  for(unsigned int c = 0; c < N_COMPONENT_CASE; ++c)
+  for(unsigned int c= 0; c < N_COMPONENT_CASE; ++c)
     {
       test_constructor<dim, Number>(components[c], component_data);
     }
@@ -200,7 +200,7 @@ main()
 
   std::vector<NUMBER> component_data(MAX_N_COMPONENT);
   {
-    NUMBER data[MAX_N_COMPONENT] = {1, 255, 32768, 98.2, 75, 7.9e+8, 6.7e-4};
+    NUMBER data[MAX_N_COMPONENT]= {1, 255, 32768, 98.2, 75, 7.9e+8, 6.7e-4};
     component_data.assign(data, data + MAX_N_COMPONENT);
   }
 

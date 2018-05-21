@@ -37,8 +37,8 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  MPI_Comm     com_all = MPI_COMM_WORLD;
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  MPI_Comm     com_all= MPI_COMM_WORLD;
   MPI_Comm     com_small;
 
   // split the communicator in proc 0,1,2 and 3,4
@@ -69,7 +69,7 @@ test()
       DoFHandler<dim> dh(tr);
       dh.distribute_dofs(fe);
 
-      IndexSet locally_owned_dofs = dh.locally_owned_dofs();
+      IndexSet locally_owned_dofs= dh.locally_owned_dofs();
       IndexSet locally_relevant_dofs;
       DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
 
@@ -80,16 +80,16 @@ test()
       parallel::distributed::SolutionTransfer<dim, PETScWrappers::MPI::Vector>
         soltrans(dh);
 
-      for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); ++i)
+      for(unsigned int i= 0; i < locally_owned_dofs.n_elements(); ++i)
         {
-          unsigned int idx = locally_owned_dofs.nth_index_in_set(i);
-          x(idx)           = idx;
+          unsigned int idx= locally_owned_dofs.nth_index_in_set(i);
+          x(idx)          = idx;
           deallog << '[' << idx << ']' << ' '
                   << get_real_assert_zero_imag(x(idx)) << std::endl;
         }
 
       x.compress(VectorOperation::insert);
-      rel_x = x;
+      rel_x= x;
 
       soltrans.prepare_serialization(rel_x);
 
@@ -114,21 +114,21 @@ test()
     DoFHandler<dim> dh(tr);
     dh.distribute_dofs(fe);
 
-    IndexSet locally_owned_dofs = dh.locally_owned_dofs();
+    IndexSet locally_owned_dofs= dh.locally_owned_dofs();
     IndexSet locally_relevant_dofs;
 
     DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
 
     PETScWrappers::MPI::Vector solution(locally_owned_dofs, com_all);
-    solution = PetscScalar();
+    solution= PetscScalar();
 
     parallel::distributed::SolutionTransfer<dim, PETScWrappers::MPI::Vector>
       soltrans(dh);
     soltrans.deserialize(solution);
 
-    for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); ++i)
+    for(unsigned int i= 0; i < locally_owned_dofs.n_elements(); ++i)
       {
-        unsigned int idx = locally_owned_dofs.nth_index_in_set(i);
+        unsigned int idx= locally_owned_dofs.nth_index_in_set(i);
         deallog << '[' << idx << ']' << ' '
                 << get_real_assert_zero_imag(solution(idx)) << std::endl;
       }

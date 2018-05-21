@@ -38,7 +38,7 @@ test()
     Triangulation<dim>::limit_level_difference_at_vertices);
 
   hp::FECollection<dim> fe;
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     fe.push_back(FESystem<dim>(FE_Q<dim>(i + 1), 2, FE_DGQ<dim>(i), 1));
 
   hp::DoFHandler<dim> dof_handler(triangulation);
@@ -46,19 +46,19 @@ test()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(2);
 
-  const unsigned int n_refinements[] = {0, 4, 3, 2};
-  for(unsigned int i = 0; i < n_refinements[dim]; ++i)
+  const unsigned int n_refinements[]= {0, 4, 3, 2};
+  for(unsigned int i= 0; i < n_refinements[dim]; ++i)
     {
       // refine one-fifth of cells randomly
       std::vector<bool> flags(triangulation.n_active_cells(), false);
-      for(unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
-        flags[Testing::rand() % flags.size()] = true;
+      for(unsigned int k= 0; k < flags.size() / 5 + 1; ++k)
+        flags[Testing::rand() % flags.size()]= true;
       // make sure there's at least one that
       // will be refined
-      flags[0] = true;
+      flags[0]= true;
 
       // refine triangulation
-      unsigned int index = 0;
+      unsigned int index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
           cell != triangulation.end();
@@ -71,7 +71,7 @@ test()
       // (this should ensure that at least
       // some of them will actually be
       // coarsened)
-      index = 0;
+      index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
           cell != triangulation.end();
@@ -81,7 +81,7 @@ test()
 
       triangulation.execute_coarsening_and_refinement();
 
-      index = 0;
+      index= 0;
       for(typename hp::DoFHandler<dim>::active_cell_iterator cell
           = dof_handler.begin_active();
           cell != dof_handler.end();
@@ -90,7 +90,7 @@ test()
 
       dof_handler.distribute_dofs(fe);
 
-      const unsigned int N = dof_handler.n_dofs();
+      const unsigned int N= dof_handler.n_dofs();
       deallog << N << std::endl;
 
       IndexSet all(N);

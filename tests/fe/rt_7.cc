@@ -40,11 +40,11 @@ plot_shape_functions(const unsigned int degree)
   GridGenerator::hyper_cube(tr, 0., 1.);
 
   DoFHandler<dim>                         dof(tr);
-  typename DoFHandler<dim>::cell_iterator c = dof.begin();
+  typename DoFHandler<dim>::cell_iterator c= dof.begin();
   dof.distribute_dofs(fe_rt);
 
   QTrapez<1>         q_trapez;
-  const unsigned int div = 10;
+  const unsigned int div= 10;
   QIterated<dim>     q(q_trapez, div);
   FEValues<dim>      fe(
     fe_rt, q, update_values | update_gradients | update_quadrature_points);
@@ -52,15 +52,15 @@ plot_shape_functions(const unsigned int degree)
 
   Assert(fe.get_fe().n_components() == dim, ExcInternalError());
 
-  for(unsigned int q_point = 0; q_point < q.size(); ++q_point)
+  for(unsigned int q_point= 0; q_point < q.size(); ++q_point)
     {
       if(q_point % QIterated<1>(q_trapez, div).size() == 0)
         deallog << std::endl;
 
       deallog << fe.quadrature_point(q_point) << " ";
 
-      for(unsigned int i = 0; i < fe_rt.dofs_per_cell; ++i)
-        for(unsigned int c = 0; c < fe.get_fe().n_components(); ++c)
+      for(unsigned int i= 0; i < fe_rt.dofs_per_cell; ++i)
+        for(unsigned int c= 0; c < fe.get_fe().n_components(); ++c)
           deallog << " " << fe.shape_value_component(i, q_point, c);
 
       deallog << std::endl;

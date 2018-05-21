@@ -40,20 +40,20 @@ void
 dofs(const DoFHandler<dim>& dof)
 {
   typename DoFHandler<dim>::cell_iterator       cell;
-  const typename DoFHandler<dim>::cell_iterator end = dof.end();
+  const typename DoFHandler<dim>::cell_iterator end= dof.end();
 
   std::vector<types::global_dof_index> indices;
 
-  for(cell = dof.begin(); cell != end; ++cell)
+  for(cell= dof.begin(); cell != end; ++cell)
     {
       indices.resize(cell->get_fe().dofs_per_cell);
       cell->get_mg_dof_indices(indices);
 
       deallog << "Level " << cell->level();
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+      for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
         deallog << " v" << cell->vertex(i);
       deallog << " dofs ";
-      for(unsigned int i = 0; i < indices.size(); ++i)
+      for(unsigned int i= 0; i < indices.size(); ++i)
         deallog << ' ' << indices[i];
       deallog << std::endl;
     }

@@ -31,68 +31,68 @@ using namespace dealii::Physics;
 template <int dim, typename Number>
 void initialize(Tensor<0, dim, Number>& x)
 {
-  x = 1.0;
+  x= 1.0;
 }
 
 template <int dim, typename Number>
 void initialize(Tensor<1, dim, Number>& x)
 {
-  for(unsigned int i = 0; i < x.n_independent_components; ++i)
-    x[i] = 1.0;
+  for(unsigned int i= 0; i < x.n_independent_components; ++i)
+    x[i]= 1.0;
 }
 
 template <int dim, typename Number>
 void initialize(Tensor<2, dim, Number>& x)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       {
-        x[i][j] = 1.0;
+        x[i][j]= 1.0;
       }
 }
 
 template <int dim, typename Number>
 void initialize(SymmetricTensor<2, dim, Number>& x)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
       {
-        x[i][j] = 1.0;
+        x[i][j]= 1.0;
       }
 }
 
 template <int dim, typename Number>
 void initialize(Tensor<3, dim, Number>& x)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
         {
-          x[i][j][k] = 1.0;
+          x[i][j][k]= 1.0;
         }
 }
 
 template <int dim, typename Number>
 void initialize(Tensor<4, dim, Number>& x)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= 0; l < dim; ++l)
           {
-            x[i][j][k][l] = 1.0;
+            x[i][j][k][l]= 1.0;
           }
 }
 
 template <int dim, typename Number>
 void initialize(SymmetricTensor<4, dim, Number>& x)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = k; l < dim; ++l)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= k; l < dim; ++l)
           {
-            x[i][j][k][l] = 1.0;
+            x[i][j][k][l]= 1.0;
           }
 }
 
@@ -100,11 +100,11 @@ template <int dim>
 void
 test_scalars()
 {
-  const double A = 1.0;
-  const double C = 1.0;
+  const double A= 1.0;
+  const double C= 1.0;
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
-  const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
+  const Vector<double>     vA= Notation::Kelvin::to_vector(A);
+  const FullMatrix<double> mC= Notation::Kelvin::to_matrix(C);
 
   deallog.push("Scalar");
   {
@@ -128,11 +128,11 @@ test_tensors_012()
   initialize(A);
   initialize(C);
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
-  const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
+  const Vector<double>     vA= Notation::Kelvin::to_vector(A);
+  const FullMatrix<double> mC= Notation::Kelvin::to_matrix(C);
 
-  const std::string name = std::string("Rank-") + Utilities::int_to_string(rank)
-                           + std::string(" tensor");
+  const std::string name= std::string("Rank-") + Utilities::int_to_string(rank)
+                          + std::string(" tensor");
   deallog.push(name);
   {
     deallog << "Vector" << std::endl;
@@ -184,7 +184,7 @@ test_tensor_3()
     Tensor<3, dim, double> C;
     initialize(C);
 
-    const FullMatrix<double> mC = Notation::Kelvin::
+    const FullMatrix<double> mC= Notation::Kelvin::
       to_matrix<dim, Tensor<1, dim>, SymmetricTensor<2, dim>>(C);
 
     deallog.push("Rank-3 tensor: Symm 1");
@@ -200,7 +200,7 @@ test_tensor_3()
     Tensor<3, dim, double> C;
     initialize(C);
 
-    const FullMatrix<double> mC = Notation::Kelvin::
+    const FullMatrix<double> mC= Notation::Kelvin::
       to_matrix<dim, SymmetricTensor<2, dim>, Tensor<1, dim>>(C);
 
     deallog.push("Rank-3 tensor: Symm 2");
@@ -219,7 +219,7 @@ test_tensor_4()
   Tensor<4, dim, double> C;
   initialize(C);
 
-  const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
+  const FullMatrix<double> mC= Notation::Kelvin::to_matrix(C);
 
   deallog.push("Rank-4 tensor");
   {
@@ -238,8 +238,8 @@ test_symmetric_tensor_2()
   initialize(A);
   initialize(C);
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
-  const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
+  const Vector<double>     vA= Notation::Kelvin::to_vector(A);
+  const FullMatrix<double> mC= Notation::Kelvin::to_matrix(C);
 
   deallog.push("Rank-2 symm tensor");
   {
@@ -258,7 +258,7 @@ test_symmetric_tensor_4()
   SymmetricTensor<4, dim, double> C;
   initialize(C);
 
-  const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
+  const FullMatrix<double> mC= Notation::Kelvin::to_matrix(C);
 
   deallog.push("Rank-4 symm tensor");
   {

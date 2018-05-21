@@ -30,7 +30,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -39,8 +39,8 @@ test()
 
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
-      unsigned int              rep = 2;
-      unsigned int              ref = 2;
+      unsigned int              rep= 2;
+      unsigned int              ref= 2;
       std::vector<unsigned int> repetitions;
       repetitions.push_back(rep);
       repetitions.push_back(rep);
@@ -56,7 +56,7 @@ test()
           std::vector<types::subdomain_id> cell_subd(tr.n_active_cells());
 
           GridTools::get_subdomain_association(tr, cell_subd);
-          for(unsigned int i = 0; i < tr.n_active_cells(); ++i)
+          for(unsigned int i= 0; i < tr.n_active_cells(); ++i)
             deallog << cell_subd[i] << " ";
           deallog << std::endl;
         }
@@ -66,7 +66,7 @@ test()
       //correct level
       typename Triangulation<dim, dim>::active_cell_iterator cell;
 
-      for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+      for(cell= tr.begin_active(); cell != tr.end(); ++cell)
         {
           if(cell->subdomain_id() != (unsigned int) myid)
             {
@@ -74,7 +74,7 @@ test()
                           ExcInternalError());
             }
           else
-            for(unsigned int n = 0; n < GeometryInfo<dim>::faces_per_cell; ++n)
+            for(unsigned int n= 0; n < GeometryInfo<dim>::faces_per_cell; ++n)
               {
                 if(cell->at_boundary(n))
                   continue;
@@ -89,7 +89,7 @@ test()
               }
         }
 
-      const unsigned int checksum = tr.get_checksum();
+      const unsigned int checksum= tr.get_checksum();
       if(myid == 0)
         {
           deallog << "Checksum: " << checksum << std::endl;
@@ -109,7 +109,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   std::cout << myid << ":" << getpid() << std::endl;
   //system("sleep 20");

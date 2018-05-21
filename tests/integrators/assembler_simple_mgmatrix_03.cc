@@ -41,17 +41,17 @@ template <typename number>
 void
 fill_matrices(MeshWorker::LocalResults<number>& results, bool face)
 {
-  for(unsigned int k = 0; k < results.n_matrices(); ++k)
+  for(unsigned int k= 0; k < results.n_matrices(); ++k)
     {
-      FullMatrix<number>& M    = results.matrix(k, false).matrix;
-      double              base = 1000 * (results.matrix(k).row + 1)
-                    + 100 * (results.matrix(k).column + 1);
-      for(unsigned int i = 0; i < M.m(); ++i)
-        for(unsigned int j = 0; j < M.n(); ++j)
+      FullMatrix<number>& M   = results.matrix(k, false).matrix;
+      double              base= 1000 * (results.matrix(k).row + 1)
+                   + 100 * (results.matrix(k).column + 1);
+      for(unsigned int i= 0; i < M.m(); ++i)
+        for(unsigned int j= 0; j < M.n(); ++j)
           {
-            M(i, j) = base + 10 * i + j;
+            M(i, j)= base + 10 * i + j;
             if(face)
-              results.matrix(k, true).matrix(i, j) = base + 10 * i + j;
+              results.matrix(k, true).matrix(i, j)= base + 10 * i + j;
           }
     }
 }
@@ -70,19 +70,19 @@ test(FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
   dof.distribute_mg_dofs(fe);
   dof.initialize_local_block_info();
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for(unsigned int level= 0; level < tr.n_levels(); ++level)
     DoFRenumbering::component_wise(dof, level);
 
   deallog << "DoFs " << dof.n_dofs() << std::endl;
 
-  typename DoFHandler<dim>::level_cell_iterator cell     = dof.begin_active();
-  typename DoFHandler<dim>::face_iterator       face     = cell->face(1);
-  typename DoFHandler<dim>::level_cell_iterator neighbor = cell->neighbor(1);
+  typename DoFHandler<dim>::level_cell_iterator cell    = dof.begin_active();
+  typename DoFHandler<dim>::face_iterator       face    = cell->face(1);
+  typename DoFHandler<dim>::level_cell_iterator neighbor= cell->neighbor(1);
 
   MGLevelObject<SparsityPattern>      sparsity(0, tr.n_levels() - 1);
   MGLevelObject<SparseMatrix<double>> matrix(0, tr.n_levels() - 1);
 
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for(unsigned int level= 0; level < tr.n_levels(); ++level)
     {
       DynamicSparsityPattern csp(dof.n_dofs(level), dof.n_dofs(level));
       MGTools::make_flux_sparsity_pattern(dof, csp, level);
@@ -102,7 +102,7 @@ test(FiniteElement<dim>& fe)
   fill_matrices(info, false);
   ass.assemble(info);
   matrix[1].print_formatted(deallog.get_file_stream(), 0, false, 6);
-  matrix[1] = 0.;
+  matrix[1]= 0.;
 
   deallog << "face" << std::endl;
   ass.initialize_info(info, true);
@@ -117,7 +117,7 @@ test(FiniteElement<dim>& fe)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 

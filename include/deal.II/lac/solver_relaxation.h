@@ -52,7 +52,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat
  * @date 2010
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class SolverRelaxation : public Solver<VectorType>
 {
 public:
@@ -67,7 +67,7 @@ public:
    * Constructor.
    */
   SolverRelaxation(SolverControl&        cn,
-                   const AdditionalData& data = AdditionalData());
+                   const AdditionalData& data= AdditionalData());
 
   /**
    * Virtual destructor.
@@ -108,19 +108,19 @@ SolverRelaxation<VectorType>::solve(const MatrixType&     A,
                                     const RelaxationType& R)
 {
   GrowingVectorMemory<VectorType> mem;
-  SolverControl::State            conv = SolverControl::iterate;
+  SolverControl::State            conv= SolverControl::iterate;
 
   // Memory allocation
   typename VectorMemory<VectorType>::Pointer Vr(mem);
-  VectorType&                                r = *Vr;
+  VectorType&                                r= *Vr;
   r.reinit(x);
   typename VectorMemory<VectorType>::Pointer Vd(mem);
-  VectorType&                                d = *Vd;
+  VectorType&                                d= *Vd;
   d.reinit(x);
 
   LogStream::Prefix prefix("Relaxation");
 
-  int iter = 0;
+  int iter= 0;
   // Main loop
   for(; conv == SolverControl::iterate; iter++)
     {
@@ -133,7 +133,7 @@ SolverRelaxation<VectorType>::solve(const MatrixType&     A,
       // residual is computed in
       // criterion() and stored
       // in res.
-      conv = this->iteration_status(iter, r.l2_norm(), x);
+      conv= this->iteration_status(iter, r.l2_norm(), x);
       if(conv != SolverControl::iterate)
         break;
       R.step(x, b);

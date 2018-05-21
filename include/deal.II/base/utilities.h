@@ -87,7 +87,7 @@ namespace Utilities
    */
   std::string
   int_to_string(const unsigned int value,
-                const unsigned int digits = numbers::invalid_unsigned_int);
+                const unsigned int digits= numbers::invalid_unsigned_int);
 
   /**
    * Convert a number @p value to a string, with @p digits characters. The
@@ -102,7 +102,7 @@ namespace Utilities
   template <typename number>
   std::string
   to_string(const number       value,
-            const unsigned int digits = numbers::invalid_unsigned_int);
+            const unsigned int digits= numbers::invalid_unsigned_int);
 
   /**
    * Determine how many digits are needed to represent numbers at most as
@@ -196,7 +196,7 @@ namespace Utilities
    * yields an empty list regardless of the number of spaces in the string.
    */
   std::vector<std::string>
-  split_string_list(const std::string& s, const std::string& delimiter = ",");
+  split_string_list(const std::string& s, const std::string& delimiter= ",");
 
   /**
    * Specialization of split_string_list() for the case where the delimiter
@@ -217,7 +217,7 @@ namespace Utilities
   std::vector<std::string>
   break_text_into_lines(const std::string& original_text,
                         const unsigned int width,
-                        const char         delimiter = ' ');
+                        const char         delimiter= ' ');
 
   /**
    * Return true if the given pattern string appears in the first position of
@@ -321,7 +321,7 @@ namespace Utilities
   template <int a, int N>
   struct DEAL_II_DEPRECATED fixed_int_power
   {
-    static const int value = a * fixed_int_power<a, N - 1>::value;
+    static const int value= a * fixed_int_power<a, N - 1>::value;
   };
 
   /**
@@ -334,7 +334,7 @@ namespace Utilities
   template <int a>
   struct DEAL_II_DEPRECATED fixed_int_power<a, 0>
   {
-    static const int value = 1;
+    static const int value= 1;
   };
 
   /**
@@ -584,7 +584,7 @@ namespace Utilities
     // Let's see if we can cast from 'From' to 'To'. If so, do the cast,
     // and then release the pointer from the old
     // owner
-    if(To* cast = dynamic_cast<To*>(p.get()))
+    if(To* cast= dynamic_cast<To*>(p.get()))
       {
         std::unique_ptr<To> result(cast);
         p.release();
@@ -869,9 +869,9 @@ namespace Utilities
         case 4:
           return n * n * n * n;
         default:
-          T result = n;
-          for(int d = 1; d < N; ++d)
-            result *= n;
+          T result= n;
+          for(int d= 1; d < N; ++d)
+            result*= n;
           return result;
       }
   }
@@ -894,7 +894,7 @@ namespace Utilities
       last - first >= 0,
       ExcMessage("The given iterators do not satisfy the proper ordering."));
 
-    unsigned int len = static_cast<unsigned int>(last - first);
+    unsigned int len= static_cast<unsigned int>(last - first);
 
     if(len == 0)
       return first;
@@ -958,8 +958,8 @@ namespace Utilities
               }
           }
 
-        const unsigned int half   = len >> 1;
-        const Iterator     middle = first + half;
+        const unsigned int half  = len >> 1;
+        const Iterator     middle= first + half;
 
         // if the value is larger than
         // that pointed to by the
@@ -968,11 +968,11 @@ namespace Utilities
         // right of it
         if(comp(*middle, val))
           {
-            first = middle + 1;
-            len -= half + 1;
+            first= middle + 1;
+            len-= half + 1;
           }
         else
-          len = half;
+          len= half;
       }
   }
 
@@ -999,7 +999,7 @@ namespace Utilities
 #  endif
 #endif
       {
-        const size_t previous_size = dest_buffer.size();
+        const size_t previous_size= dest_buffer.size();
         dest_buffer.resize(previous_size + sizeof(T));
 
         std::memcpy(dest_buffer.data() + previous_size, &object, sizeof(T));
@@ -1010,7 +1010,7 @@ namespace Utilities
       {
         // use buffer as the target of a compressing
         // stream into which we serialize the current object
-        const size_t previous_size = dest_buffer.size();
+        const size_t previous_size= dest_buffer.size();
         {
 #ifdef DEAL_II_WITH_ZLIB
           boost::iostreams::filtering_ostream out;
@@ -1027,7 +1027,7 @@ namespace Utilities
           boost::archive::binary_oarchive archive(out);
           archive << object;
 
-          const std::string& s = out.str();
+          const std::string& s= out.str();
           dest_buffer.reserve(dest_buffer.size() + s.size());
           std::move(s.begin(), s.end(), std::back_inserter(dest_buffer));
 #endif

@@ -34,7 +34,7 @@ void
 test()
 {
   std::vector<unsigned int> v;
-  for(unsigned int i = 0; i < 20; ++i)
+  for(unsigned int i= 0; i < 20; ++i)
     v.push_back(i);
 
   // first run with only a worker

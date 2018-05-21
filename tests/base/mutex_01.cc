@@ -41,7 +41,7 @@ main()
 
   mutex.acquire();
 
-  Threads::Thread<> t = Threads::new_thread(&test);
+  Threads::Thread<> t= Threads::new_thread(&test);
 
   sleep(2);
   deallog << "1" << std::endl;

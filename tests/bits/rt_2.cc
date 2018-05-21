@@ -64,16 +64,16 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
     UpdateFlags(update_values | update_quadrature_points | update_gradients
                 | update_normal_vectors | update_JxW_values));
 
-  const unsigned int n_q_face     = quad.size();
-  const unsigned int n_components = dof_handler.get_fe().n_components();
+  const unsigned int n_q_face    = quad.size();
+  const unsigned int n_components= dof_handler.get_fe().n_components();
 
   // Cell iterators
-  DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
-                                      endc = dof_handler.end();
+  DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active(),
+                                      endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
-      for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<2>::faces_per_cell; ++f)
         {
           if(!cell->face(f)->at_boundary())
             {
@@ -81,7 +81,7 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
 
               fe_v_face.reinit(cell, f);
 
-              const unsigned int neighbor = cell->neighbor_of_neighbor(f);
+              const unsigned int neighbor= cell->neighbor_of_neighbor(f);
               fe_v_face_n.reinit(cell->neighbor(f), neighbor);
 
               // Get values from
@@ -96,17 +96,17 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
                 n_q_face, Vector<double>(n_components));
               fe_v_face_n.get_function_values(solution, this_value_n);
 
-              for(unsigned int q_point = 0; q_point < n_q_face; ++q_point)
+              for(unsigned int q_point= 0; q_point < n_q_face; ++q_point)
                 {
-                  Tensor<1, 2> vn = fe_v_face.normal_vector(q_point);
-                  double       nx = vn[0];
-                  double       ny = vn[1];
+                  Tensor<1, 2> vn= fe_v_face.normal_vector(q_point);
+                  double       nx= vn[0];
+                  double       ny= vn[1];
 
-                  double u = this_value[q_point](0);
-                  double v = this_value[q_point](1);
+                  double u= this_value[q_point](0);
+                  double v= this_value[q_point](1);
 
-                  double u_n = this_value_n[q_point](0);
-                  double v_n = this_value_n[q_point](1);
+                  double u_n= this_value_n[q_point](0);
+                  double v_n= this_value_n[q_point](1);
 
                   deallog << "quadrature point " << q_point
                           << " (u-u_n)*nx+(v-v_n)*ny = "
@@ -142,8 +142,8 @@ main()
   // Fill solution vector with random
   // values between 0 and 1.
   Vector<double> solution(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    solution(i) = random_value<double>();
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
+    solution(i)= random_value<double>();
 
   // Now check if the function is
   // continuous in normal direction

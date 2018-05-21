@@ -38,7 +38,7 @@ output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
                    const std::string&         text)
 {
   deallog << text;
-  for(unsigned int j = 0; j < eigenvalues.size(); ++j)
+  for(unsigned int j= 0; j < eigenvalues.size(); ++j)
     {
       deallog << ' ' << eigenvalues.at(j);
     }
@@ -56,8 +56,8 @@ check_solve(SolverType&         solver,
             VectorType&         f,
             const PRECONDITION& P)
 {
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.solve(A, u, f, P);
@@ -79,8 +79,8 @@ check_Tsolve(SolverType&         solver,
              VectorType&         f,
              const PRECONDITION& P)
 {
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.Tsolve(A, u, f, P);
@@ -110,9 +110,9 @@ main()
   cg.connect_eigenvalues_slot(std::bind(
     output_eigenvalues<double>, std::placeholders::_1, "Final Eigenvalues: "));
 
-  for(unsigned int size = 4; size <= 30; size *= 3)
+  for(unsigned int size= 4; size <= 30; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -137,8 +137,8 @@ main()
       Vector<double> u(dim);
       Vector<double> res(dim);
 
-      f = 1.;
-      u = 1.;
+      f= 1.;
+      u= 1.;
 
       try
         {

@@ -99,7 +99,7 @@ void
 Deal2PeriodicBug::make_periodicity_constraints()
 {
   std::vector<bool> mask(1);
-  mask[0] = true;
+  mask[0]= true;
   ComponentMask cmask(mask);
   // Here we use the DoFTools function to place periodic constraints in the constraints matrix
   // We have set the boundary index for the left face of the boundary to 0 and the right face
@@ -139,7 +139,7 @@ Deal2PeriodicBug::makeGrid()
   triangulation.begin_active()->face(1)->set_boundary_id(2);
   triangulation.refine_global(1);
 
-  Triangulation<2>::active_cell_iterator cell = triangulation.begin_active();
+  Triangulation<2>::active_cell_iterator cell= triangulation.begin_active();
   (++(++cell))->set_refine_flag();
   triangulation.prepare_coarsening_and_refinement();
   triangulation.execute_coarsening_and_refinement();

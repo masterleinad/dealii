@@ -111,11 +111,11 @@ namespace pdd
     dof_handler.distribute_dofs(fe);
 
     // Initialize the solution
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
     locally_relevant_solution.reinit(locally_owned_dofs, mpi_communicator);
 
-    locally_relevant_solution = 0;
+    locally_relevant_solution= 0;
 
     // Apply a constant function at the boundary
     constraints.clear();
@@ -133,11 +133,11 @@ namespace pdd
   PDDProblem<dim>::output_results()
   {
     // First generate an output for the cells
-    const unsigned int cycle = 1;
+    const unsigned int cycle= 1;
 
     PETScWrappers::MPI::Vector solution(
       locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
-    solution = locally_relevant_solution;
+    solution= locally_relevant_solution;
 
     DataOut<dim> data_out;
     data_out.attach_dof_handler(dof_handler);

@@ -24,7 +24,7 @@
 void
 test(int n)
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
   QTrianglePolar quad(QGauss<1>(10), QGauss<1>(5));
 
@@ -38,7 +38,7 @@ test(int n)
           << std::endl
           << std::endl;
 
-  auto quad2 = quad.compute_affine_transformation(get_simplex<2>());
+  auto quad2= quad.compute_affine_transformation(get_simplex<2>());
 
   for(auto p : quad2.get_points())
     deallog << p << std::endl;

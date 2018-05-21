@@ -22,7 +22,7 @@
 
 template <typename number>
 void
-checkVmult(FullMatrix<number>& A, Vector<number>& V, char* name = "Test Matrix")
+checkVmult(FullMatrix<number>& A, Vector<number>& V, char* name= "Test Matrix")
 {
   deallog << "vmult" << std::endl;
 
@@ -41,7 +41,7 @@ checkVmult(FullMatrix<number>& A, Vector<number>& V, char* name = "Test Matrix")
   Assert(O == O_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for(unsigned int i= 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 }
@@ -54,14 +54,14 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const double Adata[] = {2, 3, 4, 5};
+  const double Adata[]= {2, 3, 4, 5};
 
   FullMatrix<double> A(2, 2);
   A.fill(Adata);
 
   Vector<double> V(2);
-  V(0) = 1;
-  V(1) = 2;
+  V(0)= 1;
+  V(1)= 2;
 
   checkVmult<double>(A, V);
 }

@@ -101,7 +101,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
 
       const FiniteElement<dim, spacedim>& fe
         = this->get_dof_handler().get_fe(fe_index);
-      const unsigned int dofs_per_cell = fe.dofs_per_cell;
+      const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
       Assert(this->dof_handler != nullptr,
              typename BaseClass::ExcInvalidObject());
@@ -120,7 +120,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
           Vector<number> tmp1(dofs_per_cell);
           Vector<number> tmp2(dofs_per_cell);
 
-          interpolated_values = 0;
+          interpolated_values= 0;
 
           // later on we will have to push the values interpolated from the child
           // to the mother cell into the output vector. unfortunately, there are
@@ -146,7 +146,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
           // element) which have shape functions that are additive (interior ones)
           // and others that are overwriting (face degrees of freedom that need to
           // be continuous across the face).
-          for(unsigned int child = 0; child < this->n_children(); ++child)
+          for(unsigned int child= 0; child < this->n_children(); ++child)
             {
               // get the values from the present child, if necessary by
               // interpolation itself either from its own children or
@@ -159,11 +159,11 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
                 .vmult(tmp2, tmp1);
 
               // and add up or set them in the output vector
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
                 if(fe.restriction_is_additive(i))
-                  interpolated_values(i) += tmp2(i);
+                  interpolated_values(i)+= tmp2(i);
                 else if(tmp2(i) != number())
-                  interpolated_values(i) = tmp2(i);
+                  interpolated_values(i)= tmp2(i);
             }
         }
     }

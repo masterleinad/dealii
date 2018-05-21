@@ -34,14 +34,14 @@ public:
   {}
 
   // delete the copy constructor
-  X(const X&) = delete;
+  X(const X&)= delete;
 
   // move constructor. sets the moved-from value to a recognizable
   // value
   X(X&& x)
   {
-    value   = x.value;
-    x.value = 0;
+    value  = x.value;
+    x.value= 0;
   }
 
   // same idea about copy operators
@@ -52,8 +52,8 @@ public:
   X&
   operator=(X&& x)
   {
-    value   = x.value;
-    x.value = 0;
+    value  = x.value;
+    x.value= 0;
 
     return *this;
   }
@@ -72,7 +72,7 @@ main()
 {
   initlog();
 
-  Threads::Task<X> t = Threads::new_task(&foo);
+  Threads::Task<X> t= Threads::new_task(&foo);
 
   // wait for the thread to return and query its value
   deallog << t.return_value().value << std::endl;
@@ -81,7 +81,7 @@ main()
   // it. do so and check that we still get the correct value. then
   // also check that the value of the original return object has been
   // reset in the move constructor/operator
-  X x = std::move(t.return_value());
+  X x= std::move(t.return_value());
   deallog << x.value << std::endl;
 
   deallog << t.return_value().value << std::endl;

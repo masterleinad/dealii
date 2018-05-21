@@ -31,8 +31,8 @@ main()
 
   ConvergenceTable t;
 
-  const unsigned long long int t1 = 100;
-  const unsigned long long int t2 = 400;
+  const unsigned long long int t1= 100;
+  const unsigned long long int t2= 400;
   t.add_value("cells", t1);
   t.add_value("error", 0.1);
   t.add_value("cells", t2);

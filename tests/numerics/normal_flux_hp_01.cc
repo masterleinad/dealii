@@ -38,12 +38,12 @@ test(const Triangulation<dim>& tr, const hp::FECollection<dim>& fe)
     cell->set_active_fe_index(cell->index() % 2);
   dof.distribute_dofs(fe);
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       deallog << "FE=" << fe[0].get_name() << ", case=" << i << std::endl;
 
       std::set<types::boundary_id> boundary_ids;
-      for(unsigned int j = 0; j <= i; ++j)
+      for(unsigned int j= 0; j <= i; ++j)
         boundary_ids.insert(j);
 
       ConstraintMatrix cm;
@@ -60,15 +60,15 @@ test_hyper_cube()
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     tr.begin_active()->face(i)->set_boundary_id(i);
 
   tr.refine_global(2);
 
-  for(unsigned int degree = 1; degree < 2; ++degree)
+  for(unsigned int degree= 1; degree < 2; ++degree)
     {
       hp::FECollection<dim> fe;
-      for(unsigned int deg = degree; deg < degree + 2; ++deg)
+      for(unsigned int deg= degree; deg < degree + 2; ++deg)
         fe.push_back(FESystem<dim>(FE_Q<dim>(deg), dim));
       test(tr, fe);
     }

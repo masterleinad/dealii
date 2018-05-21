@@ -25,11 +25,11 @@ test(PETScWrappers::MPI::Vector& v,
      PETScWrappers::MPI::Vector& w,
      PETScWrappers::MPI::Vector& x)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
-      w(i) = i + 1.;
-      x(i) = i + 2.;
+      v(i)= i;
+      w(i)= i + 1.;
+      x(i)= i + 2.;
     }
 
   v.compress(VectorOperation::insert);
@@ -39,7 +39,7 @@ test(PETScWrappers::MPI::Vector& v,
   v.add(2, w, 3, x);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i + 1., ExcInternalError());
       AssertThrow(x(i) == i + 2., ExcInternalError());

@@ -58,10 +58,10 @@ generate_grid(Triangulation<dim>& tria)
   std::vector<unsigned int> sub_div;
 
   // Define a rectangular shape
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     {
-      p1(d) = 0;
-      p2(d) = (d == 0) ? 2.0 : 1.0;
+      p1(d)= 0;
+      p2(d)= (d == 0) ? 2.0 : 1.0;
       sub_div.push_back((d == 0) ? 2 : 1);
     }
   GridGenerator::subdivided_hyper_rectangle(tria, sub_div, p1, p2, true);
@@ -94,8 +94,8 @@ test_constraints(hp::FECollection<dim>& fe_coll)
   hp::DoFHandler<dim>                                dof_handler(tria);
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc               = dof_handler.end();
-  unsigned int fe_indx = 0;
+    endc              = dof_handler.end();
+  unsigned int fe_indx= 0;
   for(; cell != endc; ++cell)
     {
       cell->set_active_fe_index(fe_indx);

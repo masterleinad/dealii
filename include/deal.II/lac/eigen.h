@@ -48,7 +48,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Guido Kanschat, 2000
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class EigenPower : private Solver<VectorType>
 {
 public:
@@ -70,7 +70,7 @@ public:
     /**
      * Constructor. Set the shift parameter.
      */
-    AdditionalData(const double shift = 0.) : shift(shift)
+    AdditionalData(const double shift= 0.) : shift(shift)
     {}
   };
 
@@ -79,7 +79,7 @@ public:
    */
   EigenPower(SolverControl&            cn,
              VectorMemory<VectorType>& mem,
-             const AdditionalData&     data = AdditionalData());
+             const AdditionalData&     data= AdditionalData());
 
   /**
    * Virtual destructor.
@@ -126,7 +126,7 @@ protected:
  *
  * @author Guido Kanschat, 2000, 2003
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class EigenInverse : private Solver<VectorType>
 {
 public:
@@ -156,9 +156,9 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(double       relaxation     = 1.,
-                   unsigned int start_adaption = 6,
-                   bool         use_residual   = true)
+    AdditionalData(double       relaxation    = 1.,
+                   unsigned int start_adaption= 6,
+                   bool         use_residual  = true)
       : relaxation(relaxation),
         start_adaption(start_adaption),
         use_residual(use_residual)
@@ -170,7 +170,7 @@ public:
    */
   EigenInverse(SolverControl&            cn,
                VectorMemory<VectorType>& mem,
-               const AdditionalData&     data = AdditionalData());
+               const AdditionalData&     data= AdditionalData());
 
   /**
    * Virtual destructor.
@@ -214,50 +214,50 @@ template <typename MatrixType>
 void
 EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
 {
-  SolverControl::State conv = SolverControl::iterate;
+  SolverControl::State conv= SolverControl::iterate;
 
   LogStream::Prefix prefix("Power method");
 
   typename VectorMemory<VectorType>::Pointer Vy(this->memory);
-  VectorType&                                y = *Vy;
+  VectorType&                                y= *Vy;
   y.reinit(x);
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
-  VectorType&                                r = *Vr;
+  VectorType&                                r= *Vr;
   r.reinit(x);
 
-  double length     = x.l2_norm();
-  double old_length = 0.;
-  x *= 1. / length;
+  double length    = x.l2_norm();
+  double old_length= 0.;
+  x*= 1. / length;
 
   A.vmult(y, x);
 
   // Main loop
-  int iter = 0;
+  int iter= 0;
   for(; conv == SolverControl::iterate; iter++)
     {
       y.add(additional_data.shift, x);
 
       // Compute absolute value of eigenvalue
-      old_length = length;
-      length     = y.l2_norm();
+      old_length= length;
+      length    = y.l2_norm();
 
       // do a little trick to compute the sign
       // with not too much effect of round-off errors.
-      double    entry  = 0.;
-      size_type i      = 0;
-      double    thresh = length / x.size();
+      double    entry = 0.;
+      size_type i     = 0;
+      double    thresh= length / x.size();
       do
         {
           Assert(i < x.size(), ExcInternalError());
-          entry = y(i++);
+          entry= y(i++);
         }
       while(std::fabs(entry) < thresh);
 
       --i;
 
       // Compute unshifted eigenvalue
-      value = (entry * x(i) < 0.) ? -length : length;
-      value -= additional_data.shift;
+      value= (entry * x(i) < 0.) ? -length : length;
+      value-= additional_data.shift;
 
       // Update normalized eigenvector
       x.equ(1 / length, y);
@@ -267,7 +267,7 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
 
       // Check the change of the eigenvalue
       // Brrr, this is not really a good criterion
-      conv = this->iteration_status(
+      conv= this->iteration_status(
         iter, std::fabs(1. / length - 1. / old_length), x);
     }
 
@@ -301,12 +301,12 @@ EigenInverse<VectorType>::solve(double&           value,
 {
   LogStream::Prefix prefix("Wielandt");
 
-  SolverControl::State conv = SolverControl::iterate;
+  SolverControl::State conv= SolverControl::iterate;
 
   // Prepare matrix for solver
-  auto   A_op          = linear_operator(A);
-  double current_shift = -value;
-  auto   A_s           = A_op + current_shift * identity_operator(A_op);
+  auto   A_op         = linear_operator(A);
+  double current_shift= -value;
+  auto   A_s          = A_op + current_shift * identity_operator(A_op);
 
   // Define solver
   ReductionControl        inner_control(5000, 1.e-16, 1.e-5, false, false);
@@ -314,56 +314,56 @@ EigenInverse<VectorType>::solve(double&           value,
   SolverGMRES<VectorType> solver(inner_control, this->memory);
 
   // Next step for recomputing the shift
-  unsigned int goal = additional_data.start_adaption;
+  unsigned int goal= additional_data.start_adaption;
 
   // Auxiliary vector
   typename VectorMemory<VectorType>::Pointer Vy(this->memory);
-  VectorType&                                y = *Vy;
+  VectorType&                                y= *Vy;
   y.reinit(x);
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
-  VectorType&                                r = *Vr;
+  VectorType&                                r= *Vr;
   r.reinit(x);
 
-  double length    = x.l2_norm();
-  double old_value = value;
+  double length   = x.l2_norm();
+  double old_value= value;
 
-  x *= 1. / length;
+  x*= 1. / length;
 
   // Main loop
-  double    res  = -std::numeric_limits<double>::max();
-  size_type iter = 0;
+  double    res = -std::numeric_limits<double>::max();
+  size_type iter= 0;
   for(; conv == SolverControl::iterate; iter++)
     {
       solver.solve(A_s, y, x, prec);
 
       // Compute absolute value of eigenvalue
-      length = y.l2_norm();
+      length= y.l2_norm();
 
       // do a little trick to compute the sign
       // with not too much effect of round-off errors.
-      double    entry  = 0.;
-      size_type i      = 0;
-      double    thresh = length / x.size();
+      double    entry = 0.;
+      size_type i     = 0;
+      double    thresh= length / x.size();
       do
         {
           Assert(i < x.size(), ExcInternalError());
-          entry = y(i++);
+          entry= y(i++);
         }
       while(std::fabs(entry) < thresh);
 
       --i;
 
       // Compute unshifted eigenvalue
-      value = (entry * x(i) < 0. ? -1. : 1.) / length - current_shift;
+      value= (entry * x(i) < 0. ? -1. : 1.) / length - current_shift;
 
       if(iter == goal)
         {
-          const auto&  relaxation = additional_data.relaxation;
+          const auto&  relaxation= additional_data.relaxation;
           const double new_shift
             = relaxation * (-value) + (1. - relaxation) * current_shift;
 
-          A_s           = A_op + new_shift * identity_operator(A_op);
-          current_shift = new_shift;
+          A_s          = A_op + new_shift * identity_operator(A_op);
+          current_shift= new_shift;
 
           ++goal;
         }
@@ -376,16 +376,16 @@ EigenInverse<VectorType>::solve(double&           value,
           y.equ(value, x);
           A.vmult(r, x);
           r.sadd(-1., value, x);
-          res = r.l2_norm();
+          res= r.l2_norm();
           // Check the residual
-          conv = this->iteration_status(iter, res, x);
+          conv= this->iteration_status(iter, res, x);
         }
       else
         {
-          res  = std::fabs(1. / value - 1. / old_value);
-          conv = this->iteration_status(iter, res, x);
+          res = std::fabs(1. / value - 1. / old_value);
+          conv= this->iteration_status(iter, res, x);
         }
-      old_value = value;
+      old_value= value;
     }
 
   // in case of failure: throw

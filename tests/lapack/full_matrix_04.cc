@@ -29,24 +29,24 @@
  * lambda = 5     v = (0, 1,-1, 0)
  * lambda = 5     v = (0, 0, 1,-1)
  */
-const double symm[] = {4.,
-                       -1.,
-                       -1.,
-                       -1.,
-                       -1.,
-                       4.,
-                       -1.,
-                       -1.,
-                       -1.,
-                       -1.,
-                       4.,
-                       -1.,
-                       -1.,
-                       -1.,
-                       -1.,
-                       4.};
+const double symm[]= {4.,
+                      -1.,
+                      -1.,
+                      -1.,
+                      -1.,
+                      4.,
+                      -1.,
+                      -1.,
+                      -1.,
+                      -1.,
+                      4.,
+                      -1.,
+                      -1.,
+                      -1.,
+                      -1.,
+                      4.};
 
-const double rect[] = {4., 3., 2., 1., 5., 8., 1., -2., 11., 13., -4., -5};
+const double rect[]= {4., 3., 2., 1., 5., 8., 1., -2., 11., 13., -4., -5};
 
 void
 test_rect(unsigned int m, unsigned int n, const double* values)
@@ -57,11 +57,11 @@ test_rect(unsigned int m, unsigned int n, const double* values)
 
   FullMatrix<double>       A(m, n, values);
   LAPACKFullMatrix<double> LA(m, n);
-  LA = A;
+  LA= A;
   LA.compute_inverse_svd();
 
   deallog << "Singular values";
-  for(unsigned int i = 0; i < LA.n_rows(); ++i)
+  for(unsigned int i= 0; i < LA.n_rows(); ++i)
     deallog << ' ' << LA.singular_value(i);
   deallog << std::endl;
 
@@ -70,15 +70,15 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   Vector<double> v1(m);
   Vector<double> v2(m);
 
-  for(unsigned int i = 0; i < u1.size(); ++i)
-    u1(i) = i * i;
-  for(unsigned int i = 0; i < v1.size(); ++i)
-    v1(i) = i * i;
+  for(unsigned int i= 0; i < u1.size(); ++i)
+    u1(i)= i * i;
+  for(unsigned int i= 0; i < v1.size(); ++i)
+    v1(i)= i * i;
 
   // Test if LA is a left inverse of A
   A.vmult(v2, u1);
   LA.vmult(u2, v2);
-  u2 -= u1;
+  u2-= u1;
   if(u2.l2_norm() < 1.e-12)
     deallog << "vmult ok" << std::endl;
   else
@@ -87,7 +87,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   // Test if LA is a right inverse of A
   LA.vmult(u2, v1);
   A.vmult(v2, u2);
-  v2 -= v1;
+  v2-= v1;
   if(v2.l2_norm() < 1.e-12)
     deallog << "vmult ok" << std::endl;
   else
@@ -97,7 +97,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   // of A^T
   A.Tvmult(u2, v1);
   LA.Tvmult(v2, u2);
-  v2 -= v1;
+  v2-= v1;
   if(v2.l2_norm() < 1.e-12)
     deallog << "Tvmult ok" << std::endl;
   else
@@ -105,7 +105,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
 
   LA.Tvmult(v2, u1);
   A.Tvmult(u2, v2);
-  u2 -= u1;
+  u2-= u1;
   if(u2.l2_norm() < 1.e-12)
     deallog << "Tvmult ok" << std::endl;
   else
@@ -117,7 +117,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);

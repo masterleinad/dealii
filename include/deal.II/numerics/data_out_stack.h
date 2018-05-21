@@ -106,8 +106,8 @@ class DoFHandler;
  * @author Wolfgang Bangerth, 1999
  */
 template <int dim,
-          int spacedim            = dim,
-          typename DoFHandlerType = DoFHandler<dim, spacedim>>
+          int spacedim           = dim,
+          typename DoFHandlerType= DoFHandler<dim, spacedim>>
 class DataOutStack : public DataOutInterface<dim + 1>
 {
 public:
@@ -130,7 +130,7 @@ public:
   /**
    * Destructor. Only declared to make it @p virtual.
    */
-  virtual ~DataOutStack() override = default;
+  virtual ~DataOutStack() override= default;
 
   /**
    * Start the next set of data for a specific parameter value. The argument
@@ -240,7 +240,7 @@ public:
    * in the direction of the time-like parameter used by this class.
    */
   void
-  build_patches(const unsigned int n_subdivisions = 0);
+  build_patches(const unsigned int n_subdivisions= 0);
 
   /**
    * Release all data that is no more needed once @p build_patches was called

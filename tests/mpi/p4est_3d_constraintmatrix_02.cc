@@ -37,8 +37,8 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
@@ -47,11 +47,10 @@ test()
 
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
-  for(unsigned int step = 0; step < 15; ++step)
+  for(unsigned int step= 0; step < 15; ++step)
     {
-      typename Triangulation<dim>::active_cell_iterator cell
-        = tr.begin_active(),
-        endc = tr.end();
+      typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active(),
+                                                        endc= tr.end();
 
       for(; cell != endc; ++cell)
         if(Testing::rand() % 42 == 1)
@@ -65,7 +64,7 @@ test()
   static const FE_Q<dim> fe(1);
   dofh.distribute_dofs(fe);
 
-  IndexSet owned_set = dofh.locally_owned_dofs();
+  IndexSet owned_set= dofh.locally_owned_dofs();
 
   IndexSet dof_set;
   DoFTools::extract_locally_active_dofs(dofh, dof_set);
@@ -75,7 +74,7 @@ test()
 
   TrilinosWrappers::MPI::Vector x;
   x.reinit(owned_set, MPI_COMM_WORLD);
-  x = 2.0;
+  x= 2.0;
 
   TrilinosWrappers::MPI::Vector x_rel;
   x_rel.reinit(relevant_set, MPI_COMM_WORLD);
@@ -85,7 +84,7 @@ test()
   cm.close();
 
   cm.distribute(x);
-  x_rel = x;
+  x_rel= x;
 
   TrilinosWrappers::MPI::Vector x_dub;
   x_dub.reinit(complete_index_set(dof_set.size()));
@@ -109,7 +108,7 @@ test()
 
   if(myid == 0)
     {
-      for(unsigned int i = 1; i < numproc; ++i)
+      for(unsigned int i= 1; i < numproc; ++i)
         {
           MPI_Status status;
           int        msglen;
@@ -133,7 +132,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

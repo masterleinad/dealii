@@ -46,21 +46,21 @@ main()
   SSdouble               a(2, 0, 7.0);
   SSdouble               b(2, 1, 3.0);
   SSdouble               c;
-  a.val() = Sdouble(2, 0, 7.0);
-  b.val() = Sdouble(2, 1, 3.0);
+  a.val()= Sdouble(2, 0, 7.0);
+  b.val()= Sdouble(2, 1, 3.0);
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
-      t1[i] = 2. * a + i;
-      t2[i] = 3. * b - i;
+      t1[i]= 2. * a + i;
+      t2[i]= 3. * b - i;
     }
-  const Tensor<1, 2, SSdouble> t3 = t2;
+  const Tensor<1, 2, SSdouble> t3= t2;
   t1*                          t2;
 
-  t2 += a * t1;
+  t2+= a * t1;
 
-  c = 0;
-  c += (a * b + 0.5 * (t3 * t3 + t1 * t2)) * 0.3;
+  c= 0;
+  c+= (a * b + 0.5 * (t3 * t3 + t1 * t2)) * 0.3;
 
   deallog << "OK" << std::endl;
 }

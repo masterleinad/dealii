@@ -306,7 +306,7 @@ namespace GridTools
                              std::vector<CellData<dim>>&   cells,
                              SubCellData&                  subcelldata,
                              std::vector<unsigned int>&    considered_vertices,
-                             const double                  tol = 1e-12);
+                             const double                  tol= 1e-12);
 
   /*@}*/
   /**
@@ -442,8 +442,8 @@ namespace GridTools
   void
   laplace_transform(const std::map<unsigned int, Point<dim>>& new_points,
                     Triangulation<dim>&                       tria,
-                    const Function<dim, double>* coefficient = nullptr,
-                    const bool solve_for_absolute_positions  = false);
+                    const Function<dim, double>* coefficient= nullptr,
+                    const bool solve_for_absolute_positions = false);
 
   /**
    * Return a std::map with all vertices of faces located in the boundary
@@ -480,7 +480,7 @@ namespace GridTools
   void
   distort_random(const double                  factor,
                  Triangulation<dim, spacedim>& triangulation,
-                 const bool                    keep_boundary = true);
+                 const bool                    keep_boundary= true);
 
   /**
    * Remove hanging nodes from a grid. If the @p isotropic parameter is set
@@ -520,8 +520,8 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   remove_hanging_nodes(Triangulation<dim, spacedim>& tria,
-                       const bool                    isotropic      = false,
-                       const unsigned int            max_iterations = 100);
+                       const bool                    isotropic     = false,
+                       const unsigned int            max_iterations= 100);
 
   /**
    * Refine a mesh anisotropically such that the resulting mesh is composed by
@@ -551,8 +551,8 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   remove_anisotropy(Triangulation<dim, spacedim>& tria,
-                    const double                  max_ratio      = 1.6180339887,
-                    const unsigned int            max_iterations = 5);
+                    const double                  max_ratio     = 1.6180339887,
+                    const unsigned int            max_iterations= 5);
 
   /**
    * Analyze the boundary cells of a mesh, and if one cell is found at
@@ -645,7 +645,7 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   regularize_corner_cells(Triangulation<dim, spacedim>& tria,
-                          const double limit_angle_fraction = .75);
+                          const double limit_angle_fraction= .75);
 
   /*@}*/
   /**
@@ -1094,7 +1094,7 @@ namespace GridTools
     const std::vector<std::vector<Tensor<1, spacedim>>>& vertex_to_cell_centers,
     const typename MeshType<dim, spacedim>::active_cell_iterator& cell_hint
     = typename MeshType<dim, spacedim>::active_cell_iterator(),
-    const std::vector<bool>& marked_vertices = std::vector<bool>());
+    const std::vector<bool>& marked_vertices= std::vector<bool>());
 
   /**
    * A version of the previous function where we use that mapping on a given
@@ -1139,7 +1139,7 @@ namespace GridTools
     const Point<spacedim>&                                             p,
     const typename Triangulation<dim, spacedim>::active_cell_iterator& cell_hint
     = typename Triangulation<dim, spacedim>::active_cell_iterator(),
-    const std::vector<bool>& marked_vertices = std::vector<bool>());
+    const std::vector<bool>& marked_vertices= std::vector<bool>());
 
   /**
    * Return a list of all descendants of the given cell that are active. For
@@ -1434,9 +1434,9 @@ namespace GridTools
     const MeshType& mesh,
     const std::function<bool(const typename MeshType::active_cell_iterator&)>&
                        predicate,
-    const unsigned int refinement_level = 0,
-    const bool         allow_merge      = false,
-    const unsigned int max_boxes        = numbers::invalid_unsigned_int);
+    const unsigned int refinement_level= 0,
+    const bool         allow_merge     = false,
+    const unsigned int max_boxes       = numbers::invalid_unsigned_int);
 
   /**
    * Given an array of points, use the global bounding box description obtained using
@@ -2229,7 +2229,7 @@ namespace GridTools
     const int                                                     direction,
     const Tensor<1, FaceIterator::AccessorType::space_dimension>& offset
     = Tensor<1, FaceIterator::AccessorType::space_dimension>(),
-    const FullMatrix<double>& matrix = FullMatrix<double>());
+    const FullMatrix<double>& matrix= FullMatrix<double>());
 
   /**
    * Same function as above, but doesn't return the actual orientation
@@ -2242,7 +2242,7 @@ namespace GridTools
     const int                                                     direction,
     const Tensor<1, FaceIterator::AccessorType::space_dimension>& offset
     = Tensor<1, FaceIterator::AccessorType::space_dimension>(),
-    const FullMatrix<double>& matrix = FullMatrix<double>());
+    const FullMatrix<double>& matrix= FullMatrix<double>());
 
   /**
    * This function will collect periodic face pairs on the coarsest mesh level
@@ -2313,7 +2313,7 @@ namespace GridTools
                                                 matched_pairs,
     const Tensor<1, MeshType::space_dimension>& offset
     = dealii::Tensor<1, MeshType::space_dimension>(),
-    const FullMatrix<double>& matrix = FullMatrix<double>());
+    const FullMatrix<double>& matrix= FullMatrix<double>());
 
   /**
    * This compatibility version of collect_periodic_faces() only works on
@@ -2347,7 +2347,7 @@ namespace GridTools
                                                         matched_pairs,
     const dealii::Tensor<1, MeshType::space_dimension>& offset
     = dealii::Tensor<1, MeshType::space_dimension>(),
-    const FullMatrix<double>& matrix = FullMatrix<double>());
+    const FullMatrix<double>& matrix= FullMatrix<double>());
 
   /*@}*/
   /**
@@ -2380,7 +2380,7 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   copy_boundary_to_manifold_id(Triangulation<dim, spacedim>& tria,
-                               const bool reset_boundary_ids = false);
+                               const bool reset_boundary_ids= false);
 
   /**
    * Map the given boundary ids to the given manifold ids on faces and
@@ -2411,7 +2411,7 @@ namespace GridTools
     const std::vector<types::boundary_id>& src_boundary_ids,
     const std::vector<types::manifold_id>& dst_manifold_ids,
     Triangulation<dim, spacedim>&          tria,
-    const std::vector<types::boundary_id>& reset_boundary_ids = {});
+    const std::vector<types::boundary_id>& reset_boundary_ids= {});
 
   /**
    * Copy material ids to manifold ids. The default manifold_id for new
@@ -2447,7 +2447,7 @@ namespace GridTools
   template <int dim, int spacedim>
   void
   copy_material_to_manifold_id(Triangulation<dim, spacedim>& tria,
-                               const bool compute_face_ids = false);
+                               const bool compute_face_ids= false);
 
   /*@}*/
 
@@ -2694,15 +2694,15 @@ namespace GridTools
     // visiting the active cells.
     typename Triangulation<dim, spacedim>::active_cell_iterator cell
       = triangulation.begin_active(),
-      endc = triangulation.end();
+      endc= triangulation.end();
     for(; cell != endc; ++cell)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         if(treated_vertices[cell->vertex_index(v)] == false)
           {
             // transform this vertex
-            cell->vertex(v) = predicate(cell->vertex(v));
+            cell->vertex(v)= predicate(cell->vertex(v));
             // and mark it as treated
-            treated_vertices[cell->vertex_index(v)] = true;
+            treated_vertices[cell->vertex_index(v)]= true;
           };
 
     // now fix any vertices on hanging nodes so that we don't create any holes
@@ -2710,9 +2710,9 @@ namespace GridTools
       {
         typename Triangulation<dim, spacedim>::active_cell_iterator cell
           = triangulation.begin_active(),
-          endc = triangulation.end();
+          endc= triangulation.end();
         for(; cell != endc; ++cell)
-          for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+          for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
               ++face)
             if(cell->face(face)->has_children()
                && !cell->face(face)->at_boundary())
@@ -2727,9 +2727,9 @@ namespace GridTools
       {
         typename Triangulation<dim, spacedim>::active_cell_iterator cell
           = triangulation.begin_active(),
-          endc = triangulation.end();
+          endc= triangulation.end();
         for(; cell != endc; ++cell)
-          for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+          for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
               ++face)
             if(cell->face(face)->has_children()
                && !cell->face(face)->at_boundary())
@@ -2769,11 +2769,11 @@ namespace GridTools
 
     if(cell->has_children())
       {
-        for(unsigned int child = 0; child < cell->n_children(); ++child)
+        for(unsigned int child= 0; child < cell->n_children(); ++child)
           if(cell->child(child)->has_children())
             {
               const std::vector<typename MeshType::active_cell_iterator>
-                children = get_active_child_cells<MeshType>(cell->child(child));
+                children= get_active_child_cells<MeshType>(cell->child(child));
               child_cells.insert(
                 child_cells.end(), children.begin(), children.end());
             }
@@ -2791,7 +2791,7 @@ namespace GridTools
     std::vector<typename MeshType::active_cell_iterator>& active_neighbors)
   {
     active_neighbors.clear();
-    for(unsigned int n = 0;
+    for(unsigned int n= 0;
         n < GeometryInfo<MeshType::dimension>::faces_per_cell;
         ++n)
       if(!cell->at_boundary(n))
@@ -2808,7 +2808,7 @@ namespace GridTools
               if(!neighbor_child->active())
                 {
                   while(neighbor_child->has_children())
-                    neighbor_child = neighbor_child->child(n == 0 ? 1 : 0);
+                    neighbor_child= neighbor_child->child(n == 0 ? 1 : 0);
 
                   Assert(neighbor_child->neighbor(n == 0 ? 1 : 0) == cell,
                          ExcInternalError());
@@ -2821,7 +2821,7 @@ namespace GridTools
                 // this neighbor has children. find
                 // out which border to the present
                 // cell
-                for(unsigned int c = 0; c < cell->face(n)->number_of_children();
+                for(unsigned int c= 0; c < cell->face(n)->number_of_children();
                     ++c)
                   active_neighbors.push_back(
                     cell->neighbor_child_on_subface(n, c));
@@ -2910,8 +2910,8 @@ namespace GridTools
         const F& f) -> decltype(f(center) - f(center))
       {
         Tensor<1, GeometryInfo<structdim>::vertices_per_cell> simplex_vector;
-        simplex_vector[cross_derivative.direction_0] = 0.5 * step;
-        simplex_vector[cross_derivative.direction_1] = -0.5 * step;
+        simplex_vector[cross_derivative.direction_0]= 0.5 * step;
+        simplex_vector[cross_derivative.direction_1]= -0.5 * step;
         return (-4.0 * f(center) - 1.0 * f(center + simplex_vector)
                 - 1.0 / 3.0 * f(center - simplex_vector)
                 + 16.0 / 3.0 * f(center + 0.5 * simplex_vector))
@@ -2945,13 +2945,13 @@ namespace GridTools
           ExcMessage("We cannot differentiate with respect to the variable "
                      "that is assumed to be dependent."));
 
-        const Point<spacedim>     manifold_point = f(center);
-        const Tensor<1, spacedim> stencil_value  = cross_stencil<structdim>(
+        const Point<spacedim>     manifold_point= f(center);
+        const Tensor<1, spacedim> stencil_value = cross_stencil<structdim>(
           {row_n, dependent_direction}, center, step, f);
-        double entry = 0.0;
-        for(unsigned int dim_n = 0; dim_n < spacedim; ++dim_n)
-          entry += -2.0 * (p0[dim_n] - manifold_point[dim_n])
-                   * stencil_value[dim_n];
+        double entry= 0.0;
+        for(unsigned int dim_n= 0; dim_n < spacedim; ++dim_n)
+          entry+= -2.0 * (p0[dim_n] - manifold_point[dim_n])
+                  * stencil_value[dim_n];
         return entry;
       }
 
@@ -2997,51 +2997,50 @@ namespace GridTools
         //                   \partial_m phi_j
         // we start at xi=(0.5, 0.5).
         Point<structdim> xi;
-        for(unsigned int d = 0; d < structdim; ++d)
-          xi[d] = 0.5;
+        for(unsigned int d= 0; d < structdim; ++d)
+          xi[d]= 0.5;
 
         Point<spacedim> x_k;
-        for(unsigned int i = 0; i < GeometryInfo<structdim>::vertices_per_cell;
+        for(unsigned int i= 0; i < GeometryInfo<structdim>::vertices_per_cell;
             ++i)
-          x_k += object->vertex(i)
-                 * GeometryInfo<structdim>::d_linear_shape_function(xi, i);
+          x_k+= object->vertex(i)
+                * GeometryInfo<structdim>::d_linear_shape_function(xi, i);
 
         do
           {
             Tensor<1, structdim> F_k;
-            for(unsigned int i = 0;
+            for(unsigned int i= 0;
                 i < GeometryInfo<structdim>::vertices_per_cell;
                 ++i)
-              F_k
-                += (x_k - trial_point) * object->vertex(i)
-                   * GeometryInfo<structdim>::d_linear_shape_function_gradient(
-                       xi, i);
+              F_k+= (x_k - trial_point) * object->vertex(i)
+                    * GeometryInfo<structdim>::d_linear_shape_function_gradient(
+                        xi, i);
 
             Tensor<2, structdim> H_k;
-            for(unsigned int i = 0;
+            for(unsigned int i= 0;
                 i < GeometryInfo<structdim>::vertices_per_cell;
                 ++i)
-              for(unsigned int j = 0;
+              for(unsigned int j= 0;
                   j < GeometryInfo<structdim>::vertices_per_cell;
                   ++j)
                 {
-                  Tensor<2, structdim> tmp = outer_product(
+                  Tensor<2, structdim> tmp= outer_product(
                     GeometryInfo<structdim>::d_linear_shape_function_gradient(
                       xi, i),
                     GeometryInfo<structdim>::d_linear_shape_function_gradient(
                       xi, j));
-                  H_k += (object->vertex(i) * object->vertex(j)) * tmp;
+                  H_k+= (object->vertex(i) * object->vertex(j)) * tmp;
                 }
 
-            const Tensor<1, structdim> delta_xi = -invert(H_k) * F_k;
-            xi += delta_xi;
+            const Tensor<1, structdim> delta_xi= -invert(H_k) * F_k;
+            xi+= delta_xi;
 
-            x_k = Point<spacedim>();
-            for(unsigned int i = 0;
+            x_k= Point<spacedim>();
+            for(unsigned int i= 0;
                 i < GeometryInfo<structdim>::vertices_per_cell;
                 ++i)
-              x_k += object->vertex(i)
-                     * GeometryInfo<structdim>::d_linear_shape_function(xi, i);
+              x_k+= object->vertex(i)
+                    * GeometryInfo<structdim>::d_linear_shape_function(xi, i);
 
             if(delta_xi.norm() < 1e-7)
               break;
@@ -3068,9 +3067,9 @@ namespace GridTools
         = Tensor<1, GeometryInfo<structdim>::vertices_per_cell>::
           n_independent_components;
       std::array<double, n_vertices_per_cell> copied_weights;
-      for(unsigned int i = 0; i < n_vertices_per_cell; ++i)
+      for(unsigned int i= 0; i < n_vertices_per_cell; ++i)
         {
-          copied_weights[i] = v[i];
+          copied_weights[i]= v[i];
           if(v[i] < 0.0 || v[i] > 1.0)
             return false;
         }
@@ -3089,10 +3088,10 @@ namespace GridTools
     const Iterator&                                       object,
     const Point<Iterator::AccessorType::space_dimension>& trial_point)
   {
-    const int spacedim  = Iterator::AccessorType::space_dimension;
-    const int structdim = Iterator::AccessorType::structure_dimension;
+    const int spacedim = Iterator::AccessorType::space_dimension;
+    const int structdim= Iterator::AccessorType::structure_dimension;
 
-    Point<spacedim> projected_point = trial_point;
+    Point<spacedim> projected_point= trial_point;
 
     if(structdim >= spacedim)
       return projected_point;
@@ -3103,8 +3102,8 @@ namespace GridTools
         // than the general algorithm in 3D). This does not take into account
         // whether projected_point is outside the quad, but we optimize along
         // lines below anyway:
-        const int                      dim = Iterator::AccessorType::dimension;
-        const Manifold<dim, spacedim>& manifold = object->get_manifold();
+        const int                      dim= Iterator::AccessorType::dimension;
+        const Manifold<dim, spacedim>& manifold= object->get_manifold();
         if(structdim == 2
            && dynamic_cast<const FlatManifold<dim, spacedim>*>(&manifold)
                 != nullptr)
@@ -3155,15 +3154,15 @@ namespace GridTools
             // could rewrite the projection as a 1D optimization problem), but
             // to reduce the potential for bugs we use the same code in both
             // cases.
-            const double step_size = object->diameter() / 64.0;
+            const double step_size= object->diameter() / 64.0;
 
             constexpr unsigned int n_vertices_per_cell
               = GeometryInfo<structdim>::vertices_per_cell;
 
             std::array<Point<spacedim>, n_vertices_per_cell> vertices;
-            for(unsigned int vertex_n = 0; vertex_n < n_vertices_per_cell;
+            for(unsigned int vertex_n= 0; vertex_n < n_vertices_per_cell;
                 ++vertex_n)
-              vertices[vertex_n] = object->vertex(vertex_n);
+              vertices[vertex_n]= object->vertex(vertex_n);
 
             auto get_point_from_weights
               = [&](const Tensor<1, n_vertices_per_cell>& weights)
@@ -3177,26 +3176,25 @@ namespace GridTools
             // pick the initial weights as (normalized) inverse distances from
             // the trial point:
             Tensor<1, n_vertices_per_cell> guess_weights;
-            double                         guess_weights_sum = 0.0;
-            for(unsigned int vertex_n = 0; vertex_n < n_vertices_per_cell;
+            double                         guess_weights_sum= 0.0;
+            for(unsigned int vertex_n= 0; vertex_n < n_vertices_per_cell;
                 ++vertex_n)
               {
-                const double distance
-                  = vertices[vertex_n].distance(trial_point);
+                const double distance= vertices[vertex_n].distance(trial_point);
                 if(distance == 0.0)
                   {
-                    guess_weights           = 0.0;
-                    guess_weights[vertex_n] = 1.0;
-                    guess_weights_sum       = 1.0;
+                    guess_weights          = 0.0;
+                    guess_weights[vertex_n]= 1.0;
+                    guess_weights_sum      = 1.0;
                     break;
                   }
                 else
                   {
-                    guess_weights[vertex_n] = 1.0 / distance;
-                    guess_weights_sum += guess_weights[vertex_n];
+                    guess_weights[vertex_n]= 1.0 / distance;
+                    guess_weights_sum+= guess_weights[vertex_n];
                   }
               }
-            guess_weights /= guess_weights_sum;
+            guess_weights/= guess_weights_sum;
             Assert(internal::weights_are_ok<structdim>(guess_weights),
                    ExcInternalError());
 
@@ -3206,13 +3204,11 @@ namespace GridTools
             // 2. An inner loop where we do a line search to find the optimal
             //    length of the step one should take in the gradient direction.
             //
-            for(unsigned int outer_n = 0; outer_n < 40; ++outer_n)
+            for(unsigned int outer_n= 0; outer_n < 40; ++outer_n)
               {
-                const unsigned int dependent_direction
-                  = n_vertices_per_cell - 1;
+                const unsigned int dependent_direction= n_vertices_per_cell - 1;
                 Tensor<1, n_vertices_per_cell> current_gradient;
-                for(unsigned int row_n = 0; row_n < n_vertices_per_cell;
-                    ++row_n)
+                for(unsigned int row_n= 0; row_n < n_vertices_per_cell; ++row_n)
                   {
                     if(row_n != dependent_direction)
                       {
@@ -3244,7 +3240,7 @@ namespace GridTools
                 // alpha by Newton iteration, where we approximate the first
                 // and second derivatives of F(x - alpha g) with centered
                 // finite differences.
-                double gradient_weight = -0.5;
+                double gradient_weight= -0.5;
                 auto   gradient_weight_objective_function
                   = [&](const double gradient_weight_guess) -> double {
                   return (trial_point
@@ -3254,17 +3250,16 @@ namespace GridTools
                     .norm_square();
                 };
 
-                for(unsigned int inner_n = 0; inner_n < 10; ++inner_n)
+                for(unsigned int inner_n= 0; inner_n < 10; ++inner_n)
                   {
-                    const double update_numerator = centered_first_difference(
+                    const double update_numerator= centered_first_difference(
                       gradient_weight,
                       step_size,
                       gradient_weight_objective_function);
-                    const double update_denominator
-                      = centered_second_difference(
-                        gradient_weight,
-                        step_size,
-                        gradient_weight_objective_function);
+                    const double update_denominator= centered_second_difference(
+                      gradient_weight,
+                      step_size,
+                      gradient_weight_objective_function);
 
                     // avoid division by zero. Note that we limit the gradient weight below
                     if(std::abs(update_denominator) == 0.0)
@@ -3277,7 +3272,7 @@ namespace GridTools
                     // itself is usually small)
                     if(std::abs(gradient_weight) > 10)
                       {
-                        gradient_weight = -10.0;
+                        gradient_weight= -10.0;
                         break;
                       }
                   }
@@ -3289,14 +3284,14 @@ namespace GridTools
                 Tensor<1, n_vertices_per_cell> tentative_weights
                   = guess_weights + gradient_weight * current_gradient;
 
-                double new_gradient_weight = gradient_weight;
-                for(unsigned int iteration_count = 0; iteration_count < 40;
+                double new_gradient_weight= gradient_weight;
+                for(unsigned int iteration_count= 0; iteration_count < 40;
                     ++iteration_count)
                   {
                     if(internal::weights_are_ok<structdim>(tentative_weights))
                       break;
 
-                    for(unsigned int i = 0; i < n_vertices_per_cell; ++i)
+                    for(unsigned int i= 0; i < n_vertices_per_cell; ++i)
                       {
                         if(tentative_weights[i] < 0.0)
                           {
@@ -3307,7 +3302,7 @@ namespace GridTools
                         if(tentative_weights[i] < 0.0
                            || 1.0 < tentative_weights[i])
                           {
-                            new_gradient_weight /= 2.0;
+                            new_gradient_weight/= 2.0;
                             tentative_weights
                               = guess_weights
                                 + new_gradient_weight * current_gradient;
@@ -3325,7 +3320,7 @@ namespace GridTools
                      .distance(trial_point)
                    < get_point_from_weights(guess_weights)
                        .distance(trial_point))
-                  guess_weights = tentative_weights;
+                  guess_weights= tentative_weights;
                 else
                   break;
                 Assert(internal::weights_are_ok<structdim>(guess_weights),
@@ -3333,7 +3328,7 @@ namespace GridTools
               }
             Assert(internal::weights_are_ok<structdim>(guess_weights),
                    ExcInternalError());
-            projected_point = get_point_from_weights(guess_weights);
+            projected_point= get_point_from_weights(guess_weights);
           }
 
         // if structdim == 2 and the optimal point is not on the interior then
@@ -3343,7 +3338,7 @@ namespace GridTools
           {
             std::array<Point<spacedim>, GeometryInfo<structdim>::lines_per_cell>
               line_projections;
-            for(unsigned int line_n = 0;
+            for(unsigned int line_n= 0;
                 line_n < GeometryInfo<structdim>::lines_per_cell;
                 ++line_n)
               {
@@ -3358,7 +3353,7 @@ namespace GridTools
                       });
             if(line_projections[0].distance(trial_point)
                < projected_point.distance(trial_point))
-              projected_point = line_projections[0];
+              projected_point= line_projections[0];
           }
       }
     else
@@ -3379,11 +3374,11 @@ namespace GridTools
     Assert(cell_ids.size() == data.size(),
            ExcDimensionMismatch(cell_ids.size(), data.size()));
     // archive the cellids in an efficient binary format
-    const size_t n_cells = cell_ids.size();
+    const size_t n_cells= cell_ids.size();
     ar&          n_cells;
     for(auto& it : cell_ids)
       {
-        CellId::binary_type binary_cell_id = it.template to_binary<dim>();
+        CellId::binary_type binary_cell_id= it.template to_binary<dim>();
         ar&                 binary_cell_id;
       }
 
@@ -3400,7 +3395,7 @@ namespace GridTools
     ar&    n_cells;
     cell_ids.clear();
     cell_ids.reserve(n_cells);
-    for(unsigned int c = 0; c < n_cells; ++c)
+    for(unsigned int c= 0; c < n_cells; ++c)
       {
         CellId::binary_type value;
         ar&                 value;
@@ -3426,9 +3421,9 @@ namespace GridTools
       false,
       ExcMessage("GridTools::exchange_cell_data_to_ghosts() requires MPI."));
 #    else
-    constexpr int dim      = MeshType::dimension;
-    constexpr int spacedim = MeshType::space_dimension;
-    auto tria = static_cast<const parallel::Triangulation<dim, spacedim>*>(
+    constexpr int dim     = MeshType::dimension;
+    constexpr int spacedim= MeshType::space_dimension;
+    auto tria= static_cast<const parallel::Triangulation<dim, spacedim>*>(
       &mesh.get_triangulation());
     Assert(
       tria != nullptr,
@@ -3449,7 +3444,7 @@ namespace GridTools
       if(cell->is_locally_owned())
         {
           std::set<dealii::types::subdomain_id> send_to;
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+          for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
             {
               const std::map<unsigned int,
                              std::set<dealii::types::subdomain_id>>::
@@ -3473,15 +3468,15 @@ namespace GridTools
               typename MeshType::active_cell_iterator mesh_it(
                 tria, cell->level(), cell->index(), &mesh);
 
-              const boost::optional<DataType> data = pack(mesh_it);
+              const boost::optional<DataType> data= pack(mesh_it);
 
               if(data)
                 {
-                  const CellId cellid = cell->id();
+                  const CellId cellid= cell->id();
 
                   for(auto it : send_to)
                     {
-                      const dealii::types::subdomain_id subdomain = it;
+                      const dealii::types::subdomain_id subdomain= it;
 
                       // find the data buffer for proc "subdomain" if it exists
                       // or create an empty one otherwise
@@ -3500,13 +3495,13 @@ namespace GridTools
         }
 
     // 2. send our messages
-    std::set<dealii::types::subdomain_id> ghost_owners   = tria->ghost_owners();
-    const unsigned int                    n_ghost_owners = ghost_owners.size();
+    std::set<dealii::types::subdomain_id> ghost_owners  = tria->ghost_owners();
+    const unsigned int                    n_ghost_owners= ghost_owners.size();
     std::vector<std::vector<char>>        sendbuffers(n_ghost_owners);
     std::vector<MPI_Request>              requests(n_ghost_owners);
 
-    unsigned int idx = 0;
-    for(auto it = ghost_owners.begin(); it != ghost_owners.end(); ++it, ++idx)
+    unsigned int idx= 0;
+    for(auto it= ghost_owners.begin(); it != ghost_owners.end(); ++it, ++idx)
       {
         CellDataTransferBuffer<dim, DataType>& data
           = destination_to_data_buffer_map[*it];
@@ -3514,46 +3509,46 @@ namespace GridTools
         // pack all the data into the buffer for this recipient and send it.
         // keep data around till we can make sure that the packet has been
         // received
-        sendbuffers[idx] = Utilities::pack(data);
-        const int ierr   = MPI_Isend(sendbuffers[idx].data(),
-                                   sendbuffers[idx].size(),
-                                   MPI_BYTE,
-                                   *it,
-                                   786,
-                                   tria->get_communicator(),
-                                   &requests[idx]);
+        sendbuffers[idx]= Utilities::pack(data);
+        const int ierr  = MPI_Isend(sendbuffers[idx].data(),
+                                  sendbuffers[idx].size(),
+                                  MPI_BYTE,
+                                  *it,
+                                  786,
+                                  tria->get_communicator(),
+                                  &requests[idx]);
         AssertThrowMPI(ierr);
       }
 
     // 3. receive messages
     std::vector<char> receive;
-    for(unsigned int idx = 0; idx < n_ghost_owners; ++idx)
+    for(unsigned int idx= 0; idx < n_ghost_owners; ++idx)
       {
         MPI_Status status;
         int        len;
         int        ierr
           = MPI_Probe(MPI_ANY_SOURCE, 786, tria->get_communicator(), &status);
         AssertThrowMPI(ierr);
-        ierr = MPI_Get_count(&status, MPI_BYTE, &len);
+        ierr= MPI_Get_count(&status, MPI_BYTE, &len);
         AssertThrowMPI(ierr);
 
         receive.resize(len);
 
-        char* ptr = receive.data();
-        ierr      = MPI_Recv(ptr,
-                        len,
-                        MPI_BYTE,
-                        status.MPI_SOURCE,
-                        status.MPI_TAG,
-                        tria->get_communicator(),
-                        &status);
+        char* ptr= receive.data();
+        ierr     = MPI_Recv(ptr,
+                       len,
+                       MPI_BYTE,
+                       status.MPI_SOURCE,
+                       status.MPI_TAG,
+                       tria->get_communicator(),
+                       &status);
         AssertThrowMPI(ierr);
 
         auto cellinfo
           = Utilities::unpack<CellDataTransferBuffer<dim, DataType>>(receive);
 
-        DataType* data = cellinfo.data.data();
-        for(unsigned int c = 0; c < cellinfo.cell_ids.size(); ++c, ++data)
+        DataType* data= cellinfo.data.data();
+        for(unsigned int c= 0; c < cellinfo.cell_ids.size(); ++c, ++data)
           {
             const typename Triangulation<dim, spacedim>::cell_iterator tria_cell
               = cellinfo.cell_ids[c].to_cell(*tria);

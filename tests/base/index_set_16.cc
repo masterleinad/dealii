@@ -32,14 +32,14 @@ test()
   is2.add_range(0, 50);
   //  is2.add_range(10,15);
 
-  IndexSet is3 = is1;
+  IndexSet is3= is1;
   is3.subtract_set(is2);
 
   is1.print(deallog);
   is2.print(deallog);
   is3.print(deallog);
 
-  for(unsigned int i = 0; i < is3.size(); ++i)
+  for(unsigned int i= 0; i < is3.size(); ++i)
     {
       AssertThrow((is1.is_element(i) && !is2.is_element(i))
                     == is3.is_element(i),

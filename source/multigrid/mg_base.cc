@@ -31,7 +31,7 @@ MGSmootherBase<VectorType>::apply(const unsigned int level,
                                   VectorType&        u,
                                   const VectorType&  rhs) const
 {
-  u = typename VectorType::value_type(0.);
+  u= typename VectorType::value_type(0.);
   smooth(level, u, rhs);
 }
 

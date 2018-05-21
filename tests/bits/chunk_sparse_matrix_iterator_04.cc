@@ -24,19 +24,19 @@ test(const unsigned int chunk_size)
 {
   deallog << "Chunk size: " << chunk_size << std::endl;
   ChunkSparsityPattern sp(5, 5, 3, chunk_size);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 5; ++j)
       if(((i + 2 * j + 1) % 3 == 0) || (i == j))
         sp.add(i, j);
   sp.compress();
   ChunkSparseMatrix<double> m(sp);
 
-  ChunkSparseMatrix<double>::iterator i = m.begin();
+  ChunkSparseMatrix<double>::iterator i= m.begin();
   for(; i != m.end(); ++i)
-    i->value() = i->row() * i->column();
+    i->value()= i->row() * i->column();
 
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 5; ++j)
       if(((i + 2 * j + 1) % 3 == 0) || (i == j))
         {
           deallog << i << ' ' << j << ' ' << m.el(i, j) << std::endl;

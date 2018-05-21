@@ -31,14 +31,14 @@ namespace Particles
    * ParticleAccessor class this is used to hide the internal implementation
    * of the particle class and the particle container.
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class ParticleIterator
   {
   public:
     /**
      * Empty constructor. Such an object is not usable!
      */
-    ParticleIterator() = default;
+    ParticleIterator()= default;
 
     /**
      * Constructor of the iterator. Takes a reference to the particle

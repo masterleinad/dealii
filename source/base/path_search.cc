@@ -109,7 +109,7 @@ PathSearch::find(const std::string& filename,
                  const char*        open_mode)
 {
   std::vector<std::string>::const_iterator       path;
-  const std::vector<std::string>::const_iterator endp = my_path_list.end();
+  const std::vector<std::string>::const_iterator endp= my_path_list.end();
 
   std::string real_name;
 
@@ -118,17 +118,17 @@ PathSearch::find(const std::string& filename,
             << " directories " << std::endl;
 
   // Try to open file in the various directories we have
-  for(path = my_path_list.begin(); path != endp; ++path)
+  for(path= my_path_list.begin(); path != endp; ++path)
     {
       // see if the file exists as given, i.e., with
       // the whole filename specified, including (possibly)
       // the suffix
       {
-        real_name = *path + filename;
+        real_name= *path + filename;
         if(debug > 1)
           deallog << "PathSearch[" << cls << "] trying " << real_name
                   << std::endl;
-        FILE* fp = fopen(real_name.c_str(), open_mode);
+        FILE* fp= fopen(real_name.c_str(), open_mode);
         if(fp != nullptr)
           {
             if(debug > 0)
@@ -143,11 +143,11 @@ PathSearch::find(const std::string& filename,
       // no suffix
       if(suffix != "")
         {
-          real_name = *path + filename + suffix;
+          real_name= *path + filename + suffix;
           if(debug > 1)
             deallog << "PathSearch[" << cls << "] trying " << real_name
                     << std::endl;
-          FILE* fp = fopen(real_name.c_str(), open_mode);
+          FILE* fp= fopen(real_name.c_str(), open_mode);
           if(fp != nullptr)
             {
               if(debug > 0)
@@ -166,14 +166,14 @@ std::string
 PathSearch::find(const std::string& filename, const char* open_mode)
 {
   std::vector<std::string>::const_iterator       suffix;
-  const std::vector<std::string>::const_iterator ends = my_suffix_list.end();
+  const std::vector<std::string>::const_iterator ends= my_suffix_list.end();
 
   if(debug > 2)
     deallog << "PathSearch[" << cls << "] " << my_path_list.size()
             << " directories " << my_suffix_list.size() << " suffixes"
             << std::endl;
 
-  for(suffix = my_suffix_list.begin(); suffix != ends; ++suffix)
+  for(suffix= my_suffix_list.begin(); suffix != ends; ++suffix)
     {
       try
         {

@@ -90,7 +90,7 @@ ChunkSparsityPattern::operator=(const ChunkSparsityPattern& s)
                     "empty."));
 
   // perform the checks in the underlying object as well
-  sparsity_pattern = s.sparsity_pattern;
+  sparsity_pattern= s.sparsity_pattern;
 
   return *this;
 }
@@ -118,17 +118,17 @@ ChunkSparsityPattern::reinit(
   Assert(row_lengths.size() == m, ExcInvalidNumber(m));
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 
-  rows = m;
-  cols = n;
+  rows= m;
+  cols= n;
 
-  this->chunk_size = chunk_size;
+  this->chunk_size= chunk_size;
 
   // pass down to the necessary information to the underlying object. we need
   // to calculate how many chunks we need: we need to round up (m/chunk_size)
   // and (n/chunk_size). rounding up in integer arithmetic equals
   // ((m+chunk_size-1)/chunk_size):
-  const size_type m_chunks = (m + chunk_size - 1) / chunk_size,
-                  n_chunks = (n + chunk_size - 1) / chunk_size;
+  const size_type m_chunks= (m + chunk_size - 1) / chunk_size,
+                  n_chunks= (n + chunk_size - 1) / chunk_size;
 
   // compute the maximum number of chunks in each row. the passed array
   // denotes the number of entries in each row of the big matrix -- in the
@@ -137,14 +137,14 @@ ChunkSparsityPattern::reinit(
   // and entries in row zero at columns {0,2} and for row one at {4,6} -->
   // we'll need 4 chunks for the first chunk row!) :
   std::vector<unsigned int> chunk_row_lengths(m_chunks, 0);
-  for(size_type i = 0; i < m; ++i)
-    chunk_row_lengths[i / chunk_size] += row_lengths[i];
+  for(size_type i= 0; i < m; ++i)
+    chunk_row_lengths[i / chunk_size]+= row_lengths[i];
 
   // for the case that the reduced sparsity pattern optimizes the diagonal but
   // the actual sparsity pattern does not, need to take one more entry in the
   // row to fit the user-required entry
   if(m != n && m_chunks == n_chunks)
-    for(unsigned int i = 0; i < m_chunks; ++i)
+    for(unsigned int i= 0; i < m_chunks; ++i)
       ++chunk_row_lengths[i];
 
   sparsity_pattern.reinit(m_chunks, n_chunks, chunk_row_lengths);
@@ -162,9 +162,9 @@ ChunkSparsityPattern::copy_from(const SparsityPatternType& dsp,
                                 const size_type            chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
-  this->chunk_size = chunk_size;
-  rows             = dsp.n_rows();
-  cols             = dsp.n_cols();
+  this->chunk_size= chunk_size;
+  rows            = dsp.n_rows();
+  cols            = dsp.n_cols();
 
   // simple case: just use the given sparsity pattern
   if(chunk_size == 1)
@@ -176,18 +176,18 @@ ChunkSparsityPattern::copy_from(const SparsityPatternType& dsp,
   // create a temporary compressed sparsity pattern that collects all entries
   // from the input sparsity pattern and then initialize the underlying small
   // sparsity pattern
-  const size_type m_chunks = (dsp.n_rows() + chunk_size - 1) / chunk_size,
-                  n_chunks = (dsp.n_cols() + chunk_size - 1) / chunk_size;
+  const size_type m_chunks= (dsp.n_rows() + chunk_size - 1) / chunk_size,
+                  n_chunks= (dsp.n_cols() + chunk_size - 1) / chunk_size;
   DynamicSparsityPattern temporary_sp(m_chunks, n_chunks);
 
-  for(size_type row = 0; row < dsp.n_rows(); ++row)
+  for(size_type row= 0; row < dsp.n_rows(); ++row)
     {
-      const size_type reduced_row = row / chunk_size;
+      const size_type reduced_row= row / chunk_size;
 
       // TODO: This could be made more efficient if we cached the
       // previous column and only called add() if the previous and the
       // current column lead to different chunk columns
-      for(typename SparsityPatternType::iterator col_num = dsp.begin(row);
+      for(typename SparsityPatternType::iterator col_num= dsp.begin(row);
           col_num != dsp.end(row);
           ++col_num)
         temporary_sp.add(reduced_row, col_num->column() / chunk_size);
@@ -208,9 +208,9 @@ ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
   // hasn't happened yet) if m==n since we always allocate that for diagonal
   // matrices
   std::vector<size_type> entries_per_row(matrix.m(), 0);
-  for(size_type row = 0; row < matrix.m(); ++row)
+  for(size_type row= 0; row < matrix.m(); ++row)
     {
-      for(size_type col = 0; col < matrix.n(); ++col)
+      for(size_type col= 0; col < matrix.n(); ++col)
         if(matrix(row, col) != 0)
           ++entries_per_row[row];
 
@@ -221,8 +221,8 @@ ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
   reinit(matrix.m(), matrix.n(), entries_per_row, chunk_size);
 
   // then actually fill it
-  for(size_type row = 0; row < matrix.m(); ++row)
-    for(size_type col = 0; col < matrix.n(); ++col)
+  for(size_type row= 0; row < matrix.m(); ++row)
+    for(size_type col= 0; col < matrix.n(); ++col)
       if(matrix(row, col) != 0)
         add(row, col);
 
@@ -255,7 +255,7 @@ namespace internal
     void
     copy_sparsity(const SparsityPattern& src, SparsityPattern& dst)
     {
-      dst = src;
+      dst= src;
     }
   } // namespace
 } // namespace internal
@@ -279,9 +279,9 @@ ChunkSparsityPattern::create_from(const unsigned int m,
                "and number of columns in sparsity pattern for the chunks."));
 
   internal::copy_sparsity(sparsity_pattern_for_chunks, sparsity_pattern);
-  chunk_size = chunk_size_in;
-  rows       = m;
-  cols       = n;
+  chunk_size= chunk_size_in;
+  rows      = m;
+  cols      = n;
 }
 
 bool
@@ -337,15 +337,14 @@ ChunkSparsityPattern::row_length(const size_type i) const
     // if columns don't align, then just iterate over all chunks and see
     // what this leads to
     {
-      SparsityPattern::const_iterator p
-        = sparsity_pattern.begin(i / chunk_size),
-        end          = sparsity_pattern.end(i / chunk_size);
-      unsigned int n = 0;
+      SparsityPattern::const_iterator p= sparsity_pattern.begin(i / chunk_size),
+                                      end= sparsity_pattern.end(i / chunk_size);
+      unsigned int n                     = 0;
       for(; p != end; ++p)
         if(p->column() != sparsity_pattern.n_cols() - 1)
-          n += chunk_size;
+          n+= chunk_size;
         else
-          n += (n_cols() % chunk_size);
+          n+= (n_cols() % chunk_size);
       return n;
     }
 }
@@ -365,9 +364,9 @@ ChunkSparsityPattern::n_nonzero_elements() const
           // columns align with chunks, but not rows
           size_type n
             = sparsity_pattern.n_nonzero_elements() * chunk_size * chunk_size;
-          n -= (sparsity_pattern.n_rows() * chunk_size - n_rows())
-               * sparsity_pattern.row_length(sparsity_pattern.n_rows() - 1)
-               * chunk_size;
+          n-= (sparsity_pattern.n_rows() * chunk_size - n_rows())
+              * sparsity_pattern.row_length(sparsity_pattern.n_rows() - 1)
+              * chunk_size;
           return n;
         }
 
@@ -377,27 +376,27 @@ ChunkSparsityPattern::n_nonzero_elements() const
           // what this leads to. follow the advice in the documentation of the
           // sparsity pattern iterators to do the loop over individual rows,
           // rather than all elements
-          size_type n = 0;
+          size_type n= 0;
 
-          for(size_type row = 0; row < sparsity_pattern.n_rows(); ++row)
+          for(size_type row= 0; row < sparsity_pattern.n_rows(); ++row)
             {
-              SparsityPattern::const_iterator p = sparsity_pattern.begin(row);
+              SparsityPattern::const_iterator p= sparsity_pattern.begin(row);
               for(; p != sparsity_pattern.end(row); ++p)
                 if((row != sparsity_pattern.n_rows() - 1)
                    && (p->column() != sparsity_pattern.n_cols() - 1))
-                  n += chunk_size * chunk_size;
+                  n+= chunk_size * chunk_size;
                 else if((row == sparsity_pattern.n_rows() - 1)
                         && (p->column() != sparsity_pattern.n_cols() - 1))
                   // last chunk row, but not last chunk column. only a smaller
                   // number (n_rows % chunk_size) of rows actually exist
-                  n += (n_rows() % chunk_size) * chunk_size;
+                  n+= (n_rows() % chunk_size) * chunk_size;
                 else if((row != sparsity_pattern.n_rows() - 1)
                         && (p->column() == sparsity_pattern.n_cols() - 1))
                   // last chunk column, but not row
-                  n += (n_cols() % chunk_size) * chunk_size;
+                  n+= (n_cols() % chunk_size) * chunk_size;
                 else
                   // bottom right chunk
-                  n += (n_cols() % chunk_size) * (n_rows() % chunk_size);
+                  n+= (n_cols() % chunk_size) * (n_rows() % chunk_size);
             }
 
           return n;
@@ -414,16 +413,16 @@ ChunkSparsityPattern::print(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 
-  for(size_type i = 0; i < sparsity_pattern.rows; ++i)
-    for(size_type d = 0; (d < chunk_size) && (i * chunk_size + d < n_rows());
+  for(size_type i= 0; i < sparsity_pattern.rows; ++i)
+    for(size_type d= 0; (d < chunk_size) && (i * chunk_size + d < n_rows());
         ++d)
       {
         out << '[' << i * chunk_size + d;
-        for(size_type j = sparsity_pattern.rowstart[i];
+        for(size_type j= sparsity_pattern.rowstart[i];
             j < sparsity_pattern.rowstart[i + 1];
             ++j)
           if(sparsity_pattern.colnums[j] != sparsity_pattern.invalid_entry)
-            for(size_type e = 0;
+            for(size_type e= 0;
                 ((e < chunk_size)
                  && (sparsity_pattern.colnums[j] * chunk_size + e < n_cols()));
                 ++e)
@@ -445,16 +444,16 @@ ChunkSparsityPattern::print_gnuplot(std::ostream& out) const
 
   // for each entry in the underlying sparsity pattern, repeat everything
   // chunk_size x chunk_size times
-  for(size_type i = 0; i < sparsity_pattern.rows; ++i)
-    for(size_type j = sparsity_pattern.rowstart[i];
+  for(size_type i= 0; i < sparsity_pattern.rows; ++i)
+    for(size_type j= sparsity_pattern.rowstart[i];
         j < sparsity_pattern.rowstart[i + 1];
         ++j)
       if(sparsity_pattern.colnums[j] != sparsity_pattern.invalid_entry)
-        for(size_type d = 0;
+        for(size_type d= 0;
             ((d < chunk_size)
              && (sparsity_pattern.colnums[j] * chunk_size + d < n_cols()));
             ++d)
-          for(size_type e = 0;
+          for(size_type e= 0;
               (e < chunk_size) && (i * chunk_size + e < n_rows());
               ++e)
             // while matrix entries are usually written (i,j), with i vertical

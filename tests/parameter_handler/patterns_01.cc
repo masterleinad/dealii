@@ -25,14 +25,14 @@ main()
   // create a pattern and let it
   // output its description
   Patterns::Integer pattern(-1, 42);
-  const std::string desc = pattern.description();
+  const std::string desc= pattern.description();
 
   // now let the same class re-create
   // a pattern object from the
   // description and verify that the
   // result is the same as what we
   // started out with
-  std::unique_ptr<Patterns::Integer> pattern2 = Patterns::Integer::create(desc);
+  std::unique_ptr<Patterns::Integer> pattern2= Patterns::Integer::create(desc);
 
   AssertThrow(pattern2 != nullptr, ExcInternalError());
   AssertThrow(desc == pattern2->description(), ExcInternalError());

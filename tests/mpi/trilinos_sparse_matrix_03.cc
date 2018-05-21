@@ -28,11 +28,11 @@
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int my_id   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  const unsigned int n_rows = 3;
-  const unsigned int n_cols = 4;
+  const unsigned int n_rows= 3;
+  const unsigned int n_cols= 4;
 
   IndexSet row_partitioning(n_rows);
   IndexSet col_partitioning(n_cols);
@@ -92,8 +92,7 @@ test()
   // matrix, just make sure
   if(my_id == 0)
     {
-      for(TrilinosWrappers::SparseMatrix::iterator p = A.begin(0);
-          p != A.end(0);
+      for(TrilinosWrappers::SparseMatrix::iterator p= A.begin(0); p != A.end(0);
           ++p)
         {
           AssertThrow(p->row() == 0, ExcInternalError());
@@ -108,8 +107,7 @@ test()
     }
   else
     {
-      for(TrilinosWrappers::SparseMatrix::iterator p = A.begin(2);
-          p != A.end(2);
+      for(TrilinosWrappers::SparseMatrix::iterator p= A.begin(2); p != A.end(2);
           ++p)
         {
           AssertThrow(p->row() == 2, ExcInternalError());
@@ -128,8 +126,7 @@ test()
   if(my_id == 0)
     {
       A.set(2, 3, 42.);
-      for(TrilinosWrappers::SparseMatrix::iterator p = A.begin(0);
-          p != A.end(0);
+      for(TrilinosWrappers::SparseMatrix::iterator p= A.begin(0); p != A.end(0);
           ++p)
         {
           AssertThrow(p->row() == 0, ExcInternalError());
@@ -145,8 +142,7 @@ test()
   else
     {
       A.set(0, 0, 108.);
-      for(TrilinosWrappers::SparseMatrix::iterator p = A.begin(2);
-          p != A.end(2);
+      for(TrilinosWrappers::SparseMatrix::iterator p= A.begin(2); p != A.end(2);
           ++p)
         {
           AssertThrow(p->row() == 2, ExcInternalError());
@@ -162,8 +158,7 @@ test()
   A.compress(VectorOperation::insert);
   if(my_id == 0)
     {
-      for(TrilinosWrappers::SparseMatrix::iterator p = A.begin(0);
-          p != A.end(0);
+      for(TrilinosWrappers::SparseMatrix::iterator p= A.begin(0); p != A.end(0);
           ++p)
         {
           AssertThrow(p->row() == 0, ExcInternalError());
@@ -178,8 +173,7 @@ test()
     }
   else
     {
-      for(TrilinosWrappers::SparseMatrix::iterator p = A.begin(2);
-          p != A.end(2);
+      for(TrilinosWrappers::SparseMatrix::iterator p= A.begin(2); p != A.end(2);
           ++p)
         {
           AssertThrow(p->row() == 2, ExcInternalError());
@@ -201,8 +195,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int       myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

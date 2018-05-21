@@ -27,16 +27,16 @@ main()
   deallog << std::setprecision(0);
   deallog.attach(logfile);
 
-  const std::string elements = "1 2 3 4 5 6";
+  const std::string elements= "1 2 3 4 5 6";
   {
     // create a 2x3 table from this
     Table<2, double>   t(2, 3);
     std::istringstream in1(elements);
     t.fill(std::istream_iterator<double>(in1), true);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for(unsigned int i= 0; i < t.size()[0]; ++i)
       {
-        for(unsigned int j = 0; j < t.size()[1]; ++j)
+        for(unsigned int j= 0; j < t.size()[1]; ++j)
           deallog << t[i][j] << ' ';
         deallog << std::endl;
       }
@@ -45,9 +45,9 @@ main()
     std::istringstream in2(elements);
     t.fill(std::istream_iterator<double>(in2), false);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for(unsigned int i= 0; i < t.size()[0]; ++i)
       {
-        for(unsigned int j = 0; j < t.size()[1]; ++j)
+        for(unsigned int j= 0; j < t.size()[1]; ++j)
           deallog << t[i][j] << ' ';
         deallog << std::endl;
       }

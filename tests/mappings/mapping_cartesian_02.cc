@@ -57,7 +57,7 @@ check(const Triangulation<dim>& tria)
 
   fe_values.reinit(dof_handler.begin_active());
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     deallog << fe_values.inverse_jacobian(0)[i] << std::endl;
 
   deallog << std::endl;

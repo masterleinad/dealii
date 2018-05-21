@@ -28,7 +28,7 @@ template <int dim>
 void
 check(const parallel::distributed::Triangulation<dim>& tria)
 {
-  unsigned int index = 0;
+  unsigned int index= 0;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active();
       cell != tria.end();

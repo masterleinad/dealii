@@ -33,13 +33,13 @@ main()
   sparsity_pattern.compress();
 
   SparseMatrix<double> M(sparsity_pattern);
-  M.diag_element(0) = 1;
-  M.diag_element(1) = 10;
-  M.diag_element(2) = 11;
-  M.diag_element(3) = 42;
+  M.diag_element(0)= 1;
+  M.diag_element(1)= 10;
+  M.diag_element(2)= 11;
+  M.diag_element(3)= 42;
 
   Vector<double> rhs(4);
-  rhs = 1;
+  rhs= 1;
 
   Vector<double> solution(4);
 
@@ -59,8 +59,8 @@ main()
   // solver tolerance scaled by 1e10. should get the same solution
   SparseMatrix<double> M1(sparsity_pattern);
   M1.add(1e10, M);
-  rhs *= 1e10;
-  solution = 0;
+  rhs*= 1e10;
+  solution= 0;
 
   {
     SolverControl    control(100, 1.e7);
