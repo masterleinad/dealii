@@ -404,10 +404,12 @@ namespace SUNDIALS
           "This is one of the following three options for the "
           "initial condition calculation. \n"
           " none: do not try to make initial conditions consistent. \n"
-          " use_y_diff: compute the algebraic components of y and differential\n"
+          " use_y_diff: compute the algebraic components of y and "
+          "differential\n"
           "    components of y_dot, given the differential components of y. \n"
           "    This option requires that the user specifies differential and \n"
-          "    algebraic components in the function get_differential_components.\n"
+          "    algebraic components in the function "
+          "get_differential_components.\n"
           " use_y_dot: compute all components of y, given y_dot.",
           Patterns::Selection("none|use_y_diff|use_y_dot"));
         prm.add_action("Correction type at initial time",
@@ -429,10 +431,12 @@ namespace SUNDIALS
           "This is one of the following three options for the "
           "initial condition calculation. \n"
           " none: do not try to make initial conditions consistent. \n"
-          " use_y_diff: compute the algebraic components of y and differential\n"
+          " use_y_diff: compute the algebraic components of y and "
+          "differential\n"
           "    components of y_dot, given the differential components of y. \n"
           "    This option requires that the user specifies differential and \n"
-          "    algebraic components in the function get_differential_components.\n"
+          "    algebraic components in the function "
+          "get_differential_components.\n"
           " use_y_dot: compute all components of y, given y_dot.",
           Patterns::Selection("none|use_y_diff|use_y_dot"));
         prm.add_action("Correction type after restart",

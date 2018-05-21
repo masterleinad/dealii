@@ -243,10 +243,9 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
       deallog << "LinearOperator payload result norm squared: "
               << out_lo_pyld.norm_sqr() << std::endl;
       const VectorType diff2 = out_lo_pyld - out_ref;
-      Assert(
-        std::sqrt(diff2.norm_sqr()) < tol,
-        ExcMessage(
-          "LinearOperator payload vmult operation does not match reference result"));
+      Assert(std::sqrt(diff2.norm_sqr()) < tol,
+             ExcMessage("LinearOperator payload vmult operation does not match "
+                        "reference result"));
 
       deallog.pop();
     }
@@ -313,10 +312,9 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
       deallog << "LinearOperator payload result norm squared: "
               << out_lo_pyld.norm_sqr() << std::endl;
       const VectorType diff2 = out_lo_pyld - out_ref;
-      Assert(
-        std::sqrt(diff2.norm_sqr()) < tol,
-        ExcMessage(
-          "LinearOperator payload Tvmult operation does not match reference result"));
+      Assert(std::sqrt(diff2.norm_sqr()) < tol,
+             ExcMessage("LinearOperator payload Tvmult operation does not "
+                        "match reference result"));
 
       deallog.pop();
     }
@@ -356,10 +354,9 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
       deallog << "LinearOperator result norm squared: " << out_lo.norm_sqr()
               << std::endl;
       const VectorType diff1 = out_lo - out_ref;
-      Assert(
-        std::sqrt(diff1.norm_sqr()) < tol,
-        ExcMessage(
-          "LinearOperator composite vmult operation does not match reference result"));
+      Assert(std::sqrt(diff1.norm_sqr()) < tol,
+             ExcMessage("LinearOperator composite vmult operation does not "
+                        "match reference result"));
 
       // Lastly we test functionality added by the Payload
       const auto lo_A_T_x_lo_A = lo_A_T * lo_A; // Construct composite operator
@@ -391,10 +388,9 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
       deallog << "LinearOperator payload result norm squared: "
               << out_lo_pyld.norm_sqr() << std::endl;
       const VectorType diff2 = out_lo_pyld - out_ref;
-      Assert(
-        std::sqrt(diff2.norm_sqr()) < tol,
-        ExcMessage(
-          "LinearOperator payload composite vmult operation does not match reference result"));
+      Assert(std::sqrt(diff2.norm_sqr()) < tol,
+             ExcMessage("LinearOperator payload composite vmult operation does "
+                        "not match reference result"));
 
       deallog.pop();
     }
@@ -434,10 +430,9 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
       deallog << "LinearOperator result norm squared: " << out_lo.norm_sqr()
               << std::endl;
       const VectorType diff = out_lo - out_ref;
-      Assert(
-        std::sqrt(diff.norm_sqr()) < tol,
-        ExcMessage(
-          "LinearOperator composite Tvmult operation does not match reference result"));
+      Assert(std::sqrt(diff.norm_sqr()) < tol,
+             ExcMessage("LinearOperator composite Tvmult operation does not "
+                        "match reference result"));
 
       // Lastly we test functionality added by the Payload
       const auto lo_A_x_lo_A_T
@@ -470,10 +465,9 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
       deallog << "LinearOperator payload result norm squared: "
               << out_lo_pyld.norm_sqr() << std::endl;
       const VectorType diff2 = out_lo_pyld - out_ref;
-      Assert(
-        std::sqrt(diff2.norm_sqr()) < tol,
-        ExcMessage(
-          "LinearOperator payload composite vmult operation does not match reference result"));
+      Assert(std::sqrt(diff2.norm_sqr()) < tol,
+             ExcMessage("LinearOperator payload composite vmult operation does "
+                        "not match reference result"));
 
       deallog.pop();
     }

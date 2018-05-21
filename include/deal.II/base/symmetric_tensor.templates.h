@@ -273,10 +273,9 @@ namespace internal
               // stipulated number of iterations
               if(it == max_n_it)
                 {
-                  AssertThrow(
-                    false,
-                    ExcMessage(
-                      "No convergence in iterative QL eigenvector algorithm.")) return std::
+                  AssertThrow(false,
+                              ExcMessage("No convergence in iterative QL "
+                                         "eigenvector algorithm.")) return std::
                     array<std::pair<Number, Tensor<1, dim, Number>>, dim>();
                 }
 
@@ -404,10 +403,9 @@ namespace internal
           // stipulated number of iterations
           if(it == max_n_it)
             {
-              AssertThrow(
-                false,
-                ExcMessage(
-                  "No convergence in iterative Jacobi eigenvector algorithm.")) return std::
+              AssertThrow(false,
+                          ExcMessage("No convergence in iterative Jacobi "
+                                     "eigenvector algorithm.")) return std::
                 array<std::pair<Number, Tensor<1, dim, Number>>, dim>();
             }
 
@@ -827,15 +825,18 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
           perform_eigenvector_decomposition(T, method);
       else
         {
-          Assert(
-            method != SymmetricTensorEigenvectorMethod::hybrid,
-            ExcMessage(
-              "The hybrid method cannot be used with auto-differentiable numbers "
-              "when the tensor upon which an eigen-decomposition is being performed "
-              "is diagonal. This is because the hybrid method immediately assumes "
-              "the values of the eigenvectors (since the characteristic polynomial) "
-              "is not solved, and therefore the sensitivity of the eigenvalues with "
-              "respect to one another is not resolved."));
+          Assert(method != SymmetricTensorEigenvectorMethod::hybrid,
+                 ExcMessage("The hybrid method cannot be used with "
+                            "auto-differentiable numbers "
+                            "when the tensor upon which an eigen-decomposition "
+                            "is being performed "
+                            "is diagonal. This is because the hybrid method "
+                            "immediately assumes "
+                            "the values of the eigenvectors (since the "
+                            "characteristic polynomial) "
+                            "is not solved, and therefore the sensitivity of "
+                            "the eigenvalues with "
+                            "respect to one another is not resolved."));
 
           // These parameters are heuristicaly chosen through "rigorous" eye-ball analysis of the
           // errors of tests based on ad-common-tests/symmetric_tensor_functions_03.h. This checks

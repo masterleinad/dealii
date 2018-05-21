@@ -2037,27 +2037,58 @@ namespace internal
             // in higher dimensions, this may happen but is not
             // implemented
             if(spacedim == 2)
-              AssertThrow((n_adj_cells >= 1) && (n_adj_cells <= 2), ExcInternalError()) else AssertThrow(
+              AssertThrow(
                 (n_adj_cells >= 1) && (n_adj_cells <= 2),
-                ExcMessage("You have a line in your triangulation "
-                           "at which more than two cells come together. "
-                           "\n\n"
-                           "This is not currently supported because the "
-                           "Triangulation class makes the assumption that "
-                           "every cell has zero or one neighbors behind "
-                           "each face (here, behind each line), but in your "
-                           "situation there would be more than one."
-                           "\n\n"
-                           "Support for this is not currently implemented. "
-                           "If you need to work with triangulations where "
-                           "more than two cells come together at a line, "
-                           "duplicate the vertices once per cell (i.e., put "
-                           "multiple vertices at the same physical location, "
-                           "but using different vertex indices for each) "
-                           "and then ensure continuity of the solution by "
-                           "explicitly creating constraints that the degrees "
-                           "of freedom at these lines have the same "
-                           "value, using the ConstraintMatrix class."));
+                ExcInternalError()) else AssertThrow((n_adj_cells >= 1)
+                                                       && (n_adj_cells <= 2),
+                                                     ExcMessage(
+                                                       "You have a line in "
+                                                       "your triangulation "
+                                                       "at which more than two "
+                                                       "cells come together. "
+                                                       "\n\n"
+                                                       "This is not currently "
+                                                       "supported because the "
+                                                       "Triangulation class "
+                                                       "makes the assumption "
+                                                       "that "
+                                                       "every cell has zero or "
+                                                       "one neighbors behind "
+                                                       "each face (here, "
+                                                       "behind each line), but "
+                                                       "in your "
+                                                       "situation there would "
+                                                       "be more than one."
+                                                       "\n\n"
+                                                       "Support for this is "
+                                                       "not currently "
+                                                       "implemented. "
+                                                       "If you need to work "
+                                                       "with triangulations "
+                                                       "where "
+                                                       "more than two cells "
+                                                       "come together at a "
+                                                       "line, "
+                                                       "duplicate the vertices "
+                                                       "once per cell (i.e., "
+                                                       "put "
+                                                       "multiple vertices at "
+                                                       "the same physical "
+                                                       "location, "
+                                                       "but using different "
+                                                       "vertex indices for "
+                                                       "each) "
+                                                       "and then ensure "
+                                                       "continuity of the "
+                                                       "solution by "
+                                                       "explicitly creating "
+                                                       "constraints that the "
+                                                       "degrees "
+                                                       "of freedom at these "
+                                                       "lines have the same "
+                                                       "value, using the "
+                                                       "ConstraintMatrix "
+                                                       "class."));
 
             // if only one cell: line is at boundary -> give it the boundary
             // indicator zero by default
@@ -4231,10 +4262,11 @@ namespace internal
             // need here
             while(triangulation.vertices_used[next_unused_vertex] == true)
               ++next_unused_vertex;
-            Assert(
-              next_unused_vertex < triangulation.vertices.size(),
-              ExcMessage(
-                "Internal error: During refinement, the triangulation wants to access an element of the 'vertices' array but it turns out that the array is not large enough."));
+            Assert(next_unused_vertex < triangulation.vertices.size(),
+                   ExcMessage(
+                     "Internal error: During refinement, the triangulation "
+                     "wants to access an element of the 'vertices' array but "
+                     "it turns out that the array is not large enough."));
             triangulation.vertices_used[next_unused_vertex] = true;
 
             new_vertices[8] = next_unused_vertex;
@@ -4299,10 +4331,10 @@ namespace internal
             new_lines[l] = next_unused_line;
             ++next_unused_line;
 
-            Assert(
-              new_lines[l]->used() == false,
-              ExcMessage(
-                "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+            Assert(new_lines[l]->used() == false,
+                   ExcMessage(
+                     "Internal error: We want to use a cell during refinement "
+                     "that should be unused, but turns out not to be."));
           }
 
         if(ref_case == RefinementCase<dim>::cut_xy)
@@ -4394,10 +4426,10 @@ namespace internal
         const unsigned int n_children = GeometryInfo<dim>::n_children(ref_case);
         for(unsigned int i = 0; i < n_children; ++i)
           {
-            Assert(
-              next_unused_cell->used() == false,
-              ExcMessage(
-                "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+            Assert(next_unused_cell->used() == false,
+                   ExcMessage(
+                     "Internal error: We want to use a cell during refinement "
+                     "that should be unused, but turns out not to be."));
             subcells[i] = next_unused_cell;
             ++next_unused_cell;
             if(i % 2 == 1 && i < n_children - 1)
@@ -4650,7 +4682,9 @@ namespace internal
                   Assert(
                     next_unused_vertex < triangulation.vertices.size(),
                     ExcMessage(
-                      "Internal error: During refinement, the triangulation wants to access an element of the 'vertices' array but it turns out that the array is not large enough."));
+                      "Internal error: During refinement, the triangulation "
+                      "wants to access an element of the 'vertices' array but "
+                      "it turns out that the array is not large enough."));
 
                   // Now we always ask the cell itself where to put
                   // the new point. The cell in turn will query the
@@ -4674,7 +4708,8 @@ namespace internal
                   Assert(
                     next_unused_cell->used() == false,
                     ExcMessage(
-                      "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                      "Internal error: We want to use a cell during refinement "
+                      "that should be unused, but turns out not to be."));
                   second_child = next_unused_cell;
                   second_child->set_used_flag();
                   second_child->clear_user_data();
@@ -4995,7 +5030,9 @@ namespace internal
                   Assert(
                     next_unused_vertex < triangulation.vertices.size(),
                     ExcMessage(
-                      "Internal error: During refinement, the triangulation wants to access an element of the 'vertices' array but it turns out that the array is not large enough."));
+                      "Internal error: During refinement, the triangulation "
+                      "wants to access an element of the 'vertices' array but "
+                      "it turns out that the array is not large enough."));
                   triangulation.vertices_used[next_unused_vertex] = true;
 
                   if(spacedim == dim)
@@ -5053,11 +5090,13 @@ namespace internal
                   Assert(
                     children[0]->used() == false,
                     ExcMessage(
-                      "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                      "Internal error: We want to use a cell during refinement "
+                      "that should be unused, but turns out not to be."));
                   Assert(
                     children[1]->used() == false,
                     ExcMessage(
-                      "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                      "Internal error: We want to use a cell during refinement "
+                      "that should be unused, but turns out not to be."));
 
                   children[0]->set(
                     internal::TriangulationImplementation ::TriaObject<1>(
@@ -5497,7 +5536,9 @@ namespace internal
                   Assert(
                     next_unused_vertex < triangulation.vertices.size(),
                     ExcMessage(
-                      "Internal error: During refinement, the triangulation wants to access an element of the 'vertices' array but it turns out that the array is not large enough."));
+                      "Internal error: During refinement, the triangulation "
+                      "wants to access an element of the 'vertices' array but "
+                      "it turns out that the array is not large enough."));
                   triangulation.vertices_used[next_unused_vertex] = true;
 
                   triangulation.vertices[next_unused_vertex]
@@ -5527,11 +5568,13 @@ namespace internal
                   Assert(
                     children[0]->used() == false,
                     ExcMessage(
-                      "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                      "Internal error: We want to use a cell during refinement "
+                      "that should be unused, but turns out not to be."));
                   Assert(
                     children[1]->used() == false,
                     ExcMessage(
-                      "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                      "Internal error: We want to use a cell during refinement "
+                      "that should be unused, but turns out not to be."));
 
                   children[0]->set(
                     internal::TriangulationImplementation ::TriaObject<1>(
@@ -5638,10 +5681,10 @@ namespace internal
                     new_line
                       = triangulation.faces->lines.next_free_single_object(
                         triangulation);
-                    Assert(
-                      new_line->used() == false,
-                      ExcMessage(
-                        "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                    Assert(new_line->used() == false,
+                           ExcMessage("Internal error: We want to use a cell "
+                                      "during refinement that should be "
+                                      "unused, but turns out not to be."));
 
                     // first collect the
                     // indices of the vertices:
@@ -5701,17 +5744,17 @@ namespace internal
                       = triangulation.faces->quads.next_free_pair_object(
                         triangulation);
                     new_quads[0] = next_unused_quad;
-                    Assert(
-                      new_quads[0]->used() == false,
-                      ExcMessage(
-                        "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                    Assert(new_quads[0]->used() == false,
+                           ExcMessage("Internal error: We want to use a cell "
+                                      "during refinement that should be "
+                                      "unused, but turns out not to be."));
 
                     ++next_unused_quad;
                     new_quads[1] = next_unused_quad;
-                    Assert(
-                      new_quads[1]->used() == false,
-                      ExcMessage(
-                        "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                    Assert(new_quads[1]->used() == false,
+                           ExcMessage("Internal error: We want to use a cell "
+                                      "during refinement that should be "
+                                      "unused, but turns out not to be."));
 
                     if(aniso_quad_ref_case == RefinementCase<dim - 1>::cut_x)
                       {
@@ -6137,8 +6180,10 @@ namespace internal
                       ++next_unused_vertex;
                     Assert(
                       next_unused_vertex < triangulation.vertices.size(),
-                      ExcMessage(
-                        "Internal error: During refinement, the triangulation wants to access an element of the 'vertices' array but it turns out that the array is not large enough."));
+                      ExcMessage("Internal error: During refinement, the "
+                                 "triangulation wants to access an element of "
+                                 "the 'vertices' array but it turns out that "
+                                 "the array is not large enough."));
 
                     // now: if the quad is refined anisotropically
                     // already, set the anisotropic refinement flag
@@ -6200,14 +6245,16 @@ namespace internal
                             // some tests; if any of the iterators
                             // should be invalid, then already
                             // dereferencing will fail
-                            Assert(
-                              children[0]->used() == false,
-                              ExcMessage(
-                                "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
-                            Assert(
-                              children[1]->used() == false,
-                              ExcMessage(
-                                "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                            Assert(children[0]->used() == false,
+                                   ExcMessage(
+                                     "Internal error: We want to use a cell "
+                                     "during refinement that should be unused, "
+                                     "but turns out not to be."));
+                            Assert(children[1]->used() == false,
+                                   ExcMessage(
+                                     "Internal error: We want to use a cell "
+                                     "during refinement that should be unused, "
+                                     "but turns out not to be."));
 
                             children[0]->set(
                               internal::TriangulationImplementation::TriaObject<
@@ -6298,8 +6345,9 @@ namespace internal
 
                         Assert(
                           new_lines[i]->used() == false,
-                          ExcMessage(
-                            "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                          ExcMessage("Internal error: We want to use a cell "
+                                     "during refinement that should be unused, "
+                                     "but turns out not to be."));
                       }
 
                     // set the data of the four lines.  first collect
@@ -6411,33 +6459,33 @@ namespace internal
                         triangulation);
 
                     new_quads[0] = next_unused_quad;
-                    Assert(
-                      new_quads[0]->used() == false,
-                      ExcMessage(
-                        "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                    Assert(new_quads[0]->used() == false,
+                           ExcMessage("Internal error: We want to use a cell "
+                                      "during refinement that should be "
+                                      "unused, but turns out not to be."));
 
                     ++next_unused_quad;
                     new_quads[1] = next_unused_quad;
-                    Assert(
-                      new_quads[1]->used() == false,
-                      ExcMessage(
-                        "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                    Assert(new_quads[1]->used() == false,
+                           ExcMessage("Internal error: We want to use a cell "
+                                      "during refinement that should be "
+                                      "unused, but turns out not to be."));
 
                     next_unused_quad
                       = triangulation.faces->quads.next_free_pair_object(
                         triangulation);
                     new_quads[2] = next_unused_quad;
-                    Assert(
-                      new_quads[2]->used() == false,
-                      ExcMessage(
-                        "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                    Assert(new_quads[2]->used() == false,
+                           ExcMessage("Internal error: We want to use a cell "
+                                      "during refinement that should be "
+                                      "unused, but turns out not to be."));
 
                     ++next_unused_quad;
                     new_quads[3] = next_unused_quad;
-                    Assert(
-                      new_quads[3]->used() == false,
-                      ExcMessage(
-                        "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                    Assert(new_quads[3]->used() == false,
+                           ExcMessage("Internal error: We want to use a cell "
+                                      "during refinement that should be "
+                                      "unused, but turns out not to be."));
 
                     // note these quads as children to the present one
                     quad->set_children(0, new_quads[0]->index());
@@ -6602,10 +6650,10 @@ namespace internal
                         = triangulation.faces->lines.next_free_single_object(
                           triangulation);
 
-                      Assert(
-                        new_lines[i]->used() == false,
-                        ExcMessage(
-                          "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                      Assert(new_lines[i]->used() == false,
+                             ExcMessage("Internal error: We want to use a cell "
+                                        "during refinement that should be "
+                                        "unused, but turns out not to be."));
                       new_lines[i]->set_used_flag();
                       new_lines[i]->clear_user_flag();
                       new_lines[i]->clear_user_data();
@@ -6628,10 +6676,10 @@ namespace internal
                         = triangulation.faces->quads.next_free_single_object(
                           triangulation);
 
-                      Assert(
-                        new_quads[i]->used() == false,
-                        ExcMessage(
-                          "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                      Assert(new_quads[i]->used() == false,
+                             ExcMessage("Internal error: We want to use a cell "
+                                        "during refinement that should be "
+                                        "unused, but turns out not to be."));
                       new_quads[i]->set_used_flag();
                       new_quads[i]->clear_user_flag();
                       new_quads[i]->clear_user_data();
@@ -6667,10 +6715,10 @@ namespace internal
 
                       new_hexes[i] = next_unused_hex;
 
-                      Assert(
-                        new_hexes[i]->used() == false,
-                        ExcMessage(
-                          "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+                      Assert(new_hexes[i]->used() == false,
+                             ExcMessage("Internal error: We want to use a cell "
+                                        "during refinement that should be "
+                                        "unused, but turns out not to be."));
                       new_hexes[i]->set_used_flag();
                       new_hexes[i]->clear_user_flag();
                       new_hexes[i]->clear_user_data();
@@ -8901,10 +8949,13 @@ namespace internal
                           while(triangulation.vertices_used[next_unused_vertex]
                                 == true)
                             ++next_unused_vertex;
-                          Assert(
-                            next_unused_vertex < triangulation.vertices.size(),
-                            ExcMessage(
-                              "Internal error: During refinement, the triangulation wants to access an element of the 'vertices' array but it turns out that the array is not large enough."));
+                          Assert(next_unused_vertex
+                                   < triangulation.vertices.size(),
+                                 ExcMessage(
+                                   "Internal error: During refinement, the "
+                                   "triangulation wants to access an element "
+                                   "of the 'vertices' array but it turns out "
+                                   "that the array is not large enough."));
                           triangulation.vertices_used[next_unused_vertex]
                             = true;
 
@@ -10321,10 +10372,9 @@ void
 Triangulation<dim, spacedim>::set_all_manifold_ids(
   const types::manifold_id m_number)
 {
-  Assert(
-    n_cells() > 0,
-    ExcMessage(
-      "Error: set_all_manifold_ids() can not be called on an empty Triangulation."));
+  Assert(n_cells() > 0,
+         ExcMessage("Error: set_all_manifold_ids() can not be called on an "
+                    "empty Triangulation."));
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = this->begin_active(),
@@ -10339,10 +10389,9 @@ void
 Triangulation<dim, spacedim>::set_all_manifold_ids_on_boundary(
   const types::manifold_id m_number)
 {
-  Assert(
-    n_cells() > 0,
-    ExcMessage(
-      "Error: set_all_manifold_ids_on_boundary() can not be called on an empty Triangulation."));
+  Assert(n_cells() > 0,
+         ExcMessage("Error: set_all_manifold_ids_on_boundary() can not be "
+                    "called on an empty Triangulation."));
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = this->begin_active(),
@@ -10360,10 +10409,9 @@ Triangulation<dim, spacedim>::set_all_manifold_ids_on_boundary(
   const types::boundary_id b_id,
   const types::manifold_id m_number)
 {
-  Assert(
-    n_cells() > 0,
-    ExcMessage(
-      "Error: set_all_manifold_ids_on_boundary() can not be called on an empty Triangulation."));
+  Assert(n_cells() > 0,
+         ExcMessage("Error: set_all_manifold_ids_on_boundary() can not be "
+                    "called on an empty Triangulation."));
 
   bool boundary_found = false;
   typename Triangulation<dim, spacedim>::active_cell_iterator cell

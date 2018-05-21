@@ -238,11 +238,11 @@ namespace StokesClass
               AssertThrow(
                 false,
                 ExcMessage(
-                  std::string(
-                    "The iterative (bottom right) solver in BlockSchurPreconditioner::vmult "
-                    "did not converge to a tolerance of "
-                    + Utilities::to_string(solver_control.tolerance())
-                    + ". It reported the following error:\n\n")
+                  std::string("The iterative (bottom right) solver in "
+                              "BlockSchurPreconditioner::vmult "
+                              "did not converge to a tolerance of "
+                              + Utilities::to_string(solver_control.tolerance())
+                              + ". It reported the following error:\n\n")
                   + exc.what())) else throw QuietException();
           }
         dst.block(1) *= -1.0;
@@ -1343,14 +1343,16 @@ namespace StokesClass
       }
     catch(SolverControl::NoConvergence)
       {
-        deallog
-          << "********************************************************************"
-          << std::endl
-          << "SOLVER DID NOT CONVERGE AFTER " << n_cheap_stokes_solver_steps
-          << " ITERATIONS. res=" << solver_control_cheap.last_value()
-          << std::endl
-          << "********************************************************************"
-          << std::endl;
+        deallog << "***********************************************************"
+                   "*********"
+                << std::endl
+                << "SOLVER DID NOT CONVERGE AFTER "
+                << n_cheap_stokes_solver_steps
+                << " ITERATIONS. res=" << solver_control_cheap.last_value()
+                << std::endl
+                << "***********************************************************"
+                   "*********"
+                << std::endl;
       }
 
     constraints_u.distribute(distributed_stokes_solution.block(0));

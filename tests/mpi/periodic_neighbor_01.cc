@@ -293,9 +293,9 @@ periodicity_tests<dim>::check_periodicity()
                               << nb_of_nb_it->face(nb_of_nb_i_face)->center()
                               << " should be equal to "
                               << cell_it->face(i_face)->center() << std::endl;
-                      deallog
-                        << "-------------------------------------------------------"
-                        << std::endl;
+                      deallog << "---------------------------------------------"
+                                 "----------"
+                              << std::endl;
                       Assert((cell_it->face(i_face)->center()
                               - nb_of_nb_it->face(nb_of_nb_i_face)->center())
                                    .norm()

@@ -905,12 +905,13 @@ namespace Physics
       {
         static_assert(
           (SubTensor1::dimension == dim && SubTensor2::dimension == dim),
-          "Sub-tensor spatial dimension is different from those of the input tensor.");
+          "Sub-tensor spatial dimension is different from those of the input "
+          "tensor.");
 
-        static_assert(
-          (SubTensor1::rank == 2 && SubTensor2::rank == 1)
-            || (SubTensor1::rank == 1 && SubTensor2::rank == 2),
-          "Cannot build a rank 3 tensor from the given combination of sub-tensors.");
+        static_assert((SubTensor1::rank == 2 && SubTensor2::rank == 1)
+                        || (SubTensor1::rank == 1 && SubTensor2::rank == 2),
+                      "Cannot build a rank 3 tensor from the given combination "
+                      "of sub-tensors.");
 
         FullMatrix<Number> out(SubTensor1::n_independent_components,
                                SubTensor2::n_independent_components);

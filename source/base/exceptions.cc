@@ -366,9 +366,9 @@ namespace StandardExceptions
       }
     else
       {
-        out
-          << "This error code is not equal to any of the standard MPI error codes."
-          << std::endl;
+        out << "This error code is not equal to any of the standard MPI error "
+               "codes."
+            << std::endl;
       }
     out << "The numerical value of the original error code is " << error_code
         << "." << std::endl;
@@ -407,13 +407,14 @@ namespace
         MPI_Comm_size(MPI_COMM_WORLD, &n_proc);
         if(n_proc > 1)
           {
-            std::cerr
-              << "Calling MPI_Abort now.\n"
-              << "To break execution in a GDB session, execute 'break MPI_Abort' before "
-              << "running. You can also put the following into your ~/.gdbinit:\n"
-              << "  set breakpoint pending on\n"
-              << "  break MPI_Abort\n"
-              << "  set breakpoint pending auto" << std::endl;
+            std::cerr << "Calling MPI_Abort now.\n"
+                      << "To break execution in a GDB session, execute 'break "
+                         "MPI_Abort' before "
+                      << "running. You can also put the following into your "
+                         "~/.gdbinit:\n"
+                      << "  set breakpoint pending on\n"
+                      << "  break MPI_Abort\n"
+                      << "  set breakpoint pending auto" << std::endl;
 
             MPI_Abort(MPI_COMM_WORLD,
                       /* return code = */ 255);
@@ -468,11 +469,13 @@ namespace deal_II_exceptions
             }
           case CUSPARSE_STATUS_INVALID_VALUE:
             {
-              return "An unsupported value of parameter was passed to the function";
+              return "An unsupported value of parameter was passed to the "
+                     "function";
             }
           case CUSPARSE_STATUS_ARCH_MISMATCH:
             {
-              return "The function requires a feature absent from the device architecture";
+              return "The function requires a feature absent from the device "
+                     "architecture";
             }
           case CUSPARSE_STATUS_MAPPING_ERROR:
             {
@@ -513,11 +516,13 @@ namespace deal_II_exceptions
             }
           case CUSOLVER_STATUS_INVALID_VALUE:
             {
-              return "An unsupported value of a parameter was passed to the function";
+              return "An unsupported value of a parameter was passed to the "
+                     "function";
             }
           case CUSOLVER_STATUS_ARCH_MISMATCH:
             {
-              return "The function requires a feature absent from the device architecture";
+              return "The function requires a feature absent from the device "
+                     "architecture";
             }
           case CUSOLVER_STATUS_EXECUTION_FAILED:
             {

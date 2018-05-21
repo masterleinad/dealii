@@ -390,10 +390,9 @@ namespace internal
              ExcMessage("You are trying to access degree of freedom "
                         "information for an object on which no such "
                         "information is available"));
-      Assert(
-        is_compressed_entry(active_fe_indices[obj_index]) == false,
-        ExcMessage(
-          "This function can no longer be called after compressing the dof_indices array"));
+      Assert(is_compressed_entry(active_fe_indices[obj_index]) == false,
+             ExcMessage("This function can no longer be called after "
+                        "compressing the dof_indices array"));
       Assert(fe_index == active_fe_indices[obj_index],
              ExcMessage("FE index does not match that of the present cell"));
       dof_indices[dof_offsets[obj_index] + local_index] = global_index;

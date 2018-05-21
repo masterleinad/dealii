@@ -1000,10 +1000,10 @@ namespace internal
             default:
               Assert(
                 false,
-                ExcMessage(
-                  "This constructor can only be called with either "
-                  "QGaussRadauChebyshev::left or QGaussRadauChebyshev::right as "
-                  "second argument."));
+                ExcMessage("This constructor can only be called with either "
+                           "QGaussRadauChebyshev::left or "
+                           "QGaussRadauChebyshev::right as "
+                           "second argument."));
           }
 
       return points;

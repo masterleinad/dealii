@@ -480,7 +480,8 @@ namespace Step37
           << "set view equal xy" << std::endl
           << "unset xtics" << std::endl
           << "unset ytics" << std::endl
-          << "plot '-' using 1:2 with lines notitle, '-' with labels point pt 2 offset 1,1 notitle"
+          << "plot '-' using 1:2 with lines notitle, '-' with labels point pt "
+             "2 offset 1,1 notitle"
           << std::endl;
         GridOut().write_gnuplot(triangulation, f);
         f << "e" << std::endl;

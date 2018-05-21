@@ -1896,10 +1896,9 @@ namespace parallel
     Triangulation<dim, spacedim>::load(const char* filename,
                                        const bool  autopartition)
     {
-      Assert(
-        this->n_cells() > 0,
-        ExcMessage(
-          "load() only works if the Triangulation already contains a coarse mesh!"));
+      Assert(this->n_cells() > 0,
+             ExcMessage("load() only works if the Triangulation already "
+                        "contains a coarse mesh!"));
       Assert(
         this->n_levels() == 1,
         ExcMessage(
@@ -1939,7 +1938,8 @@ namespace parallel
         numcpus <= Utilities::MPI::n_mpi_processes(this->mpi_communicator),
         ExcMessage(
           "parallel::distributed::Triangulation::load() only supports loading "
-          "saved data with a greater or equal number of processes than were used to "
+          "saved data with a greater or equal number of processes than were "
+          "used to "
           "save() when using p4est 0.3.4.2."));
 #  endif
 
@@ -3086,12 +3086,11 @@ namespace parallel
                           break;
                         }
 
-                    Assert(
-                      !need_to_know || !is_level_artificial,
-                      ExcMessage(
-                        "Internal error: the owner of cell"
-                        + cell->id().to_string()
-                        + " is unknown even though it is needed for geometric multigrid."));
+                    Assert(!need_to_know || !is_level_artificial,
+                           ExcMessage("Internal error: the owner of cell"
+                                      + cell->id().to_string()
+                                      + " is unknown even though it is needed "
+                                        "for geometric multigrid."));
                   }
             }
         }
@@ -3119,8 +3118,8 @@ namespace parallel
         if(cell->is_locally_owned())
           Assert(
             !cell->refine_flag_set() && !cell->coarsen_flag_set(),
-            ExcMessage(
-              "Error: There shouldn't be any cells flagged for coarsening/refinement when calling repartition()."));
+            ExcMessage("Error: There shouldn't be any cells flagged for "
+                       "coarsening/refinement when calling repartition()."));
 #  endif
 
       // before repartitioning the mesh let others attach mesh related info

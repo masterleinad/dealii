@@ -118,8 +118,8 @@ newton_binomial(unsigned int a, unsigned int b)
   if(a >= b)
     c = factorial(a) / factorial(b) / factorial(a - b);
   else
-    deallog
-      << "Error: in Newton binomial the first integer must be greater or equal to the second.";
+    deallog << "Error: in Newton binomial the first integer must be greater or "
+               "equal to the second.";
 
   return c;
 }

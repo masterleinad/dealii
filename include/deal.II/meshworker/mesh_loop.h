@@ -157,39 +157,35 @@ namespace MeshWorker
     const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
     const unsigned int chunk_size   = 8)
   {
-    Assert(
-      (!cell_worker) == !(flags & work_on_cells),
-      ExcMessage(
-        "If you specify a cell_worker, you need to set assemble_own_cells or assemble_ghost_cells."));
+    Assert((!cell_worker) == !(flags & work_on_cells),
+           ExcMessage("If you specify a cell_worker, you need to set "
+                      "assemble_own_cells or assemble_ghost_cells."));
 
     Assert(
       (flags
        & (assemble_own_interior_faces_once | assemble_own_interior_faces_both))
         != (assemble_own_interior_faces_once
             | assemble_own_interior_faces_both),
-      ExcMessage(
-        "You can only specify assemble_own_interior_faces_once OR assemble_own_interior_faces_both."));
+      ExcMessage("You can only specify assemble_own_interior_faces_once OR "
+                 "assemble_own_interior_faces_both."));
 
-    Assert(
-      (flags & (assemble_ghost_faces_once | assemble_ghost_faces_both))
-        != (assemble_ghost_faces_once | assemble_ghost_faces_both),
-      ExcMessage(
-        "You can only specify assemble_ghost_faces_once OR assemble_ghost_faces_both."));
+    Assert((flags & (assemble_ghost_faces_once | assemble_ghost_faces_both))
+             != (assemble_ghost_faces_once | assemble_ghost_faces_both),
+           ExcMessage("You can only specify assemble_ghost_faces_once OR "
+                      "assemble_ghost_faces_both."));
 
-    Assert(
-      !(flags & cells_after_faces)
-        || (flags & (assemble_own_cells | assemble_ghost_cells)),
-      ExcMessage(
-        "The option cells_after_faces only makes sense if you assemble on cells."));
+    Assert(!(flags & cells_after_faces)
+             || (flags & (assemble_own_cells | assemble_ghost_cells)),
+           ExcMessage("The option cells_after_faces only makes sense if you "
+                      "assemble on cells."));
 
     Assert((!face_worker) == !(flags & work_on_faces),
            ExcMessage(
              "If you specify a face_worker, assemble_face_* needs to be set."));
 
-    Assert(
-      (!boundary_worker) == !(flags & assemble_boundary_faces),
-      ExcMessage(
-        "If you specify a boundary_worker, assemble_boundary_faces needs to be set."));
+    Assert((!boundary_worker) == !(flags & assemble_boundary_faces),
+           ExcMessage("If you specify a boundary_worker, "
+                      "assemble_boundary_faces needs to be set."));
 
     auto cell_action = [&](const CellIteratorType& cell,
                            ScratchData&            scratch,

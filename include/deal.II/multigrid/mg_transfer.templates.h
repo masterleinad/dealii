@@ -138,10 +138,9 @@ namespace
     const dealii::parallel::Triangulation<dim, spacedim>* tria
       = (dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
         &mg_dof.get_triangulation()));
-    AssertThrow(
-      tria != nullptr,
-      ExcMessage(
-        "multigrid with Trilinos vectors only works with a parallel Triangulation!"));
+    AssertThrow(tria != nullptr,
+                ExcMessage("multigrid with Trilinos vectors only works with a "
+                           "parallel Triangulation!"));
 
     for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
       {

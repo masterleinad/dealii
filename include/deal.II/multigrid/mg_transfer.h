@@ -171,9 +171,9 @@ namespace internal
     {
       AssertThrow(
         false,
-        ExcNotImplemented(
-          "ERROR: MGTransferPrebuilt with LinearAlgebra::distributed::Vector currently "
-          "needs deal.II to be configured with Trilinos."));
+        ExcNotImplemented("ERROR: MGTransferPrebuilt with "
+                          "LinearAlgebra::distributed::Vector currently "
+                          "needs deal.II to be configured with Trilinos."));
     }
   };
 

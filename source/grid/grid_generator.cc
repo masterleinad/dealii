@@ -1157,10 +1157,9 @@ namespace GridGenerator
         Assert(repetitions[i] >= 1, ExcInvalidRepetitions(repetitions[i]));
 
         delta[i][i] = (p2[i] - p1[i]) / repetitions[i];
-        Assert(
-          delta[i][i] > 0.0,
-          ExcMessage(
-            "The first dim entries of coordinates of p1 and p2 need to be different."));
+        Assert(delta[i][i] > 0.0,
+               ExcMessage("The first dim entries of coordinates of p1 and p2 "
+                          "need to be different."));
       }
 
     // then generate the points

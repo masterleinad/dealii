@@ -23,9 +23,9 @@ template <typename number>
 void
 checkReinit2(Vector<number>& V)
 {
-  deallog
-    << "Reinit a ReadWrite VectorView<number> with Vector<number> and const size"
-    << std::endl;
+  deallog << "Reinit a ReadWrite VectorView<number> with Vector<number> and "
+             "const size"
+          << std::endl;
 
   deallog
     << "Creating dummy Vector<number> of size V.size() and filling with zeros"
@@ -64,9 +64,9 @@ checkReinit2(Vector<number>& V)
     deallog << VV(i) << '\t';
   deallog << std::endl;
 
-  deallog
-    << "Incrementing Vector<number> elements using Read-write handle of VectorView<number>"
-    << std::endl;
+  deallog << "Incrementing Vector<number> elements using Read-write handle of "
+             "VectorView<number>"
+          << std::endl;
   for(unsigned int i = 0; i < VV.size(); ++i)
     VV(i) = VV(i) + 1;
 

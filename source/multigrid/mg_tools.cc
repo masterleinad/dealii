@@ -1376,7 +1376,8 @@ namespace MGTools
                                 || component_mask[c] == true,
                               ExcMessage(
                                 "You are using a non-primitive FiniteElement "
-                                "and try to constrain just some of its components!"));
+                                "and try to constrain just some of its "
+                                "components!"));
                       }
 
                     // get indices, physical location and boundary values of dofs on this face

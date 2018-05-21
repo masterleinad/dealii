@@ -1190,10 +1190,9 @@ Vector<Number>::add(const size_type    n_indices,
   for(size_type i = 0; i < n_indices; ++i)
     {
       Assert(indices[i] < vec_size, ExcIndexRange(indices[i], 0, vec_size));
-      Assert(
-        numbers::is_finite(values[i]),
-        ExcMessage(
-          "The given value is not finite but either infinite or Not A Number (NaN)"));
+      Assert(numbers::is_finite(values[i]),
+             ExcMessage("The given value is not finite but either infinite or "
+                        "Not A Number (NaN)"));
 
       this->values[indices[i]] += values[i];
     }

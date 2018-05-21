@@ -53,11 +53,12 @@ test(const bool renumber = false)
 
   const unsigned int n_dofs = dof_handler.n_dofs();
 
-  std::cout
-    << " * | DoF    | Component  | Base element | Shape function within base | Multiplicity |"
-    << std::endl
-    << " * | :----: | :--------: | :----------: | :------------------------: | :----------: |"
-    << std::endl;
+  std::cout << " * | DoF    | Component  | Base element | Shape function "
+               "within base | Multiplicity |"
+            << std::endl
+            << " * | :----: | :--------: | :----------: | "
+               ":------------------------: | :----------: |"
+            << std::endl;
 
   for(unsigned int i = 0; i < n_dofs; ++i)
     {
@@ -99,7 +100,8 @@ test(const bool renumber = false)
         << "unset border" << std::endl
         << "set xrange [0: 1.05]" << std::endl
         << "set yrange [0: 1.05]" << std::endl
-        << "plot '-' using 1:2 with lines notitle, '-' with labels point pt 2 offset 0.5,0.5 notitle"
+        << "plot '-' using 1:2 with lines notitle, '-' with labels point pt 2 "
+           "offset 0.5,0.5 notitle"
         << std::endl;
       GridOut().write_gnuplot(triangulation, f);
       f << "e" << std::endl;

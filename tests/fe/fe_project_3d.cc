@@ -220,9 +220,9 @@ test(const FiniteElement<dim>& fe,
      const Point<dim>*         vertices_parallelograms)
 {
   deallog << "dim: " << dim << "\t" << fe.get_name() << std::endl;
-  deallog
-    << "DoFs\t\t||u-u_h||_1\tcurl(u_h)\ttangentials\tcurl(curl(u_h))\tcurl_curl_traces\tdiv(u_h)\tboundary_flux"
-    << std::endl;
+  deallog << "DoFs\t\t||u-u_h||_1\tcurl(u_h)\ttangentials\tcurl(curl(u_h))"
+             "\tcurl_curl_traces\tdiv(u_h)\tboundary_flux"
+          << std::endl;
 
   Triangulation<dim> triangulation;
   create_tria(triangulation, vertices_parallelograms);

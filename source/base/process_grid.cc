@@ -113,10 +113,9 @@ namespace Utilities
       Assert(grid_dimensions.second > 0,
              ExcMessage("Number of process grid columns has to be positive."));
 
-      Assert(
-        grid_dimensions.first * grid_dimensions.second <= n_mpi_processes,
-        ExcMessage(
-          "Size of process grid is larger than number of available MPI processes."));
+      Assert(grid_dimensions.first * grid_dimensions.second <= n_mpi_processes,
+             ExcMessage("Size of process grid is larger than number of "
+                        "available MPI processes."));
 
       // processor grid order.
       const bool column_major = false;

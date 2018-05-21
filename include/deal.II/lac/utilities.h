@@ -403,10 +403,9 @@ namespace Utilities
       Assert(degree > 0, ExcMessage("Only positive degrees make sense."));
 
       const bool scale = (a_L < std::numeric_limits<double>::infinity());
-      Assert(
-        a < b,
-        ExcMessage(
-          "Lower bound of the unwanted spectrum should be smaller than the upper bound."));
+      Assert(a < b,
+             ExcMessage("Lower bound of the unwanted spectrum should be "
+                        "smaller than the upper bound."));
 
       Assert(a_L <= a || a_L >= b || !scale,
              ExcMessage(

@@ -58,9 +58,9 @@ check()
     Assert(fe.get_sub_fe(mask) == fe.get_sub_fe(first, n), ExcInternalError());
   };
 
-  deallog
-    << "\n<table>\n"
-    << "<tr>\n<th>ComponentMask</th>\n<th>Result</th>\n<th>Description</th>\n</tr>\n";
+  deallog << "\n<table>\n"
+          << "<tr>\n<th>ComponentMask</th>\n<th>Result</th>\n<th>Description</"
+             "th>\n</tr>\n";
   run(0, 7, "@p fe itself, the whole @p FESystem");
   run(0, 2, "just the @p fe_velocity");
   run(0, 1, "The first component in @p fe_velocity");

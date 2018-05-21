@@ -1350,10 +1350,9 @@ namespace FETools
            const parallel::distributed::Triangulation<dim, spacedim>*>(
           &dof2.get_triangulation()));
 
-      Assert(
-        tr != nullptr,
-        ExcMessage(
-          "Extrapolate in parallel only works for parallel distributed triangulations!"));
+      Assert(tr != nullptr,
+             ExcMessage("Extrapolate in parallel only works for parallel "
+                        "distributed triangulations!"));
 
       communicator = tr->get_communicator();
 

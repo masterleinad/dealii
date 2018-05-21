@@ -1038,10 +1038,9 @@ namespace internal
     {
       // We cannot use Assert in a CUDA kernel
 #ifndef __CUDA_ARCH__
-      Assert(
-        false,
-        ExcMessage(
-          "Cannot access elements of an object of type Tensor<rank,0,Number>."));
+      Assert(false,
+             ExcMessage("Cannot access elements of an object of type "
+                        "Tensor<rank,0,Number>."));
 #endif
       static ArrayElementType t;
       return t;

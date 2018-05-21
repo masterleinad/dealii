@@ -159,9 +159,9 @@ private:
             deallog << "test point (unit mid) =   " << test_unit_mid
                     << "  mapped point =   " << dp_real_mid
                     << "  forward-mapping =   " << dp_test_mid << std::endl;
-            deallog
-              << "======================================================================================="
-              << std::endl;
+            deallog << "======================================================="
+                       "================================"
+                    << std::endl;
           }
       }
   }

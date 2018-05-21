@@ -582,12 +582,13 @@ TimerOutput::print_summary() const
                  << std::endl;
 
       if(time_gap > 0.0)
-        out_stream
-          << std::endl
-          << "Note: The sum of counted times is " << time_gap
-          << " seconds larger than the total time.\n"
-          << "(Timer function may have introduced too much overhead, or different\n"
-          << "section timers may have run at the same time.)" << std::endl;
+        out_stream << std::endl
+                   << "Note: The sum of counted times is " << time_gap
+                   << " seconds larger than the total time.\n"
+                   << "(Timer function may have introduced too much overhead, "
+                      "or different\n"
+                   << "section timers may have run at the same time.)"
+                   << std::endl;
     }
 
   // in case we want to write out wallclock times

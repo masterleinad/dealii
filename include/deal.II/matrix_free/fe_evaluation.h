@@ -6563,11 +6563,11 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
   const unsigned int cell_index,
   const unsigned int face_number)
 {
-  Assert(
-    this->quad_no
-      < this->matrix_info->get_mapping_info().face_data_by_cells.size(),
-    ExcMessage(
-      "You must set MatrixFree::AdditionalData::mapping_update_flags_faces_by_cells to use the present reinit method."));
+  Assert(this->quad_no
+           < this->matrix_info->get_mapping_info().face_data_by_cells.size(),
+         ExcMessage("You must set "
+                    "MatrixFree::AdditionalData::mapping_update_flags_faces_by_"
+                    "cells to use the present reinit method."));
   AssertIndexRange(face_number, GeometryInfo<dim>::faces_per_cell);
   AssertIndexRange(cell_index,
                    this->matrix_info->get_mapping_info().cell_type.size());

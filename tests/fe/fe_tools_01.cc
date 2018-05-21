@@ -63,8 +63,8 @@ main()
   test_fe<1>("FESystem<1>[FE_Q<dim>(2)^dim-FE_DGQ<d>(1)]");
   test_fe<2>("FESystem<2>[FE_Q<2>(2)^dim-FE_DGQ<2>(1)]");
   test_fe<2>("FESystem[FESystem<2>[FE_Q<2>(2)^2-FE_DGQ<2>(1)]^2-FE_Q(1)]");
-  test_fe<2>(
-    "FESystem[FESystem[FESystem[FE_Q(1)^2-FE_Q(1)]^2]-FESystem[FE_Q(1)^2]-FESystem[FE_Q(1)-FE_DGP(0)]]");
+  test_fe<2>("FESystem[FESystem[FESystem[FE_Q(1)^2-FE_Q(1)]^2]-FESystem[FE_Q(1)"
+             "^2]-FESystem[FE_Q(1)-FE_DGP(0)]]");
 
   // Now set up a list of malformed
   // names

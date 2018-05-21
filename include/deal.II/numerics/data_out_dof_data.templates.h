@@ -1079,7 +1079,8 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
         (dof_handler == nullptr)
           || (triangulation->n_active_cells() != dof_handler->n_dofs()),
         ExcMessage(
-          "Unable to determine the type of vector automatically because the number of DoFs "
+          "Unable to determine the type of vector automatically because the "
+          "number of DoFs "
           "is equal to the number of cells. Please specify DataVectorType."));
 
       if(data_vector.size() == triangulation->n_active_cells())

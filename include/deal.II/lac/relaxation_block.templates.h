@@ -199,10 +199,10 @@ namespace internal
   prepare_ghost_vector(const TrilinosWrappers::MPI::Vector& prev,
                        TrilinosWrappers::MPI::Vector*       other)
   {
-    Assert(
-      other != nullptr,
-      ExcMessage(
-        "You need to provide a ghosted vector in RelaxationBlock::AdditionalData::temp_trilinos_ghost_vector."));
+    Assert(other != nullptr,
+           ExcMessage(
+             "You need to provide a ghosted vector in "
+             "RelaxationBlock::AdditionalData::temp_trilinos_ghost_vector."));
     Assert(other->size() == prev.size(), ExcInternalError());
 
     // import ghost values:

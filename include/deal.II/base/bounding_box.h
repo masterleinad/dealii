@@ -164,10 +164,9 @@ inline BoundingBox<spacedim, Number>::BoundingBox(
 {
   //We check the Bounding Box is not degenerate
   for(unsigned int i = 0; i < spacedim; ++i)
-    Assert(
-      boundary_points.first[i] <= boundary_points.second[i],
-      ExcMessage(
-        "Bounding Box can't be created: the point's order should be bottom left, top right!"));
+    Assert(boundary_points.first[i] <= boundary_points.second[i],
+           ExcMessage("Bounding Box can't be created: the point's order should "
+                      "be bottom left, top right!"));
 
   this->boundary_points = boundary_points;
 }

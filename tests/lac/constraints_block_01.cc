@@ -100,8 +100,8 @@ main()
   //create the FE spaces for the solid and the fluid/mesh
   //each are padded with FE_Nothing to be equal length
 
-  std::string solid_fe_name
-    = "FESystem[FE_Q(2)^2-FE_Q(2)^2-FE_Nothing()^2-FE_Nothing()-FE_Nothing()^2]";
+  std::string solid_fe_name = "FESystem[FE_Q(2)^2-FE_Q(2)^2-FE_Nothing()^2-FE_"
+                              "Nothing()-FE_Nothing()^2]";
   std::string fluid_fe_name
     = "FESystem[FE_Nothing()^2-FE_Nothing()^2-FE_Q(2)^2-FE_Q(1)-FE_Q(2)^2]";
 

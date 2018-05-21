@@ -70,7 +70,8 @@ namespace
                 cell->at_boundary(f),
                 ExcMessage(
                   "You are trying to prescribe boundary ids on the face "
-                  "of a 1d cell (i.e., on a vertex), but this face is not actually at "
+                  "of a 1d cell (i.e., on a vertex), but this face is not "
+                  "actually at "
                   "the boundary of the mesh. This is not allowed."));
               cell->face(f)->set_boundary_id(
                 boundary_ids.find(cell->vertex_index(f))->second);
@@ -124,10 +125,9 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
         if(i != 1)
           AssertThrow(
             line.compare(text[i]) == 0,
-            ExcMessage(
-              std::string(
-                "While reading VTK file, failed to find a header line with text <")
-              + text[i] + ">"));
+            ExcMessage(std::string("While reading VTK file, failed to find a "
+                                   "header line with text <")
+                       + text[i] + ">"));
       }
   }
 
@@ -924,19 +924,21 @@ GridIn<dim, spacedim>::read_abaqus(std::istream& in,
       AssertThrow(
         false,
         ExcMessage(
-          "Internal conversion from ABAQUS file to UCD format was unsuccessful. "
+          "Internal conversion from ABAQUS file to UCD format was "
+          "unsuccessful. "
           "More information is provided in an error message printed above. "
-          "Are you sure that your ABAQUS mesh file conforms with the requirements "
+          "Are you sure that your ABAQUS mesh file conforms with the "
+          "requirements "
           "listed in the documentation?"));
     }
   catch(...)
     {
-      AssertThrow(
-        false,
-        ExcMessage(
-          "Internal conversion from ABAQUS file to UCD format was unsuccessful. "
-          "Are you sure that your ABAQUS mesh file conforms with the requirements "
-          "listed in the documentation?"));
+      AssertThrow(false,
+                  ExcMessage("Internal conversion from ABAQUS file to UCD "
+                             "format was unsuccessful. "
+                             "Are you sure that your ABAQUS mesh file conforms "
+                             "with the requirements "
+                             "listed in the documentation?"));
     }
 }
 
@@ -2184,15 +2186,13 @@ GridIn<dim, spacedim>::parse_tecplot_header(
           // string is treated correctly
           --i;
 
-          AssertThrow(
-            n_vars >= dim,
-            ExcMessage(
-              "Tecplot file must contain at least one variable for each dimension"));
+          AssertThrow(n_vars >= dim,
+                      ExcMessage("Tecplot file must contain at least one "
+                                 "variable for each dimension"));
           for(unsigned int d = 1; d < dim; ++d)
-            AssertThrow(
-              tecplot2deal[d] > 0,
-              ExcMessage(
-                "Tecplot file must contain at least one variable for each dimension."));
+            AssertThrow(tecplot2deal[d] > 0,
+                        ExcMessage("Tecplot file must contain at least one "
+                                   "variable for each dimension."));
         }
       else if(Utilities::match_at_string_start(entries[i], "ZONETYPE=ORDERED"))
         structured = true;
@@ -2258,16 +2258,16 @@ GridIn<dim, spacedim>::parse_tecplot_header(
           IJK[1] = Utilities::get_integer_at_position(entries[i], 2).first;
           AssertThrow(
             dim > 1 || IJK[1] == 1,
-            ExcMessage(
-              "Parameter 'J=' found in tecplot, although this is only possible for dimensions greater than 1."));
+            ExcMessage("Parameter 'J=' found in tecplot, although this is only "
+                       "possible for dimensions greater than 1."));
         }
       else if(Utilities::match_at_string_start(entries[i], "K="))
         {
           IJK[2] = Utilities::get_integer_at_position(entries[i], 2).first;
           AssertThrow(
             dim > 2 || IJK[2] == 1,
-            ExcMessage(
-              "Parameter 'K=' found in tecplot, although this is only possible for dimensions greater than 2."));
+            ExcMessage("Parameter 'K=' found in tecplot, although this is only "
+                       "possible for dimensions greater than 2."));
         }
       else if(Utilities::match_at_string_start(entries[i], "N="))
         n_vertices = Utilities::get_integer_at_position(entries[i], 2).first;
@@ -2284,30 +2284,27 @@ GridIn<dim, spacedim>::parse_tecplot_header(
       n_cells    = 1;
       for(unsigned int d = 0; d < dim; ++d)
         {
-          AssertThrow(
-            IJK[d] > 0,
-            ExcMessage(
-              "Tecplot file does not contain a complete and consistent set of parameters"));
+          AssertThrow(IJK[d] > 0,
+                      ExcMessage("Tecplot file does not contain a complete and "
+                                 "consistent set of parameters"));
           n_vertices *= IJK[d];
           n_cells *= (IJK[d] - 1);
         }
     }
   else
     {
-      AssertThrow(
-        n_vertices > 0,
-        ExcMessage(
-          "Tecplot file does not contain a complete and consistent set of parameters"));
+      AssertThrow(n_vertices > 0,
+                  ExcMessage("Tecplot file does not contain a complete and "
+                             "consistent set of parameters"));
       if(n_cells == 0)
         // this means an error, although
         // tecplot itself accepts entries like
         // 'J=20' instead of 'E=20'. therefore,
         // take the max of IJK
         n_cells = *std::max_element(IJK.begin(), IJK.end());
-      AssertThrow(
-        n_cells > 0,
-        ExcMessage(
-          "Tecplot file does not contain a complete and consistent set of parameters"));
+      AssertThrow(n_cells > 0,
+                  ExcMessage("Tecplot file does not contain a complete and "
+                             "consistent set of parameters"));
     }
 }
 

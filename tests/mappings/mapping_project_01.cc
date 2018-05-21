@@ -100,9 +100,9 @@ dim3_parallelepiped_grid()
 
   MappingQGeneric<3> mapping(1);
 
-  deallog
-    << "Check project for 3D parallelepiped with vectors (2, 0, 0), (0, 2, 0), and (0, 1, 2)."
-    << std::endl;
+  deallog << "Check project for 3D parallelepiped with vectors (2, 0, 0), (0, "
+             "2, 0), and (0, 1, 2)."
+          << std::endl;
   Triangulation<3>::active_cell_iterator cell = triangulation.begin_active(),
                                          endc = triangulation.end();
   deallog << "The test point has real coordinates: " << testp

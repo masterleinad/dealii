@@ -292,10 +292,9 @@ namespace SparsityTools
       AssertThrow(false, ExcZOLTANNotInstalled());
 #else
 
-      Assert(
-        cell_weights.size() == 0,
-        ExcMessage(
-          "The cell weighting functionality for Zoltan has not yet been implemented."));
+      Assert(cell_weights.size() == 0,
+             ExcMessage("The cell weighting functionality for Zoltan has not "
+                        "yet been implemented."));
       (void) cell_weights;
 
       //MPI environment must have been initialized by this point.

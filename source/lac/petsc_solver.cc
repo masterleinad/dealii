@@ -767,7 +767,8 @@ namespace PETScWrappers
       false,
       ExcMessage(
         "Your PETSc installation does not include a copy of "
-        "the MUMPS package necessary for this solver. You will need to configure "
+        "the MUMPS package necessary for this solver. You will need to "
+        "configure "
         "PETSc so that it includes MUMPS, recompile it, and then re-configure "
         "and recompile deal.II as well."));
 

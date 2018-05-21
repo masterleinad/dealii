@@ -29,8 +29,10 @@ main()
        "\\usepackage{amsmath}\n"
        "\\usepackage{imakeidx}\n"
        "\\makeindex[name=prmindex, title=Index of run-time parameter entries]\n"
-       "\\makeindex[name=prmindexfull, title=Index of run-time parameters with section names]\n"
-       "\\usepackage[colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue,baseurl=../]{hyperref}\n"
+       "\\makeindex[name=prmindexfull, title=Index of run-time parameters with "
+       "section names]\n"
+       "\\usepackage[colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue,"
+       "baseurl=../]{hyperref}\n"
        "\\begin{document}\n"
     << std::endl;
 

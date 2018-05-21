@@ -131,9 +131,9 @@ test_compute_pt_loc(unsigned int n_points)
                        .norm()
                      > 1e-10)
                     {
-                      deallog
-                        << " ERROR: Transformation of qpoint to point is not correct"
-                        << std::endl;
+                      deallog << " ERROR: Transformation of qpoint to point is "
+                                 "not correct"
+                              << std::endl;
                       deallog << "qpoint in serial : " << quad[pt_num]
                               << " Point in distributed: "
                               << serial_qpoints[serial_cell_idx][serial_pt_idx]

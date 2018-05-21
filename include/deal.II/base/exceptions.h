@@ -492,7 +492,8 @@ namespace StandardExceptions
   DeclException1(
     ExcNumberNotFinite,
     std::complex<double>,
-    << "In a significant number of places, deal.II checks that some intermediate "
+    << "In a significant number of places, deal.II checks that some "
+       "intermediate "
     << "value is a finite number (as opposed to plus or minus infinity, or "
     << "NaN/Not a Number). In the current function, we encountered a number "
     << "that is not finite (its value is " << arg1 << " and therefore "

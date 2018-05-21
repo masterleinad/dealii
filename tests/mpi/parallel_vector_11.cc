@@ -118,8 +118,8 @@ test()
     deallog << "OK" << std::endl;
 
   if(myid == 0)
-    deallog
-      << "Check sadd (factor, factor, vector, factor, vector, factor, vector): ";
+    deallog << "Check sadd (factor, factor, vector, factor, vector, factor, "
+               "vector): ";
   y.sadd(-1., 1., v, 2., w);
   y.add(2., x);
   for(int i = 0; i < actual_local_size; ++i)

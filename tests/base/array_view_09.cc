@@ -125,12 +125,12 @@ test()
       // just output the expected error message in release mode
       // to make CTest happy
 #ifndef DEBUG
-    deallog
-      << "ExcMessage(\"The beginning of the array view should be before the end.\")"
-      << std::endl;
-    deallog
-      << "ExcMessage(\"The beginning of the array view should be before the end.\")"
-      << std::endl;
+    deallog << "ExcMessage(\"The beginning of the array view should be before "
+               "the end.\")"
+            << std::endl;
+    deallog << "ExcMessage(\"The beginning of the array view should be before "
+               "the end.\")"
+            << std::endl;
 #endif
   }
 

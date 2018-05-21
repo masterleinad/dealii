@@ -216,10 +216,9 @@ PreconditionBlock<MatrixType, inverse_type>::forward_step(
   const MatrixType& M = *this->A;
 
   if(permutation.size() != 0)
-    Assert(
-      permutation.size() == M.m() || permutation.size() == this->size(),
-      ExcMessage(
-        "Permutation vector size must be equal to either the number of blocks or the dimension of the system"));
+    Assert(permutation.size() == M.m() || permutation.size() == this->size(),
+           ExcMessage("Permutation vector size must be equal to either the "
+                      "number of blocks or the dimension of the system"));
 
   const bool permuted      = (permutation.size() == M.m());
   const bool cell_permuted = (permutation.size() == this->size());
@@ -312,10 +311,9 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
   const MatrixType& M = *this->A;
 
   if(permutation.size() != 0)
-    Assert(
-      permutation.size() == M.m() || permutation.size() == this->size(),
-      ExcMessage(
-        "Permutation vector size must be equal to either the number of blocks or the dimension of the system"));
+    Assert(permutation.size() == M.m() || permutation.size() == this->size(),
+           ExcMessage("Permutation vector size must be equal to either the "
+                      "number of blocks or the dimension of the system"));
 
   const bool permuted      = (permutation.size() == M.m());
   const bool cell_permuted = (permutation.size() == this->size());

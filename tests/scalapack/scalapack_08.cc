@@ -88,9 +88,9 @@ test(const unsigned int size,
   for(unsigned i = 0; i < max_num_values; ++i)
     AssertThrow(std::abs(eigenvalues[size - 1 - i] - singular_values[i]) < tol,
                 ExcMessage("singular and eigenvalues do not match"));
-  pcout
-    << "   with respect to the given tolerance the singular and eigenvalues coincide"
-    << std::endl;
+  pcout << "   with respect to the given tolerance the singular and "
+           "eigenvalues coincide"
+        << std::endl;
 
   Vector<NumberType> eigenvector(size), l_singular_vector(size),
     r_singular_vector(size);
@@ -112,9 +112,9 @@ test(const unsigned int size,
         (std::abs(product_2) - 1) < tol * 10,
         ExcMessage("right singular vectors and eigenvectors do not coincide"));
     }
-  pcout
-    << "   with respect to the given tolerance the right and left singular vectors coincide with the eigenvectors"
-    << std::endl;
+  pcout << "   with respect to the given tolerance the right and left singular "
+           "vectors coincide with the eigenvectors"
+        << std::endl;
   pcout << std::endl;
 }
 

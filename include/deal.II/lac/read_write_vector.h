@@ -880,10 +880,9 @@ namespace LinearAlgebra
     const size_type size = indices.size();
     for(size_type i = 0; i < size; ++i)
       {
-        Assert(
-          numbers::is_finite(values[i]),
-          ExcMessage(
-            "The given value is not finite but either infinite or Not A Number (NaN)"));
+        Assert(numbers::is_finite(values[i]),
+               ExcMessage("The given value is not finite but either infinite "
+                          "or Not A Number (NaN)"));
         this->operator()(indices[i]) += values[indices[i]];
       }
   }
@@ -897,10 +896,9 @@ namespace LinearAlgebra
   {
     for(size_type i = 0; i < n_indices; ++i)
       {
-        Assert(
-          numbers::is_finite(values[i]),
-          ExcMessage(
-            "The given value is not finite but either infinite or Not A Number (NaN)"));
+        Assert(numbers::is_finite(values[i]),
+               ExcMessage("The given value is not finite but either infinite "
+                          "or Not A Number (NaN)"));
         this->operator()(indices[i]) += values_to_add[i];
       }
   }

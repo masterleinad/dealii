@@ -49,9 +49,9 @@ namespace LACExceptions
       }
     else
       {
-        out
-          << "PETSc was not able to determine a description for this particular error code."
-          << std::endl;
+        out << "PETSc was not able to determine a description for this "
+               "particular error code."
+            << std::endl;
       }
 #endif // DEAL_II_WITH_PETSC
     out << "The numerical value of the original error code is " << error_code

@@ -45,8 +45,8 @@ namespace internal
       (void) fe_index;
       Assert(
         (fe_index == dealii::DoFHandler<dh_dim, spacedim>::default_fe_index),
-        ExcMessage(
-          "Only the default FE index is allowed for non-hp DoFHandler objects"));
+        ExcMessage("Only the default FE index is allowed for non-hp DoFHandler "
+                   "objects"));
       Assert(
         local_index < dof_handler.get_fe().template n_dofs_per_object<dim>(),
         ExcIndexRange(local_index,

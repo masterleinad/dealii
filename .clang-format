@@ -49,7 +49,7 @@ BreakBeforeBraces: Custom
 BreakBeforeInheritanceComma: false
 BreakBeforeTernaryOperators: false
 BreakConstructorInitializers: BeforeColon
-BreakStringLiterals: false
+BreakStringLiterals: true
 
 ColumnLimit: 80
 

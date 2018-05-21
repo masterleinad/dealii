@@ -165,10 +165,9 @@ namespace internal
       const dealii::parallel::Triangulation<dim, spacedim>* tria
         = (dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
           &mg_dof.get_triangulation()));
-      AssertThrow(
-        send_data_temp.size() == 0 || tria != nullptr,
-        ExcMessage(
-          "We should only be sending information with a parallel Triangulation!"));
+      AssertThrow(send_data_temp.size() == 0 || tria != nullptr,
+                  ExcMessage("We should only be sending information with a "
+                             "parallel Triangulation!"));
 
 #ifdef DEAL_II_WITH_MPI
       if(tria)

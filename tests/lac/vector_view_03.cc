@@ -23,9 +23,9 @@ template <typename number>
 void
 checkReinit3(const Vector<number>& V)
 {
-  deallog
-    << "Reinit a ReadOnly VectorView<number> with const Vector<number> and const size"
-    << std::endl;
+  deallog << "Reinit a ReadOnly VectorView<number> with const Vector<number> "
+             "and const size"
+          << std::endl;
 
   deallog
     << "Creating dummy Vector<number> of size V.size() and filling with zeros"

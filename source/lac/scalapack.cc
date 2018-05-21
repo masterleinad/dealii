@@ -121,14 +121,12 @@ ScaLAPACKMatrix<NumberType>::reinit(
   Assert(row_block_size_ > 0, ExcMessage("Row block size has to be positive."));
   Assert(column_block_size_ > 0,
          ExcMessage("Column block size has to be positive."));
-  Assert(
-    row_block_size_ <= n_rows_,
-    ExcMessage(
-      "Row block size can not be greater than the number of rows of the matrix"));
-  Assert(
-    column_block_size_ <= n_columns_,
-    ExcMessage(
-      "Column block size can not be greater than the number of columns of the matrix"));
+  Assert(row_block_size_ <= n_rows_,
+         ExcMessage("Row block size can not be greater than the number of rows "
+                    "of the matrix"));
+  Assert(column_block_size_ <= n_columns_,
+         ExcMessage("Column block size can not be greater than the number of "
+                    "columns of the matrix"));
 
   state             = LAPACKSupport::State::matrix;
   property          = property_;
@@ -1019,10 +1017,9 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
         false :
         true;
 
-  Assert(
-    !(use_values && use_indices),
-    ExcMessage(
-      "Prescribing both the index and value range for the eigenvalues is ambiguous"));
+  Assert(!(use_values && use_indices),
+         ExcMessage("Prescribing both the index and value range for the "
+                    "eigenvalues is ambiguous"));
 
   // if computation of eigenvectors is not required use a sufficiently small distributed matrix
   std::unique_ptr<ScaLAPACKMatrix<NumberType>> eigenvectors
@@ -1328,10 +1325,9 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
         false :
         true;
 
-  Assert(
-    !(use_values && use_indices),
-    ExcMessage(
-      "Prescribing both the index and value range for the eigenvalues is ambiguous"));
+  Assert(!(use_values && use_indices),
+         ExcMessage("Prescribing both the index and value range for the "
+                    "eigenvalues is ambiguous"));
 
   // If computation of eigenvectors is not required, use a sufficiently small distributed matrix.
   std::unique_ptr<ScaLAPACKMatrix<NumberType>> eigenvectors
@@ -1456,10 +1452,9 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("psyevr", info));
 
       if(compute_eigenvectors)
-        AssertThrow(
-          m == nz,
-          ExcMessage(
-            "psyevr failed to compute all eigenvectors for the selected eigenvalues"));
+        AssertThrow(m == nz,
+                    ExcMessage("psyevr failed to compute all eigenvectors for "
+                               "the selected eigenvalues"));
 
       // If eigenvectors are queried, copy eigenvectors to original matrix.
       // As the temporary matrix eigenvectors has identical dimensions and
@@ -2546,14 +2541,12 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
       // get every dimension
       hsize_t dims[2];
       H5Sget_simple_extent_dims(dataspace_id, dims, nullptr);
-      AssertThrow(
-        (int) dims[0] == n_columns,
-        ExcMessage(
-          "The number of columns of the matrix does not match the content of the archive"));
-      AssertThrow(
-        (int) dims[1] == n_rows,
-        ExcMessage(
-          "The number of rows of the matrix does not match the content of the archive"));
+      AssertThrow((int) dims[0] == n_columns,
+                  ExcMessage("The number of columns of the matrix does not "
+                             "match the content of the archive"));
+      AssertThrow((int) dims[1] == n_rows,
+                  ExcMessage("The number of rows of the matrix does not match "
+                             "the content of the archive"));
 
       // read data
       status = H5Dread(dataset_id,
@@ -2728,14 +2721,12 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
   hsize_t dims[2];
   status = H5Sget_simple_extent_dims(dataspace_id, dims, nullptr);
   AssertThrow(status >= 0, ExcIO());
-  AssertThrow(
-    (int) dims[0] == n_columns,
-    ExcMessage(
-      "The number of columns of the matrix does not match the content of the archive"));
-  AssertThrow(
-    (int) dims[1] == n_rows,
-    ExcMessage(
-      "The number of rows of the matrix does not match the content of the archive"));
+  AssertThrow((int) dims[0] == n_columns,
+              ExcMessage("The number of columns of the matrix does not match "
+                         "the content of the archive"));
+  AssertThrow((int) dims[1] == n_rows,
+              ExcMessage("The number of rows of the matrix does not match the "
+                         "content of the archive"));
 
   // gather the number of local rows and columns from all processes
   std::vector<int> proc_n_local_rows(n_mpi_processes),

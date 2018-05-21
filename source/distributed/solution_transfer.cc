@@ -52,8 +52,8 @@ namespace parallel
                         Triangulation<dim, DoFHandlerType::space_dimension>*>(
            &dof_handler->get_triangulation())
          != nullptr),
-        ExcMessage(
-          "parallel::distributed::SolutionTransfer requires a parallel::distributed::Triangulation object."));
+        ExcMessage("parallel::distributed::SolutionTransfer requires a "
+                   "parallel::distributed::Triangulation object."));
     }
 
     template <int dim, typename VectorType, typename DoFHandlerType>

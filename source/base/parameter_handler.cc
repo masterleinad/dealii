@@ -1182,15 +1182,15 @@ ParameterHandler::recursively_print_parameters(
                     out << escape(demangle(p->first)) << "}\n";
 
                     // finally print alias and indicate if it is deprecated
-                    out
-                      << "This parameter is an alias for the parameter ``\\texttt{"
-                      << escape(alias) << "}''."
-                      << (p->second.get<std::string>("deprecation_status")
-                              == "true" ?
-                            " Its use is deprecated." :
-                            "")
-                      << "\n\n"
-                      << '\n';
+                    out << "This parameter is an alias for the parameter "
+                           "``\\texttt{"
+                        << escape(alias) << "}''."
+                        << (p->second.get<std::string>("deprecation_status")
+                                == "true" ?
+                              " Its use is deprecated." :
+                              "")
+                        << "\n\n"
+                        << '\n';
                   }
               out << "\\end{itemize}" << '\n';
             }
@@ -1622,15 +1622,15 @@ ParameterHandler::print_parameters_section(
                     out << escape(demangle(p->first)) << "}\n";
 
                     // finally print alias and indicate if it is deprecated
-                    out
-                      << "This parameter is an alias for the parameter ``\\texttt{"
-                      << escape(alias) << "}''."
-                      << (p->second.get<std::string>("deprecation_status")
-                              == "true" ?
-                            " Its use is deprecated." :
-                            "")
-                      << "\n\n"
-                      << std::endl;
+                    out << "This parameter is an alias for the parameter "
+                           "``\\texttt{"
+                        << escape(alias) << "}''."
+                        << (p->second.get<std::string>("deprecation_status")
+                                == "true" ?
+                              " Its use is deprecated." :
+                              "")
+                        << "\n\n"
+                        << std::endl;
                   }
               out << "\\end{itemize}" << std::endl;
             }
@@ -2232,10 +2232,10 @@ MultipleParameterLoop::fill_entry_values(const unsigned int run_no)
         {
           if(run_no >= choice->different_values.size())
             {
-              std::cerr
-                << "The given array for entry <" << choice->entry_name
-                << "> does not contain enough elements! Taking empty string instead."
-                << std::endl;
+              std::cerr << "The given array for entry <" << choice->entry_name
+                        << "> does not contain enough elements! Taking empty "
+                           "string instead."
+                        << std::endl;
               entry_value = "";
             }
           else

@@ -773,13 +773,13 @@ namespace Step42
                       Patterns::Integer(),
                       "Number of initial global mesh refinement steps before "
                       "the first computation.");
-    prm.declare_entry(
-      "refinement strategy",
-      "percentage",
-      Patterns::Selection("global|percentage"),
-      "Mesh refinement strategy:\n"
-      " global: one global refinement\n"
-      " percentage: a fixed percentage of cells gets refined using the Kelly estimator.");
+    prm.declare_entry("refinement strategy",
+                      "percentage",
+                      Patterns::Selection("global|percentage"),
+                      "Mesh refinement strategy:\n"
+                      " global: one global refinement\n"
+                      " percentage: a fixed percentage of cells gets refined "
+                      "using the Kelly estimator.");
     prm.declare_entry("number of cycles",
                       "5",
                       Patterns::Integer(),
@@ -788,8 +788,10 @@ namespace Step42
       "obstacle",
       "sphere",
       Patterns::Selection("sphere|read from file"),
-      "The name of the obstacle to use. This may either be 'sphere' if we should "
-      "use a spherical obstacle, or 'read from file' in which case the obstacle "
+      "The name of the obstacle to use. This may either be 'sphere' if we "
+      "should "
+      "use a spherical obstacle, or 'read from file' in which case the "
+      "obstacle "
       "will be read from a file named 'obstacle.pbm' that is supposed to be in "
       "ASCII PBM format.");
     prm.declare_entry(

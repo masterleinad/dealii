@@ -281,10 +281,9 @@ namespace Utilities
         const MPI_Comm&             mpi_communicator,
         SparseMatrix<Number>&       global)
     {
-      Assert(
-        local.get_sparsity_pattern() == global.get_sparsity_pattern(),
-        ExcMessage(
-          "The sparsity pattern of the local and the global matrices should match."));
+      Assert(local.get_sparsity_pattern() == global.get_sparsity_pattern(),
+             ExcMessage("The sparsity pattern of the local and the global "
+                        "matrices should match."));
 #ifdef DEAL_II_WITH_MPI
       // makes use of the fact that the matrix stores its data in a
       // contiguous array.
