@@ -27,6 +27,7 @@ struct CopyData
   unsigned int computed;
 };
 
+
 void
 worker(const std::vector<unsigned int>::iterator& i, ScratchData&, CopyData& ad)
 {
@@ -39,6 +40,7 @@ copier(const CopyData& ad)
   deallog << ad.computed << std::endl;
 }
 
+
 void
 test()
 {
@@ -49,6 +51,8 @@ test()
   WorkStream::run(
     v.begin(), v.end(), &worker, &copier, ScratchData(), CopyData());
 }
+
+
 
 int
 main()

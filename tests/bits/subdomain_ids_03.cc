@@ -72,6 +72,7 @@ test()
     deallog << i << ' ' << new_indices[i] << std::endl;
 }
 
+
 int
 main()
 {

@@ -18,6 +18,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -39,6 +40,8 @@ std::ofstream logfile("output");
 
 #include <deal.II/numerics/data_out.h>
 #include <iostream>
+
+
 
 template <int dim>
 class LaplaceProblem
@@ -91,6 +94,8 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
+
+
 template <int dim>
 double
 RightHandSide<dim>::value(const Point<dim>& p,
@@ -110,6 +115,8 @@ BoundaryValues<dim>::value(const Point<dim>& p,
 {
   return p.square();
 }
+
+
 
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
@@ -204,6 +211,7 @@ LaplaceProblem<dim>::assemble_system()
         }
     }
 
+
   std::map<types::global_dof_index, double> boundary_values;
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, BoundaryValues<dim>(), boundary_values);
@@ -237,6 +245,8 @@ LaplaceProblem<dim>::output_results() const
   data_out.write_gmv(deallog.get_file_stream());
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -248,6 +258,8 @@ LaplaceProblem<dim>::run()
   solve();
   output_results();
 }
+
+
 
 int
 main()

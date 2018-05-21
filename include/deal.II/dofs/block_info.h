@@ -220,11 +220,13 @@ BlockInfo::global() const
   return bi_global;
 }
 
+
 inline const BlockIndices&
 BlockInfo::local() const
 {
   return bi_local;
 }
+
 
 inline const BlockIndices&
 BlockInfo::level(const unsigned int l) const
@@ -233,12 +235,14 @@ BlockInfo::level(const unsigned int l) const
   return levels[l];
 }
 
+
 inline types::global_dof_index
 BlockInfo::renumber(const unsigned int i) const
 {
   AssertIndexRange(i, static_cast<unsigned int>(local_renumbering.size()));
   return local_renumbering[i];
 }
+
 
 inline unsigned int
 BlockInfo::base_element(const unsigned int i) const
@@ -247,6 +251,7 @@ BlockInfo::base_element(const unsigned int i) const
 
   return base_elements[i];
 }
+
 
 inline unsigned int
 BlockInfo::n_base_elements() const
@@ -285,6 +290,7 @@ BlockInfo::print(OS& os) const
       os << std::endl;
     }
 }
+
 
 inline std::size_t
 BlockInfo::memory_consumption() const

@@ -89,6 +89,7 @@ check_this(const FiniteElement<dim, spacedim>& fe,
     return;
   already_checked.insert(fe.get_name());
 
+
   // test with the same quadrature formulas
   // of a degree that is high enough to
   // exactly capture the data
@@ -141,6 +142,8 @@ check(const FiniteElement<dim, spacedim>& fe1,
   // call main function in .cc files
   check_this(fe1, fe2);
 }
+
+
 
 #define CHECK(EL1, deg1, EL2, deg2, dim, spacedim)      \
   {                                                     \

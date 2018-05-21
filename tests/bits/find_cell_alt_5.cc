@@ -24,7 +24,9 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 #include <deal.II/fe/mapping_q1.h>
+
 
 void check(Triangulation<3>& tria)
 {
@@ -43,6 +45,7 @@ void check(Triangulation<3>& tria)
   Assert(GeometryInfo<3>::distance_to_unit_cell(cell.second) < 1e-10,
          ExcInternalError());
 }
+
 
 int
 main()

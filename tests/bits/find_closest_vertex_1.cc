@@ -25,6 +25,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void check(Triangulation<3>& tria)
 {
   const std::vector<Point<3>>& v = tria.get_vertices();
@@ -36,6 +38,7 @@ void check(Triangulation<3>& tria)
 
   deallog << std::endl;
 }
+
 
 int
 main()

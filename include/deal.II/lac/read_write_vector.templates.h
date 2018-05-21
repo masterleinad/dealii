@@ -295,6 +295,8 @@ namespace LinearAlgebra
     }
   } // namespace internal
 
+
+
   template <typename Number>
   void
   ReadWriteVector<Number>::import(

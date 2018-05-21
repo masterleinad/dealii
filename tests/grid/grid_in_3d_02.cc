@@ -33,6 +33,7 @@
 
 std::ofstream logfile("output");
 
+
 void
 test(const char* filename)
 {
@@ -76,6 +77,7 @@ test(const char* filename)
   //   std::ofstream gnufile("xx.vtk");
   //   d_o.write_vtk (gnufile);
 }
+
 
 int
 main()

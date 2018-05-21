@@ -154,6 +154,7 @@ ConditionalOStream::operator<<(const T& t) const
   return *this;
 }
 
+
 inline const ConditionalOStream&
 ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&) ) const
 {
@@ -162,6 +163,7 @@ ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&) ) const
 
   return *this;
 }
+
 
 inline std::ostream&
 ConditionalOStream::get_stream() const

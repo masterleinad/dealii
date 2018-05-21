@@ -89,6 +89,7 @@ namespace internal
       unsigned int
       size() const;
 
+
     private:
       /**
        * Pool were vectors are obtained from.
@@ -289,12 +290,14 @@ public:
       void(const internal::SolverGMRESImplementation::TmpVectors<VectorType>&)>&
       slot);
 
+
   /**
    * Connect a slot to retrieve a notification when the vectors are
    * re-orthogonalized.
    */
   boost::signals2::connection
   connect_re_orthogonalization_slot(const std::function<void(int)>& slot);
+
 
   DeclException1(ExcTooFewTmpVectors,
                  int,
@@ -574,6 +577,8 @@ namespace internal
   } // namespace SolverGMRESImplementation
 } // namespace internal
 
+
+
 template <class VectorType>
 inline SolverGMRES<VectorType>::AdditionalData::AdditionalData(
   const unsigned int max_n_tmp_vectors,
@@ -788,6 +793,7 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
   // some additional vectors, also used in the orthogonalization
   dealii::Vector<double> gamma(n_tmp_vectors), ci(n_tmp_vectors - 1),
     si(n_tmp_vectors - 1), h(n_tmp_vectors - 1);
+
 
   unsigned int dim = 0;
 
@@ -1186,6 +1192,7 @@ SolverFGMRES<VectorType>::solve(const MatrixType&         A,
             v(j, x).equ(1. / a, *aux);
           else
             v(j, x) = 0.;
+
 
           preconditioner.vmult(z(j, x), v[j]);
           A.vmult(*aux, z[j]);

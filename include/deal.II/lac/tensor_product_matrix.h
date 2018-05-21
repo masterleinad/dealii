@@ -430,6 +430,7 @@ namespace internal
   } // namespace TensorProductMatrix
 } // namespace internal
 
+
 template <int dim, typename Number, int size>
 inline unsigned int
 TensorProductMatrixSymmetricSumBase<dim, Number, size>::m() const

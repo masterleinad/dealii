@@ -223,6 +223,14 @@ namespace Step24
         * detector_radius);
   }
 
+
+    for(double detector_angle = 2 * numbers::PI; detector_angle >= 0;
+        detector_angle -= detector_step_angle / 360 * 2 * numbers::PI)
+      detector_locations.push_back(
+        Point<dim>(std::cos(detector_angle), std::sin(detector_angle))
+        * detector_radius);
+  }
+
   // @sect4{TATForwardProblem::setup_system}
 
   // The following system is pretty much what we've already done in step-23,
@@ -344,6 +352,9 @@ namespace Step24
 
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
+      std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
+
+
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
         endc = dof_handler.end();
@@ -376,6 +387,7 @@ namespace Step24
                         * wave_speed,
                       laplace_matrix);
     system_matrix.add(wave_speed * theta * time_step, boundary_matrix);
+
 
     solution_p.reinit(dof_handler.n_dofs());
     old_solution_p.reinit(dof_handler.n_dofs());
@@ -498,6 +510,7 @@ namespace Step24
 
         solve_p();
 
+
         system_rhs_v = G2;
         laplace_matrix.vmult(tmp, solution_p);
         system_rhs_v.add(-time_step * theta * wave_speed * wave_speed, tmp);
@@ -506,6 +519,8 @@ namespace Step24
         system_rhs_v.add(-wave_speed, tmp);
 
         solve_v();
+
+        output_results();
 
         output_results();
 
@@ -522,6 +537,8 @@ namespace Step24
       }
   }
 } // namespace Step24
+
+
 
 // @sect3{The <code>main</code> function}
 

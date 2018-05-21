@@ -79,6 +79,7 @@
 #include <fstream>
 #include <iostream>
 
+
 // We then stick everything that relates to this tutorial program into a
 // namespace of its own, and import all the deal.II function and class names
 // into it:
@@ -114,6 +115,7 @@ namespace Step44
       void
       parse_parameters(ParameterHandler& prm);
     };
+
 
     void
     FESystem::declare_parameters(ParameterHandler& prm)
@@ -854,6 +856,8 @@ namespace Step44
 
   // @sect3{Quasi-static quasi-incompressible finite-strain solid}
 
+  // @sect3{Quasi-static quasi-incompressible finite-strain solid}
+
   // The Solid class is the central class in that it represents the problem at
   // hand. It follows the usual scheme in that all it really has is a
   // constructor, destructor and a <code>run()</code> function that dispatches
@@ -1160,6 +1164,7 @@ namespace Step44
     dof_handler_ref.clear();
   }
 
+
   // In solving the quasi-static problem, the time becomes a loading parameter,
   // i.e. we increasing the loading linearly with time, making the two concepts
   // interchangeable. We choose to increment time linearly using a constant time
@@ -1232,6 +1237,8 @@ namespace Step44
 
   // @sect3{Private interface}
 
+  // @sect3{Private interface}
+
   // @sect4{Threading-building-blocks structures}
 
   // The first group of private member functions is related to parallelization.
@@ -1261,6 +1268,7 @@ namespace Step44
       cell_matrix = 0.0;
     }
   };
+
 
   // On the other hand, the ScratchData object stores the larger objects such as
   // the shape-function values array (<code>Nx</code>) and a shape function
@@ -1438,6 +1446,7 @@ namespace Step44
     {}
   };
 
+
   // The ScratchData object for the operations we wish to perform here is empty
   // since we need no temporary data, but it still needs to be defined for the
   // current implementation of TBB in deal.II.  So we create a dummy struct for
@@ -1449,6 +1458,7 @@ namespace Step44
     reset()
     {}
   };
+
 
   // And finally we define the structures to assist with updating the quadrature
   // point information. Similar to the SC assembly process, we do not need the
@@ -1472,6 +1482,7 @@ namespace Step44
     reset()
     {}
   };
+
 
   // The ScratchData object will be used to store an alias for the solution
   // vector so that we don't have to copy this large data structure. We then
@@ -1521,6 +1532,8 @@ namespace Step44
         }
     }
   };
+
+  // @sect4{Solid::make_grid}
 
   // @sect4{Solid::make_grid}
 
@@ -1575,6 +1588,8 @@ namespace Step44
             }
         }
   }
+
+  // @sect4{Solid::system_setup}
 
   // @sect4{Solid::system_setup}
 
@@ -1681,6 +1696,7 @@ namespace Step44
     timer.leave_subsection();
   }
 
+
   // @sect4{Solid::determine_component_extractors}
   // Next we compute some information from the FE system that describes which local
   // element DOFs are attached to which block component.  This is used later to
@@ -1781,6 +1797,7 @@ namespace Step44
     timer.leave_subsection();
   }
 
+
   // Now we describe how we extract data from the solution vector and pass it
   // along to each QP storage object for processing.
   template <int dim>
@@ -1820,6 +1837,8 @@ namespace Step44
                                    scratch.solution_values_p_total[q_point],
                                    scratch.solution_values_J_total[q_point]);
   }
+
+  // @sect4{Solid::solve_nonlinear_timestep}
 
   // @sect4{Solid::solve_nonlinear_timestep}
 
@@ -1933,6 +1952,8 @@ namespace Step44
 
   // @sect4{Solid::print_conv_header and Solid::print_conv_footer}
 
+  // @sect4{Solid::print_conv_header and Solid::print_conv_footer}
+
   // This program prints out data in a nice table that is updated
   // on a per-iteration basis. The next two functions set up the table
   // header and footer:
@@ -1977,6 +1998,8 @@ namespace Step44
               << "v / V_0:\t" << error_dil.second * vol_reference << " / "
               << vol_reference << " = " << error_dil.second << std::endl;
   }
+
+  // @sect4{Solid::get_error_dilation}
 
   // @sect4{Solid::get_error_dilation}
 
@@ -2061,6 +2084,8 @@ namespace Step44
 
   // @sect4{Solid::get_error_residual}
 
+  // @sect4{Solid::get_error_residual}
+
   // Determine the true residual error for the problem.  That is, determine the
   // error in the residual for the unconstrained degrees of freedom.  Note that to
   // do so, we need to ignore constrained DOFs by setting the residual in these
@@ -2083,6 +2108,8 @@ namespace Step44
 
   // @sect4{Solid::get_error_update}
 
+  // @sect4{Solid::get_error_update}
+
   // Determine the true Newton update error for the problem
   template <int dim>
   void
@@ -2102,6 +2129,9 @@ namespace Step44
 
   // @sect4{Solid::get_total_solution}
 
+
+  // @sect4{Solid::get_total_solution}
+
   // This function provides the total solution, which is valid at any Newton step.
   // This is required as, to reduce computational error, the total solution is
   // only updated at the end of the timestep.
@@ -2114,6 +2144,8 @@ namespace Step44
     solution_total += solution_delta;
     return solution_total;
   }
+
+  // @sect4{Solid::assemble_system_tangent}
 
   // @sect4{Solid::assemble_system_tangent}
 
@@ -2734,6 +2766,7 @@ namespace Step44
                            data.local_dof_indices[j],
                            data.cell_matrix(i, j));
   }
+
 
   // Now we describe the static condensation process. As per usual, we must
   // first find out which global numbers the degrees of freedom on this cell
@@ -3441,6 +3474,7 @@ namespace Step44
   }
 
 } // namespace Step44
+
 
 // @sect3{Main function}
 // Lastly we provide the main driver function which appears

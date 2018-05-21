@@ -23,6 +23,7 @@
 #include <iterator>
 #include <ostream>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -42,6 +43,7 @@ class TableIndices
 public:
   static_assert(N > 0,
                 "TableIndices objects need to represent at least one index.");
+
 
   /**
    * Default constructor. This constructor sets all indices to zero.

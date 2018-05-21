@@ -43,6 +43,7 @@
 
 std::ofstream logfile("output");
 
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
@@ -320,6 +321,8 @@ public:
   const MatrixType* coarse_matrix;
 };
 
+
+
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
 do_test(const DoFHandler<dim>& dof)
@@ -430,6 +433,8 @@ test()
       do_test<dim, fe_degree, fe_degree + 1, double>(dof);
     }
 }
+
+
 
 int
 main(int argc, char** argv)

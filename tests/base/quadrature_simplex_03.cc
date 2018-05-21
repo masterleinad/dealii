@@ -43,6 +43,7 @@ test(int n)
   for(auto p : quad2.get_points())
     deallog << p << std::endl;
 
+
   deallog << std::endl
           << "# Area 2: "
           << std::accumulate(
@@ -50,6 +51,7 @@ test(int n)
           << std::endl
           << std::endl;
 }
+
 
 int
 main()

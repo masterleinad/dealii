@@ -26,6 +26,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -43,6 +45,7 @@ test()
   grid_out.set_flags(flags);
   grid_out.write_ucd(tria, logfile);
 }
+
 
 int
 main()

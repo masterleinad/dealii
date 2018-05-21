@@ -460,6 +460,7 @@ protected:
    */
   std::vector<std::vector<std::pair<unsigned int, unsigned int>>> copy_indices;
 
+
   /**
    * Same as above, but used to transfer solution vectors.
    */

@@ -58,6 +58,7 @@ test()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 
+
   hp::FECollection<dim> fe;
   fe.push_back(FE_Q<dim>(1));
 
@@ -113,6 +114,7 @@ test()
 
   Assert(all == complete_index_set(N), ExcInternalError());
 }
+
 
 int
 main(int argc, char* argv[])

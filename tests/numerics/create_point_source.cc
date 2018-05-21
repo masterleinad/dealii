@@ -23,6 +23,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 check()
@@ -45,6 +47,8 @@ check()
   for(unsigned int i = 0; i < dof.n_dofs(); ++i)
     deallog << vector(i) << std::endl;
 }
+
+
 
 int
 main()

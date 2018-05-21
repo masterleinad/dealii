@@ -57,6 +57,7 @@ check()
     }
 }
 
+
 int
 main()
 {

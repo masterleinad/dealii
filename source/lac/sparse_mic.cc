@@ -50,4 +50,6 @@ SparseMIC<float>::vmult<float>(Vector<float>&, const Vector<float>&) const;
 template void
 SparseMIC<float>::Tvmult<float>(Vector<float>&, const Vector<float>&) const;
 
+
+
 DEAL_II_NAMESPACE_CLOSE

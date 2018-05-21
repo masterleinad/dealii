@@ -465,6 +465,9 @@ namespace Step56
 
   // @sect4{StokesProblem::setup_dofs}
 
+
+  // @sect4{StokesProblem::setup_dofs}
+
   // This function sets up the DoFHandler, matrices, vectors, and Multigrid
   // structures (if needed).
   template <int dim>
@@ -590,6 +593,8 @@ namespace Step56
     solution.reinit(dofs_per_block);
     system_rhs.reinit(dofs_per_block);
   }
+
+  // @sect4{StokesProblem::assemble_system}
 
   // @sect4{StokesProblem::assemble_system}
 
@@ -952,6 +957,8 @@ namespace Step56
 
   // @sect4{StokesProblem::process_solution}
 
+  // @sect4{StokesProblem::process_solution}
+
   // This function computes the L2 and H1 errors of the solution. For this,
   // we need to make sure the pressure has mean zero.
   template <int dim>
@@ -1015,6 +1022,8 @@ namespace Step56
 
   // @sect4{StokesProblem::output_results}
 
+  // @sect4{StokesProblem::output_results}
+
   // This function generates graphical output like it is done in step-22.
   template <int dim>
   void
@@ -1044,6 +1053,9 @@ namespace Step56
 
   // @sect4{StokesProblem::run}
 
+
+  // @sect4{StokesProblem::run}
+
   // The last step in the Stokes class is, as usual, the function that
   // generates the initial grid and calls the other functions in the
   // respective order.
@@ -1060,6 +1072,7 @@ namespace Step56
       std::cout << "Now running with Multigrid" << std::endl;
     else
       std::cout << "Now running with UMFPACK" << std::endl;
+
 
     for(unsigned int refinement_cycle = 0; refinement_cycle < 3;
         ++refinement_cycle)

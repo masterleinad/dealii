@@ -20,6 +20,7 @@
 
 //#include <mpi.h>
 
+
 void
 test_mpi()
 {
@@ -63,6 +64,7 @@ test_mpi()
       MPI_Send(&destinations[0], size, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
     }
 
+
   if(myid == 0)
     deallog << "Exchanging data..." << std::endl;
 
@@ -99,6 +101,7 @@ test_mpi()
       MPI_Send(&origins[0], size, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
     }
 }
+
 
 int
 main(int argc, char* argv[])

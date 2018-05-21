@@ -106,6 +106,8 @@ namespace internal
   }
 } // namespace internal
 
+
+
 // ============================================================
 // PolarManifold
 // ============================================================
@@ -116,6 +118,8 @@ PolarManifold<dim, spacedim>::PolarManifold(const Point<spacedim> center)
       PolarManifold<dim, spacedim>::get_periodicity()),
     center(center)
 {}
+
+
 
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
@@ -262,6 +266,8 @@ SphericalManifold<dim, spacedim>::SphericalManifold(
   const Point<spacedim> center)
   : center(center), polar_manifold(center)
 {}
+
+
 
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
@@ -873,6 +879,8 @@ namespace
   }
 } // namespace
 
+
+
 template <int dim, int spacedim>
 Point<spacedim>
 SphericalManifold<dim, spacedim>::get_new_point(
@@ -950,6 +958,8 @@ CylindricalManifold<dim, spacedim>::CylindricalManifold(
   Assert(spacedim == 3,
          ExcMessage("CylindricalManifold can only be used for spacedim==3!"));
 }
+
+
 
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
@@ -1135,6 +1145,8 @@ FunctionManifold<dim, spacedim, chartdim>::~FunctionManifold()
     }
 }
 
+
+
 template <int dim, int spacedim, int chartdim>
 std::unique_ptr<Manifold<dim, spacedim>>
 FunctionManifold<dim, spacedim, chartdim>::clone() const
@@ -1266,6 +1278,8 @@ TorusManifold<dim>::TorusManifold(const double R, const double r)
   Assert(r > 0.0, ExcMessage("inner radius must be positive."));
 }
 
+
+
 template <int dim>
 std::unique_ptr<Manifold<dim, 3>>
 TorusManifold<dim>::clone() const
@@ -1316,6 +1330,8 @@ TransfiniteInterpolationManifold<dim,
   if(clear_signal.connected())
     clear_signal.disconnect();
 }
+
+
 
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
@@ -1674,6 +1690,8 @@ namespace
     return new_point;
   }
 } // namespace
+
+
 
 template <int dim, int spacedim>
 Point<spacedim>

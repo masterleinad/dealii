@@ -35,6 +35,8 @@
 
 #include <iostream>
 
+
+
 template <int dim, int fe_degree>
 void
 test()
@@ -174,6 +176,7 @@ test()
   deallog << "linfty_norm: " << diagonal.linfty_norm() << std::endl
           << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

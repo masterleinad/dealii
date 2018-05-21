@@ -25,6 +25,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <class TRIA>
 void
 check(TRIA& tr)
@@ -72,9 +74,12 @@ test()
       check(tr);
     }
 
+
+
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

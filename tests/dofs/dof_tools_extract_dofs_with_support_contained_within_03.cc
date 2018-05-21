@@ -32,6 +32,7 @@
 #include <set>
 #include <sstream>
 
+
 template <int dim>
 bool
 pred_left(const typename DoFHandler<dim>::active_cell_iterator& cell)

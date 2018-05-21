@@ -542,6 +542,7 @@ namespace parallel
       communicate_locally_moved_vertices(
         const std::vector<bool>& vertex_locally_moved);
 
+
       /**
        * Return true if the triangulation has hanging nodes.
        *
@@ -817,6 +818,7 @@ namespace parallel
       add_periodicity(
         const std::vector<dealii::GridTools::PeriodicFacePair<cell_iterator>>&)
         override;
+
 
     private:
       /**
@@ -1141,6 +1143,7 @@ namespace parallel
       std::vector<types::global_dof_index>
         p4est_tree_to_coarse_cell_permutation;
 
+
       //TODO: The following variable should really be private, but it is used in dof_handler_policy.cc ...
       /**
        * dummy settings object
@@ -1172,6 +1175,7 @@ namespace parallel
   } // namespace distributed
 } // namespace parallel
 
+
 #else // DEAL_II_WITH_P4EST
 
 namespace parallel
@@ -1201,6 +1205,7 @@ namespace parallel
     };
   } // namespace distributed
 } // namespace parallel
+
 
 #endif
 

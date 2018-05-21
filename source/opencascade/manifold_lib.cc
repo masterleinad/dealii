@@ -17,6 +17,7 @@
 
 #ifdef DEAL_II_WITH_OPENCASCADE
 
+
 #  include <BRepAdaptor_CompCurve.hxx>
 #  include <BRepAdaptor_Curve.hxx>
 #  include <BRepAdaptor_HCompCurve.hxx>
@@ -32,6 +33,7 @@
 #  if(OCC_VERSION_MAJOR < 7)
 #    include <Handle_Adaptor3d_HCurve.hxx>
 #  endif
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -61,6 +63,8 @@ namespace OpenCASCADE
       return Handle(BRepAdaptor_HCurve)(new BRepAdaptor_HCurve());
     }
 
+
+
     // Helper internal functions.
     double
     shape_length(const TopoDS_Shape& sh)
@@ -79,6 +83,8 @@ namespace OpenCASCADE
   {
     Assert(spacedim == 3, ExcNotImplemented());
   }
+
+
 
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
@@ -115,6 +121,8 @@ namespace OpenCASCADE
   {
     Assert(spacedim == 3, ExcNotImplemented());
   }
+
+
 
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
@@ -302,6 +310,8 @@ namespace OpenCASCADE
     Assert(spacedim >= 2, ExcImpossibleInDimSpacedim(dim, spacedim));
   }
 
+
+
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
   ArclengthProjectionLineManifold<dim, spacedim>::clone() const
@@ -344,6 +354,8 @@ namespace OpenCASCADE
     : face(face), tolerance(tolerance)
   {}
 
+
+
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
   NURBSPatchManifold<dim, spacedim>::clone() const
@@ -351,6 +363,8 @@ namespace OpenCASCADE
     return std::unique_ptr<Manifold<dim, spacedim>>(
       new NURBSPatchManifold<dim, spacedim>(face, tolerance));
   }
+
+
 
   template <int dim, int spacedim>
   Point<2>

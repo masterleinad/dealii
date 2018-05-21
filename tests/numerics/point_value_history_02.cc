@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+
+
 // ************************************************
 // A test program for the PointValueHistory class
 // Currently this only tests a finite element system
@@ -135,9 +137,15 @@ private:
   std::vector<Point<dim>> postprocessor_locations;
 };
 
+
+
 template <int dim>
 TestPointValueHistory<dim>::TestPointValueHistory()
   : finite_element(FE_Q<dim>(1 + 1), dim, FE_Q<dim>(1), 1),
+
+    dof_handler(triangulation)
+{}
+
 
     dof_handler(triangulation)
 {}
@@ -416,6 +424,8 @@ TestPointValueHistory<dim>::output_results(unsigned int   step,
   std::ofstream output(filename.str().c_str());
   data_out.write_gnuplot(output);
 }
+
+
 
 int
 main()

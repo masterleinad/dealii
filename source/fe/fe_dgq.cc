@@ -20,9 +20,11 @@
 #include <deal.II/fe/fe_tools.h>
 #include <deal.II/lac/vector.h>
 
+
 #include <deal.II/base/std_cxx14/memory.h>
 #include <iostream>
 #include <sstream>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -43,6 +45,8 @@ namespace internal
     } // namespace
   }   // namespace FE_DGQ
 } // namespace internal
+
+
 
 template <int dim, int spacedim>
 FE_DGQ<dim, spacedim>::FE_DGQ(const unsigned int degree)
@@ -258,6 +262,7 @@ FE_DGQ<dim, spacedim>::get_interpolation_matrix(
   Assert(
     interpolation_matrix.n() == source_fe.dofs_per_cell,
     ExcDimensionMismatch(interpolation_matrix.n(), source_fe.dofs_per_cell));
+
 
   // compute the interpolation
   // matrices in much the same way as
@@ -662,6 +667,8 @@ FE_DGQ<dim, spacedim>::get_constant_modes() const
     constant_modes, std::vector<unsigned int>(1, 0));
 }
 
+
+
 template <int dim, int spacedim>
 std::size_t
 FE_DGQ<dim, spacedim>::memory_consumption() const
@@ -796,6 +803,8 @@ FE_DGQArbitraryNodes<dim, spacedim>::
       nodal_values[i] = support_point_values[i](0);
     }
 }
+
+
 
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>

@@ -459,6 +459,7 @@ namespace Functions
       };
   }
 
+
 } // namespace Functions
 
 //---------------------------------------------------------------------------
@@ -497,6 +498,8 @@ ComponentSelectFunction<dim, RangeNumberType>::ComponentSelectFunction(
                     "or equal to the total number of vector components"));
 }
 
+
+
 template <int dim, typename RangeNumberType>
 void
 ComponentSelectFunction<dim, RangeNumberType>::substitute_function_value_with(
@@ -506,6 +509,8 @@ ComponentSelectFunction<dim, RangeNumberType>::substitute_function_value_with(
   for(unsigned int i = 0; i < this->function_value_vector.size(); ++i)
     this->function_value_vector[i] = f.value(p, i);
 }
+
+
 
 template <int dim, typename RangeNumberType>
 void

@@ -25,6 +25,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim, int spacedim>
 void
 test(std::ostream& logfile)
@@ -41,6 +43,7 @@ test(std::ostream& logfile)
   GridOut grid_out;
   grid_out.write_vtu(tria, logfile);
 }
+
 
 int
 main()

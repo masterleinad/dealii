@@ -414,6 +414,7 @@ SparseMatrixEZ<number>::compute_statistics(size_type&              used,
   allocated = row->start + row->length;
   reserved  = data.capacity();
 
+
   if(full)
     {
       used_by_line.resize(max_length + 1);
@@ -514,6 +515,7 @@ SparseMatrixEZ<number>::block_write(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
+
 
 #define DEAL_II_CHECK_INPUT(in, a, c)                                        \
   {                                                                          \

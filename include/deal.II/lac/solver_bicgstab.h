@@ -16,6 +16,7 @@
 #ifndef dealii_solver_bicgstab_h
 #define dealii_solver_bicgstab_h
 
+
 #include <cmath>
 #include <deal.II/base/config.h>
 #include <deal.II/base/logstream.h>
@@ -332,6 +333,8 @@ SolverBicgstab<VectorType>::criterion(const MatrixType& A,
 
   return res;
 }
+
+
 
 template <typename VectorType>
 template <typename MatrixType>

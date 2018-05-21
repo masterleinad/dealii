@@ -110,6 +110,7 @@ public:
   void
   vmult_add(BlockVector<number>& dst, const BlockVector<number>& src) const;
 
+
   /**
    * Not implemented.
    */

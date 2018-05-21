@@ -27,6 +27,7 @@
 
 #include <string>
 
+
 std::ofstream logfile("output");
 
 template <int dim>

@@ -36,6 +36,7 @@ test()
   A.print_formatted(deallog.get_file_stream(), 0, false, 2);
 }
 
+
 int
 main()
 {

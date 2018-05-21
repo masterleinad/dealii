@@ -42,6 +42,8 @@ template <int dim>
 void
 test();
 
+
+
 template <int dim>
 void
 do_check(const FiniteElement<dim>& coarse_fe, const FiniteElement<dim>& fine_fe)
@@ -107,6 +109,8 @@ do_check(const FiniteElement<dim>& coarse_fe, const FiniteElement<dim>& fine_fe)
                     ExcInternalError());
       }
 }
+
+
 
 int
 main()

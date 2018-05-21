@@ -22,6 +22,12 @@
 #  include <deal.II/base/std_cxx14/memory.h>
 #  include <deal.II/grid/tria_iterator_base.h>
 
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/exceptions.h>
+#  include <deal.II/base/iterator_range.h>
+#  include <deal.II/base/std_cxx14/memory.h>
+#  include <deal.II/grid/tria_iterator_base.h>
+
 #  include <set>
 #  include <tuple>
 
@@ -320,6 +326,7 @@ namespace IteratorFilters
     operator()(const Iterator& i) const;
   };
 } // namespace IteratorFilters
+
 
 /**
  * This class provides a certain view on a range of triangulation or
@@ -808,6 +815,8 @@ namespace internal
   } // namespace FilteredIteratorImplementation
 } // namespace internal
 
+
+
 /**
  * Filter the  given range of iterators using a Predicate. This allows to
  * replace:
@@ -1001,6 +1010,8 @@ FilteredIterator<BaseIterator>::operator<(const FilteredIterator& fi) const
           < static_cast<const BaseIterator&>(fi));
 }
 
+
+
 template <typename BaseIterator>
 inline bool
 FilteredIterator<BaseIterator>::operator==(const BaseIterator& bi) const
@@ -1045,6 +1056,8 @@ FilteredIterator<BaseIterator>::operator++(int)
     while((this->state() == IteratorState::valid) && !(*predicate)(*this));
   return old_state;
 }
+
+
 
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
@@ -1105,6 +1118,7 @@ namespace IteratorFilters
     return (i->active());
   }
 
+
   // ---------------- IteratorFilters::UserFlagSet ---------
 
   template <class Iterator>
@@ -1114,6 +1128,7 @@ namespace IteratorFilters
     return (i->user_flag_set());
   }
 
+
   // ---------------- IteratorFilters::UserFlagNotSet ---------
 
   template <class Iterator>
@@ -1122,6 +1137,7 @@ namespace IteratorFilters
   {
     return (!i->user_flag_set());
   }
+
 
   // ---------------- IteratorFilters::LevelEqualTo ---------
   inline LevelEqualTo::LevelEqualTo(const unsigned int level) : level(level)
@@ -1133,6 +1149,8 @@ namespace IteratorFilters
   {
     return (static_cast<unsigned int>(i->level()) == level);
   }
+
+
 
   // ---------------- IteratorFilters::SubdomainEqualTo ---------
   inline SubdomainEqualTo::SubdomainEqualTo(
@@ -1147,6 +1165,8 @@ namespace IteratorFilters
     return (i->subdomain_id() == subdomain_id);
   }
 
+
+
   // ---------------- IteratorFilters::LocallyOwnedCell ---------
 
   template <class Iterator>
@@ -1155,6 +1175,7 @@ namespace IteratorFilters
   {
     return (i->is_locally_owned());
   }
+
 
   // ---------------- IteratorFilters::LocallyOwnedLevelCell ---------
 
@@ -1165,12 +1186,16 @@ namespace IteratorFilters
     return (i->is_locally_owned_on_level());
   }
 
+
+
   // ---------------- IteratorFilters::MaterialIdEqualTo ---------
   inline MaterialIdEqualTo::MaterialIdEqualTo(
     const types::material_id material_id,
     const bool               only_locally_owned)
     : material_ids{material_id}, only_locally_owned(only_locally_owned)
   {}
+
+
 
   inline MaterialIdEqualTo::MaterialIdEqualTo(
     const std::set<types::material_id>& material_ids,
@@ -1188,12 +1213,16 @@ namespace IteratorFilters
              material_ids.find(i->material_id()) != material_ids.end();
   }
 
+
+
   // ---------------- IteratorFilters::ActiveFEIndexEqualTo ---------
   inline ActiveFEIndexEqualTo::ActiveFEIndexEqualTo(
     const unsigned int active_fe_index,
     const bool         only_locally_owned)
     : active_fe_indices{active_fe_index}, only_locally_owned(only_locally_owned)
   {}
+
+
 
   inline ActiveFEIndexEqualTo::ActiveFEIndexEqualTo(
     const std::set<unsigned int>& active_fe_indices,
@@ -1214,6 +1243,8 @@ namespace IteratorFilters
                != active_fe_indices.end();
   }
 
+
+
   // ---------------- IteratorFilters::AtBoundary ---------
 
   template <class Iterator>
@@ -1223,6 +1254,7 @@ namespace IteratorFilters
     return (i->at_boundary());
   }
 } // namespace IteratorFilters
+
 
 DEAL_II_NAMESPACE_CLOSE
 

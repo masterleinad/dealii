@@ -34,6 +34,8 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 test()
@@ -110,6 +112,7 @@ test()
   DoFTools::write_gnuplot_dof_support_point_info(deallog.get_file_stream(),
                                                  support_points);
 }
+
 
 int
 main(int argc, char* argv[])

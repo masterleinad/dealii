@@ -74,6 +74,7 @@ test()
     deallog << y[i] - y_ref[i] << " ";
   deallog << std::endl;
 
+
   for(unsigned int i = 0; i < M; ++i)
     y[i] = random_value<double>();
 

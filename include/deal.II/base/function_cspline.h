@@ -40,6 +40,7 @@ namespace Functions
                  << "> is different from the size of interpolation values <"
                  << arg2 << ">.");
 
+
   DeclException3(ExcCSplineOrder,
                  int,
                  double,

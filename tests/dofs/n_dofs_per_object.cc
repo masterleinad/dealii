@@ -20,6 +20,8 @@
 // check
 //   FiniteElement::n_dofs_per_object
 
+
+
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)

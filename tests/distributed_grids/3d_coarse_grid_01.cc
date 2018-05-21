@@ -23,6 +23,8 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 
+
+
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -36,6 +38,7 @@ test(std::ostream& /*out*/)
       GridGenerator::hyper_cube(tr);
       write_vtk(tr, "1");
     }
+
 
   if(true)
     {
@@ -57,6 +60,7 @@ test(std::ostream& /*out*/)
       write_vtk(tr, "3");
     }
 }
+
 
 int
 main(int argc, char* argv[])

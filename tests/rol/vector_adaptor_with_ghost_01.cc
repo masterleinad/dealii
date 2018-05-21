@@ -109,6 +109,8 @@ test()
   a_rol.checkVector(b_rol, c_rol, true, *out_stream);
 }
 
+
+
 int
 main(int argc, char** argv)
 {
@@ -116,6 +118,7 @@ main(int argc, char** argv)
 
   unsigned int myid = dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(dealii::Utilities::int_to_string(myid));
+
 
   if(myid == 0)
     {

@@ -42,6 +42,7 @@ test(unsigned int ref = 1)
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
+
   tria.begin_active()->set_manifold_id(1);
 
   tria.refine_global(1);

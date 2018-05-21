@@ -19,6 +19,7 @@
 #include <deal.II/lac/la_vector.h>
 #include <string>
 
+
 void
 test()
 {
@@ -47,6 +48,7 @@ test()
       ExcMessage(
         "Value in the vector has been changed by block_write or block_read"));
 
+
   // save data to archive
   {
     std::ofstream                 file_out2(filename);
@@ -68,6 +70,7 @@ test()
       std::abs(vec[i] - (double) i) < eps,
       ExcMessage("Value in the vector has been changed by boost archive"));
 }
+
 
 int
 main()

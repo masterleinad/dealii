@@ -40,6 +40,8 @@ namespace internal
       : n_q_points(numbers::invalid_unsigned_int)
     {}
 
+
+
     template <int structdim, int spacedim, typename Number>
     void
     MappingInfoStorage<structdim, spacedim, Number>::QuadratureDescriptor ::

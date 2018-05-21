@@ -69,6 +69,7 @@ template <typename Range  = Vector<double>,
 LinearOperator<Range, Domain, Payload>
 null_operator(const LinearOperator<Range, Domain, Payload>&);
 
+
 /**
  * A class to store the abstract concept of a linear operator.
  *
@@ -955,6 +956,7 @@ namespace internal
       template <typename... Args>
       EmptyPayload(const Args&...)
       {}
+
 
       /**
        * Return a payload configured for identity operations

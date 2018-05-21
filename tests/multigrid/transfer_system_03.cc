@@ -63,6 +63,8 @@ make_matrix(const Transfer&     transfer,
     }
 }
 
+
+
 void
 print_matrix(const FullMatrix<double>& m)
 {
@@ -73,6 +75,8 @@ print_matrix(const FullMatrix<double>& m)
       deallog << std::endl;
     }
 }
+
+
 
 template <int dim>
 void
@@ -116,6 +120,7 @@ check(const FiniteElement<dim>& fe)
   make_matrix(transfer, 2, prolong_1_2);
   print_matrix(prolong_1_2);
 }
+
 
 int
 main()

@@ -22,6 +22,7 @@
 #include <deal.II/grid/composition_manifold.h>
 #include <deal.II/grid/manifold_lib.h>
 
+
 int
 main()
 {
@@ -68,6 +69,7 @@ main()
 
   for(unsigned int v = 0; v < sp.size(); ++v)
     out << center << " " << sp[v] << std::endl;
+
 
   for(unsigned int i = 0; i < n_intermediates + 1; ++i)
     {

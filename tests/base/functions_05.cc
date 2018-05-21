@@ -59,6 +59,7 @@ check2()
   deallog << "OK" << std::endl;
 }
 
+
 int
 main()
 {

@@ -71,6 +71,8 @@ namespace internal
   } // namespace
 } // namespace internal
 
+
+
 template <int dim, typename PolynomialType>
 inline void
 TensorProductPolynomials<dim, PolynomialType>::compute_index(
@@ -217,6 +219,8 @@ TensorProductPolynomials<dim, PolynomialType>::compute_grad_grad(
 
   return grad_grad;
 }
+
+
 
 template <int dim, typename PolynomialType>
 void
@@ -380,6 +384,8 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
           }
 }
 
+
+
 /* ------------------- AnisotropicPolynomials -------------- */
 
 template <int dim>
@@ -393,6 +399,8 @@ AnisotropicPolynomials<dim>::AnisotropicPolynomials(
            ExcMessage("The number of polynomials must be larger than zero "
                       "for all coordinate directions."));
 }
+
+
 
 template <int dim>
 void
@@ -489,6 +497,8 @@ AnisotropicPolynomials<dim>::compute_grad_grad(const unsigned int i,
 
   return grad_grad;
 }
+
+
 
 template <int dim>
 void

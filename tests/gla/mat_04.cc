@@ -83,6 +83,7 @@ test()
   sp.compress();
   matrix.reinit(owned, owned, sp, MPI_COMM_WORLD);
 
+
   matrix.print(deallog.get_file_stream());
 
   // done

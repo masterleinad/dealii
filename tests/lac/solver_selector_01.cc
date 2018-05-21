@@ -22,6 +22,7 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_memory.h>
 
+
 template <typename MatrixType, typename VectorType>
 void
 check(const MatrixType& A, const VectorType& f)
@@ -59,6 +60,7 @@ check(const MatrixType& A, const VectorType& f)
       solver.solve(A, u, f, pre);
     }
 }
+
 
 int
 main()

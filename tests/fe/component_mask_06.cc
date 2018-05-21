@@ -20,6 +20,8 @@
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
 
+
+
 void
 test()
 {
@@ -31,6 +33,7 @@ test()
   // test for an empty mask
   Assert(ComponentMask().n_selected_components(12) == 12, ExcInternalError());
   Assert(ComponentMask().n_selected_components(13) == 13, ExcInternalError());
+
 
   deallog << "OK" << std::endl;
 
@@ -46,6 +49,7 @@ test()
       deallog << e.get_exc_name() << std::endl;
     }
 }
+
 
 int
 main()

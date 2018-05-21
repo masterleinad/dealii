@@ -167,7 +167,9 @@ namespace Algorithms
     extern const Event new_timestep_size;
   } // namespace Events
 
+
   //----------------------------------------------------------------------//
+
 
   inline bool
   Event::any() const
@@ -180,6 +182,7 @@ namespace Algorithms
         return true;
     return false;
   }
+
 
   inline bool
   Event::test(const Event& event) const
@@ -225,6 +228,8 @@ namespace Algorithms
     return true;
   }
 
+
+
   inline Event&
   Event::operator+=(const Event& event)
   {
@@ -239,6 +244,7 @@ namespace Algorithms
 
     return *this;
   }
+
 
   inline Event&
   Event::operator-=(const Event& event)

@@ -25,6 +25,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 void check(Triangulation<2>& tria)
 {
   for(unsigned i = 0; i < tria.n_vertices(); i++)
@@ -39,6 +41,7 @@ void check(Triangulation<2>& tria)
         deallog << "   " << cells[c] << std::endl;
     }
 }
+
 
 int
 main()

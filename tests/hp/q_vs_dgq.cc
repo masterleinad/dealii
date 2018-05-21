@@ -24,6 +24,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/hp/dof_handler.h>
 
+
 namespace Step27
 {
   using namespace dealii;
@@ -85,6 +86,8 @@ namespace Step27
             << std::endl;
   }
 } // namespace Step27
+
+
 
 int
 main()

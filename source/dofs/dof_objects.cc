@@ -64,6 +64,7 @@ namespace internal
   } // namespace DoFHandlerImplementation
 } // namespace internal
 
+
 // explicit instantiations
 namespace internal
 {

@@ -572,6 +572,7 @@ namespace MeshWorker
     /* @} */
   };
 
+
   //----------------------------------------------------------------------//
 
   template <int dim, int sdim>
@@ -713,6 +714,8 @@ namespace MeshWorker
     if(!global_data->empty())
       fill_local_data(info, split_fevalues);
   }
+
+
 
   //----------------------------------------------------------------------//
 
@@ -872,6 +875,7 @@ namespace MeshWorker
   void
   IntegrationInfoBox<dim, sdim>::post_faces(const DoFInfoBox<dim, DOFINFO>&)
   {}
+
 
 } // namespace MeshWorker
 

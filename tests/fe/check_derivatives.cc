@@ -30,6 +30,7 @@
 #include <string>
 #include <vector>
 
+
 const double delta_x = 1e-8;
 
 template <int dim>
@@ -60,6 +61,8 @@ test(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature)
         }
   deallog << "OK" << std::endl;
 }
+
+
 
 template <template <int, int> class FE>
 void

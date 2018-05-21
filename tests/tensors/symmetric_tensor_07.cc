@@ -21,6 +21,8 @@
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
 
+
+
 template <int dim>
 void
 test()
@@ -65,11 +67,14 @@ test()
   // multiplication
   AssertThrow((as * ts) * as == as * (ts * as), ExcInternalError());
 
+
   // also test that the elasticity
   // tensor is positive definite
   deallog << as * ts * as << std::endl;
   Assert(as * ts * as > 0, ExcInternalError());
 }
+
+
 
 int
 main()

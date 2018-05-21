@@ -35,6 +35,8 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
 {
@@ -114,6 +116,7 @@ private:
   void
   check_periodicity(const unsigned int cycle) const;
 
+
   Triangulation<dim> triangulation;
   FE_DGQ<dim>        fe;
   DoFHandler<dim>    dof_handler;
@@ -124,6 +127,8 @@ private:
   Vector<double> solution;
   Vector<double> system_rhs;
 };
+
+
 
 template <int dim>
 Step4<dim>::Step4() : fe(1), dof_handler(triangulation)
@@ -291,6 +296,7 @@ Step4<dim>::run()
       deallog.pop();
     }
 }
+
 
 int
 main(int argc, char** argv)

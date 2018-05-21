@@ -28,6 +28,7 @@
 #  include <deal.II/matrix_free/shape_info.h>
 #  include <functional>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace CUDAWrappers
@@ -428,6 +429,8 @@ namespace CUDAWrappers
         func(cell, &gpu_data, &shared_data, src, dst);
     }
   } // namespace internal
+
+
 
   template <int dim, typename Number>
   MatrixFree<dim, Number>::MatrixFree()

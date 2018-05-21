@@ -59,6 +59,8 @@ TestFunction::value(const Point<2>& p, const unsigned int component) const
   return std::sin(pi * p(0)) * std::cos(pi * p(1));
 }
 
+
+
 void make_grid(Triangulation<2>& triangulation)
 {
   GridGenerator::hyper_cube(triangulation);
@@ -183,6 +185,8 @@ test(const Triangulation<dim>& tria,
   //  data_out.write_gnuplot(file2);
   //  file2.close();
 }
+
+
 
 int
 main()

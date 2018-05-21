@@ -675,6 +675,8 @@ SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate(
     AssertThrow(false, ExcNotImplemented());
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,

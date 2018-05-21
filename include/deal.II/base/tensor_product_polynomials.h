@@ -193,6 +193,7 @@ public:
   unsigned int
   n() const;
 
+
 protected:
   /**
    * Copy of the vector <tt>pols</tt> of polynomials given to the constructor.

@@ -27,6 +27,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <class TRIA>
 void
 check(TRIA& tr)
@@ -41,6 +43,7 @@ check(TRIA& tr)
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

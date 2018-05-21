@@ -87,6 +87,8 @@ private:
   Vector<double> system_rhs;
 };
 
+
+
 template <int dim>
 class Coefficient : public Function<dim>
 {
@@ -135,6 +137,8 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
+
+
 template <int dim>
 Step6<dim>::Step6() : dof_handler(triangulation), fe(2)
 {}
@@ -154,11 +158,16 @@ Step6<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 
+
+  constraints.clear();
+  DoFTools::make_hanging_node_constraints(dof_handler, constraints);
+
   constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
 
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, Functions::ZeroFunction<dim>(), constraints);
+
 
   constraints.close();
 
@@ -223,6 +232,8 @@ Step6<dim>::assemble_system()
         cell_matrix, cell_rhs, local_dof_indices, system_matrix, system_rhs);
     }
 }
+
+
 
 template <int dim>
 void
@@ -293,6 +304,7 @@ Step6<dim>::run()
       else
         refine_grid();
 
+
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
 
@@ -305,6 +317,8 @@ Step6<dim>::run()
       solve();
     }
 }
+
+
 
 int
 main()

@@ -31,6 +31,7 @@ test()
   verify(p1, p2);
 }
 
+
 int
 main()
 {

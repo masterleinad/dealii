@@ -747,7 +747,9 @@ namespace internal
   };
 } // namespace internal
 
+
 /*---------------------- Inline functions: Tensor<0,dim> ---------------------*/
+
 
 template <int dim, typename Number>
 inline DEAL_II_CUDA_HOST_DEV
@@ -756,6 +758,8 @@ Tensor<0, dim, Number>::Tensor()
   // zero initialization.
   : value(internal::NumberType<Number>::value(0.0))
 {}
+
+
 
 template <int dim, typename Number>
 template <typename OtherNumber>
@@ -1048,6 +1052,7 @@ namespace internal
     }
   } // namespace TensorSubscriptor
 } // namespace internal
+
 
 template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE                       DEAL_II_CUDA_HOST_DEV
@@ -2231,6 +2236,7 @@ linfty_norm(const Tensor<2, dim, Number>& t)
 
 #ifndef DOXYGEN
 
+
 #  ifdef DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
 
 // Specialization of functions for Adol-C number types when
@@ -2270,6 +2276,7 @@ linfty_norm(const Tensor<2, dim, adouble>& t)
 }
 
 #  endif // DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
+
 
 #endif // DOXYGEN
 

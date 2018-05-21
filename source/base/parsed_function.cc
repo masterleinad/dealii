@@ -179,6 +179,7 @@ namespace Functions
     AutoDerivativeFunction<dim>::set_time(newtime);
   }
 
+
   // Explicit instantiations
   template class ParsedFunction<1>;
   template class ParsedFunction<2>;

@@ -23,6 +23,7 @@
 #include <iomanip>
 #include <sstream>
 
+
 // compare objects for equality and pointers for equality of the object
 // pointed to
 template <typename T>

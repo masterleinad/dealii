@@ -32,6 +32,7 @@
 #include <string>
 #include <vector>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 /*!@addtogroup feall */
@@ -260,6 +261,8 @@ namespace FESeries
                          const TableIndices<dim>&)>& predicate,
                        const VectorTools::NormType   norm);
 
+
+
   /**
    * Linear regression least-square fit of $y = k \, x + b$.
    * The size of the input vectors should be equal and more than 1.
@@ -365,6 +368,7 @@ namespace
   }
 
 } // namespace
+
 
 template <int dim, typename T>
 std::pair<std::vector<unsigned int>, std::vector<double>>

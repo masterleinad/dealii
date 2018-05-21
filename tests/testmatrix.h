@@ -7,6 +7,7 @@
 #include <deal.II/lac/vector.h>
 #include <iostream>
 
+
 /**
  * Finite difference matrix on uniform grid.
  * Generator for simple 5-point discretization of Laplace problem.

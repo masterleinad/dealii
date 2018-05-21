@@ -62,6 +62,8 @@ namespace Step39
 
   Functions::SlitSingularityFunction<2> exact_solution;
 
+
+
   template <int dim>
   class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
   {
@@ -372,6 +374,8 @@ namespace Step39
     dinfo2.value(0) = dinfo1.value(0);
   }
 
+
+
   template <int dim>
   class InteriorPenaltyProblem
   {
@@ -583,6 +587,7 @@ namespace Step39
     FilteredIterator<typename DoFHandler<dim>::active_cell_iterator> end(
       IteratorFilters::LocallyOwnedCell(), dof_handler.end());
 
+
     RHSIntegrator<dim> integrator;
     MeshWorker::integration_loop<dim, dim>(
       begin, end, dof_info, info_box, integrator, assembler);
@@ -621,6 +626,7 @@ namespace Step39
 
     MGLevelObject<TrilinosWrappers::MPI::Vector> temp_vectors(
       0, triangulation.n_levels() - 1);
+
 
     for(unsigned int l = smoother_data.min_level() + 1;
         l <= smoother_data.max_level();
@@ -772,6 +778,8 @@ namespace Step39
       }
   }
 } // namespace Step39
+
+
 
 int
 main(int argc, char* argv[])

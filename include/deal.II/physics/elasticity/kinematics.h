@@ -16,6 +16,7 @@
 #ifndef dealii_elasticity_kinematics_h
 #define dealii_elasticity_kinematics_h
 
+
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
@@ -254,6 +255,12 @@ namespace Physics
       template <int dim, typename Number>
       Tensor<2, dim, Number>
       w(const Tensor<2, dim, Number>& F, const Tensor<2, dim, Number>& dF_dt);
+
+      //@}
+    } // namespace Kinematics
+  }   // namespace Elasticity
+} // namespace Physics
+
 
       //@}
     } // namespace Kinematics

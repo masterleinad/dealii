@@ -25,6 +25,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 template <class MeshType>
@@ -32,6 +33,8 @@ InterGridMap<MeshType>::InterGridMap()
   : source_grid(nullptr, typeid(*this).name()),
     destination_grid(nullptr, typeid(*this).name())
 {}
+
+
 
 template <class MeshType>
 void

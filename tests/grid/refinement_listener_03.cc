@@ -19,6 +19,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 
+
 std::ofstream logfile("output");
 
 template <int dim, int spacedim>
@@ -103,6 +104,8 @@ test()
        tria_2.signals.any_change.connect(std::bind(
          &any_change_notification<dim, dim>, "tria_2", std::cref(tria_2)))};
 
+
+
   // this should print the create note
   GridGenerator::hyper_cube(tria_1);
 
@@ -131,6 +134,7 @@ test()
 
   // any_change on tria_2 will signal at destruction
 }
+
 
 int
 main()

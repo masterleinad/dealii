@@ -110,6 +110,7 @@ test2cells(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
 
   dof_handler.begin_active()->set_active_fe_index(1); //POU
 
+
   dof_handler.distribute_dofs(fe_collection);
 
   ConstraintMatrix constraints;
@@ -173,6 +174,7 @@ test2cells(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
 
   dof_handler.clear();
 }
+
 
 int
 main(int argc, char** argv)

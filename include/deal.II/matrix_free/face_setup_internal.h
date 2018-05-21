@@ -138,6 +138,8 @@ namespace internal
       std::vector<unsigned int>&                face_partition_data,
       std::vector<FaceToCellTopology<vectorization_width>>& faces_out);
 
+
+
     /* -------------------------------------------------------------------- */
 
 #ifndef DOXYGEN
@@ -1234,6 +1236,7 @@ namespace internal
 
   } // namespace MatrixFreeFunctions
 } // namespace internal
+
 
 DEAL_II_NAMESPACE_CLOSE
 

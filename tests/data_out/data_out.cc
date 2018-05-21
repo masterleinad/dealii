@@ -35,6 +35,8 @@
 #include <deal.II/numerics/data_out_faces.h>
 #include <deal.II/numerics/data_out_rotation.h>
 
+
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -76,6 +78,7 @@ LaplaceProblem<dim>::make_grid_and_dofs()
       triangulation.execute_coarsening_and_refinement();
     };
 
+
   deallog << "   Number of active cells: " << triangulation.n_active_cells()
           << std::endl
           << "   Total number of cells: " << triangulation.n_cells()
@@ -88,6 +91,8 @@ LaplaceProblem<dim>::make_grid_and_dofs()
 
   solution.reinit(dof_handler.n_dofs());
 }
+
+
 
 template <int dim>
 void
@@ -192,6 +197,8 @@ LaplaceProblem<dim>::run()
   solve();
   output_results();
 }
+
+
 
 int
 main()

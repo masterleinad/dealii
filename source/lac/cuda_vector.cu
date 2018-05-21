@@ -459,6 +459,8 @@ namespace LinearAlgebra
       }
     } // namespace internal
 
+
+
     template <typename Number>
     Vector<Number>::Vector() : val(nullptr), n_elements(0)
     {}
@@ -1048,6 +1050,7 @@ namespace LinearAlgebra
       out << std::flush;
       delete[] cpu_val;
       cpu_val = nullptr;
+
 
       AssertThrow(out, ExcIO());
       // reset output format

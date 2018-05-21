@@ -33,6 +33,8 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 
+
+
 template <int dim>
 void
 test()
@@ -49,6 +51,9 @@ test()
 
   fe_collection.push_back(
     FESystem<dim>(FE_RaviartThomas<dim>(0), 1, FE_DGQ<dim>(0), 1));
+
+  fe_collection.push_back(
+    FESystem<dim>(FE_Nothing<dim>(dim), 1, FE_Nothing<dim>(), 1));
 
   fe_collection.push_back(
     FESystem<dim>(FE_Nothing<dim>(dim), 1, FE_Nothing<dim>(), 1));
@@ -82,6 +87,8 @@ test()
           << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 }
+
+
 
 int
 main()

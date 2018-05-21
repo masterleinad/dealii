@@ -119,6 +119,7 @@ namespace Advection
     dof_handler.clear();
   }
 
+
   template <>
   void
   AdvectionProblem<1>::create_grid()
@@ -197,6 +198,7 @@ namespace Advection
     solution = 0.0;
     stage    = 0.0;
   } //setup_system
+
 
   template <int dim>
   void
@@ -382,6 +384,8 @@ namespace Advection
 
   } //integrate_face_term
 
+  } //integrate_face_term
+
   template <int dim>
   void
   AdvectionProblem<dim>::output_results(int timestep) const
@@ -401,6 +405,8 @@ namespace Advection
 
     data_out.build_patches(fe.degree);
     data_out.write_gnuplot(deallog.get_file_stream());
+
+  } //output_results
 
   } //output_results
 
@@ -438,6 +444,8 @@ namespace Advection
     output_results(n_dt);
 
   } //AdvectionProblem::run()
+
+} // namespace Advection
 
 } // namespace Advection
 

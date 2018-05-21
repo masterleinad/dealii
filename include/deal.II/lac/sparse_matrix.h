@@ -16,6 +16,7 @@
 #ifndef dealii_sparse_matrix_h
 #  define dealii_sparse_matrix_h
 
+
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/smartpointer.h>
 #  include <deal.II/base/subscriptor.h>
@@ -26,6 +27,8 @@
 #  ifdef DEAL_II_WITH_MPI
 #    include <mpi.h>
 #  endif
+
+#  include <memory>
 
 #  include <memory>
 
@@ -2156,6 +2159,8 @@ namespace SparseMatrixIterators
     return Reference(this, true);
   }
 
+
+
   template <typename number>
   inline typename Accessor<number, false>::MatrixType&
   Accessor<number, false>::get_matrix() const
@@ -2264,6 +2269,8 @@ namespace SparseMatrixIterators
   }
 
 } // namespace SparseMatrixIterators
+
+
 
 template <typename number>
 inline typename SparseMatrix<number>::const_iterator
@@ -2397,6 +2404,7 @@ SparseMatrix<number>::prepare_set()
 }
 
 #  endif // DOXYGEN
+
 
 /*----------------------------   sparse_matrix.h     ---------------------------*/
 

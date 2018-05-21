@@ -49,6 +49,8 @@ class Table<5, T>;
 template <typename T>
 class Table<6, T>;
 
+
+
 namespace internal
 {
   /**
@@ -292,6 +294,7 @@ namespace internal
        */
       Accessor(const Accessor& a);
 
+
       /**
        * Index operator. Performs a range check.
        */
@@ -341,6 +344,8 @@ namespace internal
   } // namespace TableBaseAccessors
 
 } // namespace internal
+
+
 
 /**
  * General class holding an array of objects of templated type in multiple
@@ -699,6 +704,7 @@ template <int N, typename T>
 class Table : public TableBase<N, T>
 {};
 
+
 /**
  * A class representing a one-dimensional table, i.e. a vector-like class.
  * Since the C++ library has a vector class, there is probably not much need
@@ -929,6 +935,7 @@ public:
   typename AlignedVector<T>::const_reference
   operator()(const size_type i, const size_type j) const;
 
+
   /**
    * Direct access to one element of the table by specifying all indices at
    * the same time. Range checks are performed.
@@ -951,6 +958,7 @@ public:
    */
   typename AlignedVector<T>::const_reference
   operator()(const TableIndices<2>& indices) const;
+
 
   /**
    * Number of rows. This function really makes only sense since we have a
@@ -1103,6 +1111,7 @@ public:
   typename AlignedVector<T>::const_reference
   operator()(const size_type i, const size_type j, const size_type k) const;
 
+
   /**
    * Direct access to one element of the table by specifying all indices at
    * the same time. Range checks are performed.
@@ -1191,6 +1200,7 @@ public:
              const size_type k,
              const size_type l) const;
 
+
   /**
    * Direct access to one element of the table by specifying all indices at
    * the same time. Range checks are performed.
@@ -1236,6 +1246,7 @@ public:
    * Integer type used to count the number of elements in this container.
    */
   typedef typename TableBase<5, T>::size_type size_type;
+
 
   /**
    * Default constructor. Set all dimensions to zero.
@@ -1714,6 +1725,7 @@ namespace TransposeTableIterators
   };
 } // namespace TransposeTableIterators
 
+
 /**
  * A class representing a transpose two-dimensional table, i.e. a matrix of
  * objects (not necessarily only numbers) in column first numbering (FORTRAN
@@ -1883,6 +1895,8 @@ protected:
   friend class TransposeTableIterators::Accessor<T, false>;
 };
 
+
+
 /* --------------------- Template and inline functions ---------------- */
 
 #ifndef DOXYGEN
@@ -1902,6 +1916,8 @@ TableBase<N, T>::TableBase(const TableIndices<N>& sizes,
   reinit(sizes);
   fill(entries, C_style_indexing);
 }
+
+
 
 template <int N, typename T>
 TableBase<N, T>::TableBase(const TableBase<N, T>& src) : Subscriptor()
@@ -2019,6 +2035,8 @@ namespace internal
   } // namespace TableBaseAccessors
 } // namespace internal
 
+
+
 template <int N, typename T>
 inline TableBase<N, T>&
 TableBase<N, T>::operator=(const TableBase<N, T>& m)
@@ -2078,6 +2096,8 @@ TableBase<N, T>::fill(const T& value)
   if(n_elements() != 0)
     values.fill(value);
 }
+
+
 
 template <int N, typename T>
 inline void
@@ -2195,6 +2215,7 @@ namespace internal
     }
   } // namespace TableImplementation
 } // namespace internal
+
 
 template <int N, typename T>
 template <typename InputIterator>
@@ -2565,6 +2586,8 @@ namespace TransposeTableIterators
     : LinearIndexIterator<Iterator<T, Constness>, Accessor<T, Constness>>(*i)
   {}
 
+
+
   template <typename T, bool Constness>
   Iterator<T, Constness>::Iterator(const container_pointer_type table,
                                    const size_type              row_n,
@@ -2579,6 +2602,8 @@ namespace TransposeTableIterators
         Accessor<T, Constness>(table, linear_index))
   {}
 } // namespace TransposeTableIterators
+
+
 
 //---------------------------------------------------------------------------
 template <typename T>

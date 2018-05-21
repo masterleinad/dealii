@@ -696,6 +696,9 @@ namespace Step42
     IndexSet      active_set;
     Vector<float> fraction_of_plastic_q_points_per_cell;
 
+    IndexSet      active_set;
+    Vector<float> fraction_of_plastic_q_points_per_cell;
+
     // The next block of variables corresponds to the solution
     // and the linear systems we need to form. In particular, this
     // includes the Newton matrix and right hand side; the vector
@@ -1052,6 +1055,7 @@ namespace Step42
         Utilities::MPI::this_mpi_process(mpi_communicator));
       sp.compress();
       newton_matrix.reinit(sp);
+
 
       TrilinosWrappers::SparseMatrix& mass_matrix = newton_matrix;
 
@@ -1617,6 +1621,8 @@ namespace Step42
     newton_rhs.compress(VectorOperation::add);
     newton_rhs_uncondensed.compress(VectorOperation::add);
   }
+
+
 
   // @sect4{PlasticityContactProblem::solve_newton_system}
 

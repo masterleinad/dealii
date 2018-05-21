@@ -18,12 +18,15 @@
 #include "../tests.h"
 #include "full_matrix_common.h"
 
+
+
 template <typename number>
 void
 check()
 {
   FullMatrix<number> m;
   make_square_matrix(m);
+
 
   for(typename FullMatrix<number>::const_iterator p = m.begin(1); p != m.end(1);
       ++p)

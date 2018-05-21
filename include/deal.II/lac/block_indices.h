@@ -16,6 +16,7 @@
 #ifndef dealii_block_indices_h
 #define dealii_block_indices_h
 
+
 #include <cstddef>
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
@@ -258,6 +259,8 @@ BlockIndices::reinit(const unsigned int nb, const size_type block_size)
     start_indices[i] = i * block_size;
 }
 
+
+
 inline void
 BlockIndices::reinit(const std::vector<size_type>& block_sizes)
 {
@@ -271,8 +274,11 @@ BlockIndices::reinit(const std::vector<size_type>& block_sizes)
     start_indices[i] = start_indices[i - 1] + block_sizes[i - 1];
 }
 
+
 inline BlockIndices::BlockIndices() : n_blocks(0), start_indices(1, 0)
 {}
+
+
 
 inline BlockIndices::BlockIndices(const unsigned int n_blocks,
                                   const size_type    block_size)
@@ -282,12 +288,16 @@ inline BlockIndices::BlockIndices(const unsigned int n_blocks,
     start_indices[i] = i * block_size;
 }
 
+
+
 inline BlockIndices::BlockIndices(const std::vector<size_type>& block_sizes)
   : n_blocks(static_cast<unsigned int>(block_sizes.size())),
     start_indices(block_sizes.size() + 1)
 {
   reinit(block_sizes);
 }
+
+
 
 inline BlockIndices::BlockIndices(BlockIndices&& b) noexcept
   : n_blocks(b.n_blocks), start_indices(std::move(b.start_indices))
@@ -296,6 +306,8 @@ inline BlockIndices::BlockIndices(BlockIndices&& b) noexcept
   b.start_indices = std::vector<size_type>(1, 0);
 }
 
+
+
 inline void
 BlockIndices::push_back(const size_type sz)
 {
@@ -303,6 +315,7 @@ BlockIndices::push_back(const size_type sz)
   ++n_blocks;
   AssertDimension(start_indices.size(), n_blocks + 1);
 }
+
 
 inline std::pair<unsigned int, BlockIndices::size_type>
 BlockIndices::global_to_local(const size_type i) const
@@ -317,6 +330,7 @@ BlockIndices::global_to_local(const size_type i) const
   return std::pair<unsigned int, size_type>(block, i - start_indices[block]);
 }
 
+
 inline BlockIndices::size_type
 BlockIndices::local_to_global(const unsigned int block,
                               const size_type    index) const
@@ -329,11 +343,14 @@ BlockIndices::local_to_global(const unsigned int block,
   return start_indices[block] + index;
 }
 
+
 inline unsigned int
 BlockIndices::size() const
 {
   return n_blocks;
 }
+
+
 
 inline BlockIndices::size_type
 BlockIndices::total_size() const
@@ -343,12 +360,16 @@ BlockIndices::total_size() const
   return start_indices[n_blocks];
 }
 
+
+
 inline BlockIndices::size_type
 BlockIndices::block_size(const unsigned int block) const
 {
   Assert(block < n_blocks, ExcIndexRange(block, 0, n_blocks));
   return start_indices[block + 1] - start_indices[block];
 }
+
+
 
 inline std::string
 BlockIndices::to_string() const
@@ -364,12 +385,16 @@ BlockIndices::to_string() const
   return result;
 }
 
+
+
 inline BlockIndices::size_type
 BlockIndices::block_start(const unsigned int block) const
 {
   Assert(block < n_blocks, ExcIndexRange(block, 0, n_blocks));
   return start_indices[block];
 }
+
+
 
 inline BlockIndices&
 BlockIndices::operator=(const BlockIndices& b)
@@ -378,6 +403,8 @@ BlockIndices::operator=(const BlockIndices& b)
   n_blocks      = b.n_blocks;
   return *this;
 }
+
+
 
 inline BlockIndices&
 BlockIndices::operator=(BlockIndices&& b) noexcept
@@ -390,6 +417,8 @@ BlockIndices::operator=(BlockIndices&& b) noexcept
 
   return *this;
 }
+
+
 
 inline bool
 BlockIndices::operator==(const BlockIndices& b) const
@@ -404,12 +433,16 @@ BlockIndices::operator==(const BlockIndices& b) const
   return true;
 }
 
+
+
 inline void
 BlockIndices::swap(BlockIndices& b)
 {
   std::swap(n_blocks, b.n_blocks);
   std::swap(start_indices, b.start_indices);
 }
+
+
 
 inline std::size_t
 BlockIndices::memory_consumption() const
@@ -432,6 +465,8 @@ swap(BlockIndices& u, BlockIndices& v)
 {
   u.swap(v);
 }
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

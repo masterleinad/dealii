@@ -69,6 +69,8 @@ namespace TimeStepping
     invalid
   };
 
+
+
   /**
    * Reason for exiting evolve_one_time_step when using an embedded method:
    * DELTA_T (the time step is in the valid range), MIN_DELTA_T (the time step
@@ -81,6 +83,8 @@ namespace TimeStepping
     MIN_DELTA_T,
     MAX_DELTA_T
   };
+
+
 
   /**
    * Abstract class for time stepping methods. These methods assume that the

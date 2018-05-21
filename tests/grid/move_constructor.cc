@@ -19,6 +19,8 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 
+
+
 template <int dim>
 void
 print_tria_info(const Triangulation<dim>& tria)
@@ -107,6 +109,7 @@ test_periodic_cube()
   print_tria_info(new_tria);
   print_tria_info(tria);
 }
+
 
 int
 main()

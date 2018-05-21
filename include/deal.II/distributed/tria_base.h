@@ -30,6 +30,7 @@
 #include <utility>
 #include <vector>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace parallel
@@ -80,6 +81,7 @@ namespace parallel
     const std::vector<unsigned int>&
     n_locally_owned_active_cells_per_processor() const;
 
+
     /**
      * Return the number of active cells in the triangulation that are locally
      * owned, i.e. that have a subdomain_id equal to
@@ -114,6 +116,7 @@ namespace parallel
      */
     virtual std::size_t
     memory_consumption() const override;
+
 
     /**
      * Return the global maximum level. This may be bigger than the number

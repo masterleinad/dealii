@@ -139,6 +139,7 @@ namespace PETScWrappers
       void
       reinit(const size_type n_block_rows, const size_type n_block_columns);
 
+
       /**
        * Efficiently reinit the block matrix for a parallel computation. Only
        * the BlockSparsityPattern of the Simple type can efficiently store
@@ -154,6 +155,7 @@ namespace PETScWrappers
              const BlockDynamicSparsityPattern& bdsp,
              const MPI_Comm&                    com);
 
+
       /**
        * Same as above but for a symmetric structure only.
        */
@@ -161,6 +163,8 @@ namespace PETScWrappers
       reinit(const std::vector<IndexSet>&       sizes,
              const BlockDynamicSparsityPattern& bdsp,
              const MPI_Comm&                    com);
+
+
 
       /**
        * Matrix-vector multiplication: let $dst = M*src$ with $M$ being this
@@ -274,11 +278,15 @@ namespace PETScWrappers
       return *this;
     }
 
+
+
     inline void
     BlockSparseMatrix::vmult(BlockVector& dst, const BlockVector& src) const
     {
       BaseClass::vmult_block_block(dst, src);
     }
+
+
 
     inline void
     BlockSparseMatrix::vmult(BlockVector& dst, const Vector& src) const
@@ -286,11 +294,15 @@ namespace PETScWrappers
       BaseClass::vmult_block_nonblock(dst, src);
     }
 
+
+
     inline void
     BlockSparseMatrix::vmult(Vector& dst, const BlockVector& src) const
     {
       BaseClass::vmult_nonblock_block(dst, src);
     }
+
+
 
     inline void
     BlockSparseMatrix::vmult(Vector& dst, const Vector& src) const
@@ -298,11 +310,14 @@ namespace PETScWrappers
       BaseClass::vmult_nonblock_nonblock(dst, src);
     }
 
+
     inline void
     BlockSparseMatrix::Tvmult(BlockVector& dst, const BlockVector& src) const
     {
       BaseClass::Tvmult_block_block(dst, src);
     }
+
+
 
     inline void
     BlockSparseMatrix::Tvmult(BlockVector& dst, const Vector& src) const
@@ -310,11 +325,15 @@ namespace PETScWrappers
       BaseClass::Tvmult_block_nonblock(dst, src);
     }
 
+
+
     inline void
     BlockSparseMatrix::Tvmult(Vector& dst, const BlockVector& src) const
     {
       BaseClass::Tvmult_nonblock_block(dst, src);
     }
+
+
 
     inline void
     BlockSparseMatrix::Tvmult(Vector& dst, const Vector& src) const
@@ -326,7 +345,11 @@ namespace PETScWrappers
 
 } // namespace PETScWrappers
 
+} // namespace PETScWrappers
+
 DEAL_II_NAMESPACE_CLOSE
+
+#endif // DEAL_II_WITH_PETSC
 
 #endif // DEAL_II_WITH_PETSC
 

@@ -32,6 +32,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 test()
@@ -86,6 +88,7 @@ test()
       deallog << "i=" << i << ", diff=" << diff.l2_norm() << std::endl;
     }
 }
+
 
 int
 main()

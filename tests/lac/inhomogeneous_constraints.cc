@@ -268,6 +268,8 @@ LaplaceProblem<dim>::test_equality()
   Assert(test_rhs.l2_norm() < 1e-14, ExcInternalError());
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::assemble_reference()
@@ -335,6 +337,12 @@ LaplaceProblem<dim>::assemble_reference()
     dof_handler, 0, BoundaryValues<dim>(), boundary_values);
   MatrixTools::apply_boundary_values(
     boundary_values, reference_matrix, solution, reference_rhs);
+
+  deallog << "  Reference matrix nonzeros: "
+          << reference_matrix.n_nonzero_elements() << ", actually: "
+          << reference_matrix.n_actually_nonzero_elements(1e-10) << std::endl;
+}
+
 
   deallog << "  Reference matrix nonzeros: "
           << reference_matrix.n_nonzero_elements() << ", actually: "
@@ -733,6 +741,7 @@ LaplaceProblem<dim>::estimate_smoothness(
       smoothness_indicators(index) = mu - 1. * dim / 2;
     }
 }
+
 
 int
 main()

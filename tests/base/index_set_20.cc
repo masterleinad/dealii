@@ -44,6 +44,8 @@ testor(IndexSet& a, IndexSet& other, bool verbose = true)
     }
 }
 
+
+
 void
 test()
 {
@@ -83,6 +85,8 @@ test()
       testor(a, b, false);
     }
 }
+
+
 
 int
 main()

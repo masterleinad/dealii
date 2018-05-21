@@ -31,6 +31,7 @@ struct CopyData
   unsigned int computed;
 };
 
+
 void
 worker(const std::vector<unsigned int>::iterator& i, ScratchData&, CopyData& ad)
 {
@@ -44,6 +45,8 @@ copier(const CopyData& ad)
   for(unsigned int j = 0; j < 5; ++j)
     result((ad.computed + j) % result.size()) += ad.computed;
 }
+
+
 
 void
 test()
@@ -71,6 +74,8 @@ test()
   for(unsigned int i = 0; i < result.size(); ++i)
     deallog << result(i) << std::endl;
 }
+
+
 
 int
 main()

@@ -25,6 +25,7 @@
 
 #define PRECISION 8
 
+
 template <int dim>
 inline void
 plot_shape_functions(const unsigned int degree)

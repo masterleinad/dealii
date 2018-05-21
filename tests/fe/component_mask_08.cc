@@ -20,6 +20,8 @@
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
 
+
+
 void
 test()
 {
@@ -38,6 +40,7 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

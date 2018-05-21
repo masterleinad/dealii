@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/mpi.h>
 #include <deal.II/base/mpi.templates.h>
@@ -69,6 +70,7 @@ namespace Utilities
       return n_jobs;
     }
 
+
     unsigned int
     this_mpi_process(const MPI_Comm& mpi_communicator)
     {
@@ -79,6 +81,7 @@ namespace Utilities
       return rank;
     }
 
+
     MPI_Comm
     duplicate_communicator(const MPI_Comm& mpi_communicator)
     {
@@ -87,6 +90,8 @@ namespace Utilities
       AssertThrowMPI(ierr);
       return new_communicator;
     }
+
+
 
     int
     create_group(const MPI_Comm&  comm,
@@ -269,6 +274,8 @@ namespace Utilities
       }
     } // namespace
 
+
+
     MinMaxAvg
     min_max_avg(const double my_value, const MPI_Comm& mpi_communicator)
     {
@@ -341,11 +348,14 @@ namespace Utilities
       return 1;
     }
 
+
+
     unsigned int
     this_mpi_process(const MPI_Comm&)
     {
       return 0;
     }
+
 
     MPI_Comm
     duplicate_communicator(const MPI_Comm& mpi_communicator)
@@ -370,6 +380,8 @@ namespace Utilities
 
 #endif
 
+
+
     MPI_InitFinalize::MPI_InitFinalize(int&               argc,
                                        char**&            argv,
                                        const unsigned int max_num_threads)
@@ -379,6 +391,7 @@ namespace Utilities
       Assert(constructor_has_already_run == false,
              ExcMessage("You can only create a single object of this class "
                         "in a program since it initializes the MPI system."));
+
 
       int ierr = 0;
 #ifdef DEAL_II_WITH_MPI
@@ -500,6 +513,7 @@ namespace Utilities
               }
           Assert(nth_process_on_host > 0, ExcInternalError());
 
+
           // compute how many cores each process gets. if the number does not
           // divide evenly, then we get one more core if we are among the
           // first few processes
@@ -600,6 +614,8 @@ namespace Utilities
         }
 #endif
     }
+
+
 
     bool
     job_supports_mpi()

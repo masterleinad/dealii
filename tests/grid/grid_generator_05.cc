@@ -22,6 +22,8 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 
+
+
 template <int dim>
 void
 test(std::ostream& out)
@@ -44,6 +46,7 @@ test(std::ostream& out)
     p3[1] = 1.;
   if(dim > 2)
     p3[2] = 4.;
+
 
   // loop without rotation
   if(true)
@@ -104,6 +107,7 @@ test(std::ostream& out)
       go.write_ucd(tr, out);
     }
 }
+
 
 int
 main()

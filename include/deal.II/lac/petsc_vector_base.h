@@ -18,6 +18,8 @@
 
 #  include <deal.II/base/config.h>
 
+#  include <deal.II/base/config.h>
+
 #  ifdef DEAL_II_WITH_PETSC
 
 #    include <deal.II/base/subscriptor.h>
@@ -36,6 +38,7 @@ DEAL_II_NAMESPACE_OPEN
 // forward declaration
 template <typename number>
 class Vector;
+
 
 /**
  * A namespace in which wrapper classes for PETSc objects reside.
@@ -86,6 +89,7 @@ namespace PETScWrappers
        * class to create it.
        */
       VectorReference(const VectorBase& vector, const size_type index);
+
 
     public:
       /**
@@ -812,6 +816,8 @@ namespace PETScWrappers
       = delete;
   };
 
+
+
   // ------------------- inline and template functions --------------
 
   /**
@@ -836,6 +842,7 @@ namespace PETScWrappers
       : vector(vector), index(index)
     {}
 
+
     inline const VectorReference&
     VectorReference::operator=(const VectorReference& r) const
     {
@@ -848,6 +855,8 @@ namespace PETScWrappers
       return *this;
     }
 
+
+
     inline VectorReference&
     VectorReference::operator=(const VectorReference& r)
     {
@@ -859,6 +868,8 @@ namespace PETScWrappers
 
       return *this;
     }
+
+
 
     inline const VectorReference&
     VectorReference::operator=(const PetscScalar& value) const
@@ -879,6 +890,8 @@ namespace PETScWrappers
 
       return *this;
     }
+
+
 
     inline const VectorReference&
     VectorReference::operator+=(const PetscScalar& value) const
@@ -907,8 +920,11 @@ namespace PETScWrappers
         = VecSetValues(vector, 1, &petsc_i, &value, ADD_VALUES);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
+
       return *this;
     }
+
+
 
     inline const VectorReference&
     VectorReference::operator-=(const PetscScalar& value) const
@@ -942,6 +958,8 @@ namespace PETScWrappers
       return *this;
     }
 
+
+
     inline const VectorReference&
     VectorReference::operator*=(const PetscScalar& value) const
     {
@@ -972,6 +990,8 @@ namespace PETScWrappers
 
       return *this;
     }
+
+
 
     inline const VectorReference&
     VectorReference::operator/=(const PetscScalar& value) const
@@ -1004,6 +1024,8 @@ namespace PETScWrappers
       return *this;
     }
 
+
+
     inline PetscReal
     VectorReference::real() const
     {
@@ -1013,6 +1035,8 @@ namespace PETScWrappers
       return PetscRealPart(static_cast<PetscScalar>(*this));
 #      endif
     }
+
+
 
     inline PetscReal
     VectorReference::imag() const
@@ -1038,6 +1062,7 @@ namespace PETScWrappers
             && (index < static_cast<size_type>(end)));
   }
 
+
   inline IndexSet
   VectorBase::locally_owned_elements() const
   {
@@ -1049,15 +1074,21 @@ namespace PETScWrappers
     return is;
   }
 
+
+
   inline bool
   VectorBase::has_ghost_elements() const
   {
     return ghosted;
   }
 
+
+
   inline void
   VectorBase::update_ghost_values() const
   {}
+
+
 
   inline internal::VectorReference
   VectorBase::operator()(const size_type index)
@@ -1065,16 +1096,22 @@ namespace PETScWrappers
     return internal::VectorReference(*this, index);
   }
 
+
+
   inline PetscScalar
   VectorBase::operator()(const size_type index) const
   {
     return static_cast<PetscScalar>(internal::VectorReference(*this, index));
   }
 
+
+
   inline internal::VectorReference VectorBase::operator[](const size_type index)
   {
     return operator()(index);
   }
+
+
 
   inline PetscScalar VectorBase::operator[](const size_type index) const
   {

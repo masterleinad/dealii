@@ -456,6 +456,7 @@ namespace Patterns
          const unsigned int max_elements = max_int_value,
          const std::string& separator    = ",");
 
+
     /**
      * Return the internally stored separator.
      */
@@ -772,6 +773,7 @@ namespace Patterns
      */
     Tuple(const std::vector<std::unique_ptr<PatternBase>>& patterns,
           const char*                                      separator);
+
 
     /**
      * Constructor. Creates a Tuple from more than one class derived from
@@ -1390,6 +1392,7 @@ namespace Patterns
   } // namespace Tools
 } // namespace Patterns
 
+
 // ---------------------- inline and template functions --------------------
 namespace Patterns
 {
@@ -1398,6 +1401,8 @@ namespace Patterns
     : // forward to the version with std::string argument
       Tuple(std::string(separator), ps...)
   {}
+
+
 
   template <class... PatternTypes>
   Tuple::Tuple(const std::string& separator, const PatternTypes&... ps)
@@ -1412,6 +1417,8 @@ namespace Patterns
     for(auto p : pattern_pointers)
       patterns.push_back(p->clone());
   }
+
+
 
   template <class... PatternTypes>
   Tuple::Tuple(const PatternTypes&... ps)
@@ -2206,6 +2213,7 @@ namespace Patterns
     }
   } // namespace Tools
 } // namespace Patterns
+
 
 DEAL_II_NAMESPACE_CLOSE
 

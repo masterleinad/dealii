@@ -198,6 +198,7 @@ public:
   virtual std::unique_ptr<Mapping<dim, spacedim>>
   clone() const override;
 
+
   /**
    * @name Interface with FEValues
    * @{
@@ -231,6 +232,7 @@ protected:
      * Constructor.
      */
     InternalData();
+
 
     /**
      * Return an estimate (in bytes) or the memory consumption of this object.

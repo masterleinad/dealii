@@ -23,6 +23,8 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_tools.h>
 
+
+
 void
 test_mpi()
 {
@@ -112,6 +114,9 @@ test_mpi()
   SparsityTools::distribute_sparsity_pattern(
     csp, locally_owned_dofs_per_cpu2, MPI_COMM_WORLD, locally_rel);
 
+  SparsityTools::distribute_sparsity_pattern(
+    csp, locally_owned_dofs_per_cpu2, MPI_COMM_WORLD, locally_rel);
+
   if(myid == 0)
     {
       deallog << "blocks: " << csp.n_block_rows() << "x" << csp.n_block_cols()
@@ -142,6 +147,7 @@ test_mpi()
   if(myid == 0)
     deallog << "done" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

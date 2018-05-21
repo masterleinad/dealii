@@ -16,6 +16,7 @@
 #ifndef dealii_fe_tools_templates_H
 #define dealii_fe_tools_templates_H
 
+
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/std_cxx14/memory.h>
@@ -56,6 +57,7 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/householder.h>
+
 
 #include <deal.II/base/index_set.h>
 
@@ -1000,6 +1002,8 @@ namespace FETools
     }
   } // namespace Compositing
 
+
+
   // Not implemented in the general case.
   template <class FE>
   std::unique_ptr<FiniteElement<FE::dimension, FE::space_dimension>>
@@ -1280,6 +1284,8 @@ namespace
     fe_name_map = fill_default_map();
 } // namespace
 
+
+
 namespace
 {
   // forwarder function for
@@ -1345,6 +1351,7 @@ namespace
     return 0;
   }
 } // namespace
+
 
 namespace FETools
 {
@@ -1896,6 +1903,8 @@ namespace FETools
     }
   } // namespace
 
+
+
   template <int dim, typename number, int spacedim>
   void
   compute_embedding_matrices(
@@ -2066,6 +2075,8 @@ namespace FETools
     Vector<number> v_coarse(nq * nd);
     Vector<number> v_fine(n);
 
+
+
     for(unsigned int cell_number = 0;
         cell_number < GeometryInfo<dim>::max_children_per_face;
         ++cell_number)
@@ -2196,6 +2207,13 @@ namespace FETools
           const unsigned int nc
             = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
 
+    auto compute_one_case
+      = [&fe, &q_fine, n, nd, nq](const unsigned int        ref_case,
+                                  const FullMatrix<double>& inverse_mass_matrix,
+                                  std::vector<FullMatrix<double>>& matrices) {
+          const unsigned int nc
+            = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
+
           for(unsigned int i = 0; i < nc; ++i)
             {
               Assert(matrices[i].n() == n,
@@ -2287,6 +2305,7 @@ namespace FETools
                     this_matrix(i, j) = 0.;
             }
         };
+
 
     // finally loop over all possible refinement cases
     Threads::TaskGroup<> tasks;
@@ -2561,6 +2580,8 @@ namespace FETools
         return nullptr;
       }
 
+
+
       template <int dim, int spacedim>
       std::unique_ptr<FiniteElement<dim, spacedim>>
       get_fe_by_name(std::string& name)
@@ -2570,6 +2591,8 @@ namespace FETools
       }
     } // namespace
   }   // namespace internal
+
+
 
   template <int dim>
   FiniteElement<dim>*
@@ -2717,6 +2740,12 @@ namespace FETools
         I_q(q, i) = fe.shape_value(i, quadrature.point(q));
   }
 
+
+    for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        I_q(q, i) = fe.shape_value(i, quadrature.point(q));
+  }
+
   template <int dim>
   void
   compute_projection_from_quadrature_points(
@@ -2855,6 +2884,8 @@ namespace FETools
     Assert(fe.n_components() == 1, ExcNotImplemented());
     Assert(lhs_quadrature.size() > fe.degree,
            ExcNotGreaterThan(lhs_quadrature.size(), fe.degree));
+
+
 
     // build the matrices M and Q
     // described in the documentation
@@ -3004,6 +3035,8 @@ namespace FETools
 
   } /* anonymous namespace */
 
+
+
   template <int dim, int spacedim, typename number>
   void
   convert_generalized_support_point_values_to_dof_values(
@@ -3139,6 +3172,7 @@ namespace FETools
             // line 11
             for(unsigned int i = 0; i < dofs_per_line; ++i)
               h2l[next_index++] = n - 1 + (i + 1) * n * n + n * (n - 1);
+
 
             // inside quads
             // face 0

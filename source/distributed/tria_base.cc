@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/utilities.h>
@@ -25,10 +26,12 @@
 #include <deal.II/lac/sparsity_tools.h>
 #include <deal.II/lac/vector_memory.h>
 
+
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <numeric>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -347,6 +350,7 @@ namespace parallel
     // over periodic faces.
     Assert(this->get_periodic_face_map().size() == 0, ExcNotImplemented());
 
+
     std::vector<bool> vertex_of_own_cell(this->n_vertices(), false);
 
     for(auto cell : this->active_cell_iterators())
@@ -370,6 +374,8 @@ namespace parallel
   }
 
 } // end namespace parallel
+
+
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "tria_base.inst"

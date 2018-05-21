@@ -29,6 +29,7 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
+
 template <int dim>
 void
 test()
@@ -70,6 +71,8 @@ test()
       if(sparsity.exists(i, j))
         deallog << i << ' ' << j << std::endl;
 }
+
+
 
 int
 main()

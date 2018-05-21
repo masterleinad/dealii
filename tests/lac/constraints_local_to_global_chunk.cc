@@ -109,6 +109,7 @@ test(unsigned int chunk_size)
           << std::sqrt(frobenius) << std::endl;
 }
 
+
 int
 main()
 {

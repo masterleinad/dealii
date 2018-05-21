@@ -55,6 +55,7 @@ template <int dim,
           typename Number   = double>
 class FEEvaluation;
 
+
 /**
  * This is the base class for the FEEvaluation classes. This class is a base
  * class and needs usually not be called in user code. It does not have any
@@ -1148,6 +1149,8 @@ protected:
   FEEvaluationAccess&
   operator=(const FEEvaluationAccess& other);
 };
+
+
 
 /**
  * This class provides access to the data fields of the FEEvaluation classes.
@@ -2827,6 +2830,7 @@ namespace internal
   } // namespace MatrixFreeFunctions
 } // namespace internal
 
+
 /*----------------------- Inline functions ----------------------------------*/
 
 #ifndef DOXYGEN
@@ -3757,6 +3761,8 @@ namespace internal
   };
 } // namespace internal
 
+
+
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType, typename VectorOperation>
 inline void
@@ -4371,6 +4377,8 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::set_dof_values(
   read_write_operation(setter, dst_data);
 }
 
+
+
 /*------------------------------ access to data fields ----------------------*/
 
 template <int dim, int n_components, typename Number, bool is_face>
@@ -4616,6 +4624,8 @@ namespace internal
       }
   }
 } // namespace internal
+
+
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<1, n_components_, Tensor<2, dim, VectorizedArray<Number>>>
@@ -4978,6 +4988,8 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_normal_derivative(
     }
 }
 
+
+
 template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<1, n_components_, VectorizedArray<Number>>
 FEEvaluationBase<dim, n_components_, Number, is_face>::integrate_value() const
@@ -5303,6 +5315,8 @@ FEEvaluationAccess<dim, 1, Number, is_face>::integrate_value() const
 {
   return BaseClass::integrate_value()[0];
 }
+
+
 
 /*----------------- FEEvaluationAccess vector-valued ------------------------*/
 
@@ -5882,7 +5896,10 @@ FEEvaluationAccess<1, 1, Number, is_face>::integrate_value() const
   return BaseClass::integrate_value()[0];
 }
 
+
+
 /*-------------------------- FEEvaluation -----------------------------------*/
+
 
 template <int dim,
           int fe_degree,
@@ -5906,6 +5923,8 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 {
   check_template_arguments(fe_no, 0);
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -5931,6 +5950,8 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -5953,6 +5974,8 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 {
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -5977,6 +6000,8 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -5992,6 +6017,8 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6005,6 +6032,8 @@ operator=(const FEEvaluation& other)
   check_template_arguments(numbers::invalid_unsigned_int, 0);
   return *this;
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -6162,6 +6191,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 #  endif
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6196,6 +6227,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
 #  endif
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6221,6 +6254,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
     cell->get_dof_indices(this->local_dof_indices);
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6238,6 +6273,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
   Assert(this->mapped_geometry.get() != 0, ExcNotInitialized());
   this->mapped_geometry->reinit(cell);
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -6300,6 +6337,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     return quadrature_points[q];
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6318,6 +6357,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::evaluate(
            evaluate_gradients,
            evaluate_hessians);
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -6357,6 +6398,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::evaluate(
 #  endif
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6377,6 +6420,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
            evaluate_hessians);
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6393,6 +6438,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::integrate(
   this->dof_values_initialized = true;
 #  endif
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -6433,6 +6480,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::integrate(
 #  endif
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6450,6 +6499,8 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 }
 
 /*-------------------------- FEFaceEvaluation ---------------------------*/
+
+
 
 template <int dim,
           int fe_degree,
@@ -6474,6 +6525,8 @@ inline FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     n_q_points(this->data->n_q_points_face)
 {}
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6482,6 +6535,8 @@ template <int dim,
 inline FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   ~FEFaceEvaluation()
 {}
+
+
 
 template <int dim,
           int fe_degree,
@@ -6553,6 +6608,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
 #  endif
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6620,6 +6677,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
 #  endif
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6634,6 +6693,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate(
 
   evaluate(this->values_dofs[0], evaluate_values, evaluate_gradients);
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -6731,6 +6792,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate(
 #  endif
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6746,6 +6809,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::
   this->dof_values_initialized = true;
 #  endif
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -6829,6 +6894,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::
     template interpolate<false, false>(
       *this->data, temp1, values_array, integrate_gradients, this->face_no);
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -7018,6 +7085,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 #  endif
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -7205,6 +7274,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     }
 }
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -7247,6 +7318,8 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::
           }
     }
 }
+
+
 
 template <int dim,
           int fe_degree,
@@ -7291,7 +7364,9 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 
 /*------------------------- end FEFaceEvaluation ------------------------- */
 
+
 #endif // ifndef DOXYGEN
+
 
 DEAL_II_NAMESPACE_CLOSE
 

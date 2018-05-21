@@ -24,6 +24,7 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
 template <int dim, int spacedim>
 void
 do_test(const Triangulation<dim, spacedim>& tria)

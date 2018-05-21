@@ -100,6 +100,7 @@ test()
   AssertThrow(val == 1059300., ExcMessage("Problem in add_and_dot"));
 }
 
+
 int
 main(int argc, char** argv)
 {

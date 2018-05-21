@@ -44,6 +44,7 @@ test()
   AssertThrow(a.all_zero() == false, ExcInternalError());
 }
 
+
 int
 main(int argc, char** argv)
 {

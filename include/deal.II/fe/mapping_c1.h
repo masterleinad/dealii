@@ -123,6 +123,7 @@ MappingC1<2>::MappingC1Generic::add_quad_support_points(
   const Triangulation<2>::cell_iterator&,
   std::vector<Point<2>>&) const;
 
+
 #endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE

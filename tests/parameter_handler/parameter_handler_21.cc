@@ -58,6 +58,7 @@ test()
     "", "double  spaces|input 2", "set v = double  spaces  ,  double  spaces");
 }
 
+
 int
 main()
 {

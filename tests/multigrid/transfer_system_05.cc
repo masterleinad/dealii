@@ -56,6 +56,10 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
   for(unsigned int level = 0; level < tr.n_levels(); ++level)
     DoFRenumbering::component_wise(mg_dof_handler, level, block_component);
 
+  DoFRenumbering::component_wise(mg_dof_handler, block_component);
+  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+    DoFRenumbering::component_wise(mg_dof_handler, level, block_component);
+
   MGTransferSelect<double> transfer;
 
   transfer.build_matrices(mg_dof_handler,
@@ -117,6 +121,7 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
     deallog << ' ' << (int) u(i);
   deallog << std::endl;
 }
+
 
 int
 main()

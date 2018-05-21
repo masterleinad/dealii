@@ -46,6 +46,7 @@ const types::global_dof_index DoFHandler<dim, spacedim>::invalid_dof_index;
 template <int dim, int spacedim>
 const unsigned int DoFHandler<dim, spacedim>::default_fe_index;
 
+
 // reference the invalid_dof_index variable explicitly to work around
 // a bug in the icc8 compiler
 namespace internal
@@ -57,6 +58,8 @@ namespace internal
     return &dealii::numbers::invalid_dof_index;
   }
 } // namespace internal
+
+
 
 namespace internal
 {
@@ -794,6 +797,8 @@ namespace internal
   } // namespace DoFHandlerImplementation
 } // namespace internal
 
+
+
 template <int dim, int spacedim>
 DoFHandler<dim, spacedim>::DoFHandler(const Triangulation<dim, spacedim>& tria)
   : tria(&tria, typeid(*this).name()), faces(nullptr), mg_faces(nullptr)
@@ -979,6 +984,8 @@ DoFHandler<dim, spacedim>::mg_cell_iterators() const
   return IteratorRange<typename DoFHandler<dim, spacedim>::level_cell_iterator>(
     begin_mg(), end_mg());
 }
+
+
 
 template <int dim, int spacedim>
 IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>

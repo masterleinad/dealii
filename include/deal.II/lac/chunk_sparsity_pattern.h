@@ -28,8 +28,10 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 template <typename>
 class ChunkSparseMatrix;
+
 
 /*! @addtogroup Sparsity
  *@{
@@ -100,11 +102,13 @@ namespace ChunkSparsityPatternIterators
     bool
     is_valid_entry() const;
 
+
     /**
      * Comparison. True, if both iterators point to the same matrix position.
      */
     bool
     operator==(const Accessor&) const;
+
 
     /**
      * Comparison operator. Result is true if either the first row number is
@@ -212,6 +216,8 @@ namespace ChunkSparsityPatternIterators
     Accessor accessor;
   };
 } // namespace ChunkSparsityPatternIterators
+
+
 
 /**
  * Structure representing the sparsity pattern of a sparse matrix. This class
@@ -864,12 +870,16 @@ namespace ChunkSparsityPatternIterators
       chunk_col(0)
   {}
 
+
+
   inline Accessor::Accessor(const ChunkSparsityPattern* sparsity_pattern)
     : sparsity_pattern(sparsity_pattern),
       reduced_accessor(*sparsity_pattern->sparsity_pattern.end()),
       chunk_row(0),
       chunk_col(0)
   {}
+
+
 
   inline bool
   Accessor::is_valid_entry() const
@@ -883,6 +893,8 @@ namespace ChunkSparsityPatternIterators
                 < sparsity_pattern->n_cols();
   }
 
+
+
   inline unsigned int
   Accessor::row() const
   {
@@ -891,6 +903,8 @@ namespace ChunkSparsityPatternIterators
     return sparsity_pattern->get_chunk_size() * reduced_accessor.row()
            + chunk_row;
   }
+
+
 
   inline unsigned int
   Accessor::column() const
@@ -901,6 +915,8 @@ namespace ChunkSparsityPatternIterators
            + chunk_col;
   }
 
+
+
   inline std::size_t
   Accessor::reduced_index() const
   {
@@ -908,6 +924,8 @@ namespace ChunkSparsityPatternIterators
 
     return reduced_accessor.index_within_sparsity;
   }
+
+
 
   inline bool
   Accessor::operator==(const Accessor& other) const
@@ -918,6 +936,8 @@ namespace ChunkSparsityPatternIterators
     return (reduced_accessor == other.reduced_accessor
             && chunk_row == other.chunk_row && chunk_col == other.chunk_col);
   }
+
+
 
   inline bool
   Accessor::operator<(const Accessor& other) const
@@ -951,6 +971,7 @@ namespace ChunkSparsityPatternIterators
                   == other.reduced_accessor.index_within_sparsity
                 && chunk_col < other.chunk_col));
   }
+
 
   inline void
   Accessor::advance()
@@ -1008,10 +1029,14 @@ namespace ChunkSparsityPatternIterators
       }
   }
 
+
+
   inline Iterator::Iterator(const ChunkSparsityPattern* sparsity_pattern,
                             const unsigned int          row)
     : accessor(sparsity_pattern, row)
   {}
+
+
 
   inline Iterator&
   Iterator::operator++()
@@ -1019,6 +1044,8 @@ namespace ChunkSparsityPatternIterators
     accessor.advance();
     return *this;
   }
+
+
 
   inline Iterator
   Iterator::operator++(int)
@@ -1028,15 +1055,20 @@ namespace ChunkSparsityPatternIterators
     return iter;
   }
 
+
+
   inline const Accessor& Iterator::operator*() const
   {
     return accessor;
   }
 
+
+
   inline const Accessor* Iterator::operator->() const
   {
     return &accessor;
   }
+
 
   inline bool
   Iterator::operator==(const Iterator& other) const
@@ -1044,11 +1076,14 @@ namespace ChunkSparsityPatternIterators
     return (accessor == other.accessor);
   }
 
+
+
   inline bool
   Iterator::operator!=(const Iterator& other) const
   {
     return !(accessor == other.accessor);
   }
+
 
   inline bool
   Iterator::operator<(const Iterator& other) const
@@ -1058,17 +1093,22 @@ namespace ChunkSparsityPatternIterators
 
 } // namespace ChunkSparsityPatternIterators
 
+
+
 inline ChunkSparsityPattern::iterator
 ChunkSparsityPattern::begin() const
 {
   return iterator(this, 0);
 }
 
+
 inline ChunkSparsityPattern::iterator
 ChunkSparsityPattern::end() const
 {
   return iterator(this, n_rows());
 }
+
+
 
 inline ChunkSparsityPattern::iterator
 ChunkSparsityPattern::begin(const unsigned int r) const
@@ -1077,6 +1117,8 @@ ChunkSparsityPattern::begin(const unsigned int r) const
   return iterator(this, r);
 }
 
+
+
 inline ChunkSparsityPattern::iterator
 ChunkSparsityPattern::end(const unsigned int r) const
 {
@@ -1084,11 +1126,14 @@ ChunkSparsityPattern::end(const unsigned int r) const
                                                                       r + 1);
 }
 
+
+
 inline ChunkSparsityPattern::size_type
 ChunkSparsityPattern::n_rows() const
 {
   return rows;
 }
+
 
 inline ChunkSparsityPattern::size_type
 ChunkSparsityPattern::n_cols() const
@@ -1096,11 +1141,15 @@ ChunkSparsityPattern::n_cols() const
   return cols;
 }
 
+
+
 inline ChunkSparsityPattern::size_type
 ChunkSparsityPattern::get_chunk_size() const
 {
   return chunk_size;
 }
+
+
 
 inline bool
 ChunkSparsityPattern::is_compressed() const

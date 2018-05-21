@@ -42,6 +42,8 @@
 
 #include <iostream>
 
+
+
 template <int dim, int fe_degree>
 void
 test()
@@ -128,6 +130,7 @@ test()
 
   mf.vmult(out, in);
 
+
   // assemble trilinos sparse matrix with
   // (\nabla v, \nabla u) + (v, 10 * u) for
   // reference
@@ -190,6 +193,7 @@ test()
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

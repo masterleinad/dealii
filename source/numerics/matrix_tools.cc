@@ -53,7 +53,10 @@
 #include <cmath>
 #include <set>
 
+
 DEAL_II_NAMESPACE_OPEN
+
+
 
 namespace MatrixTools
 {
@@ -105,6 +108,7 @@ namespace MatrixTools
           first_nonzero_diagonal_entry = matrix.diag_element(i);
           break;
         }
+
 
     typename std::map<types::global_dof_index, number>::const_iterator dof
       = boundary_values.begin(),
@@ -284,6 +288,7 @@ namespace MatrixTools
     if(first_nonzero_diagonal_entry == 0)
       first_nonzero_diagonal_entry = 1;
 
+
     typename std::map<types::global_dof_index, number>::const_iterator dof
       = boundary_values.begin(),
       endd = boundary_values.end();
@@ -359,6 +364,7 @@ namespace MatrixTools
             new_rhs = dof->second * first_nonzero_diagonal_entry;
           }
         right_hand_side.block(block_index.first)(block_index.second) = new_rhs;
+
 
         // if the user wants to have
         // the symmetry of the matrix
@@ -484,6 +490,8 @@ namespace MatrixTools
       }
   }
 
+
+
   template <typename number>
   void
   local_apply_boundary_values(
@@ -598,6 +606,8 @@ namespace MatrixTools
       }
   }
 } // namespace MatrixTools
+
+
 
 // explicit instantiations
 #include "matrix_tools.inst"

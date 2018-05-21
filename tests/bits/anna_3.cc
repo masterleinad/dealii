@@ -34,6 +34,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim>
 class SystemTest
 {
@@ -47,6 +48,7 @@ private:
   make_grid_and_dofs();
   void
   check();
+
 
   Triangulation<dim> triangulation;
   FESystem<dim>      fe;
@@ -113,6 +115,8 @@ SystemTest<dim>::run()
   DoFRenumbering::component_wise(dof_handler);
   check();
 }
+
+
 
 int
 main()

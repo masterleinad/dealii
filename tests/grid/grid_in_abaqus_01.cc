@@ -22,6 +22,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 abaqus_grid(const char* name)
@@ -43,6 +45,7 @@ abaqus_grid(const char* name)
       hash += (index * i * c->vertex_index(i)) % (tria.n_active_cells() + 1);
   deallog << "  hash=" << hash << std::endl;
 }
+
 
 int
 main()

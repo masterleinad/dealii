@@ -21,6 +21,8 @@
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
+
+
 void
 test()
 {
@@ -45,6 +47,7 @@ test()
   deallog << "CM2" << std::endl;
   cm2.print(deallog.get_file_stream());
 }
+
 
 int
 main()

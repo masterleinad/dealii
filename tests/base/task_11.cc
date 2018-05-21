@@ -42,6 +42,7 @@ a_task()
   mutex.release();
 }
 
+
 void
 test()
 {
@@ -63,6 +64,7 @@ test()
   deallog << "max concurrent running: " << n_max_running
           << " should be: " << MultithreadInfo::n_threads() << std::endl;
 }
+
 
 int
 main()

@@ -51,6 +51,7 @@ check()
           << std::endl;
 }
 
+
 int
 main()
 {

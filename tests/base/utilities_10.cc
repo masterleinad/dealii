@@ -20,6 +20,7 @@
 
 #include <deal.II/base/utilities.h>
 
+
 void
 test()
 {
@@ -48,6 +49,8 @@ test()
          ExcInternalError());
   Assert(Utilities::split_string_list(" ; ", ';')[0] == "", ExcInternalError());
 }
+
+
 
 int
 main()

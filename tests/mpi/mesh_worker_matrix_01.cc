@@ -214,6 +214,8 @@ test(const FiniteElement<dim>& fe)
   DoFHandler<dim> dofs(tr);
   dofs.distribute_dofs(fe);
 
+
+
   unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   if(numprocs == 1) // renumber DoFs
     {
@@ -291,6 +293,7 @@ test(const FiniteElement<dim>& fe)
   deallog << "now with jump terms" << std::endl;
   test_simple(dofs, true);
 }
+
 
 int
 main(int argc, char** argv)

@@ -192,6 +192,7 @@ namespace internal
   } // namespace TriangulationImplementation
 } // namespace internal
 
+
 template class internal::TriangulationImplementation::TriaLevel<1>;
 template class internal::TriangulationImplementation::TriaLevel<2>;
 

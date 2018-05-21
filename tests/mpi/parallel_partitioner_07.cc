@@ -23,6 +23,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test()
 {
@@ -185,6 +186,8 @@ test()
     deallog << locally_owned_array[i] << " ";
   deallog << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

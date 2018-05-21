@@ -39,6 +39,7 @@
 
 std::ofstream logfile("output");
 
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
@@ -76,6 +77,8 @@ public:
             }
       }
   }
+
+
 
   void
   test_functions(const Vector<Number>& src) const
@@ -169,6 +172,7 @@ test()
 
   do_test<dim, fe_degree, double>(dof, constraints);
 }
+
 
 int
 main()

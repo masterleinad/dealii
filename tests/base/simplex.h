@@ -38,12 +38,14 @@ get_simplex()
   return {{Point<1>(3), Point<1>(5)}};
 }
 
+
 template <>
 std::array<Point<2>, 3>
 get_simplex()
 {
   return {{Point<2>(4, 2), Point<2>(3, 3), Point<2>(2, 2.5)}};
 }
+
 
 template <>
 std::array<Point<3>, 4>
@@ -239,11 +241,25 @@ exact_integral_one_over_r(const unsigned int vertex_index,
   return v[vertex_index][i][j];
 }
 
+
+
 double
 exact_integral_one_over_r_middle(const unsigned int i, const unsigned int j)
 {
   Assert(i < 6, ExcNotImplemented());
   Assert(j < 6, ExcNotImplemented());
+
+  // The integrals are computed using the following Mathematica snippet of
+  // code:
+  //
+  // x0 = 0.5
+  // y0 = 0.5
+  // Do[Do[Print["v[", n, "][", m, "]=",
+  //    NumberForm[
+  //     NIntegrate[
+  //      x^n*y^m/Sqrt[(x - x0)^2 + (y - y0)^2], {x, 0, 1}, {y, 0, 1},
+  //      MaxRecursion -> 10000, PrecisionGoal -> 9], 9], ";"], {n, 0,
+  //    4}], {m, 0, 4}]
 
   // The integrals are computed using the following Mathematica snippet of
   // code:

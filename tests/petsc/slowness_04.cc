@@ -32,6 +32,7 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <iostream>
 
+
 void
 test()
 {
@@ -104,6 +105,8 @@ test()
 
   deallog << v1 * v2 << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

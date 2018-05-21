@@ -19,6 +19,8 @@
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
+
+
 void
 merge_check()
 {
@@ -102,6 +104,7 @@ merge_check()
       c1.print(deallog.get_file_stream());
     };
 }
+
 
 int
 main()

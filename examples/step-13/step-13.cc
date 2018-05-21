@@ -307,6 +307,8 @@ namespace Step13
       results_table.add_value("u(x_0)", point_value);
     }
 
+
+
     // @sect4{Generating output}
 
     // A different, maybe slightly odd kind of <code>evaluation</code> of a
@@ -420,6 +422,7 @@ namespace Step13
     // in. For this example, that much shall be sufficient, so we close the
     // namespace.
   } // namespace Evaluation
+
 
   // @sect3{The Laplace solver classes}
 
@@ -996,6 +999,8 @@ namespace Step13
       DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
       DoFTools::make_sparsity_pattern(dof_handler, dsp);
 
+
+
       // Wait for the side task to be done before going further
       side_task.join();
 
@@ -1025,6 +1030,8 @@ namespace Step13
 
       hanging_node_constraints.distribute(solution);
     }
+
+
 
     // @sect4{A primal solver}
 
@@ -1225,6 +1232,8 @@ namespace Step13
     }
 
   } // namespace LaplaceSolver
+
+
 
   // @sect3{Equation data}
 
@@ -1435,6 +1444,8 @@ namespace Step13
     std::cout << std::endl;
   }
 } // namespace Step13
+
+
 
 // There is not much to say about the main function. It follows the same
 // pattern as in all previous examples, with attempts to catch thrown

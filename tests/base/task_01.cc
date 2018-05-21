@@ -22,12 +22,14 @@
 
 #include <deal.II/base/thread_management.h>
 
+
 void
 test()
 {
   sleep(3);
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

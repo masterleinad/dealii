@@ -18,6 +18,8 @@
 
 #  include <deal.II/base/config.h>
 
+#  include <deal.II/base/config.h>
+
 #  ifdef DEAL_II_WITH_PETSC
 #    include <deal.II/lac/exceptions.h>
 #    include <deal.II/lac/petsc_matrix_base.h>
@@ -285,6 +287,9 @@ namespace PETScWrappers
 
   // -------- template and inline functions ----------
 
+
+  // -------- template and inline functions ----------
+
   inline const MPI_Comm&
   MatrixFree::get_mpi_communicator() const
   {
@@ -295,6 +300,7 @@ namespace PETScWrappers
 DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_PETSC
+
 
 /*----------------------------   petsc_matrix_free.h     ---------------------------*/
 

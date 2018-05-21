@@ -65,6 +65,7 @@ DeclException3(ExcWrongValue,
                double,
                << arg1 << " != " << arg2 << " with delta = " << arg3);
 
+
 template <int dim>
 void
 test()
@@ -126,6 +127,7 @@ test()
 
   deallog << "Ok" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

@@ -16,6 +16,8 @@
 #ifndef dealii_filtered_matrix_h
 #  define dealii_filtered_matrix_h
 
+
+
 #  include <algorithm>
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/memory_consumption.h>
@@ -606,6 +608,8 @@ FilteredMatrix<VectorType>::Accessor::advance()
   Assert(index < matrix->constraints.size(), ExcIteratorPastEnd());
   ++index;
 }
+
+
 
 template <typename VectorType>
 inline FilteredMatrix<VectorType>::const_iterator::const_iterator(

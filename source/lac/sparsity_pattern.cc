@@ -35,6 +35,8 @@ __declspec(selectany) // Weak extern binding due to multiple link error
 #endif
   const SparsityPattern::size_type SparsityPattern::invalid_entry;
 
+
+
 SparsityPattern::SparsityPattern()
   : max_dim(0),
     max_vec_len(0),
@@ -45,6 +47,8 @@ SparsityPattern::SparsityPattern()
 {
   reinit(0, 0, 0);
 }
+
+
 
 SparsityPattern::SparsityPattern(const SparsityPattern& s)
   : Subscriptor(),
@@ -65,6 +69,8 @@ SparsityPattern::SparsityPattern(const SparsityPattern& s)
   reinit(0, 0, 0);
 }
 
+
+
 SparsityPattern::SparsityPattern(const size_type    m,
                                  const size_type    n,
                                  const unsigned int max_per_row)
@@ -78,6 +84,8 @@ SparsityPattern::SparsityPattern(const size_type    m,
   reinit(m, n, max_per_row);
 }
 
+
+
 SparsityPattern::SparsityPattern(const size_type                  m,
                                  const size_type                  n,
                                  const std::vector<unsigned int>& row_lengths)
@@ -90,6 +98,8 @@ SparsityPattern::SparsityPattern(const size_type                  m,
   reinit(m, n, row_lengths);
 }
 
+
+
 SparsityPattern::SparsityPattern(const size_type    m,
                                  const unsigned int max_per_row)
   : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
@@ -97,12 +107,16 @@ SparsityPattern::SparsityPattern(const size_type    m,
   reinit(m, m, max_per_row);
 }
 
+
+
 SparsityPattern::SparsityPattern(const size_type                  m,
                                  const std::vector<unsigned int>& row_lengths)
   : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
 {
   reinit(m, m, row_lengths);
 }
+
+
 
 SparsityPattern::SparsityPattern(const SparsityPattern& original,
                                  const unsigned int     max_per_row,
@@ -179,6 +193,8 @@ SparsityPattern::SparsityPattern(const SparsityPattern& original,
              ExcNotEnoughSpace(0, rowstart[row + 1] - rowstart[row]));
     };
 }
+
+
 
 SparsityPattern&
 SparsityPattern::operator=(const SparsityPattern& s)
@@ -339,6 +355,7 @@ SparsityPattern::compress()
       std::not_equal_to<size_type>(), std::placeholders::_1, invalid_entry));
   // now allocate the respective memory
   std::unique_ptr<size_type[]> new_colnums(new size_type[nonzero_elements]);
+
 
   // reserve temporary storage to store the entries of one row
   std::vector<size_type> tmp_entries(max_row_length);
@@ -564,6 +581,8 @@ SparsityPattern::reinit(const size_type                  m,
 {
   reinit(m, n, make_slice(row_lengths));
 }
+
+
 
 bool
 SparsityPattern::empty() const
@@ -866,6 +885,8 @@ SparsityPattern::print_svg(std::ostream& out) const
     }
   out << "</svg>" << std::endl;
 }
+
+
 
 SparsityPattern::size_type
 SparsityPattern::bandwidth() const

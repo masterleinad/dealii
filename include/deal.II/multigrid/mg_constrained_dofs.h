@@ -31,6 +31,7 @@ class DoFHandler;
 template <int dim, typename Number>
 struct FunctionMap;
 
+
 /**
  * Collection of boundary constraints and refinement edge constraints for
  * level vectors.
@@ -117,6 +118,7 @@ public:
   at_refinement_edge(const unsigned int            level,
                      const types::global_dof_index index) const;
 
+
   /**
    * Determine whether the (i,j) entry of the interface matrix
    * on a given level should be set. This is taken in terms of
@@ -137,12 +139,14 @@ public:
   const IndexSet&
   get_boundary_indices(const unsigned int level) const;
 
+
   /**
    * Return the indices of dofs on the given level that lie on an refinement
    * edge (dofs on faces to neighbors that are coarser).
    */
   const IndexSet&
   get_refinement_edge_indices(unsigned int level) const;
+
 
   /**
    * Return if Dirichlet boundary indices are set in initialize().
@@ -293,12 +297,14 @@ MGConstrainedDoFs::make_zero_boundary_constraints(
     dof, boundary_ids, boundary_indices, component_mask);
 }
 
+
 inline void
 MGConstrainedDoFs::clear()
 {
   boundary_indices.clear();
   refinement_edge_indices.clear();
 }
+
 
 inline bool
 MGConstrainedDoFs::is_boundary_index(const unsigned int            level,
@@ -335,12 +341,16 @@ MGConstrainedDoFs::is_interface_matrix_entry(
          && !this->is_boundary_index(level, j);    // !on_boundary(j)
 }
 
+
+
 inline const IndexSet&
 MGConstrainedDoFs::get_boundary_indices(const unsigned int level) const
 {
   AssertIndexRange(level, boundary_indices.size());
   return boundary_indices[level];
 }
+
+
 
 inline const IndexSet&
 MGConstrainedDoFs::get_refinement_edge_indices(unsigned int level) const
@@ -349,11 +359,15 @@ MGConstrainedDoFs::get_refinement_edge_indices(unsigned int level) const
   return refinement_edge_indices[level];
 }
 
+
+
 inline bool
 MGConstrainedDoFs::have_boundary_indices() const
 {
   return boundary_indices.size() != 0;
 }
+
+
 
 inline const ConstraintMatrix&
 MGConstrainedDoFs::get_level_constraint_matrix(const unsigned int level) const

@@ -56,6 +56,8 @@ public:
   }
 };
 
+
+
 template <int dim>
 void
 check()
@@ -91,6 +93,8 @@ check()
   for(unsigned int i = 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
+
+
 
 int
 main()

@@ -32,6 +32,8 @@
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 // function is x^2+2xy
 template <int dim>
 class MyFunction : public Function<dim>
@@ -108,6 +110,8 @@ make_mesh(Triangulation<dim, spacedim>& tria)
   tria.execute_coarsening_and_refinement();
 }
 
+
+
 template <int dim, int spacedim>
 void
 check()
@@ -156,6 +160,7 @@ check()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

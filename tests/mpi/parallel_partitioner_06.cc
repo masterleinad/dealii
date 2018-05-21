@@ -23,6 +23,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test()
 {
@@ -166,6 +167,8 @@ test()
     deallog << ghosts[i] << " ";
   deallog << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

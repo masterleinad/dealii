@@ -40,6 +40,7 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/error_estimator.h>
 
+
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -241,6 +242,8 @@ KellyErrorEstimator<1, spacedim>::estimate(
            material_id,
            strategy);
 }
+
+
 
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
@@ -496,6 +499,7 @@ KellyErrorEstimator<1, spacedim>::estimate(
                   coefficient->vector_value(cell->vertex(n),
                                             coefficient_values);
               }
+
 
             for(unsigned int s = 0; s < n_solution_vectors; ++s)
               for(unsigned int component = 0; component < n_components;

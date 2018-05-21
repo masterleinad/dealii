@@ -121,6 +121,7 @@ check()
   deallog << " difference norm = " << out.linfty_norm() << std::endl;
 }
 
+
 int
 main()
 {

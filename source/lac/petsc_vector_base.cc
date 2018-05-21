@@ -120,6 +120,8 @@ namespace PETScWrappers
                       "the thread limit to 1 in MPI_InitFinalize()."));
   }
 
+
+
   VectorBase::VectorBase(const VectorBase& v)
     : Subscriptor(),
       ghosted(v.ghosted),
@@ -138,6 +140,8 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
+
+
   VectorBase::VectorBase(const Vec& v)
     : Subscriptor(),
       vector(v),
@@ -149,6 +153,8 @@ namespace PETScWrappers
            ExcMessage("PETSc does not support multi-threaded access, set "
                       "the thread limit to 1 in MPI_InitFinalize()."));
   }
+
+
 
   VectorBase::~VectorBase()
   {
@@ -174,6 +180,8 @@ namespace PETScWrappers
     last_action        = ::dealii::VectorOperation::unknown;
     obtained_ownership = true;
   }
+
+
 
   VectorBase&
   VectorBase::operator=(const PetscScalar s)
@@ -290,6 +298,8 @@ namespace PETScWrappers
   {
     do_set_add_operation(n_elements, indices, values, true);
   }
+
+
 
   PetscScalar VectorBase::operator*(const VectorBase& vec) const
   {
@@ -580,6 +590,8 @@ namespace PETScWrappers
     }
   } // namespace internal
 
+
+
   bool
   VectorBase::is_non_negative() const
   {
@@ -609,6 +621,8 @@ namespace PETScWrappers
     return flag;
   }
 
+
+
   VectorBase&
   VectorBase::operator*=(const PetscScalar a)
   {
@@ -620,6 +634,8 @@ namespace PETScWrappers
 
     return *this;
   }
+
+
 
   VectorBase&
   VectorBase::operator/=(const PetscScalar a)
@@ -636,6 +652,8 @@ namespace PETScWrappers
     return *this;
   }
 
+
+
   VectorBase&
   VectorBase::operator+=(const VectorBase& v)
   {
@@ -645,6 +663,8 @@ namespace PETScWrappers
 
     return *this;
   }
+
+
 
   VectorBase&
   VectorBase::operator-=(const VectorBase& v)
@@ -818,6 +838,8 @@ namespace PETScWrappers
     const PetscErrorCode ierr = VecSwap(vector, v.vector);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
+
+
 
   VectorBase::operator const Vec&() const
   {

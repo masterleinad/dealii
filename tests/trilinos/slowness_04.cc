@@ -33,6 +33,7 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 
+
 void
 test()
 {
@@ -105,6 +106,8 @@ test()
 
   deallog << v1 * v2 << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

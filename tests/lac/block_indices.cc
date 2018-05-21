@@ -18,6 +18,8 @@
 #include "../tests.h"
 #include <deal.II/lac/block_indices.h>
 
+
+
 void
 test(const BlockIndices& idx)
 {
@@ -47,6 +49,7 @@ test(const BlockIndices& idx)
 
   deallog << std::endl;
 }
+
 
 int
 main()

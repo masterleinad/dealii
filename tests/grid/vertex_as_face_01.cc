@@ -22,6 +22,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int spacedim>
 void
 test()
@@ -47,6 +49,8 @@ test()
       deallog << "Right vertex=" << cell->face(1)->vertex(0) << std::endl;
     }
 }
+
+
 
 int
 main()

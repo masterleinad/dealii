@@ -117,6 +117,7 @@ check()
   print_dof_numbers(mgdof);
 }
 
+
 int
 main(int argc, char** argv)
 {

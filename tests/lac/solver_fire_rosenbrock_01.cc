@@ -20,6 +20,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_memory.h>
 
+
+
 // Test to verify correctness of SolverFIRE::sovle()
 // The objective function is the extended Rosenbrock function.
 // The Rosenbrock function is a non-convex function used as a test problem
@@ -40,6 +42,7 @@
 // DOI: 10.1007/BF02196600
 
 using vector_t = typename dealii::Vector<double>;
+
 
 double
 compute(vector_t& G, const vector_t& X)
@@ -66,6 +69,8 @@ compute(vector_t& G, const vector_t& X)
 
   return value;
 }
+
+
 
 void
 check_value(const unsigned int N, const double tol)
@@ -100,6 +105,8 @@ check_value(const unsigned int N, const double tol)
 
   X.print(deallog);
 }
+
+
 
 int
 main()

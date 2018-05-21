@@ -28,6 +28,7 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
 
+
 template <int dim>
 void
 test()
@@ -111,6 +112,8 @@ test()
   deallog << "|B|=" << B.l2_norm() << std::endl;
   Assert(A.l2_norm() < 1e-12 * B.l2_norm(), ExcInternalError());
 }
+
+
 
 int
 main()

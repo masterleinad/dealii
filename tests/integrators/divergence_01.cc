@@ -47,6 +47,7 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
   gradient_matrix(Mg, fes, fev);
   Mg.print(deallog, 16, 8);
 
+
   Vector<double>                           u(nv), v(ns), w(ns);
   std::vector<std::vector<Tensor<1, dim>>> ugrad(
     dim, std::vector<Tensor<1, dim>>(fev.n_quadrature_points));
@@ -226,6 +227,7 @@ test(Triangulation<dim>& tr)
   test_fe(tr, n1, q1);
   test_fe(tr, s1, q1);
 }
+
 
 int
 main()

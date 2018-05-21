@@ -35,6 +35,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim>
 class Quadrature;
 
+
 template <typename number>
 class Vector;
 template <typename number>
@@ -61,6 +62,7 @@ namespace hp
   template <int, int>
   class DoFHandler;
 } // namespace hp
+
 
 #ifdef DEAL_II_WITH_PETSC
 namespace PETScWrappers
@@ -368,6 +370,7 @@ namespace MatrixCreator
     = nullptr,
     const ConstraintMatrix& constraints = ConstraintMatrix());
 
+
   /**
    * Assemble the mass matrix and a right hand side vector along the boundary.
    *
@@ -409,6 +412,7 @@ namespace MatrixCreator
       weight
     = 0,
     std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+
 
   /**
    * Call the create_boundary_mass_matrix() function, see above, with
@@ -624,6 +628,8 @@ namespace MatrixCreator
                    "the latter case, the same value will be taken for "
                    "each vector component of the finite element.");
 } // namespace MatrixCreator
+
+
 
 /**
  * Provide a collection of functions operating on matrices. These include the
@@ -1000,6 +1006,8 @@ namespace MatrixTools
                    "the same blocks sizes as the solution vector or "
                    "right hand side vectors, respectively.");
 } // namespace MatrixTools
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

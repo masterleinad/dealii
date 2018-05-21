@@ -209,6 +209,7 @@ namespace TrilinosWrappers
              const MPI_Comm&              communicator    = MPI_COMM_WORLD,
              const bool                   vector_writable = false);
 
+
       /**
        * Change the dimension to that of the vector <tt>V</tt>. The same
        * applies as for the other reinit() function.
@@ -313,6 +314,8 @@ namespace TrilinosWrappers
       reinit(parallel_partitioning, communicator, false);
     }
 
+
+
     inline BlockVector::BlockVector(
       const std::vector<IndexSet>& parallel_partitioning,
       const std::vector<IndexSet>& ghost_values,
@@ -323,10 +326,14 @@ namespace TrilinosWrappers
         parallel_partitioning, ghost_values, communicator, vector_writable);
     }
 
+
+
     inline BlockVector::BlockVector(const size_type num_blocks)
     {
       reinit(num_blocks);
     }
+
+
 
     inline BlockVector::BlockVector(const BlockVector& v)
       : dealii::BlockVectorBase<MPI::Vector>()
@@ -337,6 +344,8 @@ namespace TrilinosWrappers
       for(size_type i = 0; i < this->n_blocks(); ++i)
         this->components[i] = v.components[i];
     }
+
+
 
     inline BlockVector::BlockVector(BlockVector&& v) noexcept
     {
@@ -365,6 +374,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
+
     inline bool
     BlockVector::has_ghost_elements() const
     {
@@ -375,6 +386,8 @@ namespace TrilinosWrappers
 #  endif
       return ghosted;
     }
+
+
 
     inline void
     BlockVector::swap(BlockVector& v)

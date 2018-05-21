@@ -289,6 +289,8 @@ private:
   Object object;
 };
 
+
+
 /**
  * A class that provides possible choices for isotropic and anisotropic
  * refinement flags in the current space dimension.
@@ -651,6 +653,7 @@ public:
   RefinementCase
   operator~() const;
 
+
   /**
    * Return the flag that corresponds to cutting a cell along the axis given
    * as argument. For example, if <code>i=0</code> then the returned value is
@@ -951,6 +954,8 @@ namespace internal
     };
   };
 
+
+
   /**
    * A class that provides all possible cases a face (in the current space
    * dimension @p dim) might be subdivided into subfaces.
@@ -1008,8 +1013,12 @@ namespace internal
 
 } // namespace internal
 
+
+
 template <int dim>
 struct GeometryInfo;
+
+
 
 /**
  * Topological description of zero dimensional cells, i.e. points. This class
@@ -1134,6 +1143,8 @@ struct GeometryInfo<0>
    */
   static const std::array<unsigned int, vertices_per_cell> dx_to_deal;
 };
+
+
 
 /**
  * This class provides dimension independent information to all topological
@@ -2248,6 +2259,8 @@ struct GeometryInfo
                  << " has no subface " << arg3);
 };
 
+
+
 #ifndef DOXYGEN
 
 /* -------------- declaration of explicit specializations ------------- */
@@ -2265,15 +2278,21 @@ Tensor<1, 3>
 GeometryInfo<3>::d_linear_shape_function_gradient(const Point<3>&    xi,
                                                   const unsigned int i);
 
+
+
 /* -------------- inline functions ------------- */
+
 
 inline GeometryPrimitive::GeometryPrimitive(const Object object)
   : object(object)
 {}
 
+
+
 inline GeometryPrimitive::GeometryPrimitive(const unsigned int object_dimension)
   : object(static_cast<Object>(object_dimension))
 {}
+
 
 inline GeometryPrimitive::operator unsigned int() const
 {
@@ -2397,6 +2416,8 @@ RefinementCase<dim>::operator~() const
     (~value) & RefinementPossibilities<dim>::isotropic_refinement));
 }
 
+
+
 template <int dim>
 inline std::size_t
 RefinementCase<dim>::memory_consumption()
@@ -2415,6 +2436,8 @@ RefinementCase<dim>::serialize(Archive& ar, const unsigned int)
   ar&          uchar_value;
   value = uchar_value;
 }
+
+
 
 template <>
 inline Point<1>
@@ -2914,6 +2937,18 @@ GeometryInfo<3>::standard_to_real_face_vertex(const unsigned int vertex,
        2}, // vertex 0, face_orientation=true, face_flip=false, face_rotation=false and true
       {3,
        1}}}, // vertex 0, face_orientation=true, face_flip=true, face_rotation=false and true
+
+    {{{2, 3}, // vertex 1 ...
+      {1, 0}},
+     {{1, 0}, {2, 3}}},
+
+    {{{1, 0}, // vertex 2 ...
+      {2, 3}},
+     {{2, 3}, {1, 0}}},
+
+    {{{3, 1}, // vertex 3 ...
+      {0, 2}},
+     {{3, 1}, {0, 2}}}};
 
     {{{2, 3}, // vertex 1 ...
       {1, 0}},
@@ -3473,6 +3508,10 @@ GeometryInfo<3>::min_cell_refinement_case_for_line_refinement(
   return ref_cases[line_no / 2];
 }
 
+
+  return ref_cases[line_no / 2];
+}
+
 template <>
 inline unsigned int
 GeometryInfo<3>::real_to_standard_face_vertex(const unsigned int vertex,
@@ -3523,6 +3562,18 @@ GeometryInfo<3>::real_to_standard_face_vertex(const unsigned int vertex,
       {0, 2}},
      {{3, 2}, {0, 1}}}};
 
+    {{{2, 3}, // vertex 1 ...
+      {1, 0}},
+     {{1, 3}, {2, 0}}},
+
+    {{{1, 0}, // vertex 2 ...
+      {2, 3}},
+     {{2, 0}, {1, 3}}},
+
+    {{{3, 1}, // vertex 3 ...
+      {0, 2}},
+     {{3, 2}, {0, 1}}}};
+
   return vertex_translation[vertex][face_orientation][face_flip][face_rotation];
 }
 
@@ -3548,6 +3599,7 @@ GeometryInfo<3>::standard_to_real_face_line(const unsigned int line,
 {
   Assert(line < GeometryInfo<3>::lines_per_face,
          ExcIndexRange(line, 0, GeometryInfo<3>::lines_per_face));
+
 
   // make sure we handle
   // non-standard faces correctly
@@ -3588,6 +3640,18 @@ GeometryInfo<3>::standard_to_real_face_line(const unsigned int line,
       {0, 3}},
      {{3, 1}, {2, 0}}}};
 
+    {{{3, 1}, // line 1 ...
+      {2, 0}},
+     {{1, 2}, {0, 3}}},
+
+    {{{0, 3}, // line 2 ...
+      {1, 2}},
+     {{2, 0}, {3, 1}}},
+
+    {{{1, 2}, // line 3 ...
+      {0, 3}},
+     {{3, 1}, {2, 0}}}};
+
   return line_translation[line][face_orientation][face_flip][face_rotation];
 }
 
@@ -3611,6 +3675,7 @@ GeometryInfo<3>::real_to_standard_face_line(const unsigned int line,
 {
   Assert(line < GeometryInfo<3>::lines_per_face,
          ExcIndexRange(line, 0, GeometryInfo<3>::lines_per_face));
+
 
   // make sure we handle
   // non-standard faces correctly
@@ -3638,6 +3703,18 @@ GeometryInfo<3>::real_to_standard_face_line(const unsigned int line,
        2}, // line 0, face_orientation=true, face_flip=false, face_rotation=false and true
       {1,
        3}}}, // line 0, face_orientation=true, face_flip=true, face_rotation=false and true
+
+    {{{3, 1}, // line 1 ...
+      {2, 0}},
+     {{1, 3}, {0, 2}}},
+
+    {{{0, 3}, // line 2 ...
+      {1, 2}},
+     {{2, 1}, {3, 0}}},
+
+    {{{1, 2}, // line 3 ...
+      {0, 3}},
+     {{3, 0}, {2, 1}}}};
 
     {{{3, 1}, // line 1 ...
       {2, 0}},
@@ -4243,6 +4320,7 @@ GeometryInfo<dim>::d_linear_shape_function_gradient(const Point<dim>&,
   return Tensor<1, dim>();
 }
 
+
 unsigned int inline GeometryInfo<0>::n_children(const RefinementCase<0>&)
 {
   return 0;
@@ -4289,6 +4367,7 @@ namespace internal
     }
   } // namespace GeometryInfoHelper
 } // namespace internal
+
 
 template <int dim>
 template <int spacedim>

@@ -42,6 +42,7 @@ class FEFaceValues;
 template <int dim, int spacedim>
 class FESubfaceValues;
 
+
 /**
  * The transformation type used for the Mapping::transform() functions.
  *
@@ -423,6 +424,7 @@ public:
    * Exception
    */
   DeclException0(ExcInvalidData);
+
 
   /**
    * Computing the mapping between a real space point and a point in reference

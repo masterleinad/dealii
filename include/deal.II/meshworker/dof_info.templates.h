@@ -16,6 +16,7 @@
 #ifndef dealii_dof_info_templates_h
 #define dealii_dof_info_templates_h
 
+
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/meshworker/dof_info.h>
 
@@ -51,6 +52,7 @@ namespace MeshWorker
       indices[this->block_info->renumber(i)] = indices_org[i];
   }
 } // namespace MeshWorker
+
 
 DEAL_II_NAMESPACE_CLOSE
 

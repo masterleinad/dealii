@@ -78,6 +78,8 @@ test()
     Assert(ghosted(i) == 3, ExcInternalError());
 }
 
+
+
 int
 main(int argc, char** argv)
 {

@@ -30,6 +30,7 @@ SparseLUDecomposition<double>::copy_from<double>(const SparseMatrix<double>&);
 template void
 SparseLUDecomposition<double>::copy_from<float>(const SparseMatrix<float>&);
 
+
 template class SparseLUDecomposition<float>;
 template void
 SparseLUDecomposition<float>::initialize<double>(const SparseMatrix<double>&,

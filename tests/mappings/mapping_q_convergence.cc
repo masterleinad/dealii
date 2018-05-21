@@ -90,6 +90,7 @@ regression_slope(const std::vector<double>& x, const std::vector<double>& y)
   return X(1);
 }
 
+
 double
 zvalue(const double x, const double y)
 {
@@ -168,6 +169,8 @@ public:
     return std::cos(p[0]) + 2.0 * std::sin(2 * p[1]);
   }
 };
+
+
 
 template <int dim>
 void

@@ -20,6 +20,8 @@
 #include "../tests.h"
 #include <deal.II/lac/la_vector.h>
 
+
+
 template <typename number>
 void
 check_norms()
@@ -40,6 +42,7 @@ check_norms()
         AssertThrow(vec2.l2_norm() == norm, ExcInternalError());
     }
 }
+
 
 int
 main()

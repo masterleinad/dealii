@@ -21,6 +21,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 std::ofstream logfile("output");
 
 // testcase=0:
@@ -72,6 +73,7 @@ test(const int testcase)
           << "     Total number of vertices = " << tria_3.n_used_vertices()
           << std::endl;
 }
+
 
 int
 main()

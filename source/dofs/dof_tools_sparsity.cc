@@ -177,6 +177,9 @@ namespace DoFTools
           dofs_on_this_cell.resize(dofs_per_cell);
           cell->get_dof_indices(dofs_on_this_cell);
 
+          dofs_on_this_cell.resize(dofs_per_cell);
+          cell->get_dof_indices(dofs_on_this_cell);
+
           // make sparsity pattern for this cell. if no constraints pattern
           // was given, then the following call acts as if simply no
           // constraints existed
@@ -208,6 +211,7 @@ namespace DoFTools
     const std::list<std::pair<typename DoFHandlerType::cell_iterator,
                               typename DoFHandlerType::cell_iterator>>
       cell_list = GridTools::get_finest_common_cells(dof_row, dof_col);
+
 
     typename std::list<std::pair<typename DoFHandlerType::cell_iterator,
                                  typename DoFHandlerType::cell_iterator>>::
@@ -361,6 +365,8 @@ namespace DoFTools
                              dof_to_boundary_mapping[dofs_on_this_face[j]]);
           }
   }
+
+
 
   template <typename DoFHandlerType,
             typename SparsityPatternType,
@@ -1035,6 +1041,7 @@ namespace DoFTools
                   bool_int_and_flux_dof_mask[f](i, j) = true;
           }
 
+
         typename dealii::hp::DoFHandler<dim, spacedim>::active_cell_iterator
           cell
           = dof.begin_active(),
@@ -1229,6 +1236,9 @@ namespace DoFTools
             }
       }
     } // namespace
+
+  } // namespace internal
+
 
   } // namespace internal
 

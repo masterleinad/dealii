@@ -23,6 +23,7 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -93,6 +94,8 @@ test()
   Assert(!test_failed, ExcInternalError());
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

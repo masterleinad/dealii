@@ -35,6 +35,7 @@ test()
     deallog << output[0] << ' ' << output[1] << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

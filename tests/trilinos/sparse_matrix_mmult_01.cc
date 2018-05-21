@@ -30,6 +30,7 @@ out_matrix_size(const MATRIX& M, const std::string& name)
   deallog << name << " = " << M.m() << " x " << M.n() << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

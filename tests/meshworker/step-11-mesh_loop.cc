@@ -154,6 +154,7 @@ namespace Step11
     DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
     DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints);
 
+
     sparsity_pattern.copy_from(dsp);
     system_matrix.reinit(sparsity_pattern);
   }
@@ -292,7 +293,9 @@ namespace Step11
                             | MeshWorker::assemble_boundary_faces,
                           boundary_worker);
 
+
     solve();
+
 
     // Finally, evaluate what we got as solution. As stated in the
     // introduction, we are interested in the H1 semi-norm of the

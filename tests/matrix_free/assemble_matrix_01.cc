@@ -28,6 +28,7 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/matrix_free/fe_evaluation.h>
 
+
 std::ofstream logfile("output");
 
 template <int dim, int fe_degree>
@@ -35,6 +36,7 @@ void
 do_test(const DoFHandler<dim>& dof)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
+
 
   MappingQ<dim> mapping(fe_degree + 1);
 
@@ -139,6 +141,8 @@ test()
   dof.distribute_dofs(fe);
   do_test<dim, fe_degree>(dof);
 }
+
+
 
 int
 main()

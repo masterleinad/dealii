@@ -19,6 +19,7 @@
 #include "../test_grids.h"
 #include "../tests.h"
 
+
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/matrix_block.h>
@@ -60,6 +61,12 @@ cell_matrix(MeshWorker::DoFInfo<dim>&                       dinfo,
 {
   unsigned int dm = 0; // Matrix index
   unsigned int de = 0; // Element index
+
+  L2::mass_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
+  Laplace::cell_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
+  Divergence::gradient_matrix(dinfo.matrix(dm++, false).matrix,
+                              info.fe_values(de),
+                              info.fe_values(de + 1));
 
   L2::mass_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
   Laplace::cell_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
@@ -277,6 +284,7 @@ run2d(unsigned int degree)
   deallog.pop();
 }
 
+
 void
 run3d(unsigned int degree)
 {
@@ -315,6 +323,7 @@ run3d(unsigned int degree)
     }
   deallog.pop();
 }
+
 
 int
 main()

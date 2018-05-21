@@ -42,6 +42,9 @@ namespace internal
     template std::size_t
     DoFIndicesOnFacesOrEdges<3>::memory_consumption() const;
 
+    template std::size_t
+    DoFIndicesOnFacesOrEdges<3>::memory_consumption() const;
+
     // ---------------------- DoFFaces ----------------------------
 
     std::size_t

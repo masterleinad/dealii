@@ -18,6 +18,8 @@
 
 #  include <deal.II/base/config.h>
 
+#  include <deal.II/base/config.h>
+
 #  ifdef DEAL_II_WITH_TRILINOS
 
 #    include <deal.II/lac/exceptions.h>
@@ -26,6 +28,11 @@
 #    include <deal.II/lac/vector.h>
 
 #    include <memory>
+
+#    include <Amesos.h>
+#    include <AztecOO.h>
+#    include <Epetra_LinearProblem.h>
+#    include <Epetra_Operator.h>
 
 #    include <Amesos.h>
 #    include <AztecOO.h>
@@ -211,6 +218,8 @@ namespace TrilinosWrappers
           const Epetra_MultiVector& b,
           const Epetra_Operator&    preconditioner);
 
+
+
     /**
      * Solve the linear system <tt>Ax=b</tt>. Depending on the information
      * provided by derived classes and the object passed as a preconditioner,
@@ -268,6 +277,7 @@ namespace TrilinosWrappers
           dealii::LinearAlgebra::distributed::Vector<double>&       x,
           const dealii::LinearAlgebra::distributed::Vector<double>& b,
           const PreconditionBase& preconditioner);
+
 
     /**
      * Access to object that controls convergence.
@@ -343,6 +353,8 @@ namespace TrilinosWrappers
   void
   SolverBase::set_preconditioner(AztecOO&               solver,
                                  const Epetra_Operator& preconditioner);
+
+
 
   /**
    * An implementation of the solver interface using the Trilinos CG solver.

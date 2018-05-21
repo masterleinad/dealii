@@ -28,6 +28,7 @@
 
 using namespace std;
 
+
 void
 test()
 {
@@ -66,6 +67,8 @@ test()
       deallog << std::endl;
     }
 }
+
+
 
 int
 main()

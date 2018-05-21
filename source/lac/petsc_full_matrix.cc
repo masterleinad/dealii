@@ -56,6 +56,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
+
   const MPI_Comm&
   FullMatrix::get_mpi_communicator() const
   {
@@ -63,6 +64,7 @@ namespace PETScWrappers
     return communicator;
   }
 } // namespace PETScWrappers
+
 
 DEAL_II_NAMESPACE_CLOSE
 

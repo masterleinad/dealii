@@ -19,6 +19,7 @@
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
 
+
 int
 main()
 {
@@ -50,6 +51,7 @@ main()
       "double+double", "6.1415926", Patterns::Double(), "docs 3");
   }
   prm.leave_subsection();
+
 
   prm.print_parameters(logfile, ParameterHandler::JSON);
   logfile << std::endl;

@@ -31,6 +31,7 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 
+
 template <int dim>
 void
 check2(const FiniteElement<dim>& fe)
@@ -49,6 +50,8 @@ check()
   check2(FESystem<dim>(FE_Q<dim>(2), 1, FE_DGQ<dim>(2), 1));
   check2(FESystem<dim>(FE_Q<dim>(2), 1, FE_DGP<dim>(2), 1));
 }
+
+
 
 int
 main()

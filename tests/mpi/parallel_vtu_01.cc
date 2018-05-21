@@ -49,6 +49,7 @@ test()
   static const FE_Q<dim> fe(2);
   dofh.distribute_dofs(fe);
 
+
   TrilinosWrappers::MPI::Vector x;
   x.reinit(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
   x = 2.0;
@@ -75,6 +76,7 @@ test()
     }
   deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

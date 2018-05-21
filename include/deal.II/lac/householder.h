@@ -29,6 +29,7 @@ DEAL_II_NAMESPACE_OPEN
 template <typename number>
 class Vector;
 
+
 /*! @addtogroup Matrix2
  *@{
  */
@@ -138,6 +139,7 @@ public:
   void
   Tvmult(VectorType& dst, const VectorType& src) const;
 
+
 private:
   /**
    * Storage for the diagonal elements of the orthogonal
@@ -194,6 +196,9 @@ Householder<number>::initialize(const FullMatrix<number2>& M)
       // diagonal
       diagonal[j]   = beta * (storage(j, j) - s);
       storage(j, j) = s;
+
+      for(i = j + 1; i < m; ++i)
+        storage(i, j) *= beta;
 
       for(i = j + 1; i < m; ++i)
         storage(i, j) *= beta;

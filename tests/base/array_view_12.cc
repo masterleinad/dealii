@@ -19,6 +19,7 @@
 
 #include <deal.II/base/array_view.h>
 
+
 void
 test()
 {
@@ -76,6 +77,8 @@ test()
   deallog << "view2_const!=view2_const: " << (view2_const != view2_const)
           << std::endl;
 }
+
+
 
 int
 main()

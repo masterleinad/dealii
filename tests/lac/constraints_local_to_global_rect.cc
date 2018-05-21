@@ -58,6 +58,7 @@ test()
   global2.print_formatted(deallog.get_file_stream(), 2, true, 0, "0");
 }
 
+
 int
 main()
 {

@@ -72,6 +72,8 @@ hdf5_type_id(const char*)
 }
 #  endif // DEAL_II_WITH_HDF5
 
+
+
 template <typename NumberType>
 ScaLAPACKMatrix<NumberType>::ScaLAPACKMatrix(
   const size_type                                           n_rows_,
@@ -374,6 +376,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
   const bool in_context_A
     = (my_row_A >= 0 && my_row_A < n_grid_rows_A)
       && (my_column_A >= 0 && my_column_A < n_grid_columns_A);
+
 
   int n_grid_rows_B, n_grid_columns_B, my_row_B, my_column_B;
   Cblacs_gridinfo(B.grid->blacs_context,
@@ -2005,6 +2008,8 @@ ScaLAPACKMatrix<NumberType>::norm_symmetric(const char type) const
   return res;
 }
 
+
+
 #  ifdef DEAL_II_WITH_HDF5
 namespace internal
 {
@@ -2072,6 +2077,8 @@ namespace internal
   } // namespace
 } // namespace internal
 #  endif
+
+
 
 template <typename NumberType>
 void
@@ -2900,6 +2907,8 @@ namespace internal
   } // namespace
 } // namespace internal
 
+
+
 template <typename NumberType>
 template <class InputVector>
 void
@@ -2920,6 +2929,7 @@ ScaLAPACKMatrix<NumberType>::scale_rows(const InputVector& factors)
 
 // instantiations
 #  include "scalapack.inst"
+
 
 DEAL_II_NAMESPACE_CLOSE
 

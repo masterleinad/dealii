@@ -21,6 +21,7 @@
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 
+
 void
 test(Vector<double>& v)
 {
@@ -32,6 +33,8 @@ test(Vector<double>& v)
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

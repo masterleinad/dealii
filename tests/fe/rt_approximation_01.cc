@@ -25,9 +25,11 @@
 
 #define PRECISION 8
 
+
 std::ofstream logfile("output");
 
 char buf[1000];
+
 
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
@@ -386,6 +388,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
 
   return (0.0);
 }
+
 
 int
 main()

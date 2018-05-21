@@ -1172,6 +1172,7 @@ public:
   bool
   isotropic_restriction_is_implemented() const;
 
+
   /**
    * Access the #restriction_is_additive_flags field. See the discussion about
    * restriction matrices in the general class documentation for more
@@ -1218,6 +1219,7 @@ public:
     const dealii::internal::SubfaceCase<dim>& subface_case
     = dealii::internal::SubfaceCase<dim>::case_isotropic) const;
 
+
   /**
    * Return whether this element implements its hanging node constraints in
    * the new way, which has to be used to make elements "hp compatible".  That
@@ -1241,6 +1243,7 @@ public:
    */
   virtual bool
   hp_constraints_are_implemented() const;
+
 
   /**
    * Return the matrix interpolating from the given finite element to the
@@ -1277,6 +1280,7 @@ public:
   virtual void
   get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
                                 FullMatrix<double>& matrix) const;
+
 
   /**
    * Return the matrix interpolating from a face of one element to the
@@ -1762,6 +1766,7 @@ public:
   std::pair<unsigned int, unsigned int>
   component_to_base_index(const unsigned int component) const;
 
+
   /**
    * Return the base element for this block and the number of the copy of the
    * base element.
@@ -2179,6 +2184,7 @@ public:
    */
   GeometryPrimitive
   get_associated_geometry_primitive(const unsigned int cell_dof_index) const;
+
 
   /**
    * Given the values of a function $f(\mathbf x)$ at the (generalized)
@@ -3131,6 +3137,8 @@ FiniteElement<dim, spacedim>::face_system_to_component_index(
   return face_system_to_component_table[index];
 }
 
+
+
 template <int dim, int spacedim>
 inline std::pair<std::pair<unsigned int, unsigned int>, unsigned int>
 FiniteElement<dim, spacedim>::system_to_base_index(
@@ -3140,6 +3148,8 @@ FiniteElement<dim, spacedim>::system_to_base_index(
          ExcIndexRange(index, 0, system_to_base_table.size()));
   return system_to_base_table[index];
 }
+
+
 
 template <int dim, int spacedim>
 inline std::pair<std::pair<unsigned int, unsigned int>, unsigned int>

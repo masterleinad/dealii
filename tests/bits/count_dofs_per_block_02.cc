@@ -32,6 +32,8 @@
 
 #include <string>
 
+
+
 void
 print(const std::vector<types::global_dof_index>& v)
 {
@@ -115,6 +117,8 @@ check()
     print(dpc);
   }
 }
+
+
 
 int
 main()

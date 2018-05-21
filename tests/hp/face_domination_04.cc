@@ -38,6 +38,8 @@
 
 const unsigned int dim = 2;
 
+const unsigned int dim = 2;
+
 void
 print_dofs(const hp::DoFHandler<2>::active_cell_iterator& cell)
 {
@@ -50,6 +52,7 @@ print_dofs(const hp::DoFHandler<2>::active_cell_iterator& cell)
     deallog << dof_indices[i] << ' ';
   deallog << std::endl;
 }
+
 
 int
 main()

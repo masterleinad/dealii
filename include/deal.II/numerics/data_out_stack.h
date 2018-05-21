@@ -178,6 +178,7 @@ public:
   declare_data_vector(const std::vector<std::string>& name,
                       const VectorType                vector_type);
 
+
   /**
    * Add a data vector for the presently set value of the parameter.
    *
@@ -355,6 +356,7 @@ private:
    */
   virtual const std::vector<dealii::DataOutBase::Patch<dim + 1, dim + 1>>&
   get_patches() const override;
+
 
   /**
    * Virtual function through which the names of data sets are obtained by the

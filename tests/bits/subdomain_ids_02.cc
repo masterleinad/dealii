@@ -88,6 +88,7 @@ test()
     AssertThrow(subdomain_association[i] < (1 << dim), ExcInternalError());
 }
 
+
 int
 main()
 {

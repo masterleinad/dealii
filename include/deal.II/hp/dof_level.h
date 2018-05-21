@@ -31,6 +31,7 @@ namespace hp
   class FECollection;
 } // namespace hp
 
+
 namespace internal
 {
   namespace hp
@@ -45,6 +46,7 @@ namespace internal
     struct Implementation;
   }
 } // namespace internal
+
 
 namespace internal
 {
@@ -292,6 +294,7 @@ namespace internal
       uncompress_data(
         const dealii::hp::FECollection<dim, spacedim>& fe_collection);
 
+
       /**
        * Restore the active fe indices stored by the current object to
        * an uncompressed state. At the same time, do not touch any of
@@ -312,6 +315,7 @@ namespace internal
       void
       normalize_active_fe_indices();
 
+
       /**
        * Make hp::DoFHandler and its auxiliary class a friend since it is the
        * class that needs to create these data structures.
@@ -326,11 +330,14 @@ namespace internal
 
     // -------------------- template functions --------------------------------
 
+
     inline bool
     DoFLevel::is_compressed_entry(const active_fe_index_type active_fe_index)
     {
       return ((signed_active_fe_index_type) active_fe_index < 0);
     }
+
+
 
     inline DoFLevel::active_fe_index_type
     DoFLevel::get_toggled_compression_state(
@@ -341,6 +348,8 @@ namespace internal
       return (active_fe_index_type) ~(
         signed_active_fe_index_type) active_fe_index;
     }
+
+
 
     inline types::global_dof_index
     DoFLevel::get_dof_index(const unsigned int obj_index,
@@ -373,6 +382,8 @@ namespace internal
         return dof_indices[dof_offsets[obj_index]] + local_index;
     }
 
+
+
     inline void
     DoFLevel::set_dof_index(const unsigned int            obj_index,
                             const unsigned int            fe_index,
@@ -399,6 +410,8 @@ namespace internal
       dof_indices[dof_offsets[obj_index] + local_index] = global_index;
     }
 
+
+
     inline unsigned int
     DoFLevel::active_fe_index(const unsigned int obj_index) const
     {
@@ -411,12 +424,16 @@ namespace internal
         return get_toggled_compression_state(active_fe_indices[obj_index]);
     }
 
+
+
     inline bool
     DoFLevel::fe_index_is_active(const unsigned int obj_index,
                                  const unsigned int fe_index) const
     {
       return (fe_index == active_fe_index(obj_index));
     }
+
+
 
     inline void
     DoFLevel::set_active_fe_index(const unsigned int obj_index,
@@ -438,6 +455,8 @@ namespace internal
 
       active_fe_indices[obj_index] = fe_index;
     }
+
+
 
     inline const types::global_dof_index*
     DoFLevel::get_cell_cache_start(const unsigned int obj_index,

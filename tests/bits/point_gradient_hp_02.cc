@@ -49,6 +49,7 @@ public:
     values[0] = value(p, 0);
   }
 
+
   virtual Tensor<1, dim>
   gradient(const Point<dim>& p, const unsigned int component) const
   {
@@ -120,6 +121,8 @@ make_mesh(Triangulation<dim>& tria)
       tria.execute_coarsening_and_refinement();
     }
 }
+
+
 
 template <int dim>
 void
@@ -218,6 +221,7 @@ check()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

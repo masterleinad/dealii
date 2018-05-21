@@ -632,6 +632,7 @@ namespace internal
   }   // namespace ConstraintMatrixImplementation
 } // namespace internal
 
+
 template <class VectorType>
 void
 ConstraintMatrix::set_zero(VectorType& vec) const
@@ -876,6 +877,7 @@ namespace internal
     }
   } // namespace
 } // namespace internal
+
 
 template <class VectorType>
 void
@@ -1764,6 +1766,7 @@ namespace internals
         }
     }
   } // namespace dealiiSparseMatrix
+
 
   // similar as before, now with shortcut for deal.II sparse matrices. this
   // lets us avoid using extra arrays, and does all the operations just in
@@ -2679,6 +2682,8 @@ ConstraintMatrix::add_entries_local_to_global(
                                     sparsity_pattern);
 }
 
+
+
 template <typename SparsityPatternType>
 void
 ConstraintMatrix::add_entries_local_to_global(
@@ -2733,6 +2738,8 @@ ConstraintMatrix::add_entries_local_to_global(
   // TODO: implement this
   Assert(false, ExcNotImplemented());
 }
+
+
 
 template <typename SparsityPatternType>
 void

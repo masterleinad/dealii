@@ -71,11 +71,13 @@ namespace Step54
       NormalToMeshProjection = 2
     };
 
+
     TriangulationOnCAD(const std::string&   initial_mesh_filename,
                        const std::string&   cad_file_name,
                        const std::string&   output_filename,
                        const ProjectionType surface_projection_kind
                        = NormalProjection);
+
 
     ~TriangulationOnCAD();
 
@@ -122,6 +124,8 @@ namespace Step54
 
   TriangulationOnCAD::~TriangulationOnCAD()
   {}
+
+
 
   // @sect4{TriangulationOnCAD::read_domain}
 
@@ -375,6 +379,7 @@ namespace Step54
       }
   }
 } // namespace Step54
+
 
 // @sect3{The main() function}
 

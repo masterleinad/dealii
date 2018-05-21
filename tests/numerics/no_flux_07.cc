@@ -73,6 +73,7 @@ test_hyper_cube()
   test(tr, fe);
 }
 
+
 int
 main()
 {

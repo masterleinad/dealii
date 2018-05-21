@@ -51,6 +51,7 @@ check_quadrature_move(Args&&... args)
           << std::endl;
 }
 
+
 int
 main()
 {

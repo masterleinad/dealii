@@ -192,6 +192,11 @@ public:
   compare_for_face_domination(
     const FiniteElement<dim, spacedim>& fe_other) const override;
 
+
+  virtual std::vector<std::pair<unsigned int, unsigned int>>
+  hp_vertex_dof_identities(
+    const FiniteElement<dim, spacedim>& fe_other) const override;
+
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_vertex_dof_identities(
     const FiniteElement<dim, spacedim>& fe_other) const override;
@@ -230,6 +235,7 @@ public:
   get_face_interpolation_matrix(
     const FiniteElement<dim, spacedim>& source_fe,
     FullMatrix<double>&                 interpolation_matrix) const override;
+
 
   /**
    * Return the matrix interpolating from a face of one element to the

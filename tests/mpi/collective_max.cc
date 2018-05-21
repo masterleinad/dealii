@@ -39,6 +39,7 @@ test()
             << float_sum << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

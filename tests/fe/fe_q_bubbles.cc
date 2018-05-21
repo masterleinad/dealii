@@ -125,6 +125,9 @@ public:
   void
   run();
 
+  void
+  run();
+
 private:
   void
   make_grid();
@@ -259,6 +262,8 @@ Step3<dim>::output_results(unsigned int i) const
   data_out.add_data_vector(solution, "solution");
   data_out.build_patches(m_degree + 1);
 
+
+
   std::ofstream output(
     (fe->get_name() + "." + Utilities::int_to_string(i, 1) + ".vtk").c_str());
   data_out.write_vtk(output);
@@ -310,6 +315,7 @@ Step3<dim>::run()
       output_results(i);
     }
 }
+
 
 int
 main()

@@ -38,6 +38,7 @@ test(const unsigned int size)
   deallog << "trace difference: " << (F.trace() - M.trace()) << std::endl;
 }
 
+
 int
 main()
 {

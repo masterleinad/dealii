@@ -54,6 +54,7 @@
 #include <cmath>
 #include <set>
 
+
 DEAL_II_NAMESPACE_OPEN
 namespace MatrixCreator
 {
@@ -99,6 +100,8 @@ namespace MatrixCreator
        */
       active_cell_iterator first, second;
     };
+
+
 
     template <typename DoFHandlerType>
     inline IteratorRange<DoFHandlerType>::IteratorRange(
@@ -176,6 +179,11 @@ namespace MatrixCreator
         const ::dealii::hp::MappingCollection<dim, spacedim>&
           mapping_collection;
 
+        const ::dealii::hp::FECollection<dim, spacedim>& fe_collection;
+        const ::dealii::hp::QCollection<dim>&            quadrature_collection;
+        const ::dealii::hp::MappingCollection<dim, spacedim>&
+          mapping_collection;
+
         ::dealii::hp::FEValues<dim, spacedim> x_fe_values;
 
         std::vector<typename numbers::NumberTraits<number>::real_type>
@@ -204,6 +212,7 @@ namespace MatrixCreator
         const ConstraintMatrix* constraints;
       };
     } // namespace AssemblerData
+
 
     template <int dim, int spacedim, typename CellIterator, typename number>
     void
@@ -275,6 +284,7 @@ namespace MatrixCreator
                 data.coefficient_vector_values);
             }
         }
+
 
       const std::vector<double>& JxW = fe_values.get_JxW_values();
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -404,6 +414,8 @@ namespace MatrixCreator
           }
     }
 
+
+
     template <int dim, int spacedim, typename CellIterator>
     void
     laplace_assembler(
@@ -433,6 +445,7 @@ namespace MatrixCreator
       copy_data.cell_rhs.reinit(dofs_per_cell);
       copy_data.dof_indices.resize(dofs_per_cell);
       cell->get_dof_indices(copy_data.dof_indices);
+
 
       const bool use_rhs_function = data.rhs_function != nullptr;
       if(use_rhs_function)
@@ -470,6 +483,7 @@ namespace MatrixCreator
                 data.coefficient_vector_values);
             }
         }
+
 
       const std::vector<double>& JxW = fe_values.get_JxW_values();
       double                     add_data;
@@ -595,6 +609,8 @@ namespace MatrixCreator
           }
     }
 
+
+
     template <typename number, typename MatrixType, typename VectorType>
     void
     copy_local_to_global(const AssemblerData::CopyData<number>& data,
@@ -662,6 +678,7 @@ namespace MatrixCreator
     } // namespace AssemblerBoundary
   }   // namespace internal
 } // namespace MatrixCreator
+
 
 namespace MatrixCreator
 {
@@ -1193,6 +1210,7 @@ namespace MatrixCreator
                   }
               }
 
+
             cell->face(face)->get_dof_indices(dofs_on_face_vector);
             // for each dof on the cell, have a flag whether it is on
             // the face
@@ -1317,6 +1335,8 @@ namespace MatrixCreator
 
   } // namespace internal
 
+
+
   template <int dim, int spacedim, typename number>
   void
   create_boundary_mass_matrix(
@@ -1434,6 +1454,7 @@ namespace MatrixCreator
       copy_data.dofs.resize(copy_data.dofs_per_cell);
       cell->get_dof_indices(copy_data.dofs);
 
+
       UpdateFlags update_flags
         = UpdateFlags(update_values | update_JxW_values | update_normal_vectors
                       | update_quadrature_points);
@@ -1465,6 +1486,7 @@ namespace MatrixCreator
       copy_data.dof_is_on_face.clear();
       copy_data.cell_matrix.clear();
       copy_data.cell_vector.clear();
+
 
       for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
@@ -1764,6 +1786,8 @@ namespace MatrixCreator
     }
   } // namespace
 
+
+
   template <int dim, int spacedim, typename number>
   void
   create_boundary_mass_matrix(
@@ -1872,6 +1896,8 @@ namespace MatrixCreator
       scratch,
       copy_data);
   }
+
+
 
   template <int dim, int spacedim, typename number>
   void

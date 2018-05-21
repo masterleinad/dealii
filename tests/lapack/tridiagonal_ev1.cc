@@ -40,6 +40,7 @@ test_laplacian(unsigned int n)
   deallog << "\t cond " << M.eigenvalue(n - 2) / M.eigenvalue(0) << std::endl;
 }
 
+
 int
 main()
 {

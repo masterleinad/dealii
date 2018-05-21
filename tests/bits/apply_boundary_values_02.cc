@@ -33,6 +33,7 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 template <int dim>
 void
 test()
@@ -132,6 +133,8 @@ test()
   deallog << "|b2|=" << b2.l2_norm() << std::endl;
   Assert(b1.l2_norm() < 1e-12 * b2.l2_norm(), ExcInternalError());
 }
+
+
 
 int
 main()

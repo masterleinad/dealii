@@ -19,6 +19,7 @@
 #include "serialization.h"
 #include <deal.II/lac/sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -38,6 +39,7 @@ test()
 
   verify(sp1, sp3);
 }
+
 
 int
 main()

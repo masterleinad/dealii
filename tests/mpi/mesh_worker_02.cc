@@ -24,6 +24,7 @@
 #include <deal.II/grid/filtered_iterator.h>
 #include <deal.II/grid/grid_generator.h>
 
+
 using namespace dealii;
 
 template <int dim>
@@ -109,6 +110,7 @@ test_simple(DoFHandler<dim>& dofs, MeshWorker::LoopControl& lctrl)
   //                const LoopControl &lctrl)
   //
 
+
   MeshWorker::integration_loop<dim,
                                dim,
                                typename DoFHandler<dim>::active_cell_iterator,
@@ -180,6 +182,7 @@ test()
   lctrl.faces_to_ghost = MeshWorker::LoopControl::both;
   test_loop(dofs, lctrl);
 }
+
 
 int
 main(int argc, char** argv)

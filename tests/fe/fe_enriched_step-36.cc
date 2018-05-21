@@ -237,6 +237,7 @@ namespace Step36
     // usual elements (active_fe_index ==0):
     fe_collection.push_back(FE_Enriched<dim>(FE_Q<dim>(2)));
 
+
     // enriched elements (active_fe_index==1):
     fe_collection.push_back(
       FE_Enriched<dim>(FE_Q<dim>(2), FE_Q<dim>(1), &enrichment));
@@ -369,6 +370,7 @@ namespace Step36
                                    update_values | update_gradients
                                      | update_quadrature_points
                                      | update_JxW_values);
+
 
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),

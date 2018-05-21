@@ -42,6 +42,8 @@
 
 #include <iostream>
 
+
+
 template <int dim, int fe_degree>
 void
 test()
@@ -132,6 +134,7 @@ test()
 
   mf.vmult(out, in);
 
+
   // assemble trilinos sparse matrix with
   // (v, u) for reference
   TrilinosWrappers::SparseMatrix sparse_matrix;
@@ -190,6 +193,7 @@ test()
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

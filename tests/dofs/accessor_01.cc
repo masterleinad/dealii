@@ -24,6 +24,7 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <class ACCESSOR>
 LogStream&
 operator<<(LogStream& log, const TriaIterator<ACCESSOR>& i)
@@ -61,6 +62,7 @@ init_dofs(DoFHandler<dim>&          dof,
 {
   dof.initialize(tr, fe);
 }
+
 
 int
 main()

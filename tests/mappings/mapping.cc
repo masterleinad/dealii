@@ -204,8 +204,11 @@ create_triangulations(std::vector<Triangulation<dim>*>&,
   Assert(false, ExcNotImplemented());
 }
 
+
+
 std::vector<std::vector<unsigned int>> show;
 unsigned int                           mapping_size;
+
 
 template <>
 void create_triangulations(std::vector<Triangulation<1>*>& tria_ptr,
@@ -521,6 +524,8 @@ mapping_test()
     if(boundary_ptr[i] != nullptr)
       delete boundary_ptr[i];
 }
+
+
 
 int
 main()

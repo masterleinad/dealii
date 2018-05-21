@@ -531,6 +531,7 @@ private:
   Point<spacedim>
   do_transform_unit_to_real_cell(const InternalData& mdata) const;
 
+
   /**
    * Transform the point @p p on the real cell to the corresponding point on
    * the unit cell @p cell by a Newton iteration.
@@ -608,6 +609,7 @@ private:
                     const Quadrature<dim>& q,
                     const unsigned int     n_original_q_points,
                     InternalData&          data) const;
+
 
   /**
    * Declare other MappingFEField classes friends.

@@ -18,6 +18,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -70,6 +71,8 @@ const Point<2>
 
 template <int dim>
 const double SolutionBase<dim>::width = 1. / 3.;
+
+
 
 template <int dim>
 class Solution : public Function<dim>, protected SolutionBase<dim>
@@ -199,6 +202,8 @@ private:
 
   ConvergenceTable convergence_table;
 };
+
+
 
 template <int dim>
 HelmholtzProblem<dim>::HelmholtzProblem(const FiniteElement<dim>& fe,
@@ -341,6 +346,14 @@ HelmholtzProblem<dim>::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
+
+  std::map<types::global_dof_index, double> boundary_values;
+  VectorTools::interpolate_boundary_values(
+    dof_handler, 0, Solution<dim>(), boundary_values);
+  MatrixTools::apply_boundary_values(
+    boundary_values, system_matrix, solution, system_rhs);
+}
+
 template <int dim>
 void
 HelmholtzProblem<dim>::solve()
@@ -465,6 +478,7 @@ HelmholtzProblem<dim>::run()
       else
         refine_grid();
 
+
       setup_system();
 
       assemble_system();
@@ -472,6 +486,7 @@ HelmholtzProblem<dim>::run()
 
       process_solution(cycle);
     }
+
 
   if(refinement_mode == adaptive_refinement)
     {
@@ -560,6 +575,8 @@ HelmholtzProblem<dim>::run()
 
   convergence_table.write_tex(deallog.get_file_stream());
 
+
+
   if(refinement_mode == global_refinement)
     {
       convergence_table.add_column_to_supercolumn("cycle", "n cells");
@@ -609,6 +626,7 @@ HelmholtzProblem<dim>::run()
       convergence_table.write_tex(deallog.get_file_stream());
     }
 }
+
 
 int
 main()

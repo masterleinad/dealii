@@ -246,6 +246,7 @@ namespace internal
       bool
       face_orientation(const unsigned int cell, const unsigned int face) const;
 
+
       /**
        * Access to user pointers.
        */
@@ -425,6 +426,7 @@ namespace internal
       bool
       face_orientation(const unsigned int cell, const unsigned int face) const;
 
+
       /**
        * For edges, we enforce a standard convention that opposite
        * edges should be parallel. Now, that's enforceable in most
@@ -517,6 +519,7 @@ namespace internal
       bool
       face_orientation(const unsigned int cell, const unsigned int face) const;
 
+
       /**
        * In effect, this field has <code>4*n_quads</code> elements, being the
        * number of quads times the four lines each has.
@@ -565,6 +568,7 @@ namespace internal
     };
 
     //----------------------------------------------------------------------//
+
 
     template <typename G>
     inline TriaObjects<G>::BoundaryOrMaterialId::BoundaryOrMaterialId()
@@ -732,6 +736,8 @@ namespace internal
 
     //----------------------------------------------------------------------//
 
+    //----------------------------------------------------------------------//
+
     inline bool
     TriaObjectsHex::face_orientation(const unsigned int cell,
                                      const unsigned int face) const
@@ -754,6 +760,7 @@ namespace internal
     {
       return line_orientations[cell * GeometryInfo<2>::faces_per_cell + face];
     }
+
 
     //----------------------------------------------------------------------//
 
@@ -835,11 +842,17 @@ namespace internal
         dealii::TriaAccessor<G::dimension, dim, spacedim>>(&tria, 0, pos);
     }
 
+
+
     // declaration of explicit specializations
 
     template <>
     void
     TriaObjects<TriaObject<2>>::monitor_memory(const unsigned int) const;
+
+  } // namespace TriangulationImplementation
+} // namespace internal
+
 
   } // namespace TriangulationImplementation
 } // namespace internal

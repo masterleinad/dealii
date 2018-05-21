@@ -32,6 +32,7 @@ check()
               ExcInternalError());
 }
 
+
 int
 main()
 {

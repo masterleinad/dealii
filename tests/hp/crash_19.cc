@@ -19,6 +19,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/table_handler.h>
@@ -95,6 +96,7 @@ test()
       ++i)
     deallog << i->first << ' ' << i->second << std::endl;
 }
+
 
 int
 main()

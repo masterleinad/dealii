@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/lac/la_parallel_vector.h>
@@ -49,6 +50,8 @@ namespace internal
     }
   } // namespace PointValueHistoryImplementation
 } // namespace internal
+
+
 
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
@@ -252,6 +255,7 @@ PointValueHistory<dim>::add_point(const Point<dim>& location)
         }
     }
 
+
   std::vector<types::global_dof_index> local_dof_indices(
     dof_handler->get_fe().dofs_per_cell);
   std::vector<types::global_dof_index> new_solution_indices;
@@ -316,6 +320,7 @@ PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
   AssertThrow(!cleared, ExcInvalidState());
   AssertThrow(have_dof_handler, ExcDoFHandlerRequired());
   AssertThrow(!triangulation_changed, ExcDoFHandlerChanged());
+
 
   // Implementation assumes that support
   // points locations are dofs locations
@@ -438,6 +443,8 @@ PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
         }
     }
 }
+
+
 
 template <int dim>
 void
@@ -621,6 +628,8 @@ PointValueHistory<dim>::evaluate_field(const std::string& vector_name,
     }
 }
 
+
+
 template <int dim>
 template <typename VectorType>
 void
@@ -698,6 +707,7 @@ PointValueHistory<dim>::evaluate_field(
         = GridTools::find_active_cell_around_point(
             StaticMappingQ1<dim>::mapping, *dof_handler, requested_location)
             .first;
+
 
       fe_values.reinit(cell);
       std::vector<Vector<double>> computed_quantities(

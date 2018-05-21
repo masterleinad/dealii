@@ -15,6 +15,7 @@
 
 // test the MINRES solver
 
+
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/lac/precondition.h>
@@ -59,6 +60,7 @@ check_solve(SolverType&          solver,
   deallog << "Solver stopped after " << solver_control.last_step()
           << " iterations" << std::endl;
 }
+
 
 int
 main()

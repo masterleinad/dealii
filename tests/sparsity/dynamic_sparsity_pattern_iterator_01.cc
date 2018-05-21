@@ -18,6 +18,7 @@
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -34,6 +35,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

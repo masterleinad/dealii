@@ -76,6 +76,8 @@ namespace internal
   }
 } // namespace internal
 
+
+
 namespace hp
 {
   /**
@@ -877,6 +879,7 @@ namespace hp
                       PolicyBase<dim, spacedim>>
       policy;
 
+
     /**
      * Setup policy and listeners based on the underlying Triangulation.
      */
@@ -1059,6 +1062,7 @@ namespace internal
   policy_to_string(const dealii::internal::DoFHandlerImplementation::Policy::
                      PolicyBase<dim, spacedim>& policy);
 } // namespace internal
+
 
 namespace hp
 {

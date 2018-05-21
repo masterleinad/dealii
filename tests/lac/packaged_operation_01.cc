@@ -24,6 +24,7 @@
 
 using namespace dealii;
 
+
 void
 test_applies(std::string                              description,
              const PackagedOperation<Vector<double>>& expr)
@@ -38,6 +39,7 @@ test_applies(std::string                              description,
   expr.apply_add(tmp);
   deallog << "100. * 1_n + " << description << ": " << tmp << std::endl;
 }
+
 
 int
 main()

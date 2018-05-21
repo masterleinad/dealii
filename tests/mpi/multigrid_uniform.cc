@@ -178,6 +178,10 @@ namespace Step50
       deallog << "   " << 'L' << l << ": " << mg_dof_handler.n_dofs(l);
     deallog << std::endl;
 
+    for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+      deallog << "   " << 'L' << l << ": " << mg_dof_handler.n_dofs(l);
+    deallog << std::endl;
+
     //solution.reinit (mg_dof_handler.n_dofs());
     //system_rhs.reinit (mg_dof_handler.n_dofs());
     solution.reinit(mg_dof_handler.locally_owned_dofs(), MPI_COMM_WORLD);
@@ -488,6 +492,7 @@ namespace Step50
       }
   }
 } // namespace Step50
+
 
 // @sect3{The main() function}
 //

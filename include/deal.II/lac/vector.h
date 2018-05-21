@@ -75,6 +75,8 @@ namespace parallel
   }
 } // namespace parallel
 
+
+
 /*! @addtogroup Vectors
  *@{
  */
@@ -1019,6 +1021,7 @@ template <>
 Vector<int>::real_type
 Vector<int>::lp_norm(const real_type) const;
 
+
 //------------------------ inline functions
 
 template <typename Number>
@@ -1309,6 +1312,7 @@ operator<<(LogStream& os, const Vector<number>& v)
 template <typename Number>
 struct is_serial_vector<Vector<Number>> : std::true_type
 {};
+
 
 DEAL_II_NAMESPACE_CLOSE
 

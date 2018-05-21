@@ -18,6 +18,7 @@
 #include "../tests.h"
 #include <deal.II/base/graph_coloring.h>
 
+
 void
 fill_graph(DynamicSparsityPattern& graph)
 {
@@ -39,6 +40,7 @@ fill_graph(DynamicSparsityPattern& graph)
   graph.add(4, 2);
   graph.add(2, 3);
 }
+
 
 int
 main(int argc, char** argv)

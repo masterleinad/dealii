@@ -27,6 +27,7 @@ class Vector;
 template <class number>
 class SparseMatrix;
 
+
 /*! @addtogroup Preconditioners
  *@{
  */
@@ -200,6 +201,7 @@ PreconditionSelector<MatrixType, VectorType>::PreconditionSelector(
   const typename VectorType::value_type& omega)
   : preconditioning(preconditioning), omega(omega)
 {}
+
 
 template <typename MatrixType, typename VectorType>
 PreconditionSelector<MatrixType, VectorType>::~PreconditionSelector()

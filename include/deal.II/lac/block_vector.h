@@ -104,6 +104,7 @@ public:
    */
   BlockVector(const BlockVector<Number>& V);
 
+
   /**
    * Move constructor. Creates a new vector by stealing the internal data of
    * the given argument vector.

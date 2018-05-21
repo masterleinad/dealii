@@ -123,6 +123,9 @@ test()
 
   //  GridGenerator::hyper_cube(tr);
 
+  //  GridGenerator::hyper_cube(tr);
+
+
   GridGenerator::hyper_shell(tr, Point<dim>(), R0, R1, 12, true);
   tr.reset_manifold(0);
 
@@ -218,6 +221,7 @@ test()
 
       tr.execute_coarsening_and_refinement();
 
+
       static FE_Q<dim> fe(1);
 
       dofh.distribute_dofs(fe);
@@ -286,10 +290,13 @@ test()
     deallog << "OK" << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

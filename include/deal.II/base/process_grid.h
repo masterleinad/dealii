@@ -28,6 +28,7 @@ DEAL_II_NAMESPACE_OPEN
 template <typename NumberType>
 class ScaLAPACKMatrix;
 
+
 namespace Utilities
 {
   namespace MPI
@@ -201,17 +202,22 @@ namespace Utilities
       return n_process_rows;
     }
 
+
+
     inline unsigned int
     ProcessGrid::get_process_grid_columns() const
     {
       return n_process_columns;
     }
 
+
+
     inline bool
     ProcessGrid::is_process_active() const
     {
       return mpi_process_is_active;
     }
+
 
 #  endif // ifndef DOXYGEN
 

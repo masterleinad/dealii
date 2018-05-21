@@ -33,6 +33,7 @@ test()
     deallog << sums[0] << ' ' << sums[1] << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

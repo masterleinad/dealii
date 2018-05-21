@@ -21,6 +21,8 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 
+
+
 // reimplements things from vector.templates.h in another way which is more
 // prone to roundoff, the linker will select this version instead of the one
 // in the deal.II library
@@ -45,6 +47,8 @@ namespace dealii
     return std::sqrt(sum);
   }
 } // namespace dealii
+
+
 
 template <typename number>
 void

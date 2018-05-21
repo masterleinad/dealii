@@ -1371,6 +1371,7 @@ namespace Functions
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
 
+
     /**
      * Function values at multiple points.
      */
@@ -1397,6 +1398,8 @@ namespace Functions
      */
     const std::vector<double> coefficients;
   };
+
+
 
 } // namespace Functions
 DEAL_II_NAMESPACE_CLOSE

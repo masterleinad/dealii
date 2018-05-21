@@ -23,6 +23,8 @@ std::string input = "set test_1 = 1\n"
                     "  set test_2 = 42\n" // forbidden
                     "end\n";
 
+
+
 void
 check(const char* p)
 {
@@ -57,6 +59,7 @@ check(const char* p)
           << std::endl;
   prm.leave_subsection();
 }
+
 
 int
 main()

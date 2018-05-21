@@ -40,6 +40,8 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 std::ofstream logfile("output");
 
 template <int dim, int spacedim>
@@ -61,6 +63,10 @@ test(std::string filename, unsigned int degree = 1)
 
   DoFHandler<dim, spacedim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
+
+  deallog << "no. of cells " << triangulation.n_cells() << std::endl;
+  deallog << "no. of dofs " << dof_handler.n_dofs() << std::endl;
+  deallog << "no. of dofs per cell " << fe.dofs_per_cell << std::endl;
 
   deallog << "no. of cells " << triangulation.n_cells() << std::endl;
   deallog << "no. of dofs " << dof_handler.n_dofs() << std::endl;
@@ -89,6 +95,9 @@ test(std::string filename, unsigned int degree = 1)
   deallog << "L2 norm of projected vector: " << projected_one.l2_norm()
           << std::endl;
 
+  deallog << "L2 norm of projected vector: " << projected_one.l2_norm()
+          << std::endl;
+
   // compute the H1 difference
   Vector<float> difference_per_cell(triangulation.n_active_cells());
   VectorTools::integrate_difference(dof_handler,
@@ -100,6 +109,8 @@ test(std::string filename, unsigned int degree = 1)
 
   deallog << "H1 error: " << difference_per_cell.l2_norm() << std::endl;
 }
+
+
 
 int
 main()
@@ -113,6 +124,11 @@ main()
   test<1, 2>(SOURCE_DIR "/grids/circle_4.inp", 3);
 
   deallog << std::endl;
+
+  deallog << "Test <2,3>, Q1, Q2, Q3" << std::endl;
+  test<2, 3>(SOURCE_DIR "/grids/sphere_1.inp", 1);
+  test<2, 3>(SOURCE_DIR "/grids/sphere_1.inp", 2);
+  test<2, 3>(SOURCE_DIR "/grids/sphere_1.inp", 3);
 
   deallog << "Test <2,3>, Q1, Q2, Q3" << std::endl;
   test<2, 3>(SOURCE_DIR "/grids/sphere_1.inp", 1);

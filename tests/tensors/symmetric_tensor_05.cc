@@ -69,6 +69,8 @@ test()
   AssertThrow(a == b / 4, ExcInternalError());
 }
 
+
+
 int
 main()
 {

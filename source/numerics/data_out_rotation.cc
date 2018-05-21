@@ -85,6 +85,8 @@ namespace internal
   } // namespace DataOutRotationImplementation
 } // namespace internal
 
+
+
 template <int dim, typename DoFHandlerType>
 void
 DataOutRotation<dim, DoFHandlerType>::build_one_patch(
@@ -489,6 +491,7 @@ DataOutRotation<dim, DoFHandlerType>::build_patches(
   // rotation
   this->patches.clear();
   this->patches.reserve(all_cells.size() * n_patches_per_circle);
+
 
   std::vector<unsigned int> n_postprocessor_outputs(this->dof_data.size());
   for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)

@@ -84,6 +84,7 @@ check(double r1, double r2, unsigned int n)
   grid_out.write_dx(tria, logfile);
 }
 
+
 int
 main()
 {

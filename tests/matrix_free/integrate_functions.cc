@@ -76,6 +76,8 @@ private:
   mutable FEValues<dim>          fe_val;
 };
 
+
+
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
@@ -213,6 +215,7 @@ test()
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
+
 
 int
 main()

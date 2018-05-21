@@ -21,6 +21,7 @@
 #include <deal.II/lac/block_sparse_matrix.h>
 #include <deal.II/lac/block_sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -46,6 +47,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

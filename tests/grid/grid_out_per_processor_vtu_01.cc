@@ -30,6 +30,7 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/data_out.h>
 
+
 template <int dim>
 void
 output(const parallel::distributed::Triangulation<dim>& tr,
@@ -76,6 +77,7 @@ test()
   output(tr, "file1", false, true);
   output(tr, "file2", true, false);
 }
+
 
 int
 main(int argc, char* argv[])

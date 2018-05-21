@@ -281,6 +281,8 @@ namespace internal
     const Number2* shape_hessians;
   };
 
+
+
   template <int dim,
             int n_rows,
             int n_columns,
@@ -358,6 +360,8 @@ namespace internal
           }
       }
   }
+
+
 
   template <int dim,
             int n_rows,
@@ -1575,6 +1579,8 @@ namespace internal
     const Number2* shape_hessians;
   };
 
+
+
   template <int dim,
             int n_rows,
             int n_columns,
@@ -1944,6 +1950,8 @@ namespace internal
     const Number2* shape_gradients;
     const Number2* shape_hessians;
   };
+
+
 
   template <int dim,
             int n_rows,

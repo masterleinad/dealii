@@ -36,6 +36,8 @@
 
 std::ofstream logfile("output");
 
+std::ofstream logfile("output");
+
 template <int dim>
 void
 test(const unsigned int degree)
@@ -56,6 +58,8 @@ test(const unsigned int degree)
 
   const unsigned int dofs_per_cell = fe_rt_bubbles.dofs_per_cell;
   FullMatrix<double> mass_matrix(dofs_per_cell, dofs_per_cell);
+
+  Assert(fe.get_fe().n_components() == dim, ExcInternalError());
 
   Assert(fe.get_fe().n_components() == dim, ExcInternalError());
 

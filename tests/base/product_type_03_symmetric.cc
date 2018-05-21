@@ -22,6 +22,7 @@
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/template_constraints.h>
 
+
 template <typename T, typename U, typename CompareType>
 void
 check()
@@ -29,6 +30,7 @@ check()
   AssertThrow(typeid(T() * U()) == typeid(CompareType), ExcInternalError());
   AssertThrow(typeid(T() * U()) == typeid(CompareType), ExcInternalError());
 }
+
 
 int
 main()

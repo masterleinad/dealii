@@ -54,6 +54,7 @@ test(const unsigned int max_particles,
   // Test some fake structure, similar to particles
   typedef typename std::pair<unsigned int, Point<dim>> particle;
 
+
   unsigned int          n_local_particles = random_index(max_particles);
   std::vector<particle> particles(n_local_particles);
 
@@ -112,6 +113,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;
+
 
   test<2>(40, .3, 5, 10);
 }

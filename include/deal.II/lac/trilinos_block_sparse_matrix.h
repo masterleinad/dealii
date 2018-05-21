@@ -37,6 +37,7 @@ class BlockSparsityPattern;
 template <typename number>
 class BlockSparseMatrix;
 
+
 namespace TrilinosWrappers
 {
   /*! @addtogroup TrilinosWrappers
@@ -440,6 +441,8 @@ namespace TrilinosWrappers
 
   // ------------- inline and template functions -----------------
 
+
+
   inline BlockSparseMatrix&
   BlockSparseMatrix::operator=(const double d)
   {
@@ -451,6 +454,8 @@ namespace TrilinosWrappers
 
     return *this;
   }
+
+
 
   inline bool
   BlockSparseMatrix::is_compressed() const
@@ -503,6 +508,8 @@ namespace TrilinosWrappers
       BaseClass::vmult_block_block(dst, src);
   }
 
+
+
   template <typename VectorType1, typename VectorType2>
   inline void
   BlockSparseMatrix::vmult(VectorType1&       dst,
@@ -545,6 +552,8 @@ namespace TrilinosWrappers
       BaseClass::vmult_nonblock_nonblock(dst, src);
   }
 
+
+
   inline std::vector<IndexSet>
   BlockSparseMatrix::locally_owned_domain_indices() const
   {
@@ -558,6 +567,8 @@ namespace TrilinosWrappers
 
     return domain_indices;
   }
+
+
 
   inline std::vector<IndexSet>
   BlockSparseMatrix::locally_owned_range_indices() const
@@ -623,6 +634,9 @@ namespace TrilinosWrappers
 
     } // namespace BlockLinearOperatorImplementation
   }   /* namespace internal */
+
+
+} /* namespace TrilinosWrappers */
 
 } /* namespace TrilinosWrappers */
 

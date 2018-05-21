@@ -120,6 +120,7 @@ namespace
   }
 } // namespace
 
+
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -541,6 +542,8 @@ MGTransferBlockSelect<number>::build_matrices(
       Assert(counter == n_active_dofs, ExcInternalError());
     }
 }
+
+
 
 template <typename number>
 template <int dim, int spacedim>

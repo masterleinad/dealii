@@ -24,6 +24,8 @@
 
 #include <string>
 
+
+
 /**
  * Check if user pointers are the same as entered below
  */
@@ -214,6 +216,7 @@ user_indices(Triangulation<dim>& tr)
           it->line(l)->clear_user_index();
     }
 
+
   unsigned int p = 1;
   for(typename Triangulation<dim>::cell_iterator it = tr.begin();
       it != tr.end();
@@ -281,6 +284,7 @@ check()
   tr.clear_user_data();
   user_indices(tr);
 }
+
 
 int
 main()

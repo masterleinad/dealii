@@ -99,6 +99,8 @@ namespace Step40
     ConditionalOStream pcout;
   };
 
+
+
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem()
     : mpi_communicator(MPI_COMM_WORLD),
@@ -137,6 +139,10 @@ namespace Step40
                                        update_values | update_quadrature_points
                                          | update_normal_vectors
                                          | update_JxW_values);
+
+      Tensor<1, dim>                       u;
+      Point<dim>                           down{0, -1};
+      std::vector<types::global_dof_index> dof_indices(fe.n_dofs_per_face(), 0);
 
       Tensor<1, dim>                       u;
       Point<dim>                           down{0, -1};
@@ -211,6 +217,8 @@ namespace Step40
                          Utilities::MPI::this_mpi_process(mpi_communicator));
   }
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::assemble_system()
@@ -277,6 +285,8 @@ namespace Step40
     system_rhs.compress(VectorOperation::add);
   }
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -321,12 +331,16 @@ namespace Step40
     locally_relevant_solution = completely_distributed_solution;
   }
 
+
+
   template <int dim>
   void
   LaplaceProblem<dim>::refine_grid()
   {
     triangulation.refine_global(1);
   }
+
+
 
   template <int dim>
   void
@@ -374,6 +388,7 @@ namespace Step40
   }
 } // namespace Step40
 
+
 int
 test_mpi()
 {
@@ -416,6 +431,8 @@ test_mpi()
 
   return 0;
 }
+
+
 
 int
 main(int argc, char* argv[])

@@ -30,10 +30,13 @@
 #include <algorithm>
 #include <cmath>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
 const unsigned int MappingCartesian<dim, spacedim>::invalid_face_number;
+
+
 
 template <int dim, int spacedim>
 MappingCartesian<dim, spacedim>::InternalData::InternalData(
@@ -133,6 +136,8 @@ MappingCartesian<dim, spacedim>::get_subface_data(
 
   return std::move(data);
 }
+
+
 
 template <int dim, int spacedim>
 void
@@ -623,6 +628,8 @@ MappingCartesian<dim, spacedim>::fill_fe_subface_values(
       }
 }
 
+
+
 template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::transform(
@@ -789,6 +796,8 @@ MappingCartesian<dim, spacedim>::transform(
         Assert(false, ExcNotImplemented());
     }
 }
+
+
 
 template <int dim, int spacedim>
 void

@@ -53,6 +53,7 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 #include <fstream>
 #include <iostream>
 
@@ -338,6 +339,14 @@ namespace Step15
       boundary_values, system_matrix, newton_update, system_rhs);
   }
 
+
+    std::map<types::global_dof_index, double> boundary_values;
+    VectorTools::interpolate_boundary_values(
+      dof_handler, 0, Functions::ZeroFunction<dim>(), boundary_values);
+    MatrixTools::apply_boundary_values(
+      boundary_values, system_matrix, newton_update, system_rhs);
+  }
+
   // @sect4{MinimalSurfaceProblem::solve}
 
   // The solve function is the same as always. At the end of the solution
@@ -529,6 +538,7 @@ namespace Step15
         // the coefficient $a_n$, and then plug it all into the formula for
         // the residual:
         fe_values.get_function_gradients(evaluation_point, gradients);
+
 
         for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {

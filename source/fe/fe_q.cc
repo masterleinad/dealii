@@ -45,6 +45,8 @@ namespace internal
   }   // namespace FE_Q
 } // namespace internal
 
+
+
 template <int dim, int spacedim>
 FE_Q<dim, spacedim>::FE_Q(const unsigned int degree)
   : FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>(

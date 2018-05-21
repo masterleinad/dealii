@@ -40,6 +40,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim>
 class SystemTest
 {
@@ -55,6 +56,7 @@ private:
   shape_to_components();
   void
   check_numbering();
+
 
   Triangulation<dim> triangulation;
   FESystem<dim>      fe;
@@ -147,6 +149,8 @@ SystemTest<dim>::run()
   shape_to_components();
   check_numbering();
 }
+
+
 
 int
 main()

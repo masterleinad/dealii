@@ -72,6 +72,7 @@ test()
     f_quad_p(d) = 0.42 + 0.11 * d;
   Quadrature<dim - 1> f_quad(f_quad_p);
 
+
   {
     DoFHandler<dim> dof_handler(tria);
     dof_handler.distribute_dofs(elem);

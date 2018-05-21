@@ -243,6 +243,8 @@ private:
     preconditioner;
 };
 
+
+
 /**
  * Coarse grid solver by QR factorization implemented in the class
  * Householder.

@@ -66,6 +66,8 @@ namespace deal_II_exceptions
 
 } // namespace deal_II_exceptions
 
+
+
 ExceptionBase::ExceptionBase()
   : file(""),
     line(0),
@@ -83,6 +85,8 @@ ExceptionBase::ExceptionBase()
     raw_stacktrace[i] = nullptr;
 #endif
 }
+
+
 
 ExceptionBase::ExceptionBase(const ExceptionBase& exc)
   : file(exc.file),
@@ -104,11 +108,15 @@ ExceptionBase::ExceptionBase(const ExceptionBase& exc)
 #endif
 }
 
+
+
 ExceptionBase::~ExceptionBase() noexcept
 {
   free(stacktrace); // free(NULL) is allowed
   stacktrace = nullptr;
 }
+
+
 
 void
 ExceptionBase::set_fields(const char* f,
@@ -155,11 +163,14 @@ ExceptionBase::what() const noexcept
   return what_str.c_str();
 }
 
+
 const char*
 ExceptionBase::get_exc_name() const
 {
   return exc;
 }
+
+
 
 void
 ExceptionBase::print_exc_data(std::ostream& out) const
@@ -191,11 +202,15 @@ ExceptionBase::print_exc_data(std::ostream& out) const
   out << "Additional information: " << std::endl;
 }
 
+
+
 void
 ExceptionBase::print_info(std::ostream& out) const
 {
   out << "    (none)" << std::endl;
 }
+
+
 
 void
 ExceptionBase::print_stack_trace(std::ostream& out) const
@@ -283,6 +298,8 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
         break;
     }
 }
+
+
 
 void
 ExceptionBase::generate_message() const
@@ -442,6 +459,8 @@ namespace deal_II_exceptions
         }
     }
 
+
+
     [[noreturn]] void
     abort(const ExceptionBase& exc) {
       if(dealii::deal_II_exceptions::abort_on_exception)
@@ -496,6 +515,8 @@ namespace deal_II_exceptions
             }
         }
     }
+
+
 
     std::string
     get_cusolver_error_string(cusolverStatus_t error_code)

@@ -24,6 +24,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 #  ifdef DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
 
 namespace numbers
@@ -75,6 +76,8 @@ namespace numbers
       });
   }
 } // namespace numbers
+
+#  endif
 
 #  endif
 

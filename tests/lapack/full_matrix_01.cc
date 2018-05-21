@@ -48,6 +48,7 @@ const double symm[] = {4.,
 
 const double rect[] = {4., 3., 2., 1., 5., 8., 1., -2., 11., 13., -4., -5};
 
+
 void
 test_rect(unsigned int m, unsigned int n, const double* values)
 {

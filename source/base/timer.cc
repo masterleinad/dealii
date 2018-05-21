@@ -101,6 +101,8 @@ namespace internal
   }   // namespace TimerImplementation
 } // namespace internal
 
+
+
 CPUClock::time_point
 CPUClock::now() noexcept
 {
@@ -144,8 +146,12 @@ Timer::ClockMeasurements<clock_type_>::reset()
   last_lap_time          = duration_type::zero();
 }
 
+
+
 Timer::Timer() : Timer(MPI_COMM_SELF, /*sync_lap_times=*/false)
 {}
+
+
 
 Timer::Timer(MPI_Comm mpi_communicator, const bool sync_lap_times_)
   : running(false),
@@ -155,6 +161,8 @@ Timer::Timer(MPI_Comm mpi_communicator, const bool sync_lap_times_)
   reset();
   start();
 }
+
+
 
 void
 Timer::start()
@@ -170,6 +178,8 @@ Timer::start()
   wall_times.current_lap_start_time = wall_clock_type::now();
   cpu_times.current_lap_start_time  = cpu_clock_type::now();
 }
+
+
 
 double
 Timer::stop()
@@ -209,6 +219,8 @@ Timer::stop()
   return internal::TimerImplementation::to_seconds(cpu_times.accumulated_time);
 }
 
+
+
 double
 Timer::cpu_time() const
 {
@@ -227,11 +239,15 @@ Timer::cpu_time() const
     }
 }
 
+
+
 double
 Timer::last_cpu_time() const
 {
   return internal::TimerImplementation::to_seconds(cpu_times.last_lap_time);
 }
+
+
 
 double
 Timer::get_lap_time() const
@@ -239,11 +255,15 @@ Timer::get_lap_time() const
   return internal::TimerImplementation::to_seconds(wall_times.last_lap_time);
 }
 
+
+
 double
 Timer::operator()() const
 {
   return cpu_time();
 }
+
+
 
 double
 Timer::wall_time() const
@@ -259,11 +279,15 @@ Timer::wall_time() const
   return internal::TimerImplementation::to_seconds(current_elapsed_wall_time);
 }
 
+
+
 double
 Timer::last_wall_time() const
 {
   return internal::TimerImplementation::to_seconds(wall_times.last_lap_time);
 }
+
+
 
 void
 Timer::reset()
@@ -287,6 +311,8 @@ TimerOutput::TimerOutput(std::ostream&         stream,
     mpi_communicator(MPI_COMM_SELF)
 {}
 
+
+
 TimerOutput::TimerOutput(ConditionalOStream&   stream,
                          const OutputFrequency output_frequency,
                          const OutputType      output_type)
@@ -296,6 +322,8 @@ TimerOutput::TimerOutput(ConditionalOStream&   stream,
     output_is_enabled(true),
     mpi_communicator(MPI_COMM_SELF)
 {}
+
+
 
 TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
                          std::ostream&         stream,
@@ -307,6 +335,8 @@ TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
     output_is_enabled(true),
     mpi_communicator(mpi_communicator)
 {}
+
+
 
 TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
                          ConditionalOStream&   stream,
@@ -388,6 +418,7 @@ TimerOutput::enter_subsection(const std::string& section_name)
           // among all processes inside mpi_communicator.
           sections[section_name].timer = Timer(mpi_communicator, true);
         }
+
 
       sections[section_name].total_cpu_time  = 0;
       sections[section_name].total_wall_time = 0;

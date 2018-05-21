@@ -43,6 +43,9 @@ test()
   const double inner_radius = 0.5, outer_radius = 1.0;
   GridGenerator::hyper_shell(triangulation, center, inner_radius, outer_radius);
 
+  const double inner_radius = 0.5, outer_radius = 1.0;
+  GridGenerator::hyper_shell(triangulation, center, inner_radius, outer_radius);
+
   static const PolarManifold<dim> manifold(center);
 
   triangulation.set_all_manifold_ids(0);

@@ -26,6 +26,7 @@ double cell_coordinates[3][8] = {{0, 1, 0, 1, 0, 1, 0, 1},
                                  {0, 0, 1, 1, 0, 0, 1, 1},
                                  {0, 0, 0, 0, 1, 1, 1, 1}};
 
+
 // This function is a copy from tests/base/patches.h, included here
 // to not introduce dependencies between different test targets
 template <int dim, int spacedim>
@@ -149,6 +150,8 @@ check()
 
   deallog << std::flush;
 }
+
+
 
 int
 main(int argc, char* argv[])

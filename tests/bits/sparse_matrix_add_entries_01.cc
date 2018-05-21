@@ -22,6 +22,7 @@
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
 
+
 void
 test()
 {
@@ -90,6 +91,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

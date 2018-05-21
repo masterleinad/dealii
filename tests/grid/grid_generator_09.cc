@@ -57,6 +57,7 @@ check_rect1(unsigned int n, bool color, bool log)
     }
 }
 
+
 int
 main()
 {

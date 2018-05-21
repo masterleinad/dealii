@@ -107,6 +107,9 @@ FindBug<dim>::make_grid_and_dofs()
 
   dof_handler.distribute_dofs(fe);
 
+  dof_handler.distribute_dofs(fe);
+
+
   deallog << "Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 
@@ -132,6 +135,7 @@ FindBug<dim>::dirichlet_conditions()
                                            VectorBoundaryValues<dim>(),
                                            dirichlet_dofs,
                                            component_mask);
+
 
   std::vector<bool>            fixed_dofs(dof_handler.n_dofs());
   std::set<types::boundary_id> boundary_ids;
@@ -181,6 +185,8 @@ FindBug<dim>::run()
   make_grid_and_dofs();
   dirichlet_conditions();
 }
+
+
 
 int
 main()

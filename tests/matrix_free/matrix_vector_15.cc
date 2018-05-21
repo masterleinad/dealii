@@ -36,6 +36,8 @@
 
 std::ofstream logfile("output");
 
+
+
 template <int dim,
           int fe_degree,
           typename Number,
@@ -110,6 +112,7 @@ do_test(const DoFHandler<dim>&  dof,
     }
 
   mf.vmult(out_dist, in_dist);
+
 
   // assemble sparse matrix with (\nabla v, \nabla u) + (v, 10 * u)
   SparsityPattern sparsity;
@@ -208,6 +211,8 @@ test()
       deallog.pop();
     }
 }
+
+
 
 int
 main()

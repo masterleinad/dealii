@@ -16,6 +16,7 @@
 #ifndef dealii_integration_info_templates_h
 #define dealii_integration_info_templates_h
 
+
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/meshworker/dof_info.h>
 #include <deal.II/meshworker/integration_info.h>
@@ -263,6 +264,7 @@ namespace MeshWorker
     return mem;
   }
 } // namespace MeshWorker
+
 
 DEAL_II_NAMESPACE_CLOSE
 

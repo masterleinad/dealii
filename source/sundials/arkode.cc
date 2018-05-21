@@ -13,6 +13,7 @@
 //
 //-----------------------------------------------------------
 
+
 #include <deal.II/base/config.h>
 #include <deal.II/sundials/arkode.h>
 
@@ -73,6 +74,8 @@ namespace SUNDIALS
       return err;
     }
 
+
+
     template <typename VectorType>
     int
     t_arkode_implicit_function(realtype tt,
@@ -97,6 +100,8 @@ namespace SUNDIALS
 
       return err;
     }
+
+
 
     template <typename VectorType>
     int
@@ -131,6 +136,8 @@ namespace SUNDIALS
 
       return err;
     }
+
+
 
     template <typename VectorType>
     int
@@ -173,6 +180,8 @@ namespace SUNDIALS
       return err;
     }
 
+
+
     template <typename VectorType>
     int
     t_arkode_setup_mass(ARKodeMem arkode_mem, N_Vector, N_Vector, N_Vector)
@@ -182,6 +191,8 @@ namespace SUNDIALS
       int err = solver.setup_mass(arkode_mem->ark_tn);
       return err;
     }
+
+
 
     template <typename VectorType>
     int
@@ -443,6 +454,7 @@ namespace SUNDIALS
           = ARKodeSetFixedPoint(arkode_mem, data.maximum_non_linear_iterations);
         AssertARKode(status);
       }
+
 
     if(solve_mass_system)
       {

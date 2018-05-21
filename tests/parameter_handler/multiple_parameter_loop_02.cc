@@ -37,6 +37,7 @@ public:
   unsigned int run_no;
 };
 
+
 void
 HelperClass::declare_parameters(ParameterHandler& prm)
 {
@@ -50,6 +51,7 @@ HelperClass::declare_parameters(ParameterHandler& prm)
   prm.leave_subsection();
 }
 
+
 void
 HelperClass::run(ParameterHandler& prm)
 {
@@ -57,6 +59,8 @@ HelperClass::run(ParameterHandler& prm)
 
   prm.print_parameters(deallog.get_file_stream(), ParameterHandler::Text);
 }
+
+
 
 void
 check(const char* p)
@@ -68,6 +72,7 @@ check(const char* p)
   prm.parse_input(p);
   prm.loop(h);
 }
+
 
 int
 main()

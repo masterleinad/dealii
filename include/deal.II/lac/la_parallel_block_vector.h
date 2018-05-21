@@ -731,6 +731,7 @@ struct is_serial_vector<LinearAlgebra::distributed::BlockVector<Number>>
   : std::false_type
 {};
 
+
 DEAL_II_NAMESPACE_CLOSE
 
 #ifdef DEAL_II_MSVC

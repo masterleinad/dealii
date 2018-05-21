@@ -106,6 +106,8 @@ void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
   triangulation.create_triangulation(vertices, cells, SubCellData());
 }
 
+
+
 /* The 3D case */
 void generate_grid(parallel::distributed::Triangulation<3>& triangulation,
                    int                                      orientation)

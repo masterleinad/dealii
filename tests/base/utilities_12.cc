@@ -20,6 +20,7 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/base/vectorization.h>
 
+
 template <int dim>
 void
 test()
@@ -38,6 +39,8 @@ test()
   deallog << (double) v2[0] << std::endl;
   deallog << std::endl;
 }
+
+
 
 int
 main()

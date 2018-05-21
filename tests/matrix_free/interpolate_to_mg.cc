@@ -55,6 +55,8 @@
 #include <iostream>
 #include <vector>
 
+
+
 using namespace dealii;
 
 template <int dim>
@@ -71,6 +73,7 @@ public:
     return p[0] * 2. + p[1] - 10.;
   }
 };
+
 
 template <int dim,
           int fe_degree            = 2,
@@ -125,6 +128,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
   constraints.reinit(locally_relevant_dofs);
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
+
 
   // interpolate:
   LinearAlgebra::distributed::Vector<LevelNumberType> fine_projection;
@@ -235,6 +239,8 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
 
   deallog << "Ok" << std::endl;
 }
+
+
 
 int
 main(int argc, char* argv[])

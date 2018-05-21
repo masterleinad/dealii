@@ -24,6 +24,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 int
 main()
 {
@@ -102,6 +104,7 @@ main()
   }
 
   GridTools::laplace_transform<dim>(new_points, tria, nullptr, true);
+
 
   GridOut       grid_out;
   std::ofstream out("output");

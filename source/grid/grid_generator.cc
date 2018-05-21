@@ -54,6 +54,7 @@ namespace GridGenerator
                                     Point<3>(0, 0, -1),
                                     Point<3>(0, 0, 1)};
 
+
     /**
      * Perform the action specified by the @p colorize flag of the
      * hyper_rectangle() function of this class.
@@ -339,6 +340,7 @@ namespace GridGenerator
 
   } // namespace
 
+
   template <int dim, int spacedim>
   void
   hyper_rectangle(Triangulation<dim, spacedim>& tria,
@@ -532,6 +534,7 @@ namespace GridGenerator
     tria.create_triangulation(points, cells, SubCellData());
   }
 
+
   void moebius(Triangulation<3>&  tria,
                const unsigned int n_cells,
                const unsigned int n_rotations,
@@ -546,6 +549,7 @@ namespace GridGenerator
            ExcMessage("Outer and inner radius must be positive."));
     Assert(R > r,
            ExcMessage("Outer radius must be greater than inner radius."));
+
 
     std::vector<Point<dim>> vertices(4 * n_cells);
     double beta_step  = n_rotations * numbers::PI / 2.0 / n_cells;
@@ -2090,6 +2094,8 @@ namespace GridGenerator
                               SubCellData()); // no boundary information
   }
 
+
+
   // Implementation for 2D only
   template <>
   void hyper_cube_slit(Triangulation<2>& tria,
@@ -2168,6 +2174,8 @@ namespace GridGenerator
       cell->face(i)->set_boundary_id(0);
   }
 
+
+
   // Implementation for 2D only
   template <>
   void hyper_L(Triangulation<2>& tria,
@@ -2217,6 +2225,8 @@ namespace GridGenerator
         cell->face(3)->set_boundary_id(5);
       }
   }
+
+
 
   // Implementation for 2D only
   template <>
@@ -2329,6 +2339,7 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<2>(center));
   }
 
+
   // Implementation for 2D only
   template <>
   void cylinder(Triangulation<2>& tria,
@@ -2359,6 +2370,8 @@ namespace GridGenerator
         ++f;
       }
   }
+
+
 
   // Implementation for 2D only
   template <>
@@ -2495,6 +2508,8 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<2>(p));
   }
 
+
+
   // Implementation for 2D only
   template <>
   void half_hyper_shell(Triangulation<2>&  tria,
@@ -2547,6 +2562,8 @@ namespace GridGenerator
         vertices[i] += center;
         vertices[i + N + 1] += center;
       }
+
+    std::vector<CellData<2>> cells(N, CellData<2>());
 
     std::vector<CellData<2>> cells(N, CellData<2>());
 
@@ -2627,6 +2644,10 @@ namespace GridGenerator
         vertices[i + N + 1] += center;
       }
 
+        vertices[i] += center;
+        vertices[i + N + 1] += center;
+      }
+
     std::vector<CellData<2>> cells(N, CellData<2>());
 
     for(unsigned int i = 0; i < N; ++i)
@@ -2656,6 +2677,8 @@ namespace GridGenerator
     tria.set_all_manifold_ids(0);
     tria.set_manifold(0, SphericalManifold<2>(center));
   }
+
+
 
   // Implementation for 3D only
   template <>
@@ -2702,6 +2725,8 @@ namespace GridGenerator
         cell->face(0)->set_boundary_id(2);
       }
   }
+
+
 
   // Implementation for 3D only
   template <>
@@ -2840,6 +2865,7 @@ namespace GridGenerator
     triangulation.set_manifold(0, CylindricalManifold<3>());
   }
 
+
   // Implementation for 3D only
   template <>
   void hyper_L(Triangulation<3>& tria,
@@ -2907,6 +2933,8 @@ namespace GridGenerator
         Assert(false, ExcNotImplemented());
       }
   }
+
+
 
   // Implementation for 3D only
   template <>
@@ -2988,6 +3016,8 @@ namespace GridGenerator
     tria.set_all_manifold_ids(0);
     tria.set_manifold(0, SphericalManifold<spacedim - 1, spacedim>(p));
   }
+
+
 
   // Implementation for 3D only
   template <>
@@ -3201,6 +3231,7 @@ namespace GridGenerator
       }
     tria.set_manifold(0, SphericalManifold<3>(center));
   }
+
 
   // Implementation for 3D only
   template <>
@@ -3430,6 +3461,8 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<3>(p));
   }
 
+
+
   // Implementation for 3D only
   template <>
   void half_hyper_shell(Triangulation<3>&  tria,
@@ -3535,6 +3568,7 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<3>(center));
   }
 
+
   // Implementation for 3D only
   template <>
   void quarter_hyper_shell(Triangulation<3>&  tria,
@@ -3600,6 +3634,7 @@ namespace GridGenerator
     tria.set_all_manifold_ids(0);
     tria.set_manifold(0, SphericalManifold<3>(center));
   }
+
 
   // Implementation for 3D only
   template <>
@@ -4339,6 +4374,8 @@ namespace GridGenerator
     out_tria.create_triangulation(v, cells, subcelldata);
   }
 
+
+
   template <template <int, int> class MeshType, int dim, int spacedim>
 #ifndef _MSC_VER
   std::map<typename MeshType<dim - 1, spacedim>::cell_iterator,
@@ -4371,6 +4408,7 @@ namespace GridGenerator
     // from only level(0) cells of volume_mesh
     std::vector<typename MeshType<dim, spacedim>::face_iterator>
       mapping; // temporary map for level==0
+
 
     std::vector<bool> touched(volume_mesh.get_triangulation().n_vertices(),
                               false);

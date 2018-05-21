@@ -147,6 +147,7 @@ public:
     laplace.compute_diagonal();
   }
 
+
   virtual void
   clear()
   {
@@ -398,6 +399,8 @@ test(const unsigned int nbands = 1)
       do_test<dim, fe_degree, fe_degree + 1, double>(dof, nbands);
     }
 }
+
+
 
 int
 main(int argc, char** argv)

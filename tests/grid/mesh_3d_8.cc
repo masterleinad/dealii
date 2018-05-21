@@ -49,6 +49,7 @@ void check_this(Triangulation<3>& tria)
   deallog << "    ok." << std::endl;
 }
 
+
 void check(Triangulation<3>& tria)
 {
   deallog << "Initial check" << std::endl;
@@ -69,6 +70,7 @@ void check(Triangulation<3>& tria)
   deallog << "Check " << 2 << std::endl;
   check_this(tria);
 }
+
 
 int
 main()

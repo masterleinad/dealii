@@ -21,6 +21,7 @@
 #include <deal.II/base/quadrature.h>
 #include <deal.II/fe/fe.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 /*!@addtogroup fe */
@@ -272,6 +273,8 @@ public:
    */
   virtual ~FE_P1NC() override = default;
 
+
+
 private:
   /**
    * Return the vector consists of the numbers of degrees of freedom per objects.
@@ -372,6 +375,8 @@ private:
   void
   initialize_constraints();
 };
+
+
 
 /*@}*/
 

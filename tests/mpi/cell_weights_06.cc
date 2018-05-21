@@ -33,6 +33,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 unsigned int n_global_active_cells;
 
 template <int dim>
@@ -95,6 +97,7 @@ test()
       deallog << "processor " << p << ": " << integrated_weights[p] << " weight"
               << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

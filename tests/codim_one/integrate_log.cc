@@ -34,6 +34,7 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 
+
 #include <string>
 
 #include <math.h>
@@ -63,6 +64,7 @@ test(const unsigned int n,
   FEValues<1> fe_values(
     feq, qlog, update_JxW_values | update_quadrature_points),
     fev_help(feq, qgauss, update_JxW_values | update_quadrature_points);
+
 
   dh.distribute_dofs(feq);
 

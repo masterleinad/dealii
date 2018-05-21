@@ -43,11 +43,14 @@ public:
   }
 };
 
+
+
 Tensor<1, 1>
 curl(const Tensor<2, 2>& grads)
 {
   return Point<1>(grads[1][0] - grads[0][1]);
 }
+
 
 Tensor<1, 3>
 curl(const Tensor<2, 3>& grads)
@@ -117,6 +120,7 @@ test_hyper_cube()
   FESystem<dim> fe(FE_Q<dim>(2), dim);
   test(tr, fe);
 }
+
 
 int
 main()

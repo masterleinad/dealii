@@ -111,6 +111,8 @@ BlockMatrixArray<number, BlockVectorType>::vmult_add(
     }
 }
 
+
+
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::vmult(
@@ -120,6 +122,8 @@ BlockMatrixArray<number, BlockVectorType>::vmult(
   dst = 0.;
   vmult_add(dst, src);
 }
+
+
 
 template <typename number, typename BlockVectorType>
 void
@@ -160,6 +164,8 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult(
   dst = 0.;
   Tvmult_add(dst, src);
 }
+
+
 
 template <typename number, typename BlockVectorType>
 number

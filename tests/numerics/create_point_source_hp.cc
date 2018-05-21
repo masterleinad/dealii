@@ -24,6 +24,8 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 check()
@@ -50,6 +52,8 @@ check()
   for(unsigned int i = 0; i < dof.n_dofs(); ++i)
     deallog << vector(i) << std::endl;
 }
+
+
 
 int
 main()

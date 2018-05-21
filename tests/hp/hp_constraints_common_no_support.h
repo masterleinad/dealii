@@ -53,6 +53,8 @@ template <int dim>
 void
 test();
 
+
+
 template <int dim>
 void
 do_check(const Triangulation<dim>&    triangulation,
@@ -181,6 +183,8 @@ test_with_wrong_face_orientation(const hp::FECollection<dim>& fe)
       do_check(triangulation, fe);
     }
 }
+
+
 
 // test with a 2d mesh that forms a square but subdivides it into 3
 // elements. this tests the case of the sign_change thingy in
@@ -331,6 +335,7 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
 
   hp::DoFHandler<dim> dof_handler(triangulation);
 
+
   // for every pair of finite elements,
   // assign them to each of the two sides of the domain
   for(unsigned int fe1 = 0; fe1 < fe.size(); ++fe1)
@@ -439,6 +444,8 @@ test_interpolation(const hp::FECollection<dim>&     fe,
   test_interpolation_base(fe, polynomial_degrees, false);
   test_interpolation_base(fe, polynomial_degrees, true);
 }
+
+
 
 int
 main()

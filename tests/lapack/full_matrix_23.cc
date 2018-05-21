@@ -73,6 +73,7 @@ test()
   y.print(deallog.get_file_stream(), 6, false);
 }
 
+
 int
 main()
 {

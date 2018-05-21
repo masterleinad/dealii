@@ -43,15 +43,21 @@ namespace TrilinosWrappers
       gmres_restart_parameter(gmres_restart_parameter)
   {}
 
+
+
   SolverBase::SolverBase(SolverControl& cn, const AdditionalData& data)
     : solver_name(gmres), solver_control(cn), additional_data(data)
   {}
+
+
 
   SolverBase::SolverBase(const SolverBase::SolverName solver_name,
                          SolverControl&               cn,
                          const AdditionalData&        data)
     : solver_name(solver_name), solver_control(cn), additional_data(data)
   {}
+
+
 
   SolverControl&
   SolverBase::control() const
@@ -378,6 +384,7 @@ namespace TrilinosWrappers
     } // namespace
   }   // namespace internal
 
+
   template <typename Preconditioner>
   void
   SolverBase::do_solve(const Preconditioner& preconditioner)
@@ -558,6 +565,8 @@ namespace TrilinosWrappers
     : SolverBase::AdditionalData(output_solver_details)
   {}
 
+
+
   SolverCG::SolverCG(SolverControl& cn, const AdditionalData& data)
     : SolverBase(cn, data), additional_data(data)
   {
@@ -572,6 +581,8 @@ namespace TrilinosWrappers
     : SolverBase::AdditionalData(output_solver_details, restart_parameter)
   {}
 
+
+
   SolverGMRES::SolverGMRES(SolverControl& cn, const AdditionalData& data)
     : SolverBase(cn, data), additional_data(data)
   {
@@ -585,6 +596,8 @@ namespace TrilinosWrappers
     : SolverBase::AdditionalData(output_solver_details)
   {}
 
+
+
   SolverBicgstab::SolverBicgstab(SolverControl& cn, const AdditionalData& data)
     : SolverBase(cn, data), additional_data(data)
   {
@@ -597,6 +610,8 @@ namespace TrilinosWrappers
     : SolverBase::AdditionalData(output_solver_details)
   {}
 
+
+
   SolverCGS::SolverCGS(SolverControl& cn, const AdditionalData& data)
     : SolverBase(cn, data), additional_data(data)
   {
@@ -608,6 +623,8 @@ namespace TrilinosWrappers
   SolverTFQMR::AdditionalData::AdditionalData(const bool output_solver_details)
     : SolverBase::AdditionalData(output_solver_details)
   {}
+
+
 
   SolverTFQMR::SolverTFQMR(SolverControl& cn, const AdditionalData& data)
     : SolverBase(cn, data), additional_data(data)
@@ -622,16 +639,22 @@ namespace TrilinosWrappers
     : output_solver_details(output_solver_details), solver_type(solver_type)
   {}
 
+
+
   SolverDirect::SolverDirect(SolverControl& cn, const AdditionalData& data)
     : solver_control(cn),
       additional_data(data.output_solver_details, data.solver_type)
   {}
+
+
 
   SolverControl&
   SolverDirect::control() const
   {
     return solver_control;
   }
+
+
 
   void
   SolverDirect::initialize(const SparseMatrix& A)
@@ -677,6 +700,7 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
+
   void
   SolverDirect::solve(MPI::Vector& x, const MPI::Vector& b)
   {
@@ -692,6 +716,7 @@ namespace TrilinosWrappers
     ConditionalOStream verbose_cout(std::cout,
                                     additional_data.output_solver_details);
 
+
     verbose_cout << "Starting solve" << std::endl;
 
     // Fetch return value of Amesos Solver functions
@@ -701,6 +726,8 @@ namespace TrilinosWrappers
     // Finally, force the SolverControl object to report convergence
     solver_control.check(0, 0);
   }
+
+
 
   void
   SolverDirect::solve(
@@ -846,6 +873,7 @@ namespace TrilinosWrappers
     do_solve();
   }
 } // namespace TrilinosWrappers
+
 
 // explicit instantiations
 // TODO: put these instantiations into generic file

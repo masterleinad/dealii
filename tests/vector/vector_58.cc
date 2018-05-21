@@ -69,6 +69,8 @@ test(const std::vector<unsigned int>& size_sequence)
   deallog << "OK" << std::endl;
 }
 
+
+
 int
 main()
 {

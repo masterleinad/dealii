@@ -79,6 +79,7 @@ test2()
               << std::endl;
     }
 
+
   int hash  = 0;
   int index = 0;
   for(typename Triangulation<dim>::active_cell_iterator c = tria.begin_active();
@@ -130,6 +131,7 @@ filename_resolution()
   check_file<2>(std::string(SOURCE_DIR "/grid_in/2d"), GridIn<2>::ucd);
   check_file<2>(std::string(SOURCE_DIR "/grid_in/2d"), GridIn<2>::xda);
 }
+
 
 int
 main()

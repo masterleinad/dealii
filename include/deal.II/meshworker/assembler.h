@@ -25,6 +25,7 @@
 #include <deal.II/meshworker/simple.h>
 #include <deal.II/multigrid/mg_constrained_dofs.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace MeshWorker
@@ -125,6 +126,7 @@ namespace MeshWorker
       template <class DOFINFO>
       void
       initialize_info(DOFINFO& info, bool face) const;
+
 
       /**
        * Assemble the local residuals into the global residuals.
@@ -228,6 +230,7 @@ namespace MeshWorker
       template <class DOFINFO>
       void
       initialize_info(DOFINFO& info, bool face) const;
+
 
       /**
        * Assemble the local matrices into the global matrices.
@@ -362,6 +365,7 @@ namespace MeshWorker
       template <class DOFINFO>
       void
       initialize_info(DOFINFO& info, bool face) const;
+
 
       /**
        * Assemble the local matrices into the global matrices.
@@ -500,6 +504,7 @@ namespace MeshWorker
                    MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>>
         mg_constrained_dofs;
 
+
       /**
        * The smallest positive number that will be entered into the global
        * matrix. All smaller absolute values will be treated as zero and will
@@ -593,6 +598,7 @@ namespace MeshWorker
         }
     }
 
+
     //----------------------------------------------------------------------//
 
     template <typename MatrixType, typename number>
@@ -618,6 +624,8 @@ namespace MeshWorker
     {
       constraints = &c;
     }
+
+
 
     template <typename MatrixType, typename number>
     template <class DOFINFO>
@@ -742,6 +750,7 @@ namespace MeshWorker
         }
     }
 
+
     // ----------------------------------------------------------------------//
 
     template <typename MatrixType, typename number>
@@ -768,6 +777,7 @@ namespace MeshWorker
     {
       mg_constrained_dofs = &mg_c;
     }
+
 
     template <typename MatrixType, typename number>
     template <class DOFINFO>

@@ -403,6 +403,7 @@ public:
   std::size_t
   memory_consumption() const;
 
+
 private:
   /**
    * Pointer to the matrices.
@@ -559,6 +560,7 @@ public:
    */
   std::size_t
   memory_consumption() const;
+
 
 private:
   /**
@@ -761,6 +763,7 @@ namespace mg
            + this->vector_memory.memory_consumption();
   }
 } // namespace mg
+
 
 //----------------------------------------------------------------------//
 

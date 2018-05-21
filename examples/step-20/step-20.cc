@@ -633,6 +633,7 @@ namespace Step20
     mutable Vector<double> tmp1, tmp2;
   };
 
+
   SchurComplement ::SchurComplement(
     const BlockSparseMatrix<double>&           A,
     const InverseMatrix<SparseMatrix<double>>& Minv)
@@ -641,6 +642,7 @@ namespace Step20
       tmp1(A.block(0, 0).m()),
       tmp2(A.block(0, 0).m())
   {}
+
 
   void
   SchurComplement::vmult(Vector<double>& dst, const Vector<double>& src) const
@@ -669,6 +671,8 @@ namespace Step20
 
     mutable Vector<double> tmp1, tmp2;
   };
+
+
 
   ApproximateSchurComplement::ApproximateSchurComplement(
     const BlockSparseMatrix<double>& A)
@@ -879,6 +883,7 @@ namespace Step20
     output_results();
   }
 } // namespace Step20
+
 
 // @sect3{The <code>main</code> function}
 

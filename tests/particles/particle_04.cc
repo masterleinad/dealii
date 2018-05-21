@@ -19,6 +19,7 @@
 #include <deal.II/base/array_view.h>
 #include <deal.II/particles/particle.h>
 
+
 template <int dim, int spacedim>
 void
 test()
@@ -68,6 +69,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

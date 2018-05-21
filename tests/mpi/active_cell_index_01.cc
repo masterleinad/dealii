@@ -24,6 +24,8 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <int dim>
 void
 check(const parallel::distributed::Triangulation<dim>& tria)
@@ -38,6 +40,8 @@ check(const parallel::distributed::Triangulation<dim>& tria)
   AssertThrow(index == tria.n_active_cells(), ExcInternalError());
   AssertThrow(index >= tria.n_locally_owned_active_cells(), ExcInternalError());
 }
+
+
 
 template <int dim>
 void
@@ -54,6 +58,7 @@ check()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK for " << dim << "d" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

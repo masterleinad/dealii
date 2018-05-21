@@ -340,6 +340,8 @@ namespace internal
   } // namespace TriaAccessorBaseImplementation
 } // namespace internal
 
+
+
 template <int structdim, int dim, int spacedim>
 inline dealii::internal::TriangulationImplementation::TriaObjects<
   dealii::internal::TriangulationImplementation::TriaObject<structdim>>&
@@ -823,6 +825,7 @@ namespace internal
             {false, false}},
            {{true, false}, {false, true}}}};
 
+
         return (accessor.quad(quad_index)->line_orientation(line_index)
                 == bool_table[std_line_index / 2][accessor.face_orientation(
                      quad_index)][accessor.face_flip(quad_index)]
@@ -1031,6 +1034,8 @@ namespace internal
   } // namespace TriaAccessorImplementation
 } // namespace internal
 
+
+
 template <int structdim, int dim, int spacedim>
 inline TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
   const Triangulation<dim, spacedim>* parent,
@@ -1098,6 +1103,8 @@ TriaAccessor<structdim, dim, spacedim>::line_index(const unsigned int i) const
   return dealii::internal::TriaAccessorImplementation::Implementation::
     line_index(*this, i);
 }
+
+
 
 template <int structdim, int dim, int spacedim>
 inline typename dealii::internal::TriangulationImplementation::
@@ -1330,6 +1337,8 @@ TriaAccessor<structdim, dim, spacedim>::refinement_case() const
     }
 }
 
+
+
 template <int structdim, int dim, int spacedim>
 inline TriaIterator<TriaAccessor<structdim, dim, spacedim>>
 TriaAccessor<structdim, dim, spacedim>::child(const unsigned int i) const
@@ -1408,6 +1417,8 @@ TriaAccessor<structdim, dim, spacedim>::has_children() const
   return (this->objects().children[n_sets_of_two * this->present_index] != -1);
 }
 
+
+
 template <int structdim, int dim, int spacedim>
 inline unsigned int
 TriaAccessor<structdim, dim, spacedim>::n_children() const
@@ -1446,6 +1457,8 @@ TriaAccessor<structdim, dim, spacedim>::clear_refinement_case() const
   this->objects().refinement_cases[this->present_index]
     = RefinementCase<structdim>::no_refinement;
 }
+
+
 
 template <int structdim, int dim, int spacedim>
 void
@@ -1725,6 +1738,18 @@ TriaAccessor<structdim, dim, spacedim>::set_all_boundary_ids(
         // 1d objects have no sub-objects
         // where we have to do anything
         break;
+
+      case 2:
+        // for boundary quads also set
+        // boundary_id of bounding lines
+        for(unsigned int i = 0; i < 4; ++i)
+          this->line(i)->set_boundary_id(boundary_ind);
+        break;
+
+      default:
+        Assert(false, ExcNotImplemented());
+    }
+}
 
       case 2:
         // for boundary quads also set
@@ -2717,6 +2742,8 @@ namespace internal
     }
   } // namespace CellAccessorImplementation
 } // namespace internal
+
+
 
 template <int dim, int spacedim>
 inline TriaIterator<TriaAccessor<dim - 1, dim, spacedim>>

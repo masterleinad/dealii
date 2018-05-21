@@ -63,6 +63,9 @@ test_real_to_unit_cell()
   const unsigned int      n_points = 5;
   std::vector<Point<dim>> unit_points(Utilities::fixed_power<dim>(n_points));
 
+  const unsigned int      n_points = 5;
+  std::vector<Point<dim>> unit_points(Utilities::fixed_power<dim>(n_points));
+
   switch(dim)
     {
       case 1:
@@ -133,6 +136,9 @@ main()
   test_real_to_unit_cell<1, 1>();
   test_real_to_unit_cell<2, 2>();
   test_real_to_unit_cell<3, 3>();
+
+  test_real_to_unit_cell<1, 2>();
+  test_real_to_unit_cell<2, 3>();
 
   test_real_to_unit_cell<1, 2>();
   test_real_to_unit_cell<2, 3>();

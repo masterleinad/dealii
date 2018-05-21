@@ -328,6 +328,8 @@ namespace hp
   }
 } // namespace hp
 
+
+
 // explicit instantiations
 #include "fe_collection.inst"
 

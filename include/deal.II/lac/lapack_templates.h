@@ -1824,6 +1824,8 @@ potrs(const char*,
 }
 #endif
 
+
+
 /// Template wrapper for LAPACK functions dgetri and sgetri
 template <typename number1, typename number2>
 inline void

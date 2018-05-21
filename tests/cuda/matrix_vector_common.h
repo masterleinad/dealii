@@ -45,6 +45,8 @@ template <int dim, int fe_degree>
 void
 test();
 
+
+
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 void
 do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
@@ -141,6 +143,8 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   const double diff_norm = out_norm / out_dist_cpu_norm;
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
+
+
 
 int
 main()

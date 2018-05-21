@@ -21,6 +21,7 @@
 
 #include <deal.II/base/thread_management.h>
 
+
 void
 worker()
 {
@@ -38,6 +39,8 @@ waiter(int i)
 
   deallog << "Waiting thread " << i << " was woken up." << std::endl;
 }
+
+
 
 int
 main()

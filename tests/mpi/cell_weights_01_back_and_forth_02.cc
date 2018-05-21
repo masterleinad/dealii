@@ -27,6 +27,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 unsigned int current_cell_weight;
 
 template <int dim>
@@ -64,12 +66,14 @@ test()
   tr.signals.cell_weight.disconnect_all_slots();
   tr.repartition();
 
+
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     for(unsigned int p = 0; p < numproc; ++p)
       deallog << "processor " << p << ": "
               << tr.n_locally_owned_active_cells_per_processor()[p]
               << " locally owned active cells" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

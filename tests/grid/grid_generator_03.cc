@@ -27,6 +27,11 @@ template <int dim>
 Table<dim, types::material_id>
 material_ids();
 
+
+template <int dim>
+Table<dim, types::material_id>
+material_ids();
+
 template <>
 Table<1, types::material_id>
 material_ids<1>()
@@ -36,6 +41,7 @@ material_ids<1>()
     t[i] = 1;
   return t;
 }
+
 
 template <>
 Table<2, types::material_id>
@@ -49,6 +55,7 @@ material_ids<2>()
   t[1][1] = (types::material_id)(-1);
   return t;
 }
+
 
 template <>
 Table<3, types::material_id>
@@ -126,6 +133,7 @@ test(std::ostream& out)
         go.write_gnuplot(tr, out);
     }
 }
+
 
 int
 main()

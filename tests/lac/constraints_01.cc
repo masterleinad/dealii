@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+
+
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
@@ -48,6 +50,7 @@ test()
   deallog << "constraint 18466 inhom? " << is << std::endl;
   Assert(!is, ExcInternalError());
 }
+
 
 int
 main()

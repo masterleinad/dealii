@@ -20,6 +20,7 @@
 
 #include "../tests.h"
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/utilities.h>
@@ -339,10 +340,13 @@ LaplaceProblem<dim>::assemble_multigrid()
               cell_matrix(i, j) = 0;
             }
 
+
       empty_constraints.distribute_local_to_global(
         cell_matrix, local_dof_indices, mg_interface_matrices[cell->level()]);
     }
 }
+
+
 
 template <int dim>
 void
@@ -390,6 +394,8 @@ LaplaceProblem<dim>::solve()
   constraints.distribute(solution);
 }
 
+
+
 template <int dim>
 void
 LaplaceProblem<dim>::refine_grid()
@@ -425,6 +431,7 @@ LaplaceProblem<dim>::run()
       else
         refine_grid();
 
+
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
 
@@ -443,6 +450,7 @@ LaplaceProblem<dim>::run()
       solve();
     }
 }
+
 
 int
 main()

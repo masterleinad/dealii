@@ -27,6 +27,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -102,6 +103,9 @@ test(const char* filename)
       ++i, ++cell)
     cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
+
+  output(tria);
+}
 
   output(tria);
 }

@@ -16,7 +16,14 @@
 #ifndef dealii_solution_transfer_h
 #  define dealii_solution_transfer_h
 
+
 /*----------------------------   solutiontransfer.h     ----------------------*/
+
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/exceptions.h>
+#  include <deal.II/base/smartpointer.h>
+#  include <deal.II/dofs/dof_handler.h>
+#  include <deal.II/lac/vector.h>
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>

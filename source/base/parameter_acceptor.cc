@@ -131,6 +131,8 @@ ParameterAcceptor::initialize(
   parse_all_parameters(prm);
 }
 
+
+
 void
 ParameterAcceptor::initialize(std::istream& input_stream, ParameterHandler& prm)
 
@@ -148,13 +150,19 @@ ParameterAcceptor::clear()
   prm.clear();
 }
 
+
+
 void
 ParameterAcceptor::declare_parameters(ParameterHandler&)
 {}
 
+
+
 void
 ParameterAcceptor::parse_parameters(ParameterHandler&)
 {}
+
+
 
 void
 ParameterAcceptor::parse_all_parameters(ParameterHandler& prm)

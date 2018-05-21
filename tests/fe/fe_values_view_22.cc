@@ -76,6 +76,8 @@ MixedElastoPlasticity<dim>::MixedElastoPlasticity(const unsigned int degree)
     dof_handler(triangulation)
 {}
 
+
+
 template <int dim>
 void
 MixedElastoPlasticity<dim>::make_grid_and_dofs()
@@ -174,6 +176,7 @@ MixedElastoPlasticity<dim>::assemble_system()
         deallog << "\t" << i << "\t" << i_group << "\t" << i_index << "\t"
                 << i_node;
 
+
         if(i_group == 0) // if i corresponds to tensor stress
           solution(local_dof_indices[i]) = stress_value;
         else // i corresponds to scalar gamma
@@ -181,6 +184,11 @@ MixedElastoPlasticity<dim>::assemble_system()
 
         deallog << "\t" << solution(local_dof_indices[i]) << std::endl;
       }
+
+    std::vector<Tensor<1, dim>> local_divergences(quadrature_formula.size());
+    std::vector<SymmetricTensor<2, dim>> local_values(
+      quadrature_formula.size());
+    std::vector<double> local_scalar_values(quadrature_formula.size());
 
     std::vector<Tensor<1, dim>> local_divergences(quadrature_formula.size());
     std::vector<SymmetricTensor<2, dim>> local_values(
@@ -222,6 +230,8 @@ MixedElastoPlasticity<dim>::run()
   make_grid_and_dofs();
   assemble_system();
 }
+
+
 
 int
 main()

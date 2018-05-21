@@ -33,6 +33,7 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/mapping_collection.h>
 
+
 #include <deal.II/fe/mapping_q1.h>
 
 bool inside(Triangulation<3>& tria, Point<3>& p)
@@ -82,6 +83,7 @@ check2()
   GridTools::find_active_cell_around_point(
     mappings, dof_handler, p2); //triggered exception
 }
+
 
 int
 main()

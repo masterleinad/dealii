@@ -31,6 +31,7 @@ class Triangulation;
 template <int dim, int spacedim>
 class Mapping;
 
+
 /**
  * Within this namespace, we define several structures that are used to
  * describe flags that can be given to grid output routines to modify the
@@ -769,6 +770,8 @@ namespace GridOutFlags
   {};
 } // namespace GridOutFlags
 
+
+
 /**
  * This class provides a means to output a triangulation to a file in
  * different formats. See the enum GridOut::OutputFormat for a list of formats
@@ -1064,6 +1067,7 @@ public:
   template <int dim, int spacedim>
   void
   write_svg(const Triangulation<dim, spacedim>& tria, std::ostream& out) const;
+
 
   /**
    * Write triangulation in MathGL script format. To interpret this file a
@@ -1448,6 +1452,8 @@ private:
                   const unsigned int         next_element_index,
                   std::ostream&              out) const;
 
+
+
   /**
    * Write the grid information about lines to @p out. Only those lines are
    * printed which are on the boundary and which have a boundary indicator not
@@ -1567,6 +1573,7 @@ private:
                   const unsigned int         next_element_index,
                   std::ostream&              out) const;
 
+
   /**
    * Write the grid information about lines to @p out. Only those lines are
    * printed which are on the boundary and which have a boundary indicator not
@@ -1618,6 +1625,7 @@ private:
                   const unsigned int         next_element_index,
                   std::ostream&              out) const;
 
+
   /**
    * Declaration of the specialization of above function for 2d. Does nothing.
    */
@@ -1633,6 +1641,7 @@ private:
   write_ucd_lines(const Triangulation<2, 3>& tria,
                   const unsigned int         next_element_index,
                   std::ostream&              out) const;
+
 
   /**
    * This function projects a three-dimensional point (Point<3> point) onto a

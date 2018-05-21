@@ -25,6 +25,7 @@
 #include <deal.II/lac/trilinos_block_sparse_matrix.h>
 #include <iostream>
 
+
 void
 test()
 {
@@ -127,6 +128,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

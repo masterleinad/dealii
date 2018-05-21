@@ -50,6 +50,8 @@ test()
   fe.push_back(fe_3);
   fe.push_back(fe_4);
 
+
+
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(2);
   deallog << "Number of active cells: " << triangulation.n_active_cells()
@@ -88,6 +90,7 @@ test()
 
   hanging_node_constraints.close();
 }
+
 
 int
 main()

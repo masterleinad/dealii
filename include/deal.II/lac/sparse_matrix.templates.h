@@ -36,6 +36,8 @@
 #include <ostream>
 #include <vector>
 
+
+
 DEAL_II_NAMESPACE_OPEN
 
 template <typename number>
@@ -150,6 +152,8 @@ namespace internal
     }
   } // namespace SparseMatrixImplementation
 } // namespace internal
+
+
 
 template <typename number>
 SparseMatrix<number>&
@@ -468,6 +472,7 @@ namespace internal
     }
   } // namespace SparseMatrixImplementation
 } // namespace internal
+
 
 template <typename number>
 template <typename number2>
@@ -835,6 +840,8 @@ namespace internal
   } // namespace SparseMatrixImplementation
 } // namespace internal
 
+
+
 template <typename number>
 template <typename somenumber>
 somenumber
@@ -896,6 +903,8 @@ namespace internal
     }
   } // namespace SparseMatrixImplementation
 } // namespace internal
+
+
 
 template <typename number>
 template <typename somenumber>
@@ -1026,6 +1035,8 @@ SparseMatrix<number>::mmult(SparseMatrix<numberC>&       C,
         }
     }
 }
+
+
 
 template <typename number>
 template <typename numberB, typename numberC>
@@ -1257,6 +1268,7 @@ namespace internal
   } // namespace SparseMatrixImplementation
 } // namespace internal
 
+
 template <typename number>
 template <typename somenumber>
 somenumber
@@ -1320,6 +1332,7 @@ namespace
 #endif
   }
 } // namespace
+
 
 template <typename number>
 template <typename somenumber>

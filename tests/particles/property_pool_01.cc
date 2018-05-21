@@ -20,6 +20,7 @@
 #include <fstream>
 #include <iomanip>
 
+
 void
 test()
 {
@@ -39,6 +40,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

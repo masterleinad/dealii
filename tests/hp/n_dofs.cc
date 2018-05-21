@@ -32,6 +32,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
 
+
+
 template <int dim>
 void
 test(const FiniteElement<dim>& fe)
@@ -69,10 +71,36 @@ test(const FiniteElement<dim>& fe)
     test(q);                      \
   }
 
+#define CHECK(EL, deg, dim) \
+  {                         \
+    FE_##EL<dim> EL(deg);   \
+    test(EL);               \
+  }
+
+#define CHECK_SYS1(sub1, N1, dim) \
+  {                               \
+    FESystem<dim> q(sub1, N1);    \
+    test(q);                      \
+  }
+
 #define CHECK_SYS2(sub1, N1, sub2, N2, dim) \
   {                                         \
     FESystem<dim> q(sub1, N1, sub2, N2);    \
     test(q);                                \
+  }
+
+#define CHECK_SYS3(sub1, N1, sub2, N2, sub3, N3, dim) \
+  {                                                   \
+    FESystem<dim> q(sub1, N1, sub2, N2, sub3, N3);    \
+    test(q);                                          \
+  }
+
+
+#define CHECK_ALL(EL, deg) \
+  {                        \
+    CHECK(EL, deg, 1);     \
+    CHECK(EL, deg, 2);     \
+    CHECK(EL, deg, 3);     \
   }
 
 #define CHECK_SYS3(sub1, N1, sub2, N2, sub3, N3, dim) \
@@ -129,6 +157,10 @@ main()
   CHECK_SYS1(FE_Q<3>(1), 3, 3);
   CHECK_SYS1(FE_DGQ<3>(2), 2, 3);
   CHECK_SYS1(FE_DGP<3>(3), 1, 3);
+
+  CHECK_SYS2(FE_Q<1>(1), 3, FE_DGQ<1>(2), 2, 1);
+  CHECK_SYS2(FE_DGQ<1>(2), 2, FE_DGP<1>(3), 1, 1);
+  CHECK_SYS2(FE_DGP<1>(3), 1, FE_DGQ<1>(2), 2, 1);
 
   CHECK_SYS2(FE_Q<1>(1), 3, FE_DGQ<1>(2), 2, 1);
   CHECK_SYS2(FE_DGQ<1>(2), 2, FE_DGP<1>(3), 1, 1);

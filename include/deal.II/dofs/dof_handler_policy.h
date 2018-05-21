@@ -22,6 +22,13 @@
 #  include <deal.II/dofs/dof_renumbering.h>
 #  include <deal.II/dofs/dof_tools.h>
 
+
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/exceptions.h>
+#  include <deal.II/base/template_constraints.h>
+#  include <deal.II/dofs/dof_renumbering.h>
+#  include <deal.II/dofs/dof_tools.h>
+
 #  include <map>
 #  include <set>
 #  include <vector>
@@ -30,6 +37,7 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int, int>
 class DoFHandler;
+
 
 namespace internal
 {
@@ -247,6 +255,8 @@ namespace internal
     } // namespace Policy
   }   // namespace DoFHandlerImplementation
 } // namespace internal
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

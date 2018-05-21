@@ -31,6 +31,7 @@
 #include <utility>
 #include <vector>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, class T>
@@ -1258,6 +1259,7 @@ public:
   const LineRange
   get_lines() const;
 
+
   /**
    * Check if the current object is consistent on all processors
    * in a distributed computation.
@@ -1290,6 +1292,7 @@ public:
                             const IndexSet&              locally_active_dofs,
                             const MPI_Comm               mpi_communicator,
                             const bool                   verbose = false) const;
+
 
   /**
    * Exception
@@ -1577,6 +1580,8 @@ inline ConstraintMatrix::ConstraintMatrix(const IndexSet& local_constraints)
   local_lines.compress();
 }
 
+
+
 inline ConstraintMatrix::ConstraintMatrix(
   const ConstraintMatrix& constraint_matrix)
   : Subscriptor(),
@@ -1585,6 +1590,7 @@ inline ConstraintMatrix::ConstraintMatrix(
     local_lines(constraint_matrix.local_lines),
     sorted(constraint_matrix.sorted)
 {}
+
 
 inline void
 ConstraintMatrix::add_line(const size_type line)
@@ -1614,6 +1620,8 @@ ConstraintMatrix::add_line(const size_type line)
   lines.back().inhomogeneity = 0.;
   lines_cache[line_index]    = lines.size() - 1;
 }
+
+
 
 inline void
 ConstraintMatrix::add_entry(const size_type line,
@@ -1655,6 +1663,8 @@ ConstraintMatrix::add_entry(const size_type line,
   line_ptr->entries.emplace_back(column, value);
 }
 
+
+
 inline void
 ConstraintMatrix::set_inhomogeneity(const size_type line, const double value)
 {
@@ -1667,11 +1677,15 @@ ConstraintMatrix::set_inhomogeneity(const size_type line, const double value)
   line_ptr->inhomogeneity  = value;
 }
 
+
+
 inline types::global_dof_index
 ConstraintMatrix::n_constraints() const
 {
   return lines.size();
 }
+
+
 
 inline bool
 ConstraintMatrix::is_constrained(const size_type index) const
@@ -1680,6 +1694,8 @@ ConstraintMatrix::is_constrained(const size_type index) const
   return ((line_index < lines_cache.size())
           && (lines_cache[line_index] != numbers::invalid_size_type));
 }
+
+
 
 inline bool
 ConstraintMatrix::is_inhomogeneously_constrained(const size_type index) const
@@ -1697,6 +1713,8 @@ ConstraintMatrix::is_inhomogeneously_constrained(const size_type index) const
     }
 }
 
+
+
 inline const std::vector<std::pair<types::global_dof_index, double>>*
 ConstraintMatrix::get_constraint_entries(const size_type line) const
 {
@@ -1709,6 +1727,8 @@ ConstraintMatrix::get_constraint_entries(const size_type line) const
   else
     return &lines[lines_cache[line_index]].entries;
 }
+
+
 
 inline double
 ConstraintMatrix::get_inhomogeneity(const size_type line) const
@@ -1741,6 +1761,8 @@ ConstraintMatrix::can_store_line(size_type line_index) const
   return !local_lines.size() || local_lines.is_element(line_index);
 }
 
+
+
 inline const IndexSet&
 ConstraintMatrix::get_local_lines() const
 {
@@ -1766,6 +1788,7 @@ ConstraintMatrix::distribute_local_to_global(const size_type index,
           += value * position.entries[j].second;
     }
 }
+
 
 template <typename ForwardIteratorVec,
           typename ForwardIteratorInd,
@@ -1812,6 +1835,8 @@ ConstraintMatrix::distribute_local_to_global(
                              global_vector);
 }
 
+
+
 template <typename ForwardIteratorVec,
           typename ForwardIteratorInd,
           class VectorType>
@@ -1839,6 +1864,7 @@ ConstraintMatrix::get_dof_values(const VectorType&  global_vector,
         }
     }
 }
+
 
 template <typename MatrixType>
 class BlockMatrixBase;
@@ -1945,6 +1971,8 @@ ConstraintMatrix::distribute_local_to_global(
     std::integral_constant<bool, IsBlockMatrix<MatrixType>::value>());
 }
 
+
+
 template <typename MatrixType, typename VectorType>
 inline void
 ConstraintMatrix::distribute_local_to_global(
@@ -1966,6 +1994,8 @@ ConstraintMatrix::distribute_local_to_global(
     use_inhomogeneities_for_rhs,
     std::integral_constant<bool, IsBlockMatrix<MatrixType>::value>());
 }
+
+
 
 template <typename SparsityPatternType>
 inline void

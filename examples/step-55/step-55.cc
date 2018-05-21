@@ -312,6 +312,8 @@ namespace Step55
     TimerOutput        computing_timer;
   };
 
+
+
   template <int dim>
   StokesProblem<dim>::StokesProblem(unsigned int velocity_degree)
     : velocity_degree(velocity_degree),
@@ -472,6 +474,8 @@ namespace Step55
     system_rhs.reinit(owned_partitioning, mpi_communicator);
   }
 
+
+
   // @sect3{Assembly}
   //
   // This function assembles the system matrix, the preconditioner matrix,
@@ -554,6 +558,13 @@ namespace Step55
                                  * fe_values.JxW(q);
                 }
             }
+
+          cell->get_dof_indices(local_dof_indices);
+          constraints.distribute_local_to_global(cell_matrix,
+                                                 cell_rhs,
+                                                 local_dof_indices,
+                                                 system_matrix,
+                                                 system_rhs);
 
           cell->get_dof_indices(local_dof_indices);
           constraints.distribute_local_to_global(cell_matrix,
@@ -692,6 +703,8 @@ namespace Step55
       }
   }
 
+
+
   template <int dim>
   void
   StokesProblem<dim>::output_results(const unsigned int cycle) const
@@ -730,6 +743,7 @@ namespace Step55
             << std::endl;
     }
 
+
     std::vector<std::string> solution_names(dim, "velocity");
     solution_names.emplace_back("pressure");
     std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -761,6 +775,7 @@ namespace Step55
                                data_component_interpretation);
     }
 
+
     Vector<float> subdomain(triangulation.n_active_cells());
     for(unsigned int i = 0; i < subdomain.size(); ++i)
       subdomain(i) = triangulation.locally_owned_subdomain();
@@ -789,6 +804,8 @@ namespace Step55
         data_out.write_pvtu_record(master_output, filenames);
       }
   }
+
+
 
   template <int dim>
   void
@@ -827,6 +844,8 @@ namespace Step55
       }
   }
 } // namespace Step55
+
+
 
 int
 main(int argc, char* argv[])

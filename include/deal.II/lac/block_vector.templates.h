@@ -16,6 +16,7 @@
 #ifndef dealii_block_vector_templates_h
 #define dealii_block_vector_templates_h
 
+
 #include <algorithm>
 #include <cmath>
 #include <deal.II/base/config.h>

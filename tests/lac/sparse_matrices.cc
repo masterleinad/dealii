@@ -28,6 +28,8 @@
 #include <deal.II/lac/precondition_block.templates.h>
 #include <deal.II/lac/sparse_matrix_ez.templates.h>
 
+
+
 #define PREC_CHECK(solver, method, precond) \
   deallog.push(#precond);                   \
   try                                       \
@@ -200,6 +202,7 @@ check_iterator(const MatrixType& A)
   //  deallog.pop();
 }
 
+
 void
 check_ez_iterator()
 {
@@ -222,6 +225,7 @@ check_ez_iterator()
 
   check_iterator(m);
 }
+
 
 void
 check_conjugate(std::ostream& out)
@@ -263,6 +267,7 @@ check_conjugate(std::ostream& out)
   out << "Second conjugate" << std::endl;
   C2.print(out);
 }
+
 
 int
 main()

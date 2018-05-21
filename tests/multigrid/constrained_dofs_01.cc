@@ -126,6 +126,9 @@ check_fe(FiniteElement<dim>& fe)
 
   MGConstrainedDoFs mg_constrained_dofs;
 
+
+  MGConstrainedDoFs mg_constrained_dofs;
+
   typename FunctionMap<dim>::type dirichlet_boundary;
   Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
   dirichlet_boundary[0] = &homogeneous_dirichlet_bc;

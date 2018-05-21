@@ -51,6 +51,8 @@ template <int dim>
 void
 test();
 
+
+
 template <int dim>
 void
 do_check(const Triangulation<dim>&    triangulation,
@@ -75,6 +77,8 @@ do_check(const Triangulation<dim>&    triangulation,
   constraints.print(deallog.get_file_stream());
 }
 
+
+
 void
 test_with_wrong_face_orientation(const hp::FECollection<3>& fe)
 {
@@ -85,6 +89,8 @@ test_with_wrong_face_orientation(const hp::FECollection<3>& fe)
 
   do_check(triangulation, fe);
 }
+
+
 
 int
 main()

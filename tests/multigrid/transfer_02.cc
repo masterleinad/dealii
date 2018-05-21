@@ -160,6 +160,7 @@ check_simple(const FiniteElement<dim>& fe)
   deallog << "diff " << v.l2_norm() << std::endl;
 }
 
+
 int
 main()
 {

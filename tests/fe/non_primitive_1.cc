@@ -35,6 +35,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/sparse_matrix.h>
 
+
+
 // create the matrix in the plain old
 // way, which is valid if the finite
 // element shape functions are
@@ -163,6 +165,7 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
                           * fe_values.JxW(q));
                 };
 
+
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         for(unsigned int j = 0; j < dofs_per_cell; ++j)
@@ -238,12 +241,15 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
                               * fe_values.JxW(q));
                     };
 
+
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         for(unsigned int j = 0; j < dofs_per_cell; ++j)
           A.add(local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
     };
 }
+
+
 
 template <int dim>
 void
@@ -305,6 +311,8 @@ test()
                   ExcInternalError());
     };
 }
+
+
 
 int
 main()

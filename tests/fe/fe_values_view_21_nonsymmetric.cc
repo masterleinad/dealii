@@ -40,6 +40,7 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 #include <iostream>
 
 using namespace dealii;
@@ -61,6 +62,7 @@ private:
   const unsigned int degree;
   const unsigned int n_stress_components; // components of stress
   const unsigned int n_gamma_components;  // scalar plastic multiplier
+
 
   Triangulation<dim> triangulation;
   FESystem<dim>      fe;
@@ -176,6 +178,9 @@ MixedElastoPlasticity<dim>::assemble_system()
   deallog << "fe.dofs_per_cell: " << fe.dofs_per_cell
           << "\tquadrature_formula.size(): " << quadrature_formula.size()
           << std::endl;
+
+  std::vector<Tensor<1, dim>> local_divergences(quadrature_formula.size());
+  std::vector<Tensor<2, dim>> local_values(quadrature_formula.size());
 
   std::vector<Tensor<1, dim>> local_divergences(quadrature_formula.size());
   std::vector<Tensor<2, dim>> local_values(quadrature_formula.size());

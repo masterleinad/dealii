@@ -39,6 +39,7 @@
 
 #include <boost/concept_check.hpp>
 
+
 void
 test()
 {
@@ -93,6 +94,7 @@ test()
           }
     }
 }
+
 
 int
 main(int argc, char* argv[])

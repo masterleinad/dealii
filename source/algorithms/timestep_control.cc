@@ -45,6 +45,8 @@ TimestepControl::TimestepControl(double start,
   (void) min_step_val;
 }
 
+
+
 void
 TimestepControl::declare_parameters(ParameterHandler& param)
 {
@@ -57,6 +59,8 @@ TimestepControl::declare_parameters(ParameterHandler& param)
   param.declare_entry(
     "Strategy", "uniform", Patterns::Selection("uniform|doubling"));
 }
+
+
 
 void
 TimestepControl::parse_parameters(ParameterHandler& param)
@@ -73,6 +77,8 @@ TimestepControl::parse_parameters(ParameterHandler& param)
   else if(strat == std::string("doubling"))
     strategy_val = doubling;
 }
+
+
 
 bool
 TimestepControl::advance()
@@ -114,6 +120,7 @@ TimestepControl::advance()
   now_val = h;
   return changed;
 }
+
 
 bool
 TimestepControl::print()

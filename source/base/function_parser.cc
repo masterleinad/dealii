@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <cmath>
 #include <deal.II/base/function_parser.h>
 #include <deal.II/base/thread_management.h>
@@ -225,6 +226,8 @@ namespace internal
 
 } // namespace internal
 
+
+
 template <int dim>
 void
 FunctionParser<dim>::init_muparser() const
@@ -421,6 +424,7 @@ FunctionParser<dim>::vector_value(const Point<dim>& p,
   Assert(initialized == true, ExcNotInitialized());
   Assert(values.size() == this->n_components,
          ExcDimensionMismatch(values.size(), this->n_components));
+
 
   // initialize the parser if that hasn't happened yet on the current thread
   if(fp.get().size() == 0)

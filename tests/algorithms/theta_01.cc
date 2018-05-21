@@ -26,6 +26,7 @@
 using namespace dealii;
 using namespace Algorithms;
 
+
 class Explicit : public OperatorBase
 {
 public:
@@ -37,6 +38,7 @@ private:
   SmartPointer<const FullMatrix<double>, Explicit> matrix;
   FullMatrix<double>                               m;
 };
+
 
 class Implicit : public OperatorBase
 {
@@ -87,6 +89,7 @@ main()
           << value.l2_norm() << std::endl;
 }
 
+
 Explicit::Explicit(const FullMatrix<double>& M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
@@ -108,6 +111,7 @@ Explicit::operator()(AnyData& out, const AnyData& in)
   unsigned int i = in.find("Previous iterate");
   m.vmult(*out.entry<Vector<double>*>(0), *in.read_ptr<Vector<double>>(i));
 }
+
 
 Implicit::Implicit(const FullMatrix<double>& M) : matrix(&M)
 {

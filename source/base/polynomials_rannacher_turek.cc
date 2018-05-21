@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/polynomials_rannacher_turek.h>
 
@@ -89,6 +90,8 @@ PolynomialsRannacherTurek<dim>::compute_grad(const unsigned int i,
 
   return grad;
 }
+
+
 
 template <int dim>
 Tensor<2, dim>

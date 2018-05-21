@@ -32,6 +32,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int, int>
 class MappingQ;
 
+
 /*!@addtogroup mapping */
 /*@{*/
 
@@ -192,6 +193,7 @@ public:
                     const Quadrature<dim>& quadrature,
                     const unsigned int     n_original_q_points);
 
+
     /**
      * Compute the weights associated to the Manifold object, that
      * need to be passed when computing the location of the quadrature
@@ -253,6 +255,7 @@ public:
      * Computed once.
      */
     std::vector<std::vector<double>> cell_manifold_quadrature_weights;
+
 
     /**
      * A vector of weights for use in Manifold::get_new_point(). For

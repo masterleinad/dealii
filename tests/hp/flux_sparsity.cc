@@ -115,6 +115,8 @@ check()
   dsp.print(deallog.get_file_stream());
 }
 
+
+
 int
 main()
 {

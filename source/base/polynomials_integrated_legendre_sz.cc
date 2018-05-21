@@ -21,6 +21,8 @@ IntegratedLegendreSZ::IntegratedLegendreSZ(const unsigned int k)
   : Polynomials::Polynomial<double>(get_coefficients(k))
 {}
 
+
+
 const std::vector<double>
 IntegratedLegendreSZ::get_coefficients(const unsigned int k)
 {
@@ -65,6 +67,8 @@ IntegratedLegendreSZ::get_coefficients(const unsigned int k)
 
   return coefficients;
 }
+
+
 
 std::vector<Polynomials::Polynomial<double>>
 IntegratedLegendreSZ::generate_complete_basis(const unsigned int degree)

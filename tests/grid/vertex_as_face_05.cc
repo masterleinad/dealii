@@ -27,6 +27,8 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 
+
+
 template <int spacedim>
 void
 test()
@@ -57,6 +59,8 @@ test()
       deallog << "Right vertex=" << cell->face(1)->vertex(0) << std::endl;
     }
 }
+
+
 
 int
 main()

@@ -45,6 +45,7 @@ test()
   if(type == 1 && M % 2 == 1 && N % 2 == 1)
     shape[M / 2][N / 2] = 0.;
 
+
   // create symmetrized shape array exactly as expected by the evenodd
   // function
   AlignedVector<double> shape_sym(M * ((N + 1) / 2));
@@ -86,6 +87,7 @@ test()
   for(unsigned int i = 0; i < M; ++i)
     deallog << x[i] - y_ref[i] << " ";
   deallog << std::endl;
+
 
   for(unsigned int i = 0; i < M; ++i)
     x[i] = random_value<double>();

@@ -108,6 +108,8 @@ private:
   const MatrixFree<dim, Number>& data;
 };
 
+
+
 template <int dim, int fe_degree>
 void
 test()
@@ -203,6 +205,7 @@ test()
   out_ptr[2] = &out[2];
   mf.vmult(out_ptr, in_ptr);
 
+
   // assemble trilinos sparse matrix with
   // (\nabla v, \nabla u) + (v, 10 * u) for
   // reference
@@ -269,6 +272,7 @@ test()
     }
   deallog << std::endl << std::endl;
 }
+
 
 int
 main(int argc, char** argv)

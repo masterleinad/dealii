@@ -35,6 +35,7 @@ check(TRIA& tr)
 {
   typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
 
+
   for(; cell != endc; ++cell)
     {
       deallog << cell->level() << " " << cell->index() << std::endl;
@@ -50,6 +51,7 @@ check(TRIA& tr)
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main(int argc, char* argv[])

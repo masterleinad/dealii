@@ -19,12 +19,16 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 static unsigned subcells[6][4] = {{0, 1, 2, 3},
                                   {4, 5, 6, 7},
                                   {0, 1, 5, 4},
                                   {1, 5, 6, 2},
                                   {3, 2, 6, 7},
                                   {0, 4, 7, 3}};
+
+
 
 template <int dim>
 void
@@ -98,6 +102,7 @@ test()
   //   std::ofstream ucd_file("subcelldata.inp");
   //   grid_out.write_ucd(tria, ucd_file);
 }
+
 
 int
 main()

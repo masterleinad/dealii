@@ -23,6 +23,7 @@
 #include <deal.II/base/vectorization.h>
 #include <deal.II/matrix_free/tensor_product_kernels.h>
 
+
 template <int M, int N, int type, bool add>
 void
 test()
@@ -72,6 +73,7 @@ test()
                     ExcInternalError());
     }
   deallog << std::endl;
+
 
   for(unsigned int i = 0; i < M; ++i)
     for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)

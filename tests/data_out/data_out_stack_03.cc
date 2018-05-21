@@ -24,6 +24,8 @@
 
 #include <deal.II/numerics/data_out_stack.h>
 
+
+
 template <int dim>
 void
 run()
@@ -55,6 +57,8 @@ run()
 
   data_out_stack.write_dx(deallog.get_file_stream());
 }
+
+
 
 int
 main()

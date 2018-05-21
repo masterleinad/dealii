@@ -22,6 +22,7 @@
 
 // Check LinearAlgebra::EpetraWrappers::Vector assignment and import
 
+
 void
 test()
 {
@@ -197,6 +198,7 @@ test()
   const double val = b * c;
   AssertThrow(val == 285., ExcMessage("Problem in operator *."));
 }
+
 
 int
 main(int argc, char** argv)

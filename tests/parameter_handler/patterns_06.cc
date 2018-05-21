@@ -44,6 +44,8 @@ main()
   std::vector<Point<2>>             va6(2, Point<2>(6.0, 7.0));
   std::vector<Point<3>>             va7(2, Point<3>(8.0, 9.0, 10.0));
 
+
+
   ParameterHandler prm;
   prm.add_parameter("A signed integer", a0);
   prm.add_parameter("An unsigned integer", a1);

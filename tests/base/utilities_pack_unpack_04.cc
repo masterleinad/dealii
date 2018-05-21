@@ -25,6 +25,7 @@
 #include <cstring>
 #include <tuple>
 
+
 template <typename T, int N>
 void
 check(const T (&object)[N])
@@ -52,6 +53,7 @@ check(const T (&object)[N])
       }
   deallog << "direct cmp: " << (equal ? "OK" : "Failed") << std::endl;
 }
+
 
 void
 test()

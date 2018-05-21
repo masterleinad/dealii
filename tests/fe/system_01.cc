@@ -51,6 +51,8 @@ check(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   deallog << std::endl;
 }
 
+
+
 #define CHECK_SYS1(sub1_1, N1_1, sub2_1, N2_1, dim) \
   {                                                 \
     FESystem<dim> fe1(sub1_1, N1_1);                \
@@ -64,6 +66,7 @@ check(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     FESystem<dim> q(sub1, N1, sub2, N2, sub3, N3);    \
     check(q, q);                                      \
   }
+
 
 int
 main()

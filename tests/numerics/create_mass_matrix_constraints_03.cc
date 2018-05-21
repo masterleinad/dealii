@@ -35,6 +35,8 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 check()
@@ -111,6 +113,8 @@ check()
   rhs -= rhs_ref;
   deallog << "RHS vector error l2: " << rhs.l2_norm() << std::endl;
 }
+
+
 
 int
 main()

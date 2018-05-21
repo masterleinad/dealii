@@ -22,6 +22,7 @@
 #include <deal.II/matrix_free/shape_info.h>
 #include <deal.II/matrix_free/tensor_product_kernels.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -122,6 +123,8 @@ namespace internal
               const bool                                    integrate_gradients,
               const bool add_into_values_array);
   };
+
+
 
   template <MatrixFreeFunctions::ElementType type,
             int                              dim,
@@ -389,6 +392,8 @@ namespace internal
                              - 1];
       }
   }
+
+
 
   template <MatrixFreeFunctions::ElementType type,
             int                              dim,
@@ -1111,6 +1116,8 @@ namespace internal
       }
   }
 
+
+
   /**
    * This struct performs the evaluation of function values, gradients and
    * Hessians for tensor-product finite elements. This a specialization for
@@ -1151,6 +1158,8 @@ namespace internal
               const bool                                    integrate_gradients,
               const bool add_into_values_array);
   };
+
+
 
   template <int dim,
             int fe_degree,
@@ -1213,6 +1222,8 @@ namespace internal
       }
   }
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1273,6 +1284,8 @@ namespace internal
         values_dofs += shape_info.dofs_per_component_on_cell;
       }
   }
+
+
 
   template <bool symmetric_evaluate,
             int  dim,

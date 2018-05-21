@@ -19,10 +19,13 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 ChunkSparsityPattern::ChunkSparsityPattern()
 {
   reinit(0, 0, 0, 1);
 }
+
+
 
 ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern& s)
   : Subscriptor(),
@@ -38,6 +41,8 @@ ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern& s)
   reinit(0, 0, 0, chunk_size);
 }
 
+
+
 ChunkSparsityPattern::ChunkSparsityPattern(const size_type m,
                                            const size_type n,
                                            const size_type max_per_row,
@@ -47,6 +52,8 @@ ChunkSparsityPattern::ChunkSparsityPattern(const size_type m,
 
   reinit(m, n, max_per_row, chunk_size);
 }
+
+
 
 ChunkSparsityPattern::ChunkSparsityPattern(
   const size_type               m,
@@ -59,12 +66,16 @@ ChunkSparsityPattern::ChunkSparsityPattern(
   reinit(m, n, row_lengths, chunk_size);
 }
 
+
+
 ChunkSparsityPattern::ChunkSparsityPattern(const size_type n,
                                            const size_type max_per_row,
                                            const size_type chunk_size)
 {
   reinit(n, n, max_per_row, chunk_size);
 }
+
+
 
 ChunkSparsityPattern::ChunkSparsityPattern(
   const size_type               m,
@@ -75,6 +86,8 @@ ChunkSparsityPattern::ChunkSparsityPattern(
 
   reinit(m, m, row_lengths, chunk_size);
 }
+
+
 
 ChunkSparsityPattern&
 ChunkSparsityPattern::operator=(const ChunkSparsityPattern& s)
@@ -196,6 +209,8 @@ ChunkSparsityPattern::copy_from(const SparsityPatternType& dsp,
   sparsity_pattern.copy_from(temporary_sp);
 }
 
+
+
 template <typename number>
 void
 ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
@@ -259,6 +274,8 @@ namespace internal
     }
   } // namespace
 } // namespace internal
+
+
 
 template <typename Sparsity>
 void

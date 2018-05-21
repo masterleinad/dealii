@@ -47,6 +47,7 @@ interpolation_conditions(const std::vector<Polynomial<double>>& polynomials)
     }
 }
 
+
 int
 main()
 {

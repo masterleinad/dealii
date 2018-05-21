@@ -28,6 +28,7 @@ public:
     : ChartManifold<dim, spacedim, spacedim>(periodicity)
   {}
 
+
   virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override
   {
@@ -35,11 +36,13 @@ public:
       new MyFlatManifold(this->get_periodicity()));
   }
 
+
   virtual Point<spacedim>
   pull_back(const Point<spacedim>& space_point) const
   {
     return space_point;
   }
+
 
   virtual Point<spacedim>
   push_forward(const Point<spacedim>& chart_point) const
@@ -56,6 +59,8 @@ public:
     return x;
   }
 };
+
+
 
 // Helper function
 template <int dim, int spacedim>

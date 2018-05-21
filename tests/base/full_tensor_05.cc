@@ -68,6 +68,8 @@ test()
   AssertThrow(a == b / 2, ExcInternalError());
 }
 
+
+
 int
 main()
 {

@@ -49,6 +49,7 @@ test(const unsigned int m = 13, const unsigned int n = 5)
     deallog << "Ok" << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

@@ -19,6 +19,7 @@
 
 #include <deal.II/base/aligned_vector.h>
 
+
 void
 test()
 {
@@ -80,6 +81,8 @@ test()
     AssertDimension(a[i], true);
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

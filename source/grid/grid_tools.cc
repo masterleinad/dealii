@@ -530,6 +530,7 @@ namespace GridTools
 
     Assert(considered_vertices.size() <= vertices.size(), ExcInternalError());
 
+
     // now loop over all vertices to be
     // considered and try to find an identical
     // one
@@ -578,6 +579,8 @@ namespace GridTools
 
     delete_unused_vertices(vertices, cells, subcelldata);
   }
+
+
 
   // define some transformations in an anonymous namespace
   namespace
@@ -664,6 +667,7 @@ namespace GridTools
     };
   } // namespace
 
+
   template <int dim, int spacedim>
   void
   shift(const Tensor<1, spacedim>&    shift_vector,
@@ -727,6 +731,8 @@ namespace GridTools
       solver.solve(SF, u, f, PF);
     }
   } // namespace
+
+
 
   // Implementation for 1D only
   template <>
@@ -879,6 +885,7 @@ namespace GridTools
     // points but keep them on
     // the manifold. however, this isn't implemented right now
     Assert(spacedim == dim, ExcNotImplemented());
+
 
     // find the smallest length of the
     // lines adjacent to the
@@ -1604,6 +1611,8 @@ namespace GridTools
     return best_cell;
   }
 
+
+
   template <int dim, int spacedim>
   std::vector<std::vector<Tensor<1, spacedim>>>
   vertex_to_cell_centers_directions(
@@ -1616,6 +1625,7 @@ namespace GridTools
     const unsigned int                  n_vertices = vertex_to_cells.size();
 
     AssertDimension(vertices.size(), n_vertices);
+
 
     std::vector<std::vector<Tensor<1, spacedim>>> vertex_to_cell_centers(
       n_vertices);
@@ -1877,6 +1887,8 @@ namespace GridTools
     } // namespace BoundingBoxPredicate
   }   // namespace internal
 
+
+
   template <class MeshType>
   std::vector<BoundingBox<MeshType::space_dimension>>
   compute_mesh_predicate_bounding_box(
@@ -2012,6 +2024,8 @@ namespace GridTools
         return merged_b_boxes;
       }
   }
+
+
 
   template <int spacedim>
   std::tuple<std::vector<std::vector<unsigned int>>,
@@ -3009,6 +3023,7 @@ namespace GridTools
     }
   } // namespace
 
+
   template <int dim, int spacedim>
   double
   minimal_cell_diameter(const Triangulation<dim, spacedim>& triangulation,
@@ -3222,6 +3237,8 @@ namespace GridTools
       {
         return object->face(f)->center();
       }
+
+
 
       /**
        * Compute the minimal diameter of an
@@ -3463,6 +3480,8 @@ namespace GridTools
         return (std::max(new_min_product, old_min_product) > 0);
       }
 
+
+
       void
       fix_up_faces(const dealii::Triangulation<1, 1>::cell_iterator&,
                    std::integral_constant<int, 1>,
@@ -3514,6 +3533,7 @@ namespace GridTools
       }
     } /* namespace FixUpDistortedChildCells */
   }   /* namespace internal */
+
 
   template <int dim, int spacedim>
   typename Triangulation<dim, spacedim>::DistortedCellList
@@ -3785,6 +3805,7 @@ namespace GridTools
     AssertThrow(!tria.has_hanging_nodes(),
                 ExcMessage("The input Triangulation cannot "
                            "have hanging nodes."));
+
 
     bool has_cells_with_more_than_dim_faces_on_boundary = true;
     bool has_cells_with_dim_faces_on_boundary           = false;
@@ -4561,6 +4582,8 @@ namespace GridTools
     } // namespace distributed_cptloc
   }   // namespace internal
 
+
+
   template <int dim, int spacedim>
   std::tuple<
     std::vector<typename Triangulation<dim, spacedim>::active_cell_iterator>,
@@ -4794,6 +4817,7 @@ namespace GridTools
 #endif
   }
 
+
   template <int dim, int spacedim>
   std::map<unsigned int, Point<spacedim>>
   extract_used_vertices(const Triangulation<dim, spacedim>& container,
@@ -4810,6 +4834,7 @@ namespace GridTools
     return result;
   }
 
+
   template <int spacedim>
   unsigned int
   find_closest_vertex(const std::map<unsigned int, Point<spacedim>>& vertices,
@@ -4824,6 +4849,7 @@ namespace GridTools
       });
     return id_and_v->first;
   }
+
 
   template <int dim, int spacedim>
   std::pair<typename Triangulation<dim, spacedim>::active_cell_iterator,

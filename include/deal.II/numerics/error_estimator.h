@@ -25,6 +25,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 template <int, int>
 class Mapping;
 template <int>
@@ -415,6 +416,7 @@ public:
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
 
+
   /**
    * Equivalent to the set of functions above, except that this one takes a
    * quadrature collection for hp finite element dof handlers.
@@ -436,6 +438,7 @@ public:
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
+
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -458,6 +461,7 @@ public:
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
 
+
   /**
    * Equivalent to the set of functions above, except that this one takes a
    * quadrature collection for hp finite element dof handlers.
@@ -479,6 +483,7 @@ public:
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
+
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -696,6 +701,7 @@ public:
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
 
+
   /**
    * Equivalent to the set of functions above, except that this one takes a
    * quadrature collection for hp finite element dof handlers.
@@ -717,6 +723,7 @@ public:
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
+
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -739,6 +746,7 @@ public:
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
 
+
   /**
    * Equivalent to the set of functions above, except that this one takes a
    * quadrature collection for hp finite element dof handlers.
@@ -760,6 +768,7 @@ public:
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
+
 
   /**
    * Equivalent to the set of functions above, except that this one takes a

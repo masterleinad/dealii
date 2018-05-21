@@ -71,6 +71,7 @@
 
 #include <iostream>
 
+
 void
 test()
 {
@@ -109,6 +110,7 @@ test()
       solid_top = static_cast<double>(v_distance + solid_cells_y * cell_size_y),
       total_length
       = (inflow_cells + solid_cells_x + outflow_cells) * cell_size_x;
+
 
     std::vector<std::vector<double>> step_sizes(2);
     //----------------INFLOW ---------------
@@ -215,6 +217,7 @@ test()
     IndexSet locally_relevant_dofs = handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(handler, locally_relevant_dofs);
 
+
     PETScWrappers::MPI::Vector vector;
     vector.reinit(locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
 
@@ -232,6 +235,7 @@ test()
                     ExcInternalError());
   }
 }
+
 
 int
 main(int argc, char* argv[])

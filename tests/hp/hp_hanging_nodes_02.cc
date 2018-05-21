@@ -99,6 +99,7 @@ run(bool random_p, unsigned int* indx)
         }
     }
 
+
   dof_handler.distribute_dofs(fe);
   deallog << "Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
@@ -124,6 +125,8 @@ run_test(unsigned int* indx)
   run<dim>(false, indx);
 }
 
+
+
 int
 main()
 {
@@ -132,6 +135,7 @@ main()
   deallog.attach(logfile);
 
   unsigned int index[] = {1, 2, 3, 4, 5, 6, 7};
+
 
   deallog << "Testing Order 1" << std::endl;
   run_test<2>(&(index[0]));

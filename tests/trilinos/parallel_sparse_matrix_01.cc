@@ -29,6 +29,7 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 
+
 void
 test()
 {
@@ -75,6 +76,8 @@ test()
   //           csp.add (start_row[bi] + i,
   //                    start_row[bj] + (i+2*k) % local_rows_per_process[bj]);
 
+
+
   // now create a matrix with this sparsity
   // pattern
   Epetra_Map map(
@@ -99,6 +102,8 @@ test()
   deallog << "OK" << std::endl;
 }
 
+
+
 int
 main(int argc, char** argv)
 {
@@ -106,6 +111,7 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
+
 
   try
     {

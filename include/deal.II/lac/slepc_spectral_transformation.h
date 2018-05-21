@@ -16,6 +16,7 @@
 #ifndef dealii_slepc_spectral_transformation_h
 #  define dealii_slepc_spectral_transformation_h
 
+
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_SLEPC
@@ -139,6 +140,7 @@ namespace SLEPcWrappers
      */
     TransformationShift(const MPI_Comm&       mpi_communicator,
                         const AdditionalData& data = AdditionalData());
+
 
   protected:
     /**

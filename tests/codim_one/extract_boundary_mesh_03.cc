@@ -69,6 +69,7 @@ test_vertices_orientation(
                  ExcInternalError());
         }
 
+
       for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           Point<spacedim> diff(face->vertex(k));
@@ -86,6 +87,7 @@ save_mesh(const Triangulation<dim, spacedim>& tria)
   GridOut grid_out;
   grid_out.write_gnuplot(tria, deallog.get_file_stream());
 }
+
 
 int
 main()

@@ -86,6 +86,7 @@ namespace internal
   };
 } // namespace internal
 
+
 // Enable the EnableIfScalar type trait for VectorizedArray<Number> such
 // that it can be used as a Number type in Tensor<rank,dim,Number>, etc.
 
@@ -1362,6 +1363,8 @@ vectorized_transpose_and_store(const bool                    add_into,
             out[offsets[v + outer] + i] = in[i][v + outer];
     }
 }
+
+
 
 #elif DEAL_II_COMPILER_VECTORIZATION_LEVEL >= 2 && defined(__AVX__)
 

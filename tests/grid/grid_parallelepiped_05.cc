@@ -108,5 +108,8 @@ main()
   check<3, 3>(true);
   check<3, 3>(false);
 
+  check<3, 3>(true);
+  check<3, 3>(false);
+
   deallog << "OK" << std::endl;
 }

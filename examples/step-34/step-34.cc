@@ -112,6 +112,7 @@ namespace Step34
     }
   } // namespace LaplaceKernel
 
+
   // @sect3{The BEMProblem class}
 
   // The structure of a boundary element method code is very similar to the
@@ -592,6 +593,7 @@ namespace Step34
     DoFTools::map_dofs_to_support_points<dim - 1, dim>(
       mapping, dh, support_points);
 
+
     // After doing so, we can start the integration loop over all cells, where
     // we first initialize the FEValues object and get the values of
     // $\mathbf{\tilde v}$ at the quadrature points (this vector field should
@@ -934,6 +936,7 @@ namespace Step34
       = dh.begin_active(),
       endc = dh.end();
 
+
     FEValues<dim - 1, dim> fe_v(mapping,
                                 fe,
                                 *quadrature,
@@ -1076,6 +1079,7 @@ namespace Step34
       compute_exterior_solution();
   }
 } // namespace Step34
+
 
 // @sect3{The main() function}
 

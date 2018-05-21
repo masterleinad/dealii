@@ -294,6 +294,8 @@ FiniteElement<dim, spacedim>::get_restriction_matrix(
   return restriction[refinement_case - 1][child];
 }
 
+
+
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FiniteElement<dim, spacedim>::get_prolongation_matrix(
@@ -574,6 +576,8 @@ FiniteElement<dim, spacedim>::face_to_cell_index(const unsigned int face_index,
       return (this->first_quad_index + face * this->dofs_per_quad + index);
     }
 }
+
+
 
 template <int dim, int spacedim>
 unsigned int

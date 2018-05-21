@@ -57,6 +57,8 @@
 #include <iostream>
 #include <vector>
 
+
+
 using namespace dealii;
 
 template <int dim>
@@ -91,6 +93,7 @@ public:
     return shift_vec;
   }
 };
+
 
 template <int dim,
           int fe_degree            = 2,
@@ -140,6 +143,7 @@ test(const unsigned int n_ref = 0)
   // quadrature for MatrixFree, not related to the degree in the
   // FE displacement field.
   QGauss<1> quadrature_formula(n_q_points);
+
 
   FESystem<dim>   fe_euler(FE_Q<dim>(euler_fe_degree), dim);
   DoFHandler<dim> dof_handler_euler(triangulation);
@@ -203,6 +207,16 @@ test(const unsigned int n_ref = 0)
     MappingQEulerian<dim, LinearAlgebra::distributed::Vector<NumberType>>
       euler_fine(euler_fe_degree, dof_handler_euler, displacement);
 
+
+    MatrixFree<dim, NumberType>                          matrix_free_euler;
+    typename MatrixFree<dim, NumberType>::AdditionalData data;
+    data.tasks_parallel_scheme
+      = MatrixFree<dim, NumberType>::AdditionalData::partition_color;
+    data.mapping_update_flags = update_values | update_gradients
+                                | update_JxW_values | update_quadrature_points;
+    matrix_free_euler.reinit(
+      euler_fine, dof_handler, constraints, quadrature_formula, data);
+
     MatrixFree<dim, NumberType>                          matrix_free_euler;
     typename MatrixFree<dim, NumberType>::AdditionalData data;
     data.tasks_parallel_scheme
@@ -214,6 +228,7 @@ test(const unsigned int n_ref = 0)
 
     MatrixFree<dim, NumberType> matrix_free;
     matrix_free.reinit(dof_handler, constraints, quadrature_formula, data);
+
 
     // test fine-level mapping:
     {
@@ -323,6 +338,8 @@ test(const unsigned int n_ref = 0)
 
   deallog << "Ok" << std::endl;
 }
+
+
 
 int
 main(int argc, char* argv[])

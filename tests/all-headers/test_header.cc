@@ -21,6 +21,7 @@
 #  error "HEADER does not include config.h."
 #endif
 
+
 int
 main()
 {

@@ -46,6 +46,7 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
 
+
 void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
 {
   // This quadrature rule determines
@@ -120,6 +121,7 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
     }
 }
 
+
 int
 main()
 {
@@ -150,6 +152,7 @@ main()
   // on uniform mesh:
   deallog << "Uniform mesh test" << std::endl;
   evaluate_normal(dof_handler, solution);
+
 
   // Then test same on distorted mesh
   GridTools::distort_random(0.05, tria_test);

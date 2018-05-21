@@ -27,6 +27,8 @@ namespace internal
     NumberCache::NumberCache() : n_global_dofs(0), n_locally_owned_dofs(0)
     {}
 
+
+
     NumberCache::NumberCache(const types::global_dof_index n_global_dofs)
       : n_global_dofs(n_global_dofs),
         n_locally_owned_dofs(n_global_dofs),
@@ -34,6 +36,8 @@ namespace internal
         n_locally_owned_dofs_per_processor(1, n_global_dofs),
         locally_owned_dofs_per_processor(1, complete_index_set(n_global_dofs))
     {}
+
+
 
     NumberCache::NumberCache(
       const std::vector<IndexSet>& locally_owned_dofs_per_processor,
@@ -53,11 +57,14 @@ namespace internal
       n_locally_owned_dofs = n_locally_owned_dofs_per_processor[my_rank];
       locally_owned_dofs   = locally_owned_dofs_per_processor[my_rank];
 
+
       n_global_dofs
         = std::accumulate(n_locally_owned_dofs_per_processor.begin(),
                           n_locally_owned_dofs_per_processor.end(),
                           types::global_dof_index(0));
     }
+
+
 
     void
     NumberCache::clear()

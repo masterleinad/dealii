@@ -70,6 +70,7 @@ test()
             << get_real_assert_zero_imag(v(block1.nth_index_in_set(0)))
             << std::endl;
 
+
   ConstraintMatrix cm;
   cm.add_line(0);
   cm.add_entry(0, 1, 3.0);
@@ -85,6 +86,8 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

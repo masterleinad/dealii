@@ -191,6 +191,7 @@ test6(const bool         do_href,
   dof_handler.clear();
 }
 
+
 int
 main(int argc, char** argv)
 {

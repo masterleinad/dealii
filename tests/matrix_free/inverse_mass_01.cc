@@ -34,6 +34,8 @@
 
 std::ofstream logfile("output");
 
+
+
 template <int dim,
           int fe_degree,
           typename Number,
@@ -202,6 +204,8 @@ test()
       deallog.pop();
     }
 }
+
+
 
 int
 main()

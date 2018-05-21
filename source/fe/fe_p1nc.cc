@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/fe/fe_p1nc.h>
 
@@ -33,11 +34,15 @@ FE_P1NC::FE_P1NC()
   initialize_constraints();
 }
 
+
+
 std::string
 FE_P1NC::get_name() const
 {
   return "FE_P1NC";
 }
+
+
 
 UpdateFlags
 FE_P1NC::requires_update_flags(const UpdateFlags flags) const
@@ -56,6 +61,8 @@ FE_P1NC::requires_update_flags(const UpdateFlags flags) const
   return out;
 }
 
+
+
 std::unique_ptr<FiniteElement<2, 2>>
 FE_P1NC::clone() const
 {
@@ -71,6 +78,8 @@ FE_P1NC::get_dpo_vector()
   dpo[2] = 0; // quad
   return dpo;
 }
+
+
 
 std::array<std::array<double, 3>, 4>
 FE_P1NC::get_linear_shape_coefficients(
@@ -124,6 +133,8 @@ FE_P1NC::get_linear_shape_coefficients(
   return coeffs;
 }
 
+
+
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_data(
   const UpdateFlags update_flags,
@@ -146,6 +157,8 @@ FE_P1NC::get_data(
   return data;
 }
 
+
+
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_face_data(
   const UpdateFlags update_flags,
@@ -167,6 +180,8 @@ FE_P1NC::get_face_data(
 
   return data;
 }
+
+
 
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_subface_data(
@@ -312,6 +327,8 @@ FE_P1NC::fill_fe_subface_values(
         output_data.shape_gradients[k][i]
           = Point<2>(coeffs[k][0], coeffs[k][1]);
 }
+
+
 
 void
 FE_P1NC::initialize_constraints()

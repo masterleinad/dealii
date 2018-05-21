@@ -31,6 +31,7 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/solver_cg.h>
@@ -65,6 +66,8 @@ private:
   Vector<double> system_rhs;
 };
 
+
+
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
@@ -78,6 +81,7 @@ LaplaceProblem<dim>::run()
   GridIn<dim> grid_in;
   grid_in.attach_triangulation(triangulation);
 
+
   std::ifstream input_file(SOURCE_DIR "/gerold_1.inp");
 
   deallog << "read ucd data file" << std::endl;
@@ -85,6 +89,7 @@ LaplaceProblem<dim>::run()
   grid_in.read_ucd(input_file);
   deallog << "ucd data file readin exe" << std::endl;
 }
+
 
 int
 main()

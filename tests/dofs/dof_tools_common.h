@@ -40,6 +40,8 @@ template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler);
 
+
+
 void
 output_bool_vector(std::vector<bool>& v)
 {
@@ -55,6 +57,7 @@ set_boundary_ids(Triangulation<dim>& tria)
   for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     tria.begin_active()->face(f)->set_boundary_id(f);
 }
+
 
 void set_boundary_ids(Triangulation<1>&)
 {}
@@ -101,6 +104,18 @@ check(const FiniteElement<dim>& fe, const std::string& name)
     check(q, #sub1 #N1);          \
   }
 
+#define CHECK(EL, deg, dim) \
+  {                         \
+    FE_##EL<dim> EL(deg);   \
+    check(EL, #EL #deg);    \
+  }
+
+#define CHECK_SYS1(sub1, N1, dim) \
+  {                               \
+    FESystem<dim> q(sub1, N1);    \
+    check(q, #sub1 #N1);          \
+  }
+
 #define CHECK_SYS2(sub1, N1, sub2, N2, dim) \
   {                                         \
     FESystem<dim> q(sub1, N1, sub2, N2);    \
@@ -111,6 +126,14 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   {                                                   \
     FESystem<dim> q(sub1, N1, sub2, N2, sub3, N3);    \
     check(q, #sub1 #N1 #sub2 #N2 #sub3 #N3);          \
+  }
+
+
+#define CHECK_ALL(EL, deg) \
+  {                        \
+    CHECK(EL, deg, 1);     \
+    CHECK(EL, deg, 2);     \
+    CHECK(EL, deg, 3);     \
   }
 
 #define CHECK_ALL(EL, deg) \
@@ -164,6 +187,10 @@ main()
       CHECK_SYS1(FE_Q<2>(1), 3, 2);
       CHECK_SYS1(FE_DGQ<2>(2), 2, 2);
       CHECK_SYS1(FE_DGP<2>(3), 1, 2);
+
+      CHECK_SYS1(FE_Q<3>(1), 3, 3);
+      CHECK_SYS1(FE_DGQ<3>(2), 2, 3);
+      CHECK_SYS1(FE_DGP<3>(3), 1, 3);
 
       CHECK_SYS1(FE_Q<3>(1), 3, 3);
       CHECK_SYS1(FE_DGQ<3>(2), 2, 3);

@@ -21,6 +21,7 @@
 
 #include <deal.II/base/index_set.h>
 
+
 void
 test()
 {
@@ -45,6 +46,8 @@ test()
 
   std::remove("a.idxset");
 }
+
+
 
 int
 main()

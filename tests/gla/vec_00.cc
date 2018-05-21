@@ -41,10 +41,12 @@ test()
   IndexSet local_relevant(numproc * 2);
   local_relevant.add_range(1, 2);
 
+
   IndexSet something(100);
   something.add_range(myid, myid + 1);
   if(myid == numproc - 1)
     something.add_range(numproc, 100);
+
 
   {
     typename LA::MPI::Vector v1;
@@ -70,6 +72,8 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

@@ -58,6 +58,7 @@ namespace Physics
       Tensor<2, 2, Number>
       rotation_matrix_2d(const Number& angle);
 
+
       /**
        * Return the rotation matrix for 3-d Euclidean space. Most concisely
        * stated using the Rodrigues' rotation formula, this function returns
@@ -781,6 +782,11 @@ namespace Physics
   } // namespace Transformations
 } // namespace Physics
 
+
+    //@}
+  } // namespace Transformations
+} // namespace Physics
+
 #ifndef DOXYGEN
 
 // ------------------------- inline functions ------------------------
@@ -903,6 +909,8 @@ namespace internal
     } // namespace
   }   // namespace Physics
 } // namespace internal
+
+
 
 template <typename Number>
 Tensor<2, 2, Number>

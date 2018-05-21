@@ -404,6 +404,7 @@ public:
   initialize(std::istream&     input_stream,
              ParameterHandler& prm = ParameterAcceptor::prm);
 
+
   /**
    * Clear class list and global parameter file.
    */
@@ -625,6 +626,8 @@ ParameterAcceptor::add_parameter(const std::string&           entry,
   leave_my_subsection(prm);
 }
 
+
+
 template <class SourceClass>
 template <typename... Args>
 ParameterAcceptorProxy<SourceClass>::ParameterAcceptorProxy(
@@ -633,12 +636,16 @@ ParameterAcceptorProxy<SourceClass>::ParameterAcceptorProxy(
   : SourceClass(args...), ParameterAcceptor(section_name)
 {}
 
+
+
 template <class SourceClass>
 void
 ParameterAcceptorProxy<SourceClass>::declare_parameters(ParameterHandler& prm)
 {
   SourceClass::declare_parameters(prm);
 }
+
+
 
 template <class SourceClass>
 void

@@ -170,6 +170,7 @@ LaplaceProblem<dim>::assemble_system()
                             * fe_values.JxW(q_point));
           };
 
+
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         {
@@ -220,6 +221,7 @@ LaplaceProblem<dim>::assemble_multigrid()
                                    * fe_values.JxW(q_point);
           };
 
+
       cell->get_mg_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         {
@@ -264,6 +266,7 @@ LaplaceProblem<dim>::solve()
 
   SolverControl solver_control(1000, 1e-12);
   SolverCG<>    cg(solver_control);
+
 
   cg.solve(system_matrix, solution, system_rhs, preconditioner);
 
@@ -314,6 +317,8 @@ LaplaceProblem<dim>::run()
       output_results(cycle);
     };
 }
+
+
 
 int
 main()

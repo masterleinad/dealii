@@ -18,10 +18,13 @@
 #include "../tests.h"
 #include "full_matrix_common.h"
 
+
+
 const double entries2[4] = {0.814723686393179,
                             0.516389376684563,
                             0.516389376684563,
                             0.913375856139019};
+
 
 const double entries3[9] = {1.808621732261680,
                             0.845866689167942,
@@ -32,6 +35,8 @@ const double entries3[9] = {1.808621732261680,
                             0.667106522517665,
                             0.281706853672865,
                             0.741757766593798};
+
+
 
 // Create a positive definite random matrix
 

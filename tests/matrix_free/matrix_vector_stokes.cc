@@ -46,6 +46,8 @@ std::ofstream logfile("output");
 #include <complex>
 #include <iostream>
 
+
+
 template <int dim, int degree_p, typename VectorType>
 class MatrixFreeTest
 {
@@ -95,6 +97,7 @@ public:
         pressure.distribute_local_to_global(dst, dim);
       }
   }
+
 
   void
   vmult(VectorType& dst, const VectorType& src) const
@@ -295,6 +298,8 @@ test()
           << error / relative << std::endl
           << std::endl;
 }
+
+
 
 int
 main()

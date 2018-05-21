@@ -980,6 +980,7 @@ public:
   void
   clear();
 
+
   /**
    * Declare a new entry with name <tt>entry</tt>, default and for which any
    * input has to match the <tt>pattern</tt> (default: any pattern).
@@ -1222,6 +1223,7 @@ public:
    */
   void
   set(const std::string& entry_name, const bool& new_value);
+
 
   /**
    * Print all parameters with the given style to <tt>out</tt>.

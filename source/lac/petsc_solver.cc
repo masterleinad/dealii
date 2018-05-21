@@ -37,6 +37,8 @@ namespace PETScWrappers
     destroy_krylov_solver(ksp);
   }
 
+
+
   SolverBase::SolverBase(SolverControl& cn, const MPI_Comm& mpi_communicator)
     : solver_control(cn), mpi_communicator(mpi_communicator)
   {}
@@ -145,6 +147,7 @@ namespace PETScWrappers
     solver_data.reset();
   }
 
+
   SolverControl&
   SolverBase::control() const
   {
@@ -230,6 +233,8 @@ namespace PETScWrappers
   SolverRichardson::AdditionalData::AdditionalData(const double omega)
     : omega(omega)
   {}
+
+
 
   SolverRichardson::SolverRichardson(SolverControl&        cn,
                                      const MPI_Comm&       mpi_communicator,
@@ -345,6 +350,8 @@ namespace PETScWrappers
     : restart_parameter(restart_parameter),
       right_preconditioning(right_preconditioning)
   {}
+
+
 
   SolverGMRES::SolverGMRES(SolverControl&        cn,
                            const MPI_Comm&       mpi_communicator,
@@ -566,6 +573,7 @@ namespace PETScWrappers
     // the 'pc' object is owned by the 'ksp' object, and consequently
     // does not have to be destroyed explicitly here
   }
+
 
   SparseDirectMUMPS::SparseDirectMUMPS(SolverControl&        cn,
                                        const MPI_Comm&       mpi_communicator,

@@ -29,6 +29,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim>
 void
 testit(parallel::distributed::Triangulation<dim>& tr)
@@ -72,6 +73,7 @@ test(std::ostream& /*out*/)
     testit(tr);
   }
 }
+
 
 int
 main(int argc, char* argv[])

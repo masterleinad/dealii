@@ -52,6 +52,7 @@ check()
   for(unsigned int l = 0; l < tr.n_levels(); ++l)
     DoFRenumbering::component_wise(mgdof, l);
 
+
   typename DoFHandler<dim>::level_cell_iterator cell = mgdof.begin_mg(),
                                                 endc = mgdof.end_mg();
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
@@ -95,6 +96,7 @@ check()
           }
     }
 }
+
 
 int
 main()

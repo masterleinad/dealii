@@ -19,6 +19,7 @@
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
 
+
 template <int dim>
 void
 test()
@@ -69,6 +70,8 @@ test()
         AssertThrow(bs[i][j] == ba[i][j], ExcInternalError());
       }
 }
+
+
 
 int
 main()

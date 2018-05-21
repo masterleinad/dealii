@@ -39,6 +39,7 @@ test(unsigned int ref = 1)
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
+
   tria.begin_active()->set_manifold_id(3);
   for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     tria.begin_active()->face(f)->set_manifold_id(2);

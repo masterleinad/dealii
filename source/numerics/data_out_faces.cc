@@ -69,6 +69,8 @@ namespace internal
   } // namespace DataOutFacesImplementation
 } // namespace internal
 
+
+
 template <int dim, typename DoFHandlerType>
 DataOutFaces<dim, DoFHandlerType>::DataOutFaces(const bool so)
   : surface_only(so)
@@ -299,6 +301,8 @@ DataOutFaces<dim, DoFHandlerType>::build_one_patch(
     }
 }
 
+
+
 template <int dim, typename DoFHandlerType>
 void
 DataOutFaces<dim, DoFHandlerType>::build_patches(
@@ -347,6 +351,7 @@ DataOutFaces<dim, DoFHandlerType>::build_patches(
   this->patches.clear();
   this->patches.reserve(all_faces.size());
   Assert(this->patches.size() == 0, ExcInternalError());
+
 
   std::vector<unsigned int> n_postprocessor_outputs(this->dof_data.size());
   for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)

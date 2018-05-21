@@ -653,6 +653,7 @@ namespace DoFRenumbering
                  const std::vector<unsigned int>& target_component
                  = std::vector<unsigned int>());
 
+
   /**
    * Sort the degrees of freedom by component. It does the same thing as the
    * above function, only that it does this for one single level of a
@@ -958,6 +959,7 @@ namespace DoFRenumbering
              const Tensor<1, DoFHandlerType::space_dimension>& direction,
              const bool dof_wise_renumbering = false);
 
+
   /**
    * Cell-wise downstream numbering with respect to a constant flow direction
    * on one level of a multigrid hierarchy. See the other function with the same name.
@@ -1206,6 +1208,7 @@ namespace DoFRenumbering
    */
   DeclException0(ExcNotDGFEM);
 } // namespace DoFRenumbering
+
 
 DEAL_II_NAMESPACE_CLOSE
 

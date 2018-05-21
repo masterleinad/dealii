@@ -45,6 +45,7 @@ check(const FiniteElement<dim>& fe1,
     CHECK(EL1, deg1, EL2, deg2, 3);     \
   }
 
+
 int
 main(int argc, char** argv)
 {

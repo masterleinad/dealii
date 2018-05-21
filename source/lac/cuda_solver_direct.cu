@@ -41,6 +41,8 @@ namespace CUDAWrappers
       AssertCusparse(cusparse_error_code);
     }
 
+
+
     void
     cusparsecsr2dense(cusparseHandle_t            cusparse_handle,
                       const SparseMatrix<double>& matrix,
@@ -61,6 +63,8 @@ namespace CUDAWrappers
       AssertCusparse(cusparse_error_code);
     }
 
+
+
     void
     cusolverDngetrf_buffer_size(cusolverDnHandle_t cusolver_dn_handle,
                                 int                m,
@@ -73,6 +77,8 @@ namespace CUDAWrappers
       AssertCusolver(cusolver_error_code);
     }
 
+
+
     void
     cusolverDngetrf_buffer_size(cusolverDnHandle_t cusolver_dn_handle,
                                 int                m,
@@ -84,6 +90,8 @@ namespace CUDAWrappers
         cusolver_dn_handle, m, n, dense_matrix_dev, m, &workspace_size);
       AssertCusolver(cusolver_error_code);
     }
+
+
 
     void
     cusolverDngetrf(cusolverDnHandle_t cusolver_dn_handle,
@@ -106,6 +114,8 @@ namespace CUDAWrappers
       AssertCusolver(cusolver_error_code);
     }
 
+
+
     void
     cusolverDngetrf(cusolverDnHandle_t cusolver_dn_handle,
                     int                m,
@@ -126,6 +136,8 @@ namespace CUDAWrappers
                            info_dev);
       AssertCusolver(cusolver_error_code);
     }
+
+
 
     void
     cusolverDngetrs(cusolverDnHandle_t cusolver_dn_handle,
@@ -150,6 +162,8 @@ namespace CUDAWrappers
       AssertCusolver(cusolver_error_code);
     }
 
+
+
     void
     cusolverDngetrs(cusolverDnHandle_t cusolver_dn_handle,
                     int                m,
@@ -172,6 +186,8 @@ namespace CUDAWrappers
                            info_dev);
       AssertCusolver(cusolver_error_code);
     }
+
+
 
     void
     cusolverSpcsrlsvluHost(cusolverSpHandle_t cusolver_sp_handle,
@@ -202,6 +218,8 @@ namespace CUDAWrappers
       Assert(singularity == -1, ExcMessage("Coarse matrix is singular"));
     }
 
+
+
     void
     cusolverSpcsrlsvluHost(cusolverSpHandle_t cusolver_sp_handle,
                            const unsigned int n_rows,
@@ -231,6 +249,8 @@ namespace CUDAWrappers
       Assert(singularity == -1, ExcMessage("Coarse matrix is singular"));
     }
 
+
+
     void
     cholesky_factorization(cusolverSpHandle_t         cusolver_sp_handle,
                            const SparseMatrix<float>& matrix,
@@ -256,6 +276,8 @@ namespace CUDAWrappers
       AssertCusolver(cusolver_error_code);
       Assert(singularity == -1, ExcMessage("Coarse matrix is not SPD"));
     }
+
+
 
     void
     cholesky_factorization(cusolverSpHandle_t          cusolver_sp_handle,
@@ -390,6 +412,8 @@ namespace CUDAWrappers
       Utilities::CUDA::copy_to_dev(x_host, x_dev);
     }
   } // namespace internal
+
+
 
   template <typename Number>
   SolverDirect<Number>::AdditionalData::AdditionalData(

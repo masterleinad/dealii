@@ -114,6 +114,8 @@ BlockSparseMatrix<number>::empty() const
   return true;
 }
 
+
+
 template <typename number>
 typename BlockSparseMatrix<number>::size_type
 BlockSparseMatrix<number>::get_row_length(const size_type row) const

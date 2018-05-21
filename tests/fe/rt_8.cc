@@ -35,6 +35,7 @@
 
 #define PRECISION 8
 
+
 std::ofstream logfile("output");
 
 template <int dim>
@@ -59,6 +60,7 @@ test(const unsigned int degree)
   FullMatrix<double> mass_matrix(dofs_per_cell, dofs_per_cell);
 
   Assert(fe.get_fe().n_components() == dim, ExcInternalError());
+
 
   for(unsigned int q_point = 0; q_point < q.size(); ++q_point)
     for(unsigned int i = 0; i < dofs_per_cell; ++i)

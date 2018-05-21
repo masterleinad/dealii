@@ -953,6 +953,7 @@ ScaLAPACKMatrix<NumberType>::local_n() const
   return n_local_columns;
 }
 
+
 #  endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE

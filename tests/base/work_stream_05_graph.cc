@@ -30,6 +30,7 @@ struct CopyData
   unsigned int computed;
 };
 
+
 void
 worker(const std::vector<unsigned int>::iterator& i, ScratchData&, CopyData& ad)
 {
@@ -55,6 +56,8 @@ conflictor(const std::vector<unsigned int>::iterator& i)
 
   return conflicts;
 }
+
+
 
 void
 test()
@@ -90,6 +93,8 @@ test()
   for(unsigned int i = 0; i < result.size(); ++i)
     deallog << result(i) << std::endl;
 }
+
+
 
 int
 main()

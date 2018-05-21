@@ -29,6 +29,7 @@ fill(AnyData& data)
   d1 = 18.;
 }
 
+
 void
 extract(const AnyData& data)
 {

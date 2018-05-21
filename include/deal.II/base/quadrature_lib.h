@@ -183,6 +183,8 @@ private:
   get_quadrature_weights(const unsigned int n);
 };
 
+
+
 /**
  * A class for Gauss quadrature with arbitrary logarithmic weighting function.
  * This formula is used to integrate $\ln(|x-x_0|/\alpha)\;f(x)$ on the
@@ -818,6 +820,8 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
 template <>
 QTelles<1>::QTelles(const Quadrature<1>& base_quad,
                     const Point<1>&      singularity);
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

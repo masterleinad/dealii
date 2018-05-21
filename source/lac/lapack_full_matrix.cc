@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/lapack_full_matrix.h>
@@ -330,6 +331,8 @@ namespace
   }
 } // namespace
 
+
+
 template <typename number>
 void
 LAPACKFullMatrix<number>::rank1_update(const number a, const Vector<number>& v)
@@ -537,6 +540,7 @@ LAPACKFullMatrix<number>::Tvmult(Vector<number>&       w,
 
       return;
     }
+
 
   switch(state)
     {
@@ -1625,6 +1629,14 @@ LAPACKFullMatrix<number>::compute_eigenvalues_symmetric(
   std::vector<types::blas_int> iwork(static_cast<size_type>(5 * nn));
   std::vector<types::blas_int> ifail(static_cast<size_type>(nn));
 
+  types::blas_int              info(0), lwork(-1), n_eigenpairs(0);
+  const char* const            jobz(&V);
+  const char* const            uplo(&U);
+  const char* const            range(&V);
+  const types::blas_int* const dummy(&one);
+  std::vector<types::blas_int> iwork(static_cast<size_type>(5 * nn));
+  std::vector<types::blas_int> ifail(static_cast<size_type>(nn));
+
   /*
    * The LAPACK routine xSYEVX requires a sufficiently large work array; the
    * minimum requirement is
@@ -1730,6 +1742,14 @@ LAPACKFullMatrix<number>::compute_generalized_eigenvalues_symmetric(
   number* const values_A            = &this->values[0];
   number* const values_B            = &B.values[0];
   number* const values_eigenvectors = &matrix_eigenvectors.values[0];
+
+  types::blas_int              info(0), lwork(-1), n_eigenpairs(0);
+  const char* const            jobz(&V);
+  const char* const            uplo(&U);
+  const char* const            range(&V);
+  const types::blas_int* const dummy(&one);
+  iwork.resize(static_cast<size_type>(5 * nn));
+  std::vector<types::blas_int> ifail(static_cast<size_type>(nn));
 
   types::blas_int              info(0), lwork(-1), n_eigenpairs(0);
   const char* const            jobz(&V);

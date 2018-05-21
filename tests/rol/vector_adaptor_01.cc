@@ -33,6 +33,7 @@ test(const VectorType& given_vector)
   AssertThrow(given_vector == *given_vector_rol.getVector(),
               ExcInternalError());
 
+
   Teuchos::RCP<VectorType>       w_rcp = Teuchos::rcp(new VectorType);
   Rol::VectorAdaptor<VectorType> w_rol(w_rcp);
 
@@ -53,6 +54,8 @@ test(const VectorType& given_vector)
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

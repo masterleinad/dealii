@@ -36,6 +36,7 @@
 
 std::ofstream logfile("output");
 
+
 void
 check_file()
 {
@@ -58,6 +59,7 @@ check_file()
         }
     }
 }
+
 
 int
 main()

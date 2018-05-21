@@ -27,6 +27,8 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
+
+
 template <int dim>
 void
 check()
@@ -42,6 +44,7 @@ check()
 
   deallog << "n_active_cells: " << tria.n_active_cells() << std::endl;
 
+
   GridRefinement::refine_and_coarsen_fixed_fraction(
     tria, estimated_error_per_cell, 0.25, 0);
   tria.execute_coarsening_and_refinement();
@@ -50,6 +53,7 @@ check()
 
   deallog << "OK for " << dim << "d" << std::endl;
 }
+
 
 int
 main()

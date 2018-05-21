@@ -20,6 +20,7 @@
 #include <deal.II/lac/vector.h>
 #include <vector>
 
+
 void
 test(const unsigned int chunk_size,
      Vector<double>&    v,
@@ -69,6 +70,8 @@ test(const unsigned int chunk_size,
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

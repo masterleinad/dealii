@@ -19,6 +19,7 @@
 
 #include <deal.II/base/index_set.h>
 
+
 void
 test()
 {
@@ -34,6 +35,8 @@ test()
 
   deallog << index_set.n_elements() << std::endl;
 }
+
+
 
 int
 main()

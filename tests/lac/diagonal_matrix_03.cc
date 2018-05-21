@@ -21,6 +21,8 @@
 #include <deal.II/lac/linear_operator.h>
 #include <deal.II/lac/vector.h>
 
+
+
 void
 check()
 {
@@ -87,6 +89,7 @@ check()
   out -= exact;
   deallog << "Error vmult set 3: " << out.linfty_norm() << std::endl;
 }
+
 
 int
 main()

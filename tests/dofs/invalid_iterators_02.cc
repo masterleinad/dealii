@@ -21,6 +21,7 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
 
+
 template <int dim>
 void
 check()
@@ -35,6 +36,8 @@ check()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

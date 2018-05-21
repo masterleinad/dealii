@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -142,6 +143,7 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
   // compute (deg+1)^(dim-1)
   for(unsigned int d = 1; d < dim; ++d)
     n_face_points *= deg + 1;
+
 
   this->generalized_support_points.resize(
     GeometryInfo<dim>::faces_per_cell * n_face_points + n_interior_points);

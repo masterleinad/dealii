@@ -39,6 +39,8 @@
 
 #include <deal.II/numerics/data_out.h>
 
+
+
 int
 main()
 {
@@ -47,6 +49,7 @@ main()
   Triangulation<2> triangulation;
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
+
 
   hp::FECollection<2> fe_collection;
   fe_collection.push_back(FE_Q<2>(1));
@@ -67,6 +70,7 @@ main()
   cell++;
   cell->set_active_fe_index(0);
 
+
   dof_handler.distribute_dofs(fe_collection);
 
   // Init solution
@@ -79,6 +83,7 @@ main()
   data_out.add_data_vector(solution, "Solution");
   data_out.build_patches();
   data_out.write_vtu(deallog.get_file_stream());
+
 
   // Interpoalte solution
   SolutionTransfer<2, Vector<double>, hp::DoFHandler<2>> solultion_trans(

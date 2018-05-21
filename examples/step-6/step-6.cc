@@ -115,6 +115,7 @@ private:
   FE_Q<dim>       fe;
   DoFHandler<dim> dof_handler;
 
+
   // This is the new variable in the main class. We need an object which holds
   // a list of constraints to hold the hanging nodes and the boundary
   // conditions.
@@ -251,6 +252,7 @@ Step6<dim>::setup_system()
   // the current set of constraints from the last system and then compute new ones:
   constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
+
 
   // Now we are ready to interpolate the boundary values with indicator 0 (the
   // whole boundary) and store the resulting constraints in our
@@ -604,6 +606,7 @@ Step6<dim>::run()
         }
       else
         refine_grid();
+
 
       std::cout << "   Number of active cells:       "
                 << triangulation.n_active_cells() << std::endl;

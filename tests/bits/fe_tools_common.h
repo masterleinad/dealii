@@ -43,6 +43,8 @@ template <int dim>
 void
 check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2);
 
+
+
 // output some indicators for a given matrix. we don't write out the
 // entire matrix since this would blow up our output files beyond
 // reasonable limits
@@ -80,6 +82,8 @@ output_vector(const VectorType& v)
     deallog << v(i) << ' ';
   deallog << std::endl;
 }
+
+
 
 template <int dim>
 Triangulation<dim>*
@@ -126,6 +130,8 @@ check(const FiniteElement<dim>& fe1,
   // call main function in .cc files
   check_this(fe1, fe2);
 }
+
+
 
 #define CHECK(EL1, deg1, EL2, deg2, dim)                \
   {                                                     \
@@ -206,9 +212,17 @@ main()
       CHECK_SYS1(FE_DGQ<1>(2), 2, FE_DGQ<1>(3), 2, 1);
       CHECK_SYS1(FE_DGP<1>(3), 1, FE_DGP<1>(1), 1, 1);
 
+      CHECK_SYS1(FE_Q<1>(1), 3, FE_Q<1>(2), 3, 1);
+      CHECK_SYS1(FE_DGQ<1>(2), 2, FE_DGQ<1>(3), 2, 1);
+      CHECK_SYS1(FE_DGP<1>(3), 1, FE_DGP<1>(1), 1, 1);
+
       CHECK_SYS1(FE_Q<2>(1), 3, FE_Q<2>(2), 3, 2);
       CHECK_SYS1(FE_DGQ<2>(2), 2, FE_DGQ<2>(3), 2, 2);
       CHECK_SYS1(FE_DGP<2>(3), 1, FE_DGP<2>(1), 1, 2);
+
+      CHECK_SYS1(FE_Q<3>(1), 3, FE_Q<3>(2), 3, 3);
+      CHECK_SYS1(FE_DGQ<3>(2), 2, FE_DGQ<3>(3), 2, 3);
+      CHECK_SYS1(FE_DGP<3>(3), 1, FE_DGP<3>(1), 1, 3);
 
       CHECK_SYS1(FE_Q<3>(1), 3, FE_Q<3>(2), 3, 3);
       CHECK_SYS1(FE_DGQ<3>(2), 2, FE_DGQ<3>(3), 2, 3);

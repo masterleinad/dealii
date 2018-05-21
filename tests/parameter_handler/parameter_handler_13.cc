@@ -46,6 +46,7 @@ check(const char* p)
     }
 }
 
+
 int
 main()
 {

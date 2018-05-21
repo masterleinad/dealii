@@ -46,6 +46,7 @@ main()
   tria.set_all_manifold_ids_on_boundary(0);
   tria.set_manifold(0, circle);
 
+
   // refine it more or less
   // arbitrarily
   tria.refine_global(1);

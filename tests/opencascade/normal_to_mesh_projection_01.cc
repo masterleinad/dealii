@@ -51,6 +51,7 @@ main()
 
   TopoDS_Face face = BRepFill::Face(edge1, edge2);
 
+
   NormalToMeshProjectionBoundary<1, 3> manifold(face);
 
   Triangulation<1, 3> tria;

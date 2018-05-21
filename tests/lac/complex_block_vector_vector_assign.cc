@@ -34,6 +34,7 @@ operator==(const Vector1& v1, const Vector2& v2)
   return true;
 }
 
+
 void
 test()
 {
@@ -59,6 +60,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

@@ -239,6 +239,7 @@ namespace Functions
                std::vector<typename VectorType::value_type>& values,
                const unsigned int component = 0) const override;
 
+
     /**
      * Set @p values to the point values of the function at the @p points. It
      * is assumed that @p values already has the right size, i.e. the same
@@ -336,6 +337,7 @@ namespace Functions
       const std::vector<Point<dim>>&                                p,
       std::vector<Tensor<1, dim, typename VectorType::value_type>>& gradients,
       const unsigned int component = 0) const override;
+
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.

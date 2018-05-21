@@ -21,12 +21,14 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/fe/mapping_q1.h>
 
+
 #include <array>
 
 DEAL_II_NAMESPACE_OPEN
 
 template <typename>
 class Vector;
+
 
 /*!@addtogroup mapping */
 /*@{*/
@@ -136,6 +138,8 @@ public:
    * Exception.
    */
   DeclException0(ExcInactiveCell);
+
+
 
 protected:
   /**

@@ -30,6 +30,7 @@ check()
               ExcInternalError());
 }
 
+
 int
 main()
 {
@@ -60,6 +61,8 @@ main()
         t2[i][j] = 3. * b - i + j;
       }
   t1* t2;
+
+  t2 += a * t1;
 
   t2 += a * t1;
 

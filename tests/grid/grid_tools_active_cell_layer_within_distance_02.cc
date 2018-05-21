@@ -59,10 +59,12 @@ test()
 {
   deallog << "dim = " << dim << std::endl;
 
+
   std::vector<double>
     step_sizes_i; // step sizes in i direction (similar in all directions)
   std::vector<std::vector<double>>
     step_sizes; // step sizes as input to the subdivided_hyper_rectangle
+
 
   unsigned int n_steps = 25;
   double       size    = 0.; // size of domain in i direction
@@ -144,6 +146,7 @@ test()
   }
 #endif
 }
+
 
 int
 main()

@@ -29,6 +29,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim>
 void
 check()
@@ -69,6 +70,7 @@ check<3>()
 
   GridOut().write_gnuplot(triangulation, deallog.get_file_stream());
 }
+
 
 int
 main()

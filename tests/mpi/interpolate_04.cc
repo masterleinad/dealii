@@ -34,6 +34,8 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 template <int dim>
 void
 test()
@@ -75,10 +77,13 @@ test()
     deallog << "norm = " << norm << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 

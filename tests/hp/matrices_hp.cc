@@ -56,6 +56,8 @@ public:
   }
 };
 
+
+
 template <int dim>
 void
 check_boundary(const hp::DoFHandler<dim>&        dof,
@@ -107,6 +109,8 @@ check_boundary(const hp::DoFHandler<dim>&        dof,
 void
 check_boundary(const hp::DoFHandler<1>&, const hp::MappingCollection<1>&)
 {}
+
+
 
 template <int dim>
 void
@@ -208,6 +212,8 @@ check()
   if(dim > 1)
     check_boundary(dof, mapping);
 }
+
+
 
 int
 main()

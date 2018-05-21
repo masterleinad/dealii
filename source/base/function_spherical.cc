@@ -148,6 +148,8 @@ namespace Functions
     }
   } // namespace
 
+
+
   template <int dim>
   Spherical<dim>::Spherical(const Point<dim>&  p,
                             const unsigned int n_components)
@@ -321,6 +323,8 @@ namespace Functions
     AssertThrow(false, ExcNotImplemented());
     return std::array<double, 6>();
   }
+
+
 
   // explicit instantiations
   template class Spherical<1>;

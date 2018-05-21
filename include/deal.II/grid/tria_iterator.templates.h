@@ -111,10 +111,12 @@ template <typename Accessor>
 inline TriaIterator<Accessor>::TriaIterator() : TriaRawIterator<Accessor>()
 {}
 
+
 template <typename Accessor>
 inline TriaIterator<Accessor>::TriaIterator(const TriaIterator<Accessor>& i)
   : TriaRawIterator<Accessor>(i.accessor)
 {}
+
 
 template <typename Accessor>
 inline TriaIterator<Accessor>::TriaIterator(const TriaRawIterator<Accessor>& i)
@@ -275,11 +277,13 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator()
   : TriaIterator<Accessor>()
 {}
 
+
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator(
   const TriaActiveIterator<Accessor>& i)
   : TriaIterator<Accessor>(static_cast<TriaIterator<Accessor>>(i))
 {}
+
 
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator(

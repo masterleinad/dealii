@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/lac/block_sparse_matrix.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/lac/la_parallel_vector.h>
@@ -33,12 +34,17 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 MGTransferBlockBase::MGTransferBlockBase() : n_mg_blocks(0)
 {}
+
+
 
 MGTransferBlockBase::MGTransferBlockBase(const MGConstrainedDoFs& mg_c)
   : n_mg_blocks(0), mg_constrained_dofs(&mg_c)
 {}
+
+
 
 MGTransferBlockBase::MGTransferBlockBase(const ConstraintMatrix& /*c*/,
                                          const MGConstrainedDoFs& mg_c)

@@ -20,6 +20,7 @@
 #include <deal.II/lac/vector.h>
 #include <vector>
 
+
 void
 test(Vector<double>& v)
 {
@@ -58,6 +59,8 @@ test(Vector<double>& v)
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

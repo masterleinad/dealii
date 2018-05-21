@@ -113,6 +113,8 @@ extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
   dof_set.compress();
 }
 
+
+
 template <int dim>
 void
 check_fe(FiniteElement<dim>& fe)
@@ -180,6 +182,9 @@ check_fe(FiniteElement<dim>& fe)
     dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
     mg_constrained_dofs_ref.initialize(dofhref, dirichlet_boundary);
   }
+
+  MGConstrainedDoFs mg_constrained_dofs;
+
 
   MGConstrainedDoFs mg_constrained_dofs;
 

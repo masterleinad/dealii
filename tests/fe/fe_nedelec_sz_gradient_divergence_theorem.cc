@@ -162,6 +162,7 @@ test_hyper_ball(const double tolerance)
   test(tr, fe, tolerance);
 }
 
+
 int
 main()
 {

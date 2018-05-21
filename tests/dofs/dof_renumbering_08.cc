@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 
+
+
 template <int dim>
 void
 print_dofs(const DoFHandler<dim>& dof)
@@ -103,6 +105,7 @@ check()
     check_renumbering(dof);
   }
 }
+
 
 int
 main()

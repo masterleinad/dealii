@@ -20,6 +20,7 @@
 #include <deal.II/base/table_indices.h>
 #include <deal.II/base/template_constraints.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -81,6 +82,7 @@ namespace TensorAccessors
     template <int rank_1, int rank_2, int dim>
     class Contract3;
   } // namespace internal
+
 
   /**
    * This class provides a local typedef @p value_type denoting the resulting

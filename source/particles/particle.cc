@@ -28,6 +28,8 @@ namespace Particles
       properties(PropertyPool::invalid_handle)
   {}
 
+
+
   template <int dim, int spacedim>
   Particle<dim, spacedim>::Particle(const Point<spacedim>& location,
                                     const Point<dim>&      reference_location,
@@ -38,6 +40,8 @@ namespace Particles
       property_pool(nullptr),
       properties(PropertyPool::invalid_handle)
   {}
+
+
 
   template <int dim, int spacedim>
   Particle<dim, spacedim>::Particle(const Particle<dim, spacedim>& particle)

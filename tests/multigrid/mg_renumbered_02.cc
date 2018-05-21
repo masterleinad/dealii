@@ -342,6 +342,7 @@ LaplaceProblem<dim>::refine_local()
         ++cell)
       cell->set_refine_flag();
 
+
   triangulation.execute_coarsening_and_refinement();
 }
 

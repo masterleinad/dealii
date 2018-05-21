@@ -51,6 +51,8 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
 
+
+
 /*
  * Check the value of the derivative field.
  */
@@ -493,6 +495,8 @@ project(const Mapping<dim>&     mapping,
   constraints.distribute(vec);
 }
 
+
+
 int
 main()
 {
@@ -500,6 +504,7 @@ main()
 
   Triangulation<3> tria_test;
   GridGenerator::hyper_cube(tria_test);
+
 
   for(Triangulation<3>::active_cell_iterator cell = tria_test.begin_active();
       cell != tria_test.end();
@@ -509,6 +514,10 @@ main()
       for(unsigned int v = 0; v < 4; ++v)
         deallog << "    " << cell->vertex(v) << std::endl;
     }
+
+  FE_ABF<3> fe(0);
+  deallog << "Dofs/cell " << fe.dofs_per_cell << ", Dofs/face "
+          << fe.dofs_per_face << std::endl;
 
   FE_ABF<3> fe(0);
   deallog << "Dofs/cell " << fe.dofs_per_cell << ", Dofs/face "

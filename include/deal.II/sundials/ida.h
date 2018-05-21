@@ -51,6 +51,7 @@
 #  include <boost/signals2.hpp>
 #  include <memory>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 // Shorthand notation for IDA error codes.
@@ -762,6 +763,7 @@ namespace SUNDIALS
                    << "One of the SUNDIALS IDA internal functions "
                    << " returned a negative error code: " << arg1
                    << ". Please consult SUNDIALS manual.");
+
 
   private:
     /**

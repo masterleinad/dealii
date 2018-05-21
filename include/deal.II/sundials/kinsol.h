@@ -36,6 +36,7 @@
 #  include <boost/signals2.hpp>
 #  include <memory>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 // Shorthand notation for KINSOL error codes.
@@ -499,6 +500,7 @@ namespace SUNDIALS
     std::function<int(const VectorType& src, VectorType& dst)>
       iteration_function;
 
+
     /**
      * A function object that users may supply and that is intended to
      * prepare the linear solver for subsequent calls to
@@ -610,6 +612,7 @@ namespace SUNDIALS
                    << " returned a negative error code: " << arg1
                    << ". Please consult SUNDIALS manual.");
 
+
   private:
     /**
      * Throw an exception when a function with the given name is not implemented.
@@ -664,6 +667,7 @@ namespace SUNDIALS
   };
 
 } // namespace SUNDIALS
+
 
 DEAL_II_NAMESPACE_CLOSE
 #endif

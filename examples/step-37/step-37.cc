@@ -57,6 +57,7 @@
 #include <fstream>
 #include <iostream>
 
+
 namespace Step37
 {
   using namespace dealii;
@@ -72,6 +73,7 @@ namespace Step37
   // and choose dimension 3 as standard.
   const unsigned int degree_finite_element = 2;
   const unsigned int dimension             = 3;
+
 
   // @sect3{Equation data}
 
@@ -1186,6 +1188,8 @@ namespace Step37
       };
   }
 } // namespace Step37
+
+
 
 // @sect3{The <code>main</code> function}
 

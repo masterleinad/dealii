@@ -29,6 +29,8 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/block_vector.h>
 
+
+
 void
 do_add(const bool even_or_odd, BlockSparseMatrix<double>& bsm)
 {
@@ -48,6 +50,7 @@ do_add(const bool even_or_odd, BlockSparseMatrix<double>& bsm)
 
   bsm.add(0, 5, col_indices, values, false);
 }
+
 
 void
 test()
@@ -85,6 +88,8 @@ test()
 
   bsm.print_formatted(deallog.get_file_stream());
 }
+
+
 
 int
 main()

@@ -18,6 +18,8 @@
 
 #  include <deal.II/base/config.h>
 
+#  include <deal.II/base/config.h>
+
 #  ifdef DEAL_II_WITH_PETSC
 
 #    include <deal.II/lac/exceptions.h>
@@ -134,6 +136,7 @@ namespace PETScWrappers
           const VectorBase&         b,
           const PreconditionerBase& preconditioner);
 
+
     /**
      * Resets the contained preconditioner and solver object. See class
      * description for more details.
@@ -141,12 +144,14 @@ namespace PETScWrappers
     virtual void
     reset();
 
+
     /**
      * Sets a prefix name for the solver object. Useful when customizing the
      * PETSc KSP object with command-line options.
      */
     void
     set_prefix(const std::string& prefix);
+
 
     /**
      * Access to object that controls convergence.
@@ -671,6 +676,8 @@ namespace PETScWrappers
     virtual void
     set_solver_type(KSP& ksp) const override;
   };
+
+
 
   /**
    * An implementation of the solver interface using the PETSc TFQMR-2 solver

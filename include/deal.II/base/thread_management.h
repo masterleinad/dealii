@@ -21,11 +21,34 @@
 #  include <deal.II/base/multithread_info.h>
 #  include <deal.II/base/template_constraints.h>
 
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/exceptions.h>
+#  include <deal.II/base/multithread_info.h>
+#  include <deal.II/base/template_constraints.h>
+
 #  ifdef DEAL_II_WITH_THREADS
 #    include <condition_variable>
 #    include <mutex>
 #    include <thread>
 #  endif
+
+#  include <functional>
+#  include <iterator>
+#  include <list>
+#  include <memory>
+#  include <tuple>
+#  include <utility>
+#  include <vector>
+
+
+#  ifdef DEAL_II_WITH_THREADS
+#    ifdef DEAL_II_USE_MT_POSIX
+#      include <pthread.h>
+#    endif
+#    include <tbb/task.h>
+#    include <tbb/tbb_stddef.h>
+#  endif
+
 
 #  include <functional>
 #  include <iterator>
@@ -233,6 +256,7 @@ namespace Threads
 
     //@}
   };
+
 
 #  ifdef DEAL_II_WITH_THREADS
 
@@ -480,6 +504,8 @@ namespace Threads
    */
   typedef DummyBarrier Barrier;
 #  endif
+
+} // namespace Threads
 
 } // namespace Threads
 
@@ -776,6 +802,8 @@ namespace Threads
     };
   } // namespace internal
 
+
+
   namespace internal
   {
     template <typename RT>
@@ -786,12 +814,15 @@ namespace Threads
       ret_val.set(function());
     }
 
+
     inline void
     call(const std::function<void()>& function, internal::return_value<void>&)
     {
       function();
     }
   } // namespace internal
+
+
 
   namespace internal
   {
@@ -980,6 +1011,7 @@ namespace Threads
 #  endif
   } // namespace internal
 
+
   /**
    * An object that represents a spawned thread. This object can be freely
    * copied around in user space, and all instances will represent the same
@@ -1153,6 +1185,8 @@ namespace Threads
       }
     };
   } // namespace internal
+
+
 
   // ----------- thread starters for functions not taking any parameters
 
@@ -1335,8 +1369,10 @@ namespace Threads
     std::list<Thread<RT>> threads;
   };
 
+
   template <typename>
   class Task;
+
 
   namespace internal
   {
@@ -1479,6 +1515,7 @@ namespace Threads
       void
       join();
 
+
       template <typename>
       friend struct TaskEntryPoint;
       friend class dealii::Threads::Task<RT>;
@@ -1580,6 +1617,8 @@ namespace Threads
       task->wait_for_all();
     }
 
+
+
 #  else // no threading enabled
 
     /**
@@ -1621,6 +1660,9 @@ namespace Threads
     };
 
 #  endif
+
+  } // namespace internal
+
 
   } // namespace internal
 
@@ -1926,6 +1968,7 @@ namespace Threads
       fun_ptr, std::cref(c), internal::maybe_make_ref<Args>::act(args)...)));
   }
 #  endif
+
 
   // ------------------------ TaskGroup -------------------------------------
 

@@ -54,6 +54,8 @@ namespace internal
   } // namespace DataOutRotationImplementation
 } // namespace internal
 
+
+
 /**
  * This class generates output in the full domain of computations that were
  * done using rotational symmetry of domain and solution. In particular, if a

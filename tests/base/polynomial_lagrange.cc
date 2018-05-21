@@ -72,6 +72,7 @@ check_lge(unsigned int n)
   check_interpolation(p, x);
 }
 
+
 int
 main()
 {

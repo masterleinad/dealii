@@ -238,6 +238,8 @@ namespace Step23
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
+
+
   template <int dim>
   class BoundaryValuesV : public Function<dim>
   {
@@ -248,6 +250,8 @@ namespace Step23
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
+
+
 
   template <int dim>
   double
@@ -278,6 +282,8 @@ namespace Step23
     else
       return 0;
   }
+
+
 
   // @sect3{Implementation of the <code>WaveEquation</code> class}
 
@@ -439,6 +445,8 @@ namespace Step23
     data_out.write_gnuplot(output);
   }
 
+
+
   // @sect4{WaveEquation::run}
 
   // The following is really the only interesting function of the program. It
@@ -549,6 +557,7 @@ namespace Step23
         }
         solve_u();
 
+
         // The second step, i.e. solving for $V^n$, works similarly, except
         // that this time the matrix on the left is the mass matrix (which we
         // copy again in order to be able to apply boundary conditions, and
@@ -601,6 +610,7 @@ namespace Step23
       }
   }
 } // namespace Step23
+
 
 // @sect3{The <code>main</code> function}
 

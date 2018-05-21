@@ -18,6 +18,7 @@
 #include "../tests.h"
 std::ofstream logfile("output");
 
+
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -135,6 +136,8 @@ namespace Evaluation
     results_table.add_value("u(x_0)", point_value);
   }
 
+
+
   template <int dim>
   class SolutionOutput : public EvaluationBase<dim>
   {
@@ -177,7 +180,11 @@ namespace Evaluation
     //    data_out.write (deallog.get_file_stream(), output_format);
   }
 
+
+
 } // namespace Evaluation
+
+
 
 namespace LaplaceSolver
 {
@@ -338,6 +345,7 @@ namespace LaplaceSolver
     VectorTools::interpolate_boundary_values(
       dof_handler, 0, *boundary_values, boundary_value_map);
 
+
     threads.join_all();
     linear_system.hanging_node_constraints.condense(linear_system.matrix);
 
@@ -377,6 +385,8 @@ namespace LaplaceSolver
               cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                     * fe_values.shape_grad(j, q_point)
                                     * fe_values.JxW(q_point));
+
+        cell->get_dof_indices(local_dof_indices);
 
         cell->get_dof_indices(local_dof_indices);
 
@@ -427,6 +437,8 @@ namespace LaplaceSolver
 
     hanging_node_constraints.distribute(solution);
   }
+
+
 
   template <int dim>
   class PrimalSolver : public Solver<dim>
@@ -572,6 +584,8 @@ namespace LaplaceSolver
 
 } // namespace LaplaceSolver
 
+
+
 template <int dim>
 class Solution : public Function<dim>
 {
@@ -630,6 +644,8 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return -u * (t1 + t2 + t3);
 }
 
+
+
 template <int dim>
 void
 run_simulation(
@@ -652,6 +668,7 @@ run_simulation(
           (*i)->set_refinement_cycle(step);
           solver.postprocess(**i);
         };
+
 
       if(solver.n_dofs() < 2000)
         solver.refine_grid();
@@ -707,6 +724,8 @@ solve_problem(const std::string& solver_name)
 
   deallog << std::endl;
 }
+
+
 
 int
 main()

@@ -45,6 +45,8 @@ main()
 
   std::vector<Point<2>> vertices = FE_Q<2>(1).get_unit_support_points();
 
+  std::vector<Point<2>> vertices = FE_Q<2>(1).get_unit_support_points();
+
   for(unsigned int m = 1; m < 7; ++m)
     {
       deallog << " =========Quadrature Order: " << m
@@ -58,6 +60,7 @@ main()
                 << " ============================= " << endl;
         QTelles<2>        quad(m, vertices[index]);
         QGaussOneOverR<2> quad2(m, vertices[index]);
+
 
         for(unsigned int i = 0; i < 6; ++i)
           {

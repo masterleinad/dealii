@@ -27,6 +27,10 @@
 std::vector<DataOutBase::Patch<2, 2>> patches;
 std::vector<std::string>              names;
 
+
+std::vector<DataOutBase::Patch<2, 2>> patches;
+std::vector<std::string>              names;
+
 class DataOutX : public DataOutInterface<2, 2>
 {
   virtual const std::vector<::DataOutBase::Patch<2, 2>>&
@@ -58,6 +62,8 @@ check(std::ostream& out)
   DataOutX x;
   x.write_pvtu_record(out, filenames);
 }
+
+
 
 int
 main()

@@ -39,6 +39,7 @@ template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler);
 
+
 void
 output_vector(std::vector<bool>& v)
 {

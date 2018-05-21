@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/vectorization.h>
@@ -317,6 +318,8 @@ namespace
           }
   }
 } // namespace
+
+
 
 template <int dim, typename Number>
 template <int degree>

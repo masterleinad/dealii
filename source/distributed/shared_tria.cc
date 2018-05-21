@@ -24,6 +24,7 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/sparsity_tools.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 #ifdef DEAL_II_WITH_MPI
@@ -63,6 +64,8 @@ namespace parallel
           ExcMessage(
             "construct_multigrid_hierarchy requires allow_artificial_cells to be set to true."))
     }
+
+
 
     template <int dim, int spacedim>
     void
@@ -421,6 +424,7 @@ namespace parallel
     }
   } // namespace shared
 } // namespace parallel
+
 
 #endif
 

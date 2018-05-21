@@ -31,6 +31,10 @@
 #    include <Epetra_Map.h>
 #    include <Epetra_MpiComm.h>
 
+#    include <Epetra_Import.h>
+#    include <Epetra_Map.h>
+#    include <Epetra_MpiComm.h>
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace LinearAlgebra
@@ -42,15 +46,21 @@ namespace LinearAlgebra
           Epetra_Map(0, 0, 0, Utilities::Trilinos::comm_self())))
     {}
 
+
+
     Vector::Vector(const Vector& V)
       : Subscriptor(), vector(new Epetra_FEVector(V.trilinos_vector()))
     {}
+
+
 
     Vector::Vector(const IndexSet& parallel_partitioner,
                    const MPI_Comm& communicator)
       : vector(new Epetra_FEVector(
           parallel_partitioner.make_trilinos_map(communicator, false)))
     {}
+
+
 
     void
     Vector::reinit(const IndexSet& parallel_partitioner,
@@ -69,6 +79,8 @@ namespace LinearAlgebra
         }
     }
 
+
+
     void
     Vector::reinit(const VectorSpaceVector<double>& V,
                    const bool                       omit_zeroing_entries)
@@ -84,6 +96,8 @@ namespace LinearAlgebra
              down_V.get_mpi_communicator(),
              omit_zeroing_entries);
     }
+
+
 
     Vector&
     Vector::operator=(const Vector& V)
@@ -114,6 +128,8 @@ namespace LinearAlgebra
       return *this;
     }
 
+
+
     Vector&
     Vector::operator=(const double s)
     {
@@ -125,6 +141,8 @@ namespace LinearAlgebra
 
       return *this;
     }
+
+
 
     void
     Vector::import(
@@ -172,6 +190,8 @@ namespace LinearAlgebra
         vector->Export(source_vector, import, Add);
     }
 
+
+
     Vector&
     Vector::operator*=(const double factor)
     {
@@ -180,6 +200,8 @@ namespace LinearAlgebra
 
       return *this;
     }
+
+
 
     Vector&
     Vector::operator/=(const double factor)
@@ -190,6 +212,8 @@ namespace LinearAlgebra
 
       return *this;
     }
+
+
 
     Vector&
     Vector::operator+=(const VectorSpaceVector<double>& V)
@@ -240,6 +264,8 @@ namespace LinearAlgebra
       return *this;
     }
 
+
+
     Vector&
     Vector::operator-=(const VectorSpaceVector<double>& V)
     {
@@ -247,6 +273,8 @@ namespace LinearAlgebra
 
       return *this;
     }
+
+
 
     double Vector::operator*(const VectorSpaceVector<double>& V) const
     {
@@ -269,6 +297,8 @@ namespace LinearAlgebra
       return result;
     }
 
+
+
     void
     Vector::add(const double a)
     {
@@ -277,6 +307,8 @@ namespace LinearAlgebra
       for(unsigned int i = 0; i < local_size; ++i)
         (*vector)[0][i] += a;
     }
+
+
 
     void
     Vector::add(const double a, const VectorSpaceVector<double>& V)
@@ -295,6 +327,8 @@ namespace LinearAlgebra
       Assert(ierr == 0, ExcTrilinosError(ierr));
       (void) ierr;
     }
+
+
 
     void
     Vector::add(const double                     a,
@@ -326,6 +360,8 @@ namespace LinearAlgebra
       (void) ierr;
     }
 
+
+
     void
     Vector::sadd(const double                     s,
                  const double                     a,
@@ -342,6 +378,8 @@ namespace LinearAlgebra
       tmp *= a;
       *this += tmp;
     }
+
+
 
     void
     Vector::scale(const VectorSpaceVector<double>& scaling_factors)
@@ -361,6 +399,8 @@ namespace LinearAlgebra
       Assert(ierr == 0, ExcTrilinosError(ierr));
       (void) ierr;
     }
+
+
 
     void
     Vector::equ(const double a, const VectorSpaceVector<double>& V)
@@ -382,6 +422,8 @@ namespace LinearAlgebra
           (void) ierr;
         }
     }
+
+
 
     bool
     Vector::all_zero() const
@@ -410,6 +452,8 @@ namespace LinearAlgebra
       return num_nonzero == 0;
     }
 
+
+
     double
     Vector::mean_value() const
     {
@@ -422,6 +466,8 @@ namespace LinearAlgebra
       return mean_value;
     }
 
+
+
     double
     Vector::l1_norm() const
     {
@@ -432,6 +478,8 @@ namespace LinearAlgebra
 
       return norm;
     }
+
+
 
     double
     Vector::l2_norm() const
@@ -444,6 +492,8 @@ namespace LinearAlgebra
       return norm;
     }
 
+
+
     double
     Vector::linfty_norm() const
     {
@@ -455,6 +505,8 @@ namespace LinearAlgebra
       return norm;
     }
 
+
+
     double
     Vector::add_and_dot(const double                     a,
                         const VectorSpaceVector<double>& V,
@@ -464,6 +516,8 @@ namespace LinearAlgebra
 
       return *this * W;
     }
+
+
 
     Vector::size_type
     Vector::size() const
@@ -475,6 +529,8 @@ namespace LinearAlgebra
 #    endif
     }
 
+
+
     MPI_Comm
     Vector::get_mpi_communicator() const
     {
@@ -483,6 +539,8 @@ namespace LinearAlgebra
       Assert(epetra_comm != nullptr, ExcInternalError());
       return epetra_comm->GetMpiComm();
     }
+
+
 
     ::dealii::IndexSet
     Vector::locally_owned_elements() const
@@ -516,17 +574,23 @@ namespace LinearAlgebra
       return is;
     }
 
+
+
     const Epetra_FEVector&
     Vector::trilinos_vector() const
     {
       return *vector;
     }
 
+
+
     Epetra_FEVector&
     Vector::trilinos_vector()
     {
       return *vector;
     }
+
+
 
     void
     Vector::print(std::ostream&      out,
@@ -564,6 +628,8 @@ namespace LinearAlgebra
       AssertThrow(out, ExcIO());
     }
 
+
+
     std::size_t
     Vector::memory_consumption() const
     {
@@ -571,6 +637,8 @@ namespace LinearAlgebra
              + vector->MyLength()
                  * (sizeof(double) + sizeof(TrilinosWrappers::types::int_type));
     }
+
+
 
     void
     Vector::create_epetra_comm_pattern(const IndexSet& source_index_set,

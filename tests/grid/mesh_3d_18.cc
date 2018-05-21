@@ -31,6 +31,8 @@ char logname[] = "output";
 
 #include <vector>
 
+
+
 void
 test_with_wrong_face_orientation()
 {
@@ -93,6 +95,8 @@ test_with_wrong_face_orientation()
                 == neighbor_child->face(cell->neighbor_of_neighbor(3)),
               ExcInternalError());
 }
+
+
 
 int
 main()

@@ -32,6 +32,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
+
+
 // define a function that is zero within the square
 //   [-sqrt(2)/2,sqrt(2)/2]^d
 // which is the domain produced by GridGenerator::hyper_sphere
@@ -67,6 +69,7 @@ test()
   Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   tria.set_manifold(0, boundary);
+
 
   FE_Q<dim>       fe(1);
   DoFHandler<dim> dh(tria);
@@ -161,6 +164,7 @@ test()
                 << std::endl;
   }
 }
+
 
 int
 main()

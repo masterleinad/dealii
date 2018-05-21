@@ -153,6 +153,7 @@ test_dim_3(const enum SymmetricTensorEigenvectorMethod method,
   check_vector(2, v3, eig_vals_vecs[2].second);
 }
 
+
 void
 run_tests(const enum SymmetricTensorEigenvectorMethod method)
 {

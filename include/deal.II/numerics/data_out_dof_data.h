@@ -144,6 +144,7 @@ namespace Exceptions
   } // namespace DataOutImplementation
 } // namespace Exceptions
 
+
 namespace internal
 {
   namespace DataOutImplementation
@@ -422,6 +423,7 @@ namespace internal
     };
   } // namespace DataOutImplementation
 } // namespace internal
+
 
 //TODO: Most of the documentation of DataOut_DoFData applies to DataOut.
 
@@ -768,6 +770,7 @@ public:
     const std::vector<DataComponentInterpretation::DataComponentInterpretation>&
       data_component_interpretation
     = std::vector<DataComponentInterpretation::DataComponentInterpretation>());
+
 
   /**
    * This function is an abbreviation of the function above with only a scalar

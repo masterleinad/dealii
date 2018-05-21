@@ -26,6 +26,7 @@
 #include <deal.II/matrix_free/matrix_free.h>
 #include <deal.II/multigrid/mg_constrained_dofs.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace MatrixFreeOperators
@@ -566,6 +567,7 @@ namespace MatrixFreeOperators
     template <typename VectorType>
     void
     initialize_dof_vector(VectorType& vec) const;
+
 
   private:
     /**
@@ -1467,6 +1469,8 @@ namespace MatrixFreeOperators
     : Subscriptor(), mf_base_operator(nullptr)
   {}
 
+
+
   template <typename OperatorType>
   void
   MGInterfaceOperator<OperatorType>::clear()
@@ -1540,6 +1544,8 @@ namespace MatrixFreeOperators
     : Base<dim, VectorType>()
   {}
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1574,6 +1580,8 @@ namespace MatrixFreeOperators
     diagonal_vector.update_ghost_values();
   }
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1586,6 +1594,8 @@ namespace MatrixFreeOperators
     Base<dim, VectorType>::data->cell_loop(
       &MassOperator::local_apply_cell, this, dst, src);
   }
+
+
 
   template <int dim,
             int fe_degree,
@@ -1627,6 +1637,8 @@ namespace MatrixFreeOperators
     : Base<dim, VectorType>()
   {}
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1639,6 +1651,8 @@ namespace MatrixFreeOperators
     Base<dim, VectorType>::clear();
     scalar_coefficient.reset();
   }
+
+
 
   template <int dim,
             int fe_degree,
@@ -1654,6 +1668,8 @@ namespace MatrixFreeOperators
   {
     scalar_coefficient = scalar_coefficient_;
   }
+
+
 
   template <int dim,
             int fe_degree,
@@ -1673,6 +1689,8 @@ namespace MatrixFreeOperators
     Assert(scalar_coefficient.get(), ExcNotInitialized());
     return scalar_coefficient;
   }
+
+
 
   template <int dim,
             int fe_degree,
@@ -1713,6 +1731,8 @@ namespace MatrixFreeOperators
     diagonal_vector.update_ghost_values();
   }
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1740,6 +1760,8 @@ namespace MatrixFreeOperators
       return true;
     }
   } // namespace
+
+
 
   template <int dim,
             int fe_degree,
@@ -1777,6 +1799,8 @@ namespace MatrixFreeOperators
     phi.integrate(false, true);
   }
 
+
+
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1801,6 +1825,7 @@ namespace MatrixFreeOperators
         phi.distribute_local_to_global(dst);
       }
   }
+
 
   template <int dim,
             int fe_degree,

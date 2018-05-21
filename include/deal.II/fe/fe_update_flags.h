@@ -29,6 +29,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int, int>
 class FiniteElement;
 
+
 /*!@addtogroup feaccess */
 /*@{*/
 
@@ -304,6 +305,8 @@ operator|(const UpdateFlags f1, const UpdateFlags f2)
   return static_cast<UpdateFlags>(static_cast<unsigned int>(f1)
                                   | static_cast<unsigned int>(f2));
 }
+
+
 
 /**
  * Global operator which sets the bits from the second argument also in the
@@ -617,6 +620,7 @@ namespace internal
     };
   } // namespace FEValuesImplementation
 } // namespace internal
+
 
 /*@}*/
 

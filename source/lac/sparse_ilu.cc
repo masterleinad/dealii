@@ -34,6 +34,7 @@ SparseILU<double>::vmult<float>(Vector<float>&, const Vector<float>&) const;
 template void
 SparseILU<double>::Tvmult<float>(Vector<float>&, const Vector<float>&) const;
 
+
 template class SparseILU<float>;
 template void
 SparseILU<float>::initialize<double>(const SparseMatrix<double>&,

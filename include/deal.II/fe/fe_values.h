@@ -97,6 +97,8 @@ namespace internal
   };
 } // namespace internal
 
+
+
 /**
  * A namespace for "views" on a FEValues, FEFaceValues, or FESubfaceValues
  * object. A view represents only a certain part of the whole: whereas the
@@ -445,6 +447,7 @@ namespace FEValuesViews
         typename OutputType<typename InputVector::value_type>::hessian_type>&
         hessians) const;
 
+
     /**
      * Return the Laplacians of the selected scalar component of the finite
      * element function characterized by <tt>fe_function</tt> at the
@@ -482,6 +485,7 @@ namespace FEValuesViews
         typename OutputType<typename InputVector::value_type>::laplacian_type>&
         laplacians) const;
 
+
     /**
      * Return the third derivatives of the selected scalar component of the
      * finite element function characterized by <tt>fe_function</tt> at the
@@ -517,6 +521,7 @@ namespace FEValuesViews
       const InputVector&                    dof_values,
       std::vector<typename OutputType<typename InputVector::value_type>::
                     third_derivative_type>& third_derivatives) const;
+
 
   private:
     /**
@@ -1647,6 +1652,7 @@ namespace FEValuesViews
     Tensor(const FEValuesBase<dim, spacedim>& fe_values_base,
            const unsigned int                 first_tensor_component);
 
+
     /**
      * Copy operator. This is not a lightweight object so we don't allow
      * copying and generate an exception if this function is called.
@@ -1855,6 +1861,7 @@ namespace FEValuesViews
 
 } // namespace FEValuesViews
 
+
 namespace internal
 {
   namespace FEValuesViews
@@ -1887,6 +1894,8 @@ namespace internal
     };
   } // namespace FEValuesViews
 } // namespace internal
+
+
 
 /**
  * FEValues, FEFaceValues and FESubfaceValues objects are interfaces to finite
@@ -2029,10 +2038,12 @@ public:
                const Mapping<dim, spacedim>&       mapping,
                const FiniteElement<dim, spacedim>& fe);
 
+
   /**
    * Destructor.
    */
   ~FEValuesBase() override;
+
 
   /// @name ShapeAccess Access to shape function values. These fields are filled by the finite element.
   //@{
@@ -2343,6 +2354,7 @@ public:
     const InputVector&                                             fe_function,
     const VectorSlice<const std::vector<types::global_dof_index>>& indices,
     std::vector<Vector<typename InputVector::value_type>>& values) const;
+
 
   /**
    * Generate vector function values from an arbitrary vector.
@@ -3090,6 +3102,7 @@ public:
   const FEValuesViews::SymmetricTensor<2, dim, spacedim>&
   operator[](const FEValuesExtractors::SymmetricTensor<2>& tensor) const;
 
+
   /**
    * Create a view of the current FEValues object that represents a set of
    * <code>(dim*dim)</code> scalar components (i.e. a 2nd order tensor) of the
@@ -3302,6 +3315,7 @@ protected:
   dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
     mapping_output;
 
+
   /**
    * A pointer to the finite element object associated with this FEValues
    * object.
@@ -3325,6 +3339,7 @@ protected:
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>
     finite_element_output;
+
 
   /**
    * Original update flags handed to the constructor of FEValues.
@@ -4320,6 +4335,8 @@ namespace FEValuesViews
       return dealii::SymmetricTensor<2, 1>(array);
     }
 
+
+
     inline dealii::SymmetricTensor<2, 2>
     symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 2>& t)
     {
@@ -4342,6 +4359,8 @@ namespace FEValuesViews
             }
         }
     }
+
+
 
     inline dealii::SymmetricTensor<2, 3>
     symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 3>& t)
@@ -4371,6 +4390,8 @@ namespace FEValuesViews
         }
     }
   } // namespace
+
+
 
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::symmetric_gradient_type
@@ -4686,6 +4707,8 @@ namespace FEValuesViews
   }
 
 } // namespace FEValuesViews
+
+
 
 /*------------------------ Inline functions: FEValuesBase ------------------------*/
 

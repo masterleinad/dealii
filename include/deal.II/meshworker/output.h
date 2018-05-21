@@ -22,6 +22,7 @@
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/meshworker/dof_info.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace MeshWorker
@@ -156,6 +157,7 @@ namespace MeshWorker
         (*os) << std::endl;
     }
 
+
     inline GnuplotPatch::GnuplotPatch()
       : n_vectors(numbers::invalid_unsigned_int),
         n_points(numbers::invalid_unsigned_int),
@@ -201,6 +203,9 @@ namespace MeshWorker
       // it after a square
       const unsigned int row_length2
         = (patch_dim == 1) ? row_length : (row_length * row_length);
+
+      //      AssertDimension(np, Utilities::fixed_power<dim>(n_points));
+      AssertDimension(nv, n_vectors + dim);
 
       //      AssertDimension(np, Utilities::fixed_power<dim>(n_points));
       AssertDimension(nv, n_vectors + dim);

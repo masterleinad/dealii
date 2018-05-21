@@ -54,6 +54,7 @@ template <int dim>
 void
 test();
 
+
 template <int dim>
 class F : public Function<dim>
 {
@@ -72,6 +73,7 @@ public:
         val += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return val;
   }
+
 
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
@@ -217,6 +219,8 @@ test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
     }
 }
 
+
+
 // test with a 2d mesh that forms a square but subdivides it into 3
 // elements. this tests the case of the sign_change thingy in
 // fe_poly_tensor.cc
@@ -333,6 +337,8 @@ test_with_2d_deformed_refined_mesh(const FiniteElement<dim>& fe,
         triangulation, fe, order_difference);
     }
 }
+
+
 
 int
 main(int argc, char* argv[])

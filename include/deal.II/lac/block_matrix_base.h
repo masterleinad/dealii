@@ -33,8 +33,11 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 template <typename>
 class MatrixIterator;
+
+
 
 /*! @addtogroup Matrix1
  *@{
@@ -279,6 +282,8 @@ namespace BlockMatrixIterators
   };
 } // namespace BlockMatrixIterators
 
+
+
 /**
  * Blocked matrix class. The behaviour of objects of this type is almost as
  * for the usual matrix objects, with most of the functions being implemented
@@ -365,6 +370,9 @@ public:
   typedef MatrixIterator<BlockMatrixIterators::Accessor<BlockMatrixBase, true>>
     const_iterator;
 
+  typedef MatrixIterator<BlockMatrixIterators::Accessor<BlockMatrixBase, true>>
+    const_iterator;
+
   /**
    * Default constructor.
    */
@@ -401,6 +409,7 @@ public:
   BlockType&
   block(const unsigned int row, const unsigned int column);
 
+
   /**
    * Access the block with the given coordinates. Version for constant
    * objects.
@@ -421,6 +430,7 @@ public:
    */
   size_type
   n() const;
+
 
   /**
    * Return the number of blocks in a column. Returns zero if no sparsity
@@ -968,6 +978,7 @@ protected:
   void
   Tvmult_nonblock_nonblock(VectorType& dst, const VectorType& src) const;
 
+
 protected:
   /**
    * Some matrix types, in particular PETSc, need to synchronize set and add
@@ -984,6 +995,7 @@ protected:
    */
   void
   prepare_set_operation();
+
 
 private:
   /**
@@ -1134,6 +1146,7 @@ namespace BlockMatrixIterators
       }
   }
 
+
   //   template <class BlockMatrixType>
   //   inline
   //   Accessor<BlockMatrixType, true>::Accessor (const Accessor<BlockMatrixType, true>& other)
@@ -1144,6 +1157,7 @@ namespace BlockMatrixIterators
   //     this->row_block = other.row_block;
   //     this->col_block = other.col_block;
   //   }
+
 
   template <class BlockMatrixType>
   inline Accessor<BlockMatrixType, true>::Accessor(
@@ -1272,6 +1286,7 @@ namespace BlockMatrixIterators
   }
 
   //----------------------------------------------------------------------//
+
 
   template <class BlockMatrixType>
   inline Accessor<BlockMatrixType, false>::Accessor(BlockMatrixType* matrix,
@@ -1442,6 +1457,7 @@ namespace BlockMatrixIterators
     return false;
   }
 } // namespace BlockMatrixIterators
+
 
 //---------------------------------------------------------------------------
 
@@ -2138,6 +2154,12 @@ BlockMatrixBase<MatrixType>::vmult_nonblock_block(
     block(0, col).vmult_add(dst, src.block(col));
 }
 
+
+  block(0, 0).vmult(dst, src.block(0));
+  for(size_type col = 1; col < n_block_cols(); ++col)
+    block(0, col).vmult_add(dst, src.block(col));
+}
+
 template <class MatrixType>
 template <class BlockVectorType, class VectorType>
 void
@@ -2147,6 +2169,11 @@ BlockMatrixBase<MatrixType>::vmult_block_nonblock(BlockVectorType&  dst,
   Assert(dst.n_blocks() == n_block_rows(),
          ExcDimensionMismatch(dst.n_blocks(), n_block_rows()));
   Assert(1 == n_block_cols(), ExcDimensionMismatch(1, n_block_cols()));
+
+  for(size_type row = 0; row < n_block_rows(); ++row)
+    block(row, 0).vmult(dst.block(row), src);
+}
+
 
   for(size_type row = 0; row < n_block_rows(); ++row)
     block(row, 0).vmult(dst.block(row), src);
@@ -2180,6 +2207,8 @@ BlockMatrixBase<MatrixType>::vmult_add(BlockVectorType&       dst,
     for(unsigned int col = 0; col < n_block_cols(); ++col)
       block(row, col).vmult_add(dst.block(row), src.block(col));
 }
+
+
 
 template <class MatrixType>
 template <class BlockVectorType>
@@ -2448,6 +2477,7 @@ BlockMatrixBase<MatrixType>::collect_sizes()
   // finally initialize the row
   // indices with this array
   this->row_block_indices.reinit(row_sizes);
+
 
   // then do the same with the columns
   for(unsigned int c = 0; c < this->n_block_cols(); ++c)

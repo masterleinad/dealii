@@ -17,6 +17,7 @@
 // the unit tests is a mirror of
 // SLEPc-3.6.1/src/eps/examples/tests/test4.c
 
+
 #include "../testmatrix.h"
 #include "../tests.h"
 #include "testmatrix.h"
@@ -103,6 +104,7 @@ check_solve(SolverType&               solver,
   deallog << std::endl << std::endl;
 }
 
+
 int
 main(int argc, char** argv)
 {
@@ -113,6 +115,7 @@ main(int argc, char** argv)
   {
     SolverControl control(
       500, 1e-12 /*1000*PETSC_MACHINE_EPSILON*/, false, false);
+
 
     const unsigned int size = 31;
     unsigned int       dim  = (size - 1);

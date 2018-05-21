@@ -29,6 +29,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int spacedim>
 void
 test()
@@ -46,6 +48,8 @@ test()
 
   FESystem<1, spacedim> fe(FE_Q<1, spacedim>(1), 1, FE_DGQ<1, spacedim>(1), 1);
 
+  FESystem<1, spacedim> fe(FE_Q<1, spacedim>(1), 1, FE_DGQ<1, spacedim>(1), 1);
+
   DoFHandler<1, spacedim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
@@ -53,6 +57,7 @@ test()
   const unsigned int N = dof_handler.n_boundary_dofs();
   deallog << N << std::endl;
 }
+
 
 int
 main()

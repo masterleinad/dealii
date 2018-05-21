@@ -90,6 +90,7 @@ namespace Maxwell
     vector_value_list(const std::vector<Point<dim>>& points,
                       std::vector<Vector<double>>&   values) const;
 
+
     void
     curl_value_list(const std::vector<Point<dim>>& points,
                     std::vector<Vector<double>>&   value_list);
@@ -243,6 +244,7 @@ namespace Maxwell
         exact_solution.curl_value_list(fe_values.get_quadrature_points(),
                                        exactcurlsol_list);
 
+
         // Store computed values at quad points:
         fe_values[E_re].get_function_values(solution, sol);
 
@@ -285,11 +287,13 @@ namespace Maxwell
     system_rhs.reinit(dof_handler.n_dofs());
     constraints.clear();
 
+
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
 
     // FE_Nedelec boundary condition.
     VectorTools::project_boundary_values_curl_conforming_l2(
       dof_handler, 0, exact_solution, 0, constraints);
+
 
     constraints.close();
 
@@ -412,6 +416,7 @@ namespace Maxwell
   {
     Vector<double> diff_per_cell(triangulation.n_active_cells());
 
+
     VectorTools::integrate_difference(mapping,
                                       dof_handler,
                                       solution,
@@ -444,6 +449,7 @@ namespace Maxwell
             /* Cube mesh */
             GridGenerator::hyper_cube(triangulation, 0, 1);
             GridTools::distort_random(0.2, triangulation, false);
+
 
             /* Testing hanging nodes
              *        triangulation.refine_global(1);

@@ -111,6 +111,7 @@ namespace internal
 
 } // namespace internal
 
+
 template <typename T>
 struct EnableIfScalar<Sacado::Fad::DFad<T>>
 {
@@ -228,6 +229,7 @@ namespace internal
   };
 
 } // namespace internal
+
 
 template <typename T>
 struct EnableIfScalar<Sacado::Rad::ADvar<T>>

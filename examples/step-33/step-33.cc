@@ -63,6 +63,7 @@
 #include <deal.II/lac/trilinos_solver.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 
+
 // Sacado is the automatic differentiation package within Trilinos, which is
 // used to find the Jacobian for a fully implicit Newton iteration:
 #include <Sacado.hpp>
@@ -130,6 +131,7 @@ namespace Step33
 
       return names;
     }
+
 
     static std::vector<DataComponentInterpretation::DataComponentInterpretation>
     component_interpretation()
@@ -737,6 +739,8 @@ namespace Step33
       parse_parameters(ParameterHandler& prm);
     };
 
+
+
     void
     Solver::declare_parameters(ParameterHandler& prm)
     {
@@ -774,6 +778,8 @@ namespace Step33
       }
       prm.leave_subsection();
     }
+
+
 
     void
     Solver::parse_parameters(ParameterHandler& prm)
@@ -819,6 +825,8 @@ namespace Step33
       parse_parameters(ParameterHandler& prm);
     };
 
+
+
     void
     Refinement::declare_parameters(ParameterHandler& prm)
     {
@@ -851,6 +859,7 @@ namespace Step33
       }
       prm.leave_subsection();
     }
+
 
     void
     Refinement::parse_parameters(ParameterHandler& prm)
@@ -893,6 +902,7 @@ namespace Step33
       parse_parameters(ParameterHandler& prm);
     };
 
+
     void
     Flux::declare_parameters(ParameterHandler& prm)
     {
@@ -909,6 +919,7 @@ namespace Step33
       }
       prm.leave_subsection();
     }
+
 
     void
     Flux::parse_parameters(ParameterHandler& prm)
@@ -945,6 +956,8 @@ namespace Step33
       parse_parameters(ParameterHandler& prm);
     };
 
+
+
     void
     Output::declare_parameters(ParameterHandler& prm)
     {
@@ -959,6 +972,8 @@ namespace Step33
       }
       prm.leave_subsection();
     }
+
+
 
     void
     Output::parse_parameters(ParameterHandler& prm)
@@ -1035,6 +1050,7 @@ namespace Step33
         BoundaryConditions();
       };
 
+
       AllParameters();
 
       double diffusion_power;
@@ -1098,6 +1114,7 @@ namespace Step33
                           "implicit Euler (theta=1).");
       }
       prm.leave_subsection();
+
 
       for(unsigned int b = 0; b < max_n_boundaries; ++b)
         {
@@ -1233,6 +1250,8 @@ namespace Step33
     }
   } // namespace Parameters
 
+
+
   // @sect3{Conservation law class}
 
   // Here finally comes the class that actually does something with all the
@@ -1274,6 +1293,14 @@ namespace Step33
 
     std::pair<unsigned int, double>
     solve(Vector<double>& solution);
+
+    void
+    compute_refinement_indicators(Vector<double>& indicator) const;
+    void
+    refine_grid(const Vector<double>& indicator);
+
+    void
+    output_results() const;
 
     void
     compute_refinement_indicators(Vector<double>& indicator) const;
@@ -2291,6 +2318,8 @@ namespace Step33
 
     ++output_file_number;
   }
+
+
 
   // @sect4{ConservationLaw::run}
 

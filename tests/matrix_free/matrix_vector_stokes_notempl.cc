@@ -43,6 +43,8 @@ std::ofstream logfile("output");
 #include <complex>
 #include <iostream>
 
+
+
 template <int dim, typename VectorType>
 class MatrixFreeTest
 {
@@ -92,6 +94,7 @@ public:
         pressure.distribute_local_to_global(dst.block(1));
       }
   }
+
 
   void
   vmult(VectorType& dst, const VectorType& src) const
@@ -257,6 +260,11 @@ test(const unsigned int fe_degree)
     solution.block(d).reinit(dofs_per_block[d]);
   solution.collect_sizes();
 
+  solution.reinit(2);
+  for(unsigned int d = 0; d < 2; ++d)
+    solution.block(d).reinit(dofs_per_block[d]);
+  solution.collect_sizes();
+
   system_rhs.reinit(solution);
   mf_solution.reinit(solution);
 
@@ -305,6 +313,8 @@ test(const unsigned int fe_degree)
           << std::endl
           << std::endl;
 }
+
+
 
 int
 main()

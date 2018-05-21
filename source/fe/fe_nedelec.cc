@@ -61,6 +61,7 @@ namespace internal
   }   // namespace FE_Nedelec
 } // namespace internal
 
+
 template <int dim>
 FE_Nedelec<dim>::FE_Nedelec(const unsigned int order)
   : FE_PolyTensor<PolynomialsNedelec<dim>, dim>(

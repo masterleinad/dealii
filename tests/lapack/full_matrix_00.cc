@@ -20,6 +20,7 @@
 
 #include <iostream>
 
+
 void
 test(const unsigned int size, const bool reinit_square)
 {
@@ -82,6 +83,7 @@ test(const unsigned int size, const bool reinit_square)
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

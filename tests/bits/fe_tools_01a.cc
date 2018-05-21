@@ -42,10 +42,19 @@ check(const FE_Q<dim>& fe, const std::string& name)
   deallog << std::endl;
 }
 
+
+
 #define CHECK(EL, deg, dim) \
   {                         \
     FE_##EL<dim> EL(deg);   \
     check(EL, #EL #deg);    \
+  }
+
+#define CHECK_ALL(EL, deg) \
+  {                        \
+    CHECK(EL, deg, 1);     \
+    CHECK(EL, deg, 2);     \
+    CHECK(EL, deg, 3);     \
   }
 
 #define CHECK_ALL(EL, deg) \

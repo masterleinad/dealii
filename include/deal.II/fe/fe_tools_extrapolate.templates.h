@@ -459,16 +459,22 @@ namespace FETools
       {}
     };
 
+
+
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::
       ExtrapolateImplementation()
       : round(0)
     {}
 
+
+
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData()
       : tree_index(0), receiver(0)
     {}
+
+
 
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData(
@@ -477,6 +483,8 @@ namespace FETools
     {
       dof_values.reinit(dofs_per_cell);
     }
+
+
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -553,6 +561,8 @@ namespace FETools
             dealii_cell, p4est_cell, interpolated_values, u2);
         }
     }
+
+
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -694,6 +704,8 @@ namespace FETools
         }
     }
 
+
+
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
@@ -757,6 +769,8 @@ namespace FETools
         }
     }
 
+
+
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::compute_needs(
@@ -811,6 +825,8 @@ namespace FETools
                                     new_needs);
         }
     }
+
+
 
     template <int dim, int spacedim, class OutVector>
     void
@@ -891,6 +907,8 @@ namespace FETools
         }
     }
 
+
+
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
@@ -952,6 +970,8 @@ namespace FETools
         }
     }
 
+
+
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
     void
@@ -1011,6 +1031,8 @@ namespace FETools
                                             new_needs);
         }
     }
+
+
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -1106,6 +1128,8 @@ namespace FETools
         }
     }
 
+
+
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::send_cells(
@@ -1187,6 +1211,8 @@ namespace FETools
       std::sort(received_cells.begin(), received_cells.end());
     }
 
+
+
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::add_new_need(
@@ -1214,6 +1240,8 @@ namespace FETools
       cell_data_insert(cell_data, new_needs);
     }
 
+
+
     template <int dim, int spacedim, class OutVector>
     int
     ExtrapolateImplementation<dim, spacedim, OutVector>::cell_data_search(
@@ -1229,6 +1257,8 @@ namespace FETools
       return (-1);
     }
 
+
+
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::cell_data_insert(
@@ -1241,6 +1271,8 @@ namespace FETools
       if((bound == cells_list.end()) || (cell_data < *bound))
         cells_list.insert(bound, 1, cell_data);
     }
+
+
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -1336,6 +1368,8 @@ namespace FETools
         }
       while(ready != 0);
     }
+
+
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -1539,6 +1573,8 @@ namespace FETools
         const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
+
+
 
 #  ifdef DEAL_II_WITH_MPI
       template <int dim, int spacedim>

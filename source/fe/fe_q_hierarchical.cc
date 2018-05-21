@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_q_hierarchical.h>
 
@@ -50,6 +51,8 @@ namespace internal
     } // namespace
   }   // namespace FE_Q_Hierarchical
 } // namespace internal
+
+
 
 template <int dim>
 FE_Q_Hierarchical<dim>::FE_Q_Hierarchical(const unsigned int degree)
@@ -2141,6 +2144,7 @@ FE_Q_Hierarchical<1>::has_support_on_face(const unsigned int shape_index,
   Assert(face_index < GeometryInfo<1>::faces_per_cell,
          ExcIndexRange(face_index, 0, GeometryInfo<1>::faces_per_cell));
 
+
   // in 1d, things are simple. since
   // there is only one degree of
   // freedom per vertex in this
@@ -2150,6 +2154,8 @@ FE_Q_Hierarchical<1>::has_support_on_face(const unsigned int shape_index,
   return (((shape_index == 0) && (face_index == 0))
           || ((shape_index == 1) && (face_index == 1)));
 }
+
+
 
 template <int dim>
 bool

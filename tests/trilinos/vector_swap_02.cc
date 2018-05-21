@@ -34,6 +34,7 @@ print(TrilinosWrappers::MPI::Vector& v, unsigned int first_element)
   v.locally_owned_elements().print(deallog);
 }
 
+
 void
 test()
 {
@@ -68,6 +69,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

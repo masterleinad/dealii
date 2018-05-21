@@ -60,6 +60,7 @@ check_simple(const FiniteElement<dim>& fe)
   transfer.print_indices(deallog.get_file_stream());
 }
 
+
 int
 main()
 {

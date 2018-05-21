@@ -200,6 +200,8 @@ namespace Step22
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
 
+
+
   template <int dim>
   StokesProblem<dim>::StokesProblem (const unsigned int degree)
     :
@@ -227,6 +229,8 @@ namespace Step22
     offset[0] = 0;
     offset[1] = 0;
   }
+
+
 
   template <int dim>
   void
@@ -407,6 +411,10 @@ namespace Step22
             for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
               local_matrix(i, j) = local_matrix(j, i);
 
+          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+              local_matrix(i, j) = local_matrix(j, i);
+
           cell->get_dof_indices(local_dof_indices);
           constraints.distribute_local_to_global(local_matrix,
                                                  local_rhs,
@@ -418,6 +426,8 @@ namespace Step22
     system_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
   }
+
+
 
   template <int dim>
   void
@@ -452,6 +462,7 @@ namespace Step22
 
       TrilinosWrappers::PreconditionAMG preconditioner;
       preconditioner.initialize(system_matrix.block(1, 1));
+
 
       cg.solve(schur_complement, tmp.block(1), schur_rhs, preconditioner);
 
@@ -489,6 +500,7 @@ namespace Step22
       {
         pcout << "Point: " << point << " is not inside a cell!" << std::endl;
       }
+
 
     std::vector<double> tmp(value.size());
     for(unsigned int i = 0; i < value.size(); ++i)
@@ -837,6 +849,8 @@ namespace Step22
       }
   }
 } // namespace Step22
+
+
 
 int
 main(int argc, char* argv[])

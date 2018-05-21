@@ -154,6 +154,7 @@ private:
   DerivativeForm<1, dim, spacedim, Number>
   times_T_t(const Tensor<2, dim, Number>& T) const;
 
+
   /**
    * Array of tensors holding the subelements.
    */
@@ -163,6 +164,8 @@ private:
 /*--------------------------- Inline functions -----------------------------*/
 
 #ifndef DOXYGEN
+
+
 
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<order, dim, spacedim, Number>::DerivativeForm()
@@ -182,6 +185,8 @@ inline DerivativeForm<order, dim, spacedim, Number>::DerivativeForm(
     for(unsigned int j = 0; j < dim; ++j)
       (*this)[j] = T[j];
 }
+
+
 
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<order, dim, spacedim, Number>&
@@ -345,6 +350,8 @@ DerivativeForm<order, dim, spacedim, Number>::memory_consumption()
 }
 
 #endif // DOXYGEN
+
+
 
 /**
  * One of the uses of DerivativeForm is to apply it as a transformation. This

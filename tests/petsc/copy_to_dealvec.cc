@@ -22,6 +22,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test()
 {
@@ -85,10 +86,13 @@ test()
   Assert(copied(myid * 2) == myid * 4.0, ExcInternalError());
   Assert(copied(myid * 2 + 1) == myid * 4.0 + 2.0, ExcInternalError());
 
+
   // done
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

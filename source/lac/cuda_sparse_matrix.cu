@@ -40,6 +40,8 @@ namespace CUDAWrappers
         val[idx] *= a;
     }
 
+
+
     void
     csrmv(cusparseHandle_t         handle,
           bool                     transpose,
@@ -76,6 +78,8 @@ namespace CUDAWrappers
                                                    y);
       AssertCusparse(error_code);
     }
+
+
 
     void
     csrmv(cusparseHandle_t         handle,
@@ -152,6 +156,8 @@ namespace CUDAWrappers
         }
     }
   } // namespace internal
+
+
 
   template <typename Number>
   SparseMatrix<Number>::SparseMatrix()

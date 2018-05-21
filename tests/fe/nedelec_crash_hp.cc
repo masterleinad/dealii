@@ -93,6 +93,8 @@ test()
       }
 }
 
+
+
 int
 main()
 {
@@ -100,6 +102,7 @@ main()
   logfile.precision(7);
 
   deallog.attach(logfile);
+
 
   test<2>();
   test<3>();

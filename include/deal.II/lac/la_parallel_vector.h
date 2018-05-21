@@ -497,6 +497,7 @@ namespace LinearAlgebra
       update_ghost_values_start(const unsigned int communication_channel
                                 = 0) const;
 
+
       /**
        * For all requests that have been started in update_ghost_values_start,
        * wait for the communication to finish.
@@ -1556,6 +1557,7 @@ namespace LinearAlgebra
   } // namespace distributed
 } // namespace LinearAlgebra
 
+
 /**
  * Global function @p swap which overloads the default implementation of the
  * C++ standard library which uses a temporary object. The function simply
@@ -1581,6 +1583,7 @@ template <typename Number>
 struct is_serial_vector<LinearAlgebra::distributed::Vector<Number>>
   : std::false_type
 {};
+
 
 namespace internal
 {

@@ -31,6 +31,7 @@ diff(FullMatrix<double>& M)
     deallog << "oops " << err << std::endl;
 }
 
+
 void
 test(const unsigned int n, const unsigned int m)
 {

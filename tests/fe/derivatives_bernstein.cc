@@ -91,6 +91,8 @@ plot_FE_Bernstein_shape_functions()
   plot_derivatives(m, b4, "B4");
 }
 
+
+
 int
 main()
 {
@@ -106,6 +108,10 @@ main()
   deallog.push("2d");
   plot_FE_Bernstein_shape_functions<2>();
 
+  deallog.pop();
+
+  deallog.push("3d");
+  //  plot_FE_Bernstein_shape_functions<3>();
   deallog.pop();
 
   deallog.push("3d");

@@ -24,6 +24,8 @@
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
+
+
 void
 test()
 {
@@ -38,6 +40,7 @@ test()
 
   cm.print(deallog.get_file_stream());
 }
+
 
 int
 main()

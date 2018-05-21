@@ -16,6 +16,7 @@
 #ifndef dealii_vector_memory_templates_h
 #define dealii_vector_memory_templates_h
 
+
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/std_cxx14/memory.h>
 

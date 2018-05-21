@@ -76,6 +76,7 @@ namespace internal
       Assert(q_index < q_collection.size(),
              ExcIndexRange(q_index, 0, q_collection.size()));
 
+
       // set the triple of indices
       // that we want to work with
       present_fe_values_index
@@ -98,9 +99,12 @@ namespace internal
   } // namespace hp
 } // namespace internal
 
+
+
 namespace hp
 {
   // -------------------------- FEValues -------------------------
+
 
   template <int dim, int spacedim>
   FEValues<dim, spacedim>::FEValues(
@@ -213,7 +217,9 @@ namespace hp
       .reinit(cell);
   }
 
+
   // -------------------------- FEFaceValues -------------------------
+
 
   template <int dim, int spacedim>
   FEFaceValues<dim, spacedim>::FEFaceValues(
@@ -330,7 +336,9 @@ namespace hp
       .reinit(cell, face_no);
   }
 
+
   // -------------------------- FESubfaceValues -------------------------
+
 
   template <int dim, int spacedim>
   FESubfaceValues<dim, spacedim>::FESubfaceValues(
@@ -449,6 +457,7 @@ namespace hp
       .reinit(cell, face_no, subface_no);
   }
 } // namespace hp
+
 
 // explicit instantiations
 #include "fe_values.inst"

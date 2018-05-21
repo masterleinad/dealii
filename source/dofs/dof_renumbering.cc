@@ -57,6 +57,7 @@
 #include <map>
 #include <vector>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace DoFRenumbering
@@ -80,6 +81,7 @@ namespace DoFRenumbering
 
       typedef std::pair<size_type, size_type> Pair;
     } // namespace boosttypes
+
 
     namespace internal
     {
@@ -118,6 +120,7 @@ namespace DoFRenumbering
       }
     } // namespace internal
 
+
     template <typename DoFHandlerType>
     void
     Cuthill_McKee(DoFHandlerType& dof_handler,
@@ -147,6 +150,10 @@ namespace DoFRenumbering
                                boosttypes::vertex_degree_t>::type graph_degree;
 
       internal::create_graph(dof_handler, use_constraints, graph, graph_degree);
+
+      boosttypes::property_map<boosttypes::Graph,
+                               boosttypes::vertex_index_t>::type index_map
+        = get(::boost::vertex_index, graph);
 
       boosttypes::property_map<boosttypes::Graph,
                                boosttypes::vertex_index_t>::type index_map
@@ -204,6 +211,10 @@ namespace DoFRenumbering
                                boosttypes::vertex_degree_t>::type graph_degree;
 
       internal::create_graph(dof_handler, use_constraints, graph, graph_degree);
+
+      boosttypes::property_map<boosttypes::Graph,
+                               boosttypes::vertex_index_t>::type index_map
+        = get(::boost::vertex_index, graph);
 
       boosttypes::property_map<boosttypes::Graph,
                                boosttypes::vertex_index_t>::type index_map
@@ -305,7 +316,9 @@ namespace DoFRenumbering
       ::boost::property_map<Graph, vertex_index_t>::type id
         = get(vertex_index, G);
 
+
       Vector degree(n, 0);
+
 
       minimum_degree_ordering(
         G,
@@ -316,6 +329,7 @@ namespace DoFRenumbering
           supernode_sizes.begin(), id, supernode_sizes[0]),
         delta,
         id);
+
 
       for(int i = 0; i < n; ++i)
         {
@@ -335,6 +349,8 @@ namespace DoFRenumbering
     }
 
   } // namespace boost
+
+
 
   template <typename DoFHandlerType>
   void
@@ -622,6 +638,10 @@ namespace DoFRenumbering
     dof_handler.renumber_dofs(renumbering);
   }
 
+
+    dof_handler.renumber_dofs(renumbering);
+  }
+
   template <typename DoFHandlerType>
   void
   component_wise(DoFHandlerType&                  dof_handler,
@@ -863,6 +883,8 @@ namespace DoFRenumbering
           shifts[c] = shifts[c - 1] + component_to_dof_map[c - 1].size();
       }
 
+
+
     // now concatenate all the
     // components in the order the user
     // desired to see
@@ -930,6 +952,10 @@ namespace DoFRenumbering
              || ((dof_handler.n_locally_owned_dofs() < dof_handler.n_dofs())
                  && (result <= dof_handler.n_dofs())),
            ExcInternalError());
+
+    dof_handler.renumber_dofs(renumbering);
+  }
+
 
     dof_handler.renumber_dofs(renumbering);
   }
@@ -1152,6 +1178,8 @@ namespace DoFRenumbering
           shifts[c] = shifts[c - 1] + block_to_dof_map[c - 1].size();
       }
 
+
+
     // now concatenate all the
     // components in the order the user
     // desired to see
@@ -1276,6 +1304,8 @@ namespace DoFRenumbering
       return current_next_free_dof_offset;
     }
   } // namespace
+
+
 
   template <int dim>
   void
@@ -1922,6 +1952,8 @@ namespace DoFRenumbering
       }
     };
   } // namespace internal
+
+
 
   template <typename DoFHandlerType>
   void

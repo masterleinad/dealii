@@ -27,6 +27,7 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -95,6 +96,7 @@ FESystem<dim, spacedim>::InternalData::get_fe_output_object(
 
 template <int dim, int spacedim>
 const unsigned int FESystem<dim, spacedim>::invalid_face_number;
+
 
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe,
@@ -1087,6 +1089,8 @@ FESystem<dim, spacedim>::fill_fe_face_values(
                mapping_data,
                output_data);
 }
+
+
 
 template <int dim, int spacedim>
 void
@@ -2420,6 +2424,8 @@ FESystem<dim, spacedim>::memory_consumption() const
     mem += MemoryConsumption::memory_consumption(*base_elements[i].first);
   return mem;
 }
+
+
 
 // explicit instantiations
 #include "fe_system.inst"

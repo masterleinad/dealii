@@ -18,6 +18,8 @@
 
 #  include <deal.II/base/config.h>
 
+#  include <deal.II/base/config.h>
+
 #  ifdef DEAL_II_WITH_PETSC
 
 #    include <deal.II/lac/exceptions.h>
@@ -29,6 +31,7 @@ DEAL_II_NAMESPACE_OPEN
 // forward declaration
 template <typename MatrixType>
 class BlockMatrixBase;
+
 
 namespace PETScWrappers
 {

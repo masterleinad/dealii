@@ -31,6 +31,8 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/lac/vector.h>
 
+
+
 template <int dim>
 std::vector<types::global_dof_index>
 get_dofs(const hp::DoFHandler<dim>& dof)
@@ -95,6 +97,7 @@ check()
   check_renumbering(dof);
   dof.clear();
 }
+
 
 int
 main()

@@ -28,6 +28,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 template <typename number>
 class BlockSparseMatrix;
 class BlockDynamicSparsityPattern;
@@ -153,6 +154,7 @@ public:
    */
   SparsityPatternType&
   block(const size_type row, const size_type column);
+
 
   /**
    * Access the block with the given coordinates. Version for constant
@@ -430,6 +432,7 @@ public:
          const BlockIndices&                           col_indices,
          const std::vector<std::vector<unsigned int>>& row_lengths);
 
+
   /**
    * Return whether the structure is compressed or not, i.e. whether all sub-
    * matrices are compressed.
@@ -539,6 +542,7 @@ public:
    */
   BlockDynamicSparsityPattern(const BlockIndices& row_indices,
                               const BlockIndices& col_indices);
+
 
   /**
    * Resize the pattern to a tensor product of matrices with dimensions
@@ -928,6 +932,7 @@ BlockSparsityPatternBase<SparsityPatternType>::n_block_rows() const
   return rows;
 }
 
+
 inline BlockDynamicSparsityPattern::size_type
 BlockDynamicSparsityPattern::column_number(const size_type    row,
                                            const unsigned int index) const
@@ -955,6 +960,7 @@ BlockDynamicSparsityPattern::column_number(const size_type    row,
   Assert(false, ExcInternalError());
   return 0;
 }
+
 
 inline void
 BlockSparsityPattern::reinit(const size_type n_block_rows,

@@ -19,6 +19,7 @@ char logname[] = "output";
 
 #include "../tests.h"
 
+
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/timer.h>
@@ -121,6 +122,8 @@ RightHandSide<dim>::value(const Point<dim>& p,
     product *= (p[d] + 1);
   return product;
 }
+
+
 
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : dof_handler(triangulation)
@@ -336,6 +339,7 @@ LaplaceProblem<dim>::estimate_smoothness(
   for(unsigned int i = 0; i < n_fourier_modes; ++i)
     ln_k[i] = std::log(k_vectors[i].norm());
 
+
   // assemble the matrices that do
   // the Fourier transforms for each
   // of the finite elements we deal
@@ -436,6 +440,8 @@ LaplaceProblem<dim>::estimate_smoothness(
       smoothness_indicators(index) = mu - 1. * dim / 2;
     }
 }
+
+
 
 template <int dim>
 void
@@ -735,6 +741,18 @@ LaplaceProblem<3>::create_coarse_grid()
   triangulation.refine_global(1);
 }
 
+  for(Triangulation<dim>::active_cell_iterator cell
+      = triangulation.begin_active();
+      cell != triangulation.end();
+      ++cell)
+    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if((cell->face(f)->center()[2] != -4) && (cell->face(f)->center()[2] != 7)
+         && (cell->face(f)->at_boundary()))
+        cell->face(f)->set_boundary_id(1);
+
+  triangulation.refine_global(1);
+}
+
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -747,6 +765,7 @@ LaplaceProblem<dim>::run()
         create_coarse_grid();
       else
         refine_grid();
+
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;

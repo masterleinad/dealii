@@ -109,6 +109,8 @@ DataPostprocessorVector<dim>::get_needed_update_flags() const
   return update_flags;
 }
 
+
+
 // -------------------------- DataPostprocessorTensor ---------------------------
 
 template <int dim>
@@ -147,6 +149,8 @@ DataPostprocessorTensor<dim>::get_needed_update_flags() const
 {
   return update_flags;
 }
+
+
 
 // explicit instantiation
 #include "data_postprocessor.inst"

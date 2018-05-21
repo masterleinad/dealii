@@ -35,6 +35,8 @@ namespace Utilities
         have_ghost_indices(false)
     {}
 
+
+
     Partitioner::Partitioner(const unsigned int size)
       : global_size(size),
         locally_owned_range_data(size),
@@ -53,6 +55,8 @@ namespace Utilities
       ghost_indices_data.set_size(size);
     }
 
+
+
     Partitioner::Partitioner(const IndexSet& locally_owned_indices,
                              const IndexSet& ghost_indices_in,
                              const MPI_Comm  communicator_in)
@@ -69,6 +73,8 @@ namespace Utilities
       set_owned_indices(locally_owned_indices);
       set_ghost_indices(ghost_indices_in);
     }
+
+
 
     Partitioner::Partitioner(const IndexSet& locally_owned_indices,
                              const MPI_Comm  communicator_in)

@@ -24,12 +24,15 @@
 Threads::Mutex mutex;
 int            spin_lock = 0;
 
+
 int
 worker()
 {
   sleep(1);
   return 42;
 }
+
+
 
 int
 main()

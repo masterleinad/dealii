@@ -42,6 +42,8 @@ template <int dim, int fe_degree>
 void
 test();
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
@@ -87,6 +89,8 @@ public:
       }
   }
 
+
+
   void
   test_functions(const Vector<Number>& src) const
   {
@@ -98,6 +102,8 @@ public:
 protected:
   const MatrixFree<dim, Number>& data;
 };
+
+
 
 template <int dim, int fe_degree, typename number>
 void
@@ -147,6 +153,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
       deallog << e.get_exc_name() << std::endl;
     }
 }
+
 
 int
 main()

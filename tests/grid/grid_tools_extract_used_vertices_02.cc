@@ -21,6 +21,7 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 
+
 template <int dim, int spacedim>
 void
 test(const Point<spacedim>& p)
@@ -48,6 +49,7 @@ test(const Point<spacedim>& p)
   deallog << "Closest vertex to " << p << ", v[" << i << "] :" << m[i]
           << std::endl;
 };
+
 
 int
 main()

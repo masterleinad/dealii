@@ -19,6 +19,7 @@
 #include <boost/serialization/vector.hpp>
 #include <deal.II/base/table.h>
 
+
 void
 test()
 {
@@ -51,6 +52,7 @@ test()
 
   verify(t1, t3);
 }
+
 
 int
 main()

@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 check(const Triangulation<dim>& tria, const unsigned int order)
@@ -85,6 +87,7 @@ check(const Triangulation<dim>& tria, const unsigned int order)
   Assert(n2 * n2 < 1e-24, ExcInternalError());
   deallog << " subface integration is ok: " << std::sqrt(n2 * n2) << std::endl;
 }
+
 
 int
 main()

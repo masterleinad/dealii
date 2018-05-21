@@ -23,6 +23,7 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 
+
 void
 test()
 {
@@ -54,6 +55,8 @@ test()
   deallog << static_cast<TrilinosScalar>(c)
           << std::endl; // should point to v(1)
 }
+
+
 
 int
 main(int argc, char** argv)

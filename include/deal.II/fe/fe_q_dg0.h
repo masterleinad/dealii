@@ -277,6 +277,7 @@ public:
   get_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
                            FullMatrix<double>& matrix) const override;
 
+
   /**
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.

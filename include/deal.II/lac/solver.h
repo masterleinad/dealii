@@ -386,6 +386,8 @@ public:
                                const double       check_value,
                                const VectorType&  current_iterate)>& slot);
 
+
+
 protected:
   /**
    * A static vector memory object to be used whenever no such object has been

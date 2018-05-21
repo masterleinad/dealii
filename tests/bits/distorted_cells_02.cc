@@ -28,6 +28,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 check()
@@ -36,6 +38,8 @@ check()
 
   GridIn<dim>   gi;
   std::ifstream in(dim == 2 ? SOURCE_DIR "/grids/2d" : SOURCE_DIR "/grids/3d");
+
+  gi.attach_triangulation(coarse_grid);
 
   gi.attach_triangulation(coarse_grid);
 
@@ -57,6 +61,7 @@ check()
   Assert(coarse_grid.n_levels() == 1, ExcInternalError());
   Assert(coarse_grid.n_active_cells() == 1, ExcInternalError());
 }
+
 
 int
 main()

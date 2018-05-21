@@ -59,6 +59,7 @@ test(const unsigned int size)
     }
 }
 
+
 int
 main()
 {

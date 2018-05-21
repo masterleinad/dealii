@@ -36,6 +36,7 @@ using namespace std;
 
 const double a = 4, b = 5;
 
+
 template <int dim>
 class MyFunction : public Function<dim>
 {
@@ -213,6 +214,7 @@ derivatives()
               << endl;
     }
 }
+
 
 int
 main()

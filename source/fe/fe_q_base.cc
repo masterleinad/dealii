@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/polynomials_piecewise.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
@@ -91,6 +92,8 @@ namespace internal
     } // namespace
   }   // namespace FE_Q_Base
 } // namespace internal
+
+
 
 /**
  * A class with the same purpose as the similarly named class of the
@@ -683,6 +686,8 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_constraints_are_implemented() const
   return true;
 }
 
+
+
 template <class PolynomialType, int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Q_Base<PolynomialType, dim, spacedim>::hp_vertex_dof_identities(
@@ -986,6 +991,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::
   // i=dof_no%n and j=dof_no/n. i and j can then be used to construct the
   // rotated and mirrored numbers.
 
+
   for(unsigned int local = 0; local < this->dofs_per_quad; ++local)
     // face support points are in lexicographic ordering with x running
     // fastest. invert that (y running fastest)
@@ -1136,6 +1142,8 @@ FE_Q_Base<PolynomialType, dim, spacedim>::face_to_cell_index(
       return (this->first_quad_index + face * this->dofs_per_quad + index);
     }
 }
+
+
 
 template <class PolynomialType, int dim, int spacedim>
 std::vector<unsigned int>

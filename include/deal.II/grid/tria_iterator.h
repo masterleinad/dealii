@@ -16,7 +16,11 @@
 #ifndef dealii_tria_iterator_h
 #  define dealii_tria_iterator_h
 
+
 /*----------------------------   tria-iterator.h     ---------------------------*/
+
+#  include <deal.II/base/config.h>
+#  include <deal.II/base/exceptions.h>
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
@@ -34,6 +38,12 @@ template <int dim, int spacedim>
 class Triangulation;
 template <int, int, int>
 class TriaAccessorBase;
+
+template <typename>
+class TriaIterator;
+template <typename>
+class TriaActiveIterator;
+
 
 template <typename>
 class TriaIterator;
@@ -347,6 +357,7 @@ public:
    */
   Accessor* operator->();
 
+
   /**
    * In order be able to assign end-iterators for different accessors to each
    * other, we need an access function which returns the accessor regardless
@@ -470,6 +481,7 @@ public:
   template <class StreamType>
   void
   print(StreamType& out) const;
+
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -1192,6 +1204,7 @@ DEAL_II_NAMESPACE_CLOSE
 #  ifndef DEBUG
 #    include "tria_iterator.templates.h"
 #  endif
+
 
 /*----------------------------   tria-iterator.h     ---------------------------*/
 #endif

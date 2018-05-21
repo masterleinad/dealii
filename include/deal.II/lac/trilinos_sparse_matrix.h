@@ -16,6 +16,7 @@
 #ifndef dealii_trilinos_sparse_matrix_h
 #  define dealii_trilinos_sparse_matrix_h
 
+
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_TRILINOS
@@ -444,6 +445,7 @@ namespace TrilinosWrappers
     };
 
   } // namespace SparseMatrixIterators
+
 
   /**
    * This class implements a wrapper to use the Trilinos distributed sparse
@@ -1724,6 +1726,7 @@ namespace TrilinosWrappers
           const SparseMatrix& B,
           const MPI::Vector&  V = MPI::Vector()) const;
 
+
     /**
      * Perform the matrix-matrix multiplication with the transpose of
      * <tt>this</tt>, i.e., <tt>C = A<sup>T</sup> * B</tt>, or, if an optional
@@ -2056,6 +2059,8 @@ namespace TrilinosWrappers
                    << " exist in the Trilinos sparsity pattern.");
     //@}
 
+
+
   protected:
     /**
      * For some matrix storage formats, in particular for the PETSc
@@ -2077,6 +2082,8 @@ namespace TrilinosWrappers
      */
     void
     prepare_set();
+
+
 
   private:
     /**
@@ -2615,6 +2622,9 @@ namespace TrilinosWrappers
 
   // -------------------------- inline and template functions ----------------------
 
+
+  // -------------------------- inline and template functions ----------------------
+
 #    ifndef DOXYGEN
 
   namespace SparseMatrixIterators
@@ -2627,12 +2637,14 @@ namespace TrilinosWrappers
       visit_present_row();
     }
 
+
     inline AccessorBase::size_type
     AccessorBase::row() const
     {
       Assert(a_row < matrix->m(), ExcBeyondEndOfMatrix());
       return a_row;
     }
+
 
     inline AccessorBase::size_type
     AccessorBase::column() const
@@ -2641,12 +2653,14 @@ namespace TrilinosWrappers
       return (*colnum_cache)[a_index];
     }
 
+
     inline AccessorBase::size_type
     AccessorBase::index() const
     {
       Assert(a_row < matrix->m(), ExcBeyondEndOfMatrix());
       return a_index;
     }
+
 
     inline Accessor<true>::Accessor(MatrixType*     matrix,
                                     const size_type row,
@@ -2659,6 +2673,7 @@ namespace TrilinosWrappers
       : AccessorBase(other)
     {}
 
+
     inline TrilinosScalar
     Accessor<true>::value() const
     {
@@ -2666,9 +2681,11 @@ namespace TrilinosWrappers
       return (*value_cache)[a_index];
     }
 
+
     inline Accessor<false>::Reference::Reference(const Accessor<false>& acc)
       : accessor(const_cast<Accessor<false>&>(acc))
     {}
+
 
     inline Accessor<false>::Reference::operator TrilinosScalar() const
     {
@@ -2684,6 +2701,7 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
     inline const Accessor<false>::Reference&
     Accessor<false>::Reference::operator+=(const TrilinosScalar n) const
     {
@@ -2692,6 +2710,7 @@ namespace TrilinosWrappers
         accessor.row(), accessor.column(), static_cast<TrilinosScalar>(*this));
       return *this;
     }
+
 
     inline const Accessor<false>::Reference&
     Accessor<false>::Reference::operator-=(const TrilinosScalar n) const
@@ -2702,6 +2721,7 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
     inline const Accessor<false>::Reference&
     Accessor<false>::Reference::operator*=(const TrilinosScalar n) const
     {
@@ -2710,6 +2730,7 @@ namespace TrilinosWrappers
         accessor.row(), accessor.column(), static_cast<TrilinosScalar>(*this));
       return *this;
     }
+
 
     inline const Accessor<false>::Reference&
     Accessor<false>::Reference::operator/=(const TrilinosScalar n) const
@@ -2720,11 +2741,13 @@ namespace TrilinosWrappers
       return *this;
     }
 
+
     inline Accessor<false>::Accessor(MatrixType*     matrix,
                                      const size_type row,
                                      const size_type index)
       : AccessorBase(matrix, row, index)
     {}
+
 
     inline Accessor<false>::Reference
     Accessor<false>::value() const
@@ -2827,17 +2850,23 @@ namespace TrilinosWrappers
 
   } // namespace SparseMatrixIterators
 
+
+
   inline SparseMatrix::const_iterator
   SparseMatrix::begin() const
   {
     return begin(0);
   }
 
+
+
   inline SparseMatrix::const_iterator
   SparseMatrix::end() const
   {
     return const_iterator(this, m(), 0);
   }
+
+
 
   inline SparseMatrix::const_iterator
   SparseMatrix::begin(const size_type r) const
@@ -2848,6 +2877,8 @@ namespace TrilinosWrappers
     else
       return end(r);
   }
+
+
 
   inline SparseMatrix::const_iterator
   SparseMatrix::end(const size_type r) const
@@ -2866,17 +2897,23 @@ namespace TrilinosWrappers
     return end();
   }
 
+
+
   inline SparseMatrix::iterator
   SparseMatrix::begin()
   {
     return begin(0);
   }
 
+
+
   inline SparseMatrix::iterator
   SparseMatrix::end()
   {
     return iterator(this, m(), 0);
   }
+
+
 
   inline SparseMatrix::iterator
   SparseMatrix::begin(const size_type r)
@@ -2887,6 +2924,8 @@ namespace TrilinosWrappers
     else
       return end(r);
   }
+
+
 
   inline SparseMatrix::iterator
   SparseMatrix::end(const size_type r)
@@ -2905,6 +2944,8 @@ namespace TrilinosWrappers
     return end();
   }
 
+
+
   inline bool
   SparseMatrix::in_local_range(const size_type index) const
   {
@@ -2920,6 +2961,8 @@ namespace TrilinosWrappers
     return ((index >= static_cast<size_type>(begin))
             && (index < static_cast<size_type>(end)));
   }
+
+
 
   inline bool
   SparseMatrix::is_compressed() const
@@ -2940,6 +2983,8 @@ namespace TrilinosWrappers
     set(i, 1, &j, &value, false);
   }
 
+
+
   inline void
   SparseMatrix::set(const std::vector<size_type>&     indices,
                     const FullMatrix<TrilinosScalar>& values,
@@ -2956,6 +3001,8 @@ namespace TrilinosWrappers
           &values(i, 0),
           elide_zero_values);
   }
+
+
 
   inline void
   SparseMatrix::add(const size_type      i,
@@ -3002,6 +3049,8 @@ namespace TrilinosWrappers
 #      endif
   }
 
+
+
   inline SparseMatrix::size_type
   SparseMatrix::n() const
   {
@@ -3016,11 +3065,15 @@ namespace TrilinosWrappers
 #      endif
   }
 
+
+
   inline unsigned int
   SparseMatrix::local_size() const
   {
     return matrix->NumMyRows();
   }
+
+
 
   inline std::pair<SparseMatrix::size_type, SparseMatrix::size_type>
   SparseMatrix::local_range() const
@@ -3036,6 +3089,8 @@ namespace TrilinosWrappers
 
     return std::make_pair(begin, end);
   }
+
+
 
   inline SparseMatrix::size_type
   SparseMatrix::n_nonzero_elements() const
@@ -3080,11 +3135,15 @@ namespace TrilinosWrappers
            use_this_sparsity);
   }
 
+
+
   inline const Epetra_CrsMatrix&
   SparseMatrix::trilinos_matrix() const
   {
     return static_cast<const Epetra_CrsMatrix&>(*matrix);
   }
+
+
 
   inline const Epetra_CrsGraph&
   SparseMatrix::trilinos_sparsity_pattern() const
@@ -3092,11 +3151,15 @@ namespace TrilinosWrappers
     return matrix->Graph();
   }
 
+
+
   inline IndexSet
   SparseMatrix::locally_owned_domain_indices() const
   {
     return IndexSet(matrix->DomainMap());
   }
+
+
 
   inline IndexSet
   SparseMatrix::locally_owned_range_indices() const
@@ -3104,11 +3167,15 @@ namespace TrilinosWrappers
     return IndexSet(matrix->RangeMap());
   }
 
+
+
   inline void
   SparseMatrix::prepare_add()
   {
     //nothing to do here
   }
+
+
 
   inline void
   SparseMatrix::prepare_set()
@@ -3206,7 +3273,9 @@ namespace TrilinosWrappers
 
 DEAL_II_NAMESPACE_CLOSE
 
+
 #  endif // DEAL_II_WITH_TRILINOS
+
 
 /*-----------------------   trilinos_sparse_matrix.h     --------------------*/
 

@@ -50,6 +50,7 @@ test_block_list(const parallel::distributed::Triangulation<dim>& tr,
     }
 }
 
+
 int
 main(int argc, char** argv)
 {

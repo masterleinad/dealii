@@ -65,6 +65,7 @@ burn(unsigned int n)
     }
 }
 
+
 int
 main()
 {

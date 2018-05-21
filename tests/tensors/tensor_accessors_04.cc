@@ -20,6 +20,7 @@
 #include <deal.II/base/tensor.h>
 #include <deal.II/base/tensor_accessors.h>
 
+
 int
 main()
 {
@@ -41,6 +42,9 @@ main()
 
   int               c_left[5] = {0, 1, 2, 3, 4};
   Tensor<1, 5, int> left(c_left);
+
+  int                     c_right[5] = {0, 100, 200, 300, 400};
+  const Tensor<1, 5, int> right(c_right);
 
   int                     c_right[5] = {0, 100, 200, 300, 400};
   const Tensor<1, 5, int> right(c_right);

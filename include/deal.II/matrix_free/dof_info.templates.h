@@ -1128,6 +1128,8 @@ namespace internal
       }
     } // namespace
 
+
+
     void
     DoFInfo::make_connectivity_graph(
       const TaskInfo&                  task_info,
@@ -1197,6 +1199,8 @@ namespace internal
                                              std::ref(connectivity)),
                                    20);
     }
+
+
 
     void
     DoFInfo ::compute_dof_renumbering(

@@ -13,6 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
+
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/std_cxx14/memory.h>
@@ -37,6 +38,7 @@
 #include <list>
 #include <map>
 #include <numeric>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -72,6 +74,7 @@ namespace internal
               + MemoryConsumption::memory_consumption(n_active_lines_level));
     }
 
+
     NumberCache<2>::NumberCache() : n_quads(0), n_active_quads(0)
     // all other fields are
     // default constructed
@@ -86,6 +89,8 @@ namespace internal
               + MemoryConsumption::memory_consumption(n_active_quads)
               + MemoryConsumption::memory_consumption(n_active_quads_level));
     }
+
+
 
     NumberCache<3>::NumberCache() : n_hexes(0), n_active_hexes(0)
     // all other fields are
@@ -422,6 +427,8 @@ namespace
       return std::vector<unsigned int>();
   }
 
+
+
   /**
    * Fill the vector @p quad_cell_count
    * needed by @p delete_children with the
@@ -466,12 +473,14 @@ namespace
     // hasn't changed for 1d
   }
 
+
   void reorder_compatibility(std::vector<CellData<2>>& cells,
                              const SubCellData&)
   {
     for(unsigned int cell = 0; cell < cells.size(); ++cell)
       std::swap(cells[cell].vertices[2], cells[cell].vertices[3]);
   }
+
 
   void reorder_compatibility(std::vector<CellData<3>>& cells,
                              SubCellData&              subcelldata)
@@ -690,6 +699,7 @@ namespace
   template <int spacedim>
   void update_neighbors(Triangulation<1, spacedim>&)
   {}
+
 
   template <int dim, int spacedim>
   void
@@ -1054,7 +1064,9 @@ namespace
       }
   }
 
+
 } // end of anonymous namespace
+
 
 namespace internal
 {
@@ -1211,6 +1223,7 @@ namespace internal
       << "In SubCellData the line info of the line with vertex indices " << arg1
       << " and " << arg2 << " appears more than once. "
       << "This is not allowed.");
+
 
     /**
      * A class into which we put many of the functions that implement
@@ -2024,6 +2037,7 @@ namespace internal
             }
         }
 
+
         for(typename Triangulation<dim, spacedim>::line_iterator line
             = triangulation.begin_line();
             line != triangulation.end_line();
@@ -2464,6 +2478,7 @@ namespace internal
                       orientation[l] = false;
                     }
 
+
                 internal::TriangulationImplementation::TriaObject<2> quad(
                   face_line_list[0],
                   face_line_list[1],
@@ -2590,6 +2605,7 @@ namespace internal
               quad->set_line_orientation(1, q->second.second[1]);
               quad->set_line_orientation(2, q->second.second[2]);
               quad->set_line_orientation(3, q->second.second[3]);
+
 
               // now set the iterator for
               // this quad
@@ -3551,6 +3567,45 @@ namespace internal
               quads_to_delete.push_back(cell->child(0)->face(5));
               quads_to_delete.push_back(cell->child(3)->face(2));
               quads_to_delete.push_back(cell->child(3)->face(4));
+
+              lines_to_delete.push_back(cell->child(0)->line(7));
+              break;
+            case RefinementCase<dim>::cut_xyz:
+              quads_to_delete.push_back(cell->child(0)->face(1));
+              quads_to_delete.push_back(cell->child(2)->face(1));
+              quads_to_delete.push_back(cell->child(4)->face(1));
+              quads_to_delete.push_back(cell->child(6)->face(1));
+
+              quads_to_delete.push_back(cell->child(0)->face(3));
+              quads_to_delete.push_back(cell->child(1)->face(3));
+              quads_to_delete.push_back(cell->child(4)->face(3));
+              quads_to_delete.push_back(cell->child(5)->face(3));
+
+              quads_to_delete.push_back(cell->child(0)->face(5));
+              quads_to_delete.push_back(cell->child(1)->face(5));
+              quads_to_delete.push_back(cell->child(2)->face(5));
+              quads_to_delete.push_back(cell->child(3)->face(5));
+
+              lines_to_delete.push_back(cell->child(0)->line(5));
+              lines_to_delete.push_back(cell->child(0)->line(7));
+              lines_to_delete.push_back(cell->child(0)->line(11));
+              lines_to_delete.push_back(cell->child(7)->line(0));
+              lines_to_delete.push_back(cell->child(7)->line(2));
+              lines_to_delete.push_back(cell->child(7)->line(8));
+              // delete the vertex which will not
+              // be needed anymore. This vertex
+              // is the vertex at the heart of
+              // this cell, which is the sixth of
+              // the first child
+              triangulation.vertices_used[cell->child(0)->vertex_index(7)]
+                = false;
+              break;
+            default:
+              // only remaining case is
+              // no_refinement, thus an error
+              Assert(false, ExcInternalError());
+              break;
+          }
 
               lines_to_delete.push_back(cell->child(0)->line(7));
               break;
@@ -4919,6 +4974,7 @@ namespace internal
               triangulation.levels[level + 1]->cells.used.end(),
               std::bind(std::equal_to<bool>(), std::placeholders::_1, true));
 
+
             // reserve space for the used_cells cells already existing
             // on the next higher level as well as for the
             // needed_cells that will be created on that level
@@ -5341,11 +5397,13 @@ namespace internal
 
                 } // if refine_flag set and for all cells on this level
 
+
             // count number of used cells on the next higher level
             const unsigned int used_cells = std::count_if(
               triangulation.levels[level + 1]->cells.used.begin(),
               triangulation.levels[level + 1]->cells.used.end(),
               std::bind(std::equal_to<bool>(), std::placeholders::_1, true));
+
 
             // reserve space for the used_cells cells already existing
             // on the next higher level as well as for the
@@ -5426,6 +5484,7 @@ namespace internal
         triangulation.faces->quads.reserve_space(needed_quads_pair,
                                                  needed_quads_single);
 
+
         // add to needed vertices how many vertices are already in use
         needed_vertices += std::count_if(
           triangulation.vertices_used.begin(),
@@ -5439,6 +5498,7 @@ namespace internal
             triangulation.vertices.resize(needed_vertices, Point<spacedim>());
             triangulation.vertices_used.resize(needed_vertices, false);
           }
+
 
           ///////////////////////////////////////////
           // Before we start with the actual refinement, we do some
@@ -5712,6 +5772,7 @@ namespace internal
                       new_quads[1]->used() == false,
                       ExcMessage(
                         "Internal error: We want to use a cell during refinement that should be unused, but turns out not to be."));
+
 
                     if(aniso_quad_ref_case == RefinementCase<dim - 1>::cut_x)
                       {
@@ -9788,6 +9849,7 @@ namespace internal
       static void
       prevent_distorted_boundary_cells(const Triangulation<1, spacedim>&);
 
+
       template <int dim, int spacedim>
       static void
       prevent_distorted_boundary_cells(
@@ -9906,6 +9968,7 @@ namespace internal
             // going to be coarsened, if we had to make a
             // decision. the following function sets these flags:
             triangulation.fix_coarsen_flags();
+
 
             // flag those lines that are refined and will not be
             // coarsened and those that will be refined
@@ -10151,8 +10214,12 @@ namespace internal
   } // namespace TriangulationImplementation
 } // namespace internal
 
+
+
 template <int dim, int spacedim>
 const unsigned int Triangulation<dim, spacedim>::dimension;
+
+
 
 template <int dim, int spacedim>
 Triangulation<dim, spacedim>::Triangulation(
@@ -10176,6 +10243,8 @@ Triangulation<dim, spacedim>::Triangulation(
   signals.clear.connect(signals.any_change);
   signals.mesh_movement.connect(signals.any_change);
 }
+
+
 
 template <int dim, int spacedim>
 Triangulation<dim, spacedim>::Triangulation(
@@ -10298,6 +10367,7 @@ Triangulation<dim, spacedim>::set_manifold(const types::manifold_id m_number)
   reset_manifold(m_number);
 }
 
+
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::reset_manifold(const types::manifold_id m_number)
@@ -10308,6 +10378,7 @@ Triangulation<dim, spacedim>::reset_manifold(const types::manifold_id m_number)
   //delete the entry located at number.
   manifold.erase(m_number);
 }
+
 
 template <int dim, int spacedim>
 void
@@ -10416,6 +10487,8 @@ Triangulation<dim, spacedim>::get_manifold(
     get_default_flat_manifold<dim, spacedim>();
 }
 
+
+
 template <int dim, int spacedim>
 std::vector<types::boundary_id>
 Triangulation<dim, spacedim>::get_boundary_ids() const
@@ -10485,6 +10558,7 @@ Triangulation<dim, spacedim>::copy_triangulation(
                "something. Here, it seems like the source does not "
                "contain anything at all."));
 
+
   // copy normal elements
   vertices               = other_tria.vertices;
   vertices_used          = other_tria.vertices_used;
@@ -10498,6 +10572,7 @@ Triangulation<dim, spacedim>::copy_triangulation(
   auto bdry_iterator = other_tria.manifold.begin();
   for(; bdry_iterator != other_tria.manifold.end(); ++bdry_iterator)
     manifold[bdry_iterator->first] = bdry_iterator->second->clone();
+
 
   levels.reserve(other_tria.levels.size());
   for(unsigned int level = 0; level < other_tria.levels.size(); ++level)
@@ -10728,6 +10803,8 @@ Triangulation<dim, spacedim>::create_triangulation(
   signals.create();
 }
 
+
+
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::flip_all_direction_flags()
@@ -10905,11 +10982,13 @@ namespace
     // nothing to do in 1d
   }
 
+
   void
     clear_user_data(internal::TriangulationImplementation::TriaFaces<2>* faces)
   {
     faces->lines.clear_user_data();
   }
+
 
   void
     clear_user_data(internal::TriangulationImplementation::TriaFaces<3>* faces)
@@ -10918,6 +10997,7 @@ namespace
     faces->quads.clear_user_data();
   }
 } // namespace
+
 
 template <int dim, int spacedim>
 void
@@ -10949,6 +11029,7 @@ namespace
     faces->lines.clear_user_flags();
   }
 } // namespace
+
 
 template <int dim, int spacedim>
 void
@@ -10987,6 +11068,7 @@ namespace
   }
 } // namespace
 
+
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::clear_user_flags_quad()
@@ -11003,6 +11085,7 @@ namespace
   {
     // nothing to do in 1d
   }
+
 
   void clear_user_flags_hex(
     std::vector<
@@ -11021,6 +11104,7 @@ namespace
       levels[level]->cells.clear_user_flags();
   }
 } // namespace
+
 
 template <int dim, int spacedim>
 void
@@ -11229,6 +11313,7 @@ namespace
     Assert(false, ExcInternalError());
   }
 } // namespace
+
 
 template <int dim, int spacedim>
 void
@@ -11442,6 +11527,7 @@ namespace
   }
 } // namespace
 
+
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::save_user_indices_line(
@@ -11567,6 +11653,7 @@ namespace
     Assert(false, ExcInternalError());
   }
 } // namespace
+
 
 template <int dim, int spacedim>
 void
@@ -12004,6 +12091,8 @@ Triangulation<dim, spacedim>::end_vertex() const
                                numbers::invalid_unsigned_int);
 }
 
+
+
 /*------------------------ Line iterator functions ------------------------*/
 
 template <int dim, int spacedim>
@@ -12091,6 +12180,10 @@ Triangulation<dim, spacedim>::begin_raw_quad(const unsigned int level) const
       case 3:
         {
           Assert(level == 0, ExcFacesHaveNoLevel());
+
+          return raw_quad_iterator(
+            const_cast<Triangulation<dim, spacedim>*>(this), 0, 0);
+        }
 
           return raw_quad_iterator(
             const_cast<Triangulation<dim, spacedim>*>(this), 0, 0);
@@ -12204,6 +12297,8 @@ Triangulation<dim, spacedim>::end_hex() const
     const_cast<Triangulation<dim, spacedim>*>(this), -1, -1);
 }
 
+
+
 // -------------------------------- number of cells etc ---------------
 
 namespace internal
@@ -12216,6 +12311,7 @@ namespace internal
       return c.n_lines;
     }
 
+
     inline unsigned int
     n_active_cells(
       const internal::TriangulationImplementation::NumberCache<1>& c)
@@ -12223,11 +12319,13 @@ namespace internal
       return c.n_active_lines;
     }
 
+
     inline unsigned int
     n_cells(const internal::TriangulationImplementation::NumberCache<2>& c)
     {
       return c.n_quads;
     }
+
 
     inline unsigned int
     n_active_cells(
@@ -12236,11 +12334,13 @@ namespace internal
       return c.n_active_quads;
     }
 
+
     inline unsigned int
     n_cells(const internal::TriangulationImplementation::NumberCache<3>& c)
     {
       return c.n_hexes;
     }
+
 
     inline unsigned int
     n_active_cells(
@@ -12250,6 +12350,8 @@ namespace internal
     }
   } // namespace TriangulationImplementation
 } // namespace internal
+
+
 
 template <int dim, int spacedim>
 unsigned int
@@ -12530,6 +12632,8 @@ Triangulation<1, 1>::n_active_quads() const
   return 0;
 }
 
+
+
 template <>
 unsigned int
 Triangulation<1, 2>::n_quads() const
@@ -12654,6 +12758,8 @@ Triangulation<3, 3>::n_raw_quads(const unsigned int) const
   Assert(false, ExcFacesHaveNoLevel());
   return 0;
 }
+
+
 
 template <int dim, int spacedim>
 unsigned int
@@ -12781,6 +12887,8 @@ Triangulation<dim, spacedim>::get_used_vertices() const
 {
   return vertices_used;
 }
+
+
 
 template <>
 unsigned int
@@ -13021,6 +13129,8 @@ Triangulation<dim, spacedim>::execute_refinement()
   const DistortedCellList cells_with_distorted_children
     = internal::TriangulationImplementation::Implementation::execute_refinement(
       *this, check_for_distorted_cells);
+
+
 
   // re-compute number of lines
   internal::TriangulationImplementation::Implementation ::compute_number_cache(
@@ -13313,6 +13423,7 @@ Triangulation<dim, spacedim>::fix_coarsen_flags()
       // more
       clear_user_flags();
 
+
       // now see if anything has changed in the last iteration of this
       // function
       std::vector<bool> current_coarsen_flags(n_active_cells());
@@ -13379,6 +13490,8 @@ Triangulation<1, 3>::prepare_coarsening_and_refinement()
   return (flags_before != flags_after);
 }
 
+
+
 namespace
 {
   // check if the given @param cell marked for coarsening would
@@ -13444,6 +13557,7 @@ namespace
   {
     Assert(cell->has_children() == false, ExcInternalError());
     Assert(cell->refine_flag_set() == false, ExcInternalError());
+
 
     // now we provide two algorithms. the first one is the standard
     // one, coming from the time, where only isotropic refinement was
@@ -13563,6 +13677,7 @@ namespace
       }
   }
 } // namespace
+
 
 template <int dim, int spacedim>
 bool
@@ -14498,12 +14613,15 @@ Triangulation<dim, spacedim>::prepare_coarsening_and_refinement()
     }
   while(mesh_changed_in_this_loop);
 
+
   // find out whether something was really changed in this
   // function. Note that @p{flags_before_loop} represents the state
   // after the last loop, i.e.  the present state
   return ((flags_before[0] != flags_before_loop[0])
           || (flags_before[1] != flags_before_loop[1]));
 }
+
+
 
 template <int dim, int spacedim>
 void
@@ -14594,6 +14712,8 @@ Triangulation<dim, spacedim>::memory_consumption() const
 
   return mem;
 }
+
+
 
 template <int dim, int spacedim>
 Triangulation<dim, spacedim>::DistortedCellList::~DistortedCellList() noexcept

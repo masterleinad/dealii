@@ -31,6 +31,7 @@ const unsigned int SymmetricTensor<rank, dim, Number>::dimension;
 template <int rank, int dim, typename Number>
 const unsigned int SymmetricTensor<rank, dim, Number>::n_independent_components;
 
+
 // explicit instantiations
 #include "symmetric_tensor.inst"
 

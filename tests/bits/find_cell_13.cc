@@ -29,6 +29,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 void check(Triangulation<2>& tria)
 {
   // generate some random points bounded by [0., 0.2)^2 in R^2 space
@@ -83,6 +84,7 @@ void check(Triangulation<2>& tria)
       Assert(false, ExcInternalError());
     }
 }
+
 
 int
 main()

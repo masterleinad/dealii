@@ -71,6 +71,7 @@
 #include <limits>
 #include <memory>
 
+
 // At the end of this top-matter, we import all deal.II names into the global
 // namespace:
 namespace Step31
@@ -203,6 +204,8 @@ namespace Step31
     }
   } // namespace EquationData
 
+
+
   // @sect3{Linear solvers and preconditioners}
 
   // This section introduces some objects that are used for the solution of
@@ -259,6 +262,7 @@ namespace Step31
     public:
       InverseMatrix(const MatrixType&         m,
                     const PreconditionerType& preconditioner);
+
 
       template <typename VectorType>
       void
@@ -425,6 +429,8 @@ namespace Step31
     }
   } // namespace LinearSolvers
 
+
+
   // @sect3{The <code>BoussinesqFlowProblem</code> class template}
 
   // The definition of the class that defines the top-level logic of solving
@@ -495,6 +501,7 @@ namespace Step31
       const double                       global_T_variation,
       const double                       cell_diameter) const;
 
+
     Triangulation<dim> triangulation;
     double             global_Omega_diameter;
 
@@ -511,6 +518,7 @@ namespace Step31
     TrilinosWrappers::MPI::BlockVector old_stokes_solution;
     TrilinosWrappers::MPI::BlockVector stokes_rhs;
 
+
     const unsigned int temperature_degree;
     FE_Q<dim>          temperature_fe;
     DoFHandler<dim>    temperature_dof_handler;
@@ -524,6 +532,7 @@ namespace Step31
     TrilinosWrappers::MPI::Vector old_temperature_solution;
     TrilinosWrappers::MPI::Vector old_old_temperature_solution;
     TrilinosWrappers::MPI::Vector temperature_rhs;
+
 
     double       time_step;
     double       old_time_step;
@@ -644,6 +653,8 @@ namespace Step31
 
     return max_velocity;
   }
+
+
 
   // @sect4{BoussinesqFlowProblem::get_extrapolated_temperature_range}
 
@@ -1392,6 +1403,8 @@ namespace Step31
     std::cout << std::endl;
   }
 
+
+
   // @sect4{BoussinesqFlowProblem::assemble_temperature_matrix}
   //
   // This function assembles the matrix in the temperature equation. The
@@ -1688,6 +1701,8 @@ namespace Step31
           local_rhs, local_dof_indices, temperature_rhs);
       }
   }
+
+
 
   // @sect4{BoussinesqFlowProblem::solve}
   //
@@ -2051,6 +2066,9 @@ namespace Step31
     GridGenerator::hyper_cube(triangulation);
     global_Omega_diameter = GridTools::diameter(triangulation);
 
+    GridGenerator::hyper_cube(triangulation);
+    global_Omega_diameter = GridTools::diameter(triangulation);
+
     triangulation.refine_global(initial_refinement);
 
     setup_dofs();
@@ -2116,6 +2134,8 @@ namespace Step31
     while(time <= 100);
   }
 } // namespace Step31
+
+
 
 // @sect3{The <code>main</code> function}
 //

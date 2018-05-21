@@ -90,6 +90,7 @@
 #include <deal.II/distributed/grid_refinement.h>
 #include <deal.II/distributed/tria.h>
 
+
 // The next step is like in all previous tutorial programs: We put everything
 // into a namespace of its own and then import the deal.II classes and
 // functions into it:
@@ -119,8 +120,12 @@ namespace Step32
     const double R0 = 6371000. - 2890000.; /* m          */
     const double R1 = 6371000. - 35000.;   /* m          */
 
+    const double R0 = 6371000. - 2890000.; /* m          */
+    const double R1 = 6371000. - 35000.;   /* m          */
+
     const double T0 = 4000 + 273; /* K          */
     const double T1 = 700 + 273;  /* K          */
+
 
     // The next set of definitions are for functions that encode the density
     // as a function of temperature, the gravity vector, and the initial
@@ -197,6 +202,9 @@ namespace Step32
     // times in seconds yields numbers that one can't relate to reality, and
     // so we convert to years using the factor defined here:
     const double year_in_seconds = 60 * 60 * 24 * 365.2425;
+
+  } // namespace EquationData
+
 
   } // namespace EquationData
 
@@ -283,6 +291,8 @@ namespace Step32
     };
   } // namespace LinearSolvers
 
+
+
   // @sect3{Definition of assembly data structures}
   //
   // As described in the introduction, we will use the WorkStream mechanism
@@ -341,6 +351,8 @@ namespace Step32
 
         FEValues<dim> stokes_fe_values;
 
+        FEValues<dim> stokes_fe_values;
+
         std::vector<Tensor<2, dim>> grad_phi_u;
         std::vector<double>         phi_p;
       };
@@ -388,6 +400,8 @@ namespace Step32
                      const UpdateFlags         temperature_update_flags);
 
         StokesSystem(const StokesSystem<dim>& data);
+
+        FEValues<dim> temperature_fe_values;
 
         FEValues<dim> temperature_fe_values;
 
@@ -446,6 +460,7 @@ namespace Step32
 
         TemperatureMatrix(const TemperatureMatrix& data);
 
+
         FEValues<dim> temperature_fe_values;
 
         std::vector<double>         phi_T;
@@ -497,6 +512,9 @@ namespace Step32
                        const Quadrature<dim>&    quadrature);
 
         TemperatureRHS(const TemperatureRHS& data);
+
+        FEValues<dim> temperature_fe_values;
+        FEValues<dim> stokes_fe_values;
 
         FEValues<dim> temperature_fe_values;
         FEValues<dim> stokes_fe_values;
@@ -577,6 +595,7 @@ namespace Step32
           old_old_temperature_laplacians(scratch.old_old_temperature_laplacians)
       {}
     } // namespace Scratch
+
 
     // The CopyData objects are even simpler than the Scratch objects as all
     // they have to do is to store the results of local computations until
@@ -689,6 +708,8 @@ namespace Step32
       {}
     } // namespace CopyData
   }   // namespace Assembly
+
+
 
   // @sect3{The <code>BoussinesqFlowProblem</code> class template}
   //
@@ -859,6 +880,10 @@ namespace Step32
     DoFHandler<dim>  temperature_dof_handler;
     ConstraintMatrix temperature_constraints;
 
+    FE_Q<dim>        temperature_fe;
+    DoFHandler<dim>  temperature_dof_handler;
+    ConstraintMatrix temperature_constraints;
+
     TrilinosWrappers::SparseMatrix temperature_mass_matrix;
     TrilinosWrappers::SparseMatrix temperature_stiffness_matrix;
     TrilinosWrappers::SparseMatrix temperature_matrix;
@@ -867,6 +892,7 @@ namespace Step32
     TrilinosWrappers::MPI::Vector old_temperature_solution;
     TrilinosWrappers::MPI::Vector old_old_temperature_solution;
     TrilinosWrappers::MPI::Vector temperature_rhs;
+
 
     double       time_step;
     double       old_time_step;
@@ -909,6 +935,7 @@ namespace Step32
       const IndexSet& temperature_partitioning,
       const IndexSet& temperature_relevant_partitioning);
 
+
     // Following the @ref MTWorkStream "task-based parallelization" paradigm,
     // we split all the assembly routines into two parts: a first part that
     // can do all the calculations on a certain cell without taking care of
@@ -927,6 +954,7 @@ namespace Step32
     copy_local_to_global_stokes_preconditioner(
       const Assembly::CopyData::StokesPreconditioner<dim>& data);
 
+
     void
     local_assemble_stokes_system(
       const typename DoFHandler<dim>::active_cell_iterator& cell,
@@ -937,6 +965,7 @@ namespace Step32
     copy_local_to_global_stokes_system(
       const Assembly::CopyData::StokesSystem<dim>& data);
 
+
     void
     local_assemble_temperature_matrix(
       const typename DoFHandler<dim>::active_cell_iterator& cell,
@@ -946,6 +975,8 @@ namespace Step32
     void
     copy_local_to_global_temperature_matrix(
       const Assembly::CopyData::TemperatureMatrix<dim>& data);
+
+
 
     void
     local_assemble_temperature_rhs(
@@ -1148,6 +1179,8 @@ namespace Step32
     }
     prm.leave_subsection();
   }
+
+
 
   // @sect4{BoussinesqFlowProblem::BoussinesqFlowProblem}
   //
@@ -1681,6 +1714,7 @@ namespace Step32
     TrilinosWrappers::MPI::Vector rhs(row_temp_matrix_partitioning),
       solution(row_temp_matrix_partitioning);
 
+
     const EquationData::TemperatureInitialValues<dim> initial_temperature;
 
     typename DoFHandler<dim>::active_cell_iterator cell
@@ -1753,6 +1787,8 @@ namespace Step32
     old_temperature_solution     = solution;
     old_old_temperature_solution = solution;
   }
+
+
 
   // @sect4{The BoussinesqFlowProblem setup functions}
 
@@ -2842,6 +2878,8 @@ namespace Step32
     temperature_rhs.compress(VectorOperation::add);
   }
 
+
+
   // @sect4{BoussinesqFlowProblem::solve}
 
   // This function solves the linear systems in each time step of the
@@ -2971,6 +3009,7 @@ namespace Step32
           n_iterations
             = (solver_control.last_step() + solver_control_refined.last_step());
         }
+
 
       stokes_constraints.distribute(distributed_stokes_solution);
 
@@ -3338,6 +3377,7 @@ namespace Step32
     std::ofstream output(filename);
     data_out.write_vtu(output);
 
+
     // At this point, all processors have written their own files to disk. We
     // could visualize them individually in Visit or Paraview, but in reality
     // we of course want to visualize the whole set of files at once. To this
@@ -3624,6 +3664,8 @@ namespace Step32
       output_results();
   }
 } // namespace Step32
+
+
 
 // @sect3{The <code>main</code> function}
 

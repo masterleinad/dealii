@@ -41,6 +41,7 @@ namespace PETScWrappers
       AssertThrow(ierr == 0, ExcPETScError(ierr));
     }
 
+
     SparseMatrix::~SparseMatrix()
     {
       destroy_matrix(matrix);
@@ -64,6 +65,8 @@ namespace PETScWrappers
                 is_symmetric,
                 n_offdiag_nonzero_per_row);
     }
+
+
 
     SparseMatrix::SparseMatrix(
       const MPI_Comm&               communicator,
@@ -116,6 +119,7 @@ namespace PETScWrappers
       ierr = MatDuplicate(other.matrix, MAT_DO_NOT_COPY_VALUES, &matrix);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
     }
+
 
     SparseMatrix&
     SparseMatrix::operator=(const value_type d)
@@ -203,6 +207,7 @@ namespace PETScWrappers
       // get rid of old matrix and generate a new one
       const PetscErrorCode ierr = destroy_matrix(matrix);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
+
 
       do_reinit(sparsity_pattern,
                 local_rows_per_process,
@@ -365,6 +370,7 @@ namespace PETScWrappers
       }
 #  endif
 
+
       // create the matrix. We do not set row length but set the
       // correct SparsityPattern later.
       PetscErrorCode ierr = MatCreate(communicator, &matrix);
@@ -375,6 +381,9 @@ namespace PETScWrappers
                          local_columns.n_elements(),
                          sparsity_pattern.n_rows(),
                          sparsity_pattern.n_cols());
+      AssertThrow(ierr == 0, ExcPETScError(ierr));
+
+      ierr = MatSetType(matrix, MATMPIAIJ);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       ierr = MatSetType(matrix, MATMPIAIJ);
@@ -403,6 +412,7 @@ namespace PETScWrappers
           const PetscInt local_row_start = local_rows.nth_index_in_set(0);
           const PetscInt local_row_end
             = local_row_start + local_rows.n_elements();
+
 
           // first set up the column number
           // array for the rows to be stored
@@ -642,6 +652,7 @@ namespace PETScWrappers
                             const IndexSet&,
                             const DynamicSparsityPattern&);
 
+
     PetscScalar
     SparseMatrix::matrix_norm_square(const Vector& v) const
     {
@@ -736,6 +747,7 @@ namespace PETScWrappers
 
   } // namespace MPI
 } // namespace PETScWrappers
+
 
 DEAL_II_NAMESPACE_CLOSE
 

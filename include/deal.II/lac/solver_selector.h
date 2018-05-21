@@ -195,6 +195,8 @@ public:
                  << std::endl
                  << get_solver_names());
 
+
+
 protected:
   /**
    * Stores the @p SolverControl that is needed in the constructor of each @p

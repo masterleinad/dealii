@@ -29,6 +29,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 Point<dim>
 rotate_to_y(const Point<dim>& p)
@@ -68,6 +70,7 @@ check()
     for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       deallog << cell->vertex(i) << std::endl;
 }
+
 
 int
 main()

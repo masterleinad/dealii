@@ -185,6 +185,8 @@ namespace numbers
     } // namespace SignalingNaN
   }   // namespace internal
 
+
+
   /**
    * Provide an object of type @p T filled with a signaling NaN that will
    * cause an exception when used in a computation. The content of these
@@ -219,6 +221,7 @@ namespace numbers
     return internal::SignalingNaN::NaNInitializer<T>::invalid_element();
   }
 } // namespace numbers
+
 
 DEAL_II_NAMESPACE_CLOSE
 

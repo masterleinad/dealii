@@ -289,6 +289,7 @@ seventh_grid()
   pcout << "OK" << std::endl;
 }
 
+
 int
 main(int argc, char* argv[])
 {

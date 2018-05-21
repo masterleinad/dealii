@@ -38,6 +38,7 @@ char logname[] = "output";
 
 #include "../tests.h"
 
+
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
@@ -61,6 +62,7 @@ cell_is_patch_level_1(const typename Triangulation<dim>::cell_iterator& cell)
   return (n_active_children == 0) || (n_active_children == cell->n_children());
 }
 
+
 void
 test()
 {
@@ -75,6 +77,7 @@ test()
   triangulation.execute_coarsening_and_refinement();
 
   deallog << "n_active_cells = " << triangulation.n_active_cells() << std::endl;
+
 
   for(Triangulation<2>::cell_iterator cell = triangulation.begin();
       cell != triangulation.end();
@@ -115,6 +118,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

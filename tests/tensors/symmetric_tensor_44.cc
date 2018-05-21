@@ -71,6 +71,7 @@ print(const TensorType1<2, dim, NumberType1>& t2_1,
   deallog << t4_2 << std::endl;
 }
 
+
 template <template <int, int, typename> class TensorType1,
           template <int, int, typename> class TensorType2>
 struct AreSame : std::false_type
@@ -79,6 +80,7 @@ struct AreSame : std::false_type
 template <template <int, int, typename> class TensorType1>
 struct AreSame<TensorType1, TensorType1> : std::true_type
 {};
+
 
 template <template <int, int, typename> class TensorType1,
           typename NumberType1,
@@ -209,6 +211,7 @@ typename std::enable_if<
     && AreSame<TensorType2, SymmetricTensor>::value)>::type
 test_three()
 {}
+
 
 template <template <int, int, typename> class TensorType1,
           typename NumberType1,

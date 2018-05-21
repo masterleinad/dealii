@@ -30,6 +30,7 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector.h>
 
+
 #include <array>
 
 DEAL_II_NAMESPACE_OPEN
@@ -105,6 +106,8 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::compute_mapping_support_points(
 
   return a;
 }
+
+
 
 template <int dim, class VectorType, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>

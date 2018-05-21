@@ -32,6 +32,7 @@ namespace internal
     unsigned int minimum_parallel_grain_size = 4096;
   } // namespace VectorImplementation
 
+
   namespace SparseMatrixImplementation
   {
     // set this value to 1/16 of the value of the minimum grain size of
@@ -90,5 +91,7 @@ namespace parallel
 #endif
   } // namespace internal
 } // namespace parallel
+
+
 
 DEAL_II_NAMESPACE_CLOSE

@@ -94,6 +94,7 @@ namespace OpenCASCADE
       const ArrayView<const Point<spacedim>>& surrounding_points,
       const Point<spacedim>&                  candidate) const override;
 
+
   protected:
     /**
      * The topological shape which is used internally to project points. You

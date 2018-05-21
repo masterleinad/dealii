@@ -20,6 +20,7 @@
 #include <deal.II/lac/vector.h>
 #include <vector>
 
+
 void
 test(Vector<std::complex<double>>& v)
 {
@@ -49,6 +50,8 @@ test(Vector<std::complex<double>>& v)
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

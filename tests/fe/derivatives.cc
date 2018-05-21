@@ -28,6 +28,7 @@
 #include <string>
 #include <vector>
 
+
 template <int dim>
 inline void
 plot_derivatives(Mapping<dim>&       mapping,
@@ -149,6 +150,10 @@ main()
   deallog.push("2d");
   plot_FE_Q_shape_functions<2>();
   plot_FE_DGQ_shape_functions<2>();
+  deallog.pop();
+
+  deallog.push("3d");
+  //  plot_FE_Q_shape_functions<3>();
   deallog.pop();
 
   deallog.push("3d");

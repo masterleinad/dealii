@@ -35,6 +35,8 @@ template <int structdim, typename DoFHandlerType, bool level_dof_access>
 const unsigned int
   DoFAccessor<structdim, DoFHandlerType, level_dof_access>::space_dimension;
 
+
+
 /*------------------------ Functions: DoFInvalidAccessor ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
@@ -78,6 +80,8 @@ DoFInvalidAccessor<structdim, dim, spacedim>::set_dof_index(
 
 /*------------------------- Functions: DoFCellAccessor -----------------------*/
 
+
+
 template <typename DoFHandlerType, bool lda>
 void
 DoFCellAccessor<DoFHandlerType, lda>::update_cell_dof_indices_cache() const
@@ -106,6 +110,8 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_indices(
   internal::DoFCellAccessorImplementation::Implementation::set_dof_indices(
     *this, local_dof_indices);
 }
+
+
 
 template <typename DoFHandlerType, bool lda>
 TriaIterator<DoFCellAccessor<DoFHandlerType, lda>>
@@ -153,6 +159,8 @@ DoFCellAccessor<DoFHandlerType, lda>::neighbor_or_periodic_neighbor(
   return TriaIterator<DoFCellAccessor<DoFHandlerType, lda>>(*q,
                                                             this->dof_handler);
 }
+
+
 
 // --------------------------------------------------------------------------
 // explicit instantiations

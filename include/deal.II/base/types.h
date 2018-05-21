@@ -16,8 +16,10 @@
 #ifndef dealii_types_h
 #define dealii_types_h
 
+
 #include <cstddef>
 #include <deal.II/base/config.h>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -154,6 +156,7 @@ namespace TrilinosWrappers
   } // namespace types
 } // namespace TrilinosWrappers
 
+
 // this part of the namespace numbers got moved to the bottom types.h file,
 // because otherwise we get a circular inclusion of config.h, types.h, and
 // numbers.h
@@ -267,6 +270,7 @@ namespace numbers
   const types::subdomain_id artificial_subdomain_id
     = static_cast<types::subdomain_id>(-2);
 } // namespace numbers
+
 
 DEAL_II_NAMESPACE_CLOSE
 

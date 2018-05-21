@@ -37,6 +37,7 @@ operator==(const PETScWrappers::MPI::BlockVector& v1,
   return true;
 }
 
+
 void
 test()
 {
@@ -218,6 +219,8 @@ test()
       deallog << "Check 14: true" << std::endl;
     };
 }
+
+
 
 int
 main(int argc, char** argv)

@@ -42,6 +42,7 @@ check()
   deallog << t.norm() << ' ' << ti.norm() << ' ' << tc.norm() << std::endl;
 }
 
+
 int
 main()
 {

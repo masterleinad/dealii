@@ -35,6 +35,7 @@ TimeDependent::TimeSteppingData::TimeSteppingData(const unsigned int look_ahead,
   : look_ahead(look_ahead), look_back(look_back)
 {}
 
+
 TimeDependent::TimeDependent(const TimeSteppingData& data_primal,
                              const TimeSteppingData& data_dual,
                              const TimeSteppingData& data_postprocess)
@@ -43,6 +44,7 @@ TimeDependent::TimeDependent(const TimeSteppingData& data_primal,
     timestepping_data_dual(data_dual),
     timestepping_data_postprocess(data_postprocess)
 {}
+
 
 TimeDependent::~TimeDependent()
 {
@@ -122,6 +124,7 @@ TimeDependent::add_timestep(TimeStepBase* new_timestep)
   insert_timestep(nullptr, new_timestep);
 }
 
+
 void
 TimeDependent::delete_timestep(const unsigned int position)
 {
@@ -186,6 +189,8 @@ TimeDependent::postprocess()
     forward);
 }
 
+
+
 void
 TimeDependent::start_sweep(const unsigned int s)
 {
@@ -208,6 +213,8 @@ TimeDependent::start_sweep(const unsigned int s)
     timesteps[step]->start_sweep();
 }
 
+
+
 void
 TimeDependent::end_sweep()
 {
@@ -219,6 +226,8 @@ TimeDependent::end_sweep()
     std::bind(p, this, std::placeholders::_1, std::placeholders::_2),
     1);
 }
+
+
 
 void
 TimeDependent::end_sweep(const unsigned int begin, const unsigned int end)
@@ -242,6 +251,7 @@ TimeDependent::memory_consumption() const
 }
 
 /* --------------------------------------------------------------------- */
+
 
 TimeStepBase::TimeStepBase(const double time)
   : previous_timestep(nullptr),
@@ -548,6 +558,7 @@ namespace
         return grids_changed;
       };
 
+
     if(!cell1->has_children() && !cell2->has_children())
       // none of the two have children, so
       // make sure that not one is flagged
@@ -567,6 +578,7 @@ namespace
 
         return false;
       };
+
 
     if(cell1->has_children() && !cell2->has_children())
       // cell1 has children, cell2 has not
@@ -651,6 +663,7 @@ namespace
   }
 } // namespace
 
+
 template <int dim>
 void
 TimeStepBase_Tria<dim>::refine_grid(const RefinementData refinement_data)
@@ -677,6 +690,7 @@ TimeStepBase_Tria<dim>::refine_grid(const RefinementData refinement_data)
   // are assumed
   Vector<float>::const_iterator p_refinement_threshold = nullptr,
                                 p_coarsening_threshold = nullptr;
+
 
   // if we are to do some cell number
   // correction steps, we have to find out
@@ -777,6 +791,7 @@ TimeStepBase_Tria<dim>::refine_grid(const RefinementData refinement_data)
         // triangulation
         tria->prepare_coarsening_and_refinement();
         previous_tria->prepare_coarsening_and_refinement();
+
 
         // now count the number of elements
         // which will result on the previous
@@ -1101,6 +1116,7 @@ typename TimeStepBase_Tria_Flags::RefinementFlags<dim>::CorrectionRelaxations
       // for the following
       // relaxation
       std::make_pair(0U, 0.)));
+
 
 template <int dim>
 TimeStepBase_Tria_Flags::RefinementFlags<dim>::RefinementFlags(

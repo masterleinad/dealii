@@ -33,6 +33,7 @@
 
 std::ofstream logfile("output");
 
+
 int
 main()
 {

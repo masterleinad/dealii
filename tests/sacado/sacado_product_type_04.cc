@@ -30,6 +30,7 @@ check()
               ExcInternalError());
 }
 
+
 int
 main()
 {
@@ -61,6 +62,8 @@ main()
 
   c = 0;
   c += (a * b + 0.5 * (t3 * t3 + t1 * t2)) * 0.3;
+
+
 
   deallog << "OK" << std::endl;
 }

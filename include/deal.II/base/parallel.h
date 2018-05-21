@@ -318,6 +318,7 @@ namespace parallel
 #endif
   } // namespace internal
 
+
   /**
    * This function applies the given function argument @p f to all elements in
    * the range <code>[begin,end)</code> and may do so in parallel.
@@ -565,6 +566,7 @@ namespace parallel
 #endif
   } // namespace internal
 
+
   /**
    * This function works a lot like the apply_to_subranges(), but it allows to
    * accumulate numerical results computed on each subrange into one number.
@@ -654,6 +656,7 @@ namespace parallel
 #endif
   }
 
+
   // --------------------- for loop affinity partitioner -----------------------
 
   /**
@@ -721,6 +724,7 @@ namespace parallel
   } // namespace internal
 } // namespace parallel
 
+
 namespace internal
 {
   namespace VectorImplementation
@@ -741,6 +745,7 @@ namespace internal
      */
     extern unsigned int minimum_parallel_grain_size;
   } // namespace VectorImplementation
+
 
   namespace SparseMatrixImplementation
   {
@@ -782,6 +787,7 @@ namespace parallel
   } // namespace internal
 
 #endif
+
 
   inline void
   ParallelForInteger::apply_parallel(

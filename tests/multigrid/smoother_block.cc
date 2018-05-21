@@ -200,6 +200,7 @@ check()
   check_smoother(A, P);
 }
 
+
 int
 main()
 {

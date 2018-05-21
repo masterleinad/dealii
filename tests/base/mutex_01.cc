@@ -22,6 +22,7 @@
 
 Threads::Mutex mutex;
 
+
 void
 test()
 {
@@ -31,6 +32,7 @@ test()
   mutex.acquire();
   deallog << "2" << std::endl;
 }
+
 
 int
 main()

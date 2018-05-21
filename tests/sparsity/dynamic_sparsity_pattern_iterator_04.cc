@@ -41,6 +41,7 @@ backtrace:
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
+
 void
 iterate(DynamicSparsityPattern& sp)
 {
@@ -66,6 +67,7 @@ iterate(DynamicSparsityPattern& sp)
   deallog << "OK" << std::endl;
 }
 
+
 void
 test()
 {
@@ -90,6 +92,8 @@ test()
     iterate(sp);
   }
 }
+
+
 
 int
 main()

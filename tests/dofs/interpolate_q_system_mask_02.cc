@@ -107,6 +107,7 @@ test()
             dof_handler, F<dim>(q, adj2), interpolant, mask2);
           constraints.distribute(interpolant);
 
+
           // then compute the interpolation error for mask 1
           VectorTools::integrate_difference(dof_handler,
                                             interpolant,
@@ -141,6 +142,8 @@ test()
         }
     }
 }
+
+
 
 int
 main()

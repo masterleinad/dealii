@@ -32,6 +32,7 @@ namespace MeshWorker
   template <int dim, class DOFINFO>
   class DoFInfoBox;
 
+
   /**
    * A class containing information on geometry and degrees of freedom of a
    * mesh object.
@@ -160,6 +161,9 @@ namespace MeshWorker
     const BlockIndices&
     local_indices() const;
 
+    const BlockIndices&
+    local_indices() const;
+
     /// The block structure of the system
     SmartPointer<const BlockInfo, DoFInfo<dim, spacedim>> block_info;
 
@@ -238,6 +242,7 @@ namespace MeshWorker
     template <class ASSEMBLER>
     void
     assemble(ASSEMBLER& ass) const;
+
 
     /**
      * The data for the cell.

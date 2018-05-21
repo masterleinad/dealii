@@ -41,6 +41,8 @@ std::ofstream logfile("output");
 #include <deal.II/lac/solver_richardson.h>
 #include <deal.II/numerics/derivative_approximation.h>
 
+
+
 template <int dim>
 class RHS : public Function<dim>
 {
@@ -453,6 +455,7 @@ DGMethod<dim>::assemble_system1()
                   const unsigned int neighbor2
                     = cell->neighbor_of_neighbor(face_no);
 
+
                   for(unsigned int subface_no = 0;
                       subface_no < face->n_children();
                       ++subface_no)
@@ -570,6 +573,9 @@ DGMethod<dim>::assemble_system2()
     mapping, fe, face_quadrature, face_update_flags);
   FEFaceValues<dim> fe_v_face_neighbor(
     mapping, fe, face_quadrature, neighbor_face_update_flags);
+
+  FullMatrix<double> ui_vi_matrix(dofs_per_cell, dofs_per_cell);
+  FullMatrix<double> ue_vi_matrix(dofs_per_cell, dofs_per_cell);
 
   FullMatrix<double> ui_vi_matrix(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> ue_vi_matrix(dofs_per_cell, dofs_per_cell);
@@ -788,6 +794,7 @@ DGMethod<dim>::run()
         }
       else
         refine_grid();
+
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;

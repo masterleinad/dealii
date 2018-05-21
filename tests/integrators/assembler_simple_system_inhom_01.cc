@@ -347,6 +347,7 @@ MatrixIntegrator<dim>::boundary(
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {}
 
+
 template <int dim>
 void
 MatrixIntegrator<dim>::face(
@@ -700,6 +701,7 @@ MeshWorkerConstraintMatrixTest<dim>::run()
   deallog << "difference rhs " << error_rhs.l2_norm() << std::endl;
   deallog << "difference matrix " << error_matrix.frobenius_norm() << std::endl;
 }
+
 
 int
 main()

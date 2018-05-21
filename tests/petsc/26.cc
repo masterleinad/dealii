@@ -21,6 +21,7 @@
 #include <iostream>
 #include <vector>
 
+
 void
 test(PETScWrappers::MPI::Vector& v)
 {
@@ -37,6 +38,8 @@ test(PETScWrappers::MPI::Vector& v)
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

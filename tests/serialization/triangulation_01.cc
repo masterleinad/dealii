@@ -117,6 +117,7 @@ namespace dealii
   }
 } // namespace dealii
 
+
 template <int dim, int spacedim>
 void
 do_boundary(Triangulation<dim, spacedim>& t1)
@@ -154,6 +155,7 @@ test()
 
   verify(tria_1, tria_2);
 }
+
 
 int
 main()

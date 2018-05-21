@@ -51,6 +51,8 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
 
+
+
 /*
  * Check the value of the derivative field.
  */
@@ -496,6 +498,7 @@ project(const Mapping<dim>&     mapping,
         */
     }
 
+
   // set up mass matrix and right hand side
   vec.reinit(dof.n_dofs());
   SparsityPattern sparsity(
@@ -529,6 +532,7 @@ project(const Mapping<dim>&     mapping,
   // distribute solution
   constraints.distribute(vec);
 }
+
 
 int create_alternate_unitsquare(Triangulation<2>& tria)
 {
@@ -570,6 +574,8 @@ int create_alternate_unitsquare(Triangulation<2>& tria)
   return (0);
 }
 
+
+
 int
 main(int /*argc*/, char** /*argv*/)
 {
@@ -592,6 +598,9 @@ main(int /*argc*/, char** /*argv*/)
       for(unsigned int v = 0; v < 4; ++v)
         deallog << "    " << cell->vertex(v) << std::endl;
     }
+
+  //   tria_test.refine_global (1);
+  //   GridTools::distort_random (0.25, tria_test);
 
   //   tria_test.refine_global (1);
   //   GridTools::distort_random (0.25, tria_test);

@@ -26,6 +26,11 @@
 #    include <deal.II/lac/trilinos_sparse_matrix.h>
 #  endif
 
+#  ifdef DEAL_II_WITH_TRILINOS
+#    include <deal.II/lac/trilinos_block_sparse_matrix.h>
+#    include <deal.II/lac/trilinos_sparse_matrix.h>
+#  endif
+
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -218,6 +223,7 @@ namespace internal
         return matrix.el(i, j);
       }
 
+
 #  ifdef DEAL_II_WITH_TRILINOS
       /**
        * Return the element with given indices of a Trilinos sparse matrix.
@@ -243,11 +249,13 @@ namespace internal
       }
 #  endif
 
+
 #  ifdef DEAL_II_WITH_PETSC
       // no need to do anything: PETSc matrix objects do not distinguish
       // between operator() and el(i,j), so we can safely access elements
       // through the generic function below
 #  endif
+
 
       /**
        * Return the element with given indices from any matrix type for which
@@ -265,6 +273,8 @@ namespace internal
     } // namespace
   }   // namespace MatrixOutImplementation
 } // namespace internal
+
+
 
 template <class Matrix>
 inline double

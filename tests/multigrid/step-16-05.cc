@@ -343,6 +343,7 @@ LaplaceProblem<dim>::assemble_multigrid()
               cell_matrix(i, j) = 0;
             }
 
+
       empty_constraints.distribute_local_to_global(
         cell_matrix, local_dof_indices, mg_interface_matrices[cell->level()]);
     }

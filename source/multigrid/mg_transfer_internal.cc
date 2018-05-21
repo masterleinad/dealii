@@ -49,6 +49,8 @@ namespace internal
       {}
     };
 
+
+
     template <int dim, int spacedim>
     void
     fill_copy_indices(
@@ -137,6 +139,7 @@ namespace internal
                   bool level_mine
                     = mg_dof.locally_owned_mg_dofs(level).is_element(
                       level_dof_indices[i]);
+
 
                   if(global_mine && level_mine)
                     {
@@ -589,6 +592,8 @@ namespace internal
       }
       const std::unique_ptr<FiniteElement<1>> fe(
         FETools::get_fe_by_name<1, 1>(fe_name));
+
+      setup_element_info(elem_info, *fe, mg_dof);
 
       setup_element_info(elem_info, *fe, mg_dof);
 

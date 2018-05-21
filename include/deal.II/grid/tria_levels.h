@@ -151,6 +151,7 @@ namespace internal
        */
       TriaObjects<TriaObject<dim>> cells;
 
+
       /**
        * Reserve enough space to accommodate @p total_cells cells on this
        * level. Since there are no @p used flags on this level, you have to
@@ -229,6 +230,7 @@ namespace internal
 
       TriaObjectsHex cells;
 
+
       void
       reserve_space(const unsigned int total_cells,
                     const unsigned int dimension,
@@ -295,6 +297,8 @@ namespace internal
 
   } // namespace TriangulationImplementation
 } // namespace internal
+
+
 
 DEAL_II_NAMESPACE_CLOSE
 

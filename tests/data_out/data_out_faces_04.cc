@@ -24,6 +24,8 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out_faces.h>
 
+
+
 // have a class that makes sure we can get at the patches and data set
 // names that the base class generates
 template <int dim>
@@ -81,6 +83,8 @@ my_check_this(const DoFHandler<1>&,
 {
   // don't check in 1d
 }
+
+
 
 template <int dim>
 void
@@ -143,6 +147,8 @@ my_check_this(const DoFHandler<dim>& dof_handler,
 
   deallog << "OK" << std::endl;
 }
+
+
 
 template <int dim>
 void

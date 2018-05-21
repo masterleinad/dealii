@@ -34,6 +34,8 @@ namespace Gmsh
       output_base_name(output_base_name)
   {}
 
+
+
   void
   AdditionalParameters::add_parameters(ParameterHandler& prm)
   {
@@ -44,6 +46,8 @@ namespace Gmsh
                       "temporary files, and then remove them when they "
                       "are no longer used.");
   }
+
+
 
 #  ifdef DEAL_II_WITH_OPENCASCADE
   template <int spacedim>

@@ -178,6 +178,7 @@ transfer(std::ostream& out)
   dgq_data_out.write_gnuplot(out);
 }
 
+
 int
 main()
 {

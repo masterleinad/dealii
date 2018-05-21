@@ -42,6 +42,7 @@ struct X
   }
 };
 
+
 void
 test()
 {
@@ -59,6 +60,8 @@ test()
 
   AssertThrow(counter == 12, ExcInternalError());
 }
+
+
 
 int
 main()

@@ -126,6 +126,7 @@ public:
   virtual std::string
   get_name() const override;
 
+
   /**
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.

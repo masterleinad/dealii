@@ -55,6 +55,7 @@
 #include <fstream>
 #include <iostream>
 
+
 // The final part of the top matter is to open a namespace into which to put
 // everything, and then to import the dealii namespace into it.
 namespace Step53
@@ -125,6 +126,7 @@ namespace Step53
       Point<2>(-lat * 180 / numbers::PI, lon * 180 / numbers::PI));
   }
 
+
   std::array<std::pair<double, double>, 2>
   AfricaTopography::get_endpoints()
   {
@@ -133,6 +135,7 @@ namespace Step53
     endpoints[1] = std::make_pair(25, 35.95);
     return endpoints;
   }
+
 
   std::array<unsigned int, 2>
   AfricaTopography::n_intervals()
@@ -447,6 +450,8 @@ namespace Step53
     grid_out.write_vtu(triangulation, out);
   }
 } // namespace Step53
+
+
 
 // @sect3{The main function}
 

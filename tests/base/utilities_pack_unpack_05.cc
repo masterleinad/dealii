@@ -22,6 +22,7 @@
 #include <deal.II/base/point.h>
 #include <deal.II/base/utilities.h>
 
+
 using namespace dealii;
 
 template <int N, int dim>
@@ -57,6 +58,7 @@ check(const double (&array)[N], const Point<dim>(&point))
           << (point.distance(unpacked_point) < 1e-12 ? "OK" : "Failed")
           << std::endl;
 }
+
 
 void
 test()

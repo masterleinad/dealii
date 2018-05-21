@@ -23,6 +23,8 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_view.h>
 
+
+
 template <typename number>
 void
 check_norms()
@@ -57,6 +59,7 @@ check_norms()
       deallog << std::endl;
     }
 }
+
 
 int
 main()

@@ -16,6 +16,7 @@
 #ifndef dealii_template_constraints_h
 #define dealii_template_constraints_h
 
+
 #include <deal.II/base/complex_overloads.h>
 #include <deal.II/base/config.h>
 
@@ -31,6 +32,7 @@ namespace internal
     // helper struct for is_base_of_all and all_same_as
     template <bool... Values>
     struct BoolStorage;
+
 
     /**
      * A helper class whose `value` member is true or false depending on
@@ -82,8 +84,11 @@ struct enable_if_all
   : std::enable_if<internal::TemplateConstraints::all_true<Values...>::value>
 {};
 
+
+
 template <bool, typename>
 struct constraint_and_return_value;
+
 
 /**
  * This specialization of the general template for the case of a <tt>true</tt>
@@ -328,6 +333,8 @@ namespace internal
   {};
 } // namespace internal
 
+
+
 /**
  * A type that can be used to determine whether two types are equal. It allows
  * to write code like
@@ -372,6 +379,8 @@ namespace internal
   };
 
 } // namespace internal
+
+
 
 /**
  * A class with a local typedef that represents the type that results from the
@@ -474,6 +483,8 @@ namespace internal
 
 } // namespace internal
 
+
+
 /**
  * This class provides a local typedef @p type that is equal to the template
  * argument but only if the template argument corresponds to a scalar type
@@ -527,6 +538,7 @@ namespace internal
  */
 template <typename T>
 struct EnableIfScalar;
+
 
 template <>
 struct EnableIfScalar<double>

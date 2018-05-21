@@ -116,6 +116,10 @@ test_dim_3(const double e1,
                                     + e2 * symmetrize(outer_product(v2, v2))
                                     + e3 * symmetrize(outer_product(v3, v3));
 
+  const SymmetricTensor<2, dim> T = e1 * symmetrize(outer_product(v1, v1))
+                                    + e2 * symmetrize(outer_product(v2, v2))
+                                    + e3 * symmetrize(outer_product(v3, v3));
+
   const std::array<double, dim> eig_vals = eigenvalues(T);
 
   check_value(dim, 0, e1, eig_vals[0], tol);

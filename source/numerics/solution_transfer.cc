@@ -238,6 +238,8 @@ namespace internal
   }
 } // namespace internal
 
+
+
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::
@@ -373,6 +375,10 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
 
           const unsigned int dofs_per_cell
             = cell->get_dof_handler().get_fe(target_fe_index).dofs_per_cell;
+
+          std::vector<Vector<typename VectorType::value_type>>(
+            in_size, Vector<typename VectorType::value_type>(dofs_per_cell))
+            .swap(dof_values_on_cell[n_cf]);
 
           std::vector<Vector<typename VectorType::value_type>>(
             in_size, Vector<typename VectorType::value_type>(dofs_per_cell))
@@ -525,6 +531,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
                     }
                   else
                     data = &(*valuesptr)[j];
+
 
                   for(unsigned int i = 0; i < dofs_per_cell; ++i)
                     internal::ElementAccess<VectorType>::set(

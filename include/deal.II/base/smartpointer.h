@@ -99,6 +99,7 @@ public:
    */
   SmartPointer(T* t);
 
+
   /**
    * Destructor, removing the subscription.
    */

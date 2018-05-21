@@ -226,6 +226,8 @@ namespace Testing
   }
 } // namespace Testing
 
+
+
 // Get a uniformly distributed random value between min and max
 template <typename T = double>
 T
@@ -463,6 +465,7 @@ initlog(bool console = false)
   deallog.depth_console(console ? 10 : 0);
 }
 
+
 inline void
 mpi_initlog(const bool console = false)
 {
@@ -571,6 +574,7 @@ namespace deal_II_exceptions
   extern bool show_stacktrace;
 } // namespace deal_II_exceptions
 DEAL_II_NAMESPACE_CLOSE
+
 
 void
 new_tbb_assertion_handler(const char* file,

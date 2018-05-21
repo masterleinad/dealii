@@ -157,6 +157,7 @@ check(const unsigned int fe_degree)
     }
 }
 
+
 int
 main(int argc, char** argv)
 {

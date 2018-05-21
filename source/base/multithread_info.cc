@@ -46,6 +46,9 @@ DEAL_II_NAMESPACE_OPEN
 #  if defined(__linux__) || defined(__sun__) || defined(__osf__) \
     || defined(_AIX)
 
+#  if defined(__linux__) || defined(__sun__) || defined(__osf__) \
+    || defined(_AIX)
+
 unsigned int
 MultithreadInfo::get_n_cpus()
 {
@@ -108,6 +111,7 @@ MultithreadInfo::n_cores()
   return MultithreadInfo::n_cpus;
 }
 
+
 void
 MultithreadInfo::set_thread_limit(const unsigned int max_threads)
 {
@@ -160,12 +164,15 @@ MultithreadInfo::set_thread_limit(const unsigned int max_threads)
   dummy.initialize(n_max_threads);
 }
 
+
 unsigned int
 MultithreadInfo::n_threads()
 {
   Assert(n_max_threads != numbers::invalid_unsigned_int, ExcInternalError());
   return n_max_threads;
 }
+
+#else // not in MT mode
 
 #else // not in MT mode
 
@@ -193,6 +200,7 @@ MultithreadInfo::set_thread_limit(const unsigned int)
 
 #endif
 
+
 bool
 MultithreadInfo::is_running_single_threaded()
 {
@@ -217,6 +225,8 @@ MultithreadInfo::initialize_multithreading()
   MultithreadInfo::set_thread_limit(numbers::invalid_unsigned_int);
   done = true;
 }
+
+
 
 const unsigned int MultithreadInfo::n_cpus  = MultithreadInfo::get_n_cpus();
 unsigned int MultithreadInfo::n_max_threads = numbers::invalid_unsigned_int;

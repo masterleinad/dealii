@@ -28,6 +28,7 @@ template void
 SparseVanka<double>::vmult<double>(Vector<double>&       dst,
                                    const Vector<double>& src) const;
 
+
 template class SparseBlockVanka<float>;
 template class SparseBlockVanka<double>;
 

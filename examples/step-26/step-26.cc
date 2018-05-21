@@ -444,6 +444,7 @@ namespace Step26
     tmp.reinit(solution.size());
     forcing_terms.reinit(solution.size());
 
+
     VectorTools::interpolate(
       dof_handler, Functions::ZeroFunction<dim>(), old_solution);
     solution = old_solution;

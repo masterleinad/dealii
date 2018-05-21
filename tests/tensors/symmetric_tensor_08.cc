@@ -19,6 +19,7 @@
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
 
+
 inline double
 value(unsigned int i,
       unsigned int j,
@@ -66,6 +67,8 @@ test()
     for(unsigned int j = 0; j < dim; ++j)
       deallog << i << ' ' << j << ' ' << a[i][j] << std::endl;
 }
+
+
 
 int
 main()

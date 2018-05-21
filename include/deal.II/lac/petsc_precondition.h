@@ -18,6 +18,8 @@
 
 #  include <deal.II/base/config.h>
 
+#  include <deal.II/base/config.h>
+
 #  ifdef DEAL_II_WITH_PETSC
 
 #    include <deal.II/lac/exceptions.h>
@@ -73,6 +75,7 @@ namespace PETScWrappers
      */
     void
     vmult(VectorBase& dst, const VectorBase& src) const;
+
 
     /**
      * Give access to the underlying PETSc object.
@@ -138,6 +141,7 @@ namespace PETScWrappers
      * object.
      */
     PreconditionJacobi() = default;
+
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
@@ -235,6 +239,7 @@ namespace PETScWrappers
     PreconditionBlockJacobi(const MPI_Comm        communicator,
                             const AdditionalData& additional_data
                             = AdditionalData());
+
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -641,6 +646,8 @@ namespace PETScWrappers
     AdditionalData additional_data;
   };
 
+
+
   /**
    * A class that implements the interface to use the BoomerAMG algebraic
    * multigrid preconditioner from the HYPRE suite. Note that PETSc has to be
@@ -734,6 +741,7 @@ namespace PETScWrappers
     PreconditionBoomerAMG(const MPI_Comm        communicator,
                           const AdditionalData& additional_data
                           = AdditionalData());
+
 
     /**
      * Initialize the preconditioner object and calculate all data that is
@@ -930,7 +938,10 @@ namespace PETScWrappers
   };
 } // namespace PETScWrappers
 
+
+
 DEAL_II_NAMESPACE_CLOSE
+
 
 #  endif // DEAL_II_WITH_PETSC
 

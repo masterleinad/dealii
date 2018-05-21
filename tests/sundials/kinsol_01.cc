@@ -64,6 +64,7 @@ main(int argc, char** argv)
     return 0;
   };
 
+
   kinsol.iteration_function = [](const VectorType& u, VectorType& F) -> int {
     for(unsigned int i = 0; i < u.size(); ++i)
       F[i] = u[i] * u[i] - i * i - u[i];

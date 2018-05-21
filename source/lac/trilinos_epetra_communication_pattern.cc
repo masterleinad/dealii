@@ -45,6 +45,8 @@ namespace LinearAlgebra
                                    communicator);
     }
 
+
+
     void
     CommunicationPattern::reinit(const IndexSet& vector_space_vector_index_set,
                                  const IndexSet& read_write_vector_index_set,
@@ -64,11 +66,15 @@ namespace LinearAlgebra
                                                      vector_space_vector_map);
     }
 
+
+
     const MPI_Comm&
     CommunicationPattern::get_mpi_communicator() const
     {
       return *comm;
     }
+
+
 
     const Epetra_Import&
     CommunicationPattern::get_epetra_import() const

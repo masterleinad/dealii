@@ -29,6 +29,8 @@
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/vector.h>
 
+
+
 void
 test()
 {
@@ -52,6 +54,7 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
 
 int
 main()

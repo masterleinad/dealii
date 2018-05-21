@@ -26,6 +26,8 @@
 #include <string>
 #include <vector>
 
+
+
 template <int dim>
 inline void
 show_values(FiniteElement<dim>& fe, const char* name)
@@ -95,6 +97,8 @@ main()
   deallog << std::setprecision(2);
   deallog << std::fixed;
   deallog.attach(logfile);
+
+
 
   deallog.push("1d");
   show_values<1>();

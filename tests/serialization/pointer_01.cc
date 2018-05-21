@@ -56,6 +56,7 @@ private:
   unsigned int object_number;
 };
 
+
 void
 test()
 {
@@ -73,6 +74,7 @@ test()
   delete p1;
   delete p2;
 }
+
 
 int
 main()

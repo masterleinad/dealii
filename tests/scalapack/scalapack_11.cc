@@ -87,6 +87,8 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   AssertThrow(dest.frobenius_norm() < 1e-12, ExcInternalError());
 }
 
+
+
 int
 main(int argc, char** argv)
 {

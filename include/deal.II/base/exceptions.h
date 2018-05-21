@@ -82,6 +82,7 @@ public:
              const char* cond,
              const char* exc_name);
 
+
   /**
    * Override the standard function that returns the description of the error.
    */
@@ -185,6 +186,7 @@ private:
     class Exception0 : public dealii::ExceptionBase \
     {}
 
+
 /**
  * Declare an exception class derived from ExceptionBase that can take one
  * runtime argument, but if none is given in the place where you want to throw
@@ -235,6 +237,7 @@ private:
       const type1 arg1;                                  \
     }
 
+
 /**
  * Declare an exception class derived from ExceptionBase with two additional
  * parameters.
@@ -262,6 +265,7 @@ private:
       const type1 arg1;                                         \
       const type2 arg2;                                         \
     }
+
 
 /**
  * Declare an exception class derived from ExceptionBase with three additional
@@ -292,6 +296,7 @@ private:
       const type2 arg2;                                                \
       const type3 arg3;                                                \
     }
+
 
 /**
  * Declare an exception class derived from ExceptionBase with four additional
@@ -327,6 +332,7 @@ private:
       const type3 arg3;                                                       \
       const type4 arg4;                                                       \
     }
+
 
 /**
  * Declare an exception class derived from ExceptionBase with five additional
@@ -405,6 +411,7 @@ private:
     /** @dealiiExceptionMessage{outsequence} */          \
     static dealii::ExceptionBase& Exception1(type1 arg1)
 
+
 /**
  * Declare an exception class derived from ExceptionBase with two additional
  * parameters.
@@ -415,6 +422,7 @@ private:
     /** @ingroup Exceptions */                                  \
     /** @dealiiExceptionMessage{outsequence} */                 \
     static dealii::ExceptionBase& Exception2(type1 arg1, type2 arg2)
+
 
 /**
  * Declare an exception class derived from ExceptionBase with three additional
@@ -427,6 +435,7 @@ private:
     /** @dealiiExceptionMessage{outsequence} */                        \
     static dealii::ExceptionBase& Exception3(type1 arg1, type2 arg2, type3 arg3)
 
+
 /**
  * Declare an exception class derived from ExceptionBase with four additional
  * parameters.
@@ -438,6 +447,7 @@ private:
     /** @dealiiExceptionMessage{outsequence} */                               \
     static dealii::ExceptionBase& Exception4(                                 \
       type1 arg1, type2 arg2, type3 arg3, type4 arg4)
+
 
 /**
  * Declare an exception class derived from ExceptionBase with five additional
@@ -713,6 +723,7 @@ namespace StandardExceptions
                  << "You are trying to execute functionality that is "
                  << "impossible in dimensions <" << arg1 << "," << arg2
                  << "> or simply does not make any sense.");
+
 
   /**
    * A number is zero, but it should not be here.
@@ -1343,6 +1354,7 @@ namespace deal_II_exceptions
  */
 #define AssertDimension(dim1, dim2) \
   Assert((dim1) == (dim2), dealii::ExcDimensionMismatch((dim1), (dim2)))
+
 
 /**
  * An assertion that tests whether <tt>vec</tt> has size <tt>dim1</tt>, and

@@ -152,6 +152,8 @@ namespace
 #endif
 } // namespace
 
+
+
 /* ------------------ MGLevelGlobalTransfer<VectorType> ----------------- */
 
 namespace internal
@@ -188,6 +190,7 @@ namespace internal
     dst = src;
   }
 } // namespace internal
+
 
 template <typename VectorType>
 template <int dim, class InVector, int spacedim>

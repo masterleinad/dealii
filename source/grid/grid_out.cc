@@ -35,6 +35,7 @@
 #include <list>
 #include <set>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace GridOutFlags
@@ -89,6 +90,7 @@ namespace GridOutFlags
     write_all_faces = param.get_bool("Write all faces");
   }
 
+
   Msh::Msh(const bool write_faces, const bool write_lines)
     : write_faces(write_faces), write_lines(write_lines)
   {}
@@ -100,12 +102,14 @@ namespace GridOutFlags
     param.declare_entry("Write lines", "false", Patterns::Bool());
   }
 
+
   void
   Msh::parse_parameters(ParameterHandler& param)
   {
     write_faces = param.get_bool("Write faces");
     write_lines = param.get_bool("Write lines");
   }
+
 
   Ucd::Ucd(const bool write_preamble,
            const bool write_faces,
@@ -115,6 +119,8 @@ namespace GridOutFlags
       write_lines(write_lines)
   {}
 
+
+
   void
   Ucd::declare_parameters(ParameterHandler& param)
   {
@@ -122,6 +128,7 @@ namespace GridOutFlags
     param.declare_entry("Write faces", "false", Patterns::Bool());
     param.declare_entry("Write lines", "false", Patterns::Bool());
   }
+
 
   void
   Ucd::parse_parameters(ParameterHandler& param)
@@ -131,6 +138,7 @@ namespace GridOutFlags
     write_lines    = param.get_bool("Write lines");
   }
 
+
   Gnuplot::Gnuplot(const bool         write_cell_numbers,
                    const unsigned int n_boundary_face_points,
                    const bool         curved_inner_cells)
@@ -139,6 +147,8 @@ namespace GridOutFlags
       curved_inner_cells(curved_inner_cells)
   {}
 
+
+
   void
   Gnuplot::declare_parameters(ParameterHandler& param)
   {
@@ -146,12 +156,14 @@ namespace GridOutFlags
     param.declare_entry("Boundary points", "2", Patterns::Integer());
   }
 
+
   void
   Gnuplot::parse_parameters(ParameterHandler& param)
   {
     write_cell_numbers     = param.get_bool("Cell number");
     n_boundary_face_points = param.get_integer("Boundary points");
   }
+
 
   EpsFlagsBase::EpsFlagsBase(const SizeType     size_type,
                              const unsigned int size,
@@ -166,6 +178,7 @@ namespace GridOutFlags
       n_boundary_face_points(n_boundary_face_points),
       color_lines_level(color_lines_level)
   {}
+
 
   void
   EpsFlagsBase::declare_parameters(ParameterHandler& param)
@@ -197,6 +210,7 @@ namespace GridOutFlags
                         "Draw different colors according to grid level.");
   }
 
+
   void
   EpsFlagsBase::parse_parameters(ParameterHandler& param)
   {
@@ -211,6 +225,8 @@ namespace GridOutFlags
     color_lines_level        = param.get_bool("Color by level");
   }
 
+
+
   Eps<1>::Eps(const SizeType     size_type,
               const unsigned int size,
               const double       line_width,
@@ -223,15 +239,19 @@ namespace GridOutFlags
                    n_boundary_face_points)
   {}
 
+
   void
   Eps<1>::declare_parameters(ParameterHandler&)
   {}
+
 
   void
   Eps<1>::parse_parameters(ParameterHandler& param)
   {
     EpsFlagsBase::parse_parameters(param);
   }
+
+
 
   Eps<2>::Eps(const SizeType     size_type,
               const unsigned int size,
@@ -253,6 +273,7 @@ namespace GridOutFlags
       write_vertex_numbers(write_vertex_numbers)
   {}
 
+
   void
   Eps<2>::declare_parameters(ParameterHandler& param)
   {
@@ -272,6 +293,7 @@ namespace GridOutFlags
                         "Write numbers for each vertex");
   }
 
+
   void
   Eps<2>::parse_parameters(ParameterHandler& param)
   {
@@ -280,6 +302,8 @@ namespace GridOutFlags
     write_cell_number_level = param.get_bool("Level number");
     write_vertex_numbers    = param.get_bool("Vertex number");
   }
+
+
 
   Eps<3>::Eps(const SizeType     size_type,
               const unsigned int size,
@@ -297,6 +321,7 @@ namespace GridOutFlags
       turn_angle(turn_angle)
   {}
 
+
   void
   Eps<3>::declare_parameters(ParameterHandler& param)
   {
@@ -311,6 +336,7 @@ namespace GridOutFlags
                         "Elevation of the view point above the xy-plane.");
   }
 
+
   void
   Eps<3>::parse_parameters(ParameterHandler& param)
   {
@@ -318,6 +344,8 @@ namespace GridOutFlags
     azimut_angle = 90 - param.get_double("Elevation");
     turn_angle   = param.get_double("Azimuth");
   }
+
+
 
   XFig::XFig()
     : draw_boundary(true),
@@ -331,6 +359,7 @@ namespace GridOutFlags
       boundary_style(0),
       boundary_thickness(3)
   {}
+
 
   void
   XFig::declare_parameters(ParameterHandler& param)
@@ -346,6 +375,7 @@ namespace GridOutFlags
     param.declare_entry("Boundary style", "0", Patterns::Integer());
     param.declare_entry("Boundary width", "3", Patterns::Integer());
   }
+
 
   void
   XFig::parse_parameters(ParameterHandler& param)
@@ -411,8 +441,11 @@ namespace GridOutFlags
   }
 } // end namespace GridOutFlags
 
+
+
 GridOut::GridOut() : default_format(none)
 {}
+
 
 void
 GridOut::set_flags(const GridOutFlags::DX& flags)
@@ -420,11 +453,14 @@ GridOut::set_flags(const GridOutFlags::DX& flags)
   dx_flags = flags;
 }
 
+
+
 void
 GridOut::set_flags(const GridOutFlags::Msh& flags)
 {
   msh_flags = flags;
 }
+
 
 void
 GridOut::set_flags(const GridOutFlags::Ucd& flags)
@@ -432,11 +468,15 @@ GridOut::set_flags(const GridOutFlags::Ucd& flags)
   ucd_flags = flags;
 }
 
+
+
 void
 GridOut::set_flags(const GridOutFlags::Gnuplot& flags)
 {
   gnuplot_flags = flags;
 }
+
+
 
 void
 GridOut::set_flags(const GridOutFlags::Eps<1>& flags)
@@ -444,11 +484,15 @@ GridOut::set_flags(const GridOutFlags::Eps<1>& flags)
   eps_flags_1 = flags;
 }
 
+
+
 void
 GridOut::set_flags(const GridOutFlags::Eps<2>& flags)
 {
   eps_flags_2 = flags;
 }
+
+
 
 void
 GridOut::set_flags(const GridOutFlags::Eps<3>& flags)
@@ -456,17 +500,21 @@ GridOut::set_flags(const GridOutFlags::Eps<3>& flags)
   eps_flags_3 = flags;
 }
 
+
+
 void
 GridOut::set_flags(const GridOutFlags::XFig& flags)
 {
   xfig_flags = flags;
 }
 
+
 void
 GridOut::set_flags(const GridOutFlags::Svg& flags)
 {
   svg_flags = flags;
 }
+
 
 void
 GridOut::set_flags(const GridOutFlags::MathGL& flags)
@@ -565,6 +613,8 @@ GridOut::parse_output_format(const std::string& format_name)
   // return something weird
   return OutputFormat(-1);
 }
+
+
 
 std::string
 GridOut::get_output_format_names()
@@ -724,6 +774,7 @@ GridOut::write_dx(const Triangulation<dim, spacedim>& tria,
   const typename Triangulation<dim, spacedim>::active_cell_iterator endc
     = tria.end();
 
+
   // write the vertices
   out << "object \"vertices\" class array type float rank 1 shape " << dim
       << " items " << n_vertices << " data follows" << '\n';
@@ -835,6 +886,7 @@ GridOut::write_dx(const Triangulation<dim, spacedim>& tria,
           << "attribute \"ref\" string \"positions\"" << '\n'
           << '\n';
 
+
       // Additional face information
 
       out << "object \"boundary\" class array type int rank 0 items " << n_faces
@@ -929,6 +981,8 @@ GridOut::write_dx(const Triangulation<dim, spacedim>& tria,
 
   AssertThrow(out, ExcIO());
 }
+
+
 
 template <int dim, int spacedim>
 void
@@ -1413,6 +1467,7 @@ GridOut::write_svg(const Triangulation<dim, spacedim>&,
   Assert(false, ExcNotImplemented());
 }
 
+
 void
 GridOut::write_svg(const Triangulation<2, 2>& tria, std::ostream& out) const
 {
@@ -1671,6 +1726,7 @@ GridOut::write_svg(const Triangulation<2, 2>& tria, std::ostream& out) const
                         * sin(angle_factor * svg_flags.polar_angle)
                         * cos(angle_factor * svg_flags.azimuth_angle);
 
+
   // determine the bounding box of the given triangulation on the projection plane of the camera viewing system
   point[0] = tria.begin()->vertex(0)[0];
   point[1] = tria.begin()->vertex(0)[1];
@@ -1830,6 +1886,7 @@ GridOut::write_svg(const Triangulation<2, 2>& tria, std::ostream& out) const
   out << "<svg width=\"" << width + additional_width << "\" height=\"" << height
       << "\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" << '\n'
       << '\n';
+
 
   if(svg_flags.background == GridOutFlags::Svg::dealii)
     {
@@ -2362,6 +2419,7 @@ GridOut::write_svg(const Triangulation<2, 2>& tria, std::ostream& out) const
         }
     }
 
+
   // draw the legend
   if(svg_flags.draw_legend)
     out << '\n' << " <!-- legend -->" << '\n';
@@ -2502,6 +2560,7 @@ GridOut::write_svg(const Triangulation<2, 2>& tria, std::ostream& out) const
           << "°, polar: " << svg_flags.polar_angle << "°</text>" << '\n';
     }
 
+
   // draw the colorbar
   if(svg_flags.draw_colorbar && svg_flags.coloring)
     {
@@ -2598,6 +2657,7 @@ GridOut::write_svg(const Triangulation<2, 2>& tria, std::ostream& out) const
           labeling_index++;
         }
     }
+
 
   // finalize the svg file
   out << '\n' << "</svg>";
@@ -2806,6 +2866,8 @@ namespace
   }
 } // namespace
 
+
+
 template <int dim, int spacedim>
 void
 GridOut::write_vtk(const Triangulation<dim, spacedim>& tria,
@@ -2975,6 +3037,8 @@ GridOut::write_mesh_per_processor_as_vtu(
   DataOutBase::write_vtu(patches, data_names, vector_data_ranges, flags, out);
 }
 
+
+
 unsigned int
 GridOut::n_boundary_faces(const Triangulation<1>&) const
 {
@@ -2986,6 +3050,7 @@ GridOut::n_boundary_lines(const Triangulation<1>&) const
 {
   return 0;
 }
+
 
 unsigned int
 GridOut::n_boundary_faces(const Triangulation<1, 2>&) const
@@ -3072,6 +3137,8 @@ GridOut::n_boundary_lines(const Triangulation<dim, spacedim>& tria) const
   return n_lines;
 }
 
+
+
 unsigned int
 GridOut::write_msh_faces(const Triangulation<1, 1>&,
                          const unsigned int next_element_index,
@@ -3135,6 +3202,8 @@ GridOut::write_msh_lines(const Triangulation<2, 3>&,
 {
   return next_element_index;
 }
+
+
 
 template <int dim, int spacedim>
 unsigned int
@@ -3228,6 +3297,8 @@ GridOut::write_msh_lines(const Triangulation<dim, spacedim>& tria,
 
   return current_element_index;
 }
+
+
 
 unsigned int
 GridOut::write_ucd_faces(const Triangulation<1, 1>&,
@@ -3381,6 +3452,7 @@ GridOut::write_ucd_lines(const Triangulation<dim, spacedim>& tria,
     line_flags);
   return current_element_index;
 }
+
 
 Point<2> GridOut::svg_project_point(Point<3> point,
                                     Point<3> camera_position,
@@ -3830,6 +3902,8 @@ namespace internal
   } // namespace
 } // namespace internal
 
+
+
 template <int dim, int spacedim>
 void
 GridOut::write_gnuplot(const Triangulation<dim, spacedim>& tria,
@@ -3856,6 +3930,7 @@ namespace internal
         : first(f), second(s), colorize(c), level(l)
       {}
     };
+
 
     void
     write_eps(const dealii::Triangulation<1>&,
@@ -4129,6 +4204,7 @@ namespace internal
                    - ((Point<dim>(1, 0, 0) * unit_vector1) * unit_vector1));
               const Tensor<1, dim> unit_vector2 = vector2 / vector2.norm();
 
+
               for(; cell != endc; ++cell)
                 for(unsigned int line_no = 0;
                     line_no < GeometryInfo<dim>::lines_per_cell;
@@ -4191,6 +4267,7 @@ namespace internal
            / (eps_flags_base.size_type == GridOutFlags::EpsFlagsBase::width ?
                 x_max - x_min :
                 y_min - y_max));
+
 
       // now write preamble
       if(true)
@@ -4360,6 +4437,7 @@ namespace internal
     }
   } // namespace
 } // namespace internal
+
 
 template <int dim, int spacedim>
 void

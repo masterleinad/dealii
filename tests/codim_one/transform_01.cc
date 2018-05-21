@@ -25,6 +25,7 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 
+
 template <int dim>
 Point<dim>
 warp(const Point<dim>& p)
@@ -47,6 +48,7 @@ save_mesh(const Triangulation<dim, spacedim>& tria)
   GridOut grid_out;
   grid_out.write_gnuplot(tria, deallog.get_file_stream());
 }
+
 
 int
 main()

@@ -23,6 +23,7 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 
+
 void
 test()
 {
@@ -43,6 +44,8 @@ test()
       k++)
     deallog << k->row() << ' ' << k->column() << ' ' << k->value() << std::endl;
 }
+
+
 
 int
 main(int argc, char** argv)

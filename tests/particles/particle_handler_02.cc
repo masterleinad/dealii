@@ -37,6 +37,8 @@ test()
 
     Particles::ParticleHandler<dim, spacedim> particle_handler(tr, mapping);
 
+    Particles::ParticleHandler<dim, spacedim> particle_handler(tr, mapping);
+
     Point<spacedim> position;
     position(0) = 0.3;
     if(spacedim > 1)
@@ -54,6 +56,12 @@ test()
     Particles::Particle<dim, spacedim> particle(
       position, reference_position, 7);
     deallog << "Particle location: " << particle.get_location() << std::endl;
+
+    std::pair<typename parallel::distributed::Triangulation<dim, spacedim>::
+                active_cell_iterator,
+              Point<dim>>
+      cell_position = GridTools::find_active_cell_around_point(
+        mapping, tr, particle.get_location());
 
     std::pair<typename parallel::distributed::Triangulation<dim, spacedim>::
                 active_cell_iterator,
@@ -94,6 +102,8 @@ test()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main(int argc, char* argv[])

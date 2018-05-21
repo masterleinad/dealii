@@ -16,8 +16,12 @@
 #include "../tests.h"
 #include <deal.II/lac/la_vector.h>
 
+
+
 const unsigned int N           = 10;
 unsigned int       check_point = 0;
+
+
 
 template <typename number>
 void
@@ -120,6 +124,7 @@ check_vectors(LinearAlgebra::Vector<number1>& d1,
   d2.equ(.25, d1);
   print(d2);
 }
+
 
 int
 main()

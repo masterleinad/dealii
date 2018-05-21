@@ -78,6 +78,7 @@ namespace Utilities
                  << "Can't convert the string " << arg1
                  << " to the desired type");
 
+
   std::string
   dealii_version_string()
   {
@@ -555,6 +556,8 @@ namespace Utilities
     return out;
   }
 
+
+
   namespace System
   {
 #if defined(__linux__)
@@ -604,6 +607,7 @@ namespace Utilities
         }
     }
 
+
     void
     get_memory_stats(MemoryStats& stats)
     {
@@ -636,6 +640,8 @@ namespace Utilities
 #endif
     }
 
+
+
     std::string
     get_hostname()
     {
@@ -648,6 +654,8 @@ namespace Utilities
 #endif
       return hostname;
     }
+
+
 
     std::string
     get_time()
@@ -663,6 +671,8 @@ namespace Utilities
       return o.str();
     }
 
+
+
     std::string
     get_date()
     {
@@ -675,6 +685,8 @@ namespace Utilities
 
       return o.str();
     }
+
+
 
     void
     posix_memalign(void** memptr, size_t alignment, size_t size)
@@ -693,12 +705,15 @@ namespace Utilities
 #endif
     }
 
+
+
     bool
     job_supports_mpi()
     {
       return Utilities::MPI::job_supports_mpi();
     }
   } // namespace System
+
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -718,6 +733,8 @@ namespace Utilities
       return *communicator;
     }
 
+
+
     const Epetra_Comm&
     comm_self()
     {
@@ -731,6 +748,8 @@ namespace Utilities
 
       return *communicator;
     }
+
+
 
     Epetra_Comm*
     duplicate_communicator(const Epetra_Comm& communicator)
@@ -757,6 +776,8 @@ namespace Utilities
         dynamic_cast<const Epetra_SerialComm&>(communicator));
     }
 
+
+
     void
     destroy_communicator(Epetra_Comm& communicator)
     {
@@ -774,11 +795,14 @@ namespace Utilities
 #  endif
     }
 
+
+
     unsigned int
     get_n_mpi_processes(const Epetra_Comm& mpi_communicator)
     {
       return mpi_communicator.NumProc();
     }
+
 
     unsigned int
     get_this_mpi_process(const Epetra_Comm& mpi_communicator)

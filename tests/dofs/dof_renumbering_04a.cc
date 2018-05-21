@@ -31,6 +31,8 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 
+
+
 template <int dim>
 void
 print_dofs(const DoFHandler<dim>& dof)
@@ -47,6 +49,8 @@ print_dofs(const DoFHandler<dim>& dof)
         deallog << v[i] << std::endl;
     }
 }
+
+
 
 template <int dim>
 void
@@ -65,6 +69,7 @@ check()
   for(unsigned int i = 0; i < new_dofs.size(); ++i)
     deallog << new_dofs[i] << std::endl;
 }
+
 
 int
 main()

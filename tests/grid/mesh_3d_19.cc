@@ -28,6 +28,8 @@ char logname[] = "output";
 
 #include <vector>
 
+
+
 void
 test_with_wrong_face_orientation()
 {
@@ -48,6 +50,8 @@ test_with_wrong_face_orientation()
     deallog << "cell->neighbor(3)->face(" << i
             << ")=" << cell->neighbor(3)->face(i) << std::endl;
 }
+
+
 
 int
 main()

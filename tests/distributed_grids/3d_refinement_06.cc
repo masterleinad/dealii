@@ -30,6 +30,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -73,6 +75,7 @@ test(std::ostream& /*out*/)
     Assert(tr.n_active_cells() == 120, ExcInternalError());
   }
 }
+
 
 int
 main(int argc, char* argv[])

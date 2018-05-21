@@ -21,6 +21,7 @@
 
 #include <deal.II/base/utilities.h>
 
+
 std::pair<double, double>
 test()
 {
@@ -43,6 +44,8 @@ test()
 
   return std::make_pair(mean, stddev);
 }
+
+
 
 int
 main()

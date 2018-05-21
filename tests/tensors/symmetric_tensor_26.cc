@@ -36,6 +36,7 @@ check()
   deallog << "S*x = " << S * x << std::endl;
 }
 
+
 int
 main()
 {

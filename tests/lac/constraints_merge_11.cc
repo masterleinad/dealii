@@ -19,6 +19,8 @@
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
+
+
 void
 merge_check()
 {
@@ -50,6 +52,8 @@ merge_check()
 
   deallog << "OK" << std::endl;
 }
+
+
 
 int
 main()

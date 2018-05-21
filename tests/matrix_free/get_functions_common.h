@@ -45,6 +45,8 @@ template <int dim, int fe_degree>
 void
 test();
 
+
+
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
@@ -136,6 +138,8 @@ public:
       }
   }
 
+
+
   void
   test_functions(const Vector<Number>& src) const
   {
@@ -215,6 +219,8 @@ public:
   {}
 };
 
+
+
 template <int dim, int fe_degree, typename number>
 void
 do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
@@ -250,6 +256,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   MatrixFreeTest<dim, fe_degree, fe_degree + 1, number> mf(mf_data);
   mf.test_functions(solution);
 }
+
 
 int
 main()

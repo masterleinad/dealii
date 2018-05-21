@@ -137,6 +137,8 @@ namespace internal
   }   // namespace FE_PolyTensor
 } // namespace internal
 
+
+
 template <class PolynomialType, int dim, int spacedim>
 FE_PolyTensor<PolynomialType, dim, spacedim>::FE_PolyTensor(
   const unsigned int                degree,
@@ -342,6 +344,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_values(
     internal::FE_PolyTensor::get_face_sign_change_nedelec(
       cell, this->dofs_per_face, fe_data.sign_change);
 
+
   for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
     {
       const unsigned int first
@@ -491,6 +494,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_values(
                           += output_data.shape_values(first + n, k)
                              * mapping_data
                                  .jacobian_pushed_forward_grads[k][d][n];
+
 
                   for(unsigned int k = 0; k < n_q_points; ++k)
                     for(unsigned int d = 0; d < dim; ++d)

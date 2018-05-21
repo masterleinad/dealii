@@ -51,6 +51,7 @@ namespace internal
   } // namespace DataOutFacesImplementation
 } // namespace internal
 
+
 /**
  * This class generates output from faces of a triangulation. It might be used
  * to generate output only for the surface of the triangulation (this is the
@@ -190,6 +191,7 @@ public:
    * that is better to type.
    */
   typedef typename std::pair<cell_iterator, unsigned int> FaceDescriptor;
+
 
   /**
    * Return the first face which we want output for. The default

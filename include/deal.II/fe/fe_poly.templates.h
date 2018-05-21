@@ -16,6 +16,7 @@
 #ifndef dealii_fe_poly_templates_h
 #define dealii_fe_poly_templates_h
 
+
 #include <deal.II/base/polynomial_space.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/tensor_product_polynomials.h>
@@ -23,6 +24,7 @@
 #include <deal.II/base/tensor_product_polynomials_const.h>
 #include <deal.II/fe/fe_poly.h>
 #include <deal.II/fe/fe_values.h>
+
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -516,12 +518,16 @@ namespace internal
   }
 } // namespace internal
 
+
+
 template <class PolynomialType, int dim, int spacedim>
 std::vector<unsigned int>
 FE_Poly<PolynomialType, dim, spacedim>::get_poly_space_numbering() const
 {
   return internal::get_poly_space_numbering(poly_space);
 }
+
+
 
 template <class PolynomialType, int dim, int spacedim>
 std::vector<unsigned int>

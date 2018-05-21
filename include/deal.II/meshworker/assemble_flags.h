@@ -145,6 +145,8 @@ namespace MeshWorker
                                       | static_cast<unsigned int>(f2));
   }
 
+
+
   /**
    * Global operator which sets the bits from the second argument also in the
    * first one.

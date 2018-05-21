@@ -47,6 +47,7 @@ test()
   verify(q1, q2);
 }
 
+
 int
 main()
 {

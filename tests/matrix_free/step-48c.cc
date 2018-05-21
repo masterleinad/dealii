@@ -72,6 +72,8 @@ namespace Step48
       const std::pair<unsigned int, unsigned int>& cell_range) const;
   };
 
+
+
   template <int dim, int fe_degree>
   SineGordonOperation<dim, fe_degree>::SineGordonOperation(
     const MatrixFree<dim, double>& data_in,
@@ -102,6 +104,8 @@ namespace Step48
       else
         inv_mass_matrix.local_element(k) = 0;
   }
+
+
 
   template <int dim, int fe_degree>
   void
@@ -138,6 +142,8 @@ namespace Step48
       }
   }
 
+
+
   template <int dim, int fe_degree>
   void
   SineGordonOperation<dim, fe_degree>::apply(
@@ -168,6 +174,8 @@ namespace Step48
   {
     return 4. * std::exp(-p.square() * 10);
   }
+
+
 
   template <int dim>
   class SineGordonProblem
@@ -240,6 +248,7 @@ namespace Step48
     deallog << "   Number of degrees of freedom: " << dof_handler.n_dofs()
             << std::endl;
 
+
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
     constraints.clear();
     constraints.reinit(locally_relevant_dofs);
@@ -258,6 +267,8 @@ namespace Step48
     old_solution.reinit(solution);
     old_old_solution.reinit(solution);
   }
+
+
 
   template <int dim>
   void
@@ -297,6 +308,7 @@ namespace Step48
             << ", finest cell: " << global_min_cell_diameter << std::endl
             << std::endl;
 
+
     VectorTools::interpolate(
       dof_handler, InitialSolution<dim>(1, time), solution);
     VectorTools::interpolate(
@@ -329,6 +341,8 @@ namespace Step48
             << std::endl;
   }
 } // namespace Step48
+
+
 
 int
 main(int argc, char** argv)

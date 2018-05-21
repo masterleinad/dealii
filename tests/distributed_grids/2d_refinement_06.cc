@@ -28,6 +28,8 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
+
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -59,6 +61,7 @@ test(std::ostream& /*out*/)
     deallog << "cells test2: " << tr.n_active_cells() << std::endl;
   }
 }
+
 
 int
 main(int argc, char* argv[])

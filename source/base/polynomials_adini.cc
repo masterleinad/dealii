@@ -30,7 +30,9 @@
   koefs(10, z) = a10;                                         \
   koefs(11, z) = a11;
 
+
 DEAL_II_NAMESPACE_OPEN
+
 
 PolynomialsAdini::PolynomialsAdini()
   : coef(12, 12), dx(12, 12), dy(12, 12), dxx(12, 12), dyy(12, 12), dxy(12, 12)

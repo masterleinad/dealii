@@ -203,6 +203,7 @@ namespace
     }
   } // namespace base64
 
+
   /**
    * Do a base64 encoding of the given data.
    *
@@ -303,6 +304,7 @@ namespace
   }
 #endif
 } // namespace
+
 
 // some declarations of functions and locally used classes
 namespace DataOutBase
@@ -455,11 +457,15 @@ namespace DataOutBase
     }
   } // namespace
 
+
+
   DataOutFilter::DataOutFilter()
     : flags(false, true),
       node_dim(numbers::invalid_unsigned_int),
       vertices_per_cell(numbers::invalid_unsigned_int)
   {}
+
+
 
   DataOutFilter::DataOutFilter(const DataOutBase::DataOutFilterFlags& flags)
     : flags(flags),
@@ -542,6 +548,8 @@ namespace DataOutBase
     return data_set_dims.at(set_num);
   }
 
+
+
   const double*
   DataOutFilter::get_data_set(const unsigned int set_num) const
   {
@@ -604,6 +612,8 @@ namespace DataOutBase
       }
   }
 
+
+
   void
   DataOutFilter::write_data_set(const std::string&      name,
                                 const unsigned int      dimension,
@@ -638,6 +648,8 @@ namespace DataOutBase
       }
   }
 } // namespace DataOutBase
+
+
 
 //----------------------------------------------------------------------//
 //Auxiliary data
@@ -1142,6 +1154,8 @@ namespace
 
   //----------------------------------------------------------------------//
 
+  //----------------------------------------------------------------------//
+
   DXStream::DXStream(std::ostream& out, const DataOutBase::DXFlags& f)
     : StreamBase<DataOutBase::DXFlags>(out, f)
   {}
@@ -1225,6 +1239,9 @@ namespace
 
   //----------------------------------------------------------------------//
 
+
+  //----------------------------------------------------------------------//
+
   GmvStream::GmvStream(std::ostream& out, const DataOutBase::GmvFlags& f)
     : StreamBase<DataOutBase::GmvFlags>(out, f)
   {}
@@ -1268,6 +1285,8 @@ namespace
     stream << '\n';
   }
 
+
+
   TecplotStream::TecplotStream(std::ostream&                    out,
                                const DataOutBase::TecplotFlags& f)
     : StreamBase<DataOutBase::TecplotFlags>(out, f)
@@ -1308,6 +1327,8 @@ namespace
       }
     stream << '\n';
   }
+
+
 
   UcdStream::UcdStream(std::ostream& out, const DataOutBase::UcdFlags& f)
     : StreamBase<DataOutBase::UcdFlags>(out, f)
@@ -1379,6 +1400,9 @@ namespace
 
   //----------------------------------------------------------------------//
 
+
+  //----------------------------------------------------------------------//
+
   VtkStream::VtkStream(std::ostream& out, const DataOutBase::VtkFlags& f)
     : StreamBase<DataOutBase::VtkFlags>(out, f)
   {}
@@ -1419,6 +1443,8 @@ namespace
     }
     stream << '\n';
   }
+
+
 
   VtuStream::VtuStream(std::ostream& out, const DataOutBase::VtkFlags& f)
     : StreamBase<DataOutBase::VtkFlags>(out, f)
@@ -1533,6 +1559,8 @@ namespace
   }
 } // namespace
 
+
+
 namespace DataOutBase
 {
   const unsigned int Deal_II_IntermediateFlags::format_version = 3;
@@ -1540,8 +1568,10 @@ namespace DataOutBase
   template <int dim, int spacedim>
   const unsigned int Patch<dim, spacedim>::space_dim;
 
+
   template <int dim, int spacedim>
   const unsigned int Patch<dim, spacedim>::no_neighbor;
+
 
   template <int dim, int spacedim>
   Patch<dim, spacedim>::Patch()
@@ -1622,8 +1652,10 @@ namespace DataOutBase
   template <int spacedim>
   const unsigned int Patch<0, spacedim>::space_dim;
 
+
   template <int spacedim>
   const unsigned int Patch<0, spacedim>::no_neighbor;
+
 
   template <int spacedim>
   unsigned int Patch<0, spacedim>::neighbors[1]
@@ -1690,8 +1722,12 @@ namespace DataOutBase
     std::swap(points_are_available, other_patch.points_are_available);
   }
 
+
+
   UcdFlags::UcdFlags(const bool write_preamble) : write_preamble(write_preamble)
   {}
+
+
 
   GnuplotFlags::GnuplotFlags()
   {
@@ -1699,6 +1735,8 @@ namespace DataOutBase
     space_dimension_labels.emplace_back("y");
     space_dimension_labels.emplace_back("z");
   }
+
+
 
   GnuplotFlags::GnuplotFlags(const std::vector<std::string>& labels)
     : space_dimension_labels(labels)
@@ -1710,17 +1748,21 @@ namespace DataOutBase
     return MemoryConsumption::memory_consumption(space_dimension_labels);
   }
 
+
+
   PovrayFlags::PovrayFlags(const bool smooth,
                            const bool bicubic_patch,
                            const bool external_data)
     : smooth(smooth), bicubic_patch(bicubic_patch), external_data(external_data)
   {}
 
+
   DataOutFilterFlags::DataOutFilterFlags(const bool filter_duplicate_vertices,
                                          const bool xdmf_hdf5_output)
     : filter_duplicate_vertices(filter_duplicate_vertices),
       xdmf_hdf5_output(xdmf_hdf5_output)
   {}
+
 
   void
   DataOutFilterFlags::declare_parameters(ParameterHandler& prm)
@@ -1758,12 +1800,16 @@ namespace DataOutBase
       "Whether the data will be used in an XDMF/HDF5 combination.");
   }
 
+
+
   void
   DataOutFilterFlags::parse_parameters(const ParameterHandler& prm)
   {
     filter_duplicate_vertices = prm.get_bool("Filter duplicate vertices");
     xdmf_hdf5_output          = prm.get_bool("XDMF HDF5 output");
   }
+
+
 
   DXFlags::DXFlags(const bool write_neighbors,
                    const bool int_binary,
@@ -1775,6 +1821,7 @@ namespace DataOutBase
       data_binary(data_binary),
       data_double(false)
   {}
+
 
   void
   DXFlags::declare_parameters(ParameterHandler& prm)
@@ -1805,12 +1852,16 @@ namespace DataOutBase
                       "floating point values of 32 or 64 bits length");
   }
 
+
+
   void
   DXFlags::parse_parameters(const ParameterHandler& prm)
   {
     write_neighbors = prm.get_bool("Write neighbors");
     //TODO:[GK] Read the new  parameters
   }
+
+
 
   void
   UcdFlags::declare_parameters(ParameterHandler& prm)
@@ -1824,11 +1875,15 @@ namespace DataOutBase
                       "as the creating program");
   }
 
+
+
   void
   UcdFlags::parse_parameters(const ParameterHandler& prm)
   {
     write_preamble = prm.get_bool("Write preamble");
   }
+
+
 
   SvgFlags::SvgFlags(const unsigned int height_vector,
                      const int          azimuth_angle,
@@ -1845,6 +1900,8 @@ namespace DataOutBase
       margin(margin),
       draw_colorbar(draw_colorbar)
   {}
+
+
 
   void
   PovrayFlags::declare_parameters(ParameterHandler& prm)
@@ -1866,6 +1923,8 @@ namespace DataOutBase
                       "the POVRAY input file");
   }
 
+
+
   void
   PovrayFlags::parse_parameters(const ParameterHandler& prm)
   {
@@ -1873,6 +1932,8 @@ namespace DataOutBase
     bicubic_patch = prm.get_bool("Use bicubic patches");
     external_data = prm.get_bool("Include external file");
   }
+
+
 
   EpsFlags::EpsFlags(const unsigned int  height_vector,
                      const unsigned int  color_vector,
@@ -2008,6 +2069,8 @@ namespace DataOutBase
     return rgb_values;
   }
 
+
+
   bool
   EpsCell2d::operator<(const EpsCell2d& e) const
   {
@@ -2015,6 +2078,8 @@ namespace DataOutBase
     // which we sort the elements
     return depth > e.depth;
   }
+
+
 
   void
   EpsFlags::declare_parameters(ParameterHandler& prm)
@@ -2081,6 +2146,8 @@ namespace DataOutBase
       "and/or cell interiors");
   }
 
+
+
   void
   EpsFlags::parse_parameters(const ParameterHandler& prm)
   {
@@ -2112,6 +2179,8 @@ namespace DataOutBase
       Assert(false, ExcInternalError());
   }
 
+
+
   TecplotFlags::TecplotFlags(const char*  tecplot_binary_file_name,
                              const char*  zone_name,
                              const double solution_time)
@@ -2127,6 +2196,8 @@ namespace DataOutBase
            + MemoryConsumption::memory_consumption(tecplot_binary_file_name)
            + MemoryConsumption::memory_consumption(zone_name);
   }
+
+
 
   VtkFlags::VtkFlags(const double                         time,
                      const unsigned int                   cycle,
@@ -2232,6 +2303,7 @@ namespace DataOutBase
           return "";
       }
   }
+
 
   //----------------------------------------------------------------------//
 
@@ -2656,6 +2728,8 @@ namespace DataOutBase
       return gradient_parameters;
     }
   } // namespace
+
+
 
   template <int dim, int spacedim>
   void
@@ -3439,6 +3513,7 @@ namespace DataOutBase
         Assert(patch->data.n_cols() == Utilities::fixed_power<dim>(n),
                ExcInvalidDatasetSize(patch->data.n_cols(), n_subdivisions + 1));
 
+
         std::vector<Point<spacedim>> ver(n * n);
 
         for(unsigned int i2 = 0; i2 < n; ++i2)
@@ -3449,6 +3524,7 @@ namespace DataOutBase
               compute_node(
                 ver[i1 * d1 + i2 * d2], &*patch, i1, i2, 0, n_subdivisions);
             }
+
 
         if(!flags.bicubic_patch)
           {
@@ -4224,6 +4300,7 @@ namespace DataOutBase
         << '\n'
         << "#" << '\n';
 
+
       out << "Variables=";
 
       switch(spacedim)
@@ -4291,6 +4368,7 @@ namespace DataOutBase
     // vertices along with their
     // coordinates
 
+
     for(unsigned int d = 0; d < spacedim; ++d)
       {
         tecplot_out.selected_component = d;
@@ -4325,6 +4403,8 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
+
+
   //---------------------------------------------------------------------------
   // Macros for handling Tecplot API data
 
@@ -4354,6 +4434,7 @@ namespace DataOutBase
       unsigned int n_vert;
     };
 
+
     inline TecplotMacros::TecplotMacros(const unsigned int n_nodes,
                                         const unsigned int n_vars,
                                         const unsigned int n_cells,
@@ -4364,14 +4445,20 @@ namespace DataOutBase
       connData.resize(n_cells * n_vert);
     }
 
+
+
     inline TecplotMacros::~TecplotMacros()
     {}
+
+
 
     inline float&
     TecplotMacros::nd(const unsigned int i, const unsigned int j)
     {
       return nodalData[i * n_nodes + j];
     }
+
+
 
     inline int&
     TecplotMacros::cd(const unsigned int i, const unsigned int j)
@@ -4381,8 +4468,11 @@ namespace DataOutBase
 
   } // namespace
 
+
 #endif
   //---------------------------------------------------------------------------
+
+
 
   template <int dim, int spacedim>
   void
@@ -4436,6 +4526,8 @@ namespace DataOutBase
         write_tecplot(patches, data_names, vector_data_ranges, flags, out);
         return;
       }
+
+    AssertThrow(out, ExcIO());
 
     AssertThrow(out, ExcIO());
 
@@ -4621,6 +4713,8 @@ namespace DataOutBase
         tm.nd((spacedim + data_set), entry)
           = static_cast<float>(data_vectors[data_set][entry]);
 
+
+
     /////////////////////////////////
     // now for the cells. note that
     // vertices are counted from 1 onwards
@@ -4667,6 +4761,7 @@ namespace DataOutBase
                     for(unsigned int i1 = 0; i1 < n_subdivisions; ++i1)
                       {
                         // note: vertex indices start with 1!
+
 
                         tm.cd(0, elem) = first_vertex_of_patch + (i1) *d1
                                          + (i2) *d2 + (i3) *d3 + 1;
@@ -5008,6 +5103,7 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
+
   void
   write_vtu_header(std::ostream& out, const VtkFlags& flags)
   {
@@ -5038,6 +5134,8 @@ namespace DataOutBase
     out << "<UnstructuredGrid>";
     out << '\n';
   }
+
+
 
   void
   write_vtu_footer(std::ostream& out)
@@ -5713,6 +5811,7 @@ namespace DataOutBase
     if(flags.margin)
       margin_in_percent = 5;
 
+
     // determine the bounding box in the model space
     double x_dimension, y_dimension, z_dimension;
 
@@ -5827,6 +5926,7 @@ namespace DataOutBase
     y_dimension = y_max - y_min;
     z_dimension = z_max - z_min;
 
+
     // set initial camera position
     Point<3> camera_position;
     Point<3> camera_direction;
@@ -5926,6 +6026,7 @@ namespace DataOutBase
     camera_position[1] -= (z_min + 2. * z_dimension)
                           * std::sin(angle_factor * flags.polar_angle)
                           * std::cos(angle_factor * flags.azimuth_angle);
+
 
     // determine the bounding box on the projection plane
     double x_min_perspective, y_min_perspective;
@@ -6488,6 +6589,7 @@ namespace DataOutBase
           }
       }
 
+
     // draw the colorbar
     if(flags.draw_colorbar)
       {
@@ -6712,6 +6814,8 @@ namespace DataOutBase
     return std::make_pair(dim, spacedim);
   }
 } // namespace DataOutBase
+
+
 
 /* --------------------------- class DataOutInterface ---------------------- */
 
@@ -7773,6 +7877,7 @@ DataOutInterface<dim, spacedim>::declare_parameters(ParameterHandler& prm)
   DataOutBase::VtkFlags::declare_parameters(prm);
   prm.leave_subsection();
 
+
   prm.enter_subsection("deal.II intermediate output parameters");
   DataOutBase::Deal_II_IntermediateFlags::declare_parameters(prm);
   prm.leave_subsection();
@@ -8017,6 +8122,7 @@ DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim>& source)
 {
   typedef typename dealii::DataOutBase::Patch<dim, spacedim> Patch;
 
+
   const std::vector<Patch>& source_patches = source.get_patches();
   Assert(patches.size() != 0, DataOutBase::ExcNoPatches());
   Assert(source_patches.size() != 0, DataOutBase::ExcNoPatches());
@@ -8108,6 +8214,8 @@ XDMFEntry::XDMFEntry()
     space_dimension(numbers::invalid_unsigned_int)
 {}
 
+
+
 XDMFEntry::XDMFEntry(const std::string& filename,
                      const double       time,
                      const unsigned int nodes,
@@ -8115,6 +8223,8 @@ XDMFEntry::XDMFEntry(const std::string& filename,
                      const unsigned int dim)
   : XDMFEntry(filename, filename, time, nodes, cells, dim, dim)
 {}
+
+
 
 XDMFEntry::XDMFEntry(const std::string& mesh_filename,
                      const std::string& solution_filename,
@@ -8124,6 +8234,8 @@ XDMFEntry::XDMFEntry(const std::string& mesh_filename,
                      const unsigned int dim)
   : XDMFEntry(mesh_filename, solution_filename, time, nodes, cells, dim, dim)
 {}
+
+
 
 XDMFEntry::XDMFEntry(const std::string& mesh_filename,
                      const std::string& solution_filename,
@@ -8163,6 +8275,8 @@ namespace
     return res;
   }
 } // namespace
+
+
 
 std::string
 XDMFEntry::get_xdmf_content(const unsigned int indent_level) const
@@ -8326,6 +8440,8 @@ namespace DataOutBase
     return in;
   }
 } // namespace DataOutBase
+
+
 
 // explicit instantiations
 #include "data_out_base.inst"

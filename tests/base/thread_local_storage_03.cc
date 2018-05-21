@@ -20,6 +20,7 @@
 #include <deal.II/base/thread_local_storage.h>
 #include <deal.II/base/thread_management.h>
 
+
 struct X
 {
   Threads::ThreadLocalStorage<int> tls_data;
@@ -38,6 +39,7 @@ struct X
   }
 };
 
+
 void
 test()
 {
@@ -47,6 +49,8 @@ test()
 
   AssertThrow(t.return_value() == 42, ExcInternalError());
 }
+
+
 
 int
 main()

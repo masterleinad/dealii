@@ -39,6 +39,8 @@ char logname[] = "output";
 
 #include <vector>
 
+
+
 int
 main()
 {

@@ -19,6 +19,7 @@
 #include "../test_grids.h"
 #include "../tests.h"
 
+
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_nedelec.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
@@ -288,6 +289,7 @@ test(Triangulation<dim>& tr)
   FE_RaviartThomas<dim> rt1(1);
   test_fe(tr, rt1);
 }
+
 
 int
 main()

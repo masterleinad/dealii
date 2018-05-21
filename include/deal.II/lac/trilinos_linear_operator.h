@@ -46,10 +46,12 @@ namespace TrilinosWrappers
     }
   } // namespace internal
 
+
   /**
    * @name Creation of a LinearOperator
    */
   //@{
+
 
   /**
    * @relatesalso LinearOperator
@@ -110,11 +112,13 @@ namespace TrilinosWrappers
       matrix, matrix);
   }
 
+
   //@}
   /**
    * @name Creation of a BlockLinearOperator
    */
   //@{
+
 
   /**
    * @relatesalso BlockLinearOperator

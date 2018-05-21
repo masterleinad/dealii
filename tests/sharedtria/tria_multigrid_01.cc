@@ -26,6 +26,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim>
 void
 compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
@@ -106,10 +107,12 @@ test()
       parallel::shared::Triangulation<dim>::partition_zorder
       | parallel::shared::Triangulation<dim>::construct_multigrid_hierarchy));
 
+
   parallel::distributed::Triangulation<dim> p4est_tria(
     MPI_COMM_WORLD,
     Triangulation<dim>::limit_level_difference_at_vertices,
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
+
 
   unsigned int refinements = 2;
   GridGenerator::subdivided_hyper_cube(shared_tria, 2, -1, 1);

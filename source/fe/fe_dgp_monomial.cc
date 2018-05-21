@@ -19,6 +19,7 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -75,6 +76,7 @@ namespace internal
                                       {1, 0, 1},
                                       {0, 1, 1}};
 
+
       template <int dim>
       void
       generate_unit_points(const unsigned int, std::vector<Point<dim>>&);
@@ -120,6 +122,8 @@ namespace internal
     } // namespace
   }   // namespace FE_DGPMonomial
 } // namespace internal
+
+
 
 template <int dim>
 FE_DGPMonomial<dim>::FE_DGPMonomial(const unsigned int degree)

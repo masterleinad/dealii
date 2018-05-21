@@ -29,6 +29,7 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 
+
 void
 test(const unsigned int M, const unsigned int N)
 {
@@ -46,6 +47,8 @@ test(const unsigned int M, const unsigned int N)
 
   deallog << sp.n_nonzero_elements() << std::endl;
 }
+
+
 
 int
 main()

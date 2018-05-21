@@ -18,6 +18,7 @@
 #include "../tests.h"
 #include <deal.II/lac/block_sparsity_pattern.h>
 
+
 int
 main()
 {
@@ -41,6 +42,7 @@ main()
   csp.add(11, 3);
 
   csp.print(deallog.get_file_stream());
+
 
   for(types::global_dof_index row = 0; row < csp.n_rows(); ++row)
     {

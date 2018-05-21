@@ -28,12 +28,14 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 template <int dim>
 void
 check()
 {
   AssertThrow(false, ExcInternalError());
 }
+
 
 template <>
 void
@@ -51,6 +53,7 @@ check<2>()
     for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       deallog << cell->vertex(i) << std::endl;
 }
+
 
 template <>
 void
@@ -70,6 +73,7 @@ check<3>()
     for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       deallog << cell->vertex(i) << std::endl;
 }
+
 
 int
 main()

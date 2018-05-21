@@ -41,6 +41,7 @@ public:
   Identity() : Function<dim>(dim)
   {}
 
+
   virtual double
   value(const Point<dim>& p, const unsigned int component) const
   {
@@ -55,6 +56,7 @@ public:
   }
 };
 
+
 int
 main()
 {
@@ -65,6 +67,8 @@ main()
 
   Triangulation<2, 3> tria;
 
+  Triangulation<2, 3> tria;
+
   std::map<Triangulation<2, 3>::cell_iterator,
            Triangulation<3, 3>::face_iterator>
     surface_to_volume_mapping;
@@ -72,6 +76,9 @@ main()
   SphericalManifold<3> boundary_description;
   Triangulation<3>     volume_mesh;
   GridGenerator::half_hyper_ball(volume_mesh);
+
+  volume_mesh.set_manifold(1, boundary_description);
+  volume_mesh.set_manifold(0, boundary_description);
 
   volume_mesh.set_manifold(1, boundary_description);
   volume_mesh.set_manifold(0, boundary_description);
@@ -108,6 +115,8 @@ main()
                            DataOut<2, DoFHandler<2, 3>>::type_dof_data,
                            data_component_interpretation);
   data_out.build_patches(mapping, 2);
+
+  data_out.write_gnuplot(deallog.get_file_stream());
 
   data_out.write_gnuplot(deallog.get_file_stream());
 

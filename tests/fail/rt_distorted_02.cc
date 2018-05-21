@@ -22,9 +22,11 @@
 
 #define PRECISION 2
 
+
 std::ofstream logfile("output");
 
 char buf[1000];
+
 
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
@@ -293,6 +295,7 @@ double EvaluateDiver(Mapping<2>&     mapping,
 
   return (result);
 }
+
 
 int
 main()

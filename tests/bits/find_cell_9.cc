@@ -26,6 +26,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
+
 void create_coarse_grid(Triangulation<2>& coarse_grid)
 {
   static const Point<2> vertices_1[] = {
@@ -60,6 +61,7 @@ void create_coarse_grid(Triangulation<2>& coarse_grid)
   coarse_grid.create_triangulation(vertices, cells, SubCellData());
 }
 
+
 void check(Triangulation<2>& tria)
 {
   Point<2> p(0.99, 1. / 2.);
@@ -75,6 +77,7 @@ void check(Triangulation<2>& tria)
   AssertThrow(p.distance(cell->center()) < cell->diameter() / 2,
               ExcInternalError());
 }
+
 
 int
 main()
